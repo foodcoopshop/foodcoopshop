@@ -1,0 +1,243 @@
+<?php
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+if (! $appAuth->loggedIn() || $this->action == 'iframeStartPage')
+    return;
+?>
+
+<?php
+
+// used multiple times...
+$paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
+$paymentMemberFeeMenuElement = $this->Menu->getPaymentMemberFeeMenuElement();
+$actionLogsMenuElement = array(
+    'slug' => '/admin/action_logs',
+    'name' => 'Aktivitäten',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-eye'
+    )
+);
+$cancelledArticlesMenuElement = array(
+    'slug' => '/admin/action_logs/index/type:order_detail_cancelled',
+    'name' => 'Stornierte Artikel',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-remove'
+    )
+);
+$ordersMenuElement = array(
+    'slug' => '/admin/orders',
+    'name' => 'Bestellungen',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-shopping-cart'
+    )
+);
+$orderDetailsMenuElement = array(
+    'slug' => '/admin/order_details',
+    'name' => 'Bestellte Artikel',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-shopping-cart'
+    )
+);
+$customerProfileMenuElement = array(
+    'slug' => $this->Slug->getCustomerProfile(),
+    'name' => 'Meine Daten',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-home'
+    )
+);
+$changePasswordMenuElement = array(
+    'slug' => $this->Slug->getChangePassword(),
+    'name' => 'Passwort ändern',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-key'
+    )
+);
+$blogPostsMenuElement = array(
+    'slug' => $this->Slug->getBlogPostListAdmin(),
+    'name' => 'Blog-Artikel',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-file-text'
+    )
+);
+$homepageAdministrationElement = array(
+    'slug' => $this->Slug->getPagesListAdmin(),
+    'name' => 'Homepage-Verwaltung',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-pencil-square-o'
+    )
+);
+
+$menu = array();
+$logoHtml = '<img class="logo" src="/files/images/logo.jpg" width="100%" />';
+$menu[] = array(
+    'slug' => $this->Slug->getHome(),
+    'name' => $logoHtml,
+    'options' => array()
+);
+$menu[] = array(
+    'slug' => $this->Slug->getHome(),
+    'name' => 'Home',
+    'options' => array(
+        'fa-icon' => 'fa-fw fa-home'
+    )
+);
+
+if ($appAuth->isCustomer()) {
+    $ordersMenuElement['children'] = array(
+        $orderDetailsMenuElement,
+        $cancelledArticlesMenuElement
+    );
+    $menu[] = $ordersMenuElement;
+    if (! empty($paymentProductMenuElement)) {
+        $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
+    }
+    if (! empty($paymentMemberFeeMenuElement)) {
+        $customerProfileMenuElement['children'][] = $paymentMemberFeeMenuElement;
+    }
+    $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
+    $menu[] = $customerProfileMenuElement;
+}
+
+if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+    $ordersMenuElement['children'] = array(
+        $orderDetailsMenuElement,
+        $cancelledArticlesMenuElement,
+        array(
+            'slug' => '/admin/lists/order_lists',
+            'name' => 'Bestelllisten',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-book'
+            )
+        )
+    );
+    $menu[] = $ordersMenuElement;
+    $manufacturerMenu = array(
+        'slug' => '/admin/manufacturers',
+        'name' => 'Hersteller',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-leaf'
+        )
+    );
+    $manufacturerMenu['children'][] = array(
+        'slug' => '/admin/products',
+        'name' => 'Artikel',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-tags'
+        )
+    );
+    $menu[] = $manufacturerMenu;
+    
+    $menu[] = array(
+        'slug' => '/admin/customers',
+        'name' => 'Mitglieder',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-male'
+        )
+    );
+    $menu[] = $actionLogsMenuElement;
+    if (! empty($paymentProductMenuElement)) {
+        $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
+    }
+    if (! empty($paymentMemberFeeMenuElement)) {
+        $customerProfileMenuElement['children'][] = $paymentMemberFeeMenuElement;
+    }
+    $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
+    $menu[] = $customerProfileMenuElement;
+    $menu[] = $blogPostsMenuElement;
+    
+    $homepageAdministrationElement['children'][] = array(
+        'slug' => $this->Slug->getCategoriesList(),
+        'name' => 'Kategorien',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-list'
+        )
+    );
+    $homepageAdministrationElement['children'][] = array(
+        'slug' => $this->Slug->getAttributesList(),
+        'name' => 'Varianten',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-chevron-circle-right'
+        )
+    );
+    $homepageAdministrationElement['children'][] = array(
+        'slug' => $this->Slug->getSliderList(),
+        'name' => 'Slideshow <span class="new">NEU</span>',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-image'
+        )
+    );
+    
+    if ($appAuth->isSuperadmin()) {
+        $homepageAdministrationElement['children'][] = array(
+            'slug' => $this->Slug->getTaxesList(),
+            'name' => 'Steuersätze',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-percent'
+            )
+        );
+        if ($this->Html->paymentIsCashless()) {
+            $homepageAdministrationElement['children'][] = array(
+                'slug' => $this->Slug->getReport('product'),
+                'name' => 'Finanzberichte',
+                'options' => array(
+                    'fa-icon' => 'fa-fw fa-money'
+                )
+            );
+        }
+        $homepageAdministrationElement['children'][] = array(
+            'slug' => $this->Slug->getConfigurationsList(),
+            'name' => 'Einstellungen',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-cogs'
+            )
+        );
+    }
+    
+    $menu[] = $homepageAdministrationElement;
+}
+
+if ($appAuth->isManufacturer()) {
+    $menu[] = $orderDetailsMenuElement;
+    $menu[] = array(
+        'slug' => '/admin/products',
+        'name' => 'Meine Artikel',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-tags'
+        )
+    );
+    $menu[] = $cancelledArticlesMenuElement;
+    $profileMenu = array(
+        'slug' => $this->Slug->getManufacturerProfile(),
+        'name' => 'Mein Profil',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-home'
+        )
+    );
+    $profileMenu['children'][] = $changePasswordMenuElement;
+    $menu[] = $profileMenu;
+    $menu[] = $blogPostsMenuElement;
+    $menu[] = $actionLogsMenuElement;
+}
+
+// for all users
+$menu[] = $this->Menu->getAuthMenuElement($appAuth);
+
+echo $this->Menu->render($menu, array(
+    'id' => 'menu',
+    'class' => 'vertical menu'
+));
+
+?>
+    

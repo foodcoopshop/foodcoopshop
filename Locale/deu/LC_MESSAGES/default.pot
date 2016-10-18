@@ -1,0 +1,75 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Plugin/Admin/Controller/CustomersController.php:28
+msgid "Change your password"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:45
+msgid "Your old Password was wrong"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:50
+msgid "Insert your new Password"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:55
+msgid "The length of the password should be from 6 - 32 Chars"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:62
+msgid "the new passwords are not the same"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:69
+msgid "your new and your old Password dont differ, please change"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:76
+msgid "Please set your password"
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:83
+msgid "An error occurred, please check your form."
+msgstr ""
+
+#: Plugin/Admin/Controller/CustomersController.php:93
+msgid "your new password successfully set"
+msgstr ""
+
+#: Plugin/Admin/View/Customers/change_password.ctp:30
+msgid "Password : Old Password *"
+msgstr ""
+
+#: Plugin/Admin/View/Customers/change_password.ctp:31
+msgid "Password : New Password *"
+msgstr ""
+
+#: Plugin/Admin/View/Customers/change_password.ctp:32
+msgid "Password : New Password Repeat *"
+msgstr ""
+
+#: View/Errors/error400.ctp:27
+#: View/Errors/missing_action.ctp:27
+#: View/Errors/missing_controller.ctp:27
+msgid "The requested address %s was not found on this server."
+msgstr ""
+
+#: View/Errors/error500.ctp:26
+#: View/Errors/fatal_error.ctp:26
+#: View/Errors/pdo_error.ctp:25
+msgid "An Internal Error Has Occurred."
+msgstr ""
+

@@ -1,0 +1,1 @@
+This folder is used for storing database backups, invoices and order lists. Should be located outside of your webroot.

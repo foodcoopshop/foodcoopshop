@@ -1,0 +1,6 @@
+{
+  "directory": "webroot/js/vendor",
+  "scripts": {
+      "postinstall": "bash Console/cake BowerPostInstall"
+  }
+}

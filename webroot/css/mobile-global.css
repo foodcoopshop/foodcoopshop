@@ -1,0 +1,72 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+@media only screen and (max-device-width: 768px) {
+    
+    /* START chrome pull refresh fix */
+    html {
+        overflow-y: scroll;
+    }
+    body, [canvas=container] {
+        overflow: visible;
+    }
+    /* END chrome pull refresh fix */
+    
+    body {
+        margin: 0 ! important;
+    }
+    #container {
+        overflow: hidden ! important; /* avoids iphone scrolling bug */
+        min-height: initial ! important;
+    }
+    .sb-slidebar {
+        background-color: #719f41;
+        z-index: 100000;
+    }
+    .sb-left {
+      -webkit-box-shadow: 5px 0 5px -2px #888;
+      box-shadow: 5px 0 5px -2px #888;
+    }
+    .sb-left a,
+    .sb-left li.heading {
+        color: #fff ! important;
+        padding: 5px;
+        display: block;
+        border-bottom: 1px solid #fff;
+    }
+    .sb-left li.heading,
+    .sb-left a:hover,
+    .sb-left a.active {
+        background-color: #777;
+    }
+    .sb-left li.heading {
+        padding-left: 10px;
+    }
+    li ul li a {
+        font-size: 12px;
+        padding-left: 10px ! important;
+    }
+    li ul li a {
+        padding-left: 15px ! important;
+    }
+    li ul li ul li a {
+        padding-left: 25px ! important;
+    }
+    .sb-left a i {
+        padding-left: 5px;
+    }
+    .sb-left a i:before {
+        padding-right: 5px;
+    }
+    
+}
