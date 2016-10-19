@@ -252,12 +252,12 @@ if (Configure::check('app.debugPasswordForUrl') && !empty($_GET['pass']) && $_GE
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', 'Up3qyQDPHCZWR3HVrpKwscWxNF2begafpAQv954dmCuMgqWf');
+	Configure::write('Security.salt', '');
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
-	Configure::write('Security.cipherSeed', '13186453216845316541684135217100');
+	Configure::write('Security.cipherSeed', '');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).

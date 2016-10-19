@@ -40,8 +40,8 @@ Configure::write('app.cookieKey', '');
  */
 $addressForPdf = "\n\nFoodCoopShop Demo";
 $addressForPdf .= "\nDemostraße 4";
-$addressForPdf .= "\n4644 Scharnstein";
-$addressForPdf .= "\ndemoshop@foodcoopshop.com";
+$addressForPdf .= "\n4644 Demostadt";
+$addressForPdf .= "\nmail@example.com";
 Configure::write('app.addressForPdf', $addressForPdf);
 
 /**
@@ -79,5 +79,16 @@ Configure::write('app.emailOrderReminderEnabled', true);
 Configure::write('app.paymentMethods', array(
     'cashless'
 ));
+
+
+/**
+ * A random string used in security hashing methods.
+ */
+Configure::write('Security.salt', '');
+
+/**
+ * A random numeric string (digits only) used to encrypt/decrypt strings.
+ */
+Configure::write('Security.cipherSeed', '');
 
 ?>
