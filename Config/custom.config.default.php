@@ -80,4 +80,15 @@ Configure::write('app.paymentMethods', array(
     'cashless'
 ));
 
+
+/**
+ * A random string used in security hashing methods.
+ */
+Configure::write('Security.salt', '');
+
+/**
+ * A random numeric string (digits only) used to encrypt/decrypt strings.
+ */
+Configure::write('Security.cipherSeed', '');
+
 ?>

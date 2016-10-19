@@ -111,9 +111,4 @@ class ConfigurationsController extends AdminAppController
         $this->set('success', $success);
     }
 
-    public function generateCookieKey()
-    {
-        $this->autoRender = false;
-        pr('app.cookieKey: ' . StringComponent::createRandomString(56));
-    }
 }
