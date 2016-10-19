@@ -3,6 +3,11 @@
 
 FoodCoopShop is a free, open source, software for foodcoops, released under MIT License. It is based on CakePHP 2.
 
+## TODOs until v1.0.0
+* database installation
+* how to run unit tests
+* how to use cronjobs
+
 ## Requirements
 * Apache with `mod_rewrite`
 * PHP 5.5 or higher (PHP 7 recommended)
