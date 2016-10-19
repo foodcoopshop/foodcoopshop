@@ -302,25 +302,14 @@ $this->element('addScript', array(
 		</tr>
 
 		<tr>
-			<td>Default-Bild für Produkte (Detail, 358x358)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/products/de-default-large_default.jpg</td>
-			<td><img src="/files/images/products/de-default-large_default.jpg" /></td>
-		</tr>
-
-		<tr>
 			<td>Default-Bild für Hersteller (Liste: 125x125)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
 			<td><img
 				src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
 		</tr>
 
 		<tr>
-			<td>Default-Bild für Aktuelles-Beitrag (Home, 150x125)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
+			<td>Default-Bild für Aktuelles-Beitrag (Home, 150x113)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
 			<td><img src="/files/images/blog_posts/no-home-default.jpg" /></td>
-		</tr>
-
-		<tr>
-			<td>Default-Bild für Aktuelles-Beitrag (Detail, 650x240)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-single-default.jpg</td>
-			<td><img width="500"
-				src="/files/images/blog_posts/no-single-default.jpg" /></td>
 		</tr>
 
 	</table>

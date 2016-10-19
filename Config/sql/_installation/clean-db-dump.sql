@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Okt 2016 um 16:26
+-- Erstellungszeit: 19. Okt 2016 um 20:19
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -196,6 +196,15 @@ CREATE TABLE `fcs_category` (
   `is_root_category` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Daten für Tabelle `fcs_category`
+--
+
+INSERT INTO `fcs_category` (`id_category`, `id_parent`, `id_shop_default`, `level_depth`, `nleft`, `nright`, `active`, `date_add`, `date_upd`, `position`, `is_root_category`) VALUES
+(1, 0, 1, 0, 1, 30, 1, '2016-10-19 21:05:00', '2016-10-19 21:05:00', 0, 0),
+(2, 1, 1, 1, 2, 29, 1, '2016-10-19 21:05:00', '2016-10-19 21:05:00', 0, 1),
+(20, 2, 1, 2, 3, 4, 1, '2016-10-19 21:05:00', '2016-10-19 21:05:00', 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -214,6 +223,15 @@ CREATE TABLE `fcs_category_lang` (
   `meta_keywords` varchar(255) DEFAULT NULL,
   `meta_description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `fcs_category_lang`
+--
+
+INSERT INTO `fcs_category_lang` (`id_category`, `id_shop`, `id_lang`, `name`, `description`, `link_rewrite`, `meta_title`, `meta_keywords`, `meta_description`) VALUES
+(1, 1, 1, 'Root', '', 'root', '', '', ''),
+(2, 1, 1, 'Produkte', '', 'home', '', '', ''),
+(20, 1, 1, 'Alle Produkte', '', 'alle-produkte', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -397,7 +415,7 @@ CREATE TABLE `fcs_homeslider_slides_lang` (
 --
 
 INSERT INTO `fcs_homeslider_slides_lang` (`id_homeslider_slides`, `id_lang`, `title`, `description`, `legend`, `url`, `image`) VALUES
-(6, 1, '', '', '', '#', 'demo-slider.jpg');
+(6, 1, '', '', '', '', 'demo-slider.jpg');
 
 -- --------------------------------------------------------
 
@@ -843,13 +861,6 @@ CREATE TABLE `fcs_smart_blog_post_shop` (
   `id_shop` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `fcs_smart_blog_post_shop`
---
-
-INSERT INTO `fcs_smart_blog_post_shop` (`id_smart_blog_post_shop`, `id_smart_blog_post`, `id_shop`) VALUES
-(26, 2, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1212,12 +1223,12 @@ ALTER TABLE `fcs_attribute`
 -- AUTO_INCREMENT für Tabelle `fcs_cake_action_logs`
 --
 ALTER TABLE `fcs_cake_action_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_carts`
 --
 ALTER TABLE `fcs_cake_carts`
-  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_cart_products`
 --
@@ -1242,7 +1253,7 @@ ALTER TABLE `fcs_cake_payments`
 -- AUTO_INCREMENT für Tabelle `fcs_category`
 --
 ALTER TABLE `fcs_category`
-  MODIFY `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cms`
 --
@@ -1262,7 +1273,7 @@ ALTER TABLE `fcs_customer`
 -- AUTO_INCREMENT für Tabelle `fcs_homeslider_slides`
 --
 ALTER TABLE `fcs_homeslider_slides`
-  MODIFY `id_homeslider_slides` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_homeslider_slides` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_image`
 --
@@ -1302,7 +1313,7 @@ ALTER TABLE `fcs_smart_blog_post`
 -- AUTO_INCREMENT für Tabelle `fcs_smart_blog_post_shop`
 --
 ALTER TABLE `fcs_smart_blog_post_shop`
-  MODIFY `id_smart_blog_post_shop` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_smart_blog_post_shop` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_stock_available`
 --
