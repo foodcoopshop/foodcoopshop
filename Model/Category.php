@@ -64,10 +64,14 @@ class Category extends AppModel
         return $categorieForMenu;
     }
 
+    public function getExcludeCondition() {
+        return $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
+    }
+    
     public function getThreaded($conditions = array())
     {
         $conditions = array_merge($conditions, array(
-            $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')'
+            $this->getExcludeCondition()
         ));
         
         $categories = $this->find('threaded', array(

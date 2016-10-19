@@ -129,6 +129,7 @@ class CategoriesController extends AdminAppController
     public function index()
     {
         $conditions = array();
+        $conditions[] = $this->Category->getExcludeCondition();
         $conditions[] = 'Category.active > ' . APP_DEL;
         
         $totalCategoriesCount = $this->Category->find('count', array(
