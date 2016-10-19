@@ -3,10 +3,6 @@
 
 FoodCoopShop is a free, open source, software for foodcoops, released under MIT License. It is based on CakePHP 2.
 
-## TODOs until v1.0.0
-* how to run unit tests
-* how to use cronjobs
-
 ## Requirements
 * Apache with `mod_rewrite`
 * PHP 5.5 or higher (PHP 7 recommended)
@@ -33,6 +29,7 @@ FoodCoopShop is highly customizable to satisfy the demands of the broad variety 
 * the default configuration is found in [app.config.php](Config/app.config.php).
 * you can override the default configuration in [custom.config.php](Config/custom.config.default.php), rename this file to custom.config.php
 * any credentials need to be put in [credentials.php](Config/credentials.default.php), rename the file to credentials.php
+* some configuration is already based in the database and can be changed here: /admin/configurations (superadmin privileges required)
 
 # Developer area
 
@@ -61,6 +58,14 @@ $ chmod a+w -R /webroot/tmp
 * Your virutal host should end with ".dev", to automatically recognize dev environment and set the correct debug mode.
 * The host's document root must point to /webroot
 
+## Cronjobs ##
+* The cronjobs are located in [Console/Command](Console/Command)
+* Example call to run the weekly sending of order lists: `bash cake SendOrderLists`
+
+## Unit Tests ##
+* To run the unit tests, create a second database on your computer and add a test database to your database.php. Please follow [Cake's testing documentation](http://book.cakephp.org/2.0/en/development/testing.html)
+* The tests can be run in the console or the web interface: www.yourdomain.com/test.php
+* Both default and test database configuration need to point to the test database!
 
 ## Pull requests
 Pull requests are welcome, please make sure your modifications are to the develop branch of FoodCoopShop and they are well tested!
