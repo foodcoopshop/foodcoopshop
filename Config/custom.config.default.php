@@ -40,8 +40,8 @@ Configure::write('app.cookieKey', '');
  */
 $addressForPdf = "\n\nFoodCoopShop Demo";
 $addressForPdf .= "\nDemostraße 4";
-$addressForPdf .= "\n4644 Scharnstein";
-$addressForPdf .= "\ndemoshop@foodcoopshop.com";
+$addressForPdf .= "\n4644 Demostadt";
+$addressForPdf .= "\nmail@example.com";
 Configure::write('app.addressForPdf', $addressForPdf);
 
 /**
