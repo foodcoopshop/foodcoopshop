@@ -11,37 +11,20 @@ FoodCoopShop is a free, open source, software for foodcoops, released under MIT 
 ## Installation
 The latest version can be downloaded on [https://www.foodcoopshop.com/download](https://www.foodcoopshop.com/download).
 
-## Database and email setup
-Please use the documentation of CakePHP 
-* [Cake's database documentation](http://book.cakephp.org/2.0/en/development/configuration.html) 
-* [Cake's email documentation](http://book.cakephp.org/2.0/en/core-utility-libraries/email.html) 
-* Once you created a user with superadmin privileges, you can test your email configuration by accessing /admin/configurations/sendTestEmail
-
-## Importing the database dump
-Once the database setup is complete, import [the clean database dump](Config/sql/_installation/clean-db-dump.sql)
-
-## Changing security keys
-* Open your domain (e.g. www.yourfoodcoop.com) in a browser and follow the steps to change your security keys (app.cookieKey, Security.salt and Security.cipherSeed need to be changed in your custom.config.php
-
-## Configuring FoodCoopShop
-FoodCoopShop is highly customizable to satisfy the demands of the broad variety of foodcoops.
-
-* the default configuration is found in [app.config.php](Config/app.config.php).
-* you can override the default configuration in [custom.config.php](Config/custom.config.default.php), rename this file to custom.config.php
-* any credentials need to be put in [credentials.php](Config/credentials.default.php), rename the file to credentials.php
-* some configuration is already based in the database and can be changed here: /admin/configurations (superadmin privileges required)
+## Configuration details
+Please follow the [configuration wiki page](wiki/Configuration)
 
 # Developer area
 
 ## Installation
 
 Clone the repository and install the composer vendors (use the "--prefer-dist" option to avoid downloading VCS meta data).
-``` bash
+```
 $ composer install
 ```
 
 Installing the bower components 
-``` bash
+```
 $ bower install
 ```
 
@@ -54,18 +37,8 @@ $ chmod a+w -R /webroot/files
 $ chmod a+w -R /webroot/tmp
 ```
 
-## Virtual host
-* Your virutal host should end with ".dev", to automatically recognize dev environment and set the correct debug mode.
-* The host's document root must point to /webroot
-
-## Cronjobs
-* The cronjobs are located in [Console/Command](Console/Command)
-* Example call to run the weekly sending of order lists: `bash cake SendOrderLists`
-
-## Unit Tests
-* To run the unit tests, create a second database on your computer and add a test database to your database.php. Please follow [Cake's testing documentation](http://book.cakephp.org/2.0/en/development/testing.html)
-* The tests can be run in the console or the web interface: www.yourdomain.com/test.php
-* Both default and test database configuration need to point to the test database!
+## Configuration details
+Please follow the [configuration wiki page](wiki/Configuration)
 
 ## Pull requests
 Pull requests are welcome, please make sure your modifications are to the develop branch of FoodCoopShop and they are well tested!
