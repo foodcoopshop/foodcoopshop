@@ -20,10 +20,12 @@ App::uses('Folder', 'Utility');
 class BowerPostInstallShell extends AppShell
 {
 
+    /**
+     * do not call parent::main because db connection might not be available
+     * @see AppShell::main()
+     */
     public function main()
     {
-        parent::main();
-        
         $this->copyAdaptedKcfinderFiles();
         $this->copyJqueryUiImages();
         $this->copyBoostrapFonts();
