@@ -19,24 +19,39 @@
  * @link          https://www.foodcoopshop.com
  */
 
+/**
+ * please create a unique cookie key and put it here
+ */
+Configure::write('app.cookieKey', '');
+
+/**
+ * A random string used in security hashing methods.
+ */
+Configure::write('Security.salt', '');
+
+/**
+ * A random numeric string (digits only) used to encrypt/decrypt strings.
+ */
+Configure::write('Security.cipherSeed', '');
+
+
+/**
+ * the name of your organisation, will be used in page title, email footer
+ * and on many other places
+ */
 Configure::write('app.name', 'Demo Foodcoop');
 
 /**
- * title suffix for document title
+ * page title suffix for document title
+ * please leave it as it is if you do not know what it is
  */
 Configure::write('app.titleSuffix', Configure::read('app.name'));
-
-/**
- * please create a unique cookie key and put it here
- * 
- */
-Configure::write('app.cookieKey', '');
 
 /**
  * address configuration (for displaying address in generated pdfs and the footer of the homepage
  * ATTENTION:
  * - last element needs to be a valid email address!
- * - line separator must be \n 
+ * - line separator must be \n
  */
 $addressForPdf = "\n\nFoodCoopShop Demo";
 $addressForPdf .= "\nDemostraße 4";
@@ -46,6 +61,7 @@ Configure::write('app.addressForPdf', $addressForPdf);
 
 /**
  * defines how many days after the app.sendOrderListsWeekday the products are delivered
+ * app.sendOrderListsWeekday is defined in app.config.php and preset to 3, i.e. "wednesday"
  */
 Configure::write('app.deliveryDayDelta', 2);
 
@@ -79,16 +95,5 @@ Configure::write('app.emailOrderReminderEnabled', true);
 Configure::write('app.paymentMethods', array(
     'cashless'
 ));
-
-
-/**
- * A random string used in security hashing methods.
- */
-Configure::write('Security.salt', '');
-
-/**
- * A random numeric string (digits only) used to encrypt/decrypt strings.
- */
-Configure::write('Security.cipherSeed', '');
 
 ?>
