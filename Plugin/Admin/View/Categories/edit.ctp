@@ -87,7 +87,7 @@ echo $this->Form->input('Category.delete_image', array(
 
 if ($this->here != $this->Slug->getCategoryAdd()) {
     echo $this->Form->input('Category.delete_category', array(
-        'label' => 'Seite löschen?',
+        'label' => 'Kategorie löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
     ));
