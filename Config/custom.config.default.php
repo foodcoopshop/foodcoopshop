@@ -71,9 +71,9 @@ Configure::write('app.deliveryDayDelta', 2);
 Configure::write('app.additionalOrderStatusChangeInfo', '');
 
 /**
- * your host's name
+ * your host's name, eg. http://www.yourfoodcoop.com
  */
-Configure::write('app.cakeServerName', 'http://www.foodcoopshop.dev');
+Configure::write('app.cakeServerName', '');
 
 /**
  * array of email adresses that receive notifications after new member registrations
