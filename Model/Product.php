@@ -417,7 +417,7 @@ class Product extends AppModel
         $productAttributeId = $this->ProductAttributes->getLastInsertID();
         
         // INSERT in ProductAttributeCombination tricky because of set primary_key
-        $this->query('INSERT INTO ".$this->tablePrefix."product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
+        $this->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
         
         $this->ProductAttributes->ProductAttributeShop->save(array(
             'id_product_attribute' => $productAttributeId,
