@@ -74,7 +74,15 @@ class EmailLog implements CakeLogInterface
             return false;
         }
         
+        // never send emails for 404 exceptions
+        // somehow in EmailLog.php status code is always 200, so no check for 404 possible
+        $ignoredExceptionsRegex = '/\[(MissingController|MissingAction)Exception\]/';
+        if (preg_match($ignoredExceptionsRegex, $message)) {
+            return false;
+        }
+        
         // ignore the following requests
+        /*
         $patterns = array(
             '^\/apple\-touch\-icon',
             '^\/apple\-app\-site\-association',
@@ -92,12 +100,13 @@ class EmailLog implements CakeLogInterface
             '^\/(shop|shops|schnell\-bestellung|angebote|kontaktieren\-sie\-uns)', // legacy urls
             '^\/(produkt|aktuelles|hersteller|content|kategorie)\/'
         ) // avoid 404 messages for offline objects
-;
+        ;
         
         $regex = '/' . implode('|', $patterns) . '/i';
         if (preg_match($regex, $_SERVER['REQUEST_URI'])) {
             return false;
         }
+        */
         
         $params = array(
             'type' => ucfirst($type),
