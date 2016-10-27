@@ -339,7 +339,7 @@ class Manufacturer extends AppModel
                 LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
                 LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
                 LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer
-                LEFT JOIN ".$this->tablePrefix."tax t ON odt.id_tax = t.id_tax
+                LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
             WHERE 1 
                 AND m.id_manufacturer = :manufacturerId
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom

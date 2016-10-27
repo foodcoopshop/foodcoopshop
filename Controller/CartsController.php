@@ -224,7 +224,7 @@ class CartsController extends FrontendController
                 
                 $orderDetailTax2save[] = array(
                     'id_order_detail' => $orderDetail['OrderDetails']['id_order_detail'],
-                    'id_tax' => $product['Tax']['id_tax'],
+                    'id_tax' => 0, // do not use the field id_tax in order_details_tax but id_tax in order_details!
                     'unit_amount' => $unitTaxAmount,
                     'total_amount' => $totalTaxAmount
                 );
