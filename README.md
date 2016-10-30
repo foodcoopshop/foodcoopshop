@@ -11,11 +11,11 @@ FoodCoopShop is a free, open source, software for foodcoops, released under MIT 
 ## Installation
 The latest version can be downloaded on [https://www.foodcoopshop.com/download](https://www.foodcoopshop.com/download).
 
-## Configuration details
-Please read the [configuration wiki page](https://github.com/foodcoopshop/foodcoopshop/wiki/Configuration).
+## Installation details
+Please read the [installation details wiki page](https://github.com/foodcoopshop/foodcoopshop/wiki/Installation-details).
 
-## Software documentation
-Please read the [software documentation](https://github.com/foodcoopshop/foodcoopshop/wiki).  
+## Software documentation (only available in German)
+Please read the [software documentation in German](https://github.com/foodcoopshop/foodcoopshop/wiki/Dokumentation-de).  
 
 
 # Developer area
@@ -41,8 +41,8 @@ $ chmod a+w -R /webroot/files
 $ chmod a+w -R /webroot/tmp
 ```
 
-## Configuration details
-Please read the [configuration wiki page](https://github.com/foodcoopshop/foodcoopshop/wiki/Configuration).
+## Software documentation (only available in German)
+Please read the [software documentation in German](https://github.com/foodcoopshop/foodcoopshop/wiki/Dokumentation-de).  
 
 ## Pull requests
 Pull requests are welcome, please make sure your modifications are to the develop branch of FoodCoopShop and they are well tested!
