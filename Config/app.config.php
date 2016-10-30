@@ -63,29 +63,55 @@ Configure::write('app.folder.order_lists', APP . 'files_private' . DS .'order_li
 Configure::write('app.folder.invoices_with_current_year_and_month', Configure::read('app.folder.invoices').DS.date('Y').DS.date('m'));
 Configure::write('app.folder.order_lists_with_current_year_and_month', Configure::read('app.folder.order_lists').DS.date('Y').DS.date('m'));
 
+/**
+ * if set to true, a compensation percentage can be added to the manufacturer settings
+ */
 Configure::write('app.useManufacturerCompensationPercentage', false);
+/**
+ * all the default values in this block can be overwritten in the manufacturer settings
+ */ 
 Configure::write('app.defaultCompensationPercentage', 0);
 Configure::write('app.defaultSendOrderList', true);
 Configure::write('app.defaultSendInvoice', true);
 Configure::write('app.defaultTaxId', 2);
 Configure::write('app.defaultBulkOrdersAllowed', false);
 
-Configure::write('app.isDepositPaymentCashless', false);
+Configure::write('app.isDepositPaymentCashless', true);
 Configure::write('app.depositPaymentCashlessStartDate', '2016-01-01');
 
+/**
+ * adds a link to the manufacturer admin to generate and send the order list on click
+ * can be useful, if e.g. a member forgot to order and the order lists are already sent
+ */
 Configure::write('app.allowManualOrderListSending', false);
 /**
- * implementeded for tuesday (2) and wednesday (3)
+ * weekday on which the weekly cronjob "SendOrderList" is called
+ * options:
+ * - 2 (tuesday)
+ * - 3 (wednesday)
  */
 Configure::write('app.sendOrderListsWeekday', 3);
 
+/**
+ * should names of members be shown as "John Doe" or "Doe John"
+ * options:
+ * - firstname
+ * - lastname
+ */
 Configure::write('app.customerMainNamePart', 'firstname');
+
+/**
+ * id of the category "all products"
+ */
 Configure::write('app.categoryAllProducts', 20);
 
+/**
+ * @deprecated - do not use this option, it won't make it in the next version
+ */
 Configure::write('app.memberFeeFlexibleEnabled', false);
 
 /**
- * image upload configuration
+ * image upload sizes and suffixes
  */
 Configure::write('app.productImageSizes', array(
  	 '150' => array('suffix' => '-home_default'),      // list page
@@ -108,8 +134,6 @@ Configure::write('app.sliderImageSizes', array(
 ));
 Configure::write('app.tmpUploadFileSize', 800);
 Configure::write('app.tmpUploadImagesDir', Configure::read('app.tmpWwwDir').DS.'images');
-
-Configure::write('app.emailErrorLoggingEnabled', false);
 
 Configure::write('app.langId', 1);
 Configure::write('app.shopId', 1);
