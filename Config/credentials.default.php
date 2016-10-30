@@ -23,7 +23,13 @@ Configure::write('app.adminEmail', 'mail@example.com');
 Configure::write('app.adminPassword', 'my-password');
 
 /**
- * when exceptions are triggered, emails are sent FROM this email configuration
+ * set to true if you want to receive debug emails when exceptions are triggered
+ */
+Configure::write('app.emailErrorLoggingEnabled', false);
+
+/**
+ * FROM address
+ * emails are sent FROM this email configuration if app.emailErrorLoggingEnabled is set to true
  */
 Configure::write('debugEmailConfig', array(
     'host' => 'mail.example.com',
@@ -38,6 +44,7 @@ Configure::write('debugEmailConfig', array(
 ));
 
 /**
+ * TO address
  * when exceptions are triggered, emails are sent TO this email address
  */
 Configure::write('app.debugEmail', 'mail@example.com');
