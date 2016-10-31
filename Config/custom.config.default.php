@@ -80,8 +80,6 @@ Configure::write('app.cakeServerName', '');
  */
 Configure::write('app.registrationNotificationEmails', array());
 
-Configure::write('app.isDepositPaymentCashless', true);
-
 Configure::write('app.memberFeeEnabled', true);
 
 /**
