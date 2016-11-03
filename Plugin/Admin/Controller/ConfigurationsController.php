@@ -105,7 +105,7 @@ class ConfigurationsController extends AdminAppController
         $success = $email->to(Configure::read('app.hostingEmail'))
             ->subject('Test E-Mail')
             ->attachments(array(
-            ROOT . DS . 'app' . DS . 'webroot' . DS . 'img' . DS . 'FoodCoopShop-logo.png'
+            WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
         ))
             ->send('Das ist der Text der E-Mail (mit Bild als Anhang).');
         $this->set('success', $success);
