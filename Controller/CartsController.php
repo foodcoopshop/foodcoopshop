@@ -314,7 +314,6 @@ class CartsController extends FrontendController
                 $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
             }
             if ($message != '') {
-                $this->log($message);
                 die(json_encode(array(
                     'status' => 0,
                     'msg' => $message
