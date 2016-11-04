@@ -61,7 +61,7 @@ class TaxesController extends AdminAppController
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Tax'] as &$data) {
-                $data = strip_tags($data);
+                $data = strip_tags(trim($data));
             }
             
             $errors = array();

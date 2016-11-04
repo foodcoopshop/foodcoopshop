@@ -101,7 +101,7 @@ class ManufacturersController extends AdminAppController
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Manufacturer'] as &$data) {
-                $data = strip_tags($data);
+                $data = strip_tags(trim($data));
             }
             
             foreach ($this->request->data['ManufacturerLang'] as $key => &$data) {
@@ -109,12 +109,15 @@ class ManufacturersController extends AdminAppController
                     'description',
                     'short_description'
                 ))) {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
             }
             
-            $errors = array();
+            foreach ($this->request->data['Address'] as &$data) {
+                $data = strip_tags(trim($data));
+            }
             
+            $errors = array();
             if (! $this->Manufacturer->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->validationErrors);
             }

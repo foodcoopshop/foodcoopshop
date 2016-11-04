@@ -89,11 +89,11 @@ class BlogPostsController extends AdminAppController
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['BlogPost'] as &$data) {
-                $data = strip_tags($data);
+                $data = strip_tags(trim($data));
             }
             foreach ($this->request->data['BlogPostLang'] as $key => &$data) {
                 if ($key != 'content') {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
             }
             

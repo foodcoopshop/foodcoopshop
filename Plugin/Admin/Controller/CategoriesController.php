@@ -66,7 +66,7 @@ class CategoriesController extends AdminAppController
             }
             
             foreach ($this->request->data['CategoryLang'] as $key => &$data) {
-                $data = trim(strip_tags($data));
+                $data = strip_tags(trim($data));
             }
             
             $errors = array();

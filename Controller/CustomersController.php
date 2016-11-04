@@ -131,10 +131,10 @@ class CustomersController extends FrontendController
                 
                 // quick and dirty solution for stripping html tags, use html purifier here
                 foreach ($this->request->data['Customer'] as &$data) {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
                 foreach ($this->request->data['AddressCustomer'] as &$data) {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
                 
                 // create email, firstname and lastname in adress record
