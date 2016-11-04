@@ -57,7 +57,7 @@ class AppShell extends Shell
     public function getRuntime()
     {
         $time = $this->timeEnd - $this->timeStart;
-        return 'Laufzeit: ' . number_format($time, 2, ',', '.') . ' Sekunden';
+        return 'Laufzeit: ' . Configure::read('htmlHelper')->formatAsDecimal($time) . ' Sekunden';
     }
 
     public function initSimpleBrowser()

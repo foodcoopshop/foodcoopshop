@@ -89,7 +89,7 @@ class MyHtmlHelper extends HtmlHelper {
      * @param decimal $amount
      */
     function formatTaxRate($rate) {
-        return $rate != intval($rate) ? number_format($rate, 1, ',', '.') : number_format($rate, 0);
+        return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
     
     function formatAsDecimal($amount, $decimals=2) {

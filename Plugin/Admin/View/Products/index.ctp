@@ -260,7 +260,7 @@
                 'title' => 'Anzahl ändern'
             ), 'javascript:void(0);');
             echo '<span class="quantity-for-dialog">';
-            echo number_format($product['StockAvailable']['quantity'], 0, ',', '.');
+            echo $this->Html->formatAsDecimal($product['StockAvailable']['quantity'], 0);
             echo '</span>';
         }
         
@@ -270,7 +270,7 @@
         echo '<div class="table-cell-wrapper price">';
         if (empty($product['ProductAttributes'])) {
             echo '<span class="price-for-dialog">';
-            echo number_format($product['Product']['gross_price'], 2, ',', '.');
+            echo $this->Html->formatAsDecimal($product['Product']['gross_price']);
             echo '</span>';
         }
         if (empty($product['ProductAttributes'])) {
@@ -299,7 +299,7 @@
             ));
             echo '</div>';
             $taxRate = $product['Tax']['rate'];
-            echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? number_format($taxRate, 1, ',', '.') : number_format($taxRate, 0)) . '%' . '</span>';
+            echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
             echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
                 'class' => 'product-tax-edit-button',
                 'title' => 'Steuer ändern',
@@ -337,7 +337,7 @@
             }
             if ($product['Deposit'] > 0) {
                 echo '<span class="deposit-for-dialog">';
-                echo number_format($product['Deposit'], 2, ',', '.');
+                echo $this->Html->formatAsDecimal($product['Deposit']);
                 echo '</span>';
             }
             echo '</div>';

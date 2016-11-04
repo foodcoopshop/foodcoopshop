@@ -93,16 +93,16 @@ class FCS_TCPDF extends TCPDF
                 
                 if (in_array('Preis exkl.', $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . number_format($priceExcl, 2, ',', '.') . '</td>';
+                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
                 }
                 
                 if (in_array('MWSt.', $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . number_format($tax, 2, ',', '.') . ' (' . ($taxRate != intval($taxRate) ? number_format($taxRate, 1, ',', '.') : number_format($taxRate, 0)) . '%)</td>';
+                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
                 }
                 
                 $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . number_format($priceIncl, 2, ',', '.') . '</td>';
+                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
                 
                 $indexForWidth ++;
                 $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . $result[0]['Bestelldatum'] . '</td>';
@@ -159,7 +159,7 @@ class FCS_TCPDF extends TCPDF
         
         if (in_array('Preis exkl.', $headers)) {
             $colspan --;
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . number_format($priceExclSum, 2, ',', '.') . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceExclSum) . '</td>';
             $indexForWidth ++;
         }
         
@@ -167,13 +167,13 @@ class FCS_TCPDF extends TCPDF
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
-                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? number_format($taxRate, 1, ',', '.') : number_format($taxRate, 0)) . '%)';
+                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)';
             }
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . number_format($taxSum, 2, ',', '.') . $taxRateString . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;
         }
         
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . number_format($priceInclSum, 2, ',', '.') . '</td>';
+        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceInclSum) . '</td>';
         $indexForWidth ++;
         
         if ($colspan > 0) {

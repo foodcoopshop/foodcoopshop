@@ -259,7 +259,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editQuantityReason . '"</b>';
         }
         
-        $message .= ' Der Warenbestand wurde auf ' . number_format($newQuantity, 0, ',', '.') . ' erhöht.';
+        $message .= ' Der Warenbestand wurde auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
         
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -307,7 +307,7 @@ class OrderDetailsController extends AdminAppController
         
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetail']['product_quantity']);
         
-        $message = 'Der Preis des bestellten Artikels "' . $oldOrderDetail['OrderDetail']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ') wurde erfolgreich von ' . number_format($oldOrderDetail['OrderDetail']['total_price_tax_incl'], 2, ',', '.') . ' auf ' . number_format($productPrice, 2, ',', '.') . ' korrigiert ';
+        $message = 'Der Preis des bestellten Artikels "' . $oldOrderDetail['OrderDetail']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetail']['total_price_tax_incl']) . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
         
         // send email to customer
         $email = new AppEmail();
@@ -421,7 +421,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
         }
         
-        $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . number_format($newQuantity, 0, ',', '.') . ' erhöht.';
+        $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
         
         $this->AppSession->setFlashMessage($message);
         

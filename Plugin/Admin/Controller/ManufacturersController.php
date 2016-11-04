@@ -663,9 +663,9 @@ attachments(array(
             $sumTax += $result['odt']['MWSt'];
             $sumAmount += $result['od']['Menge'];
         }
-        $this->set('sumPriceExcl', number_format($sumPriceExcl, 2, ',', '.'));
-        $this->set('sumTax', number_format($sumTax, 2, ',', '.'));
-        $this->set('sumPriceIncl', number_format($sumPriceIncl, 2, ',', '.'));
+        $this->set('sumPriceExcl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceExcl));
+        $this->set('sumTax', Configure::read('htmlHelper')->formatAsDecimal($sumTax));
+        $this->set('sumPriceIncl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceIncl));
         $this->set('sumAmount', $sumAmount);
         
         $this->set('compensationPercentage', $this->getCompensationPercentage($manufacturerId));

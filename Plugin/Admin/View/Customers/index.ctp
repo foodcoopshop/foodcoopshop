@@ -185,7 +185,7 @@ foreach ($customers as $customer) {
     $sumOrdersCount += $customer['valid_orders_count'];
     echo '</td>';
     
-    if (Configure::read('htmlHelper')->paymentIsCashless()) {
+    if ($this->Html->paymentIsCashless()) {
         echo '<td class="' . ($customer['payment_product_delta'] < 0 ? 'negative' : '') . '">';
         if ($customer['payment_product_delta'] != 0) {
             echo $this->Html->formatAsEuro($customer['payment_product_delta']);
@@ -231,12 +231,12 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
-echo '<td><b>' . number_format($sumOrdersCount, 0, ',', '.') . '</b></td>';
-if (Configure::read('htmlHelper')->paymentIsCashless()) {
+echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
+if ($this->Html->paymentIsCashless()) {
     echo '<td>';
-    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">€&nbsp;' . number_format($sumPaymentsProductDelta, 2, ',', '.') . '</b>';
+    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsProductDelta) . '</b>';
     if (Configure::read('app.isDepositPaymentCashless')) {
-        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">€&nbsp;' . number_format($sumPaymentsDepositDelta, 2, ',', '.') . '&nbsp;Pf.</b>';
+        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
     }
     echo '</td>';
 }

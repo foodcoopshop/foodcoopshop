@@ -181,9 +181,9 @@ foreach ($orderDetails as $orderDetail) {
                 'title' => 'Zum Ändern des Preises anklicken'
             ), 'javascript:void(0);');
         }
-        echo '<span class="product-price-for-dialog">' . number_format($orderDetail['OrderDetail']['total_price_tax_incl'], 2, ',', '.') . '</span>';
+        echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail['OrderDetail']['total_price_tax_incl']) . '</span>';
     } else {
-        echo number_format($orderDetail['sum_price'], 2, ',', '.');
+        echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
     }
     echo '</div>';
     echo '</td>';
@@ -199,7 +199,7 @@ foreach ($orderDetails as $orderDetail) {
         if ($priceDiffers) {
             echo '<span style="color:red;font-weight:bold;">';
         }
-        echo number_format($reducedPrice, 2, ',', '.');
+        echo $this->Html->formatAsDecimal($reducedPrice);
         if ($priceDiffers) {
             echo '</span>';
         }
@@ -209,11 +209,11 @@ foreach ($orderDetails as $orderDetail) {
     echo '<td class="right">';
     if (! $groupByManufacturer) {
         if ($orderDetail['OrderDetail']['deposit'] > 0) {
-            echo number_format($orderDetail['OrderDetail']['deposit'], 2, ',', '.');
+            echo $this->Html->formatAsDecimal($orderDetail['OrderDetail']['deposit']);
         }
     } else {
         if ($orderDetail['sum_deposit'] > 0) {
-            echo number_format($orderDetail['sum_deposit'], 2, ',', '.');
+            echo $this->Html->formatAsDecimal($orderDetail['sum_deposit']);
         }
     }
     echo '</td>';
@@ -269,14 +269,14 @@ if ($appAuth->isManufacturer()) {
 } else {
     echo '<td colspan="2"></td>';
 }
-echo '<td class="right"><b>' . number_format($sumPrice, 2, ',', '.') . '</b></td>';
+echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
 if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
     echo '<td></td>';
-    echo '<td class="right"><b>' . number_format($sumReducedPrice, 2, ',', '.') . '</b></td>';
+    echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
 $sumDepositString = '';
 if ($sumDeposit > 0) {
-    $sumDepositString = number_format($sumDeposit, 2, ',', '.');
+    $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 if ($orderState == 3) {
