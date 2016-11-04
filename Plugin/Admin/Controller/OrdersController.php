@@ -74,12 +74,13 @@ class OrdersController extends AdminAppController
             
             $newDate = Configure::read('timeHelper')->getDateForShopOrder();
             $order2update = array(
-                'date_add' => $newDate
+                'date_add' => $newDate,
+                'current_state' => Configure::read('htmlHelper')->paymentIsCashless() ? ORDER_STATE_CASH_FREE : ORDER_STATE_CASH
             );
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
             
-            $message = 'Sofort-Bestellung (' . $order['Order']['reference'] . ') für ' . $order['Customer']['name'] . ' erfolgreich und automatisch rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '.';
+            $message = 'Sofort-Bestellung (' . $order['Order']['reference'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt, rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . ' und abgeschlossen.';
             
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
