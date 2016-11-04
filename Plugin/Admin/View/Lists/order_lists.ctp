@@ -25,8 +25,7 @@
     ?>
     
     <div class="filter-container">
-		Abholtag <input id="date" type="text" class="datepicker"
-			value="<?php echo $date; ?>" />
+   	    Abholtag <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom)); ?>
 		<button id="filter" class="btn btn-success">
 			<i class="fa fa-search"></i> Filtern
 		</button>
