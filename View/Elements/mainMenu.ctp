@@ -21,10 +21,12 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
     );
 }
 
-$menu[] = array(
-    'name' => 'Hersteller', 'slug' => $this->Slug->getManufacturerList(),
-    'children' => $manufacturersForMenu
-);
+if (!empty($manufacturersForMenu)) {
+    $menu[] = array(
+        'name' => 'Hersteller', 'slug' => $this->Slug->getManufacturerList(),
+        'children' => $manufacturersForMenu
+    );
+}
 
 $menu[] = array(
     'name' => 'Aktuelles', 'slug' => $this->Slug->getBlogList()
