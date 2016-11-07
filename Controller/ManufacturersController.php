@@ -23,10 +23,16 @@ class ManufacturersController extends FrontendController
     public function index()
     {
         $this->Manufacturer->recursive = 1;
+        
+        $conditions = array(
+            'Manufacturer.active' => APP_ON
+        );
+        if (! $this->AppAuth->loggedIn()) {
+            $conditions['Manufacturer.is_private'] = APP_OFF;
+        }
+        
         $manufacturers = $this->Manufacturer->find('all', array(
-            'conditions' => array(
-                'Manufacturer.active' => APP_ON
-            ),
+            'conditions' => $conditions,
             'order' => array(
                 'Manufacturer.name' => 'ASC'
             )
