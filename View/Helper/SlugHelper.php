@@ -69,6 +69,10 @@ class SlugHelper extends Helper {
         return '/logout';
     }
     
+    public function getRegistration() {
+        return '/registrierung';
+    }
+    
     public function getCreditBalance() {
         return '/admin/payments/product';
     }

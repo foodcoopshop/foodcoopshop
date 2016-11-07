@@ -85,7 +85,7 @@ class AppCakeTestCase extends CakeTestCase
     protected function assertJsonAccessRestricted()
     {
         $response = $this->browser->getJsonDecodedContent();
-        $this->assertRegExp('/' . preg_quote('Du bist nicht angemeldet.') . '/', $response->msg, 'login check does not work');
+        $this->assertRegExpWithUnquotedString('Du bist nicht angemeldet.', $response->msg, 'login check does not work');
     }
 
     protected function assertJsonOk()
@@ -93,6 +93,16 @@ class AppCakeTestCase extends CakeTestCase
         $response = $this->browser->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1"');
     }
+    
+    protected function assertRegExpWithUnquotedString($unquotetString, $response, $msg='')
+    {
+        $this->assertRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
+    }
+    
+    protected function assertUrl($url, $expectedUrl, $msg='') {
+        $this->assertEquals($this->browser->baseUrl . $expectedUrl, $url, $msg);
+    }
+    
 }
 
 ?>

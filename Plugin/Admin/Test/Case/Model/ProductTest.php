@@ -42,33 +42,35 @@ class ProductTest extends AppCakeTestCase
         // change price to invalid string
         $price = 'invalid-price';
         $response = $this->changeProductPrice(346, $price);
-        $this->assertRegExp('/' . preg_quote('input format for price is wrong') . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString('input format for price is wrong', $response->msg);
         $this->assertJsonError();
         
         $productId = 1000;
         $response = $this->changeProductPrice($productId, '0,15');
-        $this->assertRegExp('/' . preg_quote('product ' . $productId . ' not found') . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString('product ' . $productId . ' not found', $response->msg);
         $this->assertJsonError();
         
         // change price of product
-        $this->checkPriceChange(346, '2,02');
+        $this->checkPriceChange(346, '2,20', '2,00');
         
         // change price of attribute
-        $this->checkPriceChange('60-10', '1,25');
+        $this->checkPriceChange('60-10', '1,25', '1,106195');
         
         // change price of product with 0% tax
-        $this->checkPriceChange('163', '1,60');
+        $this->checkPriceChange('163', '1,60', '1,60');
+        
     }
 
     /**
      * checks price in database (getGrossPrice)
      */
-    private function checkPriceChange($productId, $price)
+    private function checkPriceChange($productId, $price, $expectedNetPrice)
     {
+        $price = str_replace(',', '.', $price);
         $response = $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
-        $grossPrice = $this->Product->getGrossPrice($productId, $price);
-        $this->assertEquals($price, $price, $grossPrice, 'editing price failed');
+        $netPrice = $this->Product->getNetPrice($productId, $price);
+        $this->assertEquals(floatval($expectedNetPrice), $netPrice, 'editing price failed');
     }
 
     /**

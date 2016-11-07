@@ -71,12 +71,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $response = $this->addManufacturer($manufacturerData);
         
         // provoke errors
-        $this->assertRegExp('/' . preg_quote('Beim Speichern sind 5 Fehler aufgetreten!') . '/', $response);
-        $this->assertRegExp('/' . preg_quote('Bitte gib einen gültigen IBAN ein.') . '/', $response);
-        $this->assertRegExp('/' . preg_quote('Bitte gib einen gültigen BIC ein.') . '/', $response);
-        $this->assertRegExp('/' . preg_quote('Diese E-Mail-Adresse existiert bereits.') . '/', $response);
-        $this->assertRegExp('/' . preg_quote('Bitte gib den Vornamen des Rechnungsempfängers an.') . '/', $response);
-        $this->assertRegExp('/' . preg_quote('Bitte gib den Nachnamen des Rechnungsempfängers an.') . '/', $response);
+        $this->assertRegExpWithUnquotedString('Beim Speichern sind 5 Fehler aufgetreten!', $response);
+        $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen IBAN ein.', $response);
+        $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen BIC ein.', $response);
+        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse existiert bereits.', $response);
+        $this->assertRegExpWithUnquotedString('Bitte gib den Vornamen des Rechnungsempfängers an.', $response);
+        $this->assertRegExpWithUnquotedString('Bitte gib den Nachnamen des Rechnungsempfängers an.', $response);
         
         // set proper data and post again
         $manufacturerData['Manufacturer']['iban'] = 'AT193357281080332578';
@@ -87,7 +87,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         
         $response = $this->addManufacturer($manufacturerData);
         
-        $this->assertRegExp('/' . preg_quote('Der Hersteller wurde erfolgreich gespeichert.') . '/', $response);
+        $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $response);
         
         // get inserted manufacturer from database and check detail page for patterns
         $manufacturer = $this->Manufacturer->find('first', array(
@@ -97,7 +97,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ));
         
         $response = $this->browser->get($this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']));
-        $this->assertRegExp('/' . preg_quote('<h1>' . $manufacturer['Manufacturer']['name']) . '/', $response);
+        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer['Manufacturer']['name'], $response);
         
         $this->doTestCustomerRecord($manufacturer);
         
@@ -116,17 +116,17 @@ class ManufacturersControllerTest extends AppCakeTestCase
         // test with valid customer email address must fail
         $this->browser->setFieldById('AddressEmail', 'foodcoopshop-demo-mitglied@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
-        $this->assertRegExp('/' . preg_quote('Diese E-Mail-Adresse existiert bereits.') . '/', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse existiert bereits.', $this->browser->getContent());
         
         // test with valid manufacturer email address must fail
         $this->browser->setFieldById('AddressEmail', 'fcs-demo-gemuese-hersteller@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
-        $this->assertRegExp('/' . preg_quote('Diese E-Mail-Adresse existiert bereits.') . '/', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse existiert bereits.', $this->browser->getContent());
         
         // test with valid email address
         $this->browser->setFieldById('AddressEmail', 'new-email-address@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
-        $this->assertRegExp('/' . preg_quote('Der Hersteller wurde erfolgreich gespeichert.') . '/', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $this->browser->getContent());
         
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
@@ -148,7 +148,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         
         // saving customer must add a customer record
         $this->browser->submitFormById('ManufacturerEditForm');
-        $this->assertRegExp('/' . preg_quote('Der Hersteller wurde erfolgreich gespeichert.') . '/', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $this->browser->getContent());
         
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
