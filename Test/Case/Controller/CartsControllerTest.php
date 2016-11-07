@@ -198,7 +198,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'Order.id_order' => $orderId
             )
         ));
-        $this->assertNotEqual(array(), $order, 'order not correct');
+        $this->assertNotEquals(array(), $order, 'order not correct');
         $this->assertEquals($order['Order']['id_order'], $orderId, 'order id not correct');
         $this->assertEquals($order['Order']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
         $this->assertEquals($order['Order']['id_cake_cart'], 1, 'order cake_id not correct');
