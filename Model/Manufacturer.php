@@ -209,7 +209,6 @@ class Manufacturer extends AppModel
             'fields' => array(
                 'Manufacturer.id_manufacturer',
                 'Manufacturer.name',
-                'Manufacturer.id_manufacturer'
             ),
             'order' => array(
                 'Manufacturer.name' => 'ASC'

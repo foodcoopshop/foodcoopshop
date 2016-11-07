@@ -38,6 +38,10 @@ class ManufacturersController extends FrontendController
             )
         ));
         
+        if (empty($manufacturers)) {
+            throw new MissingActionException('no manufacturers available');
+        }
+        
         if ($this->AppAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = ClassRegistry::init('Product');
             foreach ($manufacturers as &$manufacturer) {
