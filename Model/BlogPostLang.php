@@ -36,6 +36,15 @@ class BlogPostLang extends AppModel
                 'message' => 'Bitte gib mindestens 3 Zeichen ein.'
             )
         ),
+        'short_description' => array(
+            'maxLength' => array(
+                'rule' => array(
+                    'maxLength',
+                    100                    
+                ),
+                'message' => 'Bitte gib maximal 100 Zeichen ein.'
+            )
+        ),
         'content' => array(
             'notBlank' => array(
                 'rule' => array(
