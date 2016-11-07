@@ -1,0 +1,1 @@
+ALTER TABLE `fcs_cake_payments` ADD `id_manufacturer` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `id_customer`;

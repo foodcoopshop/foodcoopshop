@@ -37,6 +37,10 @@ class SlugHelper extends Helper {
         return '/hersteller';
     }
     
+    public function getDepositList() {
+        return '/admin/deposits';
+    }
+    
     public function getCartDetail() {
         return '/warenkorb/anzeigen';
     }

@@ -225,6 +225,15 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-home'
         )
     );
+    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+        $menu[] = array(
+            'slug' => $this->Slug->getDepositList(),
+            'name' => 'Pfand <span class="new">NEU</span>',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-recycle'
+            )
+        );
+    }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
     $menu[] = $blogPostsMenuElement;

@@ -462,6 +462,7 @@ body.orders.index #add-order-button-wrapper div.select {
 .jquery-ui-icon a.icon-with-text.button {
     padding: 7px;    
 }
+body.deposits #help-container,
 #payments-list #help-container {
     display: block;
 }
@@ -798,6 +799,9 @@ body.customers.index .customer-details-wrapper {
 }
 body.customers.index .name {
     float: left;
+}
+body.deposits.index table.list {
+    width: 500px;
 }
 body.taxes.index table.list,
 body.slider.index table.list {
