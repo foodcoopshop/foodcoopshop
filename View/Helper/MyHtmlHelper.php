@@ -202,6 +202,14 @@ class MyHtmlHelper extends HtmlHelper
     {
         return $this->getPaymentTexts()[$paymentType];
     }
+    
+    public function getManufacturerDepositPaymentTexts() {
+        $paymentTexts = array(
+            'empty_glasses' => 'Leergebinde',
+            'money' => 'Überweisung'
+        );
+        return $paymentTexts;
+    }
 
     /**
      *

@@ -29,14 +29,14 @@ echo $this->Form->input('CakePayment.amount', array(
     'label' => 'Betrag in €',
     'type' => 'string'
 ));
-echo $this->Html->link('<i class="fa"></i> Kommentar hinzufügen', 'javascript:void(0);', array(
-    'class' => 'toggle-link',
-    'title' => 'Kommentar hinzufügen',
-    'escape' => false
-));
-echo '<div class="toggle-content">';
-echo $this->Form->textarea('CakePayment.text');
-echo '</div>';
+if (isset($manufacturerId)) {
+    echo '<p style="margin-top:10px;">Hat der Hersteller Leergebinde mitgenommen<br />oder wurde ihm Geld überwiesen?</p>';
+    foreach($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
+        echo '<div class="radio-wrapper">';
+            echo '<label for="payment-'.$paymentTextKey.'-'.$rowId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$rowId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
+        echo '</div>';
+    }
+}
 echo $this->Form->hidden('CakePayment.type', array(
     'value' => 'deposit'
 ));

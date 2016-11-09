@@ -2082,6 +2082,17 @@ foodcoopshop.Admin = {
             text = $('.featherlight-content #CakePaymentText').val().trim();
         }
 
+        // radio buttons only if deposit is added to manufacurers
+        if ($('.featherlight-content input[type="radio"]').length > 0) {
+        	var selectedRadioButton = $('.featherlight-content input[name=payment_text]:checked');
+        	if (selectedRadioButton.length == 0) {
+                alert('Bitte wähle die Art der Pfand-Rücknahme aus.');
+                foodcoopshop.AppFeatherlight.enableSaveButton();
+                return;
+        	}
+        	text = $('.featherlight-content input[name=payment_text]:checked').val();
+        }
+        
         var months_range = [];
         if ($('.featherlight-content input[type="checkbox"]').length > 0) {
             $('.featherlight-content input[type="checkbox"]:checked').each(

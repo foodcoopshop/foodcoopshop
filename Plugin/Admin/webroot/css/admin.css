@@ -454,6 +454,16 @@ body.orders.index #add-order-button-wrapper div.select {
 .featherlight-content .add-payment-form label {
     width: 100%;
 }
+.featherlight-content .add-payment-form .radio-wrapper {
+	width: 165px;
+	float: left;
+    margin-bottom: 10px;
+}
+.featherlight-content .add-payment-form .radio-wrapper label {
+	float: left;
+	width: auto;
+	margin-right: 5px;
+}
 .jquery-ui-icon a.icon-with-text {
     float: left;
     padding: 0 5px;
