@@ -167,6 +167,7 @@ class CakeActionLog extends AppModel
             'de' => 'Mitglied: Guthaben eingetragen'
         ),
         'payment_product_deleted' => array(
+        	'de' => 'Mitglied: Guthaben gelöscht'
         ),
         'payment_deposit_added' => array(
             'de' => 'Mitglied/Hersteller: Pfand-Betrag eingetragen',
