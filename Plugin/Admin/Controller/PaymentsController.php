@@ -26,6 +26,8 @@ class PaymentsController extends AdminAppController
             case 'member_fee':
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
+            case 'changeState':
+                return $this->AppAuth->loggedIn();
             default:
                 return $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
@@ -184,13 +186,15 @@ class PaymentsController extends AdminAppController
         ));
 
         if (empty($payment)) {
-            $message = 'payment id nicht korrekt: ' . $paymentId;
+            $message = 'payment id not correct: ' . $paymentId;
             $this->log($message);
             die(json_encode(array(
                 'status' => 0,
                 'msg' => $message
             )));
         }
+        
+        // TODO add payment owner check (also for manufacturers!)
 
         // update table cake_payments
         $this->CakePayment->id = $paymentId;

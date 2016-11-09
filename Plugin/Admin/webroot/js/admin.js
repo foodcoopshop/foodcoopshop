@@ -2191,8 +2191,8 @@ foodcoopshop.Admin = {
                                                 onError: function(
                                                     data) {
                                                     alert(data.msg);
-                                                    document.location
-                                                        .reload();
+//                                                    document.location
+//                                                        .reload();
                                                 }
                                             });
 

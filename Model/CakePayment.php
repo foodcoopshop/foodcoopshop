@@ -23,19 +23,45 @@ class CakePayment extends AppModel
         )
     );
     
-    /**
-     * @param int $manufacturerId
-     * @param boolean $groupByMonth
-     * @return array
-     */
-    public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth) {
-        
+    private function getManufacturerDepositConditions($manufacturerId)
+    {
         $conditions = array(
             'CakePayment.status' => APP_ON,
             'CakePayment.id_customer' => 0
         );
         $conditions['CakePayment.id_manufacturer'] = $manufacturerId;
         $conditions['CakePayment.type'] = 'deposit';
+        return $conditions;
+    }
+    
+    /**
+     * @param int $manufacturerId
+     * @param string $monthAndYear
+     * @return array
+     */
+    public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear)
+    {
+        $conditions = $this->getManufacturerDepositConditions($manufacturerId);
+        $conditions['DATE_FORMAT(CakePayment.date_add, \'%Y-%c\')'] = $monthAndYear;
+        
+        $paymentSum = $this->find('all', array(
+            'fields' => 'CakePayment.*',
+            'conditions' => $conditions,
+            'order' => array('CakePayment.date_add' => 'DESC'),
+        ));
+        
+        return $paymentSum;
+    }
+    
+    /**
+     * @param int $manufacturerId
+     * @param boolean $groupByMonth
+     * @return array
+     */
+    public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth)
+    {
+        
+        $conditions = $this->getManufacturerDepositConditions($manufacturerId);
         
         $fields = array(
             'SUM(amount) as sumDepositReturned'

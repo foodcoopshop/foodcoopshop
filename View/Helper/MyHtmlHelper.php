@@ -211,6 +211,11 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
+    function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
+    {
+        return $this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText];
+    }
+    
     /**
      *
      * @param int $imageId            

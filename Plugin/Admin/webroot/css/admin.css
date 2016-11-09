@@ -814,8 +814,13 @@ body.manufacturers.index .manufacturer-details-wrapper {
 body.customers.index .name {
     float: left;
 }
-body.deposits.index table.list {
+body.deposits table.list,
+body.deposits .bottom-button-container {
     width: 500px;
+}
+body.deposits .bottom-button-container {
+	float: left;
+	text-align: right;
 }
 body.taxes.index table.list,
 body.slider.index table.list {

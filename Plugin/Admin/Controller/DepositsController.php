@@ -89,6 +89,28 @@ class DepositsController extends AdminAppController
         
     }
 
+    /**
+     * @param string $monthAndYear
+     */
+    public function detail($monthAndYear)
+    {
+        
+        $this->loadModel('CakePayment');
+        $payments = $this->CakePayment->getManufacturerDepositsByMonth($this->AppAuth->getManufacturerId(), $monthAndYear);
+        
+        $this->set('payments', $payments);
+        
+        if ($monthAndYear == '') {
+            throw new MissingActionException('monthAndYear missing');
+        }
+        $monthAndYearExploded = explode('-', $monthAndYear);
+        $year  = $monthAndYearExploded[0];
+        $month = $monthAndYearExploded[1];
+        
+        $this->set('title_for_layout', 'Pfand-Rücknahme Detailauflistung für ' . Configure::read('timeHelper')->getMonthName($month) . ' ' . $year);
+        
+    }
+    
 }
 
 ?>

@@ -50,30 +50,41 @@ if (empty($deposits)) {
             echo '<th class="right">Pfand zurückgenommen</th>';
         echo '</tr>';
     
-        foreach($deposits as $deposit) {
+        foreach($deposits as $monthAndYear => $deposit) {
             
             echo '<tr>';
                 
                 echo '<td>';
-                    echo '<span style="float: left;">'.$deposit['monthAndYearAsString'].'</span>';
-                    echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Details anzeigen',
-                        array(
-                            'title' => 'Details anzeigen',
-                            'class' => 'icon-with-text',
-                        ),
-                        '/admin/order_details/index/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
-                    ).'</span>';
-                '</td>';
+                    echo $deposit['monthAndYearAsString'];
+                echo '</td>';
                 
                 echo '<td class="right">';
                     if (isset($deposit['delivered'])) {
-                        echo $this->Html->formatAsEuro($deposit['delivered']);
+                        echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Details',
+                            array(
+                                'title' => 'Details anzeigen',
+                                'class' => 'icon-with-text',
+                            ),
+                            '/admin/order_details/index/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
+                        ).'</span>';
+                        echo '<span style="float: right;">';
+                            echo $this->Html->formatAsEuro($deposit['delivered']);
+                        echo '</span>';
                     }
                 echo '</td>';
                 
                 echo '<td class="right negative">';
                     if (isset($deposit['returned'])) {
-                        echo $this->Html->formatAsEuro($deposit['returned']);
+                        echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Details',
+                            array(
+                                'title' => 'Details anzeigen',
+                                'class' => 'icon-with-text',
+                            ),
+                            $this->Slug->getDepositDetail($monthAndYear)
+                        ).'</span>';
+                        echo '<span style="float: right;">';
+                            echo $this->Html->formatAsEuro($deposit['returned']);
+                        echo '</span>';
                     }
                 echo '</td>';
             echo '</tr>';
