@@ -48,14 +48,14 @@ if (empty($deposits)) {
             echo '<th class="right">Pfand zurückgenommen</th>';
         echo '</tr>';
     
-        foreach($deposits as $month => $deposit) {
+        foreach($deposits as $deposit) {
             
             echo '<tr>';
                 
                 echo '<td class="right">';
                     echo $this->Html->link( 
-                        $deposit['monthName'],
-                        '/admin/order_details/index/dateFrom:01.'.$month.'/dateTo:31.'.$month.'/deposit:1/orderState:'.$orderState
+                        $deposit['monthAndYearAsString'],
+                        '/admin/order_details/index/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
                     );
                 '</td>';
                 

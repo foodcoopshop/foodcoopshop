@@ -34,28 +34,28 @@ class DepositsController extends AdminAppController
         $depositsDelivered = $this->OrderDetail->getDepositSum($this->AppAuth->getManufacturerId());
         $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($this->AppAuth->getManufacturerId());
         
-        $months = Configure::read('timeHelper')->getAllMonthsForYear(2017);
-        $months = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2016), $months);
-        $months = array_reverse($months);
+        $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2017);
+        $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);
+        $monthsAndYear = array_reverse($monthsAndYear);
         
         $deposits = array();
         $sumDepositsDelivered = 0;
         $sumDepositsReturned = 0;
-        foreach($months as $month => $monthAsString) {
+        foreach($monthsAndYear as $monthAndYear => $monthAndYearAsString) {
             $recordFound = false;
             foreach($depositsDelivered as $depositDelivered) {
-                if ($depositDelivered[0]['month'] == $month) {
+                if ($depositDelivered[0]['monthAndYear'] == $monthAndYear) {
                     $deliveredValue = $depositDelivered[0]['sumDepositDelivered'];
-                    $deposits[$month]['delivered'] = $deliveredValue;
+                    $deposits[$monthAndYear]['delivered'] = $deliveredValue;
                     $sumDepositsDelivered += $deliveredValue;
                     $recordFound = true;
                     continue;
                 }
             }
             foreach($depositsReturned as $depositReturned) {
-                if ($depositReturned[0]['month'] == $month) {
+                if ($depositReturned[0]['monthAndYear'] == $monthAndYear) {
                     $returnValue = $depositReturned[0]['sumDepositReturned'] * -1;
-                    $deposits[$month]['returned'] = $returnValue;
+                    $deposits[$monthAndYear]['returned'] = $returnValue;
                     $sumDepositsReturned += $returnValue;
                     $recordFound = true;
                     continue;
@@ -64,9 +64,14 @@ class DepositsController extends AdminAppController
             
             if (!$recordFound) {
                 // remove empty months
-                unset($months[$month]);
+                unset($monthsAndYear[$monthAndYear]);
             } else {
-                $deposits[$month]['monthName'] = $monthAsString;
+                $deposits[$monthAndYear]['monthAndYearAsString'] = $monthAndYearAsString;
+                $monthAndYearExploded = explode('-', $monthAndYear);
+                $year  = $monthAndYearExploded[0];
+                $month = $monthAndYearExploded[1];
+                $deposits[$monthAndYear]['dateFrom'] = '01.' . Configure::read('htmlHelper')->addLeadingZero($month) . '.' . $year;
+                $deposits[$monthAndYear]['dateTo'] = Configure::read('timeHelper')->getLastDayOfGivenMonth($monthAndYear) . '.' . Configure::read('htmlHelper')->addLeadingZero($month) . '.' . $year;
             }
             
         }

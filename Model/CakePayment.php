@@ -38,13 +38,13 @@ class CakePayment extends AppModel
         
         $fields = array(
             'SUM(amount) as sumDepositReturned',
-            'DATE_FORMAT(CakePayment.date_add, \'%Y-%c\') as month'
+            'DATE_FORMAT(CakePayment.date_add, \'%Y-%c\') as monthAndYear'
         );
         $paymentSum = $this->find('all', array(
             'fields' => $fields,
             'conditions' => $conditions,
             'order' => array('CakePayment.date_add' => 'DESC'),
-            'group' => 'month'
+            'group' => 'monthAndYear'
         ));
         
         return $paymentSum;

@@ -19,6 +19,11 @@ App::uses('TimeHelper', 'View/Helper');
  */
 class MyTimeHelper extends TimeHelper {
 
+    public function getLastDayOfGivenMonth($monthAndYear)
+    {
+        return date('t', strtotime($monthAndYear));
+    }
+    
     public function getCurrentDateForDatabase() {
         return date('Y-m-d H:i:s');
     }

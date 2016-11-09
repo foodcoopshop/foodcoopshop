@@ -57,7 +57,7 @@ class OrderDetail extends AppModel
     
     public function getDepositSum($manufacturerId) {
         
-        $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered, DATE_FORMAT(o.date_add, \'%Y-%c\') as month ';
+        $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered, DATE_FORMAT(o.date_add, \'%Y-%c\') as monthAndYear ';
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
@@ -65,7 +65,7 @@ class OrderDetail extends AppModel
         
         $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
         
-        $sql .= 'GROUP BY month ';
+        $sql .= 'GROUP BY monthAndYear ';
         $sql .= 'ORDER BY o.date_add DESC ';
         $params = array(
             'manufacturerId' => $manufacturerId,
