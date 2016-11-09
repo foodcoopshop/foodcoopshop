@@ -155,7 +155,7 @@ foreach ($actionLogs as $actionLog) {
     }
     
     if ($showLink) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => $title,
             'target' => $targetBlank ? '_blank' : ''
         ), $url);

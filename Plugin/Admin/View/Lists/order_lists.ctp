@@ -66,7 +66,7 @@
         echo '</td>';
         
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Liste anzeigen (gruppiert nach Artikel)', array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Artikel)', array(
             'title' => 'Liste anzeigen (gruppiert nach Artikel)',
             'target' => '_blank',
             'class' => 'icon-with-text'
@@ -74,7 +74,7 @@
         echo '</td>';
         
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Liste anzeigen (gruppiert nach Mitglied)', array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Mitglied)', array(
             'title' => 'Liste anzeigen (gruppiert nach Mitglied)',
             'target' => '_blank',
             'class' => 'icon-with-text'

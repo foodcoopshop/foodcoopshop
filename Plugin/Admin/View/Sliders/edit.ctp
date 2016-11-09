@@ -63,7 +63,7 @@ if ($imageSrc) {
 }
 echo '</label>';
 echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image('/js/vendor/famfamfam-silk/dist/png/image_add.png'), array(
+echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
     'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
     'title' => 'Neues Bild hochladen bzw. austauschen',
     'data-object-id' => $idForImageUpload

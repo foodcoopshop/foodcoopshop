@@ -74,7 +74,7 @@ foreach ($attributes as $attribute) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getAttributeEdit($attribute['Attribute']['id_attribute']));
     echo '</td>';

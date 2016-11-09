@@ -132,7 +132,7 @@ foreach ($customers as $customer) {
     }
     
     echo '<div class="customer-details-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/book_open.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('book_open.png')), array(
         'class' => 'customer-details-read-button',
         'title' => $details
     ), 'javascript:void(0);');
@@ -144,7 +144,7 @@ foreach ($customers as $customer) {
     
     if ($appAuth->getGroupId() >= $customer['Customer']['id_default_group']) {
         echo '<div class="table-cell-wrapper group">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
             'class' => 'customer-group-edit-button',
             'title' => 'Zum Ändern der Gruppe anklicken'
         ), 'javascript:void(0);');
@@ -163,7 +163,7 @@ foreach ($customers as $customer) {
     echo '<td style="text-align:center;padding-left:10px;width:42px;">';
     
     if ($customer['Customer']['active'] == 1) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), array(
             'class' => 'set-state-to-inactive change-active-state',
             'id' => 'change-active-state-' . $customer['Customer']['id_customer'],
             'title' => 'Zum Deaktivieren anklicken'
@@ -171,7 +171,7 @@ foreach ($customers as $customer) {
     }
     
     if ($customer['Customer']['active'] == '') {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'set-state-to-active change-active-state',
             'id' => 'change-active-state-' . $customer['Customer']['id_customer'],
             'title' => 'Zum Aktivieren anklicken'
@@ -210,14 +210,14 @@ foreach ($customers as $customer) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/comment_add.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('comment_add.png')), array(
         'class' => 'customer-comment-edit-button',
         'title' => 'Kommentar bearbeiten',
         'data-title-for-overlay' => $customer['AddressCustomer']['other']
     ), 'javascript:void(0);');
     if ($customer['AddressCustomer']['other'] != '') {
         echo '<span class="customer-comment-read-button-wrapper">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/user_comment.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('user_comment.png')), array(
             'class' => 'customer-comment-read-button',
             'title' => $customer['AddressCustomer']['other'],
             'data-title-for-overlay' => $customer['AddressCustomer']['other']

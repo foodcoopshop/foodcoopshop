@@ -17,7 +17,7 @@ $this->element('addScript', array(
     'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
 ));
 
-echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/money_euro.png') . $buttonText, array(
+echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . $buttonText, array(
     'title' => 'Pfand-Betrag eintragen',
     'class' => 'add-payment-deposit-button icon-with-text',
     'data-object-id' => $rowId

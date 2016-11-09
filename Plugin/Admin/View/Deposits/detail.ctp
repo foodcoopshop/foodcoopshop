@@ -60,7 +60,7 @@ foreach ($payments as $payment) {
         echo '</td>';
     
         echo '<td style="text-align:center;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-payment-button',
                 'title' => 'Pfand-Rücknahme löschen?'
             ), 'javascript:void(0);');

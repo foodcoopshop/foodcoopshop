@@ -76,16 +76,16 @@
 			<li>Auf dieser Seite werden deine <b>Artikel</b> verwaltet.
 			</li>
 			<li>
-                Du kannst neue Artikel erstellen (Button rechts oben), mit einem Klick auf einen der Bearbeiten-Icons <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'); ?> kannst den entsprechenden (z.B. Kategorien, Anzahl, Preis...) ändern.
+                Du kannst neue Artikel erstellen (Button rechts oben), mit einem Klick auf einen der Bearbeiten-Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')); ?> kannst den entsprechenden (z.B. Kategorien, Anzahl, Preis...) ändern.
             </li>
 			<li>Hinweis zum Ändern der Beschreibung: <b><i>Kurze</i> Beschreibung</b>
 				steht im Shop immer neben dem Bild und ist in den Listen zu lesen. <b><i>Lange</i>
 					Beschreibung</b> steht nur auf der Produkt-Detailseite (z.B. für
 				das Anführen von Inhaltsstoffen geeignet).
 			</li>
-			<li>Du kannst deine Artikel <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png'); ?> bzw. <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'); ?> ganz rechts).
+			<li>Du kannst deine Artikel <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('accept.png')); ?> bzw. <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts).
             </li>
-			<li><b>Varianten: </b>Mit dem <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/add.png'); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Artikeln anlegen. Das <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/star.png'); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
+			<li><b>Varianten: </b>Mit dem <?php echo $this->Html->image($this->Html->getFamFamFamPath('add.png')); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Artikeln anlegen. Das <?php echo $this->Html->image($this->Html->getFamFamFamPath('star.png')); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
                 Varianten können auf "nicht bestellbar" gesetzt werden, in dem du die Anzahl auf 0 setzt.
             </li>
 			<li>Falls eine gewünschte Variante noch nicht zur Verfügung steht,
@@ -97,7 +97,7 @@
 				automatisch. Somit bekommt jeder, der bestellt, seine Ware und es
 				muss nichts storniert werden.
 			</li>
-			<li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/image_add.png'); ?>-Icons kannst ein Bild zu deinem Artikel hochladen. Wenn zu einem Artikel noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
+			<li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image($this->Html->getFamFamFamPath('image_add.png')); ?>-Icons kannst ein Bild zu deinem Artikel hochladen. Wenn zu einem Artikel noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
             </li>
 			<li>Du siehst, für welche Artikel wir Pfand einheben. Möchtest du den
 				Pfand ändern, sag uns bitte Bescheid.</li>
@@ -143,7 +143,7 @@
         
         echo '<td style="text-align: center;padding-left:16px;width:50px;">';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/add.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), array(
                 'class' => 'add-product-attribute-button',
                 'title' => 'Neue Variante für Artikel "' . $product['ProductLang']['name'] . '" erstellen'
             ), 'javascript:void(0);');
@@ -152,7 +152,7 @@
         
         echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && empty($product['ImageShop']) ? 'not-available' : '') . '">';
         if ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/image_add.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
                 'class' => 'add-image-button',
                 'title' => 'Neues Bild hochladen bzw. austauschen',
                 'data-object-id' => $product['Product']['id_product']
@@ -170,7 +170,7 @@
         echo '<td>';
         
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-name-edit-button',
                 'title' => 'Name und Beschreibung ändern'
             ), 'javascript:void(0);');
@@ -179,7 +179,7 @@
         if (! isset($product['ProductAttributes'])) {
             
             echo '<span style="float:left;margin-right: 5px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-product-attribute-button',
                 'title' => 'Variante für Artikel "' . $product['ProductLang']['name'] . '" löschen'
             ), 'javascript:void(0);');
@@ -187,11 +187,11 @@
             
             echo '<span style="float:left;">';
             if ($product['ProductAttributeShop']['default_on'] == 1) {
-                echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/star.png', array(
+                echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), array(
                     'title' => 'Diese Variante ist die Standardvariante.'
                 ));
             } else {
-                echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/bullet_star.png'), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('bullet_star.png')), array(
                     'class' => 'set-as-default-attribute-button',
                     'title' => 'Als neue Standard-Variante festlegen'
                 ), 'javascript:void(0);');
@@ -240,7 +240,7 @@
             ));
             echo '<div class="sc"></div>';
             echo '</div>';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-categories-edit-button',
                 'title' => 'Kategorien ändern',
                 'data-object-id' => $product['Product']['id_product']
@@ -255,7 +255,7 @@
         echo '<td class="' . (empty($product['ProductAttributes']) && $product['StockAvailable']['quantity'] == 0 ? 'not-available' : '') . '">';
         
         if (empty($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-quantity-edit-button',
                 'title' => 'Anzahl ändern'
             ), 'javascript:void(0);');
@@ -274,7 +274,7 @@
             echo '</span>';
         }
         if (empty($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-price-edit-button',
                 'title' => 'Preis ändern'
             ), 'javascript:void(0);');
@@ -300,7 +300,7 @@
             echo '</div>';
             $taxRate = $product['Tax']['rate'];
             echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-tax-edit-button',
                 'title' => 'Steuer ändern',
                 'data-object-id' => $product['Product']['id_product']
@@ -311,13 +311,13 @@
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             if (! $product['Product']['is_new']) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png') . ' Neu', array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', array(
                     'class' => 'icon-with-text change-new-state change-new-state-active',
                     'id' => 'change-new-state-' . $product['Product']['id_product'],
                     'title' => 'Artikel die nächsten ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
                 ), 'javascript:void(0);');
             } else {
-                echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png') . ' Neu', array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', array(
                     'class' => 'icon-with-text change-new-state change-new-state-inactive',
                     'id' => 'change-new-state-' . $product['Product']['id_product'],
                     'title' => 'Artikel nicht mehr als "neu" anzeigen?'
@@ -330,7 +330,7 @@
         if (empty($product['ProductAttributes'])) {
             echo '<div class="table-cell-wrapper price">';
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                     'class' => 'product-deposit-edit-button',
                     'title' => 'Zum Ändern des Pfands anklicken'
                 ), 'javascript:void(0);');
@@ -347,7 +347,7 @@
         echo '<td style="text-align: center;padding-left:10px;width:42px;">';
         
         if ($product['Product']['active'] == 1) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), array(
                 'class' => 'set-state-to-inactive change-active-state',
                 'id' => 'change-active-state-' . $product['Product']['id_product'],
                 'title' => 'Zum Deaktivieren anklicken'
@@ -355,7 +355,7 @@
         }
         
         if ($product['Product']['active'] == '') {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'set-state-to-active change-active-state',
                 'id' => 'change-active-state-' . $product['Product']['id_product'],
                 'title' => 'Zum Aktivieren anklicken'
@@ -366,7 +366,7 @@
         
         echo '<td>';
         if ($product['Product']['active'] && (! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
                 'title' => 'Artikel-Vorschau',
                 'target' => '_blank'
             ), $url = $this->Slug->getProductDetail($product['Product']['id_product'], $product['ProductLang']['name']));

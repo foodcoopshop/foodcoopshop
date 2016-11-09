@@ -60,7 +60,7 @@ if (empty($deposits)) {
                 
                 echo '<td class="right">';
                     if (isset($deposit['delivered'])) {
-                        echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Details',
+                        echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                             array(
                                 'title' => 'Details anzeigen',
                                 'class' => 'icon-with-text',
@@ -75,7 +75,7 @@ if (empty($deposits)) {
                 
                 echo '<td class="right negative">';
                     if (isset($deposit['returned'])) {
-                        echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Details',
+                        echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                             array(
                                 'title' => 'Details anzeigen',
                                 'class' => 'icon-with-text',

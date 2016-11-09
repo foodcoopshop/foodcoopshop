@@ -75,7 +75,7 @@ $this->element('addScript', array('script' =>
                 
                 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                     echo $this->Html->getJqueryUiIcon(
-                        $this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'),
+                        $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
                         array(
                             'title' => 'Bearbeiten'
                         )

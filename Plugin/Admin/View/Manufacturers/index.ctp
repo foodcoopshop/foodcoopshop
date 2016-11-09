@@ -103,7 +103,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']));
     echo '</td>';
@@ -118,7 +118,7 @@ foreach ($manufacturers as $manufacturer) {
             $details .= '<br />' . $manufacturer['Address']['phone'];
         }
         echo '<div class="manufacturer-details-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/book_open.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('book_open.png')), array(
                 'class' => 'manufacturer-details-read-button',
                 'title' => $details
             ), 'javascript:void(0);');
@@ -132,7 +132,7 @@ foreach ($manufacturers as $manufacturer) {
     
     echo '<td style="width:130px;">';
     $productCountSum += $manufacturer['product_count'];
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/tag_green.png') . $manufacturer['product_count'] . ' Artikel', array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . ' Artikel', array(
         'title' => 'Alle Artikel von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
     ), '/admin/products/index/manufacturerId:' . $manufacturer['Manufacturer']['id_manufacturer']);
@@ -158,34 +158,34 @@ foreach ($manufacturers as $manufacturer) {
     
     echo '<td style="text-align:center;width:42px;">';
     if ($manufacturer['Manufacturer']['iban'] != '') {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
     if ($manufacturer['Manufacturer']['active'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     if ($manufacturer['Manufacturer']['active'] == '') {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
     
     echo '<td align="center">';
     if ($manufacturer['Manufacturer']['holiday'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td align="center">';
     if ($manufacturer['Manufacturer']['is_private'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td>';
         echo '<span class="manufacturer-options-button-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_white_gear.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')), array(
                 'class' => 'manufacturer-options-button',
                 'title' => $manufacturer['Address']['other'],
                 'data-title-for-overlay' => $manufacturer['Address']['other']
@@ -224,7 +224,7 @@ foreach ($manufacturers as $manufacturer) {
     
     if (Configure::read('app.allowManualOrderListSending')) {
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/email.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), array(
             'title' => 'Bestellliste manuell versenden',
             'class' => 'manual-order-list-send-link'
         ), 'javascript:void(0);');
@@ -240,7 +240,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td style="width: 29px;">';
     if ($manufacturer['Manufacturer']['active']) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']);
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Hersteller-Seite',
             'target' => '_blank'
         ), $manufacturerLink);
