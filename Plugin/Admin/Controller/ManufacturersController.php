@@ -278,10 +278,16 @@ class ManufacturersController extends AdminAppController
         $manufacturers = $this->Paginator->paginate('Manufacturer');
         
         $this->loadModel('Product');
+        $this->loadModel('CakePayment');
+        $this->loadModel('OrderDetail');
+        
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
             $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
-            $i ++;
+            $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $sumDepositReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
+            $i++;
         }
         $this->set('manufacturers', $manufacturers);
         

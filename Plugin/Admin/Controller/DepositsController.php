@@ -31,8 +31,8 @@ class DepositsController extends AdminAppController
         $orderState = Configure::read('htmlHelper')->getOrderStateIdsAsCsv();
         $this->set('orderState', $orderState);
         
-        $depositsDelivered = $this->OrderDetail->getDepositSum($this->AppAuth->getManufacturerId());
-        $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($this->AppAuth->getManufacturerId());
+        $depositsDelivered = $this->OrderDetail->getDepositSum($this->AppAuth->getManufacturerId(), true);
+        $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($this->AppAuth->getManufacturerId(), true);
         
         $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2017);
         $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);

@@ -25,9 +25,10 @@ class CakePayment extends AppModel
     
     /**
      * @param int $manufacturerId
+     * @param boolean $groupByMonth
      * @return array
      */
-    public function getMonthlyDepositSumByManufacturer($manufacturerId) {
+    public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth) {
         
         $conditions = array(
             'CakePayment.status' => APP_ON,
@@ -37,14 +38,16 @@ class CakePayment extends AppModel
         $conditions['CakePayment.type'] = 'deposit';
         
         $fields = array(
-            'SUM(amount) as sumDepositReturned',
-            'DATE_FORMAT(CakePayment.date_add, \'%Y-%c\') as monthAndYear'
+            'SUM(amount) as sumDepositReturned'
         );
+        if ($groupByMonth) {
+            $fields[] = 'DATE_FORMAT(CakePayment.date_add, \'%Y-%c\') as monthAndYear';
+        }
         $paymentSum = $this->find('all', array(
             'fields' => $fields,
             'conditions' => $conditions,
             'order' => array('CakePayment.date_add' => 'DESC'),
-            'group' => 'monthAndYear'
+            'group' => $groupByMonth ? 'monthAndYear' : null
         ));
         
         return $paymentSum;

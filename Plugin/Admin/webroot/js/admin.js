@@ -2074,7 +2074,8 @@ foodcoopshop.Admin = {
         }
 
         var type = $('.featherlight-content #CakePaymentType').val();
-        var customerId = $('.featherlight-content #CakePaymentCustomerId').val();
+        var customerIdDomElement = $('.featherlight-content #CakePaymentCustomerId');
+        var manufacturerIdDomElement = $('.featherlight-content #CakePaymentManufacturerId');
 
         var text = '';
         if ($('.featherlight-content #CakePaymentText').length > 0) {
@@ -2100,7 +2101,8 @@ foodcoopshop.Admin = {
             type: type,
             text: text,
             months_range: months_range,
-            customerId: customerId
+            customerId: customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0,
+            manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0
         }, {
             onOk: function(data) {
                 document.location.reload();

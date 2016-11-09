@@ -36,6 +36,7 @@ class PaymentsController extends AdminAppController
     {
         $this->loadModel('CakePayment');
         $this->loadModel('Customer');
+        $this->loadModel('Manufacturer');
         parent::beforeFilter();
     }
 
@@ -86,27 +87,47 @@ class PaymentsController extends AdminAppController
             'deposit',
             'member_fee_flexible'
         ))) {
+            
+            // payments to deposits can be added to customers or manufacturers
             $customerId = (int) $this->params['data']['customerId'];
-            $this->Customer->recursive = - 1;
-            $customer = $this->Customer->find('first', array(
-                'conditions' => array(
-                    'Customer.id_customer' => $customerId
-                )
-            ));
-            if (empty($customer)) {
-                $message = 'customer id nicht korrekt: ' . $customerId;
-                $this->log($message);
-                die(json_encode(array(
-                    'status' => 0,
-                    'msg' => $message
-                )));
-            }
-            if ($type == 'deposit') {
+            if ($customerId > 0) {
+                $this->Customer->recursive = - 1;
+                $customer = $this->Customer->find('first', array(
+                    'conditions' => array(
+                        'Customer.id_customer' => $customerId
+                    )
+                ));
                 $message .= ' für ' . $customer['Customer']['name'];
+                if (empty($customer)) {
+                    $message = 'customer id not correkt: ' . $customerId;
+                    $this->log($message);
+                    die(json_encode(array(
+                        'status' => 0,
+                        'msg' => $message
+                    )));
+                }
             }
-            if ($type == 'member_fee_flexible') {
-                $message .= ' für ' . $customer['Customer']['name'];
+            
+            $manufacturerId = (int) $this->params['data']['manufacturerId'];
+            if ($manufacturerId > 0) {
+                $this->Manufacturer->recursive = - 1;
+                $manufacturer = $this->Manufacturer->find('first', array(
+                    'conditions' => array(
+                        'Manufacturer.id_manufacturer' => $manufacturerId
+                    )
+                ));
+                $message = 'Pfand-Rücknahme';
+                $message .= ' für ' . $manufacturer['Manufacturer']['name'];
+                if (empty($manufacturer)) {
+                    $message = 'manufacturer id not correkt: ' . $manufacturerId;
+                    $this->log($message);
+                    die(json_encode(array(
+                        'status' => 0,
+                        'msg' => $message
+                    )));
+                }
             }
+            
         }
 
         // add entry in table cake_payments
@@ -115,6 +136,7 @@ class PaymentsController extends AdminAppController
             'status' => APP_ON,
             'type' => $type,
             'id_customer' => $customerId,
+            'id_manufacturer' => $manufacturerId,
             'date_add' => date('Y-m-d H:i:s'),
             'date_changed' => date('Y-m-d H:i:s'),
             'amount' => $amount,
@@ -133,7 +155,9 @@ class PaymentsController extends AdminAppController
 
         switch ($type) {
             case 'deposit':
-                $message .= ' Der Betrag ist im Guthaben-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';
+                if ($customerId > 0) {
+                    $message .= ' Der Betrag ist im Guthaben-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';
+                }
                 break;
             case 'member_fee_flexible':
                 $message .= ' Der Betrag ist im Mitgliedsbeitrags-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';

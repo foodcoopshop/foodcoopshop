@@ -26,11 +26,6 @@
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()) . ");"
     ));
-    if (Configure::read('app.isDepositPaymentCashless')) {
-        $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
-        ));
-    }
     if (Configure::read('app.memberFeeFlexibleEnabled')) {
         $this->element('addScript', array(
             'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
@@ -182,34 +177,12 @@
         
         if (Configure::read('app.isDepositPaymentCashless')) {
             echo '<td style="width:144px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/money_euro.png') . ' Pfand-Rückgabe', array(
-                'title' => 'Pfand-Betrag eintragen',
-                'class' => 'add-payment-deposit-button icon-with-text',
-                'data-object-id' => $order['Order']['id_order']
-            ), 'javascript:void(0);');
-            echo '<div id="add-payment-deposit-form-' . $order['Order']['id_order'] . '" class="add-payment-form add-payment-deposit-form">';
-            echo '<h3>Pfand eintragen</h3>';
-            echo '<p>Pfand-Betrag für <b>' . $order['Order']['name'] . '</b> eintragen:</p>';
-            echo $this->Form->input('CakePayment.amount', array(
-                'label' => 'Betrag in €',
-                'type' => 'string'
-            ));
-            echo $this->Html->link('<i class="fa"></i> Kommentar hinzufügen', 'javascript:void(0);', array(
-                'class' => 'toggle-link',
-                'title' => 'Kommentar hinzufügen',
-                'escape' => false
-            ));
-            echo '<div class="toggle-content">';
-            echo $this->Form->textarea('CakePayment.text');
-            echo '</div>';
-            echo $this->Form->hidden('CakePayment.type', array(
-                'value' => 'deposit'
-            ));
-            echo $this->Form->hidden('CakePayment.customerId', array(
-                'value' => $order['Customer']['id_customer']
-            ));
-            echo '</div>';
-            echo '<div class="sc"></div>';
+                echo $this->element('addDepositPaymentOverlay', array(
+                    'buttonText' => 'Pfand-Rückgabe',
+                    'rowId' => $order['Order']['id_order'],
+                    'userName' => $order['Order']['name'],
+                    'customerId' => $order['Customer']['id_customer']
+                ));
             echo '</td>';
         }
         

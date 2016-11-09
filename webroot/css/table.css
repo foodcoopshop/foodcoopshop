@@ -66,7 +66,8 @@ table.list td.not-available {
     color: white;
 }
 table.list td.negative,
-b.negative {
+b.negative,
+span.negative {
     color: red ! important;
 }
 table.list th,

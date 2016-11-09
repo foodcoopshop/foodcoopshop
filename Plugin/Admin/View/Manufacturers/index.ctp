@@ -18,7 +18,7 @@
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setUseManufacturerCompensationPercentage(" . (Configure::read('app.useManufacturerCompensationPercentage') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultCompensationPercentage(" . Configure::read('app.defaultCompensationPercentage') . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultSendOrderList(" . (Configure::read('app.defaultSendOrderList') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultSendInvoice(" . (Configure::read('app.defaultSendInvoice') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultTaxId(" . Configure::read('app.defaultTaxId') . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultBulkOrdersAllowed(" . (Configure::read('app.defaultBulkOrdersAllowed') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.initEditManufacturerOptions('#manufacturers-list .manufacturer-options-button');"
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setUseManufacturerCompensationPercentage(" . (Configure::read('app.useManufacturerCompensationPercentage') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultCompensationPercentage(" . Configure::read('app.defaultCompensationPercentage') . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultSendOrderList(" . (Configure::read('app.defaultSendOrderList') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultSendInvoice(" . (Configure::read('app.defaultSendInvoice') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultTaxId(" . Configure::read('app.defaultTaxId') . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultBulkOrdersAllowed(" . (Configure::read('app.defaultBulkOrdersAllowed') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.initEditManufacturerOptions('#manufacturers-list .manufacturer-options-button');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ));
     
     if (Configure::read('app.allowManualOrderListSending')) {
@@ -62,7 +62,7 @@ echo '<th>Logo</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.name', 'Name') . '</th>';
 echo '<th style="width:83px;">Artikel</th>';
-echo '<th>' . $this->Paginator->sort('Address.email', 'Email / Telefon') . '</th>';
+echo '<th>Pfand</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.holiday', 'Urlaub') . '</th>';
@@ -109,11 +109,28 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     
     echo '<td>';
-    echo '<b>' . $manufacturer['Manufacturer']['name'] . '</b><br />';
-    echo $manufacturer['Address']['name'] . ', ' . $manufacturer['Address']['city'];
+        
+        $details = $manufacturer['Address']['name'];
+        if ($manufacturer['Address']['phone_mobile'] != '') {
+            $details .= '<br />'.$manufacturer['Address']['phone_mobile'];
+        }
+        if ($manufacturer['Address']['phone'] != '') {
+            $details .= '<br />' . $manufacturer['Address']['phone'];
+        }
+        echo '<div class="manufacturer-details-wrapper">';
+            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/book_open.png'), array(
+                'class' => 'manufacturer-details-read-button',
+                'title' => $details
+            ), 'javascript:void(0);');
+        echo '</div>';
+        
+        echo '<b>' . $manufacturer['Manufacturer']['name'] . '</b><br />';
+        echo $manufacturer['Address']['city'];
+        echo '<br /><span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
+        
     echo '</td>';
     
-    echo '<td style="width:100px;">';
+    echo '<td style="width:130px;">';
     $productCountSum += $manufacturer['product_count'];
     echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/tag_green.png') . $manufacturer['product_count'] . ' Artikel', array(
         'title' => 'Alle Artikel von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
@@ -121,17 +138,22 @@ foreach ($manufacturers as $manufacturer) {
     ), '/admin/products/index/manufacturerId:' . $manufacturer['Manufacturer']['id_manufacturer']);
     echo '</td>';
     
-    echo '<td>';
-    echo '<span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
-    if ($manufacturer['Address']['phone_mobile'] != '') {
-        echo $manufacturer['Address']['phone_mobile'];
-    }
-    if ($manufacturer['Address']['phone_mobile'] != '' && $manufacturer['Address']['phone'] != '') {
-        echo '<br />';
-    }
-    if ($manufacturer['Address']['phone'] != '') {
-        echo $manufacturer['Address']['phone'];
-    }
+    echo '<td style="width:215px;">';
+        if ($manufacturer['deposit_credit_balance'] != 0) {
+            echo $this->element('addDepositPaymentOverlay', array(
+                'buttonText' => 'Pfand-Rücknahme',
+                'rowId' => $manufacturer['Manufacturer']['id_manufacturer'],
+                'userName' => $manufacturer['Manufacturer']['name'],
+                'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer']
+            ));
+            $depositSaldoClasses = array();
+            if ($manufacturer['deposit_credit_balance'] < 0) {
+                $depositSaldoClasses[] = 'negative';
+            }
+            echo '<div style="float: right;">';
+                echo 'Kontostand: <span class="'.implode(' ', $depositSaldoClasses).'">' . $this->Html->formatAsEuro($manufacturer['deposit_credit_balance']);
+            echo '</div>';
+        }
     echo '</td>';
     
     echo '<td style="text-align:center;width:42px;">';
@@ -162,20 +184,20 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     
     echo '<td>';
-    echo '<span class="manufacturer-options-button-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_white_gear.png'), array(
-        'class' => 'manufacturer-options-button',
-        'title' => $manufacturer['Address']['other'],
-        'data-title-for-overlay' => $manufacturer['Address']['other']
-    ), 'javascript:void(0);');
-    echo '<div class="hide tax-wrapper">';
-    echo $this->Form->input('Tax.id_tax', array(
-        'type' => 'select',
-        'label' => '',
-        'options' => $taxesForDropdown
-    ));
-    echo '</div>';
-    echo '</span>';
+        echo '<span class="manufacturer-options-button-wrapper">';
+            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_white_gear.png'), array(
+                'class' => 'manufacturer-options-button',
+                'title' => $manufacturer['Address']['other'],
+                'data-title-for-overlay' => $manufacturer['Address']['other']
+            ), 'javascript:void(0);');
+            echo '<div class="hide tax-wrapper">';
+                echo $this->Form->input('Tax.id_tax', array(
+                    'type' => 'select',
+                    'label' => '',
+                    'options' => $taxesForDropdown
+                ));
+            echo '</div>';
+        echo '</span>';
     echo '</td>';
     
     if (Configure::read('app.useManufacturerCompensationPercentage')) {
@@ -189,11 +211,11 @@ foreach ($manufacturers as $manufacturer) {
         echo '</td>';
     }
     
-    echo '<td>';
-    echo 'Bestellliste prüfen: ';
-    echo $this->Html->link('Artikel', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
-        'target' => '_blank'
-    ));
+    echo '<td style="width:140px;">';
+    echo 'Bestellliste prüfen<br />';
+        echo $this->Html->link('Artikel', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+            'target' => '_blank'
+        ));
     echo ' / ';
     echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
         'target' => '_blank'
@@ -246,7 +268,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="6"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

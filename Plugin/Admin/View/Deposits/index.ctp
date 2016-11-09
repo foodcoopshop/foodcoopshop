@@ -30,7 +30,9 @@ $this->element('addScript', array(
 	<ul>
         <?php echo $this->element('shopdienstInfo'); ?>
         <li>Hier wird seit dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> das Pfand für den Hersteller verwaltet.</li>
-        <li>Dem gelieferten Pfand liegt das Bestelldatum (nicht das Lieferdatum!) zugrunde, dem zurückgenommenen Pfand der Tag, an dem das Retour-Pfand ins System eingetragen wurde.</li>
+        <li>Pfand, das vor diesem Zeitraum verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
+        <li><b>Geliefertes Pfand</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
+        <li><b>Zurückgenommenes Pfand</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
     </ul>
 </div>    
     
@@ -87,13 +89,13 @@ if (empty($deposits)) {
         
         echo '<tr>';
             echo '<td colspan="2" class="right"><b>Dein Pfand-Kontostand</td>';
-            $depositCreditBalance = $sumDepositsDelivered - $sumDepositsReturned;
-            $depositCreditBalanceClass = '';
+            $depositCreditBalance = $sumDepositsDelivered + $sumDepositsReturned;
+            $depositCreditBalanceClasses = array('right');
             if ($depositCreditBalance < 0) {
-                $depositCreditBalanceClass = ' class="negative"';
+                $depositCreditBalanceClasses[] = 'negative';
             }
             
-            echo '<td '.$depositCreditBalanceClass.' class="right"><b style="font-size: 16px;">'.$this->Html->formatAsEuro($depositCreditBalance).'</b></td>';
+            echo '<td class="'.implode(' ', $depositCreditBalanceClasses).'"><b style="font-size: 16px;">'.$this->Html->formatAsEuro($depositCreditBalance).'</b></td>';
         echo '</tr>';
         
     echo '</table>';
