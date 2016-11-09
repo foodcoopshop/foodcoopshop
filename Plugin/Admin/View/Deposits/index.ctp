@@ -54,11 +54,15 @@ if (empty($deposits)) {
             
             echo '<tr>';
                 
-                echo '<td class="right">';
-                    echo $this->Html->link( 
-                        $deposit['monthAndYearAsString'],
+                echo '<td>';
+                    echo '<span style="float: left;">'.$deposit['monthAndYearAsString'].'</span>';
+                    echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/zoom.png') . ' Details anzeigen',
+                        array(
+                            'title' => 'Details anzeigen',
+                            'class' => 'icon-with-text',
+                        ),
                         '/admin/order_details/index/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
-                    );
+                    ).'</span>';
                 '</td>';
                 
                 echo '<td class="right">';
@@ -84,7 +88,11 @@ if (empty($deposits)) {
         echo '<tr>';
             echo '<td></td>';
             echo '<td class="right"><b>'.$this->Html->formatAsEuro($sumDepositsDelivered).'</b></td>';
-            echo '<td class="right negative"><b>'.$this->Html->formatAsEuro($sumDepositsReturned).'</b></td>';
+            echo '<td class="right negative">';
+                if ($sumDepositsReturned != 0) {
+                    echo '<b>'.$this->Html->formatAsEuro($sumDepositsReturned).'</b>';
+                }
+            echo '</td>';
         echo '</tr>';
         
         echo '<tr>';
@@ -94,7 +102,6 @@ if (empty($deposits)) {
             if ($depositCreditBalance < 0) {
                 $depositCreditBalanceClasses[] = 'negative';
             }
-            
             echo '<td class="'.implode(' ', $depositCreditBalanceClasses).'"><b style="font-size: 16px;">'.$this->Html->formatAsEuro($depositCreditBalance).'</b></td>';
         echo '</tr>';
         

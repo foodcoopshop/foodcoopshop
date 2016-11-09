@@ -34,7 +34,10 @@ class DepositsController extends AdminAppController
         $depositsDelivered = $this->OrderDetail->getDepositSum($this->AppAuth->getManufacturerId(), true);
         $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($this->AppAuth->getManufacturerId(), true);
         
-        $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2017);
+        // TODO add year 2020 on 31.12.2019
+        $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2019);
+        $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2018), $monthsAndYear);
+        $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2017), $monthsAndYear);
         $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);
         $monthsAndYear = array_reverse($monthsAndYear);
         
@@ -46,9 +49,11 @@ class DepositsController extends AdminAppController
             foreach($depositsDelivered as $depositDelivered) {
                 if ($depositDelivered[0]['monthAndYear'] == $monthAndYear) {
                     $deliveredValue = $depositDelivered[0]['sumDepositDelivered'];
-                    $deposits[$monthAndYear]['delivered'] = $deliveredValue;
-                    $sumDepositsDelivered += $deliveredValue;
-                    $recordFound = true;
+                    if ($deliveredValue > 0) {
+                        $deposits[$monthAndYear]['delivered'] = $deliveredValue;
+                        $sumDepositsDelivered += $deliveredValue;
+                        $recordFound = true;
+                    }
                     continue;
                 }
             }
