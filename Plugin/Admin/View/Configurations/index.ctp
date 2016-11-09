@@ -248,6 +248,11 @@ $this->element('addScript', array(
 		<?php } ?>
 		
         <tr>
+			<td>app.depositForManufacturersStartDate</td>
+			<td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
+		</tr>
+
+        <tr>
 			<td>app.customerMainNamePart</td>
 			<td><?php echo Configure::read('app.customerMainNamePart'); ?></td>
 		</tr>
