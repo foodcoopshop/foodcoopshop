@@ -52,11 +52,17 @@ $this->element('addScript', array(
 <div id="help-container">
 	<ul>
         <?php echo $this->element('shopdienstInfo'); ?>
-        <li>Hier wird seit dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturer']['name']; ?></b> verwaltet.</li>
-        <li>Pfand, das vor diesem Zeitraum verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
-        <li><b>Geliefertes Pfand</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
-        <li><b>Zurückgenommenes Pfand</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
-        <li>Du kannst hier neue Pfand-Rücknahmen eintragen.</li>
+        <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturer']['name']; ?></b> verwaltet.</li>
+        <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
+        <li><b>Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
+        <li><b>Pfand zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
+        <li>Ein Klick auf <b>Details</b> zeigt die genau Zusammensetzung des monatlichen Betrages an.</li>
+        <?php if ($appAuth->isManufacturer()) { ?>
+        	<li>Falls du Leergebinde vom Abhollager mitnimmst, 
+        <?php } else { ?>
+        	<li>Falls du dem Hersteller Pfand-Geld überweist, oder er Leergebinde mitnimmt, 
+        <?php } ?>
+        	kannst du hier eine neue Pfand-Rücknahme eintragen.</li>
     </ul>
 </div>    
     
