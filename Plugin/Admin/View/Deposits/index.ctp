@@ -22,21 +22,55 @@ $this->element('addScript', array(
 ?>
 
 <div class="filter-container">
-	<h1>Pfand-Verwaltung</h1>
+	<h1><?php echo $title_for_layout; ?></h1>
+	<?php
+    	if (!$appAuth->isManufacturer()) {
+    	    echo $this->Form->input('manufacturerId', array(
+    	        'type' => 'select',
+    	        'label' => '',
+    	        'options' => $manufacturersForDropdown,
+    	        'empty' => 'alle Hersteller',
+    	        'selected' => $manufacturerId != '' ? $manufacturerId : ''
+    	    ));
+    	?>
+    	<button id="filter" class="btn btn-success">
+			<i class="fa fa-search"></i> Filtern
+		</button>
+    	<?php
+    	}
+	?>
 	<div class="right"></div>
 </div>
+
+<?php
+    if (empty($manufacturer)) {
+        echo '<br /><h2 class="warning">Bitte wähle einen Hersteller aus.</h2>';
+        return;
+    }
+?>
 
 <div id="help-container">
 	<ul>
         <?php echo $this->element('shopdienstInfo'); ?>
-        <li>Hier wird seit dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> das Pfand für den Hersteller verwaltet.</li>
+        <li>Hier wird seit dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturer']['name']; ?></b> verwaltet.</li>
         <li>Pfand, das vor diesem Zeitraum verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
         <li><b>Geliefertes Pfand</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
         <li><b>Zurückgenommenes Pfand</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
+        <li>Du kannst hier neue Pfand-Rücknahmen eintragen.</li>
     </ul>
 </div>    
     
 <?php
+
+
+echo '<div class="add-payment-deposit-wrapper">';
+    echo $this->element('addDepositPaymentOverlay', array(
+        'buttonText' => 'Pfand-Rücknahme eintragen',
+        'rowId' => $manufacturer['Manufacturer']['id_manufacturer'],
+        'userName' => $manufacturer['Manufacturer']['name'],
+        'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer']
+    ));
+echo '</div>';
 
 if (empty($deposits)) {
     echo '<h2 class="warning">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
@@ -65,7 +99,7 @@ if (empty($deposits)) {
                                 'title' => 'Details anzeigen',
                                 'class' => 'icon-with-text',
                             ),
-                            '/admin/order_details/index/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
+                            '/admin/order_details/index/manufacturerId:'.$manufacturerId.'/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
                         ).'</span>';
                         echo '<span style="float: right;">';
                             echo $this->Html->formatAsEuro($deposit['delivered']);
@@ -80,7 +114,7 @@ if (empty($deposits)) {
                                 'title' => 'Details anzeigen',
                                 'class' => 'icon-with-text',
                             ),
-                            $this->Slug->getDepositDetail($monthAndYear)
+                            $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear)
                         ).'</span>';
                         echo '<span style="float: right;">';
                             echo $this->Html->formatAsEuro($deposit['returned']);

@@ -308,6 +308,15 @@ if (! $groupByManufacturer && $productId == '' && $manufacturerId == '' && $cust
     }
 }
 
+if ($deposit != '') {
+    if ($appAuth->isManufacturer()) {
+        $depositOverviewUrl = $this->Slug->getMyDepositList();
+    } else {
+        $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
+    }
+    $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
+}
+
 if ($buttonExists) {
     echo '<div class="bottom-button-container">';
     echo $buttonHtml;

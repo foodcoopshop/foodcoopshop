@@ -822,6 +822,12 @@ body.deposits .bottom-button-container {
 	float: left;
 	text-align: right;
 }
+body.deposits .add-payment-deposit-wrapper {
+	float: left;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
 body.taxes.index table.list,
 body.slider.index table.list {
 	width: 300px;

@@ -26,6 +26,7 @@ class PaymentsController extends AdminAppController
             case 'member_fee':
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
+            case 'add':
             case 'changeState':
                 return $this->AppAuth->loggedIn();
             default:

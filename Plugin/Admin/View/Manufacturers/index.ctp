@@ -132,27 +132,33 @@ foreach ($manufacturers as $manufacturer) {
     
     echo '<td style="width:130px;">';
     $productCountSum += $manufacturer['product_count'];
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . ' Artikel', array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;Artikel', array(
         'title' => 'Alle Artikel von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
     ), '/admin/products/index/manufacturerId:' . $manufacturer['Manufacturer']['id_manufacturer']);
     echo '</td>';
     
-    echo '<td style="width:215px;">';
+    echo '<td>';
         if ($manufacturer['deposit_credit_balance'] != 0) {
-            echo $this->element('addDepositPaymentOverlay', array(
-                'buttonText' => 'Pfand-Rücknahme',
-                'rowId' => $manufacturer['Manufacturer']['id_manufacturer'],
-                'userName' => $manufacturer['Manufacturer']['name'],
-                'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer']
-            ));
+            
             $depositSaldoClasses = array();
             if ($manufacturer['deposit_credit_balance'] < 0) {
                 $depositSaldoClasses[] = 'negative';
             }
-            echo '<div style="float: right;">';
-                echo 'Kontostand: <span class="'.implode(' ', $depositSaldoClasses).'">' . $this->Html->formatAsEuro($manufacturer['deposit_credit_balance']);
-            echo '</div>';
+            $depositSaldoHtml = '<span class="'.implode(' ', $depositSaldoClasses).'">' . $this->Html->formatAsEuro($manufacturer['deposit_credit_balance']);
+            
+            if ($appAuth->isManufacturer()) {
+                $depositOverviewUrl = $this->Slug->getMyDepositList();
+            } else {
+                $depositOverviewUrl = $this->Slug->getDepositList($manufacturer['Manufacturer']['id_manufacturer']);
+            }
+            echo $this->Html->getJqueryUiIcon('Pfand:&nbsp;' . $depositSaldoHtml, array(
+                    'class' => 'icon-with-text',
+                    'title' => 'Pfandkonto anzeigen'
+                ),
+                $depositOverviewUrl
+            );
+            
         }
     echo '</td>';
     

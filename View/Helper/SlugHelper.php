@@ -37,12 +37,28 @@ class SlugHelper extends Helper {
         return '/hersteller';
     }
     
-    public function getDepositList() {
-        return '/admin/deposits';
+    public function getMyDepositList() {
+        return '/admin/deposits/my_index';
     }
     
-    public function getDepositDetail($monthAndYear) {
-        return '/admin/deposits/detail/'.$monthAndYear;
+    public function getMyDepositDetail($monthAndYear) {
+        return '/admin/deposits/my_detail/'.$monthAndYear;
+    }
+    
+    public function getDepositList($manufacturerId='') {
+        $url = '/admin/deposits/index';
+        if ($manufacturerId != '') {
+            $url .= '/manufacturerId:'.$manufacturerId;
+        }
+        return $url;
+    }
+    
+    public function getDepositDetail($manufacturerId, $monthAndYear) {
+        $url = '/admin/deposits/detail/'.$monthAndYear;
+        if ($manufacturerId != '') {
+            $url .= '/manufacturerId:'.$manufacturerId;
+        }
+        return $url;
     }
     
     public function getCartDetail() {

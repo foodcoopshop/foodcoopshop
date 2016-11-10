@@ -29,6 +29,9 @@ $this->element('addScript', array(
 	</div>
 
 <?php
+
+echo '<br /><p>Für '.Configure::read('timeHelper')->getMonthName($month) . ' ' . $year.'</p>';
+
 echo '<table class="list no-clone-last-row">';
 echo '<tr class="sort">';
     echo '<th>Datum</th>';
@@ -82,7 +85,12 @@ foreach ($payments as $payment) {
 echo '</table>';
 
 echo '<div class="bottom-button-container">';
-    echo '<a class="btn btn-default" href="'.$this->Slug->getDepositList().'"><i class="fa fa-back"></i> Zurück zur Übersicht</a>';
+    if ($appAuth->isManufacturer()) {
+        $depositOverviewUrl = $this->Slug->getMyDepositList();
+    } else {
+        $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
+    }
+    echo '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

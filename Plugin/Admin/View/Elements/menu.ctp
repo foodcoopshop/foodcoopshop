@@ -137,6 +137,17 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'fa-icon' => 'fa-fw fa-tags'
         )
     );
+    
+    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+        $manufacturerMenu['children'][] = array(
+            'slug' => $this->Slug->getDepositList(),
+            'name' => 'Pfandkonto <span class="new">NEU</span>',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-recycle'
+            )
+        );
+    }
+    
     $menu[] = $manufacturerMenu;
     
     $menu[] = array(
@@ -227,8 +238,8 @@ if ($appAuth->isManufacturer()) {
     );
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $menu[] = array(
-            'slug' => $this->Slug->getDepositList(),
-            'name' => 'Pfand <span class="new">NEU</span>',
+            'slug' => $this->Slug->getMyDepositList(),
+            'name' => 'Pfandkonto <span class="new">NEU</span>',
             'options' => array(
                 'fa-icon' => 'fa-fw fa-recycle'
             )

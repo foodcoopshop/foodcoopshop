@@ -17,22 +17,83 @@
 class DepositsController extends AdminAppController
 {
 
+    public $manufacturerId;
+    
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isManufacturer();
+        switch ($this->action) {
+            case 'index':
+            case 'detail':
+                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+                break;
+            case 'my_index':
+            case 'my_detail':
+                return $this->AppAuth->isManufacturer();
+                break;
+            default:
+                return $this->AppAuth->isManufacturer();
+                break;
+        }
+        
     }
 
+    /**
+     * $this->manufacturerId needs to be set in calling method
+     * @return int
+     */
+    private function getManufacturerId()
+    {
+        $manufacturerId = '';
+        if (isset($this->request->named['manufacturerId'])) {
+            $manufacturerId = $this->request->named['manufacturerId'];
+        } if ($this->manufacturerId > 0) {
+            $manufacturerId = $this->manufacturerId;
+        }
+        return $manufacturerId;
+    }
+    
+    public function my_index()
+    {
+        $this->manufacturerId = $this->AppAuth->getManufacturerId();
+        $this->index();
+        $this->render('index');
+    }
+    
+    public function my_detail($monthAndYear)
+    {
+        $this->manufacturerId = $this->AppAuth->getManufacturerId(); 
+        $this->detail($monthAndYear);
+        $this->render('detail');
+    }
+    
     public function index()
     {
-
+        $manufacturerId = $this->getManufacturerId();
+        
+        $this->loadModel('Manufacturer');
+        $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
+        $this->set('manufacturerId', $manufacturerId);
+        
+        if ($manufacturerId == '') {
+            $this->set('title_for_layout', 'Pfandkonto Übersicht');
+            return;    
+        }
+        
+        $manufacturer = $this->Manufacturer->find('first', array(
+            'conditions' => array(
+                'Manufacturer.id_manufacturer' => $manufacturerId
+            )
+        ));
+        $this->set('manufacturer', $manufacturer);
+        
         $this->loadModel('OrderDetail');
         $this->loadModel('CakePayment');
         
         $orderState = Configure::read('htmlHelper')->getOrderStateIdsAsCsv();
         $this->set('orderState', $orderState);
         
-        $depositsDelivered = $this->OrderDetail->getDepositSum($this->AppAuth->getManufacturerId(), true);
-        $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($this->AppAuth->getManufacturerId(), true);
+        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
+        $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
         
         // TODO add year 2020 on 31.12.2019
         $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2019);
@@ -85,7 +146,11 @@ class DepositsController extends AdminAppController
         $this->set('sumDepositsReturned', $sumDepositsReturned);
         $this->set('deposits', $deposits);
         
-        $this->set('title_for_layout', 'Pfand-Übersicht');
+        $title = 'Pfandkonto für ';
+        if ($this->AppAuth->isManufacturer()) {
+            $title .= $manufacturer['Manufacturer']['name'];
+        } 
+        $this->set('title_for_layout', $title);
         
     }
 
@@ -95,8 +160,20 @@ class DepositsController extends AdminAppController
     public function detail($monthAndYear)
     {
         
+        $manufacturerId = $this->getManufacturerId();
+        
+        $this->loadModel('Manufacturer');
+        $this->set('manufacturerId', $manufacturerId);
+        
+        $manufacturer = $this->Manufacturer->find('first', array(
+            'conditions' => array(
+                'Manufacturer.id_manufacturer' => $manufacturerId
+            )
+        ));
+        $this->set('manufacturer', $manufacturer);
+        
         $this->loadModel('CakePayment');
-        $payments = $this->CakePayment->getManufacturerDepositsByMonth($this->AppAuth->getManufacturerId(), $monthAndYear);
+        $payments = $this->CakePayment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
         
         $this->set('payments', $payments);
         
@@ -106,8 +183,9 @@ class DepositsController extends AdminAppController
         $monthAndYearExploded = explode('-', $monthAndYear);
         $year  = $monthAndYearExploded[0];
         $month = $monthAndYearExploded[1];
-        
-        $this->set('title_for_layout', 'Pfand-Rücknahme Detailauflistung für ' . Configure::read('timeHelper')->getMonthName($month) . ' ' . $year);
+        $this->set('month', $month);
+        $this->set('year', $year);
+        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer['Manufacturer']['name']);
         
     }
     
