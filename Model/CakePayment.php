@@ -23,13 +23,15 @@ class CakePayment extends AppModel
         )
     );
     
-    private function getManufacturerDepositConditions($manufacturerId)
+    private function getManufacturerDepositConditions($manufacturerId=null)
     {
         $conditions = array(
             'CakePayment.status' => APP_ON,
             'CakePayment.id_customer' => 0
         );
-        $conditions['CakePayment.id_manufacturer'] = $manufacturerId;
+        if (!is_null($manufacturerId)) {
+            $conditions['CakePayment.id_manufacturer'] = $manufacturerId;
+        }
         $conditions['CakePayment.type'] = 'deposit';
         return $conditions;
     }
@@ -51,6 +53,20 @@ class CakePayment extends AppModel
         ));
         
         return $paymentSum;
+    }
+    
+    /**
+     * @return float
+     */
+    public function getManufacturerDepositSum()
+    {
+        $conditions = $this->getManufacturerDepositConditions();
+        $paymentSum = $this->find('all', array(
+            'fields' => 'SUM(amount) as sumManufacturerDeposit',
+            'conditions' => $conditions,
+            'order' => array('CakePayment.date_add' => 'DESC'),
+        ));
+        return $paymentSum[0][0]['sumManufacturerDeposit'];
     }
     
     /**

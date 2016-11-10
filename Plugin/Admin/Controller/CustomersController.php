@@ -380,7 +380,6 @@ class CustomersController extends AdminAppController
         
         $customers = $this->Paginator->paginate('Customer');
         
-        // TODO mit counter_cache implementieren?
         $i = 0;
         $this->loadModel('CakePayment');
         $this->loadModel('Order');
@@ -458,6 +457,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('customers', $customers);
         
+        $this->set('manufacturerDepositSum',  $this->CakePayment->getManufacturerDepositSum());
         $this->set('title_for_layout', 'Mitglieder');
     }
 }
