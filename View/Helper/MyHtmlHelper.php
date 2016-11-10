@@ -222,7 +222,10 @@ class MyHtmlHelper extends HtmlHelper
 
     function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
     {
-        return $this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText];
+        if (isset($this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText])) {
+            return $this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText];
+        }
+        return $manufacturerDepositPaymentText;
     }
     
     /**

@@ -20,6 +20,9 @@ class CakePayment extends AppModel
     public $belongsTo = array(
         'Customer' => array(
             'foreignKey' => 'id_customer'
+        ),
+        'Manufacturer' => array(
+            'foreignKey' => 'id_manufacturer'
         )
     );
     

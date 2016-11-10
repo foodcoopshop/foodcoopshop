@@ -54,9 +54,6 @@ class ReportsController extends AdminAppController
             $conditions['CakePayment.id_customer'] = $customerId;
         }
         
-        // exclude deposits for manufacturers
-        $conditions['CakePayment.id_manufacturer'] = 0;
-        
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(

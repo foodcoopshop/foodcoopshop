@@ -85,7 +85,12 @@ foreach ($payments as $payment) {
     echo '<tr class="data ' . $rowClass . '">';
     
     echo '<td>';
-    echo $payment['Customer']['name'] . $additionalText;
+        if (!empty($payment['Manufacturer']['name'])) {
+            echo $payment['Manufacturer']['name'];
+        } else {
+            echo $payment['Customer']['name'];
+        }
+        echo $additionalText;
     echo '</td>';
     
     echo '<td style="text-align:right;width:110px;">';
@@ -98,10 +103,15 @@ foreach ($payments as $payment) {
     
     if ($showTextColumn) {
         echo '<td>';
-        if ($paymentType == 'member_fee') {
-            echo $this->Html->getMemberFeeTextForFrontend($payment['CakePayment']['text']);
-        } else {
-            echo $payment['CakePayment']['text'];
+        switch($paymentType) {
+            case 'member_fee':
+                echo $this->Html->getMemberFeeTextForFrontend($payment['CakePayment']['text']);
+                break;
+            case 'deposit':
+                echo $this->Html->getManufacturerDepositPaymentText($payment['CakePayment']['text']);
+                break;
+            default:
+                echo $payment['CakePayment']['text'];
         }
         echo '</td>';
     }
