@@ -139,7 +139,7 @@ class PaymentsController extends AdminAppController
             'status' => APP_ON,
             'type' => $type,
             'id_customer' => $customerId,
-            'id_manufacturer' => $manufacturerId,
+            'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
             'date_add' => date('Y-m-d H:i:s'),
             'date_changed' => date('Y-m-d H:i:s'),
             'amount' => $amount,
