@@ -183,7 +183,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         )
     );
     $homepageAdministrationElement['children'][] = array(
-        'slug' => $this->Slug->getSliderList(),
+        'slug' => $this->Slug->getSlidersList(),
         'name' => 'Slideshow',
         'options' => array(
             'fa-icon' => 'fa-fw fa-image'

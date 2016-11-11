@@ -191,7 +191,7 @@ class SlugHelper extends Helper {
         return '/admin/manufacturers/add';
     }
     
-    public function getSliderList() {
+    public function getSlidersList() {
         return '/admin/sliders';
     }
     public function getSliderEdit($slideId) {
