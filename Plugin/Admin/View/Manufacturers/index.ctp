@@ -139,7 +139,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     
     echo '<td>';
-        if ($manufacturer['deposit_credit_balance'] != 0) {
+        if ($manufacturer['sum_deposit_delivered'] > 0) {
             
             $depositSaldoClasses = array();
             if ($manufacturer['deposit_credit_balance'] < 0) {

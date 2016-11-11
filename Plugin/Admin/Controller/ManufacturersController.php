@@ -286,6 +286,7 @@ class ManufacturersController extends AdminAppController
             $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturer']['id_manufacturer'], false);
             $sumDepositReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
             $i++;
         }
