@@ -141,7 +141,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = array(
             'slug' => $this->Slug->getDepositList(),
-            'name' => 'Pfandkonto <span class="new">NEU</span>',
+            'name' => 'Pfandkonto',
             'options' => array(
                 'fa-icon' => 'fa-fw fa-recycle'
             )
@@ -237,13 +237,17 @@ if ($appAuth->isManufacturer()) {
         )
     );
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
-        $menu[] = array(
-            'slug' => $this->Slug->getMyDepositList(),
-            'name' => 'Pfandkonto <span class="new">NEU</span>',
-            'options' => array(
-                'fa-icon' => 'fa-fw fa-recycle'
-            )
-        );
+        $od = ClassRegistry::init('OrderDetail');
+        $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
+        if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {
+            $menu[] = array(
+                'slug' => $this->Slug->getMyDepositList(),
+                'name' => 'Pfandkonto',
+                'options' => array(
+                    'fa-icon' => 'fa-fw fa-recycle'
+                )
+            );
+        }
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;

@@ -77,6 +77,7 @@ echo '<div class="add-payment-deposit-wrapper">';
         'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer']
     ));
 echo '</div>';
+echo '<div class="sc"></div>';
 
 if (empty($deposits)) {
     echo '<h2 class="warning">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';

@@ -75,7 +75,7 @@ class DepositsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
         
         if ($manufacturerId == '') {
-            $this->set('title_for_layout', 'Pfandkonto Übersicht');
+            $this->set('title_for_layout', 'Pfandkonto');
             return;    
         }
         
