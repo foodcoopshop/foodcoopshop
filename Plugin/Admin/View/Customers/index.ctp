@@ -233,7 +233,7 @@ echo '<tr>';
 echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
-    $sumPaymentsDepositDelta += $manufacturerDepositSum;
+    $sumPaymentsDepositDelta += $manufacturerDepositMoneySum;
     echo '<td>';
     echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsProductDelta) . '</b>';
     if (Configure::read('app.isDepositPaymentCashless')) {

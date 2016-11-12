@@ -61,15 +61,20 @@ class CakePayment extends AppModel
     /**
      * @return float
      */
-    public function getManufacturerDepositSum()
+    public function getManufacturerDepositMoneySum()
     {
+        
         $conditions = $this->getManufacturerDepositConditions();
+        $conditions['CakePayment.text'] = 'money';
+        
         $paymentSum = $this->find('all', array(
-            'fields' => 'SUM(amount) as sumManufacturerDeposit',
+            'fields' => 'SUM(amount) as sumManufacturerMoneyDeposit',
             'conditions' => $conditions,
             'order' => array('CakePayment.date_add' => 'DESC'),
         ));
-        return $paymentSum[0][0]['sumManufacturerDeposit'];
+        
+        return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
+        
     }
     
     /**

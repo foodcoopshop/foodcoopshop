@@ -457,7 +457,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('customers', $customers);
         
-        $this->set('manufacturerDepositSum',  $this->CakePayment->getManufacturerDepositSum());
+        $this->set('manufacturerDepositMoneySum',  $this->CakePayment->getManufacturerDepositMoneySum());
         $this->set('title_for_layout', 'Mitglieder');
     }
 }
