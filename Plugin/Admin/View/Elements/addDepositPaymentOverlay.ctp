@@ -25,18 +25,33 @@ echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPa
 echo '<div id="add-payment-deposit-form-' . $rowId . '" class="add-payment-form add-payment-deposit-form">';
 echo '<h3>Pfand eintragen</h3>';
 echo '<p>Pfand-Betrag für <b>' . $userName . '</b> eintragen:</p>';
+
+if (isset($manufacturerId)) {
+    
+    if ($appAuth->isAdmin() || $appAuth->isManufacturer()) {
+        echo '<p style="margin-top:10px;">Bitte trage hier den Wert des Leergebindes ein,<br />
+            das vom Hersteller zurückgenommen wird.</p>';
+        echo $this->Form->hidden('CakePayment.text', array(
+            'value' => 'empty_glasses'
+        ));
+    }
+    
+    if ($appAuth->isSuperadmin()) {
+        echo '<p style="margin-top:10px;">Hat der Hersteller Leergebinde mitgenommen<br />oder wurde sein Pfandkonto mit Geld ausgeglichen?</p>';
+        foreach($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
+            echo '<div class="radio-wrapper">';
+            echo '<label for="payment-'.$paymentTextKey.'-'.$rowId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$rowId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
+            echo '</div>';
+        }
+    }
+    
+}
+
 echo $this->Form->input('CakePayment.amount', array(
     'label' => 'Betrag in €',
     'type' => 'string'
 ));
-if (isset($manufacturerId)) {
-    echo '<p style="margin-top:10px;">Hat der Hersteller Leergebinde mitgenommen<br />oder wurde ihm Geld überwiesen?</p>';
-    foreach($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
-        echo '<div class="radio-wrapper">';
-            echo '<label for="payment-'.$paymentTextKey.'-'.$rowId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$rowId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
-        echo '</div>';
-    }
-}
+
 echo $this->Form->hidden('CakePayment.type', array(
     'value' => 'deposit'
 ));

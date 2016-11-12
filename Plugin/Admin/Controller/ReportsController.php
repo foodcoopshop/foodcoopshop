@@ -54,6 +54,9 @@ class ReportsController extends AdminAppController
             $conditions['CakePayment.id_customer'] = $customerId;
         }
         
+        // exluce "empty_glasses" deposit payments for manufacturers
+        $conditions[] = "((CakePayment.id_manufacturer > 0 && CakePayment.text = 'money') || CakePayment.id_manufacturer = 0)";
+        
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
@@ -62,7 +65,6 @@ class ReportsController extends AdminAppController
         ), $this->Paginator->settings);
         
         $payments = $this->Paginator->paginate('CakePayment');
-        
         $this->set('payments', $payments);
         
         $this->set('customersForDropdown', $this->CakePayment->Customer->getForDropdown());

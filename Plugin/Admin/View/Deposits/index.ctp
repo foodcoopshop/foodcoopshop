@@ -54,13 +54,14 @@ $this->element('addScript', array(
         <?php echo $this->element('shopdienstInfo'); ?>
         <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturer']['name']; ?></b> verwaltet.</li>
         <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
-        <li><b>Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
-        <li><b>Pfand zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
+        <li><b>Produkt mit Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
+        <li><b>Leergebinde zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
         <li>Ein Klick auf <b>Details</b> zeigt die genau Zusammensetzung des monatlichen Betrages an.</li>
-        <?php if ($appAuth->isManufacturer()) { ?>
-        	<li>Falls du Leergebinde vom Abhollager mitnimmst, 
-        <?php } else { ?>
-        	<li>Falls du dem Hersteller Pfand-Geld überweist, oder er Leergebinde mitnimmt, 
+        <?php if ($appAuth->isManufacturer() || $appAuth->isAdmin()) { ?>
+        	<li>Falls der Hersteller Leergebinde vom Abhollager mitnimmt, 
+        <?php } ?>
+        <?php if ($appAuth->isSuperadmin()) { ?>
+        	<li>Falls du dem Hersteller das Pfandkonto mit Geld ausgleichst, oder er Leergebinde mitnimmt, 
         <?php } ?>
         	kannst du hier eine neue Pfand-Rücknahme eintragen.</li>
     </ul>
@@ -70,8 +71,14 @@ $this->element('addScript', array(
 
 
 echo '<div class="add-payment-deposit-wrapper">';
+    if ($appAuth->isManufacturer() || $appAuth->isAdmin()) {
+        $buttonText = 'Leergebinde-Rücknahme eintragen';
+    }
+    if ($appAuth->isSuperadmin()) {
+        $buttonText = 'Pfand-Rücknahme eintragen';
+    }
     echo $this->element('addDepositPaymentOverlay', array(
-        'buttonText' => 'Pfand-Rücknahme eintragen',
+        'buttonText' => $buttonText,
         'rowId' => $manufacturer['Manufacturer']['id_manufacturer'],
         'userName' => $manufacturer['Manufacturer']['name'],
         'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer']
@@ -87,8 +94,8 @@ if (empty($deposits)) {
     
         echo '<tr class="sort">';
             echo '<th class="right">Monat</th>';
-            echo '<th class="right">Pfand geliefert</th>';
-            echo '<th class="right">Pfand zurückgenommen</th>';
+            echo '<th class="right">Produkt mit Pfand geliefert</th>';
+            echo '<th class="right">Leergebinde zurückgenommen</th>';
         echo '</tr>';
     
         foreach($deposits as $monthAndYear => $deposit) {
