@@ -169,14 +169,20 @@ class CakeActionLog extends AppModel
         'payment_product_deleted' => array(
         	'de' => 'Mitglied: Guthaben gelöscht'
         ),
-        'payment_deposit_added' => array(
-            'de' => 'Mitglied/Hersteller: Pfand-Betrag eingetragen',
+        'payment_deposit_customer_added' => array(
+            'de' => 'Mitglied: Pfand-Betrag eingetragen'
+        ),
+        'payment_deposit_manufacturer_added' => array(
+            'de' => 'Hersteller: Pfand-Rücknahme eingetragen',
             'access' => array(
                 'manufacturer'
             )
         ),
-        'payment_deposit_deleted' => array(
-            'de' => 'Mitglied/Hersteller: Pfand-Betrag gelöscht',
+        'payment_deposit_customer_deleted' => array(
+            'de' => 'Mitglied: Pfand-Betrag gelöscht'
+        ),
+        'payment_deposit_manufacturer_deleted' => array(
+            'de' => 'Hersteller: Pfand-Rücknahme gelöscht',
             'access' => array(
                 'manufacturer'
             )

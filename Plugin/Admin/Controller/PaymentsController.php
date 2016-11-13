@@ -86,6 +86,9 @@ class PaymentsController extends AdminAppController
             $customerId = $this->AppAuth->getUserId();
             $text = implode(',', $this->params['data']['months_range']);
         }
+        
+        $actionLogType = $type;
+        
         if (in_array($type, array(
             'deposit',
             'member_fee_flexible'
@@ -94,6 +97,7 @@ class PaymentsController extends AdminAppController
             // payments to deposits can be added to customers or manufacturers
             $customerId = (int) $this->params['data']['customerId'];
             if ($customerId > 0) {
+                $userType = 'customer';
                 $this->Customer->recursive = - 1;
                 $customer = $this->Customer->find('first', array(
                     'conditions' => array(
@@ -113,6 +117,7 @@ class PaymentsController extends AdminAppController
             
             $manufacturerId = (int) $this->params['data']['manufacturerId'];
             if ($manufacturerId > 0) {
+                $userType = 'manufacturer';
                 $this->Manufacturer->recursive = - 1;
                 $manufacturer = $this->Manufacturer->find('first', array(
                     'conditions' => array(
@@ -131,6 +136,10 @@ class PaymentsController extends AdminAppController
                 }
             }
             
+            if ($type == 'deposit') {
+                $actionLogType .= '_'.$userType;
+            }
+            
         }
 
         // add entry in table cake_payments
@@ -147,32 +156,37 @@ class PaymentsController extends AdminAppController
         ));
 
         $this->loadModel('CakeActionLog');
-
         $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('htmlHelper')->formatAsEuro($amount);
 
         if ($type == 'member_fee') {
             $message .= ', für ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($text);
         }
 
-        $this->CakeActionLog->customSave('payment_' . $type . '_added', $this->AppAuth->getUserId(), $this->CakePayment->getLastInsertId(), 'payments', $message);
+        $this->CakeActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $this->CakePayment->getLastInsertId(), 'payments', $message);
 
-        switch ($type) {
-            case 'deposit':
-                if ($customerId > 0) {
-                    $message .= ' Der Betrag ist im Guthaben-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';
-                }
-                break;
-            case 'member_fee_flexible':
-                $message .= ' Der Betrag ist im Mitgliedsbeitrags-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';
-                break;
+        if (in_array($actionLogType, array('deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'))) {
+            $message .= ' Der Betrag ist ';
+            switch ($actionLogType) {
+                case 'deposit_customer':
+                    $message .= 'im Guthaben-System von ' . $customer['Customer']['name'];
+                    break;
+                case 'deposit_manufacturer':
+                    $message .= 'im Pfandkonto von ' . $manufacturer['Manufacturer']['name'];
+                    break;
+                case 'member_fee_flexible':
+                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer['Customer']['name'];
+                    break;
+            }
+            $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
         }
-
+        
         $this->AppSession->setFlashMessage($message);
 
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
         )));
+        
     }
 
     public function changeState()
@@ -207,7 +221,17 @@ class PaymentsController extends AdminAppController
         $this->loadModel('CakeActionLog');
 
         $message = 'Die Zahlung wurde erfolgreich gelöscht.';
-        $this->CakeActionLog->customSave('payment_' . $payment['CakePayment']['type'] . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
+        
+        $actionLogType = $payment['CakePayment']['type'];
+        if ($payment['CakePayment']['type'] == 'deposit') {
+            $userType = 'customer';
+            if ($payment['CakePayment']['id_manufacturer'] > 0) {
+                $userType = 'manufacturer';
+            }
+            $actionLogType .= '_'.$userType;
+        }
+        
+        $this->CakeActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
         $this->AppSession->setFlashMessage($message);
 
