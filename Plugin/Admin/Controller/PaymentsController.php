@@ -106,7 +106,7 @@ class PaymentsController extends AdminAppController
                 ));
                 $message .= ' für ' . $customer['Customer']['name'];
                 if (empty($customer)) {
-                    $message = 'customer id not correkt: ' . $customerId;
+                    $message = 'customer id not correct: ' . $customerId;
                     $this->log($message);
                     die(json_encode(array(
                         'status' => 0,
@@ -124,10 +124,10 @@ class PaymentsController extends AdminAppController
                         'Manufacturer.id_manufacturer' => $manufacturerId
                     )
                 ));
-                $message = 'Pfand-Rücknahme';
+                $message = 'Pfand-Rücknahme ('.Configure::read('htmlHelper')->getManufacturerDepositPaymentText($text).')';
                 $message .= ' für ' . $manufacturer['Manufacturer']['name'];
                 if (empty($manufacturer)) {
-                    $message = 'manufacturer id not correkt: ' . $manufacturerId;
+                    $message = 'manufacturer id not correct: ' . $manufacturerId;
                     $this->log($message);
                     die(json_encode(array(
                         'status' => 0,
