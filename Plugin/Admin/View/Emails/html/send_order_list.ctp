@@ -34,16 +34,15 @@
 			</p>
 
             <ul style="padding-left: 10px;">
-				<li><b>Neue Produkte erstellen</b> (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
-				<li><b>Ändern des Preises</b> und <b>Stornieren</b> von	bereits bestellten Produkten</li>
-				<li>Änderung von Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner
-					Produkte</li>
-				<li>Hochladen von Bildern</li>
+				<li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
+				<li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
+				<li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
+				<li>Hochladen von Produkt-Fotos</li>
 				<li>Aktivieren bzw. Deaktivieren deiner Produkte</li>
-				<li>Änderung deines Hersteller-Profils</li>
 				<li>Produkte als "neu" markieren</li>
+				<li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
 				<li>Pfandkonto (falls du Pfand verwendest)</li>
-				<li>Änderung deines Passwortes</li>
+				<li>Passwort ändern</li>
 			</ul>
 			
             <?php if (!Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
