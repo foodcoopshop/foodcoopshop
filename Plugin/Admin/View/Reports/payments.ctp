@@ -46,7 +46,10 @@ foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
     if ($pt == $this->params['pass'][0]) {
         $btnClass = 'active';
     }
-    echo '<li class="' . $btnClass . '"><a href="' . $this->Slug->getReport($pt) . '/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '">' . $paymentText . '</a></li>';
+    // show deposit report also for cash configuration
+    if ($this->Html->paymentIsCashless() || in_array($pt, array('deposit', 'member_fee', 'member_fee_flexible'))) {
+        echo '<li class="' . $btnClass . '"><a href="' . $this->Slug->getReport($pt) . '/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '">' . $paymentText . '</a></li>';
+    }
 }
 ?>
 </ul>
