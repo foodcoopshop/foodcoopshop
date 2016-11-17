@@ -925,14 +925,19 @@ body.blog_posts.detail #inner-content > .img-wrapper {
 	float: right;
 }
 body.blog_posts.detail #inner-content,
-body.pages.detail #inner-content {
+body.pages.detail #inner-content,
+body.manufacturers.detail #inner-content {
 	position: relative;
 }
 body.blog_posts ul.jquery-ui-icon,
-body.pages.detail ul.jquery-ui-icon {
-	top: 5px;
-	right: 15px;
+body.pages.detail ul.jquery-ui-icon,
+body.manufacturers.detail ul.jquery-ui-icon {
+	top: -15px;
+	right: 5px;
 	position: absolute;
+}
+ul.jquery-ui-icon li {
+    line-height: 16px ! important;
 }
 body.blog_posts.index ul.jquery-ui-icon {
 	right: 0;
