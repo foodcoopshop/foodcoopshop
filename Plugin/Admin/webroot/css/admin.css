@@ -704,12 +704,15 @@ form.fcs-form .input.checkbox span.after {
 	margin-left: 25px;
 }
 body.configurations.index td.first {
-	vertical-align:top;
-	width:450px;
+	vertical-align: top;
+	width: 450px;
 	font-weight: bold;
 }
 body.configurations.index td.first div.small {
 	font-weight: normal;
+	line-height: 15px;
+	float: left;
+	padding-bottom: 4px;
 }
 body.configurations.edit form.fcs-form label {
 	width: 100%;
@@ -736,7 +739,8 @@ form.fcs-form .short.input input {
     margin-right: 5px;
 }
 form.fcs-form .small {
-	line-height: 17px;
+	line-height: 15px;
+	float: left;
 }
 .bootstrap-select span.filter-option i.fa {
 	position: absolute;

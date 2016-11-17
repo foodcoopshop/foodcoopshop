@@ -159,7 +159,7 @@ echo $this->Form->input('Manufacturer.bic', array(
 ));
 echo '<div class="sc"></div>';
 
-echo '<h2>Rechnungsdaten <span>werden zum Erstellen deiner Rechnungen verwendet</span></h2>';
+echo '<h2>Firmendaten <span>werden für das Impressum und zum Erstellen deiner Rechnungen verwendet</span></h2>';
 echo $this->Form->input('Address.firstname', array(
     'label' => 'Vorname',
     'required' => true
