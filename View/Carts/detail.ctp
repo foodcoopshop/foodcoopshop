@@ -37,8 +37,16 @@ $this->element('addScript', array('script' =>
         }
     ?>
     
-    <p style="margin-top: 40px;">Um die Bestellung abzuschließen, klicke bitte auf "Jetzt bestellen".</p>
+    <p style="margin-top: 40px;">Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen".</p>
     
-	<p><a class="btn btn-success" href="<?php echo $this->Slug->getCartFinish(); ?>"><i class="fa fa-check fa-lg"></i> Jetzt bestellen</a></p>	
+    <?php
+        if ($this->Html->paymentIsCashless()) {
+            echo '<p>Der Betrag wird automatisch von deinem Guthaben abgebucht.</p>';
+        } else {
+            echo '<p>Der Betrag bitte bei der Abholung in bar bezahlen.</p>';
+        }
+    ?>
+    
+	<p><a class="btn btn-success" href="<?php echo $this->Slug->getCartFinish(); ?>"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</a></p>	
         
 </div>
