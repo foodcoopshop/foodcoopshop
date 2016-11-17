@@ -523,11 +523,8 @@ body.manufacturers.detail img.manufacturer-logo {
 	padding: 20px;
 	text-align: center;
 }
-#footer #facebook-wrapper iframe {
-	border: 1px solid #fff ! important;
-}
 #footer #facebook-wrapper {
-	clear: both;
+	float: right;
 	margin-top: 10px;
 }
 #footer .fcs-backlink {
