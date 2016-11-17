@@ -29,9 +29,14 @@
 	   $email = array_pop($address); // remove last element
 	   echo implode(', ', $address);
 	?></span></p>
-	<p><?php
-	   echo '<i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hide_email($email).'</span>';
-	?></p>
+	<?php
+	   echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hide_email($email).'</span></p>';
+	   if (Configure::read('app.db_config_FCS_FACEBOOK_URL') != '') { ?>
+    	<p>
+    		<a target="_blank" href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>
+    		<a target="_blank" href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?></a>
+    	</p>
+	<?php } ?>
 </div>
 
 <?php
@@ -49,23 +54,6 @@
         }
     }
 ?>
-
-<?php if (Configure::read('app.db_config_FCS_FACEBOOK_URL') != '') { ?>
-    
-    <div id="facebook-wrapper">
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.6";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-        
-        <div class="fb-page" data-href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>" data-small-header="false" data-width="500" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><a href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><?php echo Configure::read('app.name'); ?></a></blockquote></div></div>
-	</div>
-
-<?php } ?>
 
 <?php if (Configure::read('app.db_config_FCS_SHOW_FOODCOOPSHOP_BACKLINK')) { ?>
 	<a class="fcs-backlink" target="_blank" href="https://www.foodcoopshop.com">&copy; <?php echo date('Y'); ?> foodcoopshop.com</a>
