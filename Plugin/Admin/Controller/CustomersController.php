@@ -187,10 +187,10 @@ class CustomersController extends AdminAppController
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Customer'] as &$data) {
-                $data = strip_tags($data);
+                $data = strip_tags(trim($data));
             }
             foreach ($this->request->data['AddressCustomer'] as &$data) {
-                $data = strip_tags($data);
+                $data = strip_tags(trim($data));
             }
             
             $this->Customer->AddressCustomer->id = $unsavedCustomer['AddressCustomer']['id_address'];
@@ -198,6 +198,7 @@ class CustomersController extends AdminAppController
             $this->request->data['AddressCustomer']['firstname'] = $this->request->data['Customer']['firstname'];
             $this->request->data['AddressCustomer']['lastname'] = $this->request->data['Customer']['lastname'];
             $this->request->data['AddressCustomer']['email'] = $this->request->data['Customer']['email'];
+            
             $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
             
             $errors = array();
@@ -379,7 +380,6 @@ class CustomersController extends AdminAppController
         
         $customers = $this->Paginator->paginate('Customer');
         
-        // TODO mit counter_cache implementieren?
         $i = 0;
         $this->loadModel('CakePayment');
         $this->loadModel('Order');
@@ -457,6 +457,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('customers', $customers);
         
+        $this->set('manufacturerDepositMoneySum',  $this->CakePayment->getManufacturerDepositMoneySum());
         $this->set('title_for_layout', 'Mitglieder');
     }
 }

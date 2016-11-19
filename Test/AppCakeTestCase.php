@@ -8,6 +8,7 @@ App::uses('AppSimpleBrowser', 'Lib/SimpleBrowser');
 App::uses('SlugHelper', 'View/Helper');
 App::uses('MyHtmlHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
+App::uses('Configuration', 'Model');
 
 /**
  * AppCakeTestCase
@@ -52,6 +53,8 @@ class AppCakeTestCase extends CakeTestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Customer = new Customer();
+        $this->Configuration = new Configuration();
+        $this->Configuration->loadConfigurations();
     }
 
     protected static function initTestDatabase()
@@ -85,7 +88,7 @@ class AppCakeTestCase extends CakeTestCase
     protected function assertJsonAccessRestricted()
     {
         $response = $this->browser->getJsonDecodedContent();
-        $this->assertRegExp('/' . preg_quote('Du bist nicht angemeldet.') . '/', $response->msg, 'login check does not work');
+        $this->assertRegExpWithUnquotedString('Du bist nicht angemeldet.', $response->msg, 'login check does not work');
     }
 
     protected function assertJsonOk()
@@ -93,6 +96,42 @@ class AppCakeTestCase extends CakeTestCase
         $response = $this->browser->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1"');
     }
+    
+    protected function assertRegExpWithUnquotedString($unquotetString, $response, $msg='')
+    {
+        $this->assertRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
+    }
+    
+    protected function assertUrl($url, $expectedUrl, $msg='') {
+        $this->assertEquals($this->browser->baseUrl . $expectedUrl, $url, $msg);
+    }
+    
+    /**
+     * needs to login as superadmin and logs user out automatically
+     * eventually create a new browser instance for this method
+     * 
+     * @param string $configKey
+     * @param string $newValue
+     */
+    protected function changeConfiguration($configKey, $newValue) {
+        $this->browser->doFoodCoopShopLogin();
+        $configuration = $this->Configuration->find('first', array(
+            'conditions' => array(
+                'Configuration.active' => APP_ON,
+                'Configuration.name' => $configKey
+            )
+        ));
+        $this->browser->post('/admin/configurations/edit/'.$configuration['Configuration']['id_configuration'], array(
+            'Configuration' => array(
+                'value' => $newValue
+            ),
+            'referer' => ''
+        ));
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent(), 'configuration edit failed');
+        $this->Configuration->loadConfigurations();
+        $this->browser->doFoodCoopShopLogout();
+    }
+    
 }
 
 ?>

@@ -17,7 +17,7 @@ $helpText = '<li><b>Hallo ' . $appAuth->getUserFirstname() . '!</b></li>
         <li>Um deinen Mitgliedsbeitrag einzuzahlen, überweise bitte mittels E-Banking oder per Erlagschein den gewünschten Betrag auf folgendes Konto:</li>
         <li><b>' . Configure::read('app.db_config_FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') . '</b></li>
         <li>Bitte gib als Buchungstext "Mitgliedsbeitrag", deinen Namen und den Zeitraum an, für den dein Mitgliedsbeitrag gedacht ist.</li>
-        <li>Klicke dann auf ' . $this->Html->image('/js/vendor/famfamfam-silk/dist/png/heart.png') . ' "Eingezahlten Mitgliedsbeitrag eintragen" und gib folgendes ein:
+        <li>Klicke dann auf ' . $this->Html->image($this->Html->getFamFamFamPath('heart.png')) .' "Eingezahlten Mitgliedsbeitrag eintragen" und gib folgendes ein:
             <br />- den Betrag, den du gerade überwiesen hast
             <br />- den Zeitraum, für den die Zahlung gelten soll</li>
     ';
@@ -71,7 +71,7 @@ if (count($payments) == 0) {
         echo '</td>';
         
         echo '<td style="text-align:center;">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'delete-payment-button',
             'title' => 'Aufladung löschen?'
         ), 'javascript:void(0);');

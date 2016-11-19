@@ -2074,13 +2074,25 @@ foodcoopshop.Admin = {
         }
 
         var type = $('.featherlight-content #CakePaymentType').val();
-        var customerId = $('.featherlight-content #CakePaymentCustomerId').val();
+        var customerIdDomElement = $('.featherlight-content #CakePaymentCustomerId');
+        var manufacturerIdDomElement = $('.featherlight-content #CakePaymentManufacturerId');
 
         var text = '';
         if ($('.featherlight-content #CakePaymentText').length > 0) {
             text = $('.featherlight-content #CakePaymentText').val().trim();
         }
 
+        // radio buttons only if deposit is added to manufacurers
+        if ($('.featherlight-content input[type="radio"]').length > 0) {
+        	var selectedRadioButton = $('.featherlight-content input[name=payment_text]:checked');
+        	if (selectedRadioButton.length == 0) {
+                alert('Bitte wähle die Art der Pfand-Rücknahme aus.');
+                foodcoopshop.AppFeatherlight.enableSaveButton();
+                return;
+        	}
+        	text = $('.featherlight-content input[name=payment_text]:checked').val();
+        }
+        
         var months_range = [];
         if ($('.featherlight-content input[type="checkbox"]').length > 0) {
             $('.featherlight-content input[type="checkbox"]:checked').each(
@@ -2100,7 +2112,8 @@ foodcoopshop.Admin = {
             type: type,
             text: text,
             months_range: months_range,
-            customerId: customerId
+            customerId: customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0,
+            manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0
         }, {
             onOk: function(data) {
                 document.location.reload();
@@ -2178,8 +2191,8 @@ foodcoopshop.Admin = {
                                                 onError: function(
                                                     data) {
                                                     alert(data.msg);
-                                                    document.location
-                                                        .reload();
+//                                                    document.location
+//                                                        .reload();
                                                 }
                                             });
 

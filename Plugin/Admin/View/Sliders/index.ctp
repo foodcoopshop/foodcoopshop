@@ -68,7 +68,7 @@ foreach ($sliders as $slider) {
     echo '<tr id="slider-' . $slider['Slider']['id_homeslider_slides'] . '" class="' . implode(' ', $rowClass) . '">';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getSliderEdit($slider['Slider']['id_homeslider_slides']));
     echo '</td>';
@@ -87,9 +87,9 @@ foreach ($sliders as $slider) {
     
     echo '<td align="center">';
     if ($slider['Slider']['active'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
     

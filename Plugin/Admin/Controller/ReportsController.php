@@ -19,6 +19,14 @@ class ReportsController extends AdminAppController
 
     public function isAuthorized($user)
     {
+        if (isset($this->params['pass'][0])) {
+            switch($this->params['pass'][0]) {
+                // allow deposit for cash configuration
+                case 'deposit':
+                    return $this->AppAuth->isSuperadmin();
+                    break;
+            }
+        }
         return $this->AppAuth->isSuperadmin() && Configure::read('htmlHelper')->paymentIsCashless();
     }
 
@@ -54,6 +62,9 @@ class ReportsController extends AdminAppController
             $conditions['CakePayment.id_customer'] = $customerId;
         }
         
+        // exluce "empty_glasses" deposit payments for manufacturers
+        $conditions[] = "((CakePayment.id_manufacturer > 0 && CakePayment.text = 'money') || CakePayment.id_manufacturer = 0)";
+        
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
@@ -62,7 +73,6 @@ class ReportsController extends AdminAppController
         ), $this->Paginator->settings);
         
         $payments = $this->Paginator->paginate('CakePayment');
-        
         $this->set('payments', $payments);
         
         $this->set('customersForDropdown', $this->CakePayment->Customer->getForDropdown());

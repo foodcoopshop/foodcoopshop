@@ -64,7 +64,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->browser->doFoodCoopShopLogin();
         $response = $this->addProduct(8787, 2);
-        $this->assertRegExp('/' . preg_quote('Das Produkt mit der ID 8787 ist nicht vorhanden.') . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 8787 ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -72,7 +72,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->browser->doFoodCoopShopLogin();
         $response = $this->addProduct('test', 2);
-        $this->assertRegExp('/' . preg_quote('Das Produkt mit der ID test ist nicht vorhanden.') . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -80,7 +80,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->browser->doFoodCoopShopLogin();
         $response = $this->addProduct($this->productId1, 100);
-        $this->assertRegExp('/' . preg_quote('Die gewünschte Anzahl "100" ist nicht gültig.') . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -94,7 +94,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(array(), $cakeCart['CakeCartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $this->assertRegExp('/' . preg_quote('Produkt 346 war nicht in Warenkorb vorhanden.') . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -198,7 +198,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'Order.id_order' => $orderId
             )
         ));
-        $this->assertNotEqual(array(), $order, 'order not correct');
+        $this->assertNotEquals(array(), $order, 'order not correct');
         $this->assertEquals($order['Order']['id_order'], $orderId, 'order id not correct');
         $this->assertEquals($order['Order']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
         $this->assertEquals($order['Order']['id_cake_cart'], 1, 'order cake_id not correct');
@@ -233,7 +233,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->browser->doFoodCoopShopLogin();
         $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.shopOrderTestUser')['email']);
         $this->assertRegExp('/Diese Bestellung wird für \<b\>' . Configure::read('test.shopOrderTestUser')['name'] . '\<\/b\> getätigt./', $responseHtml);
-        $this->assertEquals($this->browser->baseUrl . '/', $this->browser->getUrl(), 'redirect did not work');
+        $this->assertUrl($this->browser->getUrl(), '/', 'redirect did not work');
     }
 
     /**
@@ -284,7 +284,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->addProduct($productId, $amount);
         $response = $this->browser->getJsonDecodedContent();
-        $this->assertRegExp('/' . preg_quote($expectedErrorMessage) . '/', $response->msg);
+        $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
         $this->assertJsonError();
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());

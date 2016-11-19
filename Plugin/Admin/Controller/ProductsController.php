@@ -23,7 +23,7 @@ class ProductsController extends AdminAppController
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
+                return $this->AppAuth->loggedIn();
                 break;
             default:
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {

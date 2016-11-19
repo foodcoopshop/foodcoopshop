@@ -75,7 +75,7 @@ class CustomersController extends FrontendController
     {
         $this->set('title_for_layout', 'Anmelden');
         
-        if (! $this->request->is('post') && $this->here == '/registrierung') {
+        if (! $this->request->is('post') && $this->here == Configure::read('slugHelper')->getRegistration()) {
             $this->redirect(Configure::read('slugHelper')->getLogin());
         }
         
@@ -110,7 +110,7 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        if ($this->here == '/registrierung') {
+        if ($this->here == Configure::read('slugHelper')->getRegistration()) {
             
             if ($this->AppAuth->loggedIn()) {
                 $this->AppSession->setFlashError('Du bist bereits angemeldet.');
@@ -120,10 +120,10 @@ class CustomersController extends FrontendController
             // prevent spam
             // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
             if ($this->request->data['antiSpam'] == 'lalala' || $this->request->data['antiSpam'] < 3) {
-                $this->AppSession->setFlashError('Spam');
+                $this->AppSession->setFlashError('S-p-a-m-!');
                 $this->redirect(Configure::read('slugHelper')->getLogin());
             }
-            
+
             if (! empty($this->request->data)) {
                 
                 // validate data - do not use $this->Customer->saveAll()
@@ -131,10 +131,10 @@ class CustomersController extends FrontendController
                 
                 // quick and dirty solution for stripping html tags, use html purifier here
                 foreach ($this->request->data['Customer'] as &$data) {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
                 foreach ($this->request->data['AddressCustomer'] as &$data) {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
                 
                 // create email, firstname and lastname in adress record

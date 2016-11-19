@@ -20,7 +20,7 @@ App::uses('AppCakeTestCase', 'Test');
 class PagesControllerTest extends AppCakeTestCase
 {
 
-    public function testAllLoggedOutUrls()
+    public function testAllPublicUrls()
     {
         $testUrls = array(
             $this->Slug->getHome(),
@@ -32,7 +32,8 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getProductDetail(339, 'Kartoffel'),
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
-            $this->Slug->getPageDetail(9, 'Impressum')
+            $this->Slug->getPageDetail(9, 'Impressum'),
+            $this->Slug->getLogin()
         );
         
         foreach ($testUrls as $url) {
@@ -42,6 +43,52 @@ class PagesControllerTest extends AppCakeTestCase
                 echo $this->browser->getContent();
             }
         }
+    }
+    
+    public function testAllSuperadminUrls()
+    {
+        $this->browser->doFoodCoopShopLogin();
+        
+        $testUrls = array(
+            $this->Slug->getCartDetail(),
+            $this->Slug->getPagesListAdmin(),
+            $this->Slug->getPageAdd(),
+            $this->Slug->getPageEdit(3),
+            $this->Slug->getDepositList(4),
+            $this->Slug->getDepositDetail(4, '2016-11'),
+            $this->Slug->getCreditBalance(),
+            $this->Slug->getChangePassword(),
+            $this->Slug->getCustomerProfile(),
+            $this->Slug->getReport('product'),
+            $this->Slug->getReport('deposit'),
+            $this->Slug->getBlogPostListAdmin(),
+            $this->Slug->getBlogPostAdd(),
+            $this->Slug->getBlogPostEdit(2),
+            $this->Slug->getAttributesList(),
+            $this->Slug->getAttributeAdd(),
+            $this->Slug->getAttributeEdit(32),
+            $this->Slug->getCategoriesList(),
+            $this->Slug->getCategoryAdd(),
+            $this->Slug->getCategoryEdit(17),
+            $this->Slug->getTaxesList(),
+            $this->Slug->getTaxAdd(),
+            $this->Slug->getTaxEdit(2),
+            $this->Slug->getSlidersList(),
+            $this->Slug->getSliderAdd(),
+            $this->Slug->getSliderEdit(6),
+            $this->Slug->getConfigurationsList(),
+            $this->Slug->getConfigurationEdit(544)
+        );
+    
+        foreach ($testUrls as $url) {
+            $this->browser->get($url);
+            if ($this->hasPageErrors()) {
+                echo '<a href="' . $url . '">' . $url . '</a><br />';
+                echo $this->browser->getContent();
+            }
+        }
+        
+        $this->browser->doFoodCoopShopLogout();
     }
 
     public function test404Pages()

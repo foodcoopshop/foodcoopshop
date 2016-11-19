@@ -54,8 +54,39 @@ class OrderDetail extends AppModel
         $condition = 'Order.current_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
+    
+    /**
+     * @param int $manufacturerId
+     * @param boolean $groupByMonth
+     * @return array
+     */
+    public function getDepositSum($manufacturerId, $groupByMonth) {
+        
+        $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
+        if ($groupByMonth) {
+            $sql .= ', DATE_FORMAT(o.date_add, \'%Y-%c\') as monthAndYear ';
+        }
+        $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
+        $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
+        $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
+        $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
+        
+        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
+        
+        if ($groupByMonth) {
+            $sql .= 'GROUP BY monthAndYear ';
+        }
+        $sql .= 'ORDER BY o.date_add DESC ';
+        $params = array(
+            'manufacturerId' => $manufacturerId,
+            'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate')
+        );
+        $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
+        return $orderDetails;
+        
+    }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $reference)
+    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $reference, $deposit)
     {
         $conditions = array();
         
@@ -81,6 +112,10 @@ class OrderDetail extends AppModel
         
         if ($reference != '') {
             $conditions['Order.reference'] = $reference;
+        }
+        
+        if ($deposit != '') {
+            $conditions[] = 'OrderDetail.deposit > 0';
         }
         
         $contain = array(

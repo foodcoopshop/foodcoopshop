@@ -107,20 +107,20 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post']));
     echo '</td>';
     
     echo '<td align="center">';
     if ($blogPost['BlogPost']['is_featured'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td align="center">';
     if ($blogPost['BlogPost']['is_private'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
@@ -150,15 +150,15 @@ foreach ($blogPosts as $blogPost) {
     
     echo '<td align="center">';
     if ($blogPost['BlogPost']['active'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
     
     echo '<td>';
     if ($blogPost['BlogPost']['active']) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Blog-Artikel anzeigen',
             'target' => '_blank'
         ), $this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_smart_blog_post'], $blogPost['BlogPostLang']['meta_title']));

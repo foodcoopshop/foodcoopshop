@@ -34,11 +34,11 @@ class ListsController extends AdminAppController
         $path = realpath(Configure::read('app.folder.order_lists'));
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
         
-        $date = date('d.m.Y', Configure::read('timeHelper')->getDeliveryDay());
-        if (! empty($this->params['named']['date'])) {
-            $date = $this->params['named']['date'];
+        $dateFrom = date('d.m.Y', Configure::read('timeHelper')->getDeliveryDay());
+        if (! empty($this->params['named']['dateFrom'])) {
+            $dateFrom = $this->params['named']['dateFrom'];
         }
-        $this->set('date', $date);
+        $this->set('dateFrom', $dateFrom);
         
         $files = array();
         
@@ -52,7 +52,7 @@ class ListsController extends AdminAppController
                 $deliveryDate = substr($object->getFileName(), 0, 10);
                 
                 // date check
-                if (! (strtotime($date) == strtotime($deliveryDate))) {
+                if (! (strtotime($dateFrom) == strtotime($deliveryDate))) {
                     continue;
                 }
                 
@@ -84,7 +84,7 @@ class ListsController extends AdminAppController
             }
         }
         
-        $files = Set::sort($files, '{n}.date', 'DESC');
+        $files = Set::sort($files, '{n}.delivery_date', 'DESC');
         $this->set('files', $files);
         
         $this->set('title_for_layout', 'Bestelllisten');

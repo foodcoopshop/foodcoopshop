@@ -69,7 +69,7 @@ $this->element('addScript', array(
             
             echo '<td style="width:30px;">';
             
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'title' => 'Einstellung bearbeiten',
                 'class' => 'edit-configuration-button'
             ), $this->Slug->getConfigurationEdit($configuration['Configuration']['id_configuration'], $configuration['Configuration']['name']));
@@ -247,6 +247,11 @@ $this->element('addScript', array(
 		</tr>
 		<?php } ?>
 		
+        <tr>
+			<td>app.depositForManufacturersStartDate</td>
+			<td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
+		</tr>
+
         <tr>
 			<td>app.customerMainNamePart</td>
 			<td><?php echo Configure::read('app.customerMainNamePart'); ?></td>

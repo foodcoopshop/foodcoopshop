@@ -101,7 +101,7 @@ class ManufacturersController extends AdminAppController
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Manufacturer'] as &$data) {
-                $data = strip_tags($data);
+                $data = strip_tags(trim($data));
             }
             
             foreach ($this->request->data['ManufacturerLang'] as $key => &$data) {
@@ -109,12 +109,15 @@ class ManufacturersController extends AdminAppController
                     'description',
                     'short_description'
                 ))) {
-                    $data = strip_tags($data);
+                    $data = strip_tags(trim($data));
                 }
             }
             
-            $errors = array();
+            foreach ($this->request->data['Address'] as &$data) {
+                $data = strip_tags(trim($data));
+            }
             
+            $errors = array();
             if (! $this->Manufacturer->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->validationErrors);
             }
@@ -275,10 +278,17 @@ class ManufacturersController extends AdminAppController
         $manufacturers = $this->Paginator->paginate('Manufacturer');
         
         $this->loadModel('Product');
+        $this->loadModel('CakePayment');
+        $this->loadModel('OrderDetail');
+        
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
             $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
-            $i ++;
+            $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $sumDepositReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
+            $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
+            $i++;
         }
         $this->set('manufacturers', $manufacturers);
         
@@ -660,9 +670,9 @@ attachments(array(
             $sumTax += $result['odt']['MWSt'];
             $sumAmount += $result['od']['Menge'];
         }
-        $this->set('sumPriceExcl', number_format($sumPriceExcl, 2, ',', '.'));
-        $this->set('sumTax', number_format($sumTax, 2, ',', '.'));
-        $this->set('sumPriceIncl', number_format($sumPriceIncl, 2, ',', '.'));
+        $this->set('sumPriceExcl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceExcl));
+        $this->set('sumTax', Configure::read('htmlHelper')->formatAsDecimal($sumTax));
+        $this->set('sumPriceIncl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceIncl));
         $this->set('sumAmount', $sumAmount);
         
         $this->set('compensationPercentage', $this->getCompensationPercentage($manufacturerId));

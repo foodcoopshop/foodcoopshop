@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Okt 2016 um 16:30
+-- Erstellungszeit: 07. Nov 2016 um 16:42
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -60,7 +60,7 @@ INSERT INTO `fcs_address` (`id_address`, `id_country`, `id_state`, `id_customer`
 (177, 2, 0, 0, 15, 0, 0, 'manufacturer', '', 'Milch-Hersteller', 'Demo', 'Demostraße 4', '', '4644', 'Scharnstein', '{"compensationPercentage":0,"sendInvoice":"1","sendOrderList":"1","defaultTaxId":4,"sendOrderListCc":"test@test.at","bulkOrdersAllowed":"0"}', '', '', 'fcs-demo-milch-hersteller@mailinator.com', '', '', '2014-06-04 21:46:38', '2015-10-16 10:06:52', 1, 0),
 (180, 2, 0, 0, 5, 0, 0, 'manufacturer', '', 'Gemüse-Hersteller', 'Demo', 'Demostraße 4', '', '4644', 'Scharnstein', '{"compensationPercentage":10,"sendInvoice":"1","sendOrderList":"1","defaultTaxId":1,"sendOrderListCc":"","bulkOrdersAllowed":"0"}', '', '', 'fcs-demo-gemuese-hersteller@mailinator.com', '', '', '2014-05-14 21:20:05', '2015-12-30 00:54:35', 1, 0),
 (181, 2, 0, 0, 16, 0, 0, 'manufacturer', '', 'Hersteller ohne Customer-Eintrag', 'Demo', 'Demostraße 4', '', '4644', 'Scharnstein', '{"compensationPercentage":10,"sendInvoice":"1","sendOrderList":"1","defaultTaxId":1,"sendOrderListCc":"","bulkOrdersAllowed":"0"}', '', '', 'fcs-hersteller-ohne-customer-eintrag@mailinator.com', '', '', '2014-05-14 21:20:05', '2015-12-30 00:54:35', 1, 0),
-(182, 2, NULL, 92, 0, 0, 0, '', NULL, 'Superadmin', 'Demo', 'Demostraße 4', '', '4644', 'Demostadt', NULL, '', '0600/000000', 'fcs-demo-superadmin@mailinator.com', NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0);
+(182, 2, NULL, 92, 0, 0, 0, '', NULL, 'Superadmin', 'Demo', 'Demostraße 4', '', '4644', 'Demostadt', NULL, '', '0600/000000', 'fcs-demo-superadmin@mailinator.com', NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -326,6 +326,7 @@ DROP TABLE IF EXISTS `fcs_cake_payments`;
 CREATE TABLE `fcs_cake_payments` (
   `id` int(10) NOT NULL,
   `id_customer` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `id_manufacturer` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `type` varchar(20) NOT NULL DEFAULT 'product',
   `amount` decimal(10,2) NOT NULL,
   `text` varchar(255) NOT NULL,
@@ -892,7 +893,7 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (545, NULL, NULL, 1, 'FCS_ACCOUNTING_EMAIL', 'E-Mail-Adresse des Finanzverantwortlichen<br /><div class="small">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>', '', 'text', 110, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (546, NULL, NULL, 1, 'FCS_AUTHENTICATION_INFO_TEXT', 'Info-Text beim Registrierungsformular<br /><div class="small">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>', 'Um bei uns zu bestellen musst du Vereinsmitglied sein.', 'textarea', 160, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (547, NULL, NULL, 1, 'FCS_SHOW_PRODUCTS_FOR_GUESTS', 'Produkte für nicht eingeloggte Mitglieder sichtbar?', '1', 'boolean', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(548, NULL, NULL, 1, 'FCS_DEFAULT_NEW_MEMBER_ACTIVE', 'Neue Mitglieder automatisch aktivieren?', '0', 'boolean', 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(548, NULL, NULL, 1, 'FCS_DEFAULT_NEW_MEMBER_ACTIVE', 'Neue Mitglieder automatisch aktivieren?', '1', 'boolean', 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (549, NULL, NULL, 1, 'FCS_MINIMAL_CREDIT_BALANCE', 'Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class="small">Z.B.: "100" für 100 € im Minus. 0 bedeutet "kein Bestell-Limit".</div>', '100', 'number', 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (550, NULL, NULL, 1, 'FCS_BANK_ACCOUNT_DATA', 'Bankverbindung für die Guthaben-Einzahlungen".', 'Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 130, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (551, NULL, NULL, 1, 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA', 'Bankverbindung für die Mitgliedsbeitrags-Einzahlungen".', 'MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 140, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

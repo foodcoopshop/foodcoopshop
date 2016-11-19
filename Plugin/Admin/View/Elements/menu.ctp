@@ -137,6 +137,17 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'fa-icon' => 'fa-fw fa-tags'
         )
     );
+    
+    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+        $manufacturerMenu['children'][] = array(
+            'slug' => $this->Slug->getDepositList(),
+            'name' => 'Pfandkonto',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-recycle'
+            )
+        );
+    }
+    
     $menu[] = $manufacturerMenu;
     
     $menu[] = array(
@@ -172,7 +183,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         )
     );
     $homepageAdministrationElement['children'][] = array(
-        'slug' => $this->Slug->getSliderList(),
+        'slug' => $this->Slug->getSlidersList(),
         'name' => 'Slideshow',
         'options' => array(
             'fa-icon' => 'fa-fw fa-image'
@@ -187,15 +198,18 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 'fa-icon' => 'fa-fw fa-percent'
             )
         );
-        if ($this->Html->paymentIsCashless()) {
-            $homepageAdministrationElement['children'][] = array(
-                'slug' => $this->Slug->getReport('product'),
-                'name' => 'Finanzberichte',
-                'options' => array(
-                    'fa-icon' => 'fa-fw fa-money'
-                )
-            );
+        // show deposit report also for cash configuration
+        $reportSlug = $this->Slug->getReport('product');
+        if (!$this->Html->paymentIsCashless()) {
+            $reportSlug = $this->Slug->getReport('deposit');
         }
+        $homepageAdministrationElement['children'][] = array(
+            'slug' => $reportSlug,
+            'name' => 'Finanzberichte',
+            'options' => array(
+                'fa-icon' => 'fa-fw fa-money'
+            )
+        );
         $homepageAdministrationElement['children'][] = array(
             'slug' => $this->Slug->getConfigurationsList(),
             'name' => 'Einstellungen',
@@ -225,6 +239,19 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-home'
         )
     );
+    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+        $od = ClassRegistry::init('OrderDetail');
+        $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
+        if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {
+            $menu[] = array(
+                'slug' => $this->Slug->getMyDepositList(),
+                'name' => 'Pfandkonto',
+                'options' => array(
+                    'fa-icon' => 'fa-fw fa-recycle'
+                )
+            );
+        }
+    }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
     $menu[] = $blogPostsMenuElement;

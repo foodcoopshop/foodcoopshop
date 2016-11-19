@@ -55,7 +55,7 @@
             <li>Auf dieser Seite werden die <b>bestellten Artikel</b>
 				verwaltet.
 			</li>
-			<li><b>Artikel stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'); ?> ganz rechts kannst du den Artikel stornieren. Von Mittwoch bis Freitag
+			<li><b>Artikel stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du den Artikel stornieren. Von Mittwoch bis Freitag
             	<?php if (!$appAuth->isManufacturer()) { ?>
             		werden beim Stornieren das Mitglied und der Hersteller
             	<?php } else { ?>
@@ -139,7 +139,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '<div class="table-cell-wrapper quantity">';
     if (! $groupByManufacturer) {
         if ($orderDetail['OrderDetail']['product_quantity'] > 1 && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'order-detail-product-quantity-edit-button',
                 'title' => 'Zum Ändern der Anzahl anklicken'
             ), 'javascript:void(0);');
@@ -176,14 +176,14 @@ foreach ($orderDetails as $orderDetail) {
     echo '<div class="table-cell-wrapper price">';
     if (! $groupByManufacturer) {
         if (($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'order-detail-product-price-edit-button',
                 'title' => 'Zum Ändern des Preises anklicken'
             ), 'javascript:void(0);');
         }
-        echo '<span class="product-price-for-dialog">' . number_format($orderDetail['OrderDetail']['total_price_tax_incl'], 2, ',', '.') . '</span>';
+        echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail['OrderDetail']['total_price_tax_incl']) . '</span>';
     } else {
-        echo number_format($orderDetail['sum_price'], 2, ',', '.');
+        echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
     }
     echo '</div>';
     echo '</td>';
@@ -199,7 +199,7 @@ foreach ($orderDetails as $orderDetail) {
         if ($priceDiffers) {
             echo '<span style="color:red;font-weight:bold;">';
         }
-        echo number_format($reducedPrice, 2, ',', '.');
+        echo $this->Html->formatAsDecimal($reducedPrice);
         if ($priceDiffers) {
             echo '</span>';
         }
@@ -209,11 +209,11 @@ foreach ($orderDetails as $orderDetail) {
     echo '<td class="right">';
     if (! $groupByManufacturer) {
         if ($orderDetail['OrderDetail']['deposit'] > 0) {
-            echo number_format($orderDetail['OrderDetail']['deposit'], 2, ',', '.');
+            echo $this->Html->formatAsDecimal($orderDetail['OrderDetail']['deposit']);
         }
     } else {
         if ($orderDetail['sum_deposit'] > 0) {
-            echo number_format($orderDetail['sum_deposit'], 2, ',', '.');
+            echo $this->Html->formatAsDecimal($orderDetail['sum_deposit']);
         }
     }
     echo '</td>';
@@ -244,7 +244,7 @@ foreach ($orderDetails as $orderDetail) {
     
     echo '<td style="text-align:center;">';
     if (! $groupByManufacturer && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'delete-order-detail',
             'id' => 'delete-order-detail-' . $orderDetail['OrderDetail']['id_order_detail'],
             'title' => 'Artikel stornieren?'
@@ -269,14 +269,14 @@ if ($appAuth->isManufacturer()) {
 } else {
     echo '<td colspan="2"></td>';
 }
-echo '<td class="right"><b>' . number_format($sumPrice, 2, ',', '.') . '</b></td>';
+echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
 if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
     echo '<td></td>';
-    echo '<td class="right"><b>' . number_format($sumReducedPrice, 2, ',', '.') . '</b></td>';
+    echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
 $sumDepositString = '';
 if ($sumDeposit > 0) {
-    $sumDepositString = number_format($sumDeposit, 2, ',', '.');
+    $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 if ($orderState == 3) {
@@ -306,6 +306,15 @@ if (! $groupByManufacturer && $productId == '' && $manufacturerId == '' && $cust
         $buttonExists = true;
         $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> Bestellstatus ändern</button>';
     }
+}
+
+if ($deposit != '') {
+    if ($appAuth->isManufacturer()) {
+        $depositOverviewUrl = $this->Slug->getMyDepositList();
+    } else {
+        $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
+    }
+    $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 }
 
 if ($buttonExists) {

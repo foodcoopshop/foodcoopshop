@@ -26,11 +26,6 @@
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()) . ");"
     ));
-    if (Configure::read('app.isDepositPaymentCashless')) {
-        $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
-        ));
-    }
     if (Configure::read('app.memberFeeFlexibleEnabled')) {
         $this->element('addScript', array(
             'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
@@ -82,8 +77,8 @@
 			<li>Eine Bestellung (im Unterschied zum <b>bestellten Artikel</b>)
 				beinhaltet einen oder mehrere bestellte Artikel.
 			</li>
-			<li>Ein Klick auf <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/cart.png'); ?> "Bestellte Artikel anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Artikel des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
-			<li><b>Bestellung rückdatieren</b>: Falls du während eines Shopdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Artikel sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/calendar.png'); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag Shopdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
+			<li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Artikel anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Artikel des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
+			<li><b>Bestellung rückdatieren</b>: Falls du während eines Shopdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Artikel sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag Shopdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
 			<li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
 				der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,
 				wieviel jedes Mitglied tatsächlich zu bezahlen hat. Diese Liste ist
@@ -92,7 +87,7 @@
 			<li>Unten rechts ist ein Button, mit dem man alle E-Mail-Adressen der
 				Mitglieder in der Liste erhält. So kann man Informationen an alle
 				Leute aussenden, die bestellt haben.</li>
-			<li>Mit Klick <?php echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/money_euro.png'); ?> "Bestellstatus ändern" kannst du den Bestellstatus der Bestellung ändern.</li>
+			<li>Mit Klick <?php echo $this->Html->image($this->Html->getFamFamFamPath('money_euro.png')); ?> "Bestellstatus ändern" kannst du den Bestellstatus der Bestellung ändern.</li>
 			<li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
 				haben erst 3x oder weniger bestellt.
 			</li>
@@ -166,7 +161,7 @@
         echo '</td>';
         
         echo '<td style="width: 140px;">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/cart.png') . ' Bestellte Artikel', array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . ' Bestellte Artikel', array(
             'title' => 'Alle bestellten Artikel von ' . $order['Order']['name'] . ' anzeigen',
             'class' => 'icon-with-text'
         ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customer']['id_customer'] . '/orderState:' . $orderState);
@@ -182,40 +177,18 @@
         
         if (Configure::read('app.isDepositPaymentCashless')) {
             echo '<td style="width:144px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/money_euro.png') . ' Pfand-Rückgabe', array(
-                'title' => 'Pfand-Betrag eintragen',
-                'class' => 'add-payment-deposit-button icon-with-text',
-                'data-object-id' => $order['Order']['id_order']
-            ), 'javascript:void(0);');
-            echo '<div id="add-payment-deposit-form-' . $order['Order']['id_order'] . '" class="add-payment-form add-payment-deposit-form">';
-            echo '<h3>Pfand eintragen</h3>';
-            echo '<p>Pfand-Betrag für <b>' . $order['Order']['name'] . '</b> eintragen:</p>';
-            echo $this->Form->input('CakePayment.amount', array(
-                'label' => 'Betrag in €',
-                'type' => 'string'
-            ));
-            echo $this->Html->link('<i class="fa"></i> Kommentar hinzufügen', 'javascript:void(0);', array(
-                'class' => 'toggle-link',
-                'title' => 'Kommentar hinzufügen',
-                'escape' => false
-            ));
-            echo '<div class="toggle-content">';
-            echo $this->Form->textarea('CakePayment.text');
-            echo '</div>';
-            echo $this->Form->hidden('CakePayment.type', array(
-                'value' => 'deposit'
-            ));
-            echo $this->Form->hidden('CakePayment.customerId', array(
-                'value' => $order['Customer']['id_customer']
-            ));
-            echo '</div>';
-            echo '<div class="sc"></div>';
+                echo $this->element('addDepositPaymentOverlay', array(
+                    'buttonText' => 'Pfand-Rückgabe',
+                    'rowId' => $order['Order']['id_order'],
+                    'userName' => $order['Order']['name'],
+                    'customerId' => $order['Customer']['id_customer']
+                ));
             echo '</td>';
         }
         
         if (Configure::read('app.memberFeeFlexibleEnabled')) {
             echo '<td style="width:72px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/heart.png') . ' Flexi', array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('heart.png')) . ' Flexi', array(
                 'title' => 'Flexiblen Mitgliedsbeitrag eintragen',
                 'class' => 'add-payment-member-fee-flexible-button icon-with-text',
                 'data-object-id' => $order['Order']['id_order']
@@ -254,7 +227,7 @@
                 $statusChangeIcon = 'error';
             }
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/' . $statusChangeIcon . '.png') . ' Bestellstatus ändern', array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . ' Bestellstatus ändern', array(
                     'title' => 'Bestellstatus ändern',
                     'class' => 'change-order-state-button icon-with-text'
                 ), 'javascript:void(0);');
@@ -272,7 +245,7 @@
             ));
             echo '</div>';
             if (! $groupByCustomer) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/calendar.png'), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('calendar.png')), array(
                     'title' => 'Bestellung rückdatieren',
                     'class' => 'edit-button'
                 ), 'javascript:void(0);');

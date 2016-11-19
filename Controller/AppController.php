@@ -121,7 +121,7 @@ class AppController extends Controller
         }
         
         $isMobile = false;
-        if ($this->request->is('mobile')) {
+        if ($this->request->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);

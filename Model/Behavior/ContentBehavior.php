@@ -28,7 +28,7 @@ class ContentBehavior extends ModelBehavior
 
     public function saveDateFields(Model $model)
     {
-        if (is_null($model->id) && $model->hasField('date_add')) {
+        if ((is_null($model->id) || empty($model->id)) && $model->hasField('date_add')) {
             $model->data[$model->name]['date_add'] = Configure::read('timeHelper')->getCurrentDateForDatabase();
         }
         if ($model->hasField('date_upd')) {

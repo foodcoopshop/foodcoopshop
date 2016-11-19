@@ -167,13 +167,25 @@ class CakeActionLog extends AppModel
             'de' => 'Mitglied: Guthaben eingetragen'
         ),
         'payment_product_deleted' => array(
-            'de' => 'Mitglied: Guthaben gelöscht'
+        	'de' => 'Mitglied: Guthaben gelöscht'
         ),
-        'payment_deposit_added' => array(
+        'payment_deposit_customer_added' => array(
             'de' => 'Mitglied: Pfand-Betrag eingetragen'
         ),
-        'payment_deposit_deleted' => array(
+        'payment_deposit_manufacturer_added' => array(
+            'de' => 'Hersteller: Pfand-Rücknahme eingetragen',
+            'access' => array(
+                'manufacturer'
+            )
+        ),
+        'payment_deposit_customer_deleted' => array(
             'de' => 'Mitglied: Pfand-Betrag gelöscht'
+        ),
+        'payment_deposit_manufacturer_deleted' => array(
+            'de' => 'Hersteller: Pfand-Rücknahme gelöscht',
+            'access' => array(
+                'manufacturer'
+            )
         ),
         'payment_member_fee_added' => array(
             'de' => 'Mitglied: Mitgliedsbeitrag eingetragen'
@@ -373,6 +385,12 @@ class CakeActionLog extends AppModel
             'foreignKey' => 'object_id',
             'conditions' => array(
                 'object_type' => 'blog_posts'
+            )
+        ),
+        'CakePayment' => array(
+            'foreignKey' => 'object_id',
+            'conditions' => array(
+                'object_type' => 'payments'
             )
         )
     );

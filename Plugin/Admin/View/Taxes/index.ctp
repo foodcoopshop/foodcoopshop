@@ -72,7 +72,7 @@ foreach ($taxes as $tax) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getTaxEdit($tax['Tax']['id_tax']));
     echo '</td>';
@@ -83,9 +83,9 @@ foreach ($taxes as $tax) {
     
     echo '<td align="center">';
     if ($tax['Tax']['active'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
     

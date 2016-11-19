@@ -454,6 +454,16 @@ body.orders.index #add-order-button-wrapper div.select {
 .featherlight-content .add-payment-form label {
     width: 100%;
 }
+.featherlight-content .add-payment-form .radio-wrapper {
+	width: 165px;
+	float: left;
+    margin-bottom: 10px;
+}
+.featherlight-content .add-payment-form .radio-wrapper label {
+	float: left;
+	width: auto;
+	margin-right: 5px;
+}
 .jquery-ui-icon a.icon-with-text {
     float: left;
     padding: 0 5px;
@@ -462,6 +472,7 @@ body.orders.index #add-order-button-wrapper div.select {
 .jquery-ui-icon a.icon-with-text.button {
     padding: 7px;    
 }
+body.deposits #help-container,
 #payments-list #help-container {
     display: block;
 }
@@ -577,6 +588,9 @@ body.orders.index #add-order-button-wrapper div.select {
 }
 .featherlight-content .mini-upload-form .img-delete {
     right: 30px;
+}
+body.manufacturers.index span.email {
+	word-wrap: break-word;
 }
 body.manufacturers li.ui-state-default a.uploaded,
 body.blog_posts li.ui-state-default a.uploaded,
@@ -792,12 +806,27 @@ body.attributes.index table.list td {
 body.attributes.index table.list td .toggle-link {
 	margin-bottom: 0px;
 }
-body.customers.index .customer-details-wrapper {
+body.customers.index .customer-details-wrapper,
+body.manufacturers.index .manufacturer-details-wrapper {
 	float: right;
 	margin-left: 5px;
 }
 body.customers.index .name {
     float: left;
+}
+body.deposits table.list,
+body.deposits .bottom-button-container {
+    width: 500px;
+}
+body.deposits .bottom-button-container {
+	float: left;
+	text-align: right;
+}
+body.deposits .add-payment-deposit-wrapper {
+	float: left;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 body.taxes.index table.list,
 body.slider.index table.list {

@@ -62,7 +62,7 @@ echo '<th>Logo</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.name', 'Name') . '</th>';
 echo '<th style="width:83px;">Artikel</th>';
-echo '<th>' . $this->Paginator->sort('Address.email', 'Email / Telefon') . '</th>';
+echo '<th>Pfand</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.holiday', 'Urlaub') . '</th>';
@@ -103,79 +103,107 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']));
     echo '</td>';
     
     echo '<td>';
-    echo '<b>' . $manufacturer['Manufacturer']['name'] . '</b><br />';
-    echo $manufacturer['Address']['name'] . ', ' . $manufacturer['Address']['city'];
+        
+        $details = $manufacturer['Address']['name'];
+        if ($manufacturer['Address']['phone_mobile'] != '') {
+            $details .= '<br />'.$manufacturer['Address']['phone_mobile'];
+        }
+        if ($manufacturer['Address']['phone'] != '') {
+            $details .= '<br />' . $manufacturer['Address']['phone'];
+        }
+        echo '<div class="manufacturer-details-wrapper">';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('book_open.png')), array(
+                'class' => 'manufacturer-details-read-button',
+                'title' => $details
+            ), 'javascript:void(0);');
+        echo '</div>';
+        
+        echo '<b>' . $manufacturer['Manufacturer']['name'] . '</b><br />';
+        echo $manufacturer['Address']['city'];
+        echo '<br /><span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
+        
     echo '</td>';
     
-    echo '<td style="width:100px;">';
+    echo '<td style="width:130px;">';
     $productCountSum += $manufacturer['product_count'];
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/tag_green.png') . $manufacturer['product_count'] . ' Artikel', array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;Artikel', array(
         'title' => 'Alle Artikel von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
     ), '/admin/products/index/manufacturerId:' . $manufacturer['Manufacturer']['id_manufacturer']);
     echo '</td>';
     
     echo '<td>';
-    echo '<span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
-    if ($manufacturer['Address']['phone_mobile'] != '') {
-        echo $manufacturer['Address']['phone_mobile'];
-    }
-    if ($manufacturer['Address']['phone_mobile'] != '' && $manufacturer['Address']['phone'] != '') {
-        echo '<br />';
-    }
-    if ($manufacturer['Address']['phone'] != '') {
-        echo $manufacturer['Address']['phone'];
-    }
+        if ($manufacturer['sum_deposit_delivered'] > 0) {
+            
+            $depositSaldoClasses = array();
+            if ($manufacturer['deposit_credit_balance'] < 0) {
+                $depositSaldoClasses[] = 'negative';
+            }
+            $depositSaldoHtml = '<span class="'.implode(' ', $depositSaldoClasses).'">' . $this->Html->formatAsEuro($manufacturer['deposit_credit_balance']);
+            
+            if ($appAuth->isManufacturer()) {
+                $depositOverviewUrl = $this->Slug->getMyDepositList();
+            } else {
+                $depositOverviewUrl = $this->Slug->getDepositList($manufacturer['Manufacturer']['id_manufacturer']);
+            }
+            echo $this->Html->getJqueryUiIcon('Pfand:&nbsp;' . $depositSaldoHtml, array(
+                    'class' => 'icon-with-text',
+                    'title' => 'Pfandkonto anzeigen'
+                ),
+                $depositOverviewUrl
+            );
+            
+        }
     echo '</td>';
     
     echo '<td style="text-align:center;width:42px;">';
     if ($manufacturer['Manufacturer']['iban'] != '') {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
     if ($manufacturer['Manufacturer']['active'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     if ($manufacturer['Manufacturer']['active'] == '') {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
     
     echo '<td align="center">';
     if ($manufacturer['Manufacturer']['holiday'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td align="center">';
     if ($manufacturer['Manufacturer']['is_private'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td>';
-    echo '<span class="manufacturer-options-button-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_white_gear.png'), array(
-        'class' => 'manufacturer-options-button',
-        'title' => $manufacturer['Address']['other'],
-        'data-title-for-overlay' => $manufacturer['Address']['other']
-    ), 'javascript:void(0);');
-    echo '<div class="hide tax-wrapper">';
-    echo $this->Form->input('Tax.id_tax', array(
-        'type' => 'select',
-        'label' => '',
-        'options' => $taxesForDropdown
-    ));
-    echo '</div>';
-    echo '</span>';
+        echo '<span class="manufacturer-options-button-wrapper">';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')), array(
+                'class' => 'manufacturer-options-button',
+                'title' => $manufacturer['Address']['other'],
+                'data-title-for-overlay' => $manufacturer['Address']['other']
+            ), 'javascript:void(0);');
+            echo '<div class="hide tax-wrapper">';
+                echo $this->Form->input('Tax.id_tax', array(
+                    'type' => 'select',
+                    'label' => '',
+                    'options' => $taxesForDropdown
+                ));
+            echo '</div>';
+        echo '</span>';
     echo '</td>';
     
     if (Configure::read('app.useManufacturerCompensationPercentage')) {
@@ -189,11 +217,11 @@ foreach ($manufacturers as $manufacturer) {
         echo '</td>';
     }
     
-    echo '<td>';
-    echo 'Bestellliste prüfen: ';
-    echo $this->Html->link('Artikel', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
-        'target' => '_blank'
-    ));
+    echo '<td style="width:140px;">';
+    echo 'Bestellliste prüfen<br />';
+        echo $this->Html->link('Artikel', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+            'target' => '_blank'
+        ));
     echo ' / ';
     echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
         'target' => '_blank'
@@ -202,7 +230,7 @@ foreach ($manufacturers as $manufacturer) {
     
     if (Configure::read('app.allowManualOrderListSending')) {
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/email.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), array(
             'title' => 'Bestellliste manuell versenden',
             'class' => 'manual-order-list-send-link'
         ), 'javascript:void(0);');
@@ -218,7 +246,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td style="width: 29px;">';
     if ($manufacturer['Manufacturer']['active']) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']);
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Hersteller-Seite',
             'target' => '_blank'
         ), $manufacturerLink);
@@ -246,7 +274,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="6"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

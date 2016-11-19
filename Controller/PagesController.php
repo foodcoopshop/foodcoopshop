@@ -72,6 +72,11 @@ class PagesController extends FrontendController
             throw new MissingActionException('page not found');
         }
         
+        // redirect direct call of page with link
+        if ($page['Page']['url'] != '') {
+            $this->redirect($page['Page']['url']);
+        }
+        
         $children = $this->Page->children($pageId, false, null, array(
             'Page.position' => 'ASC'
         ));

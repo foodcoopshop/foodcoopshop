@@ -31,7 +31,7 @@ foreach ($pages as $page) {
     echo '</td>';
     
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getPageEdit($page['Page']['id_cms']));
     echo '</td>';
@@ -55,13 +55,13 @@ foreach ($pages as $page) {
     
     echo '<td align="center">';
     if ($page['Page']['full_width'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     
     echo '<td align="center">';
     if ($page['Page']['url'] != '') {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/link.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), array(
             'target' => '_blank',
             'title' => $page['Page']['url']
         ), $page['Page']['url']);
@@ -78,15 +78,15 @@ foreach ($pages as $page) {
     
     echo '<td align="center">';
     if ($page['Page']['active'] == 1) {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
-        echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
     
     echo '<td>';
     if ($page['Page']['active']) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Seite anzeigen',
             'target' => '_blank'
         ), $this->Slug->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']));

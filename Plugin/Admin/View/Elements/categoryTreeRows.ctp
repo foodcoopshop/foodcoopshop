@@ -31,7 +31,7 @@ foreach ($categories as $category) {
     echo '</td>';
     
     echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/page_edit.png'), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
             'title' => 'Bearbeiten'
         ), $this->Slug->getCategoryEdit($category['Category']['id_category']));
     echo '</td>';
@@ -49,15 +49,15 @@ foreach ($categories as $category) {
     
     echo '<td align="center">';
         if ($category['Category']['active'] == 1) {
-            echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/accept.png');
+            echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
         } else {
-            echo $this->Html->image('/js/vendor/famfamfam-silk/dist/png/delete.png');
+            echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
         }
     echo '</td>';
     
     echo '<td style="width:20px;">';
         if ($category['Category']['active']) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image('/js/vendor/famfamfam-silk/dist/png/arrow_right.png'), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
                 'title' => 'Seite anzeigen',
                 'target' => '_blank'
             ), $this->Slug->getCategoryDetail($category['Category']['id_category'], $category['CategoryLang']['name']));

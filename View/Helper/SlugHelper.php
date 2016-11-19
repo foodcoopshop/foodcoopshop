@@ -37,6 +37,30 @@ class SlugHelper extends Helper {
         return '/hersteller';
     }
     
+    public function getMyDepositList() {
+        return '/admin/deposits/my_index';
+    }
+    
+    public function getMyDepositDetail($monthAndYear) {
+        return '/admin/deposits/my_detail/'.$monthAndYear;
+    }
+    
+    public function getDepositList($manufacturerId='') {
+        $url = '/admin/deposits/index';
+        if ($manufacturerId != '') {
+            $url .= '/manufacturerId:'.$manufacturerId;
+        }
+        return $url;
+    }
+    
+    public function getDepositDetail($manufacturerId, $monthAndYear) {
+        $url = '/admin/deposits/detail/'.$monthAndYear;
+        if ($manufacturerId != '') {
+            $url .= '/manufacturerId:'.$manufacturerId;
+        }
+        return $url;
+    }
+    
     public function getCartDetail() {
         return '/warenkorb/anzeigen';
     }
@@ -67,6 +91,10 @@ class SlugHelper extends Helper {
     
     public function getLogout() {
         return '/logout';
+    }
+    
+    public function getRegistration() {
+        return '/registrierung';
     }
     
     public function getCreditBalance() {
@@ -163,7 +191,7 @@ class SlugHelper extends Helper {
         return '/admin/manufacturers/add';
     }
     
-    public function getSliderList() {
+    public function getSlidersList() {
         return '/admin/sliders';
     }
     public function getSliderEdit($slideId) {

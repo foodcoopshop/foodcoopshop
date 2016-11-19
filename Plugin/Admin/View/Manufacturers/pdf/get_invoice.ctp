@@ -85,7 +85,7 @@ if ($compensationPercentage > 0) {
     $html .= '</td>';
     
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3> - ' . number_format($compensatedPrice, 2, ',', '.') . '</h3>';
+    $html .= '<h3> - ' . $this->Html->formatAsDecimal($compensatedPrice) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
     
@@ -95,7 +95,7 @@ if ($compensationPercentage > 0) {
     $html .= '</td>';
     
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3>' . number_format($newSumPriceIncl, 2, ',', '.') . '</h3>';
+    $html .= '<h3>' . $this->Html->formatAsDecimal($sumNewPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
     

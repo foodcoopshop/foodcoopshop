@@ -26,6 +26,9 @@ class PaymentsController extends AdminAppController
             case 'member_fee':
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
+            case 'add':
+            case 'changeState':
+                return $this->AppAuth->loggedIn();
             default:
                 return $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
@@ -36,6 +39,7 @@ class PaymentsController extends AdminAppController
     {
         $this->loadModel('CakePayment');
         $this->loadModel('Customer');
+        $this->loadModel('Manufacturer');
         parent::beforeFilter();
     }
 
@@ -82,31 +86,60 @@ class PaymentsController extends AdminAppController
             $customerId = $this->AppAuth->getUserId();
             $text = implode(',', $this->params['data']['months_range']);
         }
+        
+        $actionLogType = $type;
+        
         if (in_array($type, array(
             'deposit',
             'member_fee_flexible'
         ))) {
+            
+            // payments to deposits can be added to customers or manufacturers
             $customerId = (int) $this->params['data']['customerId'];
-            $this->Customer->recursive = - 1;
-            $customer = $this->Customer->find('first', array(
-                'conditions' => array(
-                    'Customer.id_customer' => $customerId
-                )
-            ));
-            if (empty($customer)) {
-                $message = 'customer id nicht korrekt: ' . $customerId;
-                $this->log($message);
-                die(json_encode(array(
-                    'status' => 0,
-                    'msg' => $message
-                )));
+            if ($customerId > 0) {
+                $userType = 'customer';
+                $this->Customer->recursive = - 1;
+                $customer = $this->Customer->find('first', array(
+                    'conditions' => array(
+                        'Customer.id_customer' => $customerId
+                    )
+                ));
+                $message .= ' für ' . $customer['Customer']['name'];
+                if (empty($customer)) {
+                    $message = 'customer id not correct: ' . $customerId;
+                    $this->log($message);
+                    die(json_encode(array(
+                        'status' => 0,
+                        'msg' => $message
+                    )));
+                }
             }
+            
+            $manufacturerId = (int) $this->params['data']['manufacturerId'];
+            if ($manufacturerId > 0) {
+                $userType = 'manufacturer';
+                $this->Manufacturer->recursive = - 1;
+                $manufacturer = $this->Manufacturer->find('first', array(
+                    'conditions' => array(
+                        'Manufacturer.id_manufacturer' => $manufacturerId
+                    )
+                ));
+                $message = 'Pfand-Rücknahme ('.Configure::read('htmlHelper')->getManufacturerDepositPaymentText($text).')';
+                $message .= ' für ' . $manufacturer['Manufacturer']['name'];
+                if (empty($manufacturer)) {
+                    $message = 'manufacturer id not correct: ' . $manufacturerId;
+                    $this->log($message);
+                    die(json_encode(array(
+                        'status' => 0,
+                        'msg' => $message
+                    )));
+                }
+            }
+            
             if ($type == 'deposit') {
-                $message .= ' für ' . $customer['Customer']['name'];
+                $actionLogType .= '_'.$userType;
             }
-            if ($type == 'member_fee_flexible') {
-                $message .= ' für ' . $customer['Customer']['name'];
-            }
+            
         }
 
         // add entry in table cake_payments
@@ -115,6 +148,7 @@ class PaymentsController extends AdminAppController
             'status' => APP_ON,
             'type' => $type,
             'id_customer' => $customerId,
+            'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
             'date_add' => date('Y-m-d H:i:s'),
             'date_changed' => date('Y-m-d H:i:s'),
             'amount' => $amount,
@@ -122,30 +156,37 @@ class PaymentsController extends AdminAppController
         ));
 
         $this->loadModel('CakeActionLog');
-
         $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('htmlHelper')->formatAsEuro($amount);
 
         if ($type == 'member_fee') {
             $message .= ', für ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($text);
         }
 
-        $this->CakeActionLog->customSave('payment_' . $type . '_added', $this->AppAuth->getUserId(), $this->CakePayment->getLastInsertId(), 'payments', $message);
+        $this->CakeActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $this->CakePayment->getLastInsertId(), 'payments', $message);
 
-        switch ($type) {
-            case 'deposit':
-                $message .= ' Der Betrag ist im Guthaben-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';
-                break;
-            case 'member_fee_flexible':
-                $message .= ' Der Betrag ist im Mitgliedsbeitrags-System von ' . $customer['Customer']['name'] . ' eingetragen worden und kann dort gegebenfalls wieder gelöscht werden.';
-                break;
+        if (in_array($actionLogType, array('deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'))) {
+            $message .= ' Der Betrag ist ';
+            switch ($actionLogType) {
+                case 'deposit_customer':
+                    $message .= 'im Guthaben-System von ' . $customer['Customer']['name'];
+                    break;
+                case 'deposit_manufacturer':
+                    $message .= 'im Pfandkonto von ' . $manufacturer['Manufacturer']['name'];
+                    break;
+                case 'member_fee_flexible':
+                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer['Customer']['name'];
+                    break;
+            }
+            $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
         }
-
+        
         $this->AppSession->setFlashMessage($message);
 
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
         )));
+        
     }
 
     public function changeState()
@@ -160,13 +201,15 @@ class PaymentsController extends AdminAppController
         ));
 
         if (empty($payment)) {
-            $message = 'payment id nicht korrekt: ' . $paymentId;
+            $message = 'payment id not correct: ' . $paymentId;
             $this->log($message);
             die(json_encode(array(
                 'status' => 0,
                 'msg' => $message
             )));
         }
+        
+        // TODO add payment owner check (also for manufacturers!)
 
         // update table cake_payments
         $this->CakePayment->id = $paymentId;
@@ -178,7 +221,17 @@ class PaymentsController extends AdminAppController
         $this->loadModel('CakeActionLog');
 
         $message = 'Die Zahlung wurde erfolgreich gelöscht.';
-        $this->CakeActionLog->customSave('payment_' . $payment['CakePayment']['type'] . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
+        
+        $actionLogType = $payment['CakePayment']['type'];
+        if ($payment['CakePayment']['type'] == 'deposit') {
+            $userType = 'customer';
+            if ($payment['CakePayment']['id_manufacturer'] > 0) {
+                $userType = 'manufacturer';
+            }
+            $actionLogType .= '_'.$userType;
+        }
+        
+        $this->CakeActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
         $this->AppSession->setFlashMessage($message);
 

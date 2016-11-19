@@ -78,6 +78,7 @@ Configure::write('app.defaultBulkOrdersAllowed', false);
 
 Configure::write('app.isDepositPaymentCashless', true);
 Configure::write('app.depositPaymentCashlessStartDate', '2016-01-01');
+Configure::write('app.depositForManufacturersStartDate', '2016-01-01');
 
 /**
  * adds a link to the manufacturer admin to generate and send the order list on click
