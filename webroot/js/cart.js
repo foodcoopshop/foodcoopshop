@@ -200,6 +200,7 @@ foodcoopshop.Cart = {
             var tax = foodcoopshop.Helper.getEuroAsFloat(productContainer.find('.tax').html());
             var oldAmount = parseInt(productContainer.find('.amount span.value').html());
             var newPrice = price / oldAmount;
+            var newTax = tax / oldAmount;
             var depositContainer = productContainer.find('.deposit span');
             var newDeposit = 0;
             if (depositContainer.length > 0) {
@@ -227,7 +228,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit);
                         foodcoopshop.Cart.updateCartSum(newPrice * amount);
-                        foodcoopshop.Cart.updateCartTaxSum(tax * amount);
+                        foodcoopshop.Cart.updateCartTaxSum(newTax * amount);
                         if (depositContainer.length > 0) {
                             foodcoopshop.Cart.updateCartDepositSum(newDeposit * amount);
                         }

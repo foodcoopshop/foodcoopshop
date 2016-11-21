@@ -178,6 +178,12 @@ class Product extends AppModel
         return $productsForDropdown;
     }
 
+    /**
+     * @param float $grossPrice (for all units)
+     * @param float $netPrice (for one unit)
+     * @param int $quantity
+     * @return float
+     */
     public function getUnitTax($grossPrice, $netPrice, $quantity)
     {
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
