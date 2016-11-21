@@ -21,6 +21,18 @@ class StringComponent extends Component
 {
 
     /**
+     * @param string $url
+     * @return string
+     */
+    public static function addHttpToUrl($url)
+    {
+        if ($url == '') return $url;
+        if (!preg_match('/^http\:\/\//', $url)) {
+            $url = 'http://'.$url;
+        }
+        return $url;
+    }
+    /**
      * @param string $string
      * @return string
      */

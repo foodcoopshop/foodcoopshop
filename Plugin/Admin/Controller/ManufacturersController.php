@@ -93,11 +93,13 @@ class ManufacturersController extends AdminAppController
             
             // validate data - do not use $this->Manufacturer->saveAll()
             $this->Manufacturer->id = $manufacturerId;
-            $this->Manufacturer->set($this->request->data['Manufacturer']);
             
             // for making regex work, remove whitespace
             $this->request->data['Manufacturer']['iban'] = str_replace(' ', '', $this->request->data['Manufacturer']['iban']);
             $this->request->data['Manufacturer']['bic'] = str_replace(' ', '', $this->request->data['Manufacturer']['bic']);
+            $this->request->data['Manufacturer']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturer']['homepage']);
+            
+            $this->Manufacturer->set($this->request->data['Manufacturer']);
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Manufacturer'] as &$data) {

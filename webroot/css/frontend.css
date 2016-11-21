@@ -512,7 +512,11 @@ body.manufacturers.detail img.manufacturer-logo {
     padding: 10px;
     border: 1px solid #d6d4d4;
 }
-
+body.manufacturers.detail .imprint {
+	float: right;
+	width: 100%;
+	text-align: right;
+}
 #footer {
 	background-color: #3f3f3f;
 	color: #fff;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 21. Nov 2016 um 18:24
+-- Erstellungszeit: 21. Nov 2016 um 20:25
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -478,7 +478,12 @@ CREATE TABLE `fcs_manufacturer` (
   `additional_text_for_invoice` text NOT NULL,
   `iban` varchar(20) NOT NULL,
   `bic` varchar(8) NOT NULL,
-  `bank_name` varchar(255) NOT NULL
+  `bank_name` varchar(255) NOT NULL,
+  `firmenbuchnummer` varchar(20) NOT NULL,
+  `firmengericht` varchar(150) NOT NULL,
+  `aufsichtsbehoerde` varchar(150) NOT NULL,
+  `kammer` varchar(150) NOT NULL,
+  `homepage` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1276,7 +1281,7 @@ ALTER TABLE `fcs_customer`
 -- AUTO_INCREMENT für Tabelle `fcs_homeslider_slides`
 --
 ALTER TABLE `fcs_homeslider_slides`
-  MODIFY `id_homeslider_slides` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_homeslider_slides` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_image`
 --

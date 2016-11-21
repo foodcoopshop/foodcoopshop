@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 21. Nov 2016 um 18:21
+-- Erstellungszeit: 21. Nov 2016 um 20:24
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -1096,18 +1096,23 @@ CREATE TABLE `fcs_manufacturer` (
   `additional_text_for_invoice` text NOT NULL,
   `iban` varchar(20) NOT NULL,
   `bic` varchar(8) NOT NULL,
-  `bank_name` varchar(255) NOT NULL
+  `bank_name` varchar(255) NOT NULL,
+  `firmenbuchnummer` varchar(20) NOT NULL,
+  `firmengericht` varchar(150) NOT NULL,
+  `aufsichtsbehoerde` varchar(150) NOT NULL,
+  `kammer` varchar(150) NOT NULL,
+  `homepage` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `fcs_manufacturer`
 --
 
-INSERT INTO `fcs_manufacturer` (`id_manufacturer`, `name`, `date_add`, `date_upd`, `active`, `holiday`, `is_private`, `uid_number`, `additional_text_for_invoice`, `iban`, `bic`, `bank_name`) VALUES
-(4, 'Demo Fleisch-Hersteller', '2014-05-14 13:23:02', '2015-05-15 13:31:41', 1, 0, 0, '', '', '', '', ''),
-(5, 'Demo Gemüse-Hersteller', '2014-05-14 13:36:44', '2016-09-27 09:34:51', 1, 0, 0, '', '', '', '', ''),
-(15, 'Demo Milch-Hersteller', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', ''),
-(16, 'Hersteller ohne Customer-Eintrag', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '');
+INSERT INTO `fcs_manufacturer` (`id_manufacturer`, `name`, `date_add`, `date_upd`, `active`, `holiday`, `is_private`, `uid_number`, `additional_text_for_invoice`, `iban`, `bic`, `bank_name`, `firmenbuchnummer`, `firmengericht`, `aufsichtsbehoerde`, `kammer`, `homepage`) VALUES
+(4, 'Demo Fleisch-Hersteller', '2014-05-14 13:23:02', '2015-05-15 13:31:41', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
+(5, 'Demo Gemüse-Hersteller', '2014-05-14 13:36:44', '2016-09-27 09:34:51', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
+(15, 'Demo Milch-Hersteller', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
+(16, 'Hersteller ohne Customer-Eintrag', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1194,6 +1199,8 @@ CREATE TABLE `fcs_orders` (
   `general_terms_and_conditions_accepted` tinyint(4) UNSIGNED NOT NULL,
   `cancellation_terms_accepted` tinyint(4) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `fcs_order_detail`

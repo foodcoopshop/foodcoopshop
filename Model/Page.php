@@ -54,7 +54,7 @@ class Page extends AppModel
                 'url',
                 true
             ),
-            'message' => 'Bitte gibt eine gültige Url an, z.B. http://www.foodcoopshop.com'
+            'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
         )
     );
 

@@ -89,6 +89,14 @@ class Manufacturer extends AppModel
                 'allowEmpty' => true,
                 'message' => 'Bitte gib einen gültigen BIC ein.'
             )
+        ),
+        'homepage' => array(
+            'allowEmpty' => true,
+            'rule' => array(
+                'url',
+                true
+            ),
+            'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
         )
     );
 

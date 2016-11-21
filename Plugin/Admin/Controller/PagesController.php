@@ -76,6 +76,9 @@ class PagesController extends AdminAppController
             
             // validate data - do not use $this->Page->saveAll()
             $this->Page->id = $pageId;
+            
+            $this->request->data['Page']['url'] = StringComponent::addHttpToUrl($this->request->data['Page']['url']);
+            
             $this->Page->set($this->request->data['Page']);
             
             // quick and dirty solution for stripping html tags, use html purifier here

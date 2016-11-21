@@ -48,7 +48,7 @@ class AddressManufacturer extends Address
                 'rule' => array(
                     'uniqueEmailWithFlagCheck'
                 ),
-                'message' => 'Diese E-Mail-Adresse existiert bereits.'
+                'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
             ),
             'email' => array(
                 'rule' => array(

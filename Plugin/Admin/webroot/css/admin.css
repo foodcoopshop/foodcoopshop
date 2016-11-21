@@ -742,6 +742,16 @@ form.fcs-form .small {
 	line-height: 15px;
 	float: left;
 }
+form.fcs-form .checkbox .small {
+	line-height: 21px;
+	float: left;
+}
+form.fcs-form .input.text .after.small,
+form.fcs-form .input.tel .after.small {
+	float: right;
+	line-height: 28px;
+	margin-left: 5px;
+}
 .bootstrap-select span.filter-option i.fa {
 	position: absolute;
 	right: 25px;
