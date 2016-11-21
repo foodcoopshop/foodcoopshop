@@ -71,7 +71,7 @@ class Customer extends AppModel
             ),
             'unique' => array(
                 'rule' => 'isUnique',
-                'message' => 'Diese E-Mail-Adresse wird bereits verwendet.'
+                'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
             )
         )
     );

@@ -70,7 +70,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $data['AddressCustomer']['phone'] = '897++asdf+d';
         $response = $this->addCustomer($data);
         $this->checkForMainErrorMessage($response);
-        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse wird bereits verwendet.', $response);
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);
         $this->assertRegExpWithUnquotedString('Die PLZ ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Die Handynummer ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Die Telefonnummer ist nicht gültig.', $response);
