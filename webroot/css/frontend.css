@@ -420,7 +420,8 @@ body.blog_posts.index .blog-post-wrapper,
 	margin-bottom: 10px;
 	width: 100%;
 }
-.product-wrapper .entity-wrapper:not(.active) {
+.product-wrapper .entity-wrapper:not(.active),
+.product-wrapper .entity-wrapper div.tax {
 	display: none;
 }
 .product-wrapper .line {
@@ -672,7 +673,9 @@ body.manufacturers.detail img.manufacturer-logo {
 .cart span.manufacturer-link,
 .cart span.image,
 .cart span.deposit,
-.cart p.deposit-sum-wrapper {
+.cart p.deposit-sum-wrapper,
+.cart p.tax-sum-wrapper,
+.cart span.tax {
     float: left;
     display: none;
 }
@@ -733,15 +736,20 @@ body.carts.detail .cart:not(#cart) span.product-name span.unity {
     font-size: 13px;
     margin-left: 5px;
 }
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper {
+body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
+body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
 	display: block;
 	float: none;
 }
+body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
 	font-weight: bold;
     float: right;
     margin-right: 17px;
-} 
+}
+body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
+	margin-top: 40px;
+}
 body.carts.detail .cart:not(#cart) span.manufacturer-link {
 	display: inline;
     width: 150px;

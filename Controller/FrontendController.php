@@ -51,8 +51,10 @@ class FrontendController extends AppController
         $this->ProductAttribute->recursive = 2; // for attribute lang
         
         foreach ($products as &$product) {
-            
-            $product['Product']['gross_price'] = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
+           
+            $grossPrice = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
+            $product['Product']['gross_price'] = $grossPrice;
+            $product['Product']['tax'] = $grossPrice - $product['ProductShop']['price'];
             $product['Product']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
             
             $product['attributes'] = $this->ProductAttribute->find('all', array(
@@ -61,7 +63,9 @@ class FrontendController extends AppController
                 )
             ));
             foreach ($product['attributes'] as &$attribute) {
-                $attribute['ProductAttributeShop']['gross_price'] = $this->Product->getGrossPrice($attribute['ProductAttributeShop']['id_product'], $attribute['ProductAttributeShop']['price']);
+                $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShop']['id_product'], $attribute['ProductAttributeShop']['price']);
+                $attribute['ProductAttributeShop']['gross_price'] = $grossPrice;
+                $attribute['ProductAttributeShop']['tax'] = $grossPrice - $attribute['ProductAttributeShop']['price'];
             }
         }
         

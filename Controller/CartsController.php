@@ -127,8 +127,8 @@ class CartsController extends FrontendController
                 'product_attribute_id' => $ids['attributeId'],
                 'product_name' => $this->CakeCart->getProductNameWithUnity($ccp['productName'], $ccp['unity']),
                 'product_quantity' => $ccp['amount'],
-                'product_price' => $ccp['price_excl'],
-                'total_price_tax_excl' => $ccp['price_excl'],
+                'product_price' => $ccp['priceExcl'],
+                'total_price_tax_excl' => $ccp['priceExcl'],
                 'total_price_tax_incl' => $ccp['price'],
                 'id_tax' => $product['Product']['id_tax'],
                 'deposit' => $ccp['deposit']
