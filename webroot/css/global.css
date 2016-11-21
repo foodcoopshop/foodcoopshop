@@ -329,6 +329,17 @@ input[type="checkbox"] {
 .featherlight:last-of-type {
 	background: rgba(0, 0, 0, 0.65) ! important;
 }
+.featherlight .featherlight-inner.href {
+    max-width: 990px;
+    padding: 10px;
+    overflow-y: auto ! important;
+}
+.featherlight .featherlight-inner.href h2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 .toggle-link {
     margin-bottom: 5px;
     float: left;

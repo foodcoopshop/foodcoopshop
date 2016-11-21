@@ -32,6 +32,7 @@ class CartsController extends FrontendController
 
     public function finish()
     {
+        
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCakeCart();
         
@@ -148,14 +149,26 @@ class CartsController extends FrontendController
             );
         }
         
+        
         $this->set('cartErrors', $cartErrors);
         
-        if (! empty($cartErrors)) {
+        
+        $this->loadModel('Order');
+        $checkboxErrors = false;
+        if ($this->request->data['Order']['general_terms_and_conditions_accepted'] != 1) {
+            $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
+            $checkboxErrors = true;
+        }
+        if ($this->request->data['Order']['cancellation_terms_accepted'] != 1) {
+            $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere den Ausschluss des Rücktrittsrechts.');
+            $checkboxErrors = true;
+        }
+        
+        if (!empty($cartErrors) || $checkboxErrors) {
             $this->AppSession->setFlashError('Es sind Fehler aufgetreten.');
         } else {
             
             // START save order
-            $this->loadModel('Order');
             $this->Order->id = null;
             $order2save = array(
                 'reference' => strtoupper(StringComponent::createRandomString(9)),
@@ -170,7 +183,9 @@ class CartsController extends FrontendController
                 'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
-                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
+                'total_deposit' => $this->AppAuth->Cart->getDepositSum(),
+                'general_terms_and_conditions_accepted' => $this->request->data['Order']['general_terms_and_conditions_accepted'],
+                'cancellation_terms_accepted' => $this->request->data['Order']['cancellation_terms_accepted']
             );
             $order = $this->Order->save($order2save);
             

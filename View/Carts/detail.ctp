@@ -14,6 +14,7 @@
  */
 $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ));
 ?>
@@ -39,16 +40,42 @@ $this->element('addScript', array('script' =>
     
     <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     
-    <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen".</p>
+    <p>Um die Bestellung abzuschließen, akzeptiere bitte AGB und den Ausschluss des Rücktrittsrechts und klicke dann auf "Zahlungspflichtig bestellen",
     
-    <?php
-        if ($this->Html->paymentIsCashless()) {
-            echo '<p>Der Betrag wird automatisch von deinem Guthaben abgebucht.</p>';
-        } else {
-            echo '<p>Der Betrag bitte bei der Abholung in bar bezahlen.</p>';
-        }
+<?php
+
+    if ($this->Html->paymentIsCashless()) {
+        echo 'der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
+    } else {
+        echo 'den Betrag bitte bei der Abholung in bar bezahlen.</p>';
+    }
+ 
+    echo $this->Form->create('Order', array(
+        'class' => 'fcs-form',
+        'url' => $this->Slug->getCartFinish()
+    ));
+    
+        echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
+            echo $this->element('legal/generalTermsAndConditions');
+        echo '</div>';
+        echo $this->Form->input('Order.general_terms_and_conditions_accepted', array(
+            'label' => 'Ich akzeptiere die <a href="#general-terms-and-conditions">AGB</a>',
+            'type' => 'checkbox'
+        ));
+        echo '<div id="cancellation-not-possible" class="featherlight-overlay">';
+            echo $this->element('legal/cancellationNotPossible');
+        echo '</div>';
+        echo $this->Form->input('Order.cancellation_terms_accepted', array(
+            'label' => 'Ich akzeptiere den <a href="#cancellation-not-possible">Ausschluss des Rücktrittsrechts</a>',
+            'type' => 'checkbox'
+        ));
     ?>
+    <div class="sc"></div>
     
-	<p><a class="btn btn-success" href="<?php echo $this->Slug->getCartFinish(); ?>"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</a></p>	
-        
+	<p>
+		<button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
+	</p>
+    		
+    </form>
+    
 </div>

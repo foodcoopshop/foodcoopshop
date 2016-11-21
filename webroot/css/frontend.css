@@ -731,6 +731,24 @@ body.carts.detail .cart:not(#cart) span.amount {
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
+body.carts.detail .cart:not(#cart) .input.checkbox {
+	clear: both;
+    float: right;
+    line-height: 26px;
+    margin-top: -10px;
+}
+body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
+	margin-left: -10px;
+	width: 100%;
+	font-size: 14px;
+}
+body.carts.detail .cart:not(#cart) .input.checkbox input[type="checkbox"] {
+	margin-left: -10px;
+}
+body.carts.detail .cart:not(#cart) .featherlight-overlay {
+	display: none;
+}
+
 body.carts.detail .cart:not(#cart) span.amount .btn {
 	color: #719f41;
 }
@@ -819,7 +837,7 @@ body.carts.detail .cart:not(#cart) ul.error-message {
     margin-left: -10px;
 }
 body.carts.detail .cart:not(#cart) .btn-success {
-    font-size: 20px;
+    font-size: 18px;
     float: right;
     padding: 5px 10px;
     margin-top: 10px;

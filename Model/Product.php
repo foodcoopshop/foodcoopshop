@@ -186,6 +186,7 @@ class Product extends AppModel
      */
     public function getUnitTax($grossPrice, $netPrice, $quantity)
     {
+        if ($quantity == 0) return 0;
         return round(($grossPrice - ($netPrice * $quantity)) / $quantity, 2);
     }
 

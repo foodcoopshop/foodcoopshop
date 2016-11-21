@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Okt 2016 um 20:19
+-- Erstellungszeit: 21. Nov 2016 um 18:24
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -167,6 +167,7 @@ DROP TABLE IF EXISTS `fcs_cake_payments`;
 CREATE TABLE `fcs_cake_payments` (
   `id` int(10) NOT NULL,
   `id_customer` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `id_manufacturer` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `type` varchar(20) NOT NULL DEFAULT 'product',
   `amount` decimal(10,2) NOT NULL,
   `text` varchar(255) NOT NULL,
@@ -552,7 +553,9 @@ CREATE TABLE `fcs_orders` (
   `date_upd` datetime NOT NULL,
   `round_mode` tinyint(1) NOT NULL DEFAULT '2',
   `round_type` tinyint(1) NOT NULL DEFAULT '1',
-  `total_deposit` decimal(10,2) NOT NULL
+  `total_deposit` decimal(10,2) NOT NULL,
+  `general_terms_and_conditions_accepted` tinyint(4) UNSIGNED NOT NULL,
+  `cancellation_terms_accepted` tinyint(4) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1223,12 +1226,12 @@ ALTER TABLE `fcs_attribute`
 -- AUTO_INCREMENT für Tabelle `fcs_cake_action_logs`
 --
 ALTER TABLE `fcs_cake_action_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_carts`
 --
 ALTER TABLE `fcs_cake_carts`
-  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_cart_products`
 --

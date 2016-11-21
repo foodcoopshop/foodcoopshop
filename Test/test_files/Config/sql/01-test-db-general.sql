@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 07. Nov 2016 um 16:42
+-- Erstellungszeit: 21. Nov 2016 um 18:21
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -1190,18 +1190,10 @@ CREATE TABLE `fcs_orders` (
   `date_upd` datetime NOT NULL,
   `round_mode` tinyint(1) NOT NULL DEFAULT '2',
   `round_type` tinyint(1) NOT NULL DEFAULT '1',
-  `total_deposit` decimal(10,2) NOT NULL
+  `total_deposit` decimal(10,2) NOT NULL,
+  `general_terms_and_conditions_accepted` tinyint(4) UNSIGNED NOT NULL,
+  `cancellation_terms_accepted` tinyint(4) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `fcs_orders`
---
-
-INSERT INTO `fcs_orders` (`id_order`, `reference`, `id_shop_group`, `id_shop`, `id_carrier`, `id_lang`, `id_customer`, `id_cart`, `id_cake_cart`, `id_currency`, `id_address_delivery`, `id_address_invoice`, `current_state`, `secure_key`, `payment`, `conversion_rate`, `module`, `recyclable`, `gift`, `gift_message`, `mobile_theme`, `shipping_number`, `total_discounts`, `total_discounts_tax_incl`, `total_discounts_tax_excl`, `total_paid`, `total_paid_tax_incl`, `total_paid_tax_excl`, `total_paid_real`, `total_products`, `total_products_wt`, `total_shipping`, `total_shipping_tax_incl`, `total_shipping_tax_excl`, `carrier_tax_rate`, `total_wrapping`, `total_wrapping_tax_incl`, `total_wrapping_tax_excl`, `invoice_number`, `delivery_number`, `invoice_date`, `delivery_date`, `valid`, `date_add`, `date_upd`, `round_mode`, `round_type`, `total_deposit`) VALUES
-(1, 'ZB256B2YP', 1, 1, 0, 1, 88, 0, 1, 1, 0, 0, 3, '-1', '', '1.000000', NULL, 0, 0, NULL, 0, NULL, '0.000000', '0.000000', '0.000000', '6.136364', '6.136364', '5.578515', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000', '0.000000', '0.000000', '0.000000', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2016-09-27 09:34:53', '2016-09-27 09:34:53', 2, 1, '2.50'),
-(2, '85PNEDXSI', 1, 1, 0, 1, 88, 0, 2, 1, 0, 0, 3, '-1', '', '1.000000', NULL, 0, 0, NULL, 0, NULL, '0.000000', '0.000000', '0.000000', '0.620000', '0.620000', '0.545455', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000', '0.000000', '0.000000', '0.000000', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2016-09-27 09:34:57', '2016-09-27 09:34:57', 2, 1, '0.50');
-
--- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `fcs_order_detail`

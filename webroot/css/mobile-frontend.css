@@ -309,5 +309,7 @@
     body.carts.detail .cart:not(#cart) .image {
         margin-top: 0;
     }
-
+    body.carts.detail .cart:not(#cart) .input.checkbox label {
+        font-size: 13px;
+    }
 }

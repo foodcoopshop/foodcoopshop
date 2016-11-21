@@ -46,9 +46,10 @@ foodcoopshop.Cart = {
     },
 
     initCartFinish: function() {
-        $('#inner-content a.btn-success').on('click', function() {
+        $('#inner-content button.btn-success').on('click', function() {
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
+            $(this).closest('form').submit();
         });
     },
 

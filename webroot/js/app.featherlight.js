@@ -47,6 +47,16 @@ foodcoopshop.AppFeatherlight = {
 
     },
 
+    initLightboxForHref: function(container) {
+    	  var configuration = this.initLightbox({
+    		  afterContent : function() {
+    			  $('.featherlight-inner').addClass('href');
+    			  foodcoopshop.AppFeatherlight.setMaxHeightInner();
+    		  }
+    	  });
+          $(container).featherlight(configuration);
+    },
+    
     initLightboxForImages: function(container) {
 
         var configuration = this.initLightbox({
