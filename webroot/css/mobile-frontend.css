@@ -247,6 +247,7 @@
     .sb-right {
         color: #333 ! important;
     }
+    
 }
 
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
@@ -291,6 +292,22 @@
     }
     .sb-slidebar {
        width: 55% ! important;
+    }
+    .carts.detail span.product-name-wrapper {
+        float: none;    
+    }
+    body.carts.detail .cart:not(#cart) .product {
+        padding-top: 10px;
+    }
+    body.carts.detail .cart:not(#cart) span.amount {
+        margin-left: -8px;
+        padding-right: 100px; /* to move short products names to next row */
+    }
+    body.carts.detail .cart:not(#cart) span.right {
+        position: static;
+    }
+    body.carts.detail .cart:not(#cart) .image {
+        margin-top: 0;
     }
 
 }

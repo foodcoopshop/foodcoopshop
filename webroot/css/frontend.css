@@ -381,7 +381,7 @@ body.blog_posts.index .blog-post-wrapper,
 }
 .product-wrapper div.second-column {
 	overflow: hidden;
-	word-wrap: break-word; /* for long links in text */
+	word-wrap: break-word;
 }
 .blog-post-wrapper div.second-column {
 	min-height: 148px;
@@ -633,6 +633,9 @@ body.manufacturers.detail img.manufacturer-logo {
 #cart .shop-order-customer-info a {
     margin-top: 3px;
 }
+#cart p.products span.product span:not(:first-of-type) {
+    margin-right: 3px;
+}
 .cart p.no-products {
     margin-bottom: 20px;
 }
@@ -647,9 +650,6 @@ body.manufacturers.detail img.manufacturer-logo {
 	width: 100%;
 	float: left;
 }
-.cart p.products span.product span:not(:first-of-type) {
-	margin-right: 3px;
-}
 .cart p.sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
 .cart b.payment {
@@ -662,7 +662,6 @@ body.manufacturers.detail img.manufacturer-logo {
 	float: right;
 }
 .cart a.product-name {
-	float: left;
 	margin-right: 3px;
 }
 .cart span.product-name-wrapper span.unity {
@@ -686,6 +685,9 @@ body.manufacturers.detail img.manufacturer-logo {
 .cart span.product-name-wrapper {
 	float: left;
 	width: 185px; /* consider scrollbar! */
+}
+.cart span.product-name-wrapper a {
+    word-wrap: break-word;
 }
 .cart span.right {
 	float: right;
@@ -738,12 +740,12 @@ body.carts.detail .cart:not(#cart) span.right .delete {
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     font-size: 13px;
-    margin-left: 5px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
 	display: block;
-	float: none;
+	float: left;
+	width: 100%;
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {

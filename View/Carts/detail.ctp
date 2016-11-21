@@ -24,7 +24,7 @@ $this->element('addScript', array('script' =>
 
 	<p class="no-products">Dein Warenkorb ist leer.</p>
     <p class="products"></p>
-    <p class="sum-wrapper"><b>Warenwert gesamt (inkl. Umsatzsteuer)</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+    <p class="sum-wrapper"><b>Warenwert gesamt (inkl. USt.)</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php if ($appAuth->Cart->getDepositSum() > 0) { ?>
     	<p class="deposit-sum-wrapper"><b>+ Pfand gesamt</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php } ?>
