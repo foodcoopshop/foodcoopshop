@@ -40,14 +40,14 @@ $this->element('addScript', array('script' =>
     
     <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     
-    <p>Um die Bestellung abzuschließen, akzeptiere bitte AGB und den Ausschluss des Rücktrittsrechts und klicke dann auf "Zahlungspflichtig bestellen",
+    <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
     
 <?php
 
     if ($this->Html->paymentIsCashless()) {
-        echo 'der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
+        echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
     } else {
-        echo 'den Betrag bitte bei der Abholung in bar bezahlen.</p>';
+        echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
     }
  
     echo $this->Form->create('Order', array(
