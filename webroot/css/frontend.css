@@ -740,11 +740,16 @@ body.carts.detail .cart:not(#cart) .input.checkbox {
     float: right;
     line-height: 26px;
     margin-top: -10px;
+    margin-right: -10px;
+}
+body.carts.detail .cart:not(#cart) .input.checkbox label {
+	margin-right: 10px;
 }
 body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
 	margin-left: -10px ! important;
 	width: 100% ! important;
 	font-size: 14px;
+	text-align: right;
 }
 body.carts.detail .cart:not(#cart) .input.checkbox input[type="checkbox"] {
 	margin-left: -10px;
@@ -816,7 +821,8 @@ body.carts.detail .cart:not(#cart) .product {
 	padding-top: 40px;
 }
 body.carts.detail .cart:not(#cart) .products {
-	max-height: none; 
+	max-height: none;
+	overflow-x: hidden; /* error wrapper tricky to style */
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
@@ -836,9 +842,10 @@ body.carts.detail .cart:not(#cart) .product.error a {
 }
 body.carts.detail .cart:not(#cart) ul.error-message {
     width: 102%;
-    padding: 10px 10px 10px 40px;
+    padding: 15px 10px 10px 40px;
     float: left;
     margin-left: -10px;
+    margin-top: -10px;
 }
 body.carts.detail .cart:not(#cart) .btn-success {
     font-size: 18px;
