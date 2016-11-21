@@ -84,6 +84,14 @@ class CakeCart extends AppModel
             }
             
             $productImage = Configure::read('htmlHelper')->image(Configure::read('htmlHelper')->getProductImageSrc($imageId, $imageLegend, 'home'));
+            $productLink = Configure::read('htmlHelper')->link(
+                $cartProduct['ProductLang']['name'],
+                Configure::read('slugHelper')->getProductDetail(
+                    $cartProduct['CakeCartProduct']['id_product'],
+                    $cartProduct['ProductLang']['name']
+                ),
+                array('class' => 'product-name')
+            );
             
             if (isset($cartProduct['ProductAttribute']['ProductAttributeCombination'])) {
                 
@@ -92,6 +100,7 @@ class CakeCart extends AppModel
                     'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
                     'productId' => $cartProduct['CakeCartProduct']['id_product'] . '-' . $cartProduct['CakeCartProduct']['id_product_attribute'],
                     'productName' => $cartProduct['ProductLang']['name'],
+                    'productLink' => $productLink,
                     'unity' => $cartProduct['ProductAttribute']['ProductAttributeCombination']['AttributeLang']['name'],
                     'amount' => $cartProduct['CakeCartProduct']['amount'],
                     'manufacturerLink' => $manufacturerLink,
@@ -116,6 +125,7 @@ class CakeCart extends AppModel
                     'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
                     'productId' => $cartProduct['CakeCartProduct']['id_product'],
                     'productName' => $cartProduct['ProductLang']['name'],
+                    'productLink' => $productLink,
                     'unity' => $cartProduct['Product']['ProductShop']['unity'],
                     'amount' => $cartProduct['CakeCartProduct']['amount'],
                     'manufacturerLink' => $manufacturerLink,

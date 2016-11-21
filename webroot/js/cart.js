@@ -28,7 +28,7 @@ foodcoopshop.Cart = {
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             $('.cart p.products').append(
-                this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productName, cp.unity, cp.manufacturerLink, cp.image, cp.deposit, cp.tax)
+                this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity, cp.manufacturerLink, cp.image, cp.deposit, cp.tax)
             );
             sum += cp.price;
             depositSum += cp.deposit;
@@ -40,6 +40,9 @@ foodcoopshop.Cart = {
 
         foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
         $('.cart p.products').show();
+        
+        foodcoopshop.AppFeatherlight.initLightboxForImages('.cart .products a.image');
+
     },
 
     initCartFinish: function() {
@@ -106,7 +109,7 @@ foodcoopshop.Cart = {
             $('#cart p.products').show();
 
             var productWrapper = $(this).closest('.product-wrapper');
-            var productName = productWrapper.find('.heading h4 a').html();
+            var productLink = productWrapper.find('.heading h4').html();
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
             var price = foodcoopshop.Helper.getEuroAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             var tax = foodcoopshop.Helper.getEuroAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
@@ -137,7 +140,7 @@ foodcoopshop.Cart = {
             } else {
                 // product not yet in cart
                 $('#cart p.products').append(
-                    foodcoopshop.Cart.getCartProductHtml(productId, amount, amount * price, productName, unity, '', '', 0, tax)
+                    foodcoopshop.Cart.getCartProductHtml(productId, amount, amount * price, productLink, unity, '', '', 0, tax)
                 );
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function() {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
@@ -259,13 +262,19 @@ foodcoopshop.Cart = {
         });
     },
 
-    getCartProductHtml: function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax) {
+    getCartProductHtml: function(productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax) {
+    	
+    	var imgHtml = '<span class="image">' + image + '</span>';
+    	if (!$(image).attr('src').match(/de\-default\-home/)) {
+    		imgHtml = '<a href="'  + $(image).attr('src').replace(/\-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
+    	}
         return '<span data-product-id="' + productId + '" class="product' + ' ' + productId + '">' +
-                '<span class="image">' + image + '</span>' +
+                imgHtml + 
                 '<span class="amount"><span class="value">' + amount + '</span>x</span>' +
-                '<span class="product-name">' + productName +
-                '<span class="unity">' + unity + '</span>' +
-            '</span>' +
+                '<span class="product-name-wrapper">' + 
+                	productLink + 
+                	'<span class="unity">' + unity + '</span>' +
+            '</span>' + 
             '<span class="manufacturer-link">' + manufacturerLink + '</span>' +
             '<span class="right">' +
                 '<span class="delete"><a class="btn" title="Aus dem Warenkorb löschen?" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +

@@ -661,7 +661,11 @@ body.manufacturers.detail img.manufacturer-logo {
 .cart p.products span.product span.price {
 	float: right;
 }
-.cart span.product-name span.unity {
+.cart a.product-name {
+	float: left;
+	margin-right: 3px;
+}
+.cart span.product-name-wrapper span.unity {
 	margin-left: 2px;
 	color: #515151;
 	font-size: 11px;
@@ -671,7 +675,7 @@ body.manufacturers.detail img.manufacturer-logo {
 	margin-right: 3px;
 }
 .cart span.manufacturer-link,
-.cart span.image,
+.cart .image,
 .cart span.deposit,
 .cart p.deposit-sum-wrapper,
 .cart p.tax-sum-wrapper,
@@ -679,7 +683,7 @@ body.manufacturers.detail img.manufacturer-logo {
     float: left;
     display: none;
 }
-.cart span.product-name {
+.cart span.product-name-wrapper {
 	float: left;
 	width: 185px; /* consider scrollbar! */
 }
@@ -715,7 +719,7 @@ a.btn.btn-success:hover,
 a.btn.btn-success:hover i {
 	color: #d6d4d4 ! important;
 }
-body.carts.detail .cart:not(#cart) span.product-name {
+body.carts.detail .cart:not(#cart) span.product-name-wrapper {
 	width: 240px;
 }
 body.carts.detail .cart:not(#cart) span.amount {
@@ -732,7 +736,7 @@ body.carts.detail .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name span.unity {
+body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     font-size: 13px;
     margin-left: 5px;
 }
@@ -759,7 +763,7 @@ body.carts.detail .cart:not(#cart) span.deposit {
 	clear: both;
 	margin-right: 25px;
 }
-body.carts.detail .cart:not(#cart) span.image {
+body.carts.detail .cart:not(#cart) .image {
     display: inline;
     text-align: center;
     float: left;
@@ -769,7 +773,7 @@ body.carts.detail .cart:not(#cart) span.image {
     width: 120px;
     margin-top: -30px;
 }
-body.carts.detail .cart:not(#cart) span.image img {
+body.carts.detail .cart:not(#cart) .image img {
     width: 100px;
 }
 body.carts.detail .cart:not(#cart) {
