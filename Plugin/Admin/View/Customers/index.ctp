@@ -96,7 +96,7 @@ foreach ($customers as $customer) {
     
     $i ++;
     
-    if (Configure::read('app.isDepositPaymentCashless')) {
+    if ($this->Html->paymentIsCashless()) {
         $sumPaymentsDepositDelta += $customer['payment_deposit_delta'];
     }
     
