@@ -58,7 +58,7 @@ foodcoopshop.Cart = {
         }
     },
 
-    updateExistingProduct: function(productContainer, amount, price, deposit) {
+    updateExistingProduct: function(productContainer, amount, price, deposit, tax) {
 
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
@@ -84,6 +84,15 @@ foodcoopshop.Cart = {
             oldDeposit.html(foodcoopshop.Helper.formatFloatAsEuro(newDeposit));
             foodcoopshop.Helper.applyBlinkEffect(oldDeposit);
         }
+        
+        // update tax
+        var oldTax = productContainer.find('span.tax');
+        var newTax = (
+            foodcoopshop.Helper.getEuroAsFloat(oldTax.html()) +
+            (tax * amount)
+        );
+        oldTax.html(foodcoopshop.Helper.formatFloatAsEuro(newTax));
+        
     },
 
     initAddToCartButton: function() {
@@ -226,7 +235,7 @@ foodcoopshop.Cart = {
                     onOk: function(data) {
                         foodcoopshop.Helper.removeSpinnerFromButton(button, elementClass.replace(/fa /, ''));
                         foodcoopshop.Helper.enableButton(button);
-                        foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit);
+                        foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax);
                         foodcoopshop.Cart.updateCartSum(newPrice * amount);
                         foodcoopshop.Cart.updateCartTaxSum(newTax * amount);
                         if (depositContainer.length > 0) {
