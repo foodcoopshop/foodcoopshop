@@ -63,8 +63,10 @@ foodcoopshop.AppFeatherlight = {
             type: 'image',
             onResize: function() {
                 var content = $('.featherlight-content');
-                content.css('max-height', $(window).height() - 20)
-                content.find('img').css('height', content.height());
+                content.css('max-height', $(window).height() - 20);
+                var img = content.find('img'); 
+                img.css('height', content.height());
+                content.css('width', img.width() + 10);
             }
         });
 
