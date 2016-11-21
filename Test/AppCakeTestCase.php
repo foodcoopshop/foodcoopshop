@@ -116,7 +116,7 @@ class AppCakeTestCase extends CakeTestCase
         $ph = new AppPasswordHasher();
         $sql = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
         $params = array(
-            'passwd' => $ph->hash('foodcoopshop')
+            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
         );
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
