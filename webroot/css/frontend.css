@@ -738,8 +738,8 @@ body.carts.detail .cart:not(#cart) .input.checkbox {
     margin-top: -10px;
 }
 body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
-	margin-left: -10px;
-	width: 100%;
+	margin-left: -10px ! important;
+	width: 100% ! important;
 	font-size: 14px;
 }
 body.carts.detail .cart:not(#cart) .input.checkbox input[type="checkbox"] {

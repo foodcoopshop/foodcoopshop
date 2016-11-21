@@ -247,7 +247,9 @@
     .sb-right {
         color: #333 ! important;
     }
-    
+    body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
+        font-size: 12px;
+    }
 }
 
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
@@ -312,4 +314,4 @@
     body.carts.detail .cart:not(#cart) .input.checkbox label {
         font-size: 13px;
     }
-}
+ }

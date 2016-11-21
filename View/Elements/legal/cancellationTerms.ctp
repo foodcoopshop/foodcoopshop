@@ -1,8 +1,8 @@
-<h1>Informationen zur Ausübung des Widerrufsrechts</h1>
+<h1>Informationen zur Ausübung des Rücktrittsrechts</h1>
 
 <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
  
-<h2>Die Widerrufsfrist beträgt vierzehn Tage</h2>
+<h2>Die Rücktrittsfrist beträgt vierzehn Tage</h2>
 
 <p>a) im Falle eines Dienstleistungsvertrags oder von digitalen Inhalten, die nicht auf einem körperlichen Datenträger geliefert werden: ab dem Tag des Vertragsabschlusses.</p>
 <p>b) im Falle eines Kaufvertrags: ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen haben bzw. hat.</p>

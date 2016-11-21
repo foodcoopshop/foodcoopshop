@@ -62,11 +62,11 @@ $this->element('addScript', array('script' =>
             'label' => 'Ich akzeptiere die <a href="#general-terms-and-conditions">AGB</a>',
             'type' => 'checkbox'
         ));
-        echo '<div id="cancellation-not-possible" class="featherlight-overlay">';
-            echo $this->element('legal/cancellationNotPossible');
+        echo '<div id="cancellation-terms" class="featherlight-overlay">';
+            echo $this->element('legal/cancellationTerms');
         echo '</div>';
         echo $this->Form->input('Order.cancellation_terms_accepted', array(
-            'label' => 'Ich akzeptiere den <a href="#cancellation-not-possible">Ausschluss des Rücktrittsrechts</a>',
+            'label' => 'Ich akzeptiere den <a href="#cancellation-terms">Ausschluss des Rücktrittsrechts</a>',
             'type' => 'checkbox'
         ));
     ?>
