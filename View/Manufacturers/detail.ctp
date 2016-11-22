@@ -89,48 +89,6 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
     
     echo '<div class="imprint">';
         echo '<h2>Impressum</h2>';
-        $imprintLines = array();
-        $imprintLines[] = '<b>'.$manufacturer['Manufacturer']['name'].'</b>';
-        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['name']) {
-            $imprintLines[] = $manufacturer['Address']['name'];
-        }
-        $address = $manufacturer['Address']['address1'];
-        if ($manufacturer['Address']['address2'] != '') {
-            $address .= ' / ' . $manufacturer['Address']['address2'];
-        }
-        $imprintLines[] = $address;
-        if (!($manufacturer['Address']['postcode'] == '' || $manufacturer['Address']['city'] == '')) {
-            $imprintLines[] = @$manufacturer['Address']['postcode'] . ' ' . @$manufacturer['Address']['city'];
-        }
-        if ($manufacturer['Address']['phone_mobile'] != '') {
-            $imprintLines[] = 'Mobil: ' . $manufacturer['Address']['phone_mobile'];
-        }
-        if ($manufacturer['Address']['phone'] != '') {
-            $imprintLines[] = 'Telefon: ' . $manufacturer['Address']['phone'];
-        }
-        $imprintLines[] = 'E-Mail: ' . StringComponent::hide_email($manufacturer['Address']['email']);
-        if ($manufacturer['Manufacturer']['homepage'] != '') {
-            $imprintLines[] = 'Homepage: ' . $this->Html->link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], array('options' => array('target' => '_blank')));
-        }
-        $imprintLines[] = ''; // new line
-        if ($manufacturer['Manufacturer']['uid_number'] != '') {
-            $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturer']['uid_number'];
-        }
-        
-        if ($manufacturer['Manufacturer']['firmenbuchnummer'] != '') {
-            $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturer']['firmenbuchnummer'];
-        }
-        if ($manufacturer['Manufacturer']['firmengericht'] != '') {
-            $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturer']['firmengericht'];
-        }
-        if ($manufacturer['Manufacturer']['aufsichtsbehoerde'] != '') {
-            $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturer']['aufsichtsbehoerde'];
-        }
-        if ($manufacturer['Manufacturer']['kammer'] != '') {
-            $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturer']['kammer'];
-        }
-        
-        echo '<p>'.implode('<br />', $imprintLines).'</p>';
-//         pr($manufacturer);
+        echo $this->Html->getManufacturerImprint($manufacturer, 'html');
     echo '</div>';
 ?>

@@ -1,4 +1,19 @@
-<h1>Informationen zur Ausübung des Rücktrittsrechts</h1>
+<?php
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.1.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+ ?>
+ <h1>Informationen zur Ausübung des Rücktrittsrechts</h1>
 
 <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
  
@@ -10,7 +25,7 @@
 <p>d) im Falle eines Vertrags über die Lieferung einer Ware in mehreren Teilsendungen oder Stücken: an dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die letzte Teilsendung oder das letzte Stück in Besitz genommen haben bzw. hat.</p>
 <p>e) im Falle eines Vertrags zur regelmäßigen Lieferung von Waren über einen festgelegten Zeitraum hinweg: an dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die erste Ware in Besitz genommen haben bzw. hat.</p>
 
-<p>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns ([Bitte den Lieferanten, samt Anschrift und E-Mail bzw. Faxnummer ergänzen]) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief, Telefax oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
+<p>Um Ihr Widerrufsrecht auszuüben, müssen Sie den Lieferanten mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief, Telefax oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
 
 
 <h2>Folgen des Widerrufs</h2>

@@ -29,6 +29,24 @@ class CartsController extends FrontendController
     {
         $this->set('title_for_layout', 'Dein Warenkorb');
     }
+    
+    /**
+     * called from finish context
+     * @param array $order
+     * @param array $orderDetails
+     */
+    private function generateCancellationForm($order, $products)
+    {
+        $this->set('order', $order);
+        $manufacturers = array();
+        foreach($products as $product) {
+            $manufacturers[$product['Manufacturer']['id_manufacturer']][] = $product;
+        }
+        $this->set('manufacturers', $manufacturers);
+        $this->set('saveParam', 'F');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        $this->render('generateCancellationForm');
+    }
 
     public function finish()
     {
@@ -64,6 +82,7 @@ class CartsController extends FrontendController
         
         $cartErrors = array();
         $orderDetails2save = array();
+        $products = array();
         
         foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
             
@@ -75,6 +94,7 @@ class CartsController extends FrontendController
                     'Product.id_product' => $ids['productId']
                 )
             ));
+            $products[] = $product;
             
             $stockAvailableQuantity = $product['StockAvailable']['quantity'];
             
@@ -257,18 +277,21 @@ class CartsController extends FrontendController
             }
             // END update stock available
             
-            $this->AppAuth->Cart->markAsSaved();
+//             $this->AppAuth->Cart->markAsSaved();
             
             $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
             
             // send confirmation email to customer
+            $this->generateCancellationForm($order, $products);
+            $cancellationFormPDF = Configure::read('htmlHelper')->getCancellationFormLink($this->AppAuth, $order);
             $email = new AppEmail();
             $email->template('customer_order_successful')
                 ->emailFormat('html')
                 ->to($this->AppAuth->getEmail())
                 ->subject('Bestellbestätigung')
+                ->attachments(array($cancellationFormPDF))
                 ->viewVars(array(
                 'cart' => $cart,
                 'appAuth' => $this->AppAuth,
