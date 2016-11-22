@@ -155,11 +155,11 @@ class CartsController extends FrontendController
         
         $this->loadModel('Order');
         $checkboxErrors = false;
-        if ($this->request->data['Order']['general_terms_and_conditions_accepted'] != 1) {
+        if (!isset($this->request->data['Order']['general_terms_and_conditions_accepted']) || $this->request->data['Order']['general_terms_and_conditions_accepted'] != 1) {
             $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
             $checkboxErrors = true;
         }
-        if ($this->request->data['Order']['cancellation_terms_accepted'] != 1) {
+        if (!isset($this->request->data['Order']['cancellation_terms_accepted']) || $this->request->data['Order']['cancellation_terms_accepted'] != 1) {
             $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere den Ausschluss des Rücktrittsrechts.');
             $checkboxErrors = true;
         }
