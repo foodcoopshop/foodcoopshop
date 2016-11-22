@@ -23,14 +23,13 @@
 
 <div class="second-column">
 	<h2>Kontakt</h2>
-	<p><i class="fa fa-map-marker fa-2x fa-fw"></i> <span><?php
-	   $address = explode("\n", Configure::read('app.addressForPdf'));
-	   $address = array_filter($address); // remove empty elements
-	   $email = array_pop($address); // remove last element
-	   echo implode(', ', $address);
+	<p><i class="fa fa-map-marker fa-2x fa-fw"></i> <span>
+	<?php
+	   echo Configure::read('app.name').', ';
+	   echo implode(', ', $this->Html->getAddressFromAddressConfiguration());
 	?></span></p>
 	<?php
-	   echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hide_email($email).'</span></p>';
+	   echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hide_email($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
 	   if (Configure::read('app.db_config_FCS_FACEBOOK_URL') != '') { ?>
     	<p>
     		<a target="_blank" href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>

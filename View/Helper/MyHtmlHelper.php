@@ -29,6 +29,25 @@ class MyHtmlHelper extends HtmlHelper
     {
         return sprintf('%0'.$maxDigits.'d', $number);
     }
+    
+    /**
+     * @return string
+     */
+    public function getAddressFromAddressConfiguration() {
+        $address = explode("\n", Configure::read('app.addressForPdf'));
+        $address = array_filter($address); // remove empty elements
+        array_shift($address); // remove first element - usually same as app.name
+        array_pop($address); // remove last element - usually email address
+        return $address;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getEmailFromAddressConfiguration() {
+        $address = explode("\n", Configure::read('app.addressForPdf'));
+        return end($address);
+    }
 
     public function getMenuTypes()
     {
