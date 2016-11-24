@@ -13,4 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<h1>Coming soon...</h1>
+<?php
+$this->element('addScript', array('script' =>
+    Configure::read('app.jsNamespace').".Helper.init();"
+));
+echo $this->element('legal/privacyPolicy');
+?>

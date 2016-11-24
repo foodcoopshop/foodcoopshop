@@ -16,6 +16,8 @@
 <div class="first-column">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
+        $menu[] = array('name' => 'Nutzungsbedingungen', 'slug' => '/nutzungsbedingungen');
+        $menu[] = array('name' => 'Datenschutzerklärung', 'slug' => '/datenschutzerklaerung');
         echo '<h2>Informationen</h2>';
         echo $this->Menu->render($menu, array('id' => 'footer-menu', 'class' => 'menu'));
     ?>

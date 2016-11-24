@@ -93,4 +93,15 @@ class PagesController extends FrontendController
         $this->set('page', $page);
         $this->set('title_for_layout', $page['PageLang']['meta_title']);
     }
+    
+    public function terms_of_use()
+    {
+        $this->set('title_for_layout', 'Nutzungsbedingungen');
+    }
+    
+    public function privacy_policy() 
+    {
+        $this->set('title_for_layout', 'Datenschutzerklärung');
+    }
+    
 }

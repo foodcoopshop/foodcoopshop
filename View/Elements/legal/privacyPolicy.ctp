@@ -1,0 +1,56 @@
+<?php
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.1.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+?>
+<h1>Datenschutzerklärung</h1>
+
+<h2>1. Allgemeines</h2>
+
+<p>1.1. Die Webseiten des FoodCoopShops, erreichbar unter der Domain <?php echo Configure::read('app.cakeServerName'); ?>, werden vom Verein <b><?php echo Configure::read('app.name'); ?></b>, <?php echo implode(', ', $this->Html->getAddressFromAddressConfiguration()); ?>, als Diensteanbieter (im Folgenden „Website“) betrieben. Medieninhaber und Herausgeber der Website [Bitte ergänzen] ist der Verein [Bitte ergänzen].</p>
+
+<p>1.2. Der Schutz und die Sicherheit Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Die Website speichert und verarbeitet Daten daher ausschließlich im Sinne des österreichischen Datenschutzgesetzes 2000. Sie als Nutzer stimmen der Datenverarbeitung im Sinne dieser Erklärung zu.</p>
+
+<p>1.3. Auf der Website werden automatisiert keine direkt personenbezogenen Daten ermittelt. Das heißt: Nur durch Ihre aktive Eingabe von (beispielsweise) Namen, Adresse etc. geben Sie der Website diese Daten bekannt.</p> 
+
+<p>1.4. Die Website erstellt keine personenbezogenen Nutzerprofile.</p>
+
+<h2>2. Gespeicherte Daten:</h2>
+
+<p>2.1. Die Website speichert und verarbeitet folgende personenbezogene Daten, wenn Sie unsere Website besuchen:</p>
+
+<p>2.1.1. Serverlogs: Die IP-Adresse des Anfragenden Computers, gemeinsam mit dem Datum, der Uhrzeit, der Anfrage, welche Datei angefragt wird (Name und URL), welche Datenmenge an Sie übertragen wird, eine Meldung, ob die Anfrage erfolgreich war, Erkennungsdaten des verwendeten Browsers und des verwendeten Betriebssystems, sowie die Website, von der der Zugriff erfolgte (sollte der Zugriff über einen Link erfolgen). Die Serverlogs werden gespeichert, um die Systemsicherheit prüfen zu können, die Website technisch administrieren, sowie das Angebot optimieren zu können. Diese Daten werden – sollte es einen Hackangriff gegeben haben – an die Strafverfolgungsbehörden weitergeben. Eine darüberhinausgehende Weitergabe an Dritte erfolgt nicht. Die Serverlogs werden für maximal ein Monat gespeichert.</p> 
+
+<p>2.1.2. Cookies: Cookies sind kleine Textdateien, die die Website auf Ihrem Computer speichert, um diesen wiederzuerkennen. Die in den Cookies enthaltenen Informationen werden verwendet, um festzustellen, ob Sie eingeloggt sind, oder welche Daten sie bereits eingegeben haben, Informationen über die Nutzung der Gratis-Tests und Richtlinien. Bei den meisten Web-Browsern werden Cookies automatisch akzeptiert. Durch Änderung der Einstellungen Ihres Browsers können Sie dies vermeiden. Sie können auf Ihrem PC gespeicherte Cookies jederzeit durch Löschen der temporären Internetdateien entfernen.</p> 
+
+<p>Konkret werden folgende Cookies gespeichert über die jeweilige Session hinaus gespeichert:</p>
+
+<p>[Bitte Namen, Zweck und Speicherdauer ergänzen]</p> 
+
+<p>2.2. Die Website speichert und verwendet darüber hinaus automatisiert keine Daten.</p>
+
+<h2>3. Über die Website eingegebenen Daten</h2>
+
+Sollten Sie im Rahmen der Website Daten eingeben, verarbeiten wir Ihre Daten wie folgt:</p>
+
+<p>3.1. Daten über die Bestellungen: Jene Daten, welche Sie im Rahmen Ihrer Anmeldung sowie im Rahmen der Bestellungen bekanntgegeben haben, werden ausschließlich für die Abwicklung der Bestellung verwendet. Die Daten werden für die Dauer von sieben Jahren gespeichert.</p>
+
+<p>3.2. Newsletter: Jene Daten, welche Sie im Rahmen der Newsletter-Anmeldung eingetragen haben, werden von uns gespeichert und ausschließlich zur Zusendung von Newslettern per E-Mail verwendet. Eine Weitergabe der Daten an Dritte erfolgt nicht. Sie können einen bei uns abonnierten Newsletter jederzeit abbestellen. Die personenbezogenen Daten werden gespeichert und für den Newsletteversand verwendet, bis Sie sich abmelden.</p>
+
+<h2>4. Widerspruchsrecht</h2>
+
+<p>4.1. Jeder Nutzer der Website hat das Recht, die Speicherung seiner personenbezogenen Daten zu verweigern, der Nutzer und seine Daten werden in diesem Fall gelöscht, sofern keine gesetzliche Verpflichtung zur Speicherung der Daten besteht.</p>
+
+<h2>5. Datenverwendung</h2>
+
+<p>5.1. Die Website verpflichtet sich zur Absicherung der Daten gegen unberechtigten Zugriff gemäß dem Datenschutzgesetz 2000 (DSG). Die Website speichert und nutzt die vom Nutzer eingegeben und übermittelten Daten ausschließlich im hier genannten Umfang. Mit Löschung des Nutzers werden sämtliche personenbezogenen Daten des Nutzers gelöscht.</p>
