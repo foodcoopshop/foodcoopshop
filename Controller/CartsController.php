@@ -48,6 +48,12 @@ class CartsController extends FrontendController
         $this->render('generateCancellationForm');
     }
 
+    public function generateCancellationInformationPdf() {
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        $this->render('generateCancellationForm');
+    }
+    
     public function finish()
     {
         
@@ -285,7 +291,7 @@ class CartsController extends FrontendController
             
             // send confirmation email to customer
             $this->generateCancellationForm($order, $products);
-            $cancellationFormPDF = Configure::read('htmlHelper')->getCancellationFormLink($this->AppAuth, $order);
+            $cancellationFormPDF = Configure::read('htmlHelper')->getCancellationFormLink($order);
             $email = new AppEmail();
             $email->template('customer_order_successful')
                 ->emailFormat('html')

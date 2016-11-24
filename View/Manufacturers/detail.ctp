@@ -89,6 +89,6 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
     
     echo '<div class="imprint">';
         echo '<h2>Impressum</h2>';
-        echo $this->Html->getManufacturerImprint($manufacturer, 'html');
+        echo $this->Html->getManufacturerImprint($manufacturer, 'html', false);
     echo '</div>';
 ?>

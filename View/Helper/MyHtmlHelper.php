@@ -30,9 +30,14 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
     
-    public function getCancellationFormLink($appAuth, $order)
+    public function getCancellationFormLink($order=null)
     {
-        return TMP.'ruecktrittsformular-'.StringComponent::slugify($appAuth->getUsername()).'-'.$order['Order']['id_order'].'-'.Configure::read('timeHelper')->formatToDateShort($order['Order']['date_add']).'.pdf';
+        $filenamePart1 = 'Informationen-ueber-Ruecktrittsrecht';
+        $filenamePart2 = '';
+        if (!is_null($order)) {
+            $filenamePart2 = '-und-Ruecktrittsformular-Bestellnummer-'.$order['Order']['id_order'].'-'.Configure::read('timeHelper')->formatToDateShort($order['Order']['date_add']);
+        }
+        return TMP.$filenamePart1.$filenamePart2.'.pdf';
     }
     
     /**
@@ -40,7 +45,7 @@ class MyHtmlHelper extends HtmlHelper
      * @param string $outputType "pdf" of "html"
      * @return string
      */
-    public function getManufacturerImprint($manufacturer, $outputType)
+    public function getManufacturerImprint($manufacturer, $outputType, $addressOnly)
     {
         if (!isset($manufacturer['Manufacturer'])) {
             $manufacturer['Manufacturer'] = $manufacturer;
@@ -65,25 +70,28 @@ class MyHtmlHelper extends HtmlHelper
             $imprintLines[] = 'Telefon: ' . $manufacturer['Address']['phone'];
         }
         $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hide_email($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
-        if ($manufacturer['Manufacturer']['homepage'] != '') {
-            $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], array('options' => array('target' => '_blank'))) : $manufacturer['Manufacturer']['homepage']);
-        }
-        $imprintLines[] = ''; // new line
-        if ($manufacturer['Manufacturer']['uid_number'] != '') {
-            $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturer']['uid_number'];
-        }
         
-        if ($manufacturer['Manufacturer']['firmenbuchnummer'] != '') {
-            $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturer']['firmenbuchnummer'];
-        }
-        if ($manufacturer['Manufacturer']['firmengericht'] != '') {
-            $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturer']['firmengericht'];
-        }
-        if ($manufacturer['Manufacturer']['aufsichtsbehoerde'] != '') {
-            $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturer']['aufsichtsbehoerde'];
-        }
-        if ($manufacturer['Manufacturer']['kammer'] != '') {
-            $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturer']['kammer'];
+        if (!$addressOnly) {
+            if ($manufacturer['Manufacturer']['homepage'] != '') {
+                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], array('options' => array('target' => '_blank'))) : $manufacturer['Manufacturer']['homepage']);
+            }
+            $imprintLines[] = ''; // new line
+            if ($manufacturer['Manufacturer']['uid_number'] != '') {
+                $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturer']['uid_number'];
+            }
+            
+            if ($manufacturer['Manufacturer']['firmenbuchnummer'] != '') {
+                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturer']['firmenbuchnummer'];
+            }
+            if ($manufacturer['Manufacturer']['firmengericht'] != '') {
+                $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturer']['firmengericht'];
+            }
+            if ($manufacturer['Manufacturer']['aufsichtsbehoerde'] != '') {
+                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturer']['aufsichtsbehoerde'];
+            }
+            if ($manufacturer['Manufacturer']['kammer'] != '') {
+                $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturer']['kammer'];
+            }
         }
         return '<p>'.implode('<br />', $imprintLines).'</p>';
     }

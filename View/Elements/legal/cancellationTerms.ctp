@@ -12,11 +12,13 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
- ?>
- <h1>Informationen zur Ausübung des Rücktrittsrechts</h1>
+?>
+<h1>Informationen zur Ausübung des Rücktrittsrechts</h1>
 
 <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
  
+<p><b>Sie haben kein Rücktrittsrecht bei Waren, die schnell verderben können oder deren Verfallsdatum schnell überschritten würde, sowie bei Waren, die versiegelt geliefert werden und aus Gründen des Gesundheitsschutzes oder aus Hygienegründen nicht zur Rückgabe geeignet sind und deren Versiegelung nach der Lieferung entfernt wurde.</b></p>
+
 <h2>Die Rücktrittsfrist beträgt vierzehn Tage</h2>
 
 <p>a) im Falle eines Dienstleistungsvertrags oder von digitalen Inhalten, die nicht auf einem körperlichen Datenträger geliefert werden: ab dem Tag des Vertragsabschlusses.</p>
@@ -41,5 +43,3 @@
 <p>Sie müssen für einen etwaigen Wertverlust der Waren nur aufkommen, wenn dieser Wertverlust auf einen zur Prüfung der Beschaffenheit, Eigenschaften und Funktionsweise der Waren nicht notwendigen Umgang mit ihnen zurückzuführen ist.</p>
 
 <p>Haben Sie verlangt, dass die Dienstleistungen während der Widerrufsfrist beginnen soll, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</p>
-
-<p>Sie haben kein Rücktrittsrecht bei Waren, die schnell verderben können oder deren Verfallsdatum schnell überschritten würde, sowie bei Waren, die versiegelt geliefert werden und aus Gründen des Gesundheitsschutzes oder aus Hygienegründen nicht zur Rückgabe geeignet sind und deren Versiegelung nach der Lieferung entfernt wurde.</p>

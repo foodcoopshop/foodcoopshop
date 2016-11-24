@@ -34,6 +34,7 @@
 	Router::connect('/registrierung', array('controller' => 'customers', 'action' => 'login'));
 	Router::connect('/registrierung/abgeschlossen', array('controller' => 'customers', 'action' => 'registration_successful'));
 	Router::connect('/logout', array('controller' => 'customers', 'action' => 'logout'));
+	Router::connect('/Informationen-ueber-Ruecktrittsrecht', array('controller' => 'carts', 'action' => 'generateCancellationInformationPdf'));
 	
 	Router::connect('/neue-produkte', array('controller' => 'categories', 'action' => 'new_products'));
 	Router::connect('/neues-passwort-anfordern', array('controller' => 'customers', 'action' => 'new_password_request'));
