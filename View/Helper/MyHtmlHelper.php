@@ -43,7 +43,7 @@ class MyHtmlHelper extends HtmlHelper
      * @param array $order
      * @return string
      */
-    public function getCancellationFormPDFLink($order=null)
+    public function getCancellationInformationAndFormPDFLink($order=null)
     {
         $filenamePart1 = 'Informationen-ueber-Ruecktrittsrecht';
         $filenamePart2 = '';

@@ -102,8 +102,7 @@ if (!empty($manufacturers)) {
     
 }
 
-$filename = @$this->Html->getCancellationFormPDFLink($order);
-
+$filename = @$this->Html->getCancellationInformationAndFormPDFLink($order);
 
 if (file_exists($filename))
     unlink($filename);

@@ -52,16 +52,35 @@ class CartsController extends FrontendController
     /**
      * called from finish context
      * saves pdf as file
-     * @param array1 $order
-     * @param array $products
+     * @param array $order
+     * @param array $orderDetails
+     * @param array $orderDetailsTax
      */
-    private function generateOrderConfirmation($order, $products)
+    private function generateOrderConfirmation($order, $orderDetails, $orderDetailsTax)
     {
+        
+        $this->loadModel('Product');
         $this->set('order', $order);
         $manufacturers = array();
-        foreach($products as $product) {
-            $manufacturers[$product['Manufacturer']['id_manufacturer']][] = $product;
+        foreach($orderDetails as $orderDetail) {
+            $this->Product->recursive = 2;
+            $product = $this->Product->find('first', array(
+                'conditions' => array(
+                    'Product.id_product' => $orderDetail['OrderDetails']['product_id']
+                )
+            ));
+            // avoid extra db request and attach taxes manually to order details
+            foreach($orderDetailsTax as $tax) {
+                if ($tax['id_order_detail'] == $orderDetail['OrderDetails']['id_order_detail']) {
+                    $orderDetail['OrderDetails']['OrderDetailTax'] = $tax;
+                }
+            }
+            $manufacturers[$product['Product']['id_manufacturer']][] = array(
+                'OrderDetail' => $orderDetail['OrderDetails'],
+                'Manufacturer' => $product['Manufacturer']
+            );
         }
+        
         $this->set('manufacturers', $manufacturers);
         $this->set('saveParam', 'F');
         $this->RequestHandler->renderAs($this, 'pdf');
@@ -261,6 +280,7 @@ class CartsController extends FrontendController
                     'OrderDetails.id_order' => $orderId
                 )
             ));
+            
             if (empty($orderDetails)) {
                 $message = 'Bei der Erstellung der bestellten Artikel ist ein Fehler aufgetreten.';
                 $this->AppSession->setFlashError($message);
@@ -306,36 +326,37 @@ class CartsController extends FrontendController
             }
             // END update stock available
             
-//             $this->AppAuth->Cart->markAsSaved();
+            $this->AppAuth->Cart->markAsSaved();
             
             $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
             
-            // send confirmation email to customer
+            // START send confirmation email to customer
             $this->generateCancellationInformationAndForm($order, $products);
-            $cancellationFormPDF = Configure::read('htmlHelper')->getCancellationFormPDFLink($order);
+            $cancellationInformationAndFormPDF = Configure::read('htmlHelper')->getCancellationInformationAndFormPDFLink($order);
             
-//             $this->generateOrderConfirmation($order, $products);
-//             $orderConfirmationPDF = Configure::read('htmlHelper')->getOrderConfirmationPDFLink($order);
+            $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save);
+            $orderConfirmationPDF = Configure::read('htmlHelper')->getOrderConfirmationPDFLink($order);
             
             $email = new AppEmail();
             $email->template('customer_order_successful')
                 ->emailFormat('html')
                 ->to($this->AppAuth->getEmail())
                 ->subject('Bestellbestätigung')
-                ->attachments(array($cancellationFormPDF))
+                ->attachments(array($cancellationInformationAndFormPDF, $orderConfirmationPDF))
                 ->viewVars(array(
                 'cart' => $cart,
                 'appAuth' => $this->AppAuth,
                 'order' => $order
             ));
-            
+                
             if (Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC') != '') {
                 $email->bcc(Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC'));
             }
             
             $email->send();
+            // END send confirmation email to customer
             
             // due to redirect, before render is not called
             $this->resetOriginalLoggedCustomer();

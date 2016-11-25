@@ -121,7 +121,10 @@
 		</tr>
 		<tr>
 			<td>
-				Eine detaillierte Auflistung findest du im beiliegenden Dokument "Bestelluebersicht-<?php echo $order['Order']['id_order']; ?>.pdf".
+				Eine detaillierte Auflistung deiner Bestellung findest du im beiliegenden Dokument "Bestelluebersicht-<?php echo $order['Order']['id_order']; ?>.pdf".
+			</td>
+			<td>
+				Die Informationen zum Rücktrittsrecht und das Rücktrittsformular sind gesetzlich vorgeschrieben. Sie machen für Foodcoops aber wenig Sinn, da das Rücktrittsrecht für verderbliche Waren ausgeschlossen ist.
 			</td>
 		</tr>
 	</tbody>
