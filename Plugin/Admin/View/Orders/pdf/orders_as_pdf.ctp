@@ -89,11 +89,11 @@ foreach ($orders as $order) {
                 $pdf->table .= '<td width="' . $widths[2] . '"></td>';
                 $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '"><p>' . $this->Html->formatAsEuro($sumPrice) . '</p></td>';
                 if ($sumDeposit > 0) {
-                    $sumDeposit = $this->Html->formatAsEuro($sumDeposit);
+                    $sumDepositAsString = $this->Html->formatAsEuro($sumDeposit);
                 } else {
-                    $sumDeposit = '';
+                    $sumDepositAsString = '';
                 }
-                $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '"><p>' . $sumDeposit . '</p></td>';
+                $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '"><p>' . $sumDepositAsString . '</p></td>';
             $pdf->table .= '</tr>';
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td colspan="3" style="text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '"><h3>Gesamt</h3></td>';
