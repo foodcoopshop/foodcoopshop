@@ -30,12 +30,25 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
     
-    public function getCancellationFormLink($order=null)
+    /**
+     * @param array $order
+     * @return string
+     */
+    public function getOrderConfirmationPDFLink($order)
+    {
+        return TMP.'Bestellbestaetigung-'.$order['Order']['id_order'].'.pdf';
+    }
+    
+    /**
+     * @param array $order
+     * @return string
+     */
+    public function getCancellationFormPDFLink($order=null)
     {
         $filenamePart1 = 'Informationen-ueber-Ruecktrittsrecht';
         $filenamePart2 = '';
         if (!is_null($order)) {
-            $filenamePart2 = '-und-Ruecktrittsformular-Bestellnummer-'.$order['Order']['id_order'].'-'.Configure::read('timeHelper')->formatToDateShort($order['Order']['date_add']);
+            $filenamePart2 = '-und-Ruecktrittsformular-'.$order['Order']['id_order'];
         }
         return TMP.$filenamePart1.$filenamePart2.'.pdf';
     }

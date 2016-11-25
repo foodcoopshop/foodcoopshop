@@ -27,6 +27,19 @@ class CartComponent extends Component
         return null;
     }
 
+    public function getProductAndDepositSum()
+    {
+        return $this->getProductSum() + $this->getDepositSum();
+    }
+    
+    public function getTaxSum()
+    {
+        if ($this->cakeCart !== null) {
+            return $this->cakeCart['CakeCartTaxSum'];
+        }
+        return 0;
+    }
+    
     public function getDepositSum()
     {
         if ($this->cakeCart !== null) {

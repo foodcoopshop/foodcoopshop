@@ -71,7 +71,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
             
-            $html = '<p>Name des/der Verbraucher(s): <b>'.$appAuth->getUsername().'</b></p>';
+            $html = '<p>Name des/der Verbraucher(s): '.$appAuth->getUsername().'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             
             $customerAddress = $appAuth->user('AddressCustomer.address1');
@@ -102,7 +102,7 @@ if (!empty($manufacturers)) {
     
 }
 
-$filename = @$this->Html->getCancellationFormLink($order);
+$filename = @$this->Html->getCancellationFormPDFLink($order);
 
 
 if (file_exists($filename))

@@ -27,7 +27,7 @@
 		</tr>
 	</tbody>
 </table>
-		
+
 <?php echo $this->element('email/tableHead', array('cellpadding' => 6)); ?>
 	<tbody>
 	
@@ -76,11 +76,9 @@
         <?php } ?>
 		
 		<tr>
-			<td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
-			<td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
-			<td align="right" style="font-size: 18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;">Gesamt</td>
-			<td align="right" style="font-size: 18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;border-right:none;"><?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getProductSum()); ?></td>
-			<td align="right" style="font-size: 18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;">
+			<td style="border:1px solid #d6d4d4;" colspan="3"></td>
+			<td align="right" style="font-weight:bold;border:1px solid #d6d4d4;border-right:none;"><?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getProductSum()); ?></td>
+			<td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
 				<?php
 				    if ($appAuth->Cart->getDepositSum() > 0) {
 				        echo $this->MyHtml->formatAsEuro($appAuth->Cart->getDepositSum());
@@ -89,5 +87,42 @@
 			</td>
 		</tr>
 		
+		<tr>
+			<td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
+			<td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;border-right:none;">Gesamt</td>
+			<td align="center" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2">
+				<?php
+				    echo $this->MyHtml->formatAsEuro($appAuth->Cart->getProductAndDepositSum());
+				?>
+			</td>
+		</tr>
+		
+	</tbody>
+</table>
+
+<?php echo $this->element('email/tableHead'); ?>
+	<tbody>
+		<tr>
+			<td style="padding-top:20px;">
+				Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<?php
+    				if ($this->MyHtml->paymentIsCashless()) {
+    				    $paymentText = 'Der Gesamtbetrag wurde von deinem Guthaben abgezogen.';
+    				} else {
+    				    $paymentText = 'Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen.';
+    				}
+    				echo $paymentText;
+				?>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Eine detaillierte Auflistung findest du im beiliegenden Dokument "Bestelluebersicht-<?php echo $order['Order']['id_order']; ?>.pdf".
+			</td>
+		</tr>
 	</tbody>
 </table>

@@ -1006,9 +1006,10 @@ body.customers.registration_successful #inner-content h2 {
     padding-bottom: 20px;
     margin-bottom: 0;
 }
-body.pages.detail h2 {
+body.pages h2 {
 	color: #333;
 	font-size: 18px;
+	padding-top: 10px;
 }
 body.products.detail .product-wrapper {
 	border-bottom: 1px solid #d6d4d4;
