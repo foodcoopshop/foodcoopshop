@@ -331,7 +331,8 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (550, NULL, NULL, 1, 'FCS_BANK_ACCOUNT_DATA', 'Bankverbindung für die Guthaben-Einzahlungen".', 'Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 130, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (551, NULL, NULL, 1, 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA', 'Bankverbindung für die Mitgliedsbeitrags-Einzahlungen".', 'MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 140, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (552, NULL, NULL, 1, 'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS', 'Zusätzliche Liefer-Informationen für die Hersteller<br /><div class="small">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>', ', 15:00 bis 17:00 Uhr', 'text', 120, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00');
+(553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00'),
+(554, NULL, NULL, 1, 'FCS_SHOW_FOODCOOPSHOP_BACKLINK', 'Link auf www.foodcoopshop.com anzeigen?<br /><div class="small">Der Link wird im Footer und in den generierten PDFs (Bestelllisten, Rechnungen) angezeigt.</div>', '1', 'boolean', 180, '2016-11-27 00:00:00', '2016-11-27 00:00:00');
 
 -- --------------------------------------------------------
 
