@@ -20,6 +20,31 @@ App::uses('FrontendController', 'Controller');
 class CartsController extends FrontendController
 {
 
+    public function beforeFilter()
+    {
+    
+        if ($this->request->is('post')) {
+            $message = '';
+            if (! $this->AppAuth->loggedIn()) {
+                $message = 'Du bist nicht angemeldet.';
+            }
+            if ($this->AppAuth->isManufacturer()) {
+                $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
+            }
+            if ($message != '') {
+                die(json_encode(array(
+                    'status' => 0,
+                    'msg' => $message
+                )));
+            }
+        }
+    
+        parent::beforeFilter();
+    
+        $this->AppAuth->allow('generateCancellationInformationPdf');
+    
+    }
+    
     public function isAuthorized($user)
     {
         return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED');
@@ -397,27 +422,6 @@ class CartsController extends FrontendController
         
         $this->resetOriginalLoggedCustomer();
         $this->destroyShopOrderCustomer();
-    }
-
-    public function beforeFilter()
-    {
-        if ($this->request->is('post')) {
-            $message = '';
-            if (! $this->AppAuth->loggedIn()) {
-                $message = 'Du bist nicht angemeldet.';
-            }
-            if ($this->AppAuth->isManufacturer()) {
-                $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
-            }
-            if ($message != '') {
-                die(json_encode(array(
-                    'status' => 0,
-                    'msg' => $message
-                )));
-            }
-        }
-        
-        parent::beforeFilter();
     }
 
     public function ajaxDeleteShopOrderCustomer()

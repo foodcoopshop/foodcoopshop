@@ -26,6 +26,16 @@ class CustomersController extends FrontendController
         $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
     }
     
+    /**
+     * generates pdf on-the-fly
+     */
+    private function generateTermsOfUsePdf($customer) {
+        $this->set('customer', $customer);
+        $this->set('saveParam', 'F');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        $this->render('generateTermsOfUsePdf');
+    }
+    
     public function accept_updated_terms_of_use() {
         
         if (!$this->request->is('post')) {
@@ -217,10 +227,12 @@ class CustomersController extends FrontendController
                     $this->CakeActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
                     
                     // START send confirmation email to customer
-                    
+                    $attachments = array();
                     $email = new AppEmail();
                     if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
+                        $this->generateTermsOfUsePdf($newCustomer['Customer']);
+                        $attachments = Configure::read('htmlHelper')->getTermsOfUsePDFLink($newCustomer['Customer']);
                     } else {
                         $template = 'customer_registered_inactive';
                     }
@@ -228,24 +240,12 @@ class CustomersController extends FrontendController
                         ->emailFormat('html')
                         ->to($this->request->data['Customer']['email'])
                         ->subject('Willkommen')
+                        ->attachments($attachments)
                         ->viewVars(array(
                         'appAuth' => $this->AppAuth,
                         'data' => $this->request->data,
                         'newPassword' => $newPassword
                     ));
-                    
-                    // add optional attachment (all files in folder)
-                    App::uses('Folder', 'Utility');
-                    $dir = new Folder(WWW_ROOT . Configure::read('app.registrationAttachmentDir'));
-                    $attachments = $dir->find('(.*)', true);
-                    foreach ($attachments as $attachment) {
-                        if (! in_array($attachment, array(
-                            '.gitignore'
-                        ))) {
-                            $email->addAttachments(WWW_ROOT . Configure::read('app.registrationAttachmentDir') . DS . $attachment);
-                        }
-                    }
-                    
                     $email->send();
                     // END send confirmation email to customer
                     

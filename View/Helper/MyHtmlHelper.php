@@ -30,6 +30,12 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
     
+    public function getTermsOfUsePDFLink($customer)
+    {
+        $url = Configure::read('app.folder.customers_with_current_year_and_month') . DS;
+        return $url . 'Nutzungsbedingungen-'.$customer['id_customer'].'.pdf';
+    }
+    
     /**
      * @param array $order
      * @return string

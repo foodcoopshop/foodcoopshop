@@ -107,11 +107,11 @@ $filename = @$this->Html->getCancellationInformationAndFormPDFLink($order);
 if (file_exists($filename))
     unlink($filename);
 
-    App::uses('Folder', 'Utility');
-    $dir = new Folder();
-    $path = dirname($filename);
-    $dir->create($path);
-    $dir->chmod($path, 0755);
+App::uses('Folder', 'Utility');
+$dir = new Folder();
+$path = dirname($filename);
+$dir->create($path);
+$dir->chmod($path, 0755);
     
 if ($saveParam == 'I') {
     $filename = str_replace(Configure::read('app.folder.orders_with_current_year_and_month'), '', $filename);

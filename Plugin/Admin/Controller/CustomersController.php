@@ -233,6 +233,16 @@ class CustomersController extends AdminAppController
         }
     }
 
+    /**
+     * generates pdf on-the-fly
+     */
+    private function generateTermsOfUsePdf($customer) {
+        $this->set('customer', $customer);
+        $this->set('saveParam', 'F');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        $this->render('generateTermsOfUsePdf');
+    }
+    
     public function changeStatus($customerId, $status, $sendEmail)
     {
         if (! in_array($status, array(
@@ -247,19 +257,22 @@ class CustomersController extends AdminAppController
             'active' => $status
         ));
         
-        $statusText = 'deaktiviert';
-        $actionLogType = 'customer_set_inactive';
-        if ($status) {
-            $statusText = 'aktiviert';
-            $actionLogType = 'customer_set_active';
-        }
-        
         $this->Customer->recursive = - 1;
         $customer = $this->Customer->find('first', array(
             'conditions' => array(
                 'Customer.id_customer' => $customerId
             )
         ));
+        
+        $statusText = 'deaktiviert';
+        $actionLogType = 'customer_set_inactive';
+        $attachments = array();
+        if ($status) {
+            $statusText = 'aktiviert';
+            $actionLogType = 'customer_set_active';
+            $this->generateTermsOfUsePdf($customer['Customer']);
+            $attachments = Configure::read('htmlHelper')->getTermsOfUsePDFLink($customer['Customer']);
+        }
         
         $message = 'Das Mitglied "' . $customer['Customer']['name'] . '" wurde erfolgreich ' . $statusText;
         
@@ -272,6 +285,7 @@ class CustomersController extends AdminAppController
             $email->template('customer_activated')
                 ->emailFormat('html')
                 ->to($customer['Customer']['email'])
+                ->attachments($attachments)
                 ->subject('Dein Mitgliedskonto wurde aktiviert.')
                 ->viewVars(array(
                 'appAuth' => $this->AppAuth,

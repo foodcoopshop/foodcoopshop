@@ -41,7 +41,7 @@
 
 <h2>4. Rücktrittsrecht</h2>
 
-<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Lieferanten direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</p> 
+<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Lieferanten direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</p> 
 
 <p>4.2. Der jeweilige Lieferant wird von den alternativen Streitbeilegungsstellen „Online-Streitbeilegung“ (https://webgate.ec.europa.eu/odr) sowie „Internetombudsmann“ (www.ombudsmann.at) erfasst. Der Nutzer hat auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p> 
 
