@@ -38,6 +38,9 @@ class Configuration extends AppModel
             case 'FCS_DAYS_SHOW_PRODUCT_AS_NEW':
                 $validationRules = $this->getNumberRangeConfigurationRule(1, 14);
                 break;
+            case 'FCS_PAYMENT_PRODUCT_MAXIMUM':
+                $validationRules = $this->getNumberRangeConfigurationRule(50, 1000);
+                break;
             case 'FCS_CUSTOMER_GROUP':
                 $validationRules = $this->getNumberRangeConfigurationRule(CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
                 break;

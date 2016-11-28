@@ -58,7 +58,15 @@
 <?php if ($this->Html->paymentIsCashless()) { ?>
 <h2>6. Guthabenkonto</h2>
 
-<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom FoodCoopShop verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von EUR 500,00 Beträge einbezahlen. Bei einem negativen Kontostand sind weitere Bestellungen nicht möglich.</p> 
+<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom FoodCoopShop verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
+
+<?php
+    if (Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE') == 0) {
+        echo 'Auch bei einem negativen Kontostand sind weitere Bestellungen möglich.';
+    } else {
+        echo 'Bis zu einem Kontostand von ' . $this->MyHtml->formatAsEuro(Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
+    }
+?>
 
 <p>6.2. Durch die Bezahlung der einzelnen Waren ermächtigt der Nutzer den FoodCoopShop, nach Abgabe der Bestellung den jeweils angegebenen Betrag an den Lieferanten zu bezahlen.</p>
 

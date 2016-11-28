@@ -73,6 +73,12 @@ class PaymentsController extends AdminAppController
         $amount = preg_replace('/[^0-9,.]/', '', $amount);
         $amount = floatval(str_replace(',', '.', $amount));
 
+        if ($type == 'product' && $amount > Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')) {
+            $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM');
+            $this->log($message);
+            die(json_encode(array('status'=>0,'msg'=>$message)));
+        }
+        
         $text = '';
         if (isset($this->params['data']['text'])) {
             $text = strip_tags(html_entity_decode($this->params['data']['text']));
