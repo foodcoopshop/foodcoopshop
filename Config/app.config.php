@@ -148,4 +148,9 @@ Configure::write('app.countryId', 2); // austria: 2, germany: 1
  */
 Configure::write('app.mysqlDumpCommand', 'mysqldump');
 
+/**
+ * date of the last update of terms of use
+ */
+Configure::write('app.termsOfUseLastUpdate', '2016-11-28');
+
 ?>

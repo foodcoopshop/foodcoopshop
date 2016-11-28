@@ -37,23 +37,6 @@ class AdminAppController extends AppController
     }
 
     /**
-     * keep this method in a controller - does not work with AppAuthComponent::login
-     * updates login data (after profile change for customer and manufacturer)
-     */
-    protected function renewAuthSession()
-    {
-        $this->loadModel('Customer');
-        $customer = $this->Customer->find('first', array(
-            'conditions' => array(
-                'Customer.id_customer' => $this->AppAuth->getUserId('id_customer')
-            )
-        ));
-        if (! empty($customer)) {
-            $this->AppAuth->login($customer['Customer']);
-        }
-    }
-
-    /**
      * deletes physical files (thumbs)
      */
     protected function deleteUploadedImage($imageId, $thumbsPath, $imageSizes)

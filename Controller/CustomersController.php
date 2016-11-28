@@ -23,7 +23,34 @@ class CustomersController extends FrontendController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->AppAuth->allow(); // allows all actions
+        $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
+    }
+    
+    public function accept_updated_terms_of_use() {
+        
+        if (!$this->request->is('post')) {
+            $this->redirect('/');
+        }
+        
+        $checkboxErrors = false;
+        if (!isset($this->request->data['Customer']['terms_of_use_accepted_date']) || $this->request->data['Customer']['terms_of_use_accepted_date'] != 1) {
+            $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
+            $checkboxErrors = true;
+        }
+        
+        $this->Customer->set($this->request->data['Customer']);
+        if (!$checkboxErrors) {
+            $this->Customer->id = $this->AppAuth->getUserId();
+            $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
+            $this->Customer->save($this->request->data['Customer'], false);
+            $this->AppSession->setFlashMessage('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert.');
+            $this->renewAuthSession();
+            $this->redirect('/');
+        } else {
+            $this->AppSession->setFlashError('Bitte akzeptiere die Nutzungsbedingungen.');
+            $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
+        }
+        
     }
 
     public function new_password_request()
