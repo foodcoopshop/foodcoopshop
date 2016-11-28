@@ -36,7 +36,8 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getOrderConfirmationPDFLink($order)
     {
-        return TMP.'Bestellbestaetigung-'.$order['Order']['id_order'].'.pdf';
+        $url = Configure::read('app.folder.orders_with_current_year_and_month') . DS;
+        return $url . 'Bestellbestaetigung-' . $order['Order']['id_order'] . '.pdf';
     }
     
     /**
@@ -45,12 +46,13 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getCancellationInformationAndFormPDFLink($order=null)
     {
+        $url = Configure::read('app.folder.orders_with_current_year_and_month') . DS;
         $filenamePart1 = 'Informationen-ueber-Ruecktrittsrecht';
         $filenamePart2 = '';
         if (!is_null($order)) {
             $filenamePart2 = '-und-Ruecktrittsformular-'.$order['Order']['id_order'];
         }
-        return TMP.$filenamePart1.$filenamePart2.'.pdf';
+        return $url.$filenamePart1.$filenamePart2.'.pdf';
     }
     
     /**
