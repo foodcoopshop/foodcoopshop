@@ -38,7 +38,7 @@ if (!$appAuth->termsOfUseAccepted()) {
     <?php
         if (empty($appAuth->Cart->getProducts())) {
             $this->element('addScript', array('script' =>
-                "foodcoopshop.Helper.disableButton($('.cart .btn-success'));"
+                "foodcoopshop.Helper.disableButton($('.cart .btn-success.btn-order'));"
             ));
         }
     ?>
