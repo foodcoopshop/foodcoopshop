@@ -99,6 +99,10 @@ class CartsController extends FrontendController
     public function finish()
     {
         
+        if (!$this->request->is('post')) {
+            $this->redirect('/');
+        }
+        
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCakeCart();
         
