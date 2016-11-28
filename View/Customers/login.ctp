@@ -14,6 +14,7 @@
  */
 $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ));
 ?>
@@ -82,9 +83,18 @@ $this->element('addScript', array('script' =>
                       echo $this->Form->input('Customer.newsletter', array('label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox'));
                   }
                   
+                  echo '<div id="terms-of-use" class="featherlight-overlay">';
+                    echo $this->element('legal/termsOfUse');
+                  echo '</div>';
+                  echo $this->Form->input('Customer.terms_of_use_accepted_date', array(
+                      'label' => 'Ich akzeptiere die <a href="#terms-of-use">Nutzungsbedingungen</a>',
+                      'type' => 'checkbox'
+                  ));
+                  
               ?>
               
               <div class="sc"></div>
+              <br />
       	  	  <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> Mitgliedskonto erstellen</button>
       	  
       	  </div>

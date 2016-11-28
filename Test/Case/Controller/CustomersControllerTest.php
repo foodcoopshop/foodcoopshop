@@ -33,7 +33,8 @@ class CustomersControllerTest extends AppCakeTestCase
                 'email' => '',
                 'firstname' => '',
                 'lastname' => '',
-                'newsletter' => 1
+                'newsletter' => 1,
+                'terms_of_use_accepted_date' => 0
             ),
             'antiSpam' => 0,
             'AddressCustomer' => array(
@@ -74,6 +75,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die PLZ ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Die Handynummer ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Die Telefonnummer ist nicht gültig.', $response);
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Nutzungsbedingungen.', $response);
         
         
         // 4) save user and check record
@@ -101,6 +103,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $data['Customer']['email'] = $customerEmail;
         $data['Customer']['firstname'] = $customerFirstname;
         $data['Customer']['lastname'] = $customerLastname;
+        $data['Customer']['terms_of_use_accepted_date'] = 1;
         $data['AddressCustomer']['city'] = $customerCity;
         $data['AddressCustomer']['address1'] = $customerAddress1;
         $data['AddressCustomer']['address2'] = $customerAddress2;
@@ -125,6 +128,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($customerFirstname, $customer['Customer']['firstname'], 'saving field firstname failed');
         $this->assertEquals($customerLastname, $customer['Customer']['lastname'], 'saving field lastname failed');
         $this->assertEquals(1, $customer['Customer']['newsletter'], 'saving field newsletter failed');
+        $this->assertEquals(date('Y-m-d'), $customer['Customer']['terms_of_use_accepted_date'], 'saving field terms_of_use_accepted_date failed');
         
         // check address record
         $this->assertEquals($customerFirstname, $customer['AddressCustomer']['firstname'], 'saving field firstname failed');

@@ -368,6 +368,7 @@ CREATE TABLE `fcs_customer` (
   `show_public_prices` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `max_payment_days` int(10) UNSIGNED NOT NULL DEFAULT '60',
   `secure_key` varchar(32) NOT NULL DEFAULT '-1',
+  `terms_of_use_accepted_date` date NOT NULL,
   `note` text,
   `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `is_guest` tinyint(1) NOT NULL DEFAULT '0',

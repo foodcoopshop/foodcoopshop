@@ -935,6 +935,7 @@ CREATE TABLE `fcs_customer` (
   `show_public_prices` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `max_payment_days` int(10) UNSIGNED NOT NULL DEFAULT '60',
   `secure_key` varchar(32) NOT NULL DEFAULT '-1',
+  `terms_of_use_accepted_date` date NOT NULL,
   `note` text,
   `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `is_guest` tinyint(1) NOT NULL DEFAULT '0',
@@ -947,13 +948,13 @@ CREATE TABLE `fcs_customer` (
 -- Daten für Tabelle `fcs_customer`
 --
 
-INSERT INTO `fcs_customer` (`id_customer`, `id_shop_group`, `id_shop`, `id_gender`, `id_default_group`, `id_lang`, `id_risk`, `company`, `siret`, `ape`, `firstname`, `lastname`, `email`, `passwd`, `last_passwd_gen`, `birthday`, `newsletter`, `ip_registration_newsletter`, `newsletter_date_add`, `optin`, `website`, `outstanding_allow_amount`, `show_public_prices`, `max_payment_days`, `secure_key`, `note`, `active`, `is_guest`, `deleted`, `date_add`, `date_upd`) VALUES
-(87, 1, 1, 1, 3, 1, 0, NULL, NULL, NULL, 'Demo', 'Mitglied', 'fcs-demo-mitglied@mailinator.com', '', '2014-12-02 04:19:31', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:19:31', 0, NULL, '0.000000', 0, 0, 'd39a3a43e5d9aedc566bc211895cd16c', NULL, 1, 0, 0, '2014-12-02 12:19:31', '2015-12-06 23:37:44'),
-(88, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Admin', 'fcs-demo-admin@mailinator.com', '', '2014-12-02 04:28:43', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:28:43', 0, NULL, '0.000000', 0, 0, 'c1064e463d615234b31d0a3d8095985c', NULL, 1, 0, 0, '2014-12-02 12:28:43', '2016-09-29 16:25:09'),
-(89, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Gemüse-Hersteller', 'fcs-demo-gemuese-hersteller@mailinator.com', '', '2014-12-02 04:37:26', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '28f90fbd45ee72f09399c68195244a69', NULL, 1, 0, 0, '2014-12-02 12:37:26', '2015-03-11 18:12:10'),
-(90, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Milch-Hersteller', 'fcs-demo-milch-hersteller@mailinator.com', '', '2014-12-02 04:37:49', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '82230af5ed33a8b80df6e2ad426d76f2', NULL, 1, 0, 0, '2014-12-02 12:37:49', '2015-03-11 18:11:54'),
-(91, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Fleisch-Hersteller', 'fcs-demo-fleisch-hersteller@mailinator.com', '', '2014-12-02 04:38:12', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '50e86f1cf90b2b9b22dc84dd58e40efc', NULL, 1, 0, 0, '2014-12-02 12:38:12', '2015-03-11 18:11:47'),
-(92, 1, 1, 0, 5, 1, 1, NULL, NULL, NULL, 'Demo', 'Superadmin', 'fcs-demo-superadmin@mailinator.com', '', '2016-09-29 14:26:12', NULL, 0, NULL, NULL, 0, NULL, '0.000000', 0, 0, '-1', NULL, 1, 0, 0, '2016-09-29 16:26:12', '2016-09-29 16:26:12');
+INSERT INTO `fcs_customer` (`id_customer`, `id_shop_group`, `id_shop`, `id_gender`, `id_default_group`, `id_lang`, `id_risk`, `company`, `siret`, `ape`, `firstname`, `lastname`, `email`, `passwd`, `last_passwd_gen`, `birthday`, `newsletter`, `ip_registration_newsletter`, `newsletter_date_add`, `optin`, `website`, `outstanding_allow_amount`, `show_public_prices`, `max_payment_days`, `secure_key`, `terms_of_use_accepted_date`, `note`, `active`, `is_guest`, `deleted`, `date_add`, `date_upd`) VALUES
+(87, 1, 1, 1, 3, 1, 0, NULL, NULL, NULL, 'Demo', 'Mitglied', 'fcs-demo-mitglied@mailinator.com', '', '2014-12-02 04:19:31', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:19:31', 0, NULL, '0.000000', 0, 0, 'd39a3a43e5d9aedc566bc211895cd16c', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:19:31', '2015-12-06 23:37:44'),
+(88, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Admin', 'fcs-demo-admin@mailinator.com', '', '2014-12-02 04:28:43', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:28:43', 0, NULL, '0.000000', 0, 0, 'c1064e463d615234b31d0a3d8095985c', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:28:43', '2016-09-29 16:25:09'),
+(89, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Gemüse-Hersteller', 'fcs-demo-gemuese-hersteller@mailinator.com', '', '2014-12-02 04:37:26', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '28f90fbd45ee72f09399c68195244a69', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:37:26', '2015-03-11 18:12:10'),
+(90, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Milch-Hersteller', 'fcs-demo-milch-hersteller@mailinator.com', '', '2014-12-02 04:37:49', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '82230af5ed33a8b80df6e2ad426d76f2', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:37:49', '2015-03-11 18:11:54'),
+(91, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Fleisch-Hersteller', 'fcs-demo-fleisch-hersteller@mailinator.com', '', '2014-12-02 04:38:12', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '50e86f1cf90b2b9b22dc84dd58e40efc', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:38:12', '2015-03-11 18:11:47'),
+(92, 1, 1, 0, 5, 1, 1, NULL, NULL, NULL, 'Demo', 'Superadmin', 'fcs-demo-superadmin@mailinator.com', '', '2016-09-29 14:26:12', NULL, 0, NULL, NULL, 0, NULL, '0.000000', 0, 0, '-1', '0000-00-00', NULL, 1, 0, 0, '2016-09-29 16:26:12', '2016-09-29 16:26:12');
 
 -- --------------------------------------------------------
 

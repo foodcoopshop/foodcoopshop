@@ -225,11 +225,15 @@
         width: 30% ! important;
     }
     #login-form .input.checkbox label {
-        width: 50% ! important;
+        width: 90% ! important;
     }
     form div.error-message {
         margin-left: 30% ! important;
         width: 60% ! important;
+        font-size: 11px;
+    }
+    #login-form .input.checkbox .error-message {
+        width: 80% ! important;
     }
     
     /**

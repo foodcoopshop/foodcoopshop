@@ -152,7 +152,13 @@ class CustomersController extends FrontendController
                     $errors = array_merge($errors, $this->Customer->AddressCustomer->validationErrors);
                 }
                 
-                if (empty($errors)) {
+                $checkboxErrors = false;
+                if (!isset($this->request->data['Customer']['terms_of_use_accepted_date']) || $this->request->data['Customer']['terms_of_use_accepted_date'] != 1) {
+                    $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
+                    $checkboxErrors = true;
+                }
+                
+                if (empty($errors) && !$checkboxErrors) {
                     
                     // save customer
                     $this->Customer->id = null;
@@ -160,6 +166,8 @@ class CustomersController extends FrontendController
                     $this->request->data['Customer']['id_default_group'] = Configure::read('app.db_config_FCS_CUSTOMER_GROUP');
                     $this->request->data['Customer']['id_lang'] = Configure::read('app.langId');
                     $this->request->data['Customer']['id_shop'] = Configure::read('app.shopId');
+                    $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
+                    
                     $newCustomer = $this->Customer->save($this->request->data['Customer'], array(
                         'validate' => false
                     ));

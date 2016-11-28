@@ -250,8 +250,11 @@ body.customers.new_password_request .input {
 #login-form .input input[type="checkbox"] {
     margin-left: 215px;
 }
-#login-form .input.checkbox label {
-    width: 300px;
+#login-form .input.checkbox .error-message {
+    margin-top: 25px;
+	width: auto ! important;
+    margin-left: 0 ! important;
+    clear: both;
 }
 
 body.customers.new_password_request .btn-success {
@@ -287,7 +290,10 @@ body.customers.new_password_request .input input {
 }
 body.customers form .checkbox label {
 	padding-left: 0;
+	width: 350px ! important;
+	clear: both;
 	line-height: 18px ! important;
+	margin-top: 4px;
 }
 #login-form div.error-message {
 	margin-left: 95px;
@@ -754,7 +760,8 @@ body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
 body.carts.detail .cart:not(#cart) .input.checkbox input[type="checkbox"] {
 	margin-left: -10px;
 }
-body.carts.detail .cart:not(#cart) .featherlight-overlay {
+body.carts.detail .cart:not(#cart) .featherlight-overlay,
+#RegistrationForm .featherlight-overlay {
 	display: none;
 }
 
