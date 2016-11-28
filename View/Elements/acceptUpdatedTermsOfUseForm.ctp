@@ -18,13 +18,13 @@
 if (!$appAuth->loggedIn() || $appAuth->termsOfUseAccepted()) return false;
 
 $this->element('addScript', array('script' =>
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-box .input.checkbox label a');"
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-form .input.checkbox label a');"
 ));
 ?>
-<div class="accept-updated-terms-of-use-box">
+<div class="accept-updated-terms-of-use-form">
 	<h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
 	<p>die Nutzungsbedingungen der Plattform (FoodCoopShop) haben sich geändert.<br />
-	Um sie weiterhin verwenden zu können, akzeptiere bitte die Nutzungsbedingungen.</p>
+	Um sie weiterhin verwenden zu können, lese bitte die Nutzungsbedingungen und akzeptiere sie.</p>
 	<form action="/nutzungsbedingungen-akzeptieren" id="RegistrationForm" method="post" accept-charset="utf-8">
     	<?php
         	echo '<div id="terms-of-use" class="featherlight-overlay">';
@@ -32,7 +32,8 @@ $this->element('addScript', array('script' =>
         	echo '</div>';
         	echo $this->Form->input('Customer.terms_of_use_accepted_date', array(
         	    'label' => 'Ich akzeptiere die <b><a href="#terms-of-use">Nutzungsbedingungen</a></b>',
-        	    'type' => 'checkbox'
+        	    'type' => 'checkbox',
+        	    'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString()
         	));
     	?>
     	<br />

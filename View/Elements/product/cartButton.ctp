@@ -26,6 +26,7 @@ if (!$appAuth->loggedIn() || !Configure::read('app.db_config_FCS_CART_ENABLED'))
             ));
         }
     ?>
+    
     <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-success btn-cart" href="javascript:void(0);">
     	<i class="fa fa-shopping-cart fa-lg"></i> In den Warenkorb
     </a>

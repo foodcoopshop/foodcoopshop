@@ -17,6 +17,11 @@ $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ));
+if (!$appAuth->termsOfUseAccepted()) {
+    $this->element('addScript', array('script' => 
+        "foodcoopshop.Helper.disableButton($('#OrderDetailForm button.btn-success'));"
+    ));
+}
 ?>
 
 <h1>Dein Warenkorb</h1>
@@ -73,9 +78,13 @@ $this->element('addScript', array('script' =>
     <div class="sc"></div>
     
 	<p>
-		<button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
+		<button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
 	</p>
     		
     </form>
+    
+    <div class="accept-updated-terms-of-use-form-bottom-wrapper">
+    	<?php echo $this->element('acceptUpdatedTermsOfUseForm'); ?>
+    </div>
     
 </div>

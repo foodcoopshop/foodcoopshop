@@ -138,7 +138,7 @@ class AppController extends Controller
         $this->loadModel('Customer');
         $customer = $this->Customer->find('first', array(
             'conditions' => array(
-                'Customer.id_customer' => $this->AppAuth->getUserId('id_customer')
+                'Customer.id_customer' => $this->AppAuth->getUserId()
             )
         ));
         if (! empty($customer)) {

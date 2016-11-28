@@ -741,23 +741,23 @@ body.carts.detail .cart:not(#cart) span.amount {
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-body.carts.detail .cart:not(#cart) .input.checkbox {
+body.carts.detail #OrderDetailForm .input.checkbox {
 	clear: both;
     float: right;
     line-height: 26px;
     margin-top: -10px;
     margin-right: -10px;
 }
-body.carts.detail .cart:not(#cart) .input.checkbox label {
+body.carts.detail #OrderDetailForm .input.checkbox label {
 	margin-right: 10px;
 }
-body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
+body.carts.detail #OrderDetailForm  .input.checkbox .error-message {
 	margin-left: -10px ! important;
 	width: 100% ! important;
 	font-size: 14px;
 	text-align: right;
 }
-body.carts.detail .cart:not(#cart) .input.checkbox input[type="checkbox"] {
+body.carts.detail #OrderDetailForm .input.checkbox input[type="checkbox"] {
 	margin-left: -10px;
 }
 body.carts.detail .cart:not(#cart) .featherlight-overlay,
@@ -854,7 +854,7 @@ body.carts.detail .cart:not(#cart) ul.error-message {
     margin-left: -10px;
     margin-top: -10px;
 }
-body.carts.detail .cart:not(#cart) .btn-success {
+body.carts.detail .cart:not(#cart) .btn-success.btn-order {
     font-size: 18px;
     float: right;
     padding: 5px 10px;
@@ -1037,7 +1037,7 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
 	width: 265px;
 }
-.accept-updated-terms-of-use-box {
+.accept-updated-terms-of-use-form {
 	float: left;
 	padding: 10px;
 	background: #f3515c;
@@ -1046,24 +1046,30 @@ body.blog_posts.detail p.neighbors a {
 	margin-bottom: 20px;
 	margin-top: -4px;
 }
-.accept-updated-terms-of-use-box h2 {
+.accept-updated-terms-of-use-form h2 {
 	color: #fff ! important;
 }
-.accept-updated-terms-of-use-box form {
+.accept-updated-terms-of-use-form form {
 	width: 100%;
 	float: left;
 }
-.accept-updated-terms-of-use-box button {
+.accept-updated-terms-of-use-form button {
 	float: right;
 }
-.accept-updated-terms-of-use-box .input.checkbox {
+.accept-updated-terms-of-use-form .input.checkbox {
 	float: left;
 }
-.accept-updated-terms-of-use-box input[type="checkbox"] {
+.accept-updated-terms-of-use-form input[type="checkbox"] {
 	margin-left: 0;
 }
-.accept-updated-terms-of-use-box .input.checkbox label {
+.accept-updated-terms-of-use-form .input.checkbox label {
 	padding-left: 30px;
 	margin-top: 3px;
 	width: auto ! important;
+}
+
+.accept-updated-terms-of-use-form-bottom-wrapper {
+	margin-top: 20px;
+	float: left;
+	width: 100%;
 }

@@ -43,9 +43,9 @@ class CustomersController extends FrontendController
             $this->Customer->id = $this->AppAuth->getUserId();
             $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
             $this->Customer->save($this->request->data['Customer'], false);
-            $this->AppSession->setFlashMessage('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert.');
+            $this->AppSession->setFlashMessage('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
             $this->renewAuthSession();
-            $this->redirect('/');
+            $this->redirect($this->referer());
         } else {
             $this->AppSession->setFlashError('Bitte akzeptiere die Nutzungsbedingungen.');
             $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');

@@ -66,7 +66,7 @@
 			<?php echo $this->element('slider', array('slides' => !empty($slides) ? $slides : array())); ?>        	
 	       	<?php echo $this->element('sidebar'); ?>
 	       	<div id="inner-content">
-	        	<?php echo $this->element('acceptUpdatedTermsOfUseBox'); ?>
+	        	<?php echo $this->element('acceptUpdatedTermsOfUseForm'); ?>
         		<?php echo $this->fetch('content'); ?>
         		<div class="sc"></div>
         	</div>

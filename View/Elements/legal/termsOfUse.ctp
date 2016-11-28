@@ -25,7 +25,7 @@
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Der FoodCoopShop stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Anbieter Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Lieferanten an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Lieferanten. Ein Vertrag zwischen dem Nutzer und dem Lieferanten kommt zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</p>
+<p>2.1. Der FoodCoopShop stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Anbieter Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Lieferanten an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Lieferanten. <b>Ein Vertrag zwischen dem Nutzer und dem Lieferanten kommt zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
 
 <p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Lieferanten zustande.</p>
 
