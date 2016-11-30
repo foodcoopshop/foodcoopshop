@@ -20,11 +20,15 @@ class PaymentsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->action) {
-            case 'product':
+            case 'overview':
                 return Configure::read('htmlHelper')->paymentIsCashless() && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
-            case 'member_fee':
+            case 'my_member_fee':
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                break;
+            case 'product':
+            case 'member_fee':
+                return $this->AppAuth->isSuperadmin();
                 break;
             case 'add':
             case 'changeState':
@@ -51,6 +55,7 @@ class PaymentsController extends AdminAppController
         if (! in_array($type, array(
             'product',
             'deposit',
+            'payback',
             'member_fee',
             'member_fee_flexible'
         ))) {
@@ -85,11 +90,11 @@ class PaymentsController extends AdminAppController
         }
 
         $message = Configure::read('htmlHelper')->getPaymentText($type);
-        if ($type == 'product') {
-            $customerId = $this->AppAuth->getUserId();
+        if (in_array($type, array('product', 'payback'))) {
+            $customerId = (int) $this->params['data']['customerId'];
         }
         if ($type == 'member_fee') {
-            $customerId = $this->AppAuth->getUserId();
+            $customerId = (int) $this->params['data']['customerId'];
             $text = implode(',', $this->params['data']['months_range']);
         }
         
@@ -246,9 +251,44 @@ class PaymentsController extends AdminAppController
             'msg' => 'ok'
         )));
     }
+    
+    /**
+     * $this->customerId needs to be set in calling method
+     * @return int
+     */
+    private function getCustomerId()
+    {
+        $customerId = '';
+        if (isset($this->request->named['customerId'])) {
+            $customerId = $this->request->named['customerId'];
+        } if ($this->customerId > 0) {
+            $customerId = $this->customerId;
+        }
+        return $customerId;
+    }
+    
+    public function overview()
+    {
+        $this->customerId = $this->AppAuth->getUserId();
+        $this->product();
+        $this->render('product');
+    }
 
+    public function my_member_fee()
+    {
+        $this->customerId = $this->AppAuth->getUserId();
+        $this->member_fee();
+        $this->render('member_fee');
+    }
+    
     public function member_fee()
     {
+        
+        // do not allow call without param customerId
+        if ($this->getCustomerId() == '') {
+            $this->redirect(Configure::read('slugHelper')->getMyMemberFeeBalance());
+        }
+        
         $this->allowedPaymentTypes = array(
             'member_fee'
         );
@@ -274,21 +314,29 @@ class PaymentsController extends AdminAppController
 
     public function product()
     {
+        
+        // do not allow call without param customerId
+        if ($this->getCustomerId() == '') {
+            $this->redirect(Configure::read('slugHelper')->getMyCreditBalance());    
+        }
+        
         $this->set('title_for_layout', 'Guthaben');
 
         $this->allowedPaymentTypes = array(
             'product',
+            'payback',
             'deposit'
         );
         if (! Configure::read('app.isDepositPaymentCashless')) {
             $this->allowedPaymentTypes = array(
-                'product'
+                'product',
+                'payback'
             );
         }
 
         $this->preparePayments();
 
-        $this->set('creditBalance', $this->AppAuth->getCreditBalance());
+        $this->set('creditBalance', $this->Customer->getCreditBalance($this->getCustomerId()));
     }
 
     private function preparePayments()
@@ -297,7 +345,7 @@ class PaymentsController extends AdminAppController
 
         $customer = $this->Customer->find('first', array(
             'conditions' => array(
-                'Customer.id_customer' => $this->AppAuth->getUserId()
+                'Customer.id_customer' => $this->getCustomerId()
             )
         ));
 
@@ -338,5 +386,15 @@ class PaymentsController extends AdminAppController
 
         $payments = Set::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
+        $this->set('customerId', $this->getCustomerId());
+        
+        $this->set('column_title', $this->viewVars['title_for_layout']);
+        
+        $title = $this->viewVars['title_for_layout'];
+        if (in_array($this->action, array('product', 'member_fee'))) {
+            $title .= ' von ' . $customer['Customer']['name'];
+        }
+        $this->set('title_for_layout',  $title);
+        
     }
 }

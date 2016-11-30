@@ -97,8 +97,16 @@ class SlugHelper extends Helper {
         return '/registrierung';
     }
     
-    public function getCreditBalance() {
-        return '/admin/payments/product';
+    public function getMyMemberFeeBalance() {
+        return '/admin/payments/my_member_fee';
+    }
+    
+    public function getMyCreditBalance() {
+        return '/admin/payments/overview';
+    }
+    
+    public function getCreditBalance($customerId) {
+        return '/admin/payments/product/customerId:'.$customerId;
     }
     
     public function getChangePassword() {
@@ -107,6 +115,10 @@ class SlugHelper extends Helper {
 
     public function getCustomerProfile() {
         return '/admin/customers/profile';
+    }
+    
+    public function getCustomerListAdmin() {
+        return '/admin/customers';
     }
     
     public function getManufacturerProfile() {

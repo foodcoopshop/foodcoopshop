@@ -302,6 +302,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $paymentTexts = array(
             'product' => 'Guthaben-Aufladung',
+            'payback' => 'Rückzahlung',
             'deposit' => 'Pfand-Rückgabe'
         );
         if (Configure::read('app.memberFeeEnabled')) {
@@ -316,6 +317,14 @@ class MyHtmlHelper extends HtmlHelper
     function getPaymentText($paymentType)
     {
         return $this->getPaymentTexts()[$paymentType];
+    }
+    
+    public function getSuperadminProductPaymentTexts($appAuth) {
+        $paymentTexts = array(
+            'product' => self::getPaymentText('product'),
+            'payback' => self::getPaymentText('payback')
+        );
+        return $paymentTexts;
     }
     
     public function getManufacturerDepositPaymentTexts() {

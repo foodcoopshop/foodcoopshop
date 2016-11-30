@@ -421,6 +421,10 @@ form div.error-message {
     margin-bottom: 10px;
     clear: both;
 }
+body.payments.product #add-payment-button-wrapper,
+body.payments.member_fee #add-payment-button-wrapper {
+	margin-top: 8px;
+}
 #payments-list #add-payment-button-wrapper .jquery-ui-icon a.icon-with-text {
     font-weight: bold;
 }
@@ -449,13 +453,13 @@ body.orders.index #add-order-button-wrapper div.select {
     margin-left: 5px;
 }
 .featherlight-content .add-payment-form {
-    min-width: 350px;
+    min-width:370px ! important;
 }
 .featherlight-content .add-payment-form label {
     width: 100%;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
-	width: 165px;
+	width: 185px;
 	float: left;
     margin-bottom: 10px;
 }
@@ -473,7 +477,8 @@ body.orders.index #add-order-button-wrapper div.select {
     padding: 7px;    
 }
 body.deposits #help-container,
-#payments-list #help-container {
+body.payments.overview #help-container,
+body.payments.my_member_fee #help-container {
     display: block;
 }
 .featherlight-content h3 {
@@ -647,9 +652,17 @@ body.sliders form.mini-upload-form a.img-delete {
     width: 100%;
 }
 body.payments.product table.list,
-body.payments.member_fee table.list {
+body.payments.overview table.list,
+body.payments.member_fee table.list,
+body.payments.my_member_fee table.list,
+body.payments .bottom-button-container {
     width: 650px;
 }
+body.payments .bottom-button-container {
+    float: left;
+    text-align: right;
+}
+
 #customer-group-edit-form {
 	margin-top: 10px;
 }

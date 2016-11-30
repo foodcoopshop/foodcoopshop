@@ -49,9 +49,28 @@ echo $this->Form->input('CakePayment.amount', array(
     'label' => 'Betrag in €',
     'type' => 'string'
 ));
-echo $this->Form->hidden('CakePayment.type', array(
-    'value' => $this->action
+echo $this->Form->hidden('CakePayment.customerId', array(
+    'value' => $customerId
 ));
+
+if ($this->action == 'product' && $appAuth->isSuperadmin()) {
+    echo '<p style="margin-top: 10px;">Wenn es sich um eine Rückzahlung handelt,<br />trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast.</p>';
+    $i = 0;
+    foreach($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
+        echo '<div class="radio-wrapper">';
+            $checked = '';
+            if ($i == 0) {
+                $checked = 'checked="checked"';
+            }
+            echo '<label for="type-'.$paymentTextKey.'">'.$paymentText.'</label><input '.$checked.' id="type-'.$paymentTextKey.'"type="radio" name="type" value="'.$paymentTextKey.'"/>';
+        echo '</div>';
+        $i++;
+    }
+} else {
+    echo $this->Form->hidden('CakePayment.type', array(
+        'value' => $this->action
+    ));
+}
 
 if ($this->action == 'member_fee') {
     

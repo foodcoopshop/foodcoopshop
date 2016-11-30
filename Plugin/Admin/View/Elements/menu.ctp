@@ -151,7 +151,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $manufacturerMenu;
     
     $menu[] = array(
-        'slug' => '/admin/customers',
+        'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => 'Mitglieder',
         'options' => array(
             'fa-icon' => 'fa-fw fa-male'

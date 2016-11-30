@@ -402,6 +402,7 @@ class CustomersController extends AdminAppController
             if (Configure::read('htmlHelper')->paymentIsCashless()) {
                 
                 $paymentProductSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'product');
+                $paymentPaybackSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'payback');
                 $paymentDepositSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'deposit');
                 
                 $sumTotalProduct = 0;
@@ -413,7 +414,7 @@ class CustomersController extends AdminAppController
                     }
                 }
                 // sometimes strange values like 2.8421709430404E-14 appear
-                $customers[$i]['payment_product_delta'] = round($paymentProductSum - $sumTotalProduct, 2);
+                $customers[$i]['payment_product_delta'] = round($paymentProductSum - $paymentPaybackSum - $sumTotalProduct, 2);
                 $customers[$i]['payment_deposit_delta'] = round($paymentDepositSum - $sumTotalDeposit, 2);
                 
                 // combine deposit delta in product delta to show same credit balance in list like in personal payment product page
