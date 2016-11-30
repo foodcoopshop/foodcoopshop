@@ -239,7 +239,7 @@ class OrdersController extends AdminAppController
         }
         $this->set('orders', $orders);
         
-        $this->set('customersForDropdown', $this->Order->Customer->getForDropdown(false, 'email', false));
+        $this->set('customersForDropdown', $this->Order->Customer->getForDropdown(false, 'email', $this->AppAuth->isSuperadmin()));
         
         $this->set('title_for_layout', 'Bestellungen');
     }
