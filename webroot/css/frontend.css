@@ -248,7 +248,13 @@ body.customers.new_password_request .input {
     padding: 3px;
 }
 #login-form .input input[type="checkbox"] {
-    margin-left: 215px;
+    margin-left: 330px;
+}
+/* Nur Firefox */
+@-moz-document url-prefix() {
+    #login-form .input input[type="checkbox"] {
+        margin-left: -20px;
+    }
 }
 #login-form .input.checkbox .error-message {
     margin-top: 25px;
@@ -277,7 +283,10 @@ body.customers.new_password_request .btn-success {
 	display: none;
 	float: left;
 }
-#login-form .input input,
+#login-form .input.text input,
+#login-form .input.tel input,
+#login-form .input.email input,
+#login-form .input.password input,
 body.customers.new_password_request .input input {
     width: 255px;
     padding: 3px;

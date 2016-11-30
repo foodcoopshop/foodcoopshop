@@ -54,7 +54,7 @@ $this->element('addScript', array('script' =>
     ?>
 	  <div class="sc"></div>
   	  <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;">Mitgliedskonto erstellen</h1>
-  	  <form action="/registrierung" id="RegistrationForm" method="post" accept-charset="utf-8">
+  	  <form action="/registrierung" id="RegistrationForm" method="post" accept-charset="utf-8" novalidate>
 		  <?php      
               
 		      echo $this->Form->input('Customer.email', array('label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true)); // id: avoid duplicate id (login form has field "email" too)
