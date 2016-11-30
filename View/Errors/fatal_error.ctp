@@ -15,7 +15,7 @@
 ?>
 
 <?php if (Configure::read('debug') == 0) { ?>
-	<?php echo '<img id="installation-logo" src="/files/images/logo.jpg" />'; ?>
+	<?php echo '<a href="/"><img id="installation-logo" src="/files/images/logo.jpg" /></a>'; ?>
 <?php } else { ?>
 	<h2><?php echo $message; ?></h2>
 <?php } ?>

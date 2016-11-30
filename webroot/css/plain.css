@@ -55,7 +55,12 @@ body.cake_errors.dev #inner-content {
 
 body.cake_errors h2 {
 	font-size: 18px;
-	text-shadow: 1px 1px #333;
+	background: #fff;
+	padding: 5px;
+	width: 500px;
+	margin: 0 auto;
+	line-height: 20px;
+	border-radius: 5px;
 } 
 
 #login-form {
