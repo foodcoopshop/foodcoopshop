@@ -113,7 +113,7 @@ h2.warning {
 .vertical.menu > li img.logo {
     float: left;
     padding: 5px;
-    color: #009335;
+    color: #333333;
     background: #fff;
     border-bottom: 1px solid #dfdfdf; 
     border-right: 1px solid #dfdfdf;
@@ -133,6 +133,7 @@ h2.warning {
     position: absolute;
     left: 3px;
     top: 6px;
+    color: #009335;
 }
 .vertical.menu li.has-icon a,
 .vertical.menu li a.has-icon,
