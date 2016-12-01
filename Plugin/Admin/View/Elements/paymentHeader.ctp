@@ -53,7 +53,7 @@ echo $this->Form->hidden('CakePayment.customerId', array(
     'value' => $customerId
 ));
 
-if ($this->action == 'product' && $appAuth->isSuperadmin()) {
+if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
     echo '<p style="margin-top: 10px;">Wenn es sich um eine Rückzahlung handelt,<br />trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast.</p>';
     $i = 0;
     foreach($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
@@ -68,11 +68,11 @@ if ($this->action == 'product' && $appAuth->isSuperadmin()) {
     }
 } else {
     echo $this->Form->hidden('CakePayment.type', array(
-        'value' => $this->action
+        'value' => $paymentType
     ));
 }
 
-if ($this->action == 'member_fee') {
+if ($paymentType == 'member_fee') {
     
     echo '<div class="multiple-checkbox-wrapper">';
     

@@ -59,7 +59,7 @@ class PaymentsController extends AdminAppController
             'member_fee',
             'member_fee_flexible'
         ))) {
-            $message = 'payment type nicht korrekt: ' . $type;
+            $message = 'payment type not correct: ' . $type;
             $this->log($message);
             die(json_encode(array(
                 'status' => 0,
@@ -117,11 +117,11 @@ class PaymentsController extends AdminAppController
                 ));
                 $message .= ' für ' . $customer['Customer']['name'];
                 if (empty($customer)) {
-                    $message = 'customer id not correct: ' . $customerId;
-                    $this->log($message);
+                    $msg = 'customer id not correct: ' . $customerId;
+                    $this->log($msg);
                     die(json_encode(array(
                         'status' => 0,
-                        'msg' => $message
+                        'msg' => $msg
                     )));
                 }
             }
@@ -138,11 +138,11 @@ class PaymentsController extends AdminAppController
                 $message = 'Pfand-Rücknahme ('.Configure::read('htmlHelper')->getManufacturerDepositPaymentText($text).')';
                 $message .= ' für ' . $manufacturer['Manufacturer']['name'];
                 if (empty($manufacturer)) {
-                    $message = 'manufacturer id not correct: ' . $manufacturerId;
-                    $this->log($message);
+                    $msg = 'manufacturer id not correct: ' . $manufacturerId;
+                    $this->log($msg);
                     die(json_encode(array(
                         'status' => 0,
-                        'msg' => $message
+                        'msg' => $msg
                     )));
                 }
             }
@@ -153,6 +153,43 @@ class PaymentsController extends AdminAppController
             
         }
 
+        
+        // payments paybacks, product and member_fee can also be placed for other users
+        if (in_array($type, array(
+            'product',
+            'payback',
+            'member_fee'
+        ))) {
+            
+            $this->Customer->recursive = - 1;
+            $customer = $this->Customer->find('first', array(
+                'conditions' => array(
+                    'Customer.id_customer' => $customerId
+                )
+            ));
+            if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
+                $message .= ' für ' . $customer['Customer']['name'];
+            }
+            // security check
+            if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
+                $msg = 'user without superadmin privileges tried to insert payment for another user: ' . $customerId;
+                $this->log($msg);
+                die(json_encode(array(
+                    'status' => 0,
+                    'msg' => $msg
+                )));
+            }
+            if (empty($customer)) {
+                $msg = 'customer id not correct: ' . $customerId;
+                $this->log($msg);
+                die(json_encode(array(
+                    'status' => 0,
+                    'msg' => $msg
+                )));
+            }
+        
+        }
+        
         // add entry in table cake_payments
         $this->CakePayment->id = null; // force insert
         $this->CakePayment->save(array(
@@ -230,8 +267,6 @@ class PaymentsController extends AdminAppController
         ));
 
         $this->loadModel('CakeActionLog');
-
-        $message = 'Die Zahlung wurde erfolgreich gelöscht.';
         
         $actionLogType = $payment['CakePayment']['type'];
         if ($payment['CakePayment']['type'] == 'deposit') {
@@ -241,6 +276,20 @@ class PaymentsController extends AdminAppController
             }
             $actionLogType .= '_'.$userType;
         }
+        
+
+        $message = 'Die Zahlung (' . Configure::read('htmlHelper')->formatAsEuro($payment['CakePayment']['amount']). ', '. Configure::read('htmlHelper')->getPaymentText($payment['CakePayment']['type']) .')';
+        
+        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['CakePayment']['id_customer']) {
+            if (isset($payment['Customer']['name'])) {
+                $username = $payment['Customer']['name'];
+            } else {
+                $username = $payment['Manufacturer']['name'];
+            }
+            $message .= ' von ' . $username;
+        }
+        
+        $message .= ' wurde erfolgreich gelöscht.';
         
         $this->CakeActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
@@ -270,6 +319,7 @@ class PaymentsController extends AdminAppController
     public function overview()
     {
         $this->customerId = $this->AppAuth->getUserId();
+        $this->paymentType = 'product';
         $this->product();
         $this->render('product');
     }
@@ -277,6 +327,7 @@ class PaymentsController extends AdminAppController
     public function my_member_fee()
     {
         $this->customerId = $this->AppAuth->getUserId();
+        $this->paymentType = 'member_fee';
         $this->member_fee();
         $this->render('member_fee');
     }
@@ -288,6 +339,9 @@ class PaymentsController extends AdminAppController
         if ($this->getCustomerId() == '') {
             $this->redirect(Configure::read('slugHelper')->getMyMemberFeeBalance());
         }
+        
+        $this->paymentType = 'member_fee';
+        $this->set('title_for_layout', 'Mitgliedsbeitrag');
         
         $this->allowedPaymentTypes = array(
             'member_fee'
@@ -301,7 +355,6 @@ class PaymentsController extends AdminAppController
             $sumMemberFeeFlexbile = $this->CakePayment->getSum($this->AppAuth->getUserId(), 'member_fee_flexible');
             $this->set('sumMemberFeeFlexible', $sumMemberFeeFlexbile);
         }
-        $this->set('title_for_layout', 'Mitgliedsbeitrag');
 
         $this->Customer->unbindModel(array(
             'hasMany' => 'PaidCashFreeOrders'
@@ -320,6 +373,7 @@ class PaymentsController extends AdminAppController
             $this->redirect(Configure::read('slugHelper')->getMyCreditBalance());    
         }
         
+        $this->paymentType = 'product';
         $this->set('title_for_layout', 'Guthaben');
 
         $this->allowedPaymentTypes = array(
@@ -395,6 +449,8 @@ class PaymentsController extends AdminAppController
             $title .= ' von ' . $customer['Customer']['name'];
         }
         $this->set('title_for_layout',  $title);
+        
+        $this->set('paymentType',  $this->paymentType);
         
     }
 }
