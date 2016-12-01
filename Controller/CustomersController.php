@@ -31,9 +31,9 @@ class CustomersController extends FrontendController
      */
     private function generateTermsOfUsePdf($customer) {
         $this->set('customer', $customer);
-        $this->set('saveParam', 'F');
+        $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateTermsOfUsePdf');
+        return $this->render('generateTermsOfUsePdf');
     }
     
     public function accept_updated_terms_of_use() {
@@ -231,8 +231,7 @@ class CustomersController extends FrontendController
                     $email = new AppEmail();
                     if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
-                        $this->generateTermsOfUsePdf($newCustomer['Customer']);
-                        $attachments = Configure::read('htmlHelper')->getTermsOfUsePDFLink($newCustomer['Customer']);
+                        $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($newCustomer['Customer']))));
                     } else {
                         $template = 'customer_registered_inactive';
                     }
@@ -240,7 +239,6 @@ class CustomersController extends FrontendController
                         ->emailFormat('html')
                         ->to($this->request->data['Customer']['email'])
                         ->subject('Willkommen')
-                        ->attachments($attachments)
                         ->viewVars(array(
                         'appAuth' => $this->AppAuth,
                         'data' => $this->request->data,

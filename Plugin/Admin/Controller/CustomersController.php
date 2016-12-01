@@ -238,9 +238,9 @@ class CustomersController extends AdminAppController
      */
     private function generateTermsOfUsePdf($customer) {
         $this->set('customer', $customer);
-        $this->set('saveParam', 'F');
+        $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateTermsOfUsePdf');
+        return $this->render('generateTermsOfUsePdf');
     }
     
     public function changeStatus($customerId, $status, $sendEmail)
@@ -266,12 +266,9 @@ class CustomersController extends AdminAppController
         
         $statusText = 'deaktiviert';
         $actionLogType = 'customer_set_inactive';
-        $attachments = array();
         if ($status) {
             $statusText = 'aktiviert';
             $actionLogType = 'customer_set_active';
-            $this->generateTermsOfUsePdf($customer['Customer']);
-            $attachments = Configure::read('htmlHelper')->getTermsOfUsePDFLink($customer['Customer']);
         }
         
         $message = 'Das Mitglied "' . $customer['Customer']['name'] . '" wurde erfolgreich ' . $statusText;
@@ -285,13 +282,14 @@ class CustomersController extends AdminAppController
             $email->template('customer_activated')
                 ->emailFormat('html')
                 ->to($customer['Customer']['email'])
-                ->attachments($attachments)
                 ->subject('Dein Mitgliedskonto wurde aktiviert.')
                 ->viewVars(array(
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
                 'newPassword' => $newPassword
             ));
+            
+            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customer']))));
             $email->send();
             
             $message .= ' und eine Info-Mail an ' . $customer['Customer']['email'] . ' versendet';

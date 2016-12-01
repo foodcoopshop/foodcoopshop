@@ -59,12 +59,8 @@ Configure::write('app.uploadedImagesDir', Configure::read('app.filesDir') . DS .
 
 Configure::write('app.folder.invoices', APP . 'files_private'. DS . 'invoices');
 Configure::write('app.folder.order_lists', APP . 'files_private' . DS .'order_lists');
-Configure::write('app.folder.orders', APP . 'files_private' . DS .'orders');
-Configure::write('app.folder.customers', APP . 'files_private' . DS .'customers');
 Configure::write('app.folder.invoices_with_current_year_and_month', Configure::read('app.folder.invoices').DS.date('Y').DS.date('m'));
 Configure::write('app.folder.order_lists_with_current_year_and_month', Configure::read('app.folder.order_lists').DS.date('Y').DS.date('m'));
-Configure::write('app.folder.orders_with_current_year_and_month', Configure::read('app.folder.orders').DS.date('Y').DS.date('m'));
-Configure::write('app.folder.customers_with_current_year_and_month', Configure::read('app.folder.customers').DS.date('Y').DS.date('m'));
 
 /**
  * if set to true, a compensation percentage can be added to the manufacturer settings

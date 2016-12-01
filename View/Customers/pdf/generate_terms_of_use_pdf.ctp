@@ -27,17 +27,5 @@ $pdf->AddPage();
 $html = $this->element('legal/termsOfUse');
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$filename = @$this->Html->getTermsOfUsePDFLink($customer);
-
-if (file_exists($filename))
-    unlink($filename);
-
-App::uses('Folder', 'Utility');
-$dir = new Folder();
-$path = dirname($filename);
-$dir->create($path);
-$dir->chmod($path, 0755);
-
-echo $pdf->Output($filename, $saveParam);
-
+echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);
 ?>

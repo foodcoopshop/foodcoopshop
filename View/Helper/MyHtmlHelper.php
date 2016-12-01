@@ -30,46 +30,6 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
     
-    public function getTermsOfUsePDFLink($customer)
-    {
-        $url = Configure::read('app.folder.customers_with_current_year_and_month') . DS;
-        return $url . 'Nutzungsbedingungen-'.$customer['id_customer'].'.pdf';
-    }
-    
-    /**
-     * @param array $order
-     * @return string
-     */
-    public function getOrderConfirmationPDFLink($order)
-    {
-        $url = Configure::read('app.folder.orders_with_current_year_and_month') . DS;
-        return $url . 'Bestellbestaetigung-' . $order['Order']['id_order'] . '.pdf';
-    }
-    
-    /**
-     * @return string
-     */
-    public function getGeneralTermsAndConditionsPDFLink($order)
-    {
-        $url = Configure::read('app.folder.orders_with_current_year_and_month') . DS;
-        return $url . 'Allgemeine-Geschaeftsbedingungen-' . $order['Order']['id_order'] . '.pdf';
-    }
-    
-    /**
-     * @param array $order
-     * @return string
-     */
-    public function getCancellationInformationAndFormPDFLink($order=null)
-    {
-        $url = Configure::read('app.folder.orders_with_current_year_and_month') . DS;
-        $filenamePart1 = 'Informationen-ueber-Ruecktrittsrecht';
-        $filenamePart2 = '';
-        if (!is_null($order)) {
-            $filenamePart2 = '-und-Ruecktrittsformular-'.$order['Order']['id_order'];
-        }
-        return $url.$filenamePart1.$filenamePart2.'.pdf';
-    }
-    
     /**
      * @param array $manufacturer
      * @param string $outputType "pdf" of "html"

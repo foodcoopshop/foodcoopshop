@@ -135,11 +135,6 @@ if (!empty($manufacturers)) {
 
 }
 
-$filename = $this->Html->getOrderConfirmationPDFLink($order);
-
-if (file_exists($filename))
-    unlink($filename);
-
-echo $pdf->Output($filename, $saveParam);
+echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);
 
 ?>

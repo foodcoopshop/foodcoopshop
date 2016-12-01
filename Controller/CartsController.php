@@ -69,9 +69,9 @@ class CartsController extends FrontendController
             $manufacturers[$product['Manufacturer']['id_manufacturer']][] = $product;
         }
         $this->set('manufacturers', $manufacturers);
-        $this->set('saveParam', 'F');
+        $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateCancellationInformationAndForm');
+        return $this->render('generateCancellationInformationAndForm');
     }
 
     /**
@@ -82,9 +82,9 @@ class CartsController extends FrontendController
     private function generateGeneralTermsAndConditions($order)
     {
         $this->set('order', $order);
-        $this->set('saveParam', 'F');
+        $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateGeneralTermsAndConditions');
+        return $this->render('generateGeneralTermsAndConditions');
     }
     
     /**
@@ -120,9 +120,9 @@ class CartsController extends FrontendController
         }
         
         $this->set('manufacturers', $manufacturers);
-        $this->set('saveParam', 'F');
+        $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateOrderConfirmation');
+        return $this->render('generateOrderConfirmation');
     }
     
     /**
@@ -368,7 +368,7 @@ class CartsController extends FrontendController
             }
             // END update stock available
             
-            $this->AppAuth->Cart->markAsSaved();
+//             $this->AppAuth->Cart->markAsSaved();
             
             $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
@@ -378,26 +378,22 @@ class CartsController extends FrontendController
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
             if ($this->AppAuth->user('active')) {
                 
-                $this->generateCancellationInformationAndForm($order, $products);
-                $cancellationInformationAndFormPDF = Configure::read('htmlHelper')->getCancellationInformationAndFormPDFLink($order);
-                
-                $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save);
-                $orderConfirmationPDF = Configure::read('htmlHelper')->getOrderConfirmationPDFLink($order);
-                
-                $this->generateGeneralTermsAndConditions($order);
-                $generalTermsAndConditionsPDF = Configure::read('htmlHelper')->getGeneralTermsAndConditionsPDFLink($order);
-                
                 $email = new AppEmail();
                 $email->template('customer_order_successful')
                     ->emailFormat('html')
                     ->to($this->AppAuth->getEmail())
                     ->subject('Bestellbestätigung')
-                    ->attachments(array($cancellationInformationAndFormPDF, $orderConfirmationPDF, $generalTermsAndConditionsPDF))
                     ->viewVars(array(
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
                     'order' => $order
                 ));
+                    
+
+                $email->addAttachments(array('Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => array('data' => $this->generateCancellationInformationAndForm($order, $products))));
+                $email->addAttachments(array('Bestellbestaetigung.pdf' => array('data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save))));
+                $email->addAttachments(array('Allgemeine-Geschaeftsbedingungen.pdf' => array('data' => $this->generateGeneralTermsAndConditions($order))));
+                
                     
                 if (Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC') != '') {
                     $email->bcc(Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC'));
