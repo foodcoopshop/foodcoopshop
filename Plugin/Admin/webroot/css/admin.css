@@ -859,3 +859,11 @@ body.taxes.index table.list,
 body.slider.index table.list {
 	width: 300px;
 }
+
+.accept-updated-terms-of-use-form {
+	width: 800px;
+	margin: 0 auto;
+	float: none;
+	text-align: left;
+	height: 155px;
+}

@@ -25,6 +25,7 @@ if ($appAuth->isManufacturer()) {
     $adminName = 'Hersteller-Bereich';
 }
 echo '<h1>Willkommen <br />im ' . $adminName . '</h1>';
+echo $this->element('acceptUpdatedTermsOfUseForm');
 echo '<br />';
 echo '<img id="installation-logo" src="/files/images/logo.jpg" />';
 echo '<div class="sc"></div>';

@@ -341,6 +341,9 @@ input[type="checkbox"] {
     margin-top: 10px;
     float: left;
     width: 100%;
+    letter-spacing: normal ! important;
+    border: none ! important;
+    padding-bottom: 0 ! important;
 }
 
 .toggle-link {
@@ -375,4 +378,49 @@ pre {
 }
 .ui-dialog.logout-button {
 	z-index: 100000;
+}
+
+.accept-updated-terms-of-use-form {
+    float: left;
+    padding: 10px;
+    background: #f3515c;
+    color: #fff;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: -4px;
+    font-size: 10pt ! important;
+}
+.accept-updated-terms-of-use-form h2 {
+    color: #fff ! important;
+    font-size: 20px ! important;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 5px;
+}
+.accept-updated-terms-of-use-form form {
+    width: 100%;
+    float: left;
+}
+.accept-updated-terms-of-use-form button {
+    float: right;
+}
+.accept-updated-terms-of-use-form .input.checkbox {
+    float: left;
+}
+.accept-updated-terms-of-use-form input[type="checkbox"] {
+    margin-left: 0;
+}
+.accept-updated-terms-of-use-form .input.checkbox label {
+    padding-left: 30px;
+    margin-top: 3px;
+    width: auto ! important;
+}
+
+.accept-updated-terms-of-use-form-bottom-wrapper {
+    margin-top: 20px;
+    float: left;
+    width: 100%;
+}
+#AcceptTermsOfUseForm .featherlight-overlay {
+    display: none;
 }

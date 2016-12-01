@@ -24,7 +24,7 @@ $this->element('addScript', array('script' =>
 <div class="accept-updated-terms-of-use-form">
 	<h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
 	<p>um diese Plattform (FoodCoopShop) weiterhin verwenden zu können, <b><a class="terms-of-use-overlay" href="#terms-of-use">lese bitte die geänderten Nutzungsbedingungen</a></b> und akzeptiere sie.</p>
-	<form action="/nutzungsbedingungen-akzeptieren" id="RegistrationForm" method="post" accept-charset="utf-8">
+	<form action="/nutzungsbedingungen-akzeptieren" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
     	<?php
         	echo '<div id="terms-of-use" class="featherlight-overlay">';
         	echo $this->element('legal/termsOfUse');
