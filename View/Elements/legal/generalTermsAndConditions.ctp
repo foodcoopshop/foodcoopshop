@@ -13,4 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<h1>Coming soon...</h1>
+<h1>Allgemeine Geschäftsbedingungen</h1>
+
+<p>Coming soon...</p>

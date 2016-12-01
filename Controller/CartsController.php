@@ -76,6 +76,19 @@ class CartsController extends FrontendController
 
     /**
      * called from finish context
+     * @param array $order
+     * saves pdf as file
+     */
+    private function generateGeneralTermsAndConditions($order)
+    {
+        $this->set('order', $order);
+        $this->set('saveParam', 'F');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        $this->render('generateGeneralTermsAndConditions');
+    }
+    
+    /**
+     * called from finish context
      * saves pdf as file
      * @param array $order
      * @param array $orderDetails
@@ -364,18 +377,22 @@ class CartsController extends FrontendController
             // START send confirmation email to customer
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
             if ($this->AppAuth->user('active')) {
+                
                 $this->generateCancellationInformationAndForm($order, $products);
                 $cancellationInformationAndFormPDF = Configure::read('htmlHelper')->getCancellationInformationAndFormPDFLink($order);
                 
                 $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save);
                 $orderConfirmationPDF = Configure::read('htmlHelper')->getOrderConfirmationPDFLink($order);
                 
+                $this->generateGeneralTermsAndConditions($order);
+                $generalTermsAndConditionsPDF = Configure::read('htmlHelper')->getGeneralTermsAndConditionsPDFLink($order);
+                
                 $email = new AppEmail();
                 $email->template('customer_order_successful')
                     ->emailFormat('html')
                     ->to($this->AppAuth->getEmail())
                     ->subject('Bestellbestätigung')
-                    ->attachments(array($cancellationInformationAndFormPDF, $orderConfirmationPDF))
+                    ->attachments(array($cancellationInformationAndFormPDF, $orderConfirmationPDF, $generalTermsAndConditionsPDF))
                     ->viewVars(array(
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,

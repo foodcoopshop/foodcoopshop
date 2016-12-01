@@ -47,6 +47,15 @@ class MyHtmlHelper extends HtmlHelper
     }
     
     /**
+     * @return string
+     */
+    public function getGeneralTermsAndConditionsPDFLink($order)
+    {
+        $url = Configure::read('app.folder.orders_with_current_year_and_month') . DS;
+        return $url . 'Allgemeine-Geschaeftsbedingungen-' . $order['Order']['id_order'] . '.pdf';
+    }
+    
+    /**
      * @param array $order
      * @return string
      */
