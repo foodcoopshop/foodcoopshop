@@ -130,6 +130,10 @@ class FrontendController extends AppController
         $this->loadModel('Page');
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';
+        if (! $this->AppAuth->loggedIn()) {
+            $conditions['Page.is_private'] = APP_OFF;
+        }
+        
         $pages = $this->Page->findAllGroupedByMenu($conditions);
         $pagesForHeader = array();
         $pagesForFooter = array();

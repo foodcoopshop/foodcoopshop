@@ -806,6 +806,7 @@ CREATE TABLE `fcs_cms` (
   `url` varchar(255) NOT NULL,
   `indexation` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
   `id_customer` int(10) UNSIGNED NOT NULL,
+  `is_private` int(11) UNSIGNED NOT NULL,
   `modified` datetime NOT NULL,
   `created` datetime NOT NULL,
   `full_width` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',

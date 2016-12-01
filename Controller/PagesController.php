@@ -67,7 +67,7 @@ class PagesController extends FrontendController
     {
         $pageId = (int) $this->params['pass'][0];
         
-        $page = $this->Page->getPageForFrontend($pageId);
+        $page = $this->Page->getPageForFrontend($pageId, $this->AppAuth);
         if (empty($page)) {
             throw new MissingActionException('page not found');
         }
@@ -82,7 +82,7 @@ class PagesController extends FrontendController
         ));
         $page['children'] = array();
         foreach ($children as $child) {
-            $page['children'][] = $this->Page->getPageForFrontend($child['Page']['id_cms']);
+            $page['children'][] = $this->Page->getPageForFrontend($child['Page']['id_cms'], $this->AppAuth);
         }
         
         $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']);
