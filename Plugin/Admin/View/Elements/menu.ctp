@@ -100,14 +100,15 @@ if ($appAuth->isCustomer()) {
         $cancelledArticlesMenuElement
     );
     $menu[] = $ordersMenuElement;
+    $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
-        $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
+        $menu[]= $paymentProductMenuElement;
     }
     if (! empty($paymentMemberFeeMenuElement)) {
-        $customerProfileMenuElement['children'][] = $paymentMemberFeeMenuElement;
+        $menu[]= $paymentMemberFeeMenuElement;
     }
-    $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
-    $menu[] = $customerProfileMenuElement;
+    $menu[] = $changePasswordMenuElement;
+    $menu[] = $actionLogsMenuElement;
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {

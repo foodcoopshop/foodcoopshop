@@ -78,9 +78,8 @@ class ActionLogsController extends AdminAppController
         
         // customers are only allowed to see their own data
         if ($this->AppAuth->isCustomer()) {
-            $conditions['Customer.id_customer'] = $this->AppAuth->getUserId();
             // configuration of customerMainNamePart can be changed
-            $conditions[] = '(CakeActionLog.text REGEXP \'' . $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname') . '\' OR CakeActionLog.text REGEXP \'' . $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname') . '\')';
+            $conditions[] = '(Customer.id_customer = '.$this->AppAuth->getUserId().' OR (CakeActionLog.text REGEXP \'' . $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname') . '\' OR CakeActionLog.text REGEXP \'' . $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname') . '\'))';
         }
         
         $type = '';
