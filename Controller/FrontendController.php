@@ -149,7 +149,7 @@ class FrontendController extends AppController
         
         /*
          * changed the acutally logged in customer to the desired shopOrderCustomer
-         * but only in controller (befor filter), before render sets the customer back to the original one
+         * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
         if ($this->AppSession->read('Auth.shopOrderCustomer')) {

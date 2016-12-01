@@ -385,9 +385,9 @@ class CartsController extends FrontendController
             }
             
             $email->send();
-            // END send confirmation email to customer
+            //END send confirmation email to customer
             
-            // due to redirect, before render is not called
+            // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
             
             $this->redirect(Configure::read('slugHelper')->getCartFinished($orderId));
