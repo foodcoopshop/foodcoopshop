@@ -88,7 +88,15 @@ class FrontendController extends AppController
     // is not called on ajax actions!
     public function beforeRender()
     {
+        
         parent::beforeRender();
+        
+        // when a shop order was placed, the pdfs that are rendered for the order confirmation email
+        // called this method and therefore called resetOriginalLoggedCustomer() => email was sent t
+        // the user who placed the order for a member and not to the member
+        if ($this->response->type() != 'text/html') {
+            return;
+        }
         
         $this->resetOriginalLoggedCustomer();
         
