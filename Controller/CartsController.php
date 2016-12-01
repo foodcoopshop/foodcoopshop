@@ -362,29 +362,32 @@ class CartsController extends FrontendController
             $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
             
             // START send confirmation email to customer
-            $this->generateCancellationInformationAndForm($order, $products);
-            $cancellationInformationAndFormPDF = Configure::read('htmlHelper')->getCancellationInformationAndFormPDFLink($order);
-            
-            $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save);
-            $orderConfirmationPDF = Configure::read('htmlHelper')->getOrderConfirmationPDFLink($order);
-            
-            $email = new AppEmail();
-            $email->template('customer_order_successful')
-                ->emailFormat('html')
-                ->to($this->AppAuth->getEmail())
-                ->subject('Bestellbestätigung')
-                ->attachments(array($cancellationInformationAndFormPDF, $orderConfirmationPDF))
-                ->viewVars(array(
-                'cart' => $cart,
-                'appAuth' => $this->AppAuth,
-                'order' => $order
-            ));
+            // do not send email to inactive users (superadmins can place shop orders for inactive users!)
+            if ($this->AppAuth->user('active')) {
+                $this->generateCancellationInformationAndForm($order, $products);
+                $cancellationInformationAndFormPDF = Configure::read('htmlHelper')->getCancellationInformationAndFormPDFLink($order);
                 
-            if (Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC') != '') {
-                $email->bcc(Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC'));
+                $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save);
+                $orderConfirmationPDF = Configure::read('htmlHelper')->getOrderConfirmationPDFLink($order);
+                
+                $email = new AppEmail();
+                $email->template('customer_order_successful')
+                    ->emailFormat('html')
+                    ->to($this->AppAuth->getEmail())
+                    ->subject('Bestellbestätigung')
+                    ->attachments(array($cancellationInformationAndFormPDF, $orderConfirmationPDF))
+                    ->viewVars(array(
+                    'cart' => $cart,
+                    'appAuth' => $this->AppAuth,
+                    'order' => $order
+                ));
+                    
+                if (Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC') != '') {
+                    $email->bcc(Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC'));
+                }
+                
+                $email->send();
             }
-            
-            $email->send();
             //END send confirmation email to customer
             
             // due to redirect, beforeRender() is not called
