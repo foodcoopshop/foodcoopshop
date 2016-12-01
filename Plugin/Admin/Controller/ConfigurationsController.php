@@ -104,10 +104,12 @@ class ConfigurationsController extends AdminAppController
         $email = new AppEmail();
         $success = $email->to(Configure::read('app.hostingEmail'))
             ->subject('Test E-Mail')
+            ->template('send_test_email_template')
+            ->emailFormat('html')
             ->attachments(array(
-            WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
-        ))
-            ->send('Das ist der Text der E-Mail (mit Bild als Anhang).');
+                WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
+            ))
+            ->send();
         $this->set('success', $success);
     }
 
