@@ -253,10 +253,6 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
 
-        if (Configure::read('app.orderDetailDeleteMailBcc')) {
-            $email->addBcc(Configure::read('app.orderDetailDeleteMailBcc'));
-        }
-
         $email->send();
 
         $message .= ' versendet.';
@@ -339,10 +335,6 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
 
-        if (Configure::read('app.orderDetailDeleteMailBcc')) {
-            $email->addBcc(Configure::read('app.orderDetailDeleteMailBcc'));
-        }
-
         $email->send();
 
         $message .= ' versendet.';
@@ -414,10 +406,6 @@ class OrderDetailsController extends AdminAppController
         if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
             $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
             $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
-        }
-
-        if (Configure::read('app.orderDetailDeleteMailBcc')) {
-            $email->addBcc(Configure::read('app.orderDetailDeleteMailBcc'));
         }
 
         $email->send();

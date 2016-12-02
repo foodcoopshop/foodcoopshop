@@ -368,7 +368,7 @@ class CartsController extends FrontendController
             }
             // END update stock available
             
-            $this->AppAuth->Cart->markAsSaved();
+//             $this->AppAuth->Cart->markAsSaved();
             
             $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
@@ -393,11 +393,6 @@ class CartsController extends FrontendController
                 $email->addAttachments(array('Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => array('data' => $this->generateCancellationInformationAndForm($order, $products))));
                 $email->addAttachments(array('Bestellbestaetigung.pdf' => array('data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save))));
                 $email->addAttachments(array('Allgemeine-Geschaeftsbedingungen.pdf' => array('data' => $this->generateGeneralTermsAndConditions($order))));
-                
-                    
-                if (Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC') != '') {
-                    $email->bcc(Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC'));
-                }
                 
                 $email->send();
             }

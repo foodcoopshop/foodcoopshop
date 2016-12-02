@@ -371,9 +371,6 @@ class ManufacturersController extends AdminAppController
                     'appAuth' => $this->AppAuth
                 ));
                 
-                if (Configure::read('app.invoiceMailBcc')) {
-                    $email->addBcc(Configure::read('app.invoiceMailBcc'));
-                }
                 $email->send();
             }
         }
@@ -449,7 +446,7 @@ class ManufacturersController extends AdminAppController
                     ->emailFormat('html')
                     ->cc($ccRecipients)
                     -> // works also with empty array!
-attachments(array(
+                        attachments(array(
                     $productPdfFile,
                     $customerPdfFile
                 ))
@@ -459,9 +456,6 @@ attachments(array(
                     'appAuth' => $this->AppAuth
                 ));
                 
-                if (Configure::read('app.orderListMailBcc')) {
-                    $email->addBcc(Configure::read('app.orderListMailBcc'));
-                }
                 $email->send();
             }
         }

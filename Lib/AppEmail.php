@@ -23,6 +23,10 @@ class AppEmail extends CakeEmail
     public function __construct($config = null)
     {
         parent::__construct('default');
+        
+        if (Configure::read('app.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
+            $this->addBcc(Configure::read('app.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC'));
+        }
     }
 
     /**

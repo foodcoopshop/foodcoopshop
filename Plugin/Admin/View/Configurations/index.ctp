@@ -132,44 +132,7 @@ $this->element('addScript', array(
 			<td><?php echo join(', ', Configure::read('app.registrationNotificationEmails')); ?></td>
 		</tr>
 
-		<tr>
-			<td>app.orderListMailBcc</td>
-			<td>
-                <?php
-                if (Configure::read('app.orderListMailBcc')) {
-                    echo Configure::read('app.orderListMailBcc');
-                } else {
-                    echo 'kein app.orderListMailBcc definiert';
-                }
-                ?>
-            </td>
-		</tr>
 
-		<tr>
-			<td>app.invoiceMailBcc</td>
-			<td>
-                <?php
-                if (Configure::read('app.invoiceMailBcc')) {
-                    echo Configure::read('app.invoiceMailBcc');
-                } else {
-                    echo 'kein app.invoiceMailBcc definiert';
-                }
-                ?>
-            </td>
-		</tr>
-
-		<tr>
-			<td>app.orderDetailDeleteMailBcc</td>
-			<td>
-                <?php
-                if (Configure::read('app.orderDetailDeleteMailBcc')) {
-                    echo Configure::read('app.orderDetailDeleteMailBcc');
-                } else {
-                    echo 'kein app.orderDetailDeleteMailBcc definiert';
-                }
-                ?>
-            </td>
-		</tr>
 
 		<tr>
 			<td>app.adminEmail / app.adminPassword</td>
