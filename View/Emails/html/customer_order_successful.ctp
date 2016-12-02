@@ -121,7 +121,7 @@
 		</tr>
 		<tr>
 			<td style="padding-top:20px;font-size:12px;">
-				Eine detaillierte Auflistung deiner Bestellung findest du im beiliegenden Dokument "Bestelluebersicht-<?php echo $order['Order']['id_order']; ?>.pdf".
+				Eine detaillierte Auflistung deiner Bestellung findest du in der beiliegenden Datei "Bestelluebersicht.pdf".
 			</td>
 		</tr>
 		<tr>
