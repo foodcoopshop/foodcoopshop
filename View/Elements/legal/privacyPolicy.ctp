@@ -31,11 +31,11 @@
 
 <p>2.1.1. Serverlogs: Die IP-Adresse des Anfragenden Computers, gemeinsam mit dem Datum, der Uhrzeit, der Anfrage, welche Datei angefragt wird (Name und URL), welche Datenmenge an Sie übertragen wird, eine Meldung, ob die Anfrage erfolgreich war, Erkennungsdaten des verwendeten Browsers und des verwendeten Betriebssystems, sowie die Website, von der der Zugriff erfolgte (sollte der Zugriff über einen Link erfolgen). Die Serverlogs werden gespeichert, um die Systemsicherheit prüfen zu können, die Website technisch administrieren, sowie das Angebot optimieren zu können. Diese Daten werden – sollte es einen Hackangriff gegeben haben – an die Strafverfolgungsbehörden weitergeben. Eine darüberhinausgehende Weitergabe an Dritte erfolgt nicht. Die Serverlogs werden für maximal ein Monat gespeichert.</p> 
 
-<p>2.1.2. Cookies: Cookies sind kleine Textdateien, die die Website auf Ihrem Computer speichert, um diesen wiederzuerkennen. Die in den Cookies enthaltenen Informationen werden verwendet, um festzustellen, ob Sie eingeloggt sind, oder welche Daten sie bereits eingegeben haben, Informationen über die Nutzung der Gratis-Tests und Richtlinien. Bei den meisten Web-Browsern werden Cookies automatisch akzeptiert. Durch Änderung der Einstellungen Ihres Browsers können Sie dies vermeiden. Sie können auf Ihrem PC gespeicherte Cookies jederzeit durch Löschen der temporären Internetdateien entfernen.</p> 
+<p>2.1.2. Cookies: Cookies sind kleine Textdateien, die die Website auf Ihrem Computer speichert, um diesen wiederzuerkennen. Die in den Cookies enthaltenen Informationen werden verwendet, um festzustellen, ob Sie eingeloggt sind. Bei den meisten Web-Browsern werden Cookies automatisch akzeptiert. Durch Änderung der Einstellungen Ihres Browsers können Sie dies vermeiden. Sie können auf Ihrem PC gespeicherte Cookies jederzeit durch Löschen der temporären Internetdateien entfernen.</p> 
 
 <p>Konkret werden folgende Cookies gespeichert über die jeweilige Session hinaus gespeichert:</p>
 
-<p>[Bitte Namen, Zweck und Speicherdauer ergänzen]</p> 
+<p>CakeCookie.remember_me_cookie: 6 Tage gültig, wird ausschließlich für die Login-Funktion "angemeldet bleiben" vewendet</p> 
 
 <p>2.2. Die Website speichert und verwendet darüber hinaus automatisiert keine Daten.</p>
 
@@ -44,8 +44,6 @@
 Sollten Sie im Rahmen der Website Daten eingeben, verarbeiten wir Ihre Daten wie folgt:</p>
 
 <p>3.1. Daten über die Bestellungen: Jene Daten, welche Sie im Rahmen Ihrer Anmeldung sowie im Rahmen der Bestellungen bekanntgegeben haben, werden ausschließlich für die Abwicklung der Bestellung verwendet. Die Daten werden für die Dauer von sieben Jahren gespeichert.</p>
-
-<p>3.2. Newsletter: Jene Daten, welche Sie im Rahmen der Newsletter-Anmeldung eingetragen haben, werden von uns gespeichert und ausschließlich zur Zusendung von Newslettern per E-Mail verwendet. Eine Weitergabe der Daten an Dritte erfolgt nicht. Sie können einen bei uns abonnierten Newsletter jederzeit abbestellen. Die personenbezogenen Daten werden gespeichert und für den Newsletteversand verwendet, bis Sie sich abmelden.</p>
 
 <h2>4. Widerspruchsrecht</h2>
 
