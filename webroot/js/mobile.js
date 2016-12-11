@@ -47,7 +47,13 @@ foodcoopshop.Mobile = {
             menuItems.push(item);
         });
 
-        menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
+        // if all manufacturers are disabled / set to private - do not include menu item
+        $('.sidebar li.heading').each(function() {
+        	if ($(this).html() == 'Hersteller') {
+                menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
+        	}
+        });
+        
         menuItems.push('<li><a href="/aktuelles"><i class="fa"></i>Aktuelles</a></li>');
 
         $('.sidebar ul#categories-menu > li').each(function() {
