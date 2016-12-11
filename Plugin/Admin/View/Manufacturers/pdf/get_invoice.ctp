@@ -95,7 +95,7 @@ if ($compensationPercentage > 0) {
     $html .= '</td>';
     
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3>' . $this->Html->formatAsDecimal($sumNewPriceIncl) . '</h3>';
+    $html .= '<h3>' . $this->Html->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
     
