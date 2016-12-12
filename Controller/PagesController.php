@@ -56,7 +56,8 @@ class PagesController extends FrontendController
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
         
-        $this->set('title_for_layout', 'Home');
+        Configure::write('app.titleSuffix', Configure::read('app.titleSuffix') . ' - Foodcoop');
+        $this->set('title_for_layout', 'Willkommen');
         
         $this->loadModel('Slider');
         $sliders = $this->Slider->getForHome();
