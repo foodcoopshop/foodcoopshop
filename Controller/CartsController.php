@@ -47,7 +47,7 @@ class CartsController extends FrontendController
     
     public function isAuthorized($user)
     {
-        return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED');
+        return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
     }
 
     public function detail()
