@@ -47,19 +47,25 @@ if (!$appAuth->termsOfUseAccepted()) {
     
     <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
     
-<?php
+	<?php
 
-    if ($this->Html->paymentIsCashless()) {
-        echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
-    } else {
-        echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
-    }
- 
-    echo $this->Form->create('Order', array(
-        'class' => 'fcs-form',
-        'url' => $this->Slug->getCartFinish()
-    ));
-    
+        if ($this->Html->paymentIsCashless()) {
+            echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
+        } else {
+            echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
+        }
+     ?>
+     
+    <p>
+    	Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo implode(', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
+    </p>
+
+     <?php
+        echo $this->Form->create('Order', array(
+            'class' => 'fcs-form',
+            'url' => $this->Slug->getCartFinish()
+        ));
+        
         echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
             echo $this->element('legal/generalTermsAndConditions');
         echo '</div>';
