@@ -17,5 +17,9 @@
 $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ));
-echo $this->element('legal/termsOfUse');
+if ($appAuth->isManufacturer()) {
+    echo $this->element('legal/termsOfUseForManufacturers');
+} else {
+    echo $this->element('legal/termsOfUse');
+}
 ?>

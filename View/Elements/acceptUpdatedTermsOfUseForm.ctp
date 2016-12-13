@@ -27,7 +27,11 @@ $this->element('addScript', array('script' =>
 	<form action="/nutzungsbedingungen-akzeptieren" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
     	<?php
         	echo '<div id="terms-of-use" class="featherlight-overlay">';
-        	echo $this->element('legal/termsOfUse');
+        	if ($appAuth->isManufacturer()) {
+        	    echo $this->element('legal/termsOfUseForManufacturers');
+        	} else {
+        	    echo $this->element('legal/termsOfUse');
+        	}
         	echo '</div>';
         	echo $this->Form->input('Customer.terms_of_use_accepted_date', array(
         	    'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',

@@ -388,10 +388,7 @@ class ManufacturersController extends AdminAppController
         ));
         
         $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
-        if (isset($addressOther['compensationPercentage'])) {
-            $compensationPercentage = (int) $addressOther['compensationPercentage'];
-        }
+        $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
         return $compensationPercentage;
     }
 

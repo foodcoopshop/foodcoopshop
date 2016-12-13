@@ -120,6 +120,18 @@ class AppController extends Controller
             }
         }
         
+        if ($this->AppAuth->isManufacturer()) {
+            $this->loadModel('Manufacturer');
+            $manufacturer = $this->Manufacturer->find('first', array(
+                'conditions' => array(
+                    'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
+                )
+            ));
+            $addressOther = $manufacturer['Address']['other'];
+            $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
+            $this->set('compensationPercentageForTermsOfUse', $compensationPercentage);
+        }
+        
         $isMobile = false;
         if ($this->request->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
             $isMobile = true;

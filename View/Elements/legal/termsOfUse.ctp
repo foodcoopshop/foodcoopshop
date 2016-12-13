@@ -13,21 +13,30 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<h1>Nutzungsbedingungen der Plattform</h1> 
+<h1>Nutzungsbedingungen</h1> 
 
-<p>(im Folgenden kurz: FoodCoopShop)</p>
+<h2>Betreiber der Plattform</h2>
 
-<h2>1. Geltung der AGB</h2>
+<p>
+    <?php
+        echo Configure::read('app.name').'<br />';
+        echo implode('<br />', $this->MyHtml->getAddressFromAddressConfiguration());
+    ?>
+</p>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der FoodCoopShop im Rahmen seiner Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p> 
+<p>(im Folgenden kurz: Foodcoop)</p>
+
+<h2>1. Geltung der Nutzungsbedingungen</h2>
+
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die die Foodcoop im Rahmen seiner Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p> 
 
 <p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Der FoodCoopShop stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Anbieter Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Lieferanten an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Lieferanten. <b>Ein Vertrag zwischen dem Nutzer und dem Lieferanten kommt zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
+<p>2.1. Die Foodcoop stellt dem Nutzer eine Plattform (FoodCoopShop) unentgeltlich zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Hersteller an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller. <b>Ein Vertrag zwischen dem Nutzer und dem Hersteller kommt zustande, wenn der Hersteller mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
 
-<p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Lieferanten zustande.</p>
+<p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande.</p>
 
 <p>2.3. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p> 
 
@@ -35,17 +44,17 @@
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 
-<p>3.1. Die Nutzung des FoodCoopShop ist für die Nutzer kostenlos. Die Haftung des FoodCoopShop ist daher ausgeschlossen.</p> 
+<p>3.1. Die Nutzung der Plattform (FoodCoopShop) ist für die Nutzer kostenlos. Die Haftung des FoodCoopShop ist daher ausgeschlossen.</p> 
 
-<p>3.2. Für Schäden infolge schuldhafter Vertragsverletzung haftet der FoodCoopShop bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
+<p>3.2. Für Schäden infolge schuldhafter Vertragsverletzung haftet die Foodcoop bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
 
 <h2>4. Rücktrittsrecht</h2>
 
-<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Lieferanten direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</p> 
+<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Hersteller direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</p> 
 
-<p>4.2. Der jeweilige Lieferant wird von den alternativen Streitbeilegungsstellen „Online-Streitbeilegung“ (https://webgate.ec.europa.eu/odr) sowie „Internetombudsmann“ (www.ombudsmann.at) erfasst. Der Nutzer hat auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p> 
+<p>4.2. Der jeweilige Hersteller wird von den alternativen Streitbeilegungsstellen „Online-Streitbeilegung“ (https://webgate.ec.europa.eu/odr) sowie „Internetombudsmann“ (www.ombudsmann.at) erfasst. Der Nutzer hat auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p> 
 
-<p>Die E-Mailadresse des jeweiligen Lieferanten ergibt sich aus dessen Impressum.</p>
+<p>Die E-Mailadresse des jeweiligen Hersteller ergibt sich aus dessen Impressum.</p>
 
 <h2>5. Schlussbestimmungen</h2> 
 
@@ -58,7 +67,7 @@
 <?php if ($this->Html->paymentIsCashless()) { ?>
 <h2>6. Guthabenkonto</h2>
 
-<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom FoodCoopShop verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
+<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird von der Foodcoop verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
 
 <?php
     if (Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE') == 0) {
@@ -68,7 +77,7 @@
     }
 ?>
 
-<p>6.2. Durch die Bezahlung der einzelnen Waren ermächtigt der Nutzer den FoodCoopShop, nach Abgabe der Bestellung den jeweils angegebenen Betrag an den Lieferanten zu bezahlen.</p>
+<p>6.2. Durch die Bezahlung der einzelnen Waren ermächtigt der Nutzer die Foodcoop, nach Abgabe der Bestellung den jeweils angegebenen Betrag an den Hersteller zu bezahlen.</p>
 
-<p>6.3. Der Nutzer hat jederzeit das Recht, die Auszahlung des Guthabenkontos zu verlangen, der FoodCoopShop wird die Auszahlung binnen 14 Tagen auf das vom Nutzer bekanntgegebene Konto mittels Überweisung durchführen.</p> 
+<p>6.3. Der Nutzer hat jederzeit das Recht, die Auszahlung des Guthabenkontos zu verlangen, die Foodcoop wird die Auszahlung innerhalb eines Monats auf das vom Nutzer bekanntgegebene Konto mittels Überweisung durchführen.</p> 
 <?php } ?>

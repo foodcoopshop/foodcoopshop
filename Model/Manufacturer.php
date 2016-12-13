@@ -134,6 +134,21 @@ class Manufacturer extends AppModel
         }
         return $bulkOrdersAllowed;
     }
+    
+    /**
+     *
+     * @param $other json
+     *            (contains manufacturer options)
+     * @return int
+     */
+    public function getCompensationPercentage($other)
+    {
+        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
+        if (isset($other['compensationPercentage'])) {
+            $compensationPercentage = (int) $other['compensationPercentage'];
+        }
+        return $compensationPercentage;
+    }
 
     /**
      *
