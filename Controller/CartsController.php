@@ -368,7 +368,7 @@ class CartsController extends FrontendController
             }
             // END update stock available
             
-//             $this->AppAuth->Cart->markAsSaved();
+            $this->AppAuth->Cart->markAsSaved();
             
             $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
