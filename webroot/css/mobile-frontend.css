@@ -260,6 +260,7 @@
     }
     body.carts.detail .cart:not(#cart) .input.checkbox .error-message {
         font-size: 12px;
+        line-height: 18px;
     }
 }
 

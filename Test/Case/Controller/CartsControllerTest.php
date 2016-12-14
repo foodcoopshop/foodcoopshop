@@ -188,7 +188,7 @@ class CartsControllerTest extends AppCakeTestCase
         // firstly do not check legal checkboxes
         $this->finishCart(false, false);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->browser->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere den Ausschluss des Rücktrittsrechts.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
         
         // then check the checkboxes
         $this->finishCart();

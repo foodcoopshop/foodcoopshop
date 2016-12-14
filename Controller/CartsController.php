@@ -270,7 +270,7 @@ class CartsController extends FrontendController
             $checkboxErrors = true;
         }
         if (!isset($this->request->data['Order']['cancellation_terms_accepted']) || $this->request->data['Order']['cancellation_terms_accepted'] != 1) {
-            $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere den Ausschluss des Rücktrittsrechts.');
+            $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
             $checkboxErrors = true;
         }
         
