@@ -120,13 +120,20 @@
 			</td>
 		</tr>
 		<tr>
+			<td>
+			    <p>
+    				Bitte hole deine Produkte am <b><?php echo $this->MyTime->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo implode(', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab.
+			    </p>
+			</td>
+		</tr>
+		<tr>
 			<td style="padding-top:20px;font-size:12px;">
 				Eine detaillierte Auflistung deiner Bestellung findest du in der beiliegenden Datei "Bestelluebersicht.pdf".
 			</td>
 		</tr>
 		<tr>
 			<td style="font-size:12px;">
-				Die Informationen zum Rücktrittsrecht und das Rücktrittsformular sind gesetzlich vorgeschrieben. Sie machen für Foodcoops aber wenig Sinn, da das Rücktrittsrecht für verderbliche Waren ausgeschlossen ist.
+				PS: Die Informationen zum Rücktrittsrecht und das Rücktrittsformular sind gesetzlich vorgeschrieben. Das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen.
 			</td>
 		</tr>
 	</tbody>
