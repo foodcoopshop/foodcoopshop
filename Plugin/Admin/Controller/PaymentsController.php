@@ -27,6 +27,11 @@ class PaymentsController extends AdminAppController
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'product':
+                // allow redirects for legacy links
+                if (empty($this->params['named']['customerId'])) {
+                    return $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                }
+                return $this->AppAuth->isSuperadmin();
             case 'member_fee':
                 return $this->AppAuth->isSuperadmin();
                 break;
@@ -370,7 +375,7 @@ class PaymentsController extends AdminAppController
         
         // do not allow call without param customerId
         if ($this->getCustomerId() == '') {
-            $this->redirect(Configure::read('slugHelper')->getMyCreditBalance());    
+            $this->redirect(Configure::read('slugHelper')->getMyCreditBalance());
         }
         
         $this->paymentType = 'product';
