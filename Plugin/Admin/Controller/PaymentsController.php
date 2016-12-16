@@ -29,15 +29,20 @@ class PaymentsController extends AdminAppController
             case 'product':
                 // allow redirects for legacy links
                 if (empty($this->params['named']['customerId'])) {
-                    return $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                    $this->redirect(Configure::read('slugHelper')->getMyCreditBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
+                break;
             case 'member_fee':
+                if (empty($this->params['named']['customerId'])) {
+                    $this->redirect(Configure::read('slugHelper')->getMyMemberFeeBalance());
+                }
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'add':
             case 'changeState':
                 return $this->AppAuth->loggedIn();
+                break;
             default:
                 return $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
@@ -339,12 +344,7 @@ class PaymentsController extends AdminAppController
     
     public function member_fee()
     {
-        
-        // do not allow call without param customerId
-        if ($this->getCustomerId() == '') {
-            $this->redirect(Configure::read('slugHelper')->getMyMemberFeeBalance());
-        }
-        
+                
         $this->paymentType = 'member_fee';
         $this->set('title_for_layout', 'Mitgliedsbeitrag');
         
@@ -372,11 +372,6 @@ class PaymentsController extends AdminAppController
 
     public function product()
     {
-        
-        // do not allow call without param customerId
-        if ($this->getCustomerId() == '') {
-            $this->redirect(Configure::read('slugHelper')->getMyCreditBalance());
-        }
         
         $this->paymentType = 'product';
         $this->set('title_for_layout', 'Guthaben');
