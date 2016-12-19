@@ -35,7 +35,11 @@ body.customers.login #content {
 }
 #home h1 {
 	color: #333;
-	text-shadow: 1px 1px #fff;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: #fff;
+	width: 260px;
+	margin: 0 auto;
 }
 #flashMessage {
     left: 470px;
@@ -863,6 +867,7 @@ body.slider.index table.list {
 .accept-updated-terms-of-use-form {
 	width: 800px;
 	margin: 0 auto;
+	margin-top: 20px;
 	float: none;
 	text-align: left;
 	height: 155px;
