@@ -28,15 +28,15 @@
 
 <h2>1. Geltung der Nutzungsbedingungen</h2>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die die Foodcoop im Rahmen seiner Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p> 
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die die Foodcoop im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p> 
 
 <p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Die Foodcoop stellt dem Nutzer eine Plattform (FoodCoopShop) unentgeltlich zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Hersteller an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller. <b>Ein Vertrag zwischen dem Nutzer und dem Hersteller kommt zustande, wenn der Hersteller mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
+<p>2.1. Die Foodcoop stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Hersteller an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller. <b>Ein Vertrag zwischen dem Nutzer und dem Hersteller kommt dann zustande, wenn der Hersteller mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p>
 
-<p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande.</p>
+<p>2.2. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande (Direktverkauf).</p>
 
 <p>2.3. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p> 
 
@@ -44,17 +44,17 @@
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 
-<p>3.1. Die Nutzung der Plattform (FoodCoopShop) ist für die Nutzer kostenlos. Die Haftung des FoodCoopShop ist daher ausgeschlossen.</p> 
+<p>3.1. Die Nutzung der Plattform ist für die Nutzer kostenlos. Eine Haftung ist daher ausgeschlossen.</p> 
 
 <p>3.2. Für Schäden infolge schuldhafter Vertragsverletzung haftet die Foodcoop bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
 
 <h2>4. Rücktrittsrecht</h2>
 
-<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Hersteller direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</p> 
+<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Hersteller direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. <b>Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</b></p> 
 
 <p>4.2. Der jeweilige Hersteller wird von den alternativen Streitbeilegungsstellen "Online-Streitbeilegung" (https://webgate.ec.europa.eu/odr) sowie "Internetombudsmann" (www.ombudsmann.at) erfasst. Der Nutzer hat auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p> 
 
-<p>Die E-Mailadresse des jeweiligen Hersteller ergibt sich aus dessen Impressum.</p>
+<p>4.3 Die E-Mailadresse des jeweiligen Hersteller ergibt sich aus dessen Impressum.</p>
 
 <h2>5. Schlussbestimmungen</h2> 
 

@@ -34,7 +34,7 @@
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Die Foodcoop stellt dem Hersteller eine Plattform (FoodCoopShop) zur Verfügung, auf der der Hersteller (nicht exklusiv) Waren und Dienstleistungen zum Verkauf anbietet. Dazu stellt die Foodcoop dem Hersteller ein System (Hersteller-Bereich) zur Verfügung, mit dem der Hersteller die jeweiligen Produkte selbst eintragen kann.</p>
+<p>2.1. Die Foodcoop stellt dem Hersteller eine Plattform zur Verfügung, auf der der Hersteller (nicht exklusiv) Waren und Dienstleistungen zum Verkauf anbietet. Dazu stellt die Foodcoop dem Hersteller ein System (Hersteller-Bereich) zur Verfügung, mit dem der Hersteller die jeweiligen Produkte selbst eintragen kann.</p>
 
 <p>2.2. Der Hersteller verpflichtet sich nur solche Waren und Dienstleistungen zum Verkauf anzubieten, welche in Österreich durch den Hersteller verkauft werden dürfen.</p>
 
@@ -58,13 +58,13 @@
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 
-<p>3.1. Die Haftung der Foodcoop und der verwendeten Software (FoodCoopShop) ist ausgeschlossen. Für Schäden infolge schuldhafter Vertragsverletzung haftet die Foodcoop bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
+<p>3.1. Die Haftung der Foodcoop ist ausgeschlossen. Für Schäden infolge schuldhafter Vertragsverletzung haftet die Foodcoop bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
 
 <p>3.2. Der Hersteller verpflichtet sich, die ihn betreffenden Daten vollständig und wahrheitsgemäß auszufüllen und aktuell zu halten.</p>
 
 <p>3.3. Die Foodcoop haftet nicht für Rechtstexte, die die Foodcoop dem Hersteller zur Verfügung stellt. Die Zurverfügungstellung erfolgt unverbindlich.</p>
 
-<p>3.4. Der Hersteller verpflichtet sich, nur solche Inhalte auf die Plattform zu stellen, für die er die für die Veröffentlichung auf der Plattform notwendigen Rechte erworben hat. Der Hersteller haftet daher für die von ihm bereitgestellten Inhalte und wird die Foodcoop schad- und klaglos halten.</p>  
+<p>3.4. Der Hersteller verpflichtet sich, nur solche Inhalte auf die Plattform zu stellen, für die er die für die Veröffentlichung auf der Plattform <b>notwendigen Rechte</b> erworben hat. Der Hersteller haftet daher für die von ihm bereitgestellten Inhalte und wird die Foodcoop schad- und klaglos halten. <b>Dies gilt vor allem für Bilder, die für das Hersteller-Profil oder die Produkte verwendet werden können.</b></p>  
 
 <h2>4. Schlussbestimmungen</h2>
 
