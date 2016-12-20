@@ -84,6 +84,7 @@ class PagesController extends FrontendController
         $page['children'] = array();
         foreach ($children as $child) {
             if ($child['Page']['active'] == APP_OFF) continue;
+            if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) continue;
             $page['children'][] = $this->Page->getPageForFrontend($child['Page']['id_cms'], $this->AppAuth);
         }
         
