@@ -128,7 +128,7 @@
 		</tr>
 		<tr>
 			<td style="font-size:12px;">
-				<p>Eine detaillierte Auflistung deiner Bestellung findest du in der beiliegenden Datei "Bestelluebersicht.pdf". Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen.</p>
+				Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen.
 			</td>
 		</tr>
 	</tbody>

@@ -35,16 +35,11 @@ if (!empty($manufacturers)) {
 
             $pdf->infoTextForFooter = 'Bestellübersicht ' . $detail['Manufacturer']['name'];
 
-            $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Order']['date_add']) . '</h3>', true, false, true, false, '');
+            $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $this->Time->formatToDateNTimeLong($order['Order']['date_add']).'</h3>', true, false, true, false, '');
             $pdf->Ln(8);
             
-            $pdf->writeHTML('<p>Bestellt von: ' . $appAuth->getUsername() . '</p>', true, false, true, false, '');
-            $pdf->Ln(8);
-            
-            $pdf->writeHTML('<p>Hersteller:</p>', true, false, true, false, '');
-            $pdf->Ln(3);
             $pdf->writeHTML($this->Html->getManufacturerImprint($detail['Manufacturer'], 'pdf', false), true, false, true, false, '');
-            $pdf->Ln(8);
+            $pdf->Ln(6);
             
             $widths = array(
                 45,
