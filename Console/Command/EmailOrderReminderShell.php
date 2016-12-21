@@ -1,4 +1,5 @@
 <?php
+
 /**
  * EmailOrderReminderShell
  *
@@ -19,11 +20,11 @@ class EmailOrderReminderShell extends AppShell
 
     public function main()
     {
-        if (! Configure::read('app.emailOrderReminderEnabled')) {
+        parent::main();
+        
+        if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('app.db_config_FCS_CART_ENABLED')) {
             return;
         }
-        
-        parent::main();
         
         App::uses('AppEmail', 'Lib');
         
@@ -46,12 +47,12 @@ class EmailOrderReminderShell extends AppShell
         $outString = '';
         foreach ($customers as $customer) {
             
-            // kunde hat offene bestellungen, dh keine email verschicken
+            // customer has open orders, do not send email
             if (count($customer['ActiveOrders']) > 0) {
                 continue;
             }
             
-            $Email = new CakeEmail();
+            $Email = new AppEmail();
             $Email->to($customer['Customer']['email'])
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
