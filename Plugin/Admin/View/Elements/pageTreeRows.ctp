@@ -54,6 +54,12 @@ foreach ($pages as $page) {
     echo '</td>';
     
     echo '<td align="center">';
+    if ($page['Page']['is_private'] == 1) {
+        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+    }
+    echo '</td>';
+    
+    echo '<td align="center">';
     if ($page['Page']['full_width'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }

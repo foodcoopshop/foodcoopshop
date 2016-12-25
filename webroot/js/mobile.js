@@ -47,7 +47,13 @@ foodcoopshop.Mobile = {
             menuItems.push(item);
         });
 
-        menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
+        // if all manufacturers are disabled / set to private - do not include menu item
+        $('.sidebar li.heading').each(function() {
+        	if ($(this).html() == 'Hersteller') {
+                menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
+        	}
+        });
+        
         menuItems.push('<li><a href="/aktuelles"><i class="fa"></i>Aktuelles</a></li>');
 
         $('.sidebar ul#categories-menu > li').each(function() {
@@ -106,7 +112,7 @@ foodcoopshop.Mobile = {
         $('.sb-right').html('<div class="inner">' + $('#info-box').html() + '</div>');
 
         // add credit balance info and shop order info to cart page
-        var cartPage = $('body.carts.detail #inner-content h1');
+        var cartPage = $('body.carts.detail #inner-content h1:first');
         cartPage.after($('#cart p.shop-order-customer-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
 

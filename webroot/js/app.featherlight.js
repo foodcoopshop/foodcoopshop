@@ -47,14 +47,26 @@ foodcoopshop.AppFeatherlight = {
 
     },
 
+    initLightboxForHref: function(container) {
+    	  var configuration = this.initLightbox({
+    		  afterContent : function() {
+    			  $('.featherlight-inner').addClass('href');
+    			  foodcoopshop.AppFeatherlight.setMaxHeightInner();
+    		  }
+    	  });
+          $(container).featherlight(configuration);
+    },
+    
     initLightboxForImages: function(container) {
 
         var configuration = this.initLightbox({
             type: 'image',
             onResize: function() {
                 var content = $('.featherlight-content');
-                content.css('max-height', $(window).height() - 20)
-                content.find('img').css('height', content.height());
+                content.css('max-height', $(window).height() - 20);
+                var img = content.find('img'); 
+                img.css('height', content.height());
+                content.css('width', img.width() + 10);
             }
         });
 

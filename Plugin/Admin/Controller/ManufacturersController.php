@@ -93,11 +93,13 @@ class ManufacturersController extends AdminAppController
             
             // validate data - do not use $this->Manufacturer->saveAll()
             $this->Manufacturer->id = $manufacturerId;
-            $this->Manufacturer->set($this->request->data['Manufacturer']);
             
             // for making regex work, remove whitespace
             $this->request->data['Manufacturer']['iban'] = str_replace(' ', '', $this->request->data['Manufacturer']['iban']);
             $this->request->data['Manufacturer']['bic'] = str_replace(' ', '', $this->request->data['Manufacturer']['bic']);
+            $this->request->data['Manufacturer']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturer']['homepage']);
+            
+            $this->Manufacturer->set($this->request->data['Manufacturer']);
             
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Manufacturer'] as &$data) {
@@ -369,9 +371,6 @@ class ManufacturersController extends AdminAppController
                     'appAuth' => $this->AppAuth
                 ));
                 
-                if (Configure::read('app.invoiceMailBcc')) {
-                    $email->addBcc(Configure::read('app.invoiceMailBcc'));
-                }
                 $email->send();
             }
         }
@@ -389,10 +388,7 @@ class ManufacturersController extends AdminAppController
         ));
         
         $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
-        if (isset($addressOther['compensationPercentage'])) {
-            $compensationPercentage = (int) $addressOther['compensationPercentage'];
-        }
+        $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
         return $compensationPercentage;
     }
 
@@ -447,7 +443,7 @@ class ManufacturersController extends AdminAppController
                     ->emailFormat('html')
                     ->cc($ccRecipients)
                     -> // works also with empty array!
-attachments(array(
+                        attachments(array(
                     $productPdfFile,
                     $customerPdfFile
                 ))
@@ -457,9 +453,6 @@ attachments(array(
                     'appAuth' => $this->AppAuth
                 ));
                 
-                if (Configure::read('app.orderListMailBcc')) {
-                    $email->addBcc(Configure::read('app.orderListMailBcc'));
-                }
                 $email->send();
             }
         }

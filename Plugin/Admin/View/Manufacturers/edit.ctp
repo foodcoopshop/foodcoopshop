@@ -65,13 +65,21 @@ echo $this->Form->input('Manufacturer.name', array(
 echo $this->Form->input('Address.email', array(
     'type' => 'text',
     'label' => 'E-Mail-Adresse',
-    'required' => true
+    'required' => true,
+    'after' => '<span class="after small">Wird in deinem Impressum spamgeschützt angezeigt</span>'
 ));
 echo $this->Form->input('Address.phone_mobile', array(
-    'label' => 'Handy'
+    'label' => 'Handy',
+    'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
 ));
 echo $this->Form->input('Address.phone', array(
-    'label' => 'Telefon'
+    'label' => 'Telefon',
+    'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
+));
+echo $this->Form->input('Manufacturer.homepage', array(
+    'placeholder' => 'z.B. http://www.foodcoopshop.com',
+    'label' => 'Homepage',
+    'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
 ));
 echo $this->Form->input('Manufacturer.active', array(
     'label' => 'Aktiv?',
@@ -159,7 +167,7 @@ echo $this->Form->input('Manufacturer.bic', array(
 ));
 echo '<div class="sc"></div>';
 
-echo '<h2>Rechnungsdaten <span>werden zum Erstellen deiner Rechnungen verwendet</span></h2>';
+echo '<h2>Firmendaten <span>für dein Impressum deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten rechts.</span></h2>';
 echo $this->Form->input('Address.firstname', array(
     'label' => 'Vorname',
     'required' => true
@@ -183,7 +191,29 @@ echo $this->Form->input('Address.city', array(
 ));
 
 echo $this->Form->input('Manufacturer.uid_number', array(
-    'label' => 'UID-Nummer'
+    'label' => 'UID-Nummer',
+    'after' => '<span class="after small">sofern vorhanden</span>'
+));
+
+echo $this->Form->input('Manufacturer.firmenbuchnummer', array(
+    'label' => 'Firmenbuchnummer',
+    'after' => '<span class="after small">sofern vorhanden</span>'
+));
+
+echo $this->Form->input('Manufacturer.firmengericht', array(
+    'label' => 'Firmengericht',
+    'after' => '<span class="after small">sofern vorhanden</span>'
+));
+
+echo $this->Form->input('Manufacturer.aufsichtsbehoerde', array(
+    'label' => 'Aufsichtsbehörde',
+    'after' => '<span class="after small">sofern vorhanden</span>'
+));
+
+echo $this->Form->input('Manufacturer.kammer', array(
+    'placeholder' => 'z.B. Landwirtschaftskammer',
+    'label' => 'Kammer',
+    'after' => '<span class="after small">sofern vorhanden</span>'
 ));
 
 echo $this->Form->input('Manufacturer.additional_text_for_invoice', array(

@@ -136,7 +136,9 @@ class OrderDetailsController extends AdminAppController
         ), $this->Paginator->settings);
 
         $orderDetails = $this->Paginator->paginate('OrderDetail');
-
+        
+        $this->loadModel('Manufacturer');
+        
         // prepare group by array
         if ($groupByManufacturer) {
 
@@ -148,10 +150,7 @@ class OrderDetailsController extends AdminAppController
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
 
                 $addressOther = StringComponent::decodeJsonFromForm($orderDetail['Product']['Manufacturer']['Address']['other']);
-                $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
-                if (isset($addressOther['compensationPercentage'])) {
-                    $compensationPercentage = (int) $addressOther['compensationPercentage'];
-                }
+                $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
                 $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['compensation_percentage'] = $compensationPercentage;
 
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
@@ -253,10 +252,6 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
 
-        if (Configure::read('app.orderDetailDeleteMailBcc')) {
-            $email->addBcc(Configure::read('app.orderDetailDeleteMailBcc'));
-        }
-
         $email->send();
 
         $message .= ' versendet.';
@@ -339,10 +334,6 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
 
-        if (Configure::read('app.orderDetailDeleteMailBcc')) {
-            $email->addBcc(Configure::read('app.orderDetailDeleteMailBcc'));
-        }
-
         $email->send();
 
         $message .= ' versendet.';
@@ -414,10 +405,6 @@ class OrderDetailsController extends AdminAppController
         if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
             $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
             $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
-        }
-
-        if (Configure::read('app.orderDetailDeleteMailBcc')) {
-            $email->addBcc(Configure::read('app.orderDetailDeleteMailBcc'));
         }
 
         $email->send();

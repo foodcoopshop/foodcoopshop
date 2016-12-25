@@ -55,7 +55,6 @@ Configure::write('app.visibleOrderStates', array(
 
 Configure::write('app.filesDir', DS.'files');
 Configure::write('app.tmpWwwDir', DS.'tmp');
-Configure::write('app.registrationAttachmentDir', Configure::read('app.filesDir') . DS . 'registration');
 Configure::write('app.uploadedImagesDir', Configure::read('app.filesDir') . DS . 'images');
 
 Configure::write('app.folder.invoices', APP . 'files_private'. DS . 'invoices');
@@ -145,5 +144,10 @@ Configure::write('app.countryId', 2); // austria: 2, germany: 1
  * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
  */
 Configure::write('app.mysqlDumpCommand', 'mysqldump');
+
+/**
+ * date of the last update of terms of use
+ */
+Configure::write('app.termsOfUseLastUpdate', '2016-11-28');
 
 ?>

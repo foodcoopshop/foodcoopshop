@@ -84,6 +84,14 @@ class CakeCart extends AppModel
             }
             
             $productImage = Configure::read('htmlHelper')->image(Configure::read('htmlHelper')->getProductImageSrc($imageId, $imageLegend, 'home'));
+            $productLink = Configure::read('htmlHelper')->link(
+                $cartProduct['ProductLang']['name'],
+                Configure::read('slugHelper')->getProductDetail(
+                    $cartProduct['CakeCartProduct']['id_product'],
+                    $cartProduct['ProductLang']['name']
+                ),
+                array('class' => 'product-name')
+            );
             
             if (isset($cartProduct['ProductAttribute']['ProductAttributeCombination'])) {
                 
@@ -92,6 +100,7 @@ class CakeCart extends AppModel
                     'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
                     'productId' => $cartProduct['CakeCartProduct']['id_product'] . '-' . $cartProduct['CakeCartProduct']['id_product_attribute'],
                     'productName' => $cartProduct['ProductLang']['name'],
+                    'productLink' => $productLink,
                     'unity' => $cartProduct['ProductAttribute']['ProductAttributeCombination']['AttributeLang']['name'],
                     'amount' => $cartProduct['CakeCartProduct']['amount'],
                     'manufacturerLink' => $manufacturerLink,
@@ -99,7 +108,15 @@ class CakeCart extends AppModel
                     'image' => $productImage,
                     'deposit' => isset($cartProduct['ProductAttribute']['CakeDepositProductAttribute']['deposit']) ? $cartProduct['ProductAttribute']['CakeDepositProductAttribute']['deposit'] * $cartProduct['CakeCartProduct']['amount'] : 0, // * 1 to convert to float
                     'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['ProductAttribute']['ProductAttributeShop']['price']) * $cartProduct['CakeCartProduct']['amount'],
-                    'price_excl' => $cartProduct['ProductAttribute']['ProductAttributeShop']['price'] * $cartProduct['CakeCartProduct']['amount']
+                    'priceExcl' => $cartProduct['ProductAttribute']['ProductAttributeShop']['price'] * $cartProduct['CakeCartProduct']['amount'],
+                    'tax' => $ccp->Product->getUnitTax(
+                        $ccp->Product->getGrossPrice(
+                            $cartProduct['Product']['id_product'],
+                            $cartProduct['ProductAttribute']['ProductAttributeShop']['price']
+                        ) * $cartProduct['CakeCartProduct']['amount'],
+                        $cartProduct['ProductAttribute']['ProductAttributeShop']['price'],
+                        $cartProduct['CakeCartProduct']['amount']
+                    ) * $cartProduct['CakeCartProduct']['amount']
                 );
             } else {
                 
@@ -108,14 +125,22 @@ class CakeCart extends AppModel
                     'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
                     'productId' => $cartProduct['CakeCartProduct']['id_product'],
                     'productName' => $cartProduct['ProductLang']['name'],
+                    'productLink' => $productLink,
                     'unity' => $cartProduct['Product']['ProductShop']['unity'],
                     'amount' => $cartProduct['CakeCartProduct']['amount'],
                     'manufacturerLink' => $manufacturerLink,
                     'manufacturerName' => $cartProduct['Product']['Manufacturer']['name'],
                     'image' => $productImage,
-                    'deposit' => isset($cartProduct['Product']['CakeDepositProduct']['deposit']) ? $cartProduct['Product']['CakeDepositProduct']['deposit'] * $cartProduct['CakeCartProduct']['amount'] : 0, // * 1 to convert to float
+                    'deposit' => isset($cartProduct['Product']['CakeDepositProduct']['deposit']) ? $cartProduct['Product']['CakeDepositProduct']['deposit'] * $cartProduct['CakeCartProduct']['amount'] : 0,
                     'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['Product']['ProductShop']['price']) * $cartProduct['CakeCartProduct']['amount'],
-                    'price_excl' => $cartProduct['Product']['ProductShop']['price'] * $cartProduct['CakeCartProduct']['amount']
+                    'priceExcl' => $cartProduct['Product']['ProductShop']['price'] * $cartProduct['CakeCartProduct']['amount'],
+                    'tax' => $ccp->Product->getUnitTax(
+                        $ccp->Product->getGrossPrice(
+                            $cartProduct['Product']['id_product'], $cartProduct['Product']['ProductShop']['price']
+                        ) * $cartProduct['CakeCartProduct']['amount'],
+                        $cartProduct['Product']['ProductShop']['price'],
+                        $cartProduct['CakeCartProduct']['amount']
+                    ) * $cartProduct['CakeCartProduct']['amount']
                 );
             }
         }
@@ -124,10 +149,12 @@ class CakeCart extends AppModel
         $preparedCart['CakeCartDepositSum'] = 0;
         $preparedCart['CakeCartProductSum'] = 0;
         $preparedCart['CakeCartProductSumExcl'] = 0;
+        $preparedCart['CakeCartTaxSum'] = 0;
         foreach ($preparedCart['CakeCartProducts'] as $p) {
             $preparedCart['CakeCartDepositSum'] += $p['deposit'];
             $preparedCart['CakeCartProductSum'] += $p['price'];
-            $preparedCart['CakeCartProductSumExcl'] += $p['price_excl'];
+            $preparedCart['CakeCartTaxSum'] += $p['tax'];
+            $preparedCart['CakeCartProductSumExcl'] += $p['priceExcl'];
         }
         return $preparedCart;
     }

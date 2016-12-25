@@ -50,7 +50,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'additional_text_for_invoice' => '',
                 'uid_number' => '',
                 'tmp_image' => '',
-                'delete_image' => ''
+                'delete_image' => '',
+                'firmenbuchnummer' => '',
+                'firmengericht' => '',
+                'aufsichtsbehoerde' => '',
+                'kammer' => '',
+                'homepage' => ''
             ),
             'ManufacturerLang' => array(
                 'short_description' => 'Test Description'
@@ -74,7 +79,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Beim Speichern sind 5 Fehler aufgetreten!', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen IBAN ein.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen BIC ein.', $response);
-        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse existiert bereits.', $response);
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib den Vornamen des Rechnungsempfängers an.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib den Nachnamen des Rechnungsempfängers an.', $response);
         
@@ -84,6 +89,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $manufacturerData['Address']['email'] = 'test-manufacturer@mailinator.com';
         $manufacturerData['Address']['firstname'] = 'Test';
         $manufacturerData['Address']['lastname'] = 'Manufacturer';
+        $manufacturerData['Manufacturer']['homepage'] = 'www.foodcoopshop.com';
         
         $response = $this->addManufacturer($manufacturerData);
         
@@ -116,12 +122,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
         // test with valid customer email address must fail
         $this->browser->setFieldById('AddressEmail', 'foodcoopshop-demo-mitglied@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
-        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse existiert bereits.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
         
         // test with valid manufacturer email address must fail
         $this->browser->setFieldById('AddressEmail', 'fcs-demo-gemuese-hersteller@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
-        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse existiert bereits.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
         
         // test with valid email address
         $this->browser->setFieldById('AddressEmail', 'new-email-address@mailinator.com');

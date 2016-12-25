@@ -186,10 +186,25 @@ foreach ($customers as $customer) {
     echo '</td>';
     
     if ($this->Html->paymentIsCashless()) {
-        echo '<td class="' . ($customer['payment_product_delta'] < 0 ? 'negative' : '') . '">';
-        if ($customer['payment_product_delta'] != 0) {
-            echo $this->Html->formatAsEuro($customer['payment_product_delta']);
+        
+        $negativeClass = $customer['payment_product_delta'] < 0 ? 'negative' : '';
+        echo '<td align="center" class="' . $negativeClass . '">';
+        
+        if ($appAuth->isSuperadmin()) {
+            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer['payment_product_delta']);
+            echo $this->Html->getJqueryUiIcon($creditBalanceHtml, array(
+                'class' => 'icon-with-text',
+                'title' => 'Guthaben anzeigen'
+            ),
+                $this->Slug->getCreditBalance($customer['Customer']['id_customer'])
+            );
+            
+        } else {
+            if ($customer['payment_product_delta'] != 0) {
+                echo $this->Html->formatAsEuro($customer['payment_product_delta']);
+            }
         }
+        
         $sumPaymentsProductDelta += $customer['payment_product_delta'];
         echo '</td>';
     }

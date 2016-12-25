@@ -57,6 +57,7 @@ echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('PageLang.meta_title', 'Seitenitel') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.menu_type', 'Menü') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.position', 'Reihenfolge im Menü') . '</th>';
+echo '<th>' . $this->Paginator->sort('Page.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.full_width', 'Ganze Breite') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.url', 'Link') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customer.name', 'geändert von') . '</th>';

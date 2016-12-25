@@ -65,7 +65,9 @@
     				<?php } else { ?>
     				    <br />
     				<?php  } ?>
-    				<br />&copy; <?php echo date('Y'); ?> www.foodcoopshop.com
+    				<?php if (Configure::read('app.db_config_FCS_SHOW_FOODCOOPSHOP_BACKLINK')) { ?>
+    					<br />&copy; <?php echo date('Y'); ?> www.foodcoopshop.com
+    				<?php } ?>
     			</td>
     		</tr>
     	</tbody>

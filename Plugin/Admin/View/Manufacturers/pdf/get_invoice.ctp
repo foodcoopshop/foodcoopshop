@@ -69,7 +69,7 @@ $pdf->addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl)
 $pdf->renderTable();
 // Artikelauflistung End
 
-if ($compensationPercentage > 0) {
+if (Configure::read('app.useManufacturerCompensationPercentage') && $compensationPercentage > 0) {
     
     $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
     $compensatedPrice = round($sumPriceIncl * $compensationPercentage / 100, 2);
@@ -95,7 +95,7 @@ if ($compensationPercentage > 0) {
     $html .= '</td>';
     
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3>' . $this->Html->formatAsDecimal($sumNewPriceIncl) . '</h3>';
+    $html .= '<h3>' . $this->Html->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
     

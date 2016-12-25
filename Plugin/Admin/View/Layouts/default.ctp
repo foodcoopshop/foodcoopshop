@@ -23,7 +23,7 @@
     
     <?php echo $this->element('jsNamespace'); ?>
     <link
-	href='http://fonts.googleapis.com/css?family=Open+Sans:400,700'
+	href='//fonts.googleapis.com/css?family=Open+Sans:400,700'
 	rel='stylesheet' type='text/css'>
     
     <?php

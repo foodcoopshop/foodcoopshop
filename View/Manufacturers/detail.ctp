@@ -24,6 +24,31 @@ $this->element('addScript', array('script' =>
 ?>
 
 <h1><?php echo $manufacturer['Manufacturer']['name']; ?>
+
+<?php
+if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer()) {
+    
+    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+        $manufacturerEditSlug = $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']);
+    }
+    
+    if ($appAuth->isManufacturer() && $appAuth->getManufacturerId() == $manufacturer['Manufacturer']['id_manufacturer']) {
+        $manufacturerEditSlug = $this->Slug->getManufacturerProfile();
+    }
+    
+    if (isset($manufacturerEditSlug)) {
+        echo $this->Html->getJqueryUiIcon(
+            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+            array(
+                'title' => 'Bearbeiten'
+            )
+            ,$manufacturerEditSlug
+        );
+    }
+    
+}
+?>
+
 <?php
 if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
     echo '<span>'.count($manufacturer['Products']) . ' gefunden</span>';
@@ -61,4 +86,9 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
             echo $this->element('product/product', array('product' => $product));
         }
     }
+    
+    echo '<div class="imprint">';
+        echo '<h2>Impressum</h2>';
+        echo $this->Html->getManufacturerImprint($manufacturer, 'html', false);
+    echo '</div>';
 ?>

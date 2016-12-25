@@ -33,9 +33,9 @@ $this->element('addScript', array('script' =>
     		     (zuzüglich <b><?php echo $this->Html->formatAsEuro($order['Order']['total_deposit']); ?></b> Pfand)
     		<?php } ?>
     		wurde automatisch von deinem Guthaben abgezogen.</li>
-        <li><a class="btn btn-success" href="<?php echo $this->Slug->getCreditBalance(); ?>">Guthaben aufladen</a></li>
+        <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>">Guthaben aufladen</a></li>
     <?php } else { ?>
-        <li>Bitte vergiss nicht, den Betrag so genau wie möglich in bar mitzunehmen.</li>
+        <li>Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen.</li>
     <?php } ?>
 
 </ul>

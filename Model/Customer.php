@@ -71,7 +71,7 @@ class Customer extends AppModel
             ),
             'unique' => array(
                 'rule' => 'isUnique',
-                'message' => 'Diese E-Mail-Adresse wird bereits verwendet.'
+                'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
             )
         )
     );
@@ -202,6 +202,7 @@ class Customer extends AppModel
         App::uses('CakePayment', 'Model');
         $cp = new CakePayment();
         $paymentSumProduct = $cp->getSum($customerId, 'product');
+        $paybackSumProduct = $cp->getSum($customerId, 'payback');;
         $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
         
         App::uses('Order', 'Model');
@@ -209,7 +210,7 @@ class Customer extends AppModel
         $productSum = $o->getSumProduct($customerId);
         $depositSum = $o->getSumDeposit($customerId);
         
-        return $paymentSumProduct + $paymentSumDeposit - $productSum - $depositSum;
+        return $paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum;
     }
 
     public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true)

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 07. Nov 2016 um 16:42
+-- Erstellungszeit: 21. Nov 2016 um 20:24
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -806,6 +806,7 @@ CREATE TABLE `fcs_cms` (
   `url` varchar(255) NOT NULL,
   `indexation` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
   `id_customer` int(10) UNSIGNED NOT NULL,
+  `is_private` int(11) UNSIGNED NOT NULL,
   `modified` datetime NOT NULL,
   `created` datetime NOT NULL,
   `full_width` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
@@ -886,19 +887,21 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (31, NULL, NULL, 1, 'FCS_DAYS_SHOW_PRODUCT_AS_NEW', 'Wie viele Tage sollen Produkte "als neu markiert" bleiben?', '7', 'number', 70, '0000-00-00 00:00:00', '2014-05-14 21:15:45'),
 (164, NULL, NULL, 1, 'FCS_CUSTOMER_GROUP', 'Welcher Gruppe sollen neu registrierte Mitglieder zugewiesen werden?', '3', 'dropdown', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (456, NULL, NULL, 1, 'FCS_FOOTER_CMS_TEXT', 'Zusätzlicher Text für den Footer', NULL, 'textarea', 80, '2014-06-11 17:50:55', '2016-07-01 21:47:47'),
-(508, NULL, NULL, 1, 'FCS_FACEBOOK_URL', 'Facebook-Url für die Einbindung im Footer', 'https://www.facebook.com/FoodCoopShop-1600216136944038/', 'text', 90, '2015-07-08 13:23:54', '2015-07-08 13:23:54'),
+(508, NULL, NULL, 1, 'FCS_FACEBOOK_URL', 'Facebook-Url für die Einbindung im Footer', 'https://www.facebook.com/FoodCoopShop/', 'text', 90, '2015-07-08 13:23:54', '2015-07-08 13:23:54'),
 (538, NULL, NULL, 1, 'FCS_REGISTRATION_EMAIL_TEXT', 'Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird.', '', 'textarea', 170, '2016-06-26 00:00:00', '2016-06-26 00:00:00'),
-(543, NULL, NULL, 1, 'FCS_RIGHT_INFO_BOX_HTML', 'Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class="small">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als "Überschrift 3" formatieren.<br />Die Variable {ABHOLTAG} zeigt automatisch das richtige Abholdatum an.</div>', '<h3>Abholzeiten</h3>\n\n<p>Wenn du deine Produkte jetzt bestellst, kannst du sie am <strong>{ABHOLTAG}</strong>&nbsp;zwischen 17 und 19 Uhr abholen.</p>\n\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\n', 'textarea', 150, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(543, NULL, NULL, 1, 'FCS_RIGHT_INFO_BOX_HTML', 'Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class="small">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als "Überschrift 3" formatieren.<br />Die Variable {ABHOLTAG} zeigt automatisch das richtige Abholdatum an.</div>', '<h3>Abholzeiten</h3>\r\n\r\n<p>Wenn du deine Produkte jetzt bestellst, kannst du sie am <strong>{ABHOLTAG}</strong>&nbsp;zwischen 17 und 19 Uhr abholen.</p>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\r\n', 'textarea', 150, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (544, NULL, NULL, 1, 'FCS_CART_ENABLED', 'Ist die Bestell-Funktion aktiviert?<br /><div class="small">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>', '1', 'boolean', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (545, NULL, NULL, 1, 'FCS_ACCOUNTING_EMAIL', 'E-Mail-Adresse des Finanzverantwortlichen<br /><div class="small">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>', '', 'text', 110, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (546, NULL, NULL, 1, 'FCS_AUTHENTICATION_INFO_TEXT', 'Info-Text beim Registrierungsformular<br /><div class="small">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>', 'Um bei uns zu bestellen musst du Vereinsmitglied sein.', 'textarea', 160, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (547, NULL, NULL, 1, 'FCS_SHOW_PRODUCTS_FOR_GUESTS', 'Produkte für nicht eingeloggte Mitglieder sichtbar?', '1', 'boolean', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(548, NULL, NULL, 1, 'FCS_DEFAULT_NEW_MEMBER_ACTIVE', 'Neue Mitglieder automatisch aktivieren?', '1', 'boolean', 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(549, NULL, NULL, 1, 'FCS_MINIMAL_CREDIT_BALANCE', 'Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class="small">Z.B.: "100" für 100 € im Minus. 0 bedeutet "kein Bestell-Limit".</div>', '100', 'number', 30, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(548, NULL, NULL, 1, 'FCS_DEFAULT_NEW_MEMBER_ACTIVE', 'Neue Mitglieder automatisch aktivieren?', '0', 'boolean', 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(549, NULL, NULL, 1, 'FCS_MINIMAL_CREDIT_BALANCE', 'Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class="small">Z.B.: "100" für 100 € im Minus. 0 bedeutet "kein Bestell-Limit".</div>', '100', 'number', 125, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (550, NULL, NULL, 1, 'FCS_BANK_ACCOUNT_DATA', 'Bankverbindung für die Guthaben-Einzahlungen".', 'Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 130, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (551, NULL, NULL, 1, 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA', 'Bankverbindung für die Mitgliedsbeitrags-Einzahlungen".', 'MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 140, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (552, NULL, NULL, 1, 'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS', 'Zusätzliche Liefer-Informationen für die Hersteller<br /><div class="small">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>', ', 15:00 bis 17:00 Uhr', 'text', 120, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00');
+(553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00'),
+(554, NULL, NULL, 1, 'FCS_SHOW_FOODCOOPSHOP_BACKLINK', 'Link auf www.foodcoopshop.com anzeigen?<br /><div class="small">Der Link wird im Footer und in den generierten PDFs (Bestelllisten, Rechnungen) angezeigt.</div>', '1', 'boolean', 180, '2016-11-27 00:00:00', '2016-11-27 00:00:00'),
+(555, NULL, NULL, 1, 'FCS_PAYMENT_PRODUCT_MAXIMUM', 'Maximalbetrag für jede Guthaben-Aufladung in Euro', '500', 'number', 127, '2016-11-28 00:00:00', '2016-11-28 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -933,6 +936,7 @@ CREATE TABLE `fcs_customer` (
   `show_public_prices` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `max_payment_days` int(10) UNSIGNED NOT NULL DEFAULT '60',
   `secure_key` varchar(32) NOT NULL DEFAULT '-1',
+  `terms_of_use_accepted_date` date NOT NULL,
   `note` text,
   `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `is_guest` tinyint(1) NOT NULL DEFAULT '0',
@@ -945,13 +949,13 @@ CREATE TABLE `fcs_customer` (
 -- Daten für Tabelle `fcs_customer`
 --
 
-INSERT INTO `fcs_customer` (`id_customer`, `id_shop_group`, `id_shop`, `id_gender`, `id_default_group`, `id_lang`, `id_risk`, `company`, `siret`, `ape`, `firstname`, `lastname`, `email`, `passwd`, `last_passwd_gen`, `birthday`, `newsletter`, `ip_registration_newsletter`, `newsletter_date_add`, `optin`, `website`, `outstanding_allow_amount`, `show_public_prices`, `max_payment_days`, `secure_key`, `note`, `active`, `is_guest`, `deleted`, `date_add`, `date_upd`) VALUES
-(87, 1, 1, 1, 3, 1, 0, NULL, NULL, NULL, 'Demo', 'Mitglied', 'fcs-demo-mitglied@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2014-12-02 04:19:31', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:19:31', 0, NULL, '0.000000', 0, 0, 'd39a3a43e5d9aedc566bc211895cd16c', NULL, 1, 0, 0, '2014-12-02 12:19:31', '2015-12-06 23:37:44'),
-(88, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Admin', 'fcs-demo-admin@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2014-12-02 04:28:43', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:28:43', 0, NULL, '0.000000', 0, 0, 'c1064e463d615234b31d0a3d8095985c', NULL, 1, 0, 0, '2014-12-02 12:28:43', '2016-09-29 16:25:09'),
-(89, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Gemüse-Hersteller', 'fcs-demo-gemuese-hersteller@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2014-12-02 04:37:26', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '28f90fbd45ee72f09399c68195244a69', NULL, 1, 0, 0, '2014-12-02 12:37:26', '2015-03-11 18:12:10'),
-(90, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Milch-Hersteller', 'fcs-demo-milch-hersteller@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2014-12-02 04:37:49', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '82230af5ed33a8b80df6e2ad426d76f2', NULL, 1, 0, 0, '2014-12-02 12:37:49', '2015-03-11 18:11:54'),
-(91, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Fleisch-Hersteller', 'fcs-demo-fleisch-hersteller@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2014-12-02 04:38:12', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '50e86f1cf90b2b9b22dc84dd58e40efc', NULL, 1, 0, 0, '2014-12-02 12:38:12', '2015-03-11 18:11:47'),
-(92, 1, 1, 0, 5, 1, 1, NULL, NULL, NULL, 'Demo', 'Superadmin', 'fcs-demo-superadmin@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2016-09-29 14:26:12', NULL, 0, NULL, NULL, 0, NULL, '0.000000', 0, 0, '-1', NULL, 1, 0, 0, '2016-09-29 16:26:12', '2016-09-29 16:26:12');
+INSERT INTO `fcs_customer` (`id_customer`, `id_shop_group`, `id_shop`, `id_gender`, `id_default_group`, `id_lang`, `id_risk`, `company`, `siret`, `ape`, `firstname`, `lastname`, `email`, `passwd`, `last_passwd_gen`, `birthday`, `newsletter`, `ip_registration_newsletter`, `newsletter_date_add`, `optin`, `website`, `outstanding_allow_amount`, `show_public_prices`, `max_payment_days`, `secure_key`, `terms_of_use_accepted_date`, `note`, `active`, `is_guest`, `deleted`, `date_add`, `date_upd`) VALUES
+(87, 1, 1, 1, 3, 1, 0, NULL, NULL, NULL, 'Demo', 'Mitglied', 'fcs-demo-mitglied@mailinator.com', '', '2014-12-02 04:19:31', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:19:31', 0, NULL, '0.000000', 0, 0, 'd39a3a43e5d9aedc566bc211895cd16c', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:19:31', '2015-12-06 23:37:44'),
+(88, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Admin', 'fcs-demo-admin@mailinator.com', '', '2014-12-02 04:28:43', '0000-00-00', 1, '88.117.53.105', '2014-12-02 12:28:43', 0, NULL, '0.000000', 0, 0, 'c1064e463d615234b31d0a3d8095985c', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:28:43', '2016-09-29 16:25:09'),
+(89, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Gemüse-Hersteller', 'fcs-demo-gemuese-hersteller@mailinator.com', '', '2014-12-02 04:37:26', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '28f90fbd45ee72f09399c68195244a69', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:37:26', '2015-03-11 18:12:10'),
+(90, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Milch-Hersteller', 'fcs-demo-milch-hersteller@mailinator.com', '', '2014-12-02 04:37:49', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '82230af5ed33a8b80df6e2ad426d76f2', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:37:49', '2015-03-11 18:11:54'),
+(91, 1, 1, 1, 4, 1, 0, NULL, NULL, NULL, 'Demo', 'Fleisch-Hersteller', 'fcs-demo-fleisch-hersteller@mailinator.com', '', '2014-12-02 04:38:12', '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, '0.000000', 0, 0, '50e86f1cf90b2b9b22dc84dd58e40efc', '0000-00-00', NULL, 1, 0, 0, '2014-12-02 12:38:12', '2015-03-11 18:11:47'),
+(92, 1, 1, 0, 5, 1, 1, NULL, NULL, NULL, 'Demo', 'Superadmin', 'fcs-demo-superadmin@mailinator.com', '', '2016-09-29 14:26:12', NULL, 0, NULL, NULL, 0, NULL, '0.000000', 0, 0, '-1', '0000-00-00', NULL, 1, 0, 0, '2016-09-29 16:26:12', '2016-09-29 16:26:12');
 
 -- --------------------------------------------------------
 
@@ -1096,18 +1100,23 @@ CREATE TABLE `fcs_manufacturer` (
   `additional_text_for_invoice` text NOT NULL,
   `iban` varchar(20) NOT NULL,
   `bic` varchar(8) NOT NULL,
-  `bank_name` varchar(255) NOT NULL
+  `bank_name` varchar(255) NOT NULL,
+  `firmenbuchnummer` varchar(20) NOT NULL,
+  `firmengericht` varchar(150) NOT NULL,
+  `aufsichtsbehoerde` varchar(150) NOT NULL,
+  `kammer` varchar(150) NOT NULL,
+  `homepage` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `fcs_manufacturer`
 --
 
-INSERT INTO `fcs_manufacturer` (`id_manufacturer`, `name`, `date_add`, `date_upd`, `active`, `holiday`, `is_private`, `uid_number`, `additional_text_for_invoice`, `iban`, `bic`, `bank_name`) VALUES
-(4, 'Demo Fleisch-Hersteller', '2014-05-14 13:23:02', '2015-05-15 13:31:41', 1, 0, 0, '', '', '', '', ''),
-(5, 'Demo Gemüse-Hersteller', '2014-05-14 13:36:44', '2016-09-27 09:34:51', 1, 0, 0, '', '', '', '', ''),
-(15, 'Demo Milch-Hersteller', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', ''),
-(16, 'Hersteller ohne Customer-Eintrag', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '');
+INSERT INTO `fcs_manufacturer` (`id_manufacturer`, `name`, `date_add`, `date_upd`, `active`, `holiday`, `is_private`, `uid_number`, `additional_text_for_invoice`, `iban`, `bic`, `bank_name`, `firmenbuchnummer`, `firmengericht`, `aufsichtsbehoerde`, `kammer`, `homepage`) VALUES
+(4, 'Demo Fleisch-Hersteller', '2014-05-14 13:23:02', '2015-05-15 13:31:41', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
+(5, 'Demo Gemüse-Hersteller', '2014-05-14 13:36:44', '2016-09-27 09:34:51', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
+(15, 'Demo Milch-Hersteller', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
+(16, 'Hersteller ohne Customer-Eintrag', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1190,16 +1199,10 @@ CREATE TABLE `fcs_orders` (
   `date_upd` datetime NOT NULL,
   `round_mode` tinyint(1) NOT NULL DEFAULT '2',
   `round_type` tinyint(1) NOT NULL DEFAULT '1',
-  `total_deposit` decimal(10,2) NOT NULL
+  `total_deposit` decimal(10,2) NOT NULL,
+  `general_terms_and_conditions_accepted` tinyint(4) UNSIGNED NOT NULL,
+  `cancellation_terms_accepted` tinyint(4) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `fcs_orders`
---
-
-INSERT INTO `fcs_orders` (`id_order`, `reference`, `id_shop_group`, `id_shop`, `id_carrier`, `id_lang`, `id_customer`, `id_cart`, `id_cake_cart`, `id_currency`, `id_address_delivery`, `id_address_invoice`, `current_state`, `secure_key`, `payment`, `conversion_rate`, `module`, `recyclable`, `gift`, `gift_message`, `mobile_theme`, `shipping_number`, `total_discounts`, `total_discounts_tax_incl`, `total_discounts_tax_excl`, `total_paid`, `total_paid_tax_incl`, `total_paid_tax_excl`, `total_paid_real`, `total_products`, `total_products_wt`, `total_shipping`, `total_shipping_tax_incl`, `total_shipping_tax_excl`, `carrier_tax_rate`, `total_wrapping`, `total_wrapping_tax_incl`, `total_wrapping_tax_excl`, `invoice_number`, `delivery_number`, `invoice_date`, `delivery_date`, `valid`, `date_add`, `date_upd`, `round_mode`, `round_type`, `total_deposit`) VALUES
-(1, 'ZB256B2YP', 1, 1, 0, 1, 88, 0, 1, 1, 0, 0, 3, '-1', '', '1.000000', NULL, 0, 0, NULL, 0, NULL, '0.000000', '0.000000', '0.000000', '6.136364', '6.136364', '5.578515', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000', '0.000000', '0.000000', '0.000000', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2016-09-27 09:34:53', '2016-09-27 09:34:53', 2, 1, '2.50'),
-(2, '85PNEDXSI', 1, 1, 0, 1, 88, 0, 2, 1, 0, 0, 3, '-1', '', '1.000000', NULL, 0, 0, NULL, 0, NULL, '0.000000', '0.000000', '0.000000', '0.620000', '0.620000', '0.545455', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000', '0.000000', '0.000000', '0.000000', 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, '2016-09-27 09:34:57', '2016-09-27 09:34:57', 2, 1, '0.50');
 
 -- --------------------------------------------------------
 

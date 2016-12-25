@@ -327,7 +327,7 @@ class MyTimeHelper extends TimeHelper {
   }
 	
 	/**
-   *  formats a timestamp to a long date (e.g. 15.04.2007 15:04)
+   *  formats a timestamp to a long date (e.g. 15.04.07 15:04)
    *  @param integer $timestamp
    *  @return string
   */

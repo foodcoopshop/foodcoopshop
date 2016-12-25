@@ -53,6 +53,8 @@ class AppCakeTestCase extends CakeTestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Customer = new Customer();
+        $this->regeneratePasswordHashes();
+        
         $this->Configuration = new Configuration();
         $this->Configuration->loadConfigurations();
     }
@@ -104,6 +106,19 @@ class AppCakeTestCase extends CakeTestCase
     
     protected function assertUrl($url, $expectedUrl, $msg='') {
         $this->assertEquals($this->browser->baseUrl . $expectedUrl, $url, $msg);
+    }
+    
+    /**
+     * due to different app.cookieKeys, logins would not work with a defined hash
+     */
+    protected function regeneratePasswordHashes() {
+        App::uses('AppPasswordHasher', 'Controller/Component/Auth');
+        $ph = new AppPasswordHasher();
+        $sql = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
+        $params = array(
+            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
+        );
+        $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
     
     /**

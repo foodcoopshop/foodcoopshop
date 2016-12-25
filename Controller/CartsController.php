@@ -20,18 +20,127 @@ App::uses('FrontendController', 'Controller');
 class CartsController extends FrontendController
 {
 
+    public function beforeFilter()
+    {
+    
+        if ($this->request->is('post')) {
+            $message = '';
+            if (! $this->AppAuth->loggedIn()) {
+                $message = 'Du bist nicht angemeldet.';
+            }
+            if ($this->AppAuth->isManufacturer()) {
+                $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
+            }
+            if ($message != '') {
+                die(json_encode(array(
+                    'status' => 0,
+                    'msg' => $message
+                )));
+            }
+        }
+    
+        parent::beforeFilter();
+    
+        $this->AppAuth->allow('generateCancellationInformationPdf');
+    
+    }
+    
     public function isAuthorized($user)
     {
-        return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED');
+        return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
     }
 
     public function detail()
     {
         $this->set('title_for_layout', 'Dein Warenkorb');
     }
+    
+    /**
+     * called from finish context
+     * saves pdf as file
+     * @param array $order
+     * @param array $orderDetails
+     */
+    private function generateCancellationInformationAndForm($order, $products)
+    {
+        $this->set('order', $order);
+        $manufacturers = array();
+        foreach($products as $product) {
+            $manufacturers[$product['Manufacturer']['id_manufacturer']][] = $product;
+        }
+        $this->set('manufacturers', $manufacturers);
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        return $this->render('generateCancellationInformationAndForm');
+    }
 
+    /**
+     * called from finish context
+     * @param array $order
+     * saves pdf as file
+     */
+    private function generateGeneralTermsAndConditions($order)
+    {
+        $this->set('order', $order);
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        return $this->render('generateGeneralTermsAndConditions');
+    }
+    
+    /**
+     * called from finish context
+     * saves pdf as file
+     * @param array $order
+     * @param array $orderDetails
+     * @param array $orderDetailsTax
+     */
+    private function generateOrderConfirmation($order, $orderDetails, $orderDetailsTax)
+    {
+        
+        $this->loadModel('Product');
+        $this->set('order', $order);
+        $manufacturers = array();
+        foreach($orderDetails as $orderDetail) {
+            $this->Product->recursive = 2;
+            $product = $this->Product->find('first', array(
+                'conditions' => array(
+                    'Product.id_product' => $orderDetail['OrderDetails']['product_id']
+                )
+            ));
+            // avoid extra db request and attach taxes manually to order details
+            foreach($orderDetailsTax as $tax) {
+                if ($tax['id_order_detail'] == $orderDetail['OrderDetails']['id_order_detail']) {
+                    $orderDetail['OrderDetails']['OrderDetailTax'] = $tax;
+                }
+            }
+            $manufacturers[$product['Product']['id_manufacturer']][] = array(
+                'OrderDetail' => $orderDetail['OrderDetails'],
+                'Manufacturer' => $product['Manufacturer']
+            );
+        }
+        
+        $this->set('manufacturers', $manufacturers);
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        return $this->render('generateOrderConfirmation');
+    }
+    
+    /**
+     * generates pdf on-the-fly
+     */
+    public function generateCancellationInformationPdf() {
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        $this->render('generateCancellationInformationAndForm');
+    }
+    
     public function finish()
     {
+        
+        if (!$this->request->is('post')) {
+            $this->redirect('/');
+        }
+        
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCakeCart();
         
@@ -63,6 +172,7 @@ class CartsController extends FrontendController
         
         $cartErrors = array();
         $orderDetails2save = array();
+        $products = array();
         
         foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
             
@@ -74,6 +184,7 @@ class CartsController extends FrontendController
                     'Product.id_product' => $ids['productId']
                 )
             ));
+            $products[] = $product;
             
             $stockAvailableQuantity = $product['StockAvailable']['quantity'];
             
@@ -127,8 +238,8 @@ class CartsController extends FrontendController
                 'product_attribute_id' => $ids['attributeId'],
                 'product_name' => $this->CakeCart->getProductNameWithUnity($ccp['productName'], $ccp['unity']),
                 'product_quantity' => $ccp['amount'],
-                'product_price' => $ccp['price_excl'],
-                'total_price_tax_excl' => $ccp['price_excl'],
+                'product_price' => $ccp['priceExcl'],
+                'total_price_tax_excl' => $ccp['priceExcl'],
                 'total_price_tax_incl' => $ccp['price'],
                 'id_tax' => $product['Product']['id_tax'],
                 'deposit' => $ccp['deposit']
@@ -148,14 +259,26 @@ class CartsController extends FrontendController
             );
         }
         
+        
         $this->set('cartErrors', $cartErrors);
         
-        if (! empty($cartErrors)) {
+        
+        $this->loadModel('Order');
+        $checkboxErrors = false;
+        if (!isset($this->request->data['Order']['general_terms_and_conditions_accepted']) || $this->request->data['Order']['general_terms_and_conditions_accepted'] != 1) {
+            $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
+            $checkboxErrors = true;
+        }
+        if (!isset($this->request->data['Order']['cancellation_terms_accepted']) || $this->request->data['Order']['cancellation_terms_accepted'] != 1) {
+            $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+            $checkboxErrors = true;
+        }
+        
+        if (!empty($cartErrors) || $checkboxErrors) {
             $this->AppSession->setFlashError('Es sind Fehler aufgetreten.');
         } else {
             
             // START save order
-            $this->loadModel('Order');
             $this->Order->id = null;
             $order2save = array(
                 'reference' => strtoupper(StringComponent::createRandomString(9)),
@@ -170,7 +293,9 @@ class CartsController extends FrontendController
                 'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
-                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
+                'total_deposit' => $this->AppAuth->Cart->getDepositSum(),
+                'general_terms_and_conditions_accepted' => $this->request->data['Order']['general_terms_and_conditions_accepted'],
+                'cancellation_terms_accepted' => $this->request->data['Order']['cancellation_terms_accepted']
             );
             $order = $this->Order->save($order2save);
             
@@ -197,6 +322,7 @@ class CartsController extends FrontendController
                     'OrderDetails.id_order' => $orderId
                 )
             ));
+            
             if (empty($orderDetails)) {
                 $message = 'Bei der Erstellung der bestellten Artikel ist ein Fehler aufgetreten.';
                 $this->AppSession->setFlashError($message);
@@ -248,25 +374,31 @@ class CartsController extends FrontendController
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
             
-            // send confirmation email to customer
-            $email = new AppEmail();
-            $email->template('customer_order_successful')
-                ->emailFormat('html')
-                ->to($this->AppAuth->getEmail())
-                ->subject('Bestellbestätigung')
-                ->viewVars(array(
-                'cart' => $cart,
-                'appAuth' => $this->AppAuth,
-                'order' => $order
-            ));
-            
-            if (Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC') != '') {
-                $email->bcc(Configure::read('app.db_config_FCS_ORDER_CONFIRMATION_MAIL_BCC'));
+            // START send confirmation email to customer
+            // do not send email to inactive users (superadmins can place shop orders for inactive users!)
+            if ($this->AppAuth->user('active')) {
+                
+                $email = new AppEmail();
+                $email->template('customer_order_successful')
+                    ->emailFormat('html')
+                    ->to($this->AppAuth->getEmail())
+                    ->subject('Bestellbestätigung')
+                    ->viewVars(array(
+                    'cart' => $cart,
+                    'appAuth' => $this->AppAuth,
+                    'order' => $order
+                ));
+                    
+
+                $email->addAttachments(array('Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => array('data' => $this->generateCancellationInformationAndForm($order, $products))));
+                $email->addAttachments(array('Bestelluebersicht.pdf' => array('data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save))));
+                $email->addAttachments(array('Allgemeine-Geschaeftsbedingungen.pdf' => array('data' => $this->generateGeneralTermsAndConditions($order))));
+                
+                $email->send();
             }
+            //END send confirmation email to customer
             
-            $email->send();
-            
-            // due to redirect, before render is not called
+            // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
             
             $this->redirect(Configure::read('slugHelper')->getCartFinished($orderId));
@@ -301,27 +433,6 @@ class CartsController extends FrontendController
         
         $this->resetOriginalLoggedCustomer();
         $this->destroyShopOrderCustomer();
-    }
-
-    public function beforeFilter()
-    {
-        if ($this->request->is('post')) {
-            $message = '';
-            if (! $this->AppAuth->loggedIn()) {
-                $message = 'Du bist nicht angemeldet.';
-            }
-            if ($this->AppAuth->isManufacturer()) {
-                $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
-            }
-            if ($message != '') {
-                die(json_encode(array(
-                    'status' => 0,
-                    'msg' => $message
-                )));
-            }
-        }
-        
-        parent::beforeFilter();
     }
 
     public function ajaxDeleteShopOrderCustomer()

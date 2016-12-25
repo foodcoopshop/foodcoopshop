@@ -100,14 +100,15 @@ if ($appAuth->isCustomer()) {
         $cancelledArticlesMenuElement
     );
     $menu[] = $ordersMenuElement;
+    $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
-        $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
+        $menu[]= $paymentProductMenuElement;
     }
     if (! empty($paymentMemberFeeMenuElement)) {
-        $customerProfileMenuElement['children'][] = $paymentMemberFeeMenuElement;
+        $menu[]= $paymentMemberFeeMenuElement;
     }
-    $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
-    $menu[] = $customerProfileMenuElement;
+    $menu[] = $changePasswordMenuElement;
+    $menu[] = $actionLogsMenuElement;
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
@@ -151,7 +152,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $manufacturerMenu;
     
     $menu[] = array(
-        'slug' => '/admin/customers',
+        'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => 'Mitglieder',
         'options' => array(
             'fa-icon' => 'fa-fw fa-male'

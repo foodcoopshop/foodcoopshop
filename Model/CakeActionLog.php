@@ -164,7 +164,13 @@ class CakeActionLog extends AppModel
         ),
         
         'payment_product_added' => array(
-            'de' => 'Mitglied: Guthaben eingetragen'
+            'de' => 'Mitglied: Guthaben-Aufladung eingetragen'
+        ),
+        'payment_payback_added' => array(
+            'de' => 'Mitglied: Rückzahlung eingetragen'
+        ),
+        'payment_payback_deleted' => array(
+            'de' => 'Mitglied: Rückzahlung gelöscht'
         ),
         'payment_product_deleted' => array(
         	'de' => 'Mitglied: Guthaben gelöscht'

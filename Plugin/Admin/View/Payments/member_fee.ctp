@@ -39,7 +39,7 @@ if (count($payments) == 0) {
     echo '<tr class="sort">';
     echo '<th>Datum</th>';
     echo '<th>Text</th>';
-    echo '<th style="text-align:right;">' . $title_for_layout . '</th>';
+    echo '<th style="text-align:right;">' . $column_title . '</th>';
     echo '<th style="width:25px;"></th>';
     echo '</tr>';
     
@@ -97,6 +97,12 @@ if (count($payments) == 0) {
     echo '</table>';
 } // end of count($payments)
 
+if ($this->action == 'member_fee') {
+    echo '<div class="bottom-button-container">';
+    echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
+    echo '</div>';
+}
 ?>
 <div class="sc"></div>
+
 </div>

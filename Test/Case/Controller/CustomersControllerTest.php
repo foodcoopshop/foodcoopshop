@@ -33,7 +33,8 @@ class CustomersControllerTest extends AppCakeTestCase
                 'email' => '',
                 'firstname' => '',
                 'lastname' => '',
-                'newsletter' => 1
+                'newsletter' => 1,
+                'terms_of_use_accepted_date' => 0
             ),
             'antiSpam' => 0,
             'AddressCustomer' => array(
@@ -70,10 +71,11 @@ class CustomersControllerTest extends AppCakeTestCase
         $data['AddressCustomer']['phone'] = '897++asdf+d';
         $response = $this->addCustomer($data);
         $this->checkForMainErrorMessage($response);
-        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse wird bereits verwendet.', $response);
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);
         $this->assertRegExpWithUnquotedString('Die PLZ ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Die Handynummer ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Die Telefonnummer ist nicht gültig.', $response);
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Nutzungsbedingungen.', $response);
         
         
         // 4) save user and check record
@@ -101,6 +103,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $data['Customer']['email'] = $customerEmail;
         $data['Customer']['firstname'] = $customerFirstname;
         $data['Customer']['lastname'] = $customerLastname;
+        $data['Customer']['terms_of_use_accepted_date'] = 1;
         $data['AddressCustomer']['city'] = $customerCity;
         $data['AddressCustomer']['address1'] = $customerAddress1;
         $data['AddressCustomer']['address2'] = $customerAddress2;
@@ -119,12 +122,13 @@ class CustomersControllerTest extends AppCakeTestCase
         ));
         
         // check customer record
-        $this->assertEquals(Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE'), $customer['Customer']['active'], 'saving field active failed');
-        $this->assertEquals(Configure::read('app.db_config_FCS_CUSTOMER_GROUP'), $customer['Customer']['id_default_group'], 'saving user group failed');
+        $this->assertEquals((bool) Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customer']['active'], 'saving field active failed');
+        $this->assertEquals((int) Configure::read('app.db_config_FCS_CUSTOMER_GROUP'), $customer['Customer']['id_default_group'], 'saving user group failed');
         $this->assertEquals($customerEmail, $customer['Customer']['email'], 'saving field email failed');
         $this->assertEquals($customerFirstname, $customer['Customer']['firstname'], 'saving field firstname failed');
         $this->assertEquals($customerLastname, $customer['Customer']['lastname'], 'saving field lastname failed');
         $this->assertEquals(1, $customer['Customer']['newsletter'], 'saving field newsletter failed');
+        $this->assertEquals(date('Y-m-d'), $customer['Customer']['terms_of_use_accepted_date'], 'saving field terms_of_use_accepted_date failed');
         
         // check address record
         $this->assertEquals($customerFirstname, $customer['AddressCustomer']['firstname'], 'saving field firstname failed');

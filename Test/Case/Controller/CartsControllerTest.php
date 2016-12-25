@@ -156,7 +156,7 @@ class CartsControllerTest extends AppCakeTestCase
          */
         // START test if PRODUCT that was deactivated during shopping process
         $this->changeProductStatus($this->productId1, APP_OFF);
-        $this->browser->get($this->Slug->getCartFinish());
+        $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeProductStatus($this->productId1, APP_ON);
@@ -164,27 +164,34 @@ class CartsControllerTest extends AppCakeTestCase
         // START test if MANUFACTURER that was deactivated during shopping process
         $manufacturerId = 5;
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
-        $this->browser->get($this->Slug->getCartFinish());
+        $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
         
         // START test if stock available for PRODUCT has gone down (eg. by another order)
         $this->changeStockAvailable($this->productId1, 1);
-        $this->browser->get($this->Slug->getCartFinish());
+        $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Anzahl \(2\) des Produktes (.*) ist leider nicht mehr (.*) Menge: 1/', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
                                                             
         // START test if stock available for ATTRIBUTE has gone down (eg. by another order)
         $this->changeStockAvailable($this->productId2, 1);
-        $this->browser->get($this->Slug->getCartFinish());
+        $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Anzahl \(3\) der Variante (.*) des Produktes (.*) ist leider nicht mehr (.*) Menge: 1/', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
                                                             
         // FINALLY order can be finished
-        $this->browser->get($this->Slug->getCartFinish());
+        
+        // firstly do not check legal checkboxes
+        $this->finishCart(false, false);
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->browser->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
+        
+        // then check the checkboxes
+        $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
         
         $this->checkCartStatusAfterFinish();
@@ -206,6 +213,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order['Order']['total_deposit'], 2.5, 'order total_deposit not correct');
         $this->assertEquals($order['Order']['total_paid_tax_excl'], 5.578515, 'order total_paid_tax_excl not correct');
         $this->assertEquals($order['Order']['total_paid_tax_incl'], 6.136364, 'order total_paid_tax_incl not correct');
+        $this->assertEquals($order['Order']['general_terms_and_conditions_accepted'], 1, 'order general_terms_and_conditions_accepted not correct');
+        $this->assertEquals($order['Order']['cancellation_terms_accepted'], 1, 'order cancellation_terms_accepted not correct');
         
         // check order_details for product1
         $this->checkOrderDetails($order['OrderDetails'][0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.305786, 3.64, 0.17, 0.34, 2);
@@ -227,7 +236,7 @@ class CartsControllerTest extends AppCakeTestCase
         
         $this->browser->doFoodCoopShopLogout();
     }
-
+    
     public function testShopOrder()
     {
         $this->browser->doFoodCoopShopLogin();
@@ -247,7 +256,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProduct($this->productId1, 1);
         $this->addProduct($this->productId1, - 1);
         $this->addProduct($this->productId2, 1);
-        $this->browser->get($this->Slug->getCartFinish());
+        $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
         $this->assertTrue(is_int($orderId), 'order not finished correctly');
         
@@ -359,6 +368,21 @@ class CartsControllerTest extends AppCakeTestCase
         return $this->browser->getJsonDecodedContent();
     }
 
+    private function finishCart($general_terms_and_conditions_accepted=true, $cancellation_terms_accepted=true)
+    {
+        $this->browser->post(
+            $this->Slug->getCartFinish(),
+            array(
+                'data' => array(
+                    'Order' => array(
+                        'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                        'cancellation_terms_accepted' => $cancellation_terms_accepted
+                    )
+                )
+            )
+        );
+    }
+    
     /**
      *
      * @param int $productId            

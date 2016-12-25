@@ -248,10 +248,19 @@ body.customers.new_password_request .input {
     padding: 3px;
 }
 #login-form .input input[type="checkbox"] {
-    margin-left: 215px;
+    margin-left: 330px;
 }
-#login-form .input.checkbox label {
-    width: 300px;
+/* Nur Firefox */
+@-moz-document url-prefix() {
+    #login-form .input input[type="checkbox"] {
+        margin-left: -20px;
+    }
+}
+#login-form .input.checkbox .error-message {
+    margin-top: 25px;
+	width: auto ! important;
+    margin-left: 0 ! important;
+    clear: both;
 }
 
 body.customers.new_password_request .btn-success {
@@ -274,7 +283,10 @@ body.customers.new_password_request .btn-success {
 	display: none;
 	float: left;
 }
-#login-form .input input,
+#login-form .input.text input,
+#login-form .input.tel input,
+#login-form .input.email input,
+#login-form .input.password input,
 body.customers.new_password_request .input input {
     width: 255px;
     padding: 3px;
@@ -287,7 +299,10 @@ body.customers.new_password_request .input input {
 }
 body.customers form .checkbox label {
 	padding-left: 0;
+	width: 350px ! important;
+	clear: both;
 	line-height: 18px ! important;
+	margin-top: 4px;
 }
 #login-form div.error-message {
 	margin-left: 95px;
@@ -381,7 +396,7 @@ body.blog_posts.index .blog-post-wrapper,
 }
 .product-wrapper div.second-column {
 	overflow: hidden;
-	word-wrap: break-word; /* for long links in text */
+	word-wrap: break-word;
 }
 .blog-post-wrapper div.second-column {
 	min-height: 148px;
@@ -420,7 +435,8 @@ body.blog_posts.index .blog-post-wrapper,
 	margin-bottom: 10px;
 	width: 100%;
 }
-.product-wrapper .entity-wrapper:not(.active) {
+.product-wrapper .entity-wrapper:not(.active),
+.product-wrapper .entity-wrapper div.tax {
 	display: none;
 }
 .product-wrapper .line {
@@ -511,7 +527,11 @@ body.manufacturers.detail img.manufacturer-logo {
     padding: 10px;
     border: 1px solid #d6d4d4;
 }
-
+body.manufacturers.detail .imprint {
+	float: right;
+	width: 100%;
+	text-align: right;
+}
 #footer {
 	background-color: #3f3f3f;
 	color: #fff;
@@ -632,6 +652,9 @@ body.manufacturers.detail img.manufacturer-logo {
 #cart .shop-order-customer-info a {
     margin-top: 3px;
 }
+#cart p.products span.product span:not(:first-of-type) {
+    margin-right: 3px;
+}
 .cart p.no-products {
     margin-bottom: 20px;
 }
@@ -646,9 +669,6 @@ body.manufacturers.detail img.manufacturer-logo {
 	width: 100%;
 	float: left;
 }
-.cart p.products span.product span:not(:first-of-type) {
-	margin-right: 3px;
-}
 .cart p.sum-wrapper span.sum,
 .cart p.deposit-sum-wrapper span.sum,
 .cart b.payment {
@@ -660,7 +680,10 @@ body.manufacturers.detail img.manufacturer-logo {
 .cart p.products span.product span.price {
 	float: right;
 }
-.cart span.product-name span.unity {
+.cart a.product-name {
+	margin-right: 3px;
+}
+.cart span.product-name-wrapper span.unity {
 	margin-left: 2px;
 	color: #515151;
 	font-size: 11px;
@@ -670,15 +693,20 @@ body.manufacturers.detail img.manufacturer-logo {
 	margin-right: 3px;
 }
 .cart span.manufacturer-link,
-.cart span.image,
+.cart .image,
 .cart span.deposit,
-.cart p.deposit-sum-wrapper {
+.cart p.deposit-sum-wrapper,
+.cart p.tax-sum-wrapper,
+.cart span.tax {
     float: left;
     display: none;
 }
-.cart span.product-name {
+.cart span.product-name-wrapper {
 	float: left;
 	width: 185px; /* consider scrollbar! */
+}
+.cart span.product-name-wrapper a {
+    word-wrap: break-word;
 }
 .cart span.right {
 	float: right;
@@ -712,7 +740,7 @@ a.btn.btn-success:hover,
 a.btn.btn-success:hover i {
 	color: #d6d4d4 ! important;
 }
-body.carts.detail .cart:not(#cart) span.product-name {
+body.carts.detail .cart:not(#cart) span.product-name-wrapper {
 	width: 240px;
 }
 body.carts.detail .cart:not(#cart) span.amount {
@@ -722,6 +750,32 @@ body.carts.detail .cart:not(#cart) span.amount {
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
+body.carts.detail #OrderDetailForm {
+	float: left;
+	margin-left: 10px;
+	margin-top: 20px;
+}
+body.carts.detail #OrderDetailForm .input.checkbox {
+	clear: both;
+    line-height: 26px;
+    margin-top: -10px;
+}
+body.carts.detail #OrderDetailForm .input.checkbox label {
+	line-height: 20px;
+}
+body.carts.detail #OrderDetailForm  .input.checkbox .error-message {
+	margin-left: -10px ! important;
+	width: 100% ! important;
+	font-size: 14px;
+}
+body.carts.detail #OrderDetailForm .input.checkbox input[type="checkbox"] {
+	margin-left: -10px;
+}
+body.carts.detail .cart:not(#cart) .featherlight-overlay,
+#RegistrationForm .featherlight-overlay {
+	display: none;
+}
+
 body.carts.detail .cart:not(#cart) span.amount .btn {
 	color: #719f41;
 }
@@ -729,19 +783,24 @@ body.carts.detail .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name span.unity {
+body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     font-size: 13px;
-    margin-left: 5px;
 }
-body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper {
+body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
+body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
 	display: block;
-	float: none;
+	float: left;
+	width: 100%;
 }
+body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
 	font-weight: bold;
     float: right;
     margin-right: 17px;
-} 
+}
+body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
+	margin-top: 40px;
+}
 body.carts.detail .cart:not(#cart) span.manufacturer-link {
 	display: inline;
     width: 150px;
@@ -751,7 +810,7 @@ body.carts.detail .cart:not(#cart) span.deposit {
 	clear: both;
 	margin-right: 25px;
 }
-body.carts.detail .cart:not(#cart) span.image {
+body.carts.detail .cart:not(#cart) .image {
     display: inline;
     text-align: center;
     float: left;
@@ -761,7 +820,7 @@ body.carts.detail .cart:not(#cart) span.image {
     width: 120px;
     margin-top: -30px;
 }
-body.carts.detail .cart:not(#cart) span.image img {
+body.carts.detail .cart:not(#cart) .image img {
     width: 100px;
 }
 body.carts.detail .cart:not(#cart) {
@@ -780,7 +839,8 @@ body.carts.detail .cart:not(#cart) .product {
 	padding-top: 40px;
 }
 body.carts.detail .cart:not(#cart) .products {
-	max-height: none; 
+	max-height: none;
+	overflow-x: hidden; /* error wrapper tricky to style */
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
@@ -800,12 +860,13 @@ body.carts.detail .cart:not(#cart) .product.error a {
 }
 body.carts.detail .cart:not(#cart) ul.error-message {
     width: 102%;
-    padding: 10px 10px 10px 40px;
+    padding: 15px 10px 10px 40px;
     float: left;
     margin-left: -10px;
+    margin-top: -10px;
 }
-body.carts.detail .cart:not(#cart) .btn-success {
-    font-size: 20px;
+body.carts.detail .cart:not(#cart) .btn-success.btn-order {
+    font-size: 18px;
     float: right;
     padding: 5px 10px;
     margin-top: 10px;
@@ -925,14 +986,19 @@ body.blog_posts.detail #inner-content > .img-wrapper {
 	float: right;
 }
 body.blog_posts.detail #inner-content,
-body.pages.detail #inner-content {
+body.pages.detail #inner-content,
+body.manufacturers.detail #inner-content {
 	position: relative;
 }
 body.blog_posts ul.jquery-ui-icon,
-body.pages.detail ul.jquery-ui-icon {
-	top: 5px;
-	right: 15px;
+body.pages.detail ul.jquery-ui-icon,
+body.manufacturers.detail ul.jquery-ui-icon {
+	top: -15px;
+	right: 5px;
 	position: absolute;
+}
+ul.jquery-ui-icon li {
+    line-height: 16px ! important;
 }
 body.blog_posts.index ul.jquery-ui-icon {
 	right: 0;
@@ -958,9 +1024,10 @@ body.customers.registration_successful #inner-content h2 {
     padding-bottom: 20px;
     margin-bottom: 0;
 }
-body.pages.detail h2 {
+body.pages h2 {
 	color: #333;
 	font-size: 18px;
+	padding-top: 10px;
 }
 body.products.detail .product-wrapper {
 	border-bottom: 1px solid #d6d4d4;

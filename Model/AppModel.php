@@ -42,7 +42,7 @@ class AppModel extends Model
 
     protected function loggedIn()
     {
-        return (boolean) SessionComponent::read('Auth.User.id_customer');
+        return (boolean) CakeSession::read('Auth.User.id_customer');
     }
 
     protected function getFieldsForProductListQuery()

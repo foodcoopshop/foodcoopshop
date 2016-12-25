@@ -33,6 +33,13 @@ class AppAuthComponent extends AuthComponent
     {
         $this->AppSession->setFlashError($message);
     }
+    
+    /**
+     * @return boolean
+     */
+    public function termsOfUseAccepted() {
+        return $this->user('terms_of_use_accepted_date') >= Configure::read('app.termsOfUseLastUpdate');
+    }
 
     public function getUserId()
     {

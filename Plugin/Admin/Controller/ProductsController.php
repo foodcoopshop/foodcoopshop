@@ -560,14 +560,6 @@ class ProductsController extends AdminAppController
         }
         
         $netPrice = $this->Product->getNetPrice($productId, $price);
-        if (! $netPrice) {
-            $message = 'Der Preis muss eine Zahl sein.';
-            $this->log($message);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $message
-            )));
-        }
         
         if ($ids['attributeId'] > 0) {
             

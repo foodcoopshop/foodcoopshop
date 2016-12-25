@@ -54,7 +54,7 @@ class Page extends AppModel
                 'url',
                 true
             ),
-            'message' => 'Bitte gibt eine gültige Url an, z.B. http://www.foodcoopshop.com'
+            'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
         )
     );
 
@@ -76,15 +76,22 @@ class Page extends AppModel
         return $pages;
     }
 
-    public function getPageForFrontend($pageId)
+    public function getPageForFrontend($pageId, $appAuth)
     {
+        
+        $conditions = array(
+            'Page.id_cms' => $pageId,
+            'Page.active' => APP_ON,
+            'PageLang.id_lang' => Configure::read('app.langId'),
+            'PageLang.id_shop' => Configure::read('app.shopId')
+        );
+        
+        if (! $appAuth->loggedIn()) {
+            $conditions['Page.is_private'] = APP_OFF;
+        }
+        
         $page = $this->find('first', array(
-            'conditions' => array(
-                'Page.id_cms' => $pageId,
-                'Page.active' => APP_ON,
-                'PageLang.id_lang' => Configure::read('app.langId'),
-                'PageLang.id_shop' => Configure::read('app.shopId')
-            ),
+            'conditions' => $conditions,
             'contain' => array(
                 'PageLang.meta_title',
                 'PageLang.link_rewrite',

@@ -2084,13 +2084,31 @@ foodcoopshop.Admin = {
 
         // radio buttons only if deposit is added to manufacurers
         if ($('.featherlight-content input[type="radio"]').length > 0) {
-        	var selectedRadioButton = $('.featherlight-content input[name=payment_text]:checked');
+        	var selectedRadioButton = $('.featherlight-content input[type="radio"]:checked');
+        	
+        	// check if radio buttons are in deposit form or product form
+        	console.log($('.featherlight-content .add-payment-form'));
+        	if ($('.featherlight-content .add-payment-form').hasClass('add-payment-deposit-form')) {
+        		var message = 'Bitte wähle die Art der Pfand-Rücknahme aus.';
+            	var isDepositForm = true;
+        	} else {
+        		var message = 'Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt.';
+        		isDepositForm = false;
+        	}
+        	
         	if (selectedRadioButton.length == 0) {
-                alert('Bitte wähle die Art der Pfand-Rücknahme aus.');
+                alert(message);
                 foodcoopshop.AppFeatherlight.enableSaveButton();
                 return;
         	}
-        	text = $('.featherlight-content input[name=payment_text]:checked').val();
+        	
+        	var selectedRadioButtonValue = $('.featherlight-content input[type="radio"]:checked').val();
+        	if (isDepositForm) {
+            	text = selectedRadioButtonValue;
+        	} else {
+        		type = selectedRadioButtonValue;
+        	}
+
         }
         
         var months_range = [];

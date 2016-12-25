@@ -23,7 +23,44 @@ class CustomersController extends FrontendController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->AppAuth->allow(); // allows all actions
+        $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
+    }
+    
+    /**
+     * generates pdf on-the-fly
+     */
+    private function generateTermsOfUsePdf($customer) {
+        $this->set('customer', $customer);
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        return $this->render('generateTermsOfUsePdf');
+    }
+    
+    public function accept_updated_terms_of_use() {
+        
+        if (!$this->request->is('post')) {
+            $this->redirect('/');
+        }
+        
+        $checkboxErrors = false;
+        if (!isset($this->request->data['Customer']['terms_of_use_accepted_date']) || $this->request->data['Customer']['terms_of_use_accepted_date'] != 1) {
+            $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
+            $checkboxErrors = true;
+        }
+        
+        $this->Customer->set($this->request->data['Customer']);
+        if (!$checkboxErrors) {
+            $this->Customer->id = $this->AppAuth->getUserId();
+            $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
+            $this->Customer->save($this->request->data['Customer'], false);
+            $this->AppSession->setFlashMessage('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
+            $this->renewAuthSession();
+            $this->redirect($this->referer());
+        } else {
+            $this->AppSession->setFlashError('Bitte akzeptiere die Nutzungsbedingungen.');
+            $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
+        }
+        
     }
 
     public function new_password_request()
@@ -152,7 +189,13 @@ class CustomersController extends FrontendController
                     $errors = array_merge($errors, $this->Customer->AddressCustomer->validationErrors);
                 }
                 
-                if (empty($errors)) {
+                $checkboxErrors = false;
+                if (!isset($this->request->data['Customer']['terms_of_use_accepted_date']) || $this->request->data['Customer']['terms_of_use_accepted_date'] != 1) {
+                    $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
+                    $checkboxErrors = true;
+                }
+                
+                if (empty($errors) && !$checkboxErrors) {
                     
                     // save customer
                     $this->Customer->id = null;
@@ -160,6 +203,8 @@ class CustomersController extends FrontendController
                     $this->request->data['Customer']['id_default_group'] = Configure::read('app.db_config_FCS_CUSTOMER_GROUP');
                     $this->request->data['Customer']['id_lang'] = Configure::read('app.langId');
                     $this->request->data['Customer']['id_shop'] = Configure::read('app.shopId');
+                    $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
+                    
                     $newCustomer = $this->Customer->save($this->request->data['Customer'], array(
                         'validate' => false
                     ));
@@ -182,10 +227,11 @@ class CustomersController extends FrontendController
                     $this->CakeActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
                     
                     // START send confirmation email to customer
-                    
+                    $attachments = array();
                     $email = new AppEmail();
                     if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
+                        $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($newCustomer['Customer']))));
                     } else {
                         $template = 'customer_registered_inactive';
                     }
@@ -198,19 +244,6 @@ class CustomersController extends FrontendController
                         'data' => $this->request->data,
                         'newPassword' => $newPassword
                     ));
-                    
-                    // add optional attachment (all files in folder)
-                    App::uses('Folder', 'Utility');
-                    $dir = new Folder(WWW_ROOT . Configure::read('app.registrationAttachmentDir'));
-                    $attachments = $dir->find('(.*)', true);
-                    foreach ($attachments as $attachment) {
-                        if (! in_array($attachment, array(
-                            '.gitignore'
-                        ))) {
-                            $email->addAttachments(WWW_ROOT . Configure::read('app.registrationAttachmentDir') . DS . $attachment);
-                        }
-                    }
-                    
                     $email->send();
                     // END send confirmation email to customer
                     

@@ -46,7 +46,7 @@ if (count($payments) == 0) {
     echo '<tr class="sort">';
     echo '<th>Datum</th>';
     echo '<th>Text</th>';
-    echo '<th style="text-align:right;">' . $title_for_layout . '</th>';
+    echo '<th style="text-align:right;">' . $column_title . '</th>';
     echo '<th style="text-align:right;">Bestellwert</th>';
     echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</th>';
     echo '<th style="width:25px;"></th>';
@@ -80,8 +80,16 @@ if (count($payments) == 0) {
             $numberClass = ' class="negative"';
         }
         
-        echo '<td style="text-align:right;" ' . $numberClass . '>';
-        if ($payment['type'] == 'product') {
+        
+        $productNumberClass = '';
+        if (in_array($payment['type'], array('payback'))) {
+            $productNumberClass = ' class="negative"';
+        }
+        echo '<td style="text-align:right;" ' . $productNumberClass . '>';
+        if (in_array($payment['type'], array('product', 'payback'))) {
+            if ($payment['type'] == 'payback') {
+                $payment['amount'] = $payment['amount'] * -1;
+            }
             $sumPayments += $payment['amount'];
             echo $this->Html->formatAsEuro($payment['amount']);
         }
@@ -108,10 +116,11 @@ if (count($payments) == 0) {
         echo '</td>';
         
         echo '<td style="text-align:center;">';
-        if (in_array($payment['type'], array(
-            'product',
-            'deposit'
-        ))) {
+        $deletablePaymentTypes = array('product', 'deposit');
+        if ($appAuth->isSuperadmin()) {
+            $deletablePaymentTypes[] = 'payback';
+        }
+        if (in_array($payment['type'], $deletablePaymentTypes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-payment-button',
                 'title' => 'Aufladung löschen?'
@@ -165,6 +174,12 @@ if (count($payments) == 0) {
     echo '</table>';
 } // end of count($payments)
 
+if ($this->action == 'product') {
+	echo '<div class="bottom-button-container">';
+        echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
+    echo '</div>';
+}
 ?>
 <div class="sc"></div>
+
 </div>

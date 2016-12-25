@@ -15,10 +15,10 @@ foodcoopshop.Helper = {
 
     init: function() {
         this.initMenu();
-        this.initRight();
         this.initLogoutButton();
         this.changeOutgoingLinksTargetToBlank();
         if (!this.isMobile()) {
+            this.initRight();
             this.initScrolltopButton();
             this.showContent();
         }
@@ -167,10 +167,6 @@ foodcoopshop.Helper = {
 
     initRight: function() {
 
-        if (foodcoopshop.Helper.isMobile()) {
-            return false;
-        }
-
         $(window).scroll(function() {
             foodcoopshop.Helper.onWindowScroll();
         });
@@ -318,7 +314,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function() {
         $.backstretch(
-            '/img/bg-photo-autumn.jpg', {
+            '/img/bg-photo-winter.jpg', {
                 positionY: 'top',
                 speed: 400
             }

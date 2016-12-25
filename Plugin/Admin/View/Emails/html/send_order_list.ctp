@@ -43,8 +43,14 @@
 				<li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
 				<li>Pfandkonto (falls du Pfand verwendest)</li>
 				<li>Passwort ändern</li>
+				<li>Daten für Impressum ändern</li>
 			</ul>
 			
+			<p>
+				<b>Impressum:</b><br />
+				Ab sofort erscheint auf deinem Hersteller-Profil rechts unterhalb des letzten Produktes dein Impressum. Die dafür notwendigen Daten kannst du im Hersteller-Bereich selbst eintragen bzw. bearbeiten.
+			</p>
+
             <?php if (!Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
             <p>
 				Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung

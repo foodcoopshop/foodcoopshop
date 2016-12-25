@@ -51,8 +51,10 @@ class FrontendController extends AppController
         $this->ProductAttribute->recursive = 2; // for attribute lang
         
         foreach ($products as &$product) {
-            
-            $product['Product']['gross_price'] = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
+           
+            $grossPrice = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
+            $product['Product']['gross_price'] = $grossPrice;
+            $product['Product']['tax'] = $grossPrice - $product['ProductShop']['price'];
             $product['Product']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
             
             $product['attributes'] = $this->ProductAttribute->find('all', array(
@@ -61,7 +63,9 @@ class FrontendController extends AppController
                 )
             ));
             foreach ($product['attributes'] as &$attribute) {
-                $attribute['ProductAttributeShop']['gross_price'] = $this->Product->getGrossPrice($attribute['ProductAttributeShop']['id_product'], $attribute['ProductAttributeShop']['price']);
+                $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShop']['id_product'], $attribute['ProductAttributeShop']['price']);
+                $attribute['ProductAttributeShop']['gross_price'] = $grossPrice;
+                $attribute['ProductAttributeShop']['tax'] = $grossPrice - $attribute['ProductAttributeShop']['price'];
             }
         }
         
@@ -84,7 +88,15 @@ class FrontendController extends AppController
     // is not called on ajax actions!
     public function beforeRender()
     {
+        
         parent::beforeRender();
+        
+        // when a shop order was placed, the pdfs that are rendered for the order confirmation email
+        // called this method and therefore called resetOriginalLoggedCustomer() => email was sent t
+        // the user who placed the order for a member and not to the member
+        if ($this->response->type() != 'text/html') {
+            return;
+        }
         
         $this->resetOriginalLoggedCustomer();
         
@@ -118,6 +130,10 @@ class FrontendController extends AppController
         $this->loadModel('Page');
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';
+        if (! $this->AppAuth->loggedIn()) {
+            $conditions['Page.is_private'] = APP_OFF;
+        }
+        
         $pages = $this->Page->findAllGroupedByMenu($conditions);
         $pagesForHeader = array();
         $pagesForFooter = array();
@@ -145,7 +161,7 @@ class FrontendController extends AppController
         
         /*
          * changed the acutally logged in customer to the desired shopOrderCustomer
-         * but only in controller (befor filter), before render sets the customer back to the original one
+         * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
         if ($this->AppSession->read('Auth.shopOrderCustomer')) {

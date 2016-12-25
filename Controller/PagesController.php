@@ -56,7 +56,8 @@ class PagesController extends FrontendController
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
         
-        $this->set('title_for_layout', 'Home');
+        Configure::write('app.titleSuffix', Configure::read('app.titleSuffix') . ' - Foodcoop');
+        $this->set('title_for_layout', 'Willkommen');
         
         $this->loadModel('Slider');
         $sliders = $this->Slider->getForHome();
@@ -67,7 +68,7 @@ class PagesController extends FrontendController
     {
         $pageId = (int) $this->params['pass'][0];
         
-        $page = $this->Page->getPageForFrontend($pageId);
+        $page = $this->Page->getPageForFrontend($pageId, $this->AppAuth);
         if (empty($page)) {
             throw new MissingActionException('page not found');
         }
@@ -82,7 +83,9 @@ class PagesController extends FrontendController
         ));
         $page['children'] = array();
         foreach ($children as $child) {
-            $page['children'][] = $this->Page->getPageForFrontend($child['Page']['id_cms']);
+            if ($child['Page']['active'] == APP_OFF) continue;
+            if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) continue;
+            $page['children'][] = $this->Page->getPageForFrontend($child['Page']['id_cms'], $this->AppAuth);
         }
         
         $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']);
@@ -93,4 +96,15 @@ class PagesController extends FrontendController
         $this->set('page', $page);
         $this->set('title_for_layout', $page['PageLang']['meta_title']);
     }
+    
+    public function terms_of_use()
+    {
+        $this->set('title_for_layout', 'Nutzungsbedingungen');
+    }
+    
+    public function privacy_policy() 
+    {
+        $this->set('title_for_layout', 'Datenschutzerklärung');
+    }
+    
 }

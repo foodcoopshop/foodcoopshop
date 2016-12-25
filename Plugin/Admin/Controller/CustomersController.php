@@ -233,6 +233,16 @@ class CustomersController extends AdminAppController
         }
     }
 
+    /**
+     * generates pdf on-the-fly
+     */
+    private function generateTermsOfUsePdf($customer) {
+        $this->set('customer', $customer);
+        $this->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this, 'pdf');
+        return $this->render('generateTermsOfUsePdf');
+    }
+    
     public function changeStatus($customerId, $status, $sendEmail)
     {
         if (! in_array($status, array(
@@ -247,19 +257,19 @@ class CustomersController extends AdminAppController
             'active' => $status
         ));
         
-        $statusText = 'deaktiviert';
-        $actionLogType = 'customer_set_inactive';
-        if ($status) {
-            $statusText = 'aktiviert';
-            $actionLogType = 'customer_set_active';
-        }
-        
         $this->Customer->recursive = - 1;
         $customer = $this->Customer->find('first', array(
             'conditions' => array(
                 'Customer.id_customer' => $customerId
             )
         ));
+        
+        $statusText = 'deaktiviert';
+        $actionLogType = 'customer_set_inactive';
+        if ($status) {
+            $statusText = 'aktiviert';
+            $actionLogType = 'customer_set_active';
+        }
         
         $message = 'Das Mitglied "' . $customer['Customer']['name'] . '" wurde erfolgreich ' . $statusText;
         
@@ -278,6 +288,8 @@ class CustomersController extends AdminAppController
                 'data' => $customer,
                 'newPassword' => $newPassword
             ));
+            
+            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customer']))));
             $email->send();
             
             $message .= ' und eine Info-Mail an ' . $customer['Customer']['email'] . ' versendet';
@@ -388,6 +400,7 @@ class CustomersController extends AdminAppController
             if (Configure::read('htmlHelper')->paymentIsCashless()) {
                 
                 $paymentProductSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'product');
+                $paymentPaybackSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'payback');
                 $paymentDepositSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'deposit');
                 
                 $sumTotalProduct = 0;
@@ -399,7 +412,7 @@ class CustomersController extends AdminAppController
                     }
                 }
                 // sometimes strange values like 2.8421709430404E-14 appear
-                $customers[$i]['payment_product_delta'] = round($paymentProductSum - $sumTotalProduct, 2);
+                $customers[$i]['payment_product_delta'] = round($paymentProductSum - $paymentPaybackSum - $sumTotalProduct, 2);
                 $customers[$i]['payment_deposit_delta'] = round($paymentDepositSum - $sumTotalDeposit, 2);
                 
                 // combine deposit delta in product delta to show same credit balance in list like in personal payment product page

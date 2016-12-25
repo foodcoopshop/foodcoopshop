@@ -115,6 +115,7 @@ echo '<div class="product-wrapper">';
                         if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
                             echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
                         }
+                        echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
                     echo '</div>';
                     echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']));
                     echo $this->element('product/amountWrapper', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
@@ -142,6 +143,7 @@ echo '<div class="product-wrapper">';
                             echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
                         }
                 echo '</div>';
+                echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';
                 echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product']));
                 echo $this->element('product/amountWrapper', array('stockAvailable' => $product['StockAvailable']['quantity']));
                 echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']));

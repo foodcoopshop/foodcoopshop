@@ -89,6 +89,14 @@ class Manufacturer extends AppModel
                 'allowEmpty' => true,
                 'message' => 'Bitte gib einen gültigen BIC ein.'
             )
+        ),
+        'homepage' => array(
+            'allowEmpty' => true,
+            'rule' => array(
+                'url',
+                true
+            ),
+            'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
         )
     );
 
@@ -125,6 +133,21 @@ class Manufacturer extends AppModel
             $bulkOrdersAllowed = $addressOther['bulkOrdersAllowed'];
         }
         return $bulkOrdersAllowed;
+    }
+    
+    /**
+     *
+     * @param $other json
+     *            (contains manufacturer options)
+     * @return int
+     */
+    public function getCompensationPercentage($other)
+    {
+        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
+        if (isset($other['compensationPercentage'])) {
+            $compensationPercentage = (int) $other['compensationPercentage'];
+        }
+        return $compensationPercentage;
     }
 
     /**

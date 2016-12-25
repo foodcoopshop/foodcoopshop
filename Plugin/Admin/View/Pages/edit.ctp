@@ -91,6 +91,10 @@ if ($this->here != $this->Slug->getPageAdd()) {
     ));
 }
 
+echo $this->Form->input('Page.is_private', array(
+    'label' => 'Nur für Mitglieder sichtbar?',
+    'type' => 'checkbox'
+));
 echo $this->Form->input('Page.active', array(
     'label' => 'Aktiv?',
     'type' => 'checkbox'

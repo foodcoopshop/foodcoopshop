@@ -29,6 +29,81 @@ class MyHtmlHelper extends HtmlHelper
     {
         return sprintf('%0'.$maxDigits.'d', $number);
     }
+    
+    /**
+     * @param array $manufacturer
+     * @param string $outputType "pdf" of "html"
+     * @return string
+     */
+    public function getManufacturerImprint($manufacturer, $outputType, $addressOnly)
+    {
+        if (!isset($manufacturer['Manufacturer'])) {
+            $manufacturer['Manufacturer'] = $manufacturer;
+        }
+        $imprintLines = array();
+        $imprintLines[] = '<b>'.$manufacturer['Manufacturer']['name'].'</b>';
+        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['name']) {
+            $imprintLines[] = $manufacturer['Address']['name'];
+        }
+        $address = $manufacturer['Address']['address1'];
+        if ($manufacturer['Address']['address2'] != '') {
+            $address .= ' / ' . $manufacturer['Address']['address2'];
+        }
+        $imprintLines[] = $address;
+        if (!($manufacturer['Address']['postcode'] == '' || $manufacturer['Address']['city'] == '')) {
+            $imprintLines[] = @$manufacturer['Address']['postcode'] . ' ' . @$manufacturer['Address']['city'];
+        }
+        if ($manufacturer['Address']['phone_mobile'] != '') {
+            $imprintLines[] = 'Mobil: ' . $manufacturer['Address']['phone_mobile'];
+        }
+        if ($manufacturer['Address']['phone'] != '') {
+            $imprintLines[] = 'Telefon: ' . $manufacturer['Address']['phone'];
+        }
+        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hide_email($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
+        
+        if (!$addressOnly) {
+            if ($manufacturer['Manufacturer']['homepage'] != '') {
+                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], array('options' => array('target' => '_blank'))) : $manufacturer['Manufacturer']['homepage']);
+            }
+            $imprintLines[] = ''; // new line
+            if ($manufacturer['Manufacturer']['uid_number'] != '') {
+                $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturer']['uid_number'];
+            }
+            
+            if ($manufacturer['Manufacturer']['firmenbuchnummer'] != '') {
+                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturer']['firmenbuchnummer'];
+            }
+            if ($manufacturer['Manufacturer']['firmengericht'] != '') {
+                $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturer']['firmengericht'];
+            }
+            if ($manufacturer['Manufacturer']['aufsichtsbehoerde'] != '') {
+                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturer']['aufsichtsbehoerde'];
+            }
+            if ($manufacturer['Manufacturer']['kammer'] != '') {
+                $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturer']['kammer'];
+            }
+        }
+        return '<p>'.implode('<br />', $imprintLines).'</p>';
+    }
+    
+    /**
+     * @return string
+     */
+    public function getAddressFromAddressConfiguration() {
+        $address = explode("\n", Configure::read('app.addressForPdf'));
+        $address = array_filter($address); // remove empty elements
+        array_shift($address); // remove first element - usually same as app.name
+        array_pop($address); // remove last element - usually email address
+        return $address;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getEmailFromAddressConfiguration() {
+        $address = explode("\n", Configure::read('app.addressForPdf'));
+        return end($address);
+    }
 
     public function getMenuTypes()
     {
@@ -196,6 +271,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $paymentTexts = array(
             'product' => 'Guthaben-Aufladung',
+            'payback' => 'Rückzahlung',
             'deposit' => 'Pfand-Rückgabe'
         );
         if (Configure::read('app.memberFeeEnabled')) {
@@ -210,6 +286,14 @@ class MyHtmlHelper extends HtmlHelper
     function getPaymentText($paymentType)
     {
         return $this->getPaymentTexts()[$paymentType];
+    }
+    
+    public function getSuperadminProductPaymentTexts($appAuth) {
+        $paymentTexts = array(
+            'product' => self::getPaymentText('product'),
+            'payback' => self::getPaymentText('payback')
+        );
+        return $paymentTexts;
     }
     
     public function getManufacturerDepositPaymentTexts() {

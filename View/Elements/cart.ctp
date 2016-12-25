@@ -55,10 +55,10 @@ if ($appAuth->Cart->getProducts() !== null) {
 		          $class[] = 'negative';
 		      }
 		      echo '<div class="credit-balance-wrapper">';
-    		      echo '<p><b><a href="'.$this->Slug->getCreditBalance().'">Dein Guthaben</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
+    		      echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">Dein Guthaben</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
     		      if ($shoppingLimitReached) {
     		          echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
-    		          echo '<p><a class="btn btn-success" href="'.$this->Slug->getCreditBalance().'">';
+    		          echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
     		              echo 'Guthaben aufladen';
     		          echo '</a></p>';
     		      }
@@ -72,6 +72,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     		<p class="products"></p>
     		<p class="sum-wrapper"><b>Summe</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     		<p class="deposit-sum-wrapper"><b>Pfand</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+    		<p class="tax-sum-wrapper"><b>Umsatzsteuer</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     		<p class="tmp-wrapper"></p>
     		
     		<div class="sc"></div>
