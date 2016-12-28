@@ -50,7 +50,7 @@
         if ($this->Html->paymentIsCashless() && Configure::read('app.db_config_FCS_BANK_ACCOUNT_DATA') != '') {
             echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>Kontodaten (Guthaben aufladen):</b> '.Configure::read('app.db_config_FCS_BANK_ACCOUNT_DATA').'</p>';
         }
-        if (Configure::read('app.db_config_FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') != '') {
+        if (Configure::read('app.memberFeeEnabled') && Configure::read('app.db_config_FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') != '') {
             echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>Kontodaten (Mitgliedsbeitrag):</b> '.Configure::read('app.db_config_FCS_MEMBER_FEE_BANK_ACCOUNT_DATA').'</p>';
         }
     }
