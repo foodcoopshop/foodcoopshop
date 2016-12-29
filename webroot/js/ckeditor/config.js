@@ -25,3 +25,5 @@ CKEDITOR.editorConfig = function( config ) {
     config.removeButtons = 'CreateDiv,Underline,Italic,Subscript,Superscript,Strike,Paste,PasteText,Anchor,Table,HorizontalRule,SpecialChar,Maximize,ShowBlocks,Blockquote,Styles';
     
 };
+
+CKEDITOR.timestamp = 'ABCD'; // change this string if version is updated
