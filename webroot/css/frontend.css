@@ -384,6 +384,10 @@ body.blog_posts.index .blog-post-wrapper,
 .product-wrapper div.first-column span.fa-stack i.fa-star {
     color: #fff;
 }
+.product-wrapper div.third-column .unity,
+.product-wrapper .radio label {
+	word-break: break-word;
+}
 .blog-post-wrapper div.second-column,
 .product-wrapper div.second-column,
 .manufacturer-wrapper div.second-column {
