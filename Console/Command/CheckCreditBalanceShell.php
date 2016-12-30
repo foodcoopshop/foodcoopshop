@@ -33,19 +33,8 @@ class CheckCreditBalanceShell extends AppShell
         
         App::uses('AppEmail', 'Lib');
         
-        $allowedPaymentTypes = array(
-            'product',
-            'deposit'
-        );
-        if (! Configure::read('app.isDepositPaymentCashless')) {
-            $allowedPaymentTypes = array(
-                'product'
-            );
-        }
-        
-        $this->Customer->hasMany['CakePayments']['conditions'][] = 'CakePayments.type IN ("' . join('", "', $allowedPaymentTypes) . '")';
-        
         $this->Customer->dropManufacturersInNextFind();
+        $this->Customer->recursive = -1;
         $customers = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customer.active' => 1
@@ -61,27 +50,12 @@ class CheckCreditBalanceShell extends AppShell
         
         foreach ($customers as $customer) {
             
-            // sum up all relevant product payments
-            $ppSum = 0;
-            foreach ($customer['CakePayments'] as $paymentProduct) {
-                $ppSum += $paymentProduct['amount'];
-            }
-            
-            // sum up all relevant orders
-            $orderSum = 0;
-            foreach ($customer['PaidCashFreeOrders'] as $order) {
-                $orderSum += $order['total_paid'];
-                if (Configure::read('app.isDepositPaymentCashless') && strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
-                    $orderSum += $order['total_deposit'];
-                }
-            }
-            
-            $delta = round($ppSum - $orderSum, 2); // sometimes strange values like 2.8421709430404E-14 appear
+            $delta = $this->Customer->getCreditBalance($customer['Customer']['id_customer']);
             
             if ($delta < 0) {
                 $i ++;
-                $totalOrderSum -= $delta;
-                $delta = '€ ' . Configure::read('htmlHelper')->formatAsDecimal($delta); // delta is rendered in email view => do not use formatAsEuro here because of &nbsp;
+                $deltaSum -= $delta;
+                $delta = '€ ' . Configure::read('htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
                 $outString .= $customer['Customer']['name'] . ': ' . $delta . '<br />';
                 $email = new AppEmail();
                 $email->template('Admin.check_credit_balance')
@@ -96,7 +70,7 @@ class CheckCreditBalanceShell extends AppShell
             }
         }
         
-        $outString .= 'Summe: ' . Configure::read('htmlHelper')->formatAsEuro($totalOrderSum * - 1) . '<br />';
+        $outString .= 'Summe: ' . Configure::read('htmlHelper')->formatAsEuro($deltaSum * - 1) . '<br />';
         $outString .= 'Verschickte E-Mails: ' . $i;
         
         $this->stopTimeLogging();
