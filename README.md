@@ -3,7 +3,7 @@ The open source software for your foodcoop
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 
-FoodCoopShop is a free, open source, software for foodcoops, released under MIT License. It is based on CakePHP 2.
+FoodCoopShop is a free open source software for foodcoops.
 
 ## Requirements
 * Apache with `mod_rewrite`
