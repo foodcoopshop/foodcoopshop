@@ -43,7 +43,7 @@ $ chmod a+w -R /webroot/files
 $ chmod a+w -R /webroot/tmp
 ```
 
-## Software documentation (only available in German)
+## Software documentation (German)
 Please read the [software documentation in German](https://github.com/foodcoopshop/foodcoopshop/wiki/Dokumentation-de).  
 
 ## Pull requests
