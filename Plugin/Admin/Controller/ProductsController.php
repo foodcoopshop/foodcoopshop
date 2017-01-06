@@ -606,8 +606,18 @@ class ProductsController extends AdminAppController
         $this->autoRender = false;
         
         $productId = $this->params['data']['productId'];
-        $deposit = $this->params['data']['deposit'];
+        $deposit = trim($this->params['data']['deposit']);
         $deposit = str_replace(',', '.', $deposit);
+        
+        if (! is_numeric($deposit) || $deposit < 0) {
+            $message = 'input format for deposit is wrong';
+            $this->log($message);
+            die(json_encode(array(
+                'status' => 0,
+                'msg' => $message
+            )));
+        }
+        $deposit = floatval($deposit);
         
         $ids = $this->Product->getProductIdAndAttributeId($productId);
         $productId = $ids['productId'];

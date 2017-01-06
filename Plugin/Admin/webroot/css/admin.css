@@ -163,6 +163,7 @@ form.fcs-form .bootstrap-select {
 }
 #product-name-edit-form input,
 #product-price-edit-form input,
+#product-deposit-edit-form input,
 #product-name-edit-form textarea,
 #product-quantity-edit-form input {
     width: 310px;

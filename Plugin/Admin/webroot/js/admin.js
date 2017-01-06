@@ -290,9 +290,9 @@ foodcoopshop.Admin = {
     initProductDepositEditDialog: function(container) {
 
         var dialogId = 'product-deposit-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand ändern">';
+        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogDepositDeposit"></label>';
+        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label>';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -359,9 +359,9 @@ foodcoopshop.Admin = {
     initProductPriceEditDialog: function(container) {
 
         var dialogId = 'product-price-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis ändern">';
+        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogPricePrice"></label>';
+        dialogHtml += '<label for="dialogPricePrice">Eingabe in €</label>';
         dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -2087,7 +2087,6 @@ foodcoopshop.Admin = {
         	var selectedRadioButton = $('.featherlight-content input[type="radio"]:checked');
         	
         	// check if radio buttons are in deposit form or product form
-        	console.log($('.featherlight-content .add-payment-form'));
         	if ($('.featherlight-content .add-payment-form').hasClass('add-payment-deposit-form')) {
         		var message = 'Bitte wähle die Art der Pfand-Rücknahme aus.';
             	var isDepositForm = true;
