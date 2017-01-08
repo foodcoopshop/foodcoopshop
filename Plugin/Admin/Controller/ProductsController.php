@@ -524,7 +524,7 @@ class ProductsController extends AdminAppController
 
     public function editPrice()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = $this->params['data']['productId'];
         $price = trim($this->params['data']['price']);

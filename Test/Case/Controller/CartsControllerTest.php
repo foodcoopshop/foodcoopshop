@@ -391,7 +391,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function addProduct($productId, $amount)
     {
-        $this->browser->post('/warenkorb/ajaxAdd', array(
+        $this->browser->ajaxPost('/warenkorb/ajaxAdd', array(
             'data' => array(
                 'productId' => $productId,
                 'amount' => $amount
@@ -407,7 +407,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function removeProduct($productId)
     {
-        $this->browser->post('/warenkorb/ajaxRemove', array(
+        $this->browser->ajaxPost('/warenkorb/ajaxRemove', array(
             'data' => array(
                 'productId' => $productId
             )
