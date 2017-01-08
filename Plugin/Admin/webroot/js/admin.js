@@ -1700,17 +1700,12 @@ foodcoopshop.Admin = {
                             $('iframe.featherlight-inner')
                                 .load(
                                     function() {
-                                        // called after each url
-                                        // change in iframe!
+                                        // called after each url change in iframe!
                                         $.featherlight.hideLoader();
-                                        var currentUrl = $(this)
-                                            .get(0).contentWindow.document.URL;
-                                        if (currentUrl
-                                            .match(/warenkorb\/abgeschlossen/)) {
-                                            $.featherlight
-                                                .showLoader();
-                                            document.location.href = '/admin/orders/correctShopOrder?url=' +
-                                                encodeURIComponent(currentUrl);
+                                        var currentUrl = $(this).get(0).contentWindow.document.URL;
+                                        if (currentUrl.match(/warenkorb\/abgeschlossen/)) {
+                                            $.featherlight.showLoader();
+                                            document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
                                         }
                                     });
                             customersDropdown.show();

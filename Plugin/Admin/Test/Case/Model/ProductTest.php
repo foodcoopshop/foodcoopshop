@@ -80,7 +80,7 @@ class ProductTest extends AppCakeTestCase
      */
     private function changeProductPrice($productId, $price)
     {
-        $this->browser->post('/admin/products/editPrice', array(
+        $this->browser->ajaxPost('/admin/products/editPrice', array(
             'data' => array(
                 'productId' => $productId,
                 'price' => $price
