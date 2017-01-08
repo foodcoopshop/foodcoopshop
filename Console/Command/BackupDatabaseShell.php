@@ -14,6 +14,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+App::uses('CakeNumber', 'Utility');
+
 class BackupDatabaseShell extends AppShell
 {
 
@@ -69,7 +72,7 @@ class BackupDatabaseShell extends AppShell
         unlink($backupdir . DS . $filename);
         // END zip and delete sql file
         
-        $message = 'Datenbank-Backup erfolgreich.';
+        $message = 'Datenbank-Backup erfolgreich ('.CakeNumber::toReadableSize(filesize($zipFilename)).').';
         
         // email zipped file
         App::uses('CakeEmail', 'Network/Email');
