@@ -37,17 +37,7 @@ class BackupDatabaseShell extends AppShell
         
         // tables whose data should not be dumped
         $ignoredTables = array(
-            $dbConfig['prefix'] . 'connections',
-            $dbConfig['prefix'] . 'connections_page',
-            $dbConfig['prefix'] . 'connections_source',
-            $dbConfig['prefix'] . 'page_viewed',
-            $dbConfig['prefix'] . 'pagenotfound',
-            $dbConfig['prefix'] . 'guest',
-            $dbConfig['prefix'] . 'order_invoice',
-            $dbConfig['prefix'] . 'order_invoice_payment',
-            $dbConfig['prefix'] . 'sekeyword',
-            $dbConfig['prefix'] . 'search_word',
-            $dbConfig['prefix'] . 'search_index'
+            //$dbConfig['prefix'] . 'name_of_ignored_table',
         );
         
         $backupdir = APP . DS . 'files_private' . DS . 'db-backups';
