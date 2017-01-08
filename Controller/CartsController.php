@@ -22,8 +22,7 @@ class CartsController extends FrontendController
 
     public function beforeFilter()
     {
-    
-        if ($this->request->is('post')) {
+        if ($this->request->is('ajax')) {
             $message = '';
             if (! $this->AppAuth->loggedIn()) {
                 $message = 'Du bist nicht angemeldet.';
@@ -32,6 +31,7 @@ class CartsController extends FrontendController
                 $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
             }
             if ($message != '') {
+                $this->log($message);
                 die(json_encode(array(
                     'status' => 0,
                     'msg' => $message
@@ -437,7 +437,7 @@ class CartsController extends FrontendController
 
     public function ajaxDeleteShopOrderCustomer()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -464,7 +464,7 @@ class CartsController extends FrontendController
 
     public function ajaxRemove()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $initialProductId = $this->params['data']['productId'];
         
@@ -511,7 +511,7 @@ class CartsController extends FrontendController
 
     public function ajaxAdd()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $initialProductId = $this->params['data']['productId'];
         

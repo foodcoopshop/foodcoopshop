@@ -49,10 +49,29 @@ class AppSimpleBrowser extends SimpleBrowser
     {
         return parent::get($this->baseUrl . $url, $parameters);
     }
-
+    
+    /**
+     * posts as ajax
+     * @param string $url
+     * @param array $parameters
+     */
+    public function ajaxPost($url, $parameters)
+    {
+        $this->addHeader('X-Requested-With:XMLHttpRequest');
+        return parent::post(
+            $this->baseUrl . $url,
+            $parameters,
+            'application/x-www-form-urlencoded'
+        );
+    }
+    
     public function post($url, $parameters = false, $content_type = false)
     {
-        return parent::post($this->baseUrl . $url, $parameters, $content_type);
+        return parent::post(
+            $this->baseUrl . $url,
+            $parameters,
+            $content_type
+        );
     }
 
     public function getJsonDecodedContent()
