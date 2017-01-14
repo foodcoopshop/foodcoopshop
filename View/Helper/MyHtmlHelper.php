@@ -97,7 +97,7 @@ class MyHtmlHelper extends HtmlHelper
      * @return string
      */
     public function getEmailFromAddressConfiguration() {
-        Configure::read('app.db_config_FCS_APP_EMAIL');
+        return Configure::read('app.db_config_FCS_APP_EMAIL');
     }
 
     public function prepareDbTextForPDF($string)
