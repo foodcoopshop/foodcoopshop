@@ -57,7 +57,7 @@ if (!$appAuth->termsOfUseAccepted()) {
      ?>
      
     <p>
-    	Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo implode(', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
+    	Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo $this->MyHtml->getAddressFromAddressConfiguration(); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
     </p>
 
      <?php

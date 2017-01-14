@@ -90,21 +90,23 @@ class MyHtmlHelper extends HtmlHelper
      * @return string
      */
     public function getAddressFromAddressConfiguration() {
-        $address = explode("\n", Configure::read('app.addressForPdf'));
-        $address = array_filter($address); // remove empty elements
-        array_shift($address); // remove first element - usually same as app.name
-        array_pop($address); // remove last element - usually email address
-        return $address;
+        return Configure::read('app.db_config_FCS_APP_ADDRESS');
     }
     
     /**
      * @return string
      */
     public function getEmailFromAddressConfiguration() {
-        $address = explode("\n", Configure::read('app.addressForPdf'));
-        return end($address);
+        Configure::read('app.db_config_FCS_APP_EMAIL');
     }
 
+    public function prepareDbTextForPDF($string)
+    {
+        $string = self::br2nl($string);
+        $string = html_entity_decode($string);
+        return $string;
+    }
+    
     public function getMenuTypes()
     {
         return array(
@@ -116,6 +118,11 @@ class MyHtmlHelper extends HtmlHelper
     public function paymentIsCashless()
     {
         return in_array('cashless', Configure::read('app.paymentMethods'));
+    }
+    
+    public function br2nl( $input )
+    {
+        return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n","",str_replace("\r","", htmlspecialchars_decode($input))));
     }
 
     public function getConfigurationDropdownOptions($name)
@@ -129,6 +136,9 @@ class MyHtmlHelper extends HtmlHelper
                     APP_ON => 'ja',
                     APP_OFF => 'nein'
                 );
+                break;
+            case 'FCS_SHOP_ORDER_DEFAULT_STATE':
+                return self::getVisibleOrderStates();
                 break;
             case 'FCS_CUSTOMER_GROUP':
                 return array_slice($this->getGroups(), 0, 2, true); // true: preserveKeys
@@ -432,14 +442,14 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
     {
         $url = Configure::read('app.folder.order_lists_with_current_year_and_month') . DS;
-        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('app.name')) . '.pdf';
+        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
         $url = Configure::read('app.folder.invoices_with_current_year_and_month') . DS;
-        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('app.name')) . '.pdf';
+        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')) . '.pdf';
         return $url;
     }
     

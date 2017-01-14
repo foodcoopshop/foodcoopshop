@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 21. Nov 2016 um 20:24
+-- Erstellungszeit: 14. Jan 2017 um 23:12
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -819,13 +819,13 @@ CREATE TABLE `fcs_cms` (
 -- Daten für Tabelle `fcs_cms`
 --
 
-INSERT INTO `fcs_cms` (`id_cms`, `id_cms_category`, `position`, `menu_type`, `active`, `url`, `indexation`, `id_customer`, `modified`, `created`, `full_width`, `id_parent`, `lft`, `rght`) VALUES
-(3, 1, 1, 'header', 1, '', 1, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
-(4, 1, 3, 'header', 1, '', 1, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
-(8, 1, 2, 'header', 1, '', 1, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
-(9, 1, 0, 'header', 1, '', 1, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
-(10, 1, 4, 'header', 1, '', 0, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
-(11, 1, 5, 'header', -1, '', 0, 3, '2016-09-12 14:59:53', '2016-08-29 13:36:43', 0, NULL, 0, 0);
+INSERT INTO `fcs_cms` (`id_cms`, `id_cms_category`, `position`, `menu_type`, `active`, `url`, `indexation`, `id_customer`, `is_private`, `modified`, `created`, `full_width`, `id_parent`, `lft`, `rght`) VALUES
+(3, 1, 1, 'header', 1, '', 1, 0, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
+(4, 1, 3, 'header', 1, '', 1, 0, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
+(8, 1, 2, 'header', 1, '', 1, 0, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
+(9, 1, 0, 'header', 1, '', 1, 0, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
+(10, 1, 4, 'header', 1, '', 0, 0, 0, '2016-08-29 13:36:43', '2016-08-29 13:36:43', 0, NULL, 0, 0),
+(11, 1, 5, 'header', -1, '', 0, 3, 0, '2016-09-12 14:59:53', '2016-08-29 13:36:43', 0, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -901,7 +901,12 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (552, NULL, NULL, 1, 'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS', 'Zusätzliche Liefer-Informationen für die Hersteller<br /><div class="small">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>', ', 15:00 bis 17:00 Uhr', 'text', 120, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00'),
 (554, NULL, NULL, 1, 'FCS_SHOW_FOODCOOPSHOP_BACKLINK', 'Link auf www.foodcoopshop.com anzeigen?<br /><div class="small">Der Link wird im Footer und in den generierten PDFs (Bestelllisten, Rechnungen) angezeigt.</div>', '1', 'boolean', 180, '2016-11-27 00:00:00', '2016-11-27 00:00:00'),
-(555, NULL, NULL, 1, 'FCS_PAYMENT_PRODUCT_MAXIMUM', 'Maximalbetrag für jede Guthaben-Aufladung in Euro', '500', 'number', 127, '2016-11-28 00:00:00', '2016-11-28 00:00:00');
+(555, NULL, NULL, 1, 'FCS_PAYMENT_PRODUCT_MAXIMUM', 'Maximalbetrag für jede Guthaben-Aufladung in Euro', '500', 'number', 127, '2016-11-28 00:00:00', '2016-11-28 00:00:00'),
+(556, NULL, NULL, 1, 'FCS_APP_NAME', 'Name der Foodcoop', '', 'text', 5, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(557, NULL, NULL, 1, 'FCS_APP_ADDRESS', 'Adresse der Foodcoop<br /><div class="small">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>', '', 'textarea', 6, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(558, NULL, NULL, 1, 'FCS_APP_EMAIL', 'E-Mail-Adresse der Foodcoop<br /><div class="small"></div>', '', 'text', 7, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(559, NULL, NULL, 1, 'FCS_PLATFORM_OWNER', 'Betreiber der Plattform<br /><div class="small">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>', '', 'textarea', 8, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(560, NULL, NULL, 1, 'FCS_SHOP_ORDER_DEFAULT_STATE', 'Bestellstatus für Sofort-Bestellungen', '1', 'dropdown', 75, '2017-01-12 00:00:00', '2017-01-12 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2231,7 +2236,7 @@ ALTER TABLE `fcs_cms`
 -- AUTO_INCREMENT für Tabelle `fcs_configuration`
 --
 ALTER TABLE `fcs_configuration`
-  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
+  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=561;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_customer`
 --

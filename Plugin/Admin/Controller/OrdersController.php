@@ -75,7 +75,7 @@ class OrdersController extends AdminAppController
             $newDate = Configure::read('timeHelper')->getDateForShopOrder();
             $order2update = array(
                 'date_add' => $newDate,
-                'current_state' => Configure::read('htmlHelper')->paymentIsCashless() ? ORDER_STATE_CASH_FREE : ORDER_STATE_CASH
+                'current_state' => Configure::read('app.db_config_FCS_SHOP_ORDER_DEFAULT_STATE')
             );
             $this->Order->id = $orderId;
             $this->Order->save($order2update);

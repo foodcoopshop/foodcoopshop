@@ -240,8 +240,8 @@ class FCS_TCPDF extends TCPDF
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
         
-        $this->SetCreator(Configure::read('app.name'));
-        $this->SetAuthor(Configure::read('app.name'));
+        $this->SetCreator(Configure::read('app.db_config_FCS_APP_NAME'));
+        $this->SetAuthor(Configure::read('app.db_config_FCS_APP_NAME'));
         $this->SetTopMargin(43);
         $this->SetRightMargin(0);
         $this->SetFontSize(10);
@@ -254,7 +254,16 @@ class FCS_TCPDF extends TCPDF
         $this->MultiCell(50, 0, '<img src="' . APP . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg' . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
         
-        $this->headerRight = Configure::read('app.addressForPdf');
+        $convertedHeaderRight = '<br />'.Configure::read('app.db_config_FCS_APP_NAME').'<br />'.Configure::read('app.db_config_FCS_APP_ADDRESS').'<br />'.Configure::read('app.db_config_FCS_APP_EMAIL');
+        $convertedHeaderRight = Configure::read('htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
+        
+        // add additional line break on top if short address
+        $lineCount = substr_count($convertedHeaderRight, "\n");
+        if ($lineCount < 5) {
+            $convertedHeaderRight = "\n" . $convertedHeaderRight;
+        }
+        
+        $this->headerRight = $convertedHeaderRight;
         
         $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', 0, 1, '', '', true);
         

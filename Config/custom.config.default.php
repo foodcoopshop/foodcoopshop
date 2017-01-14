@@ -38,26 +38,29 @@ Configure::write('Security.cipherSeed', '');
 /**
  * the name of your organisation, will be used in page title, email footer
  * and on many other places
+ * @deprecated since v.1.2.0
  */
-Configure::write('app.name', 'Demo Foodcoop');
+//Configure::write('app.name', 'Demo Foodcoop');
 
 /**
  * page title suffix for document title
  * please leave it as it is if you do not know what it is
+ * @deprecated since v.1.2.0
  */
-Configure::write('app.titleSuffix', Configure::read('app.name'));
+//Configure::write('app.titleSuffix', Configure::read('app.db_config_FCS_APP_NAME'));
 
 /**
  * address configuration (for displaying address in generated pdfs and the footer of the homepage
  * ATTENTION:
  * - last element needs to be a valid email address!
  * - line separator must be \n
+ * @deprecated since v.1.2.0
  */
-$addressForPdf = "\n\nFoodCoopShop Demo";
-$addressForPdf .= "\nDemostraße 4";
-$addressForPdf .= "\n4644 Demostadt";
-$addressForPdf .= "\nmail@example.com";
-Configure::write('app.addressForPdf', $addressForPdf);
+// $addressForPdf = "\n\nFoodCoopShop Demo";
+// $addressForPdf .= "\nDemostraße 4";
+// $addressForPdf .= "\n4644 Demostadt";
+// $addressForPdf .= "\nmail@example.com";
+// Configure::write('app.addressForPdf', $addressForPdf);
 
 /**
  * defines how many days after the app.sendOrderListsWeekday the products are delivered
