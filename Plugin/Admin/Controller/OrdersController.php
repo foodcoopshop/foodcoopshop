@@ -80,7 +80,7 @@ class OrdersController extends AdminAppController
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
             
-            $message = 'Sofort-Bestellung (' . $order['Order']['reference'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt, rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . ' und abgeschlossen.';
+            $message = 'Sofort-Bestellung (' . $order['Order']['reference'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '.';
             
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
