@@ -210,7 +210,8 @@ class Customer extends AppModel
         $productSum = $o->getSumProduct($customerId);
         $depositSum = $o->getSumDeposit($customerId);
         
-        return $paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum;
+        // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
+        return round($paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum, 2);
     }
 
     public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true)
