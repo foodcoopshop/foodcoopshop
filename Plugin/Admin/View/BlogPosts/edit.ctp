@@ -63,6 +63,7 @@ echo $this->Form->input('BlogPostLang.short_description', array(
     'div' => array(
         'class' => 'long text input'
     ),
+    'required' => false,
     'label' => 'Kurze Beschreibung'
 ));
 
@@ -128,7 +129,8 @@ if ($this->here != $this->Slug->getBlogPostAdd()) {
 echo $this->Form->input('BlogPostLang.content', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Text'
+    'label' => 'Text',
+    'required' => false
 ));
 
 ?>

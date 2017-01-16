@@ -46,7 +46,10 @@
     body.pages.home .blog-post-wrapper {
         width: 24% ! important;
     }
-    body.blog_posts.detail .blog-post-wrapper img,
+    body.blog_posts.detail img.blog-post-image {
+        margin-left: 0 ! important;
+    }
+    body.blog_posts.detail img.blog-post-image,
     body.pages.home .blog-post-wrapper img {
         width: 100% ! important;
     }
