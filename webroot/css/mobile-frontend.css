@@ -97,6 +97,7 @@
         height: auto ! important;
     }
     body.manufacturers.detail #inner-content ul.jquery-ui-icon,
+    body.pages.detail #inner-content ul.jquery-ui-icon,
     body.blog_posts.detail #inner-content ul.jquery-ui-icon {
         top: 0;
     }
