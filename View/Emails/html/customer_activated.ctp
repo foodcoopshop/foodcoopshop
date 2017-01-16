@@ -21,7 +21,7 @@
 		<tr>
 			<td>
 				
-				<p>Dein Mitgliedkonto bei "<?php echo Configure::read('app.name'); ?>" wurde soeben aktiviert.</p>
+				<p>Dein Mitgliedkonto bei "<?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?>" wurde soeben aktiviert.</p>
 				
 				<?php echo $this->element('email/profileLinks', array('data' => $data, 'newPassword' => $newPassword)); ?>
 				

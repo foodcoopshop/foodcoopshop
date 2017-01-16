@@ -29,7 +29,7 @@ header('Pragma: no-cache');
     <meta name="theme-color" content="#719f41">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.titleSuffix'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     
     <?php echo $this->element('jsNamespace'); ?>

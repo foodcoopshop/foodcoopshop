@@ -62,8 +62,18 @@ switch ($unsavedConfiguration['Configuration']['type']) {
         break;
     case 'textarea':
         $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ConfigurationValue');
-                "
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ConfigurationValue');"
+        ));
+        echo $this->Form->input('Configuration.value', array(
+            'type' => 'textarea',
+            'label' => $label,
+            'required' => true,
+            'class' => 'ckeditor'
+        ));
+        break;
+    case 'textarea_big':
+        $this->element('addScript', array(
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ConfigurationValue');"
         ));
         echo $this->Form->input('Configuration.value', array(
             'type' => 'textarea',

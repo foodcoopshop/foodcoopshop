@@ -112,11 +112,6 @@ $this->element('addScript', array(
 		</tr>
 
 		<tr>
-			<td>app.name</td>
-			<td><?php echo Configure::read('app.name'); ?></td>
-		</tr>
-
-		<tr>
 			<td>app.cakeServerName</td>
 			<td><a target="_blank"
 				href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
@@ -194,11 +189,6 @@ $this->element('addScript', array(
 		</tr>
 
 		<tr>
-			<td>app.memberFeeFlexibleEnabled</td>
-			<td><?php echo Configure::read('app.memberFeeFlexibleEnabled') ? 'ja' : 'nein'; ?></td>
-		</tr>
-
-		<tr>
 			<td>app.isDepositPaymentCashless</td>
 			<td><?php echo Configure::read('app.isDepositPaymentCashless') ? 'ja' : 'nein'; ?></td>
 		</tr>
@@ -240,11 +230,6 @@ $this->element('addScript', array(
 		<tr>
 			<td>app.defaultTax</td>
 			<td><?php echo $this->Html->formatAsPercent($defaultTax['Tax']['rate']); ?> - <?php echo $defaultTax['Tax']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
-		</tr>
-
-		<tr>
-			<td>app.addressForPdf</td>
-			<td><?php echo nl2br(Configure::read('app.addressForPdf')); ?></td>
 		</tr>
 
 		<tr>

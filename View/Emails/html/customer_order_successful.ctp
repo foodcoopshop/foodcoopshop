@@ -122,7 +122,7 @@
 		<tr>
 			<td>
 			    <p>
-    				Bitte hole deine Produkte am <b><?php echo $this->MyTime->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo implode(', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab.
+    				Bitte hole deine Produkte am <b><?php echo $this->MyTime->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab.
 			    </p>
 			</td>
 		</tr>

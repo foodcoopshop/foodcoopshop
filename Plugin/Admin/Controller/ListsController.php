@@ -57,7 +57,7 @@ class ListsController extends AdminAppController
                 }
                 
                 // manufacturer name can be more than word... kinda complicated to get to the id
-                $manufacturerString = str_replace(Inflector::slug(Configure::read('app.name')), '', substr($object->getFileName(), 11));
+                $manufacturerString = str_replace(Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')), '', substr($object->getFileName(), 11));
                 $manufacturerString = str_replace('Bestellliste_Mitglied_', '', $manufacturerString);
                 $manufacturerString = str_replace('.pdf', '', $manufacturerString);
                 $manufacturerString = substr($manufacturerString, 0, - 1); // letztes _ weg

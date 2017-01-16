@@ -20,7 +20,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="initial-scale=1.0">
 		<meta name="format-detection" content="telephone=no">
-		<title><?php echo Configure::read('app.name'); ?></title>
+		<title><?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
 	</head>
 	
 	<table width="742" cellpadding="0" border="0" cellspacing="0" style="color:#000;font-family:Arial;">
@@ -46,11 +46,8 @@
     				Diese E-Mail wurde automatisch erstellt.<br /><br />
     				--<br />
     				<?php
-        				$address = explode("\n", Configure::read('app.addressForPdf'));
-        				$address = array_filter($address); // remove empty elements
-        				$email = array_pop($address); // remove last element
-        				echo implode('<br />', $address).'<br />';
-        				echo '<a href="mailto:'.$email.'">'.$email.'</a><br />';
+        				echo Configure::read('app.db_config_FCS_APP_ADDRESS').'<br />';
+        				echo '<a href="mailto:'.Configure::read('app.db_config_FCS_APP_EMAIL').'">'.Configure::read('app.db_config_FCS_APP_EMAIL').'</a><br />';
         				echo '<a href="'.Configure::read('app.cakeServerName').'">'.str_replace('http://', '', Configure::read('app.cakeServerName')).'</a>';
     				?>
     				<?php if (isset($appAuth) && $appAuth->loggedIn()) { ?>

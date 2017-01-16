@@ -59,7 +59,7 @@ class AppEmail extends CakeEmail
                 if ($this->from() != $fallbackEmailConfig['from']) {
                     $this->config($fallbackEmailConfig);
                     $this->from(array(
-                        key($this->from()) => Configure::read('app.name')
+                        key($this->from()) => Configure::read('app.db_config_FCS_APP_NAME')
                     ));
                     CakeLog::write('info', 'email was sent with fallback config');
                     return $this->send($content);

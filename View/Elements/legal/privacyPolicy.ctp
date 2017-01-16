@@ -17,7 +17,16 @@
 
 <h2>1. Allgemeines</h2>
 
-<p>1.1. Die Webseiten der Foodcoop <?php echo Configure::read('app.name'); ?>, erreichbar unter der Domain <?php echo Configure::read('app.cakeServerName'); ?>, werden vom Verein <b><?php echo Configure::read('app.name'); ?></b>, <?php echo implode(', ', $this->Html->getAddressFromAddressConfiguration()); ?>, als Diensteanbieter (im Folgenden "Website") betrieben. Medieninhaber und Herausgeber der Website ist die Foodcoop.</p>
+<p>1.1. Die Webseiten von <b>"<?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?>"</b>, erreichbar unter der Domain <?php echo Configure::read('app.cakeServerName'); ?>,  werden von "
+    <?php
+        if (Configure::read('app.db_config_FCS_PLATFORM_OWNER') != '') {
+            echo str_replace('<br />', ', ', Configure::read('app.db_config_FCS_PLATFORM_OWNER'));
+        } else {
+            echo Configure::read('app.db_config_FCS_APP_NAME');
+            echo ', '.str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration());
+        }
+    ?>
+" als Diensteanbieter (im Folgenden "Website") betrieben. Medieninhaber und Herausgeber der Website ist der Betreiber.</p>
 
 <p>1.2. Der Schutz und die Sicherheit Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Die Website speichert und verarbeitet Daten daher ausschließlich im Sinne des österreichischen Datenschutzgesetzes 2000. Sie als Nutzer stimmen der Datenverarbeitung im Sinne dieser Erklärung zu.</p>
 

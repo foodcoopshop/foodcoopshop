@@ -56,7 +56,7 @@ class EmailOrderReminderShell extends AppShell
             $Email->to($customer['Customer']['email'])
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
-                ->subject('Bestell-Erinnerung ' . Configure::read('app.name'))
+                ->subject('Bestell-Erinnerung ' . Configure::read('app.db_config_FCS_APP_NAME'))
                 ->viewVars(array(
                 'customer' => $customer
             ))
