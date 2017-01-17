@@ -110,7 +110,7 @@
     <?php
     
     if (! empty($manufacturer) && $manufacturer['Manufacturer']['holiday'] == 1) {
-        echo '<h2 class="warning">Urlaubsmodus aktiviert. Im Shop werden keine Produkte angezeigt!</h2>';
+        echo '<h2 class="info">Urlaubsmodus aktiviert. Im Shop werden keine Produkte angezeigt!</h2>';
     }
     
     echo '<table class="list no-clone-last-row">';

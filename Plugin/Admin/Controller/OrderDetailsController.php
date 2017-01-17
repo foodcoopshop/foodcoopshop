@@ -28,30 +28,46 @@ class OrderDetailsController extends AdminAppController
                 }
                 /*
                  * START customer/manufacturer OWNER check
-                 * param orderDetailId is passed via ajaxCall
+                 * param orderDetailId / orderDetailIds is passed via ajaxCall
                  */
-                if (!empty($this->params['data']['orderDetailId'])) {
-                    if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
-                        $orderDetail = $this->OrderDetail->find('first', array(
-                            'conditions' => array(
-                                'OrderDetail.id_order_detail' => $this->params['data']['orderDetailId']
-                            )
-                        ));
-                        if (!empty($orderDetail)) {
-                            if ($this->AppAuth->isManufacturer() && $orderDetail['Product']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
-                                return true;
-                            }
-                            if ($this->AppAuth->isCustomer() && $orderDetail['Order']['id_customer'] == $this->AppAuth->getUserId()) {
-                                return true;
-                            }
-                        }
+                if (!empty($this->params['data']['orderDetailIds'])) {
+                    $accessAllowed = false;
+                    foreach($this->params['data']['orderDetailIds'] as $orderDetailId) {
+                        $accessAllowed |= $this->checkOrderDetailIdAccess($orderDetailId);
                     }
+                    return $accessAllowed;
+                }
+                if (!empty($this->params['data']['orderDetailId'])) {
+                    return $this->checkOrderDetailIdAccess($this->params['data']['orderDetailId']);
                 }
                 return false;
             default:
                 return parent::isAuthorized($user);
                 break;
         }
+    }
+    
+    /**
+     * @param int $orderDetailId
+     * @return boolean
+     */
+    private function checkOrderDetailIdAccess($orderDetailId) {
+        if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
+            $orderDetail = $this->OrderDetail->find('first', array(
+                'conditions' => array(
+                    'OrderDetail.id_order_detail' => $orderDetailId
+                )
+            ));
+            if (!empty($orderDetail)) {
+                if ($this->AppAuth->isManufacturer() && $orderDetail['Product']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
+                    return true;
+                }
+                if ($this->AppAuth->isCustomer() && $orderDetail['Order']['id_customer'] == $this->AppAuth->getUserId()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public function index()
@@ -351,76 +367,95 @@ class OrderDetailsController extends AdminAppController
         )));
     }
 
+    /**
+     * @param array $orderDetailIds
+     */
     public function delete()
     {
         $this->autoRender = false;
 
-        $orderDetailId = (int) $this->params['data']['orderDetailId'];
+        $orderDetailIds = $this->params['data']['orderDetailIds'];
         $cancellationReason = strip_tags(html_entity_decode($this->params['data']['cancellationReason']));
 
-        $orderDetail = $this->OrderDetail->find('first', array(
-            'conditions' => array(
-                'OrderDetail.id_order_detail' => $orderDetailId
-            ),
-            'contain' => array(
-                'Order',
-                'Order.Customer',
-                'Product.StockAvailable',
-                'Product.Manufacturer',
-                'Product.Manufacturer.Address',
-                'ProductAttribute.StockAvailable'
-            )
-        ));
-
-        $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung ' . $orderDetail['Order']['reference'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
-
-        // delete row
-        $this->OrderDetail->deleteOrderDetail($orderDetailId);
-
-        // update sum in table orders
-        $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($orderDetail);
-
-        $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetail']['product_quantity'] * 2);
-
-        // send email to customer
-        $email = new AppEmail();
-        $email->template('Admin.order_detail_deleted')
-        ->emailFormat('html')
-        ->to($orderDetail['Order']['Customer']['email'])
-        ->subject('Artikel kann nicht geliefert werden: ' . $orderDetail['OrderDetail']['product_name'])
-        ->viewVars(array(
-            'orderDetail' => $orderDetail,
-            'appAuth' => $this->AppAuth,
-            'cancellationReason' => $cancellationReason
-        ));
-
-        $message .= ' und eine E-Mail an <b>' . $orderDetail['Order']['Customer']['name'] . '</b>';
-
-        // never send email to manufacturer if bulk orders are allowed
-        $this->loadModel('Manufacturer');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['Address']['other']);
-
-        // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
-        $weekday = date('N');
-        if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
-            $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
-            $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
+        if (!(is_array($orderDetailIds))) {
+            die(json_encode(array(
+                'status' => 0,
+                'msg' => 'param needs to be an array, given: ' . $orderDetailIds
+            )));
         }
-
-        $email->send();
-
-        $message .= ' versendet.';
-        if ($cancellationReason != '') {
-            $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
+        
+        $flashMessage = '';
+        foreach($orderDetailIds as $orderDetailId) {
+            $orderDetail = $this->OrderDetail->find('first', array(
+                'conditions' => array(
+                    'OrderDetail.id_order_detail' => $orderDetailId
+                ),
+                'contain' => array(
+                    'Order',
+                    'Order.Customer',
+                    'Product.StockAvailable',
+                    'Product.Manufacturer',
+                    'Product.Manufacturer.Address',
+                    'ProductAttribute.StockAvailable'
+                )
+            ));
+    
+            $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung ' . $orderDetail['Order']['reference'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
+    
+            // delete row
+            $this->OrderDetail->deleteOrderDetail($orderDetailId);
+    
+            // update sum in table orders
+            $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($orderDetail);
+    
+            $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetail']['product_quantity'] * 2);
+    
+            // send email to customer
+            $email = new AppEmail();
+            $email->template('Admin.order_detail_deleted')
+            ->emailFormat('html')
+            ->to($orderDetail['Order']['Customer']['email'])
+            ->subject('Artikel kann nicht geliefert werden: ' . $orderDetail['OrderDetail']['product_name'])
+            ->viewVars(array(
+                'orderDetail' => $orderDetail,
+                'appAuth' => $this->AppAuth,
+                'cancellationReason' => $cancellationReason
+            ));
+    
+            $message .= ' und eine E-Mail an <b>' . $orderDetail['Order']['Customer']['name'] . '</b>';
+    
+            // never send email to manufacturer if bulk orders are allowed
+            $this->loadModel('Manufacturer');
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['Address']['other']);
+    
+            // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
+            $weekday = date('N');
+            if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
+                $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
+                $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
+            }
+    
+           $email->send();
+    
+            $message .= ' versendet.';
+            if ($cancellationReason != '') {
+                $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
+            }
+    
+            $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+    
+            $this->loadModel('CakeActionLog');
+            $this->CakeActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
         }
+        
 
-        $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
-
-        $this->AppSession->setFlashMessage($message);
-
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
-
+        $flashMessage = $message;
+        $orderDetailsCount = count($orderDetailIds);
+        if ($orderDetailsCount > 1) {
+            $flashMessage =  $orderDetailsCount . ' Artikel wurden erfolgreich storniert.';
+        }
+        $this->AppSession->setFlashMessage($flashMessage);
+        
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'

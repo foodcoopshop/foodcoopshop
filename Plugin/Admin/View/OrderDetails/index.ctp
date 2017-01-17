@@ -19,7 +19,10 @@
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
+            datefieldSelector.datepicker();" .
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initCancelSelectionButton();" .
+            Configure::read('app.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
     ));
     ?>
@@ -80,7 +83,9 @@
 				filtern.</li>
             <?php } ?>
         </ul>
-	</div>    
+	</div>
+	
+	<h2 class="info">Neu: Stornieren von mehreren Artikeln: Links anhaken und ganz unten auf "Ausgewählte Artikel stornieren" klicken.</h2>
     
 <?php
 echo '<table class="list">';
@@ -126,7 +131,9 @@ foreach ($orderDetails as $orderDetail) {
     echo '<tr class="data ' . (isset($orderDetail['rowClass']) ? implode(' ', $orderDetail['rowClass']) : '') . '">';
     
     echo '<td style="text-align: center;">';
-    echo '<input type="checkbox" class="row-marker" />';
+        if (! $groupByManufacturer && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
+            echo '<input type="checkbox" class="row-marker" />';
+        }
     echo '</td>';
     
     echo '<td class="hide">';
@@ -317,9 +324,11 @@ if ($deposit != '') {
     $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 }
 
+$buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-remove"></i> Ausgewählte Artikel stornieren</a>';
+
 if ($buttonExists) {
     echo '<div class="bottom-button-container">';
-    echo $buttonHtml;
+        echo $buttonHtml;
     echo '</div>';
     echo '<div class="sc"></div>';
 }
