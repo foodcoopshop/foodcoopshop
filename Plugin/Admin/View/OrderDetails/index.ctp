@@ -90,7 +90,14 @@
 <?php
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th style="width:20px;"></th>';
+echo '<th style="width:20px;">';
+    if (count($orderDetails) > 0) {
+        $this->element('addScript', array(
+            'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
+        ));
+        echo '<input type="checkbox" id="row-marker-all" />';
+    }
+echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">' . $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl') . '</th>';
 echo '<th>' . $this->Paginator->sort('OrderDetail.product_name', 'Artikel') . '</th>';
@@ -115,6 +122,8 @@ $sumReducedPrice = 0;
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
     
+    $editRecordAllowed = ! $groupByManufacturer && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed']);
+    
     $i ++;
     if (! $groupByManufacturer) {
         $sumPrice += $orderDetail['OrderDetail']['total_price_tax_incl'];
@@ -131,7 +140,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '<tr class="data ' . (isset($orderDetail['rowClass']) ? implode(' ', $orderDetail['rowClass']) : '') . '">';
     
     echo '<td style="text-align: center;">';
-        if (! $groupByManufacturer && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
+        if ($editRecordAllowed) {
             echo '<input type="checkbox" class="row-marker" />';
         }
     echo '</td>';
@@ -145,7 +154,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '<td class="right">';
     echo '<div class="table-cell-wrapper quantity">';
     if (! $groupByManufacturer) {
-        if ($orderDetail['OrderDetail']['product_quantity'] > 1 && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
+        if ($orderDetail['OrderDetail']['product_quantity'] > 1 && $editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'order-detail-product-quantity-edit-button',
                 'title' => 'Zum Ändern der Anzahl anklicken'
@@ -182,7 +191,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '<td class="right">';
     echo '<div class="table-cell-wrapper price">';
     if (! $groupByManufacturer) {
-        if (($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
+        if ($editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'order-detail-product-price-edit-button',
                 'title' => 'Zum Ändern des Preises anklicken'
@@ -250,7 +259,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
     
     echo '<td style="text-align:center;">';
-    if (! $groupByManufacturer && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed'])) {
+    if ($editRecordAllowed) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'delete-order-detail',
             'id' => 'delete-order-detail-' . $orderDetail['OrderDetail']['id_order_detail'],

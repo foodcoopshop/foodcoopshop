@@ -26,6 +26,16 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
     
+    initRowMarkerAll : function() {
+    	$('input#row-marker-all').on('change', function() {
+    		if (this.checked) {
+    			$('input.row-marker[type="checkbox"]:not(:checked)').trigger('click');
+    		} else {
+    			$('input.row-marker[type="checkbox"]:checked').trigger('click');
+    		}
+    	})
+    },
+    
     initCancelSelectionButton : function() {
     	
     	var button = $('#cancelSelectedProductsButton');
