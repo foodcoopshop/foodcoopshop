@@ -452,6 +452,7 @@ class OrderDetailsController extends AdminAppController
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
         if ($orderDetailsCount > 1) {
+            $this->log('bulk cancellation used for ' . $orderDetailsCount . ' products');
             $flashMessage =  $orderDetailsCount . ' Artikel wurden erfolgreich storniert.';
         }
         $this->AppSession->setFlashMessage($flashMessage);
