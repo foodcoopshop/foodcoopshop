@@ -85,7 +85,9 @@
         </ul>
 	</div>
 	
-	<h2 class="info">Neu: Stornieren von mehreren Artikeln: Links anhaken und ganz unten auf "Ausgewählte Artikel stornieren" klicken.</h2>
+	<?php if (count($orderDetails) > 0) { ?>
+		<h2 class="info">Neu: Stornieren von mehreren Artikeln: Links anhaken und ganz unten auf "Ausgewählte Artikel stornieren" klicken.</h2>
+    <?php } ?>
     
 <?php
 echo '<table class="list">';
@@ -333,7 +335,9 @@ if ($deposit != '') {
     $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 }
 
-$buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-remove"></i> Ausgewählte Artikel stornieren</a>';
+if (count($orderDetails) > 0) {
+    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-remove"></i> Ausgewählte Artikel stornieren</a>';
+}
 
 if ($buttonExists) {
     echo '<div class="bottom-button-container">';
