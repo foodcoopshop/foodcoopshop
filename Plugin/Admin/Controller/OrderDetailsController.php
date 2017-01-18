@@ -372,7 +372,7 @@ class OrderDetailsController extends AdminAppController
      */
     public function delete()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
 
         $orderDetailIds = $this->params['data']['orderDetailIds'];
         $cancellationReason = strip_tags(html_entity_decode($this->params['data']['cancellationReason']));
@@ -399,7 +399,7 @@ class OrderDetailsController extends AdminAppController
                     'ProductAttribute.StockAvailable'
                 )
             ));
-    
+            
             $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung ' . $orderDetail['Order']['reference'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
     
             // delete row
@@ -409,7 +409,7 @@ class OrderDetailsController extends AdminAppController
             $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($orderDetail);
     
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetail']['product_quantity'] * 2);
-    
+            
             // send email to customer
             $email = new AppEmail();
             $email->template('Admin.order_detail_deleted')
@@ -435,7 +435,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
             }
     
-           $email->send();
+            $email->send();
     
             $message .= ' versendet.';
             if ($cancellationReason != '') {
@@ -512,6 +512,7 @@ class OrderDetailsController extends AdminAppController
 
     private function increaseQuantityForProduct($orderDetail, $orderDetailQuantityBeforeQuantityChange)
     {
+        
         $stockAvailableObject = $this->OrderDetail->Product;
         $stockAvailableIndex = 'Product';
 
@@ -520,15 +521,17 @@ class OrderDetailsController extends AdminAppController
             $stockAvailableObject = $this->OrderDetail->ProductAttribute;
             $stockAvailableIndex = 'ProductAttribute';
         }
-
+        
         // do the acutal updates for increasing quantity
         if (isset($stockAvailableObject) && isset($stockAvailableIndex)) {
+            $backedUpPrimaryKey = $stockAvailableObject->StockAvailable->primaryKey;
             $stockAvailableObject->StockAvailable->primaryKey = 'id_stock_available'; // primary key was already set in model... works :-)
-            $this->OrderDetail->ProductAttribute->StockAvailable->id = $orderDetail[$stockAvailableIndex]['StockAvailable']['id_stock_available'];
+            $stockAvailableObject->StockAvailable->id = $orderDetail[$stockAvailableIndex]['StockAvailable']['id_stock_available'];
             $newQuantity = $orderDetail[$stockAvailableIndex]['StockAvailable']['quantity'] + $orderDetailQuantityBeforeQuantityChange - $orderDetail['OrderDetail']['product_quantity'];
             $stockAvailableObject->StockAvailable->save(array(
                 'quantity' => $newQuantity
             ));
+            $stockAvailableObject->StockAvailable->primaryKey = $backedUpPrimaryKey;
         }
 
         return $newQuantity;
