@@ -103,6 +103,7 @@ foodcoopshop.Cart = {
 
         $('.product-wrapper a.btn.btn-cart').on('click', function() {
 
+        	foodcoopshop.Helper.removeFlashMessage();
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-cart');
 
