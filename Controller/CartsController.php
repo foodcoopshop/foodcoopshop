@@ -281,7 +281,6 @@ class CartsController extends FrontendController
             // START save order
             $this->Order->id = null;
             $order2save = array(
-                'reference' => strtoupper(StringComponent::createRandomString(9)),
                 'id_shop' => Configure::read('app.shopId'),
                 'id_lang' => Configure::read('app.langId'),
                 'id_customer' => $this->AppAuth->getUserId(),

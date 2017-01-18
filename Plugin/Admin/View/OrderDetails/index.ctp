@@ -39,8 +39,8 @@
             <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
         <?php } ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-            <input id="reference" type="text" placeholder="Code"
-			value="<?php echo $reference; ?>" />
+            <input id="orderId" type="text" placeholder="Bestell-Nr."
+			value="<?php echo $orderId; ?>" />
         <?php } ?>
         <?php echo $this->Form->input('orderState', array('type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState)); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>

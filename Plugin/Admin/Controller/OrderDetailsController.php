@@ -100,11 +100,11 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('manufacturerId', $manufacturerId);
 
-        $reference = '';
-        if (! empty($this->params['named']['reference'])) {
-            $reference = $this->params['named']['reference'];
+        $orderId = '';
+        if (! empty($this->params['named']['orderId'])) {
+            $orderId = $this->params['named']['orderId'];
         }
-        $this->set('reference', $reference);
+        $this->set('orderId', $orderId);
 
         $deposit = '';
         if (! empty($this->params['named']['deposit'])) {
@@ -139,7 +139,7 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('groupByManufacturer', $groupByManufacturer);
 
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $reference, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
 
         $this->Paginator->settings = array_merge(array(
             'conditions' => $odParams['conditions'],
@@ -400,7 +400,7 @@ class OrderDetailsController extends AdminAppController
                 )
             ));
             
-            $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung ' . $orderDetail['Order']['reference'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
+            $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Order']['id_order'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
     
             // delete row
             $this->OrderDetail->deleteOrderDetail($orderDetailId);
