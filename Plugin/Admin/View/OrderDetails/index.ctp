@@ -85,7 +85,7 @@
         </ul>
 	</div>
 	
-	<?php if (count($orderDetails) > 0) { ?>
+	<?php if (count($orderDetails) > 0 && !$groupByManufacturer) { ?>
 		<h2 class="info">Neu: Stornieren von mehreren Artikeln: Links anhaken und ganz unten auf "Ausgewählte Artikel stornieren" klicken.</h2>
     <?php } ?>
     
@@ -93,7 +93,7 @@
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th style="width:20px;">';
-    if (count($orderDetails) > 0) {
+    if (count($orderDetails) > 0 && !$groupByManufacturer) {
         $this->element('addScript', array(
             'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
         ));
