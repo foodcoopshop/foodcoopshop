@@ -78,7 +78,7 @@ if (!empty($manufacturers)) {
             if ($appAuth->user('AddressCustomer.address2') != '') {
                 $customerAddress .= ', '.$appAuth->user('AddressCustomer.address2');
             }
-            $customerAddress .= $appAuth->user('AddressCustomer.postcode') . ' ' . $appAuth->user('AddressCustomer.city');
+            $customerAddress .= ', '.$appAuth->user('AddressCustomer.postcode') . ' ' . $appAuth->user('AddressCustomer.city');
             $html = '<p>Anschrift des/der Verbraucher(s): '.$customerAddress.'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
