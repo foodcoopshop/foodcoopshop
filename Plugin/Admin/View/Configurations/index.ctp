@@ -80,6 +80,7 @@ $this->element('addScript', array(
                 case 'number':
                 case 'text':
                 case 'textarea':
+                case 'textarea_big':
                     echo $configuration['Configuration']['value'];
                     break;
                 case 'dropdown':
