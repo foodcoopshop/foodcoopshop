@@ -86,7 +86,7 @@ class OrderDetail extends AppModel
         
     }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $reference, $deposit)
+    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit)
     {
         $conditions = array();
         
@@ -110,8 +110,8 @@ class OrderDetail extends AppModel
             $conditions['OrderDetail.id_order_detail'] = $orderDetailId;
         }
         
-        if ($reference != '') {
-            $conditions['Order.reference'] = $reference;
+        if ($orderId != '') {
+            $conditions['Order.id_order'] = $orderId;
         }
         
         if ($deposit != '') {

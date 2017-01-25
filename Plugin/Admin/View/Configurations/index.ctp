@@ -37,8 +37,7 @@ $this->element('addScript', array(
 		</ul>
 	</div>
 
-	<h2 class="warning">Die folgenden Einstellungen können selbst geändert
-		werden.</h2>
+	<h2 class="info">Die folgenden Einstellungen können selbst geändert werden.</h2>
 
 	<table class="list no-hover no-clone-last-row">
 
@@ -101,7 +100,7 @@ $this->element('addScript', array(
 	<br />
 
 
-	<h2 class="warning">Die folgenden Einstellungen können (noch) nicht
+	<h2 class="info">Die folgenden Einstellungen können (noch) nicht
 		selbst geändert werden.</h2>
 
 	<table class="list no-hover">

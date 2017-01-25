@@ -103,6 +103,7 @@ foodcoopshop.Cart = {
 
         $('.product-wrapper a.btn.btn-cart').on('click', function() {
 
+        	foodcoopshop.Helper.removeFlashMessage();
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-cart');
 
@@ -178,9 +179,17 @@ foodcoopshop.Cart = {
     },
     
     restoreOldStateOfProductAndSum : function(productId, msg) {
-        $('#cart p.products .product.' + productId).replaceWith(
-            $('#cart p.tmp-wrapper .product.' + productId)
-        );
+    	
+    	var productTmpPlaceholder = '#cart p.tmp-wrapper .product.' + productId;
+    	var productElement = $('#cart p.products .product.' + productId);
+    	
+    	// product might not have been in cart...
+    	if ($(productTmpPlaceholder).length > 0) {
+            productElement.replaceWith($(productTmpPlaceholder));
+    	} else {
+    		productElement.remove();
+    	}
+    	
         var tmpCartSum = $('#cart p.tmp-wrapper span.sum');
         $('#cart p.sum-wrapper span.sum').html(tmpCartSum.html());
         if (foodcoopshop.Helper.isMobile()) {

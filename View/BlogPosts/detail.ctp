@@ -27,10 +27,15 @@ $this->element('addScript', array('script' =>
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
         if (!$largeImageExists) {
             echo '<a href="'.$srcLargeImage.'">';
-                echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'home'). '" />';
+                echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'single'). '" />';
             echo '</a>';
         }
     echo '</div>';
+    
+    if ($blogPost['BlogPostLang']['short_description'] != '') {
+        echo '<p><b>'.$blogPost['BlogPostLang']['short_description'].'</b></p>';
+    }
+    
     echo $blogPost['BlogPostLang']['content'];
     
     echo '<p><i>';

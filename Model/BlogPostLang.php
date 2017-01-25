@@ -46,18 +46,13 @@ class BlogPostLang extends AppModel
             )
         ),
         'content' => array(
-            'notBlank' => array(
-                'rule' => array(
-                    'notBlank'
-                ),
-                'message' => 'Bitte gib eine Beschreibung an.'
-            ),
             'minLength' => array(
                 'rule' => array(
                     'minLength',
-                    10
+                    3
                 ),
-                'message' => 'Bitte gib mindestens 10 Zeichen ein.'
+                'message' => 'Bitte gib mindestens 3 Zeichen ein.',
+                'allowEmpty' => true
             )
         )
     );
