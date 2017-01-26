@@ -6,3 +6,4 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 UPDATE `fcs_configuration` SET `type` = 'textarea_big' WHERE `fcs_configuration`.`name` = 'FCS_FOOTER_CMS_TEXT';
 UPDATE `fcs_configuration` SET `type` = 'textarea_big' WHERE `fcs_configuration`.`name` = 'FCS_RIGHT_INFO_BOX_HTML';
 UPDATE `fcs_configuration` SET `type` = 'textarea_big' WHERE `fcs_configuration`.`name` = 'FCS_REGISTRATION_EMAIL_TEXT';
+UPDATE `fcs_configuration` SET `text` = 'Name der Foodcoop<br /><div class="small">Bitte im laufenden Betrieb nur in Absprache mit dem Plattform-Betreuer ändern.</div>' WHERE `fcs_configuration`.`name` = 'FCS_APP_NAME';
