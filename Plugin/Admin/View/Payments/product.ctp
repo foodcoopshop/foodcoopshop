@@ -61,7 +61,13 @@ if (count($payments) == 0) {
         
         $i ++;
         
-        echo '<tr class="data ' . $payment['type'] . '">';
+        $rowClass = array('data', $payment['type']);
+        
+        if (isset($oldYear) && $oldYear != $payment['year']) {
+            $rowClass[] = 'last-row-of-year';
+        }
+        
+        echo '<tr class="' . implode(' ', $rowClass) . '">';
         
         echo '<td class="hide">';
         echo $payment['payment_id'];
@@ -129,6 +135,9 @@ if (count($payments) == 0) {
         echo '</td>';
         
         echo '</tr>';
+        
+        $oldYear = $payment['year'];
+        
     }
     
     echo '<tr class="fake-th">';

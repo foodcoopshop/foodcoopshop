@@ -415,6 +415,7 @@ class PaymentsController extends AdminAppController
 
             $payments[] = array(
                 'date' => $payment['date_add'],
+                'year' => Configure::read('timeHelper')->getYearFromDbDate($payment['date_add']),
                 'amount' => $payment['amount'],
                 'deposit' => 0,
                 'type' => $payment['type'],
@@ -427,6 +428,7 @@ class PaymentsController extends AdminAppController
             foreach ($customer['PaidCashFreeOrders'] as $order) {
                 $payments[] = array(
                     'date' => $order['date_add'],
+                    'year' => Configure::read('timeHelper')->getYearFromDbDate($order['date_add']),
                     'amount' => $order['total_paid'] * - 1,
                     'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
                     'type' => 'order',
