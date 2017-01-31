@@ -25,7 +25,8 @@
     body.customers.new_password_request form,
     body.customers.new_password_request .input,
     .blog-wrapper.owl-carousel,
-    a.blog-post-wrapper img {
+    a.blog-post-wrapper img,
+    #inner-content iframe {
         width: 100% ! important;
     }
     body.categories.detail #inner-content h2,
