@@ -84,10 +84,6 @@
             <?php } ?>
         </ul>
 	</div>
-	
-	<?php if (count($orderDetails) > 0 && !$groupByManufacturer) { ?>
-		<h2 class="info">Neu: Stornieren von mehreren Artikeln: Links anhaken und ganz unten auf "Ausgewählte Artikel stornieren" klicken.</h2>
-    <?php } ?>
     
 <?php
 echo '<table class="list">';
