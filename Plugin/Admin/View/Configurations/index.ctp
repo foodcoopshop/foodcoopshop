@@ -233,12 +233,6 @@ $this->element('addScript', array(
 		</tr>
 
 		<tr>
-			<td><?php echo Configure::read('app.cakeServerName'); ?>/favicon.ico</td>
-			<td><img
-				src="<?php echo Configure::read('app.cakeServerName'); ?>/favicon.ico" /></td>
-		</tr>
-
-		<tr>
 			<td>Logo für Webseite (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg</td>
 			<td><img
 				src="<?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg" /></td>
