@@ -134,7 +134,7 @@ class Manufacturer extends AppModel
         }
         return $bulkOrdersAllowed;
     }
-    
+
     /**
      *
      * @param $other json
@@ -192,21 +192,25 @@ class Manufacturer extends AppModel
 
     /**
      * bindings with email as foreign key was tricky...
-     * 
-     * @param array $manufacturer            
+     *
+     * @param array $manufacturer
      * @return boolean
      */
     public function getCustomerRecord($manufacturer)
     {
         $cm = ClassRegistry::init('Customer');
-        
-        $cm->recursive = - 1;
+
+        $cm->recursive = 1;
         $customer = $cm->find('first', array(
             'conditions' => array(
                 'Customer.email' => $manufacturer['Address']['email']
             )
         ));
-        
+
+        if (!empty($customer['AddressCustomer'])) {
+            return array();
+        }
+
         return $customer;
     }
 
@@ -227,7 +231,7 @@ class Manufacturer extends AppModel
         if (! $this->loggedIn()) {
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
-        
+
         $manufacturers = $this->find('all', array(
             'fields' => array(
                 'Manufacturer.id_manufacturer',
@@ -238,7 +242,7 @@ class Manufacturer extends AppModel
             ),
             'conditions' => $conditions
         ));
-        
+
         $manufacturersForMenu = array();
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
@@ -266,7 +270,7 @@ class Manufacturer extends AppModel
                 'Manufacturer.name' => 'ASC'
             )
         ));
-        
+
         $offlineManufacturers = array();
         $onlineManufacturers = array();
         foreach ($manufacturers as $manufacturer) {
@@ -284,7 +288,7 @@ class Manufacturer extends AppModel
         if (! empty($offlineManufacturers)) {
             $manufacturersForDropdown['offline'] = $offlineManufacturers;
         }
-        
+
         return $manufacturersForDropdown;
     }
 
@@ -297,7 +301,7 @@ class Manufacturer extends AppModel
         $sql .= $this->getConditionsForProductListQuery();
         $sql .= "AND Manufacturer.id_manufacturer = :manufacturerId";
         $sql .= $this->getOrdersForProductListQuery();
-        
+
         $params = array(
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
@@ -307,16 +311,16 @@ class Manufacturer extends AppModel
         if (! $this->loggedIn()) {
             $params['isPrivate'] = APP_OFF;
         }
-        
+
         $products = $this->getDataSource()->fetchAll($sql, $params);
-        
+
         return $products;
     }
 
     /**
      * turns eg 24 into 0024
-     * 
-     * @param int $invoiceNumber            
+     *
+     * @param int $invoiceNumber
      */
     public function formatInvoiceNumber($invoiceNumber)
     {
@@ -333,36 +337,36 @@ class Manufacturer extends AppModel
                 $orderClause = Configure::read('htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
-        
+
         $customerNameAsSql = Configure::read('htmlHelper')->getCustomerNameForSql();
-        
+
         $sql = "SELECT
-                m.id_manufacturer HerstellerID,
-                m.name AS Hersteller,
-                m.uid_number as UID, m.additional_text_for_invoice as Zusatztext,
-                ma.*,
-                t.rate as Steuersatz,
-                odt.total_amount AS MWSt,
-                od.product_id AS ArtikelID,
-                od.product_name AS ArtikelName,
-                od.product_quantity AS Menge,
-                od.total_price_tax_incl AS PreisIncl,
-                od.total_price_tax_excl as PreisExcl,
-                DATE_FORMAT (o.date_add, '%d.%m.%Y') as Bestelldatum,
-                pl.description_short as Produktbeschreibung,
-                c.id_customer AS Kundennummer,
-                {$customerNameAsSql} AS Kunde,
-                od.id_order_invoice AS Rechnungsnummer
-            FROM ".$this->tablePrefix."order_detail od
+        m.id_manufacturer HerstellerID,
+        m.name AS Hersteller,
+        m.uid_number as UID, m.additional_text_for_invoice as Zusatztext,
+        ma.*,
+        t.rate as Steuersatz,
+        odt.total_amount AS MWSt,
+        od.product_id AS ArtikelID,
+        od.product_name AS ArtikelName,
+        od.product_quantity AS Menge,
+        od.total_price_tax_incl AS PreisIncl,
+        od.total_price_tax_excl as PreisExcl,
+        DATE_FORMAT (o.date_add, '%d.%m.%Y') as Bestelldatum,
+        pl.description_short as Produktbeschreibung,
+        c.id_customer AS Kundennummer,
+        {$customerNameAsSql} AS Kunde,
+        od.id_order_invoice AS Rechnungsnummer
+        FROM ".$this->tablePrefix."order_detail od
                 LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
                 LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
-                LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail 
+                LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
                 LEFT JOIN ".$this->tablePrefix."product_lang pl ON p.id_product = pl.id_product
                 LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
                 LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
                 LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer
                 LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
-            WHERE 1 
+                WHERE 1
                 AND m.id_manufacturer = :manufacturerId
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
@@ -371,7 +375,7 @@ class Manufacturer extends AppModel
                 AND ma.alias = 'manufacturer'
                 AND o.current_state IN(:orderStates)
                 ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
-        
+
         $params = array(
             'manufacturerId' => $manufacturerId,
             'dateFrom' => "'" . Configure::read('timeHelper')->formatToDbFormatDate($from) . "'",
