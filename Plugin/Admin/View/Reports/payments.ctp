@@ -56,10 +56,6 @@ foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
 
 <?php
 
-if ($paymentType == 'member_fee') {
-    echo '<h2 class="info">Ein bessere Auflistung der Mitgliedsbeiträge mit Berücksichtigung der Monate folgt etwas später.</h2>';
-}
-
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Name') . '</th>';
