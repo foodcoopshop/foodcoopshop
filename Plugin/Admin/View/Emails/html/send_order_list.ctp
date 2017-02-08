@@ -29,7 +29,7 @@
 				und Mitglied) für die nächste Lieferung.</p>
 
 			<p>
-				<b>Dein persönlicher Hersteller-Bereich:</b><br /> <a
+				<b>Dein persönlicher Hersteller-Bereich</b><br /> <a
 					href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
 			</p>
 
@@ -47,8 +47,8 @@
 			</ul>
 			
 			<p>
-				<b>Impressum:</b><br />
-				Ab sofort erscheint auf deinem Hersteller-Profil rechts unterhalb des letzten Produktes dein Impressum. Die dafür notwendigen Daten kannst du im Hersteller-Bereich selbst eintragen bzw. bearbeiten.
+				<b>Impressum</b><br />
+				Die Daten für dein Impressum (rechts unten auf deinem Hersteller-Profil) kannst du im Hersteller-Bereich selbst ändern.
 			</p>
 
             <?php if (!Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
