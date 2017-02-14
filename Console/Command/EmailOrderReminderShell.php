@@ -8,6 +8,9 @@
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
+ * 
+ * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
+ * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
  *
  * @since         FoodCoopShop 1.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
@@ -36,7 +39,7 @@ class EmailOrderReminderShell extends AppShell
         $customers = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customer.newsletter' => 1,
-                'Customer.active' => 1
+                'Customer.active' => 1,
             ),
             'order' => array(
                 'Customer.name' => 'ASC'
@@ -58,9 +61,10 @@ class EmailOrderReminderShell extends AppShell
                 ->emailFormat('html')
                 ->subject('Bestell-Erinnerung ' . Configure::read('app.db_config_FCS_APP_NAME'))
                 ->viewVars(array(
-                'customer' => $customer
-            ))
-                ->send();
+                    'customer' => $customer,
+                    'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
+                ))
+            ->send();
             
             $this->out($message);
             $outString .= $customer['Customer']['name'] . '<br />';
