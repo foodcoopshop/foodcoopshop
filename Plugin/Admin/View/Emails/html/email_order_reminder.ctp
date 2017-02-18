@@ -21,7 +21,7 @@
 		<tr>
 		<td>
 
-			<p><?php echo ucfirst($lastOrderDayAsString); ?> ist schon wieder der letzte Bestelltag. Bis <?php echo $lastOrderDayAsString; ?> Mitternacht hast
+			<p><?php echo $lastOrderDayAsString; ?> ist schon wieder der letzte Bestelltag. Bis <?php echo $lastOrderDayAsString; ?> Mitternacht hast
 				du noch Zeit.</p>
 
 			<p>
