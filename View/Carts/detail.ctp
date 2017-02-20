@@ -35,14 +35,6 @@ if (!$appAuth->termsOfUseAccepted()) {
     	<p class="deposit-sum-wrapper"><b>+ Pfand gesamt</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php } ?>
     
-    <?php
-        if (empty($appAuth->Cart->getProducts())) {
-            $this->element('addScript', array('script' =>
-                "foodcoopshop.Helper.disableButton($('.cart .btn-success.btn-order'));"
-            ));
-        }
-    ?>
-    
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
     
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
