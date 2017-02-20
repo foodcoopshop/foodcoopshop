@@ -459,6 +459,15 @@ class MyHtmlHelper extends HtmlHelper
         return date('d.m.Y', strtotime(str_replace('/', '-', $date)));
     }
 
+    public function getApprovalStates()
+    {
+        return array(
+            1 => 'bestätigt',
+            0 => 'offen',
+            -1 => 'zurückgewiesen'
+        );
+    }
+    
     public function getActiveStates()
     {
         return array(

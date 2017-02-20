@@ -39,6 +39,9 @@ class PaymentsController extends AdminAppController
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
+            case 'edit';
+                return $this->AppAuth->isSuperadmin();
+                break;
             case 'add':
             case 'changeState':
                 return $this->AppAuth->loggedIn();
@@ -55,6 +58,67 @@ class PaymentsController extends AdminAppController
         $this->loadModel('Customer');
         $this->loadModel('Manufacturer');
         parent::beforeFilter();
+    }
+    
+    public function edit($paymentId) {
+        $this->setFormReferer();
+        $unsavedPayment = $this->CakePayment->find('first', array(
+            'conditions' => array(
+                'CakePayment.id' => $paymentId
+            )
+        ));
+        
+        $this->set('unsavedPayment', $unsavedPayment);
+        $this->set('paymentId', $paymentId);
+        $this->set('title_for_layout', 'Guthaben-Aufladung überprüfen');
+        
+        if (empty($this->request->data)) {
+            $this->request->data = $unsavedPayment;
+        } else {
+        
+        
+            // validate data - do not use $this->CakePayment->saveAll()
+            $this->CakePayment->id = $paymentId;
+        
+            $this->CakePayment->set($this->request->data['CakePayment']);
+        
+            $errors = array();
+            if (! $this->CakePayment->validates()) {
+                $errors = array_merge($errors, $this->CakePayment->validationErrors);
+            }
+        
+            if (empty($errors)) {
+        
+                $this->loadModel('CakeActionLog');
+        
+                $this->request->data['CakePayment']['date_changed'] = date('Y-m-d H:i:s');
+                $this->CakePayment->save($this->request->data['CakePayment'], array(
+                    'validate' => false
+                ));
+        
+                switch($this->request->data['CakePayment']['approval']) {
+                    case -1;
+                        $actionLogType = 'payment_product_approval_not_ok';
+                        break;
+                    case 0;
+                        $actionLogType = 'payment_product_approval_open';
+                        break;
+                    case 1;
+                        $actionLogType = 'payment_product_approval_ok';
+                        break;
+                }
+        
+                $message = 'Die Guthaben-Aufladung wurde erfolgreich überprüft. Status: ' . Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']];
+                $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message);
+                $this->AppSession->setFlashMessage($message);
+        
+                $this->redirect($this->data['referer']);
+                
+            } else {
+                $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
+            }
+        }
+        
     }
 
     public function add()
@@ -421,7 +485,9 @@ class PaymentsController extends AdminAppController
                 'deposit' => 0,
                 'type' => $payment['type'],
                 'text' => $text,
-                'payment_id' => $payment['id']
+                'payment_id' => $payment['id'],
+                'approval' => $payment['approval'],
+                'approval_comment' => $payment['approval_comment']
             );
         }
 

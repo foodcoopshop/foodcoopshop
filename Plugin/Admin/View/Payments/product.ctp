@@ -78,6 +78,32 @@ if (count($payments) == 0) {
         echo '</td>';
         
         echo '<td>';
+        
+        if ($payment['type'] == 'product') {
+            switch($payment['approval']) {
+                case -1;
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('delete.png'),
+                        array(
+                            'class' => 'payment-approval',
+                            'title' => $payment['approval_comment']
+                        )
+                    );
+                    break;
+                case 0;
+                    break;
+                case 1;
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('accept.png'),
+                        array(
+                            'class' => 'payment-approval',
+                            'title' => $payment['approval_comment']
+                        )
+                    );
+                    break;
+            }
+        }
+        
         echo $payment['text'];
         echo '</td>';
         

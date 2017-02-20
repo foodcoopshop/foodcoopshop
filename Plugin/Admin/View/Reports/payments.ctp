@@ -58,6 +58,12 @@ foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
 
 echo '<table class="list">';
 echo '<tr class="sort">';
+$colspan = 2;
+if ($paymentType == 'product') {
+    echo '<th></th>';
+    echo '<th></th>';
+    $colspan = $colspan + 2;
+}
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Name') . '</th>';
 echo '<th>' . $this->Paginator->sort('CakePayment.date_add', 'Eingetragen am') . '</th>';
 echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
@@ -82,6 +88,37 @@ foreach ($payments as $payment) {
     }
     
     echo '<tr class="data ' . $rowClass . '">';
+    
+    if ($paymentType == 'product') {
+        echo '<td>';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+                'title' => 'Bearbeiten'
+            ),
+            $this->Slug->getPaymentEdit($payment['CakePayment']['id']));
+        echo '</td>';
+        echo '<td>';
+            switch($payment['CakePayment']['approval']) {
+                case -1;
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('delete.png'),
+                        array(
+                            'title' => $payment['CakePayment']['approval_comment']
+                        )
+                    );
+                    break;
+                case 0;
+                    break;
+                case 1; 
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('accept.png'),
+                        array(
+                            'title' => $payment['CakePayment']['approval_comment']
+                        )
+                    );
+                    break;
+            }
+        echo '</td>';
+    }
     
     echo '<td>';
         if (!empty($payment['Manufacturer']['name'])) {
@@ -119,7 +156,7 @@ foreach ($payments as $payment) {
 }
 
 echo '<tr>';
-echo '<td colspan="2"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
 echo '<td style="text-align:right;"><b>' . $this->Html->formatAsEuro($paymentSum) . '</b></td>';
 if ($showTextColumn) {
     echo '<td></td>';
