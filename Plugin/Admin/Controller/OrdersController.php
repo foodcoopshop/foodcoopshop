@@ -95,7 +95,8 @@ class OrdersController extends AdminAppController
 
     public function changeOrderStateToClosed()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $orderIds = $this->params['data']['orderIds'];
         $orderIds = array_unique($orderIds);
         $orderState = $this->params['data']['orderState'];
@@ -123,7 +124,8 @@ class OrdersController extends AdminAppController
 
     public function changeOrderState()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $orderIds = $this->params['data']['orderIds'];
         $orderState = $this->params['data']['orderState'];
         
@@ -275,7 +277,7 @@ class OrdersController extends AdminAppController
 
     public function editDate()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $orderId = $this->params['data']['orderId'];
         $date = $this->params['data']['date'];

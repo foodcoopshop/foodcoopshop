@@ -19,7 +19,7 @@ class ToolsController extends AdminAppController
 
     public function doTmpImageUpload()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         // check if uploaded file is image file
         $formatInfo = getimagesize($this->params['form']['upload']['tmp_name']);
@@ -49,7 +49,7 @@ class ToolsController extends AdminAppController
 
     public function rotateImage()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         // check if uploaded file is image file
         $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->params['data']['filename'];
@@ -79,8 +79,7 @@ class ToolsController extends AdminAppController
 
     public function ajaxCancelFormPage()
     {
-        Configure::write('debug', 0);
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $referer = $this->params['data']['referer'];
         if ($referer == '')

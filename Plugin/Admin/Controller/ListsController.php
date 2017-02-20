@@ -95,7 +95,7 @@ class ListsController extends AdminAppController
      */
     public function get_file()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder.order_lists')) . DS . $this->params->query['file'];
         $explodedString = explode('\\', $filenameWithPath);

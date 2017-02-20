@@ -59,7 +59,7 @@ class PaymentsController extends AdminAppController
 
     public function add()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
 
         $type = trim($this->params['data']['type']);
         if (! in_array($type, array(
@@ -249,7 +249,8 @@ class PaymentsController extends AdminAppController
 
     public function changeState()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $paymentId = $this->params['data']['paymentId'];
 
         $payment = $this->CakePayment->find('first', array(

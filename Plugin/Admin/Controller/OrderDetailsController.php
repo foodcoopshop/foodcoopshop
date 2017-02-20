@@ -207,7 +207,7 @@ class OrderDetailsController extends AdminAppController
 
     public function editProductQuantity()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
 
         $orderDetailId = (int) $this->params['data']['orderDetailId'];
         $productQuantity = $this->params['data']['productQuantity'];
@@ -291,7 +291,7 @@ class OrderDetailsController extends AdminAppController
 
     public function editProductPrice()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
 
         $orderDetailId = (int) $this->params['data']['orderDetailId'];
         $editPriceReason = strip_tags(html_entity_decode($this->params['data']['editPriceReason']));
