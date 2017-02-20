@@ -96,7 +96,7 @@ class AppCakeTestCase extends CakeTestCase
     protected function assertJsonOk()
     {
         $response = $this->browser->getJsonDecodedContent();
-        $this->assertEquals(1, $response->status, 'json status should be "1"');
+        $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
     
     protected function assertRegExpWithUnquotedString($unquotetString, $response, $msg='')
