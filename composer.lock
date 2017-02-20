@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "2.9.4",
+            "version": "2.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "95cafaec3b4ea6ecfb4560ba539374d7de6e2c00"
+                "reference": "7de6cf0aa5851e398921cfa0c696d134e8ce3b0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/95cafaec3b4ea6ecfb4560ba539374d7de6e2c00",
-                "reference": "95cafaec3b4ea6ecfb4560ba539374d7de6e2c00",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/7de6cf0aa5851e398921cfa0c696d134e8ce3b0b",
+                "reference": "7de6cf0aa5851e398921cfa0c696d134e8ce3b0b",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-12-23 18:27:15"
+            "time": "2017-01-24 01:47:14"
         },
         {
             "name": "composer/installers",
@@ -833,16 +833,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.15",
+            "version": "v2.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "befb26a3713c97af90d25dd12e75621ef14d91ff"
+                "reference": "322a8c2dfbca15ad6b1b27e182899f98ec0e0153"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/befb26a3713c97af90d25dd12e75621ef14d91ff",
-                "reference": "befb26a3713c97af90d25dd12e75621ef14d91ff",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/322a8c2dfbca15ad6b1b27e182899f98ec0e0153",
+                "reference": "322a8c2dfbca15ad6b1b27e182899f98ec0e0153",
                 "shasum": ""
             },
             "require": {
@@ -878,7 +878,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-14 16:15:57"
+            "time": "2017-01-21 16:40:50"
         }
     ],
     "aliases": [],
