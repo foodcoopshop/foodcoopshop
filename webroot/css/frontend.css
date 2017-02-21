@@ -746,7 +746,8 @@ a.btn.btn-success:hover i {
 	color: #d6d4d4 ! important;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
-	width: 240px;
+	float: left;
+	width: 210px;
 }
 body.carts.detail .cart:not(#cart) span.amount {
     margin-right: 15px;
@@ -792,6 +793,7 @@ body.carts.detail .cart:not(#cart) span.right .delete {
     margin-left: 5px;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
+	float: left;
     font-size: 13px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
