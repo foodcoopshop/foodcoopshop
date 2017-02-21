@@ -335,7 +335,8 @@ a.button {
 a.button:hover {
 	opacity: 0.7;
 }
-button[disabled] {
+button[disabled],
+a[disabled] {
 	opacity: 0.5;
 }
 
@@ -746,7 +747,6 @@ a.btn.btn-success:hover i {
 	color: #d6d4d4 ! important;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
-	float: left;
 	width: 210px;
 }
 body.carts.detail .cart:not(#cart) span.amount {

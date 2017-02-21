@@ -13,7 +13,7 @@
  */
 foodcoopshop.Cart = {
 
-	orderButton: $('.cart .btn-success.btn-order'),
+	orderButtonss: '.cart .btn-success.btn-order, .responsive-cart',
 		
     /**
      * cart products already existed in database
@@ -108,6 +108,7 @@ foodcoopshop.Cart = {
         	foodcoopshop.Helper.removeFlashMessage();
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-cart');
+            foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
             
             $('#cart p.no-products').hide();
             $('#cart p.products').show();
@@ -165,10 +166,12 @@ foodcoopshop.Cart = {
                 }, {
                     onOk: function(data) {
                         foodcoopshop.Helper.enableButton(button);
+                        foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, 'fa-cart');
                     },
                     onError: function(data) {
                         foodcoopshop.Helper.enableButton(button);
+                        foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, 'fa-cart');
                         foodcoopshop.Cart.initRemoveFromCartLinks();
                         foodcoopshop.Cart.restoreOldStateOfProductAndSum(data.productId, data.msg);
@@ -241,7 +244,7 @@ foodcoopshop.Cart = {
             var button = $(this);
             foodcoopshop.Helper.disableButton(button);
             foodcoopshop.Helper.addSpinnerToButton(button, elementClass.replace(/fa /, ''));
-        	foodcoopshop.Helper.disableButton(foodcoopshop.Cart.orderButton);
+        	foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
 
             foodcoopshop.Helper.ajaxCall(
                 '/warenkorb/ajaxAdd/', {
@@ -251,7 +254,7 @@ foodcoopshop.Cart = {
                     onOk: function(data) {
                         foodcoopshop.Helper.removeSpinnerFromButton(button, elementClass.replace(/fa /, ''));
                         foodcoopshop.Helper.enableButton(button);
-                        foodcoopshop.Helper.enableButton(foodcoopshop.Cart.orderButton);
+                    	foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax);
                         foodcoopshop.Cart.updateCartSum(newPrice * amount);
                         foodcoopshop.Cart.updateCartTaxSum(newTax * amount);
@@ -268,7 +271,7 @@ foodcoopshop.Cart = {
                     onError: function(data) {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.removeSpinnerFromButton(button, elementClass.replace(/fa /, ''));
-                    	foodcoopshop.Helper.enableButton(foodcoopshop.Cart.orderButton);
+                    	foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.showErrorMessage(data.msg);
                     }
                 }
@@ -341,7 +344,7 @@ foodcoopshop.Cart = {
 
             var productId = $(this).closest('.product').data('product-id');
             var productContainer = $('.product.' + productId);
-            foodcoopshop.Helper.disableButton(foodcoopshop.Cart.orderButton);
+            foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
 
             productContainer.each(function(index) {
                 var p = $(this);
@@ -375,15 +378,14 @@ foodcoopshop.Cart = {
                 }, {
                     onOk: function(data) {
                         foodcoopshop.Helper.enableButton(button);
-                        foodcoopshop.Helper.enableButton(foodcoopshop.Cart.orderButton);
+                        foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                     },
                     onError: function(data) {
                         $('.cart p.products .product.' + productId).addClass('error').remove();
                         foodcoopshop.Helper.showErrorMessage(data.msg);
                         foodcoopshop.Helper.enableButton(button);
-                        foodcoopshop.Helper.enableButton(foodcoopshop.Cart.orderButton);
+                        foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.showErrorMessage(data.msg);
-
                     }
                 }
             );
