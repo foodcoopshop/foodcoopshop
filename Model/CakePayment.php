@@ -23,7 +23,11 @@ class CakePayment extends AppModel
         ),
         'Manufacturer' => array(
             'foreignKey' => 'id_manufacturer'
-        )
+        ),
+        'ChangedBy' => array(
+            'className' => 'Customer',
+            'foreignKey' => 'changed_by'
+        ),
     );
     
     private function getManufacturerDepositConditions($manufacturerId=null)

@@ -49,6 +49,7 @@ echo $this->Form->create('CakePayment', array(
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('CakePayment.id');
 echo $this->Form->hidden('Customer.name');
+echo $this->Form->hidden('ChangedBy.name');
 echo $this->Form->hidden('CakePayment.amount');
 echo $this->Form->hidden('CakePayment.date_add');
 echo $this->Form->hidden('CakePayment.date_changed');
@@ -57,6 +58,7 @@ echo '<p><label>Mitglied</label>' . $this->request->data['Customer']['name'].'</
 echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($this->request->data['CakePayment']['amount']).'</p>';
 echo '<p><label>Datum der Aufladung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['CakePayment']['date_add']).'</p>';
 echo '<p><label>Datum der letzten Änderung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['CakePayment']['date_changed']).'</p>';
+echo '<p><label>Letzter Bearbeiter</label>' . $this->request->data['ChangedBy']['name'].'</p>';
 
 echo $this->Form->input('CakePayment.approval', array(
     'type' => 'select',

@@ -97,7 +97,7 @@ class PaymentsController extends AdminAppController
                 $this->loadModel('CakeActionLog');
         
                 $this->request->data['CakePayment']['date_changed'] = date('Y-m-d H:i:s');
-                $this->request->data['CakePayment']['approved_by'] = $this->AppAuth->getUserId();
+                $this->request->data['CakePayment']['changed_by'] = $this->AppAuth->getUserId();
                 
                 $this->CakePayment->save($this->request->data['CakePayment'], array(
                     'validate' => false
