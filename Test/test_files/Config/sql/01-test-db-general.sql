@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 14. Jan 2017 um 23:12
+-- Erstellungszeit: 21. Feb 2017 um 11:44
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -332,7 +332,10 @@ CREATE TABLE `fcs_cake_payments` (
   `text` varchar(255) NOT NULL,
   `date_add` datetime NOT NULL,
   `date_changed` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1'
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `approval` tinyint(4) NOT NULL,
+  `approval_comment` text NOT NULL,
+  `changed_by` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
