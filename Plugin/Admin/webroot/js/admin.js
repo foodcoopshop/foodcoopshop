@@ -26,6 +26,10 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
     
+    selectMainMenuAdmin: function(pageTitle) {
+    	foodcoopshop.Helper.selectMainMenu('#menu', pageTitle);
+    },
+    
     initRowMarkerAll : function() {
     	$('input#row-marker-all').on('change', function() {
     		if (this.checked) {

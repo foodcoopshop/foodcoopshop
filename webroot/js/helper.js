@@ -127,10 +127,14 @@ foodcoopshop.Helper = {
         }
     },
 
-    selectMainMenu: function(pageTitle) {
-        $('#main-menu > li > a').filter(function() {
+    selectMainMenu : function(menu, pageTitle) {
+        $(menu + ' > li > a').filter(function() {
             return $(this).html().substr($(this).html().length - pageTitle.length) === pageTitle;
         }).addClass('active');
+    },
+    
+    selectMainMenuFrontend: function(pageTitle) {
+    	this.selectMainMenu('#main-menu', pageTitle);
     },
 
     initSlider: function() {
