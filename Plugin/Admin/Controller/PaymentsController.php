@@ -64,9 +64,14 @@ class PaymentsController extends AdminAppController
         $this->setFormReferer();
         $unsavedPayment = $this->CakePayment->find('first', array(
             'conditions' => array(
-                'CakePayment.id' => $paymentId
+                'CakePayment.id' => $paymentId,
+                'CakePayment.type' => 'product'
             )
         ));
+        
+        if (empty($unsavedPayment)) {
+            throw new MissingActionException('payment not found');
+        }
         
         $this->set('unsavedPayment', $unsavedPayment);
         $this->set('paymentId', $paymentId);
