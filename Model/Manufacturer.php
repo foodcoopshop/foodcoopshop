@@ -207,6 +207,10 @@ class Manufacturer extends AppModel
             )
         ));
 
+        if (empty($customer['AddressCustomer']['id_address'])) {
+            return $customer;
+        }
+        
         if (!empty($customer['AddressCustomer'])) {
             return array();
         }
