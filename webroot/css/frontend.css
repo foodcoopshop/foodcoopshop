@@ -752,6 +752,9 @@ body.carts.detail .cart:not(#cart) span.amount {
     margin-right: 15px;
     margin-top: -5px;
 }
+body.carts.detail .cart:not(#cart) span.product-name-wrapper a {
+    float: left;
+}
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
