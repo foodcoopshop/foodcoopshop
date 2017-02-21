@@ -464,7 +464,7 @@ class MyHtmlHelper extends HtmlHelper
         return array(
             1 => 'bestätigt',
             0 => 'offen',
-            -1 => 'zurückgewiesen'
+            -1 => 'da stimmt was nicht...'
         );
     }
     
