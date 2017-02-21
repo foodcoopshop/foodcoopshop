@@ -26,8 +26,8 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
     
-    selectMainMenuAdmin: function(pageTitle) {
-    	foodcoopshop.Helper.selectMainMenu('#menu', pageTitle);
+    selectMainMenuAdmin: function(mainMenuTitle, subMenuTitle) {
+    	foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },
     
     initRowMarkerAll : function() {

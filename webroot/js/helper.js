@@ -127,10 +127,18 @@ foodcoopshop.Helper = {
         }
     },
 
-    selectMainMenu : function(menu, pageTitle) {
-        $(menu + ' > li > a').filter(function() {
-            return $(this).html().substr($(this).html().length - pageTitle.length) === pageTitle;
+    selectMainMenu : function(menu, mainMenuTitle, subMenuTitle) {
+        
+    	$(menu + ' > li > a').filter(function() {
+            return $(this).html().substr($(this).html().length - mainMenuTitle.length) === mainMenuTitle;
         }).addClass('active');
+        
+        if (subMenuTitle) {
+        	$(menu + ' ul > li > a').filter(function() {
+                return $(this).html().substr($(this).html().length - subMenuTitle.length) === subMenuTitle;
+            }).addClass('active');
+        }
+        
     },
     
     selectMainMenuFrontend: function(pageTitle) {

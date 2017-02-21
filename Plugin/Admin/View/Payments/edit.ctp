@@ -17,7 +17,7 @@ $this->element('addScript', array(
     'script' => 
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('CakePaymentApprovalComment');" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung');" .
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['CakePayment']['id'] . "', 'CakePayment');
     "
 ));

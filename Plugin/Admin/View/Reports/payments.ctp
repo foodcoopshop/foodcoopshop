@@ -17,7 +17,7 @@ $this->element('addScript', array(
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
         datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung');"
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
 ));
 ?>
 
