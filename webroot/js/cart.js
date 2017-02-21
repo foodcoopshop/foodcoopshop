@@ -13,7 +13,7 @@
  */
 foodcoopshop.Cart = {
 
-	orderButtonss: '.cart .btn-success.btn-order, .responsive-cart',
+	orderButtons: '.cart .btn-success.btn-order, .responsive-cart',
 		
     /**
      * cart products already existed in database
