@@ -76,13 +76,13 @@ class PaymentsController extends AdminAppController
             $this->request->data = $unsavedPayment;
         } else {
         
-        
             // validate data - do not use $this->CakePayment->saveAll()
             $this->CakePayment->id = $paymentId;
-        
             $this->CakePayment->set($this->request->data['CakePayment']);
         
             $errors = array();
+            $this->CakePayment->validator()['approval'] = $this->CakePayment->getNumberRangeConfigurationRule(-1,1);
+            
             if (! $this->CakePayment->validates()) {
                 $errors = array_merge($errors, $this->CakePayment->validationErrors);
             }

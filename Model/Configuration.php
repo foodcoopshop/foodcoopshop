@@ -129,29 +129,6 @@ class Configuration extends AppModel
         );
         return $validationRules;
     }
-        
-    private function getNumberRangeConfigurationRule($min, $max)
-    {
-        $validationRules = array();
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
-        $validationRules[] = array(
-            'rule' => array(
-                'comparison',
-                '>=',
-                $min
-            ),
-            'message' => $message
-        );
-        $validationRules[] = array(
-            'rule' => array(
-                'comparison',
-                '<=',
-                $max
-            ),
-            'message' => $message
-        );
-        return $validationRules;
-    }
 
     public function getConfigurations()
     {
