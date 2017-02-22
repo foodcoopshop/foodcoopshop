@@ -66,12 +66,17 @@ echo $this->Form->input('CakePayment.approval', array(
     'options' => $this->Html->getApprovalStates()
 ));
 
+echo $this->Form->input('CakePayment.send_email', array(
+    'label' => 'E-Mail versenden?',
+    'type' => 'checkbox',
+    'after' => '<span class="after small">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).</span>'
+));
+
 echo $this->Form->input('CakePayment.approval_comment', array(
     'type' => 'textarea',
     'label' => 'Kommentar',
     'class' => 'ckeditor'
 ));
-
 
 ?>
 

@@ -115,7 +115,26 @@ class PaymentsController extends AdminAppController
                         break;
                 }
         
-                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']].'</b> geändert';
+                $newStatusAsString = Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']];
+                $subject = 'Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.';
+                
+                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
+                if ($this->request->data['CakePayment']['send_email']) {
+                    $email = new AppEmail();
+                    $email->template('Admin.payment_status_changed')
+                        ->emailFormat('html')
+                        ->to($unsavedPayment['Customer']['email'])
+                        ->subject($subject)
+                        ->viewVars(array(
+                            'appAuth' => $this->AppAuth,
+                            'data' => $unsavedPayment,
+                            'newStatusAsString' => $newStatusAsString,
+                            'request' => $this->request->data
+                        ));
+                    $email->send();
+                    $message .= ' und eine E-Mail an das Mitglied verschickt';
+                }
+                
                 $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message.' (PaymentId: ' . $this->CakePayment->id.').');
                 $this->AppSession->setFlashMessage($message.'.');
         
