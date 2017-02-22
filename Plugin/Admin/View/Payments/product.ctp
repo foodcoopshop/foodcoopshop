@@ -42,6 +42,10 @@ if (count($payments) == 0) {
 
 } else {
     
+    $this->element('addScript', array(
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
+    ));
+    
     echo '<table class="list">';
     echo '<tr class="sort">';
     echo '<th>Datum</th>';
@@ -85,8 +89,7 @@ if (count($payments) == 0) {
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('delete.png'),
                         array(
-                            'class' => 'payment-approval',
-                            'title' => $payment['approval_comment']
+                            'class' => 'payment-approval'
                         )
                     );
                     break;
@@ -96,11 +99,21 @@ if (count($payments) == 0) {
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
                         array(
-                            'class' => 'payment-approval',
-                            'title' => $payment['approval_comment']
+                            'class' => 'payment-approval'
                         )
                     );
                     break;
+            }
+            if ($payment['approval_comment'] != '') {
+                echo '<span class="payment-approval-comment-wrapper">';
+                    echo $this->Html->getJqueryUiIcon(
+                        $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+                        array(
+                            'class' => 'payment-approval-comment',
+                            'title' => $payment['approval_comment']
+                        ),
+                        'javascript:void(0);');
+                echo '</span>';
             }
         }
         

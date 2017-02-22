@@ -883,3 +883,7 @@ body.payments img.payment-approval {
 	margin-top: 2px;
 	margin-right: 2px;
 }
+body.payments .payment-approval-comment-wrapper {
+	float: left;
+	margin-right: 2px;
+}
