@@ -115,9 +115,9 @@ class PaymentsController extends AdminAppController
                         break;
                 }
         
-                $message = 'Die Guthaben-Aufladung wurde erfolgreich überprüft. Status: ' . Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']];
-                $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message);
-                $this->AppSession->setFlashMessage($message);
+                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']].'</b> geändert';
+                $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message.' (PaymentId: ' . $this->CakePayment->id.').');
+                $this->AppSession->setFlashMessage($message.'.');
         
                 $this->redirect($this->data['referer']);
                 
