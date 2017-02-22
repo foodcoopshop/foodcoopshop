@@ -19,8 +19,17 @@ $this->element('addScript', array(
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('CakePaymentApprovalComment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['CakePayment']['id'] . "', 'CakePayment');
+        $('#CakePaymentApproval').on('change', function() {
+            var emailCheckbox = $('#CakePaymentSendEmail');
+            if ($(this).val() == -1) {
+                emailCheckbox.prop('checked', true);
+            } else {
+                emailCheckbox.prop('checked', false);
+            }
+        });    
     "
 ));
+
 ?>
 
 <div class="filter-container">
