@@ -26,7 +26,7 @@ $this->element('addScript', array(
             } else {
                 emailCheckbox.prop('checked', false);
             }
-        });    
+        }).trigger('change');
     "
 ));
 
