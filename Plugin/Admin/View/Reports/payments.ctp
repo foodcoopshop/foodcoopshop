@@ -17,6 +17,7 @@ $this->element('addScript', array(
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
         datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();".
+        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
 ));
 ?>
@@ -61,8 +62,8 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 $colspan = 2;
 if ($paymentType == 'product') {
-    echo '<th></th>';
-    echo '<th></th>';
+    echo '<th style="width:25px;"></th>';
+    echo '<th style="width:50px;"></th>';
     $colspan = $colspan + 2;
 }
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Name') . '</th>';
@@ -103,7 +104,7 @@ foreach ($payments as $payment) {
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('delete.png'),
                         array(
-                            'title' => $payment['CakePayment']['approval_comment']
+                            'class' => 'payment-approval'
                         )
                     );
                     break;
@@ -113,10 +114,21 @@ foreach ($payments as $payment) {
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
                         array(
-                            'title' => $payment['CakePayment']['approval_comment']
+                            'class' => 'payment-approval'
                         )
                     );
                     break;
+            }
+            if ($payment['CakePayment']['approval_comment'] != '') {
+                echo '<span class="payment-approval-comment-wrapper">';
+                echo $this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+                    array(
+                        'class' => 'payment-approval-comment',
+                        'title' => $payment['CakePayment']['approval_comment']
+                    ),
+                    'javascript:void(0);');
+                    echo '</span>';
             }
         echo '</td>';
     }

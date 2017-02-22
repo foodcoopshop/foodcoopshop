@@ -878,12 +878,14 @@ body.payments tr.last-row-of-year td {
 	border-top-color: #719f41;
 	border-top-style: solid;
 }
-body.payments img.payment-approval {
+body.payments img.payment-approval,
+body.reports.payment img.payment-approval {
 	float: left;
 	margin-top: 2px;
 	margin-right: 2px;
 }
-body.payments .payment-approval-comment-wrapper {
+body.payments .payment-approval-comment-wrapper,
+body.reports.payment .payment-approval-comment-wrapper {
 	float: left;
 	margin-right: 2px;
 }
