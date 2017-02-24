@@ -403,6 +403,7 @@ foodcoopshop.Helper = {
             content: function() {
                 return $(this).attr('title');
             },
+            tooltipHover: true,
             position: position
         });
     },
