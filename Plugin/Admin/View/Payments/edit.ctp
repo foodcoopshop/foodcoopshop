@@ -19,7 +19,7 @@ $this->element('addScript', array(
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('CakePaymentApprovalComment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['CakePayment']['id'] . "', 'CakePayment');".
-        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.email-template-info');
+        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.email-template-info', { my: \"center top\" });
         $('#CakePaymentApproval').on('change', function() {
             var emailCheckbox = $('#CakePaymentSendEmail');
             if ($(this).val() == -1) {
