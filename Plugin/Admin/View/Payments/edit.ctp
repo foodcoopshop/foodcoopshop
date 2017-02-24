@@ -18,7 +18,8 @@ $this->element('addScript', array(
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('CakePaymentApprovalComment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
-        Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['CakePayment']['id'] . "', 'CakePayment');
+        Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['CakePayment']['id'] . "', 'CakePayment');".
+        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.email-template-info');
         $('#CakePaymentApproval').on('change', function() {
             var emailCheckbox = $('#CakePaymentSendEmail');
             if ($(this).val() == -1) {
@@ -78,7 +79,18 @@ echo $this->Form->input('CakePayment.approval', array(
 echo $this->Form->input('CakePayment.send_email', array(
     'label' => 'E-Mail versenden?',
     'type' => 'checkbox',
-    'after' => '<span class="after small">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).</span>'
+    'after' => '<span class="after small">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).<br /><span style="float: left;">E-Mail-Vorschau:</span>'.
+            $this->Html->image($this->Html->getFamFamFamPath('accept.png'),
+            array(
+                'class' => 'email-template-info',
+                'title' => $emailTemplateOk
+            )).
+            $this->Html->image($this->Html->getFamFamFamPath('delete.png'),
+            array(
+                'class' => 'email-template-info',
+                'title' => $emailTemplateNotOk
+            )).
+    '</span>'
 ));
 
 echo $this->Form->input('CakePayment.approval_comment', array(

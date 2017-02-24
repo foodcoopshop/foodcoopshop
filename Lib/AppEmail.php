@@ -29,6 +29,10 @@ class AppEmail extends CakeEmail
         }
     }
 
+    public function _renderTemplates($content) {
+        return parent::_renderTemplates($content);
+    }
+    
     /**
      * fallback if email config is wrong (e.g.
      * password changed from third party)

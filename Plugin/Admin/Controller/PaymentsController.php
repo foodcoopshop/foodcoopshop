@@ -61,7 +61,9 @@ class PaymentsController extends AdminAppController
     }
     
     public function edit($paymentId) {
+        
         $this->setFormReferer();
+        
         $unsavedPayment = $this->CakePayment->find('first', array(
             'conditions' => array(
                 'CakePayment.id' => $paymentId,
@@ -72,6 +74,27 @@ class PaymentsController extends AdminAppController
         if (empty($unsavedPayment)) {
             throw new MissingActionException('payment not found');
         }
+        
+        // START prepare email preview
+        $requestForEmailTemplate = $unsavedPayment;
+        $requestForEmailTemplate['CakePayment']['approval'] = 1;
+        $requestForEmailTemplate['CakePayment']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
+        $email = new AppEmail();
+        $email->template('Admin.payment_status_changed')
+          ->emailFormat('html')
+          ->to($unsavedPayment['Customer']['email'])
+          ->viewVars(array(
+            'appAuth' => $this->AppAuth,
+            'data' => $unsavedPayment,
+            'newStatusAsString' => Configure::read('htmlHelper')->getApprovalStates()[1],
+            'request' => $requestForEmailTemplate
+        ));
+        $requestForEmailTemplate['CakePayment']['approval'] = -1;
+        $this->set('emailTemplateOk', $email->_renderTemplates(null)['html']);
+        $email->viewVars(array('newStatusAsString' => Configure::read('htmlHelper')->getApprovalStates()[-1]));
+        $email->viewVars(array('request' => $requestForEmailTemplate));
+        $this->set('emailTemplateNotOk', $email->_renderTemplates(null)['html']);
+        // END prepare email preview
         
         $this->set('unsavedPayment', $unsavedPayment);
         $this->set('paymentId', $paymentId);
@@ -116,21 +139,16 @@ class PaymentsController extends AdminAppController
                 }
         
                 $newStatusAsString = Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']];
-                $subject = 'Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.';
                 
                 $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
                 if ($this->request->data['CakePayment']['send_email']) {
-                    $email = new AppEmail();
-                    $email->template('Admin.payment_status_changed')
-                        ->emailFormat('html')
-                        ->to($unsavedPayment['Customer']['email'])
-                        ->subject($subject)
-                        ->viewVars(array(
-                            'appAuth' => $this->AppAuth,
-                            'data' => $unsavedPayment,
-                            'newStatusAsString' => $newStatusAsString,
-                            'request' => $this->request->data
-                        ));
+                    $email->subject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.');
+                    $email->viewVars(array(
+                        'appAuth' => $this->AppAuth,
+                        'data' => $unsavedPayment,
+                        'newStatusAsString' => $newStatusAsString,
+                        'request' => $this->request->data
+                    ));
                     $email->send();
                     $message .= ' und eine E-Mail an das Mitglied verschickt';
                 }
