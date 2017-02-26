@@ -173,7 +173,7 @@ class CakeActionLog extends AppModel
             'de' => 'Guthaben-Aufladung: Bestätigung offen'
         ),
         'payment_product_approval_not_ok' => array(
-            'de' => 'Guthaben-Aufladung: zurückgewiesen'
+            'de' => 'Guthaben-Aufladung: da stimmt was nicht...'
         ),
         'payment_payback_added' => array(
             'de' => 'Mitglied: Rückzahlung eingetragen'
