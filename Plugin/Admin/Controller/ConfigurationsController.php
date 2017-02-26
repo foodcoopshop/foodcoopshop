@@ -85,6 +85,42 @@ class ConfigurationsController extends AdminAppController
             }
         }
     }
+    
+    public function previewEmail($configurationName) {
+        $configurations = $this->Configuration->getConfigurations();
+        $email = new AppEmail();
+        $email
+            ->emailFormat('html')
+            ->viewVars(array(
+                'appAuth' => $this->AppAuth
+            ));
+        
+        switch($configurationName) {
+            case 'FCS_REGISTRATION_EMAIL_TEXT':
+                if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                    $template = 'customer_registered_active';
+                } else {
+                    $template = 'customer_registered_inactive';
+                }
+                $email->template($template);
+                $email->viewVars(array(
+                    'data' => array('Customer' => array(
+                        'firstname' => 'Vorname',
+                        'lastname' => 'Nachname',
+                        'email' => 'vorname.nachname@example.com'
+                    )),
+                    'newPassword' => 'DeinNeuesPasswort'
+                ));
+                break;
+            
+        }
+        $html = $email->_renderTemplates(null)['html'];
+        if ($html != '') {
+            echo $html;
+            exit;
+        }
+        throw new MissingActionException('no email template defined for configuration: ' . $configurationName);
+    }
 
     public function index()
     {
