@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 21. Feb 2017 um 11:44
+-- Erstellungszeit: 26. Feb 2017 um 19:28
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -1162,51 +1162,15 @@ DROP TABLE IF EXISTS `fcs_orders`;
 CREATE TABLE `fcs_orders` (
   `id_order` int(10) UNSIGNED NOT NULL,
   `reference` varchar(9) DEFAULT NULL,
-  `id_shop_group` int(11) UNSIGNED NOT NULL DEFAULT '1',
   `id_shop` int(11) UNSIGNED NOT NULL DEFAULT '1',
-  `id_carrier` int(10) UNSIGNED NOT NULL,
-  `id_lang` int(10) UNSIGNED NOT NULL,
   `id_customer` int(10) UNSIGNED NOT NULL,
-  `id_cart` int(10) UNSIGNED NOT NULL,
   `id_cake_cart` int(10) NOT NULL,
-  `id_currency` int(10) UNSIGNED NOT NULL,
-  `id_address_delivery` int(10) UNSIGNED NOT NULL,
-  `id_address_invoice` int(10) UNSIGNED NOT NULL,
   `current_state` int(10) UNSIGNED NOT NULL,
-  `secure_key` varchar(32) NOT NULL DEFAULT '-1',
-  `payment` varchar(255) NOT NULL,
-  `conversion_rate` decimal(13,6) NOT NULL DEFAULT '1.000000',
-  `module` varchar(255) DEFAULT NULL,
-  `recyclable` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `gift` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `gift_message` text,
-  `mobile_theme` tinyint(1) NOT NULL DEFAULT '0',
-  `shipping_number` varchar(64) DEFAULT NULL,
-  `total_discounts` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_discounts_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_discounts_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_paid` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_paid_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_paid_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_paid_real` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_products` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_products_wt` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `carrier_tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
-  `total_wrapping` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_wrapping_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_wrapping_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `invoice_number` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `delivery_number` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `invoice_date` datetime NOT NULL,
-  `delivery_date` datetime NOT NULL,
-  `valid` int(1) UNSIGNED NOT NULL DEFAULT '0',
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
-  `round_mode` tinyint(1) NOT NULL DEFAULT '2',
-  `round_type` tinyint(1) NOT NULL DEFAULT '1',
   `total_deposit` decimal(10,2) NOT NULL,
   `general_terms_and_conditions_accepted` tinyint(4) UNSIGNED NOT NULL,
   `cancellation_terms_accepted` tinyint(4) UNSIGNED NOT NULL
@@ -1222,49 +1186,17 @@ DROP TABLE IF EXISTS `fcs_order_detail`;
 CREATE TABLE `fcs_order_detail` (
   `id_order_detail` int(10) UNSIGNED NOT NULL,
   `id_order` int(10) UNSIGNED NOT NULL,
-  `id_order_invoice` int(11) DEFAULT NULL,
-  `id_warehouse` int(10) UNSIGNED DEFAULT '0',
   `id_shop` int(11) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
   `product_attribute_id` int(10) UNSIGNED DEFAULT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_quantity` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `product_quantity_in_stock` int(10) NOT NULL DEFAULT '0',
-  `product_quantity_refunded` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `product_quantity_return` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `product_quantity_reinjected` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `product_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `reduction_percent` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `reduction_amount` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `reduction_amount_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `reduction_amount_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `group_reduction` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `product_quantity_discount` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `product_ean13` varchar(13) DEFAULT NULL,
-  `product_upc` varchar(12) DEFAULT NULL,
-  `product_reference` varchar(32) DEFAULT NULL,
-  `product_supplier_reference` varchar(32) DEFAULT NULL,
-  `product_weight` decimal(20,6) NOT NULL,
-  `tax_computation_method` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `tax_name` varchar(16) NOT NULL,
-  `tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
-  `ecotax` decimal(21,6) NOT NULL DEFAULT '0.000000',
-  `ecotax_tax_rate` decimal(5,3) NOT NULL DEFAULT '0.000',
-  `discount_quantity_applied` tinyint(1) NOT NULL DEFAULT '0',
-  `download_hash` varchar(255) DEFAULT NULL,
-  `download_nb` int(10) UNSIGNED DEFAULT '0',
-  `download_deadline` datetime DEFAULT NULL,
   `total_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `unit_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `unit_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `purchase_supplier_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `original_product_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `id_tax_rules_group` int(11) UNSIGNED DEFAULT '0',
   `id_tax` int(11) UNSIGNED DEFAULT '0',
-  `original_wholesale_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `deposit` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1272,9 +1204,9 @@ CREATE TABLE `fcs_order_detail` (
 -- Daten für Tabelle `fcs_order_detail`
 --
 
-INSERT INTO `fcs_order_detail` (`id_order_detail`, `id_order`, `id_order_invoice`, `id_warehouse`, `id_shop`, `product_id`, `product_attribute_id`, `product_name`, `product_quantity`, `product_quantity_in_stock`, `product_quantity_refunded`, `product_quantity_return`, `product_quantity_reinjected`, `product_price`, `reduction_percent`, `reduction_amount`, `reduction_amount_tax_incl`, `reduction_amount_tax_excl`, `group_reduction`, `product_quantity_discount`, `product_ean13`, `product_upc`, `product_reference`, `product_supplier_reference`, `product_weight`, `tax_computation_method`, `tax_name`, `tax_rate`, `ecotax`, `ecotax_tax_rate`, `discount_quantity_applied`, `download_hash`, `download_nb`, `download_deadline`, `total_price_tax_incl`, `total_price_tax_excl`, `unit_price_tax_incl`, `unit_price_tax_excl`, `total_shipping_price_tax_incl`, `total_shipping_price_tax_excl`, `purchase_supplier_price`, `original_product_price`, `id_tax_rules_group`, `id_tax`, `original_wholesale_price`, `deposit`) VALUES
-(1, 1, NULL, 0, 0, 346, 0, 'Artischocke : Stück', 2, 0, 0, 0, 0, '3.305786', '0.00', '0.000000', '0.000000', '0.000000', '0.00', '0.000000', NULL, NULL, NULL, NULL, '0.000000', 0, '', '0.000', '0.000000', '0.000', 0, NULL, 0, NULL, '3.640000', '3.305786', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', 2, 2, '0.000000', '1.00'),
-(2, 1, NULL, 0, 0, 60, 10, 'Milch : 0,5l', 3, 0, 0, 0, 0, '1.636365', '0.00', '0.000000', '0.000000', '0.000000', '0.00', '0.000000', NULL, NULL, NULL, NULL, '0.000000', 0, '', '0.000', '0.000000', '0.000', 0, NULL, 0, NULL, '1.860000', '1.636365', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', '0.000000', 3, 3, '0.000000', '1.50');
+INSERT INTO `fcs_order_detail` (`id_order_detail`, `id_order`, `id_shop`, `product_id`, `product_attribute_id`, `product_name`, `product_quantity`, `product_price`, `total_price_tax_incl`, `total_price_tax_excl`, `unit_price_tax_incl`, `unit_price_tax_excl`, `id_tax`, `deposit`) VALUES
+(1, 1, 0, 346, 0, 'Artischocke : Stück', 2, '3.305786', '3.640000', '3.305786', '0.000000', '0.000000', 2, '1.00'),
+(2, 1, 0, 60, 10, 'Milch : 0,5l', 3, '1.636365', '1.860000', '1.636365', '0.000000', '0.000000', 3, '1.50');
 
 -- --------------------------------------------------------
 
@@ -2059,14 +1991,6 @@ ALTER TABLE `fcs_manufacturer_lang`
 ALTER TABLE `fcs_orders`
   ADD PRIMARY KEY (`id_order`),
   ADD KEY `id_customer` (`id_customer`),
-  ADD KEY `id_cart` (`id_cart`),
-  ADD KEY `invoice_number` (`invoice_number`),
-  ADD KEY `id_carrier` (`id_carrier`),
-  ADD KEY `id_lang` (`id_lang`),
-  ADD KEY `id_currency` (`id_currency`),
-  ADD KEY `id_address_delivery` (`id_address_delivery`),
-  ADD KEY `id_address_invoice` (`id_address_invoice`),
-  ADD KEY `id_shop_group` (`id_shop_group`),
   ADD KEY `id_shop` (`id_shop`),
   ADD KEY `date_add` (`date_add`),
   ADD KEY `current_state` (`current_state`),
@@ -2080,8 +2004,7 @@ ALTER TABLE `fcs_order_detail`
   ADD KEY `order_detail_order` (`id_order`),
   ADD KEY `product_id` (`product_id`),
   ADD KEY `product_attribute_id` (`product_attribute_id`),
-  ADD KEY `id_order_id_order_detail` (`id_order`,`id_order_detail`),
-  ADD KEY `id_tax_rules_group` (`id_tax_rules_group`);
+  ADD KEY `id_order_id_order_detail` (`id_order`,`id_order_detail`);
 
 --
 -- Indizes für die Tabelle `fcs_order_detail_tax`

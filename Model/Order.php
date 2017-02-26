@@ -179,10 +179,7 @@ class Order extends AppModel
         $order2update = array(
             'total_paid' => $sumPriceIncl,
             'total_paid_tax_incl' => $sumPriceIncl,
-            'total_paid_real' => $sumPriceIncl,
-            'total_products_wt' => $sumPriceIncl,
             'total_paid_tax_excl' => $sumPriceExcl,
-            'total_products' => $sumPriceExcl,
             'total_deposit' => $sumDeposit
         );
         
