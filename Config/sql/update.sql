@@ -2,6 +2,8 @@ ALTER TABLE `fcs_cake_payments` ADD `approval` TINYINT(4) NOT NULL AFTER `status
 ALTER TABLE `fcs_cake_payments` ADD `approval_comment` TEXT NOT NULL AFTER `approval`;
 ALTER TABLE `fcs_cake_payments` ADD `changed_by` INT(10) UNSIGNED NOT NULL AFTER `approval_comment`;
 
+UPDATE `fcs_configuration` SET `text` = 'Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href="/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT" target="_blank"><img src="/js/vendor/famfamfam-silk/dist/png/information.png?1483041252" alt=""> E-Mail-Vorschau anzeigen</a>' WHERE `fcs_configuration`.`name` = 'FCS_REGISTRATION_EMAIL_TEXT';
+
 ALTER TABLE `fcs_order_detail`
   DROP `id_order_invoice`,
   DROP `id_warehouse`,

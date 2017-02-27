@@ -64,17 +64,6 @@ $this->element('addScript', array(
             
             echo '<td class="first">';
             echo $configuration['Configuration']['text'];
-            if (in_array($configuration['Configuration']['name'], array('FCS_REGISTRATION_EMAIL_TEXT'))) {
-                echo '<br />';
-                echo $this->Html->link(
-                    $this->Html->image($this->Html->getFamFamFamPath('information.png')) . ' E-Mail-Vorschau',
-                    '/admin/configurations/previewEmail/'.$configuration['Configuration']['name'],
-                    array(
-                        'escape' => false,
-                        'target' => '_blank'
-                    )
-                );
-            }
             echo '</td>';
             
             echo '<td style="width:30px;">';
