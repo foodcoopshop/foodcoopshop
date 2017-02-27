@@ -891,9 +891,8 @@ body.reports.payment .payment-approval-comment-wrapper {
 }
 body.payments.edit .email-template-info {
 	float: left;
-	margin-left: 2px;
 }
-body.payments.edit .ui-tooltip {
-	width: 750px ! important;
-	max-width: 750px ! important;
+body.payments .after .jquery-ui-icon {
+	float: left;
+	margin-left: 2px ! important;
 }

@@ -29,6 +29,11 @@ class AppEmail extends CakeEmail
         }
     }
 
+    /**
+     * declaring this method public enables rendering an email (for preview)
+     * {@inheritDoc}
+     * @see CakeEmail::_renderTemplates()
+     */
     public function _renderTemplates($content) {
         return parent::_renderTemplates($content);
     }
