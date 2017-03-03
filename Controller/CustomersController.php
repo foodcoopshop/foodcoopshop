@@ -84,6 +84,11 @@ class CustomersController extends FrontendController
                 $this->Customer->invalidate('email', 'Wir haben diese E-Mail-Adresse nicht gefunden.');
                 return false;
             }
+
+            if ($customer['Customer']['active'] !== true) {
+                $this->AppSession->setFlashError('Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.');
+                return false;
+            }
             
             $newPassword = $this->Customer->setNewPassword($customer['Customer']['id_customer']);
             
