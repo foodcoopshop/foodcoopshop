@@ -78,4 +78,3 @@ Configure::write('app.hostingEmail', 'mail@example.com');
  */
 // Configure::write('app.debugPasswordForUrl', 'my-password');
 
-?>

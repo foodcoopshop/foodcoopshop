@@ -34,6 +34,43 @@ Configure::write('Security.salt', '');
  */
 Configure::write('Security.cipherSeed', '');
 
+/**
+ * defines how many days after the app.sendOrderListsWeekday the products are delivered
+ * app.sendOrderListsWeekday is defined in app.config.php and preset to 3, i.e. "wednesday"
+ */
+Configure::write('app.deliveryDayDelta', 2);
+
+/**
+ * optional: message that is displayed in the dialog where order status can be changed (/admin/orders)
+ */
+Configure::write('app.additionalOrderStatusChangeInfo', '');
+
+/**
+ * your host's name, eg. http://www.yourfoodcoop.com
+ */
+Configure::write('app.cakeServerName', '');
+
+/**
+ * array of email adresses that receive notifications after new member registrations
+ */
+Configure::write('app.registrationNotificationEmails', array());
+
+/**
+ * whether to apply a member fee to the members account balance
+ */
+Configure::write('app.memberFeeEnabled', true);
+
+/**
+ * cronjob needs to be activated too
+ */
+Configure::write('app.emailOrderReminderEnabled', true);
+
+/**
+ * valid options of array: 'cashless' or 'cash' (or both but this is not recommended)
+ */
+Configure::write('app.paymentMethods', array(
+    'cashless'
+));
 
 /**
  * the name of your organisation, will be used in page title, email footer
@@ -62,39 +99,3 @@ Configure::write('Security.cipherSeed', '');
 // $addressForPdf .= "\nmail@example.com";
 // Configure::write('app.addressForPdf', $addressForPdf);
 
-/**
- * defines how many days after the app.sendOrderListsWeekday the products are delivered
- * app.sendOrderListsWeekday is defined in app.config.php and preset to 3, i.e. "wednesday"
- */
-Configure::write('app.deliveryDayDelta', 2);
-
-/**
- * optional: message that is displayed in the dialog where order status can be changed (/admin/orders)
- */
-Configure::write('app.additionalOrderStatusChangeInfo', '');
-
-/**
- * your host's name, eg. http://www.yourfoodcoop.com
- */
-Configure::write('app.cakeServerName', '');
-
-/**
- * array of email adresses that receive notifications after new member registrations
- */
-Configure::write('app.registrationNotificationEmails', array());
-
-Configure::write('app.memberFeeEnabled', true);
-
-/**
- * cronjob needs to be activated too
- */
-Configure::write('app.emailOrderReminderEnabled', true);
-
-/**
- * valid options of array: 'cashless' or 'cash' (or both but this is not recommended)
- */
-Configure::write('app.paymentMethods', array(
-    'cashless'
-));
-
-?>
