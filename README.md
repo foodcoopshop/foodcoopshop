@@ -60,7 +60,6 @@ $ chmod a+w -R ./webroot/tmp
 * Import [this dump](../blob/develop/Test/test_files/Config/sql/test-db-structure.sql) into your test database
 * When you run tests that require database access, **both default and test database (in your database.php) need to point to the test database!**
 * The tests can be run using the console or the web interface: www.yourdomain.com/test.php
-* Reimport the test DB dump every time You run tests on the DB data. Some tests do not correctly clean up the DB
 
 ## Compress assets
 If the debug level is set to 0 (e.g. not using a *.dev hostname), and you made changes to your assets defined in assets_compress.ini, you can rebuild your compressed assets with
