@@ -48,19 +48,19 @@ $ bower install
 ## Setting permissions
 ```
 $ cd /path/to/project
-$ chmod a+w -R /files_private
-$ chmod a+w -R /tmp
-$ chmod a+w -R /webroot/cache
-$ chmod a+w -R /webroot/files
-$ chmod a+w -R /webroot/tmp
+$ chmod a+w -R ./files_private
+$ chmod a+w -R ./tmp
+$ chmod a+w -R ./webroot/cache
+$ chmod a+w -R ./webroot/files
+$ chmod a+w -R ./webroot/tmp
 ```
 
-## Unit Tests
-* To run the unit tests, create a second database and add a test database configuration to your database.php. Please read [Cake's testing documentation](http://book.cakephp.org/2.0/en/development/testing.html)
-* The tests can be run using the console or the web interface: www.yourdomain.com/test.php
+## Unit Testing
+* Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](http://book.cakephp.org/2.0/en/development/testing.html)
 * Import [this dump](../blob/develop/Test/test_files/Config/sql/01-test-db-general.sql) into your test database
 * When you run tests that require database access, **both default and test database (in your database.php) need to point to the test database!**
-* Reimport the test DB dump every time You run tests on the DB data. Some tests do not correctly clean up the DB.
+* The tests can be run using the console or the web interface: www.yourdomain.com/test.php
+* Reimport the test DB dump every time You run tests on the DB data. Some tests do not correctly clean up the DB
 
 ## Compress assets
 If the debug level is set to 0 (e.g. not using a *.dev hostname), and you made changes to your assets defined in assets_compress.ini, you can rebuild your compressed assets with
