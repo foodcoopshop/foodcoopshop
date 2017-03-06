@@ -28,12 +28,6 @@ class ProductTest extends AppCakeTestCase
         parent::setUp();
         $this->Product = new Product();
     }
-    
-    // called only after the first test method of this class
-    public static function setUpBeforeClass()
-    {
-        self::initTestDatabase();
-    }
 
     public function testEditPrice()
     {

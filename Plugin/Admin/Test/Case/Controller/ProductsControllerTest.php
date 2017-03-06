@@ -19,12 +19,6 @@ App::uses('AppCakeTestCase', 'Test');
  */
 class ProductsControllerTest extends AppCakeTestCase
 {
-    
-    // called only after the first test method of this class
-    public static function setUpBeforeClass()
-    {
-        self::initTestDatabase();
-    }
 
     public function testEditQuantity()
     {

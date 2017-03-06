@@ -42,11 +42,19 @@ class AppCakeTestCase extends CakeTestCase
 
     public $browser;
 
+    /**
+     * called before every test method
+     * 
+     * {@inheritDoc}
+     * @see CakeTestCase::setUp()
+     */
     public function setUp()
     {
         parent::setUp();
         
         $this->initSimpleBrowser();
+        
+        self::resetTestDatabaseData();
         
         $Controller = new Controller();
         $View = new View($Controller);
@@ -57,16 +65,14 @@ class AppCakeTestCase extends CakeTestCase
         
         $this->Configuration = new Configuration();
         $this->Configuration->loadConfigurations();
+        
     }
 
-    protected static function initTestDatabase()
+    protected static function resetTestDatabaseData()
     {
         self::$dbConnection = ConnectionManager::getDataSource('test');
         self::$testDumpDir = APP . 'Test' . DS . 'test_files' . DS . 'Config' . DS . 'sql' . DS;
-        self::$appDumpDir = APP . 'Config' . DS . 'sql' . DS . '_helper' . DS;
-        self::importDump(self::$appDumpDir . 'init-orders.sql');
-        self::importDump(self::$testDumpDir . '02-init-stock-available.sql');
-        self::importDump(self::$testDumpDir . '03-init-manufacturers.sql');
+        self::importDump(self::$testDumpDir . 'test-db-data.sql');
     }
 
     public function initSimpleBrowser()
