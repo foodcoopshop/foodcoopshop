@@ -57,7 +57,7 @@ $ chmod a+w -R ./webroot/tmp
 
 ## Unit Testing
 * Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](http://book.cakephp.org/2.0/en/development/testing.html)
-* Import [this dump](../blob/develop/Test/test_files/Config/sql/test-db-structure.sql) into your test database
+* Import [this dump](Test/test_files/Config/sql/test-db-structure.sql) into your test database
 * When you run tests that require database access, **both default and test database (in your database.php) need to point to the test database!**
 * The tests can be run using the console or the web interface: www.yourdomain.com/test.php
 
