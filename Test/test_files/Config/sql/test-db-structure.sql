@@ -341,18 +341,6 @@ CREATE TABLE `fcs_customer` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `fcs_homeslider`
---
-
-DROP TABLE IF EXISTS `fcs_homeslider`;
-CREATE TABLE `fcs_homeslider` (
-  `id_homeslider_slides` int(10) UNSIGNED NOT NULL,
-  `id_shop` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `fcs_homeslider_slides`
 --
 
@@ -525,23 +513,6 @@ CREATE TABLE `fcs_order_detail_tax` (
   `id_tax` int(11) UNSIGNED DEFAULT '0',
   `unit_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
   `total_amount` decimal(16,6) NOT NULL DEFAULT '0.000000'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `fcs_posts`
---
-
-DROP TABLE IF EXISTS `fcs_posts`;
-CREATE TABLE `fcs_posts` (
-  `id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `body` text,
-  `published` varchar(1) DEFAULT 'N',
-  `created` datetime DEFAULT NULL,
-  `updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -815,23 +786,6 @@ CREATE TABLE `fcs_tax` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `fcs_users`
---
-
-DROP TABLE IF EXISTS `fcs_users`;
-CREATE TABLE `fcs_users` (
-  `id` int(11) NOT NULL,
-  `user` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `updated` datetime DEFAULT NULL
-) ENGINE=MEMORY DEFAULT CHARSET=utf8;
-
---
--- Indizes der exportierten Tabellen
---
-
---
 -- Indizes für die Tabelle `fcs_address`
 --
 ALTER TABLE `fcs_address`
@@ -956,12 +910,6 @@ ALTER TABLE `fcs_customer`
   ADD KEY `id_shop` (`id_shop`,`date_add`);
 
 --
--- Indizes für die Tabelle `fcs_homeslider`
---
-ALTER TABLE `fcs_homeslider`
-  ADD PRIMARY KEY (`id_homeslider_slides`,`id_shop`);
-
---
 -- Indizes für die Tabelle `fcs_homeslider_slides`
 --
 ALTER TABLE `fcs_homeslider_slides`
@@ -1035,12 +983,6 @@ ALTER TABLE `fcs_order_detail`
 ALTER TABLE `fcs_order_detail_tax`
   ADD KEY `id_tax` (`id_tax`),
   ADD KEY `id_order_detail` (`id_order_detail`);
-
---
--- Indizes für die Tabelle `fcs_posts`
---
-ALTER TABLE `fcs_posts`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `fcs_product`
@@ -1134,16 +1076,6 @@ ALTER TABLE `fcs_tax`
   ADD PRIMARY KEY (`id_tax`);
 
 --
--- Indizes für die Tabelle `fcs_users`
---
-ALTER TABLE `fcs_users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT für exportierte Tabellen
---
-
---
 -- AUTO_INCREMENT für Tabelle `fcs_address`
 --
 ALTER TABLE `fcs_address`
@@ -1204,11 +1136,6 @@ ALTER TABLE `fcs_configuration`
 ALTER TABLE `fcs_customer`
   MODIFY `id_customer` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 --
--- AUTO_INCREMENT für Tabelle `fcs_homeslider`
---
-ALTER TABLE `fcs_homeslider`
-  MODIFY `id_homeslider_slides` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
 -- AUTO_INCREMENT für Tabelle `fcs_homeslider_slides`
 --
 ALTER TABLE `fcs_homeslider_slides`
@@ -1233,11 +1160,6 @@ ALTER TABLE `fcs_orders`
 --
 ALTER TABLE `fcs_order_detail`
   MODIFY `id_order_detail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT für Tabelle `fcs_posts`
---
-ALTER TABLE `fcs_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_product`
 --
@@ -1268,8 +1190,3 @@ ALTER TABLE `fcs_stock_available`
 --
 ALTER TABLE `fcs_tax`
   MODIFY `id_tax` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT für Tabelle `fcs_users`
---
-ALTER TABLE `fcs_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;

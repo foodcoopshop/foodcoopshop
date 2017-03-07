@@ -712,11 +712,6 @@ INSERT INTO `fcs_customer` (`id_customer`, `id_shop_group`, `id_shop`, `id_gende
 (92, 1, 1, 0, 5, 1, 1, NULL, NULL, NULL, 'Demo', 'Superadmin', 'fcs-demo-superadmin@mailinator.com', 'bcee5b8b98c17603db37bfbd131a5074', '2016-09-29 12:26:12', NULL, 0, NULL, NULL, 0, NULL, '0.000000', 0, 0, '-1', '0000-00-00', NULL, 1, 0, 0, '2016-09-29 16:26:12', '2016-09-29 16:26:12');
 
 --
--- TRUNCATE Tabelle vor dem Einfügen `fcs_homeslider`
---
-
-TRUNCATE TABLE `fcs_homeslider`;
---
 -- TRUNCATE Tabelle vor dem Einfügen `fcs_homeslider_slides`
 --
 
@@ -834,15 +829,6 @@ TRUNCATE TABLE `fcs_order_detail_tax`;
 INSERT INTO `fcs_order_detail_tax` (`id_order_detail`, `id_tax`, `unit_amount`, `total_amount`) VALUES
 (1, 2, '0.170000', '0.340000'),
 (2, 3, '0.070000', '0.210000');
-
---
--- TRUNCATE Tabelle vor dem Einfügen `fcs_posts`
---
-
-TRUNCATE TABLE `fcs_posts`;
---
--- TRUNCATE Tabelle vor dem Einfügen `fcs_product`
---
 
 TRUNCATE TABLE `fcs_product`;
 --
@@ -1200,9 +1186,3 @@ INSERT INTO `fcs_tax` (`id_tax`, `rate`, `active`, `deleted`) VALUES
 (1, '20.000', 1, 0),
 (2, '10.000', 1, 0),
 (3, '13.000', 1, 0);
-
---
--- TRUNCATE Tabelle vor dem Einfügen `fcs_users`
---
-
-TRUNCATE TABLE `fcs_users`;
