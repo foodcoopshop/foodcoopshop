@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 06. Mrz 2017 um 15:44
+-- Erstellungszeit: 07. Mrz 2017 um 16:27
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -679,7 +679,7 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (544, NULL, NULL, 1, 'FCS_CART_ENABLED', 'Ist die Bestell-Funktion aktiviert?<br /><div class="small">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>', '1', 'boolean', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (545, NULL, NULL, 1, 'FCS_ACCOUNTING_EMAIL', 'E-Mail-Adresse des Finanzverantwortlichen<br /><div class="small">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>', '', 'text', 110, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (546, NULL, NULL, 1, 'FCS_AUTHENTICATION_INFO_TEXT', 'Info-Text beim Registrierungsformular<br /><div class="small">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>', 'Um bei uns zu bestellen musst du Vereinsmitglied sein.', 'textarea', 160, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(547, NULL, NULL, 1, 'FCS_SHOW_PRODUCTS_FOR_GUESTS', 'Produkte für nicht eingeloggte Mitglieder sichtbar?', '1', 'boolean', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(547, NULL, NULL, 1, 'FCS_SHOW_PRODUCTS_FOR_GUESTS', 'Produkte für nicht eingeloggte Mitglieder sichtbar?', '0', 'boolean', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (548, NULL, NULL, 1, 'FCS_DEFAULT_NEW_MEMBER_ACTIVE', 'Neue Mitglieder automatisch aktivieren?', '0', 'boolean', 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (549, NULL, NULL, 1, 'FCS_MINIMAL_CREDIT_BALANCE', 'Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class="small">Z.B.: "100" für 100 € im Minus. 0 bedeutet "kein Bestell-Limit".</div>', '100', 'number', 125, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (550, NULL, NULL, 1, 'FCS_BANK_ACCOUNT_DATA', 'Bankverbindung für die Guthaben-Einzahlungen".', 'Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 130, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -688,9 +688,9 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00'),
 (554, NULL, NULL, 1, 'FCS_SHOW_FOODCOOPSHOP_BACKLINK', 'Link auf www.foodcoopshop.com anzeigen?<br /><div class="small">Der Link wird im Footer und in den generierten PDFs (Bestelllisten, Rechnungen) angezeigt.</div>', '1', 'boolean', 180, '2016-11-27 00:00:00', '2016-11-27 00:00:00'),
 (555, NULL, NULL, 1, 'FCS_PAYMENT_PRODUCT_MAXIMUM', 'Maximalbetrag für jede Guthaben-Aufladung in Euro', '500', 'number', 127, '2016-11-28 00:00:00', '2016-11-28 00:00:00'),
-(556, NULL, NULL, 1, 'FCS_APP_NAME', 'Name der Foodcoop', '', 'text', 5, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
-(557, NULL, NULL, 1, 'FCS_APP_ADDRESS', 'Adresse der Foodcoop<br /><div class="small">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>', '', 'textarea', 6, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
-(558, NULL, NULL, 1, 'FCS_APP_EMAIL', 'E-Mail-Adresse der Foodcoop<br /><div class="small"></div>', '', 'text', 7, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(556, NULL, NULL, 1, 'FCS_APP_NAME', 'Name der Foodcoop', 'FoodCoop Test', 'text', 5, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(557, NULL, NULL, 1, 'FCS_APP_ADDRESS', 'Adresse der Foodcoop<br /><div class="small">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>', 'Demostra&szlig;e 4,<br />\r\nA-4564 Demostadt', 'textarea', 6, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(558, NULL, NULL, 1, 'FCS_APP_EMAIL', 'E-Mail-Adresse der Foodcoop<br /><div class="small"></div>', 'demo-foodcoop@maillinator.com', 'text', 7, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
 (559, NULL, NULL, 1, 'FCS_PLATFORM_OWNER', 'Betreiber der Plattform<br /><div class="small">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>', '', 'textarea', 8, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
 (560, NULL, NULL, 1, 'FCS_SHOP_ORDER_DEFAULT_STATE', 'Bestellstatus für Sofort-Bestellungen', '1', 'dropdown', 75, '2017-01-12 00:00:00', '2017-01-12 00:00:00');
 
@@ -816,7 +816,6 @@ TRUNCATE TABLE `fcs_orders`;
 --
 
 TRUNCATE TABLE `fcs_order_detail`;
-
 --
 -- TRUNCATE Tabelle vor dem Einfügen `fcs_order_detail_tax`
 --
@@ -829,6 +828,10 @@ TRUNCATE TABLE `fcs_order_detail_tax`;
 INSERT INTO `fcs_order_detail_tax` (`id_order_detail`, `id_tax`, `unit_amount`, `total_amount`) VALUES
 (1, 2, '0.170000', '0.340000'),
 (2, 3, '0.070000', '0.210000');
+
+--
+-- TRUNCATE Tabelle vor dem Einfügen `fcs_product`
+--
 
 TRUNCATE TABLE `fcs_product`;
 --
