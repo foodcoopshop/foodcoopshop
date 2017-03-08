@@ -127,10 +127,22 @@ foodcoopshop.Helper = {
         }
     },
 
-    selectMainMenu: function(pageTitle) {
-        $('#main-menu > li > a').filter(function() {
-            return $(this).html().substr($(this).html().length - pageTitle.length) === pageTitle;
+    selectMainMenu : function(menu, mainMenuTitle, subMenuTitle) {
+        
+    	$(menu + ' > li > a').filter(function() {
+            return $(this).html().substr($(this).html().length - mainMenuTitle.length) === mainMenuTitle;
         }).addClass('active');
+        
+        if (subMenuTitle) {
+        	$(menu + ' ul > li > a').filter(function() {
+                return $(this).html().substr($(this).html().length - subMenuTitle.length) === subMenuTitle;
+            }).addClass('active');
+        }
+        
+    },
+    
+    selectMainMenuFrontend: function(pageTitle) {
+    	this.selectMainMenu('#main-menu', pageTitle);
     },
 
     initSlider: function() {
@@ -314,7 +326,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function() {
         $.backstretch(
-            '/img/bg-photo-winter.jpg', {
+            '/img/bg-photo-spring.jpg', {
                 positionY: 'top',
                 speed: 400
             }
@@ -391,6 +403,7 @@ foodcoopshop.Helper = {
             content: function() {
                 return $(this).attr('title');
             },
+            tooltipHover: true,
             position: position
         });
     },

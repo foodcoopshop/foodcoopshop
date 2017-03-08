@@ -19,22 +19,26 @@
 
 <p>
     <?php
-        echo Configure::read('app.name').'<br />';
-        echo implode('<br />', $this->MyHtml->getAddressFromAddressConfiguration());
+        if (Configure::read('app.db_config_FCS_PLATFORM_OWNER') != '') {
+            echo Configure::read('app.db_config_FCS_PLATFORM_OWNER');
+        } else {
+            echo Configure::read('app.db_config_FCS_APP_NAME');
+            echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
+        }
     ?>
 </p>
 
-<p>(im Folgenden kurz: Foodcoop)</p>
+<p>(im Folgenden kurz: Betreiber)</p>
 
 <h2>1. Geltung der Nutzungsbedingungen</h2>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die die Foodcoop im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für den Hersteller erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für den Hersteller erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
 
 <p>1.2. Geschäftsbedingungen des Herstellers kommen nicht zur Anwendung.</p>
 
 <h2>2. Leistungen und Entgelte</h2>
 
-<p>2.1. Die Foodcoop stellt dem Hersteller eine Plattform zur Verfügung, auf der der Hersteller (nicht exklusiv) Waren und Dienstleistungen zum Verkauf anbietet. Dazu stellt die Foodcoop dem Hersteller ein System (Hersteller-Bereich) zur Verfügung, mit dem der Hersteller die jeweiligen Produkte selbst eintragen kann.</p>
+<p>2.1. Der Betreiber stellt dem Hersteller eine Plattform zur Verfügung, auf der der Hersteller (nicht exklusiv) Waren und Dienstleistungen zum Verkauf anbietet. Dazu stellt der Betreiber dem Hersteller ein System (Hersteller-Bereich) zur Verfügung, mit dem der Hersteller die jeweiligen Produkte selbst eintragen kann.</p>
 
 <p>2.2. Der Hersteller verpflichtet sich nur solche Waren und Dienstleistungen zum Verkauf anzubieten, welche in Österreich durch den Hersteller verkauft werden dürfen.</p>
 
@@ -42,35 +46,35 @@
 
 <p>2.4. Die Auszahlung der Kaufpreise erfolgt am 11. des Folgemonats, sofern die Frist für die Ausübung eines allfälligen Rücktrittsrecht bereits abgelaufen ist.</p>
 
-<p>2.5. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande, die Foodcoop vermittelt lediglich den Vertrag.</p>
+<p>2.5. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande, der Betreiber vermittelt lediglich den Vertrag.</p>
 
 <p>2.6. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p> 
 
-<p>2.7. Die Foodcoop hat das Recht, Artikel, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
+<p>2.7. Der Betreiber hat das Recht, Artikel, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
 
 <?php
     if (Configure::read('app.useManufacturerCompensationPercentage') && $compensationPercentageForTermsOfUse > 0) {
         ?>
-		<p>2.8. Für jede über die Plattform verkaufte Ware oder Dienstleistung steht der Foodcoop eine Provision in Höhe von <?php echo $compensationPercentageForTermsOfUse; ?>% des Umsatzes zuzüglich einer allfälligen Umsatzsteuer zu. Die Foodcoop ist berechtigt, diesen Betrag unmittelbar vor der Auszahlung an den Hersteller einzubehalten. Der Hersteller bekommt die Rechnungen der verkauften Produkte (inklusive der einbehaltenen Beträge) automatisch per E-Mail.</p>
+		<p>2.8. Für jede über die Plattform verkaufte Ware oder Dienstleistung steht dem Betreiber eine Provision in Höhe von <?php echo $compensationPercentageForTermsOfUse; ?>% des Umsatzes zuzüglich einer allfälligen Umsatzsteuer zu. Der Betreiber ist berechtigt, diesen Betrag unmittelbar vor der Auszahlung an den Hersteller einzubehalten. Der Hersteller bekommt die Rechnungen der verkauften Produkte (inklusive der einbehaltenen Beträge) automatisch per E-Mail.</p>
         <?php
     }
 ?>
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 
-<p>3.1. Die Haftung der Foodcoop ist ausgeschlossen. Für Schäden infolge schuldhafter Vertragsverletzung haftet die Foodcoop bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
+<p>3.1. Die Haftung des Betreibers ist ausgeschlossen. Für Schäden infolge schuldhafter Vertragsverletzung haftet der Betreiber bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
 
 <p>3.2. Der Hersteller verpflichtet sich, die ihn betreffenden Daten vollständig und wahrheitsgemäß auszufüllen und aktuell zu halten.</p>
 
-<p>3.3. Die Foodcoop haftet nicht für Rechtstexte, die die Foodcoop dem Hersteller zur Verfügung stellt. Die Zurverfügungstellung erfolgt unverbindlich.</p>
+<p>3.3. Der Betreiber haftet nicht für Rechtstexte, die der Betreiber dem Hersteller zur Verfügung stellt. Die Zurverfügungstellung erfolgt unverbindlich.</p>
 
-<p>3.4. Der Hersteller verpflichtet sich, nur solche Inhalte auf die Plattform zu stellen, für die er die für die Veröffentlichung auf der Plattform <b>notwendigen Rechte</b> erworben hat. Der Hersteller haftet daher für die von ihm bereitgestellten Inhalte und wird die Foodcoop schad- und klaglos halten. <b>Dies gilt vor allem für Bilder, die für das Hersteller-Profil oder die Produkte verwendet werden können.</b></p>  
+<p>3.4. Der Hersteller verpflichtet sich, nur solche Inhalte auf die Plattform zu stellen, für die er die für die Veröffentlichung auf der Plattform <b>notwendigen Rechte</b> erworben hat. Der Hersteller haftet daher für die von ihm bereitgestellten Inhalte und wird den Betreiber schad- und klaglos halten. <b>Dies gilt vor allem für Bilder, die für das Hersteller-Profil oder die Produkte verwendet werden können.</b></p>  
 
 <h2>4. Schlussbestimmungen</h2>
 
-<p>4.1. Erfüllungsort für alle Leistungen aus diesem Vertrag ist der Sitz der Foodcoop.</p>
+<p>4.1. Erfüllungsort für alle Leistungen aus diesem Vertrag ist der Sitz des Betreibers.</p>
 
-<p>4.2. Als Gerichtsstand wird das für die Foodcoop sachlich und örtlich zuständige Gericht vereinbart.</p>
+<p>4.2. Als Gerichtsstand wird das für den Betreiber sachlich und örtlich zuständige Gericht vereinbart.</p>
 
 <p>4.3. Für Rechtsstreitigkeiten aus diesem Vertrag gilt ausschließlich österreichisches Recht. Die Anwendung des UN-Kaufrechts, der Verweisungsnormen des IPRG und der VO (EG) Nr. 593/2008 des Europäischen Parlaments und des Rates vom 17. Juni 2008 über das auf vertragliche Schuldverhältnisse anzuwendende Recht (Rom I-Verordnung) ist ausgeschlossen.</p> 
 

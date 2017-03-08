@@ -25,6 +25,49 @@ foodcoopshop.Admin = {
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
+    
+    selectMainMenuAdmin: function(mainMenuTitle, subMenuTitle) {
+    	foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
+    },
+    
+    initRowMarkerAll : function() {
+    	$('input#row-marker-all').on('change', function() {
+    		if (this.checked) {
+    			$('input.row-marker[type="checkbox"]:not(:checked)').trigger('click');
+    		} else {
+    			$('input.row-marker[type="checkbox"]:checked').trigger('click');
+    		}
+    	})
+    },
+    
+    initCancelSelectionButton : function() {
+    	
+    	var button = $('#cancelSelectedProductsButton');
+    	foodcoopshop.Helper.disableButton(button);
+    	
+    	$('table.list').find('input.row-marker[type="checkbox"]').on('click', function() {
+    		foodcoopshop.Admin.updateCancelSelectionButton(button);
+    	});
+    	
+    	button.on('click', function() {
+    		var orderDetailIds = [];
+    		$('table.list').find('input.row-marker[type="checkbox"]:checked').each(function() {
+    			var orderDetailId = $(this).closest('tr').find('td:nth-child(2)').html();
+    			orderDetailIds.push(orderDetailId);
+    		});
+    		foodcoopshop.Admin.openBulkDeleteOrderDetailDialog(orderDetailIds);
+    	});
+    	
+    },
+    
+    updateCancelSelectionButton : function(button) {
+    	
+		foodcoopshop.Helper.disableButton(button);
+    	if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
+    		foodcoopshop.Helper.enableButton(button);
+    	}
+    	
+    },
 
     initChangeOrderStateFromOrderDetails: function() {
     	
@@ -290,9 +333,9 @@ foodcoopshop.Admin = {
     initProductDepositEditDialog: function(container) {
 
         var dialogId = 'product-deposit-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand ändern">';
+        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogDepositDeposit"></label>';
+        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label>';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -359,9 +402,9 @@ foodcoopshop.Admin = {
     initProductPriceEditDialog: function(container) {
 
         var dialogId = 'product-price-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis ändern">';
+        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogPricePrice"></label>';
+        dialogHtml += '<label for="dialogPricePrice">Eingabe in €</label>';
         dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -748,77 +791,103 @@ foodcoopshop.Admin = {
 
     },
 
+    openBulkDeleteOrderDetailDialog : function(orderDetailIds) {
+         
+    	var infoText = '<p>Du hast <b>' + orderDetailIds.length + '</b> Artikel zum Stornieren ausgewählt:</p>';
+         
+         infoText += '<ul>';
+         for (var i in orderDetailIds) {
+             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).parent().parent().parent().parent();
+             infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9)').html() + '</li>';
+    	 }
+         infoText += '</ul>';
+
+         var dialogTitle = 'Ausgewählte Artikel wirklich stornieren?';
+         var textareaLabel = 'Warum werden die Artikel storniert (Pflichtfeld)?';
+         foodcoopshop.Admin.openDeleteOrderDetailDialog(orderDetailIds, infoText, textareaLabel, dialogTitle);    	
+    },
+    
+    openDeleteOrderDetailDialog : function(orderDetailIds, infoText, textareaLabel, dialogTitle) {
+        
+    	$('#cke_dialogCancellationReason').val('');
+        
+        var dialogHtml = infoText;
+        if (!foodcoopshop.Helper.isManufacturer) {
+            dialogHtml += '<p class="overlay-info">Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!</p>';
+        }
+        
+        dialogHtml += '<div class="textarea-wrapper">';
+        dialogHtml += '<label for="dialogCancellationReason">' + textareaLabel +'</label>';
+        dialogHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason" />';
+        dialogHtml += '</div>';
+        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+
+        $('<div></div>').appendTo('body')
+            .html(dialogHtml)
+            .dialog({
+                modal: true,
+                title: dialogTitle,
+                autoOpen: true,
+                width: 400,
+                open: function() {
+                    foodcoopshop.Helper.initCkeditor('dialogCancellationReason');
+                },
+                resizable: false,
+                buttons: {
+                    'Abbrechen': function() {
+                        $(this).dialog('close');
+                    },
+                    'Ja, stornieren!': function() {
+
+                        var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
+                        if (ckeditorData == '') {
+                            alert('Bitte an, warum du den Artikel stornierst.');
+                            return;
+                        }
+
+                        $('.ui-dialog .ajax-loader').show();
+                        $('.ui-dialog button').attr('disabled', 'disabled');
+                        foodcoopshop.Helper.ajaxCall(
+                            '/admin/order_details/delete', {
+                                orderDetailIds: orderDetailIds,
+                                cancellationReason: ckeditorData
+                            }, {
+                                onOk: function(data) {
+                                    document.location.reload();
+                                },
+                                onError: function(data) {
+                                    document.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                close: function(event, ui) {
+                    foodcoopshop.Helper.destroyCkeditor('dialogCancellationReason');
+                }
+            });        
+    },
+    
     initDeleteOrderDetail: function() {
 
         $('.delete-order-detail').on('click', function() {
 
-            $('#cke_dialogCancellationReason').val('');
-
             var orderDetailId = $(this).attr('id').split('-');
             orderDetailId = orderDetailId[orderDetailId.length - 1];
-
+            
             var dataRow = $('#delete-order-detail-' + orderDetailId).parent().parent().parent().parent();
-            var dialogHtml = '<p>Möchtest du den Artikel <b>' + dataRow.find('td:nth-child(4) a').html() + '</b>';
+            var infoText = '<p>Möchtest du den Artikel <b>' + dataRow.find('td:nth-child(4) a').html() + '</b>';
 
             if (!foodcoopshop.Helper.isManufacturer) {
-                dialogHtml += ' vom Hersteller <b>' + dataRow.find('td:nth-child(5) a').html() + '</b>';
+            	infoText += ' vom Hersteller <b>' + dataRow.find('td:nth-child(5) a').html() + '</b>';
             }
-            dialogHtml += ' wirklich stornieren?</p>';
+            infoText += ' wirklich stornieren?</p>';
+            
+            var dialogTitle = 'Bestellten Artikel wirklich stornieren?';
+            var textareaLabel = 'Warum wird der Artikel storniert (Pflichtfeld)?';
+            
+            foodcoopshop.Admin.openDeleteOrderDetailDialog([orderDetailId], infoText, textareaLabel, dialogTitle);
 
-            if (!foodcoopshop.Helper.isManufacturer) {
-                dialogHtml += '<p class="overlay-info">Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!</p>';
-            }
-
-            dialogHtml += '<div class="textarea-wrapper">';
-            dialogHtml += '<label for="dialogCancellationReason">Warum wird der Artikel storniert (Pflichtfeld)?</label>';
-            dialogHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason" />';
-            dialogHtml += '</div>';
-            dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            $('<div></div>').appendTo('body')
-                .html(dialogHtml)
-                .dialog({
-                    modal: true,
-                    title: 'Bestellten Artikel wirklich stornieren?',
-                    autoOpen: true,
-                    width: 400,
-                    open: function() {
-                        foodcoopshop.Helper.initCkeditor('dialogCancellationReason');
-                    },
-                    resizable: false,
-                    buttons: {
-                        'Abbrechen': function() {
-                            $(this).dialog('close');
-                        },
-                        'Ja, stornieren!': function() {
-
-                            var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
-                            if (ckeditorData == '') {
-                                alert('Bitte an, warum du den Artikel stornierst.');
-                                return;
-                            }
-
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.Helper.ajaxCall(
-                                '/admin/order_details/delete', {
-                                    orderDetailId: orderDetailId,
-                                    cancellationReason: ckeditorData
-                                }, {
-                                    onOk: function(data) {
-                                        document.location.reload();
-                                    },
-                                    onError: function(data) {
-                                        document.location.reload();
-                                    }
-                                }
-                            );
-                        }
-                    },
-                    close: function(event, ui) {
-                        foodcoopshop.Helper.destroyCkeditor('dialogCancellationReason');
-                    }
-                });
         });
     },
 
@@ -2082,7 +2151,6 @@ foodcoopshop.Admin = {
         	var selectedRadioButton = $('.featherlight-content input[type="radio"]:checked');
         	
         	// check if radio buttons are in deposit form or product form
-        	console.log($('.featherlight-content .add-payment-form'));
         	if ($('.featherlight-content .add-payment-form').hasClass('add-payment-deposit-form')) {
         		var message = 'Bitte wähle die Art der Pfand-Rücknahme aus.';
             	var isDepositForm = true;

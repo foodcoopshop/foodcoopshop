@@ -75,12 +75,12 @@ class OrdersController extends AdminAppController
             $newDate = Configure::read('timeHelper')->getDateForShopOrder();
             $order2update = array(
                 'date_add' => $newDate,
-                'current_state' => Configure::read('htmlHelper')->paymentIsCashless() ? ORDER_STATE_CASH_FREE : ORDER_STATE_CASH
+                'current_state' => Configure::read('app.db_config_FCS_SHOP_ORDER_DEFAULT_STATE')
             );
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
             
-            $message = 'Sofort-Bestellung (' . $order['Order']['reference'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt, rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . ' und abgeschlossen.';
+            $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '.';
             
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
@@ -95,7 +95,8 @@ class OrdersController extends AdminAppController
 
     public function changeOrderStateToClosed()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $orderIds = $this->params['data']['orderIds'];
         $orderIds = array_unique($orderIds);
         $orderState = $this->params['data']['orderState'];
@@ -123,7 +124,8 @@ class OrdersController extends AdminAppController
 
     public function changeOrderState()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $orderIds = $this->params['data']['orderIds'];
         $orderState = $this->params['data']['orderState'];
         
@@ -275,7 +277,7 @@ class OrdersController extends AdminAppController
 
     public function editDate()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $orderId = $this->params['data']['orderId'];
         $date = $this->params['data']['date'];

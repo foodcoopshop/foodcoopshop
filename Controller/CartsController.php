@@ -216,7 +216,6 @@ class CartsController extends FrontendController
                 }
                 if (! $attributeIdFound) {
                     $message = 'Die Variante existiert nicht. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um deine Bestellung abzuschließen.';
-                    $this->log($message);
                     $cartErrors[$ccp['productId']][] = $message;
                 }
             }
@@ -228,7 +227,6 @@ class CartsController extends FrontendController
             
             if (! $product['Manufacturer']['active'] || $product['Manufacturer']['holiday']) {
                 $message = 'Der Hersteller des Produkts "' . $product['ProductLang']['name'] . '" ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
-                $this->log($message);
                 $cartErrors[$ccp['productId']][] = $message;
             }
             
@@ -281,7 +279,6 @@ class CartsController extends FrontendController
             // START save order
             $this->Order->id = null;
             $order2save = array(
-                'reference' => strtoupper(StringComponent::createRandomString(9)),
                 'id_shop' => Configure::read('app.shopId'),
                 'id_lang' => Configure::read('app.langId'),
                 'id_customer' => $this->AppAuth->getUserId(),
@@ -484,7 +481,6 @@ class CartsController extends FrontendController
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
             $message = 'Produkt ' . $productId . ' war nicht in Warenkorb vorhanden.';
-            $this->log($message);
             die(json_encode(array(
                 'status' => 0,
                 'msg' => $message,
@@ -529,7 +525,6 @@ class CartsController extends FrontendController
         // allow -1 and 1 - 99
         if ($amount == 0 || $amount < - 1 || $amount > 99) {
             $message = 'Die gewünschte Anzahl "' . $amount . '" ist nicht gültig.';
-            $this->log($message);
             die(json_encode(array(
                 'status' => 0,
                 'msg' => $message,
@@ -598,7 +593,6 @@ class CartsController extends FrontendController
             }
             if (! $attributeIdFound) {
                 $message = 'Die Variante existiert nicht: ' . $initialProductId;
-                $this->log($message);
                 die(json_encode(array(
                     'status' => 0,
                     'msg' => $message,

@@ -57,14 +57,20 @@ h2 {
     margin-top: 0;
     font-weight: normal;
 }
-h2.warning {
-    background: #f3515c;
-    color: #fff;
+h2.warning,
+h2.info {
     letter-spacing: normal;
     font-size: 15px;
     padding: 7px 5px ! important;
     border-bottom: none;
     margin-bottom: 2px;
+    color: #fff;
+}
+h2.info {
+    background: #719f41;
+}
+h2.warning {
+    background: #f3515c;
 }
 #installation-logo {
     border-radius: 10px;
@@ -375,6 +381,10 @@ form .required label:after {
 pre {
 	margin-top: 50px;
 	margin-left: 150px;
+}
+.ui-tooltip pre {
+    margin-top: 0;
+    margin-left: 0;
 }
 .ui-dialog.logout-button {
 	z-index: 100000;

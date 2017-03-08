@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 21. Nov 2016 um 20:25
+-- Erstellungszeit: 26. Feb 2017 um 19:29
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -173,7 +173,10 @@ CREATE TABLE `fcs_cake_payments` (
   `text` varchar(255) NOT NULL,
   `date_add` datetime NOT NULL,
   `date_changed` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1'
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `approval` tinyint(4) NOT NULL,
+  `approval_comment` text NOT NULL,
+  `changed_by` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -321,20 +324,25 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (164, NULL, NULL, 1, 'FCS_CUSTOMER_GROUP', 'Welcher Gruppe sollen neu registrierte Mitglieder zugewiesen werden?', '3', 'dropdown', 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (456, NULL, NULL, 1, 'FCS_FOOTER_CMS_TEXT', 'Zusätzlicher Text für den Footer', NULL, 'textarea', 80, '2014-06-11 17:50:55', '2016-07-01 21:47:47'),
 (508, NULL, NULL, 1, 'FCS_FACEBOOK_URL', 'Facebook-Url für die Einbindung im Footer', 'https://www.facebook.com/FoodCoopShop/', 'text', 90, '2015-07-08 13:23:54', '2015-07-08 13:23:54'),
-(538, NULL, NULL, 1, 'FCS_REGISTRATION_EMAIL_TEXT', 'Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird.', '', 'textarea', 170, '2016-06-26 00:00:00', '2016-06-26 00:00:00'),
+(538, NULL, NULL, 1, 'FCS_REGISTRATION_EMAIL_TEXT', 'Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href="/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT" target="_blank"><img src="/js/vendor/famfamfam-silk/dist/png/information.png?1483041252" alt=""> E-Mail-Vorschau anzeigen</a>', '', 'textarea', 170, '2016-06-26 00:00:00', '2016-06-26 00:00:00'),
 (543, NULL, NULL, 1, 'FCS_RIGHT_INFO_BOX_HTML', 'Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class="small">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als "Überschrift 3" formatieren.<br />Die Variable {ABHOLTAG} zeigt automatisch das richtige Abholdatum an.</div>', '<h3>Abholzeiten</h3>\r\n\r\n<p>Wenn du deine Produkte jetzt bestellst, kannst du sie am <strong>{ABHOLTAG}</strong>&nbsp;zwischen 17 und 19 Uhr abholen.</p>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\r\n', 'textarea', 150, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (544, NULL, NULL, 1, 'FCS_CART_ENABLED', 'Ist die Bestell-Funktion aktiviert?<br /><div class="small">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>', '1', 'boolean', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (545, NULL, NULL, 1, 'FCS_ACCOUNTING_EMAIL', 'E-Mail-Adresse des Finanzverantwortlichen<br /><div class="small">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>', '', 'text', 110, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (546, NULL, NULL, 1, 'FCS_AUTHENTICATION_INFO_TEXT', 'Info-Text beim Registrierungsformular<br /><div class="small">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>', 'Um bei uns zu bestellen musst du Vereinsmitglied sein.', 'textarea', 160, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(547, NULL, NULL, 1, 'FCS_SHOW_PRODUCTS_FOR_GUESTS', 'Produkte für nicht eingeloggte Mitglieder sichtbar?', '1', 'boolean', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(547, NULL, NULL, 1, 'FCS_SHOW_PRODUCTS_FOR_GUESTS', 'Produkte für nicht eingeloggte Mitglieder sichtbar?', '0', 'boolean', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (548, NULL, NULL, 1, 'FCS_DEFAULT_NEW_MEMBER_ACTIVE', 'Neue Mitglieder automatisch aktivieren?', '0', 'boolean', 50, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(549, NULL, NULL, 1, 'FCS_MINIMAL_CREDIT_BALANCE', 'Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class="small">Z.B.: "100" für 100 € im Minus. 0 bedeutet "kein Bestell-Limit".</div>', '100', 'number', 125, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(549, NULL, NULL, 1, 'FCS_MINIMAL_CREDIT_BALANCE', 'Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class="small">Z.B.: "100" für 100 € im Minus. 0 bedeutet "kein Bestell-Limit".</div>', '50', 'number', 125, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (550, NULL, NULL, 1, 'FCS_BANK_ACCOUNT_DATA', 'Bankverbindung für die Guthaben-Einzahlungen".', 'Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 130, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (551, NULL, NULL, 1, 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA', 'Bankverbindung für die Mitgliedsbeitrags-Einzahlungen".', 'MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878', 'text', 140, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (552, NULL, NULL, 1, 'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS', 'Zusätzliche Liefer-Informationen für die Hersteller<br /><div class="small">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>', ', 15:00 bis 17:00 Uhr', 'text', 120, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (553, NULL, NULL, 1, 'FCS_ORDER_CONFIRMATION_MAIL_BCC', 'E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class="small">Kann leer gelassen werden.</div>', '', 'text', 300, '2016-10-06 00:00:00', '2016-10-06 00:00:00'),
 (554, NULL, NULL, 1, 'FCS_SHOW_FOODCOOPSHOP_BACKLINK', 'Link auf www.foodcoopshop.com anzeigen?<br /><div class="small">Der Link wird im Footer und in den generierten PDFs (Bestelllisten, Rechnungen) angezeigt.</div>', '1', 'boolean', 180, '2016-11-27 00:00:00', '2016-11-27 00:00:00'),
-(555, NULL, NULL, 1, 'FCS_PAYMENT_PRODUCT_MAXIMUM', 'Maximalbetrag für jede Guthaben-Aufladung in Euro', '500', 'number', 127, '2016-11-28 00:00:00', '2016-11-28 00:00:00');
+(555, NULL, NULL, 1, 'FCS_PAYMENT_PRODUCT_MAXIMUM', 'Maximalbetrag für jede Guthaben-Aufladung in Euro', '500', 'number', 127, '2016-11-28 00:00:00', '2016-11-28 00:00:00'),
+(556, NULL, NULL, 1, 'FCS_APP_NAME', 'Name der Foodcoop', '', 'text', 5, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(557, NULL, NULL, 1, 'FCS_APP_ADDRESS', 'Adresse der Foodcoop<br /><div class="small">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>', '', 'textarea', 6, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(558, NULL, NULL, 1, 'FCS_APP_EMAIL', 'E-Mail-Adresse der Foodcoop<br /><div class="small"></div>', '', 'text', 7, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(559, NULL, NULL, 1, 'FCS_PLATFORM_OWNER', 'Betreiber der Plattform<br /><div class="small">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>', '', 'textarea', 8, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(560, NULL, NULL, 1, 'FCS_SHOP_ORDER_DEFAULT_STATE', 'Bestellstatus für Sofort-Bestellungen', '1', 'dropdown', 75, '2017-01-12 00:00:00', '2017-01-12 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -517,51 +525,15 @@ DROP TABLE IF EXISTS `fcs_orders`;
 CREATE TABLE `fcs_orders` (
   `id_order` int(10) UNSIGNED NOT NULL,
   `reference` varchar(9) DEFAULT NULL,
-  `id_shop_group` int(11) UNSIGNED NOT NULL DEFAULT '1',
   `id_shop` int(11) UNSIGNED NOT NULL DEFAULT '1',
-  `id_carrier` int(10) UNSIGNED NOT NULL,
-  `id_lang` int(10) UNSIGNED NOT NULL,
   `id_customer` int(10) UNSIGNED NOT NULL,
-  `id_cart` int(10) UNSIGNED NOT NULL,
   `id_cake_cart` int(10) NOT NULL,
-  `id_currency` int(10) UNSIGNED NOT NULL,
-  `id_address_delivery` int(10) UNSIGNED NOT NULL,
-  `id_address_invoice` int(10) UNSIGNED NOT NULL,
   `current_state` int(10) UNSIGNED NOT NULL,
-  `secure_key` varchar(32) NOT NULL DEFAULT '-1',
-  `payment` varchar(255) NOT NULL,
-  `conversion_rate` decimal(13,6) NOT NULL DEFAULT '1.000000',
-  `module` varchar(255) DEFAULT NULL,
-  `recyclable` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `gift` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `gift_message` text,
-  `mobile_theme` tinyint(1) NOT NULL DEFAULT '0',
-  `shipping_number` varchar(64) DEFAULT NULL,
-  `total_discounts` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_discounts_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_discounts_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_paid` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_paid_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_paid_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_paid_real` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_products` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_products_wt` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `carrier_tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
-  `total_wrapping` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_wrapping_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_wrapping_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `invoice_number` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `delivery_number` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `invoice_date` datetime NOT NULL,
-  `delivery_date` datetime NOT NULL,
-  `valid` int(1) UNSIGNED NOT NULL DEFAULT '0',
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
-  `round_mode` tinyint(1) NOT NULL DEFAULT '2',
-  `round_type` tinyint(1) NOT NULL DEFAULT '1',
   `total_deposit` decimal(10,2) NOT NULL,
   `general_terms_and_conditions_accepted` tinyint(4) UNSIGNED NOT NULL,
   `cancellation_terms_accepted` tinyint(4) UNSIGNED NOT NULL
@@ -577,49 +549,17 @@ DROP TABLE IF EXISTS `fcs_order_detail`;
 CREATE TABLE `fcs_order_detail` (
   `id_order_detail` int(10) UNSIGNED NOT NULL,
   `id_order` int(10) UNSIGNED NOT NULL,
-  `id_order_invoice` int(11) DEFAULT NULL,
-  `id_warehouse` int(10) UNSIGNED DEFAULT '0',
   `id_shop` int(11) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
   `product_attribute_id` int(10) UNSIGNED DEFAULT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_quantity` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `product_quantity_in_stock` int(10) NOT NULL DEFAULT '0',
-  `product_quantity_refunded` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `product_quantity_return` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `product_quantity_reinjected` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `product_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `reduction_percent` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `reduction_amount` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `reduction_amount_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `reduction_amount_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `group_reduction` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `product_quantity_discount` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `product_ean13` varchar(13) DEFAULT NULL,
-  `product_upc` varchar(12) DEFAULT NULL,
-  `product_reference` varchar(32) DEFAULT NULL,
-  `product_supplier_reference` varchar(32) DEFAULT NULL,
-  `product_weight` decimal(20,6) NOT NULL,
-  `tax_computation_method` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `tax_name` varchar(16) NOT NULL,
-  `tax_rate` decimal(10,3) NOT NULL DEFAULT '0.000',
-  `ecotax` decimal(21,6) NOT NULL DEFAULT '0.000000',
-  `ecotax_tax_rate` decimal(5,3) NOT NULL DEFAULT '0.000',
-  `discount_quantity_applied` tinyint(1) NOT NULL DEFAULT '0',
-  `download_hash` varchar(255) DEFAULT NULL,
-  `download_nb` int(10) UNSIGNED DEFAULT '0',
-  `download_deadline` datetime DEFAULT NULL,
   `total_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `unit_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `unit_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_shipping_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `purchase_supplier_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `original_product_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `id_tax_rules_group` int(11) UNSIGNED DEFAULT '0',
   `id_tax` int(11) UNSIGNED DEFAULT '0',
-  `original_wholesale_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `deposit` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1095,14 +1035,6 @@ ALTER TABLE `fcs_manufacturer_lang`
 ALTER TABLE `fcs_orders`
   ADD PRIMARY KEY (`id_order`),
   ADD KEY `id_customer` (`id_customer`),
-  ADD KEY `id_cart` (`id_cart`),
-  ADD KEY `invoice_number` (`invoice_number`),
-  ADD KEY `id_carrier` (`id_carrier`),
-  ADD KEY `id_lang` (`id_lang`),
-  ADD KEY `id_currency` (`id_currency`),
-  ADD KEY `id_address_delivery` (`id_address_delivery`),
-  ADD KEY `id_address_invoice` (`id_address_invoice`),
-  ADD KEY `id_shop_group` (`id_shop_group`),
   ADD KEY `id_shop` (`id_shop`),
   ADD KEY `date_add` (`date_add`),
   ADD KEY `current_state` (`current_state`),
@@ -1116,8 +1048,7 @@ ALTER TABLE `fcs_order_detail`
   ADD KEY `order_detail_order` (`id_order`),
   ADD KEY `product_id` (`product_id`),
   ADD KEY `product_attribute_id` (`product_attribute_id`),
-  ADD KEY `id_order_id_order_detail` (`id_order`,`id_order_detail`),
-  ADD KEY `id_tax_rules_group` (`id_tax_rules_group`);
+  ADD KEY `id_order_id_order_detail` (`id_order`,`id_order_detail`);
 
 --
 -- Indizes für die Tabelle `fcs_order_detail_tax`
@@ -1275,7 +1206,7 @@ ALTER TABLE `fcs_cms`
 -- AUTO_INCREMENT für Tabelle `fcs_configuration`
 --
 ALTER TABLE `fcs_configuration`
-  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
+  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=561;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_customer`
 --

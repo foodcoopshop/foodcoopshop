@@ -42,6 +42,10 @@ if (count($payments) == 0) {
 
 } else {
     
+    $this->element('addScript', array(
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
+    ));
+    
     echo '<table class="list">';
     echo '<tr class="sort">';
     echo '<th>Datum</th>';
@@ -61,7 +65,13 @@ if (count($payments) == 0) {
         
         $i ++;
         
-        echo '<tr class="data ' . $payment['type'] . '">';
+        $rowClass = array('data', $payment['type']);
+        
+        if (isset($oldYear) && $oldYear != $payment['year']) {
+            $rowClass[] = 'last-row-of-year';
+        }
+        
+        echo '<tr class="' . implode(' ', $rowClass) . '">';
         
         echo '<td class="hide">';
         echo $payment['payment_id'];
@@ -72,6 +82,41 @@ if (count($payments) == 0) {
         echo '</td>';
         
         echo '<td>';
+        
+        if ($payment['type'] == 'product') {
+            switch($payment['approval']) {
+                case -1;
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('delete.png'),
+                        array(
+                            'class' => 'payment-approval'
+                        )
+                    );
+                    break;
+                case 0;
+                    break;
+                case 1;
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('accept.png'),
+                        array(
+                            'class' => 'payment-approval'
+                        )
+                    );
+                    break;
+            }
+            if ($payment['approval_comment'] != '') {
+                echo '<span class="payment-approval-comment-wrapper">';
+                    echo $this->Html->getJqueryUiIcon(
+                        $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+                        array(
+                            'class' => 'payment-approval-comment',
+                            'title' => $payment['approval_comment']
+                        ),
+                        'javascript:void(0);');
+                echo '</span>';
+            }
+        }
+        
         echo $payment['text'];
         echo '</td>';
         
@@ -129,6 +174,9 @@ if (count($payments) == 0) {
         echo '</td>';
         
         echo '</tr>';
+        
+        $oldYear = $payment['year'];
+        
     }
     
     echo '<tr class="fake-th">';

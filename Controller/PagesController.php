@@ -56,7 +56,6 @@ class PagesController extends FrontendController
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
         
-        Configure::write('app.titleSuffix', Configure::read('app.titleSuffix') . ' - Foodcoop');
         $this->set('title_for_layout', 'Willkommen');
         
         $this->loadModel('Slider');
@@ -78,14 +77,25 @@ class PagesController extends FrontendController
             $this->redirect($page['Page']['url']);
         }
         
-        $children = $this->Page->children($pageId, false, null, array(
-            'Page.position' => 'ASC'
-        ));
+        $recursive = 2; // for PageLang
+        $children = $this->Page->children(
+            $pageId,
+            false,
+            null,
+            array(
+                'Page.position' => 'ASC',
+                'PageLang.meta_title' => 'ASC'
+            ),
+            null,
+            1,
+            $recursive
+        );
+        
         $page['children'] = array();
         foreach ($children as $child) {
             if ($child['Page']['active'] == APP_OFF) continue;
             if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) continue;
-            $page['children'][] = $this->Page->getPageForFrontend($child['Page']['id_cms'], $this->AppAuth);
+            $page['children'][] = $child;
         }
         
         $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']);

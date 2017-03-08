@@ -72,7 +72,8 @@ class ProductsController extends AdminAppController
 
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
         $productsForDropdown = array();
         foreach ($products as $key => $ps) {
@@ -146,7 +147,7 @@ class ProductsController extends AdminAppController
 
     public function saveUploadedImageProduct()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = $this->params['data']['objectId'];
         $filename = $this->params['data']['filename'];
@@ -312,7 +313,7 @@ class ProductsController extends AdminAppController
 
     public function editTax()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = (int) $this->params['data']['productId'];
         $taxId = (int) $this->params['data']['taxId'];
@@ -395,7 +396,7 @@ class ProductsController extends AdminAppController
 
     public function editCategories()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = (int) $this->params['data']['productId'];
         $selectedCategories = array();
@@ -450,7 +451,7 @@ class ProductsController extends AdminAppController
 
     public function editQuantity()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = $this->params['data']['productId'];
         $quantity = (int) $this->params['data']['quantity'];
@@ -603,11 +604,21 @@ class ProductsController extends AdminAppController
 
     public function editDeposit()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = $this->params['data']['productId'];
-        $deposit = $this->params['data']['deposit'];
+        $deposit = trim($this->params['data']['deposit']);
         $deposit = str_replace(',', '.', $deposit);
+        
+        if (! is_numeric($deposit) || $deposit < 0) {
+            $message = 'input format for deposit is wrong';
+            $this->log($message);
+            die(json_encode(array(
+                'status' => 0,
+                'msg' => $message
+            )));
+        }
+        $deposit = floatval($deposit);
         
         $ids = $this->Product->getProductIdAndAttributeId($productId);
         $productId = $ids['productId'];
@@ -708,7 +719,7 @@ class ProductsController extends AdminAppController
 
     public function editName()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $productId = $this->params['data']['productId'];
         $name = StringComponent::removeSpecialChars(trim($this->params['data']['name']));

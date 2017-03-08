@@ -24,6 +24,11 @@ class MyTimeHelper extends TimeHelper {
         return date('t', strtotime($monthAndYear));
     }
     
+    public function getYearFromDbDate($dbDate)
+    {
+        return date('Y', strtotime($dbDate));
+    }
+    
     public function getCurrentDateForDatabase() {
         return date('Y-m-d H:i:s');
     }

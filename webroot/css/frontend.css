@@ -335,7 +335,8 @@ a.button {
 a.button:hover {
 	opacity: 0.7;
 }
-button[disabled] {
+button[disabled],
+a[disabled] {
 	opacity: 0.5;
 }
 
@@ -505,6 +506,7 @@ div.ui-tooltip-content {
 }
 
 body.manufacturers.detail .manufacturer-infos {
+	width: 100%;
 	min-height: 160px;
 	margin-bottom: 20px;
 	float: left;
@@ -745,11 +747,14 @@ a.btn.btn-success:hover i {
 	color: #d6d4d4 ! important;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
-	width: 240px;
+	width: 210px;
 }
 body.carts.detail .cart:not(#cart) span.amount {
     margin-right: 15px;
     margin-top: -5px;
+}
+body.carts.detail .cart:not(#cart) span.product-name-wrapper a {
+    float: left;
 }
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
@@ -788,6 +793,7 @@ body.carts.detail .cart:not(#cart) span.right .delete {
     margin-left: 5px;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
+	float: left;
     font-size: 13px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
@@ -984,7 +990,7 @@ body.blog_posts.detail #inner-content > .img-wrapper img {
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #d6d4d4;
-    width: 170px;
+    width: 300px;
 }
 body.blog_posts.detail #inner-content > .img-wrapper {
 	float: right;

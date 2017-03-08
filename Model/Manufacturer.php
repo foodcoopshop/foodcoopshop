@@ -359,8 +359,7 @@ class Manufacturer extends AppModel
         DATE_FORMAT (o.date_add, '%d.%m.%Y') as Bestelldatum,
         pl.description_short as Produktbeschreibung,
         c.id_customer AS Kundennummer,
-        {$customerNameAsSql} AS Kunde,
-        od.id_order_invoice AS Rechnungsnummer
+        {$customerNameAsSql} AS Kunde
         FROM ".$this->tablePrefix."order_detail od
                 LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
                 LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order

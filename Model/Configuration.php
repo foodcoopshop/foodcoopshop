@@ -41,13 +41,20 @@ class Configuration extends AppModel
             case 'FCS_PAYMENT_PRODUCT_MAXIMUM':
                 $validationRules = $this->getNumberRangeConfigurationRule(50, 1000);
                 break;
+            case 'FCS_SHOP_ORDER_DEFAULT_STATE':
+                $validationRules = $this->getEqualsToMultipleValuesRule(Configure::read('htmlHelper')->getVisibleOrderStates());
+                break;
             case 'FCS_CUSTOMER_GROUP':
                 $validationRules = $this->getNumberRangeConfigurationRule(CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
                 break;
             case 'FCS_FACEBOOK_URL':
                 $validationRules = $this->getUrlValidationRule();
                 break;
+            case 'FCS_APP_NAME':
+                $validationRules = $this->getCharactersRangeRule(5, 255);
+                break;
             case 'FCS_ACCOUNTING_EMAIL':
+            case 'FCS_APP_EMAIL':
                 $validationRules = $this->getEmailValidationRule();
                 break;
             case 'FCS_ORDER_CONFIRMATION_MAIL_BCC':
@@ -59,6 +66,20 @@ class Configuration extends AppModel
         }
         
         $this->validator()['value'] = $validationRules;
+    }
+    
+    private function getEqualsToMultipleValuesRule($values)
+    {
+        $validationRules = array();
+        $validationRules[] = array(
+            'rule' => array(
+                'inList',
+                array_keys($values)
+            ),
+            'message' => 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values))
+        );
+        
+        return $validationRules;
     }
 
     private function getEmailValidationRule($allowEmpty = false)
@@ -88,22 +109,20 @@ class Configuration extends AppModel
         return $validationRules;
     }
 
-    private function getNumberRangeConfigurationRule($min, $max)
+    private function getCharactersRangeRule($min, $max)
     {
         $validationRules = array();
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $message = 'Die Anzahl der Zeichen muss zwischen ' . $min . ' und ' . $max . ' liegen.';
         $validationRules[] = array(
             'rule' => array(
-                'comparison',
-                '>=',
+                'minLength',
                 $min
             ),
             'message' => $message
         );
         $validationRules[] = array(
             'rule' => array(
-                'comparison',
-                '<=',
+                'maxLength',
                 $max
             ),
             'message' => $message

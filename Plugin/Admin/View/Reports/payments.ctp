@@ -16,7 +16,9 @@
 $this->element('addScript', array(
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
-        datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();"
+        datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();".
+        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
 ));
 ?>
 
@@ -56,12 +58,14 @@ foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
 
 <?php
 
-if ($paymentType == 'member_fee') {
-    echo '<h2 class="warning">Ein bessere Auflistung der Mitgliedsbeiträge mit Berücksichtigung der Monate folgt etwas später.</h2>';
-}
-
 echo '<table class="list">';
 echo '<tr class="sort">';
+$colspan = 2;
+if ($paymentType == 'product') {
+    echo '<th style="width:25px;"></th>';
+    echo '<th style="width:50px;"></th>';
+    $colspan = $colspan + 2;
+}
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Name') . '</th>';
 echo '<th>' . $this->Paginator->sort('CakePayment.date_add', 'Eingetragen am') . '</th>';
 echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
@@ -86,6 +90,48 @@ foreach ($payments as $payment) {
     }
     
     echo '<tr class="data ' . $rowClass . '">';
+    
+    if ($paymentType == 'product') {
+        echo '<td>';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+                'title' => 'Bearbeiten'
+            ),
+            $this->Slug->getPaymentEdit($payment['CakePayment']['id']));
+        echo '</td>';
+        echo '<td>';
+            switch($payment['CakePayment']['approval']) {
+                case -1;
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('delete.png'),
+                        array(
+                            'class' => 'payment-approval'
+                        )
+                    );
+                    break;
+                case 0;
+                    break;
+                case 1; 
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('accept.png'),
+                        array(
+                            'class' => 'payment-approval'
+                        )
+                    );
+                    break;
+            }
+            if ($payment['CakePayment']['approval_comment'] != '') {
+                echo '<span class="payment-approval-comment-wrapper">';
+                echo $this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+                    array(
+                        'class' => 'payment-approval-comment',
+                        'title' => $payment['CakePayment']['approval_comment']
+                    ),
+                    'javascript:void(0);');
+                    echo '</span>';
+            }
+        echo '</td>';
+    }
     
     echo '<td>';
         if (!empty($payment['Manufacturer']['name'])) {
@@ -123,7 +169,7 @@ foreach ($payments as $payment) {
 }
 
 echo '<tr>';
-echo '<td colspan="2"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
 echo '<td style="text-align:right;"><b>' . $this->Html->formatAsEuro($paymentSum) . '</b></td>';
 if ($showTextColumn) {
     echo '<td></td>';

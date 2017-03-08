@@ -81,33 +81,6 @@ class EmailLog implements CakeLogInterface
             return false;
         }
         
-        // ignore the following requests
-        /*
-        $patterns = array(
-            '^\/apple\-touch\-icon',
-            '^\/apple\-app\-site\-association',
-            '^\/img\/favicon\.ico',
-            '^\/browserconfig\.xml',
-            '^\/mypage\.html',
-            '^\/js\/\)(.*)\.html',
-            '^\/piwik\.php',
-            '^\/themes\/default\-bootstrap',
-            '^\/(wordpress|wp|wp\-admin|wp\-login|wp\-cron)',
-            '^\/warenkorb\?add=(.*)',
-            '^\/(cache|blog)\/',
-            '^\/.well\-known',
-            '^\/m\/',
-            '^\/(shop|shops|schnell\-bestellung|angebote|kontaktieren\-sie\-uns)', // legacy urls
-            '^\/(produkt|aktuelles|hersteller|content|kategorie)\/'
-        ) // avoid 404 messages for offline objects
-        ;
-        
-        $regex = '/' . implode('|', $patterns) . '/i';
-        if (preg_match($regex, $_SERVER['REQUEST_URI'])) {
-            return false;
-        }
-        */
-        
         $params = array(
             'type' => ucfirst($type),
             'date' => date('Y-m-d H:i:s'),

@@ -14,6 +14,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+App::uses('CakeNumber', 'Utility');
+
 class BackupDatabaseShell extends AppShell
 {
 
@@ -37,17 +40,7 @@ class BackupDatabaseShell extends AppShell
         
         // tables whose data should not be dumped
         $ignoredTables = array(
-            $dbConfig['prefix'] . 'connections',
-            $dbConfig['prefix'] . 'connections_page',
-            $dbConfig['prefix'] . 'connections_source',
-            $dbConfig['prefix'] . 'page_viewed',
-            $dbConfig['prefix'] . 'pagenotfound',
-            $dbConfig['prefix'] . 'guest',
-            $dbConfig['prefix'] . 'order_invoice',
-            $dbConfig['prefix'] . 'order_invoice_payment',
-            $dbConfig['prefix'] . 'sekeyword',
-            $dbConfig['prefix'] . 'search_word',
-            $dbConfig['prefix'] . 'search_index'
+            //$dbConfig['prefix'] . 'name_of_ignored_table',
         );
         
         $backupdir = APP . DS . 'files_private' . DS . 'db-backups';
@@ -79,7 +72,7 @@ class BackupDatabaseShell extends AppShell
         unlink($backupdir . DS . $filename);
         // END zip and delete sql file
         
-        $message = 'Datenbank-Backup erfolgreich.';
+        $message = 'Datenbank-Backup erfolgreich ('.CakeNumber::toReadableSize(filesize($zipFilename)).').';
         
         // email zipped file
         App::uses('CakeEmail', 'Network/Email');

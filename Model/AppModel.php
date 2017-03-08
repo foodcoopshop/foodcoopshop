@@ -40,6 +40,30 @@ class AppModel extends Model
         return $hasErrors;
     }
 
+    public function getNumberRangeConfigurationRule($min, $max)
+    {
+        
+        $validationRules = array();
+        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $validationRules[] = array(
+            'rule' => array(
+                'comparison',
+                '>=',
+                $min
+            ),
+            'message' => $message
+        );
+        $validationRules[] = array(
+            'rule' => array(
+                'comparison',
+                '<=',
+                $max
+            ),
+            'message' => $message
+        );
+        return $validationRules;
+    }
+    
     protected function loggedIn()
     {
         return (boolean) CakeSession::read('Auth.User.id_customer');

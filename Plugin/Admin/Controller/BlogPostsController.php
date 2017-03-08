@@ -73,6 +73,7 @@ class BlogPostsController extends AdminAppController
             $unsavedBlogPost = array(
                 'BlogPost' => array(
                     'active' => APP_ON,
+                    'is_featured' => APP_ON,
                     'update_modified_field' => APP_ON
                 )
             );

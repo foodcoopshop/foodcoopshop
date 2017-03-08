@@ -23,9 +23,6 @@
         "
     ));
     
-    $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()) . ");"
-    ));
     if (Configure::read('app.memberFeeFlexibleEnabled')) {
         $this->element('addScript', array(
             'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
@@ -48,21 +45,26 @@
 
 		<div class="right">
             
-            <?php
-            echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
-            $options = array(
-                'escape' => false
-            );
-            $options['class'] = 'btn btn-default';
-            echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Neue Sofort-Bestellung', 'javascript:void(0);', $options);
-            echo $this->Form->input('customerId', array(
-                'type' => 'select',
-                'label' => '',
-                'empty' => 'Mitglied auswählen...',
-                'options' => $customersForDropdown
-            ));
-            echo '</div>';
-            ?>
+        <?php
+            if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+                $this->element('addScript', array(
+                    'script' => Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()) . ");"
+                ));
+                echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
+                $options = array(
+                    'escape' => false
+                );
+                $options['class'] = 'btn btn-default';
+                echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Neue Sofort-Bestellung', 'javascript:void(0);', $options);
+                echo $this->Form->input('customerId', array(
+                    'type' => 'select',
+                    'label' => '',
+                    'empty' => 'Mitglied auswählen...',
+                    'options' => $customersForDropdown
+                ));
+                echo '</div>';
+            }
+        ?>
               
         </div>
 

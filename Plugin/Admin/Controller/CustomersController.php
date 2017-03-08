@@ -307,7 +307,7 @@ class CustomersController extends AdminAppController
 
     public function editComment()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
         
         $customerId = $this->params['data']['customerId'];
         $customerComment = htmlspecialchars_decode($this->params['data']['customerComment']);

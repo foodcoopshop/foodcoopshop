@@ -38,12 +38,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public $StockAvailable;
     
-    // called only after the first test method of this class
-    public static function setUpBeforeClass()
-    {
-        self::initTestDatabase();
-    }
-
     public function setUp()
     {
         parent::setUp();

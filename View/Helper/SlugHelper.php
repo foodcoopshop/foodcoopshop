@@ -163,6 +163,10 @@ class SlugHelper extends Helper {
         return '/admin/pages/add';
     }
     
+    public function getPaymentEdit($paymentId) {
+        return '/admin/payments/edit/'.$paymentId;
+    }
+    
     public function getAttributesList() {
         return '/admin/attributes';
     }

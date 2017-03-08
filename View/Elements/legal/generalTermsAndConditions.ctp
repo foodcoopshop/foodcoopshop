@@ -23,7 +23,7 @@
 
 <h2>2. Leistungen und Entgelte</h2> 
 
-<p>2.1. Die vom Hersteller in der Plattform der Foodcoop unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> dargebotenen Waren und Leistungen sind eine unverbindliche Aufforderung des Herstellers an den Vertragspartner, ein verbindliches Anbot für die angebotenen Waren und Leistungen zu legen. Durch die Bestellung im Onlineshop legt der Vertragspartner ein solches verbindliches Anbot. <b>Ein Vertrag zwischen dem Vertragspartner und dem Hersteller kommt erst zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p> 
+<p>2.1. Die vom Hersteller in der Plattform des Betreibers unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> dargebotenen Waren und Leistungen sind eine unverbindliche Aufforderung des Herstellers an den Vertragspartner, ein verbindliches Anbot für die angebotenen Waren und Leistungen zu legen. Durch die Bestellung im Onlineshop legt der Vertragspartner ein solches verbindliches Anbot. <b>Ein Vertrag zwischen dem Vertragspartner und dem Hersteller kommt erst zustande, wenn der Lieferant mit der Leistungserbringung begonnen hat oder die Waren zur Abholung bereitgelegt hat.</b></p> 
 
 <p>2.2. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p>
 

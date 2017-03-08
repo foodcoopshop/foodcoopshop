@@ -37,8 +37,7 @@ $this->element('addScript', array(
 		</ul>
 	</div>
 
-	<h2 class="warning">Die folgenden Einstellungen können selbst geändert
-		werden.</h2>
+	<h2 class="info">Die folgenden Einstellungen können selbst geändert werden.</h2>
 
 	<table class="list no-hover no-clone-last-row">
 
@@ -81,6 +80,7 @@ $this->element('addScript', array(
                 case 'number':
                 case 'text':
                 case 'textarea':
+                case 'textarea_big':
                     echo $configuration['Configuration']['value'];
                     break;
                 case 'dropdown':
@@ -101,7 +101,7 @@ $this->element('addScript', array(
 	<br />
 
 
-	<h2 class="warning">Die folgenden Einstellungen können (noch) nicht
+	<h2 class="info">Die folgenden Einstellungen können (noch) nicht
 		selbst geändert werden.</h2>
 
 	<table class="list no-hover">
@@ -109,11 +109,6 @@ $this->element('addScript', array(
 		<tr>
 			<th>Einstellung</th>
 			<th>Wert</th>
-		</tr>
-
-		<tr>
-			<td>app.name</td>
-			<td><?php echo Configure::read('app.name'); ?></td>
 		</tr>
 
 		<tr>
@@ -194,11 +189,6 @@ $this->element('addScript', array(
 		</tr>
 
 		<tr>
-			<td>app.memberFeeFlexibleEnabled</td>
-			<td><?php echo Configure::read('app.memberFeeFlexibleEnabled') ? 'ja' : 'nein'; ?></td>
-		</tr>
-
-		<tr>
 			<td>app.isDepositPaymentCashless</td>
 			<td><?php echo Configure::read('app.isDepositPaymentCashless') ? 'ja' : 'nein'; ?></td>
 		</tr>
@@ -240,17 +230,6 @@ $this->element('addScript', array(
 		<tr>
 			<td>app.defaultTax</td>
 			<td><?php echo $this->Html->formatAsPercent($defaultTax['Tax']['rate']); ?> - <?php echo $defaultTax['Tax']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
-		</tr>
-
-		<tr>
-			<td>app.addressForPdf</td>
-			<td><?php echo nl2br(Configure::read('app.addressForPdf')); ?></td>
-		</tr>
-
-		<tr>
-			<td><?php echo Configure::read('app.cakeServerName'); ?>/favicon.ico</td>
-			<td><img
-				src="<?php echo Configure::read('app.cakeServerName'); ?>/favicon.ico" /></td>
 		</tr>
 
 		<tr>

@@ -21,7 +21,7 @@
 		<tr>
 			<td>
 				
-				<p>Deine Registrierung bei "<?php echo Configure::read('app.name'); ?>" war erfolgreich!</p>
+				<p>Deine Registrierung bei "<?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?>" war erfolgreich!</p>
 				
 				<p>
 					<b>Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!</b>

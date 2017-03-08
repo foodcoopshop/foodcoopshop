@@ -84,6 +84,11 @@ class CustomersController extends FrontendController
                 $this->Customer->invalidate('email', 'Wir haben diese E-Mail-Adresse nicht gefunden.');
                 return false;
             }
+
+            if ($customer['Customer']['active'] !== true) {
+                $this->AppSession->setFlashError('Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.');
+                return false;
+            }
             
             $newPassword = $this->Customer->setNewPassword($customer['Customer']['id_customer']);
             
@@ -91,7 +96,7 @@ class CustomersController extends FrontendController
             $email = new AppEmail();
             $email->template('new_password_request')
                 ->emailFormat('html')
-                ->subject('Neues Passwort für ' . Configure::read('app.name'))
+                ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
                 ->to($this->request->data['Customer']['email'])
                 ->viewVars(array(
                 'password' => $newPassword,

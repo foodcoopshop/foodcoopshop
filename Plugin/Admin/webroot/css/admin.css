@@ -163,6 +163,7 @@ form.fcs-form .bootstrap-select {
 }
 #product-name-edit-form input,
 #product-price-edit-form input,
+#product-deposit-edit-form input,
 #product-name-edit-form textarea,
 #product-quantity-edit-form input {
     width: 310px;
@@ -871,4 +872,27 @@ body.slider.index table.list {
 	float: none;
 	text-align: left;
 	height: 155px;
+}
+body.payments tr.last-row-of-year td {
+	border-top-width: 2px;
+	border-top-color: #719f41;
+	border-top-style: solid;
+}
+body.payments img.payment-approval,
+body.reports.payment img.payment-approval {
+	float: left;
+	margin-top: 2px;
+	margin-right: 2px;
+}
+body.payments .payment-approval-comment-wrapper,
+body.reports.payment .payment-approval-comment-wrapper {
+	float: left;
+	margin-right: 2px;
+}
+body.payments.edit .email-template-info {
+	float: left;
+}
+body.payments .after .jquery-ui-icon {
+	float: left;
+	margin-left: 2px ! important;
 }

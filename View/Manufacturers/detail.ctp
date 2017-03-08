@@ -78,7 +78,7 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
     }
     
     if ($manufacturer['Manufacturer']['holiday'] == 1) {
-        echo '<h2 class="warning">'.$manufacturer['Manufacturer']['name'].' ist momentan im wohlverdienten Urlaub.</h2>';
+        echo '<h2 class="info">'.$manufacturer['Manufacturer']['name'].' ist momentan im wohlverdienten Urlaub.</h2>';
     }
     
     if (!empty($manufacturer['Products'])) {

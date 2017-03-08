@@ -28,12 +28,6 @@ class ProductTest extends AppCakeTestCase
         parent::setUp();
         $this->Product = new Product();
     }
-    
-    // called only after the first test method of this class
-    public static function setUpBeforeClass()
-    {
-        self::initTestDatabase();
-    }
 
     public function testEditPrice()
     {
@@ -67,6 +61,7 @@ class ProductTest extends AppCakeTestCase
     private function checkPriceChange($productId, $price, $expectedNetPrice)
     {
         $price = str_replace(',', '.', $price);
+        $expectedNetPrice = str_replace(',', '.', $expectedNetPrice);
         $response = $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);
@@ -122,4 +117,3 @@ class ProductTest extends AppCakeTestCase
     }
 }
 
-?>

@@ -30,6 +30,15 @@ class AppEmail extends CakeEmail
     }
 
     /**
+     * declaring this method public enables rendering an email (for preview)
+     * {@inheritDoc}
+     * @see CakeEmail::_renderTemplates()
+     */
+    public function _renderTemplates($content) {
+        return parent::_renderTemplates($content);
+    }
+    
+    /**
      * fallback if email config is wrong (e.g.
      * password changed from third party)
      * 
@@ -59,7 +68,7 @@ class AppEmail extends CakeEmail
                 if ($this->from() != $fallbackEmailConfig['from']) {
                     $this->config($fallbackEmailConfig);
                     $this->from(array(
-                        key($this->from()) => Configure::read('app.name')
+                        key($this->from()) => Configure::read('app.db_config_FCS_APP_NAME')
                     ));
                     CakeLog::write('info', 'email was sent with fallback config');
                     return $this->send($content);

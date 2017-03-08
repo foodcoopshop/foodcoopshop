@@ -27,8 +27,8 @@
 	<h2>Kontakt</h2>
 	<p><i class="fa fa-map-marker fa-2x fa-fw"></i> <span>
 	<?php
-	   echo Configure::read('app.name').', ';
-	   echo implode(', ', $this->Html->getAddressFromAddressConfiguration());
+	   echo Configure::read('app.db_config_FCS_APP_NAME').', ';
+	   echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration());
 	?></span></p>
 	<?php
 	   echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hide_email($this->Html->getEmailFromAddressConfiguration()).'</span></p>';

@@ -44,7 +44,7 @@ $this->element('addScript', array(
 
 <?php
     if (empty($manufacturer)) {
-        echo '<br /><h2 class="warning">Bitte wähle einen Hersteller aus.</h2>';
+        echo '<br /><h2 class="info">Bitte wähle einen Hersteller aus.</h2>';
         return;
     }
 ?>
@@ -87,7 +87,7 @@ echo '</div>';
 echo '<div class="sc"></div>';
 
 if (empty($deposits)) {
-    echo '<h2 class="warning">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
+    echo '<h2 class="info">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
 } else {
 
     echo '<table class="list no-clone-last-row">';

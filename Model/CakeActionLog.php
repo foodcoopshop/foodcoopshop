@@ -166,6 +166,15 @@ class CakeActionLog extends AppModel
         'payment_product_added' => array(
             'de' => 'Mitglied: Guthaben-Aufladung eingetragen'
         ),
+        'payment_product_approval_ok' => array(
+            'de' => 'Guthaben-Aufladung: bestätigt'
+        ),
+        'payment_product_approval_open' => array(
+            'de' => 'Guthaben-Aufladung: Bestätigung offen'
+        ),
+        'payment_product_approval_not_ok' => array(
+            'de' => 'Guthaben-Aufladung: da stimmt was nicht...'
+        ),
         'payment_payback_added' => array(
             'de' => 'Mitglied: Rückzahlung eingetragen'
         ),

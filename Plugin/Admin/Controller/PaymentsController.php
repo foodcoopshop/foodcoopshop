@@ -39,6 +39,10 @@ class PaymentsController extends AdminAppController
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
+            case 'edit':
+            case 'previewEmail':
+                return $this->AppAuth->isSuperadmin();
+                break;
             case 'add':
             case 'changeState':
                 return $this->AppAuth->loggedIn();
@@ -56,10 +60,136 @@ class PaymentsController extends AdminAppController
         $this->loadModel('Manufacturer');
         parent::beforeFilter();
     }
+    
+    public function previewEmail($paymentId, $approval) {
+        
+        $payment = $this->CakePayment->find('first', array(
+            'conditions' => array(
+                'CakePayment.id' => $paymentId,
+                'CakePayment.type' => 'product'
+            )
+        ));
+        if (empty($payment)) {
+            throw new MissingActionException('payment not found');
+        }
+        
+        if (!in_array($approval, array(1,-1))) {
+            throw new MissingActionException('approval not implemented');
+        }
+        
+        $payment['CakePayment']['approval'] = $approval;
+        $payment['CakePayment']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
+        $email = new AppEmail();
+        $email->template('Admin.payment_status_changed')
+            ->emailFormat('html')
+            ->to($payment['Customer']['email'])
+            ->viewVars(array(
+                'appAuth' => $this->AppAuth,
+                'data' => $payment,
+                'newStatusAsString' => Configure::read('htmlHelper')->getApprovalStates()[$approval],
+                'request' => $payment
+            )
+        );
+        $html = $email->_renderTemplates(null)['html'];
+        if ($html != '') {
+            echo $html;
+            exit;
+        }
+        
+    }
+    
+    public function edit($paymentId) {
+        
+        $this->setFormReferer();
+        
+        $unsavedPayment = $this->CakePayment->find('first', array(
+            'conditions' => array(
+                'CakePayment.id' => $paymentId,
+                'CakePayment.type' => 'product'
+            )
+        ));
+        
+        if (empty($unsavedPayment)) {
+            throw new MissingActionException('payment not found');
+        }
+        
+        $this->set('unsavedPayment', $unsavedPayment);
+        $this->set('paymentId', $paymentId);
+        $this->set('title_for_layout', 'Guthaben-Aufladung überprüfen');
+        
+        if (empty($this->request->data)) {
+            $this->request->data = $unsavedPayment;
+        } else {
+        
+            // validate data - do not use $this->CakePayment->saveAll()
+            $this->CakePayment->id = $paymentId;
+            $this->CakePayment->set($this->request->data['CakePayment']);
+        
+            $errors = array();
+            $this->CakePayment->validator()['approval'] = $this->CakePayment->getNumberRangeConfigurationRule(-1,1);
+            
+            if (! $this->CakePayment->validates()) {
+                $errors = array_merge($errors, $this->CakePayment->validationErrors);
+            }
+        
+            if (empty($errors)) {
+        
+                $this->loadModel('CakeActionLog');
+        
+                $this->request->data['CakePayment']['date_changed'] = date('Y-m-d H:i:s');
+                $this->request->data['CakePayment']['changed_by'] = $this->AppAuth->getUserId();
+                
+                $this->CakePayment->save($this->request->data['CakePayment'], array(
+                    'validate' => false
+                ));
+        
+                switch($this->request->data['CakePayment']['approval']) {
+                    case -1;
+                        $actionLogType = 'payment_product_approval_not_ok';
+                        break;
+                    case 0;
+                        $actionLogType = 'payment_product_approval_open';
+                        break;
+                    case 1;
+                        $actionLogType = 'payment_product_approval_ok';
+                        break;
+                }
+        
+                $newStatusAsString = Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']];
+                
+                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
+                if ($this->request->data['CakePayment']['send_email']) {
+                    $email = new AppEmail();
+                    $email->template('Admin.payment_status_changed')
+                        ->emailFormat('html')
+                        ->to($unsavedPayment['Customer']['email'])
+                        ->subject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
+                        ->viewVars(array(
+                            'appAuth' => $this->AppAuth,
+                            'data' => $unsavedPayment,
+                            'newStatusAsString' => $newStatusAsString,
+                            'request' => $this->request->data
+                        )
+                    );
+                    $email->send();
+                    $message .= ' und eine E-Mail an das Mitglied verschickt';
+                }
+                
+                $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message.' (PaymentId: ' . $this->CakePayment->id.').');
+                $this->AppSession->setFlashMessage($message.'.');
+        
+                $this->redirect($this->data['referer']);
+                
+            } else {
+                $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
+            }
+        }
+        
+    }
 
     public function add()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
 
         $type = trim($this->params['data']['type']);
         if (! in_array($type, array(
@@ -249,7 +379,8 @@ class PaymentsController extends AdminAppController
 
     public function changeState()
     {
-        $this->autoRender = false;
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
         $paymentId = $this->params['data']['paymentId'];
 
         $payment = $this->CakePayment->find('first', array(
@@ -415,11 +546,14 @@ class PaymentsController extends AdminAppController
 
             $payments[] = array(
                 'date' => $payment['date_add'],
+                'year' => Configure::read('timeHelper')->getYearFromDbDate($payment['date_add']),
                 'amount' => $payment['amount'],
                 'deposit' => 0,
                 'type' => $payment['type'],
                 'text' => $text,
-                'payment_id' => $payment['id']
+                'payment_id' => $payment['id'],
+                'approval' => $payment['approval'],
+                'approval_comment' => $payment['approval_comment']
             );
         }
 
@@ -427,10 +561,11 @@ class PaymentsController extends AdminAppController
             foreach ($customer['PaidCashFreeOrders'] as $order) {
                 $payments[] = array(
                     'date' => $order['date_add'],
+                    'year' => Configure::read('timeHelper')->getYearFromDbDate($order['date_add']),
                     'amount' => $order['total_paid'] * - 1,
                     'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('htmlHelper')->link('Bestellung ' . $order['reference'] . ' (' . Configure::read('htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order_details/index/dateFrom:' . Configure::read('timeHelper')->formatToDateShort($order['date_add']) . '/dateTo:' . Configure::read('timeHelper')->formatToDateShort($order['date_add']) . '/reference:' . $order['reference'] . '/customerId:' . $order['id_customer'], array(
+                    'text' => Configure::read('htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order_details/index/dateFrom:' . Configure::read('timeHelper')->formatToDateShort($order['date_add']) . '/dateTo:' . Configure::read('timeHelper')->formatToDateShort($order['date_add']) . '/orderId:' . $order['id_order'] . '/customerId:' . $order['id_customer'], array(
                         'title' => 'Bestellung anzeigen'
                     )),
                     'payment_id' => null
