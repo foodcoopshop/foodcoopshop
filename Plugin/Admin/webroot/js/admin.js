@@ -21,7 +21,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.Helper.initLogoutButton();
-        this.setMenuFixed();
+       	this.setMenuFixed();
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },

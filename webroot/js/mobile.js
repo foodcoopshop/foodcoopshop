@@ -27,6 +27,48 @@ foodcoopshop.Mobile = {
         return showResponsiveMenuButton;
     },
 
+    initMenusAdmin: function() {
+    	
+    	$('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
+
+        var menuItems = []
+
+        $('#menu > li').each(function() {
+            var item = $(this);
+            item.find('a').removeClass('btn');
+            item.find('a').removeClass('btn-success');
+            menuItems.push(item);
+        });
+
+        $('.sb-left').html(menuItems);
+
+        var navBarContainer = $('.filter-container');
+        navBarContainer.prepend(this.getResponsiveMenuButton());
+        navBarContainer.attr('canvas', '');
+        $('body').prepend(navBarContainer);
+
+        // init slidebars
+        var controller = new slidebars();
+        controller.init();
+
+        $('.sb-toggle-left').on('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            controller.toggle('sb-left');
+        });
+
+        $(controller.events).on('opened', function(event, id) {
+            $('[canvas]').on('click', function() {
+                controller.close(id);
+            });
+        });
+
+        $('body').css('overflow-y', 'auto'); // fixes scrolling of content
+
+        foodcoopshop.Helper.showContent();	
+    
+    },
+    
     initMenusFrontend: function() {
 
         $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
