@@ -16,6 +16,7 @@
 #content {
 	width: 100%;
 	min-height: auto;
+	border-radius: 0;
 }
 .sb-toggle-left {
     float: left;
