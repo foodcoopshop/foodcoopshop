@@ -328,7 +328,7 @@ class CustomersController extends AdminAppController
         $this->AppSession->setFlashMessage('Der Kommentar wurde erfolgreich geändert.');
         
         $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Die Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['other'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
+        $this->CakeActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['other'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
         
         die(json_encode(array(
             'status' => 1,
