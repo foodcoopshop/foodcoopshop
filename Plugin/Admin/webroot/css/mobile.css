@@ -12,6 +12,7 @@
     float: left;
     width: 100%;
     max-width: 100%;
+    padding: 3px;
 }
 #content {
 	width: 100%;
@@ -78,6 +79,10 @@ body.pages.home #content {
 }
 table.list th, table.list td {
 	padding: 2px ! important;
+}
+.input.select, .input.checkbox, .input.text {
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 .article-description-rename-info {
 	position: static ! important;
