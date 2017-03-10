@@ -65,10 +65,17 @@ body.pages.home #content {
 .featherlight-content .mini-upload-form,
 .categories-checkboxes.featherlight-inner,
 .tax-dropdown-wrapper.featherlight-inner,
-.add-payment-form.featherlight-inner {
+.add-payment-form.featherlight-inner,
+.featherlight iframe {
 	min-width: 100% ! important;
 	max-width: 100% ! important;
 	width: 100% ! important;
+}
+.featherlight-content .message-container {
+	line-height: 25px;
+}
+.bootstrap-select .dropdown-menu {
+    position: static;
 }
 .featherlight-content .mini-upload-form {
 	padding-left: 0 ! important;
@@ -80,9 +87,9 @@ body.pages.home #content {
 table.list th, table.list td {
 	padding: 2px ! important;
 }
-.input.select, .input.checkbox, .input.text {
-	margin-top: 3px;
-	margin-bottom: 3px;
+.input.select, .input.checkbox, .input.text, div.date-field-wrapper, button#filter {
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 .article-description-rename-info {
 	position: static ! important;
