@@ -10,6 +10,12 @@
 .filter-container {
 	position: static ! important;
     float: left;
+    width: 100%;
+    max-width: 100%;
+}
+#content {
+	width: 100%;
+	min-height: auto;
 }
 .sb-toggle-left {
     float: left;
@@ -36,7 +42,7 @@
 }
 #container {
 	float: left;
-	min-width: auto;
+	min-width: 100%;
 }
 body.pages.home #container,
 body.pages.home #content,
