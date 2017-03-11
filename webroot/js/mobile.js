@@ -27,6 +27,34 @@ foodcoopshop.Mobile = {
         return showResponsiveMenuButton;
     },
 
+    bindToggleLeft : function() {
+    	$('.sb-toggle-left').on('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            controller.toggle('sb-left');
+        });    	
+    },
+    
+    bindToggleRight: function() {
+        $('.sb-toggle-right').on('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            controller.toggle('sb-right');
+        });
+    },
+    
+    bindCloseSlidebarsOnCanvasClick : function() {
+        $(controller.events).on('opened', function(event, id) {
+            $('[canvas]').on('click', function() {
+                controller.close(id);
+            });
+        });
+    },
+    
+    fixContentScrolling : function() {
+        $('body').css('overflow-y', 'auto');
+    },
+    
     initMenusAdmin: function() {
     	
     	$('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
@@ -47,23 +75,12 @@ foodcoopshop.Mobile = {
         navBarContainer.attr('canvas', '');
         $('body').prepend(navBarContainer);
 
-        // init slidebars
         var controller = new slidebars();
         controller.init();
 
-        $('.sb-toggle-left').on('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            controller.toggle('sb-left');
-        });
-
-        $(controller.events).on('opened', function(event, id) {
-            $('[canvas]').on('click', function() {
-                controller.close(id);
-            });
-        });
-
-        $('body').css('overflow-y', 'auto'); // fixes scrolling of content
+        this.bindToggleLeft();
+        this.bindCloseSlidebarsOnCanvasClick();
+        this.fixContentScrolling();
 
         foodcoopshop.Helper.showContent();	
     
@@ -161,30 +178,13 @@ foodcoopshop.Mobile = {
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));
 
-
-        // init slidebars
         var controller = new slidebars();
         controller.init();
-
-        $('.sb-toggle-left').on('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            controller.toggle('sb-left');
-        });
-
-        $('.sb-toggle-right').on('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            controller.toggle('sb-right');
-        });
-
-        $(controller.events).on('opened', function(event, id) {
-            $('[canvas]').on('click', function() {
-                controller.close(id);
-            });
-        });
-
-        $('body').css('overflow-y', 'auto'); // fixes scrolling of content
+        
+        this.bindToggleLeft();
+        this.bindToggleRight();
+        this.bindCloseSlidebarsOnCanvasClick();
+        this.fixContentScrolling();
 
         foodcoopshop.Helper.showContent();
 
