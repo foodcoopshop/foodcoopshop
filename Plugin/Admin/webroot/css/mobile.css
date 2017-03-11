@@ -94,7 +94,10 @@ table.list th, table.list td {
 .article-description-rename-info {
 	position: static ! important;
 }
-
+#flashMessage {
+	left: 5px;
+	width: 97vw;
+}
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
     .sb-slidebar {
        width: 45% ! important;
