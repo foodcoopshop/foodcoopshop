@@ -61,7 +61,7 @@ echo $this->element('renderJs', array('config' => 'admin'));
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(array('/js/vendor/slidebars/dist/slidebars', 'mobile'));
+    echo $this->Html->script(array('/js/vendor/slidebars/dist/slidebars'));
     // add script BEFORE all scripts that are loaded in views (block)
     echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();", array('block'));
 }
