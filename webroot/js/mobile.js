@@ -45,9 +45,12 @@ foodcoopshop.Mobile = {
     
     bindCloseSlidebarsOnCanvasClick : function(controller) {
         $(controller.events).on('opened', function(event, id) {
-            $('[canvas]').on('click', function() {
-                controller.close(id);
-            });
+        	$('html').on('click', function() {
+        		controller.close(id);
+    		});
+    		$('.sb-slidebar > *').on('click', function(event) {
+    		    event.stopPropagation();
+    		});
         });
     },
     
