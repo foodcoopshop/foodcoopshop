@@ -17,8 +17,8 @@
 .filter-container {
 	position: static ! important;
     float: left;
-    width: 100%;
-    max-width: 100%;
+    width: auto;
+    max-width: none;
     padding: 3px;
 }
 #content {

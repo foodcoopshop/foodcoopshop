@@ -75,8 +75,7 @@ foodcoopshop.Mobile = {
 
         var navBarContainer = $('.filter-container');
         navBarContainer.prepend(this.getResponsiveMenuButton());
-        navBarContainer.attr('canvas', '');
-        $('body').prepend(navBarContainer);
+        $('#container').prepend(navBarContainer);
 
         var controller = new slidebars();
         controller.init();
