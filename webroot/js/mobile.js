@@ -27,7 +27,7 @@ foodcoopshop.Mobile = {
         return showResponsiveMenuButton;
     },
 
-    bindToggleLeft : function() {
+    bindToggleLeft : function(controller) {
     	$('.sb-toggle-left').on('click', function(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -35,7 +35,7 @@ foodcoopshop.Mobile = {
         });    	
     },
     
-    bindToggleRight: function() {
+    bindToggleRight: function(controller) {
         $('.sb-toggle-right').on('click', function(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -43,7 +43,7 @@ foodcoopshop.Mobile = {
         });
     },
     
-    bindCloseSlidebarsOnCanvasClick : function() {
+    bindCloseSlidebarsOnCanvasClick : function(controller) {
         $(controller.events).on('opened', function(event, id) {
             $('[canvas]').on('click', function() {
                 controller.close(id);
@@ -78,9 +78,9 @@ foodcoopshop.Mobile = {
         var controller = new slidebars();
         controller.init();
 
-        this.bindToggleLeft();
-        this.bindCloseSlidebarsOnCanvasClick();
-        this.fixContentScrolling();
+        this.bindToggleLeft(controller);
+        this.bindCloseSlidebarsOnCanvasClick(controller);
+        this.fixContentScrolling(controller);
 
         foodcoopshop.Helper.showContent();	
     
@@ -181,9 +181,9 @@ foodcoopshop.Mobile = {
         var controller = new slidebars();
         controller.init();
         
-        this.bindToggleLeft();
-        this.bindToggleRight();
-        this.bindCloseSlidebarsOnCanvasClick();
+        this.bindToggleLeft(controller);
+        this.bindToggleRight(controller);
+        this.bindCloseSlidebarsOnCanvasClick(controller);
         this.fixContentScrolling();
 
         foodcoopshop.Helper.showContent();
