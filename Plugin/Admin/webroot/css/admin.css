@@ -259,7 +259,7 @@ td span.description-for-dialog {
     text-align: center;
 }
 #customers-list .bootstrap-select {
-	width: 100px ! important; 
+	width: 100px ! important;
 }
 input.datepicker {
     width: 110px;
@@ -343,6 +343,16 @@ body.products.index .unity-for-dialog {
     padding: 10px;
     margin-bottom: 10px;
 }
+#actionLogs table.list tr.info {
+}
+#actionLogs table.list tr.warn {
+    background-color: #800080;
+    color: white;
+}
+#actionLogs table.list tr.fail {
+    background-color: #C00000;
+    color: white;
+}
 #manufacturer-profile .input {
     float: left;
 }
@@ -382,8 +392,8 @@ form div.error-message {
     margin-left: 14px;
 }
 .featherlight-content button[disabled="disabled"] {
-    opacity: 0.65; 
-    cursor: not-allowed;    
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 .featherlight-content button {
     padding: 5px;
@@ -401,7 +411,7 @@ form div.error-message {
 .tax-dropdown-wrapper.featherlight-inner label {
 	width: 100%;
 }
-.categories-checkboxes.featherlight-inner .input.select, 
+.categories-checkboxes.featherlight-inner .input.select,
 .tax-dropdown-wrapper.featherlight-inner .input.select {
 	margin-bottom: 10px;
 }
@@ -479,7 +489,7 @@ body.orders.index #add-order-button-wrapper div.select {
     color: #009335 ! important;
 }
 .jquery-ui-icon a.icon-with-text.button {
-    padding: 7px;    
+    padding: 7px;
 }
 body.deposits #help-container,
 body.payments.overview #help-container,
