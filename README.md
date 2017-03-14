@@ -68,9 +68,5 @@ If the debug level is set to 0 (e.g. not using a *.dev hostname), and you made c
 $ bash Console/cake asset_compress build
 ```
 
-## Pull requests
-Pull requests are welcome, please make sure your modifications are to the develop branch of FoodCoopShop and they are well tested!
-
 # Links
 * **Official website**: [https://www.foodcoopshop.com](https://www.foodcoopshop.com)
-

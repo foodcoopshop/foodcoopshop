@@ -2,9 +2,9 @@
 
 If you want contribute **a small change** (eg. typo) that's how it works:
 
-* Fork the project and make a pull request
+* [Fork the project and make a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/)
 
-If you plan to **collaborate more intensively**, please ask Mario (office@foocoopshop.com) for an ivitation to the foodcoopshop-team. After accepting the invitation, the workflow for contributions is the following:
+If you plan to **collaborate more intensively**, please ask Mario (office@foodcoopshop.com) for an ivitation to the foodcoopshop-team. After accepting the invitation, the workflow for contributions is the following:
 
 * Create a new branch within the [main foodcoopshop repository](https://github.com/foodcoopshop/foodcoopshop)
 * Using [git flow](http://danielkummer.github.io/git-flow-cheatsheet/) (or at least their naming conventions) appreciated
