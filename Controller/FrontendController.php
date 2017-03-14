@@ -267,6 +267,7 @@ class FrontendController extends AppController
             }
 
             $this->logDbMigrationsSuccess($from, $migration);
+            Cache::clear();
         }
 
         return true;
