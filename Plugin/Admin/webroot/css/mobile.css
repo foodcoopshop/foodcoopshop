@@ -26,9 +26,9 @@
 }
 .sb-toggle-left {
     float: left;
-    margin-right: 5px;
+    margin: 3px 5px 0 5px;
     border-radius: 3px;
-    padding: 3px 3px 1px 3px;
+    padding: 2px 3px 0px 3px;
     background: #fff;
 }
 .sb-left a i {
@@ -78,8 +78,6 @@ body.pages.home #content {
 }
 .featherlight-content .message-container {
 	line-height: 25px;
-}
-.bootstrap-select .dropdown-menu {
 }
 .featherlight-content .mini-upload-form {
 	padding-left: 0 ! important;
