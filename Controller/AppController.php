@@ -60,7 +60,8 @@ class AppController extends Controller
                 )
             )
         ),
-        'Cart'
+        'Cart',
+        'DbMigration',
     );
 
     public $helpers = array(
@@ -96,6 +97,10 @@ class AppController extends Controller
         
         if ($this->name == 'CakeError') {
             $this->layout = 'plain';
+        }
+
+        if ($this->DbMigration->doDbMigrations($this)) {
+            $this->redirect('/');  // try to identify the request URL and redirect to 
         }
     }
 
