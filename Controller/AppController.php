@@ -98,15 +98,20 @@ class AppController extends Controller
         if ($this->name == 'CakeError') {
             $this->layout = 'plain';
         }
-
-        if ($this->DbMigration->doDbMigrations($this)) {
-            $this->redirect('/');  // try to identify the request URL and redirect to 
-        }
     }
 
     public function beforeFilter()
     {
         $this->loadConfigurations();
+
+        if ($this->DbMigration->doDbMigrations($this)) {
+            if ($this->request->is('get')) {
+                $this->redirect($this->request->here);  // redirect to the request URL -> start all over...
+            }
+            else { // bad luck...
+                $this->redirect('/');
+            }
+        }
         
         // auto login if cookie is set
         if (! $this->AppAuth->loggedIn() && $this->Cookie->read('remember_me_cookie') !== null) {

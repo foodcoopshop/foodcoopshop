@@ -11,6 +11,12 @@ class DbMigrationComponent extends Component {
      */
     protected $controller = null;
 
+    public function initialize(Controller $controller)
+    {
+        // maybe its possible to run here already? Would be before any execution of adds, deletes and stuff...
+        $this->controller = $controller;
+    }
+
     /*
      * Do the database migrations
      *
@@ -62,8 +68,6 @@ class DbMigrationComponent extends Component {
         if (empty($avail)) {
             return false;
         }
-
-        $this->controller = $controller;
 
         if ($avail[0] !== '0') {
             $conf = $controller->Configuration->find('first', array(
