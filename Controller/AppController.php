@@ -94,7 +94,7 @@ class AppController extends Controller
         $this->set('appAuth', $this->AppAuth);
         $loggedUser = $this->AppAuth->user();
         $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
-        
+
         if ($this->name == 'CakeError') {
             $this->layout = 'plain';
         }
@@ -104,15 +104,25 @@ class AppController extends Controller
     {
         $this->loadConfigurations();
 
-        if ($this->DbMigration->doDbMigrations($this)) {
-            if ($this->request->is('get')) {
-                $this->redirect($this->request->here);  // redirect to the request URL -> start all over...
-            }
-            else { // bad luck...
+        switch($this->DbMigration->doDbMigrations()) {
+            case -1:  // always abort what is done and return home.
                 $this->redirect('/');
-            }
+                break;
+            case -2:  // abort if not home.
+                if ($this->request->here != '/') {  // went away from home?
+                    $this->redirect('/');  // return home. DB is unusable, remember?
+                }
+                break;
+            case 1:  // always abort what is done but pick up work
+                if ($this->request->is('get')) {
+                    $this->redirect($this->request->here);  // redirect to the request URL -> start all over...
+                }
+                else { // bad luck...input is lost, do not recover from that.
+                    $this->redirect('/');
+                }
+                break;
         }
-        
+
         // auto login if cookie is set
         if (! $this->AppAuth->loggedIn() && $this->Cookie->read('remember_me_cookie') !== null) {
             $cookie = $this->Cookie->read('remember_me_cookie');
@@ -129,7 +139,7 @@ class AppController extends Controller
                 }
             }
         }
-        
+
         if ($this->AppAuth->isManufacturer()) {
             $this->loadModel('Manufacturer');
             $manufacturer = $this->Manufacturer->find('first', array(
@@ -141,13 +151,13 @@ class AppController extends Controller
             $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
             $this->set('compensationPercentageForTermsOfUse', $compensationPercentage);
         }
-        
+
         $isMobile = false;
         if ($this->request->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
-        
+
         parent::beforeFilter();
     }
 
@@ -167,7 +177,7 @@ class AppController extends Controller
             $this->AppAuth->login($customer['Customer']);
         }
     }
-    
+
     /**
      * needs to be implemented if $this->AppAuth->authorize = array('Controller') is used
      */
