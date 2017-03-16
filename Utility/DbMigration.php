@@ -3,6 +3,21 @@
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 
+/**
+ * DbMigration
+ *
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.2
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Michael Kramer
+ * @copyright     Copyright (c) Michael Kramer, http://k-pd.de
+ * @link          https://www.foodcoopshop.com
+ */
 class DbMigration {
     /*
      * The stdOut method. Must accept a single string to inform user about something.
