@@ -11,7 +11,7 @@ App::uses('DbMigration', 'Utility');
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.2
+ * @since         FoodCoopShop 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Michael Kramer
  * @copyright     Copyright (c) Michael Kramer, http://k-pd.de

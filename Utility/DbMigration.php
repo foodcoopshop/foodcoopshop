@@ -12,7 +12,7 @@ App::uses('File', 'Utility');
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.2
+ * @since         FoodCoopShop 1.3
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Michael Kramer
  * @copyright     Copyright (c) Michael Kramer, http://k-pd.de
@@ -201,7 +201,7 @@ class DbMigration {
                 $this->doSaveConf($tried);
             }
 
-            $file = new File(Configure::read('app.folder.migrations') . DS . $migration . '.sql');
+            $file = new File(Configure::read('app.folder.migrations') . DS . sprintf('%1$03d', $migration) . '.sql');
 
             if (!$file->readable()) {
                 if (is_array($conf)) {
@@ -297,7 +297,7 @@ class DbMigration {
         $result = array();
         $activeVersion = (int)$activeVersion;
         $dir = new Folder(Configure::read('app.folder.migrations'));
-        $files = $dir->find('^[0-9]+\.sql$');
+        $files = $dir->find('^[0-9][0-9][0-9]\.sql$');
         unset($dir);
 
         foreach ($files as $key => $file) {
