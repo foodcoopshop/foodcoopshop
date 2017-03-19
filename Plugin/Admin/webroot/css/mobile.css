@@ -90,9 +90,9 @@ body.pages.home #content {
 .tax-dropdown-wrapper.featherlight-inner,
 .add-payment-form.featherlight-inner,
 .featherlight iframe {
-	min-width: 100% ! important;
-	max-width: 100% ! important;
-	width: 100% ! important;
+	min-width: 200px ! important;
+	width: 98% ! important;
+    max-width: 450px ! important;
 }
 .featherlight-content .message-container {
 	line-height: 25px;
