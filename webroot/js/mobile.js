@@ -31,7 +31,13 @@ foodcoopshop.Mobile = {
     	$('.sb-toggle-left').on('click', function(event) {
             event.preventDefault();
             event.stopPropagation();
-            controller.toggle('sb-left');
+            controller.toggle('sb-left', function() {
+            	 if ($('.sb-left').css('display') == 'block') {
+            		 $('body').addClass('slidebar-left-visible');
+            	 } else {
+            		 $('body').removeClass('slidebar-left-visible');
+            	 }
+            });
         });    	
     },
     
@@ -56,6 +62,10 @@ foodcoopshop.Mobile = {
     
     fixContentScrolling : function() {
         $('body').css('overflow-y', 'auto');
+    },
+    
+    autoOpenSidebarLeft : function() {
+    	$('.sb-toggle-left').trigger('click');
     },
     
     initMenusAdmin: function() {
