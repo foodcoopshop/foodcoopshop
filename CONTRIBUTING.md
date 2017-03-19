@@ -13,3 +13,5 @@ If you plan to **collaborate more intensively**, please ask Mario (office@foodco
 * make your changes, push, and make a pull request to the develop branch
 
 The branches "master" and "develop" are protected. Only admins can push to those branches.
+
+Good issues for your first PR are labelled with ["good first PR"](https://github.com/foodcoopshop/foodcoopshop/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+PR%22)
