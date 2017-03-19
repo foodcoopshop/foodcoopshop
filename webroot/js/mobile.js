@@ -87,7 +87,7 @@ foodcoopshop.Mobile = {
         navBarContainer.prepend(this.getResponsiveMenuButton());
         $('#container').prepend(navBarContainer);
         
-        $(window).on('orientationchange', function(event) {
+        $(window).bind('resize', function() {
         	foodcoopshop.Admin.adaptContentMargin();
         });
 
