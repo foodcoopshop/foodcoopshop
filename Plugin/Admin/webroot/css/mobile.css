@@ -9,7 +9,6 @@
     display: none ! important;
 }
 #content {
-    margin-top: 0px ! important;
     margin-left: 0px ! important;
     border-left: 0px ! important;
     font-size: 9pt;
@@ -18,9 +17,8 @@
     border-radius: 0;
 }
 .filter-container {
-	position: static ! important;
-    float: left;
-    width: 100%;
+	left: 0;
+    width: 100vw;
     max-width: none;
     padding: 3px;
 }

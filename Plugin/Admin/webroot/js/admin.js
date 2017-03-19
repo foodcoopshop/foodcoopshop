@@ -1821,7 +1821,7 @@ foodcoopshop.Admin = {
     },
 
     adaptContentMargin: function() {
-        var marginTop = $('.filter-container').height() + 10;
+        var marginTop = $('.filter-container').outerHeight();
         $('#content').css('margin-top', marginTop);
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
     },
