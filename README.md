@@ -17,9 +17,9 @@ If you have questions please drop me an email: office@foodcoopshop.com (Mario).
 ## Requirements
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
-* PHP 5.5 or higher (PHP 7 recommended)
+* PHP 5.5 or higher (PHP 7.0.x recommended)
 * MySQL 5.4 or higher
-* Nodejs and npm ([installation](https://nodejs.org/en/download/)) developer packages
+* Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
@@ -68,9 +68,5 @@ If the debug level is set to 0 (e.g. not using a *.dev hostname), and you made c
 $ bash Console/cake asset_compress build
 ```
 
-## Pull requests
-Pull requests are welcome, please make sure your modifications are to the develop branch of FoodCoopShop and they are well tested!
-
 # Links
 * **Official website**: [https://www.foodcoopshop.com](https://www.foodcoopshop.com)
-
