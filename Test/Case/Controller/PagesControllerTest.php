@@ -91,14 +91,12 @@ class PagesControllerTest extends AppCakeTestCase
         $this->browser->doFoodCoopShopLogout();
     }
 
-    public function test404Pages()
+    public function test404PagesLoggedOut()
     {
         $testUrls = array(
             '/xxx',
-            $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
             $this->Slug->getPageDetail(4234, 'not valid page name'),
-            $this->Slug->getCategoryDetail(4234, 'not valid category name')
         );
         
         foreach ($testUrls as $url) {
@@ -110,6 +108,31 @@ class PagesControllerTest extends AppCakeTestCase
         }
     }
 
+    /**
+     * products and categories are not visible for guests in the test settings
+     * to test the correct 404 page, a valid login is required
+     */
+    public function test404PagesLoggedIn()
+    {
+        $this->browser->doFoodCoopShopLogin();
+        
+        $testUrls = array(
+            $this->Slug->getProductDetail(4234, 'not valid product name'),
+            $this->Slug->getCategoryDetail(4234, 'not valid category name')
+        );
+        
+        foreach ($testUrls as $url) {
+            $this->browser->get($url);
+            if (! $this->is404Page()) {
+                echo '<a href="' . $url . '">' . $url . '</a><br />';
+                echo $this->browser->getContent();
+            }
+        }
+        
+        $this->browser->doFoodCoopShopLogout();
+        
+    }
+    
     private function is404Page()
     {
         $fail = false;
