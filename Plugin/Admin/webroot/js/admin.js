@@ -1435,7 +1435,7 @@ foodcoopshop.Admin = {
             dialogHtml += '<h3>' + dataRow.find('td:nth-child(4) b').html() + '</h3>';
 
             if (foodcoopshop.Admin.useManufacturerCompensationPercentage) {
-                dialogHtml += '<label for="dialogManufacturerOptionsCompensationPercentage">Aufwandsentschädigung in % (nur ganze Zahlen)</label>';
+                dialogHtml += '<label for="dialogManufacturerOptionsCompensationPercentage">Variabler Mitgliedsbeitrag in % (nur ganze Zahlen)</label>';
                 dialogHtml += '<input type="text" name="dialogManufacturerOptionsCompensationPercentage" id="dialogManufacturerOptionsCompensationPercentage" value="" />';
             }
 

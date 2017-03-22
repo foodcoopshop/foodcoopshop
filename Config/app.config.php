@@ -66,6 +66,7 @@ Configure::write('app.folder.order_lists_with_current_year_and_month', Configure
  * if set to true, a compensation percentage can be added to the manufacturer settings
  */
 Configure::write('app.useManufacturerCompensationPercentage', false);
+Configure::write('app.manufacturerComponensationInfoText', 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.');
 /**
  * all the default values in this block can be overwritten in the manufacturer settings
  */ 

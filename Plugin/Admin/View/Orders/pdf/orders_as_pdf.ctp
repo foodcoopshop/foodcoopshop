@@ -107,6 +107,11 @@ foreach ($orders as $order) {
     $pdf->renderTable();
     
     $pdf->Ln(5);
+    if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') {
+        $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->Ln(2);
+    }
     $html = '<p>Vielen Dank, dass du bei uns bestellst!</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
     
