@@ -39,6 +39,10 @@ if (!$appAuth->termsOfUseAccepted()) {
     
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
         
+        <?php if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
+        	<p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
+        <?php } ?>
+
         <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
         
     	<?php
@@ -51,7 +55,7 @@ if (!$appAuth->termsOfUseAccepted()) {
          ?>
          
         <p>
-        	Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo $this->MyHtml->getAddressFromAddressConfiguration(); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
+        	Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
         </p>
     
          <?php

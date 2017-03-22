@@ -489,7 +489,7 @@ class ManufacturersController extends AdminAppController
         
         // check compensationPercentage
         if ($compensationPercentage != '' && ($compensationPercentage < 0 || $compensationPercentage > 99)) {
-            $msg = 'Aufwandsentschädigung muss zwischen 0 und 99 liegen!';
+            $msg = 'Variabler Mitgliedsbeitrag muss zwischen 0 und 99 liegen!';
             $this->log($msg);
             die(json_encode(array(
                 'status' => 0,

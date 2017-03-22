@@ -81,7 +81,7 @@ if (Configure::read('app.useManufacturerCompensationPercentage') && $compensatio
     
     $html .= '<tr>';
     $html .= '<td width="' . $firstColumnWidth . '">';
-    $html .= '<h3> - ' . $compensationPercentage . '% Aufwandsentschädigung</h3>';
+    $html .= '<h3> - ' . $compensationPercentage . '% variabler Mitgliedsbeitrag</h3>';
     $html .= '</td>';
     
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
@@ -102,7 +102,7 @@ if (Configure::read('app.useManufacturerCompensationPercentage') && $compensatio
     $html .= '</table>';
     $pdf->writeHTML($html, true, false, true, false, '');
     
-    $html = '<p>Die neue Gesamtsumme rechts unten (abzüglich ' . $compensationPercentage . '% Aufwandsentschädigung) wird so bald wie möglich auf dein Konto überwiesen.</p>';
+    $html = '<p>Die neue Gesamtsumme rechts unten (abzüglich ' . $compensationPercentage . '% variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen.</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 } else {

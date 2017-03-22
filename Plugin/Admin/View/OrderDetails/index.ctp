@@ -103,7 +103,7 @@ echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">Hersteller<
 echo '<th class="right">' . $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag') . '</th>';
 if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
     echo '<th>%</th>';
-    echo '<th class="right">Betrag abzügl. eventueller Aufwandsentschädigung</th>';
+    echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
 echo '<th class="right">Pfand</th>';
 echo '<th>' . $this->Paginator->sort('Order.date_add', 'Bestell-Datum') . '</th>';

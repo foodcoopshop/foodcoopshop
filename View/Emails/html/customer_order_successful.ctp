@@ -102,34 +102,35 @@
 
 <?php echo $this->element('email/tableHead'); ?>
 	<tbody>
-		<tr>
-			<td style="padding-top:20px;">
-				Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php
-    				if ($this->MyHtml->paymentIsCashless()) {
-    				    $paymentText = 'Der Gesamtbetrag wurde von deinem Guthaben abgezogen.';
-    				} else {
-    				    $paymentText = 'Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen.';
-    				}
-    				echo $paymentText;
-				?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			    <p>
-    				Bitte hole deine Produkte am <b><?php echo $this->MyTime->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab.
-			    </p>
-			</td>
-		</tr>
-		<tr>
-			<td style="font-size:12px;">
-				Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen.
-			</td>
-		</tr>
+	
+		<tr><td style="padding-top:20px;">
+			Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
+		</td></tr>
+		
+		<tr><td>
+			<?php
+				if ($this->MyHtml->paymentIsCashless()) {
+				    $paymentText = 'Der Gesamtbetrag wurde von deinem Guthaben abgezogen.';
+				} else {
+				    $paymentText = 'Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen.';
+				}
+				echo $paymentText;
+			?>
+		</td></tr>
+		
+		<?php if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
+        	<tr><td style="padding-top:20px;"><b>
+        		<?php echo Configure::read('app.manufacturerComponensationInfoText'); ?>
+        	</b></td></tr>
+        <?php } ?>
+
+		<tr><td><p>
+    		Bitte hole deine Produkte am <b><?php echo $this->MyTime->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab.
+	    </p></td></tr>
+	    
+		<tr><td style="font-size:12px;">
+			Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen.
+		</td></tr>
+		
 	</tbody>
 </table>
