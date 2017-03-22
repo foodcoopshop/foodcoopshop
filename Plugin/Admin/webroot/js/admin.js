@@ -1153,7 +1153,7 @@ foodcoopshop.Admin = {
         $('.filter-container .right a.submit').on('click', function() {
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
-            $(this).closest('#content').find('form.fcs-form').submit();
+            $(this).closest('#container').find('form.fcs-form').submit();
         });
 
         $('.filter-container .right a.cancel').on('click', function() {
