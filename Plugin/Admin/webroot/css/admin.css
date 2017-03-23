@@ -29,6 +29,9 @@ body {
 body.customers.login #content {
     width: 100%;
 }
+body.pages.home .filter-container {
+	display: none;
+}
 #home {
 	width: 100%;
 	text-align: center;

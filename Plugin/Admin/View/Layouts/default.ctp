@@ -17,6 +17,7 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta name="theme-color" content="#719f41">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
 	
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -30,9 +31,10 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-    echo $this->element('renderCss', array(
-        'config' => 'admin'
-    ));
+    	echo $this->element('renderCss', array('config' => 'admin'));
+    	if ($isMobile) {
+        	echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
+    	}
     ?>
     
 </head>
@@ -52,14 +54,18 @@
     <?php echo $this->element('scrollToTopButton'); ?>
     
     <div class="sc"></div>
-	<div class="is-mobile-detector"></div>
-    <?php echo $this->element('sql_dump'); ?>
     
 <?php
 
-echo $this->element('renderJs', array(
-    'config' => 'admin'
-));
+echo $this->element('renderJs', array('config' => 'admin'));
+
+if ($isMobile) {
+    echo '<div class="is-mobile-detector"></div>';
+    echo $this->Html->script(array('/js/vendor/slidebars/dist/slidebars'));
+    // add script BEFORE all scripts that are loaded in views (block)
+    echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();", array('block'));
+}
+echo $this->element('sql_dump');
 
 echo $this->Html->script('vendor/ckeditor/ckeditor');
 echo $this->Html->script('vendor/ckeditor/adapters/jquery');
