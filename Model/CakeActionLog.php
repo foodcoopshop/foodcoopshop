@@ -16,7 +16,20 @@
  */
 class CakeActionLog extends AppModel
 {
-
+    /*
+     * Supported structure:
+     * {type_id} => array(
+     *     'de' => 'text to show in German language',
+     *     'access' => array(
+     *         'manufacturer',  // uncertain how that works
+     *     ),
+     *     'class' => array(  // classification of log entry
+     *         'info',  // for info only, default
+     *         'warn',  // warning, something should be taken care of
+     *         'fail',  // failure while doing something, must be taken care of
+     *     ),
+     * ),
+     */
     public $types = array(
         'product_added' => array(
             'de' => 'Artikel: erstellt',
@@ -162,7 +175,7 @@ class CakeActionLog extends AppModel
                 'manufacturer'
             )
         ),
-        
+
         'payment_product_added' => array(
             'de' => 'Mitglied: Guthaben-Aufladung eingetragen'
         ),
@@ -214,7 +227,7 @@ class CakeActionLog extends AppModel
         'payment_member_fee_flexible_deleted' => array(
             'de' => 'Mitglied: Flexibler Mitgliedsbeitrag gelöscht'
         ),
-        
+
         'blog_post_added' => array(
             'de' => 'Blog-Artikel: erstellt'
         ),
@@ -230,7 +243,7 @@ class CakeActionLog extends AppModel
                 'manufacturer'
             )
         ),
-        
+
         'page_added' => array(
             'de' => 'Seite: erstellt'
         ),
@@ -240,7 +253,7 @@ class CakeActionLog extends AppModel
         'page_deleted' => array(
             'de' => 'Seite: gelöscht'
         ),
-        
+
         'category_added' => array(
             'de' => 'Kategorie: erstellt'
         ),
@@ -250,7 +263,7 @@ class CakeActionLog extends AppModel
         'category_deleted' => array(
             'de' => 'Kategorie: gelöscht'
         ),
-        
+
         'slider_added' => array(
             'de' => 'Slideshow-Bild: erstellt'
         ),
@@ -260,7 +273,7 @@ class CakeActionLog extends AppModel
         'slider_deleted' => array(
             'de' => 'Slideshow-Bild: gelöscht'
         ),
-        
+
         'tax_added' => array(
             'de' => 'Steuersatz: erstellt'
         ),
@@ -270,7 +283,7 @@ class CakeActionLog extends AppModel
         'tax_deleted' => array(
             'de' => 'Steuersatz: gelöscht'
         ),
-        
+
         'customer_registered' => array(
             'de' => 'Mitglied: Mitgliedskonto erstellt'
         ),
@@ -295,7 +308,7 @@ class CakeActionLog extends AppModel
         'customer_group_changed' => array(
             'de' => 'Mitglied: Gruppe geändert'
         ),
-        
+
         'manufacturer_description_changed' => array(
             'de' => 'Hersteller: Beschreibung geändert',
             'access' => array(
@@ -338,7 +351,7 @@ class CakeActionLog extends AppModel
                 'manufacturer'
             )
         ),
-        
+
         'cronjob_backup_database' => array(
             'de' => 'Cronjob: Datenbank gebackupt'
         ),
@@ -363,7 +376,16 @@ class CakeActionLog extends AppModel
                 'manufacturer'
             )
         ),
-        
+        'superadmin_deploy_failed' => array(
+            'de' => 'Superadmin: Update gescheitert',
+            'access' => array(
+                'manufacturer'
+            ),
+            'class' => array(
+                'fail',
+            ),
+        ),
+
         'attribute_added' => array(
             'de' => 'Variante erstellt'
         ),
@@ -373,7 +395,7 @@ class CakeActionLog extends AppModel
         'attribute_deleted' => array(
             'de' => 'Variante gelöscht'
         ),
-        
+
         'configuration_changed' => array(
             'de' => 'Einstellung geändert'
         )

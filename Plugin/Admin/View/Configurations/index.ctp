@@ -25,7 +25,7 @@ $this->element('addScript', array(
         "
     ));
     ?>
-    
+
     <div class="filter-container">
 		<h1><?php echo $title_for_layout; ?></h1>
 	</div>
@@ -46,10 +46,14 @@ $this->element('addScript', array(
 			<th></th>
 			<th>Wert</th>
 		</tr>
-        
+
         <?php
         foreach ($configurations as $configuration) {
-            
+
+            if ($configuration['Configuration']['type'] == 'readonly') {
+                continue;
+            }
+
             if (! Configure::read('htmlHelper')->paymentIsCashless() && in_array($configuration['Configuration']['name'], array(
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE'
@@ -59,23 +63,24 @@ $this->element('addScript', array(
             if (! Configure::read('app.memberFeeEnabled') && $configuration['Configuration']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
                 continue;
             }
-            
+
             echo '<tr>';
-            
+
             echo '<td class="first">';
             echo $configuration['Configuration']['text'];
             echo '</td>';
-            
+
             echo '<td style="width:30px;">';
-            
+
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'title' => 'Einstellung bearbeiten',
                 'class' => 'edit-configuration-button'
             ), $this->Slug->getConfigurationEdit($configuration['Configuration']['id_configuration'], $configuration['Configuration']['name']));
+
             echo '</td>';
-            
+
             echo '<td>';
-            
+
             switch ($configuration['Configuration']['type']) {
                 case 'number':
                 case 'text':
@@ -90,9 +95,9 @@ $this->element('addScript', array(
                     echo (boolean) $configuration['Configuration']['value'] ? 'ja' : 'nein';
                     break;
             }
-            
+
             echo '</td>';
-            
+
             echo '</tr>';
         }
         ?>
@@ -111,6 +116,26 @@ $this->element('addScript', array(
 			<th>Wert</th>
 		</tr>
 
+        <?php
+        foreach ($configurations as $configuration) {
+
+            if ($configuration['Configuration']['type'] != 'readonly') {
+                continue;
+            }
+
+            echo '<tr>';
+
+            echo '<td>';
+            echo $configuration['Configuration']['text'];
+            echo '</td>';
+
+            echo '<td>';
+            echo $configuration['Configuration']['value'];
+            echo '</td>';
+
+            echo '</tr>';
+        }
+        ?>
 		<tr>
 			<td>app.cakeServerName</td>
 			<td><a target="_blank"
@@ -199,7 +224,7 @@ $this->element('addScript', array(
 			<td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
 		</tr>
 		<?php } ?>
-		
+
         <tr>
 			<td>app.depositForManufacturersStartDate</td>
 			<td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>

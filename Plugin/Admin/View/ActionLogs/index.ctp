@@ -23,7 +23,7 @@
         "
     ));
     ?>
-   
+
     <div class="filter-container">
     	<?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
         	<?php echo $this->Form->input('type', array('type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '')); ?>
@@ -48,8 +48,8 @@
 				20.07.2015 angezeigt.</li>
             <?php } ?>
         </ul>
-	</div>    
-    
+	</div>
+
 <?php
 
 echo '<table class="list no-hover">';
@@ -65,24 +65,29 @@ echo '</tr>';
 $i = 0;
 foreach ($actionLogs as $actionLog) {
     $i ++;
-    echo '<tr class="data">';
-    
+
+    $actionType = $actionLogModel->types[$actionLog['CakeActionLog']['type']];
+    $actionClass = empty($actionType['class']) ? array() : $actionType['class'];
+    $actionClass = array_merge(array('data'), $actionClass);
+
+    echo '<tr class="' . implode(' ', $actionClass) . '">';
+
     echo '<td class="hide">';
     echo $actionLog['CakeActionLog']['id'];
     echo '</td>';
-    
+
     echo '<td>';
-    echo $actionLogModel->types[$actionLog['CakeActionLog']['type']]['de'];
+    echo $actionType['de'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Time->formatToDateNTimeLongWithSecs($actionLog['CakeActionLog']['date']);
     echo '</td>';
-    
+
     echo '<td>';
     echo $actionLog['CakeActionLog']['text'];
     echo '</td>';
-    
+
     echo '<td>';
     if (isset($actionLog['Customer']['Manufacturer'])) {
         echo $actionLog['Customer']['Manufacturer']['name'];
@@ -90,26 +95,26 @@ foreach ($actionLogs as $actionLog) {
         echo $actionLog['Customer']['name'];
     }
     echo '</td>';
-    
+
     echo '<td class="center">';
-    
+
     $showLink = false;
     $targetBlank = true;
-    
+
     // products
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'products' && ! ($actionLog['CakeActionLog']['type'] == 'product_set_inactive')) {
         $showLink = true;
         $title = 'Artikel anzeigen';
         $url = $this->Slug->getProductDetail($actionLog['CakeActionLog']['object_id'], '');
     }
-    
+
     // manufacturers
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'manufacturers') {
         $showLink = true;
         $title = 'Hersteller anzeigen';
         $url = $this->Slug->getManufacturerDetail($actionLog['CakeActionLog']['object_id'], '');
     }
-    
+
     // blog_posts
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'blog_posts' && ! (in_array($actionLog['CakeActionLog']['type'], array(
         'blog_post_deleted'
@@ -118,7 +123,7 @@ foreach ($actionLogs as $actionLog) {
         $title = 'Blog-Artikel anzeigen';
         $url = $this->Slug->getBlogPostDetail($actionLog['CakeActionLog']['object_id'], '');
     }
-    
+
     // pages
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'pages' && ! (in_array($actionLog['CakeActionLog']['type'], array(
         'page_deleted'
@@ -127,7 +132,7 @@ foreach ($actionLogs as $actionLog) {
         $title = 'Seite anzeigen';
         $url = $this->Slug->getPageDetail($actionLog['CakeActionLog']['object_id'], '');
     }
-    
+
     // categories
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'categories' && ! (in_array($actionLog['CakeActionLog']['type'], array(
         'category_deleted'
@@ -136,7 +141,7 @@ foreach ($actionLogs as $actionLog) {
         $title = 'Kategorie anzeigen';
         $url = $this->Slug->getCategoryDetail($actionLog['CakeActionLog']['object_id'], '');
     }
-    
+
     // order details
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'order_details') {
         $showLink = true;
@@ -144,7 +149,7 @@ foreach ($actionLogs as $actionLog) {
         $url = '/admin/order_details/index/orderDetailId:' . $actionLog['CakeActionLog']['object_id'];
         $targetBlank = false;
     }
-    
+
     // orders
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'orders') {
         $showLink = true;
@@ -153,7 +158,7 @@ foreach ($actionLogs as $actionLog) {
         $url = '/admin/orders/index/orderId:' . $actionLog['CakeActionLog']['object_id'] . '/orderState:' . join(',', array_keys($this->Html->getOrderStates()));
         $targetBlank = false;
     }
-    
+
     if ($showLink) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => $title,
@@ -161,7 +166,7 @@ foreach ($actionLogs as $actionLog) {
         ), $url);
     }
     echo '</td>';
-    
+
     echo '</tr>';
 }
 
@@ -171,5 +176,5 @@ echo '</tr>';
 
 echo '</table>';
 
-?>    
+?>
 </div>
