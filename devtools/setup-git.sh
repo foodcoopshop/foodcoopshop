@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 ################################################################################
 #
@@ -6,7 +6,7 @@
 #
 ################################################################################
 
-cp devtools/git-pre-commit .git/hooks/pre-commit
+cp devtools/git-pre-commit.sh .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit
-cp devtools/git-pre-push .git/hooks/pre-push
+cp devtools/git-pre-push.sh .git/hooks/pre-push
 chmod +x .git/hooks/pre-push
