@@ -11,7 +11,7 @@ This is the Developers area. If You want to use the software "as is", please fol
 
 # Developers area
 
-If you have questions please drop me an email: office@foodcoopshop.com (Mario).    
+If you have questions please drop me an email: office@foodcoopshop.com (Mario).
 
 
 ## Requirements
