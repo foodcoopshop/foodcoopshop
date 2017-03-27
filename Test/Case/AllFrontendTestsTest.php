@@ -1,6 +1,6 @@
 <?php
 /**
- * AllTestsTest
+ * AllFrontendTestsTest
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
