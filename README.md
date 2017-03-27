@@ -17,7 +17,7 @@ If you have questions please drop me an email: office@foodcoopshop.com (Mario).
 ## Requirements
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
-* PHP 5.5 or higher (PHP 7.0.x recommended)
+* PHP 5.5 or higher (PHP 7.1.x recommended)
 * MySQL 5.4 or higher
 * Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
