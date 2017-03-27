@@ -47,13 +47,13 @@ do
 
 		if [ "$filelist" != "" ]
 		then
-				echo "Running Code Sniffer"
-				$PHPCS --standard=PSR2 --encoding=utf-8 -n -p $filelist
-				if [ $? != 0 ]
-				then
-					echo "Fix the error(s) and commit the changed files before push."
-					exit 1
-				fi
+			echo "Running Code Sniffer"
+			$PHPCS --standard=devtools/fcs-rules.xml --encoding=utf-8 -n $filelist
+			if [ $? != 0 ]
+			then
+				echo "Fix the error(s) and commit the changed files before push."
+				exit 1
+			fi
 		fi
 	fi
 done
