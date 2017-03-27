@@ -48,7 +48,7 @@ do
 		if [ "$filelist" != "" ]
 		then
 			echo "Running Code Sniffer"
-			$PHPCS --standard=devtools/fcs-rules.xml --encoding=utf-8 -n $filelist
+			$PHPCS --standard=devtools/fcs-rules.xml $filelist
 			if [ $? != 0 ]
 			then
 				echo "Fix the error(s) and commit the changed files before push."
