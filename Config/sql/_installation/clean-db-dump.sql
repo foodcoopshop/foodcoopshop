@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 26. Feb 2017 um 19:29
+-- Erstellungszeit: 17. Mrz 2017 um 09:24
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -342,7 +342,9 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (557, NULL, NULL, 1, 'FCS_APP_ADDRESS', 'Adresse der Foodcoop<br /><div class="small">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>', '', 'textarea', 6, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
 (558, NULL, NULL, 1, 'FCS_APP_EMAIL', 'E-Mail-Adresse der Foodcoop<br /><div class="small"></div>', '', 'text', 7, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
 (559, NULL, NULL, 1, 'FCS_PLATFORM_OWNER', 'Betreiber der Plattform<br /><div class="small">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>', '', 'textarea', 8, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
-(560, NULL, NULL, 1, 'FCS_SHOP_ORDER_DEFAULT_STATE', 'Bestellstatus für Sofort-Bestellungen', '1', 'dropdown', 75, '2017-01-12 00:00:00', '2017-01-12 00:00:00');
+(560, NULL, NULL, 1, 'FCS_SHOP_ORDER_DEFAULT_STATE', 'Bestellstatus für Sofort-Bestellungen', '1', 'dropdown', 75, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
+(561, NULL, NULL, 1, 'FCS_DB_VERSION', 'Version der Datenbank-Struktur', '0', 'readonly', 0, '2017-03-13 00:00:00', '2017-03-13 00:00:00'),
+(562, NULL, NULL, 0, 'FCS_DB_UPDATE', 'Version des letzten versuchten Datenbank-Updates', '0', 'readonly', 0, '2017-03-13 00:00:00', '2017-03-13 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1206,7 +1208,7 @@ ALTER TABLE `fcs_cms`
 -- AUTO_INCREMENT für Tabelle `fcs_configuration`
 --
 ALTER TABLE `fcs_configuration`
-  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=561;
+  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=563;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_customer`
 --

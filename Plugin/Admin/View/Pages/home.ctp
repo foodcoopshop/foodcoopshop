@@ -14,7 +14,14 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Helper.showContent();" . Configure::read('app.jsNamespace') . ".Helper.initAnystretch();" . Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" . Configure::read('app.jsNamespace') . ".Helper.initMenu();" . Configure::read('app.jsNamespace') . ".Helper.initScrolltopButton();" . Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();"
+    'script' => 
+        Configure::read('app.jsNamespace') . ".Helper.showContent();" . 
+        Configure::read('app.jsNamespace') . ".Helper.initAnystretch();" .
+        Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" .
+        Configure::read('app.jsNamespace') . ".Helper.initMenu();" .
+        Configure::read('app.jsNamespace') . ".Helper.initScrolltopButton();" .
+        Configure::read('app.jsNamespace') . ".Mobile.autoOpenSidebarLeft();" .
+        Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();"
 ));
 
 echo '<div id="home">';
@@ -27,6 +34,7 @@ if ($appAuth->isManufacturer()) {
 echo '<h1>Willkommen <br />im ' . $adminName . '</h1>';
 echo $this->element('acceptUpdatedTermsOfUseForm');
 echo '<br />';
+echo '<div class="filter-container"></div>';
 echo '<img id="installation-logo" src="/files/images/logo.jpg" />';
 echo '<div class="sc"></div>';
 echo '</div>';

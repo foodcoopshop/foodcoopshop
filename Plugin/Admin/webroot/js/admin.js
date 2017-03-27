@@ -21,7 +21,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.Helper.initLogoutButton();
-        this.setMenuFixed();
+       	this.setMenuFixed();
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
@@ -1153,7 +1153,7 @@ foodcoopshop.Admin = {
         $('.filter-container .right a.submit').on('click', function() {
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
-            $(this).closest('#content').find('form.fcs-form').submit();
+            $(this).closest('#container').find('form.fcs-form').submit();
         });
 
         $('.filter-container .right a.cancel').on('click', function() {
@@ -1821,7 +1821,7 @@ foodcoopshop.Admin = {
     },
 
     adaptContentMargin: function() {
-        var marginTop = $('.filter-container').height() + 10;
+        var marginTop = $('.filter-container').outerHeight();
         $('#content').css('margin-top', marginTop);
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
     },

@@ -57,6 +57,7 @@ Configure::write('app.filesDir', DS.'files');
 Configure::write('app.tmpWwwDir', DS.'tmp');
 Configure::write('app.uploadedImagesDir', Configure::read('app.filesDir') . DS . 'images');
 
+Configure::write('app.folder.migrations', APP . 'Config' . DS . 'sql' . DS . 'migrations');
 Configure::write('app.folder.invoices', APP . 'files_private'. DS . 'invoices');
 Configure::write('app.folder.order_lists', APP . 'files_private' . DS .'order_lists');
 Configure::write('app.folder.invoices_with_current_year_and_month', Configure::read('app.folder.invoices').DS.date('Y').DS.date('m'));
@@ -69,7 +70,7 @@ Configure::write('app.useManufacturerCompensationPercentage', false);
 Configure::write('app.manufacturerComponensationInfoText', 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.');
 /**
  * all the default values in this block can be overwritten in the manufacturer settings
- */ 
+ */
 Configure::write('app.defaultCompensationPercentage', 0);
 Configure::write('app.defaultSendOrderList', true);
 Configure::write('app.defaultSendInvoice', true);
