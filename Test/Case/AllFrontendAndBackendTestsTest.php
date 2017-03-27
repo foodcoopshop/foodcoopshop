@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AllTestsTest extends PHPUnit_Framework_TestSuite
+class AllFrontendAndBackendTestsTest extends PHPUnit_Framework_TestSuite
 {
 
     /**
