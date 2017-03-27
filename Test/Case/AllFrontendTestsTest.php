@@ -24,7 +24,7 @@ class AllFrontendTestsTest extends PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new CakeTestSuite('All Tests');
+        $suite = new CakeTestSuite('All Frontend Tests');
         $suite->addTestDirectoryRecursive(TESTS . 'Case');
         return $suite;
     }

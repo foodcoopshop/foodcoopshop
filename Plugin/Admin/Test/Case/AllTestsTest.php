@@ -25,8 +25,7 @@ class AllTestsTest extends PHPUnit_Framework_TestSuite
     public static function suite()
     {
         $suite = new CakeTestSuite('All Tests');
-        $suite->addTestDirectoryRecursive(App::pluginPath('Admin') . 'Test' . DS . 'Case' . DS);
-        
+        $suite->addTestDirectoryRecursive(CakePlugin::path('Admin') . 'Test' . DS . 'Case');
         return $suite;
     }
 }

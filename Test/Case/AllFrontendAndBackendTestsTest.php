@@ -24,9 +24,10 @@ class AllFrontendAndBackendTestsTest extends PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new CakeTestSuite('All Tests');
+        $suite = new CakeTestSuite('All Frontend and Backend Tests');
+        // TODO maybe there is a more elegant way to include the defined tests of existing suites than copying them
         $suite->addTestDirectoryRecursive(TESTS . 'Case');
-        $suite->addTestDirectoryRecursive(APP.DS.'Plugin'.DS.'Admin'.DS.'Test'.DS.'Case');
+        $suite->addTestDirectoryRecursive(CakePlugin::path('Admin') . 'Test' . DS . 'Case');
         return $suite;
     }
 }
