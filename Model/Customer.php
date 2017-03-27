@@ -122,6 +122,7 @@ class Customer extends AppModel
         'PaidCashFreeOrders' => array(
             'className' => 'Order',
             'foreignKey' => 'id_customer',
+            'conditions' => array(),
             'order' => array(
                 'PaidCashFreeOrders.date_add' => 'DESC'
             )
