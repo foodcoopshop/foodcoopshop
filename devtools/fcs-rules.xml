@@ -7,9 +7,9 @@
  <rule ref="PSR2">
   <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
  </rule>
- <rule ref="Generic.Files.LineEndings">
+ <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
   <properties>
-   <property name="eolChar" value="\n"/>
+   <property name="ignoreBlankLines" value="false"/>
   </properties>
- </rule>
+</rule>
 </ruleset>
