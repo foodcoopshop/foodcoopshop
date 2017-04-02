@@ -20,6 +20,11 @@ $this->element('addScript', array(
         Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
 ));
+if ($paymentType == 'product') {
+    $this->element('highlightRowAfterEdit', array(
+        'rowIdPrefix' => '#cakePayment-'
+    ));
+}
 ?>
 
 <div class="filter-container">
@@ -89,7 +94,7 @@ foreach ($payments as $payment) {
         $paymentSum += $payment['CakePayment']['amount'];
     }
 
-    echo '<tr class="data ' . $rowClass . '">';
+    echo '<tr id="cakePayment-'.$payment['CakePayment']['id'].'" class="data ' . $rowClass . '">';
 
     if ($paymentType == 'product') {
         echo '<td>';
