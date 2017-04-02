@@ -1,6 +1,6 @@
 <?php
 /**
- * AllTestsTest
+ * AllFrontendTestsTest
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AllTestsTest extends PHPUnit_Framework_TestSuite
+class AllFrontendTestsTest extends PHPUnit_Framework_TestSuite
 {
 
     /**
@@ -24,7 +24,7 @@ class AllTestsTest extends PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new CakeTestSuite('All Tests');
+        $suite = new CakeTestSuite('All Frontend Tests');
         $suite->addTestDirectoryRecursive(TESTS . 'Case');
         return $suite;
     }
