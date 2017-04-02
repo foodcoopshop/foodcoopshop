@@ -63,7 +63,7 @@ echo '<tr class="sort">';
 $colspan = 2;
 if ($paymentType == 'product') {
     echo '<th style="width:25px;"></th>';
-    echo '<th style="width:50px;"></th>';
+    echo '<th style="width:50px;">' . $this->Paginator->sort('CakePayment.approval', 'Status') . '</th>';
     $colspan = $colspan + 2;
 }
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Name') . '</th>';
@@ -78,7 +78,7 @@ $i = 0;
 $paymentSum = 0;
 
 foreach ($payments as $payment) {
-    
+
     $rowClass = '';
     $additionalText = '';
     if ($payment['CakePayment']['status'] == APP_DEL) {
@@ -88,9 +88,9 @@ foreach ($payments as $payment) {
         $i ++;
         $paymentSum += $payment['CakePayment']['amount'];
     }
-    
+
     echo '<tr class="data ' . $rowClass . '">';
-    
+
     if ($paymentType == 'product') {
         echo '<td>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
@@ -110,7 +110,7 @@ foreach ($payments as $payment) {
                     break;
                 case 0;
                     break;
-                case 1; 
+                case 1;
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
                         array(
@@ -132,7 +132,7 @@ foreach ($payments as $payment) {
             }
         echo '</td>';
     }
-    
+
     echo '<td>';
         if (!empty($payment['Manufacturer']['name'])) {
             echo $payment['Manufacturer']['name'];
@@ -141,15 +141,15 @@ foreach ($payments as $payment) {
         }
         echo $additionalText;
     echo '</td>';
-    
+
     echo '<td style="text-align:right;width:110px;">';
     echo $this->Time->formatToDateNTimeShort($payment['CakePayment']['date_add']);
     echo '</td>';
-    
+
     echo '<td style="text-align:right;">';
     echo $this->Html->formatAsEuro($payment['CakePayment']['amount']);
     echo '</td>';
-    
+
     if ($showTextColumn) {
         echo '<td>';
         switch($paymentType) {
@@ -164,7 +164,7 @@ foreach ($payments as $payment) {
         }
         echo '</td>';
     }
-    
+
     echo '</tr>';
 }
 
