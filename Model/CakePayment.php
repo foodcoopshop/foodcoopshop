@@ -24,12 +24,16 @@ class CakePayment extends AppModel
         'Manufacturer' => array(
             'foreignKey' => 'id_manufacturer'
         ),
+        'CreatedBy' => array(
+            'className' => 'Customer',
+            'foreignKey' => 'created_by'
+        ),
         'ChangedBy' => array(
             'className' => 'Customer',
             'foreignKey' => 'changed_by'
         ),
     );
-    
+
     private function getManufacturerDepositConditions($manufacturerId=null)
     {
         $conditions = array(
@@ -42,7 +46,7 @@ class CakePayment extends AppModel
         $conditions['CakePayment.type'] = 'deposit';
         return $conditions;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param string $monthAndYear
@@ -52,35 +56,35 @@ class CakePayment extends AppModel
     {
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
         $conditions['DATE_FORMAT(CakePayment.date_add, \'%Y-%c\')'] = $monthAndYear;
-        
+
         $paymentSum = $this->find('all', array(
             'fields' => 'CakePayment.*',
             'conditions' => $conditions,
             'order' => array('CakePayment.date_add' => 'DESC'),
         ));
-        
+
         return $paymentSum;
     }
-    
+
     /**
      * @return float
      */
     public function getManufacturerDepositMoneySum()
     {
-        
+
         $conditions = $this->getManufacturerDepositConditions();
         $conditions['CakePayment.text'] = 'money';
-        
+
         $paymentSum = $this->find('all', array(
             'fields' => 'SUM(amount) as sumManufacturerMoneyDeposit',
             'conditions' => $conditions,
             'order' => array('CakePayment.date_add' => 'DESC'),
         ));
-        
+
         return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
-        
+
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param boolean $groupByMonth
@@ -88,9 +92,9 @@ class CakePayment extends AppModel
      */
     public function getMonthlyDepositSumByManufacturer($manufacturerId, $groupByMonth)
     {
-        
+
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
-        
+
         $fields = array(
             'SUM(amount) as sumDepositReturned'
         );
@@ -103,7 +107,7 @@ class CakePayment extends AppModel
             'order' => array('CakePayment.date_add' => 'DESC'),
             'group' => $groupByMonth ? 'monthAndYear' : null
         ));
-        
+
         return $paymentSum;
     }
 
@@ -119,19 +123,19 @@ class CakePayment extends AppModel
             'CakePayment.id_manufacturer' => 0,
             'CakePayment.status' => APP_ON
         );
-    
+
         $conditions['CakePayment.type'] = $type;
-    
+
         $paymentSum = $this->find('all', array(
             'fields' => array(
                 'SUM(amount) as SumAmount'
             ),
             'conditions' => $conditions
         ));
-    
+
         return $paymentSum[0][0]['SumAmount'];
     }
-    
+
 }
 
 ?>

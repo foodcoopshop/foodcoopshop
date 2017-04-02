@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 06. Mrz 2017 um 15:32
+-- Erstellungszeit: 02. Apr 2017 um 20:11
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -176,7 +176,8 @@ CREATE TABLE `fcs_cake_payments` (
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `approval` tinyint(4) NOT NULL,
   `approval_comment` text NOT NULL,
-  `changed_by` int(10) UNSIGNED NOT NULL
+  `changed_by` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -783,7 +784,9 @@ CREATE TABLE `fcs_tax` (
   `deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
+--
+-- Indizes der exportierten Tabellen
+--
 
 --
 -- Indizes für die Tabelle `fcs_address`
@@ -1076,6 +1079,10 @@ ALTER TABLE `fcs_tax`
   ADD PRIMARY KEY (`id_tax`);
 
 --
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
 -- AUTO_INCREMENT für Tabelle `fcs_address`
 --
 ALTER TABLE `fcs_address`
@@ -1089,17 +1096,17 @@ ALTER TABLE `fcs_attribute`
 -- AUTO_INCREMENT für Tabelle `fcs_cake_action_logs`
 --
 ALTER TABLE `fcs_cake_action_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_carts`
 --
 ALTER TABLE `fcs_cake_carts`
-  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_cart_products`
 --
 ALTER TABLE `fcs_cake_cart_products`
-  MODIFY `id_cart_product` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_cart_product` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_deposits`
 --
@@ -1129,7 +1136,7 @@ ALTER TABLE `fcs_cms`
 -- AUTO_INCREMENT für Tabelle `fcs_configuration`
 --
 ALTER TABLE `fcs_configuration`
-  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=561;
+  MODIFY `id_configuration` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=563;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_customer`
 --
@@ -1154,12 +1161,12 @@ ALTER TABLE `fcs_manufacturer`
 -- AUTO_INCREMENT für Tabelle `fcs_orders`
 --
 ALTER TABLE `fcs_orders`
-  MODIFY `id_order` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_order` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_order_detail`
 --
 ALTER TABLE `fcs_order_detail`
-  MODIFY `id_order_detail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_order_detail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_product`
 --
