@@ -342,7 +342,8 @@ class PaymentsController extends AdminAppController
             'date_add' => date('Y-m-d H:i:s'),
             'date_changed' => date('Y-m-d H:i:s'),
             'amount' => $amount,
-            'text' => $text
+            'text' => $text,
+            'created_by' => $this->AppAuth->getUserId()
         ));
 
         $this->loadModel('CakeActionLog');
@@ -537,26 +538,28 @@ class PaymentsController extends AdminAppController
         ));
 
         $payments = array();
-        foreach ($customer['CakePayments'] as $payment) {
+        if (!empty($customer['CakePayments'])) {
+            foreach ($customer['CakePayments'] as $payment) {
 
-            $text = Configure::read('htmlHelper')->getPaymentText($payment['type']);
-            if ($payment['type'] == 'member_fee') {
-                $text .= ' für: ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($payment['text']);
-            } else {
-                $text .= (! empty($payment['text']) ? ': "' . $payment['text'] . '"' : '');
+                $text = Configure::read('htmlHelper')->getPaymentText($payment['type']);
+                if ($payment['type'] == 'member_fee') {
+                    $text .= ' für: ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($payment['text']);
+                } else {
+                    $text .= (! empty($payment['text']) ? ': "' . $payment['text'] . '"' : '');
+                }
+
+                $payments[] = array(
+                    'date' => $payment['date_add'],
+                    'year' => Configure::read('timeHelper')->getYearFromDbDate($payment['date_add']),
+                    'amount' => $payment['amount'],
+                    'deposit' => 0,
+                    'type' => $payment['type'],
+                    'text' => $text,
+                    'payment_id' => $payment['id'],
+                    'approval' => $payment['approval'],
+                    'approval_comment' => $payment['approval_comment']
+                );
             }
-
-            $payments[] = array(
-                'date' => $payment['date_add'],
-                'year' => Configure::read('timeHelper')->getYearFromDbDate($payment['date_add']),
-                'amount' => $payment['amount'],
-                'deposit' => 0,
-                'type' => $payment['type'],
-                'text' => $text,
-                'payment_id' => $payment['id'],
-                'approval' => $payment['approval'],
-                'approval_comment' => $payment['approval_comment']
-            );
         }
 
         if (! empty($customer['PaidCashFreeOrders'])) {
