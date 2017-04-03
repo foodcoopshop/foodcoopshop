@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# make this use phpcs/phpcbf only. In this hook it's possible to auto-change the files and re-add the changes. Simply use "git --work-tree={tmppath}" for all commands
+# Generally:
+# - git checkout the cached versions to temp dir
+# - run phpcs (or phpcbf) on the temp dir (removing the file filter, have all tests in fcs-rules.xml)
+# - on phpcbf re-add all changes
+# - remove temp dir
+# - report errors
+# - on changes checkout cached versions
+# - allow commiting if no errors
+
 ################################################################################
 #
 #  The script below is derived from http://tech.zumba.com/2014/04/14/control-code-quality/
