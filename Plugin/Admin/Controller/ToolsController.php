@@ -20,7 +20,7 @@ class ToolsController extends AdminAppController
     public function doTmpImageUpload()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         // check if uploaded file is image file
         $formatInfo = getimagesize($this->params['form']['upload']['tmp_name']);
         // non-image files will return false
@@ -31,16 +31,18 @@ class ToolsController extends AdminAppController
                 'msg' => $message
             )));
         }
-        
+
         $extension = strtolower(pathinfo($this->params['form']['upload']['name'], PATHINFO_EXTENSION));
-        if ($extension == 'jpeg')
+        if ($extension == 'jpeg') {
             $extension = 'jpg';
+        }
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $thumb = PhpThumbFactory::create($this->params['form']['upload']['tmp_name']);
+        $this->calculateTmpUploadFileSize();
         $thumb->resize(Configure::read('app.tmpUploadFileSize'));
         $thumb->save(WWW_ROOT . $filenameWithPath);
-        
+
         die(json_encode(array(
             'status' => 1,
             'filename' => $filenameWithPath
@@ -50,13 +52,13 @@ class ToolsController extends AdminAppController
     public function rotateImage()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         // check if uploaded file is image file
         $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->params['data']['filename'];
-        
+
         $direction = $this->params['data']['direction'];
         $formatInfo = getimagesize($uploadedFile);
-        
+
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
             $message = 'Die hochgeladene Datei muss im Format "jpg" sein.';
@@ -65,11 +67,11 @@ class ToolsController extends AdminAppController
                 'msg' => $message
             )));
         }
-        
+
         $thumb = PhpThumbFactory::create($uploadedFile);
         $thumb->rotateImage($direction);
         $thumb->save($uploadedFile);
-        
+
         $rotatedImageSrc = $this->params['data']['filename'] . '?' . StringComponent::createRandomString(3);
         die(json_encode(array(
             'status' => 1,
@@ -80,34 +82,62 @@ class ToolsController extends AdminAppController
     public function ajaxCancelFormPage()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $referer = $this->params['data']['referer'];
-        if ($referer == '')
+        if ($referer == '') {
             $referer = '/';
-        
+        }
+
         $objectClass = $this->params['data']['objectClass'];
         $id = $this->params['data']['id'];
-        
+
         $this->loadModel($objectClass);
-        
+
         $object = $this->$objectClass->find('first', array(
             'conditions' => array(
                 $objectClass . '.' . $this->$objectClass->primaryKey => $id
             )
         ));
-        
+
         // eigene bearbeitungs-hinweise bei click auf cancel löschen
         // if ($object[$objectClass]['currently_updated_by'] == $this->AppAuth->getUserId()) {
         // $this->$objectClass->id = $id;
         // $this->$objectClass->saveField('currently_updated_by', 0);
         // }
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok',
             'referer' => $referer
         )));
     }
-}
 
-?>
+    /*
+     * On uploading images are resized to fit to the maximum possibly required ...ImageSizes from app.config.php
+     */
+    protected function calculateTmpUploadFileSize()
+    {
+        $confKey = 'ImageSizes';
+        $actTmpUploadFileSize = Configure::read('app.tmpUploadFileSize');
+
+        // get all config keys "*ImageSizes"
+        $imageSizes = Configure::read('app');
+        foreach (array_keys($imageSizes) as $appKey) {
+            if (strlen($appKey) < strlen($confKey) // prevent warnings of strrpos()
+                || strrpos($appKey, $confKey, strlen($confKey) * (-1)) === false
+                || !is_array($imageSizes[$appKey])
+            ) {
+                continue;
+            }
+
+            foreach ($imageSizes[$appKey] as $key => $value) {
+                if ($key <= $actTmpUploadFileSize) {
+                    continue;
+                }
+                $actTmpUploadFileSize = $key;
+            }
+        }
+
+        Configure::write('app.tmpUploadFileSize', $actTmpUploadFileSize);
+    }
+}
