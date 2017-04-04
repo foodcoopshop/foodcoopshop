@@ -134,7 +134,6 @@ Configure::write('app.categoryImageSizes', array(
 Configure::write('app.sliderImageSizes', array(
     '905' => array('suffix' => '-slider') // detail AND lightbox
 ));
-Configure::write('app.tmpUploadFileSize', 800);
 Configure::write('app.tmpUploadImagesDir', Configure::read('app.tmpWwwDir').DS.'images');
 
 Configure::write('app.langId', 1);

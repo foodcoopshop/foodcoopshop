@@ -39,8 +39,7 @@ class ToolsController extends AdminAppController
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $thumb = PhpThumbFactory::create($this->params['form']['upload']['tmp_name']);
-        $this->calculateTmpUploadFileSize();
-        $thumb->resize(Configure::read('app.tmpUploadFileSize'));
+        $thumb->resize($this->getMaxTmpUploadFileSize());
         $thumb->save(WWW_ROOT . $filenameWithPath);
 
         die(json_encode(array(
@@ -99,12 +98,6 @@ class ToolsController extends AdminAppController
             )
         ));
 
-        // eigene bearbeitungs-hinweise bei click auf cancel löschen
-        // if ($object[$objectClass]['currently_updated_by'] == $this->AppAuth->getUserId()) {
-        // $this->$objectClass->id = $id;
-        // $this->$objectClass->saveField('currently_updated_by', 0);
-        // }
-
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok',
@@ -114,11 +107,13 @@ class ToolsController extends AdminAppController
 
     /*
      * On uploading images are resized to fit to the maximum possibly required ...ImageSizes from app.config.php
+     * return int
      */
-    protected function calculateTmpUploadFileSize()
+    protected function getMaxTmpUploadFileSize()
     {
+
+        $actTmpUploadFileSize = 0;
         $confKey = 'ImageSizes';
-        $actTmpUploadFileSize = Configure::read('app.tmpUploadFileSize');
 
         // get all config keys "*ImageSizes"
         $imageSizes = Configure::read('app');
@@ -138,6 +133,7 @@ class ToolsController extends AdminAppController
             }
         }
 
-        Configure::write('app.tmpUploadFileSize', $actTmpUploadFileSize);
+        return $actTmpUploadFileSize;
+
     }
 }
