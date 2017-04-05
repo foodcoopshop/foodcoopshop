@@ -192,9 +192,10 @@ class Product extends AppModel
 
     private function getTaxJoins()
     {
+        // leave "t.active IN (0,1)" condition because 0% tax does not have a record in tax table
         $taxJoins = 'FROM '.$this->tablePrefix.'product p
              LEFT JOIN '.$this->tablePrefix.'tax t ON t.id_tax = p.id_tax
-             WHERE t.active = 1
+             WHERE t.active IN (0,1)
                AND p.id_product = :productId';
         return $taxJoins;
     }
