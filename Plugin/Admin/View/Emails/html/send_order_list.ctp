@@ -43,7 +43,6 @@
 				<li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
 				<li>Pfandkonto (falls du Pfand verwendest)</li>
 				<li>Passwort ändern</li>
-				<li>Daten für Impressum ändern</li>
 			</ul>
 			
 			<p>
