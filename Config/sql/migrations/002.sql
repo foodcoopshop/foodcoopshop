@@ -1,0 +1,1 @@
+UPDATE `fcs_configuration` SET `text` = 'Produkte für nicht eingeloggte Mitglieder sichtbar?<br /><div class=\"small\">Die Preise werden nicht angezeigt.</div>' WHERE `fcs_configuration`.`name` = 'FCS_SHOW_PRODUCTS_FOR_GUESTS';
