@@ -110,17 +110,19 @@ echo '<div class="product-wrapper">';
                     $entityClasses[] = 'active';
                 }
                 echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttribute']['id_product_attribute'].'">';
-                    echo '<div class="line">';
-                        echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShop']['gross_price']). '</div>';
-                        if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
-                            echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
-                        }
-                        echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
-                    echo '</div>';
-                    echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']));
-                    echo $this->element('product/amountWrapper', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
-                    echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailable']['quantity']));
-                    echo $this->element('product/notAvailableInfo', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
+                    if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
+                        echo '<div class="line">';
+                            echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShop']['gross_price']). '</div>';
+                            if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
+                                echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
+                            }
+                            echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
+                        echo '</div>';
+                        echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']));
+                        echo $this->element('product/amountWrapper', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
+                        echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailable']['quantity']));
+                        echo $this->element('product/notAvailableInfo', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
+                    }
                 echo '</div>';
             }
             
@@ -137,17 +139,19 @@ echo '<div class="product-wrapper">';
         } else {
             // PRODUCT WITHOUT ATTRIBUTES
             echo '<div class="entity-wrapper active">';
-                echo '<div class="line">';
-                    echo '<div class="price">' . $this->Html->formatAsEuro($product['Product']['gross_price']) . '</div>';
-                        if ($product['CakeDeposit']['deposit']) {
-                            echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
-                        }
-                echo '</div>';
-                echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';
-                echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product']));
-                echo $this->element('product/amountWrapper', array('stockAvailable' => $product['StockAvailable']['quantity']));
-                echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']));
-                echo $this->element('product/notAvailableInfo', array('stockAvailable' => $product['StockAvailable']['quantity']));
+                if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
+                    echo '<div class="line">';
+                        echo '<div class="price">' . $this->Html->formatAsEuro($product['Product']['gross_price']) . '</div>';
+                            if ($product['CakeDeposit']['deposit']) {
+                                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
+                            }
+                    echo '</div>';
+                    echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';
+                    echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product']));
+                    echo $this->element('product/amountWrapper', array('stockAvailable' => $product['StockAvailable']['quantity']));
+                    echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']));
+                    echo $this->element('product/notAvailableInfo', array('stockAvailable' => $product['StockAvailable']['quantity']));
+                }
             echo '</div>';
             
             if ($product['ProductShop']['unity'] != '') {
