@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
-# use CodeSniffer
+
+# make this use phpcs only. In this hook it's impossible to change files. Use "git --work-tree={tmppath}" for all commands
+# Generally:
+# - git checkout all changed files in the last commited version to temp dir
+# - run phpcs on the temp dir (removing the file filter, have all tests in fcs-rules.xml)
+# - remove temp dir
+# - report errors
+# - allow push if no errors
+
+# use CodeSniffer, CodeBeautifierFixer cannot be used here
 PHPCS="Vendor/bin/phpcs"
-# use CodeBeautifierFixer
-#PHPCS="Vendor/bin/phpcbf"
 
 remote="$1"
 url="$2"

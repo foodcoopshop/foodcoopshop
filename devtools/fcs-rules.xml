@@ -3,13 +3,14 @@
  <description>The FoodCoopShop coding standard</description>
  <arg name="encoding" value="utf-8"/>
  <arg value="n"/>
- <arg name="bootstrap" value="git-hooks-phpcs-filefilter.inc.php"/>
+ <!-- see CodeSniffer.php $defaultFileExtensions for this. Use <include-pattern> in CodeSniffer > 3.0.0 -->
+ <arg name="extensions" value="ctp/PHP,php/PHP,inc/PHP,js/JS,css/CSS"/>
  <rule ref="PSR2">
   <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
  </rule>
- <rule ref="Generic.Files.LineEndings">
+ <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
   <properties>
-   <property name="eolChar" value="\n"/>
+   <property name="ignoreBlankLines" value="false"/>
   </properties>
- </rule>
+</rule>
 </ruleset>
