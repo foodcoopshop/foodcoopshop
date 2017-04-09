@@ -1,0 +1,3 @@
+<?
+$empty='';
+if($empty) die();  
