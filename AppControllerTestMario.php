@@ -26,7 +26,7 @@ class AppController extends Controller
         'RequestHandler', // to parse xml extensions
         'AppSession', 
         'String',
-        'Cookie',  
+        'Cookie',   
         'Paginator' => array(
             'maxLimit' => 100000, // eg for retrieving order details for 1 year
             'limit' => 100000
