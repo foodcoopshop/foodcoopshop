@@ -1,6 +1,6 @@
 <?php
 /**
- * FCS_TCPDF
+ * AppTcpdf
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class FCS_TCPDF extends TCPDF
+class AppTcpdf extends TCPDF
 {
 
     public $headerRight;
@@ -246,7 +246,11 @@ class FCS_TCPDF extends TCPDF
         $this->SetFontSize(10);
     }
 
-    public function Header()
+    /**
+     * parent class is overriden although it's name is Header() (capital letter)
+     * php functions are case insensitive
+     */
+    public function header()
     {
         $this->SetY(4);
 
@@ -270,7 +274,11 @@ class FCS_TCPDF extends TCPDF
         $this->drawLine();
     }
 
-    public function Footer()
+    /**
+     * parent class is overriden although it's name is Header() (capital letter)
+     * php functions are case insensitive
+     */
+    public function footer()
     {
         $this->SetY(- 15);
         $this->drawLine();

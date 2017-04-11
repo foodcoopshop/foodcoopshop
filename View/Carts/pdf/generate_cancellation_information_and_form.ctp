@@ -13,8 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('FCS_TCPDF', 'Lib/Pdf');
-$pdf = new FCS_TCPDF();
+App::uses('AppTcpdf', 'Lib/Pdf');
+$pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
 
