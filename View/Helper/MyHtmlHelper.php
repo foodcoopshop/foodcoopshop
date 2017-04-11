@@ -158,7 +158,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getMenuTypes()[$menuTypeId];
     }
 
-    function getAuthDependentGroups($loggedGroupId)
+    public function getAuthDependentGroups($loggedGroupId)
     {
         $groups = $this->getGroups();
         foreach ($groups as $groupId => $groupName) {
@@ -169,7 +169,7 @@ class MyHtmlHelper extends HtmlHelper
         return $groups;
     }
 
-    function getGroups()
+    public function getGroups()
     {
         return array(
             CUSTOMER_GROUP_MEMBER => 'Mitglied',
@@ -187,17 +187,17 @@ class MyHtmlHelper extends HtmlHelper
         return '/js/vendor/famfamfam-silk/dist/png/'.$icon;
     }
 
-    function getGroupName($groupId)
+    public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];
     }
 
-    function formatAsEuro($amount)
+    public function formatAsEuro($amount)
     {
         return '€&nbsp;' . self::formatAsDecimal($amount);
     }
 
-    function formatAsPercent($amount)
+    public function formatAsPercent($amount)
     {
         return self::formatAsDecimal($amount) . '%';
     }
@@ -207,17 +207,17 @@ class MyHtmlHelper extends HtmlHelper
      *
      * @param decimal $amount
      */
-    function formatTaxRate($rate)
+    public function formatTaxRate($rate)
     {
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
 
-    function formatAsDecimal($amount, $decimals = 2)
+    public function formatAsDecimal($amount, $decimals = 2)
     {
         return number_format($amount, $decimals, ',', '.');
     }
 
-    function getCustomerOrderBy()
+    public function getCustomerOrderBy()
     {
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             return array(
@@ -232,13 +232,13 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
-    function getOrderIdFromCartFinishedUrl($url)
+    public function getOrderIdFromCartFinishedUrl($url)
     {
         $orderId = explode('/', $url);
         return (int) $orderId[5];
     }
 
-    function getCustomerNameForSql()
+    public function getCustomerNameForSql()
     {
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             return "CONCAT(c.lastname, ' ', c.firstname)";
@@ -247,7 +247,7 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
-    function getJqueryUiIcon($icon, $options, $url = '')
+    public function getJqueryUiIcon($icon, $options, $url = '')
     {
         $options['escape'] = array(
             true
@@ -268,7 +268,7 @@ class MyHtmlHelper extends HtmlHelper
         return $return;
     }
 
-    function getMemberFeeTextForFrontend($text)
+    public function getMemberFeeTextForFrontend($text)
     {
         $explodedText = explode(',', $text);
         $preparedText = array();
@@ -279,7 +279,7 @@ class MyHtmlHelper extends HtmlHelper
         return implode(', ', $preparedText);
     }
 
-    function getPaymentTexts()
+    public function getPaymentTexts()
     {
         $paymentTexts = array(
             'product' => 'Guthaben-Aufladung',
@@ -295,7 +295,7 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
-    function getPaymentText($paymentType)
+    public function getPaymentText($paymentType)
     {
         return $this->getPaymentTexts()[$paymentType];
     }
@@ -318,7 +318,7 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
-    function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
+    public function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
     {
         if (isset($this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText])) {
             return $this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText];
