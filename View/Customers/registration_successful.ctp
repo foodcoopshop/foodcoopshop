@@ -21,19 +21,19 @@ $this->element('addScript', array('script' =>
 
 <ul>
 
-	<li>Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet.</li>
+    <li>Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet.</li>
 
-	<?php if (!Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
-	<li><b>Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!</b><br />
-		Du wirst per E-Mail benachrichtigt, sobald wir dein Konto aktiviert haben.</li>
-	<?php } ?>
+    <?php if (!Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
+    <li><b>Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!</b><br />
+        Du wirst per E-Mail benachrichtigt, sobald wir dein Konto aktiviert haben.</li>
+    <?php } ?>
 </ul>
 
 <?php
-    if (!empty($blogPosts)) {
-        echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
-        echo $this->element('blogPosts', array(
-            'blogPosts' => $blogPosts
-        ));
-    }
+if (!empty($blogPosts)) {
+    echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
+    echo $this->element('blogPosts', array(
+    'blogPosts' => $blogPosts
+    ));
+}
 ?>

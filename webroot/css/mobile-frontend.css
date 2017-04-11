@@ -12,7 +12,7 @@
  * @link          https://www.foodcoopshop.com
  */
 @media only screen and (max-device-width: 768px) {
-    
+
     #container,
     #header,
     #content,
@@ -41,8 +41,8 @@
         left: 0 ! important;
     }
     .blog-wrapper .owl-next {
-	    right: 7px ! important;
-	}
+        right: 7px ! important;
+    }
     body.blog_posts.detail .blog-wrapper,
     body.pages.home .blog-post-wrapper {
         width: 24% ! important;
@@ -129,7 +129,7 @@
     }
     div.second-column h4,
     div.third-column .price {
-	    font-size: 16px ! important;
+        font-size: 16px ! important;
     }
     div.second-column h4 {
         margin-top: 0 ! important;
@@ -195,9 +195,9 @@
     }
     #footer .fcs-backlink {
         margin-top: 15px ! important;
-        margin-bottom: 10px ! important;        
+        margin-bottom: 10px ! important;
     }
-    
+
     /**
      * sidebar-left: menu starts here
      */
@@ -243,7 +243,7 @@
     #login-form .input.checkbox .error-message {
         width: 80% ! important;
     }
-    
+
     /**
      * sidebar-right: info box starts here
      */
@@ -273,10 +273,10 @@
 }
 
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
-	.ui-dialog {
+    .ui-dialog {
         width: 98% ! important;
         max-width: 450px ! important;
-	}
+    }
     body.blog_posts.detail .blog-wrapper {
         width: 48% ! important;
         margin-right: 5px ! important;
@@ -317,7 +317,7 @@
        width: 55% ! important;
     }
     .carts.detail span.product-name-wrapper {
-        float: none;    
+        float: none;
     }
     body.carts.detail .cart:not(#cart) .product {
         padding-top: 10px;

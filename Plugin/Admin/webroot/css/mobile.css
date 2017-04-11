@@ -17,13 +17,13 @@
     border-radius: 0;
 }
 .filter-container {
-	left: 0;
+    left: 0;
     width: 100vw;
     max-width: none;
     padding: 3px;
 }
 .bootstrap-select {
-	width: 150px ! important;
+    width: 150px ! important;
 }
 .sb-toggle-left {
     float: left;
@@ -33,31 +33,31 @@
     background: #fff;
 }
 .sb-left a i {
-	padding-left: 0;
+    padding-left: 0;
 }
 .sb-left a, .sb-left li.heading {
-	color: #000 ! important;
+    color: #000 ! important;
 }
 .sb-slidebar {
-	background-color: #fff;
+    background-color: #fff;
 }
 .sb-left li.heading, .sb-left a:hover, .sb-left a.active {
-	background-color: #719F42;
-	color: #fff ! important;
+    background-color: #719F42;
+    color: #fff ! important;
 }
 .sb-left img.logo {
-	width: 80%;
+    width: 80%;
 }
 #container {
-	float: left;
-	min-width: 100%;
+    float: left;
+    min-width: 100%;
 }
 body.pages.home.slidebar-left-visible .sb-toggle-left {
-	margin: 0;
+    margin: 0;
 }
 body.pages.home.slidebar-left-visible #content {
     min-width: 100%;
-	width: 100%;
+    width: 100%;
 }
 body.pages.home.slidebar-left-visible #installation-logo,
 body.pages.home.slidebar-left-visible h1 {
@@ -65,12 +65,12 @@ body.pages.home.slidebar-left-visible h1 {
     font-size: 21px;
 }
 body.pages.home.slidebar-left-visible #container {
-	min-width: 55%;
-	width: 55%;
+    min-width: 55%;
+    width: 55%;
     padding: 2%;
 }
 body.pages.home.slidebar-left-visible .filter-container {
-	padding: 4%;
+    padding: 4%;
 }
 body.pages.home #container,
 body.pages.home #content,
@@ -79,8 +79,8 @@ body.pages.home .filter-container {
     width: 100%;
 }
 body.pages.home .filter-container {
-	display: block;
-	border-bottom: none;
+    display: block;
+    border-bottom: none;
 }
 body.pages.home .filter-container,
 body.pages.home #content {
@@ -93,33 +93,33 @@ body.pages.home #content {
 .tax-dropdown-wrapper.featherlight-inner,
 .add-payment-form.featherlight-inner,
 .featherlight iframe {
-	min-width: 200px ! important;
-	width: 98% ! important;
+    min-width: 200px ! important;
+    width: 98% ! important;
     max-width: 450px ! important;
 }
 .featherlight-content .message-container {
-	line-height: 25px;
+    line-height: 25px;
 }
 .featherlight-content .mini-upload-form {
-	padding-left: 0 ! important;
+    padding-left: 0 ! important;
     padding-right: 0 ! important;
 }
 .product-attributes-dropdown {
-	width: 100%;
+    width: 100%;
 }
 table.list th, table.list td {
-	padding: 2px ! important;
+    padding: 2px ! important;
 }
 .input.select, .input.checkbox, .input.text, div.date-field-wrapper, button#filter {
-	margin-top: 2px;
-	margin-bottom: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 .article-description-rename-info {
-	position: static ! important;
+    position: static ! important;
 }
 #flashMessage {
-	left: 5px;
-	width: 97vw;
+    left: 5px;
+    width: 97vw;
 }
 .sb-slidebar {
    width: 45% ! important;

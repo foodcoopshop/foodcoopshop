@@ -195,7 +195,7 @@ class CakeActionLog extends AppModel
             'de' => 'Mitglied: Rückzahlung gelöscht'
         ),
         'payment_product_deleted' => array(
-        	'de' => 'Mitglied: Guthaben gelöscht'
+            'de' => 'Mitglied: Guthaben gelöscht'
         ),
         'payment_deposit_customer_added' => array(
             'de' => 'Mitglied: Pfand-Betrag eingetragen'
@@ -461,5 +461,3 @@ class CakeActionLog extends AppModel
         return $result;
     }
 }
-
-?>

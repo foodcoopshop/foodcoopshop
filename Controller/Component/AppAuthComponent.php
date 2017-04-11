@@ -33,11 +33,12 @@ class AppAuthComponent extends AuthComponent
     {
         $this->AppSession->setFlashError($message);
     }
-    
+
     /**
      * @return boolean
      */
-    public function termsOfUseAccepted() {
+    public function termsOfUseAccepted()
+    {
         return $this->user('terms_of_use_accepted_date') >= Configure::read('app.termsOfUseLastUpdate');
     }
 
@@ -75,7 +76,7 @@ class AppAuthComponent extends AuthComponent
     {
         App::uses('Manufacturer', 'Model');
         $mm = new Manufacturer();
-        
+
         $this->manufacturer = $mm->find('first', array(
             'conditions' => array(
                 'Address.email' => $this->user('email'),
@@ -87,10 +88,12 @@ class AppAuthComponent extends AuthComponent
 
     public function isSuperadmin()
     {
-        if ($this->isManufacturer())
+        if ($this->isManufacturer()) {
             return false;
-        if ($this->user('id_default_group') == CUSTOMER_GROUP_SUPERADMIN)
+        }
+        if ($this->user('id_default_group') == CUSTOMER_GROUP_SUPERADMIN) {
             return true;
+        }
         return false;
     }
 
@@ -100,13 +103,14 @@ class AppAuthComponent extends AuthComponent
      */
     public function isManufacturer()
     {
-        
+
         // TODO implement lazy load here (empty, false check not working)
         $this->setManufacturer();
-        
-        if (! empty($this->manufacturer))
+
+        if (! empty($this->manufacturer)) {
             return true;
-        
+        }
+
         return false;
     }
 
@@ -115,11 +119,11 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new Exception('logged user is no manufacturer');
         }
-        
+
         if (! empty($this->manufacturer)) {
             return $this->manufacturer['Manufacturer']['id_manufacturer'];
         }
-        
+
         return 0;
     }
 
@@ -128,11 +132,11 @@ class AppAuthComponent extends AuthComponent
         if (! $this->isManufacturer()) {
             throw new Exception('logged user is no manufacturer');
         }
-        
+
         if (! empty($this->manufacturer)) {
             return $this->manufacturer['Manufacturer']['name'];
         }
-        
+
         return '';
     }
 
@@ -142,10 +146,12 @@ class AppAuthComponent extends AuthComponent
      */
     public function isAdmin()
     {
-        if ($this->isManufacturer())
+        if ($this->isManufacturer()) {
             return false;
-        if ($this->user('id_default_group') == CUSTOMER_GROUP_ADMIN)
+        }
+        if ($this->user('id_default_group') == CUSTOMER_GROUP_ADMIN) {
             return true;
+        }
         return false;
     }
 
@@ -155,10 +161,12 @@ class AppAuthComponent extends AuthComponent
      */
     public function isCustomer()
     {
-        if ($this->isManufacturer())
+        if ($this->isManufacturer()) {
             return false;
-        if ($this->user('id_default_group') == CUSTOMER_GROUP_MEMBER)
+        }
+        if ($this->user('id_default_group') == CUSTOMER_GROUP_MEMBER) {
             return true;
+        }
         return false;
     }
 
@@ -188,5 +196,3 @@ class AppAuthComponent extends AuthComponent
         return $cc->getCakeCart($this->getUserId());
     }
 }
-
-?>

@@ -13,5 +13,4 @@ class EmailConfig
             'mail@example.com' => 'Demo Sender'
         )
     );
-    
 }

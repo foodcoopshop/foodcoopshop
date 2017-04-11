@@ -15,31 +15,33 @@
 ?>
 <?php
 
-if (!$appAuth->loggedIn() || $appAuth->termsOfUseAccepted()) return false;
+if (!$appAuth->loggedIn() || $appAuth->termsOfUseAccepted()) {
+    return false;
+}
 
 $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-form a.terms-of-use-overlay');"
 ));
 ?>
 <div class="accept-updated-terms-of-use-form">
-	<h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
-	<p>um diese Plattform weiterhin verwenden zu können, <b><a class="terms-of-use-overlay" href="#terms-of-use">lese bitte die geänderten Nutzungsbedingungen</a></b> und akzeptiere sie.</p>
-	<form action="/nutzungsbedingungen-akzeptieren" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
-    	<?php
-        	echo '<div id="terms-of-use" class="featherlight-overlay">';
-        	if ($appAuth->isManufacturer()) {
-        	    echo $this->element('legal/termsOfUseForManufacturers');
-        	} else {
-        	    echo $this->element('legal/termsOfUse');
-        	}
-        	echo '</div>';
-        	echo $this->Form->input('Customer.terms_of_use_accepted_date', array(
-        	    'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
-        	    'type' => 'checkbox',
-        	    'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString()
-        	));
-    	?>
-    	<br />
-    	<button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Speichern</button>
-	</form>
+    <h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
+    <p>um diese Plattform weiterhin verwenden zu können, <b><a class="terms-of-use-overlay" href="#terms-of-use">lese bitte die geänderten Nutzungsbedingungen</a></b> und akzeptiere sie.</p>
+    <form action="/nutzungsbedingungen-akzeptieren" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
+        <?php
+            echo '<div id="terms-of-use" class="featherlight-overlay">';
+        if ($appAuth->isManufacturer()) {
+            echo $this->element('legal/termsOfUseForManufacturers');
+        } else {
+            echo $this->element('legal/termsOfUse');
+        }
+            echo '</div>';
+            echo $this->Form->input('Customer.terms_of_use_accepted_date', array(
+                'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
+                'type' => 'checkbox',
+                'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString()
+            ));
+        ?>
+        <br />
+        <button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Speichern</button>
+    </form>
 </div>

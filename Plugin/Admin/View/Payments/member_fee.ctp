@@ -32,9 +32,7 @@ if (count($payments) == 0) {
     ?>
 <p>Es wurde noch kein <?php echo $title_for_layout; ?> erfasst.</p>
 <?php
-
 } else {
-    
     echo '<table class="list">';
     echo '<tr class="sort">';
     echo '<th>Datum</th>';
@@ -42,22 +40,21 @@ if (count($payments) == 0) {
     echo '<th style="text-align:right;">' . $column_title . '</th>';
     echo '<th style="width:25px;"></th>';
     echo '</tr>';
-    
+
     $i = 0;
     foreach ($payments as $payment) {
-        
         $i ++;
-        
+
         echo '<tr class="data ' . $payment['type'] . '">';
-        
+
         echo '<td class="hide">';
         echo $payment['payment_id'];
         echo '</td>';
-        
+
         echo '<td>';
         echo $this->Time->formatToDateNTimeLong($payment['date']);
         echo '</td>';
-        
+
         echo '<td>';
         if ($payment['type'] == 'member_fee') {
             echo $payment['text'];
@@ -65,35 +62,35 @@ if (count($payments) == 0) {
             echo $payment['text'];
         }
         echo '</td>';
-        
+
         echo '<td style="text-align:right;">';
         echo $this->Html->formatAsEuro($payment['amount']);
         echo '</td>';
-        
+
         echo '<td style="text-align:center;">';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'delete-payment-button',
             'title' => 'Aufladung löschen?'
         ), 'javascript:void(0);');
         echo '</td>';
-        
+
         echo '</tr>';
     }
-    
+
     echo '<tr class="fake-th">';
     echo '<td>Datum</td>';
     echo '<td>Text</td>';
     echo '<td style="text-align:right;">' . $title_for_layout . '</td>';
     echo '<td style="width:25px;"></td>';
     echo '</tr>';
-    
+
     echo '<tr>';
     echo '<td></td>';
     echo '<td><b style="font-size: 16px;">Summe: ' . $this->Html->formatAsEuro($sumMemberFee) . '</b></td>';
     echo '<td></td>';
     echo '<td></td>';
     echo '</tr>';
-    
+
     echo '</table>';
 } // end of count($payments)
 

@@ -24,5 +24,3 @@ echo $this->element('blogPosts', array(
     'blogPosts' => $blogPosts,
     'useCarousel' => false
 ));
-    
-?>

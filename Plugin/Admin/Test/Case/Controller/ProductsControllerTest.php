@@ -25,7 +25,4 @@ class ProductsControllerTest extends AppCakeTestCase
         // dummy function
         $this->assertEquals(1, 1);
     }
-    
 }
-
-?>

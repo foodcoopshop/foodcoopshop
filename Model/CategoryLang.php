@@ -31,5 +31,3 @@ class CategoryLang extends AppModel
         )
     );
 }
-
-?>

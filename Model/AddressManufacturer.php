@@ -91,8 +91,8 @@ class AddressManufacturer extends Address
 
     /**
      * for addresses only
-     * 
-     * @param array $check            
+     *
+     * @param array $check
      * @return boolean
      */
     public function uniqueEmailWithFlagCheck($check)
@@ -102,12 +102,12 @@ class AddressManufacturer extends Address
             $this->alias . '.deleted' => APP_OFF,
             $this->alias . '.active' => APP_ON
         );
-        
+
         // if manufacturer address already exists
         if ($this->id > 0) {
             $conditions[] = $this->alias . '.id_address <> ' . $this->id;
         }
-        
+
         $found = $this->find('count', array(
             'conditions' => $conditions
         ));
@@ -117,5 +117,3 @@ class AddressManufacturer extends Address
         return false;
     }
 }
-
-?>

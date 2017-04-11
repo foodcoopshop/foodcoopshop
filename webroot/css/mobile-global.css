@@ -12,7 +12,7 @@
  * @link          https://www.foodcoopshop.com
  */
 @media only screen and (max-device-width: 768px) {
-    
+
     /* START chrome pull refresh fix */
     html {
         overflow-y: scroll;
@@ -21,7 +21,7 @@
         overflow: visible;
     }
     /* END chrome pull refresh fix */
-    
+
     body {
         margin: 0 ! important;
     }
@@ -68,5 +68,5 @@
     .sb-left a i:before {
         padding-right: 5px;
     }
-    
+
 }

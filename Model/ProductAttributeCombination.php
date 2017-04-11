@@ -40,7 +40,7 @@ class ProductAttributeCombination extends AppModel
     public function getCombinationCounts($attributeId)
     {
         $this->recursive = 2;
-        
+
         $combinations = $this->find('all', array(
             'conditions' => array(
                 'Attribute.id_attribute' => $attributeId
@@ -52,31 +52,28 @@ class ProductAttributeCombination extends AppModel
                 'ProductAttribute.Product.Manufacturer'
             )
         ));
-        
+
         $return = array(
             'online' => array(),
             'offline' => array()
         );
         foreach ($combinations as $combination) {
-            
             $preparedProduct = $combination['ProductAttribute']['Product'];
-            
+
             $preparedProduct['link'] = Configure::read('htmlHelper')->link($preparedProduct['ProductLang']['name'] . ' - ' . $preparedProduct['Manufacturer']['name'], Configure::read('slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLang']['name']));
-            
+
             if ($combination['ProductAttribute']['Product']['ProductShop']['active'] == 1) {
                 $return['online'][] = $preparedProduct;
             }
-            
+
             if ($combination['ProductAttribute']['Product']['ProductShop']['active'] == 0) {
                 $return['offline'][] = $preparedProduct;
             }
         }
-        
+
         $return['online'] = Set::sort($return['online'], '{n}.ProductLang.name', 'asc');
         $return['offline'] = Set::sort($return['offline'], '{n}.ProductLang.name', 'asc');
-        
+
         return $return;
     }
 }
-
-?>

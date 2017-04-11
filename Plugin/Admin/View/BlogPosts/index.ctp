@@ -15,18 +15,18 @@
 ?>
 <div id="blogPosts">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
         "
-    ));
-    $this->element('highlightRowAfterEdit', array(
+        ));
+        $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#blogPost-'
-    ));
+        ));
     ?>
    
     <div class="filter-container">
-       	<?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+        <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
         <?php
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             echo $this->Form->input('manufacturerId', array(
@@ -39,9 +39,9 @@
         }
         ?>
         <button id="filter" class="btn btn-success">
-			<i class="fa fa-search"></i> Filtern
-		</button>
-		<div class="right">
+            <i class="fa fa-search"></i> Filtern
+        </button>
+        <div class="right">
             <?php
             echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Blog-Artikel erstellen', $this->Slug->getBlogPostAdd(), array(
@@ -52,13 +52,13 @@
             ?>
         </div>
 
-	</div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite kannst du Blog-Artikel verwalten.</li>
-		</ul>
-	</div>    
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite kannst du Blog-Artikel verwalten.</li>
+        </ul>
+    </div>    
     
 <?php
 
@@ -89,11 +89,11 @@ foreach ($blogPosts as $blogPost) {
         $rowClass[] = 'deactivated';
     }
     echo '<tr id="blogPost-' . $blogPost['BlogPost']['id_smart_blog_post'] . '" class="' . implode(' ', $rowClass) . '">';
-    
+
     echo '<td class="hide">';
     echo $blogPost['BlogPost']['id_smart_blog_post'];
     echo '</td>';
-    
+
     echo '<td align="center" style="background-color: #fff;">';
     $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'single');
     $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
@@ -105,33 +105,33 @@ foreach ($blogPosts as $blogPost) {
         echo '</a>';
     }
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post']));
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($blogPost['BlogPost']['is_featured'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($blogPost['BlogPost']['is_private'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
-    
+
     echo '<td>';
     echo $blogPost['BlogPostLang']['meta_title'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $blogPost['BlogPostLang']['short_description'];
     echo '</td>';
-    
+
     echo '<td>';
     if (! empty($blogPost['Customer']['Manufacturer'])) {
         echo $blogPost['Customer']['Manufacturer']['name'];
@@ -139,15 +139,15 @@ foreach ($blogPosts as $blogPost) {
         echo $blogPost['Customer']['name'];
     }
     echo '</td>';
-    
+
     echo '<td>';
     echo $blogPost['Manufacturer']['name'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Time->formatToDateNTimeLongWithSecs($blogPost['BlogPost']['modified']);
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($blogPost['BlogPost']['active'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
@@ -155,7 +155,7 @@ foreach ($blogPosts as $blogPost) {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
-    
+
     echo '<td>';
     if ($blogPost['BlogPost']['active']) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
@@ -164,7 +164,7 @@ foreach ($blogPosts as $blogPost) {
         ), $this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_smart_blog_post'], $blogPost['BlogPostLang']['meta_title']));
     }
     echo '</td>';
-    
+
     echo '</tr>';
 }
 

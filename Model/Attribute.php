@@ -26,5 +26,3 @@ class Attribute extends AppModel
         )
     );
 }
-
-?>

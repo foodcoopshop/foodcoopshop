@@ -15,18 +15,18 @@
 ?>
 <div id="taxes">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
-    ));
-    $this->element('highlightRowAfterEdit', array(
+        ));
+        $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#tax-'
-    ));
+        ));
     ?>
    
     <div class="filter-container">
-		<h1><?php echo $title_for_layout; ?></h1>
-		<div class="right">
+        <h1><?php echo $title_for_layout; ?></h1>
+        <div class="right">
             <?php
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Steuersatz erstellen', $this->Slug->getTaxAdd(), array(
@@ -37,13 +37,13 @@
             ?>
         </div>
 
-	</div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite kannst du Steuersätze verwalten.</li>
-		</ul>
-	</div>    
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite kannst du Steuersätze verwalten.</li>
+        </ul>
+    </div>    
     
 <?php
 
@@ -66,21 +66,21 @@ foreach ($taxes as $tax) {
         $rowClass[] = 'deactivated';
     }
     echo '<tr id="tax-' . $tax['Tax']['id_tax'] . '" class="' . implode(' ', $rowClass) . '">';
-    
+
     echo '<td class="hide">';
     echo $tax['Tax']['id_tax'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getTaxEdit($tax['Tax']['id_tax']));
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Html->formatAsPercent($tax['Tax']['rate']);
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($tax['Tax']['active'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
@@ -88,7 +88,7 @@ foreach ($taxes as $tax) {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
-    
+
     echo '</tr>';
 }
 

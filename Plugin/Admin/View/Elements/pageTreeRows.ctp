@@ -14,7 +14,6 @@
  */
 
 foreach ($pages as $page) {
-    
     $rowClass = array(
         'data'
     );
@@ -25,46 +24,46 @@ foreach ($pages as $page) {
         $rowClass[] = 'deactivated';
     }
     echo '<tr class="' . implode(' ', $rowClass) . '">';
-    
+
     echo '<td class="hide">';
     echo $page['Page']['id_cms'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getPageEdit($page['Page']['id_cms']));
     echo '</td>';
-    
+
     echo '<td>';
     if ($subRow) {
         echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right: 5px;"></i>';
     }
     echo $page['PageLang']['meta_title'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Html->getMenuType($page['Page']['menu_type']);
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($page['Page']['position'] > 0) {
         echo $page['Page']['position'];
     }
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($page['Page']['is_private'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($page['Page']['full_width'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($page['Page']['url'] != '') {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), array(
@@ -73,15 +72,15 @@ foreach ($pages as $page) {
         ), $page['Page']['url']);
     }
     echo '</td>';
-    
+
     echo '<td>';
     echo $page['Customer']['name'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Time->formatToDateNTimeLongWithSecs($page['Page']['modified']);
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($page['Page']['active'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
@@ -89,7 +88,7 @@ foreach ($pages as $page) {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
-    
+
     echo '<td>';
     if ($page['Page']['active']) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
@@ -98,9 +97,9 @@ foreach ($pages as $page) {
         ), $this->Slug->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']));
     }
     echo '</td>';
-    
+
     echo '</tr>';
-    
+
     if (! empty($page['children'])) {
         echo $this->element('pageTreeRows', array(
             'pages' => $page['children'],
@@ -108,5 +107,3 @@ foreach ($pages as $page) {
         ));
     }
 }
-
-?>

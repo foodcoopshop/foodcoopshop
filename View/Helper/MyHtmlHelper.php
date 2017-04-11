@@ -25,11 +25,11 @@ class MyHtmlHelper extends HtmlHelper
      * @param int $maxDigits
      * @return int eg. 1 => 01 / 10 => 10
      */
-    public function addLeadingZero($number, $maxDigits=2)
+    public function addLeadingZero($number, $maxDigits = 2)
     {
         return sprintf('%0'.$maxDigits.'d', $number);
     }
-    
+
     /**
      * @param array $manufacturer
      * @param string $outputType "pdf" of "html"
@@ -59,8 +59,8 @@ class MyHtmlHelper extends HtmlHelper
         if ($manufacturer['Address']['phone'] != '') {
             $imprintLines[] = 'Telefon: ' . $manufacturer['Address']['phone'];
         }
-        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hide_email($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
-        
+        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
+
         if (!$addressOnly) {
             if ($manufacturer['Manufacturer']['homepage'] != '') {
                 $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], array('options' => array('target' => '_blank'))) : $manufacturer['Manufacturer']['homepage']);
@@ -69,7 +69,7 @@ class MyHtmlHelper extends HtmlHelper
             if ($manufacturer['Manufacturer']['uid_number'] != '') {
                 $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturer']['uid_number'];
             }
-            
+
             if ($manufacturer['Manufacturer']['firmenbuchnummer'] != '') {
                 $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturer']['firmenbuchnummer'];
             }
@@ -85,18 +85,20 @@ class MyHtmlHelper extends HtmlHelper
         }
         return '<p>'.implode('<br />', $imprintLines).'</p>';
     }
-    
+
     /**
      * @return string
      */
-    public function getAddressFromAddressConfiguration() {
+    public function getAddressFromAddressConfiguration()
+    {
         return Configure::read('app.db_config_FCS_APP_ADDRESS');
     }
-    
+
     /**
      * @return string
      */
-    public function getEmailFromAddressConfiguration() {
+    public function getEmailFromAddressConfiguration()
+    {
         return Configure::read('app.db_config_FCS_APP_EMAIL');
     }
 
@@ -106,7 +108,7 @@ class MyHtmlHelper extends HtmlHelper
         $string = html_entity_decode($string);
         return $string;
     }
-    
+
     public function getMenuTypes()
     {
         return array(
@@ -119,10 +121,10 @@ class MyHtmlHelper extends HtmlHelper
     {
         return in_array('cashless', Configure::read('app.paymentMethods'));
     }
-    
-    public function br2nl( $input )
+
+    public function br2nl($input)
     {
-        return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n","",str_replace("\r","", htmlspecialchars_decode($input))));
+        return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n", "", str_replace("\r", "", htmlspecialchars_decode($input))));
     }
 
     public function getConfigurationDropdownOptions($name)
@@ -156,7 +158,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getMenuTypes()[$menuTypeId];
     }
 
-    function getAuthDependentGroups($loggedGroupId)
+    public function getAuthDependentGroups($loggedGroupId)
     {
         $groups = $this->getGroups();
         foreach ($groups as $groupId => $groupName) {
@@ -167,7 +169,7 @@ class MyHtmlHelper extends HtmlHelper
         return $groups;
     }
 
-    function getGroups()
+    public function getGroups()
     {
         return array(
             CUSTOMER_GROUP_MEMBER => 'Mitglied',
@@ -184,38 +186,38 @@ class MyHtmlHelper extends HtmlHelper
     {
         return '/js/vendor/famfamfam-silk/dist/png/'.$icon;
     }
-    
-    function getGroupName($groupId)
+
+    public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];
     }
 
-    function formatAsEuro($amount)
+    public function formatAsEuro($amount)
     {
         return '€&nbsp;' . self::formatAsDecimal($amount);
     }
 
-    function formatAsPercent($amount)
+    public function formatAsPercent($amount)
     {
         return self::formatAsDecimal($amount) . '%';
     }
 
     /**
      * shows decimals only if necessary
-     * 
-     * @param decimal $amount            
+     *
+     * @param decimal $amount
      */
-    function formatTaxRate($rate)
+    public function formatTaxRate($rate)
     {
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
 
-    function formatAsDecimal($amount, $decimals = 2)
+    public function formatAsDecimal($amount, $decimals = 2)
     {
         return number_format($amount, $decimals, ',', '.');
     }
 
-    function getCustomerOrderBy()
+    public function getCustomerOrderBy()
     {
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             return array(
@@ -230,13 +232,13 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
-    function getOrderIdFromCartFinishedUrl($url)
+    public function getOrderIdFromCartFinishedUrl($url)
     {
         $orderId = explode('/', $url);
         return (int) $orderId[5];
     }
 
-    function getCustomerNameForSql()
+    public function getCustomerNameForSql()
     {
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             return "CONCAT(c.lastname, ' ', c.firstname)";
@@ -245,28 +247,28 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
-    function getJqueryUiIcon($icon, $options, $url = '')
+    public function getJqueryUiIcon($icon, $options, $url = '')
     {
         $options['escape'] = array(
             true
         );
-        
+
         $return = '<ul class="jquery-ui-icon">';
         $return .= '<li class="ui-state-default ui-corner-all">';
-        
+
         if ($url == '') {
             $return .= $icon;
         } else {
             $return .= self::link($icon, $url, $options);
         }
-        
+
         $return .= '</li>';
         $return .= '</ul>';
-        
+
         return $return;
     }
 
-    function getMemberFeeTextForFrontend($text)
+    public function getMemberFeeTextForFrontend($text)
     {
         $explodedText = explode(',', $text);
         $preparedText = array();
@@ -277,7 +279,7 @@ class MyHtmlHelper extends HtmlHelper
         return implode(', ', $preparedText);
     }
 
-    function getPaymentTexts()
+    public function getPaymentTexts()
     {
         $paymentTexts = array(
             'product' => 'Guthaben-Aufladung',
@@ -293,20 +295,22 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
-    function getPaymentText($paymentType)
+    public function getPaymentText($paymentType)
     {
         return $this->getPaymentTexts()[$paymentType];
     }
-    
-    public function getSuperadminProductPaymentTexts($appAuth) {
+
+    public function getSuperadminProductPaymentTexts($appAuth)
+    {
         $paymentTexts = array(
             'product' => self::getPaymentText('product'),
             'payback' => self::getPaymentText('payback')
         );
         return $paymentTexts;
     }
-    
-    public function getManufacturerDepositPaymentTexts() {
+
+    public function getManufacturerDepositPaymentTexts()
+    {
         $paymentTexts = array(
             'empty_glasses' => 'Leergebinde',
             'money' => 'Ausgleichszahlung'
@@ -314,17 +318,17 @@ class MyHtmlHelper extends HtmlHelper
         return $paymentTexts;
     }
 
-    function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
+    public function getManufacturerDepositPaymentText($manufacturerDepositPaymentText)
     {
         if (isset($this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText])) {
             return $this->getManufacturerDepositPaymentTexts()[$manufacturerDepositPaymentText];
         }
         return $manufacturerDepositPaymentText;
     }
-    
+
     /**
      *
-     * @param int $imageId            
+     * @param int $imageId
      * @return eg 4/1/2 for given id 421
      */
     public function getProductImageIdAsPath($imageId)
@@ -375,14 +379,14 @@ class MyHtmlHelper extends HtmlHelper
         $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
-        
+
         $imageFilename = $blogPostId . '-' . $size . '-default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
         }
-        
+
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
@@ -391,14 +395,14 @@ class MyHtmlHelper extends HtmlHelper
         $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getManufacturerThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
-        
+
         $imageFilename = $manufacturerId . '-' . $size . '_default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
         }
-        
+
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
@@ -407,14 +411,14 @@ class MyHtmlHelper extends HtmlHelper
         $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getCategoryThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
-        
+
         $imageFilename = $categoryId . '-category_default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             return false; // do not show any image if image does not exist
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
         }
-        
+
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
@@ -423,14 +427,14 @@ class MyHtmlHelper extends HtmlHelper
         $imageIdAsPath = $this->getProductImageIdAsPath($imageId);
         $thumbsPath = $this->getProductThumbsPath($imageIdAsPath);
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'products' . DS;
-        
+
         $imageFilename = $imageId . '-' . $size . '_default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageIdAsPath . DS . $imageFilename;
         }
-        
+
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
@@ -452,7 +456,7 @@ class MyHtmlHelper extends HtmlHelper
         $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')) . '.pdf';
         return $url;
     }
-    
+
     // gehört in time helper
     public function convertToGermanDate($date)
     {
@@ -467,7 +471,7 @@ class MyHtmlHelper extends HtmlHelper
             -1 => 'da stimmt was nicht...'
         );
     }
-    
+
     public function getActiveStates()
     {
         return array(
@@ -501,7 +505,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function __construct(View $View, $settings = array())
     {
-        
+
         // wrap js block with jquery document ready
         $this->_tags['javascriptblock'] = "<script%s>
               //<![CDATA[
@@ -510,7 +514,7 @@ class MyHtmlHelper extends HtmlHelper
               });
               //]]>
           </script>";
-        
+
         parent::__construct($View, $settings);
     }
 }

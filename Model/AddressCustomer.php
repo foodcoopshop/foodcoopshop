@@ -79,5 +79,3 @@ class AddressCustomer extends Address
         )
     );
 }
-
-?>

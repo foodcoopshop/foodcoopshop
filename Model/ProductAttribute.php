@@ -44,5 +44,3 @@ class ProductAttribute extends AppModel
         )
     );
 }
-
-?>

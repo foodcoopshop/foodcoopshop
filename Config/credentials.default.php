@@ -77,4 +77,3 @@ Configure::write('app.hostingEmail', 'mail@example.com');
  * just add ?debug=2&pass=<app.debugPasswordForUrl> to any url and the debug mode is turned on
  */
 // Configure::write('app.debugPasswordForUrl', 'my-password');
-

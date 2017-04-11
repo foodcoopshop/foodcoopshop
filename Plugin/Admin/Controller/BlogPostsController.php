@@ -54,12 +54,12 @@ class BlogPostsController extends AdminAppController
         $this->setFormReferer();
         $this->loadModel('Manufacturer');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
-        
+
         $_SESSION['KCFINDER'] = array(
             'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/blog_posts",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
         );
-        
+
         if ($blogPostId > 0) {
             $unsavedBlogPost = $this->BlogPost->find('first', array(
                 'conditions' => array(
@@ -79,15 +79,14 @@ class BlogPostsController extends AdminAppController
             );
         }
         $this->set('title_for_layout', 'Blog-Artikel bearbeiten');
-        
+
         if (empty($this->request->data)) {
             $this->request->data = $unsavedBlogPost;
         } else {
-            
             // validate data - do not use $this->BlogPost->saveAll()
             $this->BlogPost->id = $blogPostId;
             $this->BlogPost->set($this->request->data['BlogPost']);
-            
+
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['BlogPost'] as &$data) {
                 $data = strip_tags(trim($data));
@@ -97,29 +96,28 @@ class BlogPostsController extends AdminAppController
                     $data = strip_tags(trim($data));
                 }
             }
-            
+
             $errors = array();
-            
+
             $this->BlogPost->BlogPostLang->set($this->request->data['BlogPostLang']);
             if (! $this->BlogPost->BlogPostLang->validates()) {
                 $errors = array_merge($errors, $this->BlogPost->BlogPostLang->validationErrors);
             }
-            
+
             if (empty($errors)) {
-                
                 $this->request->data['BlogPost']['id_customer'] = $this->AppAuth->getUserId();
-                
+
                 // field "modified" is updated by cake, set to false to avoid it
                 if (isset($this->request->data['BlogPost']['update_modified_field']) && ! $this->request->data['BlogPost']['update_modified_field']) {
                     $this->request->data['BlogPost']['modified'] = false;
                 }
-                
+
                 $this->loadModel('CakeActionLog');
-                
+
                 if (is_null($blogPostId) && $this->AppAuth->isManufacturer()) {
                     $this->request->data['BlogPost']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
                 }
-                
+
                 $this->BlogPost->save($this->request->data['BlogPost'], array(
                     'validate' => false
                 ));
@@ -138,19 +136,19 @@ class BlogPostsController extends AdminAppController
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'blog_post_changed';
                 }
-                
+
                 $this->BlogPost->BlogPostLang->save($this->request->data, array(
                     'validate' => false
                 ));
-                
+
                 if ($this->request->data['BlogPost']['tmp_image'] != '') {
                     $this->saveUploadedImage($this->BlogPost->id, $this->request->data['BlogPost']['tmp_image'], Configure::read('htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
                 }
-                
+
                 if ($this->request->data['BlogPost']['delete_image']) {
                     $this->deleteUploadedImage($this->BlogPost->id, Configure::read('htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
                 }
-                
+
                 if (isset($this->request->data['BlogPost']['delete_blog_post']) && $this->request->data['BlogPost']['delete_blog_post']) {
                     $this->BlogPost->saveField('active', APP_DEL, false);
                     $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
@@ -161,7 +159,7 @@ class BlogPostsController extends AdminAppController
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
                     $this->AppSession->setFlashMessage('Der Blog-Artikel wurde erfolgreich gespeichert.');
                 }
-                
+
                 $this->AppSession->write('highlightedRowId', $this->BlogPost->id);
                 $this->redirect($this->data['referer']);
             } else {
@@ -173,7 +171,7 @@ class BlogPostsController extends AdminAppController
     public function index()
     {
         $conditions = array();
-        
+
         $customerId = '';
         if (! empty($this->params['named']['customerId'])) {
             $customerId = $this->params['named']['customerId'];
@@ -182,13 +180,13 @@ class BlogPostsController extends AdminAppController
             );
         }
         $this->set('customerId', $customerId);
-        
+
         $manufacturerId = '';
         if (! empty($this->params['named']['manufacturerId'])) {
             $manufacturerId = $this->params['named']['manufacturerId'];
         }
         $this->set('manufacturerId', $manufacturerId);
-        
+
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
@@ -197,9 +195,9 @@ class BlogPostsController extends AdminAppController
                 'BlogPost.id_manufacturer' => $manufacturerId
             );
         }
-        
+
         $conditions[] = 'BlogPost.active > ' . APP_DEL;
-        
+
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
@@ -207,22 +205,20 @@ class BlogPostsController extends AdminAppController
             )
         ), $this->Paginator->settings);
         $blogPosts = $this->Paginator->paginate('BlogPost');
-        
+
         foreach ($blogPosts as &$blogPost) {
             $manufacturerRecord = $this->BlogPost->Customer->getManufacturerRecord($blogPost);
             $blogPost['Customer']['Manufacturer'] = @$manufacturerRecord['Manufacturer'];
         }
-        
+
         $this->set('blogPosts', $blogPosts);
-        
+
         $this->set('title_for_layout', 'Blog-Artikel');
-        
+
         $this->loadModel('Customer');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
-        
+
         $this->loadModel('Manufacturer');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
     }
 }
-
-?>

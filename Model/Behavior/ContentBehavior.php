@@ -39,13 +39,11 @@ class ContentBehavior extends ModelBehavior
     /**
      * call manually if no data is saved (before save is only triggered if at least one
      * field is changed (assumption)
-     * 
-     * @param Model $model            
+     *
+     * @param Model $model
      */
     public function updateDateUpd(Model $model)
     {
         $model->saveField('date_upd', Configure::read('timeHelper')->getCurrentDateForDatabase());
     }
 }
-
-?>

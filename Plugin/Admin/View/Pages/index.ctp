@@ -15,20 +15,20 @@
 ?>
 <div id="pages">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();
         "
-    ));
+        ));
     ?>
    
     <div class="filter-container">
-		<h1>Seiten</h1>
-       	<?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+        <h1>Seiten</h1>
+        <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
         <button id="filter" class="btn btn-success">
-			<i class="fa fa-search"></i> Filtern
-		</button>
-		<div class="right">
+            <i class="fa fa-search"></i> Filtern
+        </button>
+        <div class="right">
             <?php
             echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), array(
@@ -39,13 +39,13 @@
             ?>
         </div>
 
-	</div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite kannst du Seiten verwalten.</li>
-		</ul>
-	</div>    
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite kannst du Seiten verwalten.</li>
+        </ul>
+    </div>    
     
 <?php
 

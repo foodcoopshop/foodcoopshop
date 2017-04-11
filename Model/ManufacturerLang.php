@@ -21,5 +21,3 @@ class ManufacturerLang extends AppModel
 
     public $primaryKey = 'id_manufacturer';
 }
-
-?>

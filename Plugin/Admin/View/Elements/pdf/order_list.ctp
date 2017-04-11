@@ -13,8 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('FCS_TCPDF', 'Lib/Pdf');
-$pdf = new FCS_TCPDF();
+App::uses('AppTcpdf', 'Lib/Pdf');
+$pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 
@@ -76,10 +76,10 @@ $filename = $this->MyHtml->getOrderListLink($results[0]['m']['Hersteller'], $res
 
 // if send method is called, prepare chrononlogical folders on server
 if ($saveParam == 'F') {
-    
-    if (file_exists($filename))
+    if (file_exists($filename)) {
         unlink($filename);
-    
+    }
+
     App::uses('Folder', 'Utility');
     $dir = new Folder();
     $path = dirname($filename);
@@ -88,5 +88,3 @@ if ($saveParam == 'F') {
 }
 
 echo $pdf->Output($filename, $saveParam);
-
-?>

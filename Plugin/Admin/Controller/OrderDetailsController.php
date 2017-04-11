@@ -32,7 +32,7 @@ class OrderDetailsController extends AdminAppController
                  */
                 if (!empty($this->params['data']['orderDetailIds'])) {
                     $accessAllowed = false;
-                    foreach($this->params['data']['orderDetailIds'] as $orderDetailId) {
+                    foreach ($this->params['data']['orderDetailIds'] as $orderDetailId) {
                         $accessAllowed |= $this->checkOrderDetailIdAccess($orderDetailId);
                     }
                     return $accessAllowed;
@@ -46,12 +46,13 @@ class OrderDetailsController extends AdminAppController
                 break;
         }
     }
-    
+
     /**
      * @param int $orderDetailId
      * @return boolean
      */
-    private function checkOrderDetailIdAccess($orderDetailId) {
+    private function checkOrderDetailIdAccess($orderDetailId)
+    {
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
             $orderDetail = $this->OrderDetail->find('first', array(
                 'conditions' => array(
@@ -152,16 +153,14 @@ class OrderDetailsController extends AdminAppController
         ), $this->Paginator->settings);
 
         $orderDetails = $this->Paginator->paginate('OrderDetail');
-        
+
         $this->loadModel('Manufacturer');
-        
+
         // prepare group by array
         if ($groupByManufacturer) {
-
             $preparedOrderDetails = array();
 
             foreach ($orderDetails as $orderDetail) {
-
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
 
@@ -179,11 +178,9 @@ class OrderDetailsController extends AdminAppController
 
             // not grouped by manufacturer
         } else {
-
             $i = 0;
 
             foreach ($orderDetails as $orderDetail) {
-
                 $this->loadModel('Manufacturer');
                 $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['Address']['other']);
                 $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
@@ -383,9 +380,9 @@ class OrderDetailsController extends AdminAppController
                 'msg' => 'param needs to be an array, given: ' . $orderDetailIds
             )));
         }
-        
+
         $flashMessage = '';
-        foreach($orderDetailIds as $orderDetailId) {
+        foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('first', array(
                 'conditions' => array(
                     'OrderDetail.id_order_detail' => $orderDetailId
@@ -399,17 +396,17 @@ class OrderDetailsController extends AdminAppController
                     'ProductAttribute.StockAvailable'
                 )
             ));
-            
+
             $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Order']['id_order'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
-    
+
             // delete row
             $this->OrderDetail->deleteOrderDetail($orderDetailId);
-    
+
             // update sum in table orders
             $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($orderDetail);
-    
+
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetail']['product_quantity'] * 2);
-            
+
             // send email to customer
             $email = new AppEmail();
             $email->template('Admin.order_detail_deleted')
@@ -421,33 +418,33 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ));
-    
+
             $message .= ' und eine E-Mail an <b>' . $orderDetail['Order']['Customer']['name'] . '</b>';
-    
+
             // never send email to manufacturer if bulk orders are allowed
             $this->loadModel('Manufacturer');
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['Address']['other']);
-    
+
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
             if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
                 $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
                 $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
             }
-    
+
             $email->send();
-    
+
             $message .= ' versendet.';
             if ($cancellationReason != '') {
                 $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
             }
-    
+
             $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
-    
+
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
         }
-        
+
 
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
@@ -456,7 +453,7 @@ class OrderDetailsController extends AdminAppController
             $flashMessage =  $orderDetailsCount . ' Artikel wurden erfolgreich storniert.';
         }
         $this->AppSession->setFlashMessage($flashMessage);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -513,7 +510,7 @@ class OrderDetailsController extends AdminAppController
 
     private function increaseQuantityForProduct($orderDetail, $orderDetailQuantityBeforeQuantityChange)
     {
-        
+
         $stockAvailableObject = $this->OrderDetail->Product;
         $stockAvailableIndex = 'Product';
 
@@ -522,7 +519,7 @@ class OrderDetailsController extends AdminAppController
             $stockAvailableObject = $this->OrderDetail->ProductAttribute;
             $stockAvailableIndex = 'ProductAttribute';
         }
-        
+
         // do the acutal updates for increasing quantity
         if (isset($stockAvailableObject) && isset($stockAvailableIndex)) {
             $backedUpPrimaryKey = $stockAvailableObject->StockAvailable->primaryKey;
@@ -538,5 +535,3 @@ class OrderDetailsController extends AdminAppController
         return $newQuantity;
     }
 }
-
-?>

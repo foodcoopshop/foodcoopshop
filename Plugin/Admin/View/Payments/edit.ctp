@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => 
+    'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('CakePaymentApprovalComment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
@@ -33,18 +33,18 @@ $this->element('addScript', array(
 ?>
 
 <div class="filter-container">
-	<h1><?php echo $title_for_layout; ?></h1>
-	<div class="right">
-		<a href="javascript:void(0);" class="btn btn-success submit"><i
-			class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-			class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
-	</div>
+    <h1><?php echo $title_for_layout; ?></h1>
+    <div class="right">
+        <a href="javascript:void(0);" class="btn btn-success submit"><i
+            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+    </div>
 </div>
 
 <div id="help-container">
-	<ul>
-		<li>Auf dieser Seite kannst du die Guthaben-Aufladungen ändern.</li>
-	</ul>
+    <ul>
+        <li>Auf dieser Seite kannst du die Guthaben-Aufladungen ändern.</li>
+    </ul>
 </div>
 
 <div class="sc"></div>

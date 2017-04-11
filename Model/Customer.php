@@ -27,7 +27,7 @@ class Customer extends AppModel
     public $actsAs = array(
         'Content'
     );
-    
+
     // key needs to be called "address customer" for a working validation in customer::profile
     public $hasOne = array(
         'AddressCustomer' => array(
@@ -80,7 +80,7 @@ class Customer extends AppModel
     {
         App::uses('AppPasswordHasher', 'Controller/Component/Auth');
         $ph = new AppPasswordHasher();
-        
+
         $newPassword = StringComponent::createRandomString(8);
         $customer2save = array(
             'passwd' => $ph->hash($newPassword)
@@ -103,7 +103,7 @@ class Customer extends AppModel
                 'Customer.passwd'
             )
         ));
-        
+
         if ($hashedPassword == $customer['Customer']['passwd']) {
             return true;
         } else {
@@ -148,12 +148,12 @@ class Customer extends AppModel
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
-        
+
         $virtualNameField = "`{$this->alias}`.`firstname`,' ',`{$this->alias}`.`lastname`)";
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             $virtualNameField = "`{$this->alias}`.`lastname`,' ',`{$this->alias}`.`firstname`)";
         }
-        
+
         $this->virtualFields = array(
             'name' => "TRIM(CONCAT(" . $virtualNameField . ")"
         );
@@ -180,21 +180,21 @@ class Customer extends AppModel
 
     /**
      * bindings with email as foreign key was tricky...
-     * 
-     * @param array $customer            
+     *
+     * @param array $customer
      * @return boolean
      */
     public function getManufacturerRecord($customer)
     {
         $mm = ClassRegistry::init('Manufacturer');
-        
+
         $mm->recursive = 1;
         $manufacturer = $mm->find('first', array(
             'conditions' => array(
                 'Address.email' => $customer['Customer']['email']
             )
         ));
-        
+
         return $manufacturer;
     }
 
@@ -203,14 +203,15 @@ class Customer extends AppModel
         App::uses('CakePayment', 'Model');
         $cp = new CakePayment();
         $paymentSumProduct = $cp->getSum($customerId, 'product');
-        $paybackSumProduct = $cp->getSum($customerId, 'payback');;
+        $paybackSumProduct = $cp->getSum($customerId, 'payback');
+        ;
         $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
-        
+
         App::uses('Order', 'Model');
         $o = new Order();
         $productSum = $o->getSumProduct($customerId);
         $depositSum = $o->getSumDeposit($customerId);
-        
+
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
         return round($paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum, 2);
     }
@@ -220,12 +221,12 @@ class Customer extends AppModel
         if (! $includeManufacturers) {
             $this->dropManufacturersInNextFind();
         }
-        
+
         // TODO no other solution found to exclude those models (contain did not work)
         unset($this->hasMany['PaidCashFreeOrders']);
         unset($this->hasMany['ActiveOrders']);
         unset($this->hasMany['CakePayments']);
-        
+
         $customers = $this->find('all', array(
             'conditions' => $this->getConditionToExcludeHostingUser(),
             'fields' => array(
@@ -236,16 +237,15 @@ class Customer extends AppModel
             ),
             'order' => Configure::read('htmlHelper')->getCustomerOrderBy()
         ));
-        
+
         $offlineCustomers = array();
         $onlineCustomers = array();
         $notYetOrderedCustomers = array();
         $offlineManufacturers = array();
         $onlineManufacturers = array();
         foreach ($customers as $customer) {
-            
             $userNameForDropdown = $customer['Customer']['name'];
-            
+
             $manufacturerIncluded = false;
             if ($includeManufacturers) {
                 $manufacturer = $this->getManufacturerRecord($customer);
@@ -258,7 +258,7 @@ class Customer extends AppModel
                     $manufacturerIncluded = true;
                 }
             }
-            
+
             if (! $manufacturerIncluded) {
                 if ($customer['Customer']['active'] == 0) {
                     $offlineCustomers[$customer['Customer'][$index]] = $userNameForDropdown;
@@ -275,7 +275,7 @@ class Customer extends AppModel
                 }
             }
         }
-        
+
         $customersForDropdown = array();
         if (! empty($onlineCustomers)) {
             $customersForDropdown['Kunden: aktiv'] = $onlineCustomers;
@@ -297,5 +297,3 @@ class Customer extends AppModel
         return $customersForDropdown;
     }
 }
-
-?>

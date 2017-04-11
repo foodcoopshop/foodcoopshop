@@ -15,41 +15,41 @@
 ?>
 <!DOCTYPE html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<meta name="theme-color" content="#719f41">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
-	
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="theme-color" content="#719f41">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-	<title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
 
     <?php echo $this->element('jsNamespace'); ?>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-    	echo $this->element('renderCss', array('config' => 'admin'));
-    	if ($isMobile) {
-        	echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
-    	}
+        echo $this->element('renderCss', array('config' => 'admin'));
+    if ($isMobile) {
+        echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
+    }
     ?>
     
 </head>
 <body
-	class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->action)); ?>">
+    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->action)); ?>">
 
-	<div id="container">
+    <div id="container">
         
         <?php echo $this->element('menu'); ?>
         
         <div id="content">
-    	    <?php echo $this->Session->flash(); ?>
+            <?php echo $this->Session->flash(); ?>
             <?php echo $this->fetch('content'); ?>
         </div>
-	</div>
+    </div>
     
     <?php echo $this->element('scrollToTopButton'); ?>
     

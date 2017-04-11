@@ -13,68 +13,68 @@
  */
 foodcoopshop.Mobile = {
 
-    getSlidebarMenu: function(side) {
+    getSlidebarMenu: function (side) {
         var responsiveMenu = $('<ul/>');
         responsiveMenu.addClass('sb-slidebar sb-' + side); // for css
         responsiveMenu.attr('off-canvas', 'sb-' + side + ' ' + side + ' push');
         return responsiveMenu;
     },
 
-    getResponsiveMenuButton: function() {
+    getResponsiveMenuButton: function () {
         var showResponsiveMenuButton = $('<a/>');
         showResponsiveMenuButton.addClass('sb-toggle-left');
         showResponsiveMenuButton.html('<i class="fa fa-navicon fa-2x"></i>');
         return showResponsiveMenuButton;
     },
 
-    bindToggleLeft : function(controller) {
-    	$('.sb-toggle-left').on('click', function(event) {
+    bindToggleLeft : function (controller) {
+        $('.sb-toggle-left').on('click', function (event) {
             event.preventDefault();
             event.stopPropagation();
-            controller.toggle('sb-left', function() {
-            	 if ($('.sb-left').css('display') == 'block') {
-            		 $('body').addClass('slidebar-left-visible');
-            	 } else {
-            		 $('body').removeClass('slidebar-left-visible');
-            	 }
+            controller.toggle('sb-left', function () {
+                if ($('.sb-left').css('display') == 'block') {
+                    $('body').addClass('slidebar-left-visible');
+                } else {
+                    $('body').removeClass('slidebar-left-visible');
+                }
             });
-        });    	
+        });
     },
-    
-    bindToggleRight: function(controller) {
-        $('.sb-toggle-right').on('click', function(event) {
+
+    bindToggleRight: function (controller) {
+        $('.sb-toggle-right').on('click', function (event) {
             event.preventDefault();
             event.stopPropagation();
             controller.toggle('sb-right');
         });
     },
-    
-    bindCloseSlidebarsOnCanvasClick : function(controller) {
-        $(controller.events).on('opened', function(event, id) {
-        	$('html').on('click', function() {
-        		controller.close(id);
-    		});
-    		$('.sb-slidebar > *').on('click', function(event) {
-    		    event.stopPropagation();
-    		});
+
+    bindCloseSlidebarsOnCanvasClick : function (controller) {
+        $(controller.events).on('opened', function (event, id) {
+            $('html').on('click', function () {
+                controller.close(id);
+            });
+            $('.sb-slidebar > *').on('click', function (event) {
+                event.stopPropagation();
+            });
         });
     },
-    
-    fixContentScrolling : function() {
+
+    fixContentScrolling : function () {
         $('body').css('overflow-y', 'auto');
     },
-    
-    autoOpenSidebarLeft : function() {
-    	$('.sb-toggle-left').trigger('click');
+
+    autoOpenSidebarLeft : function () {
+        $('.sb-toggle-left').trigger('click');
     },
-    
-    initMenusAdmin: function() {
-    	
-    	$('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
+
+    initMenusAdmin: function () {
+
+        $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
         var menuItems = []
 
-        $('#menu > li').each(function() {
+        $('#menu > li').each(function () {
             var item = $(this);
             item.find('a').removeClass('btn');
             item.find('a').removeClass('btn-success');
@@ -86,9 +86,9 @@ foodcoopshop.Mobile = {
         var navBarContainer = $('.filter-container');
         navBarContainer.prepend(this.getResponsiveMenuButton());
         $('#container').prepend(navBarContainer);
-        
-        $(window).bind('resize', function() {
-        	foodcoopshop.Admin.adaptContentMargin();
+
+        $(window).bind('resize', function () {
+            foodcoopshop.Admin.adaptContentMargin();
         });
 
         var controller = new slidebars();
@@ -98,11 +98,11 @@ foodcoopshop.Mobile = {
         this.bindCloseSlidebarsOnCanvasClick(controller);
         this.fixContentScrolling(controller);
 
-        foodcoopshop.Helper.showContent();	
-    
+        foodcoopshop.Helper.showContent();
+
     },
-    
-    initMenusFrontend: function() {
+
+    initMenusFrontend: function () {
 
         $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
@@ -115,7 +115,7 @@ foodcoopshop.Mobile = {
 
         menuItems.push('<li><a href="/"><i class="fa"></i>Home</a></li>');
 
-        $('#user-menu > li').each(function() {
+        $('#user-menu > li').each(function () {
             var item = $(this);
             item.find('a').removeClass('btn');
             item.find('a').removeClass('btn-success');
@@ -123,20 +123,20 @@ foodcoopshop.Mobile = {
         });
 
         // if all manufacturers are disabled / set to private - do not include menu item
-        $('.sidebar li.heading').each(function() {
-        	if ($(this).html() == 'Hersteller') {
+        $('.sidebar li.heading').each(function () {
+            if ($(this).html() == 'Hersteller') {
                 menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
-        	}
+            }
         });
-        
+
         menuItems.push('<li><a href="/aktuelles"><i class="fa"></i>Aktuelles</a></li>');
 
-        $('.sidebar ul#categories-menu > li').each(function() {
+        $('.sidebar ul#categories-menu > li').each(function () {
             menuItems.push($(this));
         });
 
         var pageItems = ['<li class="heading">Seiten</li>'];
-        $('#main-menu > li').each(function() {
+        $('#main-menu > li').each(function () {
             // take categories and manufacturers from sidebar and not from main menu
             var mainMenuHref = $(this).find('a').attr('href');
             if ($.inArray(mainMenuHref, ['/hersteller', '/kategorie/20-alle-produkte', '/aktuelles']) == -1) {
@@ -144,7 +144,7 @@ foodcoopshop.Mobile = {
             }
         });
 
-        $('#footer-menu > li').each(function() {
+        $('#footer-menu > li').each(function () {
             pageItems.push($(this));
         });
 
@@ -176,7 +176,7 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append($('#header .logo-wrapper'));
 
         // button renamings
-        $('.manufacturer-wrapper div.third-column a.btn').each(function(btn) {
+        $('.manufacturer-wrapper div.third-column a.btn').each(function (btn) {
             $(this).html($(this).html().replace(/Alle Produkte anzeigen/, 'Anzeigen'));
         });
         $('.blog-post-wrapper div.third-column a.btn').html('Anzeigen');
@@ -196,7 +196,7 @@ foodcoopshop.Mobile = {
 
         var controller = new slidebars();
         controller.init();
-        
+
         this.bindToggleLeft(controller);
         this.bindToggleRight(controller);
         this.bindCloseSlidebarsOnCanvasClick(controller);

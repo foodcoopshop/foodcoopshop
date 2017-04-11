@@ -19,37 +19,36 @@ $this->element('addScript', array(
 ?>
 <div id="configurations">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => "$('table.list').show();
         "
-    ));
+        ));
     ?>
 
     <div class="filter-container">
-		<h1><?php echo $title_for_layout; ?></h1>
-	</div>
+        <h1><?php echo $title_for_layout; ?></h1>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite siehst du die Konfiguration deiner
-				FoodCoopShop-Installation.</li>
-		</ul>
-	</div>
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite siehst du die Konfiguration deiner
+                FoodCoopShop-Installation.</li>
+        </ul>
+    </div>
 
-	<h2 class="info">Die folgenden Einstellungen können selbst geändert werden.</h2>
+    <h2 class="info">Die folgenden Einstellungen können selbst geändert werden.</h2>
 
-	<table class="list no-hover no-clone-last-row">
+    <table class="list no-hover no-clone-last-row">
 
-		<tr>
-			<th>Einstellung</th>
-			<th></th>
-			<th>Wert</th>
-		</tr>
+        <tr>
+            <th>Einstellung</th>
+            <th></th>
+            <th>Wert</th>
+        </tr>
 
         <?php
         foreach ($configurations as $configuration) {
-
             if ($configuration['Configuration']['type'] == 'readonly') {
                 continue;
             }
@@ -103,22 +102,21 @@ $this->element('addScript', array(
         ?>
     </table>
 
-	<br />
+    <br />
 
 
-	<h2 class="info">Die folgenden Einstellungen können (noch) nicht
-		selbst geändert werden.</h2>
+    <h2 class="info">Die folgenden Einstellungen können (noch) nicht
+        selbst geändert werden.</h2>
 
-	<table class="list no-hover">
+    <table class="list no-hover">
 
-		<tr>
-			<th>Einstellung</th>
-			<th>Wert</th>
-		</tr>
+        <tr>
+            <th>Einstellung</th>
+            <th>Wert</th>
+        </tr>
 
         <?php
         foreach ($configurations as $configuration) {
-
             if ($configuration['Configuration']['type'] != 'readonly') {
                 continue;
             }
@@ -136,104 +134,104 @@ $this->element('addScript', array(
             echo '</tr>';
         }
         ?>
-		<tr>
-			<td>app.cakeServerName</td>
-			<td><a target="_blank"
-				href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
-		</tr>
+        <tr>
+            <td>app.cakeServerName</td>
+            <td><a target="_blank"
+                href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
+        </tr>
 
-		<tr>
-			<td>app.emailOrderReminderEnabled</td>
-			<td><?php echo Configure::read('app.emailOrderReminderEnabled') ? 'ja' : 'nein'; ?></td>
-		</tr>
+        <tr>
+            <td>app.emailOrderReminderEnabled</td>
+            <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? 'ja' : 'nein'; ?></td>
+        </tr>
 
-		<tr>
-			<td>app.registrationNotificationEmails</td>
-			<td><?php echo join(', ', Configure::read('app.registrationNotificationEmails')); ?></td>
-		</tr>
+        <tr>
+            <td>app.registrationNotificationEmails</td>
+            <td><?php echo join(', ', Configure::read('app.registrationNotificationEmails')); ?></td>
+        </tr>
 
 
 
-		<tr>
-			<td>app.adminEmail / app.adminPassword</td>
-			<td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|","*",Configure::read('app.adminPassword')); ?></td>
-		</tr>
+        <tr>
+            <td>app.adminEmail / app.adminPassword</td>
+            <td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('app.adminPassword')); ?></td>
+        </tr>
 
-		<tr>
-			<td>app/Config/email.php</td>
+        <tr>
+            <td>app/Config/email.php</td>
             <?php
-            require_once (APP . 'Config' . DS . 'email.php');
+            require_once(APP . 'Config' . DS . 'email.php');
             $email = new EmailConfig();
             ?>
             <td><b>Host:</b> <?php echo $email->default['host']; ?>, <b>Username:</b> <?php echo $email->default['username']; ?>, <b>Log:</b> <?php echo (isset($email->default['log']) && $email->default['log']) ? 'on' : 'off'; ?></td>
-		</tr>
+        </tr>
 
-		<tr>
-			<td>app.useManufacturerCompensationPercentage</td>
-			<td><?php echo Configure::read('app.useManufacturerCompensationPercentage') ? 'ja' : 'nein'; ?></td>
-		</tr>
+        <tr>
+            <td>app.useManufacturerCompensationPercentage</td>
+            <td><?php echo Configure::read('app.useManufacturerCompensationPercentage') ? 'ja' : 'nein'; ?></td>
+        </tr>
 
-		<tr>
-			<td>app.defaultCompensationPercentage</td>
-			<td><?php echo Configure::read('app.defaultCompensationPercentage'); ?></td>
-		</tr>
+        <tr>
+            <td>app.defaultCompensationPercentage</td>
+            <td><?php echo Configure::read('app.defaultCompensationPercentage'); ?></td>
+        </tr>
 
-		<tr>
-			<td>app.additionalOrderStatusChangeInfo</td>
-			<td><?php echo Configure::read('app.additionalOrderStatusChangeInfo'); ?></td>
-		</tr>
+        <tr>
+            <td>app.additionalOrderStatusChangeInfo</td>
+            <td><?php echo Configure::read('app.additionalOrderStatusChangeInfo'); ?></td>
+        </tr>
 
-		<tr>
-			<td>app.allowManualOrderListSending</td>
-			<td><?php echo Configure::read('app.allowManualOrderListSending') ? 'ja' : 'nein'; ?></td>
-		</tr>
+        <tr>
+            <td>app.allowManualOrderListSending</td>
+            <td><?php echo Configure::read('app.allowManualOrderListSending') ? 'ja' : 'nein'; ?></td>
+        </tr>
 
-		<tr>
-			<td>app.sendOrderListsWeekday</td>
-			<td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
-		</tr>
+        <tr>
+            <td>app.sendOrderListsWeekday</td>
+            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
+        </tr>
 
-		<tr>
-			<td>Abholtag</td>
-			<td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
-		</tr>
+        <tr>
+            <td>Abholtag</td>
+            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
+        </tr>
 
-		<tr>
-			<td>app.paymentMethods</td>
-			<td><?php echo join(', ', Configure::read('app.paymentMethods')); ?></td>
-		</tr>
+        <tr>
+            <td>app.paymentMethods</td>
+            <td><?php echo join(', ', Configure::read('app.paymentMethods')); ?></td>
+        </tr>
 
-		<tr>
-			<td>app.visibleOrderStates</td>
-			<td><?php echo json_encode(Configure::read('app.visibleOrderStates')); ?></td>
-		</tr>
+        <tr>
+            <td>app.visibleOrderStates</td>
+            <td><?php echo json_encode(Configure::read('app.visibleOrderStates')); ?></td>
+        </tr>
 
-		<tr>
-			<td>app.memberFeeEnabled</td>
-			<td><?php echo Configure::read('app.memberFeeEnabled') ? 'ja' : 'nein'; ?></td>
-		</tr>
+        <tr>
+            <td>app.memberFeeEnabled</td>
+            <td><?php echo Configure::read('app.memberFeeEnabled') ? 'ja' : 'nein'; ?></td>
+        </tr>
 
-		<tr>
-			<td>app.isDepositPaymentCashless</td>
-			<td><?php echo Configure::read('app.isDepositPaymentCashless') ? 'ja' : 'nein'; ?></td>
-		</tr>
+        <tr>
+            <td>app.isDepositPaymentCashless</td>
+            <td><?php echo Configure::read('app.isDepositPaymentCashless') ? 'ja' : 'nein'; ?></td>
+        </tr>
 
-		<?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
+        <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
             <tr>
-			<td>app.depositPaymentCashlessStartDate</td>
-			<td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
-		</tr>
-		<?php } ?>
+            <td>app.depositPaymentCashlessStartDate</td>
+            <td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
+        </tr>
+        <?php } ?>
 
         <tr>
-			<td>app.depositForManufacturersStartDate</td>
-			<td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
-		</tr>
+            <td>app.depositForManufacturersStartDate</td>
+            <td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
+        </tr>
 
         <tr>
-			<td>app.customerMainNamePart</td>
-			<td><?php echo Configure::read('app.customerMainNamePart'); ?></td>
-		</tr>
+            <td>app.customerMainNamePart</td>
+            <td><?php echo Configure::read('app.customerMainNamePart'); ?></td>
+        </tr>
 
         <?php
         if ($this->elementExists('latestGitCommit')) {
@@ -248,42 +246,42 @@ $this->element('addScript', array(
         ?>
 
         <tr>
-			<td>app.emailErrorLoggingEnabled</td>
-			<td><?php echo Configure::read('app.emailErrorLoggingEnabled') ? 'ja' : 'nein'; ?></td>
-		</tr>
+            <td>app.emailErrorLoggingEnabled</td>
+            <td><?php echo Configure::read('app.emailErrorLoggingEnabled') ? 'ja' : 'nein'; ?></td>
+        </tr>
 
-		<tr>
-			<td>app.defaultTax</td>
-			<td><?php echo $this->Html->formatAsPercent($defaultTax['Tax']['rate']); ?> - <?php echo $defaultTax['Tax']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
-		</tr>
+        <tr>
+            <td>app.defaultTax</td>
+            <td><?php echo $this->Html->formatAsPercent($defaultTax['Tax']['rate']); ?> - <?php echo $defaultTax['Tax']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
+        </tr>
 
-		<tr>
-			<td>Logo für Webseite (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg</td>
-			<td><img
-				src="<?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg" /></td>
-		</tr>
+        <tr>
+            <td>Logo für Webseite (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg</td>
+            <td><img
+                src="<?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg" /></td>
+        </tr>
 
-		<tr>
-			<td>Logo für Bestelllisten und Rechnungen (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo-pdf.jpg</td>
-			<td><img src="/files/images/logo-pdf.jpg" /></td>
-		</tr>
+        <tr>
+            <td>Logo für Bestelllisten und Rechnungen (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo-pdf.jpg</td>
+            <td><img src="/files/images/logo-pdf.jpg" /></td>
+        </tr>
 
-		<tr>
-			<td>Default-Bild für Produkte (Liste, 150x150)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/products/de-default-home_default.jpg</td>
-			<td><img src="/files/images/products/de-default-home_default.jpg" /></td>
-		</tr>
+        <tr>
+            <td>Default-Bild für Produkte (Liste, 150x150)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/products/de-default-home_default.jpg</td>
+            <td><img src="/files/images/products/de-default-home_default.jpg" /></td>
+        </tr>
 
-		<tr>
-			<td>Default-Bild für Hersteller (Liste: 125x125)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
-			<td><img
-				src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
-		</tr>
+        <tr>
+            <td>Default-Bild für Hersteller (Liste: 125x125)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
+            <td><img
+                src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
+        </tr>
 
-		<tr>
-			<td>Default-Bild für Aktuelles-Beitrag (Home, 150x113)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
-			<td><img src="/files/images/blog_posts/no-home-default.jpg" /></td>
-		</tr>
+        <tr>
+            <td>Default-Bild für Aktuelles-Beitrag (Home, 150x113)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
+            <td><img src="/files/images/blog_posts/no-home-default.jpg" /></td>
+        </tr>
 
-	</table>
+    </table>
 
 </div>

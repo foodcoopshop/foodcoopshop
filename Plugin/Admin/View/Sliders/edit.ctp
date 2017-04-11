@@ -29,18 +29,18 @@ if ($this->here != $this->Slug->getSliderAdd()) {
 ?>
 
 <div class="filter-container">
-	<h1><?php echo $title_for_layout; ?></h1>
-	<div class="right">
-		<a href="javascript:void(0);" class="btn btn-success submit"><i
-			class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-			class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
-	</div>
+    <h1><?php echo $title_for_layout; ?></h1>
+    <div class="right">
+        <a href="javascript:void(0);" class="btn btn-success submit"><i
+            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+    </div>
 </div>
 
 <div id="help-container">
-	<ul>
-		<li>Auf dieser Seite kannst du das Slideshow-Bild ändern.</li>
-	</ul>
+    <ul>
+        <li>Auf dieser Seite kannst du das Slideshow-Bild ändern.</li>
+    </ul>
 </div>
 
 <div class="sc"></div>

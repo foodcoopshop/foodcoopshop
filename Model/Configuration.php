@@ -23,7 +23,7 @@ class Configuration extends AppModel
     public function enableValidations($name)
     {
         $validationRules = array();
-        
+
         switch ($name) {
             // booleans
             case 'FCS_CART_ENABLED':
@@ -64,10 +64,10 @@ class Configuration extends AppModel
                 $validationRules = $this->getNumberRangeConfigurationRule(0, 500);
                 break;
         }
-        
+
         $this->validator()['value'] = $validationRules;
     }
-    
+
     private function getEqualsToMultipleValuesRule($values)
     {
         $validationRules = array();
@@ -78,7 +78,7 @@ class Configuration extends AppModel
             ),
             'message' => 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values))
         );
-        
+
         return $validationRules;
     }
 
@@ -151,5 +151,3 @@ class Configuration extends AppModel
         }
     }
 }
-
-?>

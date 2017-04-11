@@ -15,19 +15,19 @@
 ?>
 
 <?php if (Configure::read('debug') == 0) { ?>
-	<?php echo '<a href="/"><img id="installation-logo" src="/files/images/logo.jpg" /></a>'; ?>
+    <?php echo '<a href="/"><img id="installation-logo" src="/files/images/logo.jpg" /></a>'; ?>
 <?php } else { ?>
-	<h2><?php echo $message; ?></h2>
+    <h2><?php echo $message; ?></h2>
 <?php } ?>
 
 <h2><?php printf(
-		__d('cake', 'The requested address %s was not found on this server.'),
-		"<strong>'{$url}'</strong>"
-	); ?></h2>
+    __d('cake', 'The requested address %s was not found on this server.'),
+    "<strong>'{$url}'</strong>"
+); ?></h2>
 </h2>	
 </p>
 <?php
-if (Configure::read('debug') > 0):
-	echo $this->element('exception_stack_trace');
+if (Configure::read('debug') > 0) :
+    echo $this->element('exception_stack_trace');
 endif;
 ?>

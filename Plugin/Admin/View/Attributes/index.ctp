@@ -15,18 +15,18 @@
 ?>
 <div id="attribues">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
-    ));
-    $this->element('highlightRowAfterEdit', array(
+        ));
+        $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#attribute-'
-    ));
+        ));
     ?>
    
     <div class="filter-container">
-		<h1><?php echo $title_for_layout; ?></h1>
-		<div class="right">
+        <h1><?php echo $title_for_layout; ?></h1>
+        <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Variante erstellen', $this->Slug->getAttributeAdd(), array(
@@ -37,13 +37,13 @@
             ?>
         </div>
 
-	</div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite kannst du Varianten verwalten.</li>
-		</ul>
-	</div>    
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite kannst du Varianten verwalten.</li>
+        </ul>
+    </div>    
     
 <?php
 
@@ -68,21 +68,21 @@ foreach ($attributes as $attribute) {
         $rowClass[] = 'deactivated';
     }
     echo '<tr id="attribute-' . $attribute['Attribute']['id_attribute'] . '" class="' . implode(' ', $rowClass) . '">';
-    
+
     echo '<td class="hide">';
     echo $attribute['Attribute']['id_attribute'];
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getAttributeEdit($attribute['Attribute']['id_attribute']));
     echo '</td>';
-    
+
     echo '<td>';
     echo $attribute['AttributeLang']['name'];
     echo '</td>';
-    
+
     echo '<td style="width:300px;">';
     if (! empty($attribute['CombinationProducts']['online'])) {
         echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['online']) . ')', 'javascript:void(0);', array(
@@ -93,7 +93,7 @@ foreach ($attributes as $attribute) {
         echo '<div class="toggle-content">' . join('<br /> ', Set::extract('{n}.link', $attribute['CombinationProducts']['online'])) . '</div>';
     }
     echo '</td>';
-    
+
     echo '<td style="width:300px;">';
     if (! empty($attribute['CombinationProducts']['offline'])) {
         echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['offline']) . ')', 'javascript:void(0);', array(
@@ -104,13 +104,13 @@ foreach ($attributes as $attribute) {
         echo '<div class="toggle-content">' . join('<br /> ', Set::extract('{n}.ProductLang.name', $attribute['CombinationProducts']['offline'])) . '</div>';
     }
     echo '</td>';
-    
+
     echo '<td>';
     if ($attribute['Attribute']['modified'] != '') {
         echo $this->Time->formatToDateNTimeLongWithSecs($attribute['Attribute']['modified']);
     }
     echo '</td>';
-    
+
     echo '</tr>';
 }
 

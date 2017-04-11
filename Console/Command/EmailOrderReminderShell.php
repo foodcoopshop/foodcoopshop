@@ -24,17 +24,17 @@ class EmailOrderReminderShell extends AppShell
     public function main()
     {
         parent::main();
-        
+
         if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('app.db_config_FCS_CART_ENABLED')) {
             return;
         }
-        
+
         App::uses('AppEmail', 'Lib');
-        
+
         $this->initSimpleBrowser(); // for loggedUserId
-        
+
         $this->startTimeLogging();
-        
+
         // hersteller sind zwar kunden (hersteller login, haben aber keine kunden-adresse und werden somit nicht berücksichtigt)
         $customers = $this->Customer->find('all', array(
             'conditions' => array(
@@ -45,16 +45,15 @@ class EmailOrderReminderShell extends AppShell
                 'Customer.name' => 'ASC'
             )
         ));
-        
+
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
-            
             // customer has open orders, do not send email
             if (count($customer['ActiveOrders']) > 0) {
                 continue;
             }
-            
+
             $Email = new AppEmail();
             $Email->to($customer['Customer']['email'])
                 ->template('Admin.email_order_reminder')
@@ -65,21 +64,20 @@ class EmailOrderReminderShell extends AppShell
                   'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
                 ))
                 ->send();
-            
+
             $this->out($message);
             $outString .= $customer['Customer']['name'] . '<br />';
-            
+
             $i ++;
         }
-        
+
         $outString .= 'Verschickte E-Mails: ' . $i;
-        
+
         $this->stopTimeLogging();
-        
+
         $this->CakeActionLog->customSave('cronjob_email_order_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
-        
+
         $this->out($outString);
         $this->out($this->getRuntime());
     }
 }
-?>

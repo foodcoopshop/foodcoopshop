@@ -23,7 +23,7 @@ class BlogPostsController extends FrontendController
     public function detail()
     {
         $blogPostId = (int) $this->params['pass'][0];
-        
+
         $conditions = array(
             'BlogPost.active' => APP_ON,
             'BlogPostLang.id_lang' => Configure::read('app.langId'),
@@ -32,29 +32,29 @@ class BlogPostsController extends FrontendController
         if (! $this->AppAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
         }
-        
+
         $conditions['BlogPost.id_smart_blog_post'] = $blogPostId; // needs to be last element of conditions
-        
+
         $order = array(
             'BlogPost.modified' => 'DESC'
         );
-        
+
         $blogPost = $this->BlogPost->find('first', array(
             'conditions' => $conditions,
             'order' => $order
         ));
-        
+
         if (empty($blogPost)) {
             throw new MissingActionException('blogPost not found');
         }
-        
+
         $correctSlug = Configure::read('slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPostLang']['meta_title']);
         if ($correctSlug != Configure::read('slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
-        
+
         $this->set('blogPost', $blogPost);
-        
+
         array_pop($conditions); // do not filter last condition element blogPostId
         $neighbors = $this->BlogPost->find('neighbors', array(
             'field' => 'BlogPost.modified',
@@ -63,7 +63,7 @@ class BlogPostsController extends FrontendController
             'order' => $order
         ));
         $this->set('neighbors', $neighbors);
-        
+
         $this->set('title_for_layout', $blogPost['BlogPostLang']['meta_title']);
     }
 
@@ -74,7 +74,7 @@ class BlogPostsController extends FrontendController
             'BlogPostLang.id_lang' => Configure::read('app.langId'),
             'BlogPostShop.id_shop' => Configure::read('app.shopId')
         );
-        
+
         if (isset($this->params['manufacturerSlug'])) {
             $manufacturerId = (int) $this->params['manufacturerSlug'];
             $this->loadModel('Manufacturer');
@@ -91,21 +91,19 @@ class BlogPostsController extends FrontendController
             $this->set('manufacturer', $manufacturer);
             $conditions['BlogPost.id_manufacturer'] = $manufacturerId;
         }
-        
+
         if (! $this->AppAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
         }
-        
+
         $blogPosts = $this->BlogPost->find('all', array(
             'conditions' => $conditions,
             'order' => array(
                 'BlogPost.modified' => 'DESC'
             )
         ));
-        
+
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', 'Aktuelles');
     }
 }
-
-?>

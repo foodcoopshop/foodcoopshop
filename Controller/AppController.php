@@ -104,7 +104,7 @@ class AppController extends Controller
     {
         $this->loadConfigurations();
 
-        switch($this->DbMigration->doDbMigrations()) {
+        switch ($this->DbMigration->doDbMigrations()) {
             case -1:  // always abort what is done and return home.
                 $this->redirect('/');
                 break;
@@ -116,8 +116,7 @@ class AppController extends Controller
             case 1:  // always abort what is done but pick up work
                 if ($this->request->is('get')) {
                     $this->redirect($this->request->here);  // redirect to the request URL -> start all over...
-                }
-                else { // bad luck...input is lost, do not recover from that.
+                } else { // bad luck...input is lost, do not recover from that.
                     $this->redirect('/');
                 }
                 break;

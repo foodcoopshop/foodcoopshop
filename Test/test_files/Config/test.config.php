@@ -19,4 +19,3 @@ Configure::write('test.shopOrderTestUser', array(
     'email' => 'fcs-demo-mitglied@mailinator.com',
     'name' => 'Demo Mitglied'
 ));
-?>

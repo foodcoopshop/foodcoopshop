@@ -15,40 +15,40 @@
 ?>
 <div id="actionLogs">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");
         "
-    ));
+        ));
     ?>
 
     <div class="filter-container">
-    	<?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-        	<?php echo $this->Form->input('type', array('type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '')); ?>
-        	<?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
-        	<?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Artikel', 'options' => array())); ?>
+        <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
+            <?php echo $this->Form->input('type', array('type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '')); ?>
+            <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+            <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Artikel', 'options' => array())); ?>
         <?php } ?>
         <?php if ($appAuth->isCustomer()) { ?>
-        	<?php echo $this->Form->input('type', array('class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '')); ?>
+            <?php echo $this->Form->input('type', array('class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '')); ?>
         <?php } ?>
-    	<?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
+        <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
         <button id="filter" class="btn btn-success">
-			<i class="fa fa-search"></i> Filtern
-		</button>
-		<div class="right"></div>
-	</div>
+            <i class="fa fa-search"></i> Filtern
+        </button>
+        <div class="right"></div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite siehst du alle Aktivitäten im FoodCoopShop.</li>
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite siehst du alle Aktivitäten im FoodCoopShop.</li>
             <?php if ($appAuth->isManufacturer()) { ?>
                 <li>Die stornierten Artikel werden erst ab dem
-				20.07.2015 angezeigt.</li>
+                20.07.2015 angezeigt.</li>
             <?php } ?>
         </ul>
-	</div>
+    </div>
 
 <?php
 

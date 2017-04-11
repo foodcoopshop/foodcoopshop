@@ -23,7 +23,7 @@ class PaymentsController extends AdminAppController
             case 'overview':
                 return Configure::read('htmlHelper')->paymentIsCashless() && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
-            case 'my_member_fee':
+            case 'myMemberFee':
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'product':
@@ -33,7 +33,7 @@ class PaymentsController extends AdminAppController
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
-            case 'member_fee':
+            case 'memberFee':
                 if (empty($this->params['named']['customerId'])) {
                     $this->redirect(Configure::read('slugHelper')->getMyMemberFeeBalance());
                 }
@@ -61,7 +61,8 @@ class PaymentsController extends AdminAppController
         parent::beforeFilter();
     }
 
-    public function previewEmail($paymentId, $approval) {
+    public function previewEmail($paymentId, $approval)
+    {
 
         $payment = $this->CakePayment->find('first', array(
             'conditions' => array(
@@ -88,17 +89,16 @@ class PaymentsController extends AdminAppController
                 'data' => $payment,
                 'newStatusAsString' => Configure::read('htmlHelper')->getApprovalStates()[$approval],
                 'request' => $payment
-            )
-        );
+            ));
         $html = $email->_renderTemplates(null)['html'];
         if ($html != '') {
             echo $html;
             exit;
         }
-
     }
 
-    public function edit($paymentId) {
+    public function edit($paymentId)
+    {
 
         $this->setFormReferer();
 
@@ -120,20 +120,18 @@ class PaymentsController extends AdminAppController
         if (empty($this->request->data)) {
             $this->request->data = $unsavedPayment;
         } else {
-
             // validate data - do not use $this->CakePayment->saveAll()
             $this->CakePayment->id = $paymentId;
             $this->CakePayment->set($this->request->data['CakePayment']);
 
             $errors = array();
-            $this->CakePayment->validator()['approval'] = $this->CakePayment->getNumberRangeConfigurationRule(-1,1);
+            $this->CakePayment->validator()['approval'] = $this->CakePayment->getNumberRangeConfigurationRule(-1, 1);
 
             if (! $this->CakePayment->validates()) {
                 $errors = array_merge($errors, $this->CakePayment->validationErrors);
             }
 
             if (empty($errors)) {
-
                 $this->loadModel('CakeActionLog');
 
                 $this->request->data['CakePayment']['date_changed'] = date('Y-m-d H:i:s');
@@ -143,14 +141,14 @@ class PaymentsController extends AdminAppController
                     'validate' => false
                 ));
 
-                switch($this->request->data['CakePayment']['approval']) {
-                    case -1;
+                switch ($this->request->data['CakePayment']['approval']) {
+                    case -1:
                         $actionLogType = 'payment_product_approval_not_ok';
                         break;
-                    case 0;
+                    case 0:
                         $actionLogType = 'payment_product_approval_open';
                         break;
-                    case 1;
+                    case 1:
                         $actionLogType = 'payment_product_approval_ok';
                         break;
                 }
@@ -169,8 +167,7 @@ class PaymentsController extends AdminAppController
                             'data' => $unsavedPayment,
                             'newStatusAsString' => $newStatusAsString,
                             'request' => $this->request->data
-                        )
-                    );
+                        ));
                     $email->send();
                     $message .= ' und eine E-Mail an das Mitglied verschickt';
                 }
@@ -181,12 +178,10 @@ class PaymentsController extends AdminAppController
                 $this->AppSession->write('highlightedRowId', $this->CakePayment->id);
 
                 $this->redirect($this->data['referer']);
-
             } else {
                 $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
             }
         }
-
     }
 
     public function add()
@@ -246,7 +241,6 @@ class PaymentsController extends AdminAppController
             'deposit',
             'member_fee_flexible'
         ))) {
-
             // payments to deposits can be added to customers or manufacturers
             $customerId = (int) $this->params['data']['customerId'];
             if ($customerId > 0) {
@@ -292,7 +286,6 @@ class PaymentsController extends AdminAppController
             if ($type == 'deposit') {
                 $actionLogType .= '_'.$userType;
             }
-
         }
 
 
@@ -302,7 +295,6 @@ class PaymentsController extends AdminAppController
             'payback',
             'member_fee'
         ))) {
-
             $this->Customer->recursive = - 1;
             $customer = $this->Customer->find('first', array(
                 'conditions' => array(
@@ -329,7 +321,6 @@ class PaymentsController extends AdminAppController
                     'msg' => $msg
                 )));
             }
-
         }
 
         // add entry in table cake_payments
@@ -377,7 +368,6 @@ class PaymentsController extends AdminAppController
             'status' => 1,
             'msg' => 'ok'
         )));
-
     }
 
     public function changeState()
@@ -468,15 +458,15 @@ class PaymentsController extends AdminAppController
         $this->render('product');
     }
 
-    public function my_member_fee()
+    public function myMemberFee()
     {
         $this->customerId = $this->AppAuth->getUserId();
         $this->paymentType = 'member_fee';
-        $this->member_fee();
+        $this->memberFee();
         $this->render('member_fee');
     }
 
-    public function member_fee()
+    public function memberFee()
     {
 
         $this->paymentType = 'member_fee';
@@ -540,7 +530,6 @@ class PaymentsController extends AdminAppController
         $payments = array();
         if (!empty($customer['CakePayments'])) {
             foreach ($customer['CakePayments'] as $payment) {
-
                 $text = Configure::read('htmlHelper')->getPaymentText($payment['type']);
                 if ($payment['type'] == 'member_fee') {
                     $text .= ' für: ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($payment['text']);
@@ -588,9 +577,8 @@ class PaymentsController extends AdminAppController
         if (in_array($this->action, array('product', 'member_fee'))) {
             $title .= ' von ' . $customer['Customer']['name'];
         }
-        $this->set('title_for_layout',  $title);
+        $this->set('title_for_layout', $title);
 
-        $this->set('paymentType',  $this->paymentType);
-
+        $this->set('paymentType', $this->paymentType);
     }
 }

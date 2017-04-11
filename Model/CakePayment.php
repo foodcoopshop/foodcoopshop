@@ -34,7 +34,7 @@ class CakePayment extends AppModel
         ),
     );
 
-    private function getManufacturerDepositConditions($manufacturerId=null)
+    private function getManufacturerDepositConditions($manufacturerId = null)
     {
         $conditions = array(
             'CakePayment.status' => APP_ON,
@@ -82,7 +82,6 @@ class CakePayment extends AppModel
         ));
 
         return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
-
     }
 
     /**
@@ -135,7 +134,4 @@ class CakePayment extends AppModel
 
         return $paymentSum[0][0]['SumAmount'];
     }
-
 }
-
-?>

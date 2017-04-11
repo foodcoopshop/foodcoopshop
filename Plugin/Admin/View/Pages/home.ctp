@@ -14,8 +14,8 @@
  */
 
 $this->element('addScript', array(
-    'script' => 
-        Configure::read('app.jsNamespace') . ".Helper.showContent();" . 
+    'script' =>
+        Configure::read('app.jsNamespace') . ".Helper.showContent();" .
         Configure::read('app.jsNamespace') . ".Helper.initAnystretch();" .
         Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" .
         Configure::read('app.jsNamespace') . ".Helper.initMenu();" .
@@ -38,5 +38,3 @@ echo '<div class="filter-container"></div>';
 echo '<img id="installation-logo" src="/files/images/logo.jpg" />';
 echo '<div class="sc"></div>';
 echo '</div>';
-
-?>

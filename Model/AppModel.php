@@ -42,7 +42,7 @@ class AppModel extends Model
 
     public function getNumberRangeConfigurationRule($min, $max)
     {
-        
+
         $validationRules = array();
         $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
         $validationRules[] = array(
@@ -63,7 +63,7 @@ class AppModel extends Model
         );
         return $validationRules;
     }
-    
+
     protected function loggedIn()
     {
         return (boolean) CakeSession::read('Auth.User.id_customer');
@@ -103,11 +103,11 @@ class AppModel extends Model
                     AND Manufacturer.active = :active
                     AND ProductShop.id_shop = :shopId
                     AND (ImageShop.id_shop = :shopId OR ImageShop.id_shop IS NULL) ";
-        
+
         if (! $this->loggedIn()) {
             $conditions .= 'AND Manufacturer.is_private = :isPrivate ';
         }
-        
+
         return $conditions;
     }
 
@@ -133,7 +133,7 @@ class AppModel extends Model
     public static function interpolateQuery($query, $params)
     {
         $keys = array();
-        
+
         // build a regular expression for each parameter
         foreach ($params as $key => $value) {
             if (is_string($key)) {
@@ -142,9 +142,9 @@ class AppModel extends Model
                 $keys[] = '/[?]/';
             }
         }
-        
+
         $query = preg_replace($keys, $params, $query, 1, $count);
-        
+
         return $query;
     }
 }

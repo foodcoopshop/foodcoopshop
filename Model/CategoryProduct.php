@@ -26,5 +26,3 @@ class CategoryProduct extends AppModel
         )
     );
 }
-
-?>

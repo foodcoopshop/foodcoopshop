@@ -31,7 +31,7 @@ class CartComponent extends Component
     {
         return $this->getProductSum() + $this->getDepositSum();
     }
-    
+
     public function getTaxSum()
     {
         if ($this->cakeCart !== null) {
@@ -39,7 +39,7 @@ class CartComponent extends Component
         }
         return 0;
     }
-    
+
     public function getDepositSum()
     {
         if ($this->cakeCart !== null) {
@@ -96,5 +96,3 @@ class CartComponent extends Component
         return false;
     }
 }
-
-?>

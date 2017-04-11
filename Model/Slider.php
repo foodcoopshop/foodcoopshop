@@ -54,5 +54,3 @@ class Slider extends AppModel
         )
     );
 }
-
-?>

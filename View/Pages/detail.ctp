@@ -24,7 +24,7 @@ if ($page['Page']['full_width']) {
 echo '<h1>'.$page['PageLang']['meta_title'].'</h1>';
 
 if (!empty($page['children'])) {
-    foreach($page['children'] as $childPage) {
+    foreach ($page['children'] as $childPage) {
         echo '<p>'.$this->Html->link(
             $childPage['PageLang']['meta_title'],
             $this->Slug->getPageDetail($childPage['Page']['id_cms'], $childPage['PageLang']['meta_title']),
@@ -40,10 +40,9 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
         array(
             'title' => 'Bearbeiten'
-        )
-        ,$this->Slug->getPageEdit($page['Page']['id_cms'])
+        ),
+        $this->Slug->getPageEdit($page['Page']['id_cms'])
     );
 }
 
 echo $page['PageLang']['content'];
-?>

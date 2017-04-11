@@ -24,34 +24,34 @@ $this->element('addScript', array('script' =>
 ?>
 
 <?php
-    if (!empty($blogPosts)) {
-        echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
-        echo $this->element('blogPosts', array(
-            'blogPosts' => $blogPosts
-        ));
-    }
+if (!empty($blogPosts)) {
+    echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
+    echo $this->element('blogPosts', array(
+    'blogPosts' => $blogPosts
+    ));
+}
 ?>
 
 <h1><?php echo $title_for_layout; ?> <span><?php echo count($products); ?> gefunden</span></h1>
 
 <?php
 
-    if (!empty($category)) {
-        $categoryImgSrc = $this->Html->getCategoryImageSrc($category['Category']['id_category'], 'default'); 
-        if ($categoryImgSrc !== false) {
-            echo '<div class="img-wrapper">';
-                echo '<img src="' . $categoryImgSrc. '" />';
-            echo '</div>';
-        }
-        if ($category['CategoryLang']['description'] != '') {
-            echo '<div class="description-wrapper">';
-                echo $category['CategoryLang']['description'];
-            echo '</div>';
-        }
+if (!empty($category)) {
+    $categoryImgSrc = $this->Html->getCategoryImageSrc($category['Category']['id_category'], 'default');
+    if ($categoryImgSrc !== false) {
+        echo '<div class="img-wrapper">';
+            echo '<img src="' . $categoryImgSrc. '" />';
+        echo '</div>';
     }
-    
-    foreach($products as $product) {
-        echo $this->element('product/product', array('product' => $product));
+    if ($category['CategoryLang']['description'] != '') {
+        echo '<div class="description-wrapper">';
+            echo $category['CategoryLang']['description'];
+        echo '</div>';
     }
-    
+}
+
+foreach ($products as $product) {
+    echo $this->element('product/product', array('product' => $product));
+}
+
 ?>

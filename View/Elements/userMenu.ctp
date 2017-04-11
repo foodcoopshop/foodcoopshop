@@ -14,7 +14,7 @@
  */
 
 $menu = array();
-	
+
 $adminSlug = '/admin';
 $adminName = 'Admin-Bereich';
 $profileSlug = $this->Slug->getCustomerProfile();
@@ -27,8 +27,7 @@ if ($appAuth->isManufacturer()) {
 }
 if ($appAuth->loggedIn()) {
     $menu[] = array('slug' => $adminSlug, 'name' => $adminName, 'options' => array('class' => $class));
-	$menu[] = array('slug' => $profileSlug, 'name' =>  $userName);
+    $menu[] = array('slug' => $profileSlug, 'name' =>  $userName);
 }
 $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 echo $this->Menu->render($menu, array('id' => 'user-menu', 'class' => 'horizontal menu'));
-?>

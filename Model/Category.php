@@ -50,7 +50,7 @@ class Category extends AppModel
                 $this->flattenNestedArrayWithChildren($item['children'], str_repeat('-', $item['Category']['level_depth'] - 1) . ' ');
             }
         }
-        
+
         return $this->flattenedArray;
     }
 
@@ -64,16 +64,17 @@ class Category extends AppModel
         return $categorieForMenu;
     }
 
-    public function getExcludeCondition() {
+    public function getExcludeCondition()
+    {
         return $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
     }
-    
+
     public function getThreaded($conditions = array())
     {
         $conditions = array_merge($conditions, array(
             $this->getExcludeCondition()
         ));
-        
+
         $categories = $this->find('threaded', array(
             'conditions' => $conditions,
             'order' => array(
@@ -107,7 +108,7 @@ class Category extends AppModel
         if (! $this->loggedIn()) {
             $params['isPrivate'] = APP_OFF;
         }
-        
+
         $sql = 'SELECT ';
         if ($countMode) {
             $sql .= 'DISTINCT COUNT(*) as count ';
@@ -115,51 +116,51 @@ class Category extends AppModel
             $sql .= $this->getFieldsForProductListQuery();
         }
         $sql .= "FROM ".$this->tablePrefix."product Product ";
-        
+
         if (! $filterByNewProducts) {
             $sql .= "LEFT JOIN ".$this->tablePrefix."category_product CategoryProduct ON CategoryProduct.id_product = Product.id_product
                  LEFT JOIN ".$this->tablePrefix."category Category ON CategoryProduct.id_category = Category.id_category ";
         }
-        
+
         $sql .= $this->getJoinsForProductListQuery();
         $sql .= $this->getConditionsForProductListQuery();
-        
+
         if (! $filterByNewProducts) {
             $params['categoryId'] = $categoryId;
             $sql .= " AND CategoryProduct.id_category = :categoryId ";
             $sql .= " AND Category.active = :active";
         }
-        
+
         if ($filterByNewProducts) {
             $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
             $sql .= " AND DATE_FORMAT(ProductShop.date_add, '%Y-%m-%d') > :dateAdd";
         }
-        
+
         if ($keyword != '') {
             $params['keyword'] = '%' . $keyword . '%';
             $sql .= " AND (ProductLang.name LIKE :keyword OR ProductLang.description_short LIKE :keyword) ";
         }
-        
+
         if ($productId > 0) {
             $params['productId'] = $productId;
             $sql .= " AND Product.id_product = :productId ";
         }
-        
+
         $sql .= $this->getOrdersForProductListQuery();
         $products = $this->getDataSource()->fetchAll($sql, $params);
-        
+
         if (! $countMode) {
             return $products;
         } else {
             return $products[0][0]['count'];
         }
-        
+
         return $products;
     }
 
     /**
      *
-     * @param array $conditions            
+     * @param array $conditions
      */
     public function prepareTreeResultForMenu($items)
     {
@@ -173,7 +174,7 @@ class Category extends AppModel
     private function buildItemForTree($item, $index)
     {
         $productCount = $this->getProductsByCategoryId($item['Category']['id_category'], false, '', 0, true);
-        
+
         $tmpMenuItem = array(
             'name' => $item['CategoryLang']['name'] . ' (' . $productCount . ')',
             'slug' => Configure::read('slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['CategoryLang']['name'])
@@ -183,9 +184,7 @@ class Category extends AppModel
                 $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);
             }
         }
-        
+
         return $tmpMenuItem;
     }
 }
-
-?>

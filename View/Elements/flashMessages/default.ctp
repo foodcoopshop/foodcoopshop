@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array('script' => 
+$this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').'.Helper.appendFlashMessageCloser();'.
     Configure::read('app.jsNamespace').'.Helper.bindFlashMessageCloser();
 '));

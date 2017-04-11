@@ -13,7 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<?php if (!Configure::read('app.jsNamespace')) return; ?>
+<?php if (!Configure::read('app.jsNamespace')) {
+    return;
+} ?>
 
 <script type="text/javascript">
     if(!window.<?php echo Configure::read('app.jsNamespace'); ?>) { <?php echo Configure::read('app.jsNamespace'); ?> = window.<?php echo Configure::read('app.jsNamespace'); ?> = {}; }

@@ -40,10 +40,10 @@ class BlogPost extends AppModel
 
     public function findFeatured($appAuth)
     {
-        return $this->findBlogPosts(null, $appAuth, null, true);
+        return $this->findBlogPosts($appAuth, null, null, true);
     }
 
-    public function findBlogPosts($limit = null, $appAuth, $manufacturerId = null, $isFeatured = null)
+    public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
     {
         $conditions = array(
             'BlogPost.active' => APP_ON,
@@ -59,7 +59,7 @@ class BlogPost extends AppModel
         if ($isFeatured) {
             $conditions['BlogPost.is_featured'] = true;
         }
-        
+
         $blogPosts = $this->find('all', array(
             'conditions' => $conditions,
             'order' => array(
@@ -67,9 +67,7 @@ class BlogPost extends AppModel
             ),
             'limit' => $limit
         ));
-        
+
         return $blogPosts;
     }
 }
-
-?>

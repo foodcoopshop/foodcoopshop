@@ -16,55 +16,55 @@
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
 
-	<tr>
-		<td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-				Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
-			</td>
-	</tr>
+    <tr>
+        <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
+                Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
+            </td>
+    </tr>
 
-	<tr>
-		<td>
+    <tr>
+        <td>
 
-			<p>im Anhang findest du zwei Bestelllisten (gruppiert nach Artikel
-				und Mitglied) für die nächste Lieferung.</p>
+            <p>im Anhang findest du zwei Bestelllisten (gruppiert nach Artikel
+                und Mitglied) für die nächste Lieferung.</p>
 
-			<p>
-				<b>Dein persönlicher Hersteller-Bereich</b><br /> <a
-					href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
-			</p>
+            <p>
+                <b>Dein persönlicher Hersteller-Bereich</b><br /> <a
+                    href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
+            </p>
 
             <ul style="padding-left: 10px;">
-				<li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
-				<li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
-				<li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
-				<li>Hochladen von Produkt-Fotos</li>
-				<li>Aktivieren bzw. Deaktivieren deiner Produkte</li>
-				<li>Produkte als "neu" markieren</li>
-				<li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
-				<li>Pfandkonto (falls du Pfand verwendest)</li>
-				<li>Passwort ändern</li>
-			</ul>
-			
-			<p>
-				<b>Impressum</b><br />
-				Die Daten für dein Impressum (rechts unten auf deinem Hersteller-Profil) kannst du im Hersteller-Bereich selbst ändern.
-			</p>
+                <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
+                <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
+                <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
+                <li>Hochladen von Produkt-Fotos</li>
+                <li>Aktivieren bzw. Deaktivieren deiner Produkte</li>
+                <li>Produkte als "neu" markieren</li>
+                <li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
+                <li>Pfandkonto (falls du Pfand verwendest)</li>
+                <li>Passwort ändern</li>
+            </ul>
+            
+            <p>
+                <b>Impressum</b><br />
+                Die Daten für dein Impressum (rechts unten auf deinem Hersteller-Profil) kannst du im Hersteller-Bereich selbst ändern.
+            </p>
 
             <?php if (!Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
             <p>
-				Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung
-				deiner Produkte zu überprüfen, musst du angemeldet sein.
+                Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung
+                deiner Produkte zu überprüfen, musst du angemeldet sein.
             </p>
             <?php } ?>
 
-			<p>
-				Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls du bei uns auch bestellen möchtest, registriere dich bitte auf
-				unserer Seite und verwende dazu aber eine andere E-Mail-Adresse.
-			</p>
+            <p>
+                Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls du bei uns auch bestellen möchtest, registriere dich bitte auf
+                unserer Seite und verwende dazu aber eine andere E-Mail-Adresse.
+            </p>
 
-		</td>
+        </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

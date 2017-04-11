@@ -39,13 +39,11 @@ if (count($payments) == 0) {
     ?>
 <p>Es wurde noch kein <?php echo $title_for_layout; ?> erfasst.</p>
 <?php
-
 } else {
-    
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
     ));
-    
+
     echo '<table class="list">';
     echo '<tr class="sort">';
     echo '<th>Datum</th>';
@@ -55,37 +53,36 @@ if (count($payments) == 0) {
     echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</th>';
     echo '<th style="width:25px;"></th>';
     echo '</tr>';
-    
+
     $i = 0;
     $sumPayments = 0;
     $sumDeposits = 0;
     $sumOrders = 0;
-    
+
     foreach ($payments as $payment) {
-        
         $i ++;
-        
+
         $rowClass = array('data', $payment['type']);
-        
+
         if (isset($oldYear) && $oldYear != $payment['year']) {
             $rowClass[] = 'last-row-of-year';
         }
-        
+
         echo '<tr class="' . implode(' ', $rowClass) . '">';
-        
+
         echo '<td class="hide">';
         echo $payment['payment_id'];
         echo '</td>';
-        
+
         echo '<td>';
         echo $this->Time->formatToDateNTimeLong($payment['date']);
         echo '</td>';
-        
+
         echo '<td>';
-        
+
         if ($payment['type'] == 'product') {
-            switch($payment['approval']) {
-                case -1;
+            switch ($payment['approval']) {
+                case -1:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('delete.png'),
                         array(
@@ -93,9 +90,9 @@ if (count($payments) == 0) {
                         )
                     );
                     break;
-                case 0;
+                case 0:
                     break;
-                case 1;
+                case 1:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
                         array(
@@ -112,20 +109,21 @@ if (count($payments) == 0) {
                             'class' => 'payment-approval-comment',
                             'title' => $payment['approval_comment']
                         ),
-                        'javascript:void(0);');
+                        'javascript:void(0);'
+                    );
                 echo '</span>';
             }
         }
-        
+
         echo $payment['text'];
         echo '</td>';
-        
+
         $numberClass = '';
         if ($payment['type'] == 'order') {
             $numberClass = ' class="negative"';
         }
-        
-        
+
+
         $productNumberClass = '';
         if (in_array($payment['type'], array('payback'))) {
             $productNumberClass = ' class="negative"';
@@ -139,14 +137,14 @@ if (count($payments) == 0) {
             echo $this->Html->formatAsEuro($payment['amount']);
         }
         echo '</td>';
-        
+
         echo '<td style="text-align:right;" ' . $numberClass . '>';
         if ($payment['type'] == 'order') {
             $sumOrders += $payment['amount'];
             echo $this->Html->formatAsEuro($payment['amount']);
         }
         echo '</td>';
-        
+
         echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;" ' . $numberClass . '>';
         if ($payment['deposit'] < 0) {
             if ($payment['type'] == 'order') {
@@ -159,7 +157,7 @@ if (count($payments) == 0) {
             echo $this->Html->formatAsEuro($payment['amount']);
         }
         echo '</td>';
-        
+
         echo '<td style="text-align:center;">';
         $deletablePaymentTypes = array('product', 'deposit');
         if ($appAuth->isSuperadmin()) {
@@ -172,13 +170,12 @@ if (count($payments) == 0) {
             ), 'javascript:void(0);');
         }
         echo '</td>';
-        
+
         echo '</tr>';
-        
+
         $oldYear = $payment['year'];
-        
     }
-    
+
     echo '<tr class="fake-th">';
     echo '<td>Datum</td>';
     echo '<td>Text</td>';
@@ -187,7 +184,7 @@ if (count($payments) == 0) {
     echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</td>';
     echo '<td style="width:25px;"></td>';
     echo '</tr>';
-    
+
     echo '<tr>';
     echo '<td colspan="2"></td>';
     echo '<td align="right"><b>' . $this->Html->formatAsEuro($sumPayments) . '</b></td>';
@@ -202,7 +199,7 @@ if (count($payments) == 0) {
     echo '<td ' . $sumDepositsClass . 'align="right"><b>' . $this->Html->formatAsEuro($sumDeposits) . '</b></td>';
     echo '<td></td>';
     echo '</tr>';
-    
+
     echo '<tr>';
     echo '<td></td>';
     $sumNumberClass = '';
@@ -216,14 +213,14 @@ if (count($payments) == 0) {
     if (Configure::read('app.isDepositPaymentCashless')) {
         echo '<td></td>';
     }
-    
+
     echo '</tr>';
-    
+
     echo '</table>';
 } // end of count($payments)
 
 if ($this->action == 'product') {
-	echo '<div class="bottom-button-container">';
+    echo '<div class="bottom-button-container">';
         echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
     echo '</div>';
 }

@@ -18,7 +18,8 @@ App::uses('DbMigration', 'Utility');
  * @copyright     Copyright (c) Michael Kramer, http://k-pd.de
  * @link          https://www.foodcoopshop.com
  */
-class DbMigrationComponent extends Component {
+class DbMigrationComponent extends Component
+{
     /*
      * The DbMigration utility instance
      */
@@ -30,26 +31,32 @@ class DbMigrationComponent extends Component {
         $controller->loadModel('CakeActionLog');
 
         $this->dbMigration = new DbMigration(
-            function ($string = '') use (&$controller) { // $stdOut
+            function ($string = '') use (&$controller) {
+            // $stdOut
                 return $controller->AppSession->setFlashMessage($string);
             },
-            function ($string = '') use (&$controller) { // $stdErr
+            function ($string = '') use (&$controller) {
+            // $stdErr
                 return $controller->AppSession->setFlashError($string);
             },
-            function ($type = '', $string = '') use (&$controller) { // $stdLog
+            function ($type = '', $string = '') use (&$controller) {
+            // $stdLog
                 return $controller->CakeActionLog->customSave($type, 0, 0, '', $string);
             },
-            function ($string = '') use (&$controller) { // $findConf
+            function ($string = '') use (&$controller) {
+            // $findConf
                 return $controller->Configuration->find('first', array(
                     'conditions' => array(
                         'Configuration.name' => $string
                     )
                 ));
             },
-            function (array $conf = array()) use (&$controller) { // $saveConf
+            function (array $conf = array()) use (&$controller) {
+            // $saveConf
                 $controller->Configuration->save($conf, array('validate' => false));
             },
-            function ($string = '') use (&$controller) { // $query
+            function ($string = '') use (&$controller) {
+            // $query
                 $controller->Configuration->query($string);
             }
         );

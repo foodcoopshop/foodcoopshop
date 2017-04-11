@@ -30,15 +30,15 @@ class SendInvoicesShell extends AppShell
     public function main()
     {
         parent::main();
-        
+
         $this->startTimeLogging();
-        
+
         $dateFrom = Configure::read('timeHelper')->getFirstDayOfLastMonth();
         $dateTo = Configure::read('timeHelper')->getLastDayOfLastMonth();
-        
+
         // $dateFrom = '01.02.2016';
         // $dateTo = '29.02.2016';
-        
+
         // 1) get all manufacturers (not only active ones)
         $this->Manufacturer->unbindModel(array(
             'hasMany' => array(
@@ -50,7 +50,7 @@ class SendInvoicesShell extends AppShell
                 'Manufacturer.name' => 'ASC'
             )
         ));
-        
+
         // 2) get all orders in the given date range
         $this->Order->recursive = 2;
         $orders = $this->Order->find('all', array(
@@ -63,7 +63,7 @@ class SendInvoicesShell extends AppShell
                 )) . ')'
             )
         ));
-        
+
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = array();
         foreach ($orders as $order) {
@@ -72,7 +72,7 @@ class SendInvoicesShell extends AppShell
                 @$manufacturerOrders[$orderDetail['Product']['id_manufacturer']]['order_detail_price_sum'] += $orderDetail['total_price_tax_incl'];
             }
         }
-        
+
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
@@ -81,14 +81,14 @@ class SendInvoicesShell extends AppShell
             @$manufacturers[$i]['order_detail_price_sum'] = $manufacturerOrders[$manufacturer['Manufacturer']['id_manufacturer']]['order_detail_price_sum'];
             $i ++;
         }
-        
+
         // 5) check if manufacturers have open order details and send email
         $i = 0;
         $outString = $dateFrom . ' bis ' . $dateTo . '<br />';
-        
+
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
-        
+
         foreach ($manufacturers as $manufacturer) {
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Address']['other']);
             if (isset($manufacturer['current_order_count']) && $sendEmail) {
@@ -98,9 +98,9 @@ class SendInvoicesShell extends AppShell
                 $i ++;
             }
         }
-        
+
         $this->browser->doFoodCoopShopLogout();
-        
+
         // START send email to accounting employee
         $accountingEmail = Configure::read('app.db_config_FCS_ACCOUNTING_EMAIL');
         if ($accountingEmail != '') {
@@ -113,20 +113,19 @@ class SendInvoicesShell extends AppShell
                 ->viewVars(array(
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo
-            ))
+                ))
                 ->send();
         }
         // END send email to accounting employee
-        
+
         $outString .= 'Verschickte Rechnungen: ' . $i;
-        
+
         $this->stopTimeLogging();
-        
+
         $this->CakeActionLog->customSave('cronjob_send_invoices', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
-        
+
         $this->out($outString);
-        
+
         $this->out($this->getRuntime());
     }
 }
-?>

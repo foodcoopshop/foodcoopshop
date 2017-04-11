@@ -17,5 +17,3 @@
 class CakeDeposit extends AppModel
 {
 }
-
-?>

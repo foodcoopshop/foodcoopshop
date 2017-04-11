@@ -41,7 +41,7 @@ class AdminAppController extends AppController
      */
     protected function deleteUploadedImage($imageId, $thumbsPath, $imageSizes)
     {
-        
+
         // delete physical files
         foreach ($imageSizes as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.jpg';
@@ -53,22 +53,22 @@ class AdminAppController extends AppController
 
     /**
      *
-     * @param int $imageId            
-     * @param string $filename            
-     * @param string $thumbsPath            
-     * @param array $imageSizes            
+     * @param int $imageId
+     * @param string $filename
+     * @param string $thumbsPath
+     * @param array $imageSizes
      * @return string
      */
     protected function saveUploadedImage($imageId, $filename, $thumbsPath, $imageSizes)
     {
-        
+
         // if image was rotatet, cut off ?xyz (random string)
         $explodedFilename = explode('?', $filename);
         if (count($explodedFilename) == 2) {
             $filename = $explodedFilename[0];
         }
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        
+
         foreach ($imageSizes as $thumbSize => $options) {
             $thumb = PhpThumbFactory::create(WWW_ROOT . $filename);
             $dimensions = $thumb->getCurrentDimensions();
@@ -80,9 +80,7 @@ class AdminAppController extends AppController
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
             $thumb->save($thumbsFileName);
         }
-        
+
         return $imageId . $options['suffix'] . '.' . $extension;
     }
 }
-
-?>

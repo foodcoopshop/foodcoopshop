@@ -121,7 +121,7 @@ h2.warning {
     padding: 5px;
     color: #333333;
     background: #fff;
-    border-bottom: 1px solid #dfdfdf; 
+    border-bottom: 1px solid #dfdfdf;
     border-right: 1px solid #dfdfdf;
     font-size: 13px;
     width: 100%;
@@ -144,29 +144,29 @@ h2.warning {
 .vertical.menu li.has-icon a,
 .vertical.menu li a.has-icon,
 .vertical.menu li.has-children ul a {
-	padding-left: 28px;
+    padding-left: 28px;
 }
 .vertical.menu > li ul {
-	display: none;
+    display: none;
 }
 .vertical.menu li.has-children > a:not(.active) i:before,
 a.toggle-link:not(.collapsed) i:before  {
-	content: "\f055"; /* fa-icon-plus-sign */
-} 
+    content: "\f055"; /* fa-icon-plus-sign */
+}
 .vertical.menu li.has-children > a.active i:before,
 a.toggle-link.collapsed i:before {
     content: "\f056" /* fa-icon-minus-sign */
 }
 .vertical.menu li.has-children a.active + ul {
-	display: block;
+    display: block;
 }
 .vertical.menu li.has-children ul a {
-	font-size: 12px;
-	padding-top: 3px;
-	padding-bottom: 3px;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 .vertical.menu a.deactivated {
-	opacity: 0.5;
+    opacity: 0.5;
 }
 .dialog {
     display: none;
@@ -284,57 +284,57 @@ form div.error-message {
     width: 250px;
 }
 form div.long div.error-message {
-	width: 562px;
+    width: 562px;
 }
 form div.error-message ul {
     margin-bottom: 3px;
 }
 form div.textarea.error {
-	border: 2px solid #f3515c;
-	padding: 5px;
+    border: 2px solid #f3515c;
+    padding: 5px;
 }
 input[type="checkbox"] {
     width: 20px;
     height: 20px;
 }
 .featherlight-close-icon {
-	background: transparent ! important;
-	right: 35px ! important;
-	top: 3px ! important;
+    background: transparent ! important;
+    right: 35px ! important;
+    top: 3px ! important;
 }
 .featherlight-close-icon a {
-	padding: 6px 12px;
+    padding: 6px 12px;
     border-color: #fff ! important;
     font-size: 21px ! important;
     border-bottom-left-radius: 5px ! important;
 }
 
 .featherlight-content {
-	max-width: none ! important;
-	border: none ! important;
+    max-width: none ! important;
+    border: none ! important;
     overflow: hidden ! important;
     padding: 5px ! important;
     border-radius: 5px ! important;
 }
 .featherlight-image {
-	width: auto ! important;
-	max-width: 800px ! important;
+    width: auto ! important;
+    max-width: 800px ! important;
 }
 .featherlight-iframe .featherlight-content {
-	max-width: auto ! important;
+    max-width: auto ! important;
 }
 .featherlight-loading .featherlight-close-icon {
-	display: none;
+    display: none;
 }
 .featherlight-loading .featherlight-content {
     min-height: auto ! important;
     width: 90px;
 }
 .featherlight-loading .featherlight-inner {
-	padding: 20px;
+    padding: 20px;
 }
 .featherlight:last-of-type {
-	background: rgba(0, 0, 0, 0.65) ! important;
+    background: rgba(0, 0, 0, 0.65) ! important;
 }
 .featherlight .featherlight-inner.href {
     max-width: 990px;
@@ -363,14 +363,14 @@ input[type="checkbox"] {
     width: 100%;
 }
 span.new {
-	font-size:10px;
-	font-weight:bold;
-	background-color:#f3515c;
-	color:#fff;
-	padding:2px 5px;
-	border-radius:2px;
-	float:right;
-	margin-right: -3px;
+    font-size:10px;
+    font-weight:bold;
+    background-color:#f3515c;
+    color:#fff;
+    padding:2px 5px;
+    border-radius:2px;
+    float:right;
+    margin-right: -3px;
 }
 form .required label:after {
     color: #f3515c;
@@ -379,15 +379,15 @@ form .required label:after {
     margin-left: 2px;
 }
 pre {
-	margin-top: 50px;
-	margin-left: 150px;
+    margin-top: 50px;
+    margin-left: 150px;
 }
 .ui-tooltip pre {
     margin-top: 0;
     margin-left: 0;
 }
 .ui-dialog.logout-button {
-	z-index: 100000;
+    z-index: 100000;
 }
 
 .accept-updated-terms-of-use-form {

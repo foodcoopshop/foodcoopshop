@@ -27,25 +27,23 @@ $this->element('addScript', array('script' =>
 
 <?php
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer()) {
-    
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $manufacturerEditSlug = $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']);
     }
-    
+
     if ($appAuth->isManufacturer() && $appAuth->getManufacturerId() == $manufacturer['Manufacturer']['id_manufacturer']) {
         $manufacturerEditSlug = $this->Slug->getManufacturerProfile();
     }
-    
+
     if (isset($manufacturerEditSlug)) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
             array(
                 'title' => 'Bearbeiten'
-            )
-            ,$manufacturerEditSlug
+            ),
+            $manufacturerEditSlug
         );
     }
-    
 }
 ?>
 
@@ -60,33 +58,33 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
     <?php
         $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'large');
         $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-        if (!$largeImageExists) {
-            echo '<a class="lightbox" href="'.$srcLargeImage.'">';
-                echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium'). '" />';
-            echo '</a>';
-        }
+    if (!$largeImageExists) {
+        echo '<a class="lightbox" href="'.$srcLargeImage.'">';
+        echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium'). '" />';
+        echo '</a>';
+    }
         echo $manufacturer['ManufacturerLang']['description'];
     ?>
 </div>
 
 <?php
-    if (!empty($blogPosts)) {
-        echo '<h2>Aktuelles von '.$manufacturer['Manufacturer']['name'].'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']).'">Zum Blog von '.$manufacturer['Manufacturer']['name'].'</a></h2><div class="sc"></div>';
-        echo $this->element('blogPosts', array(
-            'blogPosts' => $blogPosts
-        ));
+if (!empty($blogPosts)) {
+    echo '<h2>Aktuelles von '.$manufacturer['Manufacturer']['name'].'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']).'">Zum Blog von '.$manufacturer['Manufacturer']['name'].'</a></h2><div class="sc"></div>';
+    echo $this->element('blogPosts', array(
+    'blogPosts' => $blogPosts
+    ));
+}
+
+if ($manufacturer['Manufacturer']['holiday'] == 1) {
+    echo '<h2 class="info">'.$manufacturer['Manufacturer']['name'].' ist momentan im wohlverdienten Urlaub.</h2>';
+}
+
+if (!empty($manufacturer['Products'])) {
+    foreach ($manufacturer['Products'] as $product) {
+        echo $this->element('product/product', array('product' => $product));
     }
-    
-    if ($manufacturer['Manufacturer']['holiday'] == 1) {
-        echo '<h2 class="info">'.$manufacturer['Manufacturer']['name'].' ist momentan im wohlverdienten Urlaub.</h2>';
-    }
-    
-    if (!empty($manufacturer['Products'])) {
-        foreach($manufacturer['Products'] as $product) {
-            echo $this->element('product/product', array('product' => $product));
-        }
-    }
-    
+}
+
     echo '<div class="imprint">';
         echo '<h2>Impressum</h2>';
         echo $this->Html->getManufacturerImprint($manufacturer, 'html', false);

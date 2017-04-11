@@ -33,26 +33,26 @@ class ProductsController extends FrontendController
     public function detail()
     {
         $productId = (int) $this->params['pass'][0];
-        
+
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
-        
+
         $this->loadModel('Category');
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
         $products = $this->perpareProductsForFrontend($products, true);
-        
+
         if (empty($products)) {
             throw new MissingActionException('product not found');
         }
-        
+
         $this->set('products', $products);
-        
+
         $correctSlug = Configure::read('slugHelper')->getProductDetail($productId, $products[0]['ProductLang']['name']);
         if ($correctSlug != Configure::read('slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
-        
+
         $this->set('title_for_layout', $products[0]['ProductLang']['name']);
     }
 }

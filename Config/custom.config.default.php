@@ -1,11 +1,11 @@
 <?php
 /**
  * custom.config.default.php
- * 
+ *
  * - this file contains the specific configuration for your foodcoop
  * - configurations in app.config.php can be overriden in this file
  * - please rename it to "custom.config.php" to use it
- * 
+ *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -98,4 +98,3 @@ Configure::write('app.paymentMethods', array(
 // $addressForPdf .= "\n4644 Demostadt";
 // $addressForPdf .= "\nmail@example.com";
 // Configure::write('app.addressForPdf', $addressForPdf);
-

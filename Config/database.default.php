@@ -30,5 +30,4 @@ class DATABASE_CONFIG
 //         'prefix' => 'fcs_',
 //         'encoding' => 'utf8'
 //     );
-    
 }

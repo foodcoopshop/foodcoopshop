@@ -20,5 +20,3 @@ if (Configure::read('debug') > 0) {
 
 echo $this->AssetCompress->css('base', array('raw' => $raw));
 echo $this->AssetCompress->css($config, array('raw' => $raw));
-
-?>

@@ -20,5 +20,3 @@ class BlogPostShop extends AppModel
     public $useTable = 'smart_blog_post_shop';
     public $primaryKey = 'id_smart_blog_post_shop';
 }
-
-?>

@@ -22,4 +22,3 @@ if ($appAuth->isManufacturer()) {
 } else {
     echo $this->element('legal/termsOfUse');
 }
-?>

@@ -13,21 +13,20 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('FCS_TCPDF', 'Lib/Pdf');
-$pdf = new FCS_TCPDF();
+App::uses('AppTcpdf', 'Lib/Pdf');
+$pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 $pdf->infoTextForFooter = 'Bestellungen';
 
 $j = 1;
 foreach ($orders as $order) {
-    
     $pdf->Ln(5);
     $pdf->writeHTML('<h2>' . $order['Customer']['name'] . '</h2>', true, false, true, false, '');
     $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Order']['date_add']) . '</h3>', true, false, true, false, '');
-    
+
     $pdf->Ln(5);
-    
+
     $widths = array(
         45,
         270,
@@ -42,23 +41,22 @@ foreach ($orders as $order) {
         'Preis',
         'Pfand'
     );
-    
+
     $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
-    
+
     $num_headers = count($headers);
     for ($i = 0; $i < $num_headers; ++ $i) {
         $pdf->table .= '<th style="font-weight:bold;background-color:#cecece" width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
     }
     $pdf->table .= '</tr></thead>';
-    
+
     $sumPrice = 0;
     $sumDeposit = 0;
     $sumQuantity = 0;
     $i = 1;
     foreach ($order['OrderDetails'] as $orderDetail) {
-        
         $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-        
+
         $quantityStyle = '';
         if ($orderDetail['product_quantity'] > 1) {
             $quantityStyle = ' background-color:#cecece;';
@@ -67,7 +65,7 @@ foreach ($orders as $order) {
         $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail['product_name'] . '</td>';
         $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail['Product']['Manufacturer']['name'] . '</td>';
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">' . $this->Html->formatAsEuro($orderDetail['total_price_tax_incl']) . '</td>';
-        
+
         $deposit = $orderDetail['deposit'];
         if ($deposit > 0) {
             $sumDeposit += $deposit;
@@ -76,23 +74,23 @@ foreach ($orders as $order) {
             $deposit = '';
         }
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
-        
+
         $sumPrice += $orderDetail['total_price_tax_incl'];
         $sumQuantity += $orderDetail['product_quantity'];
-        
+
         $pdf->table .= '</tr>';
-        
+
         if ($i == count($order['OrderDetails'])) {
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[1] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[2] . '"></td>';
                 $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '"><p>' . $this->Html->formatAsEuro($sumPrice) . '</p></td>';
-                if ($sumDeposit > 0) {
-                    $sumDepositAsString = $this->Html->formatAsEuro($sumDeposit);
-                } else {
-                    $sumDepositAsString = '';
-                }
+            if ($sumDeposit > 0) {
+                $sumDepositAsString = $this->Html->formatAsEuro($sumDeposit);
+            } else {
+                $sumDepositAsString = '';
+            }
                 $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '"><p>' . $sumDepositAsString . '</p></td>';
             $pdf->table .= '</tr>';
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
@@ -100,12 +98,12 @@ foreach ($orders as $order) {
                 $pdf->table .= '<td colspan="2" style="text-align:center"; width="' . ($widths[3] + $widths[4]) . '"><h3>' . $this->Html->formatAsEuro($sumPrice + $sumDeposit) . '</h3></td>';
             $pdf->table .= '</tr>';
         }
-        
+
         $i ++;
     }
-    
+
     $pdf->renderTable();
-    
+
     $pdf->Ln(5);
     if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') {
         $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
@@ -114,14 +112,12 @@ foreach ($orders as $order) {
     }
     $html = '<p>Vielen Dank, dass du bei uns bestellst!</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
-    
+
     if ($j < count($orders)) {
         $pdf->AddPage();
     }
-    
+
     $j ++;
 }
 
 echo $pdf->Output();
-
-?>

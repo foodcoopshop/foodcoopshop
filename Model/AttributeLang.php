@@ -49,14 +49,12 @@ class AttributeLang extends AppModel
                 'AttributeLang.name' => 'ASC'
             )
         ));
-        
+
         $attributesForDropdown = array();
         foreach ($attributes as $attribute) {
             $attributesForDropdown[$attribute['Attribute']['id_attribute']] = $attribute['AttributeLang']['name'];
         }
-        
+
         return $attributesForDropdown;
     }
 }
-
-?>

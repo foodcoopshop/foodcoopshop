@@ -33,9 +33,11 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(9, 'Impressum'),
-            $this->Slug->getLogin()
+            $this->Slug->getLogin(),
+            $this->Slug->getTermsOfUse(),
+            $this->Slug->getPrivacyPolicy()
         );
-        
+
         foreach ($testUrls as $url) {
             $this->browser->get($url);
             if ($this->hasPageErrors()) {
@@ -44,11 +46,11 @@ class PagesControllerTest extends AppCakeTestCase
             }
         }
     }
-    
+
     public function testAllSuperadminUrls()
     {
         $this->browser->doFoodCoopShopLogin();
-        
+
         $testUrls = array(
             $this->Slug->getCartDetail(),
             $this->Slug->getPagesListAdmin(),
@@ -79,7 +81,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getConfigurationsList(),
             $this->Slug->getConfigurationEdit(544)
         );
-    
+
         foreach ($testUrls as $url) {
             $this->browser->get($url);
             if ($this->hasPageErrors()) {
@@ -87,7 +89,7 @@ class PagesControllerTest extends AppCakeTestCase
                 echo $this->browser->getContent();
             }
         }
-        
+
         $this->browser->doFoodCoopShopLogout();
     }
 
@@ -98,7 +100,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
             $this->Slug->getPageDetail(4234, 'not valid page name'),
         );
-        
+
         foreach ($testUrls as $url) {
             $this->browser->get($url);
             if (! $this->is404Page()) {
@@ -115,12 +117,12 @@ class PagesControllerTest extends AppCakeTestCase
     public function test404PagesLoggedIn()
     {
         $this->browser->doFoodCoopShopLogin();
-        
+
         $testUrls = array(
             $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         );
-        
+
         foreach ($testUrls as $url) {
             $this->browser->get($url);
             if (! $this->is404Page()) {
@@ -128,11 +130,10 @@ class PagesControllerTest extends AppCakeTestCase
                 echo $this->browser->getContent();
             }
         }
-        
+
         $this->browser->doFoodCoopShopLogout();
-        
     }
-    
+
     private function is404Page()
     {
         $fail = false;
@@ -145,7 +146,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     /**
      * prueft html auf Fehlermeldungen.
-     * 
+     *
      * @return boolean
      */
     private function hasPageErrors()
@@ -167,5 +168,3 @@ class PagesControllerTest extends AppCakeTestCase
         return $fail;
     }
 }
-
-?>

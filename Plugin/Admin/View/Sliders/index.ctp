@@ -23,8 +23,8 @@ $this->element('highlightRowAfterEdit', array(
 ?>
 
 <div class="filter-container">
-	<h1>Slideshow</h1>
-	<div class="right">
+    <h1>Slideshow</h1>
+    <div class="right">
         <?php
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
         echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Slideshow-Bild erstellen', $this->Slug->getSliderAdd(), array(
@@ -38,9 +38,9 @@ $this->element('highlightRowAfterEdit', array(
 </div>
 
 <div id="help-container">
-	<ul>
-		<li>Auf dieser Seite kannst du die Slideshow-Bilder verwalten.</li>
-	</ul>
+    <ul>
+        <li>Auf dieser Seite kannst du die Slideshow-Bilder verwalten.</li>
+    </ul>
 </div>
 
 <?php
@@ -57,7 +57,6 @@ echo '</tr>';
 
 $i = 0;
 foreach ($sliders as $slider) {
-    
     $i ++;
     $rowClass = array(
         'data'
@@ -66,25 +65,25 @@ foreach ($sliders as $slider) {
         $rowClass[] = 'deactivated';
     }
     echo '<tr id="slider-' . $slider['Slider']['id_homeslider_slides'] . '" class="' . implode(' ', $rowClass) . '">';
-    
+
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
     ), $this->Slug->getSliderEdit($slider['Slider']['id_homeslider_slides']));
     echo '</td>';
-    
+
     echo '<td class="hide">';
     echo $slider['Slider']['id_homeslider_slides'];
     echo '</td>';
-    
+
     echo '<td align="center" style="background-color: #fff;">';
     echo '<img width="500" src="' . $this->Html->getSliderImageSrc($slider['SliderLang']['image']) . '" />';
     echo '</td>';
-    
+
     echo '<td align="center">';
     echo $slider['Slider']['position'];
     echo '</td>';
-    
+
     echo '<td align="center">';
     if ($slider['Slider']['active'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
@@ -92,7 +91,7 @@ foreach ($sliders as $slider) {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
-    
+
     echo '</tr>';
 }
 
