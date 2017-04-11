@@ -25,7 +25,7 @@ class ListsController extends AdminAppController
         return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
     }
 
-    public function order_lists()
+    public function orderLists()
     {
         $this->uses = array(
             'Manufacturer'
@@ -69,7 +69,7 @@ class ListsController extends AdminAppController
                     )
                 ));
 
-                $customerListLink = '/admin/lists/get_file/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
+                $customerListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
                 $productListLink = str_replace('Mitglied', 'Artikel', $customerListLink);
 
                 $files[] = array(
@@ -92,7 +92,7 @@ class ListsController extends AdminAppController
     /**
      * invoices and order lists are not stored in webroot
      */
-    public function get_file()
+    public function getFile()
     {
         $this->autoRender = false;
 

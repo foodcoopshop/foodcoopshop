@@ -117,7 +117,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $orderDetailsMenuElement,
         $cancelledArticlesMenuElement,
         array(
-            'slug' => '/admin/lists/order_lists',
+            'slug' => '/admin/lists/orderLists',
             'name' => 'Bestelllisten',
             'options' => array(
                 'fa-icon' => 'fa-fw fa-book'
