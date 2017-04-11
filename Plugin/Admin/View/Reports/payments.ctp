@@ -109,7 +109,7 @@ foreach ($payments as $payment) {
         echo '</td>';
         echo '<td>';
         switch ($payment['CakePayment']['approval']) {
-            case -1;
+            case -1:
                 echo $this->Html->image(
                     $this->Html->getFamFamFamPath('delete.png'),
                     array(
@@ -117,9 +117,9 @@ foreach ($payments as $payment) {
                     )
                 );
                 break;
-            case 0;
+            case 0:
                 break;
-            case 1;
+            case 1:
                 echo $this->Html->image(
                     $this->Html->getFamFamFamPath('accept.png'),
                     array(

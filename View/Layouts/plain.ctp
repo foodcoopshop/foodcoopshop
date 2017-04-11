@@ -45,7 +45,9 @@
                     }
                     ?>
                     <br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
-                <?php                                                                                                                                                                                                                                                                                                                                                                                                                                   } ?>
+                <?php
+                }
+                ?>
                 <div class="sc"></div>
             </div>
         </div>

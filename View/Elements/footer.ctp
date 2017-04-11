@@ -37,7 +37,9 @@
             <a target="_blank" href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>
             <a target="_blank" href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?></a>
         </p>
-    <?php                                                                                                            } ?>
+    <?php
+    }
+    ?>
 </div>
 
 <?php

@@ -82,7 +82,7 @@ if (count($payments) == 0) {
 
         if ($payment['type'] == 'product') {
             switch ($payment['approval']) {
-                case -1;
+                case -1:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('delete.png'),
                         array(
@@ -90,9 +90,9 @@ if (count($payments) == 0) {
                         )
                     );
                     break;
-                case 0;
+                case 0:
                     break;
-                case 1;
+                case 1:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
                         array(
