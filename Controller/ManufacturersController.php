@@ -84,7 +84,7 @@ class ManufacturersController extends FrontendController
         }
 
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth, $manufacturerId);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);

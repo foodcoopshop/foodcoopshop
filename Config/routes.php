@@ -32,15 +32,15 @@
 
     Router::connect('/anmelden', array('controller' => 'customers', 'action' => 'login'));
     Router::connect('/registrierung', array('controller' => 'customers', 'action' => 'login'));
-    Router::connect('/registrierung/abgeschlossen', array('controller' => 'customers', 'action' => 'registration_successful'));
+    Router::connect('/registrierung/abgeschlossen', array('controller' => 'customers', 'action' => 'registrationSuccessful'));
     Router::connect('/logout', array('controller' => 'customers', 'action' => 'logout'));
     Router::connect('/Informationen-ueber-Ruecktrittsrecht', array('controller' => 'carts', 'action' => 'generateCancellationInformationPdf'));
-    Router::connect('/nutzungsbedingungen', array('controller' => 'pages', 'action' => 'terms_of_use'));
-    Router::connect('/datenschutzerklaerung', array('controller' => 'pages', 'action' => 'privacy_policy'));
-    Router::connect('/nutzungsbedingungen-akzeptieren', array('controller' => 'customers', 'action' => 'accept_updated_terms_of_use'));
+    Router::connect('/nutzungsbedingungen', array('controller' => 'pages', 'action' => 'termsOfUse'));
+    Router::connect('/datenschutzerklaerung', array('controller' => 'pages', 'action' => 'privacyPolicy'));
+    Router::connect('/nutzungsbedingungen-akzeptieren', array('controller' => 'customers', 'action' => 'acceptUpdatedTermsOfUse'));
 
-    Router::connect('/neue-produkte', array('controller' => 'categories', 'action' => 'new_products'));
-    Router::connect('/neues-passwort-anfordern', array('controller' => 'customers', 'action' => 'new_password_request'));
+    Router::connect('/neue-produkte', array('controller' => 'categories', 'action' => 'newProducts'));
+    Router::connect('/neues-passwort-anfordern', array('controller' => 'customers', 'action' => 'newPasswordRequest'));
 
     Router::connect('/aktuelles', array('controller' => 'blog_posts', 'action' => 'index'));
     Router::connect('/aktuelles/*', array('controller' => 'blog_posts', 'action' => 'detail'));
@@ -53,7 +53,7 @@
     Router::connect('/content/*', array('controller' => 'pages', 'action' => 'detail'));
     Router::connect('/warenkorb/anzeigen', array('controller' => 'carts', 'action' => 'detail'));
     Router::connect('/warenkorb/abschliessen', array('controller' => 'carts', 'action' => 'finish'));
-    Router::connect('/warenkorb/abgeschlossen/*', array('controller' => 'carts', 'action' => 'order_successful'));
+    Router::connect('/warenkorb/abgeschlossen/*', array('controller' => 'carts', 'action' => 'orderSuccessful'));
     Router::connect('/warenkorb/:action', array('controller' => 'carts'));
 
     // home for admin

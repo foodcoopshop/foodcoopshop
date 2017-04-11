@@ -33,7 +33,9 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(9, 'Impressum'),
-            $this->Slug->getLogin()
+            $this->Slug->getLogin(),
+            $this->Slug->getTermsOfUse(),
+            $this->Slug->getPrivacyPolicy()
         );
 
         foreach ($testUrls as $url) {

@@ -16,8 +16,8 @@
 <div class="first-column">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
-        $menu[] = array('name' => 'Nutzungsbedingungen', 'slug' => '/nutzungsbedingungen');
-        $menu[] = array('name' => 'Datenschutzerklärung', 'slug' => '/datenschutzerklaerung');
+        $menu[] = array('name' => 'Nutzungsbedingungen', 'slug' => $this->Slug->getTermsOfUse());
+        $menu[] = array('name' => 'Datenschutzerklärung', 'slug' => $this->Slug->getPrivacyPolicy());
         echo '<h2>Informationen</h2>';
         echo $this->Menu->render($menu, array('id' => 'footer-menu', 'class' => 'menu'));
     ?>
@@ -31,7 +31,7 @@
        echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration());
     ?></span></p>
     <?php
-       echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hide_email($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
+       echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
     if (Configure::read('app.db_config_FCS_FACEBOOK_URL') != '') { ?>
         <p>
             <a target="_blank" href="<?php echo Configure::read('app.db_config_FCS_FACEBOOK_URL'); ?>"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>

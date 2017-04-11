@@ -40,10 +40,10 @@ class BlogPost extends AppModel
 
     public function findFeatured($appAuth)
     {
-        return $this->findBlogPosts(null, $appAuth, null, true);
+        return $this->findBlogPosts($appAuth, null, null, true);
     }
 
-    public function findBlogPosts($limit = null, $appAuth, $manufacturerId = null, $isFeatured = null)
+    public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
     {
         $conditions = array(
             'BlogPost.active' => APP_ON,

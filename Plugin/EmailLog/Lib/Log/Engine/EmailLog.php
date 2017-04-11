@@ -50,11 +50,10 @@ class EmailLog implements CakeLogInterface
      *
      * Merge options
      *
-     * @param array $options
-     *            Options for logger
+     * @param array $options Options for logger
      * @return void
      */
-    function __construct($options = array())
+    public function __construct($options = array())
     {
         $this->_options = array_merge($this->_options, $options);
     }

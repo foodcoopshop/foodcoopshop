@@ -401,7 +401,7 @@ class CartsController extends FrontendController
         $this->render('detail');
     }
 
-    public function order_successful($orderId)
+    public function orderSuccessful($orderId)
     {
         $orderId = (int) $this->params['pass'][0];
 
@@ -419,7 +419,7 @@ class CartsController extends FrontendController
         $this->set('order', $order);
 
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', 'Deine Bestellung ist abgeschlossen');

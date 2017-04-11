@@ -37,6 +37,16 @@ class SlugHelper extends Helper
         return '/content/'.$pageId.'-'.StringComponent::slugify($name);
     }
 
+    public function getTermsOfUse()
+    {
+        return '/nutzungsbedingungen';
+    }
+
+    public function getPrivacyPolicy()
+    {
+        return '/datenschutzerklaerung';
+    }
+
     public function getManufacturerList()
     {
         return '/hersteller';

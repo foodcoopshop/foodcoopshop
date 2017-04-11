@@ -30,10 +30,10 @@ class CategoriesController extends FrontendController
         }
     }
 
-    public function new_products()
+    public function newProducts()
     {
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
@@ -59,7 +59,7 @@ class CategoriesController extends FrontendController
         $this->set('keyword', $keyword);
 
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
@@ -93,7 +93,7 @@ class CategoriesController extends FrontendController
         }
 
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId($categoryId);

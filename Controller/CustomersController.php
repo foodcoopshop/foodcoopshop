@@ -37,7 +37,7 @@ class CustomersController extends FrontendController
         return $this->render('generateTermsOfUsePdf');
     }
 
-    public function accept_updated_terms_of_use()
+    public function acceptUpdatedTermsOfUse()
     {
 
         if (!$this->request->is('post')) {
@@ -64,7 +64,7 @@ class CustomersController extends FrontendController
         }
     }
 
-    public function new_password_request()
+    public function newPasswordRequest()
     {
         $this->set(array(
             'title_for_layout' => 'Neues Passwort anfordern'
@@ -271,12 +271,12 @@ class CustomersController extends FrontendController
         }
     }
 
-    public function registration_successful()
+    public function registrationSuccessful()
     {
         $this->set('title_for_layout', 'Mitgliedskonto erfolgreich erstellt');
 
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
     }
 

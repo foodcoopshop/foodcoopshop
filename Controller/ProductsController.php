@@ -35,7 +35,7 @@ class ProductsController extends FrontendController
         $productId = (int) $this->params['pass'][0];
 
         $this->loadModel('BlogPost');
-        $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
+        $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $this->loadModel('Category');

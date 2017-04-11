@@ -59,7 +59,7 @@ class MyHtmlHelper extends HtmlHelper
         if ($manufacturer['Address']['phone'] != '') {
             $imprintLines[] = 'Telefon: ' . $manufacturer['Address']['phone'];
         }
-        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hide_email($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
+        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
 
         if (!$addressOnly) {
             if ($manufacturer['Manufacturer']['homepage'] != '') {
