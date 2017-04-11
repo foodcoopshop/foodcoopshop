@@ -26,8 +26,8 @@ class DepositsController extends AdminAppController
             case 'detail':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
-            case 'my_index':
-            case 'my_detail':
+            case 'myIndex':
+            case 'myDetail':
                 return $this->AppAuth->isManufacturer();
                 break;
             default:
@@ -51,14 +51,14 @@ class DepositsController extends AdminAppController
         return $manufacturerId;
     }
 
-    public function my_index()
+    public function myIndex()
     {
         $this->manufacturerId = $this->AppAuth->getManufacturerId();
         $this->index();
         $this->render('index');
     }
 
-    public function my_detail($monthAndYear)
+    public function myDetail($monthAndYear)
     {
         $this->manufacturerId = $this->AppAuth->getManufacturerId();
         $this->detail($monthAndYear);

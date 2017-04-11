@@ -23,7 +23,7 @@ class PaymentsController extends AdminAppController
             case 'overview':
                 return Configure::read('htmlHelper')->paymentIsCashless() && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
-            case 'my_member_fee':
+            case 'myMemberFee':
                 return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'product':
@@ -33,7 +33,7 @@ class PaymentsController extends AdminAppController
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
-            case 'member_fee':
+            case 'memberFee':
                 if (empty($this->params['named']['customerId'])) {
                     $this->redirect(Configure::read('slugHelper')->getMyMemberFeeBalance());
                 }
@@ -142,13 +142,13 @@ class PaymentsController extends AdminAppController
                 ));
 
                 switch ($this->request->data['CakePayment']['approval']) {
-                    case -1;
+                    case -1:
                         $actionLogType = 'payment_product_approval_not_ok';
                         break;
-                    case 0;
+                    case 0:
                         $actionLogType = 'payment_product_approval_open';
                         break;
-                    case 1;
+                    case 1:
                         $actionLogType = 'payment_product_approval_ok';
                         break;
                 }
@@ -458,15 +458,15 @@ class PaymentsController extends AdminAppController
         $this->render('product');
     }
 
-    public function my_member_fee()
+    public function myMemberFee()
     {
         $this->customerId = $this->AppAuth->getUserId();
         $this->paymentType = 'member_fee';
-        $this->member_fee();
+        $this->memberFee();
         $this->render('member_fee');
     }
 
-    public function member_fee()
+    public function memberFee()
     {
 
         $this->paymentType = 'member_fee';

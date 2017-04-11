@@ -44,12 +44,12 @@ class SlugHelper extends Helper
 
     public function getMyDepositList()
     {
-        return '/admin/deposits/my_index';
+        return '/admin/deposits/myIndex';
     }
 
     public function getMyDepositDetail($monthAndYear)
     {
-        return '/admin/deposits/my_detail/'.$monthAndYear;
+        return '/admin/deposits/myDetail/'.$monthAndYear;
     }
 
     public function getDepositList($manufacturerId = '')
@@ -117,7 +117,7 @@ class SlugHelper extends Helper
 
     public function getMyMemberFeeBalance()
     {
-        return '/admin/payments/my_member_fee';
+        return '/admin/payments/myMemberFee';
     }
 
     public function getMyCreditBalance()
