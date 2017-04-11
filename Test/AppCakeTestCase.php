@@ -1,6 +1,6 @@
 <?php
 
-require_once ('test_files/Config/test.config.php');
+require_once('test_files/Config/test.config.php');
 
 App::uses('Controller', 'Controller');
 App::uses('View', 'View');
@@ -44,28 +44,27 @@ class AppCakeTestCase extends CakeTestCase
 
     /**
      * called before every test method
-     * 
+     *
      * {@inheritDoc}
      * @see CakeTestCase::setUp()
      */
     public function setUp()
     {
         parent::setUp();
-        
+
         $this->initSimpleBrowser();
-        
+
         self::resetTestDatabaseData();
-        
+
         $Controller = new Controller();
         $View = new View($Controller);
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Customer = new Customer();
         $this->regeneratePasswordHashes();
-        
+
         $this->Configuration = new Configuration();
         $this->Configuration->loadConfigurations();
-        
     }
 
     protected static function resetTestDatabaseData()
@@ -104,20 +103,22 @@ class AppCakeTestCase extends CakeTestCase
         $response = $this->browser->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
-    
-    protected function assertRegExpWithUnquotedString($unquotetString, $response, $msg='')
+
+    protected function assertRegExpWithUnquotedString($unquotetString, $response, $msg = '')
     {
         $this->assertRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
     }
-    
-    protected function assertUrl($url, $expectedUrl, $msg='') {
+
+    protected function assertUrl($url, $expectedUrl, $msg = '')
+    {
         $this->assertEquals($this->browser->baseUrl . $expectedUrl, $url, $msg);
     }
-    
+
     /**
      * due to different app.cookieKeys, logins would not work with a defined hash
      */
-    protected function regeneratePasswordHashes() {
+    protected function regeneratePasswordHashes()
+    {
         App::uses('AppPasswordHasher', 'Controller/Component/Auth');
         $ph = new AppPasswordHasher();
         $sql = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
@@ -126,15 +127,16 @@ class AppCakeTestCase extends CakeTestCase
         );
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
-    
+
     /**
      * needs to login as superadmin and logs user out automatically
      * eventually create a new browser instance for this method
-     * 
+     *
      * @param string $configKey
      * @param string $newValue
      */
-    protected function changeConfiguration($configKey, $newValue) {
+    protected function changeConfiguration($configKey, $newValue)
+    {
         $this->browser->doFoodCoopShopLogin();
         $configuration = $this->Configuration->find('first', array(
             'conditions' => array(
@@ -152,7 +154,4 @@ class AppCakeTestCase extends CakeTestCase
         $this->Configuration->loadConfigurations();
         $this->browser->doFoodCoopShopLogout();
     }
-    
 }
-
-?>

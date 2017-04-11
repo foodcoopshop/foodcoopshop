@@ -16,31 +16,31 @@
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
 
-	<tr>
-		<td style="font-weight: bold; font-size: 18px; padding-bottom: 10px;">
-			<p>Liebe(r) Finanz-Verantwortliche(r),</p>
-		</td>
-	</tr>
+    <tr>
+        <td style="font-weight: bold; font-size: 18px; padding-bottom: 10px;">
+            <p>Liebe(r) Finanz-Verantwortliche(r),</p>
+        </td>
+    </tr>
 
-	<tr>
-		<td>
+    <tr>
+        <td>
 
-			<p>
-				die Rechnungen vom <b><?php echo $this->MyTime->getLastMonthNameAndYear(); ?></b>
-				wurden soeben verschickt.
-			</p>
+            <p>
+                die Rechnungen vom <b><?php echo $this->MyTime->getLastMonthNameAndYear(); ?></b>
+                wurden soeben verschickt.
+            </p>
 
-			<p>
-				Hier findest du die Übersicht zum Überweisen: <br />
-	                <?php $link = Configure::read('app.cakeServerName').'/admin/order_details/index/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.'/orderState:'.ORDER_STATE_CASH.','.ORDER_STATE_CASH_FREE.'/groupByManufacturer:1'; ?>
-                	<a href="<?php echo $link; ?>"><?php echo $link; ?></a>
-			</p>
+            <p>
+                Hier findest du die Übersicht zum Überweisen: <br />
+                    <?php $link = Configure::read('app.cakeServerName').'/admin/order_details/index/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.'/orderState:'.ORDER_STATE_CASH.','.ORDER_STATE_CASH_FREE.'/groupByManufacturer:1'; ?>
+                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
+            </p>
 
-			<p>Vielen Dank für deine Arbeit!</p>
+            <p>Vielen Dank für deine Arbeit!</p>
 
-		</td>
+        </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

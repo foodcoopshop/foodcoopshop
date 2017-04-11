@@ -32,27 +32,26 @@ class ProductTest extends AppCakeTestCase
     public function testEditPrice()
     {
         $this->browser->doFoodCoopShopLogin();
-        
+
         // change price to invalid string
         $price = 'invalid-price';
         $response = $this->changeProductPrice(346, $price);
         $this->assertRegExpWithUnquotedString('input format for price is wrong', $response->msg);
         $this->assertJsonError();
-        
+
         $productId = 1000;
         $response = $this->changeProductPrice($productId, '0,15');
         $this->assertRegExpWithUnquotedString('product ' . $productId . ' not found', $response->msg);
         $this->assertJsonError();
-        
+
         // change price of product
         $this->checkPriceChange(346, '2,20', '2,00');
-        
+
         // change price of attribute
         $this->checkPriceChange('60-10', '1,25', '1,106195');
-        
+
         // change price of product with 0% tax
         $this->checkPriceChange('163', '1,60', '1,60');
-        
     }
 
     /**
@@ -70,7 +69,7 @@ class ProductTest extends AppCakeTestCase
 
     /**
      *
-     * @param int $productId            
+     * @param int $productId
      * @return json string
      */
     private function changeProductPrice($productId, $price)
@@ -109,11 +108,10 @@ class ProductTest extends AppCakeTestCase
                 )
             )
         );
-        
+
         foreach ($tests as $test) {
             $result = $this->Product->getProductIdAndAttributeId($test['id']);
             $this->assertEquals($test['result'], $result);
         }
     }
 }
-

@@ -23,5 +23,3 @@ class CakeDepositAttribute extends AppModel
 
     public $primaryKey = 'id_product_attribute';
 }
-
-?>

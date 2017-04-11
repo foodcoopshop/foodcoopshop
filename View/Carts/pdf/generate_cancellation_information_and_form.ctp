@@ -32,48 +32,48 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->infoTextForFooter = 'Information über Rücktrittsrecht';
 
 if (!empty($manufacturers)) {
-    
-    foreach($manufacturers as $manufacturer) {
+    foreach ($manufacturers as $manufacturer) {
         $i = 0;
-        
-        foreach($manufacturer as $product) {
-            
-            if ($i > 0) continue;
-            
+
+        foreach ($manufacturer as $product) {
+            if ($i > 0) {
+                continue;
+            }
+
             $pdf->AddPage();
-            
+
             $pdf->infoTextForFooter = 'Rücktrittsformular ' . $product['Manufacturer']['name'];
-            
+
             $html = '<h1>Rücktrittsformular</h1>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(8);
-            
+
             $html = '<p>Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(8);
-            
+
             $html = $this->Html->getManufacturerImprint($product['Manufacturer'], 'pdf', true);
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(4);
-            
+
             $html = '<p>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
-            
+
             $html = '<p>____________________________________________________________________________________________</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
-            
+
             $html = '<p>Bestellt am (*): '.$this->Time->formatToDateNTimeLong($order['Order']['date_add']).'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
-            
+
             $html = '<p>Erhalten am (*): </p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
-            
+
             $html = '<p>Name des/der Verbraucher(s): '.$appAuth->getUsername().'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
-            
+
             $customerAddress = $appAuth->user('AddressCustomer.address1');
             if ($appAuth->user('AddressCustomer.address2') != '') {
                 $customerAddress .= ', '.$appAuth->user('AddressCustomer.address2');
@@ -82,24 +82,21 @@ if (!empty($manufacturers)) {
             $html = '<p>Anschrift des/der Verbraucher(s): '.$customerAddress.'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
-            
+
             $html = '<p>Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)</p><br /><br />';
             $html .= '<p>___________________________________________________________</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
-            
+
             $html = '<p>Datum: ______________________</p>';
             $pdf->Ln(8);
-            
+
             $html .= '<p>(*) Unzutreffendes streichen</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
-            
+
             $i++;
-            
         }
-        
     }
-    
 }
 
 $filename = 'Informationen-ueber-Ruecktrittsrecht.pdf';
@@ -107,5 +104,3 @@ if (isset($order)) {
     $filename = StringComponent::createRandomString().'.pdf';
 }
 echo $pdf->Output($filename, $saveParam);
-
-?>

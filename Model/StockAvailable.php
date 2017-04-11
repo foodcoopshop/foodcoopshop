@@ -24,9 +24,10 @@ class StockAvailable extends AppModel
     public function updateQuantityForMainProduct($productId)
     {
         $productId = (int) $productId;
-        if ($productId < 0)
+        if ($productId < 0) {
             return;
-        
+        }
+
         // TODO use prepared statement
         $sql = 'UPDATE '.$this->tablePrefix.'stock_available sa1, (
                      SELECT SUM(quantity) as quantitySum
@@ -38,9 +39,7 @@ class StockAvailable extends AppModel
                  SET sa1.quantity = sa2.quantitySum
                  WHERE sa1.id_product = ' . $productId . '
                      AND sa1.id_product_attribute = 0';
-        
+
         $this->query($sql);
     }
 }
-
-?>

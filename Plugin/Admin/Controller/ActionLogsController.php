@@ -31,64 +31,64 @@ class ActionLogsController extends AdminAppController
     public function index()
     {
         $conditions = array();
-        
+
         $dateFrom = date('d.m.Y', strtotime('-6 day'));
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
         }
         $this->set('dateFrom', $dateFrom);
-        
+
         $dateTo = date('d.m.Y');
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
         }
         $this->set('dateTo', $dateTo);
-        
+
         $conditions[] = 'DATE_FORMAT(CakeActionLog.date, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         $conditions[] = 'DATE_FORMAT(CakeActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
-        
+
         $customerId = '';
         if (! empty($this->params['named']['customerId'])) {
             $customerId = $this->params['named']['customerId'];
         }
         $this->set('customerId', $customerId);
-        
+
         if ($customerId != '') {
             $conditions['CakeActionLog.customer_id'] = $customerId;
         }
-        
+
         $productId = '';
         if (! empty($this->params['named']['productId'])) {
             $productId = $this->params['named']['productId'];
         }
         $this->set('productId', $productId);
-        
+
         if ($productId != '') {
             $conditions['CakeActionLog.object_type'] = "products";
             $conditions['CakeActionLog.object_id'] = $productId;
         }
-        
+
         // manufacturers should only see their own product logs
         if ($this->AppAuth->isManufacturer()) {
-            $conditions[] = '(BlogPost.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . 
+            $conditions[] = '(BlogPost.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Product.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR CakePayment.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Manufacturer.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ')';
         }
-        
+
         // customers are only allowed to see their own data
         if ($this->AppAuth->isCustomer()) {
             // configuration of customerMainNamePart can be changed
             $conditions[] = '(Customer.id_customer = '.$this->AppAuth->getUserId().' OR (CakeActionLog.text REGEXP \'' . $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname') . '\' OR CakeActionLog.text REGEXP \'' . $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname') . '\'))';
         }
-        
+
         $type = '';
         if (! empty($this->params['named']['type'])) {
             $type = $this->params['named']['type'];
             $conditions[] = 'CakeActionLog.type = \'' . $type . '\'';
         }
         $this->set('type', $type);
-        
+
         $this->Paginator->settings = array_merge($this->Paginator->settings, array(
             'conditions' => $conditions,
             'order' => array(
@@ -103,13 +103,13 @@ class ActionLogsController extends AdminAppController
             }
         }
         $this->set('actionLogs', $actionLogs);
-        
+
         $this->set('actionLogModel', $this->CakeActionLog);
-        
+
         if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()) {
             $this->set('customersForDropdown', $this->Customer->getForDropdown(true));
         }
-        
+
         $titleForLayout = 'Aktivitäten';
         if (isset($this->CakeActionLog->types[$type])) {
             $titleForLayout .= ' | ' . $this->CakeActionLog->types[$type]['de'];

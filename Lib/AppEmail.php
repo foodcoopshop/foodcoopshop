@@ -23,7 +23,7 @@ class AppEmail extends CakeEmail
     public function __construct($config = null)
     {
         parent::__construct('default');
-        
+
         if (Configure::read('app.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
             $this->addBcc(Configure::read('app.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
@@ -34,35 +34,33 @@ class AppEmail extends CakeEmail
      * {@inheritDoc}
      * @see CakeEmail::_renderTemplates()
      */
-    public function _renderTemplates($content) {
+    public function _renderTemplates($content)
+    {
         return parent::_renderTemplates($content);
     }
-    
+
     /**
      * fallback if email config is wrong (e.g.
      * password changed from third party)
-     * 
+     *
      * @see CakeEmail::send()
      */
     public function send($content = null)
     {
         try {
-            
             return parent::send($content);
         } catch (Exception $e) {
-            
             if (Configure::read('app.emailErrorLoggingEnabled')) {
                 CakePlugin::load('EmailLog', array(
                     'bootstrap' => true
                 ));
             }
             CakeLog::write('error', $e->getMessage());
-            
+
             if (Configure::check('fallbackEmailConfig')) {
-                
                 $fallbackEmailConfig = Configure::read('fallbackEmailConfig');
                 $originalFrom = $this->from();
-                
+
                 // resend the email with the fallbackEmailConfig
                 // avoid endless loops if this email also not works
                 if ($this->from() != $fallbackEmailConfig['from']) {
@@ -79,5 +77,3 @@ class AppEmail extends CakeEmail
         }
     }
 }
-
-?>

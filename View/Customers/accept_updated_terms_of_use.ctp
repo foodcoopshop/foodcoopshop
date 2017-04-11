@@ -16,4 +16,3 @@ $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ));
 echo $this->element('acceptUpdatedTermsOfUseForm');
-?>

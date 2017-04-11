@@ -33,10 +33,9 @@ class AppSessionComponent extends SessionComponent
         $params = array(
             'class' => 'error'
         );
-        if ($message == 'Zugriff verweigert, bitte melde dich an.')
+        if ($message == 'Zugriff verweigert, bitte melde dich an.') {
             return false;
+        }
         $this->setFlash($message, 'flashMessages/default', $params);
     }
 }
-
-?>

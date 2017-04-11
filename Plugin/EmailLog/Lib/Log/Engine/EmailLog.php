@@ -7,12 +7,12 @@ App::uses('AppAuthComponent', 'Controller/Component');
 
 /**
  * EmailLog
- * 
+ *
  * FoodCoopShop - The open source software for your foodcoop
- * 
+ *
  * CakePHP Email Storage stream for Logging
  * Send log by email using one of configured EmailConfig (app/Config/email.php)
- * 
+ *
  * Usage:
  * {{{
  *    CakeLog::config('email', array(
@@ -22,7 +22,7 @@ App::uses('AppAuthComponent', 'Controller/Component');
  *      'logTypes' => array('warrning', 'error'),
  *    ));
  * }}}
- * 
+ *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
@@ -41,7 +41,7 @@ class EmailLog implements CakeLogInterface
      * - emailConfig - One of configured EmailConfig. See app/Config/email.php.
      * - subjectFormat - Email subject format using available params.
      * - logTypes - List of log types to send by email (all by default) or array of log types like 'error', 'warrning'. 'info'.
-     * 
+     *
      * @var array
      */
     protected $_options = array();
@@ -73,14 +73,14 @@ class EmailLog implements CakeLogInterface
         if (! empty($this->_options['logTypes']) && ! in_array($type, $this->_options['logTypes'])) {
             return false;
         }
-        
+
         // never send emails for 404 exceptions
         // somehow in EmailLog.php status code is always 200, so no check for 404 possible
         $ignoredExceptionsRegex = '/\[(MissingController|MissingAction)Exception\]/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
-        
+
         $params = array(
             'type' => ucfirst($type),
             'date' => date('Y-m-d H:i:s'),
@@ -89,7 +89,7 @@ class EmailLog implements CakeLogInterface
         );
         $subjectFormat = ':type :host :message';
         $subject = CakeText::insert($subjectFormat, $params);
-        
+
         try {
             $Email = new CakeEmail(Configure::read('debugEmailConfig'));
             $Email->to($this->_options['to'])
@@ -99,7 +99,7 @@ class EmailLog implements CakeLogInterface
                 ->viewVars(array(
                 'message' => $message,
                 'loggedUser' => AppAuthComponent::user()
-            ))
+                ))
                 ->send();
         } catch (SocketException $e) {
             return false;

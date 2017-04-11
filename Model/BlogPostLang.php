@@ -40,7 +40,7 @@ class BlogPostLang extends AppModel
             'maxLength' => array(
                 'rule' => array(
                     'maxLength',
-                    100                    
+                    100
                 ),
                 'message' => 'Bitte gib maximal 100 Zeichen ein.'
             )
@@ -57,5 +57,3 @@ class BlogPostLang extends AppModel
         )
     );
 }
-
-?>

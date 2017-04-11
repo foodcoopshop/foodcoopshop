@@ -29,7 +29,7 @@
     
     <div class="filter-container">
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-	    	<?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
+            <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
         <?php } ?>
         <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Artikel', 'options' => array())); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
@@ -40,61 +40,61 @@
         <?php } ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             <input id="orderId" type="text" placeholder="Bestell-Nr."
-			value="<?php echo $orderId; ?>" />
+            value="<?php echo $orderId; ?>" />
         <?php } ?>
         <?php echo $this->Form->input('orderState', array('type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState)); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             Gruppieren nach Hersteller: <?php echo $this->Form->input('groupByManufacturer', array('type'=>'checkbox', 'label' =>'', 'checked' => $groupByManufacturer));?>
         <?php } ?>
         <button id="filter" class="btn btn-success">
-			<i class="fa fa-search"></i> Filtern
-		</button>
-		<div class="right"></div>
-	</div>
+            <i class="fa fa-search"></i> Filtern
+        </button>
+        <div class="right"></div>
+    </div>
 
-	<div id="help-container">
-		<ul>
+    <div id="help-container">
+        <ul>
             <?php echo $this->element('shopdienstInfo'); ?>
             <li>Auf dieser Seite werden die <b>bestellten Artikel</b>
-				verwaltet.
-			</li>
-			<li><b>Artikel stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du den Artikel stornieren. Von Mittwoch bis Freitag
-            	<?php if (!$appAuth->isManufacturer()) { ?>
-            		werden beim Stornieren das Mitglied und der Hersteller
-            	<?php } else { ?>
-            	    wird beim Stornieren das Mitglied
-            	<?php } ?>
-            	per E-Mail verständigt, dass der Artikel nicht geliefert wird. Du kannst auch angeben, warum der Artikel storniert wird.</li>
-			<li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Artikeln ändern und dafür auch einen Grund angeben. Das Mitglied  
-           	<?php if (!$appAuth->isManufacturer()) { ?>
-        		und der Hersteller werden
-        	<?php } else { ?>
-        	    wird
-        	<?php } ?>
-        		dabei automatisch per E-Mail benachrichtigt.</li>
-			<li>Wenn du auf den Button rechts unten klickst, erhältst du die
-				E-Mail-Adressen von allen Mitgliedern.</li>
-			<li>Wenn du auf das Häkchen ganz links klickst, ist die Zeile bis zum
-				nächsten Laden der Seite grün markiert.</li>
+                verwaltet.
+            </li>
+            <li><b>Artikel stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du den Artikel stornieren. Von Mittwoch bis Freitag
+                <?php if (!$appAuth->isManufacturer()) { ?>
+                    werden beim Stornieren das Mitglied und der Hersteller
+                <?php } else { ?>
+                    wird beim Stornieren das Mitglied
+                <?php } ?>
+                per E-Mail verständigt, dass der Artikel nicht geliefert wird. Du kannst auch angeben, warum der Artikel storniert wird.</li>
+            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Artikeln ändern und dafür auch einen Grund angeben. Das Mitglied  
+            <?php if (!$appAuth->isManufacturer()) { ?>
+                und der Hersteller werden
+            <?php } else { ?>
+                wird
+            <?php } ?>
+                dabei automatisch per E-Mail benachrichtigt.</li>
+            <li>Wenn du auf den Button rechts unten klickst, erhältst du die
+                E-Mail-Adressen von allen Mitgliedern.</li>
+            <li>Wenn du auf das Häkchen ganz links klickst, ist die Zeile bis zum
+                nächsten Laden der Seite grün markiert.</li>
             <?php if ($appAuth->isManufacturer()) { ?>
                 <li>Du kannst nach Produkt filtern.</li>
             <?php } else { ?>
                 <li>Du kannst die Liste nach verschiedensten Kriterien
-				filtern.</li>
+                filtern.</li>
             <?php } ?>
         </ul>
-	</div>
+    </div>
     
 <?php
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th style="width:20px;">';
-    if (count($orderDetails) > 0 && !$groupByManufacturer) {
-        $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
-        ));
-        echo '<input type="checkbox" id="row-marker-all" />';
-    }
+if (count($orderDetails) > 0 && !$groupByManufacturer) {
+    $this->element('addScript', array(
+    'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
+    ));
+    echo '<input type="checkbox" id="row-marker-all" />';
+}
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">' . $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl') . '</th>';
@@ -119,9 +119,8 @@ $sumDeposit = 0;
 $sumReducedPrice = 0;
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
-    
     $editRecordAllowed = ! $groupByManufacturer && ($orderDetail['Order']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed']);
-    
+
     $i ++;
     if (! $groupByManufacturer) {
         $sumPrice += $orderDetail['OrderDetail']['total_price_tax_incl'];
@@ -134,21 +133,21 @@ foreach ($orderDetails as $orderDetail) {
         $sumReducedPrice += $reducedPrice;
         $sumDeposit += $orderDetail['sum_deposit'];
     }
-    
+
     echo '<tr class="data ' . (isset($orderDetail['rowClass']) ? implode(' ', $orderDetail['rowClass']) : '') . '">';
-    
+
     echo '<td style="text-align: center;">';
-        if ($editRecordAllowed) {
-            echo '<input type="checkbox" class="row-marker" />';
-        }
+    if ($editRecordAllowed) {
+        echo '<input type="checkbox" class="row-marker" />';
+    }
     echo '</td>';
-    
+
     echo '<td class="hide">';
     if (! $groupByManufacturer) {
         echo $orderDetail['OrderDetail']['id_order_detail'];
     }
     echo '</td>';
-    
+
     echo '<td class="right">';
     echo '<div class="table-cell-wrapper quantity">';
     if (! $groupByManufacturer) {
@@ -169,7 +168,7 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</div>';
     echo '</td>';
-    
+
     echo '<td>';
     if (! $groupByManufacturer) {
         echo $this->MyHtml->link($orderDetail['OrderDetail']['product_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/productId:' . $orderDetail['Product']['id_product'] . '/orderState:' . $orderState, array(
@@ -177,7 +176,7 @@ foreach ($orderDetails as $orderDetail) {
         ));
     }
     echo '</td>';
-    
+
     echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
     if (! $groupByManufacturer) {
         echo $this->MyHtml->link($orderDetail['Product']['Manufacturer']['name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/manufacturerId:' . $orderDetail['Product']['Manufacturer']['id_manufacturer'] . '/orderState:' . $orderState . '/customerId:' . $customerId . '/groupByManufacturer:0');
@@ -185,7 +184,7 @@ foreach ($orderDetails as $orderDetail) {
         echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/manufacturerId:' . $orderDetail['manufacturer_id'] . '/orderState:' . $orderState . '/customerId:' . $customerId . '/groupByManufacturer:0');
     }
     echo '</td>';
-    
+
     echo '<td class="right">';
     echo '<div class="table-cell-wrapper price">';
     if (! $groupByManufacturer) {
@@ -201,14 +200,14 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</div>';
     echo '</td>';
-    
+
     if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
-        
+
         echo '<td>';
         echo $orderDetail['compensation_percentage'] . '%';
         echo '</td>';
-        
+
         echo '<td class="right">';
         if ($priceDiffers) {
             echo '<span style="color:red;font-weight:bold;">';
@@ -219,7 +218,7 @@ foreach ($orderDetails as $orderDetail) {
         }
         echo '</td>';
     }
-    
+
     echo '<td class="right">';
     if (! $groupByManufacturer) {
         if ($orderDetail['OrderDetail']['deposit'] > 0) {
@@ -231,31 +230,31 @@ foreach ($orderDetails as $orderDetail) {
         }
     }
     echo '</td>';
-    
+
     echo '<td>';
     if (! $groupByManufacturer) {
         echo $this->Time->formatToDateNTimeLong($orderDetail['Order']['date_add']);
     }
     echo '</td>';
-    
+
     echo '<td>';
     if (! $groupByManufacturer) {
         echo $orderDetail['Order']['Customer']['name'];
     }
     echo '</td>';
-    
+
     echo '<td class="hide">';
     if (! $groupByManufacturer) {
         echo '<span class="email">' . $orderDetail['Order']['Customer']['email'] . '</span>';
     }
     echo '</td>';
-    
+
     echo '<td>';
     if (! $groupByManufacturer) {
         echo $this->MyHtml->getOrderStates()[$orderDetail['Order']['current_state']];
     }
     echo '</td>';
-    
+
     echo '<td style="text-align:center;">';
     if ($editRecordAllowed) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
@@ -265,13 +264,13 @@ foreach ($orderDetails as $orderDetail) {
         ), 'javascript:void(0);');
     }
     echo '</td>';
-    
+
     echo '<td class="hide orderId">';
     if (! $groupByManufacturer) {
         echo $orderDetail['OrderDetail']['id_order'];
     }
     echo '</td>';
-    
+
     echo '</tr>';
 }
 

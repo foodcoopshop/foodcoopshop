@@ -56,7 +56,7 @@ class CakeCart extends AppModel
             );
             $cakeCart = $this->save($cart2save);
         }
-        
+
         $ccp = ClassRegistry::init('CakeCartProduct');
         $ccp->recursive = 3;
         $cakeCartProducts = $ccp->find('all', array(
@@ -67,22 +67,21 @@ class CakeCart extends AppModel
                 'ProductLang.name' => 'ASC'
             )
         ));
-        
+
         $preparedCart = array(
             'CakeCart' => $cakeCart['CakeCart'],
             'CakeCartProducts' => array()
         );
         foreach ($cakeCartProducts as &$cartProduct) {
-            
             $manufacturerLink = Configure::read('htmlHelper')->link($cartProduct['Product']['Manufacturer']['name'], Configure::read('slugHelper')->getManufacturerDetail($cartProduct['Product']['Manufacturer']['id_manufacturer'], $cartProduct['Product']['Manufacturer']['name']));
-            
+
             $imageId = 0;
             $imageLegend = '';
             if (isset($cartProduct['Product']['ImageShop']['ImageLang'])) {
                 $imageId = $cartProduct['Product']['ImageShop']['ImageLang']['id_image'];
                 $imageLegend = $cartProduct['Product']['ImageShop']['ImageLang']['legend'];
             }
-            
+
             $productImage = Configure::read('htmlHelper')->image(Configure::read('htmlHelper')->getProductImageSrc($imageId, $imageLegend, 'home'));
             $productLink = Configure::read('htmlHelper')->link(
                 $cartProduct['ProductLang']['name'],
@@ -92,9 +91,8 @@ class CakeCart extends AppModel
                 ),
                 array('class' => 'product-name')
             );
-            
+
             if (isset($cartProduct['ProductAttribute']['ProductAttributeCombination'])) {
-                
                 // attribute
                 $preparedCart['CakeCartProducts'][] = array(
                     'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
@@ -119,7 +117,6 @@ class CakeCart extends AppModel
                     ) * $cartProduct['CakeCartProduct']['amount']
                 );
             } else {
-                
                 // no attribute
                 $preparedCart['CakeCartProducts'][] = array(
                     'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
@@ -136,7 +133,8 @@ class CakeCart extends AppModel
                     'priceExcl' => $cartProduct['Product']['ProductShop']['price'] * $cartProduct['CakeCartProduct']['amount'],
                     'tax' => $ccp->Product->getUnitTax(
                         $ccp->Product->getGrossPrice(
-                            $cartProduct['Product']['id_product'], $cartProduct['Product']['ProductShop']['price']
+                            $cartProduct['Product']['id_product'],
+                            $cartProduct['Product']['ProductShop']['price']
                         ) * $cartProduct['CakeCartProduct']['amount'],
                         $cartProduct['Product']['ProductShop']['price'],
                         $cartProduct['CakeCartProduct']['amount']
@@ -144,7 +142,7 @@ class CakeCart extends AppModel
                 );
             }
         }
-        
+
         // sum up deposits and products
         $preparedCart['CakeCartDepositSum'] = 0;
         $preparedCart['CakeCartProductSum'] = 0;

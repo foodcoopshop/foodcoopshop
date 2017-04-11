@@ -38,5 +38,3 @@ class PageLang extends AppModel
         )
     );
 }
-
-?>

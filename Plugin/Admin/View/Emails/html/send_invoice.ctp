@@ -16,34 +16,34 @@
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
 
-	<tr>
-		<td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-				Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
-			</td>
-	</tr>
+    <tr>
+        <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
+                Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
+            </td>
+    </tr>
 
-	<tr>
-		<td>
+    <tr>
+        <td>
 
-			<p>
-				In dieser Rechnung sind alle Bestellungen enthalten, die im <b><?php echo $invoicePeriodMonthAndYear; ?></b>
-				getätigt wurden. <b>Achtung:</b> es wird das Bestelldatum
-				berücksichtigt, nicht das Lieferdatum.
-			</p>
+            <p>
+                In dieser Rechnung sind alle Bestellungen enthalten, die im <b><?php echo $invoicePeriodMonthAndYear; ?></b>
+                getätigt wurden. <b>Achtung:</b> es wird das Bestelldatum
+                berücksichtigt, nicht das Lieferdatum.
+            </p>
 
-			<p>Sollten der Rechnungsbetrag nicht mit deinen Aufzeichnungen
-				übereinstimmen, sag uns bitte umgehend Bescheid.</p>
+            <p>Sollten der Rechnungsbetrag nicht mit deinen Aufzeichnungen
+                übereinstimmen, sag uns bitte umgehend Bescheid.</p>
 
-			<p>Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto
-				überwiesen.</p>
+            <p>Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto
+                überwiesen.</p>
 
-			<p>
-				<b>Vielen Dank, dass du uns belieferst!</b>
-			</p>
+            <p>
+                <b>Vielen Dank, dass du uns belieferst!</b>
+            </p>
 
-		</td>
+        </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

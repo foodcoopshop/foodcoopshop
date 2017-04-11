@@ -17,7 +17,7 @@
 
 <?php
 $this->element('addScript', array(
-    'script' => 
+    'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
 ));
@@ -25,8 +25,8 @@ $this->element('addScript', array(
 
 <div class="filter-container">
 <h1><?php echo $title_for_layout; ?></h1>
-		<div class="right"></div>
-	</div>
+        <div class="right"></div>
+    </div>
 
 <?php
 
@@ -42,26 +42,25 @@ echo '</tr>';
 
 $sum = 0;
 foreach ($payments as $payment) {
-    
     $sum += $payment['CakePayment']['amount'];
     echo '<tr class="data ' . $payment['CakePayment']['type'] . '">';
 
         echo '<td class="hide">';
             echo $payment['CakePayment']['id'];
         echo '</td>';
-    
+
         echo '<td>';
             echo $this->Time->formatToDateNTimeLong($payment['CakePayment']['date_add']);
         echo '</td>';
-    
+
         echo '<td>';
             echo $this->Html->getManufacturerDepositPaymentText($payment['CakePayment']['text']);
         echo '</td>';
-    
+
         echo '<td style="text-align:right;" class="negative">';
             echo $this->Html->formatAsEuro($payment['CakePayment']['amount'] * -1);
         echo '</td>';
-    
+
         echo '<td style="text-align:center;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-payment-button',
@@ -85,11 +84,11 @@ foreach ($payments as $payment) {
 echo '</table>';
 
 echo '<div class="bottom-button-container">';
-    if ($appAuth->isManufacturer()) {
-        $depositOverviewUrl = $this->Slug->getMyDepositList();
-    } else {
-        $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
-    }
+if ($appAuth->isManufacturer()) {
+    $depositOverviewUrl = $this->Slug->getMyDepositList();
+} else {
+    $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
+}
     echo '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 echo '</div>';
 echo '<div class="sc"></div>';

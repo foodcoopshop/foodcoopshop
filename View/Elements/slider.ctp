@@ -18,10 +18,8 @@ if (!empty($sliders)) {
         Configure::read('app.jsNamespace').".Helper.initSlider();"
     ));
     echo '<div id="slider">';
-        foreach($sliders as $slider) {
-            echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider['SliderLang']['image']).'" />';
-        }
+    foreach ($sliders as $slider) {
+        echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider['SliderLang']['image']).'" />';
+    }
     echo '</div>';
 }
-
-?>

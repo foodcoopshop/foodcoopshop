@@ -33,5 +33,3 @@ class Image extends AppModel
         )
     );
 }
-
-?>

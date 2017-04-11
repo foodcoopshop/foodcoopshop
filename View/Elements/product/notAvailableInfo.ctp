@@ -21,6 +21,3 @@ if ($stockAvailable == 0) {
 echo '<div class="line">
         <span class="not-available-info">'.$notAvailableInfoText.'</span>
     </div>';
-
-?>    
-

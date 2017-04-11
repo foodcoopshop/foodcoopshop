@@ -28,5 +28,3 @@ $html = $this->element('legal/generalTermsAndConditions');
 $pdf->writeHTML($html, true, false, true, false, '');
 
 echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);
-
-?>

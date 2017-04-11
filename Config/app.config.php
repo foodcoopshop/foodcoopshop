@@ -116,20 +116,20 @@ Configure::write('app.memberFeeFlexibleEnabled', false);
  * image upload sizes and suffixes
  */
 Configure::write('app.productImageSizes', array(
- 	 '150' => array('suffix' => '-home_default'),      // list page
-	 '358' => array('suffix' => '-large_default'),     // detail page
-	 '800' => array('suffix' => '-thickbox_default')   // lightbox
+     '150' => array('suffix' => '-home_default'),      // list page
+     '358' => array('suffix' => '-large_default'),     // detail page
+     '800' => array('suffix' => '-thickbox_default')   // lightbox
 ));
 Configure::write('app.blogPostImageSizes', array(
- 	 '170' => array('suffix' => '-home-default'),     // detail / list page
-	 '800' => array('suffix' => '-single-default')    // lightbox
+     '170' => array('suffix' => '-home-default'),     // detail / list page
+     '800' => array('suffix' => '-single-default')    // lightbox
 ));
 Configure::write('app.manufacturerImageSizes', array(
- 	 '200' => array('suffix' => '-medium_default'),  // detail / list page
-	 '800' => array('suffix' => '-large_default')    // lightbox
+     '200' => array('suffix' => '-medium_default'),  // detail / list page
+     '800' => array('suffix' => '-large_default')    // lightbox
 ));
 Configure::write('app.categoryImageSizes', array(
- 	 '717' => array('suffix' => '-category_default') // detail AND lightbox
+     '717' => array('suffix' => '-category_default') // detail AND lightbox
 ));
 Configure::write('app.sliderImageSizes', array(
     '905' => array('suffix' => '-slider') // detail AND lightbox
@@ -150,5 +150,3 @@ Configure::write('app.mysqlDumpCommand', 'mysqldump');
  * date of the last update of terms of use
  */
 Configure::write('app.termsOfUseLastUpdate', '2016-11-28');
-
-?>

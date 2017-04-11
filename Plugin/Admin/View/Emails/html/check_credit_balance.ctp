@@ -15,34 +15,34 @@
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-	
-		<?php echo $this->element('email/greeting', array('data' => $customer)); ?>
-		
-		<tr>
-		<td>
+    
+        <?php echo $this->element('email/greeting', array('data' => $customer)); ?>
+        
+        <tr>
+        <td>
 
-			<p>
-				dein Guthaben ist aufgebraucht und beträgt <b
-					style="color: #f3515c;"><?php echo $delta; ?></b>.
-			</p>
+            <p>
+                dein Guthaben ist aufgebraucht und beträgt <b
+                    style="color: #f3515c;"><?php echo $delta; ?></b>.
+            </p>
 
-			<p>Bitte überweise bald wieder ein neues Guthaben (z.B. € 100,00) auf
-				unser Konto.</p>
+            <p>Bitte überweise bald wieder ein neues Guthaben (z.B. € 100,00) auf
+                unser Konto.</p>
 
-			<p>
-				Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System
-					einzutragen</b>, da es ansonsten zwar auf unserem Bankkonto
-				gutgeschrieben ist, aber nicht in deinem Guthaben-System aufscheint.
-			</p>
+            <p>
+                Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System
+                    einzutragen</b>, da es ansonsten zwar auf unserem Bankkonto
+                gutgeschrieben ist, aber nicht in deinem Guthaben-System aufscheint.
+            </p>
 
-			<p>
-				Hier der Link zum Eintragen:<br /> <a
-					href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
-			</p>
+            <p>
+                Hier der Link zum Eintragen:<br /> <a
+                    href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
+            </p>
 
-		</td>
+        </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

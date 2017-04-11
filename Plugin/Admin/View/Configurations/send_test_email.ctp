@@ -18,5 +18,3 @@ $this->element('addScript', array(
 ));
 
 print_r($success);
-
-?>

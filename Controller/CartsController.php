@@ -38,13 +38,12 @@ class CartsController extends FrontendController
                 )));
             }
         }
-    
+
         parent::beforeFilter();
-    
+
         $this->AppAuth->allow('generateCancellationInformationPdf');
-    
     }
-    
+
     public function isAuthorized($user)
     {
         return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
@@ -54,7 +53,7 @@ class CartsController extends FrontendController
     {
         $this->set('title_for_layout', 'Dein Warenkorb');
     }
-    
+
     /**
      * called from finish context
      * saves pdf as file
@@ -65,7 +64,7 @@ class CartsController extends FrontendController
     {
         $this->set('order', $order);
         $manufacturers = array();
-        foreach($products as $product) {
+        foreach ($products as $product) {
             $manufacturers[$product['Manufacturer']['id_manufacturer']][] = $product;
         }
         $this->set('manufacturers', $manufacturers);
@@ -86,7 +85,7 @@ class CartsController extends FrontendController
         $this->RequestHandler->renderAs($this, 'pdf');
         return $this->render('generateGeneralTermsAndConditions');
     }
-    
+
     /**
      * called from finish context
      * saves pdf as file
@@ -96,11 +95,11 @@ class CartsController extends FrontendController
      */
     private function generateOrderConfirmation($order, $orderDetails, $orderDetailsTax)
     {
-        
+
         $this->loadModel('Product');
         $this->set('order', $order);
         $manufacturers = array();
-        foreach($orderDetails as $orderDetail) {
+        foreach ($orderDetails as $orderDetail) {
             $this->Product->recursive = 2;
             $product = $this->Product->find('first', array(
                 'conditions' => array(
@@ -108,7 +107,7 @@ class CartsController extends FrontendController
                 )
             ));
             // avoid extra db request and attach taxes manually to order details
-            foreach($orderDetailsTax as $tax) {
+            foreach ($orderDetailsTax as $tax) {
                 if ($tax['id_order_detail'] == $orderDetail['OrderDetails']['id_order_detail']) {
                     $orderDetail['OrderDetails']['OrderDetailTax'] = $tax;
                 }
@@ -118,35 +117,36 @@ class CartsController extends FrontendController
                 'Manufacturer' => $product['Manufacturer']
             );
         }
-        
+
         $this->set('manufacturers', $manufacturers);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
         return $this->render('generateOrderConfirmation');
     }
-    
+
     /**
      * generates pdf on-the-fly
      */
-    public function generateCancellationInformationPdf() {
+    public function generateCancellationInformationPdf()
+    {
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
         $this->render('generateCancellationInformationAndForm');
     }
-    
+
     public function finish()
     {
-        
+
         if (!$this->request->is('post')) {
             $this->redirect('/');
         }
-        
+
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCakeCart();
-        
+
         $this->loadModel('CakeCart');
         $this->loadModel('Product');
-        
+
         // START check if no amount is 0
         $productWithAmount0Found = false;
         foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
@@ -158,26 +158,25 @@ class CartsController extends FrontendController
                 $productWithAmount0Found = true;
             }
         }
-        
+
         if ($productWithAmount0Found) {
             $cart = $this->AppAuth->getCakeCart();
             $this->AppAuth->setCakeCart($cart);
         }
         // END check if no amount is 0
-        
+
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
             $this->AppSession->setFlashError('Dein Warenkorb war leer.');
             $this->redirect(Configure::read('slugHelper')->getCartDetail());
         }
-        
+
         $cartErrors = array();
         $orderDetails2save = array();
         $products = array();
-        
+
         foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
-            
             $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
-            
+
             $this->Product->recursive = 2;
             $product = $this->Product->find('first', array(
                 'conditions' => array(
@@ -185,15 +184,15 @@ class CartsController extends FrontendController
                 )
             ));
             $products[] = $product;
-            
+
             $stockAvailableQuantity = $product['StockAvailable']['quantity'];
-            
+
             // stock available check for product (without attributeId)
             if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $ccp['amount']) {
                 $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
-            
+
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
                 foreach ($product['ProductAttributes'] as $attribute) {
@@ -219,17 +218,17 @@ class CartsController extends FrontendController
                     $cartErrors[$ccp['productId']][] = $message;
                 }
             }
-            
+
             if (! $product['Product']['active']) {
                 $message = 'Das Produkt "' . $product['ProductLang']['name'] . '" ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
-            
+
             if (! $product['Manufacturer']['active'] || $product['Manufacturer']['holiday']) {
                 $message = 'Der Hersteller des Produkts "' . $product['ProductLang']['name'] . '" ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
-            
+
             // build orderDetails2save
             $orderDetails2save[] = array(
                 'product_id' => $ids['productId'],
@@ -242,7 +241,7 @@ class CartsController extends FrontendController
                 'id_tax' => $product['Product']['id_tax'],
                 'deposit' => $ccp['deposit']
             );
-            
+
             $newQuantity = $stockAvailableQuantity - $ccp['amount'];
             if ($newQuantity < 0) {
                 $message = 'attention, this should never happen! stock available would have been negative: productId: ' . $ids['productId'] . ', attributeId: ' . $ids['attributeId'] . '; changed it manually to 0 to avoid negative stock available value.';
@@ -256,11 +255,11 @@ class CartsController extends FrontendController
                 'StockAvailable.id_product_attribute' => $ids['attributeId']
             );
         }
-        
-        
+
+
         $this->set('cartErrors', $cartErrors);
-        
-        
+
+
         $this->loadModel('Order');
         $checkboxErrors = false;
         if (!isset($this->request->data['Order']['general_terms_and_conditions_accepted']) || $this->request->data['Order']['general_terms_and_conditions_accepted'] != 1) {
@@ -271,11 +270,10 @@ class CartsController extends FrontendController
             $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
             $checkboxErrors = true;
         }
-        
+
         if (!empty($cartErrors) || $checkboxErrors) {
             $this->AppSession->setFlashError('Es sind Fehler aufgetreten.');
         } else {
-            
             // START save order
             $this->Order->id = null;
             $order2save = array(
@@ -295,56 +293,55 @@ class CartsController extends FrontendController
                 'cancellation_terms_accepted' => $this->request->data['Order']['cancellation_terms_accepted']
             );
             $order = $this->Order->save($order2save);
-            
+
             if (empty($order)) {
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
                 $this->AppSession->setFlashError($message);
                 $this->log($message);
                 $this->redirect(Configure::read('slugHelper')->getCartFinish());
             }
-            
+
             $orderId = $order['Order']['id_order'];
             // END save order
-            
+
             // START update order_id in orderDetails2save
             foreach ($orderDetails2save as &$orderDetail) {
                 $orderDetail['id_order'] = $orderId;
             }
             $this->Order->OrderDetails->saveAll($orderDetails2save);
             // END update order_id in orderDetails2save
-            
+
             // START save order_detail_tax
             $orderDetails = $this->Order->OrderDetails->find('all', array(
                 'conditions' => array(
                     'OrderDetails.id_order' => $orderId
                 )
             ));
-            
+
             if (empty($orderDetails)) {
                 $message = 'Bei der Erstellung der bestellten Artikel ist ein Fehler aufgetreten.';
                 $this->AppSession->setFlashError($message);
                 $this->log($message);
                 $this->redirect(Configure::read('slugHelper')->getCartFinish());
             }
-            
+
             $orderDetailTax2save = array();
             $this->loadModel('OrderDetailTax');
             foreach ($orderDetails as $orderDetail) {
-                
                 // should not be necessary but a user somehow managed to set product_quantity as 0
                 $quantity = $orderDetail['OrderDetails']['product_quantity'];
                 if ($quantity == 0) {
                     $this->log('product_quantity was 0, would have resulted in division by zero error');
                     continue;
                 }
-                
+
                 $productId = $orderDetail['OrderDetails']['product_id'];
                 $price = $orderDetail['OrderDetails']['total_price_tax_incl'];
-                
+
                 $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $quantity);
                 $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $quantity);
                 $totalTaxAmount = $unitTaxAmount * $quantity;
-                
+
                 $orderDetailTax2save[] = array(
                     'id_order_detail' => $orderDetail['OrderDetails']['id_order_detail'],
                     'id_tax' => 0, // do not use the field id_tax in order_details_tax but id_tax in order_details!
@@ -352,10 +349,10 @@ class CartsController extends FrontendController
                     'total_amount' => $totalTaxAmount
                 );
             }
-            
+
             $this->OrderDetailTax->saveAll($orderDetailTax2save);
             // END save order_detail_tax
-            
+
             // START update stock available
             $i = 0;
             foreach ($stockAvailable2saveData as &$data) {
@@ -364,17 +361,16 @@ class CartsController extends FrontendController
                 $i ++;
             }
             // END update stock available
-            
+
             $this->AppAuth->Cart->markAsSaved();
-            
+
             $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
-            
+
             // START send confirmation email to customer
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
             if ($this->AppAuth->user('active')) {
-                
                 $email = new AppEmail();
                 $email->template('customer_order_successful')
                     ->emailFormat('html')
@@ -384,23 +380,23 @@ class CartsController extends FrontendController
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
                     'order' => $order
-                ));
-                    
+                    ));
+
 
                 $email->addAttachments(array('Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => array('data' => $this->generateCancellationInformationAndForm($order, $products))));
                 $email->addAttachments(array('Bestelluebersicht.pdf' => array('data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save))));
                 $email->addAttachments(array('Allgemeine-Geschaeftsbedingungen.pdf' => array('data' => $this->generateGeneralTermsAndConditions($order))));
-                
+
                 $email->send();
             }
             //END send confirmation email to customer
-            
+
             // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
-            
+
             $this->redirect(Configure::read('slugHelper')->getCartFinished($orderId));
         }
-        
+
         $this->action = 'detail';
         $this->render('detail');
     }
@@ -408,7 +404,7 @@ class CartsController extends FrontendController
     public function order_successful($orderId)
     {
         $orderId = (int) $this->params['pass'][0];
-        
+
         $this->loadModel('Order');
         $order = $this->Order->find('first', array(
             'conditions' => array(
@@ -419,15 +415,15 @@ class CartsController extends FrontendController
         if (empty($order)) {
             throw new MissingActionException('order not found');
         }
-        
+
         $this->set('order', $order);
-        
+
         $this->loadModel('BlogPost');
         $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
         $this->set('blogPosts', $blogPosts);
-        
+
         $this->set('title_for_layout', 'Deine Bestellung ist abgeschlossen');
-        
+
         $this->resetOriginalLoggedCustomer();
         $this->destroyShopOrderCustomer();
     }
@@ -435,11 +431,11 @@ class CartsController extends FrontendController
     public function ajaxDeleteShopOrderCustomer()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
         $this->destroyShopOrderCustomer();
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -462,11 +458,11 @@ class CartsController extends FrontendController
     public function ajaxRemove()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $initialProductId = $this->params['data']['productId'];
-        
+
         $this->doManufacturerCheck($initialProductId);
-        
+
         $attributeId = 0;
         $productId = $initialProductId;
         $explodedProductId = explode('-', $initialProductId);
@@ -474,10 +470,10 @@ class CartsController extends FrontendController
             $productId = $explodedProductId[0];
             $attributeId = (int) $explodedProductId[1];
         }
-        
+
         $cakeCart = $this->AppAuth->getCakeCart();
         $this->AppAuth->setCakeCart($cakeCart);
-        
+
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
             $message = 'Produkt ' . $productId . ' war nicht in Warenkorb vorhanden.';
@@ -487,18 +483,18 @@ class CartsController extends FrontendController
                 'productId' => $initialProductId
             )));
         }
-        
+
         $ccp = ClassRegistry::init('CakeCartProduct');
         $ccp->remove($productId, $attributeId, $cakeCart['CakeCart']['id_cart']);
-        
+
         // update cart to update field date_upd
         $cc = ClassRegistry::init('CakeCart');
         $cc->id = $cakeCart['CakeCart']['id_cart'];
         $cc->updateDateUpd();
-        
+
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -508,11 +504,11 @@ class CartsController extends FrontendController
     public function ajaxAdd()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $initialProductId = $this->params['data']['productId'];
-        
+
         $this->doManufacturerCheck($initialProductId);
-        
+
         $attributeId = 0;
         $productId = $initialProductId;
         $explodedProductId = explode('-', $initialProductId);
@@ -520,7 +516,7 @@ class CartsController extends FrontendController
             $productId = $explodedProductId[0];
             $attributeId = (int) $explodedProductId[1];
         }
-        
+
         $amount = (int) $this->params['data']['amount'];
         // allow -1 and 1 - 99
         if ($amount == 0 || $amount < - 1 || $amount > 99) {
@@ -531,7 +527,7 @@ class CartsController extends FrontendController
                 'productId' => $initialProductId
             )));
         }
-        
+
         // get product data from database
         $this->loadModel('Product');
         $this->Product->recursive = 2;
@@ -540,7 +536,7 @@ class CartsController extends FrontendController
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         $combinedAmount = $amount;
         if ($existingCartProduct) {
@@ -556,7 +552,7 @@ class CartsController extends FrontendController
                 'productId' => $initialProductId
             )));
         }
-        
+
         // stock available check for product
         if ($attributeId == 0 && $product['StockAvailable']['quantity'] < $combinedAmount && $amount > 0) {
             $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product['StockAvailable']['quantity'];
@@ -566,7 +562,7 @@ class CartsController extends FrontendController
                 'productId' => $initialProductId
             )));
         }
-        
+
         // check if passed optional product/attribute relation exists
         if ($attributeId > 0) {
             $attributeIdFound = false;
@@ -600,7 +596,7 @@ class CartsController extends FrontendController
                 )));
             }
         }
-        
+
         // update amount if cart product already exists
         $cakeCart = $this->AppAuth->getCakeCart();
         $this->AppAuth->setCakeCart($cakeCart);
@@ -609,7 +605,7 @@ class CartsController extends FrontendController
         if ($existingCartProduct) {
             $ccp->id = $existingCartProduct['cakeCartProductId'];
         }
-        
+
         $cartProduct2save = array(
             'id_product' => $productId,
             'amount' => $combinedAmount,
@@ -617,20 +613,18 @@ class CartsController extends FrontendController
             'id_cart' => $cakeCart['CakeCart']['id_cart']
         );
         $ccp->save($cartProduct2save);
-        
+
         // update cart to update field date_upd
         $cc = ClassRegistry::init('CakeCart');
         $cc->id = $cakeCart['CakeCart']['id_cart'];
         $cc->updateDateUpd();
-        
+
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
         )));
     }
 }
-
-?>

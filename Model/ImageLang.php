@@ -21,5 +21,3 @@ class ImageLang extends AppModel
 
     public $primaryKey = 'id_image';
 }
-
-?>

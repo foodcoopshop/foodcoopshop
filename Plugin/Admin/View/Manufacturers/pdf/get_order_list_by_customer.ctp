@@ -18,7 +18,4 @@ echo $this->element('pdf/order_list', array(
     'groupType_de' => 'Mitglied',
     'results' => $results_customer,
     'manufacturer' => isset($manufacturer) ? $manufacturer : array()
-) // not defined in sendOrderList
-);
-
-?>
+)); // not defined in sendOrderList

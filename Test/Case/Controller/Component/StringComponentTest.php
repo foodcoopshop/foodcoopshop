@@ -5,8 +5,8 @@ App::uses('Component', 'Controller');
 App::uses('StringComponent', 'Controller/Component');
 
 /**
- * StringComponentTest 
- * 
+ * StringComponentTest
+ *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -38,7 +38,7 @@ class StringComponentTest extends AppCakeTestCase
                 'slug' => 'oele-und-essig'
             )
         );
-        
+
         foreach ($tests as $test) {
             $result = StringComponent::slugify($test['name']);
             $this->assertEquals($test['slug'], $result);
@@ -61,12 +61,10 @@ class StringComponentTest extends AppCakeTestCase
                 'slug' => 'heilmassage-mittermeier'
             )
         );
-        
+
         foreach ($tests as $test) {
             $result = StringComponent::removeIdFromSlug($test['url']);
             $this->assertEquals($test['slug'], $result);
         }
     }
 }
-
-?>

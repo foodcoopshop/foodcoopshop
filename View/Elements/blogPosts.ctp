@@ -13,7 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (empty($blogPosts)) return;
+if (empty($blogPosts)) {
+    return;
+}
 
 if (!isset($useCarousel) || $useCarousel) {
     $this->element('addScript', array('script' =>
@@ -29,16 +31,14 @@ if (isset($style) && $style != '') {
 
 echo '<div class="blog-wrapper"'.$style.'>';
 
-    foreach($blogPosts as $blogPost) {
-        echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_smart_blog_post'], $blogPost['BlogPostLang']['meta_title']).'">';
-            echo '<span class="img-wrapper">';
-                echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'home'). '" />';
-            echo '</span>';
-            echo '<h3>'.$blogPost['BlogPostLang']['meta_title'].'</h3>';
-            echo '<span class="desc">'.$blogPost['BlogPostLang']['short_description'].'</span>';
-        echo '</a>';
-    }
-    
-echo '</div>';
+foreach ($blogPosts as $blogPost) {
+    echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_smart_blog_post'], $blogPost['BlogPostLang']['meta_title']).'">';
+    echo '<span class="img-wrapper">';
+        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'home'). '" />';
+    echo '</span>';
+    echo '<h3>'.$blogPost['BlogPostLang']['meta_title'].'</h3>';
+    echo '<span class="desc">'.$blogPost['BlogPostLang']['short_description'].'</span>';
+    echo '</a>';
+}
 
-?>
+echo '</div>';

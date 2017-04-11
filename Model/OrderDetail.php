@@ -36,7 +36,7 @@ class OrderDetail extends AppModel
             'foreignKey' => 'product_id', // !sic, id_ vertauscht
             'type' => 'INNER'
         ) // for manufacturer name filter
-,
+    ,
         'ProductAttribute' => array(
             'foreignKey' => 'product_attribute_id'
         )
@@ -54,14 +54,15 @@ class OrderDetail extends AppModel
         $condition = 'Order.current_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param boolean $groupByMonth
      * @return array
      */
-    public function getDepositSum($manufacturerId, $groupByMonth) {
-        
+    public function getDepositSum($manufacturerId, $groupByMonth)
+    {
+
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
         if ($groupByMonth) {
             $sql .= ', DATE_FORMAT(o.date_add, \'%Y-%c\') as monthAndYear ';
@@ -70,9 +71,9 @@ class OrderDetail extends AppModel
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        
+
         $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
-        
+
         if ($groupByMonth) {
             $sql .= 'GROUP BY monthAndYear ';
         }
@@ -83,13 +84,12 @@ class OrderDetail extends AppModel
         );
         $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
         return $orderDetails;
-        
     }
 
     public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit)
     {
         $conditions = array();
-        
+
         // if manufacturer is logged in, dateFrom and dateTo is set to '';
         if ($dateFrom != '') {
             $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
@@ -97,60 +97,58 @@ class OrderDetail extends AppModel
         if ($dateTo != '') {
             $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
-        
+
         if ($orderState != '') {
             $conditions[] = $this->getOrderStateCondition($orderState);
         }
-        
+
         if ($productId != '') {
             $conditions['OrderDetail.product_id'] = $productId;
         }
-        
+
         if ($orderDetailId != '') {
             $conditions['OrderDetail.id_order_detail'] = $orderDetailId;
         }
-        
+
         if ($orderId != '') {
             $conditions['Order.id_order'] = $orderId;
         }
-        
+
         if ($deposit != '') {
             $conditions[] = 'OrderDetail.deposit > 0';
         }
-        
+
         $contain = array(
             'Order',
             'Order.Customer',
             'Product.Manufacturer.Address'
         );
-        
+
         if ($manufacturerId != '') {
             $conditions['Product.id_manufacturer'] = $manufacturerId;
         }
-        
+
         // if logged user is manufacturer, always filter by manufacturer id
         // so that no other order details than the own are shown
         // overwrite it if manually set by id
         if ($appAuth->isManufacturer()) {
             $conditions['Product.id_manufacturer'] = $appAuth->getManufacturerId();
         }
-        
+
         if ($customerId != '') {
             $conditions['Order.id_customer'] = $customerId;
         }
-        
+
         // customers are only allowed to see their own data
         if ($appAuth->isCustomer()) {
             $conditions['Order.id_customer'] = $appAuth->getUserId();
         }
-        
+
         $odParams = array(
             'conditions' => $conditions,
             'contain' => $contain
         );
-        
+
         return $odParams;
     }
 }
-
-?>

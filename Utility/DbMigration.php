@@ -18,7 +18,8 @@ App::uses('File', 'Utility');
  * @copyright     Copyright (c) Michael Kramer, http://k-pd.de
  * @link          https://www.foodcoopshop.com
  */
-class DbMigration {
+class DbMigration
+{
     /*
      * The stdOut method. Must accept a single string to inform user about something.
      */
@@ -54,7 +55,8 @@ class DbMigration {
  *
  * @param Callable $stdOut The stdOut method
  */
-    public function __construct($stdOut = null, $stdErr = null, $stdLog = null, $findConf = null, $saveConf = null, $query = null) {
+    public function __construct($stdOut = null, $stdErr = null, $stdLog = null, $findConf = null, $saveConf = null, $query = null)
+    {
         $this->stdOut = $stdOut;
         $this->stdErr = $stdErr;
         $this->stdLog = $stdLog;
@@ -63,42 +65,48 @@ class DbMigration {
         $this->query = $query;
     }
 
-    protected function toStdOut($string = '') {
+    protected function toStdOut($string = '')
+    {
         if (is_callable($this->stdOut)) {
             return call_user_func($this->stdOut, $string);
         }
         return false;
     }
 
-    protected function toStdErr($string = '') {
+    protected function toStdErr($string = '')
+    {
         if (is_callable($this->stdErr)) {
             return call_user_func($this->stdErr, $string);
         }
         return false;
     }
 
-    protected function toStdLog($type = '', $string = '') {
+    protected function toStdLog($type = '', $string = '')
+    {
         if (is_callable($this->stdLog)) {
             return call_user_func($this->stdLog, $type, $string);
         }
         return false;
     }
 
-    protected function doFindConf($string = '') {
+    protected function doFindConf($string = '')
+    {
         if (is_callable($this->findConf)) {
             return call_user_func($this->findConf, $string);
         }
         return array();
     }
 
-    protected function doSaveConf(array $conf = array()) {
+    protected function doSaveConf(array $conf = array())
+    {
         if (is_callable($this->saveConf)) {
             return call_user_func($this->saveConf, $conf);
         }
         return false;
     }
 
-    protected function doQuery($string = '') {
+    protected function doQuery($string = '')
+    {
         if (is_callable($this->query)) {
             return call_user_func($this->query, $string);
         }
@@ -145,13 +153,11 @@ class DbMigration {
         $db = Configure::read('app.db_config_FCS_DB_VERSION');
         if (strlen($db) == 0) {  // the DB version config value doesn't exist
             $avail = array('0'); // do the very first DB migration
-        }
-        else if (!is_numeric($db)) {
+        } else if (!is_numeric($db)) {
             // on a previous fail, do not retry but inform user
             $this->toStdErr('DB update error');
             return -2;
-        }
-        else {
+        } else {
             $avail = $this->getDbMigrationsVersions($db);
         }
         unset($db);
@@ -179,19 +185,16 @@ class DbMigration {
                 $this->toStdErr('DB update error');
                 return -1;
             }
-        }
-        else {
+        } else {
             $conf = false;
             $tried = false;
         }
 
         foreach ($avail as $migration) {
-
             // note the initial version before doing the actual update
             if (is_array($conf)) {
                 $from = $conf['Configuration']['value'];
-            }
-            else {
+            } else {
                 $from = '---';
             }
 
@@ -213,8 +216,7 @@ class DbMigration {
                     // prevent endless looping on unrecoverable error
                     $conf['Configuration']['value'] = 'Cannot Read File ' . $migration;
                     $this->doSaveConf($conf);
-                }
-                else {
+                } else {
                     $this->logDbMigrationsFailure(
                         '---',
                         $migration
@@ -267,8 +269,7 @@ class DbMigration {
                     $this->toStdErr('DB update error');
                     return -1;
                 }
-            }
-            else {
+            } else {
                 $this->logDbMigrationsFailure($from, $migration);
 
                 // inform user

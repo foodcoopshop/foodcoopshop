@@ -37,7 +37,7 @@ class CartsControllerTest extends AppCakeTestCase
     public $Order;
 
     public $StockAvailable;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -99,52 +99,52 @@ class CartsControllerTest extends AppCakeTestCase
                 'Product.id_product' => $this->productId1
             )
         ));
-        
+
         $this->browser->doFoodCoopShopLogin();
-        
+
         /**
          * START add product
          */
         $amount1 = 2;
         $this->addProduct($this->productId1, $amount1);
         $this->assertJsonOk();
-        
+
         // check if product was placed in cart
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
         $this->assertEquals($this->productId1, $cakeCart['CakeCartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount1, $cakeCart['CakeCartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
-        
+
         // try to add an amount that is not available any more
         $this->addTooManyProducts($this->productId1, 99, $amount1, 'Die gewünschte Anzahl (101) des Produktes "Artischocke" ist leider nicht mehr verfügbar. Verfügbare Menge: 98', 0);
-        
+
         /**
          * START add product with attribute
          */
         $amount2 = 3;
         $this->addProduct($this->productId2, $amount2);
         $this->assertJsonOk();
-        
+
         // check if product was placed in cart
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
         $this->assertEquals($this->productId2, $cakeCart['CakeCartProducts'][1]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cakeCart['CakeCartProducts'][1]['amount'], 'amount not found in cart or amount wrong');
-        
+
         // try to add an amount that is not available any more
         $this->addTooManyProducts($this->productId2, 48, $amount2, 'Die gewünschte Anzahl (51) der Variante "0,5l" des Produktes "Milch" ist leider nicht mehr verfügbar. Verfügbare Menge: 20', 1);
-        
+
         /**
          * START add product with zero tax
          */
         $amount3 = 1;
         $this->addProduct($this->productId3, $amount3);
         $this->assertJsonOk();
-        
+
         // cake cart status check BEFORE finish
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
         $this->assertEquals($cakeCart['CakeCart']['status'], 1, 'cake cart status wrong');
-        
+
         $this->assertEquals($cakeCart['CakeCart']['id_cart'], 1, 'cake cart id wrong');
-        
+
         /**
          * START finish cart
          */
@@ -154,7 +154,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkValidationError();
         $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeProductStatus($this->productId1, APP_ON);
-        
+
         // START test if MANUFACTURER that was deactivated during shopping process
         $manufacturerId = 5;
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
@@ -162,34 +162,34 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkValidationError();
         $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
-        
+
         // START test if stock available for PRODUCT has gone down (eg. by another order)
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Anzahl \(2\) des Produktes (.*) ist leider nicht mehr (.*) Menge: 1/', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
-                                                            
+
         // START test if stock available for ATTRIBUTE has gone down (eg. by another order)
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Anzahl \(3\) der Variante (.*) des Produktes (.*) ist leider nicht mehr (.*) Menge: 1/', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
-                                                            
+
         // FINALLY order can be finished
-        
+
         // firstly do not check legal checkboxes
         $this->finishCart(false, false);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->browser->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
-        
+
         // then check the checkboxes
         $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
-        
+
         $this->checkCartStatusAfterFinish();
-        
+
         /**
          * START check order
          */
@@ -209,28 +209,28 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order['Order']['total_paid_tax_incl'], 6.136364, 'order total_paid_tax_incl not correct');
         $this->assertEquals($order['Order']['general_terms_and_conditions_accepted'], 1, 'order general_terms_and_conditions_accepted not correct');
         $this->assertEquals($order['Order']['cancellation_terms_accepted'], 1, 'order cancellation_terms_accepted not correct');
-        
+
         // check order_details for product1
         $this->checkOrderDetails($order['OrderDetails'][0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.305786, 3.64, 0.17, 0.34, 2);
-        
+
         // check order_details for product2 (third! index)
         $this->checkOrderDetails($order['OrderDetails'][2], 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.636365, 1.86, 0.07, 0.21, 3);
-        
+
         // check order_details for product3 (second! index)
         $this->checkOrderDetails($order['OrderDetails'][1], 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.636364, 0.000000, 0.000000, 0);
-        
+
         $this->checkStockAvailable($this->productId1, 96);
         $this->checkStockAvailable($this->productId2, 17);
         $this->checkStockAvailable($this->productId3, 77);
-        
+
         // check new (empty) cart
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
         $this->assertEquals($cakeCart['CakeCart']['id_cart'], 2, 'cake cart id wrong');
         $this->assertEquals(array(), $cakeCart['CakeCartProducts'], 'cake cart products not empty');
-        
+
         $this->browser->doFoodCoopShopLogout();
     }
-    
+
     public function testShopOrder()
     {
         $this->browser->doFoodCoopShopLogin();
@@ -253,9 +253,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
         $this->assertTrue(is_int($orderId), 'order not finished correctly');
-        
+
         $this->checkCartStatusAfterFinish();
-        
+
         // only one order with the cake cart id should have been created
         $orders = $this->Order->find('all', array(
             'conditions' => array(
@@ -263,7 +263,7 @@ class CartsControllerTest extends AppCakeTestCase
             )
         ));
         $this->assertEquals(1, count($orders), 'more than one order inserted');
-        
+
         foreach ($orders[0]['OrderDetails'] as $orderDetail) {
             $this->assertFalse($orderDetail['product_quantity'] == 0, 'product quantity must not be 0!');
         }
@@ -313,7 +313,7 @@ class CartsControllerTest extends AppCakeTestCase
     private function checkStockAvailable($productId, $result)
     {
         $ids = $this->Product->getProductIdAndAttributeId($productId);
-        
+
         // get changed product
         $stockAvailable = $this->StockAvailable->find('first', array(
             'conditions' => array(
@@ -321,14 +321,14 @@ class CartsControllerTest extends AppCakeTestCase
                 'StockAvailable.id_product_attribute' => $ids['attributeId']
             )
         ));
-        
+
         // stock available check of changed product
         $this->assertEquals($stockAvailable['StockAvailable']['quantity'], $result, 'stockavailable quantity wrong');
     }
 
     private function checkOrderDetails($orderDetail, $name, $quantity, $productAttributeId, $deposit, $productPrice, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
     {
-        
+
         // check order_details
         $this->assertEquals($orderDetail['product_name'], $name, '%s order_detail product name was not correct');
         $this->assertEquals($orderDetail['product_quantity'], $quantity, 'order_detail quantity was not correct');
@@ -338,7 +338,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail['total_price_tax_excl'], $totalPriceTaxExcl, 'order_detail total_price_tax_excl not correct');
         $this->assertEquals($orderDetail['total_price_tax_incl'], $totalPriceTaxIncl, 'order_detail total_price_tax_incl not correct');
         $this->assertEquals($orderDetail['id_tax'], $taxId, 'order_detail id_tax not correct');
-        
+
         // check order_details_tax
         $this->assertEquals($orderDetail['OrderDetailTax']['unit_amount'], $taxUnitAmount, 'order_detail tax unit amount not correct');
         $this->assertEquals($orderDetail['OrderDetailTax']['total_amount'], $taxTotalAmount, 'order_detail tax total amount not correct');
@@ -346,8 +346,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     /**
      *
-     * @param int $productId            
-     * @param int $amount            
+     * @param int $productId
+     * @param int $amount
      * @return json string
      */
     private function changeProductStatus($productId, $status)
@@ -362,7 +362,7 @@ class CartsControllerTest extends AppCakeTestCase
         return $this->browser->getJsonDecodedContent();
     }
 
-    private function finishCart($general_terms_and_conditions_accepted=true, $cancellation_terms_accepted=true)
+    private function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true)
     {
         $this->browser->post(
             $this->Slug->getCartFinish(),
@@ -376,11 +376,11 @@ class CartsControllerTest extends AppCakeTestCase
             )
         );
     }
-    
+
     /**
      *
-     * @param int $productId            
-     * @param int $amount            
+     * @param int $productId
+     * @param int $amount
      * @return json string
      */
     private function addProduct($productId, $amount)
@@ -396,7 +396,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     /**
      *
-     * @param int $productId            
+     * @param int $productId
      * @return json string
      */
     private function removeProduct($productId)
@@ -409,5 +409,3 @@ class CartsControllerTest extends AppCakeTestCase
         return $this->browser->getJsonDecodedContent();
     }
 }
-
-?>

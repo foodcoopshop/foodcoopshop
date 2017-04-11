@@ -15,28 +15,28 @@
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-	
-		<?php echo $this->element('email/greeting', array('data' => $customer)); ?>
-		
-		<tr>
-		<td>
+    
+        <?php echo $this->element('email/greeting', array('data' => $customer)); ?>
+        
+        <tr>
+        <td>
 
-			<p><?php echo $lastOrderDayAsString; ?> ist schon wieder der letzte Bestelltag. Bis <?php echo $lastOrderDayAsString; ?> Mitternacht hast
-				du noch Zeit.</p>
+            <p><?php echo $lastOrderDayAsString; ?> ist schon wieder der letzte Bestelltag. Bis <?php echo $lastOrderDayAsString; ?> Mitternacht hast
+                du noch Zeit.</p>
 
-			<p>
-				Hier geht's zur Homepage:<br /> <a
-					href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a>
-			</p>
+            <p>
+                Hier geht's zur Homepage:<br /> <a
+                    href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a>
+            </p>
 
-			<p>
-				Und hier kannst du diese E-Mail abbestellen:<br /> <a
-					href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
-			</p>
+            <p>
+                Und hier kannst du diese E-Mail abbestellen:<br /> <a
+                    href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+            </p>
 
-		</td>
+        </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

@@ -26,13 +26,13 @@ class CheckCreditBalanceShell extends AppShell
     public function main()
     {
         parent::main();
-        
+
         $this->initSimpleBrowser(); // for loggedUserId
-        
+
         $this->startTimeLogging();
-        
+
         App::uses('AppEmail', 'Lib');
-        
+
         $this->Customer->dropManufacturersInNextFind();
         $this->Customer->recursive = -1;
         $customers = $this->Customer->find('all', array(
@@ -43,15 +43,14 @@ class CheckCreditBalanceShell extends AppShell
                 'Customer.name' => 'ASC'
             )
         ));
-        
+
         $i = 0;
         $outString = '';
         $totalOrderSum = 0;
-        
+
         foreach ($customers as $customer) {
-            
             $delta = $this->Customer->getCreditBalance($customer['Customer']['id_customer']);
-            
+
             if ($delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
@@ -65,20 +64,19 @@ class CheckCreditBalanceShell extends AppShell
                     ->viewVars(array(
                     'customer' => $customer,
                     'delta' => $delta
-                ))
+                    ))
                     ->send();
             }
         }
-        
+
         $outString .= 'Summe: ' . Configure::read('htmlHelper')->formatAsEuro($deltaSum * - 1) . '<br />';
         $outString .= 'Verschickte E-Mails: ' . $i;
-        
+
         $this->stopTimeLogging();
-        
+
         $this->CakeActionLog->customSave('cronjob_check_credit_balance', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
-        
+
         $this->out($outString);
         $this->out($this->getRuntime());
     }
 }
-?>

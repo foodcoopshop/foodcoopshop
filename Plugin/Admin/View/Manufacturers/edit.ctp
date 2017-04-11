@@ -26,21 +26,21 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 ?>
 
 <div class="filter-container">
-	<h1><?php echo $title_for_layout; ?></h1>
-	<div class="right">
-		<a href="javascript:void(0);" class="btn btn-success submit"><i
-			class="fa fa-check"></i> Speichern</a>
+    <h1><?php echo $title_for_layout; ?></h1>
+    <div class="right">
+        <a href="javascript:void(0);" class="btn btn-success submit"><i
+            class="fa fa-check"></i> Speichern</a>
         <?php if ($this->here != $this->Slug->getManufacturerProfile()) { ?>
-    		<a href="javascript:void(0);" class="btn btn-default cancel"><i
-			class="fa fa-remove"></i> Abbrechen</a>
-    	<?php } ?>
+            <a href="javascript:void(0);" class="btn btn-default cancel"><i
+            class="fa fa-remove"></i> Abbrechen</a>
+        <?php } ?>
     </div>
 </div>
 
 <div id="help-container">
-	<ul>
-		<li>Auf dieser Seite kannst du die Hersteller-Daten ändern.</li>
-	</ul>
+    <ul>
+        <li>Auf dieser Seite kannst du die Hersteller-Daten ändern.</li>
+    </ul>
 </div>
 
 <div class="sc"></div>
@@ -234,6 +234,5 @@ echo $this->element('imageUploadForm', array(
     'action' => '/admin/tools/doTmpImageUpload/',
     'imageExists' => $imageExists,
     'existingImageSrc' => $imageSrc
-)
-);
+));
 ?>

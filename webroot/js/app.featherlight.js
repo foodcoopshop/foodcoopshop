@@ -13,21 +13,22 @@
  */
 foodcoopshop.AppFeatherlight = {
 
-    initLightbox: function(configuration) {
+    initLightbox: function (configuration) {
 
         var loading = '<i class="fa fa-spinner fa-spin fa-3x"></i>';
 
         // show loader currently only works for shop order iframe
-        $.featherlight.showLoader = function() {
+        $.featherlight.showLoader = function () {
             $('.featherlight').removeClass('featherlight-iframe');
             $('.featherlight').addClass('featherlight-loading');
             $('.featherlight .message-container').hide();
             $('.featherlight iframe').removeClass('featherlight-inner').hide();
             $('.featherlight-close-icon').after(
-                '<div class="featherlight-inner">' + loading + '</div>');
+                '<div class="featherlight-inner">' + loading + '</div>'
+            );
         };
 
-        $.featherlight.hideLoader = function() {
+        $.featherlight.hideLoader = function () {
             $('.featherlight').removeClass('featherlight-loading');
             $('.featherlight').addClass('featherlight-iframe');
             $('.featherlight .message-container').show();
@@ -37,34 +38,36 @@ foodcoopshop.AppFeatherlight = {
 
         configuration = $
             .extend(
-                configuration, {
+                configuration,
+                {
                     openSpeed: 0,
                     loading: loading,
                     closeIcon: '<a href="javascript:void(0)" class="btn btn-default btn-close"><i class="fa fa-times-circle fa-2x"></i></a>'
-                });
+                }
+            );
 
         return configuration;
 
     },
 
-    initLightboxForHref: function(container) {
-    	  var configuration = this.initLightbox({
-    		  afterContent : function() {
-    			  $('.featherlight-inner').addClass('href');
-    			  foodcoopshop.AppFeatherlight.setMaxHeightInner();
-    		  }
-    	  });
+    initLightboxForHref: function (container) {
+          var configuration = this.initLightbox({
+                afterContent : function () {
+                    $('.featherlight-inner').addClass('href');
+                    foodcoopshop.AppFeatherlight.setMaxHeightInner();
+                }
+            });
           $(container).featherlight(configuration);
     },
-    
-    initLightboxForImages: function(container) {
+
+    initLightboxForImages: function (container) {
 
         var configuration = this.initLightbox({
             type: 'image',
-            onResize: function() {
+            onResize: function () {
                 var content = $('.featherlight-content');
                 content.css('max-height', $(window).height() - 20);
-                var img = content.find('img'); 
+                var img = content.find('img');
                 img.css('height', content.height());
                 content.css('width', img.width() + 10);
             }
@@ -73,20 +76,24 @@ foodcoopshop.AppFeatherlight = {
         $(container).featherlight(configuration);
 
     },
-    
-    setMaxHeightInner : function() {
-    	$('.featherlight-inner').css('max-height', $('.featherlight-content').height());
+
+    setMaxHeightInner : function () {
+        $('.featherlight-inner').css('max-height', $('.featherlight-content').height());
     },
 
-    initLightboxForForms: function(onSave, additionalAfterOpen,
-        lightboxCloseMethod, formHtml) {
+    initLightboxForForms: function (
+        onSave,
+        additionalAfterOpen,
+        lightboxCloseMethod,
+        formHtml
+) {
 
         return this
             .initLightbox({
 
                 html: formHtml,
 
-                afterContent: function() {
+                afterContent: function () {
 
                     $('.featherlight-content').find('input, textarea')
                         .first().focus();
@@ -104,51 +111,54 @@ foodcoopshop.AppFeatherlight = {
 
                     placeholder.find('.btn.save').on(
                         'click',
-                        function() {
+                        function () {
                             foodcoopshop.Helper.addSpinnerToButton(
-                                $(this), 'fa-check');
+                                $(this),
+                                'fa-check'
+                            );
                             foodcoopshop.Helper.disableButton($(this));
                             onSave();
-                        });
+                        }
+                    );
 
-                    placeholder.find('.btn.cancel').on('click', function() {
+                    placeholder.find('.btn.cancel').on('click', function () {
                         lightboxCloseMethod();
                     });
 
                     if (additionalAfterOpen) {
                         additionalAfterOpen();
                     }
-                    
+
                     foodcoopshop.AppFeatherlight.setMaxHeightInner();
 
                 },
 
-                afterClose: function() {
-                    lightboxCloseMethod();
-                }
+            afterClose: function () {
+                lightboxCloseMethod();
+            }
 
             });
 
     },
 
-    closeLightbox: function() {
+    closeLightbox: function () {
         $.featherlight.close();
     },
 
-    closeAndReloadLightbox: function() {
+    closeAndReloadLightbox: function () {
         var button = $('.featherlight-inner .btn.cancel');
         foodcoopshop.Helper.addSpinnerToButton(button, 'fa-remove');
         foodcoopshop.Helper.disableButton(button);
         document.location.reload();
     },
 
-    enableSaveButton: function() {
+    enableSaveButton: function () {
         var button = $('.featherlight-inner .btn.save');
         foodcoopshop.Helper.removeSpinnerFromButton(button, 'fa-check');
         foodcoopshop.Helper.enableButton(button);
     },
 
-    disableSaveButton: function() {
+    disableSaveButton: function () {
         var button = $('.featherlight-inner .btn.save');
         foodcoopshop.Helper.disableButton(button);
     }

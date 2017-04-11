@@ -57,5 +57,3 @@ class Tax extends AppModel
         return $preparedTaxes;
     }
 }
-
-?>

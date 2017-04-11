@@ -41,7 +41,7 @@ body {
 }
 
 body.cake_errors {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 body.cake_errors #container {
     display: block;
@@ -50,18 +50,18 @@ body.cake_errors #container {
 
 body.cake_errors.dev #content,
 body.cake_errors.dev #inner-content {
-	text-align: left;
+    text-align: left;
 }
 
 body.cake_errors h2 {
-	font-size: 18px;
-	background: #fff;
-	padding: 5px;
-	width: 500px;
-	margin: 0 auto;
-	line-height: 20px;
-	border-radius: 5px;
-} 
+    font-size: 18px;
+    background: #fff;
+    padding: 5px;
+    width: 500px;
+    margin: 0 auto;
+    line-height: 20px;
+    border-radius: 5px;
+}
 
 #login-form {
     margin-top: 20px;
@@ -74,7 +74,7 @@ body.cake_errors h2 {
     color: #fff;
 }
 #login-form h1 {
-	border: none;
+    border: none;
     color: #fff;
     background-color: #719f41;
 }

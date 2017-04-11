@@ -78,18 +78,18 @@ class Page extends AppModel
 
     public function getPageForFrontend($pageId, $appAuth)
     {
-        
+
         $conditions = array(
             'Page.id_cms' => $pageId,
             'Page.active' => APP_ON,
             'PageLang.id_lang' => Configure::read('app.langId'),
             'PageLang.id_shop' => Configure::read('app.shopId')
         );
-        
+
         if (! $appAuth->loggedIn()) {
             $conditions['Page.is_private'] = APP_OFF;
         }
-        
+
         $page = $this->find('first', array(
             'conditions' => $conditions,
             'contain' => array(
@@ -121,7 +121,7 @@ class Page extends AppModel
                 'PageLang.meta_title'
             )
         ));
-        
+
         $preparedPages = array();
         foreach ($pages as $page) {
             $preparedPages[$page['Page']['id_cms']] = $page['PageLang']['meta_title'] . ' - ' . Configure::read('htmlHelper')->getMenuType($page['Page']['menu_type']);
@@ -129,5 +129,3 @@ class Page extends AppModel
         return $preparedPages;
     }
 }
-
-?>

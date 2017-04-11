@@ -24,16 +24,16 @@
     ?>
     
     <div id="help-container">
-		<ul>
+        <ul>
             <?php echo $helpText; ?>
         </ul>
-	</div>    
+    </div>    
     
     <?php /* filter container rendered to show print and help icons */ ?>
     <div class="filter-container">
-		<h1><?php echo $title_for_layout; ?></h1>
-		<div class="right"></div>
-	</div>
+        <h1><?php echo $title_for_layout; ?></h1>
+        <div class="right"></div>
+    </div>
 
 <?php
 
@@ -56,12 +56,12 @@ echo $this->Form->hidden('CakePayment.customerId', array(
 if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
     echo '<p style="margin-top: 10px;">Wenn es sich um eine Rückzahlung handelt,<br />trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast.</p>';
     $i = 0;
-    foreach($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
+    foreach ($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
         echo '<div class="radio-wrapper">';
             $checked = '';
-            if ($i == 0) {
-                $checked = 'checked="checked"';
-            }
+        if ($i == 0) {
+            $checked = 'checked="checked"';
+        }
             echo '<label for="type-'.$paymentTextKey.'">'.$paymentText.'</label><input '.$checked.' id="type-'.$paymentTextKey.'"type="radio" name="type" value="'.$paymentTextKey.'"/>';
         echo '</div>';
         $i++;
@@ -73,13 +73,12 @@ if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
 }
 
 if ($paymentType == 'member_fee') {
-    
     echo '<div class="multiple-checkbox-wrapper">';
-    
+
     echo '<label for="CakePaymentMonthsRange">Bitte wähle die Monate aus, für die deine Zahlung gedacht ist.</label>';
-    
+
     $currentYear = date('Y');
-    
+
     echo '<div style="width: 160px;float: left;opacity: 0.7">';
     $lastYear = $currentYear - 1;
     $monthsRange = $this->Time->getAllMonthsForYear($lastYear);
@@ -90,7 +89,7 @@ if ($paymentType == 'member_fee') {
         'type' => 'select'
     ));
     echo '</div>';
-    
+
     echo '<div style="width: 160px;float: left;">';
     $monthsRange = $this->Time->getAllMonthsForYear($currentYear);
     echo $this->Form->input('CakePayment.months_range_' . $currentYear, array(
@@ -100,7 +99,7 @@ if ($paymentType == 'member_fee') {
         'type' => 'select'
     ));
     echo '</div>';
-    
+
     echo '<div style="width: 160px;float: left;opacity: 0.7">';
     $nextYear = $currentYear + 1;
     $monthsRange = $this->Time->getAllMonthsForYear($nextYear);
@@ -111,7 +110,7 @@ if ($paymentType == 'member_fee') {
         'type' => 'select'
     ));
     echo '</div>';
-    
+
     echo '</div>';
 }
 

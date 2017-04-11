@@ -14,4 +14,3 @@
  */
 
 $this->Html->script($url, array('inline' => false));
-?>

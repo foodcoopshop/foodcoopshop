@@ -60,16 +60,15 @@ class BowerPostInstallShell extends AppShell
     private function copyAdaptedKcfinderFiles()
     {
         $kcfinderConfigDir = APP . 'Config' . DS . 'kcfinder' . DS;
-        
+
         $adaptedFiles = array(
             $kcfinderConfigDir . 'conf' . DS . 'config.php',
             $kcfinderConfigDir . 'core' . DS . 'bootstrap.php'
         );
-        
+
         foreach ($adaptedFiles as $file) {
             copy($file, preg_replace('/Config/', 'webroot' . DS . 'js' . DS . 'vendor', $file));
             $this->out('KCFinder config file ' . $file . ' copied successfully.');
         }
     }
 }
-?>

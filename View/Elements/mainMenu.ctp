@@ -35,5 +35,3 @@ $menu[] = array(
 $menu = array_merge($menu, $this->Menu->buildPageMenu($pagesForHeader));
 
 echo $this->Menu->render($menu, array('id' => 'main-menu', 'class' => 'horizontal menu'));
-    
-?>

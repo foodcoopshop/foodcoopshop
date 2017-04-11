@@ -14,4 +14,3 @@
  */
 
 $this->MyHtml->scriptBlock($script, array('inline'=>false, 'safe' => false));
-?>

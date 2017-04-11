@@ -13,8 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (! $appAuth->loggedIn() || $this->action == 'iframeStartPage')
+if (! $appAuth->loggedIn() || $this->action == 'iframeStartPage') {
     return;
+}
 ?>
 
 <?php
@@ -138,7 +139,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'fa-icon' => 'fa-fw fa-tags'
         )
     );
-    
+
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = array(
             'slug' => $this->Slug->getDepositList(),
@@ -148,9 +149,9 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             )
         );
     }
-    
+
     $menu[] = $manufacturerMenu;
-    
+
     $menu[] = array(
         'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => 'Mitglieder',
@@ -168,7 +169,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
     $menu[] = $customerProfileMenuElement;
     $menu[] = $blogPostsMenuElement;
-    
+
     $homepageAdministrationElement['children'][] = array(
         'slug' => $this->Slug->getCategoriesList(),
         'name' => 'Kategorien',
@@ -190,7 +191,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'fa-icon' => 'fa-fw fa-image'
         )
     );
-    
+
     if ($appAuth->isSuperadmin()) {
         $homepageAdministrationElement['children'][] = array(
             'slug' => $this->Slug->getTaxesList(),
@@ -219,7 +220,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             )
         );
     }
-    
+
     $menu[] = $homepageAdministrationElement;
 }
 
@@ -267,5 +268,5 @@ echo $this->Menu->render($menu, array(
     'class' => 'vertical menu'
 ));
 
-?>
-    
+
+

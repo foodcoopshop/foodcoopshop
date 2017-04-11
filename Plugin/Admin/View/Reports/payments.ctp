@@ -28,37 +28,37 @@ if ($paymentType == 'product') {
 ?>
 
 <div class="filter-container">
-	<h1><?php echo $title_for_layout; ?></h1>
-	<?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
+    <h1><?php echo $title_for_layout; ?></h1>
+    <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
     <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
     <button id="filter" class="btn btn-success">
-		<i class="fa fa-search"></i> Filtern
-	</button>
-	<div class="right"></div>
+        <i class="fa fa-search"></i> Filtern
+    </button>
+    <div class="right"></div>
 </div>
 
 <div id="help-container">
-	<ul>
-		<li>
-			Hier findest du die Auswertung für: <?php echo $this->Html->getPaymentText($paymentType); ?>
-		</li>
-		<li>Gelöschte Einzahlungen werden ausgegraut angeführt.</li>
-		<li>Falls die Zahlung von einem anderen Mitglied eingetragen wurde, wird seit v1.3 wird dieses Mitglied in der Spalte "Eingetragen von" angezeigt.</li>
-	</ul>
+    <ul>
+        <li>
+            Hier findest du die Auswertung für: <?php echo $this->Html->getPaymentText($paymentType); ?>
+        </li>
+        <li>Gelöschte Einzahlungen werden ausgegraut angeführt.</li>
+        <li>Falls die Zahlung von einem anderen Mitglied eingetragen wurde, wird seit v1.3 wird dieses Mitglied in der Spalte "Eingetragen von" angezeigt.</li>
+    </ul>
 </div>
 
 <ul class="nav nav-tabs">
-	<?php
-foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
-    $btnClass = '';
-    if ($pt == $this->params['pass'][0]) {
-        $btnClass = 'active';
+    <?php
+    foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
+        $btnClass = '';
+        if ($pt == $this->params['pass'][0]) {
+            $btnClass = 'active';
+        }
+        // show deposit report also for cash configuration
+        if ($this->Html->paymentIsCashless() || in_array($pt, array('deposit', 'member_fee', 'member_fee_flexible'))) {
+            echo '<li class="' . $btnClass . '"><a href="' . $this->Slug->getReport($pt) . '/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '">' . $paymentText . '</a></li>';
+        }
     }
-    // show deposit report also for cash configuration
-    if ($this->Html->paymentIsCashless() || in_array($pt, array('deposit', 'member_fee', 'member_fee_flexible'))) {
-        echo '<li class="' . $btnClass . '"><a href="' . $this->Slug->getReport($pt) . '/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '">' . $paymentText . '</a></li>';
-    }
-}
 ?>
 </ul>
 
@@ -85,7 +85,6 @@ $i = 0;
 $paymentSum = 0;
 
 foreach ($payments as $payment) {
-
     $rowClass = '';
     $additionalText = '';
     if ($payment['CakePayment']['status'] == APP_DEL) {
@@ -100,52 +99,56 @@ foreach ($payments as $payment) {
 
     if ($paymentType == 'product') {
         echo '<td>';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon(
+                $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                array(
                 'title' => 'Bearbeiten'
-            ),
-            $this->Slug->getPaymentEdit($payment['CakePayment']['id']));
+                ),
+                $this->Slug->getPaymentEdit($payment['CakePayment']['id'])
+            );
         echo '</td>';
         echo '<td>';
-            switch($payment['CakePayment']['approval']) {
-                case -1;
-                    echo $this->Html->image(
-                        $this->Html->getFamFamFamPath('delete.png'),
-                        array(
-                            'class' => 'payment-approval'
-                        )
-                    );
-                    break;
-                case 0;
-                    break;
-                case 1;
-                    echo $this->Html->image(
-                        $this->Html->getFamFamFamPath('accept.png'),
-                        array(
-                            'class' => 'payment-approval'
-                        )
-                    );
-                    break;
-            }
-            if ($payment['CakePayment']['approval_comment'] != '') {
-                echo '<span class="payment-approval-comment-wrapper">';
-                echo $this->Html->getJqueryUiIcon(
-                    $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+        switch ($payment['CakePayment']['approval']) {
+            case -1;
+                echo $this->Html->image(
+                    $this->Html->getFamFamFamPath('delete.png'),
                     array(
-                        'class' => 'payment-approval-comment',
-                        'title' => $payment['CakePayment']['approval_comment']
-                    ),
-                    'javascript:void(0);');
-                    echo '</span>';
-            }
+                        'class' => 'payment-approval'
+                    )
+                );
+                break;
+            case 0;
+                break;
+            case 1;
+                echo $this->Html->image(
+                    $this->Html->getFamFamFamPath('accept.png'),
+                    array(
+                        'class' => 'payment-approval'
+                    )
+                );
+                break;
+        }
+        if ($payment['CakePayment']['approval_comment'] != '') {
+            echo '<span class="payment-approval-comment-wrapper">';
+            echo $this->Html->getJqueryUiIcon(
+                $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+                array(
+                'class' => 'payment-approval-comment',
+                'title' => $payment['CakePayment']['approval_comment']
+                ),
+                'javascript:void(0);'
+            );
+            echo '</span>';
+        }
         echo '</td>';
     }
 
     echo '<td>';
-        if (!empty($payment['Manufacturer']['name'])) {
-            echo $payment['Manufacturer']['name'];
-        } else {
-            echo $payment['Customer']['name'];
-        }
+    if (!empty($payment['Manufacturer']['name'])) {
+        echo $payment['Manufacturer']['name'];
+    } else {
+        echo $payment['Customer']['name'];
+    }
         echo $additionalText;
     echo '</td>';
 
@@ -154,9 +157,9 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     echo '<td>';
-        if ($payment['CreatedBy']['id_customer'] != $payment['CakePayment']['id_customer']) {
-            echo $payment['CreatedBy']['name'];
-        }
+    if ($payment['CreatedBy']['id_customer'] != $payment['CakePayment']['id_customer']) {
+        echo $payment['CreatedBy']['name'];
+    }
     echo '</td>';
 
     echo '<td style="text-align:right;">';
@@ -165,7 +168,7 @@ foreach ($payments as $payment) {
 
     if ($showTextColumn) {
         echo '<td>';
-        switch($paymentType) {
+        switch ($paymentType) {
             case 'member_fee':
                 echo $this->Html->getMemberFeeTextForFrontend($payment['CakePayment']['text']);
                 break;

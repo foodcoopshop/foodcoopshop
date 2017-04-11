@@ -22,7 +22,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 {
 
     public $Manufacturer;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -32,7 +32,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
     public function testAddManufacturer()
     {
         $this->browser->doFoodCoopShopLogin();
-        
+
         $manufacturerData = array(
             'Manufacturer' => array(
                 'name' => 'Test Manufacturer',
@@ -68,7 +68,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             'referer' => ''
         );
         $response = $this->addManufacturer($manufacturerData);
-        
+
         // provoke errors
         $this->assertRegExpWithUnquotedString('Beim Speichern sind 5 Fehler aufgetreten!', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen IBAN ein.', $response);
@@ -76,7 +76,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib den Vornamen des Rechnungsempfängers an.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib den Nachnamen des Rechnungsempfängers an.', $response);
-        
+
         // set proper data and post again
         $manufacturerData['Manufacturer']['iban'] = 'AT193357281080332578';
         $manufacturerData['Manufacturer']['bic'] = 'BFKKAT2K';
@@ -84,79 +84,79 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $manufacturerData['Address']['firstname'] = 'Test';
         $manufacturerData['Address']['lastname'] = 'Manufacturer';
         $manufacturerData['Manufacturer']['homepage'] = 'www.foodcoopshop.com';
-        
+
         $response = $this->addManufacturer($manufacturerData);
-        
+
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $response);
-        
+
         // get inserted manufacturer from database and check detail page for patterns
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.name' => $manufacturerData['Manufacturer']['name']
             )
         ));
-        
+
         $response = $this->browser->get($this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']));
         $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer['Manufacturer']['name'], $response);
-        
+
         $this->doTestCustomerRecord($manufacturer);
-        
+
         $this->browser->doFoodCoopShopLogout();
     }
 
     public function testEditManufacturer()
     {
         $this->browser->doFoodCoopShopLogin();
-        
+
         $manufacturerId = 4;
         $response = $this->getEditManufacturer($manufacturerId);
-        
+
         $this->browser->setFieldById('ManufacturerName', 'Huhuu');
-        
+
         // test with valid customer email address must fail
         $this->browser->setFieldById('AddressEmail', 'foodcoopshop-demo-mitglied@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
-        
+
         // test with valid manufacturer email address must fail
         $this->browser->setFieldById('AddressEmail', 'fcs-demo-gemuese-hersteller@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
-        
+
         // test with valid email address
         $this->browser->setFieldById('AddressEmail', 'new-email-address@mailinator.com');
         $this->browser->submitFormById('ManufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $this->browser->getContent());
-        
+
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
             )
         ));
         $this->doTestCustomerRecord($manufacturer);
-        
+
         $this->browser->doFoodCoopShopLogout();
     }
 
     public function testAutomaticAddingOfCustomerRecord()
     {
         $this->browser->doFoodCoopShopLogin();
-        
+
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)
         $manufacturerId = 16;
         $response = $this->getEditManufacturer($manufacturerId);
-        
+
         // saving customer must add a customer record
         $this->browser->submitFormById('ManufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $this->browser->getContent());
-        
+
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
             )
         ));
         $this->doTestCustomerRecord($manufacturer);
-        
+
         $this->browser->doFoodCoopShopLogout();
     }
 
@@ -170,7 +170,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     /**
      *
-     * @param array $data            
+     * @param array $data
      * @return string
      */
     private function getEditManufacturer($manufacturerId)
@@ -181,7 +181,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     /**
      *
-     * @param array $data            
+     * @param array $data
      * @return string
      */
     private function addManufacturer($data)
@@ -192,5 +192,3 @@ class ManufacturersControllerTest extends AppCakeTestCase
         return $this->browser->getContent();
     }
 }
-
-?>

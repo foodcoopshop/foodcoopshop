@@ -21,8 +21,8 @@ body {
 }
 
 #container {
-	position: relative;
-	min-width: 1141px; /* 990px + navi width 150 + border */
+    position: relative;
+    min-width: 1141px; /* 990px + navi width 150 + border */
     display: none;
 }
 
@@ -30,19 +30,19 @@ body.customers.login #content {
     width: 100%;
 }
 body.pages.home .filter-container {
-	display: none;
+    display: none;
 }
 #home {
-	width: 100%;
-	text-align: center;
+    width: 100%;
+    text-align: center;
 }
 #home h1 {
-	color: #333;
-	padding: 10px;
-	border-radius: 10px;
-	background-color: #fff;
-	width: 260px;
-	margin: 0 auto;
+    color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 260px;
+    margin: 0 auto;
 }
 #flashMessage {
     left: 470px;
@@ -64,7 +64,7 @@ body.customers.profile #flashMessage,
 body.customers.change_password #flashMessage,
 body.taxes.add #flashMessage,
 body.taxes.edit #flashMessage {
-	top: 3px;
+    top: 3px;
 }
 #content {
     width: 990px;
@@ -85,7 +85,7 @@ body.taxes.edit #flashMessage {
     border-bottom-right-radius: 15px;
 }
 body.pages.home #content {
-	background: transparent;
+    background: transparent;
     background-color: rgba(255,255,255,0.15);
     margin-top: 0;
     border-left-color: transparent;
@@ -106,7 +106,7 @@ body.pages.display #menu a.help {
     margin-top: 1px;
 }
 button#filter {
-	margin-left: 2px;
+    margin-left: 2px;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover {
@@ -116,11 +116,11 @@ button#filter {
     width: 193px ! important;
 }
 .bootstrap-select .btn-default {
-	padding-top: 4px;
-	padding-bottom: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 form.fcs-form .bootstrap-select {
-	width: 250px ! important;
+    width: 250px ! important;
 }
 .bootstrap-select .dropdown-menu {
     overflow-x: hidden;
@@ -140,7 +140,7 @@ form.fcs-form .bootstrap-select {
     min-height: 500px;
 }
 .vertical.menu > li a img.logo {
-	padding: 0;
+    padding: 0;
     border: none;
 }
 .vertical.menu li.has-icon a,
@@ -148,15 +148,15 @@ form.fcs-form .bootstrap-select {
     padding-left: 26px;
 }
 .vertical.menu li.has-children ul a {
-	padding-left: 33px;
+    padding-left: 33px;
 }
 .vertical.menu li.has-children ul a i.fa {
-	font-size: 13px;
-	left: 13px;
-	top: 5px;
+    font-size: 13px;
+    left: 13px;
+    top: 5px;
 }
 .vertical.menu a {
-	border-right: none;
+    border-right: none;
 }
 
 #logo {
@@ -194,18 +194,18 @@ span.product-quantity-for-dialog {
     padding: 5px;
     background: #efefef;
     width: 990px; /* be aware of table border if scrolled */
-	z-index: 100;
-	border-bottom: 1px solid #dfdfdf;
+    z-index: 100;
+    border-bottom: 1px solid #dfdfdf;
 }
 .filter-container .right {
     float: right;
     margin-top: 4px;
 }
 .filter-container .right .icons {
-	float:left;
+    float:left;
 }
 .filter-container .right .icons a:not(:first-child) {
-	margin-left: 3px;
+    margin-left: 3px;
 }
 .filter-container .right a.submit,
 .filter-container .right a.cancel {
@@ -213,27 +213,27 @@ span.product-quantity-for-dialog {
    margin-right: 5px;
 }
 #content .form-buttons {
-	clear: both;
-	float: right;
-	margin-right: 10px;
-	margin-bottom: 10px;
+    clear: both;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 #content .form-buttons a {
-	float: left;
-	margin-left: 5px;
+    float: left;
+    margin-left: 5px;
 }
 
 .filter-container h1 {
-	float: left;
-	margin-top: 5px;
-	margin-bottom: 0;
-	margin-right: 5px;
-	font-size: 23px;
-	letter-spacing: 2px;
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-right: 5px;
+    font-size: 23px;
+    letter-spacing: 2px;
 }
 .filter-container input[type="text"] {
-	padding: 5px 6px;
-	border-radius: 4px;
+    padding: 5px 6px;
+    border-radius: 4px;
 }
 td.right,
 th.right {
@@ -262,7 +262,7 @@ td span.description-for-dialog {
     text-align: center;
 }
 #customers-list .bootstrap-select {
-	width: 100px ! important;
+    width: 100px ! important;
 }
 input.datepicker {
     width: 110px;
@@ -289,7 +289,7 @@ input.datepicker {
   margin-top: 10px;
 }
 #help-container li {
-	list-style-type: disc;
+    list-style-type: disc;
 }
 .warning {
     color: red;
@@ -301,7 +301,7 @@ input.datepicker {
 .last-n-days-dropdown,
 .categories-checkboxes,
 .tax-dropdown-wrapper {
-	display: none;
+    display: none;
 }
 .tax-dropdown-wrapper {
     width: 240px;
@@ -320,7 +320,7 @@ div.cke {
 #cke_dialogCancellationReason,
 #cke_dialogEditPriceReason,
 #cke_dialogEditQuantityReason {
-	float: left;
+    float: left;
 }
 #product-name-edit-form div.textarea-wrapper {
     float: left;
@@ -331,15 +331,15 @@ div.cke {
     margin-right: 0;
 }
 #order-detail-product-quantity-edit-form div.textarea-wrapper {
-	float: left;
-	margin-top: 10px;
+    float: left;
+    margin-top: 10px;
 }
 .product-attributes-dropdown {
     width: 400px;
 }
 body.products.index .unity-for-dialog {
-	font-size: 11px;
-	font-style: italic;
+    font-size: 11px;
+    font-style: italic;
 }
 #actionLogs div.changed {
     background: lightgray;
@@ -364,12 +364,12 @@ body.products.index .unity-for-dialog {
     line-height: 31px;
 }
 #manufacturer-profile .input.textarea label {
-	margin-right: 10px;
-	width: 100%;
+    margin-right: 10px;
+    width: 100%;
 }
 
 #manufacturer-profile label[for="ManufacturerLangDescription"] {
-	float: none;
+    float: none;
 }
 
 #manufacturer-profile .input {
@@ -388,7 +388,7 @@ form div.error-message {
     margin-left: 200px;
 }
 .featherlight-content {
-	min-height: 135px;
+    min-height: 135px;
 }
 .featherlight-content button.cancel {
     float: right;
@@ -402,27 +402,27 @@ form div.error-message {
     padding: 5px;
 }
 .featherlight-inner {
-	min-width: 350px ! important;
-	overflow-y: auto ! important;
+    min-width: 350px ! important;
+    overflow-y: auto ! important;
 }
 .categories-checkboxes.featherlight-inner,
 .tax-dropdown-wrapper.featherlight-inner,
 .add-payment-form.featherlight-inner {
-	padding: 10px;
-	width: 100%;
+    padding: 10px;
+    width: 100%;
 }
 .tax-dropdown-wrapper.featherlight-inner label {
-	width: 100%;
+    width: 100%;
 }
 .categories-checkboxes.featherlight-inner .input.select,
 .tax-dropdown-wrapper.featherlight-inner .input.select {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .categories-checkboxes.featherlight-inner .input.select .checkbox label {
     padding-left: 30px;
 }
 .featherlight-inner div.form-buttons {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 .overlay-info {
     color: red;
@@ -441,7 +441,7 @@ form div.error-message {
 }
 body.payments.product #add-payment-button-wrapper,
 body.payments.member_fee #add-payment-button-wrapper {
-	margin-top: 8px;
+    margin-top: 8px;
 }
 #payments-list #add-payment-button-wrapper .jquery-ui-icon a.icon-with-text {
     font-weight: bold;
@@ -451,21 +451,21 @@ body.payments.member_fee #add-payment-button-wrapper {
     margin-right: 3px;
 }
 body.orders.index #add-order-button-wrapper div.select {
-	display: none;
+    display: none;
 }
 .add-payment-form {
     display: none;
 }
 .add-payment-form .multiple-checkbox-wrapper {
-	margin-bottom: 20px;
-	float: left;
-	width: 480px;
+    margin-bottom: 20px;
+    float: left;
+    width: 480px;
 }
 .add-payment-form .multiple-checkbox-wrapper .input > label {
-	display: none;
+    display: none;
 }
 .add-payment-form .checkbox {
-	margin-bottom: 3px;
+    margin-bottom: 3px;
 }
 .add-payment-form .checkbox label {
     margin-left: 5px;
@@ -477,14 +477,14 @@ body.orders.index #add-order-button-wrapper div.select {
     width: 100%;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
-	width: 185px;
-	float: left;
+    width: 185px;
+    float: left;
     margin-bottom: 10px;
 }
 .featherlight-content .add-payment-form .radio-wrapper label {
-	float: left;
-	width: auto;
-	margin-right: 5px;
+    float: left;
+    width: auto;
+    margin-right: 5px;
 }
 .jquery-ui-icon a.icon-with-text {
     float: left;
@@ -565,11 +565,11 @@ body.payments.my_member_fee #help-container {
 }
 .featherlight-content .mini-upload-form .drop {
     position: relative;
-	min-height: 250px;
-	margin-bottom: 15px;
+    min-height: 250px;
+    margin-bottom: 15px;
 }
 .featherlight-content .mini-upload-form .drop a.upload-button:hover {
-	opacity: 0.8;
+    opacity: 0.8;
 }
 .featherlight-content .mini-upload-form  ul li {
     background: rgba(0,100,0,0.3);
@@ -588,9 +588,9 @@ body.payments.my_member_fee #help-container {
     margin-bottom: 10px;
 }
 .featherlight-content .mini-upload-form p.heading {
-	font-size: 16px;
-	margin-top: -26px;
-	font-weight: bold;
+    font-size: 16px;
+    margin-top: -26px;
+    font-weight: bold;
 }
 .featherlight-content .mini-upload-form .modify-icon {
     position: absolute;
@@ -613,21 +613,21 @@ body.payments.my_member_fee #help-container {
     right: 30px;
 }
 body.manufacturers.index span.email {
-	word-wrap: break-word;
+    word-wrap: break-word;
 }
 body.manufacturers li.ui-state-default a.uploaded,
 body.blog_posts li.ui-state-default a.uploaded,
 body.categories li.ui-state-default a.uploaded {
-	float: left;
-	margin-top: 2px; /* layout fix: top line was not shown */
+    float: left;
+    margin-top: 2px; /* layout fix: top line was not shown */
 }
 body.manufacturers li.ui-state-default a.uploaded img {
     width: 247px;
     height: auto;
 }
 body.blog_posts li.ui-state-default a.uploaded img {
-	width: 245px;
-	height: auto;
+    width: 245px;
+    height: auto;
 }
 body.categories li.ui-state-default a.uploaded img,
 body.sliders li.ui-state-default a.uploaded img {
@@ -639,7 +639,7 @@ body.manufacturers form.mini-upload-form a.img-delete,
 body.blog_posts form.mini-upload-form a.img-delete,
 body.categories form.mini-upload-form a.img-delete,
 body.sliders form.mini-upload-form a.img-delete {
-	display: none;
+    display: none;
 }
 /* END upload */
 
@@ -682,10 +682,10 @@ body.payments .bottom-button-container {
 }
 
 #customer-group-edit-form {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 #dialogOrderDetailProductPricePrice {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .btn:not(.dropdown-toggle):not(.btn-close) {
     padding: 3px 6px;
@@ -693,7 +693,7 @@ body.payments .bottom-button-container {
 }
 
 form.fcs-form {
-	padding: 10px;
+    padding: 10px;
 }
 h2 {
     font-size: 20px;
@@ -702,58 +702,58 @@ h2 {
     padding-bottom: 5px;
 }
 h2 span {
-	font-size: 12px;
-	color: #333;
-	letter-spacing: normal;
+    font-size: 12px;
+    color: #333;
+    letter-spacing: normal;
 }
 .fcs-form h2:not(:nth-of-type(1)) {
-	margin-top: 25px;
+    margin-top: 25px;
 }
 form.fcs-form .input {
-	float: left;
-	clear: both;
-	margin-bottom: 10px;
+    float: left;
+    clear: both;
+    margin-bottom: 10px;
 }
 form.fcs-form label {
-	width: 200px;
-	font-weight: normal ! important;
-	vertical-align: top;
-	line-height: 18px;
-	margin-top: 4px;
-	float: left;
+    width: 200px;
+    font-weight: normal ! important;
+    vertical-align: top;
+    line-height: 18px;
+    margin-top: 4px;
+    float: left;
 }
 form.fcs-form .input.textarea label {
-	float: none;
+    float: none;
 }
 form.fcs-form .input.checkbox label {
     padding-left: 0;
 }
 form.fcs-form input[type="checkbox"] {
-	left: 200px;
+    left: 200px;
 }
 form.fcs-form .input.checkbox span.after {
-	margin-left: 25px;
+    margin-left: 25px;
 }
 body.configurations.index td.first {
-	vertical-align: top;
-	width: 450px;
-	font-weight: bold;
+    vertical-align: top;
+    width: 450px;
+    font-weight: bold;
 }
 body.configurations.index td.first div.small {
-	font-weight: normal;
-	line-height: 15px;
-	float: left;
-	padding-bottom: 4px;
+    font-weight: normal;
+    line-height: 15px;
+    float: left;
+    padding-bottom: 4px;
 }
 body.configurations.edit form.fcs-form label {
-	width: 100%;
-	font-weight: bold ! important;
+    width: 100%;
+    font-weight: bold ! important;
 }
 body.configurations.edit form.fcs-form label .small {
-	font-weight: normal ! important;
+    font-weight: normal ! important;
 }
 body.configurations.edit form div.error-message {
-	margin-left: 0;
+    margin-left: 0;
 }
 form.fcs-form .input.text input,
 form.fcs-form .input.email input,
@@ -770,36 +770,36 @@ form.fcs-form .short.input input {
     margin-right: 5px;
 }
 form.fcs-form .small {
-	line-height: 15px;
-	float: left;
+    line-height: 15px;
+    float: left;
 }
 form.fcs-form .checkbox .small {
-	line-height: 21px;
-	float: left;
+    line-height: 21px;
+    float: left;
 }
 form.fcs-form .input.text .after.small,
 form.fcs-form .input.tel .after.small {
-	float: right;
-	line-height: 28px;
-	margin-left: 5px;
+    float: right;
+    line-height: 28px;
+    margin-left: 5px;
 }
 .bootstrap-select span.filter-option i.fa {
-	position: absolute;
-	right: 25px;
-	top: 9px;
-	font-size: 15px;
+    position: absolute;
+    right: 25px;
+    top: 9px;
+    font-size: 15px;
 }
 .featherlight-content #CakePaymentText {
-	width: 100%;
-	height: 150px;
+    width: 100%;
+    height: 150px;
     margin-bottom: 10px;
 }
 .featherlight-content .toggle-link {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 div.date-field-wrapper {
-	position: relative;
-	display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 body.reports ul.nav-tabs {
     background: #efefef;
@@ -815,13 +815,13 @@ body.reports ul.nav-tabs a:hover {
     background-color: #fff;
 }
 a.btn-arrow {
-	display: inline-block;
-	position: absolute;
-	top: 7px;
+    display: inline-block;
+    position: absolute;
+    top: 7px;
     color: #ccc;
 }
 a.btn-arrow:hover {
-	color: #719f41;
+    color: #719f41;
 }
 a.btn-previous-day {
     left: 138px;
@@ -841,20 +841,20 @@ a.btn-arrow i {
 
 body.customers.index #selectGroupId,
 body.customers.index span.group-for-dialog {
-	display: none;
+    display: none;
 }
 
 body.attributes.index table.list td {
-	padding-top: 3px;
-	vertical-align: top;
+    padding-top: 3px;
+    vertical-align: top;
 }
 body.attributes.index table.list td .toggle-link {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 body.customers.index .customer-details-wrapper,
 body.manufacturers.index .manufacturer-details-wrapper {
-	float: right;
-	margin-left: 5px;
+    float: right;
+    margin-left: 5px;
 }
 body.customers.index .name {
     float: left;
@@ -864,48 +864,48 @@ body.deposits .bottom-button-container {
     width: 500px;
 }
 body.deposits .bottom-button-container {
-	float: left;
-	text-align: right;
+    float: left;
+    text-align: right;
 }
 body.deposits .add-payment-deposit-wrapper {
-	float: left;
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 body.taxes.index table.list,
 body.slider.index table.list {
-	width: 300px;
+    width: 300px;
 }
 
 .accept-updated-terms-of-use-form {
-	width: 800px;
-	margin: 0 auto;
-	margin-top: 20px;
-	float: none;
-	text-align: left;
-	height: 155px;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 20px;
+    float: none;
+    text-align: left;
+    height: 155px;
 }
 body.payments tr.last-row-of-year td {
-	border-top-width: 2px;
-	border-top-color: #719f41;
-	border-top-style: solid;
+    border-top-width: 2px;
+    border-top-color: #719f41;
+    border-top-style: solid;
 }
 body.payments img.payment-approval,
 body.reports.payment img.payment-approval {
-	float: left;
-	margin-top: 2px;
-	margin-right: 2px;
+    float: left;
+    margin-top: 2px;
+    margin-right: 2px;
 }
 body.payments .payment-approval-comment-wrapper,
 body.reports.payment .payment-approval-comment-wrapper {
-	float: left;
-	margin-right: 2px;
+    float: left;
+    margin-right: 2px;
 }
 body.payments.edit .email-template-info {
-	float: left;
+    float: left;
 }
 body.payments .after .jquery-ui-icon {
-	float: left;
-	margin-left: 2px ! important;
+    float: left;
+    margin-left: 2px ! important;
 }

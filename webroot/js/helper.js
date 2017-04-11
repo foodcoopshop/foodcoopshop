@@ -13,7 +13,7 @@
  */
 foodcoopshop.Helper = {
 
-    init: function() {
+    init: function () {
         this.initMenu();
         this.initLogoutButton();
         this.changeOutgoingLinksTargetToBlank();
@@ -24,7 +24,7 @@ foodcoopshop.Helper = {
         }
     },
 
-    initBlogPostCarousel: function() {
+    initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');
         container.addClass('owl-carousel');
@@ -56,7 +56,7 @@ foodcoopshop.Helper = {
         });
     },
 
-    isMobile: function() {
+    isMobile: function () {
         var isMobile = false;
         if ($('div.is-mobile-detector').length == 1) {
             isMobile = true;
@@ -64,17 +64,17 @@ foodcoopshop.Helper = {
         return isMobile;
     },
 
-    initLoginForm: function() {
-        $('#LoginForm button[type="submit"]').on('click', function() {
+    initLoginForm: function () {
+        $('#LoginForm button[type="submit"]').on('click', function () {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in');
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
         });
     },
 
-    initRegistrationForm: function(isPost) {
+    initRegistrationForm: function (isPost) {
 
-        $('#RegistrationForm .btn-success').on('click', function() {
+        $('#RegistrationForm .btn-success').on('click', function () {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-user');
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
@@ -83,7 +83,7 @@ foodcoopshop.Helper = {
         if (isPost) {
             $('#RegistrationForm .detail-form').show();
         } else {
-            $('#RegistrationForm #RegistraionFormEmail').on('focus', function() {
+            $('#RegistrationForm #RegistraionFormEmail').on('focus', function () {
                 $('#RegistrationForm .detail-form').animate({
                     height: 'toggle'
                 }, 500);
@@ -98,7 +98,7 @@ foodcoopshop.Helper = {
     /**
      * http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
      */
-    updateAntiSpamField: function(form) {
+    updateAntiSpamField: function (form) {
 
         if (document.getElementById("antiSpam")) {
             a = document.getElementById("antiSpam");
@@ -109,17 +109,17 @@ foodcoopshop.Helper = {
             }
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             foodcoopshop.Helper.updateAntiSpamField(form);
         }, 1000);
 
     },
 
-    changeOutgoingLinksTargetToBlank: function() {
+    changeOutgoingLinksTargetToBlank: function () {
         $('a[href^="http://"], a[href^="https://"]:not([href^="' + window.location.host + '"])').attr('target', '_blank');
     },
 
-    inIframe: function() {
+    inIframe: function () {
         try {
             return window.self !== window.top;
         } catch (e) {
@@ -127,25 +127,25 @@ foodcoopshop.Helper = {
         }
     },
 
-    selectMainMenu : function(menu, mainMenuTitle, subMenuTitle) {
-        
-    	$(menu + ' > li > a').filter(function() {
+    selectMainMenu : function (menu, mainMenuTitle, subMenuTitle) {
+
+        $(menu + ' > li > a').filter(function () {
             return $(this).html().substr($(this).html().length - mainMenuTitle.length) === mainMenuTitle;
         }).addClass('active');
-        
+
         if (subMenuTitle) {
-        	$(menu + ' ul > li > a').filter(function() {
+            $(menu + ' ul > li > a').filter(function () {
                 return $(this).html().substr($(this).html().length - subMenuTitle.length) === subMenuTitle;
             }).addClass('active');
         }
-        
-    },
-    
-    selectMainMenuFrontend: function(pageTitle) {
-    	this.selectMainMenu('#main-menu', pageTitle);
+
     },
 
-    initSlider: function() {
+    selectMainMenuFrontend: function (pageTitle) {
+        this.selectMainMenu('#main-menu', pageTitle);
+    },
+
+    initSlider: function () {
         $('#slider').cycle({
             fx: 'scrollHorz',
             prev: '#slider-wrapper .prev',
@@ -156,11 +156,11 @@ foodcoopshop.Helper = {
         });
     },
 
-    initScrolltopButton: function() {
+    initScrolltopButton: function () {
 
         $('#scroll-to-top').hide();
 
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#scroll-to-top').fadeIn();
             } else {
@@ -168,7 +168,7 @@ foodcoopshop.Helper = {
             }
         });
 
-        $('#scroll-to-top a').on('click', function() {
+        $('#scroll-to-top a').on('click', function () {
             $('body,html').animate({
                 scrollTop: 0
             }, 400);
@@ -177,9 +177,9 @@ foodcoopshop.Helper = {
 
     },
 
-    initRight: function() {
+    initRight: function () {
 
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             foodcoopshop.Helper.onWindowScroll();
         });
 
@@ -187,7 +187,7 @@ foodcoopshop.Helper = {
 
     },
 
-    onWindowScroll: function() {
+    onWindowScroll: function () {
 
         // keep right column on its place
         var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 6;
@@ -198,36 +198,36 @@ foodcoopshop.Helper = {
 
     },
 
-    initMenu: function() {
+    initMenu: function () {
 
         // select and show submenu of vertical menu, recursive!
         var selectedSubMenu = $('.menu.vertical ul a.active').closest('ul');
         var s = selectedSubMenu.closest('li').find('a').parentsUntil('ul.vertical-menu', 'li.has-children')
-        s.each(function() {
+        s.each(function () {
             var m = $(this).find('a').first();
             m.addClass('active');
             m.css('display', 'block');
         });
 
         // bind horizontal menu hover
-        $('.menu.horizontal li').mouseenter(function() {
+        $('.menu.horizontal li').mouseenter(function () {
             $(this).children('ul').stop(true).animate({
                 opacity: 'toggle'
             }, 500);
-        }).mouseleave(function() {
+        }).mouseleave(function () {
             $(this).children('ul').stop(true).animate({
                 opacity: 'toggle'
             }, 200);
         });
 
-        // select horizontal main if sub is selected 
+        // select horizontal main if sub is selected
         var selectedSubMenu = $('.menu.horizontal ul a.active').closest('ul');
         selectedSubMenu.closest('li').find('a').first().addClass('active'); // set main manu item active if sub navi is selected
 
     },
 
-    initProductAttributesButtons: function() {
-        $('.attribute-button').on('click', function() {
+    initProductAttributesButtons: function () {
+        $('.attribute-button').on('click', function () {
             var entityWrappers = $(this).closest('.product-wrapper').find('.entity-wrapper');
             entityWrappers.hide();
             entityWrappers.removeClass('active');
@@ -238,52 +238,54 @@ foodcoopshop.Helper = {
         })
     },
 
-    addSpinnerToButton: function(button, iconClass) {
+    addSpinnerToButton: function (button, iconClass) {
         button.find('i').removeClass(iconClass);
         button.find('i').addClass('fa-spinner')
         button.find('i').addClass('fa-spin');
     },
 
-    removeSpinnerFromButton: function(button, iconClass) {
+    removeSpinnerFromButton: function (button, iconClass) {
         button.find('i').removeClass('fa-spinner')
         button.find('i').removeClass('fa-spin');
         button.find('i').addClass(iconClass);
     },
 
-    enableButton: function(button) {
+    enableButton: function (button) {
         button.attr('disabled', false);
         button.removeClass('disabled');
     },
 
-    disableButton: function(button) {
+    disableButton: function (button) {
         button.attr('disabled', 'disabled');
         button.addClass('disabled'); // :enabled selector does not work in chrome, bootstrap adds pointer-events: none;
     },
 
-    applyBlinkEffect: function(container, callback) {
-        container.fadeTo('fast', 1, function() {
-            $(this).fadeTo('fast', 0, function() {
-                $(this).fadeTo('fast', 1, function() {
-                    $(this).fadeTo('fast', 0, function() {
+    applyBlinkEffect: function (container, callback) {
+        container.fadeTo('fast', 1, function () {
+            $(this).fadeTo('fast', 0, function () {
+                $(this).fadeTo('fast', 1, function () {
+                    $(this).fadeTo('fast', 0, function () {
                         $(this).fadeTo('fast', 1);
-                        if (callback) callback();
+                        if (callback) {
+                            callback();
+                        }
                     });
                 });
             });
         });
     },
 
-    formatFloatAsEuro: function(float) {
+    formatFloatAsEuro: function (float) {
         return '€&nbsp;' + float.toFixed(2).replace(/\./, ',');
     },
 
-    getEuroAsFloat: function(string) {
+    getEuroAsFloat: function (string) {
         return parseFloat(string.replace(/€&nbsp;/, '').replace(/,/, '.'));
     },
 
-    bindToggleLinks: function(autoOpen) {
+    bindToggleLinks: function (autoOpen) {
 
-        $('.toggle-link').on('click', function() {
+        $('.toggle-link').on('click', function () {
 
             var elementToToggle = $(this).next();
             var toggleMode = elementToToggle.css('display');
@@ -308,33 +310,34 @@ foodcoopshop.Helper = {
 
     },
 
-    setServerName: function(serverName) {
+    setServerName: function (serverName) {
         this.serverName = serverName;
     },
 
-    setCakeServerName: function(cakeServerName) {
+    setCakeServerName: function (cakeServerName) {
         this.cakeServerName = cakeServerName;
     },
 
-    setIsManufacturer: function(isManufacturer) {
+    setIsManufacturer: function (isManufacturer) {
         this.isManufacturer = isManufacturer;
     },
 
-    setPaymentMethods: function(paymentMethods) {
+    setPaymentMethods: function (paymentMethods) {
         this.paymentMethods = paymentMethods;
     },
 
-    initAnystretch: function() {
+    initAnystretch: function () {
         $.backstretch(
-            '/img/bg-photo-spring.jpg', {
+            '/img/bg-photo-spring.jpg',
+            {
                 positionY: 'top',
                 speed: 400
             }
         );
     },
 
-    initLogoutButton: function() {
-        $('a.logout-button').on('click', function() {
+    initLogoutButton: function () {
+        $('a.logout-button').on('click', function () {
             $('<div></div>').appendTo('body')
                 .html('<p>Willst du dich wirklich abmelden?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
@@ -345,24 +348,24 @@ foodcoopshop.Helper = {
                     width: 400,
                     resizable: false,
                     buttons: {
-                        'Nein': function() {
+                        'Nein': function () {
                             $(this).dialog('close');
                         },
-                        'Ja': function() {
+                        'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
                             document.location.href = '/logout';
                         }
                     },
-                    close: function(event, ui) {
+                    close: function (event, ui) {
                         $(this).remove();
                     }
                 });
         });
     },
 
-    initLogoutShopOrderCustomerButton: function() {
-        $('#cart .shop-order-customer-info a.btn').on('click', function() {
+    initLogoutShopOrderCustomerButton: function () {
+        $('#cart .shop-order-customer-info a.btn').on('click', function () {
             $('<div></div>').appendTo('body')
                 .html('<p>Willst du die Sofort-Bestellung wirklich abbrechen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
@@ -372,35 +375,37 @@ foodcoopshop.Helper = {
                     width: 400,
                     resizable: false,
                     buttons: {
-                        'Nein': function() {
+                        'Nein': function () {
                             $(this).dialog('close');
                         },
-                        'Ja': function() {
+                        'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
                             foodcoopshop.Helper.ajaxCall(
-                                '/carts/ajaxDeleteShopOrderCustomer', {}, {
-                                    onOk: function(data) {
+                                '/carts/ajaxDeleteShopOrderCustomer',
+                                {},
+                                {
+                                    onOk: function (data) {
                                         $('.featherlight', window.parent.document).remove();
                                         document.location.reload();
                                     },
-                                    onError: function(data) {
+                                    onError: function (data) {
                                         document.location.reload();
                                     }
                                 }
                             );
                         }
                     },
-                    close: function(event, ui) {
+                    close: function (event, ui) {
                         $(this).remove();
                     }
                 });
         });
     },
 
-    initTooltip: function(container, position) {
+    initTooltip: function (container, position) {
         $(container).tooltip({
-            content: function() {
+            content: function () {
                 return $(this).attr('title');
             },
             tooltipHover: true,
@@ -408,30 +413,32 @@ foodcoopshop.Helper = {
         });
     },
 
-    cutRandomStringOffImageSrc: function(imageSrc) {
+    cutRandomStringOffImageSrc: function (imageSrc) {
         return imageSrc.replace(/\?.{3}/g, '');
     },
 
-    initJqueryUiIcons: function() {
+    initJqueryUiIcons: function () {
         $('li.ui-state-default').hover(
-            function() {
+            function () {
                 $(this).addClass('ui-state-hover');
             },
-            function() {
+            function () {
                 $(this).removeClass('ui-state-hover');
             }
         );
     },
 
-    showContent: function() {
+    showContent: function () {
         // do not use jquery .animate() or .show() here, if loaded in iframe and firefox, this does not work
         // only css('display') works
         $('body:not(.cake_errors) #container').css('display', 'block')
     },
 
-    initCkeditor: function(name) {
+    initCkeditor: function (name) {
 
-        if (!CKEDITOR.env.isCompatible) return false;
+        if (!CKEDITOR.env.isCompatible) {
+            return false;
+        }
 
         this.destroyCkeditor(name);
 
@@ -442,9 +449,11 @@ foodcoopshop.Helper = {
 
     },
 
-    destroyCkeditor: function(name) {
+    destroyCkeditor: function (name) {
 
-        if (!CKEDITOR.env.isCompatible) return false;
+        if (!CKEDITOR.env.isCompatible) {
+            return false;
+        }
 
         var editor = CKEDITOR.instances[name];
         if (editor) {
@@ -453,9 +462,11 @@ foodcoopshop.Helper = {
 
     },
 
-    initCkeditorBig: function(name) {
+    initCkeditorBig: function (name) {
 
-        if (!CKEDITOR.env.isCompatible) return false;
+        if (!CKEDITOR.env.isCompatible) {
+            return false;
+        }
 
         this.destroyCkeditor(name);
 
@@ -470,8 +481,8 @@ foodcoopshop.Helper = {
      * German initialisation for the jQuery UI date picker plugin. Written by
      * Milian Wolff (mail@milianw.de).
      */
-    initDatepicker: function() {
-        jQuery(function($) {
+    initDatepicker: function () {
+        jQuery(function ($) {
             $.datepicker.regional['de'] = {
                 closeText: 'schließen',
                 prevText: '&#x3c;zurück',
@@ -504,29 +515,29 @@ foodcoopshop.Helper = {
         });
     },
 
-    getRandomCode: function() {
+    getRandomCode: function () {
         return Math.floor(Math.random() * 981151510);
     },
 
-    removeFlashMessage: function() {
+    removeFlashMessage: function () {
         $('#flashMessage').remove();
     },
 
-    appendFlashMessageCloser: function() {
+    appendFlashMessageCloser: function () {
         $('#flashMessage').prepend('<a class="closer" title="Schließen" href="javascript:void(0);"><img height="16" width="16" src="/js/vendor/famfamfam-silk/dist/png/cancel.png" /></a>');
     },
 
-    bindFlashMessageCloser: function() {
-        $('#flashMessage a.closer').on('click', function() {
+    bindFlashMessageCloser: function () {
+        $('#flashMessage a.closer').on('click', function () {
             $(this).parent().animate({
                 height: 'toggle'
-            }, 500, function() {
+            }, 500, function () {
                 $(this).remove();
             });
         });
     },
 
-    showFlashMessage: function(message, type) {
+    showFlashMessage: function (message, type) {
 
         this.removeFlashMessage();
 
@@ -547,15 +558,15 @@ foodcoopshop.Helper = {
 
     },
 
-    showSuccessMessage: function(message) {
+    showSuccessMessage: function (message) {
         this.showFlashMessage(message, 'success');
     },
 
-    showErrorMessage: function(message) {
+    showErrorMessage: function (message) {
         this.showFlashMessage(message, 'error');
     },
 
-    ajaxCall: function(url, data, callbacks) {
+    ajaxCall: function (url, data, callbacks) {
 
         return jQuery.ajax({
             url: url,
@@ -563,10 +574,11 @@ foodcoopshop.Helper = {
             contentType: 'application/x-www-form-urlencoded; charset=utf-8',
             data: data,
             dataType: 'json',
-            success: function(data, textStatus) {
+            success: function (data, textStatus) {
                 try {
-                    if (callbacks.onEnd)
+                    if (callbacks.onEnd) {
                         callbacks.onEnd(data);
+                    }
                     if (data.status == 1) {
                         callbacks.onOk(data);
                     } else {
@@ -581,7 +593,7 @@ foodcoopshop.Helper = {
                     }
                 }
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 data = {
                     status: 9,
                     msg: 'Es ist ein Fehler aufgetreten.',
@@ -591,8 +603,9 @@ foodcoopshop.Helper = {
                         errorThrown: errorThrown
                     }
                 };
-                if (callbacks.onEnd)
+                if (callbacks.onEnd) {
                     callbacks.onEnd(data);
+                }
                 callbacks.onError(data);
                 if (window.console && console.error) {
                     console.error(data);

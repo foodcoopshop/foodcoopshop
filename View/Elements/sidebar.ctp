@@ -15,11 +15,11 @@
 ?>
 <div class="sidebar">
     <?php
-        if (!empty($categoriesForMenu)) {
-            echo $this->Menu->render($categoriesForMenu, array('id' => 'categories-menu', 'class' => 'vertical menu', 'heading' => 'Kategorien'));
-        }
-        if (!empty($manufacturersForMenu)) {
-            echo $this->Menu->render($manufacturersForMenu, array('id' => 'manufacturers-menu', 'class' => 'vertical menu', 'heading' => 'Hersteller'));
-        }
+    if (!empty($categoriesForMenu)) {
+        echo $this->Menu->render($categoriesForMenu, array('id' => 'categories-menu', 'class' => 'vertical menu', 'heading' => 'Kategorien'));
+    }
+    if (!empty($manufacturersForMenu)) {
+        echo $this->Menu->render($manufacturersForMenu, array('id' => 'manufacturers-menu', 'class' => 'vertical menu', 'heading' => 'Hersteller'));
+    }
     ?>
 </div>

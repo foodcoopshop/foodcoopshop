@@ -15,14 +15,14 @@
 ?>
 
 <?php if (Configure::read('debug') == 0) { ?>
-	<?php echo '<a href="/"><img id="installation-logo" src="/files/images/logo.jpg" /></a>'; ?>
+    <?php echo '<a href="/"><img id="installation-logo" src="/files/images/logo.jpg" /></a>'; ?>
 <?php } else { ?>
-	<h2><?php echo $message; ?></h2>
+    <h2><?php echo $message; ?></h2>
 <?php } ?>
 
 <h2><?php echo __d('cake', 'An Internal Error Has Occurred.'); ?></h2>
 <?php
-if (Configure::read('debug') > 0):
-	echo $this->element('exception_stack_trace');
+if (Configure::read('debug') > 0) :
+    echo $this->element('exception_stack_trace');
 endif;
 ?>

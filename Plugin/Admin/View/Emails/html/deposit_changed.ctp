@@ -16,12 +16,12 @@
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
 
-	<tr>
-		<td>
-			<p><?php echo $logString; ?></p>
-		</td>
+    <tr>
+        <td>
+            <p><?php echo $logString; ?></p>
+        </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

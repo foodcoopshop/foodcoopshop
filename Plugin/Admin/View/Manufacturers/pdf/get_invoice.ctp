@@ -70,38 +70,37 @@ $pdf->renderTable();
 // Artikelauflistung End
 
 if (Configure::read('app.useManufacturerCompensationPercentage') && $compensationPercentage > 0) {
-    
     $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
     $compensatedPrice = round($sumPriceIncl * $compensationPercentage / 100, 2);
     $newSumPriceIncl = $sumPriceIncl - $compensatedPrice;
     $firstColumnWidth = 390;
     $secondColumnWidth = 140;
-    
+
     $html = '<table border="1" cellspacing="0" cellpadding="1">';
-    
+
     $html .= '<tr>';
     $html .= '<td width="' . $firstColumnWidth . '">';
     $html .= '<h3> - ' . $compensationPercentage . '% variabler Mitgliedsbeitrag</h3>';
     $html .= '</td>';
-    
+
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
     $html .= '<h3> - ' . $this->Html->formatAsDecimal($compensatedPrice) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
-    
+
     $html .= '<tr>';
     $html .= '<td width="' . $firstColumnWidth . '">';
     $html .= '<h3>Neue Gesamtsumme</h3>';
     $html .= '</td>';
-    
+
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
     $html .= '<h3>' . $this->Html->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
-    
+
     $html .= '</table>';
     $pdf->writeHTML($html, true, false, true, false, '');
-    
+
     $html = '<p>Die neue Gesamtsumme rechts unten (abzüglich ' . $compensationPercentage . '% variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen.</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
@@ -155,10 +154,10 @@ $filename = $this->MyHtml->getInvoiceLink($results_product[0]['m']['Hersteller']
 
 // if send method is called, prepare chrononlogical folders on server
 if ($saveParam == 'F') {
-    
-    if (file_exists($filename))
+    if (file_exists($filename)) {
         unlink($filename);
-    
+    }
+
     App::uses('Folder', 'Utility');
     $dir = new Folder();
     $path = dirname($filename);
@@ -167,5 +166,3 @@ if ($saveParam == 'F') {
 }
 
 echo $pdf->Output($filename, $saveParam);
-
-?>

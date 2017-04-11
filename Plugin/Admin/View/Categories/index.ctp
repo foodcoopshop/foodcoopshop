@@ -15,19 +15,19 @@
 ?>
 <div id="categories">
 
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
         "
-    ));
-    $this->element('highlightRowAfterEdit', array(
+        ));
+        $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#category-'
-    ));
+        ));
     ?>
    
     <div class="filter-container">
-		<h1>Kategorien</h1>
-		<div class="right">
+        <h1>Kategorien</h1>
+        <div class="right">
             <?php
             echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Kategorie erstellen', $this->Slug->getCategoryAdd(), array(
@@ -38,13 +38,13 @@
             ?>
         </div>
 
-	</div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite kannst du Seiten verwalten.</li>
-		</ul>
-	</div>    
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite kannst du Seiten verwalten.</li>
+        </ul>
+    </div>    
     
 <?php
 

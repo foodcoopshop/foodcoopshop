@@ -18,7 +18,7 @@ $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ));
 if (!$appAuth->termsOfUseAccepted()) {
-    $this->element('addScript', array('script' => 
+    $this->element('addScript', array('script' =>
         "foodcoopshop.Helper.disableButton($('#OrderDetailForm button.btn-success'));"
     ));
 }
@@ -28,11 +28,11 @@ if (!$appAuth->termsOfUseAccepted()) {
 
 <div class="cart">
 
-	<p class="no-products">Dein Warenkorb ist leer.</p>
+    <p class="no-products">Dein Warenkorb ist leer.</p>
     <p class="products"></p>
     <p class="sum-wrapper"><b>Warenwert gesamt (inkl. USt.)</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php if ($appAuth->Cart->getDepositSum() > 0) { ?>
-    	<p class="deposit-sum-wrapper"><b>+ Pfand gesamt</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+        <p class="deposit-sum-wrapper"><b>+ Pfand gesamt</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php } ?>
     
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
@@ -40,30 +40,30 @@ if (!$appAuth->termsOfUseAccepted()) {
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
         
         <?php if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
-        	<p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
+            <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
         <?php } ?>
 
         <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
         
-    	<?php
-    
-            if ($this->Html->paymentIsCashless()) {
-                echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
-            } else {
-                echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
-            }
-         ?>
+        <?php
+
+        if ($this->Html->paymentIsCashless()) {
+            echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
+        } else {
+            echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
+        }
+            ?>
          
         <p>
-        	Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
+            Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
         </p>
     
-         <?php
+            <?php
             echo $this->Form->create('Order', array(
                 'class' => 'fcs-form',
                 'url' => $this->Slug->getCartFinish()
             ));
-            
+
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/generalTermsAndConditions');
             echo '</div>';
@@ -81,16 +81,16 @@ if (!$appAuth->termsOfUseAccepted()) {
         ?>
         <div class="sc"></div>
         
-    	<p>
-    		<button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
-    	</p>
-        		
+        <p>
+            <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
+        </p>
+                
         </form>
     
     <?php } ?>
     
     <div class="accept-updated-terms-of-use-form-bottom-wrapper">
-    	<?php echo $this->element('acceptUpdatedTermsOfUseForm'); ?>
+        <?php echo $this->element('acceptUpdatedTermsOfUseForm'); ?>
     </div>
     
 </div>

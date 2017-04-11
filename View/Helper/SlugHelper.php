@@ -4,9 +4,9 @@ App::uses('StringComponent', 'Controller/Component');
 
 /**
  * SlugHelper
- * 
+ *
  * TODO use cake's routing
- * 
+ *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -19,216 +19,267 @@ App::uses('StringComponent', 'Controller/Component');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class SlugHelper extends Helper {
-    
-    public function getManufacturerDetail($manufacturerId, $manufacturerName) {
+class SlugHelper extends Helper
+{
+
+    public function getManufacturerDetail($manufacturerId, $manufacturerName)
+    {
         return '/hersteller/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
     }
-    
-    public function getManufacturerBlogList($manufacturerId, $manufacturerName) {
+
+    public function getManufacturerBlogList($manufacturerId, $manufacturerName)
+    {
         return $this->getManufacturerDetail($manufacturerId, $manufacturerName) . '/aktuelles';
     }
-    
-    public function getPageDetail($pageId, $name) {
+
+    public function getPageDetail($pageId, $name)
+    {
         return '/content/'.$pageId.'-'.StringComponent::slugify($name);
     }
-    
-    public function getManufacturerList() {
+
+    public function getManufacturerList()
+    {
         return '/hersteller';
     }
-    
-    public function getMyDepositList() {
+
+    public function getMyDepositList()
+    {
         return '/admin/deposits/my_index';
     }
-    
-    public function getMyDepositDetail($monthAndYear) {
+
+    public function getMyDepositDetail($monthAndYear)
+    {
         return '/admin/deposits/my_detail/'.$monthAndYear;
     }
-    
-    public function getDepositList($manufacturerId='') {
+
+    public function getDepositList($manufacturerId = '')
+    {
         $url = '/admin/deposits/index';
         if ($manufacturerId != '') {
             $url .= '/manufacturerId:'.$manufacturerId;
         }
         return $url;
     }
-    
-    public function getDepositDetail($manufacturerId, $monthAndYear) {
+
+    public function getDepositDetail($manufacturerId, $monthAndYear)
+    {
         $url = '/admin/deposits/detail/'.$monthAndYear;
         if ($manufacturerId != '') {
             $url .= '/manufacturerId:'.$manufacturerId;
         }
         return $url;
     }
-    
-    public function getCartDetail() {
+
+    public function getCartDetail()
+    {
         return '/warenkorb/anzeigen';
     }
-    
-    public function getCartFinish() {
+
+    public function getCartFinish()
+    {
         return '/warenkorb/abschliessen';
     }
-    
-    public function getCartFinished($orderId) {
+
+    public function getCartFinished($orderId)
+    {
         return '/warenkorb/abgeschlossen/' . $orderId;
     }
-    
-    public function getHome() {
+
+    public function getHome()
+    {
         return '/';
     }
-    
-    public function getAllProducts() {
+
+    public function getAllProducts()
+    {
         return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), 'alle-produkte');
     }
-    
-    public function getCategoryDetail($categoryId, $name) {
+
+    public function getCategoryDetail($categoryId, $name)
+    {
         return '/kategorie/' . $categoryId . '-' . StringComponent::slugify($name);
     }
-    
-    public function getLogin() {
+
+    public function getLogin()
+    {
         return '/anmelden';
     }
-    
-    public function getLogout() {
+
+    public function getLogout()
+    {
         return '/logout';
     }
-    
-    public function getRegistration() {
+
+    public function getRegistration()
+    {
         return '/registrierung';
     }
-    
-    public function getMyMemberFeeBalance() {
+
+    public function getMyMemberFeeBalance()
+    {
         return '/admin/payments/my_member_fee';
     }
-    
-    public function getMyCreditBalance() {
+
+    public function getMyCreditBalance()
+    {
         return '/admin/payments/overview';
     }
-    
-    public function getCreditBalance($customerId) {
+
+    public function getCreditBalance($customerId)
+    {
         return '/admin/payments/product/customerId:'.$customerId;
     }
-    
-    public function getChangePassword() {
+
+    public function getChangePassword()
+    {
         return '/admin/customers/changePassword';
     }
 
-    public function getCustomerProfile() {
+    public function getCustomerProfile()
+    {
         return '/admin/customers/profile';
     }
-    
-    public function getCustomerListAdmin() {
+
+    public function getCustomerListAdmin()
+    {
         return '/admin/customers';
     }
-    
-    public function getManufacturerProfile() {
+
+    public function getManufacturerProfile()
+    {
         return '/admin/manufacturers/profile';
     }
-    
-    public function getNewPasswordRequest() {
+
+    public function getNewPasswordRequest()
+    {
         return '/neues-passwort-anfordern';
     }
-    
-    public function getReport($paymentType) {
+
+    public function getReport($paymentType)
+    {
         return '/admin/reports/payments/'.$paymentType;
     }
-    
-    public function getBlogList() {
+
+    public function getBlogList()
+    {
         return '/aktuelles';
     }
-    
-    public function getBlogPostDetail($blogPostId, $name) {
+
+    public function getBlogPostDetail($blogPostId, $name)
+    {
         return '/aktuelles/' . $blogPostId . '-' . StringComponent::slugify($name);
     }
-    
-    public function getBlogPostListAdmin() {
+
+    public function getBlogPostListAdmin()
+    {
         return '/admin/blog_posts';
     }
-    public function getBlogPostEdit($blogPostId) {
+    public function getBlogPostEdit($blogPostId)
+    {
         return '/admin/blog_posts/edit/'.$blogPostId;
     }
-    public function getBlogPostAdd() {
+    public function getBlogPostAdd()
+    {
         return '/admin/blog_posts/add';
     }
-    
-    public function getPagesListAdmin() {
+
+    public function getPagesListAdmin()
+    {
         return '/admin/pages';
     }
-    
-    public function getPageEdit($pageId) {
+
+    public function getPageEdit($pageId)
+    {
         return '/admin/pages/edit/'.$pageId;
     }
-    
-    public function getPageAdd() {
+
+    public function getPageAdd()
+    {
         return '/admin/pages/add';
     }
-    
-    public function getPaymentEdit($paymentId) {
+
+    public function getPaymentEdit($paymentId)
+    {
         return '/admin/payments/edit/'.$paymentId;
     }
-    
-    public function getAttributesList() {
+
+    public function getAttributesList()
+    {
         return '/admin/attributes';
     }
-    public function getAttributeAdd() {
+    public function getAttributeAdd()
+    {
         return '/admin/attributes/add';
     }
-    public function getAttributeEdit($attributeId) {
+    public function getAttributeEdit($attributeId)
+    {
         return '/admin/attributes/edit/'.$attributeId;
     }
-    
-    public function getCategoriesList() {
+
+    public function getCategoriesList()
+    {
         return '/admin/categories';
     }
-    public function getCategoryAdd() {
+    public function getCategoryAdd()
+    {
         return '/admin/categories/add';
     }
-    public function getCategoryEdit($categoryId) {
+    public function getCategoryEdit($categoryId)
+    {
         return '/admin/categories/edit/'.$categoryId;
     }
-    
-    public function getTaxesList() {
+
+    public function getTaxesList()
+    {
         return '/admin/taxes';
     }
-    public function getTaxAdd() {
+    public function getTaxAdd()
+    {
         return '/admin/taxes/add';
     }
-    public function getTaxEdit($taxId) {
+    public function getTaxEdit($taxId)
+    {
         return '/admin/taxes/edit/'.$taxId;
     }
-    
-    public function getManufacturerAdmin() {
+
+    public function getManufacturerAdmin()
+    {
         return '/admin/manufacturers';
     }
-    public function getManufacturerEdit($manufacturerId) {
+    public function getManufacturerEdit($manufacturerId)
+    {
         return '/admin/manufacturers/edit/'.$manufacturerId;
     }
-    public function getManufacturerAdd() {
+    public function getManufacturerAdd()
+    {
         return '/admin/manufacturers/add';
     }
-    
-    public function getSlidersList() {
+
+    public function getSlidersList()
+    {
         return '/admin/sliders';
     }
-    public function getSliderEdit($slideId) {
+    public function getSliderEdit($slideId)
+    {
         return '/admin/sliders/edit/'.$slideId;
     }
-    public function getSliderAdd() {
+    public function getSliderAdd()
+    {
         return '/admin/sliders/add';
     }
-    
-    public function getProductDetail($productId, $name) {
+
+    public function getProductDetail($productId, $name)
+    {
         return '/produkt/' . $productId . '-' . StringComponent::slugify($name);
     }
-    
-    public function getConfigurationsList() {
+
+    public function getConfigurationsList()
+    {
         return '/admin/configurations';
     }
-    
-    public function getConfigurationEdit($configurationId) {
+
+    public function getConfigurationEdit($configurationId)
+    {
         return '/admin/configurations/edit/'.$configurationId;
     }
-
 }
-
-?>

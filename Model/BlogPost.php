@@ -59,7 +59,7 @@ class BlogPost extends AppModel
         if ($isFeatured) {
             $conditions['BlogPost.is_featured'] = true;
         }
-        
+
         $blogPosts = $this->find('all', array(
             'conditions' => $conditions,
             'order' => array(
@@ -67,9 +67,7 @@ class BlogPost extends AppModel
             ),
             'limit' => $limit
         ));
-        
+
         return $blogPosts;
     }
 }
-
-?>

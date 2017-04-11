@@ -21,5 +21,3 @@ class ProductShop extends AppModel
 
     public $primaryKey = 'id_product';
 }
-
-?>

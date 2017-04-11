@@ -18,150 +18,145 @@ echo '<div class="product-wrapper">';
     echo '<div class="first-column">';
         $srcLargeImage = $this->Html->getProductImageSrc($product['ImageLang']['id_image'], $product['ImageLang']['legend'], 'thickbox');
         $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-        if (!$largeImageExists) {
-            echo '<a class="lightbox" href="'.$srcLargeImage.'">';
-        }
+if (!$largeImageExists) {
+    echo '<a class="lightbox" href="'.$srcLargeImage.'">';
+}
             echo '<img src="' . $this->Html->getProductImageSrc($product['ImageLang']['id_image'], $product['ImageLang']['legend'], 'home'). '" />';
-        if (!$largeImageExists) {
-            echo '</a>';
-        }
-        if ($product['Product']['is_new']) {
-            echo '<a href="/neue-produkte" class="image-badge btn btn-success" title="Neu">
+if (!$largeImageExists) {
+    echo '</a>';
+}
+if ($product['Product']['is_new']) {
+    echo '<a href="/neue-produkte" class="image-badge btn btn-success" title="Neu">
                     <i class="fa fa-star"></i> Neu
                 </a>';
-        }
+}
     echo '</div>';
-    
+
     echo '<div class="second-column">';
-    
+
     echo '<div class="heading">';
         echo '<h4><a href="'.$this->Slug->getProductDetail($product['Product']['id_product'], $product['ProductLang']['name']).'">'.$product['ProductLang']['name'].'</a></h4>';
     echo '</div>';
     echo '<div class="sc"></div>';
-    
-    if ($product['ProductLang']['description_short'] != '') {
-        echo $product['ProductLang']['description_short'].'<br />';
-    }
-    
-    if ($product['ProductLang']['description'] != '') {
-        echo $this->Html->link(
-            '<i class="fa"></i> Mehr anzeigen',
-            'javascript:void(0);',
-            array(
-                'class' => 'toggle-link',
-                'title' => 'Mehr Infos zu "'.$product['ProductLang']['name'].'" anzeigen',
-                'escape' => false
-            )
-        );
-        echo '<div class="toggle-content">'.$product['ProductLang']['description'].'</div>';
-    }
-    
+
+if ($product['ProductLang']['description_short'] != '') {
+    echo $product['ProductLang']['description_short'].'<br />';
+}
+
+if ($product['ProductLang']['description'] != '') {
+    echo $this->Html->link(
+        '<i class="fa"></i> Mehr anzeigen',
+        'javascript:void(0);',
+        array(
+        'class' => 'toggle-link',
+        'title' => 'Mehr Infos zu "'.$product['ProductLang']['name'].'" anzeigen',
+        'escape' => false
+        )
+    );
+    echo '<div class="toggle-content">'.$product['ProductLang']['description'].'</div>';
+}
+
     echo '<br />Hersteller: ';
     echo $this->Html->link(
         $product['Manufacturer']['name'],
         $this->Slug->getManufacturerDetail($product['Manufacturer']['id_manufacturer'], $product['Manufacturer']['name'])
     );
-    
+
     echo '</div>';
-    
+
     echo '<div class="third-column">';
-    
-        if (!empty($product['attributes'])) {
-            
-            // PRODUCT WITH ATTRIBUTES
-            
-            // 1) kick attributes if quantity = 0
-            $hasCheckedAttribute = false;
-            $i = 0;
-            $preparedProductAttributes = array();
-            foreach($product['attributes'] as $attribute) {
-                if ($attribute['StockAvailable']['quantity'] > 0) {
-                    $preparedProductAttributes[] = $attribute;
+
+    if (!empty($product['attributes'])) {
+        // PRODUCT WITH ATTRIBUTES
+
+        // 1) kick attributes if quantity = 0
+        $hasCheckedAttribute = false;
+        $i = 0;
+        $preparedProductAttributes = array();
+        foreach ($product['attributes'] as $attribute) {
+            if ($attribute['StockAvailable']['quantity'] > 0) {
+                $preparedProductAttributes[] = $attribute;
+            }
+            $i++;
+        }
+
+        // 2) try to define "default on" as checked radio button (if quantity is > 0)
+        $i = 0;
+        foreach ($preparedProductAttributes as $attribute) {
+            $preparedProductAttributes[$i]['checked'] = false;
+            if ($attribute['ProductAttributeShop']['default_on'] == 1) {
+                $preparedProductAttributes[$i]['checked'] = true;
+                $hasCheckedAttribute = true;
+            }
+            $i++;
+        }
+
+        // make first attribute checked if no attribute is checked
+        // (usually if quantity of default attribute is 0)
+        if (!$hasCheckedAttribute && !empty($preparedProductAttributes)) {
+            $preparedProductAttributes[0]['checked'] = true;
+        }
+
+        // every attribute has quantity = 0
+        if (empty($preparedProductAttributes)) {
+            echo '<p>Derzeit leider nicht verfügbar.</p>';
+        }
+
+        // render remaining attributes (with attribute "checked")
+        foreach ($preparedProductAttributes as $attribute) {
+            $entityClasses = array('entity-wrapper');
+            if ($attribute['checked']) {
+                $entityClasses[] = 'active';
+            }
+            echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttribute']['id_product_attribute'].'">';
+            if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
+                echo '<div class="line">';
+                echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShop']['gross_price']). '</div>';
+                if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
+                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
                 }
-                $i++;
-            }
-            
-            // 2) try to define "default on" as checked radio button (if quantity is > 0)
-            $i = 0;
-            foreach($preparedProductAttributes as $attribute) {
-                $preparedProductAttributes[$i]['checked'] = false;
-                if ($attribute['ProductAttributeShop']['default_on'] == 1) {
-                    $preparedProductAttributes[$i]['checked'] = true;
-                    $hasCheckedAttribute = true;
-                }
-                $i++;
-            }
-            
-            // make first attribute checked if no attribute is checked
-            // (usually if quantity of default attribute is 0)
-            if (!$hasCheckedAttribute && !empty($preparedProductAttributes)) {
-                $preparedProductAttributes[0]['checked'] = true;
-            }
-            
-            // every attribute has quantity = 0
-            if (empty($preparedProductAttributes)) {
-                echo '<p>Derzeit leider nicht verfügbar.</p>';
-            }
-            
-            // render remaining attributes (with attribute "checked")
-            foreach($preparedProductAttributes as $attribute) {
-                $entityClasses = array('entity-wrapper');
-                if ($attribute['checked']) {
-                    $entityClasses[] = 'active';
-                }
-                echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttribute']['id_product_attribute'].'">';
-                    if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
-                        echo '<div class="line">';
-                            echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShop']['gross_price']). '</div>';
-                            if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
-                                echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
-                            }
-                            echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
-                        echo '</div>';
-                        echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']));
-                        echo $this->element('product/amountWrapper', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
-                        echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailable']['quantity']));
-                        echo $this->element('product/notAvailableInfo', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
-                    }
+                echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
                 echo '</div>';
+                echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']));
+                echo $this->element('product/amountWrapper', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
+                echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailable']['quantity']));
+                echo $this->element('product/notAvailableInfo', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
             }
-            
-            // radio buttons for changing attributes
-            foreach($preparedProductAttributes as $attribute) {
-                echo '<div class="radio">
+            echo '</div>';
+        }
+
+        // radio buttons for changing attributes
+        foreach ($preparedProductAttributes as $attribute) {
+            echo '<div class="radio">
                            <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttribute']['id_product_attribute'].'">
                                <input type="radio" name="product-'.$product['Product']['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                               $attribute['ProductAttributeCombination']['AttributeLang']['name'].'
+                           $attribute['ProductAttributeCombination']['AttributeLang']['name'].'
                            </label>
                        </div>';
-            }
-            
-        } else {
-            // PRODUCT WITHOUT ATTRIBUTES
-            echo '<div class="entity-wrapper active">';
-                if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
-                    echo '<div class="line">';
-                        echo '<div class="price">' . $this->Html->formatAsEuro($product['Product']['gross_price']) . '</div>';
-                            if ($product['CakeDeposit']['deposit']) {
-                                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
-                            }
-                    echo '</div>';
-                    echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';
-                    echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product']));
-                    echo $this->element('product/amountWrapper', array('stockAvailable' => $product['StockAvailable']['quantity']));
-                    echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']));
-                    echo $this->element('product/notAvailableInfo', array('stockAvailable' => $product['StockAvailable']['quantity']));
-                }
-            echo '</div>';
-            
-            if ($product['ProductShop']['unity'] != '') {
-                echo '<div class="unity">Einheit: <span class="value">' . $product['ProductShop']['unity'].'</span></div>';
-            }
-            
         }
-    
-    echo '</div>';
-    
-echo '</div>';
+    } else {
+        // PRODUCT WITHOUT ATTRIBUTES
+        echo '<div class="entity-wrapper active">';
+        if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
+            echo '<div class="line">';
+            echo '<div class="price">' . $this->Html->formatAsEuro($product['Product']['gross_price']) . '</div>';
+            if ($product['CakeDeposit']['deposit']) {
+                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
+            }
+                echo '</div>';
+                echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';
+                echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product']));
+                echo $this->element('product/amountWrapper', array('stockAvailable' => $product['StockAvailable']['quantity']));
+                echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']));
+                echo $this->element('product/notAvailableInfo', array('stockAvailable' => $product['StockAvailable']['quantity']));
+        }
+        echo '</div>';
 
-?>
+        if ($product['ProductShop']['unity'] != '') {
+            echo '<div class="unity">Einheit: <span class="value">' . $product['ProductShop']['unity'].'</span></div>';
+        }
+    }
+
+    echo '</div>';
+
+    echo '</div>';

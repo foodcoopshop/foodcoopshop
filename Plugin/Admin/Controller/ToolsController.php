@@ -134,6 +134,5 @@ class ToolsController extends AdminAppController
         }
 
         return $actTmpUploadFileSize;
-
     }
 }

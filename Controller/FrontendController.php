@@ -51,7 +51,6 @@ class FrontendController extends AppController
         $this->ProductAttribute->recursive = 2; // for attribute lang
 
         foreach ($products as &$product) {
-
             $grossPrice = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
             $product['Product']['gross_price'] = $grossPrice;
             $product['Product']['tax'] = $grossPrice - $product['ProductShop']['price'];
@@ -170,7 +169,6 @@ class FrontendController extends AppController
         }
 
         if ($this->AppAuth->loggedIn() && Configure::read('htmlHelper')->paymentIsCashless()) {
-
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 
@@ -181,5 +179,3 @@ class FrontendController extends AppController
         $this->AppAuth->setCakeCart($this->AppAuth->getCakeCart());
     }
 }
-
-?>

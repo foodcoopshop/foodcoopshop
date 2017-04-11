@@ -14,20 +14,20 @@
  */
 ?>
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-<?php echo $id ?>" class="hide mini-upload-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
-	    <p class="heading">
-    	    <?php if ($imageExists) { ?>
-    		    Bestehendes Bild überschreiben
-    		<?php } else { ?>
-    		    Neues Bild hochladen
-    		<?php } ?>
-		</p>
-	<div class="drop">
-	    <?php if ($imageExists) { ?>
-	        <?php echo '<img class="existingImage" src="' . $existingImageSrc . '" />'; ?>
-		<?php } ?>
-		<p style="font-size:13px;">Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet).</p>
-		<a class="upload-button">PC durchsuchen</a>
-		<input type="file" name="upload"  accept="image/jpeg" />
-	</div>
-	<ul><!-- The file uploads will be shown here --></ul>
+        <p class="heading">
+            <?php if ($imageExists) { ?>
+                Bestehendes Bild überschreiben
+            <?php } else { ?>
+                Neues Bild hochladen
+            <?php } ?>
+        </p>
+    <div class="drop">
+        <?php if ($imageExists) { ?>
+            <?php echo '<img class="existingImage" src="' . $existingImageSrc . '" />'; ?>
+        <?php } ?>
+        <p style="font-size:13px;">Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet).</p>
+        <a class="upload-button">PC durchsuchen</a>
+        <input type="file" name="upload"  accept="image/jpeg" />
+    </div>
+    <ul><!-- The file uploads will be shown here --></ul>
 </form>	

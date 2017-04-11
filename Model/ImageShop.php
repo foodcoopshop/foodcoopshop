@@ -30,5 +30,3 @@ class ImageShop extends AppModel
         )
     );
 }
-
-?>

@@ -32,7 +32,7 @@ class AttributesController extends AdminAppController
     public function edit($attributeId = null)
     {
         $this->setFormReferer();
-        
+
         if ($attributeId > 0) {
             $unsavedAttribute = $this->Attribute->find('first', array(
                 'conditions' => array(
@@ -44,18 +44,17 @@ class AttributesController extends AdminAppController
         } else {
             $unsavedAttribute = array();
         }
-        
+
         $this->set('unsavedAttribute', $unsavedAttribute);
         $this->set('title_for_layout', 'Variante bearbeiten');
-        
+
         if (empty($this->request->data)) {
             $this->request->data = $unsavedAttribute;
         } else {
-            
             // validate data - do not use $this->Attribute->saveAll()
             $this->Attribute->id = $attributeId;
             $this->Attribute->set($this->request->data['Attribute']);
-            
+
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Attribute'] as &$data) {
                 $data = strip_tags(trim($data));
@@ -63,19 +62,18 @@ class AttributesController extends AdminAppController
             foreach ($this->request->data['AttributeLang'] as $key => &$data) {
                 $data = strip_tags(trim($data));
             }
-            
+
             $errors = array();
             $this->Attribute->AttributeLang->set($this->request->data['AttributeLang']);
             if (! $this->Attribute->AttributeLang->validates()) {
                 $errors = array_merge($errors, $this->Attribute->AttributeLang->validationErrors);
             }
-            
+
             if (empty($errors)) {
-                
                 $this->loadModel('CakeActionLog');
-                
+
                 $this->request->data['AttributeLang']['id_lang'] = Configure::read('app.langId');
-                
+
                 $this->Attribute->save($this->request->data['Attribute'], array(
                     'validate' => false
                 ));
@@ -88,11 +86,11 @@ class AttributesController extends AdminAppController
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'attribute_changed';
                 }
-                
+
                 $this->Attribute->AttributeLang->save($this->request->data, array(
                     'validate' => false
                 ));
-                
+
                 if (isset($this->request->data['Attribute']['delete_attribute']) && $this->request->data['Attribute']['delete_attribute']) {
                     $this->Attribute->delete($this->Attribute->id); // cascade does not work here
                     $this->Attribute->AttributeLang->delete($this->Attribute->id); // AttributeLang record needs to be deleted manually
@@ -104,7 +102,7 @@ class AttributesController extends AdminAppController
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->AppSession->setFlashMessage('Die Variante wurde erfolgreich gespeichert.');
                 }
-                
+
                 $this->AppSession->write('highlightedRowId', $this->Attribute->id);
                 $this->redirect($this->data['referer']);
             } else {
@@ -117,7 +115,7 @@ class AttributesController extends AdminAppController
     {
         $conditions = array();
         $conditions[] = 'Attribute.active > ' . APP_DEL;
-        
+
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
@@ -125,14 +123,14 @@ class AttributesController extends AdminAppController
             )
         ), $this->Paginator->settings);
         $attributes = $this->Paginator->paginate('Attribute');
-        
+
         $this->loadModel('ProductAttributeCombination');
         foreach ($attributes as &$attribute) {
             $attribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attribute['Attribute']['id_attribute']);
         }
-        
+
         $this->set('attributes', $attributes);
-        
+
         $this->set('title_for_layout', 'Varianten');
     }
 }

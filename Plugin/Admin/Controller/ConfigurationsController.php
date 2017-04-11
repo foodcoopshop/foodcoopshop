@@ -25,68 +25,67 @@ class ConfigurationsController extends AdminAppController
     public function edit($configurationId)
     {
         $this->setFormReferer();
-        
+
         $unsavedConfiguration = $this->Configuration->find('first', array(
             'conditions' => array(
                 'Configuration.id_configuration' => $configurationId,
                 'Configuration.active' => APP_ON
             )
         ));
-        
+
         if (empty($unsavedConfiguration)) {
             throw new MissingActionException('configuration not found');
         }
-        
+
         $this->set('unsavedConfiguration', $unsavedConfiguration);
         $this->set('configurationId', $configurationId);
         $this->set('title_for_layout', 'Einstellung bearbeiten');
-        
+
         if ($unsavedConfiguration['Configuration']['type'] == 'textarea') {
             $_SESSION['KCFINDER'] = array(
                 'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             );
         }
-        
+
         if (empty($this->request->data)) {
             $this->request->data = $unsavedConfiguration;
         } else {
-            
             // validate data - do not use $this->Configuration->saveAll()
             $this->Configuration->id = $configurationId;
             $this->Configuration->set($this->request->data['Configuration']);
-            
+
             $this->Configuration->enableValidations($unsavedConfiguration['Configuration']['name']);
-            
+
             // quick and dirty solution for stripping html tags, use html purifier here
             if ($unsavedConfiguration['Configuration']['type'] != 'textarea') {
                 $data = strip_tags($this->request->data['Configuration']['value']);
             }
-            
+
             $errors = array();
             if (! $this->Configuration->validates()) {
                 $errors = array_merge($errors, $this->Configuration->validationErrors);
             }
-            
+
             if (empty($errors)) {
-                
                 $this->Configuration->id = $configurationId;
                 $this->Configuration->save($this->request->data['Configuration'], array(
                     'validate' => false
                 ));
-                
+
                 $this->loadModel('CakeActionLog');
                 $this->AppSession->setFlashMessage('Die Einstellung wurde erfolgreich geändert.');
                 $this->CakeActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configuration']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configuration']['value'] . '"</i>');
-                
+
                 $this->redirect($this->data['referer']);
             } else {
                 $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }
-    
-    public function previewEmail($configurationName) {
+
+    public function previewEmail($configurationName)
+    {
         $configurations = $this->Configuration->getConfigurations();
         $email = new AppEmail();
         $email
@@ -94,8 +93,8 @@ class ConfigurationsController extends AdminAppController
             ->viewVars(array(
                 'appAuth' => $this->AppAuth
             ));
-        
-        switch($configurationName) {
+
+        switch ($configurationName) {
             case 'FCS_REGISTRATION_EMAIL_TEXT':
                 if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                     $template = 'customer_registered_active';
@@ -112,7 +111,6 @@ class ConfigurationsController extends AdminAppController
                     'newPassword' => 'DeinNeuesPasswort'
                 ));
                 break;
-            
         }
         $html = $email->_renderTemplates(null)['html'];
         if ($html != '') {
@@ -148,5 +146,4 @@ class ConfigurationsController extends AdminAppController
             ->send();
         $this->set('success', $success);
     }
-
 }

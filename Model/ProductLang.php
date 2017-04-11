@@ -27,5 +27,3 @@ class ProductLang extends AppModel
         )
     );
 }
-
-?>

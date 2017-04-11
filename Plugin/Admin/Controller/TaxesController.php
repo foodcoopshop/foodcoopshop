@@ -32,7 +32,7 @@ class TaxesController extends AdminAppController
     public function edit($taxId = null)
     {
         $this->setFormReferer();
-        
+
         if ($taxId > 0) {
             $unsavedTax = $this->Tax->find('first', array(
                 'conditions' => array(
@@ -47,32 +47,30 @@ class TaxesController extends AdminAppController
                 )
             );
         }
-        
+
         $this->set('unsavedTax', $unsavedTax);
         $this->set('title_for_layout', 'Steuersatz bearbeiten');
-        
+
         if (empty($this->request->data)) {
             $this->request->data = $unsavedTax;
         } else {
-            
             // validate data - do not use $this->Tax->saveAll()
             $this->Tax->id = $taxId;
             $this->Tax->set($this->request->data['Tax']);
-            
+
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Tax'] as &$data) {
                 $data = strip_tags(trim($data));
             }
-            
+
             $errors = array();
             if (! $this->Tax->validates()) {
                 $errors = array_merge($errors, $this->Tax->validationErrors);
             }
-            
+
             if (empty($errors)) {
-                
                 $this->loadModel('CakeActionLog');
-                
+
                 $this->Tax->save($this->request->data['Tax'], array(
                     'validate' => false
                 ));
@@ -83,7 +81,7 @@ class TaxesController extends AdminAppController
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'tax_changed';
                 }
-                
+
                 if (isset($this->request->data['Tax']['delete_tax']) && $this->request->data['Tax']['delete_tax']) {
                     $this->Tax->delete($this->Tax->id); // cascade does not work here
                     $message = 'Der Steuersatz "' . Configure::read('htmlHelper')->formatAsPercent($this->request->data['Tax']['rate']) . '" wurde erfolgreich gelöscht.';
@@ -99,7 +97,7 @@ class TaxesController extends AdminAppController
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
                     $this->AppSession->setFlashMessage('Der Steuersatz wurde erfolgreich gespeichert.');
                 }
-                
+
                 $this->AppSession->write('highlightedRowId', $this->Tax->id);
                 $this->redirect($this->data['referer']);
             } else {
@@ -112,7 +110,7 @@ class TaxesController extends AdminAppController
     {
         $conditions = array();
         $conditions[] = 'Tax.active > ' . APP_DEL;
-        
+
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
@@ -121,7 +119,7 @@ class TaxesController extends AdminAppController
         ), $this->Paginator->settings);
         $taxes = $this->Paginator->paginate('Tax');
         $this->set('taxes', $taxes);
-        
+
         $this->set('title_for_layout', 'Steuersätze');
     }
 }

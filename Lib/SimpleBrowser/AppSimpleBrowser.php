@@ -34,12 +34,12 @@ class AppSimpleBrowser extends SimpleBrowser
     public function __construct()
     {
         parent::__construct();
-        
+
         $Controller = new Controller();
         $View = new View($Controller);
         $this->Slug = new SlugHelper($View);
         $this->Customer = new Customer();
-        
+
         $this->setConnectionTimeout(300); // 5 min should be enough
         $this->baseUrl = Configure::read('app.cakeServerName');
         $this->adminPrefix = '/admin';
@@ -49,7 +49,7 @@ class AppSimpleBrowser extends SimpleBrowser
     {
         return parent::get($this->baseUrl . $url, $parameters);
     }
-    
+
     /**
      * posts as ajax
      * @param string $url
@@ -64,7 +64,7 @@ class AppSimpleBrowser extends SimpleBrowser
             'application/x-www-form-urlencoded'
         );
     }
-    
+
     public function post($url, $parameters = false, $content_type = false)
     {
         return parent::post(
@@ -88,7 +88,7 @@ class AppSimpleBrowser extends SimpleBrowser
             ),
             'remember_me' => false
         ));
-        
+
         if (preg_match('/Anmelden ist fehlgeschlagen./', $this->getContent())) {
             print_r('Falsche Zugangsdaten für FCS Login');
             print_r('AdminEmail: ' . $this->loginEmail);
@@ -123,5 +123,3 @@ class AppSimpleBrowser extends SimpleBrowser
         $this->get($this->Slug->getLogout());
     }
 }
-
-?>

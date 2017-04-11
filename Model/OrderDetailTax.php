@@ -21,5 +21,3 @@ class OrderDetailTax extends AppModel
 
     public $primaryKey = 'id_order_detail';
 }
-
-?>

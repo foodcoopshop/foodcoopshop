@@ -15,50 +15,50 @@
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-	
-		<?php echo $this->element('email/greeting', array('data' => $orderDetail['Order'])); ?>
-				
-		<tr>
-		<td>
-
-			<p>
-				<b><?php echo $orderDetail['OrderDetail']['product_name']; ?></b>
-				kann leider nicht geliefert werden.
-			</p>
-
-			<ul style="padding-left: 10px;">
-				<li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail['OrderDetail']['total_price_tax_incl']); ?></b></li>
-				<li>Anzahl: <b><?php echo $orderDetail['OrderDetail']['product_quantity']; ?></b></li>
-				<li>Hersteller: <b><?php echo $orderDetail['Product']['Manufacturer']['name']; ?></b></li>
-				<li>Bestelldatum: <b><?php echo $this->MyTime->formatToDateNTimeShort($orderDetail['Order']['date_add']); ?></b></li>
-			</ul>
-
-			<p>
-				Warum wurde das Produkt storniert?<br />
-				<b>
-                <?php
+    
+        <?php echo $this->element('email/greeting', array('data' => $orderDetail['Order'])); ?>
                 
-if ($cancellationReason != '') {
+        <tr>
+        <td>
+
+            <p>
+                <b><?php echo $orderDetail['OrderDetail']['product_name']; ?></b>
+                kann leider nicht geliefert werden.
+            </p>
+
+            <ul style="padding-left: 10px;">
+                <li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail['OrderDetail']['total_price_tax_incl']); ?></b></li>
+                <li>Anzahl: <b><?php echo $orderDetail['OrderDetail']['product_quantity']; ?></b></li>
+                <li>Hersteller: <b><?php echo $orderDetail['Product']['Manufacturer']['name']; ?></b></li>
+                <li>Bestelldatum: <b><?php echo $this->MyTime->formatToDateNTimeShort($orderDetail['Order']['date_add']); ?></b></li>
+            </ul>
+
+            <p>
+                Warum wurde das Produkt storniert?<br />
+                <b>
+                <?php
+
+                if ($cancellationReason != '') {
                     echo '"' . $cancellationReason . '"';
                 } else {
                     echo 'Kein Grund angegeben.';
                 }
                 ?>
                 </b>
-			</p>
+            </p>
 
-			<p>Unsere Produzenten können leider ab und zu die bestellte Ware
-				nicht liefern. Du erhältst du diese Mail, damit du rechtzeitig für
-				Ersatz sorgen kannst.</p>
-			<p>Vielen Dank für dein Verständnis!</p>
+            <p>Unsere Produzenten können leider ab und zu die bestellte Ware
+                nicht liefern. Du erhältst du diese Mail, damit du rechtzeitig für
+                Ersatz sorgen kannst.</p>
+            <p>Vielen Dank für dein Verständnis!</p>
                 
                 <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                	<p>PS: Dein Guthaben wurde automatisch angepasst.</p>
+                    <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
                 <?php } ?>
 
-			</td>
+            </td>
 
-	</tr>
+    </tr>
 
 </tbody>
 </table>

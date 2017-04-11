@@ -20,4 +20,3 @@ if (CakeSession::read('highlightedRowId')) {
     ));
     CakeSession::delete('highlightedRowId');
 }
-?>

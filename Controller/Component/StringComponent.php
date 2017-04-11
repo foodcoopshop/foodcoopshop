@@ -26,7 +26,9 @@ class StringComponent extends Component
      */
     public static function addHttpToUrl($url)
     {
-        if ($url == '') return $url;
+        if ($url == '') {
+            return $url;
+        }
         if (!preg_match('/^http\:\/\//', $url)) {
             $url = 'http://'.$url;
         }
@@ -84,14 +86,14 @@ class StringComponent extends Component
     }
 
     /**
-     * 
+     *
      * http://stackoverflow.com/questions/5305879/automatic-clean-and-seo-friendly-url-slugs
-     * 
+     *
      * @param string $string
      * @param string $separator
      * @return string
      */
-    static public function slugify($string, $separator = '-')
+    public static function slugify($string, $separator = '-')
     {
         $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
         $special_cases = array(
@@ -136,9 +138,10 @@ class StringComponent extends Component
         $key = str_shuffle($character_set);
         $cipher_text = '';
         $id = 'e' . rand(1, 999999999);
-        for ($i = 0; $i < strlen($email); $i += 1)
+        for ($i = 0; $i < strlen($email); $i += 1) {
             $cipher_text .= $key[strpos($character_set, $email[$i])];
-        
+        }
+
         $script = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';
         $script .= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
         $script .= 'document.getElementById("' . $id . '").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
@@ -150,7 +153,7 @@ class StringComponent extends Component
             '\"'
         ), $script) . "\")";
         $script = '<script type="text/javascript">/*<![CDATA[*/' . $script . '/*]]>*/</script>';
-        
+
         return '<span id="' . $id . '">[javascript protected email address]</span>' . $script;
     }
 }

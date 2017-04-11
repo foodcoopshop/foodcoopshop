@@ -28,30 +28,29 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
 
 <?php
 
-foreach($manufacturers as $manufacturer) {
-    
+foreach ($manufacturers as $manufacturer) {
     echo '<div class="manufacturer-wrapper">';
-    
+
         echo '<div class="first-column">';
             $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'large');
             $largeImageExists = preg_match('/de-default/', $srcLargeImage);
-            if (!$largeImageExists) {
-                echo '<a class="lightbox" href="'.$srcLargeImage.'">';
-            }
+    if (!$largeImageExists) {
+        echo '<a class="lightbox" href="'.$srcLargeImage.'">';
+    }
             echo '<img src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium'). '" />';
-            if (!$largeImageExists) {
-                echo '</a>';
-            }
+    if (!$largeImageExists) {
+        echo '</a>';
+    }
         echo '</div>';
-        
+
         echo '<div class="second-column">';
             echo '<h4>'.$this->Html->link(
-                    $manufacturer['Manufacturer']['name'],
-                    $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
-                  ).'</h4>';
-            echo $manufacturer['ManufacturerLang']['short_description'];    
+                $manufacturer['Manufacturer']['name'],
+                $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
+            ).'</h4>';
+            echo $manufacturer['ManufacturerLang']['short_description'];
         echo '</div>';
-        
+
         echo '<div class="third-column">';
             echo $this->Html->link(
                 'Alle Produkte anzeigen' . ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
@@ -59,11 +58,10 @@ foreach($manufacturers as $manufacturer) {
                 array('class' => 'btn btn-success')
             );
         echo '</div>';
-    
+
     echo '</div>';
-    
+
     echo '<div class="sc"></div>';
-    
 }
 
 ?>

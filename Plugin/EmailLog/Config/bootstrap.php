@@ -25,4 +25,3 @@ CakeLog::config('email', array(
         'error'
     )
 ));
-?>

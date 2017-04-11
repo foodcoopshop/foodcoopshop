@@ -14,7 +14,7 @@
  */
 ?>
 <tr>
-	<td style="font-weight:bold;font-size:18px;padding-bottom:10px;">
-		<p>Hallo <?php echo $data['Customer']['firstname'] . ' ' . $data['Customer']['lastname']; ?>,</p>
-	</td>
+    <td style="font-weight:bold;font-size:18px;padding-bottom:10px;">
+        <p>Hallo <?php echo $data['Customer']['firstname'] . ' ' . $data['Customer']['lastname']; ?>,</p>
+    </td>
 </tr>

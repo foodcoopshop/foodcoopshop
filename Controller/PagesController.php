@@ -22,7 +22,7 @@ class PagesController extends FrontendController
 
     public function home()
     {
-        
+
         /**
          * START: security keys check
          */
@@ -51,13 +51,13 @@ class PagesController extends FrontendController
         /**
          * END: security keys check
          */
-        
+
         $this->loadModel('BlogPost');
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
-        
+
         $this->set('title_for_layout', 'Willkommen');
-        
+
         $this->loadModel('Slider');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
@@ -66,17 +66,17 @@ class PagesController extends FrontendController
     public function detail()
     {
         $pageId = (int) $this->params['pass'][0];
-        
+
         $page = $this->Page->getPageForFrontend($pageId, $this->AppAuth);
         if (empty($page)) {
             throw new MissingActionException('page not found');
         }
-        
+
         // redirect direct call of page with link
         if ($page['Page']['url'] != '') {
             $this->redirect($page['Page']['url']);
         }
-        
+
         $recursive = 2; // for PageLang
         $children = $this->Page->children(
             $pageId,
@@ -90,31 +90,34 @@ class PagesController extends FrontendController
             1,
             $recursive
         );
-        
+
         $page['children'] = array();
         foreach ($children as $child) {
-            if ($child['Page']['active'] == APP_OFF) continue;
-            if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) continue;
+            if ($child['Page']['active'] == APP_OFF) {
+                continue;
+            }
+            if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) {
+                continue;
+            }
             $page['children'][] = $child;
         }
-        
+
         $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']);
         if ($correctSlug != Configure::read('slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
-        
+
         $this->set('page', $page);
         $this->set('title_for_layout', $page['PageLang']['meta_title']);
     }
-    
+
     public function terms_of_use()
     {
         $this->set('title_for_layout', 'Nutzungsbedingungen');
     }
-    
-    public function privacy_policy() 
+
+    public function privacy_policy()
     {
         $this->set('title_for_layout', 'Datenschutzerklärung');
     }
-    
 }

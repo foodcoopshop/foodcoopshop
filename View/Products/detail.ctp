@@ -26,16 +26,16 @@ $this->element('addScript', array('script' =>
 <h1><?php echo $title_for_layout; ?></h1>
 
 <?php
-    foreach($products as $product) {
-        echo $this->element('product/product', array('product' => $product));
-    }
+foreach ($products as $product) {
+    echo $this->element('product/product', array('product' => $product));
+}
 ?>
 
 <?php
-    if (!empty($blogPosts)) {
-        echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
-        echo $this->element('blogPosts', array(
-            'blogPosts' => $blogPosts
-        ));
-    }
+if (!empty($blogPosts)) {
+    echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
+    echo $this->element('blogPosts', array(
+    'blogPosts' => $blogPosts
+    ));
+}
 ?>

@@ -20,15 +20,15 @@ if (!$appAuth->loggedIn() || !Configure::read('app.db_config_FCS_CART_ENABLED'))
 
 <div class="line">
     <?php
-        if ($stockAvailable == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
-            $this->element('addScript', array('script' => 
-                "foodcoopshop.Helper.disableButton($('#btn-cart-".$productId."'));"
-            ));
-        }
+    if ($stockAvailable == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
+        $this->element('addScript', array('script' =>
+        "foodcoopshop.Helper.disableButton($('#btn-cart-".$productId."'));"
+        ));
+    }
     ?>
     
     <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-success btn-cart" href="javascript:void(0);">
-    	<i class="fa fa-shopping-cart fa-lg"></i> In den Warenkorb
+        <i class="fa fa-shopping-cart fa-lg"></i> In den Warenkorb
     </a>
 
 </div>

@@ -17,5 +17,3 @@
 class CakeInvoice extends AppModel
 {
 }
-
-?>

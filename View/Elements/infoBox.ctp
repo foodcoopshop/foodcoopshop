@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 ?><div id="info-box" class="box">
-	<?php
-	   echo preg_replace('/{ABHOLTAG}/', $this->Time->getFormattedDeliveryDateByCurrentDay(), Configure::read('app.db_config_FCS_RIGHT_INFO_BOX_HTML'));
-	?>
+    <?php
+       echo preg_replace('/{ABHOLTAG}/', $this->Time->getFormattedDeliveryDateByCurrentDay(), Configure::read('app.db_config_FCS_RIGHT_INFO_BOX_HTML'));
+    ?>
 </div>

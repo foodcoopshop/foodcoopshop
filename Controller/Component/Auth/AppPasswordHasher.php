@@ -30,5 +30,3 @@ class AppPasswordHasher extends AbstractPasswordHasher
         return $hashedPassword === $this->hash($password);
     }
 }
-
-?>

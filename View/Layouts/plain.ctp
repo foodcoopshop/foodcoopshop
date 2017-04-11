@@ -32,22 +32,22 @@
     <div id="container">
     
             <div id="content">
-        	<?php echo $this->Session->flash(); ?>
-	       	<div id="inner-content">
-        		<?php echo $this->fetch('content'); ?>
-        		<?php
-        		  if ($this->name == 'CakeError' && Configure::read('debug') == 0) {
-        		    $referer = '/';
-        		    $refererName = 'Startseite';
-            		if (!empty($_SERVER['HTTP_REFERER'])) {
-            		    $referer = $_SERVER['HTTP_REFERER'];
-            		    $refererName = 'Seite, auf der du gerade warst.';
-            		}
-            		  ?>
-           			<br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
-            	<?php } ?>
-        		<div class="sc"></div>
-        	</div>
+            <?php echo $this->Session->flash(); ?>
+            <div id="inner-content">
+                <?php echo $this->fetch('content'); ?>
+                <?php
+                if ($this->name == 'CakeError' && Configure::read('debug') == 0) {
+                    $referer = '/';
+                    $refererName = 'Startseite';
+                    if (!empty($_SERVER['HTTP_REFERER'])) {
+                        $referer = $_SERVER['HTTP_REFERER'];
+                        $refererName = 'Seite, auf der du gerade warst.';
+                    }
+                    ?>
+                    <br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
+                <?php                                                                                                                                                                                                                                                                                                                                                                                                                                   } ?>
+                <div class="sc"></div>
+            </div>
         </div>
         
     </div>
@@ -58,15 +58,15 @@
 <?php
 
     echo $this->element('renderJs', array('config' => 'frontend'));
-    
-    if ($this->name != 'CakeError' || Configure::read('debug') == 0) {
-        $this->element('addScript', array('script' =>
-            Configure::read('app.jsNamespace').".Helper.initAnystretch();"
-        ));
-    }
-    
+
+if ($this->name != 'CakeError' || Configure::read('debug') == 0) {
+    $this->element('addScript', array('script' =>
+    Configure::read('app.jsNamespace').".Helper.initAnystretch();"
+    ));
+}
+
     echo $this->fetch('script'); // all scripts from layouts
-    
+
 ?>
 
 </body>

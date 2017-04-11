@@ -14,24 +14,24 @@
  */
 ?>
 <?php echo $this->element('email/tableHead'); ?>
-	<tbody>
-	
-		<?php echo $this->element('email/greeting', array('data' => $customer)); ?>
-		
-		<tr>
-			<td>
-				
-				<p>
-					du hast um ein neues Passwort angefragt, es lautet:<br />
-					<b><?php echo $password; ?></b>
-				</p>
-				
-				<p>Du kannst dich hier anmelden und das Passwort ändern:<br />
-				<a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
-				
-			</td>
-			
-		</tr>
-		
-	</tbody>
+    <tbody>
+    
+        <?php echo $this->element('email/greeting', array('data' => $customer)); ?>
+        
+        <tr>
+            <td>
+                
+                <p>
+                    du hast um ein neues Passwort angefragt, es lautet:<br />
+                    <b><?php echo $password; ?></b>
+                </p>
+                
+                <p>Du kannst dich hier anmelden und das Passwort ändern:<br />
+                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
+                
+            </td>
+            
+        </tr>
+        
+    </tbody>
 </table>

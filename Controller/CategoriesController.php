@@ -35,13 +35,13 @@ class CategoriesController extends FrontendController
         $this->loadModel('BlogPost');
         $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
         $this->set('blogPosts', $blogPosts);
-        
+
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
         $products = $this->perpareProductsForFrontend($products);
         $this->set('products', $products);
-        
+
         $this->set('title_for_layout', 'Neue Produkte');
-        
+
         $this->render('detail');
     }
 
@@ -51,30 +51,30 @@ class CategoriesController extends FrontendController
         if (! empty($this->params->query['keyword'])) {
             $keyword = trim($this->params->query['keyword']);
         }
-        
+
         if ($keyword == '') {
             throw new MissingActionException('no keyword');
         }
-        
+
         $this->set('keyword', $keyword);
-        
+
         $this->loadModel('BlogPost');
         $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
         $this->set('blogPosts', $blogPosts);
-        
+
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
         $products = $this->perpareProductsForFrontend($products);
         $this->set('products', $products);
-        
+
         $this->set('title_for_layout', 'Suche "' . $keyword . '"');
-        
+
         $this->render('detail');
     }
 
     public function detail()
     {
         $categoryId = (int) $this->params['pass'][0];
-        
+
         $category = $this->Category->find('first', array(
             'conditions' => array(
                 'Category.id_category' => $categoryId,
@@ -82,27 +82,27 @@ class CategoriesController extends FrontendController
                 'CategoryLang.id_shop' => Configure::read('app.shopId')
             )
         ));
-        
+
         if (empty($category)) {
             throw new MissingActionException('category not found');
         }
-        
+
         $correctSlug = Configure::read('slugHelper')->getCategoryDetail($categoryId, $category['CategoryLang']['name']);
         if ($correctSlug != Configure::read('slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
-        
+
         $this->loadModel('BlogPost');
         $blogPosts = $this->BlogPost->findBlogPosts(null, $this->AppAuth);
         $this->set('blogPosts', $blogPosts);
-        
+
         $products = $this->Category->getProductsByCategoryId($categoryId);
         $products = $this->perpareProductsForFrontend($products);
-        
+
         $this->set('products', $products);
-        
+
         $this->set('category', $category);
-        
+
         $this->set('title_for_layout', $category['CategoryLang']['name']);
     }
 }

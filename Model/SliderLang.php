@@ -32,5 +32,3 @@ class SliderLang extends AppModel
         )
     );
 }
-
-?>

@@ -63,7 +63,7 @@ class ProductsController extends AdminAppController
                 break;
         }
     }
-    
+
     public function beforeFilter()
     {
         $this->loadModel('CakeActionLog');
@@ -73,7 +73,7 @@ class ProductsController extends AdminAppController
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
         $productsForDropdown = array();
         foreach ($products as $key => $ps) {
@@ -95,13 +95,13 @@ class ProductsController extends AdminAppController
 
     /**
      * deletes both db entries and physical files (thumbs)
-     * 
-     * @param int $productId            
+     *
+     * @param int $productId
      */
     public function deleteImage($productId)
     {
         $productId = (int) $productId;
-        
+
         if ($productId == 0 || $productId == '') {
             $message = 'Product Id nicht korrekt: ' . $productId;
             $this->log($message);
@@ -110,13 +110,13 @@ class ProductsController extends AdminAppController
                 'msg' => $message
             )));
         }
-        
+
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         // delete db entries
         $this->Product->ImageShop->Image->deleteAll(array(
             'Image.id_image' => $product['ImageShop']['id_image']
@@ -127,7 +127,7 @@ class ProductsController extends AdminAppController
         $this->Product->ImageShop->ImageLang->deleteAll(array(
             'ImageLang.id_image' => $product['ImageShop']['id_image']
         ), false);
-        
+
         // delete physical files
         $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($product['ImageShop']['id_image']);
         $thumbsPath = Configure::read('htmlHelper')->getProductThumbsPath($imageIdAsPath);
@@ -135,30 +135,30 @@ class ProductsController extends AdminAppController
             $thumbsFileName = $thumbsPath . DS . $product['ImageShop']['id_image'] . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
-        
+
         $messageString = 'Bild (Id: ' . $product['ImageShop']['id_image'] . ') wurde erfolgreich gelöscht. Artikel: "' . $product['ProductLang']['name'] . '", Hersteller: "' . $product['Manufacturer']['name'] . '"';
         $this->AppSession->setFlashMessage($messageString);
         $this->CakeActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         $this->redirect($this->referer());
     }
 
     public function saveUploadedImageProduct()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = $this->params['data']['objectId'];
         $filename = $this->params['data']['filename'];
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        
+
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $imageId = 0;
         if ($product['ImageShop']['id_image'] == '') {
             // product does not yet have image => create the necessary db entries
@@ -186,17 +186,17 @@ class ProductsController extends AdminAppController
                 'legend' => $product['ProductLang']['name'] . '-' . StringComponent::createRandomString(3)
             ));
         }
-        
+
         // not (yet) implemented for attributes, only for productIds!
         $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($imageId);
         $thumbsPath = Configure::read('htmlHelper')->getProductThumbsPath($imageIdAsPath);
-        
+
         // recursively create path
         App::uses('Folder', 'Utility');
         $dir = new Folder();
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);
-        
+
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $thumb = PhpThumbFactory::create(WWW_ROOT . $filename);
             $dimensions = $thumb->getCurrentDimensions();
@@ -208,13 +208,13 @@ class ProductsController extends AdminAppController
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
             $thumb->save($thumbsFileName);
         }
-        
+
         $messageString = 'Ein neues Bild zum Artikel: "' . $product['ProductLang']['name'] . '" (Hersteller: "' . $product['Manufacturer']['name'] . '") wurde hochgeladen.';
         $this->AppSession->setFlashMessage($messageString);
         $this->CakeActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'success'
@@ -223,7 +223,7 @@ class ProductsController extends AdminAppController
 
     public function deleteProductAttribute($productId, $productAttributeId)
     {
-        
+
         // get new data
         $this->Product->recursive = 4;
         $oldProduct = $this->Product->find('first', array(
@@ -231,19 +231,19 @@ class ProductsController extends AdminAppController
                 'Product.id_product' => $productId
             )
         ));
-        
+
         foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
             if ($productAttribute['ProductAttributeCombination']['id_product_attribute'] == $productAttributeId) {
                 $attributeLang = $productAttribute['ProductAttributeCombination']['AttributeLang']['name'];
             }
         }
-        
+
         $this->Product->deleteProductAttribute($productId, $productAttributeId, $oldProduct);
-        
+
         $messageString = 'Die Variante "' . $attributeLang . '" des Artikels "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich gelöscht.';
         $this->AppSession->setFlashMessage($messageString);
         $this->CakeActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
-        
+
         $this->redirect($this->referer());
     }
 
@@ -254,9 +254,9 @@ class ProductsController extends AdminAppController
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $this->Product->addProductAttribute($productId, $productAttributeId);
-        
+
         // get new data
         $this->Product->recursive = 3; // to get product attribute combination => AttributeLang
         $newProduct = $this->Product->find('first', array(
@@ -271,42 +271,42 @@ class ProductsController extends AdminAppController
             }
         }
         $this->AppSession->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
-        
+
         $messageString = 'Die Variante "' . $attributeLang . '" für den Artikel "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
         $this->AppSession->setFlashMessage($messageString);
         $this->CakeActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         $this->redirect($this->referer());
     }
 
     public function add($manufacturerId)
     {
-        
+
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
-        
+
         $this->loadModel('Manufacturer');
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
             )
         ));
-        
+
         if (empty($manufacturer)) {
             throw new MissingActionException('manufacturer not existing');
         }
-        
+
         $newProduct = $this->Product->add($manufacturer);
-        
+
         $messageString = 'Ein neuer Artikel für "' . $manufacturer['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
         $this->AppSession->setFlashMessage($messageString);
         $this->CakeActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct['Product']['id_product'], 'products', $messageString);
-        
+
         $this->AppSession->write('highlightedRowId', $newProduct['Product']['id_product']);
         $this->redirect($this->referer());
     }
@@ -314,30 +314,29 @@ class ProductsController extends AdminAppController
     public function editTax()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = (int) $this->params['data']['productId'];
         $taxId = (int) $this->params['data']['taxId'];
-        
+
         $this->Product->recursive = 2; // to get ProductAttributeShop
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         if ($taxId != $oldProduct['Product']['id_tax']) {
-            
             $product2update = array(
                 'id_tax' => $taxId
             );
-            
+
             // as often data is saved twice (Product, ProductShop)
             $this->Product->id = $productId;
             $this->Product->save($product2update);
-            
+
             $this->Product->ProductShop->id = $productId;
             $this->Product->ProductShop->save($product2update);
-            
+
             if (! empty($oldProduct['ProductAttributes'])) {
                 // update net price of all attributes
                 foreach ($oldProduct['ProductAttributes'] as $attribute) {
@@ -358,36 +357,36 @@ class ProductsController extends AdminAppController
                 $this->Product->ProductShop->id = $productId;
                 $this->Product->ProductShop->save($product2update);
             }
-            
+
             $this->loadModel('Tax');
             $tax = $this->Tax->find('first', array(
                 'conditions' => array(
                     'Tax.id_tax' => $taxId
                 )
             ));
-            
+
             if (! empty($tax)) {
                 $taxRate = Configure::read('htmlHelper')->formatTaxRate($tax['Tax']['rate']);
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
-            
+
             if (! empty($oldProduct['Tax'])) {
                 $oldTaxRate = Configure::read('htmlHelper')->formatTaxRate($oldProduct['Tax']['rate']);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
-            
+
             $messageString = 'Der Steuersatz des Artikels ' . $oldProduct['ProductLang']['name'] . ' wurde erfolgreich von  ' . $oldTaxRate . '% auf ' . $taxRate . '% geändert.';
             $this->CakeActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
         } else {
             $messageString = 'Es wurden keine Änderungen gespeichert.';
         }
-        
+
         $this->AppSession->setFlashMessage($messageString);
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'Speichern erfolgreich.'
@@ -397,27 +396,27 @@ class ProductsController extends AdminAppController
     public function editCategories()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = (int) $this->params['data']['productId'];
         $selectedCategories = array();
         if (isset($this->params['data']['selectedCategories'])) {
             $selectedCategories = $this->params['data']['selectedCategories'];
         }
-        
+
         $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle produkte'
         $selectedCategories = array_unique($selectedCategories);
-        
+
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $this->loadModel('CategoryProduct');
         $this->CategoryProduct->deleteAll(array(
             'id_product' => $productId
         ));
-        
+
         $this->loadModel('CategoryLang');
         $selectedCategoryNames = array();
         foreach ($selectedCategories as $selectedCategory) {
@@ -436,13 +435,13 @@ class ProductsController extends AdminAppController
                 $this->CategoryProduct->query($sql);
             }
         }
-        
+
         $messageString = 'Die Kategorien des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
         $this->AppSession->setFlashMessage($messageString);
         $this->CakeActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'Speichern erfolgreich.'
@@ -452,10 +451,10 @@ class ProductsController extends AdminAppController
     public function editQuantity()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = $this->params['data']['productId'];
         $quantity = (int) $this->params['data']['quantity'];
-        
+
         if ($quantity < 0) {
             $message = 'Die Anzahl darf nicht negativ sein.';
             $this->log($message);
@@ -464,14 +463,14 @@ class ProductsController extends AdminAppController
                 'msg' => $message
             )));
         }
-        
+
         $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $isAttribute = false;
         $explodedProductId = explode('-', $productId);
         if (count($explodedProductId) == 2) {
@@ -479,13 +478,13 @@ class ProductsController extends AdminAppController
             $productId = $explodedProductId[0];
             $attributeId = $explodedProductId[1];
         }
-        
+
         if ($isAttribute) {
-            
             // werte für email überschreiben
             foreach ($oldProduct['ProductAttributes'] as $attribute) {
-                if ($attribute['id_product_attribute'] != $attributeId)
+                if ($attribute['id_product_attribute'] != $attributeId) {
                     continue;
+                }
                 $oldProduct['ProductLang'] = array(
                     'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['AttributeLang']['name']
                 );
@@ -493,7 +492,7 @@ class ProductsController extends AdminAppController
                     'quantity' => $attribute['StockAvailable']['quantity']
                 );
             }
-            
+
             // update attribute - updateAll needed for multi conditions of update
             $this->Product->StockAvailable->updateAll(array(
                 'StockAvailable.quantity' => $quantity
@@ -501,7 +500,7 @@ class ProductsController extends AdminAppController
                 'StockAvailable.id_product_attribute' => $attributeId,
                 'StockAvailable.id_product' => $productId
             ));
-            
+
             $this->Product->StockAvailable->updateQuantityForMainProduct($productId);
         } else {
             $product2update = array(
@@ -510,13 +509,13 @@ class ProductsController extends AdminAppController
             $this->Product->StockAvailable->id = $productId;
             $this->Product->StockAvailable->save($product2update);
         }
-        
+
         $this->AppSession->setFlashMessage('Die Anzahl des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
-        
+
         $this->CakeActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Artikels "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde von ' . $oldProduct['StockAvailable']['quantity'] . ' auf ' . $quantity . ' geändert.');
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -526,11 +525,11 @@ class ProductsController extends AdminAppController
     public function editPrice()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = $this->params['data']['productId'];
         $price = trim($this->params['data']['price']);
         $price = str_replace(',', '.', $price);
-        
+
         if (! is_numeric($price) || $price < 0) {
             $message = 'input format for price is wrong';
             $this->log($message);
@@ -540,17 +539,17 @@ class ProductsController extends AdminAppController
             )));
         }
         $price = floatval($price);
-        
+
         $ids = $this->Product->getProductIdAndAttributeId($productId);
         $productId = $ids['productId'];
-        
+
         $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         if (empty($oldProduct)) {
             $message = 'product ' . $productId . ' not found';
             $this->log($message);
@@ -559,15 +558,15 @@ class ProductsController extends AdminAppController
                 'msg' => $message
             )));
         }
-        
+
         $netPrice = $this->Product->getNetPrice($productId, $price);
-        
+
         if ($ids['attributeId'] > 0) {
-            
             // override values for messages
             foreach ($oldProduct['ProductAttributes'] as $attribute) {
-                if ($attribute['id_product_attribute'] != $ids['attributeId'])
+                if ($attribute['id_product_attribute'] != $ids['attributeId']) {
                     continue;
+                }
                 $oldProduct['ProductLang'] = array(
                     'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['AttributeLang']['name']
                 );
@@ -575,7 +574,7 @@ class ProductsController extends AdminAppController
                     'price' => $attribute['ProductAttributeShop']['price']
                 );
             }
-            
+
             // update attribute - updateAll needed for multi conditions of update
             $this->Product->ProductAttributes->ProductAttributeShop->updateAll(array(
                 'ProductAttributeShop.price' => $netPrice
@@ -589,13 +588,13 @@ class ProductsController extends AdminAppController
             $this->Product->ProductShop->id = $productId;
             $this->Product->ProductShop->save($product2update);
         }
-        
+
         $this->AppSession->setFlashMessage('Der Preis des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
-        
+
         $this->CakeActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Artikels "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde von ' . Configure::read('htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('htmlHelper')->formatAsEuro($price) . ' geändert.');
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -605,11 +604,11 @@ class ProductsController extends AdminAppController
     public function editDeposit()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = $this->params['data']['productId'];
         $deposit = trim($this->params['data']['deposit']);
         $deposit = str_replace(',', '.', $deposit);
-        
+
         if (! is_numeric($deposit) || $deposit < 0) {
             $message = 'input format for deposit is wrong';
             $this->log($message);
@@ -619,21 +618,20 @@ class ProductsController extends AdminAppController
             )));
         }
         $deposit = floatval($deposit);
-        
+
         $ids = $this->Product->getProductIdAndAttributeId($productId);
         $productId = $ids['productId'];
-        
+
         $this->Product->recursive = 4;
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $logString = 'Der Pfand des Artikels "' . $oldProduct['ProductLang']['name'] . '"';
-        
+
         if ($ids['attributeId'] > 0) {
-            
             $attributeName = '';
             foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
                 if ($productAttribute['id_product_attribute'] == $ids['attributeId']) {
@@ -641,59 +639,58 @@ class ProductsController extends AdminAppController
                     break;
                 }
             }
-            
+
             $logString .= ' (Variante: ' . $attributeName . ') ';
-            
+
             // deposit is set for $ids['attributeId']
             $oldDeposit = $this->Product->CakeDepositProduct->find('first', array(
                 'conditions' => array(
                     'CakeDepositProduct.id_product_attribute' => $ids['attributeId']
                 )
             ));
-            
+
             if (empty($oldDeposit)) {
                 $this->Product->CakeDepositProduct->id = null; // force new insert
             } else {
                 $this->Product->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
             }
-            
+
             $deposit2save = array(
                 'id_product_attribute' => $ids['attributeId'],
                 'deposit' => $deposit
             );
         } else {
-            
             // deposit is set for productId
             $oldDeposit = $this->Product->CakeDepositProduct->find('first', array(
                 'conditions' => array(
                     'CakeDepositProduct.id_product' => $productId
                 )
             ));
-            
+
             if (empty($oldDeposit)) {
                 $this->Product->CakeDepositProduct->id = null; // force new insert
             } else {
                 $this->Product->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
             }
-            
+
             $deposit2save = array(
                 'id_product' => $productId,
                 'deposit' => $deposit
             );
         }
-        
+
         $this->Product->CakeDepositProduct->primaryKey = 'id';
         $this->Product->CakeDepositProduct->save($deposit2save);
-        
+
         $logString .= ' wurde von ';
         if (isset($oldDeposit['CakeDepositProduct'])) {
             $logString .= Configure::read('htmlHelper')->formatAsEuro($oldDeposit['CakeDepositProduct']['deposit']);
         } else {
             $logString .= Configure::read('htmlHelper')->formatAsEuro(0);
         }
-        
+
         $logString .= ' auf ' . Configure::read('htmlHelper')->formatAsEuro($deposit) . ' geändert.';
-        
+
         $email = new AppEmail();
         $email->template('Admin.deposit_changed')
             ->to($email->from())
@@ -702,15 +699,15 @@ class ProductsController extends AdminAppController
             ->viewVars(array(
             'logString' => $logString,
             'appAuth' => $this->AppAuth
-        ))
+            ))
             ->send();
-        
+
         $this->CakeActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
-        
+
         $this->AppSession->setFlashMessage('Der Pfand des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -720,37 +717,37 @@ class ProductsController extends AdminAppController
     public function editName()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $productId = $this->params['data']['productId'];
         $name = StringComponent::removeSpecialChars(trim($this->params['data']['name']));
         $unity = StringComponent::removeSpecialChars(strip_tags(trim($this->params['data']['unity'])));
-        
+
         $descriptionShort = strip_tags(htmlspecialchars_decode($this->params['data']['descriptionShort']), '<p><b><br>');
         $description = strip_tags(htmlspecialchars_decode($this->params['data']['description']), '<p><b><br>');
-        
+
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $productLang2update = array(
             'name' => $name,
             'link_rewrite' => StringComponent::slugify($name),
             'description_short' => $descriptionShort,
             'description' => $description
         );
-        
+
         $this->Product->ProductLang->id = $productId;
         $this->Product->ProductLang->save($productLang2update);
-        
+
         $this->Product->ProductShop->id = $productId;
         $this->Product->ProductShop->save(array(
             'unity' => $unity
         ));
-        
+
         $this->AppSession->setFlashMessage('Der Artikel wurde erfolgreich geändert.');
-        
+
         if ($name != $oldProduct['ProductLang']['name']) {
             $this->CakeActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Artikel "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde umbenannt in <i>"' . $name . '"</i>.');
         }
@@ -763,9 +760,9 @@ class ProductsController extends AdminAppController
         if ($descriptionShort != $oldProduct['ProductLang']['description_short']) {
             $this->CakeActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Artikels "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert. <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLang']['description_short'] . '</div> neu: <div class="changed">' . $descriptionShort . '</div>');
         }
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok'
@@ -779,26 +776,26 @@ class ProductsController extends AdminAppController
             $productId = $this->params['named']['productId'];
         }
         $this->set('productId', $productId);
-        
+
         $manufacturerId = '';
         if (! empty($this->params['named']['manufacturerId'])) {
             $manufacturerId = $this->params['named']['manufacturerId'];
         }
-        
+
         // always filter by manufacturer id so that no other products than the own are shown
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
         $this->set('manufacturerId', $manufacturerId);
-        
+
         $active = 'all'; // default value
         if (isset($this->params['named']['active'])) { // klappt bei orderState auch mit !empty( - hier nicht... strange
             $active = $this->params['named']['active'];
         }
         $this->set('active', $active);
-        
+
         $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active);
-        
+
         $this->Paginator->settings = array_merge(array(
             'conditions' => $pParams['conditions'],
             'contain' => $pParams['contain'],
@@ -806,9 +803,9 @@ class ProductsController extends AdminAppController
             'fields' => $pParams['fields'],
             'group' => $pParams['group']
         ), $this->Paginator->settings);
-        
+
         $this->Product->recursive = 3;
-        
+
         // reduce data
         $this->Product->Manufacturer->unbindModel(array(
             'hasOne' => 'ManufacturerLang'
@@ -819,22 +816,21 @@ class ProductsController extends AdminAppController
         $this->Product->ProductLang->unbindModel(array(
             'belongsTo' => 'Product'
         ));
-        
+
         $products = $this->Paginator->paginate('Product');
-        
+
         $i = 0;
         $groupedProducts = array();
         foreach ($products as $product) {
-            
             $products[$i]['Categories'] = array(
                 'names' => array(),
                 'allProductsFound' => false
             );
             foreach ($product['CategoryProducts'] as $category) {
-                
-                if ($category['id_category'] == 2)
+                if ($category['id_category'] == 2) {
                     continue; // do not consider category "produkte" - why was it needed???
-                                                                     
+                }
+
                 // alle produkte has to be checked... otherwise show error message
                 if ($category['id_category'] == Configure::read('app.categoryAllProducts')) {
                     $products[$i]['Categories']['allProductsFound'] = true;
@@ -842,24 +838,24 @@ class ProductsController extends AdminAppController
                     $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
                 }
             }
-            
+
             $products[$i]['selectedCategories'] = Set::extract('{n}.id_category', $product['CategoryProducts']);
             $products[$i]['Deposit'] = 0;
-            
+
             $products[$i]['Product']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
             $products[$i]['Product']['gross_price'] = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
-            
+
             $rowClass = array();
             if (! $product['Product']['active']) {
                 $rowClass[] = 'deactivated';
             }
-            
+
             @$products[$i]['Deposit'] = $product['CakeDepositProduct']['deposit'];
             if (empty($products[$i]['Tax'])) {
                 $products[$i]['Tax']['rate'] = 0;
                 $product = $products[$i];
             }
-            
+
             $rowClass[] = 'main-article';
             $rowIsOdd = false;
             if ($i % 2 == 0) {
@@ -867,31 +863,29 @@ class ProductsController extends AdminAppController
                 $rowClass[] = 'custom-odd';
             }
             $products[$i]['Product']['rowClass'] = join(' ', $rowClass);
-            
+
             $groupedProducts[] = $products[$i];
             $i ++;
-            
+
             if (! empty($product['ProductAttributes'])) {
-                
                 foreach ($product['ProductAttributes'] as $attribute) {
-                    
                     // hat mal einen fehler geworfen... zum debuggen
                     $grossPrice = 0;
                     if (! empty($attribute['ProductAttributeShop']['price'])) {
                         $grossPrice = $this->Product->getGrossPrice($product['Product']['id_product'], $attribute['ProductAttributeShop']['price']);
                     }
-                    
+
                     $rowClass = array(
                         'sub-row'
                     );
                     if (! $product['Product']['active']) {
                         $rowClass[] = 'deactivated';
                     }
-                    
+
                     if ($rowIsOdd) {
                         $rowClass[] = 'custom-odd';
                     }
-                    
+
                     $preparedProduct = array(
                         'Product' => array(
                             'id_product' => $product['Product']['id_product'] . '-' . $attribute['id_product_attribute'],
@@ -927,9 +921,9 @@ class ProductsController extends AdminAppController
                 }
             }
         }
-        
+
         $this->set('products', $groupedProducts);
-        
+
         $this->loadModel('AttributeLang');
         $this->set('attributesLangForDropdown', $this->AttributeLang->getForDropdown());
         $this->loadModel('Category');
@@ -937,7 +931,7 @@ class ProductsController extends AdminAppController
         $this->set('manufacturersForDropdown', $this->Product->Manufacturer->getForDropdown());
         $this->loadModel('Tax');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
-        
+
         if ($manufacturerId != '') {
             $this->loadModel('Manufacturer');
             $manufacturer = $this->Manufacturer->find('first', array(
@@ -947,7 +941,7 @@ class ProductsController extends AdminAppController
             ));
             $this->set('manufacturer', $manufacturer);
         }
-        
+
         $this->set('title_for_layout', 'Artikel');
     }
 
@@ -955,73 +949,73 @@ class ProductsController extends AdminAppController
     {
         $productId = (int) $productId;
         $productAttributeId = (int) $productAttributeId;
-        
+
         $this->Product->changeDefaultAttributeId($productId, $productAttributeId);
-        
+
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $productAttribute = $this->Product->ProductAttributes->find('first', array(
             'conditions' => array(
                 'ProductAttributes.id_product_attribute' => $productAttributeId
             ),
             'recursive' => 3
         ));
-        
+
         $message = 'Die Standard-Variante des Artikels "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombination']['AttributeLang']['name'] . '" geändert.';
         $this->AppSession->setFlashMessage($message);
         $this->CakeActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
-        
+
         $this->redirect($this->referer());
     }
 
     public function changeNewStatus($productId, $status)
     {
         $status = (int) $status;
-        
+
         if (! in_array($status, array(
             APP_OFF,
             APP_ON
         ))) {
             throw new MissingActionException('New-Status muss 0 oder 1 sein!');
         }
-        
+
         if ($status == 1) {
             $newDateAdd = 'NOW()';
         } else {
             $newDateAdd = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
         }
-        
+
         $sql = "UPDATE ".$this->Product->tablePrefix."product p, ".$this->Product->tablePrefix."product_shop ps 
                 SET p.date_add  = " . $newDateAdd . ",
                     ps.date_add = " . $newDateAdd . "
                 WHERE p.id_product = ps.id_product
                 AND p.id_product = " . $productId . ";";
         $result = $this->Product->query($sql);
-        
+
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $statusText = 'ab sofort nicht mehr als "neu" angezeigt';
         $actionLogType = 'product_set_to_old';
         if ($status) {
             $statusText = 'jetzt ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
             $actionLogType = 'product_set_to_new';
         }
-        
+
         $message = 'Der Artikel "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wird ' . $statusText . '.';
         $this->AppSession->setFlashMessage($message);
-        
+
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         $this->redirect($this->referer());
     }
 
@@ -1033,35 +1027,33 @@ class ProductsController extends AdminAppController
         ))) {
             throw new MissingActionException('Status muss 0 oder 1 sein!');
         }
-        
+
         $sql = "UPDATE ".$this->Product->tablePrefix."product p, ".$this->Product->tablePrefix."product_shop ps 
                 SET p.active  = " . $status . ",
                     ps.active = " . $status . "
                 WHERE p.id_product = ps.id_product
                 AND p.id_product = " . $productId . ";";
         $result = $this->Product->query($sql);
-        
+
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
-        
+
         $statusText = 'deaktiviert';
         $actionLogType = 'product_set_inactive';
         if ($status) {
             $statusText = 'aktiviert';
             $actionLogType = 'product_set_active';
         }
-        
+
         $this->AppSession->setFlashMessage('Der Artikel "' . $product['ProductLang']['name'] . '" wurde erfolgreich ' . $statusText . '.');
-        
+
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Der Artikel "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde ' . $statusText . '.');
-        
+
         $this->AppSession->write('highlightedRowId', $productId);
-        
+
         $this->redirect($this->referer());
     }
 }
-
-?>

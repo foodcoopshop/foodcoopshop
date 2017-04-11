@@ -15,14 +15,14 @@
 ?>
 <div id="products">
      
-     <?php
-    $this->element('addScript', array(
+        <?php
+        $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
-    ));
-    $this->element('highlightRowAfterEdit', array(
+        ));
+        $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#product-'
-    ));
+        ));
     ?>
     
     <div class="filter-container">
@@ -52,10 +52,10 @@
         ));
         ?>
         <button id="filter" class="btn btn-success">
-			<i class="fa fa-search"></i> Filtern
-		</button>
+            <i class="fa fa-search"></i> Filtern
+        </button>
 
-		<div class="right">
+        <div class="right">
             <?php
             // only show button if no manufacturer filter is applied
             if ($manufacturerId > 0) {
@@ -69,52 +69,52 @@
             ?>
         </div>
 
-	</div>
+    </div>
 
-	<div id="help-container">
-		<ul>
-			<li>Auf dieser Seite werden deine <b>Artikel</b> verwaltet.
-			</li>
-			<li>
+    <div id="help-container">
+        <ul>
+            <li>Auf dieser Seite werden deine <b>Artikel</b> verwaltet.
+            </li>
+            <li>
                 Du kannst neue Artikel erstellen (Button rechts oben), mit einem Klick auf einen der Bearbeiten-Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')); ?> kannst den entsprechenden (z.B. Kategorien, Anzahl, Preis...) ändern.
             </li>
-			<li>Hinweis zum Ändern der Beschreibung: <b><i>Kurze</i> Beschreibung</b>
-				steht im Shop immer neben dem Bild und ist in den Listen zu lesen. <b><i>Lange</i>
-					Beschreibung</b> steht nur auf der Produkt-Detailseite (z.B. für
-				das Anführen von Inhaltsstoffen geeignet).
-			</li>
-			<li>Du kannst deine Artikel <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('accept.png')); ?> bzw. <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts).
+            <li>Hinweis zum Ändern der Beschreibung: <b><i>Kurze</i> Beschreibung</b>
+                steht im Shop immer neben dem Bild und ist in den Listen zu lesen. <b><i>Lange</i>
+                    Beschreibung</b> steht nur auf der Produkt-Detailseite (z.B. für
+                das Anführen von Inhaltsstoffen geeignet).
             </li>
-			<li><b>Varianten: </b>Mit dem <?php echo $this->Html->image($this->Html->getFamFamFamPath('add.png')); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Artikeln anlegen. Das <?php echo $this->Html->image($this->Html->getFamFamFamPath('star.png')); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
+            <li>Du kannst deine Artikel <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('accept.png')); ?> bzw. <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts).
+            </li>
+            <li><b>Varianten: </b>Mit dem <?php echo $this->Html->image($this->Html->getFamFamFamPath('add.png')); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Artikeln anlegen. Das <?php echo $this->Html->image($this->Html->getFamFamFamPath('star.png')); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
                 Varianten können auf "nicht bestellbar" gesetzt werden, in dem du die Anzahl auf 0 setzt.
             </li>
-			<li>Falls eine gewünschte Variante noch nicht zur Verfügung steht,
-				sag uns bitte Bescheid. Wir legen sie dann für dich an.</li>
-			<li>Wenn du von einem Artikel nur eine <b>beschränkte Anzahl</b>
-				liefern kannst, ändere die Anzahl bitte dementsprechend. Unser
-				System vermindert bei jeder Bestellung den Lagerbestand und stoppt
-				die Bestellmöglichkeit, wenn keine Artikel mehr verfügbar sind,
-				automatisch. Somit bekommt jeder, der bestellt, seine Ware und es
-				muss nichts storniert werden.
-			</li>
-			<li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image($this->Html->getFamFamFamPath('image_add.png')); ?>-Icons kannst ein Bild zu deinem Artikel hochladen. Wenn zu einem Artikel noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
+            <li>Falls eine gewünschte Variante noch nicht zur Verfügung steht,
+                sag uns bitte Bescheid. Wir legen sie dann für dich an.</li>
+            <li>Wenn du von einem Artikel nur eine <b>beschränkte Anzahl</b>
+                liefern kannst, ändere die Anzahl bitte dementsprechend. Unser
+                System vermindert bei jeder Bestellung den Lagerbestand und stoppt
+                die Bestellmöglichkeit, wenn keine Artikel mehr verfügbar sind,
+                automatisch. Somit bekommt jeder, der bestellt, seine Ware und es
+                muss nichts storniert werden.
             </li>
-			<li>Du siehst, für welche Artikel wir Pfand einheben. Möchtest du den
-				Pfand ändern, sag uns bitte Bescheid.</li>
-			<li><b>Neue Artikel</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
-				href="<?php echo Configure::read('app.cakeServerName'); ?>/neue-produkte"
-				target="_blank">"Neue Produkte"</a> auf.</li>
-		</ul>
-	</div>
+            <li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image($this->Html->getFamFamFamPath('image_add.png')); ?>-Icons kannst ein Bild zu deinem Artikel hochladen. Wenn zu einem Artikel noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
+            </li>
+            <li>Du siehst, für welche Artikel wir Pfand einheben. Möchtest du den
+                Pfand ändern, sag uns bitte Bescheid.</li>
+            <li><b>Neue Artikel</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
+                href="<?php echo Configure::read('app.cakeServerName'); ?>/neue-produkte"
+                target="_blank">"Neue Produkte"</a> auf.</li>
+        </ul>
+    </div>
     
     <?php
-    
+
     if (! empty($manufacturer) && $manufacturer['Manufacturer']['holiday'] == 1) {
         echo '<h2 class="info">Urlaubsmodus aktiviert. Im Shop werden keine Produkte angezeigt!</h2>';
     }
-    
+
     echo '<table class="list no-clone-last-row">';
-    
+
     echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('Product.id_product', 'ID') . '</th>';
     echo '<th>Variante</th>';
@@ -129,18 +129,17 @@
     echo '<th>' . $this->Paginator->sort('Product.active', 'Status') . '</th>';
     echo '<th style="width:29px;"></th>';
     echo '</tr>';
-    
+
     $i = 0;
     foreach ($products as $product) {
-        
         $i ++;
-        
+
         echo '<tr id="product-' . $product['Product']['id_product'] . '" class="data ' . $product['Product']['rowClass'] . '">';
-        
+
         echo '<td class="hide">';
         echo $product['Product']['id_product'];
         echo '</td>';
-        
+
         echo '<td style="text-align: center;padding-left:16px;width:50px;">';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), array(
@@ -149,7 +148,7 @@
             ), 'javascript:void(0);');
         }
         echo '</td>';
-        
+
         echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && empty($product['ImageShop']) ? 'not-available' : '') . '">';
         if ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
@@ -166,25 +165,24 @@
             ));
         }
         echo '</td>';
-        
+
         echo '<td>';
-        
+
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-name-edit-button',
                 'title' => 'Name und Beschreibung ändern'
             ), 'javascript:void(0);');
         }
-        
+
         if (! isset($product['ProductAttributes'])) {
-            
             echo '<span style="float:left;margin-right: 5px;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-product-attribute-button',
                 'title' => 'Variante für Artikel "' . $product['ProductLang']['name'] . '" löschen'
             ), 'javascript:void(0);');
             echo '</span>';
-            
+
             echo '<span style="float:left;">';
             if ($product['ProductAttributeShop']['default_on'] == 1) {
                 echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), array(
@@ -198,11 +196,11 @@
             }
             echo '</span>';
         }
-        
+
         echo '<span class="name-for-dialog">';
         echo $product['ProductLang']['name'];
         echo '</span>';
-        
+
         // show unity only if article has no attributes and field "unity" is not empty
         if (empty($product['ProductAttributes'])) {
             if (isset($product['ProductShop']) && $product['ProductShop']['unity'] != '') {
@@ -212,17 +210,17 @@
                 echo '</span>';
             }
         }
-        
+
         echo '<span class="description-short-for-dialog">';
         echo $product['ProductLang']['description_short'];
         echo '</span>';
-        
+
         echo '<span class="description-for-dialog">';
         echo $product['ProductLang']['description'];
         echo '</span>';
-        
+
         echo '</td>';
-        
+
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             echo '<div class="categories-checkboxes" id="categories-checkboxes-' . $product['Product']['id_product'] . '">';
@@ -251,9 +249,9 @@
             }
         }
         echo '</td>';
-        
+
         echo '<td class="' . (empty($product['ProductAttributes']) && $product['StockAvailable']['quantity'] == 0 ? 'not-available' : '') . '">';
-        
+
         if (empty($product['ProductAttributes'])) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-quantity-edit-button',
@@ -263,9 +261,9 @@
             echo $this->Html->formatAsDecimal($product['StockAvailable']['quantity'], 0);
             echo '</span>';
         }
-        
+
         echo '</td>';
-        
+
         echo '<td class="' . (empty($product['ProductAttributes']) && $product['Product']['gross_price'] == 0 ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
         if (empty($product['ProductAttributes'])) {
@@ -281,7 +279,7 @@
         }
         echo '</div>';
         echo '</td>';
-        
+
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             echo '<div class="tax-dropdown-wrapper" id="tax-dropdown-wrapper-' . $product['Product']['id_product'] . '">';
@@ -307,7 +305,7 @@
             ), 'javascript:void(0);');
         }
         echo '</td>';
-        
+
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             if (! $product['Product']['is_new']) {
@@ -325,7 +323,7 @@
             }
         }
         echo '</td>';
-        
+
         echo '<td>';
         if (empty($product['ProductAttributes'])) {
             echo '<div class="table-cell-wrapper price">';
@@ -343,9 +341,9 @@
             echo '</div>';
         }
         echo '</td>';
-        
+
         echo '<td style="text-align: center;padding-left:10px;width:42px;">';
-        
+
         if ($product['Product']['active'] == 1) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), array(
                 'class' => 'set-state-to-inactive change-active-state',
@@ -353,7 +351,7 @@
                 'title' => 'Zum Deaktivieren anklicken'
             ), 'javascript:void(0);');
         }
-        
+
         if ($product['Product']['active'] == '') {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'set-state-to-active change-active-state',
@@ -361,9 +359,9 @@
                 'title' => 'Zum Aktivieren anklicken'
             ), 'javascript:void(0);');
         }
-        
+
         echo '</td>';
-        
+
         echo '<td>';
         if ($product['Product']['active'] && (! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
@@ -372,14 +370,14 @@
             ), $url = $this->Slug->getProductDetail($product['Product']['id_product'], $product['ProductLang']['name']));
         }
         echo '</td>';
-        
+
         echo '</tr>';
     }
-    
+
     echo '<tr>';
     echo '<td colspan="12"><b>' . $i . '</b> Datensätze</td>';
     echo '</tr>';
-    
+
     echo '</table>';
     ?>    
     

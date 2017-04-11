@@ -14,20 +14,20 @@
  */
 ?>
 <?php echo $this->element('email/tableHead'); ?>
-	<tbody>
-	
-		<?php echo $this->element('email/greeting', array('data' => $data)); ?>
-		
-		<tr>
-			<td>
-				
-				<p>Dein Mitgliedkonto bei "<?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?>" wurde soeben aktiviert.</p>
-				
-				<?php echo $this->element('email/profileLinks', array('data' => $data, 'newPassword' => $newPassword)); ?>
-				
-			</td>
-			
-		</tr>
-		
-	</tbody>
+    <tbody>
+    
+        <?php echo $this->element('email/greeting', array('data' => $data)); ?>
+        
+        <tr>
+            <td>
+                
+                <p>Dein Mitgliedkonto bei "<?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?>" wurde soeben aktiviert.</p>
+                
+                <?php echo $this->element('email/profileLinks', array('data' => $data, 'newPassword' => $newPassword)); ?>
+                
+            </td>
+            
+        </tr>
+        
+    </tbody>
 </table>
