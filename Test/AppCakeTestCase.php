@@ -77,6 +77,7 @@ class AppCakeTestCase extends CakeTestCase
     public function initSimpleBrowser()
     {
         $this->browser = new AppSimpleBrowser();
+        $this->browser->addHeader('x-unit-test-mode: true');
         $this->browser->loginEmail = Configure::read('test.loginEmail');
         $this->browser->loginPassword = Configure::read('test.loginPassword');
     }

@@ -21,6 +21,25 @@ class AppModel extends Model
 {
 
     /**
+     * for unit testing, database source needs to be changed to 'test'
+     * @param string $id
+     * @param string $table
+     * @param string $ds
+     */
+    public function __construct($id = false, $table = null, $ds = null) {
+        
+        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppSimpleBrowser::initSimpleBrowser()
+        if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
+               // unit tests called via web browser
+               || $_SERVER['PHP_SELF'] == '/test.php'
+               // unit tests called via console
+               || (php_sapi_name() == 'cli' && $_SERVER['argv'][3] && $_SERVER['argv'][3] == 'test')) {
+            $this->setDataSource('test');
+        }
+        parent::__construct($id, $table, $ds);
+    }
+    
+    /**
      * logs validation errors
      * @see Model::validates()
      */
