@@ -40,10 +40,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         foreach ($testUrls as $url) {
             $this->browser->get($url);
-            if ($this->hasPageErrors()) {
-                echo '<a href="' . $url . '">' . $url . '</a><br />';
-                echo $this->browser->getContent();
-            }
+            $this->assertPageForErrors();
         }
     }
 
@@ -84,10 +81,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         foreach ($testUrls as $url) {
             $this->browser->get($url);
-            if ($this->hasPageErrors()) {
-                echo '<a href="' . $url . '">' . $url . '</a><br />';
-                echo $this->browser->getContent();
-            }
+            $this->assertPageForErrors();
         }
 
         $this->browser->doFoodCoopShopLogout();
@@ -103,10 +97,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         foreach ($testUrls as $url) {
             $this->browser->get($url);
-            if (! $this->is404Page()) {
-                echo '<a href="' . $url . '">' . $url . '</a><br />';
-                echo $this->browser->getContent();
-            }
+            $this->assertPageFor404();
         }
     }
 
@@ -125,46 +116,42 @@ class PagesControllerTest extends AppCakeTestCase
 
         foreach ($testUrls as $url) {
             $this->browser->get($url);
-            if (! $this->is404Page()) {
-                echo '<a href="' . $url . '">' . $url . '</a><br />';
-                echo $this->browser->getContent();
-            }
+            $this->assertPageFor404();
         }
 
         $this->browser->doFoodCoopShopLogout();
     }
 
-    private function is404Page()
+    /**
+     * @return void
+     */
+    private function assertPageFor404()
     {
-        $fail = false;
         $html = $this->browser->getContent();
-        $fail |= ! $this->assertRegExp('/wurde leider nicht gefunden./', $html);
+        $this->assertRegExp('/wurde leider nicht gefunden./', $html);
         $headers = $this->browser->getHeaders();
-        $fail |= ! $this->assertRegExp("/404 Not Found/", $headers);
-        return $fail;
+        $this->assertRegExp("/404 Not Found/", $headers);
     }
 
     /**
-     * prueft html auf Fehlermeldungen.
-     *
-     * @return boolean
+     * asserts html for errors
+     * @return void
      */
-    private function hasPageErrors()
+    private function assertPageForErrors()
     {
-        $fail = false;
         $html = $this->browser->getContent();
-        $fail |= ! $this->assertNotRegExp('/class="cake-stack-trace"/', $html);
-        $fail |= ! $this->assertNotRegExp('/class="cake-error"/', $html);
-        $fail |= ! $this->assertNotRegExp('/\bFatal error\b/', $html);
-        $fail |= ! $this->assertNotRegExp('/undefined/', $html);
-        $fail |= ! $this->assertNotRegExp('/exception \'[^\']+\' with message/', $html); // alle Exceptions, die irgendwie nicht abgefangen werden
-        $fail |= ! $this->assertNotRegExp('/\<strong\>(Error|Exception)\s*:\s*\<\/strong\>/', $html);
-        $fail |= ! $this->assertNotRegExp('/Parse error/', $html);
-        $fail |= ! $this->assertNotRegExp('/Not Found/', $html); // if element to render does not exist
-        $fail |= ! $this->assertNotRegExp('/\/app\/views\/errors\//', $html); // for catching cake error messages (missing view / missing controller...)
-        $fail |= ! $this->assertNotRegExp('/error in your SQL syntax/', $html); // SQL syntax fehler
-        $fail |= ! $this->assertNotRegExp('/ERROR!/', $html); // manuelle fehlermeldung
-        $fail |= ! $this->assertRegExp('/\<\/body\>/', $html); // weiße seite? nicht fertig gerendert?
-        return $fail;
+        $this->assertNotRegExp('/class="cake-stack-trace"/', $html);
+        $this->assertNotRegExp('/class="cake-error"/', $html);
+        $this->assertNotRegExp('/\bFatal error\b/', $html);
+        $this->assertNotRegExp('/undefined/', $html);
+        $this->assertNotRegExp('/exception \'[^\']+\' with message/', $html); // alle Exceptions, die irgendwie nicht abgefangen werden
+        $this->assertNotRegExp('/\<strong\>(Error|Exception)\s*:\s*\<\/strong\>/', $html);
+        $this->assertNotRegExp('/Parse error/', $html);
+        $this->assertNotRegExp('/Not Found/', $html); // if element to render does not exist
+        $this->assertNotRegExp('/\/app\/views\/errors\//', $html); // for catching cake error messages (missing view / missing controller...)
+        $this->assertNotRegExp('/error in your SQL syntax/', $html); // SQL syntax fehler
+        $this->assertNotRegExp('/ERROR!/', $html); // manuelle fehlermeldung
+        $this->assertRegExp('/\<\/body\>/', $html); // weiße seite? nicht fertig gerendert?
     }
+    
 }
