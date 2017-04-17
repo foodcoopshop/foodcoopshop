@@ -74,7 +74,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->browser->doFoodCoopShopLogin();
         $response = $this->addProduct($this->productId1, 100);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist nicht gültig.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist gültig.', $response->msg);
         $this->assertJsonError();
     }
 
