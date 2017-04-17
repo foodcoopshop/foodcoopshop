@@ -15,32 +15,10 @@ before_script:
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
-  - mv ./Config/credentials.default.php ./Config/credentials.php
-  - echo "<?php
-    class DATABASE_CONFIG {
-        public \$default = array(
-            'datasource' => 'Database/Mysql',
-            'persistent' => false,
-            'database' => 'foodcoopshop_test',
-            'host' => '127.0.0.1',
-            'login' => 'travis',
-            'password' => '',
-            'encoding' => 'utf8'
-        );
-        public \$test = array(
-            'datasource' => 'Database/Mysql',
-            'persistent' => false,
-            'database' => 'foodcoopshop_test',
-            'host' => '127.0.0.1',
-            'login' => 'travis',
-            'password' => '',
-            'encoding' => 'utf8'
-        );
-    }" > ./Config/database.php
-    - cat ./Config/database.php
+  - cp ./Config/travis/* ./Config/
  
-script:
-  - ./Console/cake test Controller/Component/StringComponent.php --stderr
+#script:
+#  - ./Console/cake test Controller/Component/StringComponent.php --stderr
   
 notifications:
   email: false
