@@ -8,7 +8,9 @@ php:
 
 services:
   - mysql
-  
+
+env:
+  - DB=mysql
   
 before_install:
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
