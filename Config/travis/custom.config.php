@@ -48,7 +48,7 @@ Configure::write('app.additionalOrderStatusChangeInfo', '');
 /**
  * your host's name, eg. http://www.yourfoodcoop.com
  */
-Configure::write('app.cakeServerName', 'http://www');
+Configure::write('app.cakeServerName', 'http://www.foodcoopshop.dev');
 
 /**
  * array of email adresses that receive notifications after new member registrations

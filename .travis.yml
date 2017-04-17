@@ -16,9 +16,12 @@ before_script:
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
- 
+  # Apache Install
+  git clone https://github.com/lucatume/travis-apache-setup.git setup
+  sudo sh ./setup/apache-setup -h="127.0.0.1" -u="http://www.foodcoopshop.dev" -f="/var/www/foodcoopshop/webroot"
+
 script:
-  - ./Console/cake test Controller/Component/StringComponent.php --stderr
+  - ./Console/cake test Controller/CartsController.php --stderr
   
 notifications:
   email: false
