@@ -16,8 +16,8 @@ before_script:
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
   # Apache Install
-  - git clone https://github.com/lucatume/travis-apache-setup.git lucatume
-  - sudo sh lucatume/apache-setup
+  - git clone https://github.com/lucatume/travis-apache-setup.git ./lucatume
+  - sudo sh ./lucatume/apache-setup
 script:
   - ./Console/cake test Controller/CartsController.php --stderr
 notifications:
