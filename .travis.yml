@@ -28,8 +28,7 @@ before_script:
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
 script:
-  - ./Console/cake test Controller/CartsController.php --stderr
-  - ./Console/cake test Controller/PagesController.php --stderr
+  - ./Console/cake test app AllFoodCoopShopTests --stderr
 notifications:
   email: false
   
