@@ -24,6 +24,7 @@ before_script:
             'database' => 'foodcoopshop_test',
             'host' => '127.0.0.1',
             'login' => 'travis',
+            'password' => '',
             'encoding' => 'utf8'
         );
         public \$test = array(
@@ -32,9 +33,11 @@ before_script:
             'database' => 'foodcoopshop_test',
             'host' => '127.0.0.1',
             'login' => 'travis',
+            'password' => '',
             'encoding' => 'utf8'
         );
     }" > ./Config/database.php
+    - cat ./Config/database.php
  
 script:
   - ./Console/cake test Controller/Component/StringComponent.php --stderr
