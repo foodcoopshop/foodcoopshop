@@ -1,9 +1,6 @@
 language: php
  
 php:
-  - 5.5
-  - 5.6
-  - 7.0
   - 7.1
 
 services:
@@ -32,7 +29,7 @@ before_script:
     }" > ./Config/database.php
  
 script:
-  - ./Console/cake test Controller/Component/StringComponentTest.php --stderr
+  - ./Console/cake test Controller/Component/StringComponent.php --stderr
   
 notifications:
   email: false
