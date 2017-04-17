@@ -18,7 +18,7 @@ before_script:
   - cp ./Config/travis/* ./Config/
   # Apache Install
   - git clone https://github.com/lucatume/travis-apache-setup.git lucatume
-  - sudo sh lucatume/apache-setup -h="127.0.0.1" -u="http://www.foodcoopshop.dev" -f="/var/www/foodcoopshop/webroot"
+  - sudo sh lucatume/apache-setup -u="http://www.foodcoopshop.dev" -f="/var/www/foodcoopshop/webroot"
 
 script:
   - ./Console/cake test Controller/CartsController.php --stderr
