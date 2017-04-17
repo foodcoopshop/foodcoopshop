@@ -9,11 +9,9 @@ services:
 env:
   - DB=mysql
   
-before_install:
-  - mysql -e 'CREATE DATABASE foodcoopshop_test;'
-  
 before_script:
   - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
+  - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql < ./Test/test_files/Config/sql/test-db-structure.sql
   - mysql < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
