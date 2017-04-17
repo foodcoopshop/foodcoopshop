@@ -18,6 +18,14 @@ before_script:
   - mv ./Config/credentials.default.php ./Config/credentials.php
   - echo "<?php
     class DATABASE_CONFIG {
+        public \$default = array(
+            'datasource' => 'Database/Mysql',
+            'persistent' => false,
+            'database' => 'foodcoopshop_test',
+            'host' => '127.0.0.1',
+            'login' => 'travis',
+            'encoding' => 'utf8'
+        );
         public \$test = array(
             'datasource' => 'Database/Mysql',
             'persistent' => false,
