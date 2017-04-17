@@ -11,8 +11,8 @@ before_script:
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
-  - sudo sh ./Console/cake asset_compress build
   - cp ./Config/travis/* ./Config/
+  - bash ./Console/cake asset_compress build
   # Apache Install
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm
