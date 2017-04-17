@@ -1,11 +1,22 @@
 language: php
+
 php:
   - 7.1
+
 services:
   - mysql
+  
 env:
   - DB=mysql
+  
 before_script:
+  # email mock
+  - sudo apt-get install -y -qq postfix  
+  - sudo service postfix stop
+  - smtp-sink -d "%d.%H.%M.%S" localhost:2500 1000 &
+  - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
+  - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
+  # start build
   - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-structure.sql
@@ -27,8 +38,10 @@ before_script:
   - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
+
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
+
 notifications:
   email: false
   
