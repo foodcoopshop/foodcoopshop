@@ -13,7 +13,7 @@ before_script:
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
   # Apache Install
-- sudo apt-get install apache2 libapache2-mod-fastcgi
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sudo a2enmod rewrite actions fastcgi alias
