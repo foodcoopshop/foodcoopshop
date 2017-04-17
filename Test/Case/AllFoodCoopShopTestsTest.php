@@ -1,6 +1,6 @@
 <?php
 /**
- * AllFrontendAndBackendTestsTest
+ * AllFoodCoopShopTestsTest
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AllFrontendAndBackendTestsTest extends PHPUnit_Framework_TestSuite
+class AllFoodCoopShopTestsTest extends PHPUnit_Framework_TestSuite
 {
 
     /**
@@ -24,7 +24,7 @@ class AllFrontendAndBackendTestsTest extends PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
-        $suite = new CakeTestSuite('All Frontend and Backend Tests');
+        $suite = new CakeTestSuite('All FoodCoopShop Tests');
         // TODO maybe there is a more elegant way to include the defined tests of existing suites than copying them
         $suite->addTestDirectoryRecursive(TESTS . 'Case');
         $suite->addTestDirectoryRecursive(CakePlugin::path('Admin') . 'Test' . DS . 'Case');

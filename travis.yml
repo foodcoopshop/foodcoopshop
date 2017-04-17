@@ -1,0 +1,29 @@
+language: php
+ 
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+before_script:
+  - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
+  - sh -c "mysql -e 'CREATE DATABASE test;'"
+  - echo "<?php
+    class DATABASE_CONFIG {
+    public \$test = array(
+        'datasource' => 'Database/Mysql',
+        'persistent' => false,
+        'host' => 'dd36318.kasserver.com',
+        'login' => 'd0260576',
+        'password' => 'yXmZGV2SNZ4GXd2e',
+        'database' => 'd0260576',
+        'prefix' => 'fcs_',
+        'encoding' => 'utf8'
+    );
+    }" > ./Config/database.php
+ 
+script:
+  - ./Console/cake test Controller/CustomersControllerTest.php --stderr
+  
+notifications:
+  email: false
