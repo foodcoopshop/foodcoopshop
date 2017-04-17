@@ -7,23 +7,21 @@ php:
   - 7.1
 before_script:
   - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
-  - sh -c "mysql -e 'CREATE DATABASE test;'"
+  - sh -c "mysql -e 'CREATE DATABASE foodcoopshop_test;'"
   - echo "<?php
     class DATABASE_CONFIG {
     public \$test = array(
         'datasource' => 'Database/Mysql',
         'persistent' => false,
-        'host' => 'dd36318.kasserver.com',
-        'login' => 'd0260576',
-        'password' => 'yXmZGV2SNZ4GXd2e',
-        'database' => 'd0260576',
-        'prefix' => 'fcs_',
+        'database' => 'foodcoopshop_test',
+        'host' => '0.0.0.0',
+        'login' => 'travis',
         'encoding' => 'utf8'
     );
     }" > ./Config/database.php
  
 script:
-  - ./Console/cake test Controller/CustomersControllerTest.php --stderr
+  - ./Console/cake test Controller/Component/StringComponentTest.php --stderr
   
 notifications:
   email: false
