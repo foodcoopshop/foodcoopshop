@@ -140,18 +140,8 @@ class PagesControllerTest extends AppCakeTestCase
     private function assertPageForErrors()
     {
         $html = $this->browser->getContent();
-        $this->assertNotRegExp('/class="cake-stack-trace"/', $html);
-        $this->assertNotRegExp('/class="cake-error"/', $html);
-        $this->assertNotRegExp('/\bFatal error\b/', $html);
-        $this->assertNotRegExp('/undefined/', $html);
-        $this->assertNotRegExp('/exception \'[^\']+\' with message/', $html); // alle Exceptions, die irgendwie nicht abgefangen werden
-        $this->assertNotRegExp('/\<strong\>(Error|Exception)\s*:\s*\<\/strong\>/', $html);
-        $this->assertNotRegExp('/Parse error/', $html);
-        $this->assertNotRegExp('/Not Found/', $html); // if element to render does not exist
-        $this->assertNotRegExp('/\/app\/views\/errors\//', $html); // for catching cake error messages (missing view / missing controller...)
-        $this->assertNotRegExp('/error in your SQL syntax/', $html); // SQL syntax fehler
-        $this->assertNotRegExp('/ERROR!/', $html); // manuelle fehlermeldung
-        $this->assertRegExp('/\<\/body\>/', $html); // weiße seite? nicht fertig gerendert?
+        $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|undefined|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!/', $html);
+        $this->assertRegExp('/\<\/body\>/', $html); // white page? not finished rendering
     }
     
 }
