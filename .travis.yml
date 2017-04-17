@@ -16,6 +16,7 @@ before_install:
 before_script:
   - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
   - composer install --prefer-dist
+  - mv ./Config/credentials.default.php ./Config/credentials.php
   - echo "<?php
     class DATABASE_CONFIG {
         public \$test = array(
