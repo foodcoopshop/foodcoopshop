@@ -9,6 +9,10 @@ php:
 services:
   - mysql
   
+addons:
+  hosts:
+    - www.foodcoopshop.dev
+    
 env:
   - DB=mysql
   
