@@ -163,7 +163,14 @@ $this->element('addScript', array(
             require_once(APP . 'Config' . DS . 'email.php');
             $email = new EmailConfig();
             ?>
-            <td><b>Host:</b> <?php echo $email->default['host']; ?>, <b>Username:</b> <?php echo $email->default['username']; ?>, <b>Log:</b> <?php echo (isset($email->default['log']) && $email->default['log']) ? 'on' : 'off'; ?></td>
+            <td>
+            <?php if (isset($email->default['host'])) { ?>
+            	<b>Host:</b> <?php echo $email->default['host']; ?><br />
+           	<?php } ?>
+           	<?php if (isset($email->default['username'])) { ?>
+           		<b>Username:</b> <?php echo $email->default['username']; ?><br />
+           	<?php } ?>
+           	<b>Log:</b> <?php echo (isset($email->default['log']) && $email->default['log']) ? 'on' : 'off'; ?></td>
         </tr>
 
         <tr>
