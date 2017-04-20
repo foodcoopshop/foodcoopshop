@@ -70,6 +70,7 @@ class ProductTest extends AppCakeTestCase
     /**
      *
      * @param int $productId
+     * @param double $price
      * @return json string
      */
     private function changeProductPrice($productId, $price)

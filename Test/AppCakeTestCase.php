@@ -61,7 +61,7 @@ class AppCakeTestCase extends CakeTestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Customer = new Customer();
-        $this->regeneratePasswordHashes();
+        $this->generatePasswordHashes();
 
         $this->Configuration = new Configuration();
         $this->Configuration->loadConfigurations();
@@ -78,7 +78,7 @@ class AppCakeTestCase extends CakeTestCase
     {
         $this->browser = new AppSimpleBrowser();
         $this->browser->addHeader('x-unit-test-mode: true');
-        $this->browser->loginEmail = Configure::read('test.loginEmail');
+        $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
         $this->browser->loginPassword = Configure::read('test.loginPassword');
     }
 
@@ -91,6 +91,11 @@ class AppCakeTestCase extends CakeTestCase
     {
         $response = $this->browser->getJsonDecodedContent();
         $this->assertEquals(0, $response->status, 'json status should be "0"');
+    }
+
+    protected function assert403ForbiddenHeader()
+    {
+        $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
     }
 
     protected function assertJsonAccessRestricted()
@@ -118,7 +123,7 @@ class AppCakeTestCase extends CakeTestCase
     /**
      * due to different app.cookieKeys, logins would not work with a defined hash
      */
-    protected function regeneratePasswordHashes()
+    protected function generatePasswordHashes()
     {
         App::uses('AppPasswordHasher', 'Controller/Component/Auth');
         $ph = new AppPasswordHasher();
