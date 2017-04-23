@@ -465,7 +465,6 @@ class OrderDetailsController extends AdminAppController
         $unitTaxAmount = $this->OrderDetail->Product->getUnitTax($productPrice, $unitPriceExcl, $productQuantity);
         $totalTaxAmount = $unitTaxAmount * $productQuantity;
         $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
-        $productPriceExcl = round($totalPriceTaxExcl / $productQuantity, 6);
 
         // update order details
         $orderDetail2save = array(
