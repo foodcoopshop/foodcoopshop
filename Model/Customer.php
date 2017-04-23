@@ -278,10 +278,10 @@ class Customer extends AppModel
 
         $customersForDropdown = array();
         if (! empty($onlineCustomers)) {
-            $customersForDropdown['Kunden: aktiv'] = $onlineCustomers;
+            $customersForDropdown['Mitglieder: aktiv'] = $onlineCustomers;
         }
         if (! empty($notYetOrderedCustomers)) {
-            $customersForDropdown['Kunden: noch nie bestellt'] = $notYetOrderedCustomers;
+            $customersForDropdown['Mitglieder: noch nie bestellt'] = $notYetOrderedCustomers;
         }
         if (! empty($onlineManufacturers)) {
             asort($onlineManufacturers);
@@ -292,7 +292,7 @@ class Customer extends AppModel
             $customersForDropdown['Hersteller: inaktiv'] = $offlineManufacturers;
         }
         if (! empty($offlineCustomers) && $includeOfflineCustomers) {
-            $customersForDropdown['Kunden: inaktiv'] = $offlineCustomers;
+            $customersForDropdown['Mitglieder: inaktiv'] = $offlineCustomers;
         }
         return $customersForDropdown;
     }
