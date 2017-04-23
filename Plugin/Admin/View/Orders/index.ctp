@@ -29,7 +29,7 @@
             ));
         }
         $this->element('highlightRowAfterEdit', array(
-        'rowIdPrefix' => '#order-'
+            'rowIdPrefix' => '#order-'
         ));
     ?>
     
@@ -161,8 +161,8 @@
         echo $order['Order']['name']; // !sic Order.name, related virtual field is copied in controller
         echo '</td>';
 
-        echo '<td style="width: 140px;">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . ' Bestellte Artikel', array(
+        echo '<td'.(!$isMobile ? ' style="width: 140px;"' : '').'>';
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Artikel' : ''), array(
             'title' => 'Alle bestellten Artikel von ' . $order['Order']['name'] . ' anzeigen',
             'class' => 'icon-with-text'
         ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customer']['id_customer'] . '/orderState:' . $orderState);
@@ -177,9 +177,9 @@
         echo '</td>';
 
         if (Configure::read('app.isDepositPaymentCashless')) {
-            echo '<td style="width:144px;">';
+            echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
                 echo $this->element('addDepositPaymentOverlay', array(
-                    'buttonText' => 'Pfand-Rückgabe',
+                    'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
                     'rowId' => $order['Order']['id_order'],
                     'userName' => $order['Order']['name'],
                     'customerId' => $order['Customer']['id_customer']
@@ -220,7 +220,7 @@
         }
         echo '</td>';
 
-        echo '<td style="width:247px;">';
+        echo '<td'.(!$isMobile ? ' style="width: 247px;"' : '').'>';
         if (! $groupByCustomer) {
             echo '<span class="truncate" style="float: left; width: 77px;">' . $this->MyHtml->getOrderStates()[$order['Order']['current_state']] . '</span>';
             $statusChangeIcon = 'accept';
@@ -228,7 +228,7 @@
                 $statusChangeIcon = 'error';
             }
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . ' Bestellstatus ändern', array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' Bestellstatus ändern' : ''), array(
                     'title' => 'Bestellstatus ändern',
                     'class' => 'change-order-state-button icon-with-text'
                 ), 'javascript:void(0);');
