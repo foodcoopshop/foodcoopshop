@@ -31,7 +31,7 @@ class ProductTest extends AppCakeTestCase
 
     public function testEditPrice()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         // change price to invalid string
         $price = 'invalid-price';
@@ -61,7 +61,7 @@ class ProductTest extends AppCakeTestCase
     {
         $price = str_replace(',', '.', $price);
         $expectedNetPrice = str_replace(',', '.', $expectedNetPrice);
-        $response = $this->changeProductPrice($productId, $price);
+        $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice, 'editing price failed');

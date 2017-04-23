@@ -23,21 +23,21 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testShowProductsForGuestsEnabledAndLoggedOut()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 1);
-        $this->browser->doFoodCoopShopLogout();
+        $this->logout();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), false);
     }
 
     public function testShowProductsForGuestsDisabledAndLoggedIn()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 0);
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), true);
     }
 
     public function testShowProductsForGuestsDisabledAndLoggedOut()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 0);
-        $this->browser->doFoodCoopShopLogout();
+        $this->logout();
         foreach ($this->getTestUrlsForShowProductForGuests() as $url) {
             $this->browser->get($url);
             $this->assertRedirectToLoginPage();

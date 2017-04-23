@@ -31,7 +31,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testAddManufacturer()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         $manufacturerData = array(
             'Manufacturer' => array(
@@ -101,12 +101,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->doTestCustomerRecord($manufacturer);
 
-        $this->browser->doFoodCoopShopLogout();
+        $this->logout();
     }
 
     public function testEditManufacturer()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
         $response = $this->getEditManufacturer($manufacturerId);
@@ -135,12 +135,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ));
         $this->doTestCustomerRecord($manufacturer);
 
-        $this->browser->doFoodCoopShopLogout();
+        $this->logout();
     }
 
     public function testAutomaticAddingOfCustomerRecord()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)
         $manufacturerId = 16;
@@ -157,7 +157,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ));
         $this->doTestCustomerRecord($manufacturer);
 
-        $this->browser->doFoodCoopShopLogout();
+        $this->logout();
     }
 
     private function doTestCustomerRecord($manufacturer)

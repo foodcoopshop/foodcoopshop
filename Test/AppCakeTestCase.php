@@ -182,7 +182,7 @@ class AppCakeTestCase extends CakeTestCase
      */
     protected function changeConfiguration($configKey, $newValue)
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
         $configuration = $this->Configuration->find('first', array(
             'conditions' => array(
                 'Configuration.active' => APP_ON,
@@ -197,6 +197,23 @@ class AppCakeTestCase extends CakeTestCase
         ));
         $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent(), 'configuration edit failed');
         $this->Configuration->loadConfigurations();
+        $this->logout();
+    }
+
+    protected function logout()
+    {
         $this->browser->doFoodCoopShopLogout();
+    }
+
+    protected function loginAsSuperadmin()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
+        $this->browser->doFoodCoopShopLogin();
+    }
+
+    protected function loginAsCustomer()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
+        $this->browser->doFoodCoopShopLogin();
     }
 }

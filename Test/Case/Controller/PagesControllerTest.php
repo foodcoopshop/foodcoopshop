@@ -42,7 +42,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function testAllSuperadminUrls()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         $testUrls = array(
             $this->Slug->getCartDetail(),
@@ -96,7 +96,7 @@ class PagesControllerTest extends AppCakeTestCase
      */
     public function test404PagesLoggedIn()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         $testUrls = array(
             $this->Slug->getProductDetail(4234, 'not valid product name'),

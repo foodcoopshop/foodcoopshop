@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+Configure::write('test.loginEmailCustomer', 'fcs-demo-mitglied@mailinator.com');
+Configure::write('test.customerId', 87);
 Configure::write('test.loginEmailSuperadmin', 'fcs-demo-superadmin@mailinator.com');
 Configure::write('test.superadminId', 92);
 Configure::write('test.loginEmailManufacturer', 'fcs-demo-fleisch-hersteller@mailinator.com');
