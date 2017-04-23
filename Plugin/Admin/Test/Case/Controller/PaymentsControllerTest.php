@@ -72,12 +72,11 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentForOneself()
     {
-        $creditBalanceBeforeAdd = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
-        $amountToAdd = 10.5;
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), $amountToAdd, 'product');
-        $creditBalanceAfterAdd = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
-        $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment product did not increase credit balance');
+        $this->addPaymentAndAssert(
+            Configure::read('test.customerId'),
+            10.5
+        );
         $this->logout();
 
         $this->assertActionLogRecord(
@@ -91,11 +90,10 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentAsSuperadminForAnotherUser()
     {
         $this->loginAsSuperadmin();
-        $creditBalanceBeforeAdd = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
-        $amountToAdd = 20.5;
-        $this->addPayment(Configure::read('test.customerId'), $amountToAdd, 'product');
-        $creditBalanceAfterAdd = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
-        $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment product did not increase credit balance');
+        $this->addPaymentAndAssert(
+            Configure::read('test.customerId'),
+            20.5
+        );
         $this->logout();
 
         $this->assertActionLogRecord(
@@ -108,6 +106,14 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddDepositPaymentAsManufacturer()
     {
+    }
+    
+    private function addPaymentAndAssert($customerId, $amountToAdd)
+    {
+        $creditBalanceBeforeAdd = $this->Customer->getCreditBalance($customerId);
+        $this->addPayment($customerId, $amountToAdd, 'product');
+        $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
+        $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment product did not increase credit balance');
     }
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
