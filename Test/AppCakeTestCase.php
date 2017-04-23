@@ -115,14 +115,14 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
 
-    protected function assertRegExpWithUnquotedString($unquotetString, $response, $msg = '')
+    protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
+        $this->assertRegExp('/' . preg_quote($unquotedString) . '/', $response, $msg);
     }
 
-    protected function assertNotRegExpWithUnquotedString($unquotetString, $response, $msg = '')
+    protected function assertNotRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertNotRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
+        $this->assertNotRegExp('/' . preg_quote($unquotedString) . '/', $response, $msg);
     }
 
     protected function assertUrl($url, $expectedUrl, $msg = '')
