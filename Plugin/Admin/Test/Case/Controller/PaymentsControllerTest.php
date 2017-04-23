@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
+App::uses('CakeActionLog', 'Model');
 
 /**
  * PaymentsControllerTest
@@ -20,18 +21,53 @@ App::uses('AppCakeTestCase', 'Test');
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->CakeActionLog= new CakeActionLog();
+    }
+
     public function testAddPaymentLoggedOut()
     {
-        $this->addPayment(Configure::read('test.superadminId'), 0, 'product');
+        $this->addPayment(Configure::read('test.customerId'), 0, 'product');
         $this->assert403ForbiddenHeader();
         $this->assertEmpty($this->browser->getContent());
     }
 
-    public function testAddPaymentWithInvalidData()
+    public function testAddPaymentParameterPrice()
     {
-        // TODO test wrong action type
-        // TODO test and maybe change db_config_FCS_PAYMENT_PRODUCT_MAXIMUM
-        // TODO test and change negative amount (200,--) is also triggered because of if (preg_match('/\-/', $amount)) change that
+        $this->loginAsCustomer();
+
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', 'product');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('Ein negativer Betrag ist nicht erlaubt', $jsonDecodedContent->msg);
+
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', 'product');
+        $this->assertEquals(1, $jsonDecodedContent->status);
+        $this->assertEquals(10, $jsonDecodedContent->amount);
+
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10.00', 'product');
+        $this->assertEquals(10, $jsonDecodedContent->amount);
+
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', 'product');
+        $this->assertEquals(65.03, $jsonDecodedContent->amount);
+    }
+
+    public function testAddPaymentWithInvalidType()
+    {
+        $this->loginAsCustomer();
+
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $jsonDecodedContent->msg);
+    }
+
+    public function testAddPaymentAsCustomerForAnotherUser()
+    {
+        $this->loginAsCustomer();
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.superadminId'), 10, 'product');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
     }
 
     public function testAddPaymentForOneself()
@@ -44,24 +80,47 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment product did not increase credit balance');
         $this->logout();
 
-        // TODO test action log record
+        $this->assertActionLogRecord(
+            Configure::read('test.customerId'),
+            'payment_product_added',
+            'payments',
+            'Guthaben-Aufladung wurde erfolgreich eingetragen: €&nbsp;10,50'
+        );
     }
 
-    public function testAddPaymentAsSuperadminForCustomer()
+    public function testAddPaymentAsSuperadminForAnotherUser()
     {
         $this->loginAsSuperadmin();
         $creditBalanceBeforeAdd = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
-        $amountToAdd = 10.5;
+        $amountToAdd = 20.5;
         $this->addPayment(Configure::read('test.customerId'), $amountToAdd, 'product');
         $creditBalanceAfterAdd = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
         $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment product did not increase credit balance');
         $this->logout();
 
-        // TODO test action log record
+        $this->assertActionLogRecord(
+            Configure::read('test.superadminId'),
+            'payment_product_added',
+            'payments',
+            'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;20,50'
+        );
     }
 
     public function testAddDepositPaymentAsManufacturer()
     {
+    }
+
+    private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
+    {
+        $lastActionLog = $this->CakeActionLog->find('all', array(
+            'conditions' => array(
+                'CakeActionLog.customer_id' => $customerId
+            ),
+            'order' => array('CakeActionLog.date' => 'DESC')
+        ));
+        $this->assertEquals($expectedType, $lastActionLog[0]['CakeActionLog']['type'], 'cake action log type not correct');
+        $this->assertEquals($expectedObjectType, $lastActionLog[0]['CakeActionLog']['object_type'], 'cake action log object type not correct');
+        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['CakeActionLog']['text'], 'cake action log text not correct');
     }
 
     /**

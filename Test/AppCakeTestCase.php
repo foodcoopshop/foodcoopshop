@@ -200,6 +200,12 @@ class AppCakeTestCase extends CakeTestCase
         $this->logout();
     }
 
+    protected function debug($content)
+    {
+        pr($content);
+        ob_flush();
+    }
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();

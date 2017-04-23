@@ -206,7 +206,7 @@ class PaymentsController extends AdminAppController
 
         $amount = $this->params['data']['amount'];
 
-        if (preg_match('/\-/', $amount)) {
+        if (preg_match('/^\-/', $amount)) {
             $message = 'Ein negativer Betrag ist nicht erlaubt: ' . $amount;
             $this->log($message);
             die(json_encode(array('status'=>0,'msg'=>$message)));
@@ -366,7 +366,8 @@ class PaymentsController extends AdminAppController
 
         die(json_encode(array(
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
+            'amount' => $amount
         )));
     }
 
