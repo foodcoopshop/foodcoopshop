@@ -236,7 +236,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->browser->doFoodCoopShopLogin();
         $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.shopOrderTestUser')['email']);
         $this->assertRegExp('/Diese Bestellung wird für \<b\>' . Configure::read('test.shopOrderTestUser')['name'] . '\<\/b\> getätigt./', $responseHtml);
-        $this->assertUrl($this->browser->getUrl(), '/', 'redirect did not work');
+        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }
 
     /**

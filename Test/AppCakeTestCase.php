@@ -98,6 +98,11 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
     }
 
+    protected function assertRedirectToLoginPage()
+    {
+        $this->assertUrl($this->browser->baseUrl . $this->Slug->getLogin(), $this->browser->getUrl(), 'redirect to login page failed');
+    }
+
     protected function assertJsonAccessRestricted()
     {
         $response = $this->browser->getJsonDecodedContent();
@@ -115,9 +120,43 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
     }
 
+    protected function assertNotRegExpWithUnquotedString($unquotetString, $response, $msg = '')
+    {
+        $this->assertNotRegExp('/' . preg_quote($unquotetString) . '/', $response, $msg);
+    }
+
     protected function assertUrl($url, $expectedUrl, $msg = '')
     {
-        $this->assertEquals($this->browser->baseUrl . $expectedUrl, $url, $msg);
+        $this->assertEquals($url, $expectedUrl, $msg);
+    }
+
+    /**
+     * array $testPages
+     * @return void
+     */
+    protected function assertPagesFor404($testPages)
+    {
+        foreach ($testPages as $url) {
+            $this->browser->get($url);
+            $html = $this->browser->getContent();
+            $this->assertRegExp('/wurde leider nicht gefunden./', $html);
+            $headers = $this->browser->getHeaders();
+            $this->assertRegExp("/404 Not Found/", $headers);
+        }
+    }
+
+    /**
+     * array $testPages
+     * asserts html for errors or missing elements that need to occur
+     * @return void
+     */
+    protected function assertPagesForErrors($testPages)
+    {
+        foreach ($testPages as $url) {
+            $this->browser->get($url);
+            $html = $this->browser->getContent();
+            $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|undefined|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
+        }
     }
 
     /**
