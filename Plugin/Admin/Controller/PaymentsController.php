@@ -220,7 +220,7 @@ class PaymentsController extends AdminAppController
             $this->log($message);
             die(json_encode(array('status'=>0,'msg'=>$message)));
         }
-        
+
         $text = '';
         if (isset($this->params['data']['text'])) {
             $text = strip_tags(html_entity_decode($this->params['data']['text']));
@@ -263,7 +263,7 @@ class PaymentsController extends AdminAppController
             }
 
             $manufacturerId = (int) $this->params['data']['manufacturerId'];
-            
+
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
                 $this->Manufacturer->recursive = - 1;
@@ -272,7 +272,7 @@ class PaymentsController extends AdminAppController
                         'Manufacturer.id_manufacturer' => $manufacturerId
                     )
                 ));
-                
+
                 if (empty($manufacturer)) {
                     $msg = 'manufacturer id not correct: ' . $manufacturerId;
                     $this->log($msg);
@@ -281,12 +281,11 @@ class PaymentsController extends AdminAppController
                         'msg' => $msg
                     )));
                 }
-                
+
                 $message = 'Pfand-Rücknahme ('.Configure::read('htmlHelper')->getManufacturerDepositPaymentText($text).')';
                 $message .= ' für ' . $manufacturer['Manufacturer']['name'];
-                
             }
-            
+
 
             if ($type == 'deposit') {
                 $actionLogType .= '_'.$userType;
