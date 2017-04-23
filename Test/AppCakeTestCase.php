@@ -222,4 +222,10 @@ class AppCakeTestCase extends CakeTestCase
         $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
         $this->browser->doFoodCoopShopLogin();
     }
+
+    protected function loginAsManufacturer()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailManufacturer');
+        $this->browser->doFoodCoopShopLogin();
+    }
 }

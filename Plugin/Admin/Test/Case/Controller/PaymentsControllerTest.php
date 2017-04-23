@@ -2,6 +2,8 @@
 
 App::uses('AppCakeTestCase', 'Test');
 App::uses('CakeActionLog', 'Model');
+App::uses('CakePayment', 'Model');
+App::uses('Customer', 'Model');
 
 /**
  * PaymentsControllerTest
@@ -20,11 +22,12 @@ App::uses('CakeActionLog', 'Model');
  */
 class PaymentsControllerTest extends AppCakeTestCase
 {
-
+    
     public function setUp()
     {
         parent::setUp();
-        $this->CakeActionLog= new CakeActionLog();
+        $this->CakeActionLog = new CakeActionLog();
+        $this->CakePayment = new CakePayment();
     }
 
     public function testAddPaymentLoggedOut()
@@ -70,12 +73,13 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
     }
 
-    public function testAddPaymentForOneself()
+    public function testAddProductPaymentForOneself()
     {
         $this->loginAsCustomer();
-        $this->addPaymentAndAssert(
+        $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            10.5
+            10.5,
+            'product'
         );
         $this->logout();
 
@@ -87,12 +91,13 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddPaymentAsSuperadminForAnotherUser()
+    public function testAddProductPaymentAsSuperadminForAnotherUser()
     {
         $this->loginAsSuperadmin();
-        $this->addPaymentAndAssert(
+        $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            20.5
+            20.5,
+            'product'
         );
         $this->logout();
 
@@ -103,17 +108,74 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;20,50'
         );
     }
-
-    public function testAddDepositPaymentAsManufacturer()
+    
+    public function testAddDepositPaymentToCustomer()
     {
+        $this->loginAsSuperadmin();
+        $this->addPaymentAndAssertIncreasedCreditBalance(
+            Configure::read('test.customerId'),
+            10,
+            'deposit'
+        );
+        $this->logout();
+        
+        $this->assertActionLogRecord(
+            Configure::read('test.superadminId'),
+            'payment_deposit_customer_added',
+            'payments',
+            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;10,00'
+        );
     }
     
-    private function addPaymentAndAssert($customerId, $amountToAdd)
+    public function testAddDepositToManufacturerEmptyGlasses()
+    {
+        $this->addDepositToManufacturer(
+            'empty_glasses',
+            'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
+        );
+    }
+    
+    public function testAddDepositToManufacturerMoney()
+    {
+        $this->addDepositToManufacturer(
+            'money',
+            'Pfand-Rücknahme (Ausgleichszahlung) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
+        );
+    }
+    
+    private function addDepositToManufacturer($depositText, $cakeActionLogText)
+    {
+        $this->Customer = new Customer();
+        
+        $this->loginAsSuperadmin();
+        $amountToAdd = 10;
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.manufacturerId'));
+        
+        $manufacturerDepositSum = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $this->assertEmpty($manufacturerDepositSum[0][0]['sumDepositReturned']);
+        
+        $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText);
+        $this->assertEquals(1, $jsonDecodedContent->status);
+        $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
+        $manufacturerDepositSum = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0][0]['sumDepositReturned']);
+        $this->assertActionLogRecord(
+            Configure::read('test.superadminId'),
+            'payment_deposit_manufacturer_added',
+            'payments',
+            $cakeActionLogText
+        );
+        
+    }
+    
+    private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
     {
         $creditBalanceBeforeAdd = $this->Customer->getCreditBalance($customerId);
-        $this->addPayment($customerId, $amountToAdd, 'product');
+        $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
         $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
-        $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment product did not increase credit balance');
+        $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment '.$paymentType.' did not increase credit balance');
+        $this->assertEquals(1, $jsonDecodedContent->status);
+        $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
     }
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
@@ -131,15 +193,21 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     /**
      * @param int $productId
+     * @param int $amount
+     * @param string $type
+     * @param int $manufacturerId optional
+     * @param string $text optional
      * @return json string
      */
-    private function addPayment($customerId, $amount, $type)
+    private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {
         $this->browser->ajaxPost('/admin/payments/add', array(
             'data' => array(
                 'customerId' => $customerId,
                 'amount' => $amount,
-                'type' => $type
+                'type' => $type,
+                'manufacturerId' => $manufacturerId,
+                'text' => $text
             )
         ));
         return $this->browser->getJsonDecodedContent();

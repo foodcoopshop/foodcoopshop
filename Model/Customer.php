@@ -197,7 +197,33 @@ class Customer extends AppModel
 
         return $manufacturer;
     }
-
+    
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    public function getManufacturerByCustomerId($customerId)
+    {
+        $customer = $this->find('first', array(
+            'conditions' => array(
+                'Customer.id_customer' => $customerId
+            )
+        ));
+        if (!empty($customer)) {
+            return $this->getManufacturerRecord($customer);
+        }
+        return false;
+    }
+    
+    public function getManufacturerIdByCustomerId($customerId)
+    {
+        $manufacturer = $this->getManufacturerByCustomerId($customerId);
+        if (!empty($manufacturer)) {
+            return $manufacturer['Manufacturer']['id_manufacturer'];
+        }
+        return 0;
+    }
+    
     public function getCreditBalance($customerId)
     {
         App::uses('CakePayment', 'Model');
