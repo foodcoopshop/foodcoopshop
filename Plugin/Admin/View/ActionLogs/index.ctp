@@ -77,7 +77,10 @@ foreach ($actionLogs as $actionLog) {
     echo '</td>';
 
     echo '<td>';
-    echo $actionType['de'];
+    echo $this->Html->link(
+        $actionType['de'],
+        '/admin/action_logs/index/type:'.$actionLog['CakeActionLog']['type'].'/productId:'.$productId.'/customerId:'.$customerId.'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
+    );
     echo '</td>';
 
     echo '<td>';
@@ -89,11 +92,14 @@ foreach ($actionLogs as $actionLog) {
     echo '</td>';
 
     echo '<td>';
+    $name = $actionLog['Customer']['name'];
     if (isset($actionLog['Customer']['Manufacturer'])) {
-        echo $actionLog['Customer']['Manufacturer']['name'];
-    } else {
-        echo $actionLog['Customer']['name'];
+        $name = $actionLog['Customer']['Manufacturer']['name'];
     }
+    echo $this->Html->link(
+        $name,
+        '/admin/action_logs/index/type:'.$type.'/productId:'.$productId.'/customerId:'.$actionLog['Customer']['id_customer'].'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
+    );
     echo '</td>';
 
     echo '<td class="center">';
