@@ -1,8 +1,9 @@
 # FoodCoopShop
 The open source software for your foodcoop
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.txt)
 [![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
+[![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
 
 FoodCoopShop is a free open source software for foodcoops. For more information about features or a demo visit the [project details homepage](https://www.foodcoopshop.com/).
 
