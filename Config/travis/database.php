@@ -8,7 +8,7 @@ class DATABASE_CONFIG
         'persistent' => false,
         'database' => 'foodcoopshop_test',
         'host' => '127.0.0.1',
-        'login' => 'travis',
+        'login' => 'root',
         'password' => '',
         'prefix' => 'fcs_',
         'encoding' => 'utf8'
@@ -19,7 +19,7 @@ class DATABASE_CONFIG
         'persistent' => false,
         'database' => 'foodcoopshop_test',
         'host' => '127.0.0.1',
-        'login' => 'travis',
+        'login' => 'root',
         'password' => '',
         'prefix' => 'fcs_',
         'encoding' => 'utf8'
