@@ -111,7 +111,7 @@ foreach ($manufacturers as $manufacturer) {
         $details .= '<br />' . $manufacturer['Address']['phone'];
     }
         echo '<div class="manufacturer-details-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('book_open.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), array(
                 'class' => 'manufacturer-details-read-button',
                 'title' => $details
             ), 'javascript:void(0);');
