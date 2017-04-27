@@ -131,7 +131,7 @@ foreach ($customers as $customer) {
     }
 
     echo '<div class="customer-details-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('book_open.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), array(
         'class' => 'customer-details-read-button',
         'title' => $details
     ), 'javascript:void(0);');
