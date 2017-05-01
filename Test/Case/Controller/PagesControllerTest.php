@@ -37,16 +37,12 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy()
         );
-
-        foreach ($testUrls as $url) {
-            $this->browser->get($url);
-            $this->assertPageForErrors();
-        }
+        $this->assertPagesForErrors($testUrls);
     }
 
     public function testAllSuperadminUrls()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         $testUrls = array(
             $this->Slug->getCartDetail(),
@@ -79,10 +75,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getConfigurationEdit(544)
         );
 
-        foreach ($testUrls as $url) {
-            $this->browser->get($url);
-            $this->assertPageForErrors();
-        }
+        $this->assertPagesForErrors($testUrls);
 
         $this->browser->doFoodCoopShopLogout();
     }
@@ -94,11 +87,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
             $this->Slug->getPageDetail(4234, 'not valid page name'),
         );
-
-        foreach ($testUrls as $url) {
-            $this->browser->get($url);
-            $this->assertPageFor404();
-        }
+        $this->assertPagesFor404($testUrls);
     }
 
     /**
@@ -107,41 +96,13 @@ class PagesControllerTest extends AppCakeTestCase
      */
     public function test404PagesLoggedIn()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
 
         $testUrls = array(
             $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         );
-
-        foreach ($testUrls as $url) {
-            $this->browser->get($url);
-            $this->assertPageFor404();
-        }
-
+        $this->assertPagesFor404($testUrls);
         $this->browser->doFoodCoopShopLogout();
     }
-
-    /**
-     * @return void
-     */
-    private function assertPageFor404()
-    {
-        $html = $this->browser->getContent();
-        $this->assertRegExp('/wurde leider nicht gefunden./', $html);
-        $headers = $this->browser->getHeaders();
-        $this->assertRegExp("/404 Not Found/", $headers);
-    }
-
-    /**
-     * asserts html for errors
-     * @return void
-     */
-    private function assertPageForErrors()
-    {
-        $html = $this->browser->getContent();
-        $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|undefined|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!/', $html);
-        $this->assertRegExp('/\<\/body\>/', $html); // white page? not finished rendering
-    }
-    
 }

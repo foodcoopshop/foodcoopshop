@@ -206,7 +206,7 @@ class PaymentsController extends AdminAppController
 
         $amount = $this->params['data']['amount'];
 
-        if (preg_match('/\-/', $amount)) {
+        if (preg_match('/^\-/', $amount)) {
             $message = 'Ein negativer Betrag ist nicht erlaubt: ' . $amount;
             $this->log($message);
             die(json_encode(array('status'=>0,'msg'=>$message)));
@@ -251,7 +251,6 @@ class PaymentsController extends AdminAppController
                         'Customer.id_customer' => $customerId
                     )
                 ));
-                $message .= ' für ' . $customer['Customer']['name'];
                 if (empty($customer)) {
                     $msg = 'customer id not correct: ' . $customerId;
                     $this->log($msg);
@@ -260,9 +259,11 @@ class PaymentsController extends AdminAppController
                         'msg' => $msg
                     )));
                 }
+                $message .= ' für ' . $customer['Customer']['name'];
             }
 
             $manufacturerId = (int) $this->params['data']['manufacturerId'];
+
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
                 $this->Manufacturer->recursive = - 1;
@@ -271,8 +272,7 @@ class PaymentsController extends AdminAppController
                         'Manufacturer.id_manufacturer' => $manufacturerId
                     )
                 ));
-                $message = 'Pfand-Rücknahme ('.Configure::read('htmlHelper')->getManufacturerDepositPaymentText($text).')';
-                $message .= ' für ' . $manufacturer['Manufacturer']['name'];
+
                 if (empty($manufacturer)) {
                     $msg = 'manufacturer id not correct: ' . $manufacturerId;
                     $this->log($msg);
@@ -281,7 +281,11 @@ class PaymentsController extends AdminAppController
                         'msg' => $msg
                     )));
                 }
+
+                $message = 'Pfand-Rücknahme ('.Configure::read('htmlHelper')->getManufacturerDepositPaymentText($text).')';
+                $message .= ' für ' . $manufacturer['Manufacturer']['name'];
             }
+
 
             if ($type == 'deposit') {
                 $actionLogType .= '_'.$userType;
@@ -366,7 +370,8 @@ class PaymentsController extends AdminAppController
 
         die(json_encode(array(
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
+            'amount' => $amount
         )));
     }
 

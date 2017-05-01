@@ -449,7 +449,6 @@ class OrderDetailsController extends AdminAppController
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
         if ($orderDetailsCount > 1) {
-            $this->log('bulk cancellation used for ' . $orderDetailsCount . ' products');
             $flashMessage =  $orderDetailsCount . ' Artikel wurden erfolgreich storniert.';
         }
         $this->AppSession->setFlashMessage($flashMessage);
@@ -466,7 +465,6 @@ class OrderDetailsController extends AdminAppController
         $unitTaxAmount = $this->OrderDetail->Product->getUnitTax($productPrice, $unitPriceExcl, $productQuantity);
         $totalTaxAmount = $unitTaxAmount * $productQuantity;
         $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
-        $productPriceExcl = round($totalPriceTaxExcl / $productQuantity, 6);
 
         // update order details
         $orderDetail2save = array(

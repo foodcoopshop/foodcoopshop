@@ -217,6 +217,32 @@ class Manufacturer extends AppModel
 
         return $customer;
     }
+    
+    /**
+     * @param int $manufacturerId
+     * @return array
+     */
+    public function getCustomerByManufacturerId($manufacturerId)
+    { 
+        $manufacturer = $this->find('first', array(
+            'conditions' => array(
+                'Manufacturer.id_manufacturer' => $manufacturerId
+            )
+        ));
+        if (!empty($manufacturer)) {
+            return $this->getCustomerRecord($manufacturer);
+        }
+        return false;
+    }
+    
+    public function getCustomerIdByManufacturerId($manufacturerId)
+    {
+        $customer = $this->getCustomerByManufacturerId($manufacturerId);
+        if (!empty($customer)) {
+            return $$customer['Customer']['id_customer'];
+        }
+        return 0;
+    }
 
     public function hasCustomerRecord($manufacturer)
     {

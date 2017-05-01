@@ -56,7 +56,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongProductId1()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsCustomer();
         $response = $this->addProduct(8787, 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 8787 ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
@@ -64,7 +64,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongProductId2()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsCustomer();
         $response = $this->addProduct('test', 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
@@ -72,7 +72,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongAmount()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsCustomer();
         $response = $this->addProduct($this->productId1, 100);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist nicht gültig.', $response->msg);
         $this->assertJsonError();
@@ -80,7 +80,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testRemoveProduct()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsCustomer();
         $response = $this->addProduct($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
@@ -94,13 +94,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testCartLoggedIn()
     {
-        $product = $this->Product->find('first', array(
-            'conditions' => array(
-                'Product.id_product' => $this->productId1
-            )
-        ));
-
-        $this->browser->doFoodCoopShopLogin();
+        // manufacturer status needs to be changed as well, therefore use a superadmin account for both shopping and changing manufacturer data
+        $this->loginAsSuperadmin();
 
         /**
          * START add product
@@ -233,10 +228,10 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testShopOrder()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsSuperadmin();
         $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.shopOrderTestUser')['email']);
         $this->assertRegExp('/Diese Bestellung wird für \<b\>' . Configure::read('test.shopOrderTestUser')['name'] . '\<\/b\> getätigt./', $responseHtml);
-        $this->assertUrl($this->browser->getUrl(), '/', 'redirect did not work');
+        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }
 
     /**
@@ -246,7 +241,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     public function testOrderIfAmountOfOneProductIsNull()
     {
-        $this->browser->doFoodCoopShopLogin();
+        $this->loginAsCustomer();
         $this->addProduct($this->productId1, 1);
         $this->addProduct($this->productId1, - 1);
         $this->addProduct($this->productId2, 1);
