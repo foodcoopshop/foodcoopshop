@@ -1,20 +1,14 @@
 # FoodCoopShop
-The open source software for your foodcoop
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.txt)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
 [![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
 
-FoodCoopShop is a free open source software for foodcoops. For more information about features or a demo visit the [project details homepage](https://www.foodcoopshop.com/).
+FoodCoopShop is a free open source software for foodcoops. For more information about features please visit the [project details homepage](https://www.foodcoopshop.com/). There's also a [demo version](https://www.foodcoopshop.com) available.
 
 ## Installation
 
-This is the Developers area. If You want to use the software "as is", please follow the [installation details](https://github.com/foodcoopshop/foodcoopshop/wiki/Installation-details) in the project's wiki.
-
-# Developers area
-
-If you have questions please drop me an email: office@foodcoopshop.com (Mario).
-
+This is the developers area. If you want to use the software "as is", please follow the [installation details](https://github.com/foodcoopshop/foodcoopshop/wiki/Installation-details) in the project's wiki. If you have questions please drop me an email: office@foodcoopshop.com (Mario).
 
 ## Requirements
 * Server with root access / sudo and cronjobs
@@ -25,11 +19,8 @@ If you have questions please drop me an email: office@foodcoopshop.com (Mario).
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
-## Software documentation (only available in German)
+## Software documentation
 Please read the [software documentation in German](https://github.com/foodcoopshop/foodcoopshop/wiki/Dokumentation-de).
-
-## Using a local webserver
-If you develop on your local machine, your virtual host should end with ".dev" (e.g. localhost.dev). Then development environment and correct debug mode are set automatically. Simply add the prefered hostname to Your local hosts file (e.g. /etc/hosts). Check in Your browser by loading http://localhost.dev/ It's also possible to have 2 hosts pointing to the same Document Root (e.g. localhost and localhost.dev).
 
 ## Installation
 * Basically follow the [installation details](https://github.com/foodcoopshop/foodcoopshop/wiki/Installation-details) for setup. But do **clone the repository**!
