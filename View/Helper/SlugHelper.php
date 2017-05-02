@@ -278,6 +278,21 @@ class SlugHelper extends Helper
         return '/admin/sliders/add';
     }
 
+    public function getProductAdmin($manufacturerId = null, $productId = null)
+    {
+        $url = '/admin/products';
+        if (!empty($manufacturerId) || !empty($productId)) {
+            $url .= '/index';
+        }
+        if (!empty($manufacturerId)) {
+            $url .= '/manufacturerId:'.$manufacturerId;
+        }
+        if (!empty($productId)) {
+            $url .= '/productId:'.$productId;
+        }
+        return $url;
+    }
+
     public function getProductDetail($productId, $name)
     {
         return '/produkt/' . $productId . '-' . StringComponent::slugify($name);

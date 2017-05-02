@@ -489,10 +489,6 @@ body.blog_posts.index .blog-post-wrapper,
     display: block;
     margin-top: 10px;
 }
-.product-wrapper ul.jquery-ui-icon {
-    float: left;
-    margin-top: -2px;
-}
 div.ui-tooltip {
     max-width: 330px;
     border-width: 1px;
@@ -1002,11 +998,17 @@ body.manufacturers.detail #inner-content {
 }
 body.blog_posts ul.jquery-ui-icon,
 body.pages.detail ul.jquery-ui-icon,
-body.manufacturers.detail ul.jquery-ui-icon {
+body.manufacturers.detail .manufacturer-infos ul.jquery-ui-icon {
     top: -15px;
     right: 5px;
     position: absolute;
 }
+.product-wrapper ul.jquery-ui-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 ul.jquery-ui-icon li {
     line-height: 16px ! important;
 }

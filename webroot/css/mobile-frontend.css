@@ -100,13 +100,18 @@
         width: 100% ! important;
         height: auto ! important;
     }
-    body.manufacturers.detail #inner-content ul.jquery-ui-icon,
     body.pages.detail #inner-content ul.jquery-ui-icon,
     body.blog_posts.detail #inner-content ul.jquery-ui-icon {
         top: 0;
     }
+    body.manufacturers.detail #inner-content .manufacturer-infos ul.jquery-ui-icon {
+        top: -3px;
+    }
     body.blog_posts.index #inner-content ul.jquery-ui-icon {
         top: 5px;
+    }
+    .product-wrapper ul.jquery-ui-icon {
+        top: 15px;
     }
     div.first-column {
         width: 23% ! important;
