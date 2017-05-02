@@ -1005,7 +1005,7 @@ body.manufacturers.detail .manufacturer-infos ul.jquery-ui-icon {
 }
 .product-wrapper ul.jquery-ui-icon {
   position: absolute;
-  top: 0;
+  top: 47px;
   right: 0;
 }
 
@@ -1060,3 +1060,4 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
