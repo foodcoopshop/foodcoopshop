@@ -582,6 +582,9 @@ body.payments.my_member_fee #help-container {
     float: right;
     margin-top: 17px;
 }
+.featherlight-content .mini-upload-form  ul li div {
+    position: relative;
+}
 .featherlight-content .mini-upload-form .drop img.existingImage,
 .featherlight-content .mini-upload-form .drop img.uploadedFile {
     width: 300px;
