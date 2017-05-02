@@ -17,6 +17,7 @@
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="#719f41">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -25,6 +26,12 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php echo $this->element('renderCss', array('config' => 'plain')); ?>
+    <?php
+    if ($isMobile) {
+        echo $this->Html->css(array('mobile-plain'));
+    }
+    ?>
+    
     
 </head>
 <body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->action)); ?> <?php echo Configure::read('debug') == 2 ? 'dev' : ''; ?>">
