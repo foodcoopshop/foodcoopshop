@@ -322,7 +322,7 @@
        width: 55% ! important;
     }
     .carts.detail span.product-name-wrapper {
-        float: none;
+        width: 190px ! important;
     }
     body.carts.detail .cart:not(#cart) .product {
         padding-top: 10px;
