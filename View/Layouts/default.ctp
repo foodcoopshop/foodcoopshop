@@ -54,6 +54,9 @@ header('Pragma: no-cache');
         Inflector::tableize($this->name),
         Inflector::singularize(Inflector::tableize($this->action))
     );
+    if ($appAuth->isSuperadmin()) {
+        $bodyClasses[] = 'superadmin';
+    }
 ?>
 
 <body class="<?php echo implode(' ', $bodyClasses); ?>">

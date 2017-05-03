@@ -110,8 +110,8 @@
     body.blog_posts.index #inner-content ul.jquery-ui-icon {
         top: 5px;
     }
-    .product-wrapper ul.jquery-ui-icon {
-        top: 15px;
+    body.superadmin .product-wrapper .heading h4 {
+        max-width: 89%;
     }
     div.first-column {
         width: 23% ! important;
@@ -341,3 +341,4 @@
         font-size: 13px;
     }
  }
+

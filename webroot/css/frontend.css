@@ -360,6 +360,9 @@ body.blog_posts.index .blog-post-wrapper,
     margin-right: 10px;
     line-height: 23px;
 }
+body.superadmin .product-wrapper .heading h4 {
+    max-width: 95%;
+}
 .blog-post-wrapper h4 {
     margin-top: 0;
     line-height: 23px;
@@ -402,6 +405,7 @@ body.blog_posts.index .blog-post-wrapper,
 .product-wrapper div.second-column {
     overflow: hidden;
     word-wrap: break-word;
+    position: relative;
 }
 .blog-post-wrapper div.second-column {
     min-height: 148px;
@@ -1003,10 +1007,10 @@ body.manufacturers.detail .manufacturer-infos ul.jquery-ui-icon {
     right: 5px;
     position: absolute;
 }
-.product-wrapper ul.jquery-ui-icon {
+.product-wrapper .second-column ul.jquery-ui-icon {
   position: absolute;
-  top: 50px;
-  right: 0;
+  top: 0;
+  right: 5px;
 }
 
 ul.jquery-ui-icon li {
@@ -1060,5 +1064,6 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
 
 
