@@ -1,17 +1,19 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 02. Apr 2017 um 20:11
+-- Host: localhost
+-- Erstellungszeit: 03. Mai 2017 um 11:24
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Datenbank: `foodcoopshop_test`
+-- Datenbank: `foodcoopshop_clean`
 --
 
 -- --------------------------------------------------------
@@ -1086,12 +1088,12 @@ ALTER TABLE `fcs_tax`
 -- AUTO_INCREMENT für Tabelle `fcs_address`
 --
 ALTER TABLE `fcs_address`
-  MODIFY `id_address` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `id_address` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_attribute`
 --
 ALTER TABLE `fcs_attribute`
-  MODIFY `id_attribute` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id_attribute` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_action_logs`
 --
@@ -1111,7 +1113,7 @@ ALTER TABLE `fcs_cake_cart_products`
 -- AUTO_INCREMENT für Tabelle `fcs_cake_deposits`
 --
 ALTER TABLE `fcs_cake_deposits`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cake_invoices`
 --
@@ -1126,12 +1128,12 @@ ALTER TABLE `fcs_cake_payments`
 -- AUTO_INCREMENT für Tabelle `fcs_category`
 --
 ALTER TABLE `fcs_category`
-  MODIFY `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_cms`
 --
 ALTER TABLE `fcs_cms`
-  MODIFY `id_cms` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_cms` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_configuration`
 --
@@ -1141,7 +1143,7 @@ ALTER TABLE `fcs_configuration`
 -- AUTO_INCREMENT für Tabelle `fcs_customer`
 --
 ALTER TABLE `fcs_customer`
-  MODIFY `id_customer` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id_customer` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_homeslider_slides`
 --
@@ -1151,12 +1153,12 @@ ALTER TABLE `fcs_homeslider_slides`
 -- AUTO_INCREMENT für Tabelle `fcs_image`
 --
 ALTER TABLE `fcs_image`
-  MODIFY `id_image` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id_image` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_manufacturer`
 --
 ALTER TABLE `fcs_manufacturer`
-  MODIFY `id_manufacturer` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_manufacturer` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_orders`
 --
@@ -1171,29 +1173,29 @@ ALTER TABLE `fcs_order_detail`
 -- AUTO_INCREMENT für Tabelle `fcs_product`
 --
 ALTER TABLE `fcs_product`
-  MODIFY `id_product` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
+  MODIFY `id_product` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_product_attribute`
 --
 ALTER TABLE `fcs_product_attribute`
-  MODIFY `id_product_attribute` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_product_attribute` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_smart_blog_post`
 --
 ALTER TABLE `fcs_smart_blog_post`
-  MODIFY `id_smart_blog_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_smart_blog_post` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_smart_blog_post_shop`
 --
 ALTER TABLE `fcs_smart_blog_post_shop`
-  MODIFY `id_smart_blog_post_shop` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_smart_blog_post_shop` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_stock_available`
 --
 ALTER TABLE `fcs_stock_available`
-  MODIFY `id_stock_available` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=709;
+  MODIFY `id_stock_available` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `fcs_tax`
 --
 ALTER TABLE `fcs_tax`
-  MODIFY `id_tax` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tax` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;COMMIT;
