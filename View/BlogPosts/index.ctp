@@ -52,6 +52,17 @@ foreach ($blogPosts as $blogPost) {
             $blogDetailLink,
             array('escape' => false)
         );
+        
+        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+            echo $this->Html->getJqueryUiIcon(
+                $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                array(
+                    'title' => 'Bearbeiten'
+                ),
+                $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post'])
+                );
+        }
+        
     echo '</div>';
 
     echo '<div class="third-column">';
@@ -73,16 +84,6 @@ foreach ($blogPosts as $blogPost) {
         }
     }
             echo '</div>';
-
-    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-            array(
-            'title' => 'Bearbeiten'
-            ),
-            $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post'])
-        );
-    }
 
             echo '</div>';
 

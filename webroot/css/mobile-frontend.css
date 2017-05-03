@@ -107,10 +107,8 @@
     body.manufacturers.detail #inner-content .manufacturer-infos ul.jquery-ui-icon {
         top: -3px;
     }
-    body.blog_posts.index #inner-content ul.jquery-ui-icon {
-        top: 5px;
-    }
-    body.superadmin .product-wrapper .heading h4 {
+    body.superadmin .product-wrapper .heading h4,
+    .blog-post-wrapper .second-column h4 {
         max-width: 89%;
     }
     div.first-column {
