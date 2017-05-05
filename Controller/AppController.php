@@ -102,6 +102,13 @@ class AppController extends Controller
 
     public function beforeFilter()
     {
+
+        $isMobile = false;
+        if ($this->request->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+            $isMobile = true;
+        }
+        $this->set('isMobile', $isMobile);
+
         $this->loadConfigurations();
 
         switch ($this->DbMigration->doDbMigrations()) {
@@ -150,12 +157,6 @@ class AppController extends Controller
             $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
             $this->set('compensationPercentageForTermsOfUse', $compensationPercentage);
         }
-
-        $isMobile = false;
-        if ($this->request->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
-            $isMobile = true;
-        }
-        $this->set('isMobile', $isMobile);
 
         parent::beforeFilter();
     }
