@@ -8,7 +8,7 @@ FoodCoopShop is a free open source software for foodcoops. For more information 
 
 ## Installation
 
-This is the developers area. If you want to use the software "as is", please follow the [installation details](https://github.com/foodcoopshop/foodcoopshop/wiki/Installation-details) in the project's wiki. If you have questions please drop me an email: office@foodcoopshop.com (Mario).
+This is the developers area. If you want to use the software "as is", please follow the [installation details](https://github.com/foodcoopshop/foodcoopshop/wiki/Installation-details) in the project's wiki. If you have questions or if you **want be informed if a new version is relased**, please drop me an email: office@foodcoopshop.com (Mario).
 
 ## Requirements
 * Server with root access / sudo and cronjobs
