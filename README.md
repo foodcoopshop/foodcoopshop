@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
 [![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
 
-FoodCoopShop is a free open source software for foodcoops. For more information about features please visit the [project's official homepage](https://www.foodcoopshop.com/). There's also a [demo version](https://demo.foodcoopshop.com) available.
+FoodCoopShop is a free open source software for foodcoops. For more information about features please visit the project's official homepage [https://www.foodcoopshop.com](https://www.foodcoopshop.com/). There's also a [demo version](https://demo.foodcoopshop.com) available.
 
 ## Installation
 
@@ -54,5 +54,3 @@ $ chmod a+w -R ./webroot/tmp
 * The test suite **AllFoodCoopShopTests** runs all tests of the application
 * An overview about all existing tests are found on the testing web interface: www.yourdomain.com/test.php
 
-# Links
-* **Official website**: [https://www.foodcoopshop.com](https://www.foodcoopshop.com)
