@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
 [![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
 
-FoodCoopShop is a free open source software for foodcoops. For more information about features please visit the [project details homepage](https://www.foodcoopshop.com/). There's also a [demo version](https://www.foodcoopshop.com) available.
+FoodCoopShop is a free open source software for foodcoops. For more information about features please visit the [project's official homepage](https://www.foodcoopshop.com/). There's also a [demo version](https://demo.foodcoopshop.com) available.
 
 ## Installation
 
@@ -13,7 +13,7 @@ This is the developers area. If you want to use the software "as is", please fol
 ## Requirements
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
-* PHP 5.5 or higher (PHP 7.1.x recommended)
+* PHP 7.1
 * MySQL 5.4 or higher
 * Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
@@ -53,13 +53,6 @@ $ chmod a+w -R ./webroot/tmp
 * Import [this dump](Config/sql/installation/clean-db-structure.sql) into your test database
 * The test suite **AllFoodCoopShopTests** runs all tests of the application
 * An overview about all existing tests are found on the testing web interface: www.yourdomain.com/test.php
-
-## Compress assets
-If the debug level is set to 0 (e.g. not using a *.dev hostname), and you made changes to your assets defined in assets_compress.ini, you can rebuild your compressed assets with
-
-```
-$ bash Console/cake asset_compress build
-```
 
 # Links
 * **Official website**: [https://www.foodcoopshop.com](https://www.foodcoopshop.com)
