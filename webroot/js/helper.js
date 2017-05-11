@@ -150,8 +150,9 @@ foodcoopshop.Helper = {
             fx: 'scrollHorz',
             prev: '#slider-wrapper .prev',
             next: '#slider-wrapper .next',
-            timeout: 7000,
-            speed: 4000,
+            timeout: 6000,
+            speed: 3000,
+            swipe: true,
             pause: 0
         });
     },

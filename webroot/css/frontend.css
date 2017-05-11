@@ -26,9 +26,28 @@ a.transistion {
     -ms-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
 }
-#home {
-    width: 100%;
+
+body.pages.home .cycle-pager { 
     text-align: center;
+    width: 100%;
+    z-index: 500;
+    position: absolute;
+    top: 10px;
+    overflow: hidden;
+}
+body.pages.home .cycle-pager span { 
+    font-size: 50px;
+    width: 16px;
+    height: 16px; 
+    display: inline-block;
+    color: #ddd;
+    cursor: pointer; 
+}
+body.pages.home .cycle-pager span.cycle-pager-active {
+    color: #719f41;
+}
+body.pages.home .cycle-pager > * {
+    cursor: pointer;
 }
 
 #container {
