@@ -80,7 +80,7 @@ h2.warning {
     top: 48px;
     left: 445px;
     padding: 6px;
-    border: 1px solid #009335;
+    border: 1px solid #719f41;
     width: 350px;
     opacity: 0.9;
     border-radius: 5px;
@@ -105,7 +105,7 @@ h2.warning {
     text-align: center;
 }
 #flashMessage.success {
-    background: #009335;
+    background: #719f41;
     color: #fff;
 }
 
@@ -139,7 +139,7 @@ h2.warning {
     position: absolute;
     left: 3px;
     top: 6px;
-    color: #009335;
+    color: #719f41;
 }
 .vertical.menu li.has-icon a,
 .vertical.menu li a.has-icon,
