@@ -110,7 +110,7 @@ button#filter {
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover {
-    background-color: #719f41 ! important; /* bootstrap overwrite */
+    background-color: #009335 ! important; /* bootstrap overwrite */
 }
 .bootstrap-select {
     width: 193px ! important;
@@ -489,7 +489,7 @@ body.orders.index #add-order-button-wrapper div.select {
 .jquery-ui-icon a.icon-with-text {
     float: left;
     padding: 0 5px;
-    color: #333 ! important;
+    color: #009335 ! important;
 }
 .jquery-ui-icon a.icon-with-text.button {
     padding: 7px;
@@ -505,14 +505,14 @@ body.payments.my_member_fee #help-container {
     margin-bottom: 15px;
     font-size: 19px;
     font-weight: bold;
-    color: #719f41;
+    color: #009335;
     width: 90%;
     line-height: 22px;
 }
 
 .featherlight-content .message-container {
     width: 100%;
-    background: #719f41;
+    background: #009335;
     font-size: 14px;
     color: #fff;
     padding: 10px;
