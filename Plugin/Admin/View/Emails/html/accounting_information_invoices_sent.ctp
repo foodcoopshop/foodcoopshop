@@ -35,11 +35,13 @@
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
             
-            <p>
-                Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-System weniger fehleranfällig.<br />
-                <?php $link = Configure::read('app.cakeServerName').$this->Slug->getReport('product'); ?>
-                <a href="<?php echo $link; ?>"><?php echo $link; ?></a> (Link nur für Superadmins).
-            </p>
+            <?php if ($this->MyHtml->paymentIsCashless()) { ?>
+                <p>
+                    Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-System weniger fehleranfällig.<br />
+                    <?php $link = Configure::read('app.cakeServerName').$this->Slug->getReport('product'); ?>
+                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a> (Link nur für Superadmins).
+                </p>
+            <?php } ?>
 
             <p>Vielen Dank für deine Arbeit!</p>
 
