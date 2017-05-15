@@ -37,7 +37,7 @@
             
             <p>
                 Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-System weniger fehleranfällig.<br />
-                <?php $link = $this->Slug->getReport('product'); ?>
+                <?php $link = Configure::read('app.cakeServerName').$this->Slug->getReport('product'); ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
 
