@@ -54,7 +54,7 @@ $ chmod a+w -R ./webroot/tmp
 
 ## Unit Testing
 * Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](http://book.cakephp.org/2.0/en/development/testing.html)
-* Import [this dump](Config/sql/installation/clean-db-structure.sql) into your test database
+* Import [this dump](Config/sql/_installation/clean-db-structure.sql) into your test database
 * The test suite **AllFoodCoopShopTests** runs all tests of the application
 * An overview about all existing tests are found on the testing web interface: www.yourdomain.com/test.php
 
