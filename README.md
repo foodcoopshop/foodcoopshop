@@ -7,7 +7,7 @@
 FoodCoopShop is a free open source software for foodcoops.
 
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
-* Demo version: (https://demo.foodcoopshop.com)(https://demo.foodcoopshop.com)
+* Demo version: [https://demo.foodcoopshop.com](https://demo.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Installation
