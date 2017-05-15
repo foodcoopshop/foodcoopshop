@@ -4,7 +4,11 @@
 [![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
 [![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
 
-FoodCoopShop is a free open source software for foodcoops. For more information about features please visit the project's official homepage [https://www.foodcoopshop.com](https://www.foodcoopshop.com/). There's also a [demo version](https://demo.foodcoopshop.com) available.
+FoodCoopShop is a free open source software for foodcoops.
+
+* Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
+* Demo version: (https://demo.foodcoopshop.com)(https://demo.foodcoopshop.com)
+* Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Installation
 
