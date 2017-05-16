@@ -124,10 +124,14 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     echo '<td style="width:130px;">';
     $productCountSum += $manufacturer['product_count'];
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;Artikel', array(
+    echo $this->Html->getJqueryUiIcon(
+        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;Artikel',
+        array(
         'title' => 'Alle Artikel von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
-    ), '/admin/products/index/manufacturerId:' . $manufacturer['Manufacturer']['id_manufacturer']);
+        ),
+        $this->Slug->getProductAdmin($manufacturer['Manufacturer']['id_manufacturer'])
+    );
     echo '</td>';
 
     echo '<td>';

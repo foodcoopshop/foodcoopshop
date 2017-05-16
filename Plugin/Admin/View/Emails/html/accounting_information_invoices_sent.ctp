@@ -26,15 +26,22 @@
         <td>
 
             <p>
-                die Rechnungen vom <b><?php echo $this->MyTime->getLastMonthNameAndYear(); ?></b>
-                wurden soeben verschickt.
+                die Rechnungen vom <b><?php echo $this->MyTime->getLastMonthNameAndYear(); ?></b> wurden soeben verschickt.
             </p>
 
             <p>
                 Hier findest du die Übersicht zum Überweisen: <br />
-                    <?php $link = Configure::read('app.cakeServerName').'/admin/order_details/index/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.'/orderState:'.ORDER_STATE_CASH.','.ORDER_STATE_CASH_FREE.'/groupByManufacturer:1'; ?>
-                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
+                <?php $link = Configure::read('app.cakeServerName').'/admin/order_details/index/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.'/orderState:'.ORDER_STATE_CASH.','.ORDER_STATE_CASH_FREE.'/groupByManufacturer:1'; ?>
+                <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
+            
+            <?php if ($this->MyHtml->paymentIsCashless()) { ?>
+                <p>
+                    Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-System weniger fehleranfällig.<br />
+                    <?php $link = Configure::read('app.cakeServerName').$this->Slug->getReport('product'); ?>
+                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a> (Link nur für Superadmins).
+                </p>
+            <?php } ?>
 
             <p>Vielen Dank für deine Arbeit!</p>
 

@@ -62,6 +62,17 @@ if ($product['ProductLang']['description'] != '') {
         $this->Slug->getManufacturerDetail($product['Manufacturer']['id_manufacturer'], $product['Manufacturer']['name'])
     );
 
+
+    if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['Manufacturer']['id_manufacturer'] == $appAuth->getManufacturerId())) {
+        echo $this->Html->getJqueryUiIcon(
+            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+            array(
+                'title' => 'Produkt bearbeiten'
+            ),
+            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['Manufacturer']['id_manufacturer'] : null), $product['Product']['id_product'])
+        );
+    }
+
     echo '</div>';
 
     echo '<div class="third-column">';

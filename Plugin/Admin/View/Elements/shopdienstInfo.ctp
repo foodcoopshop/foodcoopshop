@@ -15,6 +15,6 @@
 
 if (! $appAuth->isManufacturer()) {
     echo '<li>';
-    echo '<a href="https://github.com/foodcoopshop/foodcoopshop/wiki/Abholung-der-Produkte" target="_blank">Hier geht\'s zur Abholdienst-Hilfe</a>';
+    echo '<a href="https://foodcoopshop.github.io/de/abholung-der-produkte" target="_blank">Hier geht\'s zur Abholdienst-Hilfe</a>';
     echo '</li>';
 }
