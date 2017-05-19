@@ -23,9 +23,6 @@ This is the developers area. If you want to use the software "as is", please fol
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
-## Software documentation
-Please read the [software documentation in German](https://foodcoopshop.github.io/de/).
-
 ## Installation
 * Basically follow the [installation details](https://foodcoopshop.github.io/en/installation-details) for setup. But do **clone the repository**!
 * Before doing any of the configuration changes, follow the steps below
