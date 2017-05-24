@@ -35,12 +35,14 @@ class EmailOrderReminderShell extends AppShell
 
         $this->startTimeLogging();
 
-        // hersteller sind zwar kunden (hersteller login, haben aber keine kunden-adresse und werden somit nicht berücksichtigt)
+        $conditions = array(
+            'Customer.newsletter' => 1,
+            'Customer.active' => 1
+        );
+        $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
+        $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', array(
-            'conditions' => array(
-                'Customer.newsletter' => 1,
-                'Customer.active' => 1
-            ),
+            'conditions' => $conditions,
             'order' => array(
                 'Customer.name' => 'ASC'
             )
@@ -65,7 +67,6 @@ class EmailOrderReminderShell extends AppShell
                 ))
                 ->send();
 
-            $this->out($message);
             $outString .= $customer['Customer']['name'] . '<br />';
 
             $i ++;
