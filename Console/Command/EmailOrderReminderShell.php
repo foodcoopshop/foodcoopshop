@@ -41,6 +41,15 @@ class EmailOrderReminderShell extends AppShell
         );
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
+        $this->Customer->unbindModel(array(
+            'hasMany' => array('PaidCashFreeOrders', 'CakePayments', 'ValidOrder')
+        ));
+
+        $activeOrderConditions = array();
+        $activeOrderConditions[] = 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->getOrderPeriodFirstDay(). '\'';
+        $activeOrderConditions[] = 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->getOrderPeriodLastDay(). '\'';
+        $this->Customer->hasMany['ActiveOrders']['conditions'] = $activeOrderConditions;
+
         $customers = $this->Customer->find('all', array(
             'conditions' => $conditions,
             'order' => array(
