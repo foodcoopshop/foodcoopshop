@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added unit tests for payments / [PR#59](https://github.com/foodcoopshop/foodcoopshop/pull/59) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Lint code with git pre-commit-hook / [PR#56](https://github.com/foodcoopshop/foodcoopshop/pull/56) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png?size=20" width="20"></a>
 - Database migrations for automatic database update after installing new release / [PR#34](https://github.com/foodcoopshop/foodcoopshop/pull/34) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
+- Created this changelog / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Changed
 - Hide product price for logged out users if option "show products for logged out users" is enabled / [PR#53](https://github.com/foodcoopshop/foodcoopshop/pull/53) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
