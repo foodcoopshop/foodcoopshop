@@ -58,7 +58,7 @@ Configure::write('app.registrationNotificationEmails', array());
 /**
  * whether to apply a member fee to the members account balance
  */
-Configure::write('app.memberFeeEnabled', true);
+Configure::write('app.memberFeeEnabled', false);
 
 /**
  * cronjob needs to be activated too
