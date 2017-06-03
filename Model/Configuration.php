@@ -48,7 +48,7 @@ class Configuration extends AppModel
                 $validationRules = $this->getNumberRangeConfigurationRule(CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
                 break;
             case 'FCS_FACEBOOK_URL':
-                $validationRules = $this->getUrlValidationRule();
+                $validationRules = $this->getUrlValidationRule(true);
                 break;
             case 'FCS_APP_NAME':
                 $validationRules = $this->getCharactersRangeRule(5, 255);
@@ -96,7 +96,7 @@ class Configuration extends AppModel
         return $validationRules;
     }
 
-    private function getUrlValidationRule()
+    private function getUrlValidationRule($allowEmpty = false)
     {
         $validationRules = array();
         $validationRules[] = array(
@@ -104,7 +104,8 @@ class Configuration extends AppModel
                 'url',
                 true
             ),
-            'message' => 'Bitte gibt eine gültige Url an.'
+            'message' => 'Bitte gibt eine gültige Url an.',
+            'allowEmpty' => $allowEmpty
         );
         return $validationRules;
     }
