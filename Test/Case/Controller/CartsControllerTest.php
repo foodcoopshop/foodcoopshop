@@ -5,6 +5,7 @@ App::uses('CakeCart', 'Model');
 App::uses('Product', 'Model');
 App::uses('Order', 'Model');
 App::uses('StockAvailable', 'Model');
+App::uses('CartsController', 'Controller');
 
 /**
  * CartsControllerTest
@@ -47,6 +48,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->StockAvailable = new StockAvailable();
     }
 
+    /**
+     * @covers CartsController::ajaxAdd
+     */
     public function testAddLoggedOut()
     {
         $this->addProduct($this->productId1, 2);
@@ -54,6 +58,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    /**
+     * @covers CartsController::ajaxAdd
+     */
     public function testAddWrongProductId1()
     {
         $this->loginAsCustomer();
@@ -62,6 +69,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    /**
+     * @covers CartsController::ajaxAdd
+     */
     public function testAddWrongProductId2()
     {
         $this->loginAsCustomer();
@@ -70,6 +80,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    /**
+     * @covers CartsController::ajaxRemove
+     */
     public function testAddWrongAmount()
     {
         $this->loginAsCustomer();
@@ -78,6 +91,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    /**
+     * @covers CartsController::ajaxRemove
+     */
     public function testRemoveProduct()
     {
         $this->loginAsCustomer();
@@ -92,6 +108,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    /**
+     * @covers CartsController::detail
+     * @covers CartsController::finish
+     * @covers CartsController::orderSuccessful
+     */
     public function testCartLoggedIn()
     {
         // manufacturer status needs to be changed as well, therefore use a superadmin account for both shopping and changing manufacturer data
