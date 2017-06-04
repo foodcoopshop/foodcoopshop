@@ -2,7 +2,12 @@
   <filter>
     <!-- adds non-existing code coverage for files that are not called in tests -->
     <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">../Console/Command</directory>
       <directory suffix=".php">../Controller</directory>
+      <directory suffix=".php">../Lib/Pdf</directory>
+      <directory suffix=".php">../Model</directory>
+      <directory suffix=".php">../View/Helper</directory>
+      <directory suffix=".php">../Utility</directory>
     </whitelist>
   </filter>
 </phpunit>
