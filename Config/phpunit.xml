@@ -1,4 +1,6 @@
-<phpunit>
+<phpunit
+    stopOnFailure="false"
+>
   <filter>
     <!-- adds non-existing code coverage for files that are not called in tests -->
     <whitelist processUncoveredFilesFromWhitelist="true">
