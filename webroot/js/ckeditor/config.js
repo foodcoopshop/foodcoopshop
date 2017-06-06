@@ -26,4 +26,4 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = 'ABCD'; // change this string if version is updated
+CKEDITOR.timestamp = '4.6.2'; // change this string if version is updated

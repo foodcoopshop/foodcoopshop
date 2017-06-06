@@ -115,6 +115,7 @@ class Customer extends AppModel
         'ActiveOrders' => array(
             'className' => 'Order',
             'foreignKey' => 'id_customer',
+            'conditions' => array(),
             'order' => array(
                 'ActiveOrders.date_add' => 'DESC'
             )
@@ -197,7 +198,7 @@ class Customer extends AppModel
 
         return $manufacturer;
     }
-    
+
     /**
      * @param int $customerId
      * @return array
@@ -214,7 +215,7 @@ class Customer extends AppModel
         }
         return false;
     }
-    
+
     public function getManufacturerIdByCustomerId($customerId)
     {
         $manufacturer = $this->getManufacturerByCustomerId($customerId);
@@ -223,7 +224,7 @@ class Customer extends AppModel
         }
         return 0;
     }
-    
+
     public function getCreditBalance($customerId)
     {
         App::uses('CakePayment', 'Model');

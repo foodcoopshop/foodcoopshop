@@ -1,8 +1,8 @@
 # FoodCoopShop
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
 [![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
+[![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
 FoodCoopShop is a free open source software for foodcoops.
 
@@ -22,9 +22,6 @@ This is the developers area. If you want to use the software "as is", please fol
 * Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
-
-## Software documentation
-Please read the [software documentation in German](https://foodcoopshop.github.io/de/).
 
 ## Installation
 * Basically follow the [installation details](https://foodcoopshop.github.io/en/installation-details) for setup. But do **clone the repository**!

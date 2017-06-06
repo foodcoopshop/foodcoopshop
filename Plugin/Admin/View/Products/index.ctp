@@ -390,7 +390,7 @@
         if ($appAuth->isManufacturer()) {
             $profileLink = $this->Slug->getManufacturerProfile();
         }
-        echo '<a href="' . $profileLink . '" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Aktivieren aktivieren / deaktivieren? Urlaubsmodus im Hersteller-Profil verwenden!</a>';
+        echo '<a href="' . $profileLink . '" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle aktivieren / deaktivieren? Urlaubsmodus im Hersteller-Profil verwenden!</a>';
         echo '</div>';
         echo '<div class="sc"></div>';
     }

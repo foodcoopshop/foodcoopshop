@@ -1,0 +1,4 @@
+linters:
+    phpcs:
+        exclude: 'Generic.Files.LineLength'
+        extensions: '.php,.ctp'

@@ -4,7 +4,7 @@
 * Create an [issue](https://github.com/foodcoopshop/foodcoopshop/issues) on GitHub, if you have found a bug. Therefore you need to be registered at Github.
 
 ## Quick contribution of source code
-If you want contribute **a small change** (eg. typo) that's how it works:
+If you want to contribute **a small change** (eg. typo) that's how it works:
 
 * [Fork the project and make a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/)
 * Please follow the coding conventions (see below) and enjoy supporting a great project!
