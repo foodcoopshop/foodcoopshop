@@ -47,7 +47,7 @@ before_script:
   - sudo service apache2 restart
 
 script:
-  - ./Console/cake test app AllFoodCoopShopTests --stderr --coverage-clover clover.xml
+  - ./Console/cake test app AllFoodCoopShopTests --stderr --coverage-clover clover.xml --configuration=Config/phpunit.xml
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
