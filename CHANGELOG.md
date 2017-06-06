@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Home slider with pagination including swiping for mobile devices / [#2](https://github.com/foodcoopshop/foodcoopshop/issues/2) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Improvements for credit uploads / [PR#47](https://github.com/foodcoopshop/foodcoopshop/pull/47) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Travis integration on Github / [PR#58](https://github.com/foodcoopshop/foodcoopshop/pull/58) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Sticklerand CodeCov integration on Github / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Stickler integration on Github / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Easier execution of unit tests / [PR#57](https://github.com/foodcoopshop/foodcoopshop/pull/57) / [PR#45](https://github.com/foodcoopshop/foodcoopshop/pull/45) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Added unit tests for payments / [PR#59](https://github.com/foodcoopshop/foodcoopshop/pull/59) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Lint code with git pre-commit-hook / [PR#56](https://github.com/foodcoopshop/foodcoopshop/pull/56) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png?size=20" width="20"></a>
