@@ -311,10 +311,6 @@ foodcoopshop.Helper = {
 
     },
 
-    setServerName: function (serverName) {
-        this.serverName = serverName;
-    },
-
     setCakeServerName: function (cakeServerName) {
         this.cakeServerName = cakeServerName;
     },
