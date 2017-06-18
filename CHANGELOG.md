@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [View unreleased changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
 
 
-## [v1.3.0] 2017-06-21 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
+## [v1.3.0] 2017-06-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
 
 ### Added
 - Responsive design for admin / [PR#37](https://github.com/foodcoopshop/foodcoopshop/pull/37) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
