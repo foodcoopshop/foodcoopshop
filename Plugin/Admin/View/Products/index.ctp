@@ -109,8 +109,11 @@
     
     <?php
 
-    if (! empty($manufacturer) && $manufacturer['Manufacturer']['holiday'] == 1) {
-        echo '<h2 class="info">Urlaubsmodus aktiviert. Im Shop werden keine Produkte angezeigt!</h2>';
+    if (!empty($manufacturer)) {
+        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturer']['name']);
+        if ($manufacturerHolidayString != '') {
+            echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
+        }
     }
 
     echo '<table class="list no-clone-last-row">';

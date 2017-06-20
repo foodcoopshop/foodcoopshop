@@ -217,13 +217,13 @@ class Manufacturer extends AppModel
 
         return $customer;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @return array
      */
     public function getCustomerByManufacturerId($manufacturerId)
-    { 
+    {
         $manufacturer = $this->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
@@ -234,7 +234,7 @@ class Manufacturer extends AppModel
         }
         return false;
     }
-    
+
     public function getCustomerIdByManufacturerId($manufacturerId)
     {
         $customer = $this->getCustomerByManufacturerId($manufacturerId);
@@ -266,6 +266,7 @@ class Manufacturer extends AppModel
             'fields' => array(
                 'Manufacturer.id_manufacturer',
                 'Manufacturer.name',
+                '!'.$this->getManufacturerHolidayConditions().' as IsHolidayActive'
             ),
             'order' => array(
                 'Manufacturer.name' => 'ASC'
@@ -276,9 +277,14 @@ class Manufacturer extends AppModel
         $manufacturersForMenu = array();
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
+            $productCount = '';
             if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $productCount = $manufacturerName .= ' (' . $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']) . ')';
+                $productCount = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             }
+            if ($manufacturer[0]['IsHolidayActive']) {
+                $productCount = 'Urlaub';
+            }
+            $manufacturerName .= ' ('.$productCount.')';
             $manufacturersForMenu[] = array(
                 'name' => $manufacturerName,
                 'slug' => Configure::read('slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])

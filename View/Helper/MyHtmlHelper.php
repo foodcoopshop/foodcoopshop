@@ -30,6 +30,33 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
 
+    public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
+    {
+        $result = '';
+        if ($isHolidayActive && $long) {
+            $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
+        }
+        if ($dateFrom != '0000-00-00') {
+            if ($dateTo == '0000-00-00' && $dateFrom > date('Y-m-d')) {
+                $result .= 'ab';
+            } else {
+                $result .= 'von';
+            }
+            if ($isHolidayActive) {
+                $result = str_replace('von', 'seit', $result);
+            }
+            $result .= ' ' . Configure::read('timeHelper')->formatToDateShort($dateFrom);
+        }
+        if ($dateTo != '0000-00-00') {
+            $result .= ' bis ' . Configure::read('timeHelper')->formatToDateShort($dateTo);
+        }
+        if ($long && $result != '') {
+            $result .= ' im wohlverdienten Urlaub.';
+        }
+
+        return $result;
+    }
+
     /**
      * @param array $manufacturer
      * @param string $outputType "pdf" of "html"
@@ -42,8 +69,8 @@ class MyHtmlHelper extends HtmlHelper
         }
         $imprintLines = array();
         $imprintLines[] = '<b>'.$manufacturer['Manufacturer']['name'].'</b>';
-        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['name']) {
-            $imprintLines[] = $manufacturer['Address']['name'];
+        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname']) {
+            $imprintLines[] = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
         }
         $address = $manufacturer['Address']['address1'];
         if ($manufacturer['Address']['address2'] != '') {

@@ -66,7 +66,8 @@ class ManufacturersController extends FrontendController
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
         $manufacturer = $this->Manufacturer->find('first', array(
-            'conditions' => $conditions
+            'conditions' => $conditions,
+            'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ));
 
         if (empty($manufacturer)) {

@@ -99,7 +99,7 @@ class Product extends AppModel
             'fields' => 'DISTINCT ' . $this->name . '.id_product',
             'conditions' => array(
                 $this->name . '.active' => APP_ON,
-                'Manufacturer.holiday' => APP_OFF,
+                $this->getManufacturerHolidayConditions(),
                 $this->name . '.id_manufacturer' => $manufacturerId
             )
         ));

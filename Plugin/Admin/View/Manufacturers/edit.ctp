@@ -14,9 +14,15 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerLangDescription');" . Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerLangShortDescription');" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerLangDescription');" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerLangShortDescription');" .
+        Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+        Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');".
+        Configure::read('app.jsNamespace') . ".Helper.initDatepicker(); var datefieldSelector = $('input.datepicker');datefieldSelector.datepicker();
     "
 ));
+
 $idForImageUpload = isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getManufacturerImageSrc($idForImageUpload, 'large');
 if (isset($this->request->data['Manufacturer']['tmp_image']) && $this->request->data['Manufacturer']['tmp_image'] != '') {
@@ -87,140 +93,150 @@ echo $this->Form->input('Manufacturer.active', array(
     'type' => 'checkbox',
     'after' => '<span class="after small">Hersteller-Profil und Produkte werden angezeigt (vom Hersteller selbst nicht änderbar).</span>'
 ));
-echo $this->Form->input('Manufacturer.holiday', array(
-    'label' => 'Urlaubsmodus?',
-    'type' => 'checkbox',
-    'after' => '<span class="after small">Hersteller-Profil wird angezeigt, die Produkte nicht.</span>'
-));
-echo $this->Form->input('Manufacturer.is_private', array(
+
+echo '<div class="holiday-wrapper">';
+    echo '<div class="input">';
+        echo '<label>Urlaubsmodus?';
+    echo '</div>';
+    echo $this->element('dateFields', array(
+        'dateFrom' => $this->request->data['Manufacturer']['holiday_from'],
+        'nameFrom' => 'data[Manufacturer][holiday_from]',
+        'dateTo' => $this->request->data['Manufacturer']['holiday_to'],
+        'nameTo' => 'data[Manufacturer][holiday_to]'
+    ));
+    echo '<span class="description small">Die Produkte werden im angegebenen Zeitraum nicht im Shop angezeigt.
+          <br />Beide Felder leer bedeutet: Urlaubsmodus nicht aktiv.</span>';
+    echo '</div>';
+
+    echo $this->Form->input('Manufacturer.is_private', array(
     'label' => 'Nur für Mitglieder?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Hersteller-Profil und Produkte werden angezeigt, aber nur für Mitglieder.</span>'
-));
-echo '<div class="sc"></div>';
+    ));
+    echo '<div class="sc"></div>';
 
-echo '<h2>Profil';
-if ($this->here != $this->Slug->getManufacturerAdd()) {
-    echo ' <span>' . $this->Html->link('Hier geht\'s zum Hersteller-Profil', $this->Slug->getManufacturerDetail($manufacturerId, $unsavedManufacturer['Manufacturer']['name']), array(
+    echo '<h2>Profil';
+    if ($this->here != $this->Slug->getManufacturerAdd()) {
+        echo ' <span>' . $this->Html->link('Hier geht\'s zum Hersteller-Profil', $this->Slug->getManufacturerDetail($manufacturerId, $unsavedManufacturer['Manufacturer']['name']), array(
         'target' => '_blank'
-    )) . '</span>';
-}
-echo '</h2>';
+        )) . '</span>';
+    }
+    echo '</h2>';
 
-echo '<div class="input">';
-echo '<label>Logo';
-if ($imageExists) {
-    echo '<br /><span class="small">Zum Ändern auf das Logo klicken.</span>';
-}
-echo '</label>';
-echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
+    echo '<div class="input">';
+    echo '<label>Logo';
+    if ($imageExists) {
+        echo '<br /><span class="small">Zum Ändern auf das Logo klicken.</span>';
+    }
+    echo '</label>';
+    echo '<div style="float:right;">';
+    echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
     'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
     'title' => 'Neues Logo hochladen bzw. austauschen',
     'data-object-id' => $idForImageUpload
-), 'javascript:void(0);');
-echo '</div>';
-echo $this->Form->hidden('Manufacturer.tmp_image');
-echo '</div>';
+    ), 'javascript:void(0);');
+    echo '</div>';
+    echo $this->Form->hidden('Manufacturer.tmp_image');
+    echo '</div>';
 
-echo $this->Form->input('Manufacturer.delete_image', array(
+    echo $this->Form->input('Manufacturer.delete_image', array(
     'label' => 'Logo löschen?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Speichern nicht vergessen</span>'
-));
+    ));
 
-if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    echo $this->Form->input('ManufacturerLang.short_description', array(
+    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+        echo $this->Form->input('ManufacturerLang.short_description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
         'label' => 'Kurze Beschreibung<br /><br /><span class="small">Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden.</span>',
         'before' => '<div style="margin-top:10px;"></div>'
-    ));
-}
+        ));
+    }
 
-$label = 'Lange Beschreibung';
-if (is_null($manufacturerId)) {
-    echo '<div class="input text">';
-    echo '<label>' . $label . '</label>';
-    echo '<p>Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf "bearbeiten" klicken.</p>';
-    echo '</div>';
-} else {
-    echo $this->Form->input('ManufacturerLang.description', array(
+    $label = 'Lange Beschreibung';
+    if (is_null($manufacturerId)) {
+        echo '<div class="input text">';
+        echo '<label>' . $label . '</label>';
+        echo '<p>Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf "bearbeiten" klicken.</p>';
+        echo '</div>';
+    } else {
+        echo $this->Form->input('ManufacturerLang.description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
         'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt, es können auch Bilder eingefügt werden.</span>'
-    ));
-}
-echo '<div class="sc"></div>';
+        ));
+    }
+    echo '<div class="sc"></div>';
 
-echo '<h2>Bankdaten <span>werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet</span></h2>';
-echo $this->Form->input('Manufacturer.bank_name', array(
+    echo '<h2>Bankdaten <span>werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet</span></h2>';
+    echo $this->Form->input('Manufacturer.bank_name', array(
     'label' => 'Bank'
-));
-echo $this->Form->input('Manufacturer.iban', array(
+    ));
+    echo $this->Form->input('Manufacturer.iban', array(
     'label' => 'IBAN',
     'maxLength' => ''
-));
-echo $this->Form->input('Manufacturer.bic', array(
+    ));
+    echo $this->Form->input('Manufacturer.bic', array(
     'label' => 'BIC',
     'maxLength' => ''
-));
-echo '<div class="sc"></div>';
+    ));
+    echo '<div class="sc"></div>';
 
-echo '<h2>Firmendaten <span>für dein Impressum deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten rechts.</span></h2>';
-echo $this->Form->input('Address.firstname', array(
+    echo '<h2>Firmendaten <span>für dein Impressum deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten rechts.</span></h2>';
+    echo $this->Form->input('Address.firstname', array(
     'label' => 'Vorname',
     'required' => true
-));
-echo $this->Form->input('Address.lastname', array(
+    ));
+    echo $this->Form->input('Address.lastname', array(
     'label' => 'Nachname',
     'required' => true
-));
-echo $this->Form->input('Address.address1', array(
+    ));
+    echo $this->Form->input('Address.address1', array(
     'label' => 'Straße'
-));
-echo $this->Form->input('Address.address2', array(
+    ));
+    echo $this->Form->input('Address.address2', array(
     'label' => 'Adresszusatz'
-));
+    ));
 
-echo $this->Form->input('Address.postcode', array(
+    echo $this->Form->input('Address.postcode', array(
     'label' => 'PLZ'
-));
-echo $this->Form->input('Address.city', array(
+    ));
+    echo $this->Form->input('Address.city', array(
     'label' => 'Ort'
-));
+    ));
 
-echo $this->Form->input('Manufacturer.uid_number', array(
+    echo $this->Form->input('Manufacturer.uid_number', array(
     'label' => 'UID-Nummer',
     'after' => '<span class="after small">sofern vorhanden</span>'
-));
+    ));
 
-echo $this->Form->input('Manufacturer.firmenbuchnummer', array(
+    echo $this->Form->input('Manufacturer.firmenbuchnummer', array(
     'label' => 'Firmenbuchnummer',
     'after' => '<span class="after small">sofern vorhanden</span>'
-));
+    ));
 
-echo $this->Form->input('Manufacturer.firmengericht', array(
+    echo $this->Form->input('Manufacturer.firmengericht', array(
     'label' => 'Firmengericht',
     'after' => '<span class="after small">sofern vorhanden</span>'
-));
+    ));
 
-echo $this->Form->input('Manufacturer.aufsichtsbehoerde', array(
+    echo $this->Form->input('Manufacturer.aufsichtsbehoerde', array(
     'label' => 'Aufsichtsbehörde',
     'after' => '<span class="after small">sofern vorhanden</span>'
-));
+    ));
 
-echo $this->Form->input('Manufacturer.kammer', array(
+    echo $this->Form->input('Manufacturer.kammer', array(
     'placeholder' => 'z.B. Landwirtschaftskammer',
     'label' => 'Kammer',
     'after' => '<span class="after small">sofern vorhanden</span>'
-));
+    ));
 
-echo $this->Form->input('Manufacturer.additional_text_for_invoice', array(
+    echo $this->Form->input('Manufacturer.additional_text_for_invoice', array(
     'type' => 'textarea',
     'label' => 'Zusatztext für Rechnung' . '<br /><br /><span class="small">Wird am Ende der Übersichtsseite deiner Rechnung eingefügt.<br />z.B.: "Durchschnittsteuersatz 10% zzgl. Zusatzsteuer 10%"</span>',
     'cols' => 81
-));
+    ));
 
 ?>
 

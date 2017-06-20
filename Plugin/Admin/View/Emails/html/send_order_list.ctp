@@ -34,6 +34,7 @@
             </p>
 
             <ul style="padding-left: 10px;">
+                <li><b>Verbesserter Urlaubsmodus</b>: Zeitraum kann angegeben werden.</li>
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
                 <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>

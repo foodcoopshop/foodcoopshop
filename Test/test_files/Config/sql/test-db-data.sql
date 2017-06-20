@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 02. Apr 2017 um 20:12
+-- Host: localhost
+-- Erstellungszeit: 20. Jun 2017 um 15:19
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -693,8 +693,8 @@ INSERT INTO `fcs_configuration` (`id_configuration`, `id_shop_group`, `id_shop`,
 (558, NULL, NULL, 1, 'FCS_APP_EMAIL', 'E-Mail-Adresse der Foodcoop<br /><div class="small"></div>', 'demo-foodcoop@maillinator.com', 'text', 7, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
 (559, NULL, NULL, 1, 'FCS_PLATFORM_OWNER', 'Betreiber der Plattform<br /><div class="small">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>', '', 'textarea', 8, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
 (560, NULL, NULL, 1, 'FCS_SHOP_ORDER_DEFAULT_STATE', 'Bestellstatus für Sofort-Bestellungen', '1', 'dropdown', 75, '2017-01-12 00:00:00', '2017-01-12 00:00:00'),
-(561, NULL, NULL, 1, 'FCS_DB_VERSION', 'Version der Datenbank-Struktur', '2', 'readonly', 0, '2017-03-13 00:00:00', '2017-03-13 00:00:00'),
-(562, NULL, NULL, 0, 'FCS_DB_UPDATE', 'Version des letzten versuchten Datenbank-Updates', '2', 'readonly', 0, '2017-03-13 00:00:00', '2017-03-13 00:00:00');
+(561, NULL, NULL, 1, 'FCS_DB_VERSION', 'Version der Datenbank-Struktur', '3', 'readonly', 0, '2017-03-13 00:00:00', '2017-03-13 00:00:00'),
+(562, NULL, NULL, 0, 'FCS_DB_UPDATE', 'Version des letzten versuchten Datenbank-Updates', '3', 'readonly', 0, '2017-03-13 00:00:00', '2017-03-13 00:00:00');
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `fcs_customer`
@@ -788,11 +788,11 @@ TRUNCATE TABLE `fcs_manufacturer`;
 -- Daten für Tabelle `fcs_manufacturer`
 --
 
-INSERT INTO `fcs_manufacturer` (`id_manufacturer`, `name`, `date_add`, `date_upd`, `active`, `holiday`, `is_private`, `uid_number`, `additional_text_for_invoice`, `iban`, `bic`, `bank_name`, `firmenbuchnummer`, `firmengericht`, `aufsichtsbehoerde`, `kammer`, `homepage`) VALUES
-(4, 'Demo Fleisch-Hersteller', '2014-05-14 13:23:02', '2015-05-15 13:31:41', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
-(5, 'Demo Gemüse-Hersteller', '2014-05-14 13:36:44', '2016-09-27 09:34:51', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
-(15, 'Demo Milch-Hersteller', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '', '', '', '', '', ''),
-(16, 'Hersteller ohne Customer-Eintrag', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, 0, 0, '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `fcs_manufacturer` (`id_manufacturer`, `name`, `date_add`, `date_upd`, `active`, `holiday_from`, `holiday_to`, `is_private`, `uid_number`, `additional_text_for_invoice`, `iban`, `bic`, `bank_name`, `firmenbuchnummer`, `firmengericht`, `aufsichtsbehoerde`, `kammer`, `homepage`) VALUES
+(4, 'Demo Fleisch-Hersteller', '2014-05-14 13:23:02', '2015-05-15 13:31:41', 1, '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', '', '', '', ''),
+(5, 'Demo Gemüse-Hersteller', '2014-05-14 13:36:44', '2016-09-27 09:34:51', 1, '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', '', '', '', ''),
+(15, 'Demo Milch-Hersteller', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', '', '', '', ''),
+(16, 'Hersteller ohne Customer-Eintrag', '2014-06-04 21:45:12', '2016-03-07 09:02:25', 1, '0000-00-00', '0000-00-00', 0, '', '', '', '', '', '', '', '', '', '');
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `fcs_manufacturer_lang`

@@ -63,6 +63,10 @@ class ManufacturersController extends AdminAppController
                     'Manufacturer.id_manufacturer' => $manufacturerId
                 )
             ));
+
+            $unsavedManufacturer['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_from']);
+            $unsavedManufacturer['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_to']);
+
             $_SESSION['KCFINDER'] = array(
                 'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
@@ -71,13 +75,13 @@ class ManufacturersController extends AdminAppController
             // default values for new manufacturers
             $unsavedManufacturer = array(
                 'Manufacturer' => array(
-                    'active' => APP_OFF,
-                    'holiday' => APP_OFF
+                    'active' => APP_OFF
                 )
             );
             // default value
             $unsavedManufacturer['Manufacturer']['active'] = APP_ON;
         }
+
         $this->set('unsavedManufacturer', $unsavedManufacturer);
         $this->set('manufacturerId', $manufacturerId);
         $this->set('title_for_layout', 'Hersteller bearbeiten');
@@ -97,6 +101,9 @@ class ManufacturersController extends AdminAppController
             $this->request->data['Manufacturer']['iban'] = str_replace(' ', '', $this->request->data['Manufacturer']['iban']);
             $this->request->data['Manufacturer']['bic'] = str_replace(' ', '', $this->request->data['Manufacturer']['bic']);
             $this->request->data['Manufacturer']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturer']['homepage']);
+
+            $this->request->data['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_from']);
+            $this->request->data['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
 
             $this->Manufacturer->set($this->request->data['Manufacturer']);
 
@@ -273,7 +280,8 @@ class ManufacturersController extends AdminAppController
             'conditions' => $conditions,
             'order' => array(
                 'Manufacturer.name' => 'ASC'
-            )
+            ),
+            'fields' => array('Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ), $this->Paginator->settings);
         $manufacturers = $this->Paginator->paginate('Manufacturer');
 
