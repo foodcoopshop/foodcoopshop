@@ -305,10 +305,20 @@ class MyTimeHelper extends TimeHelper
         return $lastMonthAndYearString;
     }
 
+    /**
+     * considers windows and unix
+     * @param date $date
+     * @return boolean
+     */
+    public function isDatabaseDateNotSet($date)
+    {
+        return $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00';
+    }
+
     public function prepareDbDateForDatepicker($date)
     {
         $preparedDate = $this->formatToDateShort($date);
-        if ($preparedDate == '01.01.1970') {
+        if ($this->isDatabaseDateNotSet($date)) {
             return '';
         } else {
             return $preparedDate;

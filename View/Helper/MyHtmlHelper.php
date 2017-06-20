@@ -36,8 +36,8 @@ class MyHtmlHelper extends HtmlHelper
         if ($isHolidayActive && $long) {
             $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
         }
-        if ($dateFrom != '0000-00-00') {
-            if ($dateTo == '0000-00-00' && $dateFrom > date('Y-m-d')) {
+        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+            if (Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && $dateFrom > date('Y-m-d')) {
                 $result .= 'ab';
             } else {
                 $result .= 'von';
@@ -47,7 +47,7 @@ class MyHtmlHelper extends HtmlHelper
             }
             $result .= ' ' . Configure::read('timeHelper')->formatToDateShort($dateFrom);
         }
-        if ($dateTo != '0000-00-00') {
+        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo)) {
             $result .= ' bis ' . Configure::read('timeHelper')->formatToDateShort($dateTo);
         }
         if ($long && $result != '') {
