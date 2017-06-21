@@ -33,6 +33,12 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
     {
         $result = '';
+
+        // holiday over?
+        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && $dateTo < date('Y-m-d')) {
+            return $result;
+        }
+
         if ($long) {
             $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
         }
