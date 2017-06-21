@@ -104,7 +104,7 @@ echo '<div class="holiday-wrapper">';
         'dateTo' => $this->request->data['Manufacturer']['holiday_to'],
         'nameTo' => 'data[Manufacturer][holiday_to]'
     ));
-    echo '<span class="description small">Die Produkte werden im angegebenen Zeitraum nicht im Shop angezeigt.
+    echo '<span class="description small">Die Produkte sind im angegebenen Zeitraum im Shop nicht bestellbar.
           <br />Beide Felder leer bedeutet: Urlaubsmodus nicht aktiv.</span>';
     echo '</div>';
 
