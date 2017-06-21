@@ -33,17 +33,14 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
     {
         $result = '';
-        if ($isHolidayActive && $long) {
+        if ($long) {
             $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
         }
         if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
-            if (Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && $dateFrom > date('Y-m-d')) {
-                $result .= 'ab';
+            if ($isHolidayActive) {
+                $result .= 'seit';
             } else {
                 $result .= 'von';
-            }
-            if ($isHolidayActive) {
-                $result = str_replace('von', 'seit', $result);
             }
             $result .= ' ' . Configure::read('timeHelper')->formatToDateShort($dateFrom);
         }
