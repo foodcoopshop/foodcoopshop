@@ -15,7 +15,7 @@ App::uses('AppCakeTestCase', 'Test');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ManufacturersControllerTest extends AppCakeTestCase
+class ManufacturersFrontendControllerTest extends AppCakeTestCase
 {
 
     private $manufacturerId = 5;
