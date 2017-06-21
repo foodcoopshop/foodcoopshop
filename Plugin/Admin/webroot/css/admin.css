@@ -912,15 +912,15 @@ body.payments .after .jquery-ui-icon {
     float: left;
     margin-left: 2px ! important;
 }
-body.manufacturers.edit .holiday-wrapper {
+body.manufacturers .holiday-wrapper {
   float: left;
   width: 100%;
   margin-bottom: 10px;
 }
-body.manufacturers.edit .holiday-wrapper .description {
+body.manufacturers .holiday-wrapper .description {
   clear: both;
   margin-left: 200px;
 }
-body.manufacturers.edit .holiday-wrapper div.date-field-wrapper {
+body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
