@@ -127,10 +127,15 @@ h2.warning {
     width: 100%;
     position: relative;
 }
+.vertical.menu span.additional-info {
+  color: #009335;
+}
 .vertical.menu a:hover,
 .vertical.menu a:hover i,
+.vertical.menu a:hover span.additional-info,
 .vertical.menu a.active,
-.vertical.menu a.active i {
+.vertical.menu a.active i,
+.vertical.menu a.active span.additional-info {
     background-color: #719f41;
     color: #fff ! important;
 }
