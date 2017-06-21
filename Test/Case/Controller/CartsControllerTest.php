@@ -365,16 +365,6 @@ class CartsControllerTest extends AppCakeTestCase
         return $this->browser->getJsonDecodedContent();
     }
 
-    private function changeManufacturerHolidayMode($manufacturerId, $dateFrom)
-    {
-        $sql = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom WHERE id_manufacturer = :manufacturerId;';
-        $params = array(
-            'manufacturerId' => $manufacturerId,
-            'dateFrom' => $dateFrom
-        );
-        $this->Product->getDataSource()->fetchAll($sql, $params);
-    }
-
     private function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true)
     {
         $this->browser->post(

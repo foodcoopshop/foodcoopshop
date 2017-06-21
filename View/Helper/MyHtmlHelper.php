@@ -62,6 +62,8 @@ class MyHtmlHelper extends HtmlHelper
             $result .= ' im wohlverdienten Urlaub.';
         }
 
+        $result = str_replace('  ', ' ', $result);
+
         return $result;
     }
 
