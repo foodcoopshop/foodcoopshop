@@ -34,6 +34,11 @@ class MyHtmlHelper extends HtmlHelper
     {
         $result = '';
 
+        // both from and to date not set
+        if (Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+            return $result;
+        }
+
         // holiday over?
         if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && $dateTo < date('Y-m-d')) {
             return $result;
