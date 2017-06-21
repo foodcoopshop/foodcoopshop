@@ -49,6 +49,12 @@ foreach ($manufacturers as $manufacturer) {
                 $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
             ).'</h4>';
             echo $manufacturer['ManufacturerLang']['short_description'];
+
+            $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturer']['name']);
+    if ($manufacturerHolidayString != '') {
+        echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
+    }
+
         echo '</div>';
 
         echo '<div class="third-column">';

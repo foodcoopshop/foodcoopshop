@@ -35,7 +35,8 @@ class ManufacturersController extends FrontendController
             'conditions' => $conditions,
             'order' => array(
                 'Manufacturer.name' => 'ASC'
-            )
+            ),
+            'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ));
 
         if (empty($manufacturers)) {
