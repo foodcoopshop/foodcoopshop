@@ -151,8 +151,8 @@ class AppModel extends Model
         ' IF ( 
             `Manufacturer`.`holiday_from` = "0000-00-00" && `Manufacturer`.`holiday_to` = "0000-00-00", 1,
                 IF (
-                     (`Manufacturer`.`holiday_from` <> "0000-00-00" AND `Manufacturer`.`holiday_to`   = "0000-00-00" AND `Manufacturer`.`holiday_from` >= DATE_FORMAT(NOW(), "%Y-%m-%d"))
-                  OR (`Manufacturer`.`holiday_to`   <> "0000-00-00" AND `Manufacturer`.`holiday_from` = "0000-00-00" AND `Manufacturer`.`holiday_to`    < DATE_FORMAT(NOW(), "%Y-%m-%d")),
+                     (`Manufacturer`.`holiday_from` <> "0000-00-00" AND `Manufacturer`.`holiday_to`   = "0000-00-00" AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))
+                  OR (`Manufacturer`.`holiday_to`   <> "0000-00-00" AND `Manufacturer`.`holiday_from` = "0000-00-00" AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")),
                 1, 0)
             )
          ';
