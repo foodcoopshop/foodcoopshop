@@ -4,18 +4,18 @@
  */
 
 if (!defined('DATASOURCE')) {
-	exit('Do not use directly.');
+    exit('Do not use directly.');
 }
 
 $datasource = array(
-	'PROD' => array(
-		'structure' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
-		'data' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data.sql',
-	),
-	'TEST' => array(
-		'structure' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
-		'data' => 'Test' . DS . 'test_files' . DS . 'Config' . DS . 'sql' . DS . 'test-db-data.sql',
-	),
+    'PROD' => array(
+        'structure' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
+        'data' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data.sql',
+    ),
+    'TEST' => array(
+        'structure' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
+        'data' => 'Test' . DS . 'test_files' . DS . 'Config' . DS . 'sql' . DS . 'test-db-data.sql',
+    ),
 );
 
 echo 'Loading config...';
@@ -29,37 +29,37 @@ include $dir . 'Config' . DS . 'database.php';
 $db = new DATABASE_CONFIG();
 
 if (DATASOURCE == 'PROD') {
-	if (!isset($db->default)) {
-		exit(PHP_EOL . 'Cannot read Config' . DS . 'database.php.' . PHP_EOL);
-	}
-	$db_conf = $db->default;  // use production DB
+    if (!isset($db->default)) {
+        exit(PHP_EOL . 'Cannot read Config' . DS . 'database.php.' . PHP_EOL);
+    }
+    $db_conf = $db->default;  // use production DB
 }
 
 if (DATASOURCE == 'TEST') {
-	if (!isset($db->test)) {
-		exit(PHP_EOL . 'Cannot read Config' . DS . 'database.php.' . PHP_EOL);
-	}
-	$db_conf = $db->test;  // use test DB
+    if (!isset($db->test)) {
+        exit(PHP_EOL . 'Cannot read Config' . DS . 'database.php.' . PHP_EOL);
+    }
+    $db_conf = $db->test;  // use test DB
 }
 
 if (empty($db_conf)) {
-	exit(PHP_EOL . 'Unknown datasource.' . PHP_EOL);
+    exit(PHP_EOL . 'Unknown datasource.' . PHP_EOL);
 }
 
 if (!isset($db_conf['datasource'])
-	|| $db_conf['datasource'] != 'Database/Mysql'
-	|| !isset($db_conf['persistent'])
-	|| $db_conf['persistent'] !== false
-	|| !isset($db_conf['encoding'])
-	|| $db_conf['encoding'] != 'utf8'
+    || $db_conf['datasource'] != 'Database/Mysql'
+    || !isset($db_conf['persistent'])
+    || $db_conf['persistent'] !== false
+    || !isset($db_conf['encoding'])
+    || $db_conf['encoding'] != 'utf8'
 ) {
-	exit(PHP_EOL . 'Cannot use config in Config' . DS . 'database.php.' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot use config in Config' . DS . 'database.php.' . PHP_EOL);
 }
 
 if (!isset($db_conf['prefix'])
-	|| $db_conf['prefix'] != 'fcs_'
+    || $db_conf['prefix'] != 'fcs_'
 ) {
-	exit(PHP_EOL . 'Cannot use prefix from Config' . DS . 'database.php. Must use default fcs_' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot use prefix from Config' . DS . 'database.php. Must use default fcs_' . PHP_EOL);
 }
 
 echo 'done' . PHP_EOL;
@@ -69,25 +69,25 @@ $dump_cmd = '';
 
 $lines = file($dir . 'Config' . DS . 'app.config.php');
 if (!is_array($lines)
-	|| empty($lines)
+    || empty($lines)
 ) {
-	exit(PHP_EOL . 'Cannot load Config' . DS . 'app.config.php.' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot load Config' . DS . 'app.config.php.' . PHP_EOL);
 }
 
 foreach ($lines as $line) {
-	if (($pos = strpos($line, '\'app.mysqlDumpCommand\',')) !== false) {
-		$line = substr($line, $pos + strlen('\'app.mysqlDumpCommand\','));
-		$line = explode('\'', $line, 3);
-		$dump_cmd = $line[1];
-	}
+    if (($pos = strpos($line, '\'app.mysqlDumpCommand\',')) !== false) {
+        $line = substr($line, $pos + strlen('\'app.mysqlDumpCommand\','));
+        $line = explode('\'', $line, 3);
+        $dump_cmd = $line[1];
+    }
 }
 
 if (empty($dump_cmd)) {
-	exit(PHP_EOL . 'Cannot read app.mysqlDumpCommand from Config' . DS . 'app.config.php.' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot read app.mysqlDumpCommand from Config' . DS . 'app.config.php.' . PHP_EOL);
 }
 
 if (strpos($dump_cmd, 'mysqldump') === false) {
-	exit(PHP_EOL . 'Cannot use app.mysqlDumpCommand from Config' . DS . 'app.config.php. Must use mysqldump' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot use app.mysqlDumpCommand from Config' . DS . 'app.config.php. Must use mysqldump' . PHP_EOL);
 }
 
 echo 'done' . PHP_EOL;
@@ -107,9 +107,9 @@ if (!empty($result)) {
 // check dump has a result file with some content of > 4k bytes (no error message should be that long)
 clearstatcache();
 if (!is_readable($datasource[DATASOURCE]['structure'] . '.tmp')
-	|| filesize($datasource[DATASOURCE]['structure'] . '.tmp') < 4096
+    || filesize($datasource[DATASOURCE]['structure'] . '.tmp') < 4096
 ) {
-	exit(PHP_EOL . 'Structure not dumped. Seek for help!' . PHP_EOL);
+    exit(PHP_EOL . 'Structure not dumped. Seek for help!' . PHP_EOL);
 }
 
 rename($datasource[DATASOURCE]['structure'] . '.tmp', $datasource[DATASOURCE]['structure']);
@@ -131,9 +131,9 @@ if (!empty($result)) {
 // check dump has a result file with some content of > 4k bytes (no error message should be that long)
 clearstatcache();
 if (!is_readable($datasource[DATASOURCE]['data'] . '.tmp')
-	|| filesize($datasource[DATASOURCE]['data'] . '.tmp') < 4096
+    || filesize($datasource[DATASOURCE]['data'] . '.tmp') < 4096
 ) {
-	exit(PHP_EOL . 'Data not dumped. Seek for help!' . PHP_EOL);
+    exit(PHP_EOL . 'Data not dumped. Seek for help!' . PHP_EOL);
 }
 
 rename($datasource[DATASOURCE]['data'] . '.tmp', $datasource[DATASOURCE]['data']);
@@ -145,30 +145,30 @@ echo 'Add table truncation to data dump...';
 $truncates = array();
 exec('grep -i -e "^CREATE TABLE" "' . $dir . $datasource[DATASOURCE]['structure'] . '"', $truncates);
 foreach ($truncates as $k => $v) {
-	$truncates[$k] = str_ireplace(array('CREATE TABLE', ' ('), array('TRUNCATE TABLE', ';'), $v);
+    $truncates[$k] = str_ireplace(array('CREATE TABLE', ' ('), array('TRUNCATE TABLE', ';'), $v);
 }
 
 $infile = fopen($dir . $datasource[DATASOURCE]['data'], 'rb');
 $outfile = fopen($dir . $datasource[DATASOURCE]['data'] . '.tmp', 'wb');
 if ($infile === false) {
-	exit(PHP_EOL . 'Cannot open ' . $datasource[DATASOURCE]['data'] . 'for reading' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot open ' . $datasource[DATASOURCE]['data'] . 'for reading' . PHP_EOL);
 }
 if ($outfile === false) {
-	exit(PHP_EOL . 'Cannot open ' . $datasource[DATASOURCE]['data'] . '.tmp' . 'for writing' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot open ' . $datasource[DATASOURCE]['data'] . '.tmp' . 'for writing' . PHP_EOL);
 }
 
 $done = false;
 while (!feof($infile)) {
-	$line = fgets($infile);
-	if (!$done && (stripos($line, '/*!40000 ALTER TABLE') === 0)) {
-		$done = true;
-		fwrite($outfile, '-- Truncate tables before insertion' . PHP_EOL);
-		foreach ($truncates as $v) {
-			fwrite($outfile, $v . PHP_EOL);
-		}
-		fwrite($outfile, PHP_EOL);
-	}
-	fwrite($outfile, $line);
+    $line = fgets($infile);
+    if (!$done && (stripos($line, '/*!40000 ALTER TABLE') === 0)) {
+        $done = true;
+        fwrite($outfile, '-- Truncate tables before insertion' . PHP_EOL);
+        foreach ($truncates as $v) {
+            fwrite($outfile, $v . PHP_EOL);
+        }
+        fwrite($outfile, PHP_EOL);
+    }
+    fwrite($outfile, $line);
 }
 fclose($infile);
 fclose($outfile);
@@ -176,4 +176,3 @@ fclose($outfile);
 rename($datasource[DATASOURCE]['data'] . '.tmp', $datasource[DATASOURCE]['data']);
 
 echo 'done' . PHP_EOL;
-

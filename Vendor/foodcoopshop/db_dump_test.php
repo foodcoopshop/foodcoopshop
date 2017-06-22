@@ -12,4 +12,3 @@ if (!defined('DS')) {
 
 // do the magic
 include realpath(__DIR__) . DS . 'db_dump_common.php';
-
