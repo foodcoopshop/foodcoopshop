@@ -441,7 +441,7 @@ class CartsController extends FrontendController
                 $email = new AppEmail();
                 $email->template('shop_order_notification')
                 ->emailFormat('html')
-                ->to($product['Manufacturer']['Address']['email'])
+                ->to($manufacturer['Manufacturer']['Address']['email'])
                 ->subject('Benachrichtigung über Sofort-Bestellung')
                 ->viewVars(array(
                     'appAuth' => $this->AppAuth,
