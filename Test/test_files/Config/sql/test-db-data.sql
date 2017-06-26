@@ -52,10 +52,10 @@ TRUNCATE TABLE `fcs_tax`;
 INSERT INTO `fcs_address` VALUES
 (153,2,0,87,0,0,0,'Ihre Adresse','','Mitglied','Demo','Demostraße 4','','4644','Scharnstein','','','0664/000000000','foodcoopshop-demo-mitglied@mailinator.com','','','2014-12-02 12:19:31','2014-12-02 12:19:31',1,0),
 (154,2,0,88,0,0,0,'Ihre Adresse','','Admin','Demo','Demostraße 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','','','2014-12-02 12:28:44','2014-12-02 12:28:44',1,0),
-(173,2,0,0,4,0,0,'manufacturer','','Fleisch-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','{\"compensationPercentage\":0,\"sendInvoice\":\"1\",\"sendOrderList\":\"1\",\"defaultTaxId\":2,\"sendOrderListCc\":\"testfcs1@mailinator.com;testfcs2@mailinator.com\",\"bulkOrdersAllowed\":\"0\"}','','','fcs-demo-fleisch-hersteller@mailinator.com','','','2014-05-27 22:20:18','2015-04-07 16:18:28',1,0),
-(177,2,0,0,15,0,0,'manufacturer','','Milch-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','{\"compensationPercentage\":0,\"sendInvoice\":\"1\",\"sendOrderList\":\"1\",\"defaultTaxId\":4,\"sendOrderListCc\":\"test@test.at\",\"bulkOrdersAllowed\":\"0\"}','','','fcs-demo-milch-hersteller@mailinator.com','','','2014-06-04 21:46:38','2015-10-16 10:06:52',1,0),
-(180,2,0,0,5,0,0,'manufacturer','','Gemüse-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','{\"compensationPercentage\":10,\"sendInvoice\":\"1\",\"sendOrderList\":\"1\",\"defaultTaxId\":1,\"sendOrderListCc\":\"\",\"bulkOrdersAllowed\":\"0\"}','','','fcs-demo-gemuese-hersteller@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
-(181,2,0,0,16,0,0,'manufacturer','','Hersteller ohne Customer-Eintrag','Demo','Demostraße 4','','4644','Scharnstein','{\"compensationPercentage\":10,\"sendInvoice\":\"1\",\"sendOrderList\":\"1\",\"defaultTaxId\":1,\"sendOrderListCc\":\"\",\"bulkOrdersAllowed\":\"0\"}','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
+(173,2,0,0,4,0,0,'manufacturer','','Fleisch-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','','','2014-05-27 22:20:18','2015-04-07 16:18:28',1,0),
+(177,2,0,0,15,0,0,'manufacturer','','Milch-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','','','2014-06-04 21:46:38','2015-10-16 10:06:52',1,0),
+(180,2,0,0,5,0,0,'manufacturer','','Gemüse-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
+(181,2,0,0,16,0,0,'manufacturer','','Hersteller ohne Customer-Eintrag','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
 (182,2,NULL,92,0,0,0,'',NULL,'Superadmin','Demo','Demostraße 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com',NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00',1,0);
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
@@ -646,8 +646,8 @@ INSERT INTO `fcs_configuration` VALUES
 (558,NULL,NULL,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,NULL,NULL,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (560,NULL,NULL,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','3','readonly',0,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
-(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','3','readonly',0,'2017-03-13 00:00:00','2017-03-13 00:00:00');
+(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','4','readonly',0,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
+(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','4','readonly',0,'2017-03-13 00:00:00','2017-03-13 00:00:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -693,10 +693,10 @@ INSERT INTO `fcs_image_shop` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','2014-05-14 13:23:02','2015-05-15 13:31:41',1,'0000-00-00','0000-00-00',0,'','','','','','','','','',''),
-(5,'Demo Gemüse-Hersteller','2014-05-14 13:36:44','2016-09-27 09:34:51',1,'0000-00-00','0000-00-00',0,'','','','','','','','','',''),
-(15,'Demo Milch-Hersteller','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','',''),
-(16,'Hersteller ohne Customer-Eintrag','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','');
+(4,'Demo Fleisch-Hersteller','2014-05-14 13:23:02','2015-05-15 13:31:41',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com,testfcs2@mailinator.com',0,NULL),
+(5,'Demo Gemüse-Hersteller','2014-05-14 13:36:44','2016-09-27 09:34:51',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL),
+(15,'Demo Milch-Hersteller','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL),
+(16,'Hersteller ohne Customer-Eintrag','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL);
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_manufacturer_lang` DISABLE KEYS */;

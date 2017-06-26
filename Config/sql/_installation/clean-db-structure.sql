@@ -86,7 +86,7 @@ CREATE TABLE `fcs_cake_action_logs` (
   `text` text NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_cake_cart_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -112,7 +112,7 @@ CREATE TABLE `fcs_cake_carts` (
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
   PRIMARY KEY (`id_cart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_cake_deposits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -397,6 +397,14 @@ CREATE TABLE `fcs_manufacturer` (
   `aufsichtsbehoerde` varchar(150) NOT NULL,
   `kammer` varchar(150) NOT NULL,
   `homepage` varchar(255) NOT NULL,
+  `id_customer` int(10) unsigned DEFAULT NULL,
+  `compensation_percentage` int(8) unsigned DEFAULT NULL,
+  `send_invoice` tinyint(4) unsigned DEFAULT NULL,
+  `send_order_list` tinyint(4) unsigned DEFAULT NULL,
+  `default_tax_id` int(8) unsigned DEFAULT NULL,
+  `send_order_list_cc` varchar(512) DEFAULT NULL,
+  `bulk_orders_allowed` tinyint(4) unsigned DEFAULT NULL,
+  `send_shop_order_notification` tinyint(4) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_manufacturer`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
