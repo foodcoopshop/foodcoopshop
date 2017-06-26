@@ -94,7 +94,7 @@ echo '<div class="holiday-wrapper">';
 
     echo $this->Form->input('Manufacturer.send_order_list_cc', array(
     'label' => 'CC-Empfänger für Bestell-Listen-Versand',
-    'after' => '<span class="after small">Funktioniert nur, wenn der Bestelllisten-Versand aktiv ist. Mehrere getrennt mit ,</span>'
+    'after' => '<span class="after small">Wird nur verwendet, wenn der Bestelllisten-Versand aktiviert ist. Mehrere getrennt mit ,</span>'
     ));
 
     echo $this->Form->input('Manufacturer.send_invoice', array(
@@ -156,7 +156,7 @@ echo '<div class="holiday-wrapper">';
         echo $this->Form->input('Manufacturer.bulk_orders_allowed', array(
         'label' => 'Hersteller optimiert für Sammelbestellungen?',
         'type' => 'checkbox',
-        'after' => '<span class="after small">Hier geht\'s zum <a href="https://foodcoopshop.github.io/de/sammelbestellungen" target="_blank">Leitfaden für Sammelbestellunten</a></span>'
+        'after' => '<span class="after small">Was macht eine Sammelbestellung aus? Hier geht\'s zum <a href="https://foodcoopshop.github.io/de/sammelbestellungen" target="_blank">Leitfaden für Sammelbestellungen</a>.</span>'
         ));
             echo '<div class="sc"></div>';
     }
