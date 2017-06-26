@@ -1,5 +1,8 @@
 ALTER TABLE `fcs_manufacturer` ADD `compensation_percentage` INT(8) UNSIGNED NULL AFTER `homepage`, ADD `send_invoice` TINYINT(4) UNSIGNED NULL AFTER `compensation_percentage`, ADD `send_order_list` TINYINT(4) UNSIGNED NULL AFTER `send_invoice`, ADD `default_tax_id` INT(8) UNSIGNED NULL AFTER `send_order_list`, ADD `send_order_list_cc` VARCHAR(512) NULL AFTER `default_tax_id`, ADD `bulk_orders_allowed` TINYINT(4) UNSIGNED NULL AFTER `send_order_list_cc`, ADD `send_shop_order_notification` TINYINT(4) UNSIGNED NULL AFTER `bulk_orders_allowed`;
 ALTER TABLE `fcs_manufacturer` ADD `id_customer` INT(10) UNSIGNED NULL AFTER `homepage`;
+ALTER TABLE `fcs_manufacturer` ADD `send_ordered_product_deleted_notification` INT(10) UNSIGNED NULL AFTER `send_shop_order_notification`;
+ALTER TABLE `fcs_manufacturer` ADD `send_ordered_product_price_changed_notification` INT(10) UNSIGNED NULL AFTER `send_ordered_product_deleted_notification`;
+ALTER TABLE `fcs_manufacturer` ADD `send_ordered_product_quantity_changed_notification` INT(10) UNSIGNED NULL AFTER `send_ordered_product_price_changed_notification`;
 
 /* migrate json encoded data into new db fields */
 UPDATE fcs_manufacturer as Manufacturer

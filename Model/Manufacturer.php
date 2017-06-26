@@ -107,6 +107,45 @@ class Manufacturer extends AppModel
     );
 
     /**
+     * @param $boolean $sendOrderedProductDeletedNotification
+     * @return boolean
+     */
+    public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification)
+    {
+        $result = $sendOrderedProductDeletedNotification;
+        if ($sendOrderedProductDeletedNotification == '') {
+            $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
+        }
+        return (boolean) $result;
+    }
+
+    /**
+     * @param $boolean $sendOrderedProductPriceChangedNotification
+     * @return boolean
+     */
+    public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification)
+    {
+        $result = $sendOrderedProductPriceChangedNotification;
+        if ($sendOrderedProductPriceChangedNotification == '') {
+            $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
+        }
+        return (boolean) $result;
+    }
+
+    /**
+     * @param $boolean $sendOrderedProductQuantityChangedNotification
+     * @return boolean
+     */
+    public function getOptionSendOrderedProductQuantityChangedNotification($sendOrderedProductQuantityChangedNotification)
+    {
+        $result = $sendOrderedProductQuantityChangedNotification;
+        if ($sendOrderedProductQuantityChangedNotification == '') {
+            $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+        }
+        return (boolean) $result;
+    }
+
+    /**
      * @param $boolean $sendInvoice
      * @return boolean
      */

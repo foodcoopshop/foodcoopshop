@@ -94,7 +94,7 @@ echo '<div class="holiday-wrapper">';
 
     echo $this->Form->input('Manufacturer.send_order_list_cc', array(
     'label' => 'CC-Empfänger für Bestell-Listen-Versand',
-    'after' => '<span class="after small">Funktioniert nur, wenn der Bestelllisten-Versand aktiv ist. Mehrere getrennt mit ;</span>'
+    'after' => '<span class="after small">Funktioniert nur, wenn der Bestelllisten-Versand aktiv ist. Mehrere getrennt mit ,</span>'
     ));
 
     echo $this->Form->input('Manufacturer.send_invoice', array(
@@ -104,10 +104,31 @@ echo '<div class="holiday-wrapper">';
     ));
     echo '<div class="sc"></div>';
 
+    echo $this->Form->input('Manufacturer.send_ordered_product_deleted_notification', array(
+        'label' => 'Stornierungen',
+        'type' => 'checkbox',
+        'after' => '<span class="after small">Bei jeder Stornierung eine Info-Mail verschicken?</span>'
+    ));
+    echo '<div class="sc"></div>';
+
+    echo $this->Form->input('Manufacturer.send_ordered_product_price_changed_notification', array(
+        'label' => 'Preis-Änderungen von bestellten Produkten',
+        'type' => 'checkbox',
+        'after' => '<span class="after small">Bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail verschicken?</span>'
+    ));
+    echo '<div class="sc"></div>';
+
+    echo $this->Form->input('Manufacturer.send_ordered_product_quantity_changed_notification', array(
+        'label' => 'Änderungen der bestellten Anzahl',
+        'type' => 'checkbox',
+        'after' => '<span class="after small">Bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail verschicken?</span>'
+    ));
+    echo '<div class="sc"></div>';
+
     echo $this->Form->input('Manufacturer.send_shop_order_notification', array(
-    'label' => 'E-Mail bei Sofortbestellungen',
+    'label' => 'Sofortbestellungen',
     'type' => 'checkbox',
-    'after' => '<span class="after small">Bei jeder Sofort-Bestellung wird eine Info-Mail (inkl. Lagerstand) verschickt.</span>'
+    'after' => '<span class="after small">Bei jeder Sofort-Bestellung eine Info-Mail (inkl. Lagerstand) verschicken?</span>'
     ));
     echo '<div class="sc"></div>';
 

@@ -489,14 +489,23 @@ class ManufacturersController extends AdminAppController
         if ($unsavedManufacturer['Manufacturer']['send_invoice'] == '') {
             $unsavedManufacturer['Manufacturer']['send_invoice'] = Configure::read('app.defaultSendInvoice');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_shop_order_notification'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_shop_order_notification'] = Configure::read('app.defaultSendShopOrderNotification');
-        }
         if ($unsavedManufacturer['Manufacturer']['default_tax_id'] == '') {
             $unsavedManufacturer['Manufacturer']['default_tax_id'] = Configure::read('app.defaultTaxId');
         }
         if (!$this->AppAuth->isManufacturer() && $unsavedManufacturer['Manufacturer']['bulk_orders_allowed'] == '') {
             $unsavedManufacturer['Manufacturer']['bulk_orders_allowed'] = Configure::read('app.defaultBulkOrdersAllowed');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_shop_order_notification'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_shop_order_notification'] = Configure::read('app.defaultSendShopOrderNotification');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_ordered_product_deleted_notification'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_ordered_product_deleted_notification'] = Configure::read('app.defaultSendOrderedProductDeletedNotification');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_ordered_product_price_changed_notification'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_ordered_product_price_changed_notification'] = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_ordered_product_quantity_changed_notification'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_ordered_product_quantity_changed_notification'] = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
 
         $unsavedManufacturer['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_from']);
@@ -539,6 +548,15 @@ class ManufacturersController extends AdminAppController
             }
             if ($this->request->data['Manufacturer']['send_shop_order_notification'] == Configure::read('app.defaultSendShopOrderNotification')) {
                 $this->request->data['Manufacturer']['send_shop_order_notification'] = null;
+            }
+            if ($this->request->data['Manufacturer']['send_ordered_product_deleted_notification'] == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
+                $this->request->data['Manufacturer']['send_ordered_product_deleted_notification'] = null;
+            }
+            if ($this->request->data['Manufacturer']['send_ordered_product_price_changed_notification'] == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
+                $this->request->data['Manufacturer']['send_ordered_product_price_changed_notification'] = null;
+            }
+            if ($this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
+                $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
             }
 
             // remove post data that could be set by hacking attempt
