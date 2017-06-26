@@ -236,7 +236,6 @@ class Manufacturer extends AppModel
 
         $ccs = explode(',', $sendOrderListCc);
         foreach ($ccs as $cc) {
-            pr($cc);
             $ccRecipients[] = $cc;
         }
         return $ccRecipients;
