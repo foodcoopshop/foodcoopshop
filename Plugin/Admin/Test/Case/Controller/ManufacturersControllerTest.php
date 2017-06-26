@@ -39,7 +39,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'bank_name' => 'Test Bank',
                 'iban' => 'Iban',
                 'bic' => 'bic',
-                'holiday' => 0,
+                'holiday_from' => '0000-00-00',
+                'holiday_to' => '0000-00-00',
                 'active' => 1,
                 'additional_text_for_invoice' => '',
                 'uid_number' => '',
@@ -109,7 +110,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
-        $response = $this->getEditManufacturer($manufacturerId);
+        $this->getEditManufacturer($manufacturerId);
 
         $this->browser->setFieldById('ManufacturerName', 'Huhuu');
 
@@ -144,7 +145,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)
         $manufacturerId = 16;
-        $response = $this->getEditManufacturer($manufacturerId);
+        $this->getEditManufacturer($manufacturerId);
 
         // saving customer must add a customer record
         $this->browser->submitFormById('ManufacturerEditForm');

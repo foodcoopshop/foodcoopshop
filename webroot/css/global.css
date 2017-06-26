@@ -65,6 +65,7 @@ h2.info {
     border-bottom: none;
     margin-bottom: 2px;
     color: #fff;
+    line-height: 19px;
 }
 h2.info {
     background: #719f41;
@@ -127,10 +128,15 @@ h2.warning {
     width: 100%;
     position: relative;
 }
+.vertical.menu span.additional-info {
+  color: #009335;
+}
 .vertical.menu a:hover,
 .vertical.menu a:hover i,
+.vertical.menu a:hover span.additional-info,
 .vertical.menu a.active,
-.vertical.menu a.active i {
+.vertical.menu a.active i,
+.vertical.menu a.active span.additional-info {
     background-color: #719f41;
     color: #fff ! important;
 }

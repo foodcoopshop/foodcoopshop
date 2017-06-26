@@ -93,13 +93,18 @@ class Product extends AppModel
         );
     }
 
-    public function getCountByManufacturerId($manufacturerId)
+    /**
+     * @param int $manufacturerId
+     * @param boolean $useHolidayMode
+     * @return array
+     */
+    public function getCountByManufacturerId($manufacturerId, $useHolidayMode = false)
     {
         $productCount = $this->find('count', array(
             'fields' => 'DISTINCT ' . $this->name . '.id_product',
             'conditions' => array(
                 $this->name . '.active' => APP_ON,
-                'Manufacturer.holiday' => APP_OFF,
+                $useHolidayMode ? $this->getManufacturerHolidayConditions() : null,
                 $this->name . '.id_manufacturer' => $manufacturerId
             )
         ));

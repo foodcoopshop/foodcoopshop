@@ -150,13 +150,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeProductStatus($this->productId1, APP_ON);
 
-        // START test if MANUFACTURER that was deactivated during shopping process
+        // START test if MANUFACTURER was deactivated during shopping process
         $manufacturerId = 5;
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
+
+        // START test if MANUFACTURER's holiday mode was activated during shopping process
+        $manufacturerId = 5;
+        $this->changeManufacturerHolidayMode($manufacturerId, date('Y-m-d'));
+        $this->finishCart();
+        $this->checkValidationError();
+        $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->changeManufacturerHolidayMode($manufacturerId, '0000-00-00');
 
         // START test if stock available for PRODUCT has gone down (eg. by another order)
         $this->changeStockAvailable($this->productId1, 1);

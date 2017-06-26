@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 03. Mai 2017 um 11:24
+-- Erstellungszeit: 20. Jun 2017 um 15:14
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
@@ -425,7 +425,8 @@ CREATE TABLE `fcs_manufacturer` (
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
-  `holiday` int(11) UNSIGNED NOT NULL,
+  `holiday_from` date NOT NULL,
+  `holiday_to` date NOT NULL,
   `is_private` int(11) UNSIGNED NOT NULL,
   `uid_number` varchar(30) NOT NULL,
   `additional_text_for_invoice` text NOT NULL,
