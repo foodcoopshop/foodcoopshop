@@ -285,7 +285,7 @@ class ManufacturersController extends AdminAppController
             $sumDepositReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
-            if (Configure::read('app.defaultCompensationPercentage')) {
+            if (Configure::read('app.useManufacturerCompensationPercentage')) {
                 $manufacturers[$i]['Manufacturer']['compensation_percentage'] = $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
             }
             $i++;
@@ -563,6 +563,7 @@ class ManufacturersController extends AdminAppController
             if ($this->AppAuth->isManufacturer()) {
                 unset($this->request->data['Manufacturer']['bulk_orders_allowed']);
                 unset($this->request->data['Manufacturer']['compensation_percentage']);
+                unset($this->request->data['Manufacturer']['id_customer']);
             }
 
             // validate data - do not use $this->Manufacturer->saveAll()
