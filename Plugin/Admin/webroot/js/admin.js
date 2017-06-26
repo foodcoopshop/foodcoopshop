@@ -1616,7 +1616,7 @@ foodcoopshop.Admin = {
         // auf dev und demo seite immer zulassen (zum testen)
         if ($.inArray(foodcoopshop.Helper.cakeServerName, [
                 'http://www.foodcoopshop.dev',
-                'http://demo.foodcoopshop.com'
+                'https://demo.foodcoopshop.com'
             ]) == -1 &&
             $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
             $(button).on('click', function (event) {
