@@ -176,7 +176,7 @@ class Category extends AppModel
         $productCount = $this->getProductsByCategoryId($item['Category']['id_category'], false, '', 0, true);
 
         $tmpMenuItem = array(
-            'name' => $item['CategoryLang']['name'] . ' (' . $productCount . ')',
+            'name' => $item['CategoryLang']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
             'slug' => Configure::read('slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['CategoryLang']['name'])
         );
         if (! empty($item['children'])) {

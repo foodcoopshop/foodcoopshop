@@ -7,6 +7,7 @@ App::uses('View', 'View');
 App::uses('AppSimpleBrowser', 'Lib/SimpleBrowser');
 App::uses('SlugHelper', 'View/Helper');
 App::uses('MyHtmlHelper', 'View/Helper');
+App::uses('MyTimeHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
 App::uses('Configuration', 'Model');
 
@@ -38,6 +39,8 @@ class AppCakeTestCase extends CakeTestCase
 
     public $Html;
 
+    public $Time;
+
     public $Customer;
 
     public $browser;
@@ -60,6 +63,7 @@ class AppCakeTestCase extends CakeTestCase
         $View = new View($Controller);
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
+        $this->Time = new MyTimeHelper($View);
         $this->Customer = new Customer();
         $this->generatePasswordHashes();
 
@@ -117,12 +121,12 @@ class AppCakeTestCase extends CakeTestCase
 
     protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertRegExp('/' . preg_quote($unquotedString) . '/', $response, $msg);
+        $this->assertRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
     protected function assertNotRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertNotRegExp('/' . preg_quote($unquotedString) . '/', $response, $msg);
+        $this->assertNotRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
     protected function assertUrl($url, $expectedUrl, $msg = '')
@@ -204,6 +208,17 @@ class AppCakeTestCase extends CakeTestCase
     {
         pr($content);
         ob_flush();
+    }
+
+    protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = '0000-00-00', $dateTo = '0000-00-00')
+    {
+        $sql = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
+        $params = array(
+            'manufacturerId' => $manufacturerId,
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo
+        );
+        $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
     protected function logout()

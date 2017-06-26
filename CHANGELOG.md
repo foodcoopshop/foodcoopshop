@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-- [View unreleased changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
-
+## Unreleased [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
+- Improved holiday mode for manufacturers / [PR#81](https://github.com/foodcoopshop/foodcoopshop/pull/81) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## [v1.3.0] 2017-06-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
 

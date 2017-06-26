@@ -217,13 +217,13 @@ class Manufacturer extends AppModel
 
         return $customer;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @return array
      */
     public function getCustomerByManufacturerId($manufacturerId)
-    { 
+    {
         $manufacturer = $this->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
@@ -234,7 +234,7 @@ class Manufacturer extends AppModel
         }
         return false;
     }
-    
+
     public function getCustomerIdByManufacturerId($manufacturerId)
     {
         $customer = $this->getCustomerByManufacturerId($manufacturerId);
@@ -266,6 +266,9 @@ class Manufacturer extends AppModel
             'fields' => array(
                 'Manufacturer.id_manufacturer',
                 'Manufacturer.name',
+                'Manufacturer.holiday_from',
+                'Manufacturer.holiday_to',
+                '!'.$this->getManufacturerHolidayConditions().' as IsHolidayActive'
             ),
             'order' => array(
                 'Manufacturer.name' => 'ASC'
@@ -276,9 +279,20 @@ class Manufacturer extends AppModel
         $manufacturersForMenu = array();
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
+            $additionalInfo = '';
             if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $productCount = $manufacturerName .= ' (' . $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']) . ')';
+                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             }
+            $holidayInfo = Configure::read('htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+            if ($holidayInfo != '') {
+                $holidayInfo = 'Urlaub ' . $holidayInfo;
+                if ($manufacturer[0]['IsHolidayActive']) {
+                    $additionalInfo = $holidayInfo;
+                } else {
+                    $additionalInfo .= ' - ' . $holidayInfo;
+                }
+            }
+            $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
             $manufacturersForMenu[] = array(
                 'name' => $manufacturerName,
                 'slug' => Configure::read('slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])

@@ -306,6 +306,26 @@ class MyTimeHelper extends TimeHelper
     }
 
     /**
+     * considers windows and unix
+     * @param date $date
+     * @return boolean
+     */
+    public function isDatabaseDateNotSet($date)
+    {
+        return $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00';
+    }
+
+    public function prepareDbDateForDatepicker($date)
+    {
+        $preparedDate = $this->formatToDateShort($date);
+        if ($this->isDatabaseDateNotSet($date)) {
+            return '';
+        } else {
+            return $preparedDate;
+        }
+    }
+
+    /**
      * formats a timestamp to a short german date (e.g. 22.04.2007)
      *
      * @param integer $timestamp
@@ -329,6 +349,15 @@ class MyTimeHelper extends TimeHelper
         $dbString = str_replace('.', '-', $dbString);
         $timestamp = strtotime($dbString);
         return date("Y-m-d", $timestamp);
+    }
+
+    public function formatForSavingAsDate($date)
+    {
+        $dbString = $this->formatToDbFormatDate($date);
+        if ($dbString == '1970-01-01') {
+            $dbString = '0000-00-00';
+        }
+        return $dbString;
     }
 
      /**

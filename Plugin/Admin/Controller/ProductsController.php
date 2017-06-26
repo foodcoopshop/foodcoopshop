@@ -937,7 +937,8 @@ class ProductsController extends AdminAppController
             $manufacturer = $this->Manufacturer->find('first', array(
                 'conditions' => array(
                     'Manufacturer.id_manufacturer' => $manufacturerId
-                )
+                ),
+                'fields' => array('Manufacturer.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
             ));
             $this->set('manufacturer', $manufacturer);
         }

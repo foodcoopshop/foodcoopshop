@@ -64,7 +64,7 @@ echo '<th style="width:83px;">Artikel</th>';
 echo '<th>Pfand</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.holiday', 'Urlaub') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Urlaub') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th>Opt.</th>';
 if (Configure::read('app.useManufacturerCompensationPercentage')) {
@@ -103,7 +103,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     echo '<td>';
 
-        $details = $manufacturer['Address']['name'];
+    $details = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
     if ($manufacturer['Address']['phone_mobile'] != '') {
         $details .= '<br />'.$manufacturer['Address']['phone_mobile'];
     }
@@ -171,11 +171,11 @@ foreach ($manufacturers as $manufacturer) {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
-    echo '<td align="center">';
-    if ($manufacturer['Manufacturer']['holiday'] == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
-    }
+
+    echo '<td>';
+        echo $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
     echo '</td>';
+
     echo '<td align="center">';
     if ($manufacturer['Manufacturer']['is_private'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
