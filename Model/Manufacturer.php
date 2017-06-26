@@ -116,7 +116,7 @@ class Manufacturer extends AppModel
         if ($sendShopOrderNotification == '') {
             $result = Configure::read('app.defaultSendShopOrderNotification');
         }
-        return $result;
+        return (boolean) $result;
     }
 
     /**
@@ -129,7 +129,7 @@ class Manufacturer extends AppModel
         if ($sendInvoice == '') {
             $result = Configure::read('app.defaultSendInvoice');
         }
-        return $result;
+        return (boolean) $result;
     }
 
     /**
@@ -168,7 +168,7 @@ class Manufacturer extends AppModel
         if ($sendOrderList == '') {
             $result = Configure::read('app.defaultSendOrderList');
         }
-        return $result;
+        return (boolean) $result;
     }
 
     /**

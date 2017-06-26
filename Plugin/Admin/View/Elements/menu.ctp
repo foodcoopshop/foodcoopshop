@@ -243,7 +243,7 @@ if ($appAuth->isManufacturer()) {
     );
     $optionsMenu = array(
         'slug' => $this->Slug->getManufacturerMyOptions(),
-        'name' => 'Einstellungen',
+        'name' => 'Einstellungen <span class="new">NEU<span>',
         'options' => array(
             'fa-icon' => 'fa-fw fa-cogs'
         )
@@ -271,10 +271,15 @@ if ($appAuth->isManufacturer()) {
 // for all users
 $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
+$footerHtml = '';
+if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer['Customer']) && !empty($appAuth->manufacturer['Customer']['AddressCustomer'])) {
+    $footerHtml = '<b>Ansprechpartner</b><br />' . $appAuth->manufacturer['Customer']['firstname'] . ' ' . $appAuth->manufacturer['Customer']['lastname'] . ', ' . $appAuth->manufacturer['Customer']['email']. ', ' . $appAuth->manufacturer['Customer']['AddressCustomer']['phone_mobile'];
+}
+
 echo $this->Menu->render($menu, array(
     'id' => 'menu',
     'class' => 'vertical menu',
-    'footer' => $appAuth->isManufacturer() ? '<b>Ansprechpartner</b><br />' . $appAuth->manufacturer['Customer']['firstname'] . ' ' . $appAuth->manufacturer['Customer']['lastname'] . ', ' . $appAuth->manufacturer['Customer']['email']. ', ' . $appAuth->manufacturer['Customer']['AddressCustomer']['phone_mobile'] : ''
+    'footer' => $footerHtml
 ));
 
 

@@ -551,6 +551,8 @@ class ManufacturersController extends AdminAppController
             $this->Manufacturer->id = $manufacturerId;
             $this->Manufacturer->set($this->request->data['Manufacturer']);
 
+            $this->Manufacturer->validator()['send_order_list'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 2);
+
             if (Configure::read('app.useManufacturerCompensationPercentage')) {
                 $this->Manufacturer->validator()['compensation_percentage'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
             }
