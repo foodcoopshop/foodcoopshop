@@ -693,10 +693,10 @@ INSERT INTO `fcs_image_shop` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','2014-05-14 13:23:02','2015-05-15 13:31:41',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,NULL,NULL,NULL,2,'testfcs1@mailinator.com,testfcs2@mailinator.com',0,NULL),
-(5,'Demo Gemüse-Hersteller','2014-05-14 13:36:44','2016-09-27 09:34:51',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL),
-(15,'Demo Milch-Hersteller','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL),
-(16,'Hersteller ohne Customer-Eintrag','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL);
+(4,'Demo Fleisch-Hersteller','2014-05-14 13:23:02','2015-05-15 13:31:41',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,NULL),
+(5,'Demo Gemüse-Hersteller','2014-05-14 13:36:44','2016-09-27 09:34:51',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL),
+(15,'Demo Milch-Hersteller','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL,NULL,NULL,NULL),
+(16,'Hersteller ohne Customer-Eintrag','2014-06-04 21:45:12','2016-03-07 09:02:25',1,'0000-00-00','0000-00-00',0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_manufacturer_lang` DISABLE KEYS */;
