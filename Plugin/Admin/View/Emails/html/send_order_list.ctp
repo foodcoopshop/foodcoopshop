@@ -32,12 +32,12 @@
             </p>
             
             <?php if (!empty($manufacturer['Customer'])) { ?>
-                <p><b>Dein Ansprechpartner: </b><?php echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'] . ', ' . $manufacturer['Customer']['email'] . ', ' . $manufacturer['Customer']['AddressCustomer']['phone_mobile']; ?></p>
+                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'] . ', ' . $manufacturer['Customer']['email'] . ', ' . $manufacturer['Customer']['AddressCustomer']['phone_mobile']; ?></p>
             <?php } ?>
 
             <ul style="padding-left: 10px;">
                 <li><b>Verbesserter Urlaubsmodus</b>: Zeitraum kann angegeben werden und wird automatisch angezeigt.</li>
-                <li><b>Neu: </b>Bearbeiten deiner Hersteller-Einstellungen</li>
+                <li><b>Neu: </b>Du kannst jetzt mehr Hersteller-Einstellungen ändern.</li>
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
                 <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
