@@ -185,6 +185,19 @@ class Manufacturer extends AppModel
     }
 
     /**
+     * @param int $defaultTaxId
+     * @return int
+     */
+    public function getOptionDefaultTaxId($defaultTaxId)
+    {
+        $result = $defaultTaxId;
+        if ($defaultTaxId == '') {
+            $result = Configure::read('app.defaultTaxId');
+        }
+        return $result;
+    }
+
+    /**
      * @param int $compensationPercentage
      * @return int
      */
