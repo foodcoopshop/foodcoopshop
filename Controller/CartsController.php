@@ -354,6 +354,8 @@ class CartsController extends FrontendController
             $this->OrderDetailTax->saveAll($orderDetailTax2save);
             // END save order_detail_tax
 
+            $this->sendShopOrderNotificationToManufacturers($cart['CakeCartProducts']);
+
             // START update stock available
             $i = 0;
             foreach ($stockAvailable2saveData as &$data) {
@@ -380,7 +382,10 @@ class CartsController extends FrontendController
                     ->viewVars(array(
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
-                    'order' => $order
+                    'order' => $order,
+                    'depositSum' => $this->AppAuth->Cart->getDepositSum(),
+                    'productSum' => $this->AppAuth->Cart->getProductSum(),
+                    'productAndDepositSum' => $this->AppAuth->Cart->getProductAndDepositSum()
                     ));
 
 
@@ -400,6 +405,56 @@ class CartsController extends FrontendController
 
         $this->action = 'detail';
         $this->render('detail');
+    }
+
+    public function sendShopOrderNotificationToManufacturers($cakeCartProducts)
+    {
+
+        if (!$this->AppSession->check('Auth.shopOrderCustomer')) {
+            return false;
+        }
+
+        $manufacturers = array();
+        foreach ($cakeCartProducts as $cakeCartProduct) {
+            $manufacturers[$cakeCartProduct['manufacturerId']][] = $cakeCartProduct;
+        }
+
+        $this->loadModel('Manufacturer');
+        $this->Manufacturer->recursive = 1;
+
+        foreach ($manufacturers as $manufacturerId => $cartProducts) {
+            $manufacturer = $this->Manufacturer->find('first', array(
+                'conditions' => array(
+                    'Manufacturer.id_manufacturer' => $manufacturerId
+                )
+            ));
+
+            $depositSum = 0;
+            $productSum = 0;
+            foreach ($cartProducts as $cartProduct) {
+                $depositSum += $cartProduct['deposit'];
+                $productSum += $cartProduct['price'];
+            }
+
+            $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturer['Manufacturer']['send_shop_order_notification']);
+            if ($sendShopOrderNotification) {
+                $email = new AppEmail();
+                $email->template('shop_order_notification')
+                ->emailFormat('html')
+                ->to($product['Manufacturer']['Address']['email'])
+                ->subject('Benachrichtigung über Sofort-Bestellung')
+                ->viewVars(array(
+                    'appAuth' => $this->AppAuth,
+                    'cart' => array('CakeCartProducts' => $cakeCartProducts),
+                    'shopOrderCustomerName' => $this->AppSession->read('Auth.shopOrderCustomer')['Customer']['name'],
+                    'manufacturer' => $manufacturer,
+                    'depositSum' => $depositSum,
+                    'productSum' => $productSum,
+                    'productAndDepositSum' => $depositSum + $productSum
+                ));
+                $email->send();
+            }
+        }
     }
 
     public function orderSuccessful($orderId)
