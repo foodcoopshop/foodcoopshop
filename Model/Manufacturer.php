@@ -28,6 +28,12 @@ class Manufacturer extends AppModel
         'Content'
     );
 
+    public $belongsTo = array(
+        'Customer' => array(
+            'foreignKey' => 'id_customer'
+        )
+    );
+
     public $hasOne = array(
         'Address' => array(
             'className' => 'AddressManufacturer',
@@ -101,91 +107,85 @@ class Manufacturer extends AppModel
     );
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendInvoice
      * @return boolean
      */
-    public function getOptionSendInvoice($other)
+    public function getOptionSendShopOrderNotification($sendShopOrderNotification)
     {
-        $sendEmail = true;
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (is_array($addressOther)) {
-            // sending of email can be disabled
-            if (isset($addressOther['sendInvoice']) && ! $addressOther['sendInvoice']) {
-                $sendEmail = false;
-            }
+        $result = $sendShopOrderNotification;
+        if ($sendShopOrderNotification == '') {
+            $result = Configure::read('app.defaultSendShopOrderNotification');
         }
-        return $sendEmail;
+        return $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendInvoice
      * @return boolean
      */
-    public function getOptionBulkOrdersAllowed($other)
+    public function getOptionSendInvoice($sendInvoice)
     {
-        $bulkOrdersAllowed = Configure::read('app.defaultBulkOrdersAllowed');
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (isset($addressOther['bulkOrdersAllowed'])) {
-            $bulkOrdersAllowed = $addressOther['bulkOrdersAllowed'];
+        $result = $sendInvoice;
+        if ($sendInvoice == '') {
+            $result = Configure::read('app.defaultSendInvoice');
         }
-        return $bulkOrdersAllowed;
+        return $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $bulkOrdersAllowed
+     * @return boolean
+     */
+    public function getOptionBulkOrdersAllowed($bulkOrdersAllowed)
+    {
+        $result = $bulkOrdersAllowed;
+        if ($bulkOrdersAllowed == '') {
+            $result = Configure::read('app.defaultBulkOrdersAllowed');
+        }
+        return $result;
+    }
+
+    /**
+     * @param int $compensationPercentage
      * @return int
      */
-    public function getCompensationPercentage($other)
+    public function getOptionCompensationPercentage($compensationPercentage)
     {
-        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
-        if (isset($other['compensationPercentage'])) {
-            $compensationPercentage = (int) $other['compensationPercentage'];
+        $result = $compensationPercentage;
+        if ($compensationPercentage == '') {
+            $result = Configure::read('app.defaultCompensationPercentage');
         }
-        return $compensationPercentage;
+        return $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendOrderList
      * @return boolean
      */
-    public function getOptionSendOrderList($other)
+    public function getOptionSendOrderList($sendOrderList)
     {
-        $sendEmail = true;
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (is_array($addressOther)) {
-            // sending of email can be disabled
-            if (isset($addressOther['sendOrderList']) && ! $addressOther['sendOrderList']) {
-                $sendEmail = false;
-            }
+        $result = $sendOrderList;
+        if ($sendOrderList == '') {
+            $result = Configure::read('app.defaultSendOrderList');
         }
-        return $sendEmail;
+        return $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
-     * @return boolean
+     * @param $string $sendOrderListCc
+     * @return array
      */
-    public function getOptionSendOrderListCc($other)
+    public function getOptionSendOrderListCc($sendOrderListCc)
     {
         $ccRecipients = array();
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (is_array($addressOther)) {
-            if (! empty($addressOther['sendOrderListCc'])) {
-                $ccs = explode(';', $addressOther['sendOrderListCc']);
-                foreach ($ccs as $cc) {
-                    $ccRecipients[] = $cc;
-                }
-            }
+        if ($sendOrderListCc == '') {
+            return $ccRecipients;
+        }
+
+        $ccs = explode(',', $sendOrderListCc);
+        foreach ($ccs as $cc) {
+            pr($cc);
+            $ccRecipients[] = $cc;
         }
         return $ccRecipients;
     }

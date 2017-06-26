@@ -18,9 +18,7 @@ $this->element('addScript', array(
         Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerLangDescription');" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerLangShortDescription');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
-        Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');".
-        Configure::read('app.jsNamespace') . ".Helper.initDatepicker(); var datefieldSelector = $('input.datepicker');datefieldSelector.datepicker();
-    "
+        Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');"
 ));
 
 $idForImageUpload = isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : StringComponent::createRandomString(6);
@@ -53,65 +51,39 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 
 <?php
 
-echo $this->Form->create('Manufacturer', array(
-    'class' => 'fcs-form'
-));
-
-echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Manufacturer.id_manufacturer');
-echo $this->Form->hidden('Address.id_address');
-
-echo '<h2>Allgemein</h2>';
-
-echo $this->Form->input('Manufacturer.name', array(
-    'type' => 'text',
-    'label' => 'Name',
-    'required' => true
-));
-echo $this->Form->input('Address.email', array(
-    'type' => 'text',
-    'label' => 'E-Mail-Adresse',
-    'required' => true,
-    'after' => '<span class="after small">Wird in deinem Impressum spamgeschützt angezeigt</span>'
-));
-echo $this->Form->input('Address.phone_mobile', array(
-    'label' => 'Handy',
-    'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
-));
-echo $this->Form->input('Address.phone', array(
-    'label' => 'Telefon',
-    'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
-));
-echo $this->Form->input('Manufacturer.homepage', array(
-    'placeholder' => 'z.B. http://www.foodcoopshop.com',
-    'label' => 'Homepage',
-    'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
-));
-echo $this->Form->input('Manufacturer.active', array(
-    'label' => 'Aktiv?',
-    'disabled' => ($appAuth->isManufacturer() ? 'disabled' : ''),
-    'type' => 'checkbox',
-    'after' => '<span class="after small">Hersteller-Profil und Produkte werden angezeigt (vom Hersteller selbst nicht änderbar).</span>'
-));
-
-echo '<div class="holiday-wrapper">';
-    echo '<div class="input">';
-        echo '<label>Urlaubsmodus?';
-    echo '</div>';
-    echo $this->element('dateFields', array(
-        'dateFrom' => $this->request->data['Manufacturer']['holiday_from'],
-        'nameFrom' => 'data[Manufacturer][holiday_from]',
-        'dateTo' => $this->request->data['Manufacturer']['holiday_to'],
-        'nameTo' => 'data[Manufacturer][holiday_to]'
+    echo $this->Form->create('Manufacturer', array(
+        'class' => 'fcs-form'
     ));
-    echo '<span class="description small">Die Produkte sind im angegebenen Zeitraum im Shop nicht bestellbar.
-          <br />Beide Felder leer bedeutet: Urlaubsmodus nicht aktiv.</span>';
-    echo '</div>';
 
-    echo $this->Form->input('Manufacturer.is_private', array(
-    'label' => 'Nur für Mitglieder?',
-    'type' => 'checkbox',
-    'after' => '<span class="after small">Hersteller-Profil und Produkte werden angezeigt, aber nur für Mitglieder.</span>'
+    echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
+    echo $this->Form->hidden('Manufacturer.id_manufacturer');
+    echo $this->Form->hidden('Address.id_address');
+
+    echo '<h2>Allgemein</h2>';
+
+    echo $this->Form->input('Manufacturer.name', array(
+        'type' => 'text',
+        'label' => 'Name',
+        'required' => true
+    ));
+    echo $this->Form->input('Address.email', array(
+        'type' => 'text',
+        'label' => 'E-Mail-Adresse',
+        'required' => true,
+        'after' => '<span class="after small">Wird in deinem Impressum spamgeschützt angezeigt</span>'
+    ));
+    echo $this->Form->input('Address.phone_mobile', array(
+        'label' => 'Handy',
+        'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
+    ));
+    echo $this->Form->input('Address.phone', array(
+        'label' => 'Telefon',
+        'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
+    ));
+    echo $this->Form->input('Manufacturer.homepage', array(
+        'placeholder' => 'z.B. https://www.foodcoopshop.com',
+        'label' => 'Homepage',
+        'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
     ));
     echo '<div class="sc"></div>';
 

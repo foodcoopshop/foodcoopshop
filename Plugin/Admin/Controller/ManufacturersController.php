@@ -21,6 +21,7 @@ class ManufacturersController extends AdminAppController
     {
         switch ($this->action) {
             case 'profile':
+            case 'myOptions':
                 return $this->AppAuth->isManufacturer();
                 break;
             case 'index':
@@ -28,9 +29,8 @@ class ManufacturersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
             case 'edit':
-                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
-                    return true;
-                }
+            case 'editOptions':
+                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
             default:
                 return $this->AppAuth->loggedIn();
@@ -64,9 +64,6 @@ class ManufacturersController extends AdminAppController
                 )
             ));
 
-            $unsavedManufacturer['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_from']);
-            $unsavedManufacturer['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_to']);
-
             $_SESSION['KCFINDER'] = array(
                 'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
@@ -89,11 +86,6 @@ class ManufacturersController extends AdminAppController
         if (empty($this->request->data)) {
             $this->request->data = $unsavedManufacturer;
         } else {
-            // html could be manipulated and checkbox disabled attribute removed
-            if ($this->AppAuth->isManufacturer()) {
-                unset($this->request->data['Manufacturer']['active']);
-            }
-
             // validate data - do not use $this->Manufacturer->saveAll()
             $this->Manufacturer->id = $manufacturerId;
 
@@ -101,9 +93,6 @@ class ManufacturersController extends AdminAppController
             $this->request->data['Manufacturer']['iban'] = str_replace(' ', '', $this->request->data['Manufacturer']['iban']);
             $this->request->data['Manufacturer']['bic'] = str_replace(' ', '', $this->request->data['Manufacturer']['bic']);
             $this->request->data['Manufacturer']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturer']['homepage']);
-
-            $this->request->data['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_from']);
-            $this->request->data['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
 
             $this->Manufacturer->set($this->request->data['Manufacturer']);
 
@@ -281,7 +270,7 @@ class ManufacturersController extends AdminAppController
             'order' => array(
                 'Manufacturer.name' => 'ASC'
             ),
-            'fields' => array('Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
+            'fields' => array('Manufacturer.*', 'Customer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ), $this->Paginator->settings);
         $manufacturers = $this->Paginator->paginate('Manufacturer');
 
@@ -296,12 +285,12 @@ class ManufacturersController extends AdminAppController
             $sumDepositReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
+            if (Configure::read('app.defaultCompensationPercentage')) {
+                $manufacturers[$i]['Manufacturer']['compensation_percentage'] = $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
+            }
             $i++;
         }
         $this->set('manufacturers', $manufacturers);
-
-        $this->loadModel('Tax');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         $this->set('title_for_layout', 'Hersteller');
     }
@@ -360,7 +349,7 @@ class ManufacturersController extends AdminAppController
 
             $invoicePeriodMonthAndYear = Configure::read('timeHelper')->getLastMonthNameAndYear();
 
-            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Address']['other']);
+            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
             if ($sendEmail) {
                 $email->template('Admin.send_invoice')
                     ->to($manufacturer['Address']['email'])
@@ -382,18 +371,24 @@ class ManufacturersController extends AdminAppController
         $this->redirect($this->referer());
     }
 
-    private function getCompensationPercentage($manufacturerId)
+    private function getOptionBulkOrdersAllowed($manufacturerId)
     {
-        $this->Manufacturer->recursive = 2; // for email
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
             )
         ));
+        return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
+    }
 
-        $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-        $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
-        return $compensationPercentage;
+    private function getOptionCompensationPercentage($manufacturerId)
+    {
+        $manufacturer = $this->Manufacturer->find('first', array(
+            'conditions' => array(
+                'Manufacturer.id_manufacturer' => $manufacturerId
+            )
+        ));
+        return $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
     }
 
     public function sendOrderList($manufacturerId, $from, $to)
@@ -433,8 +428,8 @@ class ManufacturersController extends AdminAppController
             $customerPdfUrl = Configure::read('htmlHelper')->getOrderListLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
             $customerPdfFile = $customerPdfUrl;
 
-            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer['Address']['other']);
-            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer['Address']['other']);
+            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturer']['send_order_list']);
+            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer['Manufacturer']['send_order_list_cc']);
 
             $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer['Manufacturer']['name'] . '" erfolgreich generiert';
 
@@ -465,132 +460,139 @@ class ManufacturersController extends AdminAppController
         exit(); // important, on dev it happend that the url was called twice (browser-call)
     }
 
-    public function editOptions()
+    public function myOptions()
     {
-        if ($this->AppAuth->isManufacturer()) {
-            throw new MissingActionException('no access for manufacturers!');
-        }
+        $this->editOptions($this->AppAuth->getManufacturerId());
+        $this->set('referer', $this->here);
+        $this->set('title_for_layout', 'Einstellungen bearbeiten');
+        $this->render('editOptions');
+    }
 
-        $manufacturerId = (int) $this->params['data']['manufacturerId'];
-        $compensationPercentage = (int) $this->params['data']['compensationPercentage'];
-        $sendInvoice = $this->params['data']['sendInvoice'];
-        $sendOrderList = $this->params['data']['sendOrderList'];
-        $defaultTaxId = (int) $this->params['data']['defaultTaxId'];
-        $sendOrderListCc = $this->params['data']['sendOrderListCc'];
-        $bulkOrdersAllowed = $this->params['data']['bulkOrdersAllowed'];
+    public function editOptions($manufacturerId = null)
+    {
 
-        $oldManufacturer = $this->Manufacturer->find('first', array(
+        $this->setFormReferer();
+
+        $unsavedManufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
             )
         ));
 
-        if (empty($oldManufacturer)) {
-            throw new MissingActionException('wrong manufacturer');
+        // set default data if manufacturer options are null
+        if (Configure::read('app.useManufacturerCompensationPercentage') && $unsavedManufacturer['Manufacturer']['compensation_percentage'] == '') {
+            $unsavedManufacturer['Manufacturer']['compensation_percentage'] = Configure::read('app.defaultCompensationPercentage');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_order_list'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_order_list'] = Configure::read('app.defaultSendOrderList');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_invoice'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_invoice'] = Configure::read('app.defaultSendInvoice');
+        }
+        if ($unsavedManufacturer['Manufacturer']['send_shop_order_notification'] == '') {
+            $unsavedManufacturer['Manufacturer']['send_shop_order_notification'] = Configure::read('app.defaultSendShopOrderNotification');
+        }
+        if ($unsavedManufacturer['Manufacturer']['default_tax_id'] == '') {
+            $unsavedManufacturer['Manufacturer']['default_tax_id'] = Configure::read('app.defaultTaxId');
+        }
+        if (!$this->AppAuth->isManufacturer() && $unsavedManufacturer['Manufacturer']['bulk_orders_allowed'] == '') {
+            $unsavedManufacturer['Manufacturer']['bulk_orders_allowed'] = Configure::read('app.defaultBulkOrdersAllowed');
         }
 
-        // check compensationPercentage
-        if ($compensationPercentage != '' && ($compensationPercentage < 0 || $compensationPercentage > 99)) {
-            $msg = 'Variabler Mitgliedsbeitrag muss zwischen 0 und 99 liegen!';
-            $this->log($msg);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $msg
-            )));
+        $unsavedManufacturer['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_from']);
+        $unsavedManufacturer['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_to']);
+
+        if (empty($unsavedManufacturer)) {
+            throw new MissingActionException('manufacturer does not exist');
         }
 
-        // check sendInvoice
-        if ($sendInvoice != '' && ($sendInvoice < 0 || $sendInvoice > 1)) {
-            $msg = 'Rechnung als PDF versenden muss zwischen 0 und 1 liegen!';
-            $this->log($msg);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $msg
-            )));
-        }
+        $this->set('unsavedManufacturer', $unsavedManufacturer);
+        $this->set('manufacturerId', $manufacturerId);
+        $this->set('title_for_layout', $unsavedManufacturer['Manufacturer']['name'].': Einstellungen bearbeiten');
 
-        // check sendOrderList
-        if ($sendOrderList != '' && ($sendOrderList < 0 || $sendOrderList > 1)) {
-            $msg = 'Bestell-Listen als PDF versenden muss zwischen 0 und 1 liegen!';
-            $this->log($msg);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $msg
-            )));
-        }
+        if (empty($this->request->data)) {
+            $this->request->data = $unsavedManufacturer;
+        } else {
+            // html could be manipulated and checkbox disabled attribute removed
+            if ($this->AppAuth->isManufacturer()) {
+                unset($this->request->data['Manufacturer']['active']);
+            }
 
-        // check defaultTaxId
-        $this->loadModel('Tax');
-        $tax = $this->Tax->find('first', array(
-            'conditions' => array(
-                'Tax.id_tax' => $defaultTaxId
-            )
-        ));
-        if ($defaultTaxId != 0 && empty($tax)) {
-            $msg = 'steuersatz falsch bzw. nicht gefunden';
-            $this->log($msg);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $msg
-            )));
-        }
+            $this->request->data['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_from']);
+            $this->request->data['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
 
-        // check sendOrderListCc
-        App::uses('Validation', 'Utility');
-        if ($sendOrderListCc != '') {
-            $splittedSendOrderListCc = explode(';', $sendOrderListCc);
-            foreach ($splittedSendOrderListCc as $email) {
-                if (! Validation::email($email)) {
-                    $msg = 'Falsche Eingabe beim Feld "CC-Empfänger für Bestell-Listen-Versand".';
-                    $this->log($msg);
-                    die(json_encode(array(
-                        'status' => 0,
-                        'msg' => $msg
-                    )));
+            // values that are the same as default values => null
+            if (Configure::read('app.useManufacturerCompensationPercentage') && $this->request->data['Manufacturer']['compensation_percentage'] == Configure::read('app.defaultCompensationPercentage')) {
+                $this->request->data['Manufacturer']['compensation_percentage'] = null;
+            }
+            if ($this->request->data['Manufacturer']['default_tax_id'] == Configure::read('app.defaultTaxId')) {
+                $this->request->data['Manufacturer']['default_tax_id'] = null;
+            }
+            if ($this->request->data['Manufacturer']['send_order_list'] == Configure::read('app.defaultSendOrderList')) {
+                $this->request->data['Manufacturer']['send_order_list'] = null;
+            }
+            if ($this->request->data['Manufacturer']['send_invoice'] == Configure::read('app.defaultSendInvoice')) {
+                $this->request->data['Manufacturer']['send_invoice'] = null;
+            }
+            if ($this->request->data['Manufacturer']['bulk_orders_allowed'] == Configure::read('app.defaultBulkOrdersAllowed')) {
+                $this->request->data['Manufacturer']['bulk_orders_allowed'] = null;
+            }
+            if ($this->request->data['Manufacturer']['send_shop_order_notification'] == Configure::read('app.defaultSendShopOrderNotification')) {
+                $this->request->data['Manufacturer']['send_shop_order_notification'] = null;
+            }
+
+            // remove post data that could be set by hacking attempt
+            if ($this->AppAuth->isManufacturer()) {
+                unset($this->request->data['Manufacturer']['bulk_orders_allowed']);
+                unset($this->request->data['Manufacturer']['compensation_percentage']);
+            }
+
+            // validate data - do not use $this->Manufacturer->saveAll()
+            $this->Manufacturer->id = $manufacturerId;
+            $this->Manufacturer->set($this->request->data['Manufacturer']);
+
+            if (Configure::read('app.useManufacturerCompensationPercentage')) {
+                $this->Manufacturer->validator()['compensation_percentage'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
+            }
+            if (!empty($this->request->data['Manufacturer']['send_order_list_cc'])) {
+                $this->Manufacturer->validator()['send_order_list_cc'] = $this->Manufacturer->getMultipleEmailValidationRule(true);
+            }
+
+            $errors = array();
+            if (! $this->Manufacturer->validates()) {
+                $errors = array_merge($errors, $this->Manufacturer->validationErrors);
+            }
+
+            if (empty($errors)) {
+                $this->Manufacturer->save($this->request->data['Manufacturer'], array(
+                    'validate' => false
+                ));
+
+                $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturer']['name'] . '</b>';
+                if ($this->here == Configure::read('slugHelper')->getManufacturerMyOptions()) {
+                    $message = 'Deine Einstellungen';
+                    $this->renewAuthSession();
                 }
+                $message .= ' wurden erfolgreich gespeichert.';
+
+                $this->AppSession->setFlashMessage($message);
+
+                $this->loadModel('CakeActionLog');
+                $this->CakeActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturerId, 'manufacturers', $message);
+
+                $this->redirect($this->data['referer']);
+            } else {
+                $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
             }
         }
 
-        // check bulkOrdersAllowed
-        if ($bulkOrdersAllowed != '' && ($bulkOrdersAllowed < 0 || $bulkOrdersAllowed > 1)) {
-            $msg = 'Sammelbestellung möglich muss zwischen 0 und 1 liegen!';
-            $this->log($msg);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $msg
-            )));
+        $this->loadModel('Tax');
+        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+
+        if (!$this->AppAuth->isManufacturer()) {
+            $this->loadModel('Customer');
+            $this->set('customersForDropdown', $this->Customer->getForDropdown());
         }
-
-        // saving data and setting default values
-        $otherFields = json_encode(array(
-            'compensationPercentage' => $compensationPercentage,
-            'sendInvoice' => $sendInvoice == '' ? 1 : $sendInvoice,
-            'sendOrderList' => $sendOrderList == '' ? 1 : $sendOrderList,
-            'defaultTaxId' => $defaultTaxId,
-            'sendOrderListCc' => $sendOrderListCc,
-            'bulkOrdersAllowed' => $bulkOrdersAllowed == '' ? 1 : $bulkOrdersAllowed
-        ));
-
-        // special format for db saving (no escaping and no " on start and end of string
-        $preparedOtherFields = json_encode($otherFields);
-        $preparedOtherFields = str_replace('\\', '', $preparedOtherFields);
-        $preparedOtherFields = substr($preparedOtherFields, 1, - 1);
-
-        $this->Manufacturer->Address->id = $oldManufacturer['Address']['id_address'];
-        $this->Manufacturer->Address->save(array(
-            'other' => $preparedOtherFields
-        ));
-
-        $message = 'Die Einstellungen des Herstellers "' . $oldManufacturer['Manufacturer']['name'] . '" wurden geändert.';
-        $this->AppSession->setFlashMessage($message);
-
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), 0, 'manufacturers', $message);
-
-        die(json_encode(array(
-            'status' => 1,
-            'msg' => 'Speichern erfolgreich.'
-        )));
     }
 
     public function changeProductStatusByManufacturer($manufacturerId, $status)
@@ -670,7 +672,8 @@ class ManufacturersController extends AdminAppController
         $this->set('sumPriceIncl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceIncl));
         $this->set('sumAmount', $sumAmount);
 
-        $this->set('compensationPercentage', $this->getCompensationPercentage($manufacturerId));
+        $this->set('compensationPercentage', $this->getOptionCompensationPercentage($manufacturerId));
+        $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
         $this->set('saveParam', $saveParam);
         return $results;
@@ -721,7 +724,7 @@ class ManufacturersController extends AdminAppController
 
         $this->set('manufacturer', $manufacturer);
 
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Address']['other']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
         if ($bulkOrdersAllowed) {
             $orderStates = Configure::read('htmlHelper')->getOrderStateIds();
         } else {

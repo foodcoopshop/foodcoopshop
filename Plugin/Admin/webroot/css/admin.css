@@ -158,6 +158,11 @@ form.fcs-form .bootstrap-select {
 .vertical.menu a {
     border-right: none;
 }
+.vertical.menu li.footer {
+  padding: 5px 10px;
+  font-size: 12px;
+  word-break: break-word;
+}
 
 #logo {
     position: absolute;
@@ -767,10 +772,9 @@ form.fcs-form .input.password input {
 form.fcs-form .long.input input {
     width: 562px;
 }
-form.fcs-form .short.input input {
+form.fcs-form .input.short input {
     width: 30px;
     text-align: center;
-    margin-right: 5px;
 }
 form.fcs-form .small {
     line-height: 15px;
@@ -781,6 +785,7 @@ form.fcs-form .checkbox .small {
     float: left;
 }
 form.fcs-form .input.text .after.small,
+form.fcs-form .input.number .after.small,
 form.fcs-form .input.tel .after.small {
     float: right;
     line-height: 28px;

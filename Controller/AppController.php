@@ -153,8 +153,7 @@ class AppController extends Controller
                     'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
                 )
             ));
-            $addressOther = $manufacturer['Address']['other'];
-            $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
+            $compensationPercentage = $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
             $this->set('compensationPercentageForTermsOfUse', $compensationPercentage);
         }
 

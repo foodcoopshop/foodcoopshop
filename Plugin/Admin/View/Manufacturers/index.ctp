@@ -18,7 +18,7 @@
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setUseManufacturerCompensationPercentage(" . (Configure::read('app.useManufacturerCompensationPercentage') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultCompensationPercentage(" . Configure::read('app.defaultCompensationPercentage') . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultSendOrderList(" . (Configure::read('app.defaultSendOrderList') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultSendInvoice(" . (Configure::read('app.defaultSendInvoice') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultTaxId(" . Configure::read('app.defaultTaxId') . ");" . Configure::read('app.jsNamespace') . ".Admin.setDefaultBulkOrdersAllowed(" . (Configure::read('app.defaultBulkOrdersAllowed') ? 1 : 0) . ");" . Configure::read('app.jsNamespace') . ".Admin.initEditManufacturerOptions('#manufacturers-list .manufacturer-options-button');".Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ));
     if (Configure::read('app.allowManualOrderListSending')) {
         $this->element('addScript', array(
@@ -62,6 +62,7 @@ echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.name', 'Name') . '</th>';
 echo '<th style="width:83px;">Artikel</th>';
 echo '<th>Pfand</th>';
+echo '<th>' . $this->Paginator->sort('Customer.name', 'Ansprechperson') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Urlaub') . '</th>';
@@ -91,7 +92,7 @@ foreach ($manufacturers as $manufacturer) {
     if (! $largeImageExists) {
         echo '<a class="lightbox" href="' . $srcLargeImage . '">';
     }
-    echo '<img width="90" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium') . '" />';
+    echo '<img width="50" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium') . '" />';
     if (! $largeImageExists) {
         echo '</a>';
     }
@@ -101,6 +102,7 @@ foreach ($manufacturers as $manufacturer) {
         'title' => 'Bearbeiten'
     ), $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']));
     echo '</td>';
+
     echo '<td>';
 
     $details = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
@@ -120,8 +122,8 @@ foreach ($manufacturers as $manufacturer) {
         echo '<b>' . $manufacturer['Manufacturer']['name'] . '</b><br />';
         echo $manufacturer['Address']['city'];
         echo '<br /><span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
-
     echo '</td>';
+
     echo '<td style="width:130px;">';
     $productCountSum += $manufacturer['product_count'];
     echo $this->Html->getJqueryUiIcon(
@@ -158,6 +160,12 @@ foreach ($manufacturers as $manufacturer) {
     }
     echo '</td>';
 
+    echo '<td>';
+    if (!empty($manufacturer['Customer'])) {
+        echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'];
+    }
+    echo '</td>';
+
     echo '<td style="text-align:center;width:42px;">';
     if ($manufacturer['Manufacturer']['iban'] != '') {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
@@ -181,30 +189,20 @@ foreach ($manufacturers as $manufacturer) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
+
     echo '<td>';
-    echo '<span class="manufacturer-options-button-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')), array(
-                'class' => 'manufacturer-options-button',
-                'title' => $manufacturer['Address']['other'],
-                'data-title-for-overlay' => $manufacturer['Address']['other']
-            ), 'javascript:void(0);');
-    echo '<div class="hide tax-wrapper">';
-    echo $this->Form->input('Tax.id_tax', array(
-                    'type' => 'select',
-                    'label' => '',
-                    'options' => $taxesForDropdown
-                ));
-    echo '</div>';
-    echo '</span>';
+    echo $this->Html->getJqueryUiIcon(
+        $this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')),
+        array(
+            'title' => 'Hersteller-Einstellungen bearbeiten'
+        ),
+        $this->Slug->getManufacturerEditOptions($manufacturer['Manufacturer']['id_manufacturer'])
+    );
     echo '</td>';
+
     if (Configure::read('app.useManufacturerCompensationPercentage')) {
         echo '<td>';
-        $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
-        if (isset($addressOther['compensationPercentage'])) {
-            $compensationPercentage = (int) $addressOther['compensationPercentage'];
-        }
-        echo $compensationPercentage . '%';
+            echo $manufacturer['Manufacturer']['compensation_percentage'].'%';
         echo '</td>';
     }
 
@@ -245,7 +243,7 @@ foreach ($manufacturers as $manufacturer) {
 }
 
 echo '<tr>';
-echo '<td colspan="2"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $productCountSum . '</b></td>';
 $colspan = 10;
 if (Configure::read('app.useManufacturerCompensationPercentage')) {
