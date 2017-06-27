@@ -90,8 +90,9 @@ class SendInvoicesShell extends AppShell
         $this->browser->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {
-            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
-            if (isset($manufacturer['current_order_count']) && $sendEmail) {
+            $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
+            if (isset($manufacturer['current_order_count']) && $sendInvoice && !$bulkOrdersAllowed) {
                 $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' Artikel' . ' / ' . Configure::read('htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
