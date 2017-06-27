@@ -69,14 +69,7 @@ class ManufacturersController extends AdminAppController
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
             );
         } else {
-            // default values for new manufacturers
-            $unsavedManufacturer = array(
-                'Manufacturer' => array(
-                    'active' => APP_ON,
-                    'holiday_to' => '',
-                    'holiday_from' => ''
-                )
-            );
+            $unsavedManufacturer = array();
         }
 
         $this->set('unsavedManufacturer', $unsavedManufacturer);
@@ -131,6 +124,10 @@ class ManufacturersController extends AdminAppController
             if (empty($errors)) {
                 $this->loadModel('CakeActionLog');
 
+                if (is_null($manufacturerId)) {
+                    // default value for new manufacturer
+                    $this->request->data['Manufacturer']['active'] = APP_ON;
+                }
                 $this->Manufacturer->save($this->request->data['Manufacturer'], array(
                     'validate' => false
                 ));
