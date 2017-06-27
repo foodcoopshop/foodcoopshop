@@ -112,6 +112,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $manufacturerId = 4;
         $newSendOrderList = false;
         $newSendInvoice = false;
+        $newSendOrderedProductPriceChangedNotification = false;
+        $newSendOrderedProductQuantityChangedNotification = false;
+        $newSendShopOrderNotification = false;
+        $newBulkOrdersAllowed = false;
+
         $newSendOrderListCc = array('office@rothauer-it.com', 'test@test.com');
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
 
@@ -137,6 +142,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->setFieldById('ManufacturerSendOrderListCc', implode(',', $newSendOrderListCc));  // correct
         $this->browser->submitFormById('ManufacturerEditOptionsForm');
 
+        $this->browser->setFieldById('ManufacturerSendOrderedProductPriceChangedNotification', $newSendOrderedProductPriceChangedNotification);       // do not use 0 here
+        $this->browser->setFieldById('ManufacturerSendOrderedProductQuantityChangedNotification', $newSendOrderedProductQuantityChangedNotification); // do not use 0 here
+        $this->browser->setFieldById('ManufacturerSendShopOrderNotification', $newSendShopOrderNotification);                                         // do not use 0 here
+        $this->browser->setFieldById('ManufacturerBulkOrdersAllowed', $newBulkOrdersAllowed);                                         // do not use 0 here
+
         $manufacturerNew = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
@@ -151,6 +161,18 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $sendOrderListCc = $this->Manufacturer->getOptionSendOrderListCc($manufacturerNew['Manufacturer']['send_order_list_cc']);
         $this->assertEquals($sendOrderListCc, $newSendOrderListCc, 'saving option send_order_list_cc failed');
+
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew['Manufacturer']['send_ordered_product_price_changed_notification']);
+        $this->assertEquals($sendOrderedProductPriceChangedNotification, $newSendOrderedProductPriceChangedNotification, 'saving option send_ordered_product_price_changed_notification failed');
+
+        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($manufacturerNew['Manufacturer']['send_ordered_product_quantity_changed_notification']);
+        $this->assertEquals($sendOrderedProductQuantityChangedNotification, $newSendOrderedProductQuantityChangedNotification, 'saving option send_ordered_product_quantity_changed_notification failed');
+
+        $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturerNew['Manufacturer']['send_shop_order_notification']);
+        $this->assertEquals($sendShopOrderNotification, $newSendShopOrderNotification, 'saving option send_shop_order_notification failed');
+
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew['Manufacturer']['bulk_orders_allowed']);
+        $this->assertEquals($bulkOrdersAllowed, $newBulkOrdersAllowed, 'saving option bulk_orders_allowed failed');
 
         $this->logout();
     }
