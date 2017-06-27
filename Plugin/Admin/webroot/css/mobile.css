@@ -125,3 +125,22 @@ table.list th, table.list td {
 .sb-slidebar {
    width: 45% ! important;
 }
+body.manufacturers .holiday-wrapper .description {
+  margin-left: 0px;
+}
+form.fcs-form .input.checkbox span.after {
+  line-height: 14px;
+  margin-left: 25px;
+}
+form.fcs-form label {
+  width: 120px;
+}
+form.fcs-form .input.text input,
+form.fcs-form .input.email input,
+form.fcs-form .input.tel input,
+form.fcs-form .input.password input {
+  width: 190px;
+}
+form.fcs-form input[type="checkbox"] {
+  left: 120px;
+}

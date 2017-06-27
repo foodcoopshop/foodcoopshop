@@ -38,11 +38,15 @@
       box-shadow: 5px 0 5px -2px #888;
     }
     .sb-left a,
-    .sb-left li.header {
+    .sb-left li.header,
+    .sb-left li.footer {
         color: #fff ! important;
         padding: 5px;
         display: block;
         border-bottom: 1px solid #fff;
+    }
+    .sb-left li.footer {
+        word-break: break-word;
     }
     .sb-left li.header,
     .sb-left a:hover,
