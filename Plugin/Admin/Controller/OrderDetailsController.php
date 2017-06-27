@@ -256,7 +256,7 @@ class OrderDetailsController extends AdminAppController
         // never send email to manufacturer if bulk orders are allowed
         $this->loadModel('Manufacturer');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
-        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($orderDetail['Product']['Manufacturer']['send_ordered_product_quantity_changed_notification']);
+        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_quantity_changed_notification']);
 
         // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
         $weekday = date('N');
@@ -341,9 +341,9 @@ class OrderDetailsController extends AdminAppController
         // never send email to manufacturer if bulk orders are allowed
         $this->loadModel('Manufacturer');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($orderDetail['Product']['Manufacturer']['send_ordered_product_price_changed_notification']);
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_price_changed_notification']);
 
-        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail['OrderDetail']['total_price_tax_incl'] == 0.00 && $sendOrderedProductPriceChangedNotification) {
+        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail['OrderDetail']['total_price_tax_incl'] > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Product']['Manufacturer']['name'] . '</b>';
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
