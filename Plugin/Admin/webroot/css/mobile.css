@@ -144,3 +144,6 @@ form.fcs-form .input.password input {
 form.fcs-form input[type="checkbox"] {
   left: 120px;
 }
+form.fcs-form .small {
+  line-height: 15px ! important;
+}

@@ -777,7 +777,7 @@ form.fcs-form .input.short input {
     text-align: center;
 }
 form.fcs-form .small {
-    line-height: 15px ! important;
+    line-height: 15px;
     float: left;
 }
 form.fcs-form .checkbox .small {
