@@ -24,7 +24,8 @@
 
         <tr>
             <td>
-                <p>Soeben wurde eine Sofort-Bestellung für <?php echo $shopOrderCustomerName; ?> getätigt.</p>
+                <p>Soeben wurde von <b><?php echo $originalLoggedCustomer['name']; ?></b> eine Sofort-Bestellung für <b><?php echo $appAuth->getUsername(); ?></b> getätigt (Bestellung Nr. <?php echo $order['Order']['id_order']; ?>).</p>
+                <p>Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deiner Bestellliste aufscheint.</p>
             </td>
         </tr>
         

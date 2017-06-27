@@ -56,7 +56,12 @@
                             if ($appAuth->isManufacturer()) {
                                 echo $appAuth->getManufacturerName();
                             } else {
-                                echo $appAuth->getUsername();
+                                if (isset($originalLoggedCustomer) && !is_null($originalLoggedCustomer)) {
+                                    // for shop orders
+                                    echo $originalLoggedCustomer['name'];
+                                } else {
+                                    echo $appAuth->getUsername();
+                                }
                             }
                             ?>
                     <?php } else { ?>

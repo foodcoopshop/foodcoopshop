@@ -354,7 +354,7 @@ class CartsController extends FrontendController
             $this->OrderDetailTax->saveAll($orderDetailTax2save);
             // END save order_detail_tax
 
-            $this->sendShopOrderNotificationToManufacturers($cart['CakeCartProducts']);
+            $this->sendShopOrderNotificationToManufacturers($cart['CakeCartProducts'], $order);
 
             // START update stock available
             $i = 0;
@@ -382,6 +382,7 @@ class CartsController extends FrontendController
                     ->viewVars(array(
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
+                    'originalLoggedCustomer' => $this->AppSession->check('Auth.originalLoggedCustomer') ? $this->AppSession->read('Auth.originalLoggedCustomer') : null,
                     'order' => $order,
                     'depositSum' => $this->AppAuth->Cart->getDepositSum(),
                     'productSum' => $this->AppAuth->Cart->getProductSum(),
@@ -407,7 +408,7 @@ class CartsController extends FrontendController
         $this->render('detail');
     }
 
-    public function sendShopOrderNotificationToManufacturers($cakeCartProducts)
+    public function sendShopOrderNotificationToManufacturers($cakeCartProducts, $order)
     {
 
         if (!$this->AppSession->check('Auth.shopOrderCustomer')) {
@@ -442,11 +443,12 @@ class CartsController extends FrontendController
                 $email->template('shop_order_notification')
                 ->emailFormat('html')
                 ->to($manufacturer['Address']['email'])
-                ->subject('Benachrichtigung über Sofort-Bestellung')
+                ->subject('Benachrichtigung über Sofort-Bestellung Nr. ' . $order['Order']['id_order'])
                 ->viewVars(array(
                     'appAuth' => $this->AppAuth,
+                    'order' => $order,
                     'cart' => array('CakeCartProducts' => $cakeCartProducts),
-                    'shopOrderCustomerName' => $this->AppSession->read('Auth.shopOrderCustomer')['Customer']['name'],
+                    'originalLoggedCustomer' => $this->AppSession->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
