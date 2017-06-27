@@ -248,7 +248,8 @@ class OrderDetailsController extends AdminAppController
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
-            'editQuantityReason' => $editQuantityReason
+            'editQuantityReason' => $editQuantityReason,
+            'showManufacturerUnsubscribeLink' => true
         ));
 
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Order']['Customer']['name'] . '</b>';
@@ -333,7 +334,8 @@ class OrderDetailsController extends AdminAppController
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
-            'editPriceReason' => $editPriceReason
+            'editPriceReason' => $editPriceReason,
+            'showManufacturerUnsubscribeLink' => true
         ));
 
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Order']['Customer']['name'] . '</b>';
@@ -417,7 +419,8 @@ class OrderDetailsController extends AdminAppController
             ->viewVars(array(
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
-                'cancellationReason' => $cancellationReason
+                'cancellationReason' => $cancellationReason,
+                'showManufacturerUnsubscribeLink' => true
             ));
 
             $message .= ' und eine E-Mail an <b>' . $orderDetail['Order']['Customer']['name'] . '</b>';

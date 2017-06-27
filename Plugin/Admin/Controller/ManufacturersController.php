@@ -358,7 +358,8 @@ class ManufacturersController extends AdminAppController
                     ->viewVars(array(
                     'manufacturer' => $manufacturer,
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
-                    'appAuth' => $this->AppAuth
+                    'appAuth' => $this->AppAuth,
+                    'showManufacturerUnsubscribeLink' => true
                     ));
 
                 $email->send();
@@ -444,7 +445,8 @@ class ManufacturersController extends AdminAppController
                     ->subject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                     ->viewVars(array(
                     'manufacturer' => $manufacturer,
-                    'appAuth' => $this->AppAuth
+                    'appAuth' => $this->AppAuth,
+                    'showManufacturerUnsubscribeLink' => true
                     ));
 
                 $email->send();

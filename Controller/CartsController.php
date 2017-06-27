@@ -452,7 +452,8 @@ class CartsController extends FrontendController
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
-                    'productAndDepositSum' => $depositSum + $productSum
+                    'productAndDepositSum' => $depositSum + $productSum,
+                    'showManufacturerUnsubscribeLink' => true
                 ));
                 $email->send();
             }
