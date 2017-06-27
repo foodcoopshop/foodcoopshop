@@ -72,11 +72,11 @@ class ManufacturersController extends AdminAppController
             // default values for new manufacturers
             $unsavedManufacturer = array(
                 'Manufacturer' => array(
-                    'active' => APP_OFF
+                    'active' => APP_ON,
+                    'holiday_to' => '',
+                    'holiday_from' => ''
                 )
             );
-            // default value
-            $unsavedManufacturer['Manufacturer']['active'] = APP_ON;
         }
 
         $this->set('unsavedManufacturer', $unsavedManufacturer);
