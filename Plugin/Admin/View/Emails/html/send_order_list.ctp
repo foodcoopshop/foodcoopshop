@@ -31,13 +31,13 @@
                 <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
             </p>
             
-            <?php if (!empty($manufacturer['Customer'])) { ?>
+            <?php if (!empty($manufacturer['Customer']['name'])) { ?>
                 <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'] . ', ' . $manufacturer['Customer']['email'] . ', ' . $manufacturer['Customer']['AddressCustomer']['phone_mobile']; ?></p>
             <?php } ?>
 
             <ul style="padding-left: 10px;">
-                <li><b>Verbesserter Urlaubsmodus</b>: Zeitraum kann angegeben werden und wird automatisch angezeigt.</li>
-                <li><b>Neu: </b>Du kannst jetzt mehr Hersteller-Einstellungen ändern.</li>
+                <li><b>Verbesserter Urlaubsmodus</b>: Zeitraum kann angegeben werden, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
+                <li><b>Neu: </b>Du kannst deine Benachrichtigungs-E-Mails selbst ändern.</li>
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
                 <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
@@ -50,7 +50,7 @@
             </ul>
             
             <p>
-                Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du im Hersteller-Bereich selbst ändern.
+                Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern.
             </p>
 
             <?php if (!Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
