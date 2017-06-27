@@ -44,7 +44,7 @@
             <tr>
                 <td style="padding-top:20px;font-size:12px;">
                     Diese E-Mail wurde automatisch erstellt.
-                        <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink && $appAuth->isManufacturer()) { ?>
+                        <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink) { ?>
                            Du kannst sie <a href="<?php echo Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions(); ?>">in deinen Einstellungen abbestellen</a>.
                         <?php } ?><br /><br />
                     --<br />
