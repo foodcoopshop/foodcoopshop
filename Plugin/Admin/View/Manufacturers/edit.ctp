@@ -62,6 +62,8 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 
     echo '<h2>Allgemein</h2>';
 
+    $imprintString = $appAuth->isManufacturer() ? 'in deinem Impressum' : 'im Impressum des Herstellers';
+
     echo $this->Form->input('Manufacturer.name', array(
         'type' => 'text',
         'label' => 'Name',
@@ -71,20 +73,20 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         'type' => 'text',
         'label' => 'E-Mail-Adresse',
         'required' => true,
-        'after' => '<span class="after small">Wird in deinem Impressum spamgeschützt angezeigt</span>'
+        'after' => '<span class="after small">Wird '.$imprintString.'  spamgeschützt angezeigt</span>'
     ));
     echo $this->Form->input('Address.phone_mobile', array(
         'label' => 'Handy',
-        'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
+        'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
     echo $this->Form->input('Address.phone', array(
         'label' => 'Telefon',
-        'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
+        'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
     echo $this->Form->input('Manufacturer.homepage', array(
         'placeholder' => 'z.B. https://www.foodcoopshop.com',
         'label' => 'Homepage',
-        'after' => '<span class="after small">Wird in deinem Impressum angezeigt</span>'
+        'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
     echo '<div class="sc"></div>';
 

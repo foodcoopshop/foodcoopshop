@@ -73,7 +73,7 @@ echo '<div class="holiday-wrapper">';
         'nameTo' => 'data[Manufacturer][holiday_to]'
     ));
     echo '<span class="description small">Die Produkte sind im angegebenen Zeitraum im Shop nicht bestellbar, sie werden also automatisch aktiviert und wieder deaktiviert.';
-        echo '<br />Beide Felder leer bedeutet: Urlaubsmodus nicht aktiv.';
+        echo '<br />Beide Felder leer bedeutet: Urlaubsmodus ist <b>nicht aktiv</b>.';
     echo '</span>';
     echo '</div>';
 
@@ -89,47 +89,47 @@ echo '<div class="holiday-wrapper">';
     echo $this->Form->input('Manufacturer.send_order_list', array(
     'label' => 'Bestelllisten per E-Mail',
     'type' => 'checkbox',
-    'after' => '<span class="after small">Wöchentlicher Versand der Bestelllisten aktiv?</span>'
+    'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte wöchentlich per E-Mail die Bestelllisten erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
     echo $this->Form->input('Manufacturer.send_order_list_cc', array(
     'label' => 'CC-Empfänger für Bestell-Listen-Versand',
-    'after' => '<span class="after small">Wird nur verwendet, wenn der Bestelllisten-Versand aktiviert ist. Mehrere getrennt mit ,</span>'
+    'after' => '<span class="after small">Mehrere Empfänger mit , trennen.</span>'
     ));
 
     echo $this->Form->input('Manufacturer.send_invoice', array(
     'label' => 'Rechnungen per E-Mail',
     'type' => 'checkbox',
-    'after' => '<span class="after small">Monatlicher Versand der Rechnungen aktiv?</span>'
+        'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte monatlich per E-Mail die Rechnungen erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
     echo $this->Form->input('Manufacturer.send_ordered_product_deleted_notification', array(
         'label' => 'Stornierungen',
         'type' => 'checkbox',
-        'after' => '<span class="after small">Bei jeder Stornierung eine Info-Mail verschicken?</span>'
+        'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Stornierung eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
     echo $this->Form->input('Manufacturer.send_ordered_product_price_changed_notification', array(
         'label' => 'Preis-Änderungen von bestellten Produkten',
         'type' => 'checkbox',
-        'after' => '<span class="after small">Bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail verschicken?</span>'
+        'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
     echo $this->Form->input('Manufacturer.send_ordered_product_quantity_changed_notification', array(
         'label' => 'Änderungen der bestellten Anzahl',
         'type' => 'checkbox',
-        'after' => '<span class="after small">Bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail verschicken?</span>'
+        'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
     echo $this->Form->input('Manufacturer.send_shop_order_notification', array(
     'label' => 'Sofortbestellungen',
     'type' => 'checkbox',
-    'after' => '<span class="after small">Bei jeder Sofort-Bestellung eine Info-Mail (inkl. Lagerstand) verschicken?</span>'
+    'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Sofort-Bestellung eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
