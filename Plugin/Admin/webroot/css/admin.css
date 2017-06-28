@@ -261,6 +261,7 @@ td span.description-for-dialog {
 .bottom-button-container button {
     float: right;
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 #customers-list input:not(.datepicker):not(.form-control) {
     width: 35px;
