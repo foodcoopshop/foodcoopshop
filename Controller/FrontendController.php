@@ -109,7 +109,7 @@ class FrontendController extends AppController
                 'slug' => '/neue-produkte',
                 'name' => 'Neue Produkte (' . $newProductsCount . ')',
                 'options' => array(
-                    'fa-icon' => 'fa-star'
+                    'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
                 )
             ));
             array_unshift($categoriesForMenu, array(
