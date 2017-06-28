@@ -438,7 +438,8 @@ class CartsController extends FrontendController
             }
 
             $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturer['Manufacturer']['send_shop_order_notification']);
-            if ($sendShopOrderNotification) {
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturer['Manufacturer']['bulk_orders_allowed']);
+            if ($sendShopOrderNotification && !$bulkOrdersAllowed) {
                 $email = new AppEmail();
                 $email->template('shop_order_notification')
                 ->emailFormat('html')
