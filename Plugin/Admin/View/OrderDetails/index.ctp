@@ -54,7 +54,7 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
+            <?php echo $this->element('docs/abholdienst'); ?>
             <li>Auf dieser Seite werden die <b>bestellten Artikel</b>
                 verwaltet.
             </li>

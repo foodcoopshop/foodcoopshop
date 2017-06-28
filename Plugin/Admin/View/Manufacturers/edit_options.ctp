@@ -38,6 +38,7 @@ $this->element('addScript', array(
 <div id="help-container">
     <ul>
         <li>Auf dieser Seite kannst du die Hersteller-Einstellungen ändern.</li>
+        <?php echo $this->element('docs/hersteller'); ?>
     </ul>
 </div>
 
@@ -156,7 +157,7 @@ echo '<div class="holiday-wrapper">';
         echo $this->Form->input('Manufacturer.bulk_orders_allowed', array(
         'label' => 'Hersteller optimiert für Sammelbestellungen?',
         'type' => 'checkbox',
-        'after' => '<span class="after small">Deaktiviert alle Benachrichtigungen. Mehr Infos findest du im <a href="https://foodcoopshop.github.io/de/sammelbestellungen" target="_blank">Leitfaden für Sammelbestellungen</a>.</span>'
+        'after' => '<span class="after small">Deaktiviert alle Benachrichtigungen, außer den Rechnungsversand. Mehr Infos findest du im <a href="https://foodcoopshop.github.io/de/sammelbestellungen" target="_blank">Leitfaden für Sammelbestellungen</a>.</span>'
         ));
             echo '<div class="sc"></div>';
     }

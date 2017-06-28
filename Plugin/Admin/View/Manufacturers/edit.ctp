@@ -44,6 +44,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 <div id="help-container">
     <ul>
         <li>Auf dieser Seite kannst du die Hersteller-Daten ändern.</li>
+        <?php echo $this->element('docs/hersteller'); ?>
     </ul>
 </div>
 

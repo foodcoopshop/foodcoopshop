@@ -47,8 +47,8 @@
 
     <div id="help-container">
         <ul>
-            <li>Auf dieser Seite werden die <b>Hersteller</b> verwaltet.
-            </li>
+            <li>Auf dieser Seite werden die <b>Hersteller</b> verwaltet.</li>
+            <?php echo $this->element('docs/hersteller'); ?>
         </ul>
     </div>    
     
