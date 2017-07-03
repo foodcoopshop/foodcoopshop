@@ -343,7 +343,9 @@ class Manufacturer extends AppModel
                     $additionalInfo .= ' - ' . $holidayInfo;
                 }
             }
-            $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
+            if ($additionalInfo != '') {
+                $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
+            }
             $manufacturersForMenu[] = array(
                 'name' => $manufacturerName,
                 'slug' => Configure::read('slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
