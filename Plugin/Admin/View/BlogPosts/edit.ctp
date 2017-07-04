@@ -93,9 +93,9 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'type' => 'select',
         'label' => 'Hersteller',
         'empty' => 'Hersteller auswählen',
-        'options' => $manufacturersForDropdown,
-        'after' => '<span class="after small after-select">Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung "nur für Mitglieder").</span>'
+        'options' => $manufacturersForDropdown
     ));
+    echo '<span class="description small">Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung "nur für Mitglieder").</span>';
 }
 
 echo $this->Form->input('BlogPost.is_featured', array(

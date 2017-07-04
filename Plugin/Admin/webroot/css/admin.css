@@ -735,6 +735,7 @@ form.fcs-form .description {
   clear: both;
   float: left;
   margin-left: 200px;
+  margin-bottom: 10px;
 }
 form.fcs-form .input.textarea label {
     float: none;
@@ -785,11 +786,6 @@ form.fcs-form .input.short input {
 form.fcs-form .small {
     line-height: 15px;
     float: left;
-}
-form.fcs-form .after-select {
-  clear: both;
-  margin-left: 200px;
-  margin-top: 5px;
 }
 form.fcs-form .checkbox .small {
     line-height: 21px;
