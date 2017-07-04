@@ -731,6 +731,11 @@ form.fcs-form label {
     margin-top: 4px;
     float: left;
 }
+form.fcs-form .description {
+  clear: both;
+  float: left;
+  margin-left: 200px;
+}
 form.fcs-form .input.textarea label {
     float: none;
 }
@@ -922,10 +927,6 @@ body.manufacturers .holiday-wrapper {
   float: left;
   width: 100%;
   margin-bottom: 10px;
-}
-body.manufacturers .holiday-wrapper .description {
-  clear: both;
-  margin-left: 200px;
 }
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
