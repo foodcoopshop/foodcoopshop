@@ -88,6 +88,14 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         'label' => 'Homepage',
         'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
+
+    if ($appAuth->isManufacturer()) {
+        $optionsLink = $this->Html->link('Hier geht\'s zu deinen Einstellungen', $this->Slug->getManufacturerMyOptions());
+    } else {
+        $optionsLink = $this->Html->link('Hier geht\'s zu den Hersteller-Einstellungen', $this->Slug->getManufacturerEditOptions($manufacturerId));
+    }
+    echo ' <span class="description">' . $optionsLink . '</span>';
+
     echo '<div class="sc"></div>';
 
     echo '<h2>Profil';
