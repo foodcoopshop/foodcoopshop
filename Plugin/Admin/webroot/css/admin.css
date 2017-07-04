@@ -781,6 +781,11 @@ form.fcs-form .small {
     line-height: 15px;
     float: left;
 }
+form.fcs-form .after-select {
+  clear: both;
+  margin-left: 200px;
+  margin-top: 5px;
+}
 form.fcs-form .checkbox .small {
     line-height: 21px;
     float: left;
