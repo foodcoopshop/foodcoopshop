@@ -542,7 +542,7 @@ class ManufacturersController extends AdminAppController
             if ($this->request->data['Manufacturer']['send_invoice'] == Configure::read('app.defaultSendInvoice')) {
                 $this->request->data['Manufacturer']['send_invoice'] = null;
             }
-            if ($this->request->data['Manufacturer']['bulk_orders_allowed'] == Configure::read('app.defaultBulkOrdersAllowed')) {
+            if (!$this->AppAuth->isManufacturer() && $this->request->data['Manufacturer']['bulk_orders_allowed'] == Configure::read('app.defaultBulkOrdersAllowed')) {
                 $this->request->data['Manufacturer']['bulk_orders_allowed'] = null;
             }
             if ($this->request->data['Manufacturer']['send_shop_order_notification'] == Configure::read('app.defaultSendShopOrderNotification')) {
