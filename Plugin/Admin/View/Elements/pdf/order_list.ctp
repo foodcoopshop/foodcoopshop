@@ -25,16 +25,6 @@ $pdf->SetTitle($title);
 
 $html = '<h2>' . $title;
 
-// do not show delivery details if bulk orders are allowed (weekly not correct any more)
-// TODO use Manufacturer::getOptionBulkOrdersAllowed here (do not call model from view!)
-$bulkOrdersAllowed = Configure::read('app.defaultBulkOrdersAllowed');
-if (! empty($manufacturer)) {
-    $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-    if (isset($addressOther['bulkOrdersAllowed'])) {
-        $bulkOrdersAllowed = $addressOther['bulkOrdersAllowed'];
-    }
-}
-
 /**
  * if order lists are sent on wednesday, thursday or friday, eventually changed deliveryDayDelta
  * important if allowManualOrderListSending = true

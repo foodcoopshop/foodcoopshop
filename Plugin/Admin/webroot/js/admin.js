@@ -1112,7 +1112,7 @@ foodcoopshop.Admin = {
     initManualOrderListSend: function (container, weekday) {
 
         $(container).on('click', function () {
-            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.dev', 'http://demo.foodcoopshop.com']) == -1 &&
+            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.dev', 'https://demo.foodcoopshop.com']) == -1 &&
                 $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
                 alert('Diese Funktion steht heute nicht zur Verfügung.');
                 return;
@@ -1439,161 +1439,6 @@ foodcoopshop.Admin = {
         this.additionalOrderStatusChangeInfo = additionalOrderStatusChangeInfo;
     },
 
-    setUseManufacturerCompensationPercentage: function (useManufacturerCompensationPercentage) {
-        this.useManufacturerCompensationPercentage = useManufacturerCompensationPercentage;
-    },
-
-    setDefaultCompensationPercentage: function (defaultCompensationPercentage) {
-        this.defaultCompensationPercentage = defaultCompensationPercentage;
-    },
-
-    setDefaultSendOrderList: function (defaultSendOrderList) {
-        this.defaultSendOrderList = defaultSendOrderList;
-    },
-
-    setDefaultSendInvoice: function (defaultSendInvoice) {
-        this.defaultSendInvoice = defaultSendInvoice;
-    },
-
-    setDefaultTaxId: function (defaultTaxId) {
-        this.defaultTaxId = defaultTaxId;
-    },
-
-    setDefaultBulkOrdersAllowed: function (defaultBulkOrdersAllowed) {
-        this.defaultBulkOrdersAllowed = defaultBulkOrdersAllowed;
-    },
-
-    initEditManufacturerOptions: function (container) {
-
-        $(container).on('click', function () {
-
-            var manufacturerId = $(this).closest('tr').attr('id').replace(/manufacturer-/, '');
-
-            var dataRow = $('#manufacturer-' + manufacturerId);
-            var dialogId = 'manufacturer-options-edit-form';
-            var dialogHtml = '<div id="' + dialogId + '">';
-            dialogHtml += '<h3>' + dataRow.find('td:nth-child(4) b').html() + '</h3>';
-
-            if (foodcoopshop.Admin.useManufacturerCompensationPercentage) {
-                dialogHtml += '<label for="dialogManufacturerOptionsCompensationPercentage">Variabler Mitgliedsbeitrag in % (nur ganze Zahlen)</label>';
-                dialogHtml += '<input type="text" name="dialogManufacturerOptionsCompensationPercentage" id="dialogManufacturerOptionsCompensationPercentage" value="" />';
-            }
-
-            dialogHtml += '<label for="dialogManufacturerOptionsSendOrderList">Bestell-Listen wöchentlich als PDF versenden? (0 oder 1)</label>';
-            dialogHtml += '<input type="text" name="dialogManufacturerOptionsSendOrderList" id="dialogManufacturerOptionsSendOrderList" value="" />';
-
-            dialogHtml += '<label for="dialogManufacturerOptionsSendInvoice">Rechnungen monatlich als PDF versenden? (0 oder 1)</label>';
-            dialogHtml += '<input type="text" name="dialogManufacturerOptionsSendInvoice" id="dialogManufacturerOptionsSendInvoice" value="" />';
-
-            dialogHtml += '<label style="width: 300px;" for="dialogManufacturerOptionsDefaultTaxId">Voreingestellter Steuersatz für neue Artikel</label>';
-            var tax = dataRow.find('div.tax-wrapper select');
-            dialogHtml += '<select name="dialogManufacturerOptionsDefaultTaxId" id="dialogManufacturerOptionsDefaultTaxId">' + tax.html() + '</select>';
-
-            dialogHtml += '<label class="full-width" for="dialogManufacturerOptionsSendOrderListCc">CC-Empfänger für Bestell-Listen-Versand - mehrere getrennt mit ;</label>';
-            dialogHtml += '<input class="full-width" type="text" name="dialogManufacturerOptionsSendOrderListCc" id="dialogManufacturerOptionsSendOrderListCc" value="" />';
-
-            dialogHtml += '<label for="dialogManufacturerOptionsBulkOrdersAllowed">Sammelbestellungen möglich? (0 oder 1)</label>';
-            dialogHtml += '<input type="text" name="dialogManufacturerOptionsBulkOrdersAllowed" id="dialogManufacturerOptionsBulkOrdersAllowed" value="" />';
-
-            dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-            dialogHtml += '</div>';
-
-            $('#' + dialogId).remove();
-
-            var manufacturerOptions = $(this).data('title-for-overlay');
-
-            $('<div></div>').appendTo('body')
-                .html(dialogHtml)
-                .dialog({
-                    modal: true,
-                    title: 'Hersteller-Einstellungen ändern für',
-                    autoOpen: true,
-                    open: function () {
-
-                        if (foodcoopshop.Admin.useManufacturerCompensationPercentage !== undefined) {
-                            if (manufacturerOptions === undefined || manufacturerOptions.compensationPercentage === undefined) {
-                                var compensationPercentage = foodcoopshop.Admin.defaultCompensationPercentage;
-                            } else {
-                                var compensationPercentage = manufacturerOptions.compensationPercentage;
-                            }
-                            $('#dialogManufacturerOptionsCompensationPercentage').val(compensationPercentage);
-                        }
-
-                        if (manufacturerOptions === undefined || manufacturerOptions.sendInvoice === undefined) {
-                            var sendInvoice = foodcoopshop.Admin.defaultSendInvoice;
-                        } else {
-                            var sendInvoice = manufacturerOptions.sendInvoice;
-                        }
-                        $('#dialogManufacturerOptionsSendInvoice').val(sendInvoice);
-
-                        if (manufacturerOptions === undefined || manufacturerOptions.sendOrderList === undefined) {
-                            var sendOrderList = foodcoopshop.Admin.defaultSendOrderList;
-                        } else {
-                            var sendOrderList = manufacturerOptions.sendOrderList;
-                        }
-                        $('#dialogManufacturerOptionsSendOrderList').val(sendOrderList);
-
-                        if (manufacturerOptions === undefined || manufacturerOptions.defaultTaxId === undefined) {
-                            var defaultTaxId = foodcoopshop.Admin.defaultTaxId;
-                        } else {
-                            var defaultTaxId = manufacturerOptions.defaultTaxId;
-                        }
-                        $('#dialogManufacturerOptionsDefaultTaxId').val(defaultTaxId);
-
-                        if (manufacturerOptions !== undefined && manufacturerOptions.sendOrderListCc) {
-                            $('#dialogManufacturerOptionsSendOrderListCc').val(manufacturerOptions.sendOrderListCc);
-                        }
-
-                        if (manufacturerOptions === undefined || manufacturerOptions.bulkOrdersAllowed === undefined) {
-                            var bulkOrdersAllowed = foodcoopshop.Admin.defaultBulkOrdersAllowed;
-                        } else {
-                            var bulkOrdersAllowed = manufacturerOptions.bulkOrdersAllowed;
-                        }
-                        $('#dialogManufacturerOptionsBulkOrdersAllowed').val(bulkOrdersAllowed);
-
-                    },
-                width: 550,
-                height: 450,
-                resizable: false,
-                buttons: {
-                    'Abbrechen': function () {
-                        $(this).dialog('close');
-                    },
-                    'Speichern': function () {
-                        $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr('disabled', 'disabled');
-                        foodcoopshop.Helper.ajaxCall(
-                            '/admin/manufacturers/editOptions',
-                            {
-                                manufacturerId: manufacturerId,
-                                compensationPercentage: foodcoopshop.Admin.useManufacturerCompensationPercentage ? $('#dialogManufacturerOptionsCompensationPercentage').val() : null,
-                                sendInvoice: $('#dialogManufacturerOptionsSendInvoice').val(),
-                                sendOrderList: $('#dialogManufacturerOptionsSendOrderList').val(),
-                                defaultTaxId: $('#dialogManufacturerOptionsDefaultTaxId').val(),
-                                sendOrderListCc: $('#dialogManufacturerOptionsSendOrderListCc').val(),
-                                bulkOrdersAllowed: $('#dialogManufacturerOptionsBulkOrdersAllowed').val()
-                                },
-                            {
-                                onOk: function (data) {
-                                    document.location.reload();
-                                },
-                                onError: function (data) {
-                                    $('.ui-dialog .ajax-loader').hide();
-                                    $('.ui-dialog button').attr('disabled', false);
-                                    alert(data.msg);
-                                }
-                                }
-                        );
-                    }
-                    },
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-
-        });
-    },
-
     initOrderDetailProductQuantityEditDialog: function (container) {
 
         $('#cke_dialogEditQuantityReason').val('');
@@ -1771,7 +1616,7 @@ foodcoopshop.Admin = {
         // auf dev und demo seite immer zulassen (zum testen)
         if ($.inArray(foodcoopshop.Helper.cakeServerName, [
                 'http://www.foodcoopshop.dev',
-                'http://demo.foodcoopshop.com'
+                'https://demo.foodcoopshop.com'
             ]) == -1 &&
             $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
             $(button).on('click', function (event) {

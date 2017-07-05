@@ -23,11 +23,14 @@ class MenuHelper extends Helper
     public function render($array, $options)
     {
         $tmpMenu = '<ul id="'.$options['id'].'" class="'.$options['class'].'">';
-        if (!empty($options['heading'])) {
-            $tmpMenu .= '<li class="heading">'.$options['heading'].'</li>';
+        if (!empty($options['header'])) {
+            $tmpMenu .= '<li class="header">'.$options['header'].'</li>';
         }
         foreach ($array as $index => $item) {
             $tmpMenu .= $this->buildMenuItem($item, $index);
+        }
+        if (!empty($options['footer'])) {
+            $tmpMenu .= '<li class="footer">'.$options['footer'].'</li>';
         }
         $tmpMenu .= '</ul>';
         return $tmpMenu;

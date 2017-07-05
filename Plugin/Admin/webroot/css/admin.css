@@ -158,6 +158,11 @@ form.fcs-form .bootstrap-select {
 .vertical.menu a {
     border-right: none;
 }
+.vertical.menu li.footer {
+  padding: 5px 10px;
+  font-size: 12px;
+  word-break: break-word;
+}
 
 #logo {
     position: absolute;
@@ -256,6 +261,7 @@ td span.description-for-dialog {
 .bottom-button-container button {
     float: right;
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 #customers-list input:not(.datepicker):not(.form-control) {
     width: 35px;
@@ -725,6 +731,12 @@ form.fcs-form label {
     margin-top: 4px;
     float: left;
 }
+form.fcs-form .description {
+  clear: both;
+  float: left;
+  margin-left: 200px;
+  margin-bottom: 10px;
+}
 form.fcs-form .input.textarea label {
     float: none;
 }
@@ -767,10 +779,9 @@ form.fcs-form .input.password input {
 form.fcs-form .long.input input {
     width: 562px;
 }
-form.fcs-form .short.input input {
+form.fcs-form .input.short input {
     width: 30px;
     text-align: center;
-    margin-right: 5px;
 }
 form.fcs-form .small {
     line-height: 15px;
@@ -781,6 +792,7 @@ form.fcs-form .checkbox .small {
     float: left;
 }
 form.fcs-form .input.text .after.small,
+form.fcs-form .input.number .after.small,
 form.fcs-form .input.tel .after.small {
     float: right;
     line-height: 28px;
@@ -916,10 +928,6 @@ body.manufacturers .holiday-wrapper {
   float: left;
   width: 100%;
   margin-bottom: 10px;
-}
-body.manufacturers .holiday-wrapper .description {
-  clear: both;
-  margin-left: 200px;
 }
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;

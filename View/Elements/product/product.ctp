@@ -27,7 +27,7 @@ if (!$largeImageExists) {
 }
 if ($product['Product']['is_new']) {
     echo '<a href="/neue-produkte" class="image-badge btn btn-success" title="Neu">
-                    <i class="fa fa-star"></i> Neu
+                    <i class="fa fa-star gold"></i> Neu
                 </a>';
 }
     echo '</div>';

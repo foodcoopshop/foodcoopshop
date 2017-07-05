@@ -43,12 +43,15 @@
             </tr>
             <tr>
                 <td style="padding-top:20px;font-size:12px;">
-                    Diese E-Mail wurde automatisch erstellt.<br /><br />
+                    Diese E-Mail wurde automatisch erstellt.
+                        <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink) { ?>
+                           Du kannst sie <a href="<?php echo Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions(); ?>">in deinen Einstellungen abbestellen</a>.
+                        <?php } ?><br /><br />
                     --<br />
                     <?php
                         echo Configure::read('app.db_config_FCS_APP_ADDRESS').'<br />';
                         echo '<a href="mailto:'.Configure::read('app.db_config_FCS_APP_EMAIL').'">'.Configure::read('app.db_config_FCS_APP_EMAIL').'</a><br />';
-                        echo '<a href="'.Configure::read('app.cakeServerName').'">'.str_replace('http://', '', Configure::read('app.cakeServerName')).'</a>';
+                        echo '<a href="'.Configure::read('app.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('app.cakeServerName')).'</a>';
                     ?>
                     <?php if (isset($appAuth) && $appAuth->loggedIn()) { ?>
                         <br /><br />Eingeloggt:
@@ -56,7 +59,12 @@
                             if ($appAuth->isManufacturer()) {
                                 echo $appAuth->getManufacturerName();
                             } else {
-                                echo $appAuth->getUsername();
+                                if (isset($originalLoggedCustomer) && !is_null($originalLoggedCustomer)) {
+                                    // for shop orders
+                                    echo $originalLoggedCustomer['name'];
+                                } else {
+                                    echo $appAuth->getUsername();
+                                }
                             }
                             ?>
                     <?php } else { ?>

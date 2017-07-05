@@ -34,7 +34,7 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
+            <?php echo $this->element('docs/abholdienst'); ?>
             <li>Auf dieser Seite werden die verschickten Bestelllisten
                 angezeigt.</li>
         </ul>

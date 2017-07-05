@@ -41,7 +41,7 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
+            <?php echo $this->element('docs/abholdienst'); ?>
             <li>Auf dieser Seite werden die <b>Mitglieder</b> verwaltet.
             </li>
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>

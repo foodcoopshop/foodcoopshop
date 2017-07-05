@@ -164,8 +164,7 @@ class OrderDetailsController extends AdminAppController
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
 
-                $addressOther = StringComponent::decodeJsonFromForm($orderDetail['Product']['Manufacturer']['Address']['other']);
-                $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
+                $compensationPercentage = $this->Manufacturer->getOptionCompensationPercentage($orderDetail['Product']['Manufacturer']['compensation_percentage']);
                 $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['compensation_percentage'] = $compensationPercentage;
 
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
@@ -182,7 +181,7 @@ class OrderDetailsController extends AdminAppController
 
             foreach ($orderDetails as $orderDetail) {
                 $this->loadModel('Manufacturer');
-                $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['Address']['other']);
+                $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
                 $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
 
                 $orderDetails[$i]['rowClass'] = array();
@@ -256,11 +255,12 @@ class OrderDetailsController extends AdminAppController
 
         // never send email to manufacturer if bulk orders are allowed
         $this->loadModel('Manufacturer');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['Address']['other']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
+        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_quantity_changed_notification']);
 
         // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
         $weekday = date('N');
-        if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
+        if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductQuantityChangedNotification) {
             $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Product']['Manufacturer']['name'] . '</b>';
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
@@ -340,9 +340,10 @@ class OrderDetailsController extends AdminAppController
 
         // never send email to manufacturer if bulk orders are allowed
         $this->loadModel('Manufacturer');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['Address']['other']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_price_changed_notification']);
 
-        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail['OrderDetail']['total_price_tax_incl'] > 0.01) {
+        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail['OrderDetail']['total_price_tax_incl'] > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Product']['Manufacturer']['name'] . '</b>';
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
@@ -423,11 +424,12 @@ class OrderDetailsController extends AdminAppController
 
             // never send email to manufacturer if bulk orders are allowed
             $this->loadModel('Manufacturer');
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['Address']['other']);
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
+            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail['Product']['Manufacturer']['send_ordered_product_deleted_notification']);
 
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
-            if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed) {
+            if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
                 $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
                 $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
             }

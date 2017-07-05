@@ -6,20 +6,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 1.4.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-?>
-<div class="sidebar">
-    <?php
-    if (!empty($categoriesForMenu)) {
-        echo $this->Menu->render($categoriesForMenu, array('id' => 'categories-menu', 'class' => 'vertical menu', 'header' => 'Kategorien'));
-    }
-    if (!empty($manufacturersForMenu)) {
-        echo $this->Menu->render($manufacturersForMenu, array('id' => 'manufacturers-menu', 'class' => 'vertical menu', 'header' => 'Hersteller'));
-    }
-    ?>
-</div>
+echo '<li>';
+    echo '<a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Hier geht\'s zur Hersteller-Hilfe</a>';
+echo '</li>';

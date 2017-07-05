@@ -72,7 +72,7 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
+            <?php echo $this->element('docs/abholdienst'); ?>
             <li>Auf dieser Seite werden die <b>Bestellungen</b>
                 verwaltet.
             </li>
@@ -80,11 +80,11 @@
                 beinhaltet einen oder mehrere bestellte Artikel.
             </li>
             <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Artikel anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Artikel des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
-            <li><b>Bestellung rückdatieren</b>: Falls du während eines Shopdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Artikel sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag Shopdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
+            <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Artikel sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
             <li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
                 der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,
                 wieviel jedes Mitglied tatsächlich zu bezahlen hat. Diese Liste ist
-                ideal für eine Gesamtübersicht des Shopdienstes (nach allen
+                ideal für eine Gesamtübersicht des Abholdienstes (nach allen
                 Stornierungen).</li>
             <li>Unten rechts ist ein Button, mit dem man alle E-Mail-Adressen der
                 Mitglieder in der Liste erhält. So kann man Informationen an alle
