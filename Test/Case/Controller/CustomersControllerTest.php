@@ -95,7 +95,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->saveAndCheckValidCustomer($data, $email);
 
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[1], 'Willkommen', array('war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:', 'Content-Disposition: attachment; filename="Nutzungsbedingungen.pdf"'), array($email));
+        $this->assertEmailLogs($emailLogs[1], 'Willkommen', array('war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'), array($email));
     }
 
     private function saveAndCheckValidCustomer($data, $email)

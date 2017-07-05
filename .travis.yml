@@ -17,9 +17,12 @@ env:
   - DB=mysql
   
 before_script:
-  # mail server
-  - sudo apt-get install postfix
-  - sudo service postfix start
+  # email mock
+  - sudo apt-get install -y -qq postfix  
+  - sudo service postfix stop
+  - smtp-sink -d "%d.%H.%M.%S" localhost:2500 1000 &
+  - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
+  - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
   - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'

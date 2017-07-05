@@ -57,7 +57,13 @@ class AppEmail extends CakeEmail
         return parent::_renderTemplates($content);
     }
 
-    public function logEmailInDatabase($success)
+    /**
+     * method needs to be called *before* send-method to be able to work with travis-ci
+     * travis-ci uses an email mock
+     * @param string|array $content
+     * @return mixed|boolean|array
+     */
+    public function logEmailInDatabase($content)
     {
         $emailLogModel = new EmailLog();
         $email2save = array(
@@ -66,8 +72,8 @@ class AppEmail extends CakeEmail
             'cc_address' => json_encode($this->cc()),
             'bcc_address' => json_encode($this->bcc()),
             'subject' => $this->_originalSubject,
-            'headers' => $success['headers'],
-            'message' => $success['message']
+            'headers' => json_encode($this->getHeaders()),
+            'message' => $this->_renderTemplates($content)['html']
         );
         $emailLogModel->id = null;
         return $emailLogModel->save($email2save);
@@ -82,11 +88,10 @@ class AppEmail extends CakeEmail
     public function send($content = null)
     {
         try {
-            $success = parent::send($content);
             if (Configure::read('app.db_config_FCS_EMAIL_LOG_ENABLED')) {
-                $this->logEmailInDatabase($success);
+                $this->logEmailInDatabase($content);
             }
-            return $success;
+            return parent::send($content);
         } catch (Exception $e) {
             if (Configure::read('app.emailErrorLoggingEnabled')) {
                 CakePlugin::load('EmailLog', array(
