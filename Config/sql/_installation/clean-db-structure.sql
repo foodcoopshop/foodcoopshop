@@ -319,13 +319,13 @@ DROP TABLE IF EXISTS `fcs_email_logs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_email_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from_address` text NOT NULL,
-  `to_address` text NOT NULL,
-  `cc_address` text NOT NULL,
-  `bcc_address` text NOT NULL,
-  `subject` text NOT NULL,
-  `headers` text NOT NULL,
-  `message` text NOT NULL,
+  `from_address` text NULL,
+  `to_address` text NULL,
+  `cc_address` text NULL,
+  `bcc_address` text NULL,
+  `subject` text NULL,
+  `headers` text NULL,
+  `message` text NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
