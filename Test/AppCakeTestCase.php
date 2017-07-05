@@ -257,6 +257,27 @@ class AppCakeTestCase extends CakeTestCase
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
+    /**
+     * @param String $cakeShell
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createMockShell($cakeShell)
+    {
+        App::uses('ConsoleOutput', 'Console');
+        App::uses('ConsoleInput', 'Console');
+        App::uses('Shell', 'Console');
+        App::uses('AppShell', 'Console/Command');
+
+        $out = $this->getMock('ConsoleOutput', array(), array(), '', false);
+        $in = $this->getMock('ConsoleInput', array(), array(), '', false);
+
+        return $this->getMock(
+            $cakeShell,
+            array('in', 'err', 'createFile', '_stop', 'clear'),
+            array($out, $out, $in)
+        );
+    }
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
