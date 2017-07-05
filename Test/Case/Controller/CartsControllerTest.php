@@ -53,7 +53,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddLoggedOut()
     {
-        $this->addProduct($this->productId1, 2);
+        $this->addProductToCart($this->productId1, 2);
         $this->assertJsonAccessRestricted();
         $this->assertJsonError();
     }
@@ -61,7 +61,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddWrongProductId1()
     {
         $this->loginAsCustomer();
-        $response = $this->addProduct(8787, 2);
+        $response = $this->addProductToCart(8787, 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 8787 ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
     }
@@ -69,7 +69,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddWrongProductId2()
     {
         $this->loginAsCustomer();
-        $response = $this->addProduct('test', 2);
+        $response = $this->addProductToCart('test', 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
     }
@@ -77,7 +77,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddWrongAmount()
     {
         $this->loginAsCustomer();
-        $response = $this->addProduct($this->productId1, 100);
+        $response = $this->addProductToCart($this->productId1, 100);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
@@ -85,7 +85,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testRemoveProduct()
     {
         $this->loginAsCustomer();
-        $response = $this->addProduct($this->productId1, 2);
+        $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
@@ -105,7 +105,7 @@ class CartsControllerTest extends AppCakeTestCase
          * START add product
          */
         $amount1 = 2;
-        $this->addProduct($this->productId1, $amount1);
+        $this->addProductToCart($this->productId1, $amount1);
         $this->assertJsonOk();
 
         // check if product was placed in cart
@@ -120,7 +120,7 @@ class CartsControllerTest extends AppCakeTestCase
          * START add product with attribute
          */
         $amount2 = 3;
-        $this->addProduct($this->productId2, $amount2);
+        $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
 
         // check if product was placed in cart
@@ -135,7 +135,7 @@ class CartsControllerTest extends AppCakeTestCase
          * START add product with zero tax
          */
         $amount3 = 1;
-        $this->addProduct($this->productId3, $amount3);
+        $this->addProductToCart($this->productId3, $amount3);
         $this->assertJsonOk();
 
         // cake cart status check BEFORE finish
@@ -258,9 +258,9 @@ class CartsControllerTest extends AppCakeTestCase
     public function testOrderIfAmountOfOneProductIsNull()
     {
         $this->loginAsCustomer();
-        $this->addProduct($this->productId1, 1);
-        $this->addProduct($this->productId1, - 1);
-        $this->addProduct($this->productId2, 1);
+        $this->addProductToCart($this->productId1, 1);
+        $this->addProductToCart($this->productId1, - 1);
+        $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
         $this->assertTrue(is_int($orderId), 'order not finished correctly');
@@ -296,7 +296,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function addTooManyProducts($productId, $amount, $expectedAmount, $expectedErrorMessage, $productIndex)
     {
-        $this->addProduct($productId, $amount);
+        $this->addProductToCart($productId, $amount);
         $response = $this->browser->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
@@ -370,38 +370,6 @@ class CartsControllerTest extends AppCakeTestCase
     private function changeManufacturerStatus($manufacturerId, $status)
     {
         $this->browser->get('/admin/manufacturers/changeStatus/' . $manufacturerId . '/' . $status);
-        return $this->browser->getJsonDecodedContent();
-    }
-
-    private function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true)
-    {
-        $this->browser->post(
-            $this->Slug->getCartFinish(),
-            array(
-                'data' => array(
-                    'Order' => array(
-                        'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                        'cancellation_terms_accepted' => $cancellation_terms_accepted
-                    )
-                )
-            )
-        );
-    }
-
-    /**
-     *
-     * @param int $productId
-     * @param int $amount
-     * @return json string
-     */
-    private function addProduct($productId, $amount)
-    {
-        $this->browser->ajaxPost('/warenkorb/ajaxAdd', array(
-            'data' => array(
-                'productId' => $productId,
-                'amount' => $amount
-            )
-        ));
         return $this->browser->getJsonDecodedContent();
     }
 

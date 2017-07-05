@@ -278,6 +278,39 @@ class AppCakeTestCase extends CakeTestCase
         );
     }
 
+    /**
+     *
+     * @param int $productId
+     * @param int $amount
+     * @return json string
+     */
+    protected function addProductToCart($productId, $amount)
+    {
+        $this->browser->ajaxPost('/warenkorb/ajaxAdd', array(
+            'data' => array(
+                'productId' => $productId,
+                'amount' => $amount
+            )
+        ));
+        return $this->browser->getJsonDecodedContent();
+    }
+
+
+    protected function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true)
+    {
+        $this->browser->post(
+            $this->Slug->getCartFinish(),
+            array(
+                'data' => array(
+                    'Order' => array(
+                        'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                        'cancellation_terms_accepted' => $cancellation_terms_accepted
+                    )
+                )
+            )
+        );
+    }
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
