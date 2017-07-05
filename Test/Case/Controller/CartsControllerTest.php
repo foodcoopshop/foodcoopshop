@@ -5,6 +5,7 @@ App::uses('CakeCart', 'Model');
 App::uses('Product', 'Model');
 App::uses('Order', 'Model');
 App::uses('StockAvailable', 'Model');
+App::uses('EmailLog', 'Model');
 
 /**
  * CartsControllerTest
@@ -38,6 +39,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     public $StockAvailable;
 
+    public $EmailLog;
+
     public function setUp()
     {
         parent::setUp();
@@ -45,6 +48,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->Product = new Product();
         $this->Order = new Order();
         $this->StockAvailable = new StockAvailable();
+        $this->EmailLog = new EmailLog();
     }
 
     public function testAddLoggedOut()
@@ -230,6 +234,10 @@ class CartsControllerTest extends AppCakeTestCase
         $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
         $this->assertEquals($cakeCart['CakeCart']['id_cart'], 2, 'cake cart id wrong');
         $this->assertEquals(array(), $cakeCart['CakeCartProducts'], 'cake cart products not empty');
+
+        // check email to customer
+        $emailLogs = $this->EmailLog->find('all');
+        $this->assertEmailLogs($emailLogs[0], 'Bestellbestätigung', array('Artischocke : Stück', 'Hallo Demo Superadmin,'), array(Configure::read('test.loginEmailSuperadmin')));
 
         $this->browser->doFoodCoopShopLogout();
     }

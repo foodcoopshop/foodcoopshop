@@ -21,6 +21,23 @@ App::uses('EmailLog', 'Model');
 class AppEmail extends CakeEmail
 {
 
+    private $_originalSubject = '';
+
+    /**
+     * Get/Set Subject.
+     *
+     * Subject is encode by CakeEmail.
+     * In order to access it in clear text, it's stored in $_originalSubject
+     *
+     * @param string $subject Subject string.
+     * @return string|self
+     */
+    public function subject($subject = null)
+    {
+        $this->_originalSubject = $subject;
+        return parent::subject($subject);
+    }
+
     public function __construct($config = null)
     {
         parent::__construct('default');
@@ -48,7 +65,7 @@ class AppEmail extends CakeEmail
             'to_address' => json_encode($this->to()),
             'cc_address' => json_encode($this->cc()),
             'bcc_address' => json_encode($this->bcc()),
-            'subject' => $this->subject(),
+            'subject' => $this->_originalSubject,
             'headers' => $success['headers'],
             'message' => $success['message']
         );

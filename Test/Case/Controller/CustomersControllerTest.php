@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
+App::uses('EmailLog', 'Model');
 
 /**
  * CustomersControllerTest
@@ -19,6 +20,14 @@ App::uses('AppCakeTestCase', 'Test');
  */
 class CustomersControllerTest extends AppCakeTestCase
 {
+
+    public $EmailLog;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->EmailLog = new EmailLog();
+    }
 
     public function testRegistration()
     {
@@ -73,12 +82,20 @@ class CustomersControllerTest extends AppCakeTestCase
 
 
         // 4) save user and check record
-        $this->saveAndCheckValidCustomer($data, 'new-foodcoopshop-member-1@mailinator.com');
+        $email = 'new-foodcoopshop-member-1@mailinator.com';
+        $this->saveAndCheckValidCustomer($data, $email);
+        $emailLogs = $this->EmailLog->find('all');
+        $this->assertEmailLogs($emailLogs[0], 'Willkommen', array('war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'), array($email));
+
 
         // 5) register again with changed configuration
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
         $this->changeConfiguration('FCS_CUSTOMER_GROUP', 4);
-        $this->saveAndCheckValidCustomer($data, 'new-foodcoopshop-member-2@mailinator.com');
+        $email = 'new-foodcoopshop-member-2@mailinator.com';
+        $this->saveAndCheckValidCustomer($data, $email);
+
+        $emailLogs = $this->EmailLog->find('all');
+        $this->assertEmailLogs($emailLogs[1], 'Willkommen', array('war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:', 'Content-Disposition: attachment; filename="Nutzungsbedingungen.pdf"'), array($email));
     }
 
     private function saveAndCheckValidCustomer($data, $email)
