@@ -175,6 +175,8 @@ class AppCakeTestCase extends CakeTestCase
     protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = array(), $expectedToEmails = array(), $expectedCcEmails = array(), $expectedBccEmails = array())
     {
 
+        $this->debug($emailLog);
+
         $fromAddress = json_decode($emailLog['EmailLog']['from_address']);
         $toAddress = json_decode($emailLog['EmailLog']['to_address']);
         $ccAddress = json_decode($emailLog['EmailLog']['cc_address']);
