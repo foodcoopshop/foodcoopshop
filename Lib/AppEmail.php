@@ -1,6 +1,7 @@
 <?php
 
 App::uses('CakeEmail', 'Network/Email');
+App::uses('EmailLog', 'Model');
 
 /**
  * AppEmail
@@ -39,6 +40,22 @@ class AppEmail extends CakeEmail
         return parent::_renderTemplates($content);
     }
 
+    public function logEmailInDatabase($success)
+    {
+        $emailLogModel = new EmailLog();
+//         $email2save = array(
+//             'from_address' => json_encode($this->from()),
+//             'to_address' => json_encode($this->to()),
+//             'cc_address' => json_encode($this->cc()),
+//             'bcc_address' => json_encode($this->bcc()),
+//             'subject' => $this->subject(),
+//             'headers' => $success['headers'],
+//             'message' => $success['message']
+//         );
+        $emailLogModel->id = null;
+//         return $emailLogModel->save($email2save);
+    }
+
     /**
      * fallback if email config is wrong (e.g.
      * password changed from third party)
@@ -48,7 +65,9 @@ class AppEmail extends CakeEmail
     public function send($content = null)
     {
         try {
-            return parent::send($content);
+            $success = parent::send($content);
+            $this->logEmailInDatabase($success);
+            return $success;
         } catch (Exception $e) {
             if (Configure::read('app.emailErrorLoggingEnabled')) {
                 CakePlugin::load('EmailLog', array(
