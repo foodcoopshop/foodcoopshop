@@ -19,6 +19,7 @@ env:
 before_script:
   # mail server
   - sudo apt-get install postfix
+  - sudo service postfix start
   # start build
   - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
