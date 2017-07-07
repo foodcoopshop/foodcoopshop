@@ -164,6 +164,42 @@ class AppCakeTestCase extends CakeTestCase
     }
 
     /**
+     *
+     * @param array $emailLog
+     * @param string $expectedSubjectPattern
+     * @param array $expectedMessagePatterns
+     * @param array $expectedToEmails
+     * @param array $expectedCcEmails
+     * @param array $expectedBccEmails
+     */
+    protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = array(), $expectedToEmails = array(), $expectedCcEmails = array(), $expectedBccEmails = array())
+    {
+
+        $fromAddress = json_decode($emailLog['EmailLog']['from_address']);
+        $toAddress = json_decode($emailLog['EmailLog']['to_address']);
+        $ccAddress = json_decode($emailLog['EmailLog']['cc_address']);
+        $bccAddress = json_decode($emailLog['EmailLog']['bcc_address']);
+
+        $this->assertNotEmpty($fromAddress, 'email from_address must not be empty');
+
+        if ($expectedSubjectPattern != '') {
+            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog['EmailLog']['subject'], 'email subject wrong');
+        }
+        foreach ($expectedMessagePatterns as $expectedMessagePattern) {
+            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLog']['message'], 'email message wrong');
+        }
+        foreach ($expectedToEmails as $expectedToEmail) {
+            $this->assertEquals($toAddress->$expectedToEmail, $expectedToEmail, 'email to_address wrong');
+        }
+        foreach ($expectedCcEmails as $expectedCcEmail) {
+            $this->assertEquals($ccAddress->$expectedCcEmail, $expectedCcEmail, 'email cc_address wrong');
+        }
+        foreach ($expectedBccEmails as $expectedBccEmail) {
+            $this->assertEquals($bccAddress->$expectedBccEmail, $expectedBccEmail, 'email bcc_address wrong');
+        }
+    }
+
+    /**
      * due to different app.cookieKeys, logins would not work with a defined hash
      */
     protected function generatePasswordHashes()
@@ -221,6 +257,60 @@ class AppCakeTestCase extends CakeTestCase
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
+    /**
+     * @param String $cakeShell
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createMockShell($cakeShell)
+    {
+        App::uses('ConsoleOutput', 'Console');
+        App::uses('ConsoleInput', 'Console');
+        App::uses('Shell', 'Console');
+        App::uses('AppShell', 'Console/Command');
+
+        $out = $this->getMock('ConsoleOutput', array(), array(), '', false);
+        $in = $this->getMock('ConsoleInput', array(), array(), '', false);
+
+        return $this->getMock(
+            $cakeShell,
+            array('in', 'err', 'createFile', '_stop', 'clear'),
+            array($out, $out, $in)
+        );
+    }
+
+    /**
+     *
+     * @param int $productId
+     * @param int $amount
+     * @return json string
+     */
+    protected function addProductToCart($productId, $amount)
+    {
+        $this->browser->ajaxPost('/warenkorb/ajaxAdd', array(
+            'data' => array(
+                'productId' => $productId,
+                'amount' => $amount
+            )
+        ));
+        return $this->browser->getJsonDecodedContent();
+    }
+
+
+    protected function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true)
+    {
+        $this->browser->post(
+            $this->Slug->getCartFinish(),
+            array(
+                'data' => array(
+                    'Order' => array(
+                        'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                        'cancellation_terms_accepted' => $cancellation_terms_accepted
+                    )
+                )
+            )
+        );
+    }
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
@@ -229,6 +319,12 @@ class AppCakeTestCase extends CakeTestCase
     protected function loginAsSuperadmin()
     {
         $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
+        $this->browser->doFoodCoopShopLogin();
+    }
+
+    protected function loginAsAdmin()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailAdmin');
         $this->browser->doFoodCoopShopLogin();
     }
 

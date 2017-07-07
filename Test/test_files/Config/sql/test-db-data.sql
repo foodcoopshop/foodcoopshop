@@ -26,6 +26,7 @@ TRUNCATE TABLE `fcs_cms`;
 TRUNCATE TABLE `fcs_cms_lang`;
 TRUNCATE TABLE `fcs_configuration`;
 TRUNCATE TABLE `fcs_customer`;
+TRUNCATE TABLE `fcs_email_logs`;
 TRUNCATE TABLE `fcs_homeslider_slides`;
 TRUNCATE TABLE `fcs_homeslider_slides_lang`;
 TRUNCATE TABLE `fcs_image`;
@@ -646,8 +647,9 @@ INSERT INTO `fcs_configuration` VALUES
 (558,NULL,NULL,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,NULL,NULL,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (560,NULL,NULL,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','4','readonly',0,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
-(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','4','readonly',0,'2017-03-13 00:00:00','2017-03-13 00:00:00');
+(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','5','readonly',10,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
+(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','5','readonly',20,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
+(563,NULL,NULL,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','1','readonly',30,'2017-07-05 00:00:00','2017-07-05 00:00:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -659,6 +661,9 @@ INSERT INTO `fcs_customer` VALUES
 (91,1,1,1,4,1,0,NULL,NULL,NULL,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','','2014-12-02 03:38:12','0000-00-00',0,NULL,'0000-00-00 00:00:00',0,NULL,0.000000,0,0,'50e86f1cf90b2b9b22dc84dd58e40efc','0000-00-00',NULL,1,0,0,'2014-12-02 12:38:12','2015-03-11 18:11:47'),
 (92,1,1,0,5,1,1,NULL,NULL,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','','2016-09-29 12:26:12',NULL,0,NULL,NULL,0,NULL,0.000000,0,0,'-1','0000-00-00',NULL,1,0,0,'2016-09-29 16:26:12','2016-09-29 16:26:12');
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_homeslider_slides` DISABLE KEYS */;
 INSERT INTO `fcs_homeslider_slides` VALUES

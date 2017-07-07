@@ -15,7 +15,7 @@
 
 App::uses('CakeLog', 'Log');
 CakeLog::config('email', array(
-    'engine' => 'EmailLog.EmailLog',
+    'engine' => 'EmailErrorLog.EmailErrorLog',
     'to' => Configure::read('app.debugEmail'),
     'logTypes' => array(
         'info',

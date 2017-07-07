@@ -21,7 +21,8 @@ class SendOrderListsShell extends AppShell
         'Manufacturer',
         'Order',
         'Customer',
-        'CakeActionLog'
+        'CakeActionLog',
+        'Configuration' // for unit test mock object
     );
 
     /**
