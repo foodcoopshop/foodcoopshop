@@ -322,6 +322,12 @@ class AppCakeTestCase extends CakeTestCase
         $this->browser->doFoodCoopShopLogin();
     }
 
+    protected function loginAsAdmin()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailAdmin');
+        $this->browser->doFoodCoopShopLogin();
+    }
+
     protected function loginAsCustomer()
     {
         $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
