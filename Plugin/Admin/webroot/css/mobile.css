@@ -23,7 +23,7 @@
     padding: 3px;
 }
 .filter-container h1 {
-  font-size: 18px;
+  font-size: 20px;
   float: none;
   letter-spacing: 0;
   margin-top: 8px;
@@ -140,12 +140,12 @@ table.list th, table.list td {
 body.manufacturers .holiday-wrapper .description {
   margin-left: 0px;
 }
-form.fcs-form .input.checkbox span.after {
-  margin-left: 25px;
-}
 form.fcs-form label {
   width: 120px;
 }
 form.fcs-form input[type="checkbox"] {
   left: 120px;
+}
+form.fcs-form .description {
+  margin-left: 120px;
 }
