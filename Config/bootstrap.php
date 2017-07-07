@@ -132,11 +132,5 @@ CakePlugin::load('AssetCompress', array(
     'bootstrap' => true
 ));
 
-if (Configure::read('app.emailErrorLoggingEnabled')) {
-    CakePlugin::load('EmailLog', array(
-        'bootstrap' => true
-    ));
-}
-
 // composer integration
 require APP . '/Vendor/autoload.php';
