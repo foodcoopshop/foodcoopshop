@@ -60,9 +60,38 @@ class AppModel extends Model
         return $hasErrors;
     }
 
+    /**
+     * uses cake's email validation rule for comma separated email addresses
+     * @param boolean $allowEmpty
+     * @return ValidationRule
+     */
+    public function getMultipleEmailValidationRule($allowEmpty = false)
+    {
+        $validationRules = array(
+          'rule' => array(
+              'multipleEmails'
+          ),
+          'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).',
+          'allowEmpty' => $allowEmpty
+        );
+        return $validationRules;
+    }
+
+    public function multipleEmails($check)
+    {
+        App::import('Validation', 'Cake/Utility');
+        $emails = explode(',', reset($check));
+        foreach ($emails as $email) {
+            $validates = Validation::email($email);
+            if (!$validates) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function getNumberRangeConfigurationRule($min, $max)
     {
-
         $validationRules = array();
         $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
         $validationRules[] = array(

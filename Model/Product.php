@@ -458,11 +458,7 @@ class Product extends AppModel
     {
         $defaultQuantity = 999;
 
-        $defaultTaxId = Configure::read('app.defaultTaxId');
-        $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-        if (isset($addressOther['defaultTaxId'])) {
-            $defaultTaxId = $addressOther['defaultTaxId'];
-        }
+        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer['Manufacturer']['default_tax_id']);
 
         // INSERT PRODUCT
         /*

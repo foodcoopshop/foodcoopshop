@@ -27,7 +27,7 @@ a.transistion {
     transition: all 0.3s ease-in;
 }
 
-body.pages.home .cycle-pager { 
+body.pages.home .cycle-pager {
     text-align: center;
     width: 100%;
     z-index: 500;
@@ -35,13 +35,13 @@ body.pages.home .cycle-pager {
     top: 10px;
     overflow: hidden;
 }
-body.pages.home .cycle-pager span { 
+body.pages.home .cycle-pager span {
     font-size: 50px;
     width: 16px;
-    height: 16px; 
+    height: 16px;
     display: inline-block;
     color: #ddd;
-    cursor: pointer; 
+    cursor: pointer;
 }
 body.pages.home .cycle-pager span.cycle-pager-active {
     color: #719f41;
@@ -128,7 +128,7 @@ body.categories.detail div.description-wrapper {
     clear: both;
     width: 180px;
 }
-.vertical.menu li.heading {
+.vertical.menu li.header {
     padding: 5px;
     font-size: 17px;
     padding-left: 10px;

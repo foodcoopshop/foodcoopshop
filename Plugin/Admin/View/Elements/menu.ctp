@@ -241,6 +241,13 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-home'
         )
     );
+    $optionsMenu = array(
+        'slug' => $this->Slug->getManufacturerMyOptions(),
+        'name' => 'Einstellungen <span class="new">NEU<span>',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-cogs'
+        )
+    );
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $od = ClassRegistry::init('OrderDetail');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
@@ -256,6 +263,7 @@ if ($appAuth->isManufacturer()) {
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
+    $menu[] = $optionsMenu;
     $menu[] = $blogPostsMenuElement;
     $menu[] = $actionLogsMenuElement;
 }
@@ -263,9 +271,15 @@ if ($appAuth->isManufacturer()) {
 // for all users
 $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
+$footerHtml = '';
+if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer['Customer']) && !empty($appAuth->manufacturer['Customer']['AddressCustomer'])) {
+    $footerHtml = '<b>Ansprechperson</b><br />' . $appAuth->manufacturer['Customer']['firstname'] . ' ' . $appAuth->manufacturer['Customer']['lastname'] . ', ' . $appAuth->manufacturer['Customer']['email']. ', ' . $appAuth->manufacturer['Customer']['AddressCustomer']['phone_mobile'];
+}
+
 echo $this->Menu->render($menu, array(
     'id' => 'menu',
-    'class' => 'vertical menu'
+    'class' => 'vertical menu',
+    'footer' => $footerHtml
 ));
 
 

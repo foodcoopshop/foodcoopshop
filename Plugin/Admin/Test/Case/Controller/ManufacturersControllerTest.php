@@ -29,7 +29,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->Manufacturer = new Manufacturer();
     }
 
-    public function testAddManufacturer()
+    public function testAdd()
     {
         $this->loginAsSuperadmin();
 
@@ -68,7 +68,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ),
             'referer' => ''
         );
-        $response = $this->addManufacturer($manufacturerData);
+        $response = $this->add($manufacturerData);
 
         // provoke errors
         $this->assertRegExpWithUnquotedString('Beim Speichern sind 5 Fehler aufgetreten!', $response);
@@ -86,7 +86,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $manufacturerData['Address']['lastname'] = 'Manufacturer';
         $manufacturerData['Manufacturer']['homepage'] = 'www.foodcoopshop.com';
 
-        $response = $this->addManufacturer($manufacturerData);
+        $response = $this->add($manufacturerData);
 
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $response);
 
@@ -105,12 +105,84 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testEditManufacturer()
+    public function testEditOptions()
     {
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
-        $this->getEditManufacturer($manufacturerId);
+        $newSendOrderList = false;
+        $newSendInvoice = false;
+        $newSendOrderedProductPriceChangedNotification = false;
+        $newSendOrderedProductQuantityChangedNotification = false;
+        $newSendShopOrderNotification = false;
+        $newBulkOrdersAllowed = false;
+
+        $newSendOrderListCc = array('office@rothauer-it.com', 'test@test.com');
+        $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
+
+        $manufacturerOld = $this->Manufacturer->find('first', array(
+            'conditions' => array(
+                'Manufacturer.id_manufacturer' => $manufacturerId
+            )
+        ));
+
+        $this->browser->get($this->Slug->getManufacturerEditOptions($manufacturerId));
+
+        $this->browser->setFieldById('ManufacturerSendOrderList', $newSendOrderList); // do not use 0 here
+        $this->browser->setFieldById('ManufacturerSendInvoice', $newSendInvoice);     // do not use 0 here
+
+        $this->browser->setFieldById('ManufacturerSendOrderListCc', 'office@rothauer-it.com;test@test.com');  // wrong: comma expected as separator
+        $this->browser->submitFormById('ManufacturerEditOptionsForm');
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
+
+        $this->browser->setFieldById('ManufacturerSendOrderListCc', 'office@rothauer-it.com,test@testcom');   // wrong: no dot in domain
+        $this->browser->submitFormById('ManufacturerEditOptionsForm');
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
+
+        $this->browser->setFieldById('ManufacturerSendOrderListCc', implode(',', $newSendOrderListCc));  // correct
+        $this->browser->submitFormById('ManufacturerEditOptionsForm');
+
+        $this->browser->setFieldById('ManufacturerSendOrderedProductPriceChangedNotification', $newSendOrderedProductPriceChangedNotification);       // do not use 0 here
+        $this->browser->setFieldById('ManufacturerSendOrderedProductQuantityChangedNotification', $newSendOrderedProductQuantityChangedNotification); // do not use 0 here
+        $this->browser->setFieldById('ManufacturerSendShopOrderNotification', $newSendShopOrderNotification);                                         // do not use 0 here
+        $this->browser->setFieldById('ManufacturerBulkOrdersAllowed', $newBulkOrdersAllowed);                                         // do not use 0 here
+
+        $manufacturerNew = $this->Manufacturer->find('first', array(
+            'conditions' => array(
+                'Manufacturer.id_manufacturer' => $manufacturerId
+            )
+        ));
+
+        $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew['Manufacturer']['send_order_list']);
+        $this->assertEquals($sendOrderList, $newSendOrderList, 'saving option send_order_list failed');
+
+        $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturerNew['Manufacturer']['send_invoice']);
+        $this->assertEquals($sendInvoice, $newSendInvoice, 'saving option invoice failed');
+
+        $sendOrderListCc = $this->Manufacturer->getOptionSendOrderListCc($manufacturerNew['Manufacturer']['send_order_list_cc']);
+        $this->assertEquals($sendOrderListCc, $newSendOrderListCc, 'saving option send_order_list_cc failed');
+
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew['Manufacturer']['send_ordered_product_price_changed_notification']);
+        $this->assertEquals($sendOrderedProductPriceChangedNotification, $newSendOrderedProductPriceChangedNotification, 'saving option send_ordered_product_price_changed_notification failed');
+
+        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($manufacturerNew['Manufacturer']['send_ordered_product_quantity_changed_notification']);
+        $this->assertEquals($sendOrderedProductQuantityChangedNotification, $newSendOrderedProductQuantityChangedNotification, 'saving option send_ordered_product_quantity_changed_notification failed');
+
+        $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturerNew['Manufacturer']['send_shop_order_notification']);
+        $this->assertEquals($sendShopOrderNotification, $newSendShopOrderNotification, 'saving option send_shop_order_notification failed');
+
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew['Manufacturer']['bulk_orders_allowed']);
+        $this->assertEquals($bulkOrdersAllowed, $newBulkOrdersAllowed, 'saving option bulk_orders_allowed failed');
+
+        $this->logout();
+    }
+
+    public function testEdit()
+    {
+        $this->loginAsSuperadmin();
+
+        $manufacturerId = 4;
+        $this->getEdit($manufacturerId);
 
         $this->browser->setFieldById('ManufacturerName', 'Huhuu');
 
@@ -145,7 +217,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)
         $manufacturerId = 16;
-        $this->getEditManufacturer($manufacturerId);
+        $this->getEdit($manufacturerId);
 
         // saving customer must add a customer record
         $this->browser->submitFormById('ManufacturerEditForm');
@@ -174,7 +246,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
      * @param array $data
      * @return string
      */
-    private function getEditManufacturer($manufacturerId)
+    private function getEdit($manufacturerId)
     {
         $this->browser->get($this->Slug->getManufacturerEdit($manufacturerId));
         return $this->browser->getContent();
@@ -185,7 +257,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
      * @param array $data
      * @return string
      */
-    private function addManufacturer($data)
+    private function add($data)
     {
         $this->browser->post($this->Slug->getManufacturerAdd(), array(
             'data' => $data

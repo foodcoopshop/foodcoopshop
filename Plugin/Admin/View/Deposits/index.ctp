@@ -51,7 +51,7 @@ if (empty($manufacturer)) {
 
 <div id="help-container">
     <ul>
-        <?php echo $this->element('shopdienstInfo'); ?>
+        <?php echo $this->element('docs/abholdienst'); ?>
         <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturer']['name']; ?></b> verwaltet.</li>
         <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
         <li><b>Produkt mit Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)

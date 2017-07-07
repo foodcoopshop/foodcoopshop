@@ -123,7 +123,7 @@ foodcoopshop.Mobile = {
         });
 
         // if all manufacturers are disabled / set to private - do not include menu item
-        $('.sidebar li.heading').each(function () {
+        $('.sidebar li.header').each(function () {
             if ($(this).html() == 'Hersteller') {
                 menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
             }
@@ -135,7 +135,7 @@ foodcoopshop.Mobile = {
             menuItems.push($(this));
         });
 
-        var pageItems = ['<li class="heading">Seiten</li>'];
+        var pageItems = ['<li class="header">Seiten</li>'];
         $('#main-menu > li').each(function () {
             // take categories and manufacturers from sidebar and not from main menu
             var mainMenuHref = $(this).find('a').attr('href');

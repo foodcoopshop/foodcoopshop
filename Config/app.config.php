@@ -76,6 +76,10 @@ Configure::write('app.defaultSendOrderList', true);
 Configure::write('app.defaultSendInvoice', true);
 Configure::write('app.defaultTaxId', 2);
 Configure::write('app.defaultBulkOrdersAllowed', false);
+Configure::write('app.defaultSendShopOrderNotification', true);
+Configure::write('app.defaultSendOrderedProductDeletedNotification', true);
+Configure::write('app.defaultSendOrderedProductPriceChangedNotification', true);
+Configure::write('app.defaultSendOrderedProductQuantityChangedNotification', true);
 
 Configure::write('app.isDepositPaymentCashless', true);
 Configure::write('app.depositPaymentCashlessStartDate', '2016-01-01');

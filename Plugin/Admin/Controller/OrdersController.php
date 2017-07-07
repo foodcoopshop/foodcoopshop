@@ -79,7 +79,7 @@ class OrdersController extends AdminAppController
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
 
-            $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '.';
+            $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
 
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
