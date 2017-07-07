@@ -16,6 +16,10 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->EmailLog = new EmailLog();
         $this->Order = new Order();
         $this->SendOrderLists = $this->createMockShell('SendOrderListsShell');
+
+        $this->markTestSkipped(
+            'Test incomplete: see https://github.com/foodcoopshop/foodcoopshop/issues/94'
+        );
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
@@ -30,6 +34,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
+
+        //TODO calling the method addProductToCart only once leads to order error - needs debugging
         $this->addProductToCart($productId, 1);
         $this->addProductToCart($productId, 1);
         $this->finishCart();
