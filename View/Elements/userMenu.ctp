@@ -26,8 +26,14 @@ if ($appAuth->isManufacturer()) {
     $userName = $appAuth->getManufacturerName();
 }
 if ($appAuth->loggedIn()) {
-    $menu[] = array('slug' => $adminSlug, 'name' => $adminName, 'options' => array('class' => $class));
-    $menu[] = array('slug' => $profileSlug, 'name' =>  $userName);
+    if (!CakeSession::read('Auth.shopOrderCustomer')) {
+        $menu[] = array('slug' => $adminSlug, 'name' => $adminName, 'options' => array('class' => $class));
+        $menu[] = array('slug' => $profileSlug, 'name' =>  $userName);
+    } else {
+        $menu[] = array('slug' => 'javascript:alert(\'Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus.\');', 'name' =>  'Eingeloggt: ' . $userName);
+    }
 }
-$menu[] = $this->Menu->getAuthMenuElement($appAuth);
+if (!CakeSession::read('Auth.shopOrderCustomer')) {
+    $menu[] = $this->Menu->getAuthMenuElement($appAuth);
+}
 echo $this->Menu->render($menu, array('id' => 'user-menu', 'class' => 'horizontal menu'));
