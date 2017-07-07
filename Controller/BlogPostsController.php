@@ -31,6 +31,7 @@ class BlogPostsController extends FrontendController
         );
         if (! $this->AppAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
 
         $conditions['BlogPost.id_smart_blog_post'] = $blogPostId; // needs to be last element of conditions
@@ -94,6 +95,7 @@ class BlogPostsController extends FrontendController
 
         if (! $this->AppAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
 
         $blogPosts = $this->BlogPost->find('all', array(

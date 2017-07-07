@@ -52,17 +52,17 @@ foreach ($blogPosts as $blogPost) {
             $blogDetailLink,
             array('escape' => false)
         );
-        
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-            echo $this->Html->getJqueryUiIcon(
-                $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-                array(
-                    'title' => 'Bearbeiten'
-                ),
-                $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post'])
-                );
-        }
-        
+
+    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+        echo $this->Html->getJqueryUiIcon(
+            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+            array(
+            'title' => 'Bearbeiten'
+            ),
+            $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post'])
+        );
+    }
+
     echo '</div>';
 
     echo '<div class="third-column">';
@@ -78,7 +78,11 @@ foreach ($blogPosts as $blogPost) {
     if (!empty($blogPost['Manufacturer']['id_manufacturer'])) {
         echo '<br />';
         if ($blogPost['Manufacturer']['active']) {
-            echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturer']['id_manufacturer'], $blogPost['Manufacturer']['name']).'">Zum Blog von  ' . $blogPost['Manufacturer']['name'].'</a>';
+            if ($this->here == $this->Slug->getManufacturerBlogList($blogPost['Manufacturer']['id_manufacturer'], $blogPost['Manufacturer']['name'])) {
+                echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost['Manufacturer']['id_manufacturer'], $blogPost['Manufacturer']['name']).'">Zum Hersteller ' . $blogPost['Manufacturer']['name'].'</a>';
+            } else {
+                echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturer']['id_manufacturer'], $blogPost['Manufacturer']['name']).'">Zum Blog von  ' . $blogPost['Manufacturer']['name'].'</a>';
+            }
         } else {
             echo 'von ' . $blogPost['Manufacturer']['name'];
         }
