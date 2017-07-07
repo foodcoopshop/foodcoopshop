@@ -735,6 +735,7 @@ form.fcs-form .description {
   clear: both;
   float: left;
   margin-left: 200px;
+  margin-bottom: 10px;
 }
 form.fcs-form .input.textarea label {
     float: none;
