@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
-- Kommentar-Feld bei Bestell-Abschluss für Nachricht an Abholdienst
+- Kommentar-Feld bei Bestell-Abschluss für Nachricht an Abholdienst. / [PR#100](https://github.com/foodcoopshop/foodcoopshop/pull/100) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Viele Hersteller-Einstellungen können jetzt auch vom Hersteller selbst verändert werden. / [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - E-Mail-Benachrichtigung für Hersteller nach Sofortbestellungen / [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Herstellern kann eine Ansprechperson zugeordnert werden. Name, E-Mail-Adresse und Telefonnummer sind dann für den Hersteller ersichtlich. [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
