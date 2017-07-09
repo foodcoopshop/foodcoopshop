@@ -803,6 +803,7 @@ body.carts.detail #OrderDetailForm .input.checkbox input[type="checkbox"] {
 }
 body.carts.detail #OrderDetailForm .order-comment textarea {
   width: 100%;
+  padding: 5px;
 }
 body.carts.detail #OrderDetailForm .order-comment div.error-message {
   margin-left: 0;

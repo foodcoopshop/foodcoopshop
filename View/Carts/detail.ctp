@@ -93,13 +93,13 @@ if (!$appAuth->termsOfUseAccepted()) {
             }
             echo $this->Html->link('<i class="fa"></i> Kommentar für Abholdienst schreiben?', 'javascript:void(0);', array(
             'class' => 'toggle-link',
-            'title' => 'Kommentar für Abholdienst schreiben?',
+            'title' => 'Kommentar zu deiner Bestellung schreiben?',
             'escape' => false
             ));
             echo '<div class="toggle-content order-comment">';
             echo $this->Form->input('Order.comment', array(
                 'type' => 'textarea',
-                'placeholder' => 'Wird im Admin-Bereich bei deiner Bestellung angezeigt (max. 500 Zeichen).',
+                'placeholder' => 'Hier kannst du dem Abholdienst eine Nachricht hinterlassen. Sie wird im Admin-Bereich bei deiner Bestellung angezeigt (max. 500 Zeichen).',
                 'label' => ''
             ));
             echo '</div>';
