@@ -33,6 +33,36 @@ class OrdersController extends AdminAppController
         $this->Order->recalculateOrderDetailPricesInOrder($order);
     }
 
+    public function editComment()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+
+        $orderId = $this->params['data']['orderId'];
+        $orderComment = htmlspecialchars_decode($this->params['data']['orderComment']);
+
+        $oldOrder = $this->Order->find('first', array(
+            'conditions' => array(
+                'Order.id_order' => $orderId
+            )
+        ));
+
+        $order2update = array(
+            'comment' => $orderComment
+        );
+        $this->Order->id = $oldOrder['Order']['id_order'];
+        $this->Order->save($order2update);
+
+        $this->AppSession->setFlashMessage('Der Kommentar wurde erfolgreich geändert.');
+
+        $this->loadModel('CakeActionLog');
+        $this->CakeActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Order']['id_order'] . ' von '.$oldOrder['Customer']['firstname'] . ' ' . $oldOrder['Customer']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Order']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
+
+        die(json_encode(array(
+            'status' => 1,
+            'msg' => 'ok'
+        )));
+    }
+
     public function ordersAsPdf()
     {
         if (empty($this->params['named']['orderIds'])) {

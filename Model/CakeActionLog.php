@@ -151,6 +151,9 @@ class CakeActionLog extends AppModel
         'orders_closed' => array(
             'de' => 'Bestellungen: abgeschlossen'
         ),
+        'order_comment_changed' => array(
+            'de' => 'Bestellung: Kommentar geändert'
+        ),
         'orders_date_changed' => array(
             'de' => 'Bestellung: rückdatiert'
         ),

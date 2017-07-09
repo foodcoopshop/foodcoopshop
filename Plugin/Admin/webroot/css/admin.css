@@ -459,6 +459,14 @@ body.payments.member_fee #add-payment-button-wrapper {
 body.orders.index #add-order-button-wrapper div.select {
     display: none;
 }
+body.orders.index td .order-comment-edit-button.disabled img {
+  opacity: 0.2;
+}
+body.orders.index td span.order-comment-wrapper,
+body.orders.index td span.customer-is-new {
+  float: left;
+  margin-right: 5px;
+}
 .add-payment-form {
     display: none;
 }
