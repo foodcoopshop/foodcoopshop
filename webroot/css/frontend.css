@@ -801,6 +801,13 @@ body.carts.detail #OrderDetailForm  .input.checkbox .error-message {
 body.carts.detail #OrderDetailForm .input.checkbox input[type="checkbox"] {
     margin-left: -10px;
 }
+body.carts.detail #OrderDetailForm .order-comment textarea {
+  width: 100%;
+}
+body.carts.detail #OrderDetailForm .order-comment div.error-message {
+  margin-left: 0;
+  width: 100%;
+}
 body.carts.detail .cart:not(#cart) .featherlight-overlay,
 #RegistrationForm .featherlight-overlay {
     display: none;

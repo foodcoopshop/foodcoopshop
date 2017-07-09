@@ -186,13 +186,18 @@ class CartsControllerTest extends AppCakeTestCase
 
         // FINALLY order can be finished
 
-        // firstly do not check legal checkboxes
+        // 1) do not check legal checkboxes
         $this->finishCart(false, false);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->browser->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
 
-        // then check the checkboxes
-        $this->finishCart();
+        // 2) add order comment
+        $this->finishCart(true, true, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, adfasfd sa');
+        $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->browser->getContent(), 'order comment validation did not work');
+
+        // 3) check the checkboxes and add a valid order comment
+        $orderComment = 'this is a valid order comment';
+        $this->finishCart(true, true, $orderComment);
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->checkCartStatusAfterFinish();
@@ -216,6 +221,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order['Order']['total_paid_tax_incl'], 6.136364, 'order total_paid_tax_incl not correct');
         $this->assertEquals($order['Order']['general_terms_and_conditions_accepted'], 1, 'order general_terms_and_conditions_accepted not correct');
         $this->assertEquals($order['Order']['cancellation_terms_accepted'], 1, 'order cancellation_terms_accepted not correct');
+        $this->assertEquals($order['Order']['comment'], $orderComment, 'order comment not correct');
 
         // check order_details for product1
         $this->checkOrderDetails($order['OrderDetails'][0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.305786, 3.64, 0.17, 0.34, 2);

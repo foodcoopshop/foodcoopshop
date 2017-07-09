@@ -296,7 +296,7 @@ class AppCakeTestCase extends CakeTestCase
     }
 
 
-    protected function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true)
+    protected function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true, $comment = '')
     {
         $this->browser->post(
             $this->Slug->getCartFinish(),
@@ -304,7 +304,8 @@ class AppCakeTestCase extends CakeTestCase
                 'data' => array(
                     'Order' => array(
                         'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                        'cancellation_terms_accepted' => $cancellation_terms_accepted
+                        'cancellation_terms_accepted' => $cancellation_terms_accepted,
+                        'comment' => $comment
                     )
                 )
             )
