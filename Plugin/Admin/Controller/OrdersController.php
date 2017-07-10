@@ -38,7 +38,7 @@ class OrdersController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
 
         $orderId = $this->params['data']['orderId'];
-        $orderComment = htmlspecialchars_decode($this->params['data']['orderComment']);
+        $orderComment = htmlspecialchars_decode(strip_tags(trim($this->params['data']['orderComment']), '<strong><b>'));
 
         $oldOrder = $this->Order->find('first', array(
             'conditions' => array(

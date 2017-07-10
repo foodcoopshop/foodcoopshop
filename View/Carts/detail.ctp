@@ -86,20 +86,20 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', array('script' =>
             Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ));
-            if ($this->Form->isFieldError('Order.comment')) {
+            if ($cartErrors || $formErrors) {
                 $this->element('addScript', array('script' =>
                 "$('.toggle-link').trigger('click');"
                 ));
             }
-            echo $this->Html->link('<i class="fa"></i> Kommentar für Abholdienst schreiben?', 'javascript:void(0);', array(
+            echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', array(
             'class' => 'toggle-link',
-            'title' => 'Kommentar zu deiner Bestellung schreiben?',
+            'title' => 'Nachricht an den Abholdienst schreiben?',
             'escape' => false
             ));
             echo '<div class="toggle-content order-comment">';
             echo $this->Form->input('Order.comment', array(
                 'type' => 'textarea',
-                'placeholder' => 'Hier kannst du dem Abholdienst eine Nachricht hinterlassen. Sie wird im Admin-Bereich bei deiner Bestellung angezeigt (max. 500 Zeichen).',
+                'placeholder' => 'Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht.',
                 'label' => ''
             ));
             echo '</div>';

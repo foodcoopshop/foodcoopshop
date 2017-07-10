@@ -31,7 +31,7 @@
         if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', array(
                 'script' =>
-                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button');".
+                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
                     Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('.order-comment-edit-button');"
             ));
         }
@@ -100,6 +100,9 @@
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
+            <?php if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) { ?>
+                    <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
+            <?php } ?>
         </ul>
     </div>
     

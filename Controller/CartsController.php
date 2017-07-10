@@ -272,13 +272,15 @@ class CartsController extends FrontendController
             $formErrors = true;
         }
         if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
-            $comment = trim($this->request->data['Order']['comment']);
-            $maxCommentCount = 500;
-            if (strlen($comment) > $maxCommentCount) {
-                $this->Order->invalidate('comment', 'Bitte gib maximal '.$maxCommentCount.' Zeichen ein.');
+            $orderComment = strip_tags(trim($this->request->data['Order']['comment']), '<strong><b>');
+            $maxOrderCommentCount = 500;
+            if (strlen($orderComment) > $maxOrderCommentCount) {
+                $this->Order->invalidate('comment', 'Bitte gib maximal '.$maxOrderCommentCount.' Zeichen ein.');
                 $formErrors = true;
             }
         }
+
+        $this->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || $formErrors) {
             $this->AppSession->setFlashError('Es sind Fehler aufgetreten.');
@@ -302,7 +304,7 @@ class CartsController extends FrontendController
                 'cancellation_terms_accepted' => $this->request->data['Order']['cancellation_terms_accepted']
             );
             if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
-                $order2save['comment'] = $this->request->data['Order']['comment'];
+                $order2save['comment'] = $orderComment;
             }
             $order = $this->Order->save($order2save, array(
                 'validate' => false
