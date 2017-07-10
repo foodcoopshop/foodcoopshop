@@ -18,7 +18,7 @@
     $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-read-button', { my: \"right top\", at: \"right bottom\" });" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" . Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button', { my: \"right top\", at: \"right bottom\" }, false);" . Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
     ));
     ?>
     
@@ -84,7 +84,7 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 echo '<th>' . $this->Paginator->sort('Customer.date_add', 'Registrier-Datum') . '</th>';
 echo '<th>Letztes Bestelldatum</th>';
-echo '<th>Kommentar</th>';
+echo '<th>Komm.</th>';
 echo '</tr>';
 
 $i = 0;
@@ -223,21 +223,16 @@ foreach ($customers as $customer) {
     echo $this->Time->formatToDateShort($customer['last_valid_order_date']);
     echo '</td>';
 
-    echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('comment_add.png')), array(
-        'class' => 'customer-comment-edit-button',
-        'title' => 'Kommentar bearbeiten',
-        'data-title-for-overlay' => $customer['AddressCustomer']['other']
-    ), 'javascript:void(0);');
-    if ($customer['AddressCustomer']['other'] != '') {
-        echo '<span class="customer-comment-read-button-wrapper">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('user_comment.png')), array(
-            'class' => 'customer-comment-read-button',
-            'title' => $customer['AddressCustomer']['other'],
-            'data-title-for-overlay' => $customer['AddressCustomer']['other']
-        ), 'javascript:void(0);');
-        echo '</span>';
-    }
+    echo '<td style="padding-left: 11px;">';
+        echo $this->Html->getJqueryUiIcon(
+            $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+            array(
+                'class' => 'customer-comment-edit-button' . ($customer['AddressCustomer']['other'] == '' ? ' disabled' : ''),
+                'title' => $customer['AddressCustomer']['other'] != '' ? $customer['AddressCustomer']['other'] : 'Kommentar hinzufügen',
+                'data-title-for-overlay' => $customer['AddressCustomer']['other'] != '' ? $customer['AddressCustomer']['other'] : 'Kommentar hinzufügen'
+            ),
+            'javascript:void(0);'
+        );
     echo '</td>';
 
     echo '</tr>';

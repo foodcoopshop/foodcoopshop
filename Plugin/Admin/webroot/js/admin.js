@@ -260,7 +260,11 @@ foodcoopshop.Admin = {
 
         $('.customer-comment-edit-button').on('click', function () {
             foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
-            CKEDITOR.instances['dialogCustomerComment'].setData($(this).data('title-for-overlay')); // attr title is deleted after toolbar init
+            var text = $(this).data('title-for-overlay');
+            if (text == 'Kommentar hinzufügen') {
+                text = '';
+            }
+            CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
             $('#' + dialogId + ' #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
         });
