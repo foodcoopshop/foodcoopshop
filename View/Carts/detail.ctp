@@ -86,7 +86,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', array('script' =>
             Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ));
-            if ($cartErrors || $formErrors) {
+            if (($cartErrors || $formErrors) && $this->request->data['Order']['comment'] != '') {
                 $this->element('addScript', array('script' =>
                 "$('.toggle-link').trigger('click');"
                 ));
