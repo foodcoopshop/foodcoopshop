@@ -172,7 +172,7 @@
                     array(
                     'class' => 'order-comment-edit-button' . ($order['Order']['comment'] == '' ? ' disabled' : ''),
                     'title' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen',
-                    'data-title-for-overlay' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen',
+                    'data-title-for-overlay' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen'
                     ),
                     'javascript:void(0);'
                 );
