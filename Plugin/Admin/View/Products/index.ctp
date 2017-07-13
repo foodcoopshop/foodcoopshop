@@ -389,11 +389,11 @@
     <?php
     if ($manufacturerId > 0) {
         echo '<div class="bottom-button-container">';
-        $profileLink = $this->Slug->getManufacturerEdit($manufacturerId);
+        $profileLink = $this->Slug->getManufacturerEditOptions($manufacturerId);
         if ($appAuth->isManufacturer()) {
-            $profileLink = $this->Slug->getManufacturerProfile();
+            $profileLink = $this->Slug->getManufacturerMyOptions();
         }
-        echo '<a href="' . $profileLink . '" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle aktivieren / deaktivieren? Urlaubsmodus im Hersteller-Profil verwenden!</a>';
+        echo '<a href="' . $profileLink . '" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle aktivieren / deaktivieren? Urlaubsmodus verwenden!</a>';
         echo '</div>';
         echo '<div class="sc"></div>';
     }
