@@ -173,6 +173,11 @@ foodcoopshop.Mobile = {
         cartButton.html('<span class="sum">€&nbsp;0,00</span><i class="fa fa-shopping-cart fa-2x"></i>');
         $('#' + headerId).append(cartButton);
 
+        var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative').length;
+        if (shoppingLimitReachedInfo > 0) {
+            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>Guthaben-Limit erreicht.</b></span>');
+        }
+
         $('#' + headerId).append($('#header .logo-wrapper'));
 
         // button renamings
