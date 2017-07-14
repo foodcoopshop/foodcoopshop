@@ -188,15 +188,24 @@ class AppCakeTestCase extends CakeTestCase
         foreach ($expectedMessagePatterns as $expectedMessagePattern) {
             $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLog']['message'], 'email message wrong');
         }
-        foreach ($expectedToEmails as $expectedToEmail) {
-            $this->assertEquals($toAddress->$expectedToEmail, $expectedToEmail, 'email to_address wrong');
+
+        $preparedToAddresses = array();
+        foreach ($toAddress as $email) {
+            $preparedToAddresses[] = $email;
         }
-        foreach ($expectedCcEmails as $expectedCcEmail) {
-            $this->assertEquals($ccAddress->$expectedCcEmail, $expectedCcEmail, 'email cc_address wrong');
+        $this->assertEquals($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong', 0, 0, true);
+
+        $preparedCcAddresses = array();
+        foreach ($ccAddress as $email) {
+            $preparedCcAddresses[] = $email;
         }
-        foreach ($expectedBccEmails as $expectedBccEmail) {
-            $this->assertEquals($bccAddress->$expectedBccEmail, $expectedBccEmail, 'email bcc_address wrong');
+        $this->assertEquals($preparedCcAddresses, $expectedCcEmails, 'email cc_addresses wrong', 0, 0, true);
+
+        $preparedBccAddresses = array();
+        foreach ($bccAddress as $email) {
+            $preparedBccAddresses[] = $email;
         }
+        $this->assertEquals($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong', 0, 0, true);
     }
 
     /**
@@ -335,9 +344,15 @@ class AppCakeTestCase extends CakeTestCase
         $this->browser->doFoodCoopShopLogin();
     }
 
-    protected function loginAsManufacturer()
+    protected function loginAsMeatManufacturer()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailManufacturer');
+        $this->browser->loginEmail = Configure::read('test.loginEmailMeatManufacturer');
+        $this->browser->doFoodCoopShopLogin();
+    }
+
+    protected function loginAsVegetableManufacturer()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->browser->doFoodCoopShopLogin();
     }
 }
