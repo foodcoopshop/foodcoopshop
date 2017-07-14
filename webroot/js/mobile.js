@@ -175,7 +175,7 @@ foodcoopshop.Mobile = {
 
         var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative').length;
         if (shoppingLimitReachedInfo > 0) {
-            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>Guthaben-Limit erreicht.</b></span>');
+            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>Guthaben-Limit erreicht</b></span>');
         }
 
         $('#' + headerId).append($('#header .logo-wrapper'));
