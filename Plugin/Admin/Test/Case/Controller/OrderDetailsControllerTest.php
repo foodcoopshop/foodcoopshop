@@ -31,6 +31,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     public $cancellationReason = 'Product was not fresh any more.';
 
+    public $newPrice = '3,53';
+    public $editPriceReason = 'Product was smaller than expected.';
+
     public $mockOrder;
 
     public function setUp()
@@ -97,6 +100,30 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
     }
 
+    public function testEditProductPriceAsManufacturer()
+    {
+        $this->logout();
+        $this->loginAsVegetableManufacturer();
+
+        $orderDetailId = $this->mockOrder['OrderDetails'][0]['id_order_detail'];
+
+        $this->editProductPrice($orderDetailId, $this->newPrice, $this->editPriceReason);
+
+        $this->Order->recursive = 2;
+        $order = $this->Order->find('first', array(
+            'conditions' => array(
+                'Order.id_order' => $this->mockOrder['Order']['id_order']
+            )
+        ));
+
+        $this->assertEquals($this->newPrice, Configure::read('htmlHelper')->formatAsDecimal($order['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
+
+        $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
+        $expectedCcEmails = array();
+        $this->assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails);
+    }
+
+
     private function assertRemoveFromDatabase($orderDetailIds, $orderId)
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
@@ -136,10 +163,16 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         return $order;
     }
 
-    public function assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all');
         $this->assertEmailLogs($emailLogs[1], 'Artikel kann nicht geliefert werden: Artischocke : Stück', array($this->cancellationReason, '3,64', 'Demo Gemüse-Hersteller'), $expectedToEmails, $expectedCcEmails);
+    }
+
+    private function assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails)
+    {
+        $emailLogs = $this->EmailLog->find('all');
+        $this->assertEmailLogs($emailLogs[1], 'Preis korrigiert: Artischocke', array($this->editPriceReason, $this->newPrice, 'Demo Gemüse-Hersteller'), $expectedToEmails, $expectedCcEmails);
     }
 
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
@@ -150,6 +183,20 @@ class OrderDetailsControllerTest extends AppCakeTestCase
                 'data' => array(
                     'orderDetailIds' => $orderDetailIds,
                     'cancellationReason' => $cancellationReason
+                )
+            )
+        );
+    }
+
+    private function editProductPrice($orderDetailId, $productPrice, $editPriceReason)
+    {
+        $this->browser->post(
+            '/admin/orderDetails/editProductPrice/',
+            array(
+                'data' => array(
+                    'orderDetailId' => $orderDetailId,
+                    'productPrice' => $productPrice,
+                    'editPriceReason' => $editPriceReason,
                 )
             )
         );
