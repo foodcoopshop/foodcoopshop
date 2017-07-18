@@ -3,6 +3,7 @@
 App::uses('AppCakeTestCase', 'Test');
 App::uses('Order', 'Model');
 App::uses('EmailLog', 'Model');
+App::uses('Manufacturer', 'Model');
 
 /**
  * CartsControllerTest
@@ -24,6 +25,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     public $Order;
 
+    public $Manufacturer;
+
     public $EmailLog;
 
     public $cancellationReason = 'Product was not fresh any more.';
@@ -35,6 +38,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->Order = new Order();
         $this->EmailLog = new EmailLog();
+        $this->Manufacturer = new Manufacturer();
         $this->mockOrder = $this->getOrder();
     }
 
@@ -69,7 +73,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
 
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->Order->query('UPDATE fcs_manufacturer SET send_ordered_product_deleted_notification = 0 WHERE id_manufacturer = ' . $manufacturerId);
+        $this->Order->query('UPDATE ' . $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET send_ordered_product_deleted_notification = 0 WHERE id_manufacturer = ' . $manufacturerId);
 
         $orderDetailIds = array($this->mockOrder['OrderDetails'][0]['id_order_detail']);
         $this->assertRemoveFromDatabase($orderDetailIds, $this->mockOrder['Order']['id_order']);
@@ -83,7 +87,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
 
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->Order->query('UPDATE fcs_manufacturer SET bulk_orders_allowed = 1 WHERE id_manufacturer = ' . $manufacturerId);
+        $this->Order->query('UPDATE ' .  $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET bulk_orders_allowed = 1 WHERE id_manufacturer = ' . $manufacturerId);
 
         $orderDetailIds = array($this->mockOrder['OrderDetails'][0]['id_order_detail']);
         $this->assertRemoveFromDatabase($orderDetailIds, $this->mockOrder['Order']['id_order']);
