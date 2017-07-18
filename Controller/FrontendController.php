@@ -107,14 +107,14 @@ class FrontendController extends AppController
             $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, array(
                 'slug' => '/neue-produkte',
-                'name' => 'Neue Produkte (' . $newProductsCount . ')',
+                'name' => 'Neue Produkte <span class="additional-info"> (' . $newProductsCount . ')</span>',
                 'options' => array(
                     'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
                 )
             ));
             array_unshift($categoriesForMenu, array(
                 'slug' => Configure::read('slugHelper')->getAllProducts(),
-                'name' => 'Alle Produkte (' . $allProductsCount . ')',
+                'name' => 'Alle Produkte <span class="additional-info"> (' . $allProductsCount . ')</span>',
                 'options' => array(
                     'fa-icon' => 'fa-tags'
                 )
