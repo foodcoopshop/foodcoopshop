@@ -118,15 +118,15 @@ INSERT INTO `fcs_configuration` VALUES
 (551,NULL,NULL,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bankverbindung für die Mitgliedsbeitrags-Einzahlungen\".','MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',140,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (552,NULL,NULL,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',120,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (553,NULL,NULL,1,'FCS_ORDER_CONFIRMATION_MAIL_BCC','E-Mail-Adresse, an die die Bestell-Bestätigungen als BCC geschickt werden.<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',300,'2016-10-06 00:00:00','2016-10-06 00:00:00'),
-(554,NULL,NULL,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer und in den generierten PDFs (Bestelllisten, Rechnungen) angezeigt.</div>','1','boolean',180,'2016-11-27 00:00:00','2016-11-27 00:00:00'),
+(554,NULL,NULL,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',180,'2016-11-27 00:00:00','2016-11-27 00:00:00'),
 (555,NULL,NULL,1,'FCS_PAYMENT_PRODUCT_MAXIMUM','Maximalbetrag für jede Guthaben-Aufladung in Euro','500','number',127,'2016-11-28 00:00:00','2016-11-28 00:00:00'),
 (556,NULL,NULL,1,'FCS_APP_NAME','Name der Foodcoop','','text',5,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (557,NULL,NULL,1,'FCS_APP_ADDRESS','Adresse der Foodcoop<br /><div class=\"small\">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>','','textarea',6,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,NULL,NULL,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,NULL,NULL,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (560,NULL,NULL,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','6','readonly',10,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
-(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','6','readonly',20,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
+(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','7','readonly',10,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
+(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','7','readonly',20,'2017-03-13 00:00:00','2017-03-13 00:00:00'),
 (563,NULL,NULL,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','0','readonly',30,'2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,NULL,NULL,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','0','boolean',13,'2017-07-09 00:00:00','2017-07-09 00:00:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
