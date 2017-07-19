@@ -284,11 +284,7 @@ class AppTcpdf extends TCPDF
         $this->drawLine();
         $this->SetFontSize(10);
         $this->Cell(0, 10, $this->infoTextForFooter, 0, false, 'L', 0, '', 0, false, 'T', 'M');
-        $textForFooterRight = '';
-        if (Configure::read('app.db_config_FCS_SHOW_FOODCOOPSHOP_BACKLINK')) {
-            $textForFooterRight .= '© ' . date('Y') . ' foodcoopshop.com, ';
-        }
-        $textForFooterRight .= 'Seite ' . $this->getAliasNumPage() . ' von ' . $this->getAliasNbPages();
+        $textForFooterRight = 'Seite ' . $this->getAliasNumPage() . ' von ' . $this->getAliasNbPages();
         $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
         $this->SetFontSize(12);
     }

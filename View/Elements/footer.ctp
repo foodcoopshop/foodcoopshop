@@ -59,5 +59,5 @@ if ($appAuth->loggedIn()) {
 ?>
 
 <?php if (Configure::read('app.db_config_FCS_SHOW_FOODCOOPSHOP_BACKLINK')) { ?>
-    <a class="fcs-backlink" target="_blank" href="https://www.foodcoopshop.com">&copy; <?php echo date('Y'); ?> foodcoopshop.com</a>
+    <a class="fcs-backlink" target="_blank" href="https://www.foodcoopshop.com">foodcoopshop.com</a>
 <?php } ?>
