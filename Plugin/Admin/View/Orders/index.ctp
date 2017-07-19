@@ -165,7 +165,7 @@
         echo '</td>';
 
         echo '<td style="max-width: 200px;">';
-        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
             echo '<span class="order-comment-wrapper">';
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
