@@ -28,6 +28,13 @@
             'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
             ));
         }
+        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+            $this->element('addScript', array(
+                'script' =>
+                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
+                    Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('.order-comment-edit-button');"
+            ));
+        }
         $this->element('highlightRowAfterEdit', array(
             'rowIdPrefix' => '#order-'
         ));
@@ -93,6 +100,9 @@
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
+            <?php if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) { ?>
+                    <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
+            <?php } ?>
         </ul>
     </div>
     
@@ -155,10 +165,23 @@
         echo '</td>';
 
         echo '<td style="max-width: 200px;">';
-        if ($order['Customer']['order_count'] <= 3) {
-            echo '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order['Customer']['order_count'] . 'x bestellt."></i> ';
+        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
+            echo '<span class="order-comment-wrapper">';
+                echo $this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
+                    array(
+                    'class' => 'order-comment-edit-button' . ($order['Order']['comment'] == '' ? ' disabled' : ''),
+                    'title' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen',
+                    'data-title-for-overlay' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen'
+                    ),
+                    'javascript:void(0);'
+                );
+            echo '</span>';
         }
-        echo $order['Order']['name']; // !sic Order.name, related virtual field is copied in controller
+        if ($order['Customer']['order_count'] <= 3) {
+            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order['Customer']['order_count'] . 'x bestellt."></i></span>';
+        }
+        echo '<span class="customer-name">'.$order['Order']['name'].'</span>'; // !sic Order.name, related virtual field is copied in controller
         echo '</td>';
 
         echo '<td'.(!$isMobile ? ' style="width: 140px;"' : '').'>';

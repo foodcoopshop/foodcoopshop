@@ -25,6 +25,12 @@ foreach ($orders as $order) {
     $pdf->writeHTML('<h2>' . $order['Customer']['name'] . '</h2>', true, false, true, false, '');
     $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Order']['date_add']) . '</h3>', true, false, true, false, '');
 
+    if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED') && $order['Order']['comment'] != '') {
+        $pdf->SetRightMargin(16);
+        $pdf->Ln(2);
+        $pdf->writeHTML('<p><b>Kommentar: </b>' . $order['Order']['comment'] . '</p>', true, false, true, false, '');
+    }
+
     $pdf->Ln(5);
 
     $widths = array(

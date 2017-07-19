@@ -30,6 +30,7 @@ class Configuration extends AppModel
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
+            case 'FCS_ORDER_COMMENT_ENABLED':
                 $validationRules = $this->getNumberRangeConfigurationRule(0, 1);
                 break;
             case 'FCS_PRODUCT_AVAILABILITY_LOW':

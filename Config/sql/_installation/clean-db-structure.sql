@@ -319,13 +319,13 @@ DROP TABLE IF EXISTS `fcs_email_logs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_email_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from_address` text NULL,
-  `to_address` text NULL,
-  `cc_address` text NULL,
-  `bcc_address` text NULL,
-  `subject` text NULL,
-  `headers` text NULL,
-  `message` text NULL,
+  `from_address` text,
+  `to_address` text,
+  `cc_address` text,
+  `bcc_address` text,
+  `subject` text,
+  `headers` text,
+  `message` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -495,6 +495,7 @@ CREATE TABLE `fcs_orders` (
   `total_deposit` decimal(10,2) NOT NULL,
   `general_terms_and_conditions_accepted` tinyint(4) unsigned NOT NULL,
   `cancellation_terms_accepted` tinyint(4) unsigned NOT NULL,
+  `comment` text NULL,
   PRIMARY KEY (`id_order`),
   KEY `id_customer` (`id_customer`),
   KEY `id_shop` (`id_shop`),

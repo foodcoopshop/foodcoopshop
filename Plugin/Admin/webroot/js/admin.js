@@ -260,8 +260,83 @@ foodcoopshop.Admin = {
 
         $('.customer-comment-edit-button').on('click', function () {
             foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
-            CKEDITOR.instances['dialogCustomerComment'].setData($(this).data('title-for-overlay')); // attr title is deleted after toolbar init
+            var text = $(this).data('title-for-overlay');
+            if (text == 'Kommentar hinzufügen') {
+                text = '';
+            }
+            CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
             $('#' + dialogId + ' #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            dialog.dialog('open');
+        });
+
+    },
+
+    initOrderCommentEditDialog: function (container) {
+
+        var dialogId = 'order-comment-edit-form';
+        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Kommentar zu Bestellung ändern">';
+        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
+        dialogHtml += '<div class="textarea-wrapper">';
+            dialogHtml += '<textarea class="ckeditor" name="dialogOrderComment" id="dialogOrderComment" />';
+        dialogHtml += '</div>';
+        dialogHtml += '<input type="hidden" name="dialogOrderId" id="dialogOrderId" value="" />';
+        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+        dialogHtml += '</form>';
+        dialogHtml += '</div>';
+        $(container).append(dialogHtml);
+
+        var dialog = $('#' + dialogId).dialog({
+
+            autoOpen: false,
+            height: 410,
+            width: 350,
+            modal: true,
+
+            close: function () {
+                $('#cke_dialogOrderComment').val('');
+                $('#dialogOrderId').val('');
+            },
+
+            buttons: {
+
+                'Abbrechen': function () {
+                    dialog.dialog('close');
+                },
+
+                'Speichern': function () {
+
+                    $('#order-comment-edit-form .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/orders/editComment/',
+                        {
+                            orderId: $('#dialogOrderId').val(),
+                            orderComment: CKEDITOR.instances['dialogOrderComment'].getData()
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                console.log(data);
+                            }
+                        }
+                    );
+
+                }
+
+            }
+        });
+
+        $('.order-comment-edit-button').on('click', function () {
+            foodcoopshop.Helper.initCkeditor('dialogOrderComment');
+            var text = $(this).data('title-for-overlay');
+            if (text == 'Kommentar hinzufügen') {
+                text = '';
+            }
+            CKEDITOR.instances['dialogOrderComment'].setData(text); // attr title is deleted after toolbar init
+            $('#' + dialogId + ' #dialogOrderId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
         });
 
@@ -679,7 +754,7 @@ foodcoopshop.Admin = {
                 true,
                 dataRow.find('td:nth-child(5)').html(),
                 //totalSum
-                dataRow.find('td:nth-child(2)').html()
+                dataRow.find('td:nth-child(2) span.customer-name').html()
             );
         });
     },
