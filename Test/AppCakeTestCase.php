@@ -321,6 +321,23 @@ class AppCakeTestCase extends CakeTestCase
         );
     }
 
+    /**
+     *
+     * @param int $productId
+     * @param double $price
+     * @return json string
+     */
+    protected function changeProductPrice($productId, $price)
+    {
+        $this->browser->ajaxPost('/admin/products/editPrice', array(
+            'data' => array(
+                'productId' => $productId,
+                'price' => $price
+            )
+        ));
+        return $this->browser->getJsonDecodedContent();
+    }
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
