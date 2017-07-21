@@ -39,6 +39,8 @@ before_script:
   # enable php-fpm
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo cat  ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enconf php5-fpm
   - sudo a2enmod rewrite actions fastcgi alias
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
