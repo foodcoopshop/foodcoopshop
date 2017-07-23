@@ -1,19 +1,17 @@
 language: php
-dist: precise
+dist: trusty
+sudo: required
 
 php:
-  - 5.5
-  - 5.6
-  - 7.0
   - 7.1
 
 services:
   - mysql
-  
-addons:
-  hosts:
-    - www.foodcoopshop.dev
     
+addons:
+    hosts:
+        - www.foodcoopshop.dev
+
 env:
   - DB=mysql
   
@@ -39,17 +37,29 @@ before_script:
   # enable php-fpm
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-  - sudo a2enmod rewrite actions fastcgi alias
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
-  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.dev.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.dev.conf
+  - sudo a2dissite 000-default
+  - sudo a2ensite www.foodcoopshop.dev.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - sudo chown -R www-data:www-data /home/travis/build/foodcoopshop
+  - sudo chmod o+rx /home/travis
+  - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/files_private
+  - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/tmp
+  - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/cache
+  - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/files
+  - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/tmp
   - sudo service apache2 restart
+  - curl http://www.foodcoopshop.dev
+  - curl http://www.foodcoopshop.dev/aktuelles
+  - sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
-
+  
 notifications:
   email: false
   
