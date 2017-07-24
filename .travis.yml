@@ -31,9 +31,9 @@ before_script:
   - npm install -g bower
   - bower install
   - bash ./Console/cake asset_compress build
-  # Apache Install
+  # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
-  # enable php-fpm
+  # enable php-fpm, runs as travis:travis
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
@@ -55,15 +55,8 @@ before_script:
   - curl http://www.foodcoopshop.dev
   - curl http://www.foodcoopshop.dev/aktuelles
   - sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
-  # create the command to run by Travis-CI
-  - groups
-#  - sudo chmod o+rwx /home/travis/build/foodcoopshop/foodcoopshop
-#  - echo -e "#!/usr/bin/env bash\nsudo -u www-data -- ./Console/cake test app AllFoodCoopShopTests --stderr" > ./travis-build-command.sh
-#  - chmod 0777 ./travis-build-command.sh
-#  - sudo chmod o-w /home/travis/build/foodcoopshop/foodcoopshop
 
 script:
-#  - ./travis-build-command.sh
   - ./Console/cake test app AllFoodCoopShopTests --stderr
   
 notifications:
