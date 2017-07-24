@@ -44,7 +44,7 @@ before_script:
   - sudo a2dissite 000-default
   - sudo a2ensite www.foodcoopshop.dev.conf
   - sudo a2enmod rewrite actions fastcgi alias
-  - sudo chown -R www-data:www-data /home/travis/build/foodcoopshop
+  - sudo chown -R travis:travis /home/travis/build/foodcoopshop
   - sudo chmod o+rx /home/travis
   - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/files_private
   - sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/tmp
@@ -56,15 +56,15 @@ before_script:
   - curl http://www.foodcoopshop.dev/aktuelles
   - sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
   # create the command to run by Travis-CI
-  - whoami
-  - getfacl .
-  - sudo chmod o+rwx /home/travis/build/foodcoopshop/foodcoopshop
-  - echo -e "#!/usr/bin/env bash\nsudo -u www-data -- ./Console/cake test app AllFoodCoopShopTests --stderr" > ./travis-build-command.sh
-  - chmod 0777 ./travis-build-command.sh
-  - sudo chmod o-w /home/travis/build/foodcoopshop/foodcoopshop
+  - groups
+#  - sudo chmod o+rwx /home/travis/build/foodcoopshop/foodcoopshop
+#  - echo -e "#!/usr/bin/env bash\nsudo -u www-data -- ./Console/cake test app AllFoodCoopShopTests --stderr" > ./travis-build-command.sh
+#  - chmod 0777 ./travis-build-command.sh
+#  - sudo chmod o-w /home/travis/build/foodcoopshop/foodcoopshop
 
 script:
-  - ./travis-build-command.sh
+#  - ./travis-build-command.sh
+  - ./Console/cake test app AllFoodCoopShopTests --stderr
   
 notifications:
   email: false
