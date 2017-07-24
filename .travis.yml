@@ -48,7 +48,7 @@ before_script:
   - sudo a2ensite www.foodcoopshop.dev.conf
   - sudo a2enmod rewrite actions fastcgi alias
   - sudo chown -R travis:travis /home/travis/build/foodcoopshop
-  #- sudo chmod o+rx /home/travis
+  - sudo chmod o+rx /home/travis
   #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/files_private
   #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/tmp
   #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/cache
