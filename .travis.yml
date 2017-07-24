@@ -56,8 +56,10 @@ before_script:
   - curl http://www.foodcoopshop.dev/aktuelles
   - sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
   # create the command to run by Travis-CI
-  - sudo echo -e '#!/usr/bin/env bash\nsudo -u www-data -- ./Console/cake test app AllFoodCoopShopTests --stderr' > ./travis-build-command.sh
-  - sudo chmod a+rx ./travis-build-command.sh
+  - sudo chmod o+rwx /home/travis/build/foodcoopshop/foodcoopshop
+  - echo -e "#!/usr/bin/env bash\nsudo -u www-data -- ./Console/cake test app AllFoodCoopShopTests --stderr" > ./travis-build-command.sh
+  - chmod 0777 ./travis-build-command.sh
+  - sudo chmod o-w /home/travis/build/foodcoopshop/foodcoopshop
 
 script:
   - ./travis-build-command.sh
