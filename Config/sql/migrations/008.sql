@@ -124,7 +124,7 @@ ALTER TABLE `fcs_customer`
   ALTER `email` SET DEFAULT '',
   ALTER `passwd` SET DEFAULT '',
   MODIFY `last_passwd_gen` TIMESTAMP NOT NULL,
-  MODIFY `terms_of_use_accepted_date` DATE NOT NULL DEFAULT '2017-07-21',
+  MODIFY `terms_of_use_accepted_date` DATE NOT NULL DEFAULT '1000-01-01',
   MODIFY `date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   MODIFY `date_upd` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ;
@@ -157,8 +157,8 @@ ALTER TABLE `fcs_manufacturer`
   ALTER `name` SET DEFAULT '',
   MODIFY `date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   MODIFY `date_upd` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  MODIFY `holiday_from` DATE NOT NULL DEFAULT '2017-07-21',
-  MODIFY `holiday_to` DATE NOT NULL DEFAULT '2017-07-21',
+  MODIFY `holiday_from` DATE NULL DEFAULT NULL,
+  MODIFY `holiday_to` DATE NULL DEFAULT NULL,
   ALTER `is_private` SET DEFAULT '0',
   ALTER `uid_number` SET DEFAULT '',
   ALTER `iban` SET DEFAULT '',
@@ -202,14 +202,14 @@ ALTER TABLE `fcs_orders`
 ALTER TABLE `fcs_product`
   ALTER `id_tax_rules_group` SET DEFAULT '0',
   ALTER `id_tax` SET DEFAULT '0',
-  MODIFY `available_date` DATE NOT NULL DEFAULT '2017-07-21',
+  MODIFY `available_date` DATE NOT NULL DEFAULT '1000-01-01',
   MODIFY `date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   MODIFY `date_upd` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ;
 
 ALTER TABLE `fcs_product_attribute`
   ALTER `id_product` SET DEFAULT '0',
-  MODIFY `available_date` DATE NOT NULL DEFAULT '2017-07-21'
+  MODIFY `available_date` DATE NOT NULL DEFAULT '1000-01-01'
 ;
 
 ALTER TABLE `fcs_product_attribute_combination`
@@ -221,7 +221,7 @@ ALTER TABLE `fcs_product_attribute_shop`
   ALTER `id_product_attribute` SET DEFAULT '0',
   ALTER `id_shop` SET DEFAULT '0',
   ALTER `id_product` SET DEFAULT '0',
-  MODIFY `available_date` DATE NOT NULL DEFAULT '2017-07-21'
+  MODIFY `available_date` DATE NOT NULL DEFAULT '1000-01-01'
 ;
 
 ALTER TABLE `fcs_product_lang`
@@ -235,7 +235,7 @@ ALTER TABLE `fcs_product_shop`
   ALTER `id_product` SET DEFAULT '0',
   ALTER `id_shop` SET DEFAULT '0',
   ALTER `id_tax_rules_group` SET DEFAULT '0',
-  MODIFY `available_date` DATE NOT NULL DEFAULT '2017-07-21',
+  MODIFY `available_date` DATE NOT NULL DEFAULT '1000-01-01',
   MODIFY `date_add` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   MODIFY `date_upd` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ;
