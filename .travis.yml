@@ -46,7 +46,7 @@ before_script:
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.dev.conf
   - sudo a2dissite 000-default
   - sudo a2ensite www.foodcoopshop.dev.conf
-  #- sudo a2enmod rewrite actions fastcgi alias
+  - sudo a2enmod rewrite actions fastcgi alias
   #- sudo chown -R travis:travis /home/travis/build/foodcoopshop
   #- sudo chmod o+rx /home/travis
   #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/files_private
