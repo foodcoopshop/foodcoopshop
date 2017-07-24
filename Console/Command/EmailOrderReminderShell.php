@@ -45,10 +45,8 @@ class EmailOrderReminderShell extends AppShell
             'hasMany' => array('PaidCashFreeOrders', 'CakePayments', 'ValidOrder')
         ));
 
-        $activeOrderConditions = array();
-        $activeOrderConditions[] = 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->getOrderPeriodFirstDay(). '\'';
-        $activeOrderConditions[] = 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->getOrderPeriodLastDay(). '\'';
-        $this->Customer->hasMany['ActiveOrders']['conditions'] = $activeOrderConditions;
+        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->getOrderPeriodFirstDay(). '\'';
+        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->getOrderPeriodLastDay(). '\'';
 
         $customers = $this->Customer->find('all', array(
             'conditions' => $conditions,
