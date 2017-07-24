@@ -3,9 +3,9 @@ dist: trusty
 sudo: required
 
 php:
-  #- 5.5
-  #- 5.6
-  #- 7.0
+  - 5.5
+  - 5.6
+  - 7.0
   - 7.1
 
 services:
@@ -49,13 +49,8 @@ before_script:
   - sudo a2enmod rewrite actions fastcgi alias
   - sudo chown -R travis:travis /home/travis/build/foodcoopshop
   - sudo chmod o+rx /home/travis
-  #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/files_private
-  #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/tmp
-  #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/cache
-  #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/files
-  #- sudo chmod a+w -R /home/travis/build/foodcoopshop/foodcoopshop/webroot/tmp
   - sudo service apache2 restart
-  - sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
+  #- sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
