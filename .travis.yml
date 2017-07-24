@@ -3,9 +3,9 @@ dist: trusty
 sudo: required
 
 php:
-  #- 5.5
-  #- 5.6
-  #- 7.0
+  - 5.5
+  - 5.6
+  - 7.0
   - 7.1
 
 services:
@@ -37,7 +37,8 @@ before_script:
   # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm, runs as travis:travis
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
+  #- if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
+  - sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
