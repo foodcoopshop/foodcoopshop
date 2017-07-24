@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.4.7",
-        "cakephp/cakephp": "2.10.*",
+        "cakephp/cakephp": "2.9.*",
         "weotch/phpthumb": "1.0.*",
         "tecnickcom/tcpdf": "6.2.*",
         "simpletest/simpletest": "1.1.7",
