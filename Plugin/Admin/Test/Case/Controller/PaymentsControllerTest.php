@@ -22,7 +22,7 @@ App::uses('Customer', 'Model');
  */
 class PaymentsControllerTest extends AppCakeTestCase
 {
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -108,7 +108,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;20,50'
         );
     }
-    
+
     public function testAddDepositPaymentToCustomer()
     {
         $this->loginAsSuperadmin();
@@ -118,7 +118,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             'deposit'
         );
         $this->logout();
-        
+
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
             'payment_deposit_customer_added',
@@ -126,7 +126,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;10,00'
         );
     }
-    
+
     public function testAddDepositToManufacturerEmptyGlasses()
     {
         $this->addDepositToManufacturer(
@@ -134,7 +134,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
         );
     }
-    
+
     public function testAddDepositToManufacturerMoney()
     {
         $this->addDepositToManufacturer(
@@ -142,18 +142,18 @@ class PaymentsControllerTest extends AppCakeTestCase
             'Pfand-Rücknahme (Ausgleichszahlung) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
         );
     }
-    
+
     private function addDepositToManufacturer($depositText, $cakeActionLogText)
     {
         $this->Customer = new Customer();
-        
+
         $this->loginAsSuperadmin();
         $amountToAdd = 10;
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.manufacturerId'));
-        
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+
         $manufacturerDepositSum = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0][0]['sumDepositReturned']);
-        
+
         $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText);
         $this->assertEquals(1, $jsonDecodedContent->status);
         $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
@@ -165,9 +165,8 @@ class PaymentsControllerTest extends AppCakeTestCase
             'payments',
             $cakeActionLogText
         );
-        
     }
-    
+
     private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
     {
         $creditBalanceBeforeAdd = $this->Customer->getCreditBalance($customerId);
