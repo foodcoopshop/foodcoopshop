@@ -1,21 +1,27 @@
-<VirtualHost *:80>
-
-  DocumentRoot %TRAVIS_BUILD_DIR%/webroot
-  ServerName www.foodcoopshop.dev
-
-  <Directory "%TRAVIS_BUILD_DIR%">
-    Options FollowSymLinks MultiViews ExecCGI
-    AllowOverride All
-    Order deny,allow
-    Allow from all
-  </Directory>
-
-  # Wire up Apache to use Travis CI's php-fpm.
+<VirtualHost www.foodcoopshop.dev:80>
+    ServerName www.foodcoopshop.dev
+    DocumentRoot %TRAVIS_BUILD_DIR%/webroot
+    
+    <Directory %TRAVIS_BUILD_DIR%/webroot>
+      Options FollowSymLinks MultiViews ExecCGI
+      AllowOverride All
+      Require all granted
+    </Directory>
+    
   <IfModule mod_fastcgi.c>
     AddHandler php5-fcgi .php
     Action php5-fcgi /php5-fcgi
     Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
     FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
-  </IfModule>
+    
+    <Directory /usr/lib/cgi-bin>
+        Require all granted
+    </Directory>
+    
+  </IfModule>   
 
+    LogLevel warn
+    ErrorLog /var/log/apache2/www.foodcoopshop.dev_error.log
+    CustomLog /var/log/apache2/www.foodcoopshop.dev_access.log combined
+    ServerSignature Off
 </VirtualHost>

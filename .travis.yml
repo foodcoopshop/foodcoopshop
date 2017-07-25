@@ -1,5 +1,6 @@
 language: php
-dist: precise
+dist: trusty
+sudo: required
 
 php:
   - 5.5
@@ -9,11 +10,11 @@ php:
 
 services:
   - mysql
-  
-addons:
-  hosts:
-    - www.foodcoopshop.dev
     
+addons:
+    hosts:
+        - www.foodcoopshop.dev
+
 env:
   - DB=mysql
   
@@ -25,7 +26,6 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
-  - git clone --depth 1 git://github.com/foodcoopshop/foodcoopshop
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
@@ -34,22 +34,30 @@ before_script:
   - npm install -g bower
   - bower install
   - bash ./Console/cake asset_compress build
-  # Apache Install
+  # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
-  # enable php-fpm
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
+  # enable php-fpm, runs as travis:travis
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-  - sudo a2enmod rewrite actions fastcgi alias
+  # for PHP7 inclusion of additional config files works
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
+  # for PHP5 modify main config file
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then sudo sed -e "s?user = nobody?user = travis?g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then sudo sed -e "s?group = nobody?group = travis?g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
-  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.dev.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.dev.conf
+  - sudo a2dissite 000-default
+  - sudo a2ensite www.foodcoopshop.dev.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - sudo chown -R travis:travis /home/travis/build/foodcoopshop
+  - sudo chmod o+rx /home/travis
   - sudo service apache2 restart
+  #- sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
-
+  
 notifications:
   email: false
-  
