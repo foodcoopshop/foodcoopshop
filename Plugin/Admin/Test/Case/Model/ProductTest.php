@@ -67,23 +67,6 @@ class ProductTest extends AppCakeTestCase
         $this->assertEquals(floatval($expectedNetPrice), $netPrice, 'editing price failed');
     }
 
-    /**
-     *
-     * @param int $productId
-     * @param double $price
-     * @return json string
-     */
-    private function changeProductPrice($productId, $price)
-    {
-        $this->browser->ajaxPost('/admin/products/editPrice', array(
-            'data' => array(
-                'productId' => $productId,
-                'price' => $price
-            )
-        ));
-        return $this->browser->getJsonDecodedContent();
-    }
-
     public function testGetProductIdAndAttributeId()
     {
         $tests = array(

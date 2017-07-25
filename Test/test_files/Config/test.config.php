@@ -19,8 +19,12 @@ Configure::write('test.loginEmailAdmin', 'fcs-demo-admin@mailinator.com');
 Configure::write('test.adminId', 88);
 Configure::write('test.loginEmailSuperadmin', 'fcs-demo-superadmin@mailinator.com');
 Configure::write('test.superadminId', 92);
-Configure::write('test.loginEmailManufacturer', 'fcs-demo-fleisch-hersteller@mailinator.com');
-Configure::write('test.manufacturerId', 91); // id is id from table customer, use Customer::getManufacturerIdByCustomerId to obtain real manufacturerId
+
+// id is id from table customer, use Customer::getManufacturerIdByCustomerId to obtain real manufacturerId
+Configure::write('test.loginEmailVegetableManufacturer', 'fcs-demo-gemuese-hersteller@mailinator.com');
+Configure::write('test.vegetableManufacturerId', 89);
+Configure::write('test.loginEmailMeatManufacturer', 'fcs-demo-fleisch-hersteller@mailinator.com');
+Configure::write('test.meatManufacturerId', 91);
 
 // password for all users is reset to test.loginPassword on Test::setUp()
 Configure::write('test.loginPassword', 'foodcoopshop');

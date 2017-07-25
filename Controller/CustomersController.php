@@ -231,7 +231,7 @@ class CustomersController extends FrontendController
                     $email = new AppEmail();
                     if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
-                        $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($newCustomer['Customer']))));
+                        $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($newCustomer['Customer']), 'mimetype' => 'application/pdf')));
                     } else {
                         $template = 'customer_registered_inactive';
                     }

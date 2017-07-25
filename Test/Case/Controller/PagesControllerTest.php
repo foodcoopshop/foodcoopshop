@@ -88,7 +88,7 @@ class PagesControllerTest extends AppCakeTestCase
      */
     public function testAllManufacturerUrls()
     {
-        $this->loginAsManufacturer();
+        $this->loginAsMeatManufacturer();
 
         $testUrls = array(
             $this->Slug->getManufacturerMyOptions(),
