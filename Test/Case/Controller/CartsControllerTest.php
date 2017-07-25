@@ -168,7 +168,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
-        $this->changeManufacturerHolidayMode($manufacturerId, '0000-00-00');
+        $this->changeManufacturerHolidayMode($manufacturerId, null);
 
         // START test if stock available for PRODUCT has gone down (eg. by another order)
         $this->changeStockAvailable($this->productId1, 1);

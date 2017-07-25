@@ -312,7 +312,7 @@ class MyTimeHelper extends TimeHelper
      */
     public function isDatabaseDateNotSet($date)
     {
-        return $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00';
+        return $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
     }
 
     public function prepareDbDateForDatepicker($date)
@@ -359,7 +359,7 @@ class MyTimeHelper extends TimeHelper
         if ($dbString == '1970-01-01'
             || strpos($dbString, '-') === 0
         ) {
-            $dbString = '1000-01-01';  // use minimum allowed date value as NULL causes problems (string value must be returned)
+            $dbString = null;
         }
         return $dbString;
     }
