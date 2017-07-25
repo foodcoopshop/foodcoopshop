@@ -286,7 +286,7 @@ class CustomersController extends AdminAppController
                 'newPassword' => $newPassword
                 ));
 
-            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customer']))));
+            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customer']), 'mimetype' => 'application/pdf')));
             $email->send();
 
             $message .= ' und eine Info-Mail an ' . $customer['Customer']['email'] . ' versendet';
