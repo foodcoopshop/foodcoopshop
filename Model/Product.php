@@ -463,7 +463,7 @@ class Product extends AppModel
         // INSERT PRODUCT
         /*
          * $query = "INSERT INTO `".$this->tablePrefix."product` (`id_product`, `id_supplier`, `id_manufacturer`, `id_category_default`, `id_shop_default`, `id_tax_rules_group`, `on_sale`, `online_only`, `ean13`, `upc`, `ecotax`, `quantity`, `minimal_quantity`, `price`, `wholesale_price`, `unity`, `unit_price_ratio`, `additional_shipping_cost`, `reference`, `supplier_reference`, `location`, `width`, `height`, `depth`, `weight`, `out_of_stock`, `quantity_discount`, `customizable`, `uploadable_files`, `text_fields`, `active`, `redirect_type`, `id_product_redirected`, `available_for_order`, `available_date`, `condition`, `show_price`, `indexed`, `visibility`, `cache_is_pack`, `cache_has_attachments`, `is_virtual`, `cache_default_attribute`, `date_add`, `date_upd`, `advanced_stock_management`) VALUES
-         * ( 428, 0, 31, 13, 1, 4, 0, 0, '', '', 0.000000, 0, 1, 0.000000, 0.000000, '', 0.000000, 0.00, '', '', '', 0.000000, 0.000000, 0.000000, 0.000000, 2, 0, 0, 0, 0, 1, '404', 0, 1, '0000-00-00', 'new', 1, 1, 'both', 0, 0, 0, 0, '2015-02-23 16:02:25', '2015-02-23 16:02:25', 0);";
+         * ( 428, 0, 31, 13, 1, 4, 0, 0, '', '', 0.000000, 0, 1, 0.000000, 0.000000, '', 0.000000, 0.00, '', '', '', 0.000000, 0.000000, 0.000000, 0.000000, 2, 0, 0, 0, 0, 1, '404', 0, 1, '1000-01-01', 'new', 1, 1, 'both', 0, 0, 0, 0, '2015-02-23 16:02:25', '2015-02-23 16:02:25', 0);";
          */
         $this->save(array(
             'id_manufacturer' => $manufacturer['Manufacturer']['id_manufacturer'],

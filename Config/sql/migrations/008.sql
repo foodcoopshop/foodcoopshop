@@ -5,8 +5,8 @@
 -- being inserted (zero-ish values). Instead of scanning source code
 -- and adding missing INSERT values it's easier to set zero-ish default
 -- values to the columns (except DATETIME/DATE where no zero-ish value is
--- allowed by default, DATETIME defaults to CURRENT_TIMESTAMP, DATE to the
--- date literal of the day before default was added).
+-- allowed by default, DATETIME defaults to CURRENT_TIMESTAMP, DATE to
+-- '1000-01-01').
 --
 -- id_* columns still are protected by foreign keys against DB corruption.
 
