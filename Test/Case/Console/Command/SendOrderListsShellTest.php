@@ -16,10 +16,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->EmailLog = new EmailLog();
         $this->Order = new Order();
         $this->SendOrderLists = $this->createMockShell('SendOrderListsShell');
-
-        $this->markTestSkipped(
-            'Test incomplete: see https://github.com/foodcoopshop/foodcoopshop/issues/94'
-        );
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
@@ -29,7 +25,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
 
-    /*
     public function testSendOrderListsIfOneOrderAvailable()
     {
         $this->loginAsSuperadmin();
@@ -50,11 +45,10 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all');
-        $this->debug($emailLogs);
-        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
-        $this->logout();
+        $this->debug($emailLogs[1]);
+        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEmailLogs($emailLogs[1], 'Bestellungen für den', array('im Anhang findest du zwei Bestelllisten'), array(Configure::read('test.loginEmailVegetableManufacturer')));
     }
-    */
 
     public function tearDown()
     {
