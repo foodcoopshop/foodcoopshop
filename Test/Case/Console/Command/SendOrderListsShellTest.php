@@ -45,7 +45,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all');
-        $this->debug($emailLogs[1]);
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs($emailLogs[1], 'Bestellungen für den', array('im Anhang findest du zwei Bestelllisten'), array(Configure::read('test.loginEmailVegetableManufacturer')));
     }
