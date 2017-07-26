@@ -584,7 +584,7 @@ foodcoopshop.Admin = {
 
     },
 
-    initProductNameEditDialog: function (container) {
+    createProductNameEditDialog: function (container) {
 
         var dialogId = 'product-name-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Name und Beschreibung ändern">';
@@ -606,9 +606,6 @@ foodcoopshop.Admin = {
         dialogHtml += '</form>';
         dialogHtml += '</div>';
         $(container).append(dialogHtml);
-
-        foodcoopshop.Helper.initCkeditor('dialogDescription');
-        foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
         var dialog = $('#' + dialogId).dialog({
 
@@ -664,7 +661,22 @@ foodcoopshop.Admin = {
             }
         });
 
+        return dialog;
+
+    },
+
+    initProductNameEditDialog: function (container) {
+
         $('.product-name-edit-button').on('click', function () {
+
+            var dialogId = 'product-name-edit-form';
+            foodcoopshop.Helper.destroyCkeditor('dialogDescription');
+            foodcoopshop.Helper.destroyCkeditor('dialogDescriptionShort');
+            $('#' + dialogId).remove();
+
+            var dialog = foodcoopshop.Admin.createProductNameEditDialog(container);
+            foodcoopshop.Helper.initCkeditor('dialogDescription');
+            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
             var nameCell = $(this).parent().parent().parent().parent().find('td:nth-child(4)');
             $('#' + dialogId + ' #dialogName').val(nameCell.find('span.name-for-dialog').html());
@@ -682,6 +694,7 @@ foodcoopshop.Admin = {
             }
 
             dialog.dialog('open');
+
         });
 
     },
