@@ -196,7 +196,7 @@ foodcoopshop.Admin = {
 
     },
 
-    initCustomerCommentEditDialog: function (container) {
+    createCustomerCommentEditDialog: function (container) {
 
         var dialogId = 'customer-comment-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Mitglieder-Kommentar ändern">';
@@ -258,20 +258,32 @@ foodcoopshop.Admin = {
             }
         });
 
+        return dialog;
+
+    },
+
+    initCustomerCommentEditDialog: function (container) {
+
         $('.customer-comment-edit-button').on('click', function () {
+
+            foodcoopshop.Helper.destroyCkeditor('dialogCustomerComment');
+            $('#customer-comment-edit-form').remove();
+
+            var dialog = foodcoopshop.Admin.createCustomerCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
+
             var text = $(this).data('title-for-overlay');
             if (text == 'Kommentar hinzufügen') {
                 text = '';
             }
             CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
-            $('#' + dialogId + ' #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            $('#customer-comment-edit-form #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
         });
 
     },
 
-    initOrderCommentEditDialog: function (container) {
+    createOrderCommentEditDialog: function (container) {
 
         var dialogId = 'order-comment-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Kommentar zu Bestellung ändern">';
@@ -283,6 +295,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
         dialogHtml += '</form>';
         dialogHtml += '</div>';
+
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -329,15 +342,27 @@ foodcoopshop.Admin = {
             }
         });
 
+        return dialog;
+    },
+
+    initOrderCommentEditDialog: function (container) {
+
         $('.order-comment-edit-button').on('click', function () {
+
+            foodcoopshop.Helper.destroyCkeditor('dialogOrderComment');
+            $('#order-comment-edit-form').remove();
+
+            var dialog = foodcoopshop.Admin.createOrderCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogOrderComment');
+
             var text = $(this).data('title-for-overlay');
             if (text == 'Kommentar hinzufügen') {
                 text = '';
             }
             CKEDITOR.instances['dialogOrderComment'].setData(text); // attr title is deleted after toolbar init
-            $('#' + dialogId + ' #dialogOrderId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            $('#order-comment-edit-form #dialogOrderId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
+
         });
 
     },
@@ -559,7 +584,7 @@ foodcoopshop.Admin = {
 
     },
 
-    initProductNameEditDialog: function (container) {
+    createProductNameEditDialog: function (container) {
 
         var dialogId = 'product-name-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Name und Beschreibung ändern">';
@@ -581,9 +606,6 @@ foodcoopshop.Admin = {
         dialogHtml += '</form>';
         dialogHtml += '</div>';
         $(container).append(dialogHtml);
-
-        foodcoopshop.Helper.initCkeditor('dialogDescription');
-        foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
         var dialog = $('#' + dialogId).dialog({
 
@@ -639,7 +661,22 @@ foodcoopshop.Admin = {
             }
         });
 
+        return dialog;
+
+    },
+
+    initProductNameEditDialog: function (container) {
+
         $('.product-name-edit-button').on('click', function () {
+
+            var dialogId = 'product-name-edit-form';
+            foodcoopshop.Helper.destroyCkeditor('dialogDescription');
+            foodcoopshop.Helper.destroyCkeditor('dialogDescriptionShort');
+            $('#' + dialogId).remove();
+
+            var dialog = foodcoopshop.Admin.createProductNameEditDialog(container);
+            foodcoopshop.Helper.initCkeditor('dialogDescription');
+            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
             var nameCell = $(this).parent().parent().parent().parent().find('td:nth-child(4)');
             $('#' + dialogId + ' #dialogName').val(nameCell.find('span.name-for-dialog').html());
@@ -657,6 +694,7 @@ foodcoopshop.Admin = {
             }
 
             dialog.dialog('open');
+
         });
 
     },

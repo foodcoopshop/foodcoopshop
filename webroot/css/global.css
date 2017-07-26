@@ -205,6 +205,10 @@ a.toggle-link.collapsed i:before {
 .ui-dialog-buttonset button {
     float: right;
 }
+.ui-widget-overlay {
+  background: #000 ! important;
+  opacity: .65 ! important;
+}
 li.ui-state-default {
     position: relative ! important;
     float: left ! important;
