@@ -32,7 +32,7 @@
             $this->element('addScript', array(
                 'script' =>
                     Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
-                    Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('.order-comment-edit-button');"
+                    Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ));
         }
         $this->element('highlightRowAfterEdit', array(
