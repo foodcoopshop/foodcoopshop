@@ -287,7 +287,7 @@ CREATE TABLE `fcs_customer` (
   `lastname` varchar(32) NOT NULL DEFAULT '',
   `email` varchar(128) NOT NULL DEFAULT '',
   `passwd` varchar(32) NOT NULL DEFAULT '',
-  `last_passwd_gen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_passwd_gen` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `birthday` date DEFAULT NULL,
   `newsletter` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `ip_registration_newsletter` varchar(15) DEFAULT NULL,
