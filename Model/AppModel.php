@@ -29,7 +29,7 @@ class AppModel extends Model
     public function __construct($id = false, $table = null, $ds = null)
     {
 
-        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppSimpleBrowser::initSimpleBrowser()
+        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initSimpleBrowser()
         if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
                // unit tests called via web browser
                || $_SERVER['PHP_SELF'] == '/test.php'
