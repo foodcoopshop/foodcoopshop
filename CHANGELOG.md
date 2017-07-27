@@ -1,21 +1,21 @@
-# Changelog FoodCoopShop
-All notable changes to this project will be documented in this file.
+# Changelog
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unreleased [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
+
+### Neue Funktionen
 - Kommentar-Feld bei Bestell-Abschluss für Nachricht an Abholdienst. / [PR#100](https://github.com/foodcoopshop/foodcoopshop/pull/100) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Viele Hersteller-Einstellungen können jetzt auch vom Hersteller selbst verändert werden. / [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - E-Mail-Benachrichtigung für Hersteller nach Sofortbestellungen / [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Herstellern kann eine Ansprechperson zugeordnert werden. Name, E-Mail-Adresse und Telefonnummer sind dann für den Hersteller ersichtlich. [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Verbesserter Urlaubsmodus für Hersteller. Es kann jetzt das Datum angegeben werden. / [PR#81](https://github.com/foodcoopshop/foodcoopshop/pull/81) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-### Fixed
+### Bugfixes
 - Wenn ein Hersteller nur für Mitglieder sichtbar ist, sind jetzt auch zugeordnete Blog-Artikel nur für Mitglieder sichtbar (unabhängig von der Einstellung des Blog-Artikels). / [PR#90](https://github.com/foodcoopshop/foodcoopshop/pull/90) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - In den automatisierten E-Mails bei Sofort-Bestellungen wird im Footer der Name des tatsächlich eingeloggten Mitglieds angezeigt, und nicht mehr der Name, für den bestellt wird.  
 
-### Developer
+### Für Entwickler
 - Datenbank-Anpassungen für MySQL 5.7 / [PR#109](https://github.com/foodcoopshop/foodcoopshop/pull/109) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
 - Unit Tests für Stornierung, Preisänderung und Änderung der Menge von bestellten Produkten / [PR#102](https://github.com/foodcoopshop/foodcoopshop/pull/102) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Travis-CI Anpassungen für Ubuntu Trusty / [PR#110](https://github.com/foodcoopshop/foodcoopshop/pull/110) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
