@@ -255,7 +255,7 @@ class AppCakeTestCase extends CakeTestCase
         ob_flush();
     }
 
-    protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = '0000-00-00', $dateTo = '0000-00-00')
+    protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = null, $dateTo = null)
     {
         $sql = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
         $params = array(

@@ -103,7 +103,7 @@ class CakePayment extends AppModel
         $paymentSum = $this->find('all', array(
             'fields' => $fields,
             'conditions' => $conditions,
-            'order' => array('CakePayment.date_add' => 'DESC'),
+            'order' => $groupByMonth ? array('monthAndYear' => 'DESC') : array('CakePayment.date_add' => 'DESC'),
             'group' => $groupByMonth ? 'monthAndYear' : null
         ));
 

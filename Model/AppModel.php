@@ -177,12 +177,12 @@ class AppModel extends Model
     public function getManufacturerHolidayConditions()
     {
         $condition  = ' IF ( ';
-        $condition .=       '`Manufacturer`.`holiday_from` = "0000-00-00" && `Manufacturer`.`holiday_to` = "0000-00-00", 1,'; // from and to date are not set
+        $condition .=       '`Manufacturer`.`holiday_from` IS NULL && `Manufacturer`.`holiday_to` IS NULL, 1,'; // from and to date are not set
         $condition .=       'IF (';
-        $condition .=              '(`Manufacturer`.`holiday_from` <> "0000-00-00" AND `Manufacturer`.`holiday_to`   = "0000-00-00" AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
-        $condition .=           'OR (`Manufacturer`.`holiday_to`   <> "0000-00-00" AND `Manufacturer`.`holiday_from` = "0000-00-00" AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
-        $condition .=           'OR (`Manufacturer`.`holiday_from` <> "0000-00-00" AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d")) ';  // only from date is set
-        $condition .=           'OR (`Manufacturer`.`holiday_to`   <> "0000-00-00" AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")), '; // to date is over
+        $condition .=              '(`Manufacturer`.`holiday_from` IS NOT NULL AND `Manufacturer`.`holiday_to`   IS NULL AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
+        $condition .=           'OR (`Manufacturer`.`holiday_to`   IS NOT NULL AND `Manufacturer`.`holiday_from` IS NULL AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
+        $condition .=           'OR (`Manufacturer`.`holiday_from` IS NOT NULL AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d")) ';  // only from date is set
+        $condition .=           'OR (`Manufacturer`.`holiday_to`   IS NOT NULL AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")), '; // to date is over
         $condition .=       '1, 0)';
         $condition .=   ')';
         return $condition;

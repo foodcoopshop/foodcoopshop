@@ -478,6 +478,10 @@ class ManufacturersController extends AdminAppController
             )
         ));
 
+        if (empty($unsavedManufacturer)) {
+            throw new MissingActionException('manufacturer does not exist');
+        }
+
         // set default data if manufacturer options are null
         if (Configure::read('app.useManufacturerCompensationPercentage') && $unsavedManufacturer['Manufacturer']['compensation_percentage'] == '') {
             $unsavedManufacturer['Manufacturer']['compensation_percentage'] = Configure::read('app.defaultCompensationPercentage');
@@ -509,10 +513,6 @@ class ManufacturersController extends AdminAppController
 
         $unsavedManufacturer['Manufacturer']['holiday_from'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_from']);
         $unsavedManufacturer['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_to']);
-
-        if (empty($unsavedManufacturer)) {
-            throw new MissingActionException('manufacturer does not exist');
-        }
 
         $this->set('unsavedManufacturer', $unsavedManufacturer);
         $this->set('manufacturerId', $manufacturerId);
