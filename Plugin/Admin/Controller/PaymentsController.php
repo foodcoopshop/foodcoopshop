@@ -338,7 +338,8 @@ class PaymentsController extends AdminAppController
             'date_changed' => date('Y-m-d H:i:s'),
             'amount' => $amount,
             'text' => $text,
-            'created_by' => $this->AppAuth->getUserId()
+            'created_by' => $this->AppAuth->getUserId(),
+            'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
         ));
 
         $this->loadModel('CakeActionLog');
