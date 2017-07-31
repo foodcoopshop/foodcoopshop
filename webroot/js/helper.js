@@ -513,6 +513,15 @@ foodcoopshop.Helper = {
         });
     },
 
+    /**
+     * @return value of an object by given path (separated by .)
+     */
+    resolveIndex : function (path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : undefined
+        }, obj || self)
+    },
+
     getRandomCode: function () {
         return Math.floor(Math.random() * 981151510);
     },

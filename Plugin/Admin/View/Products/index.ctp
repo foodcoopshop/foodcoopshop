@@ -66,6 +66,20 @@
                 ));
                 echo '</div>';
             }
+
+            if (Configure::read('app.networkToolsEnabled') && $appAuth->isManufacturer()) {
+                echo '<div id="toggle-sync-view-button-wrapper">';
+                echo $this->Html->link(
+                    '<i class="fa fa-refresh"></i> Produkte synchronisieren',
+                    $this->Slug->getSyncProductData(),
+                    array(
+                        'class' => 'btn btn-success',
+                        'escape' => false
+                    )
+                );
+                echo '</div>';
+            }
+
             ?>
         </div>
 

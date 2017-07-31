@@ -452,7 +452,8 @@ body.payments.member_fee #add-payment-button-wrapper {
 #payments-list #add-payment-button-wrapper .jquery-ui-icon a.icon-with-text {
     font-weight: bold;
 }
-.add-button-wrapper {
+.add-button-wrapper,
+#toggle-sync-view-button-wrapper {
     float: left;
     margin-right: 3px;
 }

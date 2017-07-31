@@ -36,8 +36,8 @@ class ProductLang extends AppModel
      *              [productId] => Array
      *                  (
      *                      [name] => Brokkoli-1
-     *                      [description] => grünes Gemüse: Strunk mit Röschen auch angeschwollenen Knospen-1
-     *                      [description_short] => kbA, vom Gemüsehof Wild-Obermayr-1
+     *                      [description] => grÃ¼nes GemÃ¼se: Strunk mit RÃ¶schen auch angeschwollenen Knospen-1
+     *                      [description_short] => kbA, vom GemÃ¼sehof Wild-Obermayr-1
      *                      [unity] => ca. 0,4 kg-1
      *                  )
      *          )

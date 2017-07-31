@@ -145,6 +145,14 @@ class CakeActionLog extends AppModel
                 'manufacturer'
             )
         ),
+
+        'product_remotely_changed' => array(
+            'de' => 'Synchronisation: Artikel geändert',
+            'access' => array(
+                'manufacturer'
+            )
+        ),
+
         'orders_state_changed' => array(
             'de' => 'Bestellung: Status geändert'
         ),

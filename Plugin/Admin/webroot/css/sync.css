@@ -1,0 +1,107 @@
+form.sync-login-form {
+    border: 1px solid #dfdfdf;
+    border-radius: 3px;
+    float: left;
+    padding: 5px;
+    width: 241px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background: #fff;
+}
+form.sync-login-form .toggle-link {
+  margin-top: -5px;
+  margin-bottom: 0;
+}
+form.sync-login-form input.username {
+  margin-top: 5px;
+}
+form.sync-login-form input {
+    width: 100%;
+}
+form.sync-login-form.error {
+    background: #f3515c;
+}
+form.sync-login-form.error b {
+    color: #fff;
+}
+body.syncs.product div.product-list {
+    float: left;
+    margin-right: 1%;
+    min-height: 1px; /* force width */
+}
+body.syncs.product div.product-list > b,
+form.sync-login-form > b {
+    margin-bottom: 5px;
+    float: left;
+    overflow: hidden;
+}
+body.syncs.product table.sync-list > tbody > tr > *:nth-child(1),
+body.syncs.product table.sync-list > tbody > tr > *:nth-child(n+3):nth-child(-n+8) {
+    display: none;
+}
+body.syncs.product table.sync-list tr.ok td,
+body.syncs.product table.assigned-products td {
+    color: #fff;
+    background-color: rgba(113,159,65,.7);
+}
+body.syncs.product table.assigned-products .spinner {
+  float: right;
+  margin-left: 5px;
+}
+body.syncs.product table.sync-list td.ui-droppable-hover {
+  background-color: orange;
+  opacity: .7;
+}
+body.syncs.product table.sync-list td.ui-draggable-dragging {
+  border: 2px solid orange;
+  background: #fff;
+  color: #333 ! important;
+}
+
+body.syncs.product table.assigned-products {
+  display: table ! important;
+  width: 100%;
+}
+body.syncs.product table.assigned-products td {
+  font-size: 11px;
+  font-style: italic;
+  border: none;
+  color: #fff;
+}
+body.syncs.product table.assigned-products td:first-of-type {
+  width: 20px;
+}
+body.syncs.product table.assigned-products span.app-name {
+  float: right;
+  margin-left: 5px;
+  font-style: italic;
+}
+
+body.syncs.product a.delete-product-button i {
+  color: #fff;
+}
+body.syncs.product a.delete-product-button:hover i {
+    color: red;
+}
+
+.ui-draggable {
+    cursor: move; /* fallback: no `url()` support or images disabled */
+    cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
+    cursor:    -moz-grab; /* Firefox 1.5-26 */
+    cursor:         grab; /* W3C standards syntax, should come least */
+}
+.ui-draggable:active {
+    cursor: -webkit-grabbing;
+    cursor:    -moz-grabbing;
+    cursor:         grabbing;
+}
+
+body.syncs.product_data table.product-list {
+  width: 600px;
+}
+body.syncs.product_data table.product-list tr.horizontal-checkboxes {
+  background-color: #ebebeb;
+}
+body.syncs.product_data table.product-list tr:nth-of-type(2) td {
+  text-align: center; /* checkboxes */
+}

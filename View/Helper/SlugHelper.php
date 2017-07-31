@@ -110,6 +110,16 @@ class SlugHelper extends Helper
         return '/kategorie/' . $categoryId . '-' . StringComponent::slugify($name);
     }
 
+    public function getSyncProducts()
+    {
+        return '/admin/syncs/products';
+    }
+
+    public function getSyncProductData()
+    {
+        return '/admin/syncs/productData';
+    }
+
     public function getLogin()
     {
         return '/anmelden';
