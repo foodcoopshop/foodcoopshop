@@ -178,6 +178,26 @@ class AppController extends Controller
     }
 
     /**
+     * can be used for returning exceptions as json
+     * try {
+     *      $this->foo->bar();
+     *  } catch (Exception $e) {
+     *      $this->sendAjaxError($e);
+     *  }
+     * @param $error
+     */
+    protected function sendAjaxError($error)
+    {
+        if ($this->request->is('ajax')) {
+            $this->response->statusCode(500);
+            $response['status'] = APP_OFF;
+            $response['msg'] = $error->getMessage();
+            $this->set(compact('response'));
+            $this->render('/Errors/errorjson');
+        }
+    }
+
+    /**
      * needs to be implemented if $this->AppAuth->authorize = array('Controller') is used
      */
     public function isAuthorized($user)

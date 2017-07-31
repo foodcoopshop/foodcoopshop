@@ -70,10 +70,11 @@ class ActionLogsController extends AdminAppController
 
         // manufacturers should only see their own product logs
         if ($this->AppAuth->isManufacturer()) {
-            $conditions[] = '(BlogPost.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+            $conditions[] = '( (BlogPost.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Product.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR CakePayment.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Manufacturer.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ')';
+                ' OR Manufacturer.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ') '.
+              ' OR (CakeActionLog.customer_id = ' .$this->AppAuth->getUserId().') )';
         }
 
         // customers are only allowed to see their own data
