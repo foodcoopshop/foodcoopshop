@@ -124,7 +124,7 @@ class CakeCart extends AppModel
                     'productId' => $cartProduct['CakeCartProduct']['id_product'],
                     'productName' => $cartProduct['ProductLang']['name'],
                     'productLink' => $productLink,
-                    'unity' => $cartProduct['Product']['ProductShop']['unity'],
+                    'unity' => $cartProduct['Product']['ProductLang']['unity'],
                     'amount' => $cartProduct['CakeCartProduct']['amount'],
                     'manufacturerId' => $cartProduct['Product']['id_manufacturer'],
                     'manufacturerLink' => $manufacturerLink,

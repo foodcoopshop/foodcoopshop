@@ -127,8 +127,8 @@ class AppModel extends Model
     protected function getFieldsForProductListQuery()
     {
         return "Product.id_product,
-                ProductLang.name, ProductLang.description_short, ProductLang.description,
-                ProductShop.price, ProductShop.unity, ProductShop.date_add,
+                ProductLang.name, ProductLang.description_short, ProductLang.description, ProductLang.unity,
+                ProductShop.price, ProductShop.date_add,
                 CakeDeposit.deposit,
                 ImageLang.id_image, ImageLang.legend,
                 Manufacturer.id_manufacturer, Manufacturer.name,

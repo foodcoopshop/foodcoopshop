@@ -556,6 +556,25 @@ foodcoopshop.Helper = {
 
     },
 
+    showOrAppendSuccessMessage : function (message) {
+        if ($('#flashMessage').length === 0) {
+            this.showSuccessMessage(message);
+        } else {
+            $('#flashMessage').append('<br />' + message);
+        }
+    },
+
+    /**
+     * if flash message was success message, transfer it into error message
+     */
+    showOrAppendErrorMessage : function (message) {
+        if ($('#flashMessage').length === 0) {
+            this.showErrorMessage(message);
+        } else {
+            $('#flashMessage').removeClass('success').addClass('error').append('<br />' + message);
+        }
+    },
+
     showSuccessMessage: function (message) {
         this.showFlashMessage(message, 'success');
     },
@@ -601,6 +620,9 @@ foodcoopshop.Helper = {
                         errorThrown: errorThrown
                     }
                 };
+                if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.msg) {
+                    data.msg = XMLHttpRequest.responseJSON.msg;
+                }
                 if (callbacks.onEnd) {
                     callbacks.onEnd(data);
                 }

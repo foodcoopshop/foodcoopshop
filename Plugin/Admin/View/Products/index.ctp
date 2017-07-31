@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<div id="products">
+<div id="products" class="product-list">
      
         <?php
         $this->element('addScript', array(
@@ -206,10 +206,10 @@
 
         // show unity only if article has no attributes and field "unity" is not empty
         if (empty($product['ProductAttributes'])) {
-            if (isset($product['ProductShop']) && $product['ProductShop']['unity'] != '') {
+            if (isset($product['ProductLang']) && $product['ProductLang']['unity'] != '') {
                 echo ': ';
                 echo '<span class="unity-for-dialog">';
-                echo $product['ProductShop']['unity'];
+                echo $product['ProductLang']['unity'];
                 echo '</span>';
             }
         }

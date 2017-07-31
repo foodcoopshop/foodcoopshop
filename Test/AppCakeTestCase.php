@@ -119,11 +119,23 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
 
+    /**
+     * back tick ` allows using forward slash in $unquotedString
+     * @param string $unquotedString
+     * @param string $response
+     * @param string $msg
+     */
     protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
         $this->assertRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
+    /**
+     * back tick ` allows using forward slash in $unquotedString
+     * @param string $unquotedString
+     * @param string $response
+     * @param string $msg
+     */
     protected function assertNotRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
         $this->assertNotRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);

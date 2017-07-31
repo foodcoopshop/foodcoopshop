@@ -30,14 +30,18 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },
 
+    /**
+     * @return rowMarker dom element
+     */
     initRowMarkerAll : function () {
-        $('input#row-marker-all').on('change', function () {
+        var rowMarkerAll = $('input#row-marker-all').on('change', function () {
             if (this.checked) {
                 $('input.row-marker[type="checkbox"]:not(:checked)').trigger('click');
             } else {
                 $('input.row-marker[type="checkbox"]:checked').trigger('click');
             }
-        })
+        });
+        return rowMarkerAll;
     },
 
     initCancelSelectionButton : function () {
@@ -564,7 +568,7 @@ foodcoopshop.Admin = {
                             onError: function (data) {
                                 dialog.dialog('close');
                                 $('#product-price-edit-form .ajax-loader').hide();
-                                alert(data.msg);
+                                foodcoopshop.Helper.showErrorMessage(data.msg);
                             }
                         }
                     );
@@ -651,7 +655,9 @@ foodcoopshop.Admin = {
                                 document.location.reload();
                             },
                             onError: function (data) {
-                                console.log(data);
+                                dialog.dialog('close');
+                                $('#product-name-edit-form .ajax-loader').hide();
+                                foodcoopshop.Helper.showErrorMessage(data.msg);
                             }
                         }
                     );
@@ -765,7 +771,7 @@ foodcoopshop.Admin = {
                             onError: function (data) {
                                 dialog.dialog('close');
                                 $('#product-quantity-edit-form .ajax-loader').hide();
-                                alert(data.msg);
+                                foodcoopshop.Helper.showErrorMessage(data.msg);
                             }
                         }
                     );

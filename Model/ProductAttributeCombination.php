@@ -62,11 +62,11 @@ class ProductAttributeCombination extends AppModel
 
             $preparedProduct['link'] = Configure::read('htmlHelper')->link($preparedProduct['ProductLang']['name'] . ' - ' . $preparedProduct['Manufacturer']['name'], Configure::read('slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLang']['name']));
 
-            if ($combination['ProductAttribute']['Product']['ProductShop']['active'] == 1) {
+            if ($combination['ProductAttribute']['Product']['active'] == 1) {
                 $return['online'][] = $preparedProduct;
             }
 
-            if ($combination['ProductAttribute']['Product']['ProductShop']['active'] == 0) {
+            if ($combination['ProductAttribute']['Product']['active'] == 0) {
                 $return['offline'][] = $preparedProduct;
             }
         }
