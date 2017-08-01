@@ -112,12 +112,12 @@ class SlugHelper extends Helper
 
     public function getSyncProducts()
     {
-        return '/admin/syncs/products';
+        return '/network/syncs/products';
     }
 
     public function getSyncProductData()
     {
-        return '/admin/syncs/productData';
+        return '/network/syncs/productData';
     }
 
     public function getLogin()

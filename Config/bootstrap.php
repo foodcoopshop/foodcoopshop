@@ -131,6 +131,11 @@ CakePlugin::load('Admin');
 CakePlugin::load('AssetCompress', array(
     'bootstrap' => true
 ));
+if (Configure::read('app.networkToolsEnabled')) {
+    CakePlugin::load('Network', array(
+        'routes' => true
+    ));
+}
 
 // composer integration
 require APP . '/Vendor/autoload.php';

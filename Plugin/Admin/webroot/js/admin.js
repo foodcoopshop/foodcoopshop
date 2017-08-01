@@ -26,6 +26,14 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+
+    addLoaderToSyncProductDataButton : function (button) {
+        button.on('click', function () {
+             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-refresh');
+             foodcoopshop.Helper.disableButton($(this));
+        });
+    },
+
     selectMainMenuAdmin: function (mainMenuTitle, subMenuTitle) {
         foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },

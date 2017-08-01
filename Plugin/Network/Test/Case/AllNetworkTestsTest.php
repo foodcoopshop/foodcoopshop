@@ -1,5 +1,7 @@
 <?php
 /**
+ * AllNetworkTestsTest
+ *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -12,15 +14,18 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+class AllNetworkTestsTest extends PHPUnit_Framework_TestSuite
+{
 
-$raw = false;
-if (Configure::read('debug') > 0) {
-    $raw = true;
-}
-
-echo $this->AssetCompress->script('base', array('raw' => $raw));
-echo $this->AssetCompress->script($config, array('raw' => $raw));
-
-if (isset($network) && $network) {
-    echo $this->AssetCompress->script('network', array('raw' => $raw));
+    /**
+     * suite method, defines tests for this suite.
+     *
+     * @return void
+     */
+    public static function suite()
+    {
+        $suite = new CakeTestSuite('All Tests');
+        $suite->addTestDirectoryRecursive(CakePlugin::path('Network') . 'Test' . DS . 'Case');
+        return $suite;
+    }
 }

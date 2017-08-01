@@ -347,6 +347,11 @@ body.products.index .unity-for-dialog {
     font-size: 11px;
     font-style: italic;
 }
+body.products.index .toggle-sync-button-wrapper {
+  float: left;
+  margin-right: 3px;
+}
+
 #actionLogs div.changed {
     background: lightgray;
     padding: 10px;

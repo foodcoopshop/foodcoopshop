@@ -69,7 +69,7 @@
 
             if (Configure::read('app.networkToolsEnabled') && $appAuth->isManufacturer()) {
                 $this->element('addScript', array(
-                    'script' => Configure::read('app.jsNamespace') . ".SyncProductData.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
+                    'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
                 ));
                 echo '<div class="toggle-sync-button-wrapper">';
                     echo $this->Html->link(

@@ -47,13 +47,6 @@ foodcoopshop.SyncProductData = {
         this.bindSyncProductDataButton();
     },
 
-    addLoaderToSyncProductDataButton : function (button) {
-        button.on('click', function () {
-             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-refresh');
-             foodcoopshop.Helper.disableButton($(this));
-        });
-    },
-
     getProductTableHeadElements : function () {
         return  ['<input type="checkbox" id="row-marker-all" />', 'Name', 'Kategorien', 'Anzahl', 'Preis', /* 'Pfand', 'Neu', */ 'Aktiv'];
     },

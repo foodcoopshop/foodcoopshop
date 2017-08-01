@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class SyncsController extends AdminAppController
+class SyncsController extends AppController
 {
 
     public function isAuthorized($user)
@@ -25,8 +25,11 @@ class SyncsController extends AdminAppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->loadModel('SyncDomain');
-        $this->loadModel('SyncProduct');
+
+        $this->layout = 'Admin.default';
+
+        $this->loadModel('Network.SyncDomain');
+        $this->loadModel('Network.SyncProduct');
     }
 
     public function ajaxSaveProduct()

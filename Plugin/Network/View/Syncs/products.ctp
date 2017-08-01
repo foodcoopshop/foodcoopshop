@@ -28,7 +28,7 @@
         <?php
            echo $this->element('syncLoginForm', array('syncDomains' => $syncDomains));
            $this->element('addScript', array(
-               'script' => Configure::read('app.jsNamespace') . ".SyncProductData.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-default'));"
+               'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-default'));"
            ));
            echo '<div class="sync-button-wrapper">';
                echo $this->Html->link('<i class="fa fa-refresh"></i> Produkte laden', 'javascript:void(0);', array(

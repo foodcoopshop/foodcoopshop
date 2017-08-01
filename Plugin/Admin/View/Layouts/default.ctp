@@ -31,7 +31,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-        echo $this->element('renderCss', array('config' => 'admin'));
+    echo $this->element('renderCss', array('config' => 'admin', 'network' => ($this->plugin == 'Network')));
     if ($isMobile) {
         echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
     }
@@ -43,7 +43,7 @@
 
     <div id="container">
         
-        <?php echo $this->element('menu'); ?>
+        <?php echo $this->element('Admin.menu'); ?>
         
         <div id="content">
             <?php echo $this->Session->flash(); ?>
@@ -57,7 +57,7 @@
     
 <?php
 
-echo $this->element('renderJs', array('config' => 'admin'));
+echo $this->element('renderJs', array('config' => 'admin', 'network' => ($this->plugin == 'Network')));
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';

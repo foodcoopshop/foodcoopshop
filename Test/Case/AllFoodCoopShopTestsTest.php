@@ -28,6 +28,7 @@ class AllFoodCoopShopTestsTest extends PHPUnit_Framework_TestSuite
         // TODO maybe there is a more elegant way to include the defined tests of existing suites than copying them
         $suite->addTestDirectoryRecursive(TESTS . 'Case');
         $suite->addTestDirectoryRecursive(CakePlugin::path('Admin') . 'Test' . DS . 'Case');
+        $suite->addTestDirectoryRecursive(CakePlugin::path('Network') . 'Test' . DS . 'Case');
         return $suite;
     }
 }
