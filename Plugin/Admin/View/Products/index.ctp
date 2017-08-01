@@ -68,15 +68,18 @@
             }
 
             if (Configure::read('app.networkToolsEnabled') && $appAuth->isManufacturer()) {
-                echo '<div id="toggle-sync-view-button-wrapper">';
-                echo $this->Html->link(
-                    '<i class="fa fa-refresh"></i> Produkte synchronisieren',
-                    $this->Slug->getSyncProductData(),
-                    array(
-                        'class' => 'btn btn-success',
-                        'escape' => false
-                    )
-                );
+                $this->element('addScript', array(
+                    'script' => Configure::read('app.jsNamespace') . ".SyncProductData.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
+                ));
+                echo '<div class="toggle-sync-button-wrapper">';
+                    echo $this->Html->link(
+                        '<i class="fa fa-refresh"></i> Produkte synchronisieren',
+                        $this->Slug->getSyncProductData(),
+                        array(
+                            'class' => 'btn btn-default',
+                            'escape' => false
+                        )
+                    );
                 echo '</div>';
             }
 

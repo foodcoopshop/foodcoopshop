@@ -79,14 +79,6 @@ $homepageAdministrationElement = array(
         'fa-icon' => 'fa-fw fa-pencil-square-o'
     )
 );
-$syncArticlesMenuElement = array(
-    'slug' => $this->Slug->getSyncProducts(),
-    'name' => 'Synchronisieren',
-    'options' => array(
-        'fa-icon' => 'fa-fw fa-refresh'
-    )
-);
-
 $menu = array();
 $logoHtml = '<img class="logo" src="/files/images/logo.jpg" width="100%" />';
 $menu[] = array(
@@ -226,7 +218,6 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 'fa-icon' => 'fa-fw fa-cogs'
             )
         );
-//         $homepageAdministrationElement['children'][] = $syncArticlesMenuElement;
     }
 
     $menu[] = $homepageAdministrationElement;
@@ -241,7 +232,6 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-tags'
         )
     );
-    $menu[] = $syncArticlesMenuElement;
     $menu[] = $cancelledArticlesMenuElement;
     $profileMenu = array(
         'slug' => $this->Slug->getManufacturerProfile(),

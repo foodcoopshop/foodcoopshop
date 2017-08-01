@@ -27,11 +27,22 @@
     <div class="filter-container">
         <?php
            echo $this->element('syncLoginForm', array('syncDomains' => $syncDomains));
-           echo '<div id="sync-button-wrapper">';
+           $this->element('addScript', array(
+               'script' => Configure::read('app.jsNamespace') . ".SyncProductData.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-default'));"
+           ));
+           echo '<div class="sync-button-wrapper">';
                echo $this->Html->link('<i class="fa fa-refresh"></i> Produkte laden', 'javascript:void(0);', array(
                    'class' => 'btn btn-success',
                    'escape' => false
                 ));
+               echo $this->Html->link(
+                   '<i class="fa fa-refresh"></i> Produkte synchronisieren',
+                   $this->Slug->getSyncProductData(),
+                   array(
+                       'class' => 'btn btn-default',
+                       'escape' => false
+                   )
+               );
                echo '</div>';
         ?>
     </div>

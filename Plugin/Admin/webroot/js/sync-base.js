@@ -16,7 +16,7 @@ foodcoopshop.SyncBase = {
     activeAjaxRequests : [],
 
     resetForm : function () {
-        this.resetButton($('#sync-button-wrapper a'), 'fa-refresh');
+        this.resetButton($('.sync-button-wrapper a'), 'fa-refresh');
     },
 
     resetButton : function (button, initialClass) {

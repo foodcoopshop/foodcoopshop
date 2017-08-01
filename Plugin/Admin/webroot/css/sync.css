@@ -1,11 +1,25 @@
+body.products.index .toggle-sync-button-wrapper,
+body.syncs.product .sync-button-wrapper,
+body.syncs.product_data .sync-button-wrapper {
+    float: left;
+    margin-right: 3px;
+}
+body.syncs.product .sync-button-wrapper,
+body.syncs.product_data .sync-button-wrapper {
+  width: 184px;
+}
+body.syncs.product .sync-button-wrapper a.btn-success,
+body.syncs.product_data .sync-button-wrapper a.btn-success {
+  margin-bottom: 3px;
+}
 form.sync-login-form {
     border: 1px solid #dfdfdf;
     border-radius: 3px;
     float: left;
-    padding: 5px;
+    padding: 7px;
     width: 241px;
     margin-right: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
     background: #fff;
 }
 form.sync-login-form .toggle-link {

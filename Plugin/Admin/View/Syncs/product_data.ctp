@@ -27,11 +27,19 @@
     <div class="filter-container">
         <?php
            echo $this->element('syncLoginForm', array('syncDomains' => $syncDomains));
-           echo '<div id="sync-button-wrapper">';
+           echo '<div class="sync-button-wrapper">';
                echo $this->Html->link('<i class="fa fa-refresh"></i> Jetzt synchronisieren', 'javascript:void(0);', array(
                    'class' => 'btn btn-success',
                    'escape' => false
                 ));
+               echo $this->Html->link(
+                   '<i class="fa fa-refresh"></i> Produkte zuordnen',
+                   $this->Slug->getSyncProducts(),
+                   array(
+                       'class' => 'btn btn-default',
+                       'escape' => false
+                   )
+               );
                echo '</div>';
         ?>
     </div>

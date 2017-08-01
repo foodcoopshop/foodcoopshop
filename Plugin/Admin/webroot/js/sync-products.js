@@ -18,12 +18,12 @@ foodcoopshop.SyncProducts = {
         this.bindLoadRemoteProductsButton();
         this.changeProductListWidth(foodcoopshop.SyncBase.getLoginForms().length);
         if (foodcoopshop.SyncBase.getLoginForms().length == localStorageCredentialsCount) {
-            $('#sync-button-wrapper a').trigger('click');
+            $('.sync-button-wrapper a.btn-success').trigger('click');
         }
     },
 
     bindLoadRemoteProductsButton : function () {
-        $('#sync-button-wrapper a').on('click', function () {
+        $('.sync-button-wrapper a.btn-success').on('click', function () {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-refresh');
             foodcoopshop.Helper.disableButton($(this));
             $('div.product-list.remote').html('');
