@@ -72,3 +72,4 @@ Configure::write('app.paymentMethods', array(
     'cashless'
 ));
 
+Configure::write('app.networkToolsEnabled', true);
