@@ -114,7 +114,7 @@ foodcoopshop.SyncProductData = {
 
     bindSyncProductDataButton : function () {
 
-        $('.sync-button-wrapper a').on('click', function () {
+        $('.sync-button-wrapper a.btn-success').on('click', function () {
 
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-refresh');
             foodcoopshop.Helper.disableButton($(this));
