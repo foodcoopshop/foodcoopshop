@@ -20,7 +20,8 @@
             'script' =>
                 Configure::read('app.jsNamespace') . ".Admin.init();".
                 Configure::read('app.jsNamespace') . ".SyncProductData.init('".addslashes(json_encode($syncProducts))."', '".addslashes(json_encode($localSyncProducts))."');".
-                Configure::read('app.jsNamespace') . ".SyncProductData.showLocalProductList();"
+                Configure::read('app.jsNamespace') . ".SyncProductData.showLocalProductList();".
+                Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-default'));"
         ));
     ?>
    

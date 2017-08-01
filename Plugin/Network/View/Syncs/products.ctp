@@ -20,16 +20,14 @@
             'script' =>
                 Configure::read('app.jsNamespace') . ".Admin.init();".
                 Configure::read('app.jsNamespace') . ".SyncProducts.showLocalProductList('".addslashes(json_encode($localResponse))."');".
-                Configure::read('app.jsNamespace') . ".SyncProducts.init();"
+                Configure::read('app.jsNamespace') . ".SyncProducts.init();".
+                Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-default'));"
         ));
     ?>
    
     <div class="filter-container">
         <?php
            echo $this->element('syncLoginForm', array('syncDomains' => $syncDomains));
-           $this->element('addScript', array(
-               'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-default'));"
-           ));
            echo '<div class="sync-button-wrapper">';
                echo $this->Html->link('<i class="fa fa-refresh"></i> Produkte laden', 'javascript:void(0);', array(
                    'class' => 'btn btn-success',
