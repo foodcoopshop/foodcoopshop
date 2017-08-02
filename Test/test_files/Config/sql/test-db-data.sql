@@ -47,8 +47,6 @@ TRUNCATE TABLE `fcs_smart_blog_post`;
 TRUNCATE TABLE `fcs_smart_blog_post_lang`;
 TRUNCATE TABLE `fcs_smart_blog_post_shop`;
 TRUNCATE TABLE `fcs_stock_available`;
-TRUNCATE TABLE `fcs_sync_domains`;
-TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
 
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
@@ -1004,12 +1002,6 @@ INSERT INTO `fcs_stock_available` VALUES
 (707,357,0,1,0,999,0,2),
 (708,361,18,1,0,999,0,0);
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_sync_domains` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_sync_products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_sync_products` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_tax` DISABLE KEYS */;
 INSERT INTO `fcs_tax` VALUES
