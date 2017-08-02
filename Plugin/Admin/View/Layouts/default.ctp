@@ -33,7 +33,7 @@
     <?php
     $cssConfigs = array('admin');
     if ($this->plugin == 'Network') {
-        $cssConfigs[] = 'Network.sync';
+        $cssConfigs[] = 'Network.all';
     }
     echo $this->element('renderCss', array('configs' => $cssConfigs));
     if ($isMobile) {
@@ -62,7 +62,7 @@
 <?php
 $jsConfigs = array('admin');
 if ($this->plugin == 'Network') {
-    $jsConfigs[] = 'Network.sync';
+    $jsConfigs[] = 'Network.all';
 }
 echo $this->element('renderJs', array('configs' => $jsConfigs));
 
