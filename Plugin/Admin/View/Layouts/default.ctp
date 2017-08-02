@@ -32,8 +32,8 @@
     
     <?php
     $cssConfigs = array('admin');
-    if ($this->plugin == 'Network') {
-        $cssConfigs[] = 'Network.all';
+    if ($this->plugin != 'Admin') {
+        $cssConfigs[] = $this->plugin.'.all';
     }
     echo $this->element('renderCss', array('configs' => $cssConfigs));
     if ($isMobile) {
@@ -61,8 +61,8 @@
     
 <?php
 $jsConfigs = array('admin');
-if ($this->plugin == 'Network') {
-    $jsConfigs[] = 'Network.all';
+if ($this->plugin != 'Admin') {
+    $jsConfigs[] = $this->plugin.'.all';
 }
 echo $this->element('renderJs', array('configs' => $jsConfigs));
 

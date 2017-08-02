@@ -143,13 +143,13 @@ class MenuHelper extends Helper
                 $userName = $appAuth->getManufacturerName();
             }
 
-            if (in_array($this->plugin, array('Network', 'Admin'))) {
+            if ($this->plugin != '') {
                 $menuElement = array('slug' => 'javascript:void(0);', 'name' => 'Abmelden<br /><span>'.$userName.'</span>', 'options' => array('fa-icon' => 'fa-fw fa-sign-out', 'class' => array('logout-button')));
             } else {
                 $menuElement = array('slug' => 'javascript:void(0);', 'name' => 'Abmelden', 'options' => array('class' => array('logout-button')));
             }
         } else {
-            if (!in_array($this->plugin, array('Network', 'Admin'))) {
+            if ($this->plugin == '') {
                 $menuElement = array('slug' => Configure::read('slugHelper')->getLogin(), 'name' => 'Anmelden');
             }
         }
