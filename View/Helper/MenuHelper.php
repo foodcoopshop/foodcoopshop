@@ -149,7 +149,7 @@ class MenuHelper extends Helper
                 $menuElement = array('slug' => 'javascript:void(0);', 'name' => 'Abmelden', 'options' => array('class' => array('logout-button')));
             }
         } else {
-            if (in_array($this->plugin, array('Network', 'Admin'))) {
+            if (!in_array($this->plugin, array('Network', 'Admin'))) {
                 $menuElement = array('slug' => Configure::read('slugHelper')->getLogin(), 'name' => 'Anmelden');
             }
         }
