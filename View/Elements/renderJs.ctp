@@ -19,8 +19,6 @@ if (Configure::read('debug') > 0) {
 }
 
 echo $this->AssetCompress->script('base', array('raw' => $raw));
-echo $this->AssetCompress->script($config, array('raw' => $raw));
-
-if (isset($network) && $network) {
-    echo $this->AssetCompress->script('network', array('raw' => $raw));
+foreach ($configs as $config) {
+    echo $this->AssetCompress->script($config, array('raw' => $raw));
 }

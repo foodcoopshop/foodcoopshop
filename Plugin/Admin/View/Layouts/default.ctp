@@ -31,7 +31,11 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-    echo $this->element('renderCss', array('config' => 'admin', 'network' => ($this->plugin == 'Network')));
+    $cssConfigs = array('admin');
+    if ($this->plugin == 'Network') {
+        $cssConfigs[] = 'Network.sync';
+    }
+    echo $this->element('renderCss', array('configs' => $cssConfigs));
     if ($isMobile) {
         echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
     }
@@ -56,8 +60,11 @@
     <div class="sc"></div>
     
 <?php
-
-echo $this->element('renderJs', array('config' => 'admin', 'network' => ($this->plugin == 'Network')));
+$jsConfigs = array('admin');
+if ($this->plugin == 'Network') {
+    $jsConfigs[] = 'Network.sync';
+}
+echo $this->element('renderJs', array('configs' => $jsConfigs));
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';

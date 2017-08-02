@@ -25,7 +25,7 @@
     <?php echo $this->element('jsNamespace'); ?>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
-    <?php echo $this->element('renderCss', array('config' => 'plain')); ?>
+    <?php echo $this->element('renderCss', array('configs' => array('plain'))); ?>
     <?php
     if ($isMobile) {
         echo $this->Html->css(array('mobile-plain'));
@@ -66,7 +66,7 @@
     
 <?php
 
-    echo $this->element('renderJs', array('config' => 'frontend'));
+    echo $this->element('renderJs', array('configs' => array('frontend')));
 
 if ($this->name != 'CakeError' || Configure::read('debug') == 0) {
     $this->element('addScript', array('script' =>

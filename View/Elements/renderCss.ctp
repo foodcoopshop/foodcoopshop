@@ -19,8 +19,6 @@ if (Configure::read('debug') > 0) {
 }
 
 echo $this->AssetCompress->css('base', array('raw' => $raw));
-echo $this->AssetCompress->css($config, array('raw' => $raw));
-
-if (isset($network) && $network) {
-    echo $this->AssetCompress->css('network', array('raw' => $raw));
+foreach ($configs as $config) {
+    echo $this->AssetCompress->css($config, array('raw' => $raw));
 }
