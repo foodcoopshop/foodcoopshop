@@ -74,8 +74,10 @@ if ($isMobile) {
 }
 echo $this->element('sql_dump');
 
-echo $this->Html->script('vendor/ckeditor/ckeditor');
-echo $this->Html->script('vendor/ckeditor/adapters/jquery');
+if ($this->plugin == 'Admin') {
+    echo $this->Html->script('vendor/ckeditor/ckeditor');
+    echo $this->Html->script('vendor/ckeditor/adapters/jquery');
+}
 
 echo $this->fetch('script'); // all scripts from layouts
 ?>
