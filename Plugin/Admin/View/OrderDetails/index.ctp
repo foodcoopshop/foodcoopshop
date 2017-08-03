@@ -101,7 +101,7 @@ echo '<th class="right">' . $this->Paginator->sort('OrderDetail.product_quantity
 echo '<th>' . $this->Paginator->sort('OrderDetail.product_name', 'Artikel') . '</th>';
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">Hersteller</th>';
 echo '<th class="right">' . $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag') . '</th>';
-if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
+if ($groupByManufacturer && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
@@ -201,7 +201,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '</div>';
     echo '</td>';
 
-    if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
+    if ($groupByManufacturer && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
 
         echo '<td>';
@@ -283,7 +283,7 @@ if ($appAuth->isManufacturer()) {
     echo '<td colspan="2"></td>';
 }
 echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
-if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
+if ($groupByManufacturer && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
     echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }

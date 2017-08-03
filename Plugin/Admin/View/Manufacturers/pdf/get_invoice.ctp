@@ -69,7 +69,7 @@ $pdf->addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl)
 $pdf->renderTable();
 // Artikelauflistung End
 
-if (Configure::read('app.useManufacturerCompensationPercentage') && $compensationPercentage > 0) {
+if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $compensationPercentage > 0) {
     $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
     $compensatedPrice = round($sumPriceIncl * $compensationPercentage / 100, 2);
     $newSumPriceIncl = $sumPriceIncl - $compensatedPrice;

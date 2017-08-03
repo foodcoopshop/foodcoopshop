@@ -136,7 +136,7 @@ echo '<div class="holiday-wrapper">';
     echo '<h2>Sonstige Einstellungen</h2>';
 
 
-    if (Configure::read('app.useManufacturerCompensationPercentage') && !$appAuth->isManufacturer()) {
+    if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
         echo $this->Form->input('Manufacturer.compensation_percentage', array(
         'label' => 'Variabler Mitgliedsbeitrag in %',
         'div' => array(

@@ -56,7 +56,7 @@
             ?>
         </td></tr>
         
-        <?php if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
+        <?php if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <tr><td style="padding-top:20px;"><b>
                 <?php echo Configure::read('app.manufacturerComponensationInfoText'); ?>
             </b></td></tr>
