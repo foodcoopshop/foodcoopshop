@@ -129,7 +129,7 @@ foreach ($orderDetails as $orderDetail) {
     } else {
         $sumPrice += $orderDetail['sum_price'];
         $sumAmount += $orderDetail['sum_amount'];
-        $reducedPrice = $orderDetail['sum_price'] * (100 - $orderDetail['compensation_percentage']) / 100;
+        $reducedPrice = $orderDetail['sum_price'] * (100 - $orderDetail['variable_member_fee']) / 100;
         $sumReducedPrice += $reducedPrice;
         $sumDeposit += $orderDetail['sum_deposit'];
     }
@@ -205,7 +205,7 @@ foreach ($orderDetails as $orderDetail) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
 
         echo '<td>';
-        echo $orderDetail['compensation_percentage'] . '%';
+        echo $orderDetail['variable_member_fee'] . '%';
         echo '</td>';
 
         echo '<td class="right">';

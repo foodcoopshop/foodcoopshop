@@ -164,8 +164,8 @@ class OrderDetailsController extends AdminAppController
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
 
-                $compensationPercentage = $this->Manufacturer->getOptionCompensationPercentage($orderDetail['Product']['Manufacturer']['compensation_percentage']);
-                $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['compensation_percentage'] = $compensationPercentage;
+                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail['Product']['Manufacturer']['variable_member_fee']);
+                $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['variable_member_fee'] = $variableMemberFee;
 
                 @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
 

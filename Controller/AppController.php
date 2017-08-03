@@ -153,8 +153,8 @@ class AppController extends Controller
                     'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
                 )
             ));
-            $compensationPercentage = $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
-            $this->set('compensationPercentageForTermsOfUse', $compensationPercentage);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+            $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
         parent::beforeFilter();
