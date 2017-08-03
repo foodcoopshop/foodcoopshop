@@ -123,7 +123,7 @@ $this->element('addScript', array(
 
             echo '<tr>';
 
-            echo '<td>';
+            echo '<td class="first">';
             echo $configuration['Configuration']['text'];
             echo '</td>';
 
@@ -165,22 +165,12 @@ $this->element('addScript', array(
             ?>
             <td>
             <?php if (isset($email->default['host'])) { ?>
-            	<b>Host:</b> <?php echo $email->default['host']; ?><br />
-           	<?php } ?>
-           	<?php if (isset($email->default['username'])) { ?>
-           		<b>Username:</b> <?php echo $email->default['username']; ?><br />
-           	<?php } ?>
-           	<b>Log:</b> <?php echo (isset($email->default['log']) && $email->default['log']) ? 'on' : 'off'; ?></td>
-        </tr>
-
-        <tr>
-            <td>app.useManufacturerCompensationPercentage</td>
-            <td><?php echo Configure::read('app.useManufacturerCompensationPercentage') ? 'ja' : 'nein'; ?></td>
-        </tr>
-
-        <tr>
-            <td>app.defaultCompensationPercentage</td>
-            <td><?php echo Configure::read('app.defaultCompensationPercentage'); ?></td>
+                <b>Host:</b> <?php echo $email->default['host']; ?><br />
+            <?php } ?>
+            <?php if (isset($email->default['username'])) { ?>
+                <b>Username:</b> <?php echo $email->default['username']; ?><br />
+            <?php } ?>
+            <b>Log:</b> <?php echo (isset($email->default['log']) && $email->default['log']) ? 'on' : 'off'; ?></td>
         </tr>
 
         <tr>

@@ -205,7 +205,7 @@ class Manufacturer extends AppModel
     {
         $result = $compensationPercentage;
         if ($compensationPercentage == '') {
-            $result = Configure::read('app.defaultCompensationPercentage');
+            $result = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;
     }

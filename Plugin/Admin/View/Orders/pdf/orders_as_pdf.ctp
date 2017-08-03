@@ -111,7 +111,7 @@ foreach ($orders as $order) {
     $pdf->renderTable();
 
     $pdf->Ln(5);
-    if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') {
+    if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') {
         $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Ln(2);

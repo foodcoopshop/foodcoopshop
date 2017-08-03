@@ -68,7 +68,7 @@ echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Urlaub') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th>Opt.</th>';
-if (Configure::read('app.useManufacturerCompensationPercentage')) {
+if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
 }
 echo '<th></th>';
@@ -200,7 +200,7 @@ foreach ($manufacturers as $manufacturer) {
     );
     echo '</td>';
 
-    if (Configure::read('app.useManufacturerCompensationPercentage')) {
+    if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
             echo $manufacturer['Manufacturer']['compensation_percentage'].'%';
         echo '</td>';
@@ -246,7 +246,7 @@ echo '<tr>';
 echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $productCountSum . '</b></td>';
 $colspan = 10;
-if (Configure::read('app.useManufacturerCompensationPercentage')) {
+if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
 if (Configure::read('app.allowManualOrderListSending')) {
