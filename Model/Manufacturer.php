@@ -198,13 +198,13 @@ class Manufacturer extends AppModel
     }
 
     /**
-     * @param int $compensationPercentage
+     * @param int $variableMemberFee
      * @return int
      */
-    public function getOptionCompensationPercentage($compensationPercentage)
+    public function getOptionVariableMemberFee($variableMemberFee)
     {
-        $result = $compensationPercentage;
-        if ($compensationPercentage == '') {
+        $result = $variableMemberFee;
+        if ($variableMemberFee == '') {
             $result = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;

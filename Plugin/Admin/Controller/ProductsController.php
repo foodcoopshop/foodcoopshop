@@ -746,8 +746,8 @@ class ProductsController extends AdminAppController
                 'fields' => array('Manufacturer.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
             ));
             $this->set('manufacturer', $manufacturer);
-            $compensationPercentage = $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
-            $this->set('compensationPercentage', $compensationPercentage);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+            $this->set('variableMemberFee', $variableMemberFee);
         }
 
         $this->set('title_for_layout', 'Artikel');

@@ -283,7 +283,7 @@ class ManufacturersController extends AdminAppController
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
             if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
-                $manufacturers[$i]['Manufacturer']['compensation_percentage'] = $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
+                $manufacturers[$i]['Manufacturer']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
             }
             $i++;
         }
@@ -379,14 +379,14 @@ class ManufacturersController extends AdminAppController
         return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
     }
 
-    private function getOptionCompensationPercentage($manufacturerId)
+    private function getOptionVariableMemberFee($manufacturerId)
     {
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
             )
         ));
-        return $this->Manufacturer->getOptionCompensationPercentage($manufacturer['Manufacturer']['compensation_percentage']);
+        return $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
     }
 
     public function sendOrderList($manufacturerId, $from, $to)
@@ -483,8 +483,8 @@ class ManufacturersController extends AdminAppController
         }
 
         // set default data if manufacturer options are null
-        if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturer']['compensation_percentage'] == '') {
-            $unsavedManufacturer['Manufacturer']['compensation_percentage'] = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+        if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturer']['variable_member_fee'] == '') {
+            $unsavedManufacturer['Manufacturer']['variable_member_fee'] = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         if ($unsavedManufacturer['Manufacturer']['send_order_list'] == '') {
             $unsavedManufacturer['Manufacturer']['send_order_list'] = Configure::read('app.defaultSendOrderList');
@@ -530,8 +530,8 @@ class ManufacturersController extends AdminAppController
             $this->request->data['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
 
             // values that are the same as default values => null
-            if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['compensation_percentage'] == Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                $this->request->data['Manufacturer']['compensation_percentage'] = null;
+            if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['variable_member_fee'] == Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                $this->request->data['Manufacturer']['variable_member_fee'] = null;
             }
             if ($this->request->data['Manufacturer']['default_tax_id'] == Configure::read('app.defaultTaxId')) {
                 $this->request->data['Manufacturer']['default_tax_id'] = null;
@@ -561,7 +561,7 @@ class ManufacturersController extends AdminAppController
             // remove post data that could be set by hacking attempt
             if ($this->AppAuth->isManufacturer()) {
                 unset($this->request->data['Manufacturer']['bulk_orders_allowed']);
-                unset($this->request->data['Manufacturer']['compensation_percentage']);
+                unset($this->request->data['Manufacturer']['variable_member_fee']);
                 unset($this->request->data['Manufacturer']['id_customer']);
             }
 
@@ -572,7 +572,7 @@ class ManufacturersController extends AdminAppController
             $this->Manufacturer->validator()['send_order_list'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 2);
 
             if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
-                $this->Manufacturer->validator()['compensation_percentage'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
+                $this->Manufacturer->validator()['variable_member_fee'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
             }
             if (!empty($this->request->data['Manufacturer']['send_order_list_cc'])) {
                 $this->Manufacturer->validator()['send_order_list_cc'] = $this->Manufacturer->getMultipleEmailValidationRule(true);
@@ -692,7 +692,7 @@ class ManufacturersController extends AdminAppController
         $this->set('sumPriceIncl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceIncl));
         $this->set('sumAmount', $sumAmount);
 
-        $this->set('compensationPercentage', $this->getOptionCompensationPercentage($manufacturerId));
+        $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
         $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
         $this->set('saveParam', $saveParam);

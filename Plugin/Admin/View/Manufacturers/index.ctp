@@ -202,7 +202,7 @@ foreach ($manufacturers as $manufacturer) {
 
     if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
-            echo $manufacturer['Manufacturer']['compensation_percentage'].'%';
+            echo $manufacturer['Manufacturer']['variable_member_fee'].'%';
         echo '</td>';
     }
 

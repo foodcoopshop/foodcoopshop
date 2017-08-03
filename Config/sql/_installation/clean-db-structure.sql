@@ -413,7 +413,7 @@ CREATE TABLE `fcs_manufacturer` (
   `kammer` varchar(150) NOT NULL DEFAULT '',
   `homepage` varchar(255) NOT NULL DEFAULT '',
   `id_customer` int(10) unsigned DEFAULT NULL,
-  `compensation_percentage` int(8) unsigned DEFAULT NULL,
+  `variable_member_fee` int(8) unsigned DEFAULT NULL,
   `send_invoice` tinyint(4) unsigned DEFAULT NULL,
   `send_order_list` tinyint(4) unsigned DEFAULT NULL,
   `default_tax_id` int(8) unsigned DEFAULT NULL,
