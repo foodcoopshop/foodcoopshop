@@ -36,8 +36,6 @@
             <?php } ?>
 
             <ul style="padding-left: 10px;">
-                <li><b>Verbesserter Urlaubsmodus</b>: Zeitraum kann angegeben werden, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
-                <li><b>Neu: </b>Du kannst deine Benachrichtigungs-E-Mails selbst ändern.</li>
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
                 <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
@@ -46,6 +44,8 @@
                 <li>Produkte als "neu" markieren</li>
                 <li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
                 <li>Pfandkonto (falls du Pfand verwendest)</li>
+                <li>Urlaubsmodus: Zeitraum angeben, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
+                <li>Benachrichtigungs-E-Mails und weitere Einstellungen ändern</li>
                 <li>Passwort ändern</li>
             </ul>
             
