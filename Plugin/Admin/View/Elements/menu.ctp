@@ -243,7 +243,7 @@ if ($appAuth->isManufacturer()) {
     );
     $optionsMenu = array(
         'slug' => $this->Slug->getManufacturerMyOptions(),
-        'name' => 'Einstellungen <span class="new">NEU<span>',
+        'name' => 'Einstellungen',
         'options' => array(
             'fa-icon' => 'fa-fw fa-cogs'
         )
