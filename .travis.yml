@@ -26,7 +26,7 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
-  - git clone --depth 1 -b develop git@github.com:foodcoopshop/fcs-network.git /home/travis/build/foodcoopshop/Plugin/Network
+  - git clone --depth=50 --branch=develop https://github.com/foodcoopshop/fcs-network.git foodcoopshop/Plugin/Network
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
