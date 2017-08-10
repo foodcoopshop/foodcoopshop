@@ -465,19 +465,9 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $productId = $this->params['data']['productId'];
+        $originalProductId = $this->params['data']['productId'];
 
-        try {
-            $this->Product->changeQuantity(
-                array(
-                    array($productId => $this->params['data']['quantity'])
-                )
-            );
-        } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
-        }
-
-        $ids = $this->Product->getProductIdAndAttributeId($productId);
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
         $this->Product->recursive = 3; // for attribute lang
@@ -486,6 +476,15 @@ class ProductsController extends AdminAppController
                 'Product.id_product' => $productId
             )
         ));
+        try {
+            $this->Product->changeQuantity(
+                array(
+                    array($originalProductId => $this->params['data']['quantity'])
+                )
+            );
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
 
         $quantity = $this->Product->getQuantityAsInteger($this->params['data']['quantity']);
         $this->AppSession->setFlashMessage('Die Anzahl des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
@@ -502,19 +501,9 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $productId = $this->params['data']['productId'];
+        $originalProductId = $this->params['data']['productId'];
 
-        try {
-            $this->Product->changePrice(
-                array(
-                    array($productId => $this->params['data']['price'])
-                )
-            );
-        } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
-        }
-
-        $ids = $this->Product->getProductIdAndAttributeId($productId);
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
         $this->Product->recursive = 3; // for attribute lang
@@ -523,6 +512,17 @@ class ProductsController extends AdminAppController
                 'Product.id_product' => $productId
             )
         ));
+
+        try {
+            $this->Product->changePrice(
+                array(
+                    array($originalProductId => $this->params['data']['price'])
+                )
+            );
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+
 
         $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
         $this->AppSession->setFlashMessage('Der Preis des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
@@ -656,6 +656,12 @@ class ProductsController extends AdminAppController
 
         $productId = $this->params['data']['productId'];
 
+        $oldProduct = $this->Product->find('first', array(
+            'conditions' => array(
+                'Product.id_product' => $productId
+            )
+        ));
+
         try {
             $this->Product->ProductLang->changeName(
                 array(
@@ -670,12 +676,6 @@ class ProductsController extends AdminAppController
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
-
-        $oldProduct = $this->Product->find('first', array(
-            'conditions' => array(
-                'Product.id_product' => $productId
-            )
-        ));
 
         $this->AppSession->setFlashMessage('Der Artikel wurde erfolgreich geändert.');
 
@@ -830,7 +830,7 @@ class ProductsController extends AdminAppController
     public function changeStatus($productId, $status)
     {
 
-        $success = $this->Product->changeStatus(
+        $this->Product->changeStatus(
             array(
                 array($productId => (int) $status)
             )
