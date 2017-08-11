@@ -71,5 +71,3 @@ Configure::write('app.emailOrderReminderEnabled', true);
 Configure::write('app.paymentMethods', array(
     'cashless'
 ));
-
-Configure::write('app.networkPluginEnabled', false);
