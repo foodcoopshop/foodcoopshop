@@ -131,7 +131,7 @@ CakePlugin::load('Admin');
 CakePlugin::load('AssetCompress', array(
     'bootstrap' => true
 ));
-if (Configure::read('app.networkToolsEnabled')) {
+if (Configure::read('app.enableNetworkPlugin')) {
     CakePlugin::load('Network', array(
         'routes' => true
     ));
