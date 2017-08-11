@@ -67,7 +67,7 @@
                 echo '</div>';
             }
 
-            if (Configure::read('app.enableNetworkPlugin') && $appAuth->isManufacturer()) {
+            if (Configure::read('app.networkPluginEnabled') && $appAuth->isManufacturer()) {
                 $this->element('addScript', array(
                     'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
                 ));

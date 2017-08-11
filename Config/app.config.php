@@ -166,4 +166,4 @@ Configure::write('app.termsOfUseLastUpdate', '2016-11-28');
  * @since FoodCoopShop v1.4.0
  * are network tools enabled?
  */
-Configure::write('app.enableNetworkPlugin', false);
+Configure::write('app.networkPluginEnabled', false);

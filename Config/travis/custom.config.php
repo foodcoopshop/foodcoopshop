@@ -72,4 +72,4 @@ Configure::write('app.paymentMethods', array(
     'cashless'
 ));
 
-Configure::write('app.enableNetworkPlugin', false);
+Configure::write('app.networkPluginEnabled', false);
