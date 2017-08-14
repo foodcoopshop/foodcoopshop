@@ -8,6 +8,7 @@ CREATE TABLE `fcs_sync_products` (
   `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `sync_domain_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `local_product_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `remote_product_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `remote_product_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `local_product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `remote_product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
