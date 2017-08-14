@@ -202,14 +202,24 @@ span.product-quantity-for-dialog {
     z-index: 100;
     border-bottom: 1px solid #dfdfdf;
 }
-.filter-container .right {
+.filter-container-not-fixed {
+  margin: 3px;
+  float: left;
+  width: 975px;
+}
+.filter-container .right,
+.filter-container-not-fixed .right {
     float: right;
+}
+.filter-container .right {
     margin-top: 4px;
 }
-.filter-container .right .icons {
-    float:left;
+.filter-container .right .icons,
+.filter-container-not-fixed .right .icons {
+    float: left;
 }
-.filter-container .right .icons a:not(:first-child) {
+.filter-container .right .icons a:not(:first-child),
+.filter-container-not-fixed .right .icons a:not(:first-child) {
     margin-left: 3px;
 }
 .filter-container .right a.submit,
@@ -906,7 +916,6 @@ body.taxes.index table.list,
 body.slider.index table.list {
     width: 300px;
 }
-
 .accept-updated-terms-of-use-form {
     width: 800px;
     margin: 0 auto;

@@ -1820,13 +1820,14 @@ foodcoopshop.Admin = {
     addPrintAndHelpIcon: function () {
 
         var html = '<div class="icons">';
-        html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
-        html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
+            html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
+            html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
         html += '</div>';
 
-        $('.filter-container div.right').append(html);
+        var container = $('.filter-container').length > 0 ? $('.filter-container') : $('.filter-container-not-fixed');
+        container.find('div.right').append(html);
 
-        $('.filter-container div.right a.help').on('click', function () {
+        container.find('div.right a.help').on('click', function () {
             $('#help-container').stop(true).animate({
                 height: 'toggle'
             }, 0);
