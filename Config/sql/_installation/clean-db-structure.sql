@@ -766,10 +766,10 @@ DROP TABLE IF EXISTS `fcs_sync_products`;
 CREATE TABLE `fcs_sync_products` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `sync_domain_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `local_product_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `remote_product_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `local_product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `remote_product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `local_product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `remote_product_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `local_product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `remote_product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0'
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
