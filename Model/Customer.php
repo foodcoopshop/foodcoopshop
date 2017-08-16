@@ -231,7 +231,6 @@ class Customer extends AppModel
         $cp = new CakePayment();
         $paymentSumProduct = $cp->getSum($customerId, 'product');
         $paybackSumProduct = $cp->getSum($customerId, 'payback');
-        ;
         $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
 
         App::uses('Order', 'Model');
