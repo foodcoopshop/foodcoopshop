@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 
 # the version controlled git hook script
-SCRIPT="devtools/git-pre-commit.sh"
+
+PATH=$1
+if [ -z ${PATH} ]
+then
+    declare -a PATH=""
+fi
+
+SCRIPT="${$PATH}devtools/git-pre-commit.sh"
 
 # get the project dir from being in [project]/.git/hooks/ and change to it
 DIR=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
