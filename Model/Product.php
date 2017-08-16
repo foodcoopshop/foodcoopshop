@@ -196,31 +196,10 @@ class Product extends AppModel
             $price = $this->getPriceAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
-            $productId = $ids['productId'];
 
-            $this->recursive = 3; // for attribute lang
-            $oldProduct = $this->find('first', array(
-                'conditions' => array(
-                    'Product.id_product' => $productId
-                )
-            ));
-
-            $netPrice = $this->getNetPrice($productId, $price);
+            $netPrice = $this->getNetPrice($ids['productId'], $price);
 
             if ($ids['attributeId'] > 0) {
-                // override values for messages
-                foreach ($oldProduct['ProductAttributes'] as $attribute) {
-                    if ($attribute['id_product_attribute'] != $ids['attributeId']) {
-                        continue;
-                    }
-                    $oldProduct['ProductLang'] = array(
-                        'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['AttributeLang']['name']
-                    );
-                    $oldProduct['ProductShop'] = array(
-                        'price' => $attribute['ProductAttributeShop']['price']
-                    );
-                }
-
                 // update attribute - updateAll needed for multi conditions of update
                 $this->ProductAttributes->ProductAttributeShop->updateAll(array(
                     'ProductAttributeShop.price' => $netPrice
@@ -231,7 +210,7 @@ class Product extends AppModel
                 $product2update = array(
                     'price' => $netPrice
                 );
-                $this->ProductShop->id = $productId;
+                $this->ProductShop->id = $ids['productId'];
                 $success |= $this->ProductShop->save($product2update);
             }
         }
@@ -264,49 +243,23 @@ class Product extends AppModel
         foreach ($products as $product) {
             $productId = key($product);
             $quantity = $product[$productId];
-            $this->recursive = 3; // for attribute lang
-            $oldProduct = $this->find('first', array(
-                'conditions' => array(
-                    'Product.id_product' => $productId
-                )
-            ));
 
-            $isAttribute = false;
-            $explodedProductId = explode('-', $productId);
-            if (count($explodedProductId) == 2) {
-                $isAttribute = true;
-                $productId = $explodedProductId[0];
-                $attributeId = $explodedProductId[1];
-            }
+            $ids = $this->getProductIdAndAttributeId($productId);
 
-            if ($isAttribute) {
-                // werte für email überschreiben
-                foreach ($oldProduct['ProductAttributes'] as $attribute) {
-                    if ($attribute['id_product_attribute'] != $attributeId) {
-                        continue;
-                    }
-                    $oldProduct['ProductLang'] = array(
-                        'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['AttributeLang']['name']
-                    );
-                    $oldProduct['StockAvailable'] = array(
-                        'quantity' => $attribute['StockAvailable']['quantity']
-                    );
-                }
-
+            if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
                 $this->StockAvailable->updateAll(array(
                     'StockAvailable.quantity' => $quantity
                 ), array(
-                    'StockAvailable.id_product_attribute' => $attributeId,
-                    'StockAvailable.id_product' => $productId
+                    'StockAvailable.id_product_attribute' => $ids['attributeId'],
+                    'StockAvailable.id_product' => $ids['productId']
                 ));
-
-                $this->StockAvailable->updateQuantityForMainProduct($productId);
+                $this->StockAvailable->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $product2update = array(
                     'quantity' => $quantity
                 );
-                $this->StockAvailable->id = $productId;
+                $this->StockAvailable->id = $ids['productId'];
                 $this->StockAvailable->save($product2update);
             }
         }
