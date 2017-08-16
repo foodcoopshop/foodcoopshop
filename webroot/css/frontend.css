@@ -222,9 +222,6 @@ body.categories.detail div.description-wrapper {
 #user-menu > li a.btn-success {
     color: #fff;
 }
-#user-menu > li a:hover {
-    color: #719f41;
-}
 #user-menu > li:not(:last-of-type):after {
     padding-left: 5px;
 }
@@ -762,9 +759,7 @@ body.manufacturers.detail .imprint {
     margin-top: -2px;
 }
 .cart .delete a.btn:hover,
-.cart span.amount .btn:hover,
-a.btn.btn-success:hover,
-a.btn.btn-success:hover i {
+.cart span.amount .btn:hover {
     color: #d6d4d4 ! important;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
