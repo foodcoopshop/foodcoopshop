@@ -33,6 +33,18 @@ a:not(.btn):hover {
     text-decoration: none;
 }
 
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.disabled {
+  background-color: #719f41;
+  border-color: #719f41;
+}
+
+.btn-success:hover {
+  opacity: 0.8;
+}
+
 .sc { clear: both; height: 0px; font-size: 0px; background-color: transparent; }
 
 h1,
