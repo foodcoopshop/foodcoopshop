@@ -27,6 +27,10 @@ class CheckCreditBalanceShell extends AppShell
     {
         parent::main();
 
+        if (!Configure::read('htmlHelper')->paymentIsCashless()) {
+            return;
+        }
+
         $this->initSimpleBrowser(); // for loggedUserId
 
         $this->startTimeLogging();
@@ -46,7 +50,6 @@ class CheckCreditBalanceShell extends AppShell
 
         $i = 0;
         $outString = '';
-        $totalOrderSum = 0;
 
         foreach ($customers as $customer) {
             $delta = $this->Customer->getCreditBalance($customer['Customer']['id_customer']);
