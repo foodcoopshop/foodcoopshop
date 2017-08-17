@@ -24,7 +24,7 @@
     "slidebars": "~2.0.2",
     "famfamfam-silk": "~1.0.0",
     "jquery-knob": "~1.2.13",
-    "blueimp-file-upload": "~9.12.5" 
+    "blueimp-file-upload": "~9.18.0" 
   }
   
 }
