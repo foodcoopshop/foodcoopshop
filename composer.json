@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.7",
+        "php": ">=5.6.0",
         "cakephp/cakephp": "2.10.*",
         "weotch/phpthumb": "1.0.*",
         "tecnickcom/tcpdf": "6.2.*",
