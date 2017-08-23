@@ -10,13 +10,13 @@
         }
     ],
     "require": {
-        "php": ">=5.4.7",
+        "php": ">=5.6.0",
         "cakephp/cakephp": "2.10.*",
         "weotch/phpthumb": "1.0.*",
         "tecnickcom/tcpdf": "6.2.*",
         "simpletest/simpletest": "1.1.7",
         "markstory/asset_compress" : "2.x-dev",
-        "tedivm/jshrink" : "1.1.0",
+        "tedivm/jshrink" : "1.2.0",
         "natxet/CssMin": "3.0.4"
     },
     "require-dev": {

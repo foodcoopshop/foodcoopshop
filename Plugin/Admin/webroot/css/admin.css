@@ -105,6 +105,9 @@ body.pages.display #menu a.help {
     float: left;
     margin-top: 1px;
 }
+.filter-container .checkbox input[type="checkbox"] {
+  margin-top: 6px;
+}
 button#filter {
     margin-left: 2px;
 }
