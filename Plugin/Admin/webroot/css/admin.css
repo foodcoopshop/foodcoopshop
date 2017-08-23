@@ -103,7 +103,10 @@ body.pages.display #menu a.help {
 .checkbox input[type="checkbox"] {
     margin-left: 0; /* bootstrap overwrite */
     float: left;
-    margin-top: 6px;
+    margin-top: 1px;
+}
+.filter-container .checkbox input[type="checkbox"] {
+  margin-top: 6px;
 }
 button#filter {
     margin-left: 2px;
