@@ -93,11 +93,7 @@ class AppEmail extends CakeEmail
             }
             return parent::send($content);
         } catch (Exception $e) {
-            if (Configure::read('app.emailErrorLoggingEnabled')) {
-                CakePlugin::load('EmailLog', array(
-                    'bootstrap' => true
-                ));
-            }
+            
             CakeLog::write('error', $e->getMessage());
 
             if (Configure::check('fallbackEmailConfig')) {
