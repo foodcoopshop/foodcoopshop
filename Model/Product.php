@@ -655,42 +655,6 @@ class Product extends AppModel
     public function deleteProductAttribute($productId, $attributeId, $oldProduct)
     {
 
-        // START: set cache_default_attribute
-
-        // 1) detect actual default attribute (if not the last attribute is deleted)
-        $defaultAttributeId = 0;
-        if (count($oldProduct['ProductAttributes']) > 1) {
-            foreach ($oldProduct['ProductAttributes'] as $pa) {
-                if ($pa['ProductAttributeShop']['default_on'] == 1 && $pa['ProductAttributeShop']['id_product_attribute'] != $attributeId) {
-                    $defaultAttributeId = $pa['ProductAttributeShop']['id_product_attribute'];
-                    break;
-                }
-            }
-        }
-
-        // 2) not the last attribute is deleted and no default attribute is set: take first attribute as new default attribute
-        if (count($oldProduct['ProductAttributes']) > 1 && $defaultAttributeId == 0) {
-            foreach ($oldProduct['ProductAttributes'] as $pa) {
-                if ($pa['ProductAttributeShop']['id_product_attribute'] != $attributeId) {
-                    $defaultAttributeId = $pa['ProductAttributeShop']['id_product_attribute'];
-                    break;
-                }
-            }
-            $this->changeDefaultAttributeId($productId, $defaultAttributeId);
-        }
-
-        // product. und product_shop.'cache_default_attribute'
-        $this->ProductShop->id = $productId;
-        $this->ProductShop->save(array(
-            'cache_default_attribute' => $defaultAttributeId
-        ));
-        $this->id = $productId;
-        $this->save(array(
-            'cache_default_attribute' => $defaultAttributeId
-        ));
-
-        // END: set cache_default_attribute
-
         $pac = $this->ProductAttributes->ProductAttributeCombination->find('first', array(
             'conditions' => array(
                 'ProductAttributeCombination.id_product_attribute' => $attributeId
@@ -767,16 +731,9 @@ class Product extends AppModel
         // INSERT PRODUCT
         $this->save(array(
             'id_manufacturer' => $manufacturer['Manufacturer']['id_manufacturer'],
-            'id_supplier' => 0,
             'id_category_default' => Configure::read('app.categoryAllProducts'),
             'id_tax' => $defaultTaxId,
-            'ean13' => '',
-            'upc' => '',
             'unity' => '',
-            'reference' => '',
-            'supplier_reference' => '',
-            'location' => '',
-            'cache_default_attribute' => 0,
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
         ));
@@ -787,14 +744,9 @@ class Product extends AppModel
             'id_product' => $newProductId,
             'id_shop' => 1,
             'id_category_default' => Configure::read('app.categoryAllProducts'),
-            'cache_default_attribute' => 0,
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
         ));
-
-        // cake cannot save enum fields...
-        $this->query('UPDATE ' . $this->tablePrefix . $this->useTable . ' SET redirect_type = "404" WHERE id_product = ' . $newProductId);
-        $this->query('UPDATE ' . $this->ProductShop->tablePrefix . $this->ProductShop->useTable . ' SET redirect_type = "404" WHERE id_product = ' . $newProductId);
 
         // INSERT CATEGORY_PRODUCTS
         $this->CategoryProducts->save(array(
@@ -811,12 +763,7 @@ class Product extends AppModel
             'name' => $name,
             'description' => '',
             'description_short' => '',
-            'unity' => '',
-            'meta_description' => '',
-            'meta_keywords' => '',
-            'meta_title' => '',
-            'available_now' => '',
-            'available_later' => ''
+            'unity' => ''
         ));
 
         // INSERT STOCK AVAILABLE
@@ -825,9 +772,6 @@ class Product extends AppModel
             'id_shop' => 1,
             'quantity' => $defaultQuantity
         ));
-
-        // TODO out_of_stock cannot be set to 2 via cake...
-        $this->query('UPDATE ' . $this->StockAvailable->tablePrefix . $this->StockAvailable->useTable . ' SET out_of_stock = 2 WHERE id_product = ' . $newProductId);
 
         $newProduct = $this->find('first', array(
             'conditions' => array(
