@@ -23,7 +23,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     
     <?php echo $this->element('jsNamespace'); ?>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php echo $this->element('renderCss', array('configs' => array('plain'))); ?>
     <?php

@@ -403,19 +403,6 @@
     
     <div class="sc"></div>
     
-    <?php
-    if ($manufacturerId > 0) {
-        echo '<div class="bottom-button-container">';
-        $profileLink = $this->Slug->getManufacturerEditOptions($manufacturerId);
-        if ($appAuth->isManufacturer()) {
-            $profileLink = $this->Slug->getManufacturerMyOptions();
-        }
-        echo '<a href="' . $profileLink . '" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle aktivieren / deaktivieren? Urlaubsmodus verwenden!</a>';
-        echo '</div>';
-        echo '<div class="sc"></div>';
-    }
-    ?>
-    
 </div>
 
 <?php echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown)); ?>
