@@ -296,7 +296,7 @@ class Product extends AppModel
      * @param array $products
      * @return array $preparedProducts
      */
-    public function prepareProductsForBackend($paginator, $pParams)
+    public function prepareProductsForBackend($paginator, $pParams, $addProductNameToAttributes = false)
     {
 
         $paginator->settings = array_merge(array(
@@ -396,7 +396,7 @@ class Product extends AppModel
                             'rowClass' => join(' ', $rowClass)
                         ),
                         'ProductLang' => array(
-                            'name' => $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ': ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''
