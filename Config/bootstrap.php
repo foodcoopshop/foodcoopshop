@@ -136,6 +136,9 @@ if (Configure::read('app.networkPluginEnabled')) {
         'routes' => true
     ));
 }
-
-// composer integration
+if (Configure::read('app.emailErrorLoggingEnabled')) {
+    CakePlugin::load('EmailErrorLog', array(
+        'bootstrap' => true
+    ));
+}
 require APP . '/Vendor/autoload.php';
