@@ -29,7 +29,7 @@ foodcoopshop.Admin = {
 
     addLoaderToSyncProductDataButton : function (button) {
         button.on('click', function () {
-             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-refresh');
+             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-left');
              foodcoopshop.Helper.disableButton($(this));
         });
     },

@@ -73,7 +73,7 @@
                 ));
                 echo '<div class="toggle-sync-button-wrapper">';
                     echo $this->Html->link(
-                        '<i class="fa fa-refresh"></i> Produkte synchronisieren',
+                        '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
                         $this->Slug->getSyncProductData(),
                         array(
                             'class' => 'btn btn-default',
