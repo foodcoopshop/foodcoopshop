@@ -651,7 +651,7 @@ class ManufacturersController extends AdminAppController
             $actionLogType = 'product_set_active';
         }
 
-        $message = 'Alle Produkte des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Produkt: ' . $affectedRows;
+        $message = 'Alle Produkte des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Produkte: ' . $affectedRows;
         $this->Flash->success($message);
 
         $this->loadModel('CakeActionLog');

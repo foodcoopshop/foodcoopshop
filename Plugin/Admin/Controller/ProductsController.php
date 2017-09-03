@@ -671,7 +671,6 @@ class ProductsController extends AdminAppController
         $this->CakeActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
         $this->Flash->success('Der Pfand des Produktes "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
-
         $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
