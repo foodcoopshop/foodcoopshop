@@ -95,17 +95,17 @@ class SlidersController extends AdminAppController
                     $this->deleteUploadedImage($this->Slider->id, Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
                     $message = 'Der Slideshow-Bild "' . $this->request->data['SliderLang']['id_homeslider_slides'] . '" wurde erfolgreich gelöscht.';
                     $this->CakeActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
-                    $this->AppSession->setFlashMessage('Der Slideshow-Bild wurde erfolgreich gelöscht.');
+                    $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Der Slideshow-Bild "' . $this->request->data['SliderLang']['id_homeslider_slides'] . '" wurde ' . $messageSuffix;
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
-                    $this->AppSession->setFlashMessage('Der Slideshow-Bild wurde erfolgreich gespeichert.');
+                    $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gespeichert.');
                 }
 
-                $this->AppSession->write('highlightedRowId', $this->Slider->id);
+                $this->Session->write('highlightedRowId', $this->Slider->id);
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }

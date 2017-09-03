@@ -24,7 +24,8 @@ class AppController extends Controller
 
     public $components = array(
         'RequestHandler', // to parse xml extensions
-        'AppSession',
+        'Session',
+        'Flash',
         'String',
         'Cookie',
         'Paginator' => array(

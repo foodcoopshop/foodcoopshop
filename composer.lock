@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "2.10.1",
+            "version": "2.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "95e0a2143934abed3baf33885032eefcf9081605"
+                "reference": "81d824077a2d70b7a50acc664a30df49054dd31a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/95e0a2143934abed3baf33885032eefcf9081605",
-                "reference": "95e0a2143934abed3baf33885032eefcf9081605",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/81d824077a2d70b7a50acc664a30df49054dd31a",
+                "reference": "81d824077a2d70b7a50acc664a30df49054dd31a",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-08-08T01:21:35+00:00"
+            "time": "2017-08-30T01:19:36+00:00"
         },
         {
             "name": "composer/installers",
@@ -924,7 +924,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.26",
+            "version": "v2.8.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
