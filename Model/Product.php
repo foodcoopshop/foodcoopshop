@@ -115,13 +115,17 @@ class Product extends AppModel
 
         foreach ($products as $product) {
             $productId = key($product);
-            $status = $product[$productId];
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new InvalidParameterException('change status is not allowed for product attributes');
+            }
+            $status = $product[$ids['productId']];
             $whitelist = array(APP_OFF, APP_ON);
             if (!in_array($status, $whitelist, true)) { // last param for type check
-                throw new InvalidParameterException('Product.active for product ' .$productId . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
+                throw new InvalidParameterException('Product.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
                 $products2save[] = array(
-                    'id_product' => $productId,
+                    'id_product' => $ids['productId'],
                     'active' => $status
                 );
             }
