@@ -291,6 +291,17 @@ class ProductTest extends AppCakeTestCase
         $this->Product->changeStatus($products);
     }
 
+    /**
+     * @expectedException InvalidParameterException
+     */
+    public function testChangeStatusForProductAttribute()
+    {
+        $products = array(
+            array('60-10' => 0)
+        );
+        $this->Product->changeStatus($products);
+    }
+
     public function testChangeStatusDisableWithOneProduct()
     {
         $products = array(

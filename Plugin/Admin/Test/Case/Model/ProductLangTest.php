@@ -54,6 +54,17 @@ class ProductLangTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
+    /**
+     * @expectedException InvalidParameterException
+     */
+    public function testChangeNameForProductAttribute()
+    {
+        $products = array(
+            array('60-10' => 0)
+        );
+        $this->ProductLang->changeName($products);
+    }
+
     public function testChangeNameWithMultipleProducts()
     {
 
