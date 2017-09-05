@@ -33,11 +33,11 @@ class DbMigrationComponent extends Component
         $this->dbMigration = new DbMigration(
             function ($string = '') use (&$controller) {
             // $stdOut
-                return $controller->AppSession->setFlashMessage($string);
+                return $controller->Session->setFlashMessage($string);
             },
             function ($string = '') use (&$controller) {
             // $stdErr
-                return $controller->AppSession->setFlashError($string);
+                return $controller->Session->setFlashError($string);
             },
             function ($type = '', $string = '') use (&$controller) {
             // $stdLog

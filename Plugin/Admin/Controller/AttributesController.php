@@ -96,17 +96,17 @@ class AttributesController extends AdminAppController
                     $this->Attribute->AttributeLang->delete($this->Attribute->id); // AttributeLang record needs to be deleted manually
                     $message = 'Die Variante "' . $this->request->data['AttributeLang']['name'] . '" wurde erfolgreich gelöscht.';
                     $this->CakeActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
-                    $this->AppSession->setFlashMessage('Die Variante wurde erfolgreich gelöscht.');
+                    $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Die Variante "' . $this->request->data['AttributeLang']['name'] . '" wurde ' . $messageSuffix;
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
-                    $this->AppSession->setFlashMessage('Die Variante wurde erfolgreich gespeichert.');
+                    $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
                 }
 
-                $this->AppSession->write('highlightedRowId', $this->Attribute->id);
+                $this->Session->write('highlightedRowId', $this->Attribute->id);
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }

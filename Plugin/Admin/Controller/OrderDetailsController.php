@@ -278,7 +278,7 @@ class OrderDetailsController extends AdminAppController
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         die(json_encode(array(
             'status' => 1,
@@ -357,7 +357,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         die(json_encode(array(
             'status' => 1,
@@ -453,7 +453,7 @@ class OrderDetailsController extends AdminAppController
         if ($orderDetailsCount > 1) {
             $flashMessage =  $orderDetailsCount . ' Artikel wurden erfolgreich storniert.';
         }
-        $this->AppSession->setFlashMessage($flashMessage);
+        $this->Flash->success($flashMessage);
 
         die(json_encode(array(
             'status' => 1,
