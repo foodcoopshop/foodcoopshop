@@ -198,7 +198,7 @@ class OrderDetailsController extends AdminAppController
         $this->set('customersForDropdown', $this->OrderDetail->Order->Customer->getForDropdown());
         $this->set('manufacturersForDropdown', $this->OrderDetail->Product->Manufacturer->getForDropdown());
 
-        $this->set('title_for_layout', 'Bestellte Artikel');
+        $this->set('title_for_layout', 'Bestellte Produkte');
     }
 
     public function editProductQuantity()
@@ -236,7 +236,7 @@ class OrderDetailsController extends AdminAppController
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $productQuantity);
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail['OrderDetail']['product_quantity']);
 
-        $message = 'Die Anzahl des bestellten Artikels <b>' . $oldOrderDetail['OrderDetail']['product_name'] . '" </b> wurde erfolgreich von ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ' auf ' . $productQuantity . ' geändert';
+        $message = 'Die Anzahl des bestellten Produktes <b>' . $oldOrderDetail['OrderDetail']['product_name'] . '" </b> wurde erfolgreich von ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ' auf ' . $productQuantity . ' geändert';
 
         // send email to customer
         $email = new AppEmail();
@@ -321,7 +321,7 @@ class OrderDetailsController extends AdminAppController
 
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetail']['product_quantity']);
 
-        $message = 'Der Preis des bestellten Artikels "' . $oldOrderDetail['OrderDetail']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetail']['total_price_tax_incl']) . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
+        $message = 'Der Preis des bestellten Produktes "' . $oldOrderDetail['OrderDetail']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetail']['total_price_tax_incl']) . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
 
         // send email to customer
         $email = new AppEmail();
@@ -398,7 +398,7 @@ class OrderDetailsController extends AdminAppController
                 )
             ));
 
-            $message = 'Artikel "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Order']['id_order'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
+            $message = 'Produkt "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Order']['id_order'] . ' vom ' . Configure::read('timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
 
             // delete row
             $this->OrderDetail->deleteOrderDetail($orderDetailId);
@@ -413,7 +413,7 @@ class OrderDetailsController extends AdminAppController
             $email->template('Admin.order_detail_deleted')
             ->emailFormat('html')
             ->to($orderDetail['Order']['Customer']['email'])
-            ->subject('Artikel kann nicht geliefert werden: ' . $orderDetail['OrderDetail']['product_name'])
+            ->subject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetail']['product_name'])
             ->viewVars(array(
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
@@ -451,7 +451,7 @@ class OrderDetailsController extends AdminAppController
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
         if ($orderDetailsCount > 1) {
-            $flashMessage =  $orderDetailsCount . ' Artikel wurden erfolgreich storniert.';
+            $flashMessage =  $orderDetailsCount . ' Produkt wurden erfolgreich storniert.';
         }
         $this->AppSession->setFlashMessage($flashMessage);
 

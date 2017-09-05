@@ -28,7 +28,7 @@
         <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
             <?php echo $this->Form->input('type', array('type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '')); ?>
             <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
-            <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Artikel', 'options' => array())); ?>
+            <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => array())); ?>
         <?php } ?>
         <?php if ($appAuth->isCustomer()) { ?>
             <?php echo $this->Form->input('type', array('class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '')); ?>
@@ -44,7 +44,7 @@
         <ul>
             <li>Auf dieser Seite siehst du alle Aktivitäten im FoodCoopShop.</li>
             <?php if ($appAuth->isManufacturer()) { ?>
-                <li>Die stornierten Artikel werden erst ab dem
+                <li>Die stornierten Produkte werden erst ab dem
                 20.07.2015 angezeigt.</li>
             <?php } ?>
         </ul>
@@ -110,7 +110,7 @@ foreach ($actionLogs as $actionLog) {
     // products
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'products' && ! ($actionLog['CakeActionLog']['type'] == 'product_set_inactive')) {
         $showLink = true;
-        $title = 'Artikel anzeigen';
+        $title = 'Produkt anzeigen';
         $url = $this->Slug->getProductDetail($actionLog['CakeActionLog']['object_id'], '');
     }
 
@@ -151,7 +151,7 @@ foreach ($actionLogs as $actionLog) {
     // order details
     if ($actionLog['CakeActionLog']['object_id'] > 0 && $actionLog['CakeActionLog']['object_type'] == 'order_details') {
         $showLink = true;
-        $title = 'Bestellten Artikel anzeigen';
+        $title = 'Bestelltes Produkt anzeigen';
         $url = '/admin/order_details/index/orderDetailId:' . $actionLog['CakeActionLog']['object_id'];
         $targetBlank = false;
     }

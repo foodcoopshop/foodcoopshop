@@ -32,115 +32,115 @@ class CakeActionLog extends AppModel
      */
     public $types = array(
         'product_added' => array(
-            'de' => 'Artikel: erstellt',
+            'de' => 'Produkt: erstellt',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_attribute_added' => array(
-            'de' => 'Artikel: Variante erstellt',
+            'de' => 'Produkt: Variante erstellt',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_image_added' => array(
-            'de' => 'Artikel: Bild hochgeladen',
+            'de' => 'Produkt: Bild hochgeladen',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_image_deleted' => array(
-            'de' => 'Artikel: Bild gelöscht',
+            'de' => 'Produkt: Bild gelöscht',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_attribute_deleted' => array(
-            'de' => 'Artikel: Variante gelöscht',
+            'de' => 'Produkt: Variante gelöscht',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_set_inactive' => array(
-            'de' => 'Artikel: deaktiviert',
+            'de' => 'Produkt: deaktiviert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_set_active' => array(
-            'de' => 'Artikel: aktiviert',
+            'de' => 'Produkt: aktiviert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_quantity_changed' => array(
-            'de' => 'Artikel: Anzahl geändert',
+            'de' => 'Produkt: Anzahl geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_price_changed' => array(
-            'de' => 'Artikel: Preis geändert',
+            'de' => 'Produkt: Preis geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_name_changed' => array(
-            'de' => 'Artikel: Name geändert',
+            'de' => 'Produkt: Name geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_unity_changed' => array(
-            'de' => 'Artikel: Einheit geändert',
+            'de' => 'Produkt: Einheit geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_description_changed' => array(
-            'de' => 'Artikel: Beschreibung geändert',
+            'de' => 'Produkt: Beschreibung geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_description_short_changed' => array(
-            'de' => 'Artikel: Beschreibung kurz geändert',
+            'de' => 'Produkt: Beschreibung kurz geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_deposit_changed' => array(
-            'de' => 'Artikel: Pfand geändert',
+            'de' => 'Produkt: Pfand geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_tax_changed' => array(
-            'de' => 'Artikel: Steuersatz geändert',
+            'de' => 'Produkt: Steuersatz geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_categories_changed' => array(
-            'de' => 'Artikel: Kategorien geändert',
+            'de' => 'Produkt: Kategorien geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_set_to_old' => array(
-            'de' => 'Artikel: nicht mehr als "neu" anzeigen',
+            'de' => 'Produkt: nicht mehr als "neu" anzeigen',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_set_to_new' => array(
-            'de' => 'Artikel: als "neu" angezeigen',
+            'de' => 'Produkt: als "neu" angezeigen',
             'access' => array(
                 'manufacturer'
             )
         ),
         'product_default_attribute_changed' => array(
-            'de' => 'Artikel: Standard-Variante geändert',
+            'de' => 'Produkt: Standard-Variante geändert',
             'access' => array(
                 'manufacturer'
             )
@@ -161,19 +161,19 @@ class CakeActionLog extends AppModel
             'de' => 'Bestellung: Sofort-Bestellung getätigt'
         ),
         'order_detail_product_price_changed' => array(
-            'de' => 'Bestellter Artikel: Preis geändert',
+            'de' => 'Bestellter Produkt: Preis geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'order_detail_product_quantity_changed' => array(
-            'de' => 'Bestellter Artikel: Anzahl geändert',
+            'de' => 'Bestellter Produkt: Anzahl geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'order_detail_cancelled' => array(
-            'de' => 'Bestellter Artikel: storniert',
+            'de' => 'Bestellter Produkt: storniert',
             'access' => array(
                 'manufacturer'
             )

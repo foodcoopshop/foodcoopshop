@@ -25,7 +25,7 @@
     <tr>
         <td>
 
-            <p>im Anhang findest du zwei Bestelllisten (gruppiert nach Artikel und Mitglied) für die nächste Lieferung.</p>
+            <p>im Anhang findest du zwei Bestelllisten (gruppiert nach Produkt und Mitglied) für die nächste Lieferung.</p>
 
             <p>
                 <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
@@ -37,7 +37,7 @@
 
             <ul style="padding-left: 10px;">
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
-                <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
+                <li>Neue Produkte erstellen (inkl. Varianten - z.B. Produkt mit 0,5 kg und 1 kg)</li>
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
                 <li>Hochladen von Produkt-Fotos</li>
                 <li>Aktivieren bzw. Deaktivieren deiner Produkte</li>

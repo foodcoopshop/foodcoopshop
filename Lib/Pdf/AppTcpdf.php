@@ -56,7 +56,7 @@ class AppTcpdf extends TCPDF
             $priceIncl = $result['od']['PreisIncl'];
             $priceExcl = $result['od']['PreisExcl'];
             $tax = $result['odt']['MWSt'];
-            $productName = $result['od']['ArtikelName'];
+            $productName = $result['od']['ProduktName'];
             $customerName = $result[0]['Kunde'];
             $taxRate = $result['t']['Steuersatz'];
 

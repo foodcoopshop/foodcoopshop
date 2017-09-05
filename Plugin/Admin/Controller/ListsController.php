@@ -44,7 +44,9 @@ class ListsController extends AdminAppController
 
         foreach ($objects as $name => $object) {
             if (preg_match('/\.pdf$/', $name)) {
-                if (preg_match('/_Artikel_/', $name)) {
+                // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
+                // the following preg_match does not make a batch renaming necessary
+                if (!preg_match('/_(Produkt|Artikel)_/', $name, $matches)) {
                     continue;
                 }
 
@@ -55,14 +57,14 @@ class ListsController extends AdminAppController
                     continue;
                 }
 
-                // manufacturer name can be more than word... kinda complicated to get to the id
+                // manufacturer name can be more than one word... kinda complicated to get to the id
                 $manufacturerString = str_replace(Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')), '', substr($object->getFileName(), 11));
                 $manufacturerString = str_replace('Bestellliste_Mitglied_', '', $manufacturerString);
                 $manufacturerString = str_replace('.pdf', '', $manufacturerString);
-                $manufacturerString = substr($manufacturerString, 0, - 1); // letztes _ weg
+                $manufacturerString = substr($manufacturerString, 0, - 1); // remove trailing _
                 $splittedManufacturerString = explode('_', $manufacturerString);
-
                 $manufacturerId = end($splittedManufacturerString);
+
                 $manufacturer = $this->Manufacturer->find('first', array(
                     'conditions' => array(
                         'Manufacturer.id_manufacturer' => $manufacturerId
@@ -70,7 +72,7 @@ class ListsController extends AdminAppController
                 ));
 
                 $customerListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
-                $productListLink = str_replace('Mitglied', 'Artikel', $customerListLink);
+                $productListLink = str_replace('Mitglied', $matches[1], $customerListLink);
 
                 $files[] = array(
                     'delivery_date' => $deliveryDate,

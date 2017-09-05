@@ -42,7 +42,7 @@ foreach ($orders as $order) {
     );
     $headers = array(
         'Anzahl',
-        'Artikelname',
+        'Produkt',
         'Hersteller',
         'Preis',
         'Pfand'
