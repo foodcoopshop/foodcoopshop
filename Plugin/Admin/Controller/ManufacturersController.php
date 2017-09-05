@@ -183,7 +183,7 @@ class ManufacturersController extends AdminAppController
 
                 $message = 'Der Hersteller "' . $this->request->data['Manufacturer']['name'] . '" wurde ' . $messageSuffix;
                 $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
-                $this->AppSession->setFlashMessage('Der Hersteller wurde erfolgreich gespeichert.');
+                $this->Flash->success('Der Hersteller wurde erfolgreich gespeichert.');
 
                 if ($this->here == Configure::read('slugHelper')->getManufacturerProfile()) {
                     $this->renewAuthSession();
@@ -191,7 +191,7 @@ class ManufacturersController extends AdminAppController
 
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
             }
         }
     }
@@ -227,7 +227,7 @@ class ManufacturersController extends AdminAppController
         $message = 'Der Hersteller "' . $manufacturer['Manufacturer']['name'] . '" wurde erfolgreich ' . $statusText;
         $message .= '.';
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturerId, 'manufacturer', $message);
@@ -332,7 +332,7 @@ class ManufacturersController extends AdminAppController
             $invoicePdfUrl = Configure::read('htmlHelper')->getInvoiceLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
             $invoicePdfFile = $invoicePdfUrl;
 
-            $this->AppSession->setFlashMessage('Rechnung für Hersteller "' . $manufacturer['Manufacturer']['name'] . '" erfolgreich versendet an ' . $manufacturer['Address']['email'] . '.</a>');
+            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer['Manufacturer']['name'] . '" erfolgreich versendet an ' . $manufacturer['Address']['email'] . '.</a>');
 
             $loggedUser = $this->AppAuth->user();
             $invoice2Save = array(
@@ -454,7 +454,7 @@ class ManufacturersController extends AdminAppController
         }
 
         $flashMessage .= '.';
-        $this->AppSession->setFlashMessage($flashMessage);
+        $this->Flash->success($flashMessage);
         $this->redirect($this->referer());
         exit(); // important, on dev it happend that the url was called twice (browser-call)
     }
@@ -595,14 +595,14 @@ class ManufacturersController extends AdminAppController
                 }
                 $message .= ' wurden erfolgreich gespeichert.';
 
-                $this->AppSession->setFlashMessage($message);
+                $this->Flash->success($message);
 
                 $this->loadModel('CakeActionLog');
                 $this->CakeActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturerId, 'manufacturers', $message);
 
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
             }
         }
 
@@ -652,7 +652,7 @@ class ManufacturersController extends AdminAppController
         }
 
         $message = 'Alle Produkte des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Produkt: ' . $affectedRows;
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, 'products', $message);
