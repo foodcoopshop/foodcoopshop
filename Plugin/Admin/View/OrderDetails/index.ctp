@@ -331,7 +331,7 @@ if ($deposit != '') {
 }
 
 if (count($orderDetails) > 0) {
-    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> Ausgewählte Produkt stornieren</a>';
+    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> Ausgewählte Produkte stornieren</a>';
 }
 
 if ($buttonExists) {
