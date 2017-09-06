@@ -47,6 +47,7 @@ body.pages.home .filter-container {
 #flashMessage {
     left: 470px;
     top: 42px;
+    word-break: break-all;
 }
 body.blog_posts.add #flashMessage,
 body.blog_posts.edit #flashMessage,
@@ -944,3 +945,4 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
