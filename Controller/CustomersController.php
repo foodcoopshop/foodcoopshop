@@ -285,6 +285,7 @@ class CustomersController extends FrontendController
         $this->Flash->success('Du hast dich erfolgreich abgemeldet.');
         $this->Cookie->delete('remember_me_cookie');
         $this->destroyShopOrderCustomer();
-        $this->redirect($this->AppAuth->logout());
+        $this->AppAuth->logout();
+        $this->redirect('/');
     }
 }
