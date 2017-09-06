@@ -46,7 +46,7 @@ class ListsController extends AdminAppController
             if (preg_match('/\.pdf$/', $name)) {
                 // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
                 // the following preg_match does not make a batch renaming necessary
-                if (!preg_match('/_(Produkt|Artikel)_/', $name, $matches)) {
+                if (!preg_match('/_Bestellliste_(Produkt|Artikel)_/', $name, $matches)) {
                     continue;
                 }
 
@@ -57,13 +57,22 @@ class ListsController extends AdminAppController
                     continue;
                 }
 
-                // manufacturer name can be more than one word... kinda complicated to get to the id
-                $manufacturerString = str_replace(Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')), '', substr($object->getFileName(), 11));
-                $manufacturerString = str_replace('Bestellliste_Mitglied_', '', $manufacturerString);
-                $manufacturerString = str_replace('.pdf', '', $manufacturerString);
-                $manufacturerString = substr($manufacturerString, 0, - 1); // remove trailing _
+                // remove date
+                $manufacturerString = substr($object->getFileName(), 11);
+
+                // remove part after bestellistenString (foodcoop name and file ending)
+                $positionBestelllistenString = strpos($manufacturerString, '_Bestellliste_'.$matches[1]);
+                $manufacturerString = substr($manufacturerString, 0, $positionBestelllistenString);
                 $splittedManufacturerString = explode('_', $manufacturerString);
-                $manufacturerId = end($splittedManufacturerString);
+                $manufacturerId = (int) end($splittedManufacturerString);
+
+                if (!$manufacturerId) {
+                    $message = 'Fehler: ManufacturerId nicht gefunden in ' . $object->getFileName();
+                    $this->Flash->error($message);
+                    $this->log($message);
+                    $this->set('files', array());
+                    return;
+                }
 
                 $manufacturer = $this->Manufacturer->find('first', array(
                     'conditions' => array(
@@ -71,8 +80,8 @@ class ListsController extends AdminAppController
                     )
                 ));
 
-                $customerListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
-                $productListLink = str_replace('Mitglied', $matches[1], $customerListLink);
+                $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
+                $customerListLink = str_replace($matches[1], 'Mitglied', $productListLink);
 
                 $files[] = array(
                     'delivery_date' => $deliveryDate,
@@ -84,8 +93,6 @@ class ListsController extends AdminAppController
                 $files = Set::sort($files, '{n}.manufacturer_name', 'desc');
             }
         }
-
-        $files = Set::sort($files, '{n}.delivery_date', 'DESC');
         $this->set('files', $files);
 
         $this->set('title_for_layout', 'Bestelllisten');
