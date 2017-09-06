@@ -126,8 +126,9 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     $productCountSum += $manufacturer['product_count'];
+    $productString = $manufacturer['product_count'] == 1 ? 'Produkt' : 'Produkte';
     echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;Produkte',
+        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;' . $productString,
         array(
         'title' => 'Alle Produkte von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
         'class' => 'icon-with-text'

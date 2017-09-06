@@ -779,7 +779,7 @@ class ProductsController extends AdminAppController
             $this->set('variableMemberFee', $variableMemberFee);
         }
 
-        $this->set('title_for_layout', 'Produkt');
+        $this->set('title_for_layout', 'Produkte');
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)

@@ -134,7 +134,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     );
     $manufacturerMenu['children'][] = array(
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => 'Produkt',
+        'name' => 'Produkte',
         'options' => array(
             'fa-icon' => 'fa-fw fa-tags'
         )
