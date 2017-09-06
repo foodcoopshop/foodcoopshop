@@ -594,7 +594,7 @@ foodcoopshop.Admin = {
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Name und Beschreibung ändern">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
         dialogHtml += '<label for="dialogName">Name</label><br />';
-        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">Wichtig: Bitte keine Produkt in andere Produkt umbenennen, sondern neue Produkt erstellen!</span><br />';
+        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">Wichtig: Bitte keine Produkte in andere Produkte umbenennen, sondern dafür ein neues Produkt erstellen!</span><br />';
         dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span style="font-weight:normal">(z.B. 1 kg, 0,5 l)</span></label><br />';
         dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
         dialogHtml += '<div class="textarea-wrapper">';
@@ -949,8 +949,8 @@ foodcoopshop.Admin = {
         }
          infoText += '</ul>';
 
-         var dialogTitle = 'Ausgewählte Produkt wirklich stornieren?';
-         var textareaLabel = 'Warum werden die Produkt storniert (Pflichtfeld)?';
+         var dialogTitle = 'Ausgewählte Produkte wirklich stornieren?';
+         var textareaLabel = 'Warum werden die Produkte storniert (Pflichtfeld)?';
          foodcoopshop.Admin.openDeleteOrderDetailDialog(orderDetailIds, infoText, textareaLabel, dialogTitle);
     },
 
@@ -2372,3 +2372,4 @@ foodcoopshop.Admin = {
     }
 
 }
+

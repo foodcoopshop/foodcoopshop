@@ -84,9 +84,9 @@
                 verwaltet.
             </li>
             <li>Eine Bestellung (im Unterschied zum <b>bestellten Produkt</b>)
-                beinhaltet einen oder mehrere bestellte Produkt.
+                beinhaltet einen oder mehrere bestellte Produkte.
             </li>
-            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Produkt anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Produkt des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
+            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Produkte anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Produkt des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
             <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Produkt sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
             <li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
                 der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,

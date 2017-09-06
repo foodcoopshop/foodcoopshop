@@ -149,7 +149,7 @@ echo '<div class="holiday-wrapper">';
 
     echo $this->Form->input('Manufacturer.default_tax_id', array(
     'type' => 'select',
-    'label' => 'Voreingestellter Steuersatz für neue Produkt',
+    'label' => 'Voreingestellter Steuersatz für neue Produkte',
     'options' => $taxesForDropdown
     ));
 

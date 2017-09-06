@@ -92,7 +92,8 @@ class SendInvoicesShell extends AppShell
         foreach ($manufacturers as $manufacturer) {
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
             if (isset($manufacturer['current_order_count']) && $sendInvoice) {
-                $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' Produkt' . ' / ' . Configure::read('htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
+                $productString = ($manufacturer['order_detail_quantity_sum'] == 1 ? 'Produkt' : 'Produkte');
+                $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
                 $i ++;

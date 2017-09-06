@@ -161,19 +161,19 @@ class CakeActionLog extends AppModel
             'de' => 'Bestellung: Sofort-Bestellung getätigt'
         ),
         'order_detail_product_price_changed' => array(
-            'de' => 'Bestellter Produkt: Preis geändert',
+            'de' => 'Bestelltes Produkt: Preis geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'order_detail_product_quantity_changed' => array(
-            'de' => 'Bestellter Produkt: Anzahl geändert',
+            'de' => 'Bestelltes Produkt: Anzahl geändert',
             'access' => array(
                 'manufacturer'
             )
         ),
         'order_detail_cancelled' => array(
-            'de' => 'Bestellter Produkt: storniert',
+            'de' => 'Bestelltes Produkt: storniert',
             'access' => array(
                 'manufacturer'
             )

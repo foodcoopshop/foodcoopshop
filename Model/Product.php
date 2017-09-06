@@ -759,7 +759,7 @@ class Product extends AppModel
         ));
 
         // INSERT PRODUCT_LANG
-        $name = StringComponent::removeSpecialChars('Neuer Produkt von ' . $manufacturer['Manufacturer']['name']);
+        $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer['Manufacturer']['name']);
         $this->ProductLang->save(array(
             'id_product' => $newProductId,
             'id_lang' => 1,

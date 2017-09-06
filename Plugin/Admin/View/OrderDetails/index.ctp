@@ -65,7 +65,7 @@
                     wird beim Stornieren das Mitglied
                 <?php } ?>
                 per E-Mail verständigt, dass der Produkt nicht geliefert wird. Du kannst auch angeben, warum der Produkt storniert wird.</li>
-            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Produktn ändern und dafür auch einen Grund angeben. Das Mitglied  
+            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Produkten ändern und dafür auch einen Grund angeben. Das Mitglied  
             <?php if (!$appAuth->isManufacturer()) { ?>
                 und der Hersteller werden
             <?php } else { ?>

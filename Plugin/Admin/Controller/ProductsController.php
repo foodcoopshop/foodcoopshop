@@ -416,7 +416,7 @@ class ProductsController extends AdminAppController
             $selectedCategories = $this->params['data']['selectedCategories'];
         }
 
-        $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle produkte'
+        $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle-produkte'
         $selectedCategories = array_unique($selectedCategories);
 
         $oldProduct = $this->Product->find('first', array(
@@ -440,7 +440,7 @@ class ProductsController extends AdminAppController
                 )
             ));
             if (! empty($oldCategory)) {
-                // do not track "alle produkte"
+                // do not track "alle-produkte"
                 if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory['CategoryLang']['name'];
                 }
