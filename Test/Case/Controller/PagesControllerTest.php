@@ -30,7 +30,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getBlogList(),
             $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
             $this->Slug->getProductDetail(339, 'Kartoffel'),
-            $this->Slug->getBlogPostDetail(2, 'Demo Blog Produkt'),
+            $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(9, 'Impressum'),
             $this->Slug->getLogin(),

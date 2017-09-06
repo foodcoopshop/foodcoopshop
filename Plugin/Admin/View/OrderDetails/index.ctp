@@ -55,16 +55,16 @@
     <div id="help-container">
         <ul>
             <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die <b>bestellten Produkt</b>
+            <li>Auf dieser Seite werden die <b>bestellten Produkte</b>
                 verwaltet.
             </li>
-            <li><b>Produkt stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du den Produkt stornieren. Von Mittwoch bis Freitag
+            <li><b>Produkt stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du das Produkt stornieren. Von Mittwoch bis Freitag
                 <?php if (!$appAuth->isManufacturer()) { ?>
                     werden beim Stornieren das Mitglied und der Hersteller
                 <?php } else { ?>
                     wird beim Stornieren das Mitglied
                 <?php } ?>
-                per E-Mail verständigt, dass der Produkt nicht geliefert wird. Du kannst auch angeben, warum der Produkt storniert wird.</li>
+                per E-Mail verständigt, dass das Produkt nicht geliefert wird. Du kannst auch angeben, warum das Produkt storniert wird.</li>
             <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Produkten ändern und dafür auch einen Grund angeben. Das Mitglied  
             <?php if (!$appAuth->isManufacturer()) { ?>
                 und der Hersteller werden

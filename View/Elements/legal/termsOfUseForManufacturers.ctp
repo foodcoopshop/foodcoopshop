@@ -50,7 +50,7 @@
 
 <p>2.6. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p> 
 
-<p>2.7. Der Betreiber hat das Recht, Produkt, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
+<p>2.7. Der Betreiber hat das Recht, Produkte, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
 
 <?php
 if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFeeForTermsOfUse > 0) {

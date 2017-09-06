@@ -940,9 +940,10 @@ foodcoopshop.Admin = {
 
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {
 
-        var infoText = '<p>Du hast <b>' + orderDetailIds.length + '</b> Produkt zum Stornieren ausgewählt:</p>';
+        var productString = orderDetailIds.length == 1 ? 'Produkt' : 'Produkte';
+        var infoText = '<p>Du hast <b>' + orderDetailIds.length + '</b> ' + productString + ' zum Stornieren ausgewählt:</p>';
 
-         infoText += '<ul>';
+        infoText += '<ul>';
         for (var i in orderDetailIds) {
             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).parent().parent().parent().parent();
             infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9)').html() + '</li>';
@@ -1650,7 +1651,7 @@ foodcoopshop.Admin = {
                 }));
             }
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantity"]').html('<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.<br />Um die Anzahl zu erhöhen, bitte den Produkt nachbuchen.<br /><br /></span>' + $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />Neue Anzahl:');
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantity"]').html('<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.<br />Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen.<br /><br /></span>' + $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />Neue Anzahl:');
             dialog.dialog('open');
         });
 
@@ -2372,4 +2373,5 @@ foodcoopshop.Admin = {
     }
 
 }
+
 

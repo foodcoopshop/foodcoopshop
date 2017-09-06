@@ -450,8 +450,9 @@ class OrderDetailsController extends AdminAppController
 
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
+        $productString = $orderDetailsCount == 1 ? 'Produkt wurde' : 'Produkte wurden';
         if ($orderDetailsCount > 1) {
-            $flashMessage =  $orderDetailsCount . ' Produkt wurden erfolgreich storniert.';
+            $flashMessage =  $orderDetailsCount . ' ' . $productString . ' erfolgreich storniert.';
         }
         $this->Flash->success($flashMessage);
 
