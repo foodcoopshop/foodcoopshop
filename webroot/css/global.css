@@ -220,6 +220,7 @@ a.toggle-link.collapsed i:before {
 .ui-widget-overlay {
   background: #000 ! important;
   opacity: .65 ! important;
+  z-index: 100001;
 }
 li.ui-state-default {
     position: relative ! important;
@@ -462,3 +463,5 @@ a.btn.btn-success:hover i.cgold,
 i.gold {
   color: #FFD700 ! important;
 }
+
+
