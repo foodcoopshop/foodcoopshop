@@ -127,16 +127,16 @@ class PagesController extends AdminAppController
                     $this->Page->saveField('active', APP_DEL, false);
                     $message = 'Die Seite "' . $this->request->data['PageLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
                     $this->CakeActionLog->customSave('page_deleted', $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
-                    $this->AppSession->setFlashMessage('Die Seite wurde erfolgreich gelöscht.');
+                    $this->Flash->success('Die Seite wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Die Seite "' . $this->request->data['PageLang']['meta_title'] . '" wurde ' . $messageSuffix;
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
-                    $this->AppSession->setFlashMessage('Die Seite wurde erfolgreich gespeichert.');
+                    $this->Flash->success('Die Seite wurde erfolgreich gespeichert.');
                 }
 
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }

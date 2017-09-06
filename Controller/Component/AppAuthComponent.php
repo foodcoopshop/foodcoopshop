@@ -21,8 +21,8 @@ class AppAuthComponent extends AuthComponent
 {
 
     public $components = array(
-        'AppSession',
         'Session',
+        'Flash',
         'RequestHandler',
         'Cart'
     );
@@ -31,7 +31,7 @@ class AppAuthComponent extends AuthComponent
 
     public function flash($message)
     {
-        $this->AppSession->setFlashError($message);
+        $this->Flash->error($message);
     }
 
     /**

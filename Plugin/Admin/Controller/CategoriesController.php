@@ -109,17 +109,17 @@ class CategoriesController extends AdminAppController
                     $this->Category->CategoryLang->delete($this->Category->id); // CategoryLang record needs to be deleted manually
                     $message = 'Die Kategorie "' . $this->request->data['CategoryLang']['name'] . '" wurde erfolgreich gelöscht.';
                     $this->CakeActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categorys', $message);
-                    $this->AppSession->setFlashMessage('Die Kategorie wurde erfolgreich gelöscht.');
+                    $this->Flash->success('Die Kategorie wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Die Kategorie "' . $this->request->data['CategoryLang']['name'] . '" wurde ' . $messageSuffix;
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
-                    $this->AppSession->setFlashMessage('Die Kategorie wurde erfolgreich gespeichert.');
+                    $this->Flash->success('Die Kategorie wurde erfolgreich gespeichert.');
                 }
 
-                $this->AppSession->write('highlightedRowId', $this->Category->id);
+                $this->Session->write('highlightedRowId', $this->Category->id);
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }
