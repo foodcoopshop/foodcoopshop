@@ -47,7 +47,6 @@ body.pages.home .filter-container {
 #flashMessage {
     left: 470px;
     top: 42px;
-    word-break: break-word;
 }
 body.blog_posts.add #flashMessage,
 body.blog_posts.edit #flashMessage,
