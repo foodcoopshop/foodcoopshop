@@ -150,10 +150,10 @@ class ProductsController extends AdminAppController
         }
 
         $messageString = 'Bild (Id: ' . $product['ImageShop']['id_image'] . ') wurde erfolgreich gelöscht. Artikel: "' . $product['ProductLang']['name'] . '", Hersteller: "' . $product['Manufacturer']['name'] . '"';
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -223,10 +223,10 @@ class ProductsController extends AdminAppController
         }
 
         $messageString = 'Ein neues Bild zum Artikel: "' . $product['ProductLang']['name'] . '" (Hersteller: "' . $product['Manufacturer']['name'] . '") wurde hochgeladen.';
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -254,7 +254,7 @@ class ProductsController extends AdminAppController
         $this->Product->deleteProductAttribute($productId, $productAttributeId, $oldProduct);
 
         $messageString = 'Die Variante "' . $attributeLang . '" des Artikels "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich gelöscht.';
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
 
         $this->redirect($this->referer());
@@ -283,13 +283,13 @@ class ProductsController extends AdminAppController
                 $attributeLang = $productAttribute['ProductAttributeCombination']['AttributeLang']['name'];
             }
         }
-        $this->AppSession->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
+        $this->Session->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
         $messageString = 'Die Variante "' . $attributeLang . '" für den Artikel "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -317,10 +317,10 @@ class ProductsController extends AdminAppController
         $newProduct = $this->Product->add($manufacturer);
 
         $messageString = 'Ein neuer Artikel für "' . $manufacturer['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct['Product']['id_product'], 'products', $messageString);
 
-        $this->AppSession->write('highlightedRowId', $newProduct['Product']['id_product']);
+        $this->Session->write('highlightedRowId', $newProduct['Product']['id_product']);
         $this->redirect($this->referer());
     }
 
@@ -396,9 +396,9 @@ class ProductsController extends AdminAppController
             $messageString = 'Es wurden keine Änderungen gespeichert.';
         }
 
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -450,10 +450,10 @@ class ProductsController extends AdminAppController
         }
 
         $messageString = 'Die Kategorien des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -503,9 +503,9 @@ class ProductsController extends AdminAppController
         }
 
         $quantity = $this->Product->getQuantityAsInteger($this->params['data']['quantity']);
-        $this->AppSession->setFlashMessage('Die Anzahl des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
+        $this->Flash->success('Die Anzahl des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
         $this->CakeActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . $oldProduct['StockAvailable']['quantity'] . ' auf ' . $quantity . ' geändert.');
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -555,9 +555,9 @@ class ProductsController extends AdminAppController
         }
 
         $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
-        $this->AppSession->setFlashMessage('Der Preis des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
+        $this->Flash->success('Der Preis des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
         $this->CakeActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Artikels <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . Configure::read('htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('htmlHelper')->formatAsEuro($price) . ' geändert.');
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         $this->set('data', array(
             'status' => 1,
@@ -670,9 +670,9 @@ class ProductsController extends AdminAppController
 
         $this->CakeActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
-        $this->AppSession->setFlashMessage('Der Pfand des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
+        $this->Flash->success('Der Pfand des Artikels "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -707,7 +707,7 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-        $this->AppSession->setFlashMessage('Der Artikel wurde erfolgreich geändert.');
+        $this->Flash->success('Der Artikel wurde erfolgreich geändert.');
 
         if ($this->params['data']['name'] != $oldProduct['ProductLang']['name']) {
             $this->CakeActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Artikel "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde umbenannt in <i>"' . $this->params['data']['name'] . '"</i>.');
@@ -722,7 +722,7 @@ class ProductsController extends AdminAppController
             $this->CakeActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Artikels "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert. <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLang']['description_short'] . '</div> neu: <div class="changed">' . $this->params['data']['descriptionShort'] . '</div>');
         }
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -804,7 +804,7 @@ class ProductsController extends AdminAppController
         ));
 
         $message = 'Die Standard-Variante des Artikels "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombination']['AttributeLang']['name'] . '" geändert.';
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
         $this->CakeActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
 
         $this->redirect($this->referer());
@@ -848,11 +848,11 @@ class ProductsController extends AdminAppController
         }
 
         $message = 'Der Artikel "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wird ' . $statusText . '.';
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -879,11 +879,11 @@ class ProductsController extends AdminAppController
             $actionLogType = 'product_set_active';
         }
 
-        $this->AppSession->setFlashMessage('Der Artikel "' . $product['ProductLang']['name'] . '" wurde erfolgreich ' . $statusText . '.');
+        $this->Flash->success('Der Artikel "' . $product['ProductLang']['name'] . '" wurde erfolgreich ' . $statusText . '.');
 
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Der Artikel "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde ' . $statusText . '.');
 
-        $this->AppSession->write('highlightedRowId', $productId);
+        $this->Session->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }

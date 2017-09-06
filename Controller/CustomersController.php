@@ -55,11 +55,11 @@ class CustomersController extends FrontendController
             $this->Customer->id = $this->AppAuth->getUserId();
             $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
             $this->Customer->save($this->request->data['Customer'], false);
-            $this->AppSession->setFlashMessage('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
+            $this->Flash->success('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
             $this->renewAuthSession();
             $this->redirect($this->referer());
         } else {
-            $this->AppSession->setFlashError('Bitte akzeptiere die Nutzungsbedingungen.');
+            $this->Flash->error('Bitte akzeptiere die Nutzungsbedingungen.');
             $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
         }
     }
@@ -87,7 +87,7 @@ class CustomersController extends FrontendController
             }
 
             if ($customer['Customer']['active'] !== true) {
-                $this->AppSession->setFlashError('Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.');
+                $this->Flash->error('Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.');
                 return false;
             }
 
@@ -105,9 +105,9 @@ class CustomersController extends FrontendController
                 ));
 
             if ($email->send()) {
-                $this->AppSession->setFlashMessage('Wir haben dir ein neues Passwort zugeschickt.');
+                $this->Flash->success('Wir haben dir ein neues Passwort zugeschickt.');
             } else {
-                $this->AppSession->setFlashError('Das Versenden des neuen Passwortes ist fehlgeschlagen.');
+                $this->Flash->error('Das Versenden des neuen Passwortes ist fehlgeschlagen.');
             }
 
             $this->redirect(Configure::read('slugHelper')->getChangePassword());
@@ -127,7 +127,7 @@ class CustomersController extends FrontendController
          */
         if ($this->here == Configure::read('slugHelper')->getLogin()) {
             if ($this->AppAuth->loggedIn()) {
-                $this->AppSession->setFlashError('Du bist bereits angemeldet.');
+                $this->Flash->error('Du bist bereits angemeldet.');
             }
             if ($this->request->is('post')) {
                 if ($this->AppAuth->login()) {
@@ -142,7 +142,7 @@ class CustomersController extends FrontendController
 
                     $this->redirect($this->AppAuth->redirect());
                 } else {
-                    $this->AppSession->setFlashError('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
+                    $this->Flash->error('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
                 }
             }
         }
@@ -152,14 +152,14 @@ class CustomersController extends FrontendController
          */
         if ($this->here == Configure::read('slugHelper')->getRegistration()) {
             if ($this->AppAuth->loggedIn()) {
-                $this->AppSession->setFlashError('Du bist bereits angemeldet.');
+                $this->Flash->error('Du bist bereits angemeldet.');
                 $this->redirect(Configure::read('slugHelper')->getLogin());
             }
 
             // prevent spam
             // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
             if ($this->request->data['antiSpam'] == 'lalala' || $this->request->data['antiSpam'] < 3) {
-                $this->AppSession->setFlashError('S-p-a-m-!');
+                $this->Flash->error('S-p-a-m-!');
                 $this->redirect(Configure::read('slugHelper')->getLogin());
             }
 
@@ -262,10 +262,10 @@ class CustomersController extends FrontendController
                     }
                     // END
 
-                    $this->AppSession->setFlashMessage('Deine Registrierung war erfolgreich.');
+                    $this->Flash->success('Deine Registrierung war erfolgreich.');
                     $this->redirect('/registrierung/abgeschlossen');
                 } else {
-                    $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                    $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
                 }
             }
         }
@@ -282,9 +282,10 @@ class CustomersController extends FrontendController
 
     public function logout()
     {
-        $this->AppSession->setFlashMessage('Du hast dich erfolgreich abgemeldet.');
+        $this->Flash->success('Du hast dich erfolgreich abgemeldet.');
         $this->Cookie->delete('remember_me_cookie');
         $this->destroyShopOrderCustomer();
-        $this->redirect($this->AppAuth->logout());
+        $this->AppAuth->logout();
+        $this->redirect('/');
     }
 }

@@ -24,7 +24,10 @@ class AppController extends Controller
 
     public $components = array(
         'RequestHandler', // to parse xml extensions
-        'AppSession',
+        'Session',
+        'Flash' => array(
+            'clear' => true
+        ),
         'String',
         'Cookie',
         'Paginator' => array(
@@ -38,7 +41,6 @@ class AppController extends Controller
                 'action' => 'login'
             ),
             'unauthorizedRedirect' => false,
-            'logoutRedirect' => '/admin/order_details', // important for manufacturer login!
             'authError' => 'Zugriff verweigert, bitte melde dich an.',
             // non acl-authorization: uses function isAuthorized in Controller
             'authorize' => array(

@@ -153,17 +153,17 @@ class BlogPostsController extends AdminAppController
                     $this->BlogPost->saveField('active', APP_DEL, false);
                     $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
                     $this->CakeActionLog->customSave('blog_post_deleted', $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
-                    $this->AppSession->setFlashMessage('Der Blog-Artikel wurde erfolgreich gelöscht.');
+                    $this->Flash->success('Der Blog-Artikel wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde ' . $messageSuffix;
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
-                    $this->AppSession->setFlashMessage('Der Blog-Artikel wurde erfolgreich gespeichert.');
+                    $this->Flash->success('Der Blog-Artikel wurde erfolgreich gespeichert.');
                 }
 
-                $this->AppSession->write('highlightedRowId', $this->BlogPost->id);
+                $this->Session->write('highlightedRowId', $this->BlogPost->id);
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }

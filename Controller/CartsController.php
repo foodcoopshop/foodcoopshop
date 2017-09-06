@@ -166,7 +166,7 @@ class CartsController extends FrontendController
         // END check if no amount is 0
 
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
-            $this->AppSession->setFlashError('Dein Warenkorb war leer.');
+            $this->Flash->error('Dein Warenkorb war leer.');
             $this->redirect(Configure::read('slugHelper')->getCartDetail());
         }
 
@@ -283,7 +283,7 @@ class CartsController extends FrontendController
         $this->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || $formErrors) {
-            $this->AppSession->setFlashError('Es sind Fehler aufgetreten.');
+            $this->Flash->error('Es sind Fehler aufgetreten.');
         } else {
             // START save order
             $this->Order->id = null;
@@ -312,7 +312,7 @@ class CartsController extends FrontendController
 
             if (empty($order)) {
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
-                $this->AppSession->setFlashError($message);
+                $this->Flash->error($message);
                 $this->log($message);
                 $this->redirect(Configure::read('slugHelper')->getCartFinish());
             }
@@ -336,7 +336,7 @@ class CartsController extends FrontendController
 
             if (empty($orderDetails)) {
                 $message = 'Bei der Erstellung der bestellten Artikel ist ein Fehler aufgetreten.';
-                $this->AppSession->setFlashError($message);
+                $this->Flash->error($message);
                 $this->log($message);
                 $this->redirect(Configure::read('slugHelper')->getCartFinish());
             }
@@ -382,7 +382,7 @@ class CartsController extends FrontendController
 
             $this->AppAuth->Cart->markAsSaved();
 
-            $this->AppSession->setFlashMessage('Deine Bestellung wurde erfolgreich abgeschlossen.');
+            $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
@@ -397,7 +397,7 @@ class CartsController extends FrontendController
                     ->viewVars(array(
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
-                    'originalLoggedCustomer' => $this->AppSession->check('Auth.originalLoggedCustomer') ? $this->AppSession->read('Auth.originalLoggedCustomer') : null,
+                    'originalLoggedCustomer' => $this->Session->check('Auth.originalLoggedCustomer') ? $this->Session->read('Auth.originalLoggedCustomer') : null,
                     'order' => $order,
                     'depositSum' => $this->AppAuth->Cart->getDepositSum(),
                     'productSum' => $this->AppAuth->Cart->getProductSum(),
@@ -426,7 +426,7 @@ class CartsController extends FrontendController
     public function sendShopOrderNotificationToManufacturers($cakeCartProducts, $order)
     {
 
-        if (!$this->AppSession->check('Auth.shopOrderCustomer')) {
+        if (!$this->Session->check('Auth.shopOrderCustomer')) {
             return false;
         }
 
@@ -464,7 +464,7 @@ class CartsController extends FrontendController
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
                     'cart' => array('CakeCartProducts' => $cakeCartProducts),
-                    'originalLoggedCustomer' => $this->AppSession->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->Session->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
