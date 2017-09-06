@@ -60,7 +60,7 @@
             // only show button if no manufacturer filter is applied
             if ($manufacturerId > 0) {
                 echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Produkt erstellen', 'javascript:void(0);', array(
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt erstellen', 'javascript:void(0);', array(
                     'class' => 'btn btn-default',
                     'escape' => false
                 ));
