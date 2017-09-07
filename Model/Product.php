@@ -713,7 +713,7 @@ class Product extends AppModel
             'id_product' => $productId
         ));
 
-        // set price of article back to 0 => if not, the price of the attribute is added to the price of the article
+        // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
         $this->ProductShop->id = $productId;
         $this->ProductShop->save(array(
             'price' => 0
@@ -759,7 +759,7 @@ class Product extends AppModel
         ));
 
         // INSERT PRODUCT_LANG
-        $name = StringComponent::removeSpecialChars('Neuer Artikel von ' . $manufacturer['Manufacturer']['name']);
+        $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer['Manufacturer']['name']);
         $this->ProductLang->save(array(
             'id_product' => $newProductId,
             'id_lang' => 1,

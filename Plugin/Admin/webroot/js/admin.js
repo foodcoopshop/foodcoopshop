@@ -602,7 +602,7 @@ foodcoopshop.Admin = {
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Name und Beschreibung ändern">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
         dialogHtml += '<label for="dialogName">Name</label><br />';
-        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info article-description-rename-info">Wichtig: Bitte keine Artikel in andere Artikel umbenennen, sondern neue Artikel erstellen!</span><br />';
+        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">Wichtig: Bitte keine Produkte in andere Produkte umbenennen, sondern dafür ein neues Produkt erstellen!</span><br />';
         dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span style="font-weight:normal">(z.B. 1 kg, 0,5 l)</span></label><br />';
         dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
         dialogHtml += '<div class="textarea-wrapper">';
@@ -699,7 +699,7 @@ foodcoopshop.Admin = {
             CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
             $('#' + dialogId + ' #dialogProductId').val($(this).parent().parent().parent().parent().find('td:nth-child(1)').html());
 
-            // hide unity field if article has attributes
+            // hide unity field if product has attributes
             var unitySelector = $('#' + dialogId + ' #labelUnity, #' + dialogId + ' #dialogUnity');
             if ($(this).parent().parent().parent().parent().next().hasClass('sub-row')) {
                 unitySelector.hide();
@@ -883,7 +883,7 @@ foodcoopshop.Admin = {
 
                 if (totalSum != '€&nbsp;0,00') {
                     $('.ui-dialog .ajax-loader').hide();
-                    alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Artikel.');
+                    alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
                     $('.ui-dialog button').attr('disabled', false);
                     return;
                 }
@@ -948,17 +948,18 @@ foodcoopshop.Admin = {
 
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {
 
-        var infoText = '<p>Du hast <b>' + orderDetailIds.length + '</b> Artikel zum Stornieren ausgewählt:</p>';
+        var productString = orderDetailIds.length == 1 ? 'Produkt' : 'Produkte';
+        var infoText = '<p>Du hast <b>' + orderDetailIds.length + '</b> ' + productString + ' zum Stornieren ausgewählt:</p>';
 
-         infoText += '<ul>';
+        infoText += '<ul>';
         for (var i in orderDetailIds) {
             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).parent().parent().parent().parent();
             infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9)').html() + '</li>';
         }
          infoText += '</ul>';
 
-         var dialogTitle = 'Ausgewählte Artikel wirklich stornieren?';
-         var textareaLabel = 'Warum werden die Artikel storniert (Pflichtfeld)?';
+         var dialogTitle = 'Ausgewählte Produkte wirklich stornieren?';
+         var textareaLabel = 'Warum werden die Produkte storniert (Pflichtfeld)?';
          foodcoopshop.Admin.openDeleteOrderDetailDialog(orderDetailIds, infoText, textareaLabel, dialogTitle);
     },
 
@@ -996,7 +997,7 @@ foodcoopshop.Admin = {
 
                     var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
                     if (ckeditorData == '') {
-                        alert('Bitte an, warum du den Artikel stornierst.');
+                        alert('Bitte an, warum du das Produkt stornierst.');
                         return;
                     }
 
@@ -1033,15 +1034,15 @@ foodcoopshop.Admin = {
             orderDetailId = orderDetailId[orderDetailId.length - 1];
 
             var dataRow = $('#delete-order-detail-' + orderDetailId).parent().parent().parent().parent();
-            var infoText = '<p>Möchtest du den Artikel <b>' + dataRow.find('td:nth-child(4) a').html() + '</b>';
+            var infoText = '<p>Möchtest du das Produkt <b>' + dataRow.find('td:nth-child(4) a').html() + '</b>';
 
             if (!foodcoopshop.Helper.isManufacturer) {
                 infoText += ' vom Hersteller <b>' + dataRow.find('td:nth-child(5) a').html() + '</b>';
             }
             infoText += ' wirklich stornieren?</p>';
 
-            var dialogTitle = 'Bestellten Artikel wirklich stornieren?';
-            var textareaLabel = 'Warum wird der Artikel storniert (Pflichtfeld)?';
+            var dialogTitle = 'Bestelltes Produkt wirklich stornieren?';
+            var textareaLabel = 'Warum wird das Produkt storniert (Pflichtfeld)?';
 
             foodcoopshop.Admin.openDeleteOrderDetailDialog([orderDetailId], infoText, textareaLabel, dialogTitle);
 
@@ -1064,10 +1065,10 @@ foodcoopshop.Admin = {
 
             var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
             $('<div></div>').appendTo('body')
-                .html('<p>Möchtest du den Artikel <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> wirklich im Shop ' + newStateText + '?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>Möchtest du das Produkt <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> wirklich im Shop ' + newStateText + '?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Artikel ' + newStateText + '?',
+                    title: 'Produkt ' + newStateText + '?',
                     autoOpen: true,
                     width: 400,
                     resizable: false,
@@ -1134,7 +1135,7 @@ foodcoopshop.Admin = {
             productId = productId[productId.length - 1];
 
             var dataRow = $(this).parent().parent().parent().parent();
-            var htmlCode = '<p>Bitte wähle die neue Variante für den Artikel <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> aus.</p>';
+            var htmlCode = '<p>Bitte wähle die neue Variante für das Produkt <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> aus.</p>';
             var productAttributesDropdown = $('#productAttributeId').clone(true);
             productAttributesDropdown.show();
             productAttributesDropdown.removeClass('hide');
@@ -1146,7 +1147,7 @@ foodcoopshop.Admin = {
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Neue Variante für Artikel erstellen',
+                    title: 'Neue Variante für Produkt erstellen',
                     autoOpen: true,
                     width: 450,
                     resizable: false,
@@ -1184,7 +1185,7 @@ foodcoopshop.Admin = {
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Neue Standard-Variante für Artikel ändern',
+                    title: 'Neue Standard-Variante für Produkt ändern',
                     autoOpen: true,
                     width: 450,
                     resizable: false,
@@ -1211,10 +1212,10 @@ foodcoopshop.Admin = {
         $(container).find('#add-product-button-wrapper a').on('click', function () {
 
             $('<div></div>').appendTo('body')
-                .html('<p>Möchtest du wirklich einen neuen Artikel erstellen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>Möchtest du wirklich ein neues Produkt erstellen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Neuen Artikel erstellen',
+                    title: 'Neues Produkt erstellen',
                     autoOpen: true,
                     width: 400,
                     resizable: false,
@@ -1658,7 +1659,7 @@ foodcoopshop.Admin = {
                 }));
             }
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantity"]').html('<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.<br />Um die Anzahl zu erhöhen, bitte den Artikel nachbuchen.<br /><br /></span>' + $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />Neue Anzahl:');
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantity"]').html('<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.<br />Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen.<br /><br /></span>' + $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />Neue Anzahl:');
             dialog.dialog('open');
         });
 
@@ -1957,7 +1958,7 @@ foodcoopshop.Admin = {
             var dataRow = $('#change-active-state-' + productId).parent().parent().parent().parent();
             $('<div></div>')
                 .appendTo('body')
-                .html('<p>Möchtest du den Artikel <b>' +
+                .html('<p>Möchtest du das Produkt <b>' +
                     dataRow
                     .find(
                         'td:nth-child(4) span.name-for-dialog'
@@ -1968,7 +1969,7 @@ foodcoopshop.Admin = {
                     '?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Artikel ' +
+                    title: 'Produkt ' +
                         newStateText + '?',
                     autoOpen: true,
                     width: 400,
@@ -2381,3 +2382,6 @@ foodcoopshop.Admin = {
     }
 
 }
+
+
+

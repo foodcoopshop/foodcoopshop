@@ -127,7 +127,7 @@ table.list th, table.list td {
     margin-top: 2px;
     margin-bottom: 2px;
 }
-.article-description-rename-info {
+.product-description-rename-info {
     position: static ! important;
 }
 #flashMessage {
@@ -149,3 +149,4 @@ form.fcs-form input[type="checkbox"] {
 form.fcs-form .description {
   margin-left: 120px;
 }
+

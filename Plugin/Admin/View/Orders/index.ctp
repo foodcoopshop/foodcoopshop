@@ -83,11 +83,11 @@
             <li>Auf dieser Seite werden die <b>Bestellungen</b>
                 verwaltet.
             </li>
-            <li>Eine Bestellung (im Unterschied zum <b>bestellten Artikel</b>)
-                beinhaltet einen oder mehrere bestellte Artikel.
+            <li>Eine Bestellung (im Unterschied zum <b>bestellten Produkt</b>)
+                beinhaltet einen oder mehrere bestellte Produkte.
             </li>
-            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Artikel anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Artikel des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
-            <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Artikel sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
+            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Produkte anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Produkte des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
+            <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied das Produkt sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
             <li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
                 der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,
                 wieviel jedes Mitglied tatsächlich zu bezahlen hat. Diese Liste ist
@@ -184,9 +184,9 @@
         echo '<span class="customer-name">'.$order['Order']['name'].'</span>'; // !sic Order.name, related virtual field is copied in controller
         echo '</td>';
 
-        echo '<td'.(!$isMobile ? ' style="width: 140px;"' : '').'>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Artikel' : ''), array(
-            'title' => 'Alle bestellten Artikel von ' . $order['Order']['name'] . ' anzeigen',
+        echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), array(
+            'title' => 'Alle bestellten Produkte von ' . $order['Order']['name'] . ' anzeigen',
             'class' => 'icon-with-text'
         ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customer']['id_customer'] . '/orderState:' . $orderState);
         echo '</td>';

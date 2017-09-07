@@ -32,7 +32,7 @@ $actionLogsMenuElement = array(
 );
 $cancelledArticlesMenuElement = array(
     'slug' => '/admin/action_logs/index/type:order_detail_cancelled',
-    'name' => 'Stornierte Artikel',
+    'name' => 'Stornierte Produkte',
     'options' => array(
         'fa-icon' => 'fa-fw fa-remove'
     )
@@ -46,7 +46,7 @@ $ordersMenuElement = array(
 );
 $orderDetailsMenuElement = array(
     'slug' => '/admin/order_details',
-    'name' => 'Bestellte Artikel',
+    'name' => 'Bestellte Produkte',
     'options' => array(
         'fa-icon' => 'fa-fw fa-shopping-cart'
     )
@@ -133,7 +133,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     );
     $manufacturerMenu['children'][] = array(
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => 'Artikel',
+        'name' => 'Produkte',
         'options' => array(
             'fa-icon' => 'fa-fw fa-tags'
         )
@@ -227,7 +227,7 @@ if ($appAuth->isManufacturer()) {
     $menu[] = $orderDetailsMenuElement;
     $menu[] = array(
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => 'Meine Artikel',
+        'name' => 'Meine Produkte',
         'options' => array(
             'fa-icon' => 'fa-fw fa-tags'
         )
