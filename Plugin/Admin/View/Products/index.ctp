@@ -31,7 +31,7 @@
             echo $this->Form->input('productId', array(
                 'type' => 'select',
                 'label' => '',
-                'empty' => 'alle Artikel',
+                'empty' => 'alle Produkte',
                 'options' => array()
             ));
         }
@@ -60,7 +60,7 @@
             // only show button if no manufacturer filter is applied
             if ($manufacturerId > 0) {
                 echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Artikel erstellen', 'javascript:void(0);', array(
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt erstellen', 'javascript:void(0);', array(
                     'class' => 'btn btn-default',
                     'escape' => false
                 ));
@@ -73,35 +73,35 @@
 
     <div id="help-container">
         <ul>
-            <li>Auf dieser Seite werden deine <b>Artikel</b> verwaltet.
+            <li>Auf dieser Seite werden deine <b>Produkt</b> verwaltet.
             </li>
             <li>
-                Du kannst neue Artikel erstellen (Button rechts oben), mit einem Klick auf einen der Bearbeiten-Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')); ?> kannst den entsprechenden (z.B. Kategorien, Anzahl, Preis...) ändern.
+                Du kannst neue Produkte erstellen (Button rechts oben), mit einem Klick auf einen der Bearbeiten-Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')); ?> kannst den entsprechenden (z.B. Kategorien, Anzahl, Preis...) ändern.
             </li>
             <li>Hinweis zum Ändern der Beschreibung: <b><i>Kurze</i> Beschreibung</b>
                 steht im Shop immer neben dem Bild und ist in den Listen zu lesen. <b><i>Lange</i>
                     Beschreibung</b> steht nur auf der Produkt-Detailseite (z.B. für
                 das Anführen von Inhaltsstoffen geeignet).
             </li>
-            <li>Du kannst deine Artikel <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('accept.png')); ?> bzw. <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts).
+            <li>Du kannst deine Produkte <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('accept.png')); ?> bzw. <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts).
             </li>
-            <li><b>Varianten: </b>Mit dem <?php echo $this->Html->image($this->Html->getFamFamFamPath('add.png')); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Artikeln anlegen. Das <?php echo $this->Html->image($this->Html->getFamFamFamPath('star.png')); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
+            <li><b>Varianten: </b>Mit dem <?php echo $this->Html->image($this->Html->getFamFamFamPath('add.png')); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Produkten anlegen. Das <?php echo $this->Html->image($this->Html->getFamFamFamPath('star.png')); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
                 Varianten können auf "nicht bestellbar" gesetzt werden, in dem du die Anzahl auf 0 setzt.
             </li>
             <li>Falls eine gewünschte Variante noch nicht zur Verfügung steht,
                 sag uns bitte Bescheid. Wir legen sie dann für dich an.</li>
-            <li>Wenn du von einem Artikel nur eine <b>beschränkte Anzahl</b>
+            <li>Wenn du von einem Produkt nur eine <b>beschränkte Anzahl</b>
                 liefern kannst, ändere die Anzahl bitte dementsprechend. Unser
                 System vermindert bei jeder Bestellung den Lagerbestand und stoppt
-                die Bestellmöglichkeit, wenn keine Artikel mehr verfügbar sind,
+                die Bestellmöglichkeit, wenn keine Produkte mehr verfügbar sind,
                 automatisch. Somit bekommt jeder, der bestellt, seine Ware und es
                 muss nichts storniert werden.
             </li>
-            <li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image($this->Html->getFamFamFamPath('image_add.png')); ?>-Icons kannst ein Bild zu deinem Artikel hochladen. Wenn zu einem Artikel noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
+            <li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image($this->Html->getFamFamFamPath('image_add.png')); ?>-Icons kannst ein Bild zu deinem Produkt hochladen. Wenn zu einem Produkt noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
             </li>
-            <li>Du siehst, für welche Artikel wir Pfand einheben. Möchtest du den
+            <li>Du siehst, für welche Produkte wir Pfand einheben. Möchtest du den
                 Pfand ändern, sag uns bitte Bescheid.</li>
-            <li><b>Neue Artikel</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
+            <li><b>Neue Produkte</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
                 href="<?php echo Configure::read('app.cakeServerName'); ?>/neue-produkte"
                 target="_blank">"Neue Produkte"</a> auf.</li>
         </ul>
@@ -147,7 +147,7 @@
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), array(
                 'class' => 'add-product-attribute-button',
-                'title' => 'Neue Variante für Artikel "' . $product['ProductLang']['name'] . '" erstellen'
+                'title' => 'Neue Variante für Produkt "' . $product['ProductLang']['name'] . '" erstellen'
             ), 'javascript:void(0);');
         }
         echo '</td>';
@@ -182,7 +182,7 @@
             echo '<span style="float:left;margin-right: 5px;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-product-attribute-button',
-                'title' => 'Variante für Artikel "' . $product['ProductLang']['name'] . '" löschen'
+                'title' => 'Variante für Produkt "' . $product['ProductLang']['name'] . '" löschen'
             ), 'javascript:void(0);');
             echo '</span>';
 
@@ -204,7 +204,7 @@
         echo $product['ProductLang']['name'];
         echo '</span>';
 
-        // show unity only if article has no attributes and field "unity" is not empty
+        // show unity only if product has no attributes and field "unity" is not empty
         if (empty($product['ProductAttributes'])) {
             if (isset($product['ProductLang']) && $product['ProductLang']['unity'] != '') {
                 echo ': ';
@@ -315,13 +315,13 @@
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', array(
                     'class' => 'icon-with-text change-new-state change-new-state-active',
                     'id' => 'change-new-state-' . $product['Product']['id_product'],
-                    'title' => 'Artikel die nächsten ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
+                    'title' => 'Produkt die nächsten ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
                 ), 'javascript:void(0);');
             } else {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', array(
                     'class' => 'icon-with-text change-new-state change-new-state-inactive',
                     'id' => 'change-new-state-' . $product['Product']['id_product'],
-                    'title' => 'Artikel nicht mehr als "neu" anzeigen?'
+                    'title' => 'Produkt nicht mehr als "neu" anzeigen?'
                 ), 'javascript:void(0);');
             }
         }
@@ -368,7 +368,7 @@
         echo '<td>';
         if ($product['Product']['active'] && (! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
-                'title' => 'Artikel-Vorschau',
+                'title' => 'Produkt-Vorschau',
                 'target' => '_blank'
             ), $url = $this->Slug->getProductDetail($product['Product']['id_product'], $product['ProductLang']['name']));
         }

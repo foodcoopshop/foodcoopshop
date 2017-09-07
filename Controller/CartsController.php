@@ -226,7 +226,7 @@ class CartsController extends FrontendController
             }
 
             if (! $product['Manufacturer']['active'] || $product[0]['IsHolidayActive']) {
-                $message = 'Der Hersteller des Produkts "' . $product['ProductLang']['name'] . '" ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = 'Der Hersteller des Produktes "' . $product['ProductLang']['name'] . '" ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
@@ -335,7 +335,7 @@ class CartsController extends FrontendController
             ));
 
             if (empty($orderDetails)) {
-                $message = 'Bei der Erstellung der bestellten Artikel ist ein Fehler aufgetreten.';
+                $message = 'Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
                 $this->log($message);
                 $this->redirect(Configure::read('slugHelper')->getCartFinish());

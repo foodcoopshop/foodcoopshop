@@ -102,6 +102,7 @@ h2.warning {
     -webkit-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     -moz-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
+    word-break: break-word;
 }
 #flashMessage .closer {
     float: right;
@@ -463,4 +464,6 @@ a.btn.btn-success:hover i.cgold,
 i.gold {
   color: #FFD700 ! important;
 }
+
+
 

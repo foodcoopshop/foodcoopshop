@@ -49,7 +49,7 @@ if ($results_product[0]['m']['UID'] != '') {
 }
 $pdf->infoTextForFooter .= ', Rechnung Nr. ' . $newInvoiceNumber;
 
-// Artikelauflistung Start
+// Produktauflistung Start
 $widths = array(
     30,
     360,
@@ -59,7 +59,7 @@ $widths = array(
 );
 $headers = array(
     'Anzahl',
-    'Artikelname',
+    'Produkt',
     'Preis exkl.',
     'MWSt.',
     'Preis inkl.'
@@ -67,7 +67,7 @@ $headers = array(
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
 $pdf->addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl);
 $pdf->renderTable();
-// Artikelauflistung End
+// Produktauflistung End
 
 if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
@@ -137,7 +137,7 @@ $widths = array(
 );
 $headers = array(
     'Anzahl',
-    'Artikelname',
+    'Produkt',
     'Preis exkl.',
     'MWSt.',
     'Preis inkl.',

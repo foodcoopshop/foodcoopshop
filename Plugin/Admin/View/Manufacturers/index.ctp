@@ -60,7 +60,7 @@ echo '<th class="hide">' . $this->Paginator->sort('Manufacturer.id_manufacturer'
 echo '<th>Logo</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.name', 'Name') . '</th>';
-echo '<th style="width:83px;">Artikel</th>';
+echo '<th style="width:83px;">Produkte</th>';
 echo '<th>Pfand</th>';
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Ansprechperson') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
@@ -124,12 +124,13 @@ foreach ($manufacturers as $manufacturer) {
         echo '<br /><span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
     echo '</td>';
 
-    echo '<td style="width:130px;">';
+    echo '<td style="width:140px;">';
     $productCountSum += $manufacturer['product_count'];
+    $productString = $manufacturer['product_count'] == 1 ? 'Produkt' : 'Produkte';
     echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;Artikel',
+        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;' . $productString,
         array(
-        'title' => 'Alle Artikel von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
+        'title' => 'Alle Produkte von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
         ),
         $this->Slug->getProductAdmin($manufacturer['Manufacturer']['id_manufacturer'])
@@ -208,7 +209,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     echo 'Bestellliste prüfen<br />';
-    echo $this->Html->link('Artikel', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
             'target' => '_blank'
         ));
     echo ' / ';
