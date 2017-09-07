@@ -159,7 +159,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
 
         // START test if MANUFACTURER's holiday mode was activated during shopping process
@@ -167,7 +167,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerHolidayMode($manufacturerId, date('Y-m-d'));
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produkts (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerHolidayMode($manufacturerId, null);
 
         // START test if stock available for PRODUCT has gone down (eg. by another order)

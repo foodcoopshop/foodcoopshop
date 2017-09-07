@@ -415,7 +415,7 @@ class ManufacturersController extends AdminAppController
 
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfUrl = Configure::read('htmlHelper')->getOrderListLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Artikel');
+            $productPdfUrl = Configure::read('htmlHelper')->getOrderListLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
             $productPdfFile = $productPdfUrl;
 
             // generate order list by customer
@@ -651,7 +651,7 @@ class ManufacturersController extends AdminAppController
             $actionLogType = 'product_set_active';
         }
 
-        $message = 'Alle Artikel des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Artikel: ' . $affectedRows;
+        $message = 'Alle Produkte des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Produkte: ' . $affectedRows;
         $this->Flash->success($message);
 
         $this->loadModel('CakeActionLog');

@@ -323,7 +323,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     private function assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[1], 'Artikel kann nicht geliefert werden: Artischocke : Stück', array($this->cancellationReason, '3,64', 'Demo Gemüse-Hersteller'), $expectedToEmails, $expectedCcEmails);
+        $this->assertEmailLogs($emailLogs[1], 'Produkt kann nicht geliefert werden: Artischocke : Stück', array($this->cancellationReason, '3,64', 'Demo Gemüse-Hersteller'), $expectedToEmails, $expectedCcEmails);
     }
 
     private function assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails)

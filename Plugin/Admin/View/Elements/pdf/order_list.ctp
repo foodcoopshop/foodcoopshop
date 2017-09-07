@@ -46,7 +46,7 @@ $widths = array(
 );
 $headers = array(
     'Anzahl',
-    'Artikelname',
+    'Produkt',
     'Preis',
     'Datum',
     'Mitglied'
