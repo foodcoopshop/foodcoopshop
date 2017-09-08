@@ -205,7 +205,7 @@ class Product extends AppModel
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+                $success = $this->ProductAttributes->ProductAttributeShop->updateAll(array(
                     'ProductAttributeShop.price' => $netPrice
                 ), array(
                     'ProductAttributeShop.id_product_attribute' => $ids['attributeId']
@@ -400,7 +400,7 @@ class Product extends AppModel
                             'rowClass' => join(' ', $rowClass)
                         ),
                         'ProductLang' => array(
-                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ': ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''
