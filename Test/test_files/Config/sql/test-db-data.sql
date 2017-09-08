@@ -1006,6 +1006,8 @@ INSERT INTO `fcs_stock_available` VALUES
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
+INSERT INTO `fcs_sync_domains` VALUES
+(1,'http://www.foodcoopshop.dev',1);
 /*!40000 ALTER TABLE `fcs_sync_domains` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_products` DISABLE KEYS */;
