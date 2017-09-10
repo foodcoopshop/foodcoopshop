@@ -15,6 +15,7 @@ ALTER TABLE `fcs_product`
   DROP `location`,
   DROP `width`,
   DROP `height`,
+  DROP `unity`,
   DROP `depth`,
   DROP `weight`,
   DROP `out_of_stock`,
