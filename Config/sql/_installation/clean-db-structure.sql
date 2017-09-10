@@ -514,7 +514,6 @@ CREATE TABLE `fcs_product` (
   `id_tax` int(11) unsigned NOT NULL DEFAULT '0',
   `quantity` int(10) NOT NULL DEFAULT '0',
   `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `unity` varchar(255) DEFAULT NULL,
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
