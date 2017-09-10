@@ -206,7 +206,6 @@ span.product-quantity-for-dialog {
     border-bottom: 1px solid #dfdfdf;
 }
 .filter-container-not-fixed {
-  margin: 3px;
   float: left;
   width: 975px;
 }
@@ -958,3 +957,4 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
