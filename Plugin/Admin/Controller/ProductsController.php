@@ -711,7 +711,7 @@ class ProductsController extends AdminAppController
         if ($this->params['data']['name'] != $oldProduct['ProductLang']['name']) {
             $this->CakeActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde umbenannt in <i>"' . $this->params['data']['name'] . '"</i>.');
         }
-        if ($this->params['data']['unity'] != $oldProduct['Product']['unity']) {
+        if ($this->params['data']['unity'] != $oldProduct['ProductLang']['unity']) {
             $this->CakeActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert in <i>"' . $this->params['data']['unity'] . '"</i>.');
         }
         if ($this->params['data']['description'] != $oldProduct['ProductLang']['description']) {
