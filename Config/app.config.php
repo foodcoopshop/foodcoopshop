@@ -165,6 +165,6 @@ Configure::write('app.termsOfUseLastUpdate', '2016-11-28');
 /**
  * @since FoodCoopShop v1.4.0
  * Is the Network Plugin enabled?
- * @see https://github.com/foodcoopshop/fcs-network
+ * @see https://github.com/foodcoopshop/fcs-network-plugin
  */
 Configure::write('app.networkPluginEnabled', false);
