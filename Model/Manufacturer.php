@@ -354,6 +354,36 @@ class Manufacturer extends AppModel
         return $manufacturersForMenu;
     }
 
+    /**
+     * @param float $price
+     * @param integer $variableMemberFee
+     * @return float
+     */
+    public function increasePriceWithVariableMemberFee($price, $variableMemberFee)
+    {
+        return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
+    }
+
+    /**
+     * @param float $price
+     * @param integer $variableMemberFee
+     * @return float
+     */
+    public function decreasePriceWithVariableMemberFee($price, $variableMemberFee)
+    {
+        return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
+    }
+
+    /**
+     * @param float $price
+     * @param integer $variableMemberFee
+     * @return float
+     */
+    public function getVariableMemberFeeAsFloat($price, $variableMemberFee)
+    {
+        return round($price * $variableMemberFee / 100, 2);
+    }
+
     public function getForDropdown()
     {
         $this->recursive = - 1;
