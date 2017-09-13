@@ -118,12 +118,18 @@ foodcoopshop.Admin = {
             showIcon: true
         });
 
-        // multiple dropdowns (implemented for orderState) need to be selected manually
-        // therefore data-val must be set!
-        $('.filter-container select[multiple="multiple"]').each(function () {
+        this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
+
+    },
+
+    /**
+     * multiple dropdowns (implemented for orderState) need to be selected manually
+     * therefore data-val must be set!
+     */
+    setSelectPickerMultipleDropdowns : function (selector) {
+        $(selector).each(function () {
             $(this).selectpicker('val', $(this).data('val').toString().split(','));
         });
-
     },
 
     afterFilterCallback: function () {
@@ -2382,6 +2388,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 

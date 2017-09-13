@@ -12,3 +12,5 @@ CREATE TABLE `fcs_sync_products` (
   `local_product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `remote_product_attribute_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `fcs_manufacturer` ADD `enabled_sync_domains` VARCHAR(50) DEFAULT NULL AFTER `send_ordered_product_quantity_changed_notification`;

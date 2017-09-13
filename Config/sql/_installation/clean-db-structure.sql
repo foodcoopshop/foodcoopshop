@@ -423,6 +423,7 @@ CREATE TABLE `fcs_manufacturer` (
   `send_ordered_product_deleted_notification` int(10) unsigned DEFAULT NULL,
   `send_ordered_product_price_changed_notification` int(10) unsigned DEFAULT NULL,
   `send_ordered_product_quantity_changed_notification` int(10) unsigned DEFAULT NULL,
+  `enabled_sync_domains` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_manufacturer`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

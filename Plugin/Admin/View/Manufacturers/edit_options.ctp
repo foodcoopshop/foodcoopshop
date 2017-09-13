@@ -171,5 +171,20 @@ echo '<div class="holiday-wrapper">';
         ));
     }
 
+    if ($isAllowedAsMasterFoodcoop) {
+        $this->element('addScript', array(
+            'script' =>
+                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
+            "
+        ));
+        echo $this->Form->input('Manufacturer.enabled_sync_domains', array(
+            'type' => 'select',
+            'multiple' => true,
+            'data-val' => $this->request->data['Manufacturer']['enabled_sync_domains'],
+            'label' => 'Mit welchen Foodcoops möchtest du deine Produktdaten synchronisien?',
+            'options' => $syncDomainsForDropdown
+        ));
+    }
+
 ?>
 </form>

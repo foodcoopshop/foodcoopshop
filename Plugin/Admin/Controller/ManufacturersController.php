@@ -482,6 +482,14 @@ class ManufacturersController extends AdminAppController
             throw new MissingActionException('manufacturer does not exist');
         }
 
+        if (Configure::read('app.networkPluginEnabled')) {
+            $this->loadModel('Network.SyncManufacturer');
+            $this->loadModel('Network.SyncDomain');
+            $isAllowedAsMasterFoodcoop = $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth);
+            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
+            $this->set('isAllowedAsMasterFoodcoop', $isAllowedAsMasterFoodcoop);
+        }
+
         // set default data if manufacturer options are null
         if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturer']['variable_member_fee'] == '') {
             $unsavedManufacturer['Manufacturer']['variable_member_fee'] = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
@@ -556,6 +564,12 @@ class ManufacturersController extends AdminAppController
             }
             if ($this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
                 $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
+            }
+
+            if ($isAllowedAsMasterFoodcoop) {
+                if ($this->request->data['Manufacturer']['enabled_sync_domains']) {
+                    $this->request->data['Manufacturer']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturer']['enabled_sync_domains']);
+                }
             }
 
             // remove post data that could be set by hacking attempt
