@@ -780,6 +780,12 @@ class ProductsController extends AdminAppController
         }
 
         $this->set('title_for_layout', 'Produkte');
+
+        if (Configure::read('app.networkPluginEnabled')) {
+            $this->loadModel('Network.SyncManufacturer');
+            $isAllowedAsMasterFoodcoop = $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth);
+            $this->set('isAllowedAsMasterFoodcoop', $isAllowedAsMasterFoodcoop);
+        }
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)

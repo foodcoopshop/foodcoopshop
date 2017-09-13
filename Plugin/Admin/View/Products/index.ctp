@@ -67,7 +67,7 @@
                 echo '</div>';
             }
 
-            if (Configure::read('app.networkPluginEnabled') && $appAuth->isManufacturer()) {
+            if (isset($isAllowedAsMasterFoodcoop) && $isAllowedAsMasterFoodcoop) {
                 $this->element('addScript', array(
                     'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
                 ));
