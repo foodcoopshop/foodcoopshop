@@ -171,7 +171,7 @@ echo '<div class="holiday-wrapper">';
         ));
     }
 
-    if ($isAllowedAsMasterFoodcoop) {
+    if (isset($isAllowedAsMasterFoodcoop) && $isAllowedAsMasterFoodcoop) {
         $this->element('addScript', array(
             'script' =>
                 Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
