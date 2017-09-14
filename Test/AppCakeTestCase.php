@@ -364,9 +364,14 @@ class AppCakeTestCase extends CakeTestCase
         return $this->browser->getJsonDecodedContent();
     }
 
-    protected function changeManufacturerOption($manufacturerId, $notificationType, $value)
+    protected function changeManufacturerOption($manufacturerId, $option, $value)
     {
-        return $this->Manufacturer->query('UPDATE ' .  $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$notificationType.' = '.$value.' WHERE id_manufacturer = ' . $manufacturerId);
+        $query = 'UPDATE ' . $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
+        $params = array(
+            'value' => $value,
+            'manufacturerId' => $manufacturerId
+        );
+        return $this->Manufacturer->getDataSource()->fetchAll($query, $params);
     }
 
     protected function logout()
