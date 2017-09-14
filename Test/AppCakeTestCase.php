@@ -246,6 +246,16 @@ class AppCakeTestCase extends CakeTestCase
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
+    protected function changeReadOnlyConfiguration($configKey, $value)
+    {
+        $query = 'UPDATE ' . $this->Configuration->tablePrefix . $this->Configuration->useTable.' SET value = :value WHERE name = :configKey';
+        $params = array(
+            'value' => $value,
+            'configKey' => $configKey
+        );
+        return $this->Configuration->getDataSource()->fetchAll($query, $params);
+    }
+
     /**
      * needs to login as superadmin and logs user out automatically
      * eventually create a new browser instance for this method
