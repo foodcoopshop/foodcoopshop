@@ -781,10 +781,13 @@ class ProductsController extends AdminAppController
 
         $this->set('title_for_layout', 'Produkte');
 
-        if (Configure::read('app.networkPluginEnabled')) {
+        if (Configure::read('app.networkPluginEnabled') && $this->AppAuth->isManufacturer()) {
             $this->loadModel('Network.SyncManufacturer');
+            $this->loadModel('Network.SyncDomain');
             $isAllowedAsMasterFoodcoop = $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth);
-            $this->set('isAllowedAsMasterFoodcoop', $isAllowedAsMasterFoodcoop);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer['Manufacturer']['enabled_sync_domains']);
+            $showSyncProductsButton = $isAllowedAsMasterFoodcoop && count($syncDomains) > 0;
+            $this->set('showSyncProductsButton', $showSyncProductsButton);
         }
     }
 

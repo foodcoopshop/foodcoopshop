@@ -67,7 +67,7 @@
                 echo '</div>';
             }
 
-            if (isset($isAllowedAsMasterFoodcoop) && $isAllowedAsMasterFoodcoop) {
+            if (isset($showSyncProductsButton) && $showSyncProductsButton) {
                 $this->element('addScript', array(
                     'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
                 ));
