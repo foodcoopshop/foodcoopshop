@@ -67,12 +67,10 @@ class AppCakeTestCase extends CakeTestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
+        $this->Configuration = new Configuration();
         $this->Customer = new Customer();
         $this->Manufacturer = new Manufacturer();
         $this->generatePasswordHashes();
-
-        $this->Configuration = new Configuration();
-        $this->Configuration->loadConfigurations();
     }
 
     protected static function resetTestDatabaseData()

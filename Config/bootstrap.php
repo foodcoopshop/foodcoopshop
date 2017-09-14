@@ -131,7 +131,10 @@ CakePlugin::load('Admin');
 CakePlugin::load('AssetCompress', array(
     'bootstrap' => true
 ));
-if (Configure::read('app.networkPluginEnabled')) {
+
+App::uses('ClassRegistry', 'Utility');
+ClassRegistry::init('Configuration')->loadConfigurations();
+if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
     CakePlugin::load('Network', array(
         'routes' => true
     ));

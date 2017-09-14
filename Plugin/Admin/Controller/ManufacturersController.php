@@ -482,7 +482,7 @@ class ManufacturersController extends AdminAppController
             throw new MissingActionException('manufacturer does not exist');
         }
 
-        if (Configure::read('app.networkPluginEnabled')) {
+        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->loadModel('Network.SyncManufacturer');
             $this->loadModel('Network.SyncDomain');
             $editSyncDomainsAllowed = $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth) || $this->AppAuth->isSuperadmin();
