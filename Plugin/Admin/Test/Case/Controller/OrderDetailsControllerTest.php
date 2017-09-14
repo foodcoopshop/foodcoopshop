@@ -264,11 +264,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails);
     }
 
-    private function changeManufacturerOption($manufacturerId, $notificationType, $value)
-    {
-        return $this->Order->query('UPDATE ' .  $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$notificationType.' = '.$value.' WHERE id_manufacturer = ' . $manufacturerId);
-    }
-
     private function getChangedMockOrderFromDatabase()
     {
         if (!$this->mockOrder) {

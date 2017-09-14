@@ -10,6 +10,7 @@ App::uses('MyHtmlHelper', 'View/Helper');
 App::uses('MyTimeHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
 App::uses('Configuration', 'Model');
+App::uses('Manufacturer', 'Model');
 
 /**
  * AppCakeTestCase
@@ -43,6 +44,8 @@ class AppCakeTestCase extends CakeTestCase
 
     public $Customer;
 
+    public $Manufacturer;
+
     public $browser;
 
     /**
@@ -65,6 +68,7 @@ class AppCakeTestCase extends CakeTestCase
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
         $this->Customer = new Customer();
+        $this->Manufacturer = new Manufacturer();
         $this->generatePasswordHashes();
 
         $this->Configuration = new Configuration();
@@ -97,14 +101,19 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertEquals(0, $response->status, 'json status should be "0"');
     }
 
-    protected function assert403ForbiddenHeader()
+    protected function assert200OkHeader()
     {
-        $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
+        $this->assertRegExp('/HTTP\/1.1 200 OK/', $this->browser->getHeaders(), 'header 200 ok not found');
     }
 
     protected function assert401UnauthorizedHeader()
     {
         $this->assertRegExp('/HTTP\/1.1 401 Unauthorized/', $this->browser->getHeaders(), 'header 401 unauthorized not found');
+    }
+
+    protected function assert403ForbiddenHeader()
+    {
+        $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
     }
 
     protected function assertRedirectToLoginPage()
@@ -353,6 +362,11 @@ class AppCakeTestCase extends CakeTestCase
             )
         ));
         return $this->browser->getJsonDecodedContent();
+    }
+
+    protected function changeManufacturerOption($manufacturerId, $notificationType, $value)
+    {
+        return $this->Manufacturer->query('UPDATE ' .  $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$notificationType.' = '.$value.' WHERE id_manufacturer = ' . $manufacturerId);
     }
 
     protected function logout()
