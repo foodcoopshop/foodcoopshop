@@ -144,4 +144,5 @@ if (Configure::read('app.emailErrorLoggingEnabled')) {
         'bootstrap' => true
     ));
 }
+// composer integration
 require APP . '/Vendor/autoload.php';
