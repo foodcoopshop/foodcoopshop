@@ -181,7 +181,7 @@ echo '<div class="holiday-wrapper">';
             'type' => 'select',
             'multiple' => true,
             'data-val' => $this->request->data['Manufacturer']['enabled_sync_domains'],
-            'label' => 'Mit welchen Foodcoops möchtest du deine Produktdaten synchronisien?',
+            'label' => 'Remote-Foodcoops<br /><a href="https://foodcoopshop.github.io/de/netzwerk-plugin" target="_blank">Hilfe zum Netzwerk-Plugin</a>',
             'options' => $syncDomainsForDropdown
         ));
     }
