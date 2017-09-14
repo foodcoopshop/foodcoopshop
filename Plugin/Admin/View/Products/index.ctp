@@ -74,7 +74,7 @@
                 echo '<div class="toggle-sync-button-wrapper">';
                     echo $this->Html->link(
                         '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
-                        $this->Slug->getSyncProductData(),
+                        $this->Network->getSyncProductData(),
                         array(
                             'class' => 'btn btn-default',
                             'escape' => false
