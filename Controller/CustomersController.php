@@ -110,7 +110,7 @@ class CustomersController extends FrontendController
                 $this->Flash->error('Das Versenden des neuen Passwortes ist fehlgeschlagen.');
             }
 
-            $this->redirect(Configure::read('slugHelper')->getChangePassword());
+            $this->redirect('/');
         }
     }
 
