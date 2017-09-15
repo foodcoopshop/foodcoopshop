@@ -23,6 +23,7 @@ $this->element('addScript', array(
     <a class="btn-arrow btn-previous-day" title="1 Tag zurück"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
     <input id="dateFrom" type="text" class="datepicker"
+        <?php echo (isset($nameFrom) ? 'name="'.$nameFrom.'"' : ''); ?>
         value="<?php echo $dateFrom; ?>" /> <a class="btn-arrow btn-next-day"
         title="1 Tag vor" href="javascript:void(0)"><i
         class="fa fa-arrow-circle-right fa"></i></a>
@@ -32,6 +33,7 @@ $this->element('addScript', array(
         class="btn-arrow btn-previous-day" title="1 Tag zurück"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
         <input id="dateTo" type="text" class="datepicker"
+            <?php echo (isset($nameTo) ? 'name="'.$nameTo.'"' : ''); ?>
             value="<?php echo $dateTo; ?>" /> <a class="btn-arrow btn-next-day"
             title="1 Tag vor" href="javascript:void(0)"><i
             class="fa fa-arrow-circle-right fa"></i></a>

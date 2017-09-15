@@ -25,29 +25,32 @@
     <tr>
         <td>
 
-            <p>im Anhang findest du zwei Bestelllisten (gruppiert nach Artikel
-                und Mitglied) für die nächste Lieferung.</p>
+            <p>im Anhang findest du zwei Bestelllisten (gruppiert nach Produkt und Mitglied) für die nächste Lieferung.</p>
 
             <p>
-                <b>Dein persönlicher Hersteller-Bereich</b><br /> <a
-                    href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
+                <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
             </p>
+            
+            <?php if (!empty($manufacturer['Customer']['name'])) { ?>
+                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'] . ', ' . $manufacturer['Customer']['email'] . ', ' . $manufacturer['Customer']['AddressCustomer']['phone_mobile']; ?></p>
+            <?php } ?>
 
             <ul style="padding-left: 10px;">
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
-                <li>Neue Produkte erstellen (inkl. Varianten - z.B. Artikel mit 0,5 kg und 1 kg)</li>
+                <li>Neue Produkte erstellen (inkl. Varianten - z.B. Produkt mit 0,5 kg und 1 kg)</li>
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
                 <li>Hochladen von Produkt-Fotos</li>
                 <li>Aktivieren bzw. Deaktivieren deiner Produkte</li>
                 <li>Produkte als "neu" markieren</li>
                 <li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
                 <li>Pfandkonto (falls du Pfand verwendest)</li>
+                <li>Urlaubsmodus: Zeitraum angeben, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
+                <li>Benachrichtigungs-E-Mails und weitere Einstellungen ändern</li>
                 <li>Passwort ändern</li>
             </ul>
             
             <p>
-                <b>Impressum</b><br />
-                Die Daten für dein Impressum (rechts unten auf deinem Hersteller-Profil) kannst du im Hersteller-Bereich selbst ändern.
+                Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern.
             </p>
 
             <?php if (!Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 

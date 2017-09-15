@@ -6,15 +6,13 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 1.4.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+class InvalidParameterException extends CakeException
+{
 
-if (! $appAuth->isManufacturer()) {
-    echo '<li>';
-    echo '<a href="https://foodcoopshop.github.io/de/abholung-der-produkte" target="_blank">Hier geht\'s zur Abholdienst-Hilfe</a>';
-    echo '</li>';
 }

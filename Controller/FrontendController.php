@@ -73,15 +73,15 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->AppSession->read('Auth.originalLoggedCustomer')) {
-            $this->AppAuth->login($this->AppSession->read('Auth.originalLoggedCustomer'));
+        if ($this->Session->read('Auth.originalLoggedCustomer')) {
+            $this->AppAuth->login($this->Session->read('Auth.originalLoggedCustomer'));
         }
     }
 
     protected function destroyShopOrderCustomer()
     {
-        $this->AppSession->delete('Auth.shopOrderCustomer');
-        $this->AppSession->delete('Auth.originalLoggedCustomer');
+        $this->Session->delete('Auth.shopOrderCustomer');
+        $this->Session->delete('Auth.originalLoggedCustomer');
     }
 
     // is not called on ajax actions!
@@ -107,14 +107,14 @@ class FrontendController extends AppController
             $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, array(
                 'slug' => '/neue-produkte',
-                'name' => 'Neue Produkte (' . $newProductsCount . ')',
+                'name' => 'Neue Produkte <span class="additional-info"> (' . $newProductsCount . ')</span>',
                 'options' => array(
-                    'fa-icon' => 'fa-star'
+                    'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
                 )
             ));
             array_unshift($categoriesForMenu, array(
                 'slug' => Configure::read('slugHelper')->getAllProducts(),
-                'name' => 'Alle Produkte (' . $allProductsCount . ')',
+                'name' => 'Alle Produkte <span class="additional-info"> (' . $allProductsCount . ')</span>',
                 'options' => array(
                     'fa-icon' => 'fa-tags'
                 )
@@ -163,9 +163,9 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
-        if ($this->AppSession->read('Auth.shopOrderCustomer')) {
-            $this->AppSession->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->login($this->AppSession->read('Auth.shopOrderCustomer')['Customer']);
+        if ($this->Session->read('Auth.shopOrderCustomer')) {
+            $this->Session->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
+            $this->AppAuth->login($this->Session->read('Auth.shopOrderCustomer')['Customer']);
         }
 
         if ($this->AppAuth->loggedIn() && Configure::read('htmlHelper')->paymentIsCashless()) {

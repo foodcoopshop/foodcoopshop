@@ -34,7 +34,7 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
+            <?php echo $this->element('docs/abholdienst'); ?>
             <li>Auf dieser Seite werden die verschickten Bestelllisten
                 angezeigt.</li>
         </ul>
@@ -46,7 +46,7 @@
     echo '<tr class="sort">';
     echo '<th>Abholdatum</th>';
     echo '<th>Hersteller</th>';
-    echo '<th>Bestellliste nach Artikel</th>';
+    echo '<th>Bestellliste nach Produkt</th>';
     echo '<th>Bestellliste nach Mitglied</th>';
     echo '</tr>';
 
@@ -65,8 +65,8 @@
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Artikel)', array(
-            'title' => 'Liste anzeigen (gruppiert nach Artikel)',
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Produkt)', array(
+            'title' => 'Liste anzeigen (gruppiert nach Produkt)',
             'target' => '_blank',
             'class' => 'icon-with-text'
         ), $file['product_list_link']);

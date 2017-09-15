@@ -1,4 +1,7 @@
 <?php
+
+App::uses('InvalidParameterException', 'Error/Exceptions');
+
 /**
  * Product
  *
@@ -93,13 +96,191 @@ class Product extends AppModel
         );
     }
 
-    public function getCountByManufacturerId($manufacturerId)
+    /**
+     * @param array $products
+     * Array
+     *   (
+     *       [0] => Array
+     *           (
+     *               [productId] => (int) status
+     *           )
+     *   )
+     * @throws InvalidParameterException
+     * @return boolean $success
+     */
+    public function changeStatus($products)
+    {
+
+        $products2save = array();
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new InvalidParameterException('change status is not allowed for product attributes');
+            }
+            $status = $product[$ids['productId']];
+            $whitelist = array(APP_OFF, APP_ON);
+            if (!in_array($status, $whitelist, true)) { // last param for type check
+                throw new InvalidParameterException('Product.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
+            } else {
+                $products2save[] = array(
+                    'id_product' => $ids['productId'],
+                    'active' => $status
+                );
+            }
+        }
+
+        $success = false;
+        if (!empty($products2save)) {
+            $success = $this->saveAll($products2save);
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param string $quantity
+     * @return boolean / int
+     */
+    public function getQuantityAsInteger($quantity)
+    {
+        $quantity = trim($quantity);
+
+        if (!is_numeric($quantity)) {
+            return -1; // do not return false, because 0 is a valid return value!
+        }
+        $quantity = (int) ($quantity);
+
+        return $quantity;
+    }
+
+    /**
+     * @param string $price
+     * @return boolean / float
+     */
+    public function getPriceAsFloat($price)
+    {
+        $price = trim($price);
+        $price = str_replace(',', '.', $price);
+
+        if (!is_numeric($price)) {
+            return -1; // do not return false, because 0 is a valid return value!
+        }
+        $price = floatval($price);
+
+        return $price;
+    }
+
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
+     *              [productId] => (float) price
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changePrice($products)
+    {
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $price = $this->getPriceAsFloat($product[$productId]);
+            if ($price < 0) {
+                throw new InvalidParameterException('Eingabeformat von Preis ist nicht korrekt: '.$product[$productId]);
+            }
+        }
+
+        $success = false;
+        foreach ($products as $product) {
+            $productId = key($product);
+            $price = $this->getPriceAsFloat($product[$productId]);
+
+            $ids = $this->getProductIdAndAttributeId($productId);
+
+            $netPrice = $this->getNetPrice($ids['productId'], $price);
+
+            if ($ids['attributeId'] > 0) {
+                // update attribute - updateAll needed for multi conditions of update
+                $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+                    'ProductAttributeShop.price' => $netPrice
+                ), array(
+                    'ProductAttributeShop.id_product_attribute' => $ids['attributeId']
+                ));
+            } else {
+                $product2update = array(
+                    'price' => $netPrice
+                );
+                $this->ProductShop->id = $ids['productId'];
+                $success |= $this->ProductShop->save($product2update);
+            }
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
+     *              [productId] => (int) quantity
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeQuantity($products)
+    {
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $quantity = $this->getQuantityAsInteger($product[$productId]);
+            if ($quantity < 0) {
+                throw new InvalidParameterException('Eingabeformat von Anzahl ist nicht korrekt: '.$product[$productId]);
+            }
+        }
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $quantity = $product[$productId];
+
+            $ids = $this->getProductIdAndAttributeId($productId);
+
+            if ($ids['attributeId'] > 0) {
+                // update attribute - updateAll needed for multi conditions of update
+                $this->StockAvailable->updateAll(array(
+                    'StockAvailable.quantity' => $quantity
+                ), array(
+                    'StockAvailable.id_product_attribute' => $ids['attributeId'],
+                    'StockAvailable.id_product' => $ids['productId']
+                ));
+                $this->StockAvailable->updateQuantityForMainProduct($ids['productId']);
+            } else {
+                $product2update = array(
+                    'quantity' => $quantity
+                );
+                $this->StockAvailable->id = $ids['productId'];
+                $this->StockAvailable->save($product2update);
+            }
+        }
+    }
+
+    /**
+     * @param int $manufacturerId
+     * @param boolean $useHolidayMode
+     * @return array
+     */
+    public function getCountByManufacturerId($manufacturerId, $useHolidayMode = false)
     {
         $productCount = $this->find('count', array(
             'fields' => 'DISTINCT ' . $this->name . '.id_product',
             'conditions' => array(
                 $this->name . '.active' => APP_ON,
-                'Manufacturer.holiday' => APP_OFF,
+                $useHolidayMode ? $this->getManufacturerHolidayConditions() : null,
                 $this->name . '.id_manufacturer' => $manufacturerId
             )
         ));
@@ -113,6 +294,139 @@ class Product extends AppModel
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param array $products
+     * @return array $preparedProducts
+     */
+    public function prepareProductsForBackend($paginator, $pParams)
+    {
+
+        $paginator->settings = array_merge(array(
+            'conditions' => $pParams['conditions'],
+            'contain' => $pParams['contain'],
+            'order' => $pParams['order'],
+            'fields' => $pParams['fields'],
+            'group' => $pParams['group']
+        ), $paginator->settings);
+
+        $this->recursive = 3;
+
+        // reduce data
+        $this->Manufacturer->unbindModel(array(
+            'hasOne' => 'ManufacturerLang'
+        ));
+        $this->Manufacturer->unbindModel(array(
+            'hasMany' => 'CakeInvoices'
+        ));
+        $this->ProductLang->unbindModel(array(
+            'belongsTo' => 'Product'
+        ));
+
+        $products = $paginator->paginate('Product');
+
+        $i = 0;
+        $preparedProducts = array();
+        foreach ($products as $product) {
+            $products[$i]['Categories'] = array(
+                'names' => array(),
+                'allProductsFound' => false
+            );
+            foreach ($product['CategoryProducts'] as $category) {
+                if ($category['id_category'] == 2) {
+                    continue; // do not consider category "produkte" - why was it needed???
+                }
+
+                // assignment to "all products" has to be checked... otherwise show error message
+                if ($category['id_category'] == Configure::read('app.categoryAllProducts')) {
+                    $products[$i]['Categories']['allProductsFound'] = true;
+                } else {
+                    $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                }
+            }
+
+            $products[$i]['selectedCategories'] = Set::extract('{n}.id_category', $product['CategoryProducts']);
+            $products[$i]['Deposit'] = 0;
+
+            $products[$i]['Product']['is_new'] = $this->isNew($product['ProductShop']['date_add']);
+            $products[$i]['Product']['gross_price'] = $this->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
+
+            $rowClass = array();
+            if (! $product['Product']['active']) {
+                $rowClass[] = 'deactivated';
+            }
+
+            @$products[$i]['Deposit'] = $product['CakeDepositProduct']['deposit'];
+            if (empty($products[$i]['Tax'])) {
+                $products[$i]['Tax']['rate'] = 0;
+                $product = $products[$i];
+            }
+
+            $rowClass[] = 'main-product';
+            $rowIsOdd = false;
+            if ($i % 2 == 0) {
+                $rowIsOdd = true;
+                $rowClass[] = 'custom-odd';
+            }
+            $products[$i]['Product']['rowClass'] = join(' ', $rowClass);
+
+            $preparedProducts[] = $products[$i];
+            $i ++;
+
+            if (! empty($product['ProductAttributes'])) {
+                foreach ($product['ProductAttributes'] as $attribute) {
+                    $grossPrice = 0;
+                    if (! empty($attribute['ProductAttributeShop']['price'])) {
+                        $grossPrice = $this->getGrossPrice($product['Product']['id_product'], $attribute['ProductAttributeShop']['price']);
+                    }
+
+                    $rowClass = array(
+                        'sub-row'
+                    );
+                    if (! $product['Product']['active']) {
+                        $rowClass[] = 'deactivated';
+                    }
+
+                    if ($rowIsOdd) {
+                        $rowClass[] = 'custom-odd';
+                    }
+
+                    $preparedProduct = array(
+                        'Product' => array(
+                            'id_product' => $product['Product']['id_product'] . '-' . $attribute['id_product_attribute'],
+                            'gross_price' => $grossPrice,
+                            'active' => - 1,
+                            'rowClass' => join(' ', $rowClass)
+                        ),
+                        'ProductLang' => array(
+                            'name' => $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'description_short' => '',
+                            'description' => '',
+                            'unity' => ''
+                        ),
+                        'Manufacturer' => array(
+                            'name' => $product['Manufacturer']['name']
+                        ),
+                        'ProductAttributeShop' => array(
+                            'default_on' => $attribute['ProductAttributeShop']['default_on']
+                        ),
+                        'StockAvailable' => array(
+                            'quantity' => $attribute['StockAvailable']['quantity']
+                        ),
+                        'Deposit' => isset($attribute['CakeDepositProductAttribute']['deposit']) ? $attribute['CakeDepositProductAttribute']['deposit'] : 0,
+                        'Categories' => array(
+                            'names' => array(),
+                            'allProductsFound' => true
+                        ),
+                        'ImageShop' => null
+                    );
+                    $preparedProducts[] = $preparedProduct;
+                }
+            }
+        }
+
+        return $preparedProducts;
     }
 
     public function getForDropdown($appAuth, $manufacturerId)
@@ -143,12 +457,11 @@ class Product extends AppModel
                 'Product.id_product',
                 'ProductLang.name',
                 'Manufacturer.name',
-                'ProductShop.active',
-                'ProductLang.link_rewrite'
+                'Product.active'
             ),
             'conditions' => $conditions,
             'order' => array(
-                'ProductShop.active' => 'DESC',
+                'Product.active' => 'DESC',
                 'ProductLang.name' => 'ASC'
             )
         ));
@@ -157,7 +470,7 @@ class Product extends AppModel
         $onlineProducts = array();
         foreach ($products as $product) {
             $productNameForDropdown = $product['ProductLang']['name'] . ' - ' . $product['Manufacturer']['name'];
-            if ($product['ProductShop']['active'] == 0) {
+            if ($product['Product']['active'] == 0) {
                 $offlineProducts[$product['Product']['id_product']] = $productNameForDropdown;
             } else {
                 $onlineProducts[$product['Product']['id_product']] = $productNameForDropdown;
@@ -293,9 +606,9 @@ class Product extends AppModel
             $conditions['Product.active'] = $active;
         }
 
-        // attributes cause duplicate entries
+        // DISTINCT: attributes cause duplicate entries
         $fields = array(
-            'DISTINCT Product.id_product, Product.*'
+            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax'
         );
 
         $contain = array(
@@ -307,7 +620,7 @@ class Product extends AppModel
             'fields' => $fields,
             'conditions' => $conditions,
             'order' => array(
-                'ProductShop.active' => 'DESC',
+                'Product.active' => 'DESC',
                 'ProductLang.name' => 'ASC'
             ),
             'contain' => $contain,
@@ -345,42 +658,6 @@ class Product extends AppModel
 
     public function deleteProductAttribute($productId, $attributeId, $oldProduct)
     {
-
-        // START: set cache_default_attribute
-
-        // 1) detect actual default attribute (if not the last attribute is deleted)
-        $defaultAttributeId = 0;
-        if (count($oldProduct['ProductAttributes']) > 1) {
-            foreach ($oldProduct['ProductAttributes'] as $pa) {
-                if ($pa['ProductAttributeShop']['default_on'] == 1 && $pa['ProductAttributeShop']['id_product_attribute'] != $attributeId) {
-                    $defaultAttributeId = $pa['ProductAttributeShop']['id_product_attribute'];
-                    break;
-                }
-            }
-        }
-
-        // 2) not the last attribute is deleted and no default attribute is set: take first attribute as new default attribute
-        if (count($oldProduct['ProductAttributes']) > 1 && $defaultAttributeId == 0) {
-            foreach ($oldProduct['ProductAttributes'] as $pa) {
-                if ($pa['ProductAttributeShop']['id_product_attribute'] != $attributeId) {
-                    $defaultAttributeId = $pa['ProductAttributeShop']['id_product_attribute'];
-                    break;
-                }
-            }
-            $this->changeDefaultAttributeId($productId, $defaultAttributeId);
-        }
-
-        // product. und product_shop.'cache_default_attribute'
-        $this->ProductShop->id = $productId;
-        $this->ProductShop->save(array(
-            'cache_default_attribute' => $defaultAttributeId
-        ));
-        $this->id = $productId;
-        $this->save(array(
-            'cache_default_attribute' => $defaultAttributeId
-        ));
-
-        // END: set cache_default_attribute
 
         $pac = $this->ProductAttributes->ProductAttributeCombination->find('first', array(
             'conditions' => array(
@@ -436,7 +713,7 @@ class Product extends AppModel
             'id_product' => $productId
         ));
 
-        // set price of article back to 0 => if not, the price of the attribute is added to the price of the article
+        // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
         $this->ProductShop->id = $productId;
         $this->ProductShop->save(array(
             'price' => 0
@@ -453,66 +730,36 @@ class Product extends AppModel
     {
         $defaultQuantity = 999;
 
-        $defaultTaxId = Configure::read('app.defaultTaxId');
-        $addressOther = StringComponent::decodeJsonFromForm($manufacturer['Address']['other']);
-        if (isset($addressOther['defaultTaxId'])) {
-            $defaultTaxId = $addressOther['defaultTaxId'];
-        }
+        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer['Manufacturer']['default_tax_id']);
 
         // INSERT PRODUCT
-        /*
-         * $query = "INSERT INTO `".$this->tablePrefix."product` (`id_product`, `id_supplier`, `id_manufacturer`, `id_category_default`, `id_shop_default`, `id_tax_rules_group`, `on_sale`, `online_only`, `ean13`, `upc`, `ecotax`, `quantity`, `minimal_quantity`, `price`, `wholesale_price`, `unity`, `unit_price_ratio`, `additional_shipping_cost`, `reference`, `supplier_reference`, `location`, `width`, `height`, `depth`, `weight`, `out_of_stock`, `quantity_discount`, `customizable`, `uploadable_files`, `text_fields`, `active`, `redirect_type`, `id_product_redirected`, `available_for_order`, `available_date`, `condition`, `show_price`, `indexed`, `visibility`, `cache_is_pack`, `cache_has_attachments`, `is_virtual`, `cache_default_attribute`, `date_add`, `date_upd`, `advanced_stock_management`) VALUES
-         * ( 428, 0, 31, 13, 1, 4, 0, 0, '', '', 0.000000, 0, 1, 0.000000, 0.000000, '', 0.000000, 0.00, '', '', '', 0.000000, 0.000000, 0.000000, 0.000000, 2, 0, 0, 0, 0, 1, '404', 0, 1, '0000-00-00', 'new', 1, 1, 'both', 0, 0, 0, 0, '2015-02-23 16:02:25', '2015-02-23 16:02:25', 0);";
-         */
         $this->save(array(
             'id_manufacturer' => $manufacturer['Manufacturer']['id_manufacturer'],
-            'id_supplier' => 0,
             'id_category_default' => Configure::read('app.categoryAllProducts'),
             'id_tax' => $defaultTaxId,
-            'ean13' => '',
-            'upc' => '',
             'unity' => '',
-            'reference' => '',
-            'supplier_reference' => '',
-            'location' => '',
-            'cache_default_attribute' => 0,
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
         ));
         $newProductId = $this->getLastInsertID();
 
         // INSERT PRODUCT_SHOP
-        /*
-         * INSERT INTO `".$this->tablePrefix."product_lang` (`id_product`, `id_shop`, `id_lang`, `description`, `description_short`, `link_rewrite`, `meta_description`, `meta_keywords`, `meta_title`, `name`, `available_now`, `available_later`) VALUES
-         * (428, 1, 1, '', '', 'noch-ein-neuer-artikel', '', '', '', 'noch ein neuer artikel', '', '');
-         */
         $this->ProductShop->save(array(
             'id_product' => $newProductId,
             'id_shop' => 1,
             'id_category_default' => Configure::read('app.categoryAllProducts'),
-            'unity' => '',
-            'cache_default_attribute' => 0,
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
         ));
 
-        // cake cannot save enum fields...
-        $this->query('UPDATE ' . $this->tablePrefix . $this->useTable . ' SET redirect_type = "404" WHERE id_product = ' . $newProductId);
-        $this->query('UPDATE ' . $this->ProductShop->tablePrefix . $this->ProductShop->useTable . ' SET redirect_type = "404" WHERE id_product = ' . $newProductId);
-
         // INSERT CATEGORY_PRODUCTS
-        // $query = "INSERT INTO `".$this->tablePrefix."category_product` (`id_category`, `id_product`, `position`) VALUES (13, 428, 131)
         $this->CategoryProducts->save(array(
             'id_category' => Configure::read('app.categoryAllProducts'),
             'id_product' => $newProductId
         ));
 
         // INSERT PRODUCT_LANG
-        /*
-         * INSERT INTO `".$this->tablePrefix."product_lang` (`id_product`, `id_shop`, `id_lang`, `description`, `description_short`, `link_rewrite`, `meta_description`, `meta_keywords`, `meta_title`, `name`, `available_now`, `available_later`) VALUES
-         * (428, 1, 1, '', '', 'noch-ein-neuer-artikel', '', '', '', 'noch ein neuer artikel', '', '');
-         */
-        $name = StringComponent::removeSpecialChars('Neuer Artikel von ' . $manufacturer['Manufacturer']['name']);
+        $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer['Manufacturer']['name']);
         $this->ProductLang->save(array(
             'id_product' => $newProductId,
             'id_lang' => 1,
@@ -520,27 +767,15 @@ class Product extends AppModel
             'name' => $name,
             'description' => '',
             'description_short' => '',
-            'meta_description' => '',
-            'meta_keywords' => '',
-            'meta_title' => '',
-            'available_now' => '',
-            'available_later' => '',
-            'link_rewrite' => StringComponent::slugify($name)
+            'unity' => ''
         ));
 
         // INSERT STOCK AVAILABLE
-        /*
-         * INSERT INTO `".$this->tablePrefix."stock_available` (`id_stock_available`, `id_product`, `id_product_attribute`, `id_shop`, `id_shop_group`, `quantity`, `depends_on_stock`, `out_of_stock`) VALUES
-         * (704, 428, 0, 1, 0, 100, 0, 2);";
-         */
         $this->StockAvailable->save(array(
             'id_product' => $newProductId,
             'id_shop' => 1,
             'quantity' => $defaultQuantity
         ));
-
-        // TODDO out_of_stock cannot be set to 2 via cake...
-        $this->query('UPDATE ' . $this->StockAvailable->tablePrefix . $this->StockAvailable->useTable . ' SET out_of_stock = 2 WHERE id_product = ' . $newProductId);
 
         $newProduct = $this->find('first', array(
             'conditions' => array(

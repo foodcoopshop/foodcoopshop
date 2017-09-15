@@ -28,6 +28,13 @@
             'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
             ));
         }
+        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+            $this->element('addScript', array(
+                'script' =>
+                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
+                    Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
+            ));
+        }
         $this->element('highlightRowAfterEdit', array(
             'rowIdPrefix' => '#order-'
         ));
@@ -72,19 +79,19 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
+            <?php echo $this->element('docs/abholdienst'); ?>
             <li>Auf dieser Seite werden die <b>Bestellungen</b>
                 verwaltet.
             </li>
-            <li>Eine Bestellung (im Unterschied zum <b>bestellten Artikel</b>)
-                beinhaltet einen oder mehrere bestellte Artikel.
+            <li>Eine Bestellung (im Unterschied zum <b>bestellten Produkt</b>)
+                beinhaltet einen oder mehrere bestellte Produkte.
             </li>
-            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Artikel anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Artikel des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
-            <li><b>Bestellung rückdatieren</b>: Falls du während eines Shopdienstes eine Bestellung rückdatieren musst (damit das Mitglied den Artikel sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag Shopdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
+            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Produkte anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Produkte des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
+            <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied das Produkt sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
             <li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
                 der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,
                 wieviel jedes Mitglied tatsächlich zu bezahlen hat. Diese Liste ist
-                ideal für eine Gesamtübersicht des Shopdienstes (nach allen
+                ideal für eine Gesamtübersicht des Abholdienstes (nach allen
                 Stornierungen).</li>
             <li>Unten rechts ist ein Button, mit dem man alle E-Mail-Adressen der
                 Mitglieder in der Liste erhält. So kann man Informationen an alle
@@ -93,6 +100,9 @@
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
+            <?php if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) { ?>
+                    <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
+            <?php } ?>
         </ul>
     </div>
     
@@ -155,15 +165,28 @@
         echo '</td>';
 
         echo '<td style="max-width: 200px;">';
-        if ($order['Customer']['order_count'] <= 3) {
-            echo '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order['Customer']['order_count'] . 'x bestellt."></i> ';
+        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
+            echo '<span class="order-comment-wrapper">';
+                echo $this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
+                    array(
+                    'class' => 'order-comment-edit-button' . ($order['Order']['comment'] == '' ? ' disabled' : ''),
+                    'title' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen',
+                    'data-title-for-overlay' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen'
+                    ),
+                    'javascript:void(0);'
+                );
+            echo '</span>';
         }
-        echo $order['Order']['name']; // !sic Order.name, related virtual field is copied in controller
+        if ($order['Customer']['order_count'] <= 3) {
+            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order['Customer']['order_count'] . 'x bestellt."></i></span>';
+        }
+        echo '<span class="customer-name">'.$order['Order']['name'].'</span>'; // !sic Order.name, related virtual field is copied in controller
         echo '</td>';
 
-        echo '<td'.(!$isMobile ? ' style="width: 140px;"' : '').'>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Artikel' : ''), array(
-            'title' => 'Alle bestellten Artikel von ' . $order['Order']['name'] . ' anzeigen',
+        echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), array(
+            'title' => 'Alle bestellten Produkte von ' . $order['Order']['name'] . ' anzeigen',
             'class' => 'icon-with-text'
         ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customer']['id_customer'] . '/orderState:' . $orderState);
         echo '</td>';

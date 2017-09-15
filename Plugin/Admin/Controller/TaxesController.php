@@ -86,7 +86,7 @@ class TaxesController extends AdminAppController
                     $this->Tax->delete($this->Tax->id); // cascade does not work here
                     $message = 'Der Steuersatz "' . Configure::read('htmlHelper')->formatAsPercent($this->request->data['Tax']['rate']) . '" wurde erfolgreich gelöscht.';
                     $this->CakeActionLog->customSave('tax_deleted', $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
-                    $this->AppSession->setFlashMessage('Der Steuersatz wurde erfolgreich gelöscht.');
+                    $this->Flash->success('Der Steuersatz wurde erfolgreich gelöscht.');
                 } else {
                     if ($taxId > 0) {
                         $taxRate = $unsavedTax['Tax']['rate'];
@@ -95,13 +95,13 @@ class TaxesController extends AdminAppController
                     }
                     $message = 'Der Steuersatz "' . Configure::read('htmlHelper')->formatAsPercent($taxRate) . '" wurde ' . $messageSuffix;
                     $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
-                    $this->AppSession->setFlashMessage('Der Steuersatz wurde erfolgreich gespeichert.');
+                    $this->Flash->success('Der Steuersatz wurde erfolgreich gespeichert.');
                 }
 
-                $this->AppSession->write('highlightedRowId', $this->Tax->id);
+                $this->Session->write('highlightedRowId', $this->Tax->id);
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }

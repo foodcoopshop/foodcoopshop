@@ -35,7 +35,8 @@ class ManufacturersController extends FrontendController
             'conditions' => $conditions,
             'order' => array(
                 'Manufacturer.name' => 'ASC'
-            )
+            ),
+            'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ));
 
         if (empty($manufacturers)) {
@@ -45,7 +46,7 @@ class ManufacturersController extends FrontendController
         if ($this->AppAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = ClassRegistry::init('Product');
             foreach ($manufacturers as &$manufacturer) {
-                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
+                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer'], true);
             }
         }
 
@@ -66,7 +67,8 @@ class ManufacturersController extends FrontendController
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
         $manufacturer = $this->Manufacturer->find('first', array(
-            'conditions' => $conditions
+            'conditions' => $conditions,
+            'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ));
 
         if (empty($manufacturer)) {

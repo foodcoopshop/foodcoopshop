@@ -74,8 +74,9 @@ if (!empty($blogPosts)) {
     ));
 }
 
-if ($manufacturer['Manufacturer']['holiday'] == 1) {
-    echo '<h2 class="info">'.$manufacturer['Manufacturer']['name'].' ist momentan im wohlverdienten Urlaub.</h2>';
+$manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturer']['name']);
+if ($manufacturerHolidayString != '') {
+    echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
 }
 
 if (!empty($manufacturer['Products'])) {

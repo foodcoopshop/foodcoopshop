@@ -10,9 +10,9 @@ FoodCoopShop is a free open source software for foodcoops.
 * Demo version: [https://demo.foodcoopshop.com](https://demo.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
-## Installation
+## Legal information
 
-This is the developers area. If you want to use the software "as is", please follow the [installation details](https://foodcoopshop.github.io/en/installation-details) in the software documentation. If you have questions or if you **want be informed if a new version is released**, please drop me an email: office@foodcoopshop.com (Mario).
+* Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
 
 ## Requirements
 * Server with root access / sudo and cronjobs
@@ -24,6 +24,7 @@ This is the developers area. If you want to use the software "as is", please fol
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
 ## Installation
+* This is the developers area. If you want to use the software "as is", please follow the [installation details](https://foodcoopshop.github.io/en/installation-details) in the software documentation. If you have questions or if you **want be informed if a new version is released**, please drop me an email: office@foodcoopshop.com (Mario).
 * Basically follow the [installation details](https://foodcoopshop.github.io/en/installation-details) for setup. But do **clone the repository**!
 * Before doing any of the configuration changes, follow the steps below
 * If You work on a local machine, do not change the owner of the files to www-data. Instead set permissions as shown below

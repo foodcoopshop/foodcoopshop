@@ -1,0 +1,1 @@
+UPDATE `fcs_configuration` SET `text` = 'Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class="small">Der Link wird im Footer angezeigt.</div>' WHERE `fcs_configuration`.`name` = 'FCS_SHOW_FOODCOOPSHOP_BACKLINK';

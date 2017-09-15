@@ -33,6 +33,18 @@ a:not(.btn):hover {
     text-decoration: none;
 }
 
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.disabled {
+  background-color: #719f41;
+  border-color: #719f41;
+}
+
+.btn-success:hover {
+  opacity: 0.8;
+}
+
 .sc { clear: both; height: 0px; font-size: 0px; background-color: transparent; }
 
 h1,
@@ -65,6 +77,7 @@ h2.info {
     border-bottom: none;
     margin-bottom: 2px;
     color: #fff;
+    line-height: 19px;
 }
 h2.info {
     background: #719f41;
@@ -89,6 +102,7 @@ h2.warning {
     -webkit-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     -moz-box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
     box-shadow: 0px 0px 70px 0px rgba(0,0,0,0.7);
+    word-break: break-word;
 }
 #flashMessage .closer {
     float: right;
@@ -127,10 +141,15 @@ h2.warning {
     width: 100%;
     position: relative;
 }
+.vertical.menu span.additional-info {
+  color: #009335;
+}
 .vertical.menu a:hover,
 .vertical.menu a:hover i,
+.vertical.menu a:hover span.additional-info,
 .vertical.menu a.active,
-.vertical.menu a.active i {
+.vertical.menu a.active i,
+.vertical.menu a.active span.additional-info {
     background-color: #719f41;
     color: #fff ! important;
 }
@@ -198,6 +217,11 @@ a.toggle-link.collapsed i:before {
 }
 .ui-dialog-buttonset button {
     float: right;
+}
+.ui-widget-overlay {
+  background: #000 ! important;
+  opacity: .65 ! important;
+  z-index: 100001;
 }
 li.ui-state-default {
     position: relative ! important;
@@ -434,3 +458,12 @@ pre {
 #AcceptTermsOfUseForm .featherlight-overlay {
     display: none;
 }
+.vertical.menu a.active i.gold,
+.vertical.menu a:hover i.gold,
+a.btn.btn-success:hover i.cgold,
+i.gold {
+  color: #FFD700 ! important;
+}
+
+
+

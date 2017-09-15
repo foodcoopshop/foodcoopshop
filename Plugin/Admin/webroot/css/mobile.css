@@ -22,6 +22,18 @@
     max-width: none;
     padding: 3px;
 }
+.filter-container h1 {
+  font-size: 20px;
+  float: none;
+  letter-spacing: 0;
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+form h2 {
+  letter-spacing: 0;
+  font-size: 16px;
+}
+form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within fcs-forms */
 .bootstrap-select {
     width: 150px ! important;
 }
@@ -35,13 +47,14 @@
 .sb-left a i {
     padding-left: 0;
 }
-.sb-left a, .sb-left li.heading {
+.sb-left a, .sb-left li.header,
+.sb-left a, .sb-left li.footer {
     color: #000 ! important;
 }
 .sb-slidebar {
     background-color: #fff;
 }
-.sb-left li.heading, .sb-left a:hover, .sb-left a.active {
+.sb-left li.header, .sb-left a:hover, .sb-left a.active {
     background-color: #719F42;
     color: #fff ! important;
 }
@@ -114,7 +127,7 @@ table.list th, table.list td {
     margin-top: 2px;
     margin-bottom: 2px;
 }
-.article-description-rename-info {
+.product-description-rename-info {
     position: static ! important;
 }
 #flashMessage {
@@ -123,4 +136,16 @@ table.list th, table.list td {
 }
 .sb-slidebar {
    width: 45% ! important;
+}
+body.manufacturers .holiday-wrapper .description {
+  margin-left: 0px;
+}
+form.fcs-form label {
+  width: 120px;
+}
+form.fcs-form input[type="checkbox"] {
+  left: 120px;
+}
+form.fcs-form .description {
+  margin-left: 120px;
 }

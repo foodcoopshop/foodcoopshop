@@ -52,6 +52,7 @@ class BlogPost extends AppModel
         );
         if (! $appAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
         if ($manufacturerId) {
             $conditions['BlogPost.id_manufacturer'] = $manufacturerId;

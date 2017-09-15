@@ -306,6 +306,26 @@ class MyTimeHelper extends TimeHelper
     }
 
     /**
+     * considers windows and unix
+     * @param date $date
+     * @return boolean
+     */
+    public function isDatabaseDateNotSet($date)
+    {
+        return $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
+    }
+
+    public function prepareDbDateForDatepicker($date)
+    {
+        $preparedDate = $this->formatToDateShort($date);
+        if ($this->isDatabaseDateNotSet($date)) {
+            return '';
+        } else {
+            return $preparedDate;
+        }
+    }
+
+    /**
      * formats a timestamp to a short german date (e.g. 22.04.2007)
      *
      * @param integer $timestamp
@@ -327,8 +347,21 @@ class MyTimeHelper extends TimeHelper
     public function formatToDbFormatDate($dbString)
     {
         $dbString = str_replace('.', '-', $dbString);
+        // BEWARE: strtotime() accepts/returns negative values since PHP5.1 in 64 bit versions
         $timestamp = strtotime($dbString);
         return date("Y-m-d", $timestamp);
+    }
+
+    public function formatForSavingAsDate($date)
+    {
+        $dbString = $this->formatToDbFormatDate($date);
+        // since MySQL 5.7 there are no negative or zero-dates accepted anymore
+        if ($dbString == '1970-01-01'
+            || strpos($dbString, '-') === 0
+        ) {
+            $dbString = null;
+        }
+        return $dbString;
     }
 
      /**

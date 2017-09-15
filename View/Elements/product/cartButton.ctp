@@ -22,7 +22,7 @@ if (!$appAuth->loggedIn() || !Configure::read('app.db_config_FCS_CART_ENABLED'))
     <?php
     if ($stockAvailable == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
         $this->element('addScript', array('script' =>
-        "foodcoopshop.Helper.disableButton($('#btn-cart-".$productId."'));"
+            Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
         ));
     }
     ?>

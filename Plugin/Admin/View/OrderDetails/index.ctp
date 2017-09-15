@@ -31,7 +31,7 @@
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
         <?php } ?>
-        <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Artikel', 'options' => array())); ?>
+        <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => array())); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             <?php echo $this->Form->input('manufacturerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '')); ?>
         <?php } ?>
@@ -54,18 +54,18 @@
 
     <div id="help-container">
         <ul>
-            <?php echo $this->element('shopdienstInfo'); ?>
-            <li>Auf dieser Seite werden die <b>bestellten Artikel</b>
+            <?php echo $this->element('docs/abholdienst'); ?>
+            <li>Auf dieser Seite werden die <b>bestellten Produkte</b>
                 verwaltet.
             </li>
-            <li><b>Artikel stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du den Artikel stornieren. Von Mittwoch bis Freitag
+            <li><b>Produkt stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du das Produkt stornieren. Von Mittwoch bis Freitag
                 <?php if (!$appAuth->isManufacturer()) { ?>
                     werden beim Stornieren das Mitglied und der Hersteller
                 <?php } else { ?>
                     wird beim Stornieren das Mitglied
                 <?php } ?>
-                per E-Mail verständigt, dass der Artikel nicht geliefert wird. Du kannst auch angeben, warum der Artikel storniert wird.</li>
-            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Artikeln ändern und dafür auch einen Grund angeben. Das Mitglied  
+                per E-Mail verständigt, dass das Produkt nicht geliefert wird. Du kannst auch angeben, warum das Produkt storniert wird.</li>
+            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Produkten ändern und dafür auch einen Grund angeben. Das Mitglied  
             <?php if (!$appAuth->isManufacturer()) { ?>
                 und der Hersteller werden
             <?php } else { ?>
@@ -98,10 +98,10 @@ if (count($orderDetails) > 0 && !$groupByManufacturer) {
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">' . $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl') . '</th>';
-echo '<th>' . $this->Paginator->sort('OrderDetail.product_name', 'Artikel') . '</th>';
+echo '<th>' . $this->Paginator->sort('OrderDetail.product_name', 'Produkt') . '</th>';
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">Hersteller</th>';
 echo '<th class="right">' . $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag') . '</th>';
-if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
+if ($groupByManufacturer && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
@@ -129,7 +129,7 @@ foreach ($orderDetails as $orderDetail) {
     } else {
         $sumPrice += $orderDetail['sum_price'];
         $sumAmount += $orderDetail['sum_amount'];
-        $reducedPrice = $orderDetail['sum_price'] * (100 - $orderDetail['compensation_percentage']) / 100;
+        $reducedPrice = $orderDetail['sum_price'] * (100 - $orderDetail['variable_member_fee']) / 100;
         $sumReducedPrice += $reducedPrice;
         $sumDeposit += $orderDetail['sum_deposit'];
     }
@@ -201,11 +201,11 @@ foreach ($orderDetails as $orderDetail) {
     echo '</div>';
     echo '</td>';
 
-    if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
+    if ($groupByManufacturer && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
 
         echo '<td>';
-        echo $orderDetail['compensation_percentage'] . '%';
+        echo $orderDetail['variable_member_fee'] . '%';
         echo '</td>';
 
         echo '<td class="right">';
@@ -260,7 +260,7 @@ foreach ($orderDetails as $orderDetail) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'delete-order-detail',
             'id' => 'delete-order-detail-' . $orderDetail['OrderDetail']['id_order_detail'],
-            'title' => 'Artikel stornieren?'
+            'title' => 'Produkt stornieren?'
         ), 'javascript:void(0);');
     }
     echo '</td>';
@@ -283,7 +283,7 @@ if ($appAuth->isManufacturer()) {
     echo '<td colspan="2"></td>';
 }
 echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
-if ($groupByManufacturer && Configure::read('app.useManufacturerCompensationPercentage')) {
+if ($groupByManufacturer && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
     echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
@@ -331,7 +331,7 @@ if ($deposit != '') {
 }
 
 if (count($orderDetails) > 0) {
-    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> Ausgewählte Artikel stornieren</a>';
+    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> Ausgewählte Produkte stornieren</a>';
 }
 
 if ($buttonExists) {

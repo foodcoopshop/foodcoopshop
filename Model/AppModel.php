@@ -26,9 +26,10 @@ class AppModel extends Model
      * @param string $table
      * @param string $ds
      */
-    public function __construct($id = false, $table = null, $ds = null) {
-        
-        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppSimpleBrowser::initSimpleBrowser()
+    public function __construct($id = false, $table = null, $ds = null)
+    {
+
+        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initSimpleBrowser()
         if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
                // unit tests called via web browser
                || $_SERVER['PHP_SELF'] == '/test.php'
@@ -38,7 +39,7 @@ class AppModel extends Model
         }
         parent::__construct($id, $table, $ds);
     }
-    
+
     /**
      * logs validation errors
      * @see Model::validates()
@@ -59,9 +60,38 @@ class AppModel extends Model
         return $hasErrors;
     }
 
+    /**
+     * uses cake's email validation rule for comma separated email addresses
+     * @param boolean $allowEmpty
+     * @return ValidationRule
+     */
+    public function getMultipleEmailValidationRule($allowEmpty = false)
+    {
+        $validationRules = array(
+          'rule' => array(
+              'multipleEmails'
+          ),
+          'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).',
+          'allowEmpty' => $allowEmpty
+        );
+        return $validationRules;
+    }
+
+    public function multipleEmails($check)
+    {
+        App::import('Validation', 'Cake/Utility');
+        $emails = explode(',', reset($check));
+        foreach ($emails as $email) {
+            $validates = Validation::email($email);
+            if (!$validates) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function getNumberRangeConfigurationRule($min, $max)
     {
-
         $validationRules = array();
         $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
         $validationRules[] = array(
@@ -83,22 +113,31 @@ class AppModel extends Model
         return $validationRules;
     }
 
+    /**
+     * @return boolean
+     */
     protected function loggedIn()
     {
         return (boolean) CakeSession::read('Auth.User.id_customer');
     }
 
+    /**
+     * @return string
+     */
     protected function getFieldsForProductListQuery()
     {
         return "Product.id_product,
-                ProductLang.name, ProductLang.description_short, ProductLang.description,
-                ProductShop.price, ProductShop.unity, ProductShop.date_add,
+                ProductLang.name, ProductLang.description_short, ProductLang.description, ProductLang.unity,
+                ProductShop.price, ProductShop.date_add,
                 CakeDeposit.deposit,
                 ImageLang.id_image, ImageLang.legend,
                 Manufacturer.id_manufacturer, Manufacturer.name,
                 StockAvailable.quantity ";
     }
 
+    /**
+     * @return string
+     */
     protected function getJoinsForProductListQuery()
     {
         return "LEFT JOIN ".$this->tablePrefix."product_shop ProductShop ON Product.id_product = ProductShop.id_product
@@ -111,6 +150,9 @@ class AppModel extends Model
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturer ON Manufacturer.id_manufacturer = Product.id_manufacturer ";
     }
 
+    /**
+     * @return string
+     */
     protected function getConditionsForProductListQuery()
     {
         $conditions = "WHERE 1
@@ -118,7 +160,7 @@ class AppModel extends Model
                     AND ProductLang.id_lang = :langId
                     AND (ImageLang.id_lang = :langId OR ImageLang.id_lang IS NULL)
                     AND Product.active = :active
-                    AND Manufacturer.holiday != :active
+                    AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturer.active = :active
                     AND ProductShop.id_shop = :shopId
                     AND (ImageShop.id_shop = :shopId OR ImageShop.id_shop IS NULL) ";
@@ -126,10 +168,29 @@ class AppModel extends Model
         if (! $this->loggedIn()) {
             $conditions .= 'AND Manufacturer.is_private = :isPrivate ';
         }
-
         return $conditions;
     }
 
+    /**
+     * @return string
+     */
+    public function getManufacturerHolidayConditions()
+    {
+        $condition  = ' IF ( ';
+        $condition .=       '`Manufacturer`.`holiday_from` IS NULL && `Manufacturer`.`holiday_to` IS NULL, 1,'; // from and to date are not set
+        $condition .=       'IF (';
+        $condition .=              '(`Manufacturer`.`holiday_from` IS NOT NULL AND `Manufacturer`.`holiday_to`   IS NULL AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
+        $condition .=           'OR (`Manufacturer`.`holiday_to`   IS NOT NULL AND `Manufacturer`.`holiday_from` IS NULL AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
+        $condition .=           'OR (`Manufacturer`.`holiday_from` IS NOT NULL AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d")) ';  // only from date is set
+        $condition .=           'OR (`Manufacturer`.`holiday_to`   IS NOT NULL AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")), '; // to date is over
+        $condition .=       '1, 0)';
+        $condition .=   ')';
+        return $condition;
+    }
+
+    /**
+     * @return string
+     */
     protected function getOrdersForProductListQuery()
     {
         return " ORDER BY ProductLang.name ASC, ImageShop.id_image DESC;";

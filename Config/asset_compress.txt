@@ -1,5 +1,0 @@
-no comments possible in asset_compress.ini
-
-[base.css]
-paths[] = WEBROOT/js :necessary for jquery.ui (css files are located in vendor/js) 
-

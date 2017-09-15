@@ -64,18 +64,29 @@ Configure::write('app.folder.invoices_with_current_year_and_month', Configure::r
 Configure::write('app.folder.order_lists_with_current_year_and_month', Configure::read('app.folder.order_lists').DS.date('Y').DS.date('m'));
 
 /**
- * if set to true, a compensation percentage can be added to the manufacturer settings
+ * @deprecated since v1.4
+ * use FCS_USE_VARIABLE_MEMBER_FEE instead (database)
  */
-Configure::write('app.useManufacturerCompensationPercentage', false);
+//Configure::write('app.useManufacturerCompensationPercentage', false);
+
+/**
+ * @deprecated since v1.4
+ * use FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE instead (database)
+ */
+//Configure::write('app.defaultCompensationPercentage', 0);
+
 Configure::write('app.manufacturerComponensationInfoText', 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.');
 /**
  * all the default values in this block can be overwritten in the manufacturer settings
  */
-Configure::write('app.defaultCompensationPercentage', 0);
 Configure::write('app.defaultSendOrderList', true);
 Configure::write('app.defaultSendInvoice', true);
 Configure::write('app.defaultTaxId', 2);
 Configure::write('app.defaultBulkOrdersAllowed', false);
+Configure::write('app.defaultSendShopOrderNotification', true);
+Configure::write('app.defaultSendOrderedProductDeletedNotification', true);
+Configure::write('app.defaultSendOrderedProductPriceChangedNotification', true);
+Configure::write('app.defaultSendOrderedProductQuantityChangedNotification', true);
 
 Configure::write('app.isDepositPaymentCashless', true);
 Configure::write('app.depositPaymentCashlessStartDate', '2016-01-01');

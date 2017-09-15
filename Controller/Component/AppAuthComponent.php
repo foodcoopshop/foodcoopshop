@@ -21,17 +21,17 @@ class AppAuthComponent extends AuthComponent
 {
 
     public $components = array(
-        'AppSession',
         'Session',
+        'Flash',
         'RequestHandler',
         'Cart'
     );
 
-    private $manufacturer;
+    public $manufacturer;
 
     public function flash($message)
     {
-        $this->AppSession->setFlashError($message);
+        $this->Flash->error($message);
     }
 
     /**
@@ -74,9 +74,14 @@ class AppAuthComponent extends AuthComponent
 
     private function setManufacturer()
     {
+        if (!empty($this->manufacturer)) {
+            return;
+        }
+
         App::uses('Manufacturer', 'Model');
         $mm = new Manufacturer();
 
+        $mm->recursive = 2; // for Customer.AddressCustomer
         $this->manufacturer = $mm->find('first', array(
             'conditions' => array(
                 'Address.email' => $this->user('email'),
@@ -103,8 +108,6 @@ class AppAuthComponent extends AuthComponent
      */
     public function isManufacturer()
     {
-
-        // TODO implement lazy load here (empty, false check not working)
         $this->setManufacturer();
 
         if (! empty($this->manufacturer)) {

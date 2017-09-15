@@ -7,6 +7,7 @@ App::uses('View', 'View');
 App::uses('AppSimpleBrowser', 'Lib/SimpleBrowser');
 App::uses('SlugHelper', 'View/Helper');
 App::uses('MyHtmlHelper', 'View/Helper');
+App::uses('MyTimeHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
 App::uses('Configuration', 'Model');
 
@@ -38,6 +39,8 @@ class AppCakeTestCase extends CakeTestCase
 
     public $Html;
 
+    public $Time;
+
     public $Customer;
 
     public $browser;
@@ -60,6 +63,7 @@ class AppCakeTestCase extends CakeTestCase
         $View = new View($Controller);
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
+        $this->Time = new MyTimeHelper($View);
         $this->Customer = new Customer();
         $this->generatePasswordHashes();
 
@@ -115,14 +119,26 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
 
+    /**
+     * back tick ` allows using forward slash in $unquotedString
+     * @param string $unquotedString
+     * @param string $response
+     * @param string $msg
+     */
     protected function assertRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertRegExp('/' . preg_quote($unquotedString) . '/', $response, $msg);
+        $this->assertRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
+    /**
+     * back tick ` allows using forward slash in $unquotedString
+     * @param string $unquotedString
+     * @param string $response
+     * @param string $msg
+     */
     protected function assertNotRegExpWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertNotRegExp('/' . preg_quote($unquotedString) . '/', $response, $msg);
+        $this->assertNotRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
     protected function assertUrl($url, $expectedUrl, $msg = '')
@@ -157,6 +173,51 @@ class AppCakeTestCase extends CakeTestCase
             $html = $this->browser->getContent();
             $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|undefined|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
         }
+    }
+
+    /**
+     *
+     * @param array $emailLog
+     * @param string $expectedSubjectPattern
+     * @param array $expectedMessagePatterns
+     * @param array $expectedToEmails
+     * @param array $expectedCcEmails
+     * @param array $expectedBccEmails
+     */
+    protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = array(), $expectedToEmails = array(), $expectedCcEmails = array(), $expectedBccEmails = array())
+    {
+
+        $fromAddress = json_decode($emailLog['EmailLog']['from_address']);
+        $toAddress = json_decode($emailLog['EmailLog']['to_address']);
+        $ccAddress = json_decode($emailLog['EmailLog']['cc_address']);
+        $bccAddress = json_decode($emailLog['EmailLog']['bcc_address']);
+
+        $this->assertNotEmpty($fromAddress, 'email from_address must not be empty');
+
+        if ($expectedSubjectPattern != '') {
+            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog['EmailLog']['subject'], 'email subject wrong');
+        }
+        foreach ($expectedMessagePatterns as $expectedMessagePattern) {
+            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLog']['message'], 'email message wrong');
+        }
+
+        $preparedToAddresses = array();
+        foreach ($toAddress as $email) {
+            $preparedToAddresses[] = $email;
+        }
+        $this->assertEquals($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong', 0, 0, true);
+
+        $preparedCcAddresses = array();
+        foreach ($ccAddress as $email) {
+            $preparedCcAddresses[] = $email;
+        }
+        $this->assertEquals($preparedCcAddresses, $expectedCcEmails, 'email cc_addresses wrong', 0, 0, true);
+
+        $preparedBccAddresses = array();
+        foreach ($bccAddress as $email) {
+            $preparedBccAddresses[] = $email;
+        }
+        $this->assertEquals($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong', 0, 0, true);
     }
 
     /**
@@ -206,6 +267,89 @@ class AppCakeTestCase extends CakeTestCase
         ob_flush();
     }
 
+    protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = null, $dateTo = null)
+    {
+        $sql = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
+        $params = array(
+            'manufacturerId' => $manufacturerId,
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo
+        );
+        $this->Customer->getDataSource()->fetchAll($sql, $params);
+    }
+
+    /**
+     * @param String $cakeShell
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createMockShell($cakeShell)
+    {
+        App::uses('ConsoleOutput', 'Console');
+        App::uses('ConsoleInput', 'Console');
+        App::uses('Shell', 'Console');
+        App::uses('AppShell', 'Console/Command');
+
+        $out = $this->getMock('ConsoleOutput', array(), array(), '', false);
+        $in = $this->getMock('ConsoleInput', array(), array(), '', false);
+
+        return $this->getMock(
+            $cakeShell,
+            array('in', 'err', 'createFile', '_stop', 'clear'),
+            array($out, $out, $in)
+        );
+    }
+
+    /**
+     *
+     * @param int $productId
+     * @param int $amount
+     * @return json string
+     */
+    protected function addProductToCart($productId, $amount)
+    {
+        $this->browser->ajaxPost('/warenkorb/ajaxAdd', array(
+            'data' => array(
+                'productId' => $productId,
+                'amount' => $amount
+            )
+        ));
+        return $this->browser->getJsonDecodedContent();
+    }
+
+
+    protected function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true, $comment = '')
+    {
+        $this->browser->post(
+            $this->Slug->getCartFinish(),
+            array(
+                'data' => array(
+                    'Order' => array(
+                        'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                        'cancellation_terms_accepted' => $cancellation_terms_accepted,
+                        'comment' => $comment
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     *
+     * @param int $productId
+     * @param double $price
+     * @return json string
+     */
+    protected function changeProductPrice($productId, $price)
+    {
+        $this->browser->ajaxPost('/admin/products/editPrice', array(
+            'data' => array(
+                'productId' => $productId,
+                'price' => $price
+            )
+        ));
+        return $this->browser->getJsonDecodedContent();
+    }
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
@@ -217,15 +361,27 @@ class AppCakeTestCase extends CakeTestCase
         $this->browser->doFoodCoopShopLogin();
     }
 
+    protected function loginAsAdmin()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailAdmin');
+        $this->browser->doFoodCoopShopLogin();
+    }
+
     protected function loginAsCustomer()
     {
         $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
         $this->browser->doFoodCoopShopLogin();
     }
 
-    protected function loginAsManufacturer()
+    protected function loginAsMeatManufacturer()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailManufacturer');
+        $this->browser->loginEmail = Configure::read('test.loginEmailMeatManufacturer');
+        $this->browser->doFoodCoopShopLogin();
+    }
+
+    protected function loginAsVegetableManufacturer()
+    {
+        $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->browser->doFoodCoopShopLogin();
     }
 }

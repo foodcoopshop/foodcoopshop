@@ -6,7 +6,7 @@ App::uses('CakeEmail', 'Network/Email');
 App::uses('AppAuthComponent', 'Controller/Component');
 
 /**
- * EmailLog
+ * EmailErrorLog
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -16,7 +16,7 @@ App::uses('AppAuthComponent', 'Controller/Component');
  * Usage:
  * {{{
  *    CakeLog::config('email', array(
- *      'engine' => 'EmailLog.EmailLog',
+ *      'engine' => 'EmailErrorLog.EmailErrorLog',
  *      'emailConfig' => 'error',
  *      'subjectFormat' => ':type :date @ :host',
  *      'logTypes' => array('warrning', 'error'),
@@ -33,7 +33,7 @@ App::uses('AppAuthComponent', 'Controller/Component');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class EmailLog implements CakeLogInterface
+class EmailErrorLog implements CakeLogInterface
 {
 
     /**
@@ -74,7 +74,7 @@ class EmailLog implements CakeLogInterface
         }
 
         // never send emails for 404 exceptions
-        // somehow in EmailLog.php status code is always 200, so no check for 404 possible
+        // somehow in EmailErrorLog.php status code is always 200, so no check for 404 possible
         $ignoredExceptionsRegex = '/\[(MissingController|MissingAction)Exception\]/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;

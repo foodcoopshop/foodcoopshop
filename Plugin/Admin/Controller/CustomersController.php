@@ -66,7 +66,7 @@ class CustomersController extends AdminAppController
         $this->Customer->saveField('id_default_group', $groupId, false);
 
         $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde von <b>' . Configure::read('htmlHelper')->getGroupName($oldCustomer['Customer']['id_default_group']) . '</b> auf <b>' . Configure::read('htmlHelper')->getGroupName($groupId) . '</b> geändert.';
-        $this->AppSession->setFlashMessage($messageString);
+        $this->Flash->success($messageString);
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
@@ -133,7 +133,7 @@ class CustomersController extends AdminAppController
         }
 
         if ($error > 0) {
-            $this->AppSession->setFlashError(__('An error occurred, please check your form.'));
+            $this->Flash->error(__('An error occurred, please check your form.'));
             return;
         }
 
@@ -158,7 +158,7 @@ class CustomersController extends AdminAppController
 
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
-            $this->AppSession->setFlashMessage(__('your new password successfully set'));
+            $this->Flash->success(__('your new password successfully set'));
             $this->redirect($this->referer());
         }
     }
@@ -222,10 +222,10 @@ class CustomersController extends AdminAppController
                 $message = 'Das Mitglied ' . $unsavedCustomer['Customer']['name'] . ' hat sein Profil geändert.';
                 $this->CakeActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $message);
 
-                $this->AppSession->setFlashMessage('Deine Änderungen wurden erfolgreich gepeichert.');
+                $this->Flash->success('Deine Änderungen wurden erfolgreich gepeichert.');
                 $this->redirect($this->referer());
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }
@@ -286,7 +286,7 @@ class CustomersController extends AdminAppController
                 'newPassword' => $newPassword
                 ));
 
-            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customer']))));
+            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customer']), 'mimetype' => 'application/pdf')));
             $email->send();
 
             $message .= ' und eine Info-Mail an ' . $customer['Customer']['email'] . ' versendet';
@@ -294,7 +294,7 @@ class CustomersController extends AdminAppController
 
         $message .= '.';
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
@@ -322,7 +322,7 @@ class CustomersController extends AdminAppController
         $this->Customer->AddressCustomer->id = $oldCustomer['AddressCustomer']['id_address'];
         $this->Customer->AddressCustomer->save($customerAddress2update);
 
-        $this->AppSession->setFlashMessage('Der Kommentar wurde erfolgreich geändert.');
+        $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['other'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');

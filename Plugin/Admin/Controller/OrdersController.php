@@ -33,6 +33,36 @@ class OrdersController extends AdminAppController
         $this->Order->recalculateOrderDetailPricesInOrder($order);
     }
 
+    public function editComment()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+
+        $orderId = $this->params['data']['orderId'];
+        $orderComment = htmlspecialchars_decode(strip_tags(trim($this->params['data']['orderComment']), '<strong><b>'));
+
+        $oldOrder = $this->Order->find('first', array(
+            'conditions' => array(
+                'Order.id_order' => $orderId
+            )
+        ));
+
+        $order2update = array(
+            'comment' => $orderComment
+        );
+        $this->Order->id = $oldOrder['Order']['id_order'];
+        $this->Order->save($order2update);
+
+        $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
+
+        $this->loadModel('CakeActionLog');
+        $this->CakeActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Order']['id_order'] . ' von '.$oldOrder['Customer']['firstname'] . ' ' . $oldOrder['Customer']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Order']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
+
+        die(json_encode(array(
+            'status' => 1,
+            'msg' => 'ok'
+        )));
+    }
+
     public function ordersAsPdf()
     {
         if (empty($this->params['named']['orderIds'])) {
@@ -79,13 +109,13 @@ class OrdersController extends AdminAppController
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
 
-            $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '.';
+            $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
 
             $this->loadModel('CakeActionLog');
             $this->CakeActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
-            $this->AppSession->setFlashMessage($message);
+            $this->Flash->success($message);
 
-            $this->AppSession->write('highlightedRowId', $orderId);
+            $this->Session->write('highlightedRowId', $orderId);
             $this->redirect($this->referer());
         } else {
             die('order id not correct: ' + $orderId);
@@ -112,7 +142,7 @@ class OrdersController extends AdminAppController
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('orders_closed', $this->AppAuth->getUserId(), 0, 'orders', $message . ': ' . join(', ', $orderIds));
 
-        $this->AppSession->setFlashMessage($message . '.');
+        $this->Flash->success($message . '.');
 
         die(json_encode(array(
             'status' => 1,
@@ -146,7 +176,7 @@ class OrdersController extends AdminAppController
         $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customer']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
         $this->CakeActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         // always redirect to orders (and keep some filters)
         $redirectUrl = '';
@@ -265,9 +295,9 @@ class OrdersController extends AdminAppController
             )
         ));
         if (! empty($shopOrderCustomer)) {
-            $this->AppSession->write('Auth.shopOrderCustomer', $shopOrderCustomer);
+            $this->Session->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
-            $this->AppSession->setFlashError('Es wurde kein Mitglied mit der E-Mail-Adresse <b>' . $shopOrderEmail . '</b> gefunden.');
+            $this->Flash->error('Es wurde kein Mitglied mit der E-Mail-Adresse <b>' . $shopOrderEmail . '</b> gefunden.');
         }
 
         $this->redirect('/');
@@ -296,7 +326,7 @@ class OrdersController extends AdminAppController
         $this->loadModel('CakeActionLog');
         $this->CakeActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         die(json_encode(array(
             'status' => 1,

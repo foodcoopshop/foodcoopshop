@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# get the script dir
+DIR=`php -r "echo dirname(realpath('$0'));"`
+
+# run the real script
+php -f "$DIR/../foodcoopshop/db_dump_install.php"

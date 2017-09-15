@@ -13,12 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array('script' =>
-    Configure::read('app.jsNamespace').'.Helper.appendFlashMessageCloser();'.
-    Configure::read('app.jsNamespace').'.Helper.bindFlashMessageCloser();
-'));
-?>
-
-<div id="flashMessage" class="<?php echo $class; ?>">
-    <?php echo $message; ?>
-</div>
+App::uses('CakeLog', 'Log');
+CakeLog::config('email', array(
+    'engine' => 'EmailErrorLog.EmailErrorLog',
+    'to' => Configure::read('app.debugEmail'),
+    'logTypes' => array(
+        'info',
+        'notice',
+        'warning',
+        'debug',
+        'error'
+    )
+));

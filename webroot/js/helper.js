@@ -325,7 +325,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-photo-summer.jpg',
+            '/img/bg-photo-autumn.jpg',
             {
                 positionY: 'top',
                 speed: 400
@@ -400,12 +400,13 @@ foodcoopshop.Helper = {
         });
     },
 
-    initTooltip: function (container, position) {
+    initTooltip: function (container, position, hover) {
+        var hover = hover || true;
         $(container).tooltip({
             content: function () {
                 return $(this).attr('title');
             },
-            tooltipHover: true,
+            tooltipHover: hover,
             position: position
         });
     },
@@ -506,7 +507,7 @@ foodcoopshop.Helper = {
                 changeYear: true,
                 changeMonth: true,
                 duration: 'fast',
-                yearRange: '2010:2020'
+                yearRange: '2014:2020'
             };
             $.datepicker.setDefaults($.datepicker.regional['de']);
         });
@@ -555,6 +556,25 @@ foodcoopshop.Helper = {
 
     },
 
+    showOrAppendSuccessMessage : function (message) {
+        if ($('#flashMessage').length === 0) {
+            this.showSuccessMessage(message);
+        } else {
+            $('#flashMessage').append('<br />' + message);
+        }
+    },
+
+    /**
+     * if flash message was success message, transfer it into error message
+     */
+    showOrAppendErrorMessage : function (message) {
+        if ($('#flashMessage').length === 0) {
+            this.showErrorMessage(message);
+        } else {
+            $('#flashMessage').removeClass('success').addClass('error').append('<br />' + message);
+        }
+    },
+
     showSuccessMessage: function (message) {
         this.showFlashMessage(message, 'success');
     },
@@ -600,6 +620,9 @@ foodcoopshop.Helper = {
                         errorThrown: errorThrown
                     }
                 };
+                if (XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.msg) {
+                    data.msg = XMLHttpRequest.responseJSON.msg;
+                }
                 if (callbacks.onEnd) {
                     callbacks.onEnd(data);
                 }
@@ -615,3 +638,4 @@ foodcoopshop.Helper = {
     }
 
 }
+

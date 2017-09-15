@@ -173,13 +173,13 @@ class PaymentsController extends AdminAppController
                 }
 
                 $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message.' (PaymentId: ' . $this->CakePayment->id.').');
-                $this->AppSession->setFlashMessage($message.'.');
+                $this->Flash->success($message.'.');
 
-                $this->AppSession->write('highlightedRowId', $this->CakePayment->id);
+                $this->Session->write('highlightedRowId', $this->CakePayment->id);
 
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
             }
         }
     }
@@ -338,7 +338,8 @@ class PaymentsController extends AdminAppController
             'date_changed' => date('Y-m-d H:i:s'),
             'amount' => $amount,
             'text' => $text,
-            'created_by' => $this->AppAuth->getUserId()
+            'created_by' => $this->AppAuth->getUserId(),
+            'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
         ));
 
         $this->loadModel('CakeActionLog');
@@ -366,7 +367,7 @@ class PaymentsController extends AdminAppController
             $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
         }
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         die(json_encode(array(
             'status' => 1,
@@ -432,7 +433,7 @@ class PaymentsController extends AdminAppController
 
         $this->CakeActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
-        $this->AppSession->setFlashMessage($message);
+        $this->Flash->success($message);
 
         die(json_encode(array(
             'status' => 1,

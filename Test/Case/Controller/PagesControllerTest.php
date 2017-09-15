@@ -40,6 +40,9 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertPagesForErrors($testUrls);
     }
 
+    /**
+     * test urls that are only available for superadmins
+     */
     public function testAllSuperadminUrls()
     {
         $this->loginAsSuperadmin();
@@ -79,6 +82,25 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->browser->doFoodCoopShopLogout();
     }
+
+    /**
+     * test urls that are only available for manufacturers
+     */
+    public function testAllManufacturerUrls()
+    {
+        $this->loginAsMeatManufacturer();
+
+        $testUrls = array(
+            $this->Slug->getManufacturerMyOptions(),
+            $this->Slug->getMyDepositList(),
+            $this->Slug->getManufacturerProfile()
+        );
+
+        $this->assertPagesForErrors($testUrls);
+
+        $this->browser->doFoodCoopShopLogout();
+    }
+
 
     public function test404PagesLoggedOut()
     {

@@ -1,6 +1,7 @@
 <?php
 
 App::uses('CakeEmail', 'Network/Email');
+App::uses('EmailLog', 'Model');
 
 /**
  * AppEmail
@@ -19,6 +20,23 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class AppEmail extends CakeEmail
 {
+
+    private $_originalSubject = '';
+
+    /**
+     * Get/Set Subject.
+     *
+     * Subject is encode by CakeEmail.
+     * In order to access it in clear text, it's stored in $_originalSubject
+     *
+     * @param string $subject Subject string.
+     * @return string|self
+     */
+    public function subject($subject = null)
+    {
+        $this->_originalSubject = $subject;
+        return parent::subject($subject);
+    }
 
     public function __construct($config = null)
     {
@@ -40,6 +58,28 @@ class AppEmail extends CakeEmail
     }
 
     /**
+     * method needs to be called *before* send-method to be able to work with travis-ci
+     * travis-ci uses an email mock
+     * @param string|array $content
+     * @return mixed|boolean|array
+     */
+    public function logEmailInDatabase($content)
+    {
+        $emailLogModel = new EmailLog();
+        $email2save = array(
+            'from_address' => json_encode($this->from()),
+            'to_address' => json_encode($this->to()),
+            'cc_address' => json_encode($this->cc()),
+            'bcc_address' => json_encode($this->bcc()),
+            'subject' => $this->_originalSubject,
+            'headers' => json_encode($this->getHeaders()),
+            'message' => $this->_renderTemplates($content)['html']
+        );
+        $emailLogModel->id = null;
+        return $emailLogModel->save($email2save);
+    }
+
+    /**
      * fallback if email config is wrong (e.g.
      * password changed from third party)
      *
@@ -48,13 +88,12 @@ class AppEmail extends CakeEmail
     public function send($content = null)
     {
         try {
+            if (Configure::read('app.db_config_FCS_EMAIL_LOG_ENABLED')) {
+                $this->logEmailInDatabase($content);
+            }
             return parent::send($content);
         } catch (Exception $e) {
-            if (Configure::read('app.emailErrorLoggingEnabled')) {
-                CakePlugin::load('EmailLog', array(
-                    'bootstrap' => true
-                ));
-            }
+            
             CakeLog::write('error', $e->getMessage());
 
             if (Configure::check('fallbackEmailConfig')) {

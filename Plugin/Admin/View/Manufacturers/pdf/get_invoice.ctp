@@ -49,7 +49,7 @@ if ($results_product[0]['m']['UID'] != '') {
 }
 $pdf->infoTextForFooter .= ', Rechnung Nr. ' . $newInvoiceNumber;
 
-// Artikelauflistung Start
+// Produktauflistung Start
 $widths = array(
     30,
     360,
@@ -59,7 +59,7 @@ $widths = array(
 );
 $headers = array(
     'Anzahl',
-    'Artikelname',
+    'Produkt',
     'Preis exkl.',
     'MWSt.',
     'Preis inkl.'
@@ -67,11 +67,11 @@ $headers = array(
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
 $pdf->addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl);
 $pdf->renderTable();
-// Artikelauflistung End
+// Produktauflistung End
 
-if (Configure::read('app.useManufacturerCompensationPercentage') && $compensationPercentage > 0) {
+if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
-    $compensatedPrice = round($sumPriceIncl * $compensationPercentage / 100, 2);
+    $compensatedPrice = round($sumPriceIncl * $variableMemberFee / 100, 2);
     $newSumPriceIncl = $sumPriceIncl - $compensatedPrice;
     $firstColumnWidth = 390;
     $secondColumnWidth = 140;
@@ -80,7 +80,7 @@ if (Configure::read('app.useManufacturerCompensationPercentage') && $compensatio
 
     $html .= '<tr>';
     $html .= '<td width="' . $firstColumnWidth . '">';
-    $html .= '<h3> - ' . $compensationPercentage . '% variabler Mitgliedsbeitrag</h3>';
+    $html .= '<h3> - ' . $variableMemberFee . '% variabler Mitgliedsbeitrag</h3>';
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
@@ -101,7 +101,7 @@ if (Configure::read('app.useManufacturerCompensationPercentage') && $compensatio
     $html .= '</table>';
     $pdf->writeHTML($html, true, false, true, false, '');
 
-    $html = '<p>Die neue Gesamtsumme rechts unten (abzüglich ' . $compensationPercentage . '% variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen.</p>';
+    $html = '<p>Die neue Gesamtsumme rechts unten (abzüglich ' . $variableMemberFee . '% variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen.</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 } else {
@@ -137,7 +137,7 @@ $widths = array(
 );
 $headers = array(
     'Anzahl',
-    'Artikelname',
+    'Produkt',
     'Preis exkl.',
     'MWSt.',
     'Preis inkl.',

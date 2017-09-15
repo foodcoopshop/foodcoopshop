@@ -123,7 +123,7 @@ foodcoopshop.Mobile = {
         });
 
         // if all manufacturers are disabled / set to private - do not include menu item
-        $('.sidebar li.heading').each(function () {
+        $('.sidebar li.header').each(function () {
             if ($(this).html() == 'Hersteller') {
                 menuItems.push('<li><a href="/hersteller"><i class="fa"></i>Hersteller</a></li>');
             }
@@ -135,7 +135,7 @@ foodcoopshop.Mobile = {
             menuItems.push($(this));
         });
 
-        var pageItems = ['<li class="heading">Seiten</li>'];
+        var pageItems = ['<li class="header">Seiten</li>'];
         $('#main-menu > li').each(function () {
             // take categories and manufacturers from sidebar and not from main menu
             var mainMenuHref = $(this).find('a').attr('href');
@@ -172,6 +172,11 @@ foodcoopshop.Mobile = {
         cartButton.removeClass('btn btn-success');
         cartButton.html('<span class="sum">€&nbsp;0,00</span><i class="fa fa-shopping-cart fa-2x"></i>');
         $('#' + headerId).append(cartButton);
+
+        var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
+        if (shoppingLimitReachedInfo > 0) {
+            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>Guthaben-Limit erreicht</b></span>');
+        }
 
         $('#' + headerId).append($('#header .logo-wrapper'));
 

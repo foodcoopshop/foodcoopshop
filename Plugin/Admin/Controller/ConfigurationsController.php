@@ -74,12 +74,12 @@ class ConfigurationsController extends AdminAppController
                 ));
 
                 $this->loadModel('CakeActionLog');
-                $this->AppSession->setFlashMessage('Die Einstellung wurde erfolgreich geändert.');
+                $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
                 $this->CakeActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configuration']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configuration']['value'] . '"</i>');
 
                 $this->redirect($this->data['referer']);
             } else {
-                $this->AppSession->setFlashError('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             }
         }
     }

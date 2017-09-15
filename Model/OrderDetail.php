@@ -76,8 +76,10 @@ class OrderDetail extends AppModel
 
         if ($groupByMonth) {
             $sql .= 'GROUP BY monthAndYear ';
+            $sql .= 'ORDER BY monthAndYear DESC ';
+        } else {
+            $sql .= 'ORDER BY o.date_add DESC ';
         }
-        $sql .= 'ORDER BY o.date_add DESC ';
         $params = array(
             'manufacturerId' => $manufacturerId,
             'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate')

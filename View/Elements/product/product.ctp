@@ -27,7 +27,7 @@ if (!$largeImageExists) {
 }
 if ($product['Product']['is_new']) {
     echo '<a href="/neue-produkte" class="image-badge btn btn-success" title="Neu">
-                    <i class="fa fa-star"></i> Neu
+                    <i class="fa fa-star gold"></i> Neu
                 </a>';
 }
     echo '</div>';
@@ -163,8 +163,8 @@ if ($product['ProductLang']['description'] != '') {
         }
         echo '</div>';
 
-        if ($product['ProductShop']['unity'] != '') {
-            echo '<div class="unity">Einheit: <span class="value">' . $product['ProductShop']['unity'].'</span></div>';
+        if ($product['ProductLang']['unity'] != '') {
+            echo '<div class="unity">Einheit: <span class="value">' . $product['ProductLang']['unity'].'</span></div>';
         }
     }
 

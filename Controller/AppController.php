@@ -24,7 +24,10 @@ class AppController extends Controller
 
     public $components = array(
         'RequestHandler', // to parse xml extensions
-        'AppSession',
+        'Session',
+        'Flash' => array(
+            'clear' => true
+        ),
         'String',
         'Cookie',
         'Paginator' => array(
@@ -38,7 +41,6 @@ class AppController extends Controller
                 'action' => 'login'
             ),
             'unauthorizedRedirect' => false,
-            'logoutRedirect' => '/admin/order_details', // important for manufacturer login!
             'authError' => 'Zugriff verweigert, bitte melde dich an.',
             // non acl-authorization: uses function isAuthorized in Controller
             'authorize' => array(
@@ -153,9 +155,8 @@ class AppController extends Controller
                     'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
                 )
             ));
-            $addressOther = $manufacturer['Address']['other'];
-            $compensationPercentage = $this->Manufacturer->getCompensationPercentage($addressOther);
-            $this->set('compensationPercentageForTermsOfUse', $compensationPercentage);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+            $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
         parent::beforeFilter();
@@ -175,6 +176,26 @@ class AppController extends Controller
         ));
         if (! empty($customer)) {
             $this->AppAuth->login($customer['Customer']);
+        }
+    }
+
+    /**
+     * can be used for returning exceptions as json
+     * try {
+     *      $this->foo->bar();
+     *  } catch (Exception $e) {
+     *      $this->sendAjaxError($e);
+     *  }
+     * @param $error
+     */
+    protected function sendAjaxError($error)
+    {
+        if ($this->request->is('ajax')) {
+            $this->response->statusCode(500);
+            $response['status'] = APP_OFF;
+            $response['msg'] = $error->getMessage();
+            $this->set(compact('response'));
+            $this->render('/Errors/errorjson');
         }
     }
 

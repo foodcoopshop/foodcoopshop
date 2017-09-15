@@ -30,6 +30,43 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
 
+    public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
+    {
+        $result = '';
+
+        // both from and to date not set
+        if (Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+            return $result;
+        }
+
+        // holiday over?
+        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && $dateTo < date('Y-m-d')) {
+            return $result;
+        }
+
+        if ($long) {
+            $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
+        }
+        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+            if ($isHolidayActive) {
+                $result .= 'seit';
+            } else {
+                $result .= 'von';
+            }
+            $result .= ' ' . Configure::read('timeHelper')->formatToDateShort($dateFrom);
+        }
+        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo)) {
+            $result .= ' bis ' . Configure::read('timeHelper')->formatToDateShort($dateTo);
+        }
+        if ($long && $result != '') {
+            $result .= ' im wohlverdienten Urlaub.';
+        }
+
+        $result = str_replace('  ', ' ', $result);
+
+        return $result;
+    }
+
     /**
      * @param array $manufacturer
      * @param string $outputType "pdf" of "html"
@@ -42,8 +79,8 @@ class MyHtmlHelper extends HtmlHelper
         }
         $imprintLines = array();
         $imprintLines[] = '<b>'.$manufacturer['Manufacturer']['name'].'</b>';
-        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['name']) {
-            $imprintLines[] = $manufacturer['Address']['name'];
+        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname']) {
+            $imprintLines[] = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
         }
         $address = $manufacturer['Address']['address1'];
         if ($manufacturer['Address']['address2'] != '') {
@@ -134,6 +171,7 @@ class MyHtmlHelper extends HtmlHelper
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
+            case 'FCS_ORDER_COMMENT_ENABLED':
                 return array(
                     APP_ON => 'ja',
                     APP_OFF => 'nein'

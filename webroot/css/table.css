@@ -51,7 +51,7 @@ table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.ico
 table.list tr.custom-odd {
     background-color: #EBEBEB;
 }
-body:not(.products) table.list tr:nth-child(odd) {
+div:not(.product-list) > table.list tr:nth-child(odd) {
     background-color: #EBEBEB;
 }
 table.list tr.deactivated {

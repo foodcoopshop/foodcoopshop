@@ -13,15 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('CakeLog', 'Log');
-CakeLog::config('email', array(
-    'engine' => 'EmailLog.EmailLog',
-    'to' => Configure::read('app.debugEmail'),
-    'logTypes' => array(
-        'info',
-        'notice',
-        'warning',
-        'debug',
-        'error'
-    )
-));
+if (! $appAuth->isManufacturer()) {
+    echo '<li>';
+        echo '<a href="https://foodcoopshop.github.io/de/abholung-der-produkte" target="_blank">Hier geht\'s zur Abholdienst-Hilfe</a>';
+    echo '</li>';
+}

@@ -160,6 +160,11 @@ class SlugHelper extends Helper
         return '/admin/manufacturers/profile';
     }
 
+    public function getManufacturerMyOptions()
+    {
+        return '/admin/manufacturers/myOptions';
+    }
+
     public function getNewPasswordRequest()
     {
         return '/neues-passwort-anfordern';
@@ -259,6 +264,10 @@ class SlugHelper extends Helper
     public function getManufacturerEdit($manufacturerId)
     {
         return '/admin/manufacturers/edit/'.$manufacturerId;
+    }
+    public function getManufacturerEditOptions($manufacturerId)
+    {
+        return '/admin/manufacturers/editOptions/'.$manufacturerId;
     }
     public function getManufacturerAdd()
     {

@@ -19,7 +19,7 @@ $this->element('addScript', array('script' =>
 ));
 if (!$appAuth->termsOfUseAccepted()) {
     $this->element('addScript', array('script' =>
-        "foodcoopshop.Helper.disableButton($('#OrderDetailForm button.btn-success'));"
+        Configure::read('app.jsNamespace') . ".Helper.disableButton($('#OrderDetailForm button.btn-success'));"
     ));
 }
 ?>
@@ -39,7 +39,7 @@ if (!$appAuth->termsOfUseAccepted()) {
     
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
         
-        <?php if (Configure::read('app.useManufacturerCompensationPercentage') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
+        <?php if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
         <?php } ?>
 
@@ -80,6 +80,31 @@ if (!$appAuth->termsOfUseAccepted()) {
             ));
         ?>
         <div class="sc"></div>
+        
+        <?php
+        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+            $this->element('addScript', array('script' =>
+            Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
+            ));
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Order']['comment'] != '') {
+                $this->element('addScript', array('script' =>
+                "$('.toggle-link').trigger('click');"
+                ));
+            }
+            echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', array(
+            'class' => 'toggle-link',
+            'title' => 'Nachricht an den Abholdienst schreiben?',
+            'escape' => false
+            ));
+            echo '<div class="toggle-content order-comment">';
+            echo $this->Form->input('Order.comment', array(
+                'type' => 'textarea',
+                'placeholder' => 'Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht.',
+                'label' => ''
+            ));
+            echo '</div>';
+        }
+        ?>
         
         <p>
             <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>

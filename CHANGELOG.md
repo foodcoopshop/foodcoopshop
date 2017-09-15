@@ -1,13 +1,33 @@
-# Changelog FoodCoopShop
-All notable changes to this project will be documented in this file.
+# Changelog
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-- [View unreleased changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
 
+## [v1.4.0] 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
 
-## [v1.3.0] 2017-06-21 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
+### Neue Funktionen
+- Kommentar-Feld bei Bestell-Abschluss für Nachricht an Abholdienst. / [PR#100](https://github.com/foodcoopshop/foodcoopshop/pull/100) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Viele Hersteller-Einstellungen können jetzt auch vom Hersteller selbst verändert werden. / [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- E-Mail-Benachrichtigung für Hersteller nach Sofortbestellungen / [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Herstellern kann eine Ansprechperson zugeordnert werden. Name, E-Mail-Adresse und Telefonnummer sind dann für den Hersteller ersichtlich. [PR#87](https://github.com/foodcoopshop/foodcoopshop/pull/87) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Verbesserter Urlaubsmodus für Hersteller. Es kann jetzt das Datum angegeben werden. / [PR#81](https://github.com/foodcoopshop/foodcoopshop/pull/81) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Bugfixes
+- Die Überschrift der Info-Box kann wieder als Überschrift 3 formatiert werden. / [Commit](https://github.com/foodcoopshop/foodcoopshop/compare/18e3adee0c536fd15e7450c7aba289c49b391214...c952166ec81eb6f8ad5c2a84875b534329439f6a) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
+- Wenn ein Hersteller nur für Mitglieder sichtbar ist, sind jetzt auch zugeordnete Blog-Artikel nur für Mitglieder sichtbar (unabhängig von der Einstellung des Blog-Artikels). / [PR#90](https://github.com/foodcoopshop/foodcoopshop/pull/90) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Artikel heißen ab sofort Produkte. Das war ein Durcheinander. / [PR#128] (https://github.com/foodcoopshop/foodcoopshop/pull/128) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- In den automatisierten E-Mails bei Sofort-Bestellungen wird im Footer der Name des tatsächlich eingeloggten Mitglieds angezeigt, und nicht mehr der Name, für den bestellt wird.  
+
+### Für Entwickler
+- Minimal-Anforderung für PHP: v5.6 (v5.5 wird nicht mehr unterstützt!)
+- Datenbank-Anpassungen für MySQL 5.7 / [PR#109](https://github.com/foodcoopshop/foodcoopshop/pull/109) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
+- Unit Tests für Stornierung, Preisänderung und Änderung der Menge von bestellten Produkten / [PR#102](https://github.com/foodcoopshop/foodcoopshop/pull/102) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Travis-CI Anpassungen für Ubuntu Trusty / [PR#110](https://github.com/foodcoopshop/foodcoopshop/pull/110) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
+- Das Versenden von E-Mails und Cake-Shell-Skripte können jetzt abgetestet werden / [PR#96](https://github.com/foodcoopshop/foodcoopshop/pull/96) / [PR#118](https://github.com/foodcoopshop/foodcoopshop/pull/118) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Erleichterter Workflow bei Migrations / [PR#82](https://github.com/foodcoopshop/foodcoopshop/pull/82) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
+
+## [v1.3.0] 2017-06-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
 
 ### Added
 - Responsive design for admin / [PR#37](https://github.com/foodcoopshop/foodcoopshop/pull/37) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>

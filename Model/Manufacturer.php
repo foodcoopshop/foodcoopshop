@@ -28,6 +28,12 @@ class Manufacturer extends AppModel
         'Content'
     );
 
+    public $belongsTo = array(
+        'Customer' => array(
+            'foreignKey' => 'id_customer'
+        )
+    );
+
     public $hasOne = array(
         'Address' => array(
             'className' => 'AddressManufacturer',
@@ -101,91 +107,136 @@ class Manufacturer extends AppModel
     );
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendOrderedProductDeletedNotification
      * @return boolean
      */
-    public function getOptionSendInvoice($other)
+    public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification)
     {
-        $sendEmail = true;
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (is_array($addressOther)) {
-            // sending of email can be disabled
-            if (isset($addressOther['sendInvoice']) && ! $addressOther['sendInvoice']) {
-                $sendEmail = false;
-            }
+        $result = $sendOrderedProductDeletedNotification;
+        if ($sendOrderedProductDeletedNotification == '') {
+            $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
-        return $sendEmail;
+        return (boolean) $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendOrderedProductPriceChangedNotification
      * @return boolean
      */
-    public function getOptionBulkOrdersAllowed($other)
+    public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification)
     {
-        $bulkOrdersAllowed = Configure::read('app.defaultBulkOrdersAllowed');
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (isset($addressOther['bulkOrdersAllowed'])) {
-            $bulkOrdersAllowed = $addressOther['bulkOrdersAllowed'];
+        $result = $sendOrderedProductPriceChangedNotification;
+        if ($sendOrderedProductPriceChangedNotification == '') {
+            $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
-        return $bulkOrdersAllowed;
+        return (boolean) $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendOrderedProductQuantityChangedNotification
+     * @return boolean
+     */
+    public function getOptionSendOrderedProductQuantityChangedNotification($sendOrderedProductQuantityChangedNotification)
+    {
+        $result = $sendOrderedProductQuantityChangedNotification;
+        if ($sendOrderedProductQuantityChangedNotification == '') {
+            $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+        }
+        return (boolean) $result;
+    }
+
+    /**
+     * @param $boolean $sendInvoice
+     * @return boolean
+     */
+    public function getOptionSendShopOrderNotification($sendShopOrderNotification)
+    {
+        $result = $sendShopOrderNotification;
+        if ($sendShopOrderNotification == '') {
+            $result = Configure::read('app.defaultSendShopOrderNotification');
+        }
+        return (boolean) $result;
+    }
+
+    /**
+     * @param $boolean $sendInvoice
+     * @return boolean
+     */
+    public function getOptionSendInvoice($sendInvoice)
+    {
+        $result = $sendInvoice;
+        if ($sendInvoice == '') {
+            $result = Configure::read('app.defaultSendInvoice');
+        }
+        return (boolean) $result;
+    }
+
+    /**
+     * @param $boolean $bulkOrdersAllowed
+     * @return boolean
+     */
+    public function getOptionBulkOrdersAllowed($bulkOrdersAllowed)
+    {
+        $result = $bulkOrdersAllowed;
+        if ($bulkOrdersAllowed == '') {
+            $result = Configure::read('app.defaultBulkOrdersAllowed');
+        }
+        return $result;
+    }
+
+    /**
+     * @param int $defaultTaxId
      * @return int
      */
-    public function getCompensationPercentage($other)
+    public function getOptionDefaultTaxId($defaultTaxId)
     {
-        $compensationPercentage = Configure::read('app.defaultCompensationPercentage');
-        if (isset($other['compensationPercentage'])) {
-            $compensationPercentage = (int) $other['compensationPercentage'];
+        $result = $defaultTaxId;
+        if ($defaultTaxId == '') {
+            $result = Configure::read('app.defaultTaxId');
         }
-        return $compensationPercentage;
+        return $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
-     * @return boolean
+     * @param int $variableMemberFee
+     * @return int
      */
-    public function getOptionSendOrderList($other)
+    public function getOptionVariableMemberFee($variableMemberFee)
     {
-        $sendEmail = true;
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (is_array($addressOther)) {
-            // sending of email can be disabled
-            if (isset($addressOther['sendOrderList']) && ! $addressOther['sendOrderList']) {
-                $sendEmail = false;
-            }
+        $result = $variableMemberFee;
+        if ($variableMemberFee == '') {
+            $result = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
-        return $sendEmail;
+        return $result;
     }
 
     /**
-     *
-     * @param $other json
-     *            (contains manufacturer options)
+     * @param $boolean $sendOrderList
      * @return boolean
      */
-    public function getOptionSendOrderListCc($other)
+    public function getOptionSendOrderList($sendOrderList)
+    {
+        $result = $sendOrderList;
+        if ($sendOrderList == '') {
+            $result = Configure::read('app.defaultSendOrderList');
+        }
+        return (boolean) $result;
+    }
+
+    /**
+     * @param $string $sendOrderListCc
+     * @return array
+     */
+    public function getOptionSendOrderListCc($sendOrderListCc)
     {
         $ccRecipients = array();
-        $addressOther = StringComponent::decodeJsonFromForm($other);
-        if (is_array($addressOther)) {
-            if (! empty($addressOther['sendOrderListCc'])) {
-                $ccs = explode(';', $addressOther['sendOrderListCc']);
-                foreach ($ccs as $cc) {
-                    $ccRecipients[] = $cc;
-                }
-            }
+        if ($sendOrderListCc == '') {
+            return $ccRecipients;
+        }
+
+        $ccs = explode(',', $sendOrderListCc);
+        foreach ($ccs as $cc) {
+            $ccRecipients[] = $cc;
         }
         return $ccRecipients;
     }
@@ -217,13 +268,13 @@ class Manufacturer extends AppModel
 
         return $customer;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @return array
      */
     public function getCustomerByManufacturerId($manufacturerId)
-    { 
+    {
         $manufacturer = $this->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
@@ -234,7 +285,7 @@ class Manufacturer extends AppModel
         }
         return false;
     }
-    
+
     public function getCustomerIdByManufacturerId($manufacturerId)
     {
         $customer = $this->getCustomerByManufacturerId($manufacturerId);
@@ -266,6 +317,9 @@ class Manufacturer extends AppModel
             'fields' => array(
                 'Manufacturer.id_manufacturer',
                 'Manufacturer.name',
+                'Manufacturer.holiday_from',
+                'Manufacturer.holiday_to',
+                '!'.$this->getManufacturerHolidayConditions().' as IsHolidayActive'
             ),
             'order' => array(
                 'Manufacturer.name' => 'ASC'
@@ -276,8 +330,21 @@ class Manufacturer extends AppModel
         $manufacturersForMenu = array();
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
+            $additionalInfo = '';
             if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $productCount = $manufacturerName .= ' (' . $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']) . ')';
+                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
+            }
+            $holidayInfo = Configure::read('htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+            if ($holidayInfo != '') {
+                $holidayInfo = 'Urlaub ' . $holidayInfo;
+                if ($manufacturer[0]['IsHolidayActive']) {
+                    $additionalInfo = $holidayInfo;
+                } else {
+                    $additionalInfo .= ' - ' . $holidayInfo;
+                }
+            }
+            if ($additionalInfo != '') {
+                $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
             }
             $manufacturersForMenu[] = array(
                 'name' => $manufacturerName,
@@ -377,8 +444,8 @@ class Manufacturer extends AppModel
         ma.*,
         t.rate as Steuersatz,
         odt.total_amount AS MWSt,
-        od.product_id AS ArtikelID,
-        od.product_name AS ArtikelName,
+        od.product_id AS ProduktID,
+        od.product_name AS ProduktName,
         od.product_quantity AS Menge,
         od.total_price_tax_incl AS PreisIncl,
         od.total_price_tax_excl as PreisExcl,

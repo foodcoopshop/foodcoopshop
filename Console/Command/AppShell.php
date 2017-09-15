@@ -84,5 +84,13 @@ class AppShell extends Shell
         $this->browser = new AppSimpleBrowser();
         $this->browser->loginEmail = Configure::read('app.adminEmail');
         $this->browser->loginPassword = Configure::read('app.adminPassword');
+
+        if ($_SERVER['PHP_SELF'] == '/test.php' // unit tests called via web browser
+            // unit tests called via console
+            || (php_sapi_name() == 'cli' && $_SERVER['argv'][3] && $_SERVER['argv'][3] == 'test')) {
+                $this->browser->addHeader('x-unit-test-mode: true');
+                $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
+                $this->browser->loginPassword = Configure::read('test.loginPassword');
+        }
     }
 }
