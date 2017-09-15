@@ -485,7 +485,7 @@ class ManufacturersController extends AdminAppController
         if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->loadModel('Network.SyncManufacturer');
             $this->loadModel('Network.SyncDomain');
-            $editSyncDomainsAllowed = $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth) || $this->AppAuth->isSuperadmin();
+            $editSyncDomainsAllowed = /* $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth) || */ $this->AppAuth->isSuperadmin();
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $this->set('editSyncDomainsAllowed', $editSyncDomainsAllowed);
         }
