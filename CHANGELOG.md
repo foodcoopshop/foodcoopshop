@@ -2,7 +2,9 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...HEAD)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
+
+## [v1.4.0] 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
 
 ### Neue Funktionen
 - Kommentar-Feld bei Bestell-Abschluss für Nachricht an Abholdienst. / [PR#100](https://github.com/foodcoopshop/foodcoopshop/pull/100) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
