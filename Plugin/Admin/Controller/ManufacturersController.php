@@ -483,11 +483,10 @@ class ManufacturersController extends AdminAppController
         }
 
         if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->loadModel('Network.SyncManufacturer');
             $this->loadModel('Network.SyncDomain');
-            $editSyncDomainsAllowed = /* $this->SyncManufacturer->isAllowedAsMasterFoodcoop($this->AppAuth) || */ $this->AppAuth->isSuperadmin();
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
-            $this->set('editSyncDomainsAllowed', $editSyncDomainsAllowed);
+            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
+            $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
 
         // set default data if manufacturer options are null
@@ -566,7 +565,7 @@ class ManufacturersController extends AdminAppController
                 $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
             }
 
-            if ($editSyncDomainsAllowed) {
+            if ($isAllowedEditManufacturerOptionsDropdown) {
                 if ($this->request->data['Manufacturer']['enabled_sync_domains']) {
                     $this->request->data['Manufacturer']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturer']['enabled_sync_domains']);
                 }

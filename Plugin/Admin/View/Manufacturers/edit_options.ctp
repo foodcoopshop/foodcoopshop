@@ -171,7 +171,7 @@ echo '<div class="holiday-wrapper">';
         ));
     }
 
-    if (isset($editSyncDomainsAllowed) && $editSyncDomainsAllowed) {
+    if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
         $this->element('addScript', array(
             'script' =>
                 Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
