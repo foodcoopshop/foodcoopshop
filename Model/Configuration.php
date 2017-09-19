@@ -58,7 +58,7 @@ class Configuration extends AppModel
             case 'FCS_APP_EMAIL':
                 $validationRules = $this->getEmailValidationRule();
                 break;
-            case 'FCS_ORDER_CONFIRMATION_MAIL_BCC':
+            case 'FCS_BACKUP_EMAIL_ADDRESS_BCC':
                 $validationRules = $this->getEmailValidationRule(true);
                 break;
             case 'FCS_MINIMAL_CREDIT_BALANCE':
