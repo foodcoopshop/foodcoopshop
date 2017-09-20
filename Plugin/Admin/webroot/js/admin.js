@@ -128,7 +128,10 @@ foodcoopshop.Admin = {
      */
     setSelectPickerMultipleDropdowns : function (selector) {
         $(selector).each(function () {
-            $(this).selectpicker('val', $(this).data('val').toString().split(','));
+            var val = $(this).data('val');
+            if (val) {
+                $(this).selectpicker('val', val.toString().split(','));
+            }
         });
     },
 
@@ -2388,6 +2391,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
