@@ -2,13 +2,17 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
+## Unveröffentlichte Version [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
+
+
+### Neue Funktionen
+- Einbindung des Netzwerk-Plugins ist jetzt möglich / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
 - Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
-## [v1.4.0] 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
+## v1.4.0 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
 
 ### Neue Funktionen
 - Kommentar-Feld bei Bestell-Abschluss für Nachricht an Abholdienst. / [PR#100](https://github.com/foodcoopshop/foodcoopshop/pull/100) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -31,7 +35,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Das Versenden von E-Mails und Cake-Shell-Skripte können jetzt abgetestet werden / [PR#96](https://github.com/foodcoopshop/foodcoopshop/pull/96) / [PR#118](https://github.com/foodcoopshop/foodcoopshop/pull/118) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Erleichterter Workflow bei Migrations / [PR#82](https://github.com/foodcoopshop/foodcoopshop/pull/82) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
 
-## [v1.3.0] 2017-06-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
+## v1.3.0 2017-06-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2.1...v1.3.0)
 
 ### Added
 - Responsive design for admin / [PR#37](https://github.com/foodcoopshop/foodcoopshop/pull/37) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -54,12 +58,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - New price of products was calculated wrong if tax was set offline / [PR#51](https://github.com/foodcoopshop/foodcoopshop/pull/51) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Slider images upload / [PR#49](https://github.com/foodcoopshop/foodcoopshop/pull/49) / <a href="https://github.com/k-pd"><img src="https://github.com/k-pd.png" width="20"></a>
 
-## [v1.2.1] 2017-03-22 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2...v1.2.1)
+## v1.2.1 2017-03-22 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.2...v1.2.1)
 
 ### Added
 - Info-Text für variablen Mitgliedsbeitrag in Bestelllisten, Rechnungen, Bestellbestätigungen und Bestell-PDFs
 
-## [v1.2.0] 2017-03-09 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.1.3...v1.2)
+## v1.2.0 2017-03-09 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.1.3...v1.2)
 
 ### Added
 - Neues Frühwarnsystem für Guthaben-Aufladungen: Diese können jetzt von einem Superadmin bestätigt bzw. als "da stimmt was nicht…" markiert werden, auch Kommentare sind möglich. Die Mitglieder sehen den Status ihrer Zahlungen in ihrem Guthaben-System und können über die Status-Änderung (optional) per E-Mail benachrichtigt werden.
@@ -75,22 +79,22 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Der Betreiber der Webseite kann jetzt separat angegeben werden, sollte der Betreiber nicht die Foodcoop selbst sein (unter "Einstellungen")
 - Favicons werden jetzt für viele mobile Devices unterstützt.
 
-## [v1.1.3] 2017-02-21 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.1.2...v1.1.3)
+## v1.1.3 2017-02-21 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.1.2...v1.1.3)
 
 ### Fixed
 - Hersteller-bearbeiten: Customer records wurden mehrfach angelegt
 
-## [v1.1.2] 2017-02-06 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.1.1...v1.1.2)
+## v1.1.2 2017-02-06 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.1.1...v1.1.2)
 
 ### Fixed
 - Hersteller-bearbeiten: wenn gleiche E-Mail-Adresse bereits einem Mitglied zugewiesen war, konnte sich der Hersteller danach nicht mehr einloggen
 
-## [v1.1.1] 2016-12-30 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/1.1.0...v1.1.1)
+## v1.1.1 2016-12-30 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/1.1.0...v1.1.1)
 
 ### Fixed
 - Mehrere kleine Bugfixes
 
-## [v1.1.0] 2016-12-25 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/1.0.0...1.1.0)
+## v1.1.0 2016-12-25 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/1.0.0...1.1.0)
 
 ### Added
 - Superadmins können Guthaben-Konten von anderen Mitgliedern ansehen und Zahlungen eintragen bzw. löschen. Es sind ab sofort auch Rückzahlungen eintragbar, falls Mitglieder aus dem Verein austreten und ihnen Geld zurücküberwiesen wird.
@@ -113,7 +117,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Hersteller, die nur für Mitglieder sichtbar sind, wurden auf der Hersteller-Übersichtsseite angezeigt.
 - Zahlreiche kleinere Bugfixes und Verbesserungen.
 
-## [v1.0.0] 2016-10-30 / [View changes](https://github.com/foodcoopshop/foodcoopshop/commits/1.0.0)
+## v1.0.0 2016-10-30 / [View changes](https://github.com/foodcoopshop/foodcoopshop/commits/1.0.0)
 
 Zur Erklärung: Bis zum 24.10.2016 wurde das große Update im Sommer als "1.0" bezeichnet. Ab diesem Datum wird dieses Update mit "0.9" bezeichnet, und "1.0" ist die erste offizielle Open-Source-Version vom FoodCoopShop.
 
