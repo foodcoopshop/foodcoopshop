@@ -171,5 +171,20 @@ echo '<div class="holiday-wrapper">';
         ));
     }
 
+    if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
+        $this->element('addScript', array(
+            'script' =>
+                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
+            "
+        ));
+        echo $this->Form->input('Manufacturer.enabled_sync_domains', array(
+            'type' => 'select',
+            'multiple' => true,
+            'data-val' => $this->request->data['Manufacturer']['enabled_sync_domains'],
+            'label' => 'Remote-Foodcoops<br /><a href="https://foodcoopshop.github.io/de/netzwerk-plugin" target="_blank">Infos zum Netzwerk-Plugin</a>',
+            'options' => $syncDomainsForDropdown
+        ));
+    }
+
 ?>
 </form>

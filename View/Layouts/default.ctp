@@ -41,7 +41,7 @@ header('Pragma: no-cache');
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-        echo $this->element('renderCss', array('config' => 'frontend'));
+        echo $this->element('renderCss', array('configs' => array('frontend')));
     if ($isMobile) {
         echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend'));
     }
@@ -110,7 +110,7 @@ header('Pragma: no-cache');
     <?php echo $this->element('sql_dump'); ?>
     
 <?php
-    echo $this->element('renderJs', array('config' => 'frontend'));
+    echo $this->element('renderJs', array('configs' => array('frontend')));
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
     echo $this->Html->script(array('/js/vendor/slidebars/dist/slidebars'));

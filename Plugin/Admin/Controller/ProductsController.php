@@ -780,6 +780,16 @@ class ProductsController extends AdminAppController
         }
 
         $this->set('title_for_layout', 'Produkte');
+
+        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
+            $this->loadModel('Network.SyncManufacturer');
+            $this->loadModel('Network.SyncDomain');
+            $this->helpers[] = 'Network.Network';
+            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer['Manufacturer']['enabled_sync_domains']);
+            $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
+            $this->set('showSyncProductsButton', $showSyncProductsButton);
+        }
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)

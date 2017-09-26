@@ -482,6 +482,13 @@ class ManufacturersController extends AdminAppController
             throw new MissingActionException('manufacturer does not exist');
         }
 
+        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+            $this->loadModel('Network.SyncDomain');
+            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
+            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
+            $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
+        }
+
         // set default data if manufacturer options are null
         if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturer']['variable_member_fee'] == '') {
             $unsavedManufacturer['Manufacturer']['variable_member_fee'] = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
@@ -556,6 +563,12 @@ class ManufacturersController extends AdminAppController
             }
             if ($this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
                 $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
+            }
+
+            if ($isAllowedEditManufacturerOptionsDropdown) {
+                if ($this->request->data['Manufacturer']['enabled_sync_domains']) {
+                    $this->request->data['Manufacturer']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturer']['enabled_sync_domains']);
+                }
             }
 
             // remove post data that could be set by hacking attempt

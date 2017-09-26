@@ -81,15 +81,6 @@ class AppController extends Controller
         'Text'
     );
 
-    /**
-     * loads configuration from database
-     */
-    public function loadConfigurations()
-    {
-        $this->loadModel('Configuration');
-        $configurations = $this->Configuration->loadConfigurations();
-    }
-
     public function beforeRender()
     {
         parent::beforeRender();
@@ -110,8 +101,6 @@ class AppController extends Controller
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
-
-        $this->loadConfigurations();
 
         switch ($this->DbMigration->doDbMigrations()) {
             case -1:  // always abort what is done and return home.
@@ -192,8 +181,10 @@ class AppController extends Controller
     {
         if ($this->request->is('ajax')) {
             $this->response->statusCode(500);
-            $response['status'] = APP_OFF;
-            $response['msg'] = $error->getMessage();
+            $response = array(
+                'status' => APP_OFF,
+                'msg' => $error->getMessage()
+            );
             $this->set(compact('response'));
             $this->render('/Errors/errorjson');
         }

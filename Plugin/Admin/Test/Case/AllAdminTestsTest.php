@@ -1,6 +1,6 @@
 <?php
 /**
- * AllTestsTest
+ * AllAdminTestsTest
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AllTestsTest extends PHPUnit_Framework_TestSuite
+class AllAdminTestsTest extends PHPUnit_Framework_TestSuite
 {
 
     /**

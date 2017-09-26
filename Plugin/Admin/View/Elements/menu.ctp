@@ -79,7 +79,6 @@ $homepageAdministrationElement = array(
         'fa-icon' => 'fa-fw fa-pencil-square-o'
     )
 );
-
 $menu = array();
 $logoHtml = '<img class="logo" src="/files/images/logo.jpg" width="100%" />';
 $menu[] = array(

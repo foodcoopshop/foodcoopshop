@@ -131,6 +131,14 @@ CakePlugin::load('Admin');
 CakePlugin::load('AssetCompress', array(
     'bootstrap' => true
 ));
+
+App::uses('ClassRegistry', 'Utility');
+ClassRegistry::init('Configuration')->loadConfigurations();
+if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+    CakePlugin::load('Network', array(
+        'routes' => true
+    ));
+}
 if (Configure::read('app.emailErrorLoggingEnabled')) {
     CakePlugin::load('EmailErrorLog', array(
         'bootstrap' => true

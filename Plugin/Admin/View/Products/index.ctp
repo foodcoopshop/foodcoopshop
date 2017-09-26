@@ -66,6 +66,23 @@
                 ));
                 echo '</div>';
             }
+
+            if (isset($showSyncProductsButton) && $showSyncProductsButton) {
+                $this->element('addScript', array(
+                    'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
+                ));
+                echo '<div class="toggle-sync-button-wrapper">';
+                    echo $this->Html->link(
+                        '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
+                        $this->Network->getSyncProductData(),
+                        array(
+                            'class' => 'btn btn-default',
+                            'escape' => false
+                        )
+                    );
+                echo '</div>';
+            }
+
             ?>
         </div>
 

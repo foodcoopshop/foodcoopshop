@@ -47,6 +47,8 @@ TRUNCATE TABLE `fcs_smart_blog_post`;
 TRUNCATE TABLE `fcs_smart_blog_post_lang`;
 TRUNCATE TABLE `fcs_smart_blog_post_shop`;
 TRUNCATE TABLE `fcs_stock_available`;
+TRUNCATE TABLE `fcs_sync_domains`;
+TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
 
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
@@ -125,12 +127,13 @@ INSERT INTO `fcs_configuration` VALUES
 (558,NULL,NULL,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,NULL,NULL,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (560,NULL,NULL,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','12','readonly',10,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
-(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','12','readonly',20,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
+(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','13','readonly',10,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
+(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','13','readonly',20,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
 (563,NULL,NULL,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','0','readonly',30,'2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,NULL,NULL,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','0','boolean',13,'2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,NULL,NULL,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
-(566,NULL,NULL,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00');
+(566,NULL,NULL,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
+(567,NULL,NULL,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Plugin aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-plugin\" target=\"_blank\">Infos zum Netzwerk-Plugin</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -202,6 +205,12 @@ INSERT INTO `fcs_homeslider_slides_lang` VALUES
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_sync_domains` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_sync_products` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_sync_products` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_tax` DISABLE KEYS */;
 INSERT INTO `fcs_tax` VALUES

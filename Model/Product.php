@@ -77,6 +77,24 @@ class Product extends AppModel
     }
 
     /**
+     * @param int $productId
+     * @param int $manufacturerId
+     * @return boolean success
+     */
+    public function isOwner($productId, $manufacturerId)
+    {
+
+        $this->recursive = -1;
+        $found = $this->find('count', array(
+            'conditions' => array(
+                'Product.id_product' => $productId,
+                'Product.id_manufacturer' => $manufacturerId
+            )
+        ));
+        return (boolean) $found;
+    }
+
+    /**
      *
      * @param string $productId
      *            (eg. 4 or '4-10' or '4'
@@ -205,7 +223,7 @@ class Product extends AppModel
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+                $success = $this->ProductAttributes->ProductAttributeShop->updateAll(array(
                     'ProductAttributeShop.price' => $netPrice
                 ), array(
                     'ProductAttributeShop.id_product_attribute' => $ids['attributeId']
@@ -300,7 +318,7 @@ class Product extends AppModel
      * @param array $products
      * @return array $preparedProducts
      */
-    public function prepareProductsForBackend($paginator, $pParams)
+    public function prepareProductsForBackend($paginator, $pParams, $addProductNameToAttributes = false)
     {
 
         $paginator->settings = array_merge(array(
@@ -400,7 +418,7 @@ class Product extends AppModel
                             'rowClass' => join(' ', $rowClass)
                         ),
                         'ProductLang' => array(
-                            'name' => $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''

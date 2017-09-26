@@ -26,6 +26,14 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+
+    addLoaderToSyncProductDataButton : function (button) {
+        button.on('click', function () {
+             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-left');
+             foodcoopshop.Helper.disableButton($(this));
+        });
+    },
+
     selectMainMenuAdmin: function (mainMenuTitle, subMenuTitle) {
         foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },
@@ -110,12 +118,21 @@ foodcoopshop.Admin = {
             showIcon: true
         });
 
-        // multiple dropdowns (implemented for orderState) need to be selected manually
-        // therefore data-val must be set!
-        $('.filter-container select[multiple="multiple"]').each(function () {
-            $(this).selectpicker('val', $(this).data('val').toString().split(','));
-        });
+        this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
 
+    },
+
+    /**
+     * multiple dropdowns (implemented for orderState) need to be selected manually
+     * therefore data-val must be set!
+     */
+    setSelectPickerMultipleDropdowns : function (selector) {
+        $(selector).each(function () {
+            var val = $(this).data('val');
+            if (val) {
+                $(this).selectpicker('val', val.toString().split(','));
+            }
+        });
     },
 
     afterFilterCallback: function () {
@@ -1813,13 +1830,14 @@ foodcoopshop.Admin = {
     addPrintAndHelpIcon: function () {
 
         var html = '<div class="icons">';
-        html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
-        html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
+            html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
+            html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
         html += '</div>';
 
-        $('.filter-container div.right').append(html);
+        var container = $('.filter-container').length > 0 ? $('.filter-container') : $('.filter-container-not-fixed');
+        container.find('div.right').append(html);
 
-        $('.filter-container div.right a.help').on('click', function () {
+        container.find('div.right a.help').on('click', function () {
             $('#help-container').stop(true).animate({
                 height: 'toggle'
             }, 0);
@@ -2373,5 +2391,8 @@ foodcoopshop.Admin = {
     }
 
 }
+
+
+
 
 

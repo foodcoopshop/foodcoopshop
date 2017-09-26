@@ -29,18 +29,12 @@ class AppShell extends Shell
 
     public $uses = array(
         'CakeActionLog',
-        'Customer',
-        'Configuration'
+        'Customer'
     );
-
-    public function loadConfigurations()
-    {
-        $this->Configuration->loadConfigurations();
-    }
 
     public function main()
     {
-        $this->loadConfigurations();
+
         error_reporting(0); // disable all error messages
 
         $dbMigration = $this->Tasks->load('DbMigration');
