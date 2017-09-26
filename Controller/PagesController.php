@@ -93,7 +93,7 @@ class PagesController extends FrontendController
 
         $page['children'] = array();
         foreach ($children as $child) {
-            if ($child['Page']['active'] == APP_OFF) {
+            if ($child['Page']['active'] < APP_ON) {
                 continue;
             }
             if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) {
