@@ -181,8 +181,10 @@ class AppController extends Controller
     {
         if ($this->request->is('ajax')) {
             $this->response->statusCode(500);
-            $response['status'] = APP_OFF;
-            $response['msg'] = $error->getMessage();
+            $response = array(
+                'status' => APP_OFF,
+                'msg' => $error->getMessage()
+            );
             $this->set(compact('response'));
             $this->render('/Errors/errorjson');
         }
