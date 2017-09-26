@@ -77,6 +77,24 @@ class Product extends AppModel
     }
 
     /**
+     * @param int $productId
+     * @param int $manufacturerId
+     * @return boolean success
+     */
+    public function isOwner($productId, $manufacturerId)
+    {
+
+        $this->recursive = -1;
+        $found = $this->find('count', array(
+            'conditions' => array(
+                'Product.id_product' => $productId,
+                'Product.id_manufacturer' => $manufacturerId
+            )
+        ));
+        return (boolean) $found;
+    }
+
+    /**
      *
      * @param string $productId
      *            (eg. 4 or '4-10' or '4'
