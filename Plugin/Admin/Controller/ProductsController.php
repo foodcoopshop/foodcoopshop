@@ -14,6 +14,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use Intervention\Image\ImageManagerStatic as Image;
+
 class ProductsController extends AdminAppController
 {
 
@@ -211,15 +214,14 @@ class ProductsController extends AdminAppController
         $dir->chmod($thumbsPath, 0755);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $thumb = PhpThumbFactory::create(WWW_ROOT . $filename);
-            $dimensions = $thumb->getCurrentDimensions();
+            $image = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
-            if ($dimensions['height'] > $dimensions['width']) {
-                $thumbSize = round($thumbSize * ($dimensions['width'] / $dimensions['height']), 0);
+            if ($image->getHeight() > $image->getWidth()) {
+                $thumbSize = round($thumbSize * ($image->getWidth() / $image->getHeight()), 0);
             }
-            $thumb->resize($thumbSize);
+            $image->widen($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $thumb->save($thumbsFileName);
+            $image->save($thumbsFileName);
         }
 
         $messageString = 'Ein neues Bild zum Produkt: "' . $product['ProductLang']['name'] . '" (Hersteller: "' . $product['Manufacturer']['name'] . '") wurde hochgeladen.';
