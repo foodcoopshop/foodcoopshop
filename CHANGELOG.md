@@ -14,7 +14,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
-- Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt. / [PR#137](https://github.com/foodcoopshop/foodcoopshop/pull/137) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt: [image.intervention.io](image.intervention.io). / [PR#137](https://github.com/foodcoopshop/foodcoopshop/pull/137) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v1.4.0 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
 
