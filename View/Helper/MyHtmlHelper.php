@@ -414,7 +414,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getBlogPostImageSrc($blogPostId, $size)
     {
-        $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
@@ -430,7 +429,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getManufacturerImageSrc($manufacturerId, $size)
     {
-        $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getManufacturerThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
 
@@ -446,7 +444,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCategoryImageSrc($categoryId)
     {
-        $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getCategoryThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
 
