@@ -9,9 +9,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Einbindung des Netzwerk-Plugins ist jetzt möglich / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
+- Hochgeladene Bilder, die ersetzt wurden, werden jetzt sofort angezeigt. Aufgrund des Browser-Cachings wurden die alten Bilder angezeigt. / [PR#137](https://github.com/foodcoopshop/foodcoopshop/pull/137) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht funktioniert / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Für Entwickler
+- Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt. / [PR#137](https://github.com/foodcoopshop/foodcoopshop/pull/137) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v1.4.0 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
 
