@@ -475,7 +475,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function prepareAsUrl($string)
     {
-        return str_replace(DS, '/', $string);
+        $physicalFile = substr(WWW_ROOT, 0, - 1) . $string;
+        if (file_exists($physicalFile)) {
+            $string .= '?' . filemtime($physicalFile);
+        }
+        $string = str_replace(DS, '/', $string);
+        return $string;
     }
 
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
