@@ -565,7 +565,7 @@ class ManufacturersController extends AdminAppController
                 $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
             }
 
-            if ($isAllowedEditManufacturerOptionsDropdown) {
+            if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
                 if ($this->request->data['Manufacturer']['enabled_sync_domains']) {
                     $this->request->data['Manufacturer']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturer']['enabled_sync_domains']);
                 }
