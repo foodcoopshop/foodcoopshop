@@ -14,6 +14,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Intervention\Image\ImageManagerStatic as Image;
+
 class ToolsController extends AdminAppController
 {
 
@@ -38,9 +40,9 @@ class ToolsController extends AdminAppController
         }
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
-        $thumb = PhpThumbFactory::create($this->params['form']['upload']['tmp_name']);
-        $thumb->resize($this->getMaxTmpUploadFileSize());
-        $thumb->save(WWW_ROOT . $filenameWithPath);
+        Image::make($this->params['form']['upload']['tmp_name'])
+            ->widen($this->getMaxTmpUploadFileSize())
+            ->save(WWW_ROOT . $filenameWithPath);
 
         die(json_encode(array(
             'status' => 1,
@@ -56,6 +58,22 @@ class ToolsController extends AdminAppController
         $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->params['data']['filename'];
 
         $direction = $this->params['data']['direction'];
+
+        $directionInDegrees = null;
+        if ($direction == 'CW') {
+            $directionInDegrees = 90;
+        }
+        if ($direction == 'ACW') {
+            $directionInDegrees = -90;
+        }
+        if (is_null($directionInDegrees)) {
+            $message = 'direction wrong';
+            die(json_encode(array(
+                'status' => 0,
+                'msg' => $message
+            )));
+        }
+
         $formatInfo = getimagesize($uploadedFile);
 
         // non-image files will return false
@@ -67,9 +85,9 @@ class ToolsController extends AdminAppController
             )));
         }
 
-        $thumb = PhpThumbFactory::create($uploadedFile);
-        $thumb->rotateImage($direction);
-        $thumb->save($uploadedFile);
+        Image::make($uploadedFile)
+        ->rotate($directionInDegrees)
+            ->save($uploadedFile);
 
         $rotatedImageSrc = $this->params['data']['filename'] . '?' . StringComponent::createRandomString(3);
         die(json_encode(array(

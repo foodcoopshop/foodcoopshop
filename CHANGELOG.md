@@ -9,9 +9,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Einbindung des Netzwerk-Plugins ist jetzt möglich / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
+- Bereits hochgeladene Bilder, die durch neue ersetzt wurden, werden jetzt auch am Frontend sofort angezeigt. / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht funktioniert / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
+### Für Entwickler
+- Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt: [image.intervention.io](http://image.intervention.io). / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v1.4.0 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
 
@@ -25,7 +28,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Bugfixes
 - Die Überschrift der Info-Box kann wieder als Überschrift 3 formatiert werden. / [Commit](https://github.com/foodcoopshop/foodcoopshop/compare/18e3adee0c536fd15e7450c7aba289c49b391214...c952166ec81eb6f8ad5c2a84875b534329439f6a) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Wenn ein Hersteller nur für Mitglieder sichtbar ist, sind jetzt auch zugeordnete Blog-Artikel nur für Mitglieder sichtbar (unabhängig von der Einstellung des Blog-Artikels). / [PR#90](https://github.com/foodcoopshop/foodcoopshop/pull/90) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Artikel heißen ab sofort Produkte. Das war ein Durcheinander. / [PR#128] (https://github.com/foodcoopshop/foodcoopshop/pull/128) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Artikel heißen ab sofort Produkte. Das war ein Durcheinander. / [PR#128](https://github.com/foodcoopshop/foodcoopshop/pull/128) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - In den automatisierten E-Mails bei Sofort-Bestellungen wird im Footer der Name des tatsächlich eingeloggten Mitglieds angezeigt, und nicht mehr der Name, für den bestellt wird.  
 
 ### Für Entwickler
