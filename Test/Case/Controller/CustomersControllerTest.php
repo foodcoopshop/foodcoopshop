@@ -29,6 +29,58 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->EmailLog = new EmailLog();
     }
 
+    public function testNewPasswordRequestWithWrongEmail()
+    {
+        $this->doPostNewPasswordRequest('this-is-no-email-address');
+        $this->assertRegExpWithUnquotedString('Diese E-Mail-Adresse ist nicht gültig.', $this->browser->getContent());
+    }
+
+    public function testNewPasswordRequestWithNonExistingEmail()
+    {
+        $this->doPostNewPasswordRequest('test@test-fcs-test.at');
+        $this->assertRegExpWithUnquotedString('Wir haben diese E-Mail-Adresse nicht gefunden.', $this->browser->getContent());
+    }
+
+    public function testNewPasswordRequestWithValidEmail()
+    {
+        $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
+        $this->assertRegExpWithUnquotedString('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.', $this->browser->getContent());
+
+        $emailLogs = $this->EmailLog->find('all');
+        $this->assertEmailLogs($emailLogs[0], 'Anfrage für neues Passwort für FoodCoop Test', array('bitte klicke auf folgenden Link, um dein neues Passwort zu generieren'), array(Configure::read('test.loginEmailCustomer')));
+
+        $customer = $this->Customer->find('first', array(
+            'email' => Configure::read('test.loginEmailCustomer')
+        ));
+
+        $this->browser->get($this->Slug->getApproveNewPassword('non-existing-code'));
+        $this->assert404NotFoundHeader();
+
+        $this->browser->get($this->Slug->getApproveNewPassword($customer['Customer']['change_password_code']));
+        $this->assertRegExpWithUnquotedString('Wir haben dir dein neues Passwort zugeschickt.', $this->browser->getContent());
+
+        $emailLogs = $this->EmailLog->find('all');
+        $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', array('du hast gerade ein neues Passwort generiert, es lautet:'), array(Configure::read('test.loginEmailCustomer')));
+
+        preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[1]['EmailLog']['message'], $matches);
+
+        // script would break if login does not work - no complaints means login works :-)
+        $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
+        $this->browser->loginPassword = $matches[1][0];
+        $this->browser->doFoodCoopShopLogin();
+    }
+
+    private function doPostNewPasswordRequest($email)
+    {
+        $this->browser->post($this->Slug->getNewPasswordRequest(), array(
+            'data' => array(
+                'Customer' => array(
+                    'email' => $email
+                )
+            )
+        ));
+    }
+
     public function testRegistration()
     {
         $data = array(

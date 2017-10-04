@@ -102,7 +102,7 @@ class CustomersController extends FrontendController
             $email = new AppEmail();
             $email->template('new_password_request_successful')
                 ->emailFormat('html')
-                ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
+                ->subject('Anfrage für neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
                 ->to($this->request->data['Customer']['email'])
                 ->viewVars(array(
                 'changePasswordCode' => $changePasswordCode,
@@ -142,7 +142,7 @@ class CustomersController extends FrontendController
         $email = new AppEmail();
             $email->template('new_password_set_successful')
             ->emailFormat('html')
-            ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
+            ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME') . ' generiert')
             ->to($customer['Customer']['email'])
             ->viewVars(array(
                 'password' => $newPassword,
