@@ -22,8 +22,7 @@ $this->element('addScript', array('script' =>
 <form novalidate="novalidate" action="<?php echo $this->Slug->getNewPasswordRequest();?>" method="post">
     
     <p>Bitte gib deine E-Mail-Adresse an und klicke dann auf "Senden".</p>
-    <p style="margin-bottom: 20px;">Wir senden dir dann einen Link zu, mit dem du das neue Passwort
-    <br /> generieren kannst.</p>
+    <p>Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst.</p>
     
     <?php echo $this->Form->input('Customer.email', array('label' => 'E-Mail')); ?>
     <button type="submit" class="btn btn-success">Senden</button>

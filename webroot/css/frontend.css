@@ -251,8 +251,7 @@ body.customers.new_password_request #inner-content form {
 body.customers.new_password_request #inner-content form {
     padding: 0;
 }
-#login-form .input label,
-body.customers.new_password_request .input label {
+#login-form .input label {
     width: 95px;
     float: left;
     line-height: 25px;
@@ -282,9 +281,6 @@ body.customers.new_password_request .input {
     clear: both;
 }
 
-body.customers.new_password_request .btn-success {
-    float: right;
-}
 #login-form .remember-me-wrapper {
     float: left;
     margin-left: 73px;
@@ -1092,3 +1088,4 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
