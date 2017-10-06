@@ -147,7 +147,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         echo $this->Form->input('ManufacturerLang.description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
-        'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt, es können auch Bilder eingefügt werden.</span>'
+        'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt.<br /><br /><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
         ));
     }
     echo '<div class="sc"></div>';
