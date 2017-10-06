@@ -19,7 +19,7 @@ FoodCoopShop is a free open source software for foodcoops.
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
 * PHP 7.1
-* MySQL 5.4 or higher
+* MySQL 5.6 or higher
 * Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
