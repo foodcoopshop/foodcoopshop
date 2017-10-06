@@ -114,6 +114,11 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
     }
 
+    protected function assert404NotFoundHeader()
+    {
+        $this->assertRegExp('/HTTP\/1.1 404 Not Found/', $this->browser->getHeaders(), 'header 404 not found not found');
+    }
+
     protected function assertRedirectToLoginPage()
     {
         $this->assertUrl($this->browser->baseUrl . $this->Slug->getLogin(), $this->browser->getUrl(), 'redirect to login page failed');

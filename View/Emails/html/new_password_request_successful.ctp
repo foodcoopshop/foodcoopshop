@@ -22,12 +22,10 @@
             <td>
                 
                 <p>
-                    du hast um ein neues Passwort angefragt, es lautet:<br />
-                    <b><?php echo $password; ?></b>
+                    bitte klicke auf folgenden Link, um dein neues Passwort zu generieren:<br />
                 </p>
                 
-                <p>Du kannst dich hier anmelden und das Passwort ändern:<br />
-                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
+                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?></a>
                 
             </td>
             

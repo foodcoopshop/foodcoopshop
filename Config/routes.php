@@ -41,6 +41,7 @@
 
     Router::connect('/neue-produkte', array('controller' => 'categories', 'action' => 'newProducts'));
     Router::connect('/neues-passwort-anfordern', array('controller' => 'customers', 'action' => 'newPasswordRequest'));
+    Router::connect('/neues-passwort-generieren/:changePasswordCode', array('controller' => 'customers', 'action' => 'generateNewPassword'));
 
     Router::connect('/aktuelles', array('controller' => 'blog_posts', 'action' => 'index'));
     Router::connect('/aktuelles/*', array('controller' => 'blog_posts', 'action' => 'detail'));
