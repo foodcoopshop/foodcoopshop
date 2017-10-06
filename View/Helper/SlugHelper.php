@@ -165,6 +165,11 @@ class SlugHelper extends Helper
         return '/admin/manufacturers/myOptions';
     }
 
+    public function getApproveNewPassword($changePasswordCode)
+    {
+        return '/neues-passwort-generieren/' . $changePasswordCode;
+    }
+
     public function getNewPasswordRequest()
     {
         return '/neues-passwort-anfordern';
