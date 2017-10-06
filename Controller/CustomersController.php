@@ -161,7 +161,7 @@ class CustomersController extends FrontendController
         $this->Customer->id = $customer['Customer']['id_customer'];
         $this->Customer->save($customer2save);
 
-        $this->redirect('/');
+        $this->redirect(Configure::read('slugHelper')->getLogin());
     }
 
     public function login()
