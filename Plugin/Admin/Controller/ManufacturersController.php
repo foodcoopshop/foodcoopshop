@@ -537,8 +537,11 @@ class ManufacturersController extends AdminAppController
             $this->request->data['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
 
             // values that are the same as default values => null
-            if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['variable_member_fee'] == Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                $this->request->data['Manufacturer']['variable_member_fee'] = null;
+            if (!$this->AppAuth->isManufacturer()) {
+                // only admins and superadmins are allowed to change variable_member_fee
+                if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['variable_member_fee'] == Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                    $this->request->data['Manufacturer']['variable_member_fee'] = null;
+                }
             }
             if ($this->request->data['Manufacturer']['default_tax_id'] == Configure::read('app.defaultTaxId')) {
                 $this->request->data['Manufacturer']['default_tax_id'] = null;
