@@ -47,6 +47,7 @@ define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');
 define('IBAN_REGEX', '/^([0-9a-zA-Z]\s?){20}$/');
 define('BIC_REGEX', '/^[a-z]{6}[2-9a-z][0-9a-np-z]([a-z0-9]{3}|x{3})?$/i');
+define('HTTPS_REGEX', '/^https\:\/\//');
 
 Configure::write('app.visibleOrderStates', array(
     ORDER_STATE_OPEN => 'offen',

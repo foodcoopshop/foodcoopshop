@@ -275,6 +275,16 @@ class CakeActionLog extends AppModel
             'de' => 'Kategorie: gelöscht'
         ),
 
+        'remote_foodcoop_added' => array(
+            'de' => 'Remote-Foodcoop: erstellt'
+        ),
+        'remote_foodcoop_changed' => array(
+            'de' => 'Remote-Foodcoop: geändert'
+        ),
+        'remote_foodcoop_deleted' => array(
+            'de' => 'Remote-Foodcoop: gelöscht'
+        ),
+
         'slider_added' => array(
             'de' => 'Slideshow-Bild: erstellt'
         ),

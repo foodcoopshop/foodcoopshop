@@ -168,6 +168,12 @@ class AppController extends Controller
         }
     }
 
+
+    public function setFormReferer()
+    {
+        $this->set('referer', isset($this->request->data['referer']) ? $this->request->data['referer'] : $this->referer());
+    }
+
     /**
      * can be used for returning exceptions as json
      * try {

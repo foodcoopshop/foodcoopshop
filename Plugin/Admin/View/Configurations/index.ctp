@@ -145,6 +145,32 @@ $this->element('addScript', array(
             <td>Version Netzwerk-Plugin</td>
             <td><?php echo $versionNetworkPlugin; ?></td>
         </tr>
+        <tr>
+            <td>
+                <b>Remote-Foodcoops</b>
+                <br /><div class="small">Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können.</div>
+            </td>
+            <td>
+            <?php
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), array(
+                    'class' => 'btn btn-default',
+                    'escape' => false
+                ));
+                echo '<br />';
+            foreach ($syncDomains as $syncDomain) {
+                echo '<span style="float: left;margin-right: 5px;">'.$syncDomain['SyncDomain']['domain'].' (' . ($syncDomain['SyncDomain']['active'] ? 'aktiv' : 'deaktiviert') . ')</span>';
+                echo $this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                    array(
+                    'title' => 'Remote-Foodcoop ' . $syncDomain['SyncDomain']['domain'] . ' ändern',
+                    'style' => 'float: left;'
+                    ),
+                    $this->Network->getSyncDomainEdit($syncDomain['SyncDomain']['id'])
+                );
+                echo '<br />';
+            }
+            ?></td>
+        </tr>
         <?php } ?>
 
         <tr>

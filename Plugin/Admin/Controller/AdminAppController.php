@@ -34,11 +34,6 @@ class AdminAppController extends AppController
         $this->loadModel(Inflector::singularize($this->name)); // force cake to load corresponding model in main app folder
     }
 
-    public function setFormReferer()
-    {
-        $this->set('referer', isset($this->request->data['referer']) ? $this->request->data['referer'] : $this->referer());
-    }
-
     /**
      * deletes physical files (thumbs)
      */
