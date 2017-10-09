@@ -1,4 +1,7 @@
 <?php
+
+App::uses('ConfigFileMissingException', 'Error/Exceptions');
+
 /**
  * Configuration
  *
@@ -19,6 +22,29 @@ class Configuration extends AppModel
 
     public $useTable = 'configuration';
     public $primaryKey = 'id_configuration';
+
+    /**
+     * @param string $plugin
+     * @throws ConfigFileMissingException
+     * @return string (version)
+     */
+    public function getVersion($plugin = null)
+    {
+        $versionFile = 'VERSION.txt';
+        if ($plugin) {
+            $versionFileWithPath = APP . 'Plugin' . DS . $plugin . DS . $versionFile;
+        } else {
+            $versionFileWithPath = APP . $versionFile;
+        }
+
+        if (!file_exists($versionFileWithPath)) {
+            throw new ConfigFileMissingException('version file not found: ' . $versionFileWithPath);
+        }
+        $file = new File($versionFileWithPath);
+        $version = $file->read(true, 'r');
+
+        return $version;
+    }
 
     public function enableValidations($name)
     {

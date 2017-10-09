@@ -134,11 +134,25 @@ $this->element('addScript', array(
             echo '</tr>';
         }
         ?>
+        
+        <tr>
+            <td>Version FoodCoopShop</td>
+            <td><?php echo $versionFoodCoopShop; ?></td>
+        </tr>
+
+        <?php if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+        <tr>
+            <td>Version Netzwerk-Plugin</td>
+            <td><?php echo $versionNetworkPlugin; ?></td>
+        </tr>
+        <?php } ?>
+
         <tr>
             <td>app.cakeServerName</td>
             <td><a target="_blank"
                 href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
         </tr>
+        
 
         <tr>
             <td>app.emailOrderReminderEnabled</td>
