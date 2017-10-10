@@ -105,7 +105,7 @@ $this->element('addScript', array(
         <tr>
             <td>
                 <b>Remote-Foodcoops</b>
-                <br /><div class="small">Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können.</div>
+                <br /><div class="small">Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können.<br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>">Infos zum Netzwerk-Plugin</a></div>
             </td>
             <td colspan="2">
             <?php

@@ -181,7 +181,7 @@ echo '<div class="holiday-wrapper">';
             'type' => 'select',
             'multiple' => true,
             'data-val' => $this->request->data['Manufacturer']['enabled_sync_domains'],
-            'label' => 'Remote-Foodcoops<br /><a href="https://foodcoopshop.github.io/de/netzwerk-plugin" target="_blank">Infos zum Netzwerk-Plugin</a>',
+            'label' => 'Remote-Foodcoops<br /><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Plugin</a>',
             'options' => $syncDomainsForDropdown
         ));
     }
