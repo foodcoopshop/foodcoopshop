@@ -48,6 +48,8 @@ define('ZIP_REGEX', '/^[0-9]{4,5}$/');
 define('IBAN_REGEX', '/^([0-9a-zA-Z]\s?){20}$/');
 define('BIC_REGEX', '/^[a-z]{6}[2-9a-z][0-9a-np-z]([a-z0-9]{3}|x{3})?$/i');
 define('HTTPS_REGEX', '/^https\:\/\//');
+// copied from Cake/Utility/Validation.php with additional $ at the end
+define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
 
 Configure::write('app.visibleOrderStates', array(
     ORDER_STATE_OPEN => 'offen',
