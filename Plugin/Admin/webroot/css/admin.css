@@ -363,6 +363,10 @@ body.products.index .toggle-sync-button-wrapper {
   float: left;
   margin-right: 3px;
 }
+body.configurations.index td.sync-domain-list a.btn {
+  float: right;
+  margin-bottom: 5px;
+}
 
 #actionLogs div.changed {
     background: lightgray;
@@ -957,4 +961,5 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
