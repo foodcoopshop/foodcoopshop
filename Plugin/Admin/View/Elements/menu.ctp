@@ -170,6 +170,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $blogPostsMenuElement;
 
     $homepageAdministrationElement['children'][] = array(
+        'slug' => $this->Slug->getPagesListAdmin(),
+        'name' => 'Seiten',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-pencil-square-o'
+        )
+    );
+
+    $homepageAdministrationElement['children'][] = array(
         'slug' => $this->Slug->getCategoriesList(),
         'name' => 'Kategorien',
         'options' => array(
