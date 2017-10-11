@@ -484,6 +484,7 @@ class ManufacturersController extends AdminAppController
 
         if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->loadModel('Network.SyncDomain');
+            $this->helpers[] = 'Network.Network';
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
