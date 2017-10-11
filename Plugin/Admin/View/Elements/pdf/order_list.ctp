@@ -83,5 +83,5 @@ if ($saveParam == 'F') {
     $filename = substr($filename, 11);
     $filename = $this->params['pass'][1] . '-' . $this->params['pass'][2] . '-' . $filename;
 }
-pr($filename);
+
 echo $pdf->Output($filename, $saveParam);
