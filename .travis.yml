@@ -9,6 +9,7 @@ php:
 
 services:
   - docker
+  - mysql
     
 addons:
     hosts:
@@ -30,9 +31,9 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
-  - sudo mysql -e 'CREATE DATABASE foodcoopshop_test;'
-  - sudo mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
-  - sudo mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
+  - mysql -e 'CREATE DATABASE foodcoopshop_test;'
+  - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
+  - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
   - npm install -g bower
