@@ -8,7 +8,6 @@ php:
   - 7.1
 
 services:
-  - mysql
   - docker
     
 addons:
@@ -18,7 +17,6 @@ addons:
 before_install:
   - sudo service mysql stop || sudo service mysql-5.6 stop || sudo stop mysql-5.6 || sudo stop mysql || echo "failed to stop mysql"
   - sudo docker run -d -p 3306:3306 mysql:5.7
-  - sudo service mysql start
   - mysql -h localhost -V
 
 env:
@@ -32,9 +30,9 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
-  - mysql -e 'CREATE DATABASE foodcoopshop_test;'
-  - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
-  - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
+  - sudo mysql -e 'CREATE DATABASE foodcoopshop_test;'
+  - sudo mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
+  - sudo mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
   - npm install -g bower
