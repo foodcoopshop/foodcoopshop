@@ -372,7 +372,8 @@ class PaymentsController extends AdminAppController
         die(json_encode(array(
             'status' => 1,
             'msg' => 'ok',
-            'amount' => $amount
+            'amount' => $amount,
+            'paymentId' => $this->CakePayment->getLastInsertId()
         )));
     }
 
@@ -384,12 +385,13 @@ class PaymentsController extends AdminAppController
 
         $payment = $this->CakePayment->find('first', array(
             'conditions' => array(
-                'CakePayment.id' => $paymentId
+                'CakePayment.id' => $paymentId,
+                'CakePayment.approval <> ' . APP_ON
             )
         ));
 
         if (empty($payment)) {
-            $message = 'payment id not correct: ' . $paymentId;
+            $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
             $this->log($message);
             die(json_encode(array(
                 'status' => 0,
