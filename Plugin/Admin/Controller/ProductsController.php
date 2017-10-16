@@ -595,9 +595,8 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-
-        $logString = 'Der Pfand des Produktes "' . $oldProduct['ProductLang']['name'] . '"';
         $depositEntity = $oldProduct['CakeDepositProduct'];
+        $productName = $oldProduct['ProductLang']['name'];
 
         if ($ids['attributeId'] > 0) {
             $attributeName = '';
@@ -608,10 +607,10 @@ class ProductsController extends AdminAppController
                     break;
                 }
             }
-            $logString .= ' (Variante: ' . $attributeName . ') ';
+            $productName .= ' (Variante: '.$attributeName.')';
         }
 
-        $logString .= ' wurde von ';
+        $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
         if (isset($depositEntity['deposit'])) {
             $logString .= Configure::read('htmlHelper')->formatAsEuro($depositEntity['deposit']);
         } else {
@@ -623,7 +622,7 @@ class ProductsController extends AdminAppController
 
         $this->CakeActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
-        $this->Flash->success('Der Pfand des Produktes "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
+        $this->Flash->success('Der Pfand des Produktes "' . $productName . '" wurde erfolgreich geändert.');
         $this->Session->write('highlightedRowId', $productId);
 
         $this->set('data', array(
