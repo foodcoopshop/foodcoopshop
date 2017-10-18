@@ -8,17 +8,11 @@ php:
   - 7.1
 
 services:
-  - docker
   - mysql
     
 addons:
     hosts:
         - www.foodcoopshop.dev
-
-before_install:
-  - sudo service mysql stop || sudo service mysql-5.6 stop || sudo stop mysql-5.6 || sudo stop mysql || echo "failed to stop mysql"
-  - sudo docker run -d -p 3306:3306 mysql:5.7
-  - mysql -h localhost -V
 
 env:
   - DB=mysql
@@ -31,6 +25,7 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
+  - bash .travis.install-mysql-5.7.sh  
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
