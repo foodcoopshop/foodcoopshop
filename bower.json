@@ -11,11 +11,11 @@
   "dependencies": {
     "jquery": "~1.12.4",
     "jquery-ui": "~1.12.1",
-    "ckeditor": "~4.7.1",
+    "ckeditor": "4.7.3",
     "kcfinder": "3.12",
     "bootstrap": "~3.3.7",
     "bootstrap-select": "~1.12.4",
-    "featherlight": "~1.7.1",
+    "featherlight": "1.7.8",
     "anystretch": "~1.2.5",
     "fontawesome": "~4.7",
     "jquery-cycle2": "~2.1.6",

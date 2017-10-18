@@ -82,7 +82,7 @@ if (count($payments) == 0) {
 
         if ($payment['type'] == 'product') {
             switch ($payment['approval']) {
-                case -1:
+                case APP_DEL:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('delete.png'),
                         array(
@@ -90,9 +90,9 @@ if (count($payments) == 0) {
                         )
                     );
                     break;
-                case 0:
+                case APP_OFF:
                     break;
-                case 1:
+                case APP_ON:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
                         array(
@@ -163,7 +163,7 @@ if (count($payments) == 0) {
         if ($appAuth->isSuperadmin()) {
             $deletablePaymentTypes[] = 'payback';
         }
-        if (in_array($payment['type'], $deletablePaymentTypes)) {
+        if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
                 'class' => 'delete-payment-button',
                 'title' => 'Aufladung löschen?'
