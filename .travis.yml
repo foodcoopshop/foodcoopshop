@@ -30,6 +30,7 @@ before_script:
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
+  - mysql -e 'ALTER DATABASE foodcoopshop_test CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
   - npm install -g bower
