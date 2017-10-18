@@ -90,7 +90,7 @@ class ListsController extends AdminAppController
                     'customer_list_link' => $customerListLink
                 );
 
-                $files = Set::sort($files, '{n}.manufacturer_name', 'desc');
+                $files = Set::sort($files, '{n}.manufacturer_name', 'asc');
             }
         }
         $this->set('files', $files);

@@ -266,6 +266,60 @@ class ProductTest extends AppCakeTestCase
     }
 
     /**
+     * START tests change deposit
+     */
+
+    public function testChangeDepositWithOneProduct()
+    {
+        $products = array(
+            array(102 => '1,00')
+        );
+        $this->Product->changeDeposit($products);
+        $this->assertProductDeposit($products);
+    }
+
+    public function testChangeDepositWithOneProductAttribute()
+    {
+        $products = array(
+            array('60-10' => '1,00')
+        );
+        $this->Product->changeDeposit($products);
+        $this->assertProductDeposit($products);
+    }
+
+    public function testChangeDepositWithMultipleProductsAndOneWithInvalidNegativeDeposit()
+    {
+
+        // 1) change deposits to same deposit to be able to test if the price has not changed
+        $sameDeposit = '1,00';
+        $products = array(
+            array(346 => $sameDeposit),
+            array(102 => $sameDeposit),
+            array(161 => $sameDeposit),
+        );
+        $this->Product->changeDeposit($products);
+        $this->assertProductDeposit($products);
+
+        // try to change deposits, but include one invalid deposit
+        $products = array(
+            array(102 => '2,00'),
+            array(346 => '-1'), // invalid deposit
+            array(161 => '1,00')
+        );
+
+        $exceptionThrown = false;
+
+        try {
+            $this->Product->changePrice($products);
+        } catch (InvalidParameterException $e) {
+            $exceptionThrown = true;
+        }
+
+        $this->assertProductDeposit($products, $sameDeposit);
+        $this->assertSame(true, $exceptionThrown);
+    }
+
+    /**
      * START tests change status
      */
 
@@ -406,6 +460,38 @@ class ProductTest extends AppCakeTestCase
             $this->assertEquals($expectedQuantity, $result, 'changing the quantity flag did not work');
         }
     }
+
+    private function assertProductDeposit($products, $forceUseThisDeposit = null)
+    {
+        foreach ($products as $product) {
+            $originalProductId = key($product);
+            $productAndAttributeId = $this->Product->getProductIdAndAttributeId($originalProductId);
+            $productId = $productAndAttributeId['productId'];
+            $expectedDeposit = $product[$originalProductId];
+            if ($forceUseThisDeposit) {
+                $expectedDeposit = $forceUseThisDeposit;
+            }
+            $expectedDeposit = str_replace(',', '.', $expectedDeposit);
+            if ($productAndAttributeId['attributeId'] > 0) {
+                $this->Product->recursive = 3;
+                $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
+            }
+
+            $changedProduct = $this->Product->find('first', array(
+                'conditions' => array(
+                    'Product.id_product' => $productId
+                )
+            ));
+
+            if ($productAndAttributeId['attributeId'] == 0) {
+                $resultEntity = $changedProduct['CakeDepositProduct'];
+            } else {
+                $resultEntity = $changedProduct['ProductAttributes'][0]['CakeDepositProductAttribute'];
+            }
+            $this->assertEquals($expectedDeposit, $this->Product->getPriceAsFloat($resultEntity['deposit']), 'changing the deposit did not work');
+        }
+    }
+
     private function assertProductPrice($products, $forceUseThisPrice = null)
     {
         foreach ($products as $product) {
@@ -430,11 +516,11 @@ class ProductTest extends AppCakeTestCase
                 'contain' => $contain
             ));
             if ($productAndAttributeId['attributeId'] == 0) {
-                $result = $changedProduct['ProductShop']['price'];
+                $resultEntity = $changedProduct['ProductShop'];
             } else {
-                $result = $changedProduct['ProductAttributes'][0]['ProductAttributeShop']['price'];
+                $resultEntity = $changedProduct['ProductAttributes'][0]['ProductAttributeShop'];
             }
-            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $result), 'changing the price did not work');
+            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $resultEntity['price']), 'changing the price did not work');
         }
     }
 

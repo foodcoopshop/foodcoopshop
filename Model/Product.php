@@ -196,6 +196,79 @@ class Product extends AppModel
      *  (
      *      [0] => Array
      *          (
+     *              [productId] => (float) deposit
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeDeposit($products)
+    {
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $deposit = $this->getPriceAsFloat($product[$productId]);
+            if ($deposit < 0) {
+                throw new InvalidParameterException('Eingabeformat von Pfand ist nicht korrekt: '.$product[$productId]);
+            }
+        }
+
+        $success = false;
+        foreach ($products as $product) {
+            $productId = key($product);
+            $deposit = $this->getPriceAsFloat($product[$productId]);
+
+            $ids = $this->getProductIdAndAttributeId($productId);
+
+            if ($ids['attributeId'] > 0) {
+                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                    'conditions' => array(
+                        'CakeDepositProduct.id_product_attribute' => $ids['attributeId']
+                    )
+                ));
+
+                if (empty($oldDeposit)) {
+                    $this->CakeDepositProduct->id = null; // force new insert
+                } else {
+                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                }
+
+                $deposit2save = array(
+                    'id_product_attribute' => $ids['attributeId'],
+                    'deposit' => $deposit
+                );
+            } else {
+                // deposit is set for productId
+                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                    'conditions' => array(
+                        'CakeDepositProduct.id_product' => $productId
+                    )
+                ));
+
+                if (empty($oldDeposit)) {
+                    $this->CakeDepositProduct->id = null; // force new insert
+                } else {
+                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                }
+
+                $deposit2save = array(
+                    'id_product' => $productId,
+                    'deposit' => $deposit
+                );
+            }
+
+            $this->CakeDepositProduct->primaryKey = 'id';
+            $success |= $this->CakeDepositProduct->save($deposit2save);
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
      *              [productId] => (float) price
      *          )
      *  )

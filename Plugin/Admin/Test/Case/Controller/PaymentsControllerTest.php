@@ -34,7 +34,6 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->addPayment(Configure::read('test.customerId'), 0, 'product');
         $this->assert403ForbiddenHeader();
-        $this->assertEmpty($this->browser->getContent());
     }
 
     public function testAddPaymentParameterPrice()
@@ -143,6 +142,46 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
+    public function testDeletePaymentLoggedOut()
+    {
+        $this->deletePayment(1);
+        $this->assert403ForbiddenHeader();
+    }
+
+    public function testDeletePaymentWithApprovalOk()
+    {
+        $this->loginAsCustomer();
+        $this->addPayment(Configure::read('test.customerId'), 10.5, 'product');
+        $addResponse = $this->browser->getJsonDecodedContent();
+
+        // change approval to APP_ON via sql query
+        $query = 'UPDATE ' . $this->CakePayment->tablePrefix . $this->CakePayment->useTable.' SET approval = :approval WHERE id = :paymentId';
+        $params = array(
+            'approval' => APP_ON,
+            'paymentId' => $addResponse->paymentId
+        );
+        $this->CakePayment->getDataSource()->fetchAll($query, $params);
+
+        $this->deletePayment($addResponse->paymentId);
+        $deleteResponse = $this->browser->getJsonDecodedContent();
+        $this->assertEquals(0, $deleteResponse->status);
+        $this->assertRegExpWithUnquotedString('payment id ('.$addResponse->paymentId.') not correct or already approved (approval: 1)', $deleteResponse->msg);
+    }
+
+    public function testDeletePaymentAsCustomer()
+    {
+
+        $creditBalanceBeforeAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
+
+        $this->loginAsCustomer();
+        $this->addPayment(Configure::read('test.customerId'), 10.5, 'product');
+        $response = $this->browser->getJsonDecodedContent();
+        $this->deletePayment($response->paymentId);
+
+        $creditBalanceAfterAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
+        $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
+    }
+
     private function addDepositToManufacturer($depositText, $cakeActionLogText)
     {
         $this->Customer = new Customer();
@@ -191,12 +230,26 @@ class PaymentsControllerTest extends AppCakeTestCase
     }
 
     /**
-     * @param int $productId
+     * @param int $paymentId
+     * @return string
+     */
+    private function deletePayment($paymentId)
+    {
+        $this->browser->ajaxPost('/admin/payments/changeState', array(
+            'data' => array(
+                'paymentId' => $paymentId
+            )
+        ));
+        return $this->browser->getJsonDecodedContent();
+    }
+
+    /**
+     * @param int $customerId
      * @param int $amount
      * @param string $type
      * @param int $manufacturerId optional
      * @param string $text optional
-     * @return json string
+     * @return string
      */
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {

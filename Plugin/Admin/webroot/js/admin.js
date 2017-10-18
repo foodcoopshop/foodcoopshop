@@ -464,7 +464,7 @@ foodcoopshop.Admin = {
         var dialogId = 'product-deposit-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label>';
+        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label> (zum Löschen <b>0</b> eintragen)';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -2391,6 +2391,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
