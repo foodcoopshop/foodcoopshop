@@ -4,7 +4,7 @@ wget http://dev.mysql.com/get/mysql-apt-config_0.8.8-1_all.deb
 sudo dpkg --install mysql-apt-config_0.8.8-1_all.deb
 sudo apt-get update
 sudo apt-get install mysql-server
-sudo mysql_secure_installation
+sudo mysql_secure_installation --use-default
 sudo mysql_install_db
 service mysql status
-service mysql restart
+sudo service mysql start
