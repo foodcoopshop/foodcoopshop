@@ -61,7 +61,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'email' => 'fcs-demo-gemuese-hersteller@mailinator.com',
                 'phone_mobile' => '',
                 'phone' => '',
-//                 'address1' => 'Street 1',
+                'address1' => 'Street 1',
                 'address2' => 'Street 2',
                 'postcode' => '',
                 'city' => 'Test City'
