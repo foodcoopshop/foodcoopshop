@@ -24,7 +24,7 @@ CREATE TABLE `fcs_address` (
   `company` varchar(64) DEFAULT NULL,
   `lastname` varchar(32) NOT NULL DEFAULT '',
   `firstname` varchar(32) NOT NULL DEFAULT '',
-  `address1` varchar(128) NOT NULL DEFAULT '',
+  `address1` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `address2` varchar(128) DEFAULT NULL,
   `postcode` varchar(12) DEFAULT NULL,
   `city` varchar(64) NOT NULL DEFAULT '',
