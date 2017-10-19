@@ -29,8 +29,8 @@ a:not(.btn), a:not(.btn):visited, a:not(.btn):active {
   text-decoration: none ! important;
 }
 a:not(.btn):hover {
-    color: #006400;
-    text-decoration: none;
+  color: #006400;
+  text-decoration: none;
 }
 
 .btn-success:hover,
@@ -40,8 +40,25 @@ a:not(.btn):hover {
   background-color: #719f41;
   border-color: #719f41;
 }
+.btn-success {
+    background-color: #719f41;
+}
 
-.btn-success:hover {
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger:active:focus,
+.btn-danger.disabled {
+  background-color: #f3515c;
+  border-color: #f3515c;
+}
+.btn-danger {
+  background-color: #f3515c;
+  border-color: #d9534f;
+}
+
+.btn-success:hover,
+.btn-danger:hover {
   opacity: 0.8;
 }
 
@@ -240,10 +257,6 @@ ul.jquery-ui-icon {
     float: left ! important;
     padding: 0 ! important;
 }
-.btn-success {
-    background-color: #719f41;
-}
-
 #scroll-to-top {
   position: fixed;
   bottom: 10px;
@@ -464,6 +477,7 @@ a.btn.btn-success:hover i.cgold,
 i.gold {
   color: #FFD700 ! important;
 }
+
 
 
 
