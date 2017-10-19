@@ -699,7 +699,7 @@ class Product extends AppModel
 
         // DISTINCT: attributes cause duplicate entries
         $fields = array(
-            'DISTINCT Product.*, ProductLang.*, ImageShop.*'
+            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, ImageShop.id_image'
         );
 
         $contain = array(

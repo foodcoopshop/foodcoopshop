@@ -169,14 +169,14 @@
         }
         echo '</td>';
 
-        echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && empty($product['ImageShop']) ? 'not-available' : '') . '">';
+        $imageExists = $product['ImageShop']['id_image'] != '';
+        echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && !$imageExists ? 'not-available' : '') . '">';
         if ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
                 'class' => 'add-image-button',
                 'title' => 'Neues Bild hochladen bzw. austauschen',
                 'data-object-id' => $product['Product']['id_product']
             ), 'javascript:void(0);');
-            $imageExists = ! empty($product['ImageShop']);
             echo $this->element('imageUploadForm', array(
                 'id' => $product['Product']['id_product'],
                 'action' => '/admin/tools/doTmpImageUpload/' . $product['Product']['id_product'],
