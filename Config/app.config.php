@@ -102,9 +102,10 @@ Configure::write('app.depositForManufacturersStartDate', '2016-01-01');
 Configure::write('app.allowManualOrderListSending', false);
 /**
  * weekday on which the weekly cronjob "SendOrderList" is called
- * options:
+ * the available options are:
  * - 2 (tuesday)
  * - 3 (wednesday)
+ * all the other weekdays are not implemented yet!
  */
 Configure::write('app.sendOrderListsWeekday', 3);
 
