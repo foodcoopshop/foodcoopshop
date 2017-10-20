@@ -27,7 +27,7 @@ before_script:
   # start build
   - bash ./Config/travis/install-mysql-5.7.sh
   - mysql --version
-  - mysql -e 'CREATE DATABASE foodcoopshop_test DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;'
+  - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
