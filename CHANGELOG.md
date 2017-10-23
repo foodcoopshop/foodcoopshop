@@ -11,9 +11,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Wenn man das Passwort vergessen hat, muss man jetzt zusätzlich auf einen Bestätigungs-Link klicken, bevor das Passwort tatsächlich geändert wird. / [PR#141](https://github.com/foodcoopshop/foodcoopshop/pull/141) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
+- Wenn der Steuersatz eines Produktes 0% betragen hat und geändert wird, wurde der Preis auf € 0 zurückgesetzt. / [PR#153](https://github.com/foodcoopshop/foodcoopshop/pull/153) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bereits hochgeladene Bilder, die durch neue ersetzt wurden, werden jetzt auch am Frontend sofort angezeigt. / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht funktioniert / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht funktioniert. / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt. / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
 - Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt: [image.intervention.io](http://image.intervention.io). / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>

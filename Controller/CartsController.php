@@ -22,6 +22,9 @@ class CartsController extends FrontendController
 
     public function beforeFilter()
     {
+
+        parent::beforeFilter();
+
         if ($this->request->is('ajax')) {
             $message = '';
             if (! $this->AppAuth->loggedIn()) {
@@ -38,8 +41,6 @@ class CartsController extends FrontendController
                 )));
             }
         }
-
-        parent::beforeFilter();
 
         $this->AppAuth->allow('generateCancellationInformationPdf');
     }
