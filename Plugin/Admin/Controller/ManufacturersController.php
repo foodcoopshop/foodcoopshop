@@ -169,7 +169,7 @@ class ManufacturersController extends AdminAppController
                 $this->Manufacturer->ManufacturerLang->save($this->request->data, array(
                     'validate' => false
                 ));
-                $this->log(print_r($this->request->data, true));
+
                 $this->Manufacturer->Address->save($this->request->data, array(
                     'validate' => false
                 ));

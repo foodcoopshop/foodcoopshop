@@ -214,13 +214,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
     public function testAutomaticAddingOfCustomerRecord()
     {
 
-        $manufacturer = $this->Manufacturer->find('first', array(
-            'conditions' => array(
-                'Manufacturer.id_manufacturer' => 16
-            )
-        ));
-        error_log(print_r($manufacturer, true));
-
         $this->loginAsSuperadmin();
 
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)
