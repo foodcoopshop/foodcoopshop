@@ -433,7 +433,10 @@ class Product extends AppModel
                 if ($category['id_category'] == Configure::read('app.categoryAllProducts')) {
                     $products[$i]['Categories']['allProductsFound'] = true;
                 } else {
-                    $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                    // check if category was assigned to product but deleted afterwards
+                    if (isset($category['CategoryLang']) && isset($category['CategoryLang']['name'])) {
+                        $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                    }
                 }
             }
 
