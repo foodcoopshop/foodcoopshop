@@ -59,7 +59,6 @@ before_script:
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
-  - sudo cat ./tmp/logs/debug.log
   - sudo cat ./tmp/logs/error.log
   
 notifications:

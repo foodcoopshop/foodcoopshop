@@ -216,7 +216,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturer.id_manufacturer' => 16
             )
         ));
         error_log(print_r($manufacturer, true));
