@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
+App::uses('BlogPost', 'Model');
 
 /**
  *
@@ -18,6 +19,14 @@ App::uses('AppCakeTestCase', 'Test');
  */
 class BlogPostsControllerTest extends AppCakeTestCase
 {
+
+    public $BlogPost;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->BlogPost = new BlogPost();
+    }
 
     public function testBlogPostDetaiOnlinePublicLoggedOut()
     {
@@ -69,13 +78,13 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
     {
-        $sql = 'UPDATE fcs_smart_blog_post SET is_private = :isPrivate, id_manufacturer = :manufacturerId, active = :active WHERE id_smart_blog_post = :blogPostId;';
+        $sql = 'UPDATE ' . $this->BlogPost->tablePrefix . $this->BlogPost->useTable.' SET is_private = :isPrivate, id_manufacturer = :manufacturerId, active = :active WHERE id_smart_blog_post = :blogPostId;';
         $params = array(
             'blogPostId' => $blogPostId,
             'isPrivate' => $isPrivate,
             'manufacturerId' => $manufacturerId,
             'active' => $active
         );
-        $this->Customer->getDataSource()->fetchAll($sql, $params);
+        $this->BlogPost->getDataSource()->fetchAll($sql, $params);
     }
 }
