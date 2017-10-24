@@ -60,6 +60,7 @@ class Page extends AppModel
 
     public function findAllGroupedByMenu($conditions)
     {
+
         $pages = $this->find('threaded', array(
             'conditions' => $conditions,
             'order' => array(
@@ -74,31 +75,6 @@ class Page extends AppModel
             )
         ));
         return $pages;
-    }
-
-    public function getPageForFrontend($pageId, $appAuth)
-    {
-
-        $conditions = array(
-            'Page.id_cms' => $pageId,
-            'Page.active' => APP_ON,
-            'PageLang.id_lang' => Configure::read('app.langId'),
-            'PageLang.id_shop' => Configure::read('app.shopId')
-        );
-
-        if (! $appAuth->loggedIn()) {
-            $conditions['Page.is_private'] = APP_OFF;
-        }
-
-        $page = $this->find('first', array(
-            'conditions' => $conditions,
-            'contain' => array(
-                'PageLang.meta_title',
-                'PageLang.link_rewrite',
-                'PageLang.content'
-            )
-        ));
-        return $page;
     }
 
     public function getMainPagesForDropdown($pageIdToExcluce = null)
