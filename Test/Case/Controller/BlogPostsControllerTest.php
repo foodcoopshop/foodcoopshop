@@ -16,7 +16,7 @@ App::uses('AppCakeTestCase', 'Test');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class BlogsControllerTest extends AppCakeTestCase
+class BlogPostsControllerTest extends AppCakeTestCase
 {
 
     public function testBlogDetailOnlinePublicLoggedOut()
