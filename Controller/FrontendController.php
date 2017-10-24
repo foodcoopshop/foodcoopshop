@@ -127,6 +127,7 @@ class FrontendController extends AppController
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
         $this->loadModel('Page');
+        $conditions = array();
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';
         if (! $this->AppAuth->loggedIn()) {
