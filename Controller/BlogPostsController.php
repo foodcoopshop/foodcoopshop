@@ -36,7 +36,7 @@ class BlogPostsController extends FrontendController
                 ));
                 if (!empty($blogPost) && !$this->AppAuth->loggedIn()
                     && ($blogPost['BlogPost']['is_private'] == APP_ON
-                    || (isset($blogPost['Manufacturer']) && $blogPost['Manufacturer']['is_private'] == APP_ON))
+                    || (isset($blogPost['Manufacturer']) && $blogPost['Manufacturer']['is_private']))
                     ) {
                         $this->AppAuth->deny($this->action);
                 }
