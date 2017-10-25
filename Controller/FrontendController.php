@@ -44,7 +44,7 @@ class FrontendController extends AppController
      *
      * @param array $products
      */
-    protected function perpareProductsForFrontend($products)
+    protected function prepareProductsForFrontend($products)
     {
         $this->loadModel('Product');
         $this->loadModel('ProductAttribute');

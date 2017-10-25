@@ -100,7 +100,7 @@ class ManufacturersController extends FrontendController
 
         if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn()) {
             $products = $this->Manufacturer->getProductsByManufacturerId($manufacturerId);
-            $manufacturer['Products'] = $this->perpareProductsForFrontend($products);
+            $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }
 
         $this->loadModel('BlogPost');

@@ -23,10 +23,23 @@ class ProductsController extends FrontendController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        if (! (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn())) {
+
+        $this->loadModel('Product');
+        $productId = (int) $this->params['pass'][0];
+
+        $product = $this->Product->find('first', array(
+            'conditions' => array(
+                'Product.id_product' => $productId,
+                'Product.active' => APP_ON
+            )
+        ));
+        if ((
+              !empty($product)
+              && !$this->AppAuth->loggedIn()
+              && (isset($product['Manufacturer']) && $product['Manufacturer']['is_private'])
+              )
+            ) {
             $this->AppAuth->deny($this->action);
-        } else {
-            $this->AppAuth->allow($this->action);
         }
     }
 
@@ -39,20 +52,20 @@ class ProductsController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->loadModel('Category');
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
-        $products = $this->perpareProductsForFrontend($products, true);
+        $product = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $this->prepareProductsForFrontend($product);
 
-        if (empty($products)) {
+        if (empty($product) || !isset($product[0])) {
             throw new MissingActionException('product not found');
         }
 
-        $this->set('products', $products);
+        $this->set('product', $product[0]);
 
-        $correctSlug = Configure::read('slugHelper')->getProductDetail($productId, $products[0]['ProductLang']['name']);
+        $correctSlug = Configure::read('slugHelper')->getProductDetail($productId, $product[0]['ProductLang']['name']);
         if ($correctSlug != Configure::read('slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 
-        $this->set('title_for_layout', $products[0]['ProductLang']['name']);
+        $this->set('title_for_layout', $product[0]['ProductLang']['name']);
     }
 }

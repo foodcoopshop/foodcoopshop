@@ -37,7 +37,7 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
-        $products = $this->perpareProductsForFrontend($products);
+        $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', 'Neue Produkte');
@@ -63,7 +63,7 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
-        $products = $this->perpareProductsForFrontend($products);
+        $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
         $this->set('title_for_layout', 'Suche "' . $keyword . '"');
@@ -97,7 +97,7 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $products = $this->Category->getProductsByCategoryId($categoryId);
-        $products = $this->perpareProductsForFrontend($products);
+        $products = $this->prepareProductsForFrontend($products);
 
         $this->set('products', $products);
 
