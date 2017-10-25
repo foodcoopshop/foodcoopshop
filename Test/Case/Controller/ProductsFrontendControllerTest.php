@@ -17,7 +17,7 @@ App::uses('Product', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ProductsControllerTest extends AppCakeTestCase
+class ProductsFrontendControllerTest extends AppCakeTestCase
 {
 
     public $Product;
