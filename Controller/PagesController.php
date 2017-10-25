@@ -27,6 +27,7 @@ class PagesController extends FrontendController
         switch ($this->action) {
             case 'detail':
                 $pageId = (int) $this->params['pass'][0];
+                $this->Page->recursive = -1;
                 $page = $this->Page->find('first', array(
                     'conditions' => array(
                         'Page.id_cms' => $pageId,

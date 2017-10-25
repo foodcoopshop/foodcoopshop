@@ -59,7 +59,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assert200OkHeader();
     }
 
-    public function testBlogPostDetaiPublicNonExistingLoggedOut()
+    public function testBlogPostDetaiNonExistingLoggedOut()
     {
         $blogPostId = 3;
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));

@@ -142,7 +142,6 @@ class PagesControllerTest extends AppCakeTestCase
         $this->browser->doFoodCoopShopLogout();
     }
 
-
     public function testPageDetailOnlinePublicLoggedOut()
     {
         $this->browser->get($this->Slug->getPageDetail(3, 'Demo Page'));
@@ -174,7 +173,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assert200OkHeader();
     }
 
-    public function testPageDetailPublicNonExistingLoggedOut()
+    public function testPageDetailNonExistingLoggedOut()
     {
         $pageId = 30;
         $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
