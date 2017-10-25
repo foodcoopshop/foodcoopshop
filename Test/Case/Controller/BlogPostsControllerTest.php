@@ -28,13 +28,13 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->BlogPost = new BlogPost();
     }
 
-    public function testBlogPostDetaiOnlinePublicLoggedOut()
+    public function testBlogPostDetailOnlinePublicLoggedOut()
     {
         $this->browser->get($this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'));
         $this->assert200OkHeader();
     }
 
-    public function testBlogPostDetaiOfflinePublicLoggedOut()
+    public function testBlogPostDetailOfflinePublicLoggedOut()
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, null, null, false);
@@ -42,7 +42,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
     }
 
-    public function testBlogPostDetaiOnlinePrivateLoggedOut()
+    public function testBlogPostDetailOnlinePrivateLoggedOut()
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, true);
@@ -50,7 +50,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
-    public function testBlogPostDetaiOnlinePrivateLoggedIn()
+    public function testBlogPostDetailOnlinePrivateLoggedIn()
     {
         $this->loginAsCustomer();
         $blogPostId = 2;
@@ -66,7 +66,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
     }
 
-    public function testBlogPostDetaiOnlinePublicManufacturerPrivateLoggedOut()
+    public function testBlogPostDetailOnlinePublicManufacturerPrivateLoggedOut()
     {
         $blogPostId = 2;
         $manufacturerId = 15;
