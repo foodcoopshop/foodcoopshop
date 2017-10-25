@@ -20,6 +20,27 @@ App::uses('FrontendController', 'Controller');
 class ManufacturersController extends FrontendController
 {
 
+    public function beforeFilter()
+    {
+
+        parent::beforeFilter();
+        switch ($this->action) {
+            case 'detail':
+                $manufacturerId = (int) $this->params['pass'][0];
+                $this->Manufacturer->recursive = -1;
+                $manufacturer = $this->Manufacturer->find('first', array(
+                    'conditions' => array(
+                        'Manufacturer.id_manufacturer' => $manufacturerId,
+                        'Manufacturer.active' => APP_ON
+                    )
+                ));
+                if (!empty($manufacturer) && !$this->AppAuth->loggedIn() && $manufacturer['Manufacturer']['is_private']) {
+                    $this->AppAuth->deny($this->action);
+                }
+                break;
+        }
+    }
+
     public function index()
     {
         $this->Manufacturer->recursive = 1;
@@ -63,9 +84,6 @@ class ManufacturersController extends FrontendController
             'Manufacturer.id_manufacturer' => $manufacturerId,
             'Manufacturer.active' => APP_ON
         );
-        if (! $this->AppAuth->loggedIn()) {
-            $conditions['Manufacturer.is_private'] = APP_OFF;
-        }
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => $conditions,
             'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
