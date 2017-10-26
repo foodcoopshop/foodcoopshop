@@ -17,6 +17,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt. / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- MySQL 5.7 wird jetzt wirklich unterstützt, es gab da noch ein paar Probleme. / [PR#xxx](https://github.com/foodcoopshop/foodcoopshop/pull/xxx) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt: [image.intervention.io](http://image.intervention.io). / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v1.4.0 2017-09-17 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.3.0...v1.4.0)
