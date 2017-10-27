@@ -29,14 +29,12 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     public function testShowProductsForGuestsDisabledAndLoggedIn()
     {
-        $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 0);
         $this->loginAsSuperadmin();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), true);
     }
 
     public function testShowProductsForGuestsDisabledAndLoggedOut()
     {
-        $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 0);
         $this->logout();
         foreach ($this->getTestUrlsForShowProductForGuests() as $url) {
             $this->browser->get($url);

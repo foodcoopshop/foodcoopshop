@@ -20,6 +20,29 @@ App::uses('FrontendController', 'Controller');
 class BlogPostsController extends FrontendController
 {
 
+    public function beforeFilter()
+    {
+
+        parent::beforeFilter();
+
+        switch ($this->action) {
+            case 'detail':
+                $blogPostId = (int) $this->params['pass'][0];
+                $blogPost = $this->BlogPost->find('first', array(
+                    'conditions' => array(
+                        'BlogPost.id_smart_blog_post' => $blogPostId,
+                        'BlogPost.active' => APP_ON
+                    )
+                ));
+                if (!empty($blogPost) && !$this->AppAuth->loggedIn()
+                    && ($blogPost['BlogPost']['is_private'] || (isset($blogPost['Manufacturer']) && $blogPost['Manufacturer']['is_private']))
+                    ) {
+                        $this->AppAuth->deny($this->action);
+                }
+                break;
+        }
+    }
+
     public function detail()
     {
         $blogPostId = (int) $this->params['pass'][0];
@@ -29,20 +52,10 @@ class BlogPostsController extends FrontendController
             'BlogPostLang.id_lang' => Configure::read('app.langId'),
             'BlogPostShop.id_shop' => Configure::read('app.shopId')
         );
-        if (! $this->AppAuth->loggedIn()) {
-            $conditions['BlogPost.is_private'] = APP_OFF;
-            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
-        }
-
         $conditions['BlogPost.id_smart_blog_post'] = $blogPostId; // needs to be last element of conditions
 
-        $order = array(
-            'BlogPost.modified' => 'DESC'
-        );
-
         $blogPost = $this->BlogPost->find('first', array(
-            'conditions' => $conditions,
-            'order' => $order
+            'conditions' => $conditions
         ));
 
         if (empty($blogPost)) {
@@ -61,7 +74,9 @@ class BlogPostsController extends FrontendController
             'field' => 'BlogPost.modified',
             'value' => $blogPost['BlogPost']['modified'],
             'conditions' => $conditions,
-            'order' => $order
+            'order' => array(
+                'BlogPost.modified' => 'DESC'
+            )
         ));
         $this->set('neighbors', $neighbors);
 

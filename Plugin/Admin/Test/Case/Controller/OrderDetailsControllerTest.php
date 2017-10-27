@@ -84,7 +84,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturerOption($manufacturerId, 'send_ordered_product_deleted_notification', 0);
+        $this->changeManufacturer($manufacturerId, 'send_ordered_product_deleted_notification', 0);
 
         $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Order']['id_order']);
 
@@ -99,7 +99,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturerOption($manufacturerId, 'bulk_orders_allowed', 1);
+        $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
         $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Order']['id_order']);
 
@@ -164,7 +164,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturerOption($manufacturerId, 'send_ordered_product_price_changed_notification', 0);
+        $this->changeManufacturer($manufacturerId, 'send_ordered_product_price_changed_notification', 0);
 
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
@@ -182,7 +182,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturerOption($manufacturerId, 'bulk_orders_allowed', 1);
+        $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
@@ -235,7 +235,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturerOption($manufacturerId, 'send_ordered_product_quantity_changed_notification', 0);
+        $this->changeManufacturer($manufacturerId, 'send_ordered_product_quantity_changed_notification', 0);
 
         $this->editOrderDetailQuantity($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newQuantity, $this->editQuantityReason);
 
@@ -252,7 +252,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturerOption($manufacturerId, 'bulk_orders_allowed', 1);
+        $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
         $this->editOrderDetailQuantity($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newQuantity, $this->editQuantityReason);
 

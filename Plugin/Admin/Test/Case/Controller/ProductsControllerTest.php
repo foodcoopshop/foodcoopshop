@@ -44,9 +44,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 1000;
         $this->changeProductPrice($productId, '0,15');
-        $response = $this->browser->getContent();
         // as long as isAuthorized does not return json on ajax requests...
-        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $response);
+        $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
     public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
@@ -54,9 +53,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsVegetableManufacturer();
         $productId = 102;
         $this->changeProductPrice($productId, '0,15');
-        $response = $this->browser->getContent();
         // as long as isAuthorized does not return json on ajax requests...
-        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $response);
+        $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
     public function testEditPriceOfProductAsSuperadmin()

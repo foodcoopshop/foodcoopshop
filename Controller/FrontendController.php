@@ -44,7 +44,7 @@ class FrontendController extends AppController
      *
      * @param array $products
      */
-    protected function perpareProductsForFrontend($products)
+    protected function prepareProductsForFrontend($products)
     {
         $this->loadModel('Product');
         $this->loadModel('ProductAttribute');
@@ -127,6 +127,7 @@ class FrontendController extends AppController
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
         $this->loadModel('Page');
+        $conditions = array();
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';
         if (! $this->AppAuth->loggedIn()) {
