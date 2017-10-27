@@ -151,7 +151,7 @@ class PagesControllerTest extends AppCakeTestCase
     public function testPageDetailOfflinePublicLoggedOut()
     {
         $pageId = 3;
-        $this->changePage($pageId, null, 0);
+        $this->changePage($pageId, 0, 0);
         $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
         $this->assert404NotFoundHeader();
     }
