@@ -37,7 +37,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     public function testBlogPostDetailOfflinePublicLoggedOut()
     {
         $blogPostId = 2;
-        $this->changeBlogPost($blogPostId, null, null, 0);
+        $this->changeBlogPost($blogPostId, 0, 0, 0);
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assert404NotFoundHeader();
     }
@@ -70,7 +70,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     {
         $blogPostId = 2;
         $manufacturerId = 15;
-        $this->changeBlogPost($blogPostId, null, $manufacturerId);
+        $this->changeBlogPost($blogPostId, 0, $manufacturerId);
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
