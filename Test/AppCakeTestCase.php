@@ -114,6 +114,11 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
     }
 
+    protected function assertAccessDeniedWithRedirectToLoginForm()
+    {
+        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->browser->getContent());
+    }
+
     protected function assert404NotFoundHeader()
     {
         $this->assertRegExp('/HTTP\/1.1 404 Not Found/', $this->browser->getHeaders(), 'header 404 not found not found');
@@ -377,7 +382,7 @@ class AppCakeTestCase extends CakeTestCase
         return $this->browser->getJsonDecodedContent();
     }
 
-    protected function changeManufacturerOption($manufacturerId, $option, $value)
+    protected function changeManufacturer($manufacturerId, $option, $value)
     {
         $query = 'UPDATE ' . $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
         $params = array(
