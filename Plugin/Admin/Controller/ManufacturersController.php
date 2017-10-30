@@ -323,6 +323,7 @@ class ManufacturersController extends AdminAppController
 
             $this->RequestHandler->renderAs($this, 'pdf');
             $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+                ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
             ), 'F');

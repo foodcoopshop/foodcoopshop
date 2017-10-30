@@ -58,6 +58,7 @@ class SendInvoicesShell extends AppShell
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'',
                 'Order.current_state IN (' . join(",", array(
+                    ORDER_STATE_OPEN,
                     ORDER_STATE_CASH,
                     ORDER_STATE_CASH_FREE
                 )) . ')'
