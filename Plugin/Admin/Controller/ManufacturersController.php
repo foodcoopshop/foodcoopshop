@@ -633,51 +633,6 @@ class ManufacturersController extends AdminAppController
         }
     }
 
-    public function changeProductStatusByManufacturer($manufacturerId, $status)
-    {
-        if (! in_array($status, array(
-            APP_OFF,
-            APP_ON
-        ))) {
-            throw new MissingActionException('Status muss 0 oder 1 sein!');
-        }
-
-        // if logged user is manufacturer, then get param manufacturer id is NOT used
-        // but logged user id for security reasons
-        if ($this->AppAuth->isManufacturer()) {
-            $manufacturerId = $this->AppAuth->getManufacturerId();
-        }
-
-        $sql = "UPDATE ".$this->Manufactuer->tablePrefix."product p, ".$this->Manufacturer->tablePrefix."product_shop ps 
-                SET p.active  = " . $status . ",
-                    ps.active = " . $status . "
-                WHERE p.id_product = ps.id_product
-                AND p.id_manufacturer = " . $manufacturerId . ";";
-        $result = $this->Manufacturer->query($sql);
-        $affectedRows = $this->Manufacturer->getAffectedRows() / 2; // two tables affected...
-
-        $manufacturer = $this->Manufacturer->find('first', array(
-            'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
-            )
-        ));
-
-        $statusText = 'deaktiviert';
-        $actionLogType = 'product_set_inactive';
-        if ($status) {
-            $statusText = 'aktiviert';
-            $actionLogType = 'product_set_active';
-        }
-
-        $message = 'Alle Produkte des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Produkte: ' . $affectedRows;
-        $this->Flash->success($message);
-
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, 'products', $message);
-
-        $this->redirect($this->referer());
-    }
-
     private function prepareInvoiceAndOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
     {
         $results = $this->Manufacturer->getOrderList($manufacturerId, $groupType, $from, $to, $orderState);
