@@ -324,6 +324,7 @@ class ManufacturersController extends AdminAppController
 
             $this->RequestHandler->renderAs($this, 'pdf');
             $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+                ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
             ), 'F');
@@ -675,6 +676,7 @@ class ManufacturersController extends AdminAppController
     public function getInvoice($manufacturerId, $from, $to)
     {
         $results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+            ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ));
@@ -683,6 +685,7 @@ class ManufacturersController extends AdminAppController
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
         $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
+            ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ));
