@@ -20,7 +20,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
     private $manufacturerId = 5;
     private $today;
-    private $mustNotBeShownString = 'im wohlverdienten Urlaub.</h2>';
+    private $mustNotBeShownString = 'Lieferpause.</h2>';
 
     public function setUp()
     {
@@ -37,7 +37,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             $dateFrom,
             $dateTo,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist seit '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat seit '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' Lieferpause.</h2>',
             true,
             false
         );
@@ -75,7 +75,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             $dateFrom,
             null,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist seit '.$this->Time->formatToDateShort($dateFrom).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat seit '.$this->Time->formatToDateShort($dateFrom).' Lieferpause.</h2>',
             true,
             false
         );
@@ -90,7 +90,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             $dateFrom,
             $dateTo,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist von '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat von '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' Lieferpause.</h2>',
             true,
             true
         );
@@ -104,7 +104,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             null,
             $dateTo,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist bis '.$this->Time->formatToDateShort($dateTo).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat bis '.$this->Time->formatToDateShort($dateTo).' Lieferpause.</h2>',
             true,
             false
         );

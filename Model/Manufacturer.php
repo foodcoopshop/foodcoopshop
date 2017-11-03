@@ -336,7 +336,7 @@ class Manufacturer extends AppModel
             }
             $holidayInfo = Configure::read('htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
             if ($holidayInfo != '') {
-                $holidayInfo = 'Urlaub ' . $holidayInfo;
+                $holidayInfo = 'Lieferpause ' . $holidayInfo;
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
