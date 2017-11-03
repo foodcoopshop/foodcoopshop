@@ -2,22 +2,22 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlichte Version [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
 
 
 ### Neue Funktionen
-- Anpassungen für die Einbindung des Netzwerk-Moduls in der Version 1.0. / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - In den Rechnungen scheinen jetzt auch Bestellungen mit dem Status *offen* auf. / [PR#156](https://github.com/foodcoopshop/foodcoopshop/pull/156) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Eine Änderung der Guthaben-Aufladung ist mehr möglich, sobald sie bestätigt wurde. / [PR#143](https://github.com/foodcoopshop/foodcoopshop/pull/143) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Eine Änderung von Guthaben-Aufladungen ist nicht mehr möglich, sobald sie bestätigt wurden. / [PR#143](https://github.com/foodcoopshop/foodcoopshop/pull/143) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Falls man uneingeloggt nur für Mitglieder sichtbare Blog-Artikel, Seiten oder Hersteller (bzw. deren Produkte) aufruft, wird jetzt statt der Fehler-Seite das Login-Formular angezeigt. / [PR#154](https://github.com/foodcoopshop/foodcoopshop/pull/154) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wenn man das Passwort vergessen hat, muss man jetzt zusätzlich auf einen Bestätigungs-Link klicken, bevor das Passwort tatsächlich geändert wird. / [PR#141](https://github.com/foodcoopshop/foodcoopshop/pull/141) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Urlaubsmodus heißt jetzt *Lieferpause* und kann somit auch für Lieferpausen außerhalb des Urlaubs verwendet werden. / [PR#159](https://github.com/foodcoopshop/foodcoopshop/pull/159) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Anpassungen für die Einbindung des Netzwerk-Moduls in der Version 1.0. / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
 - Wenn der Steuersatz eines Produktes 0% betragen hat und geändert wird, wurde der Preis auf € 0 zurückgesetzt. / [PR#153](https://github.com/foodcoopshop/foodcoopshop/pull/153) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bereits hochgeladene Bilder, die durch neue ersetzt wurden, werden jetzt auch am Frontend sofort angezeigt. / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht funktioniert. / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Gelöschte Unterseiten wurden auf der übergeordneten Seite verlinkt. / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht korrekt funktioniert. / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Gelöschte Unterseiten wurden auf der übergeordneten Seite als Button angezeigt. / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
 - Veraltete Dependency zum Erstellen von Thumbnails wurde ersetzt: [image.intervention.io](http://image.intervention.io). / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
