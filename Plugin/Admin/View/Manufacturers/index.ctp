@@ -65,7 +65,7 @@ echo '<th>Pfand</th>';
 echo '<th>' . $this->Paginator->sort('Customer.name', 'Ansprechperson') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Urlaub') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Lieferpause') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th>Opt.</th>';
 if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {

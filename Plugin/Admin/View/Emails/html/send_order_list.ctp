@@ -44,7 +44,7 @@
                 <li>Produkte als "neu" markieren</li>
                 <li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
                 <li>Pfandkonto (falls du Pfand verwendest)</li>
-                <li>Urlaubsmodus: Zeitraum angeben, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
+                <li>Lieferpause: Zeitraum angeben, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
                 <li>Benachrichtigungs-E-Mails und weitere Einstellungen ändern</li>
                 <li>Passwort ändern</li>
             </ul>

@@ -64,7 +64,7 @@ echo $this->Form->input('Manufacturer.active', array(
 
 echo '<div class="holiday-wrapper">';
     echo '<div class="input">';
-        echo '<label>Urlaubsmodus?';
+        echo '<label>Lieferpause?';
     echo '</div>';
     echo $this->element('dateFields', array(
         'dateFrom' => $this->request->data['Manufacturer']['holiday_from'],
@@ -73,7 +73,7 @@ echo '<div class="holiday-wrapper">';
         'nameTo' => 'data[Manufacturer][holiday_to]'
     ));
     echo '<span class="description small">Die Produkte sind im angegebenen Zeitraum im Shop nicht bestellbar, sie werden also automatisch aktiviert und wieder deaktiviert.';
-        echo '<br />Beide Felder leer bedeutet: Urlaubsmodus ist <b>nicht aktiv</b>.';
+        echo '<br />Beide Felder leer bedeutet: Lieferpause ist <b>nicht aktiv</b>.';
     echo '</span>';
     echo '</div>';
 
