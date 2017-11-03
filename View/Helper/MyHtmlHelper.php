@@ -45,7 +45,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($long) {
-            $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
+            $result .= 'Der Hersteller <b>' . $name . '</b> hat ';
         }
         if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
@@ -59,7 +59,7 @@ class MyHtmlHelper extends HtmlHelper
             $result .= ' bis ' . Configure::read('timeHelper')->formatToDateShort($dateTo);
         }
         if ($long && $result != '') {
-            $result .= ' im wohlverdienten Urlaub.';
+            $result .= ' Lieferpause.';
         }
 
         $result = str_replace('  ', ' ', $result);
