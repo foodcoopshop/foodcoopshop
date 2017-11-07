@@ -37,7 +37,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     public function testBlogPostDetailOfflinePublicLoggedOut()
     {
         $blogPostId = 2;
-        $this->changeBlogPost($blogPostId, null, null, false);
+        $this->changeBlogPost($blogPostId, 0, 0, 0);
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assert404NotFoundHeader();
     }
@@ -45,7 +45,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     public function testBlogPostDetailOnlinePrivateLoggedOut()
     {
         $blogPostId = 2;
-        $this->changeBlogPost($blogPostId, true);
+        $this->changeBlogPost($blogPostId, 1);
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -54,7 +54,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $blogPostId = 2;
-        $this->changeBlogPost($blogPostId, true);
+        $this->changeBlogPost($blogPostId, 1);
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assert200OkHeader();
     }
@@ -70,8 +70,8 @@ class BlogPostsControllerTest extends AppCakeTestCase
     {
         $blogPostId = 2;
         $manufacturerId = 15;
-        $this->changeBlogPost($blogPostId, null, $manufacturerId);
-        $this->changeManufacturer($manufacturerId, 'is_private', true);
+        $this->changeBlogPost($blogPostId, 0, $manufacturerId);
+        $this->changeManufacturer($manufacturerId, 'is_private', 1);
         $this->browser->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }

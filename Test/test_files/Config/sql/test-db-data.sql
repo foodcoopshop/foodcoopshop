@@ -53,13 +53,13 @@ TRUNCATE TABLE `fcs_tax`;
 
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
 INSERT INTO `fcs_address` VALUES
-(153,2,0,87,0,0,0,'Ihre Adresse','','Mitglied','Demo','Demostraße 4','','4644','Scharnstein','','','0664/000000000','foodcoopshop-demo-mitglied@mailinator.com','','','2014-12-02 12:19:31','2014-12-02 12:19:31',1,0),
-(154,2,0,88,0,0,0,'Ihre Adresse','','Admin','Demo','Demostraße 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','','','2014-12-02 12:28:44','2014-12-02 12:28:44',1,0),
-(173,2,0,0,4,0,0,'manufacturer','','Fleisch-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','','','2014-05-27 22:20:18','2015-04-07 16:18:28',1,0),
-(177,2,0,0,15,0,0,'manufacturer','','Milch-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','','','2014-06-04 21:46:38','2015-10-16 10:06:52',1,0),
-(180,2,0,0,5,0,0,'manufacturer','','Gemüse-Hersteller','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
-(181,2,0,0,16,0,0,'manufacturer','','Hersteller ohne Customer-Eintrag','Demo','Demostraße 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
-(182,2,NULL,92,0,0,0,'',NULL,'Superadmin','Demo','Demostraße 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com',NULL,NULL,'2017-07-26 13:19:19','2017-07-26 13:19:19',1,0);
+(153,2,0,87,0,0,0,'Ihre Adresse','','Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','foodcoopshop-demo-mitglied@mailinator.com','','','2014-12-02 12:19:31','2014-12-02 12:19:31',1,0),
+(154,2,0,88,0,0,0,'Ihre Adresse','','Admin','Demo','Demostrasse 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','','','2014-12-02 12:28:44','2014-12-02 12:28:44',1,0),
+(173,2,0,0,4,0,0,'manufacturer','','Fleisch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','','','2014-05-27 22:20:18','2015-04-07 16:18:28',1,0),
+(177,2,0,0,15,0,0,'manufacturer','','Milch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','','','2014-06-04 21:46:38','2015-10-16 10:06:52',1,0),
+(180,2,0,0,5,0,0,'manufacturer','','Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
+(181,2,0,0,16,0,0,'manufacturer','','Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
+(182,2,NULL,92,0,0,0,'',NULL,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com',NULL,NULL,'2017-07-26 13:19:19','2017-07-26 13:19:19',1,0);
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
