@@ -1073,14 +1073,20 @@ body.products.detail .product-wrapper {
     border-bottom: 1px solid #d6d4d4;
     margin-bottom: 20px;
 }
-#inner-content ul {
+#inner-content ul,
+#info-box ul {
   padding-left: 10px;
   margin-left: 10px;
   margin-top: 10px;
 }
-#inner-content li {
+#inner-content li,
+#info-box li {
     list-style-type: disc;
     line-height: 23px;
+}
+#info-box li {
+    line-height: 19px;
+    padding-bottom: 5px;
 }
 body.blog_posts.detail p.neighbors {
     margin-top: 10px;
@@ -1088,4 +1094,5 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
 

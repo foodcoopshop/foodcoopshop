@@ -276,6 +276,16 @@
         padding: 5px ! important;
         border-left: 1px solid #719f41 ! important;
     }
+    .sb-right .inner ul {
+       padding-left: 10px;
+       margin-left: 10px;
+       margin-top: 10px;
+    }
+    .sb-right .inner li {
+        list-style-type: disc;
+        line-height: 19px;
+        padding-bottom: 5px;
+    }
     .sb-slidebar {
        width: 40% ! important;
     }
@@ -352,5 +362,6 @@
         font-size: 13px;
     }
  }
+
 
 
