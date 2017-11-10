@@ -22,6 +22,7 @@
             datefieldSelector.datepicker();" .
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initCancelSelectionButton();" .
+            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
             Configure::read('app.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
     ));
@@ -38,6 +39,10 @@
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>    
             <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
         <?php } ?>
+        <?php if ($appAuth->isCustomer()) { ?>
+            <?php // for preselecting customer in shop order dropdown ?>
+            <?php echo $this->Form->hidden('customerId', array('value' => isset($customerId) ? $customerId: '')); ?>
+        <?php } ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             <input id="orderId" type="text" placeholder="Bestell-Nr."
             value="<?php echo $orderId; ?>" />
@@ -49,7 +54,15 @@
         <button id="filter" class="btn btn-success">
             <i class="fa fa-search"></i> Filtern
         </button>
-        <div class="right"></div>
+        <div class="right">
+        <?php
+        if (!$appAuth->isManufacturer()) {
+            echo $this->element('addShopOrderButton', array(
+            'customers' => $customersForShopOrderDropdown
+            ));
+        }
+        ?>
+        </div>
     </div>
 
     <div id="help-container">

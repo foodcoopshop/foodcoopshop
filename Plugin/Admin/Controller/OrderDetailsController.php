@@ -198,6 +198,10 @@ class OrderDetailsController extends AdminAppController
         $this->set('customersForDropdown', $this->OrderDetail->Order->Customer->getForDropdown());
         $this->set('manufacturersForDropdown', $this->OrderDetail->Product->Manufacturer->getForDropdown());
 
+        if (!$this->AppAuth->isManufacturer()) {
+            $this->set('customersForShopOrderDropdown', $this->OrderDetail->Order->Customer->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
+        }
+
         $this->set('title_for_layout', 'Bestellte Produkte');
     }
 

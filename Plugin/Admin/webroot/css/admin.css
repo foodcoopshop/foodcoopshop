@@ -477,7 +477,8 @@ body.payments.member_fee #add-payment-button-wrapper {
     float: left;
     margin-right: 3px;
 }
-body.orders.index #add-order-button-wrapper div.select {
+body.orders.index #add-order-button-wrapper div.select,
+body.order_details.index #add-order-button-wrapper div.select {
     display: none;
 }
 body.orders.index td .order-comment-edit-button.disabled img,
@@ -962,6 +963,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
