@@ -268,7 +268,7 @@ class OrdersController extends AdminAppController
         }
         $this->set('orders', $orders);
 
-        $this->set('customersForDropdown', $this->Order->Customer->getForDropdown(false, 'email', $this->AppAuth->isSuperadmin()));
+        $this->set('customersForDropdown', $this->Order->Customer->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
         $this->set('title_for_layout', 'Bestellungen');
     }
@@ -281,23 +281,23 @@ class OrdersController extends AdminAppController
      * this url is called if shop order (sofortbestellung) is initialized
      * saves the desired user in session
      */
-    public function initShopOrder($shopOrderEmail)
+    public function initShopOrder($customerId)
     {
-        if (! $shopOrderEmail) {
-            throw new MissingActionException('shopOrderEmail not passed');
+        if (! $customerId) {
+            throw new MissingActionException('customerId not passed');
         }
 
         $this->loadModel('Customer');
         $this->Customer->recursive = - 1;
         $shopOrderCustomer = $this->Customer->find('first', array(
             'conditions' => array(
-                'Customer.email' => $shopOrderEmail
+                'Customer.id_customer' => $customerId
             )
         ));
         if (! empty($shopOrderCustomer)) {
             $this->Session->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
-            $this->Flash->error('Es wurde kein Mitglied mit der E-Mail-Adresse <b>' . $shopOrderEmail . '</b> gefunden.');
+            $this->Flash->error('Es wurde kein Mitglied mit der Id <b>' . $customerId . '</b> gefunden.');
         }
 
         $this->redirect('/');
