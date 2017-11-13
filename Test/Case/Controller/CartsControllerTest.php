@@ -251,8 +251,13 @@ class CartsControllerTest extends AppCakeTestCase
     public function testShopOrder()
     {
         $this->loginAsSuperadmin();
-        $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.shopOrderTestUser')['email']);
-        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . Configure::read('test.shopOrderTestUser')['name'] . '\<\/b\> getätigt./', $responseHtml);
+        $testCustomer = $this->Customer->find('first', array(
+            'conditions' => array(
+                'Customer.id_customer' => Configure::read('test.customerId')
+            )
+        ));
+        $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.customerId'));
+        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customer']['name'] . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }
 

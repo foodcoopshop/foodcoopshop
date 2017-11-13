@@ -158,7 +158,7 @@ foodcoopshop.Admin = {
         }
 
         //.input-block-level due to bootstrap select
-        $('.filter-container').find('input:not(.form-control), select').each(function () {
+        $('.filter-container').find('input:not(.form-control):not(.do-not-submit), select:not(.do-not-submit)').each(function () {
             switch ($(this).prop('tagName').toLowerCase()) {
                 case 'input':
                     switch ($(this).attr('type')) {
@@ -1749,6 +1749,10 @@ foodcoopshop.Admin = {
 
     },
 
+    /**
+     * @param string button
+     * @param int weekday
+     */
     initAddOrder: function (button, weekday) {
         // auf dev und demo seite immer zulassen (zum testen)
         if ($.inArray(foodcoopshop.Helper.cakeServerName, [
@@ -1785,23 +1789,18 @@ foodcoopshop.Admin = {
 
                         // only clone dropdown once
                         if ($('.message-container span.start select').length == 0) {
-                            var customersDropdown = $(
-                                '#add-order-button-wrapper select'
-                            )
-                                .clone(true);
+                            var customersDropdown = $('#add-order-button-wrapper select').clone(true);
                             customersDropdown.attr(
                                 'id',
                                 'customersDropdown'
                             );
                             customersDropdown
                                 .change(function () {
-                                    var newSrc = foodcoopshop.Helper.cakeServerName +
-                                        '/admin/orders/initShopOrder/' +
-                                        $(this).val();
-                                    $('iframe.featherlight-inner')
-                                        .attr('src', newSrc);
+                                    var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
+                                    $('iframe.featherlight-inner').attr('src', newSrc);
                                     $.featherlight.showLoader();
                                 });
+
                             $('iframe.featherlight-inner')
                                 .load(
                                     function () {
@@ -1817,6 +1816,13 @@ foodcoopshop.Admin = {
                             customersDropdown.show();
                             customersDropdown.removeClass('hide');
                             customersDropdown.appendTo('.message-container span.start');
+
+                            // always preselect user if there is a dropdown called #customerId (for call from order detail)
+                            var customerId = $('#customerId').val();
+                            if (customerId > 0) {
+                                customersDropdown.val(customerId);
+                                customersDropdown.trigger('change');
+                            }
                         }
                     }
                 });
@@ -2391,6 +2397,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
