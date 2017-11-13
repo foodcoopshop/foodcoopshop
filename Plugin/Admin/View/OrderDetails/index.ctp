@@ -58,7 +58,7 @@
         <div class="right">
         
         <?php
-        if (Configure::read('app.isDepositPaymentCashless') && $customerId > 0 && count($orderDetails) > 0) {
+        if (Configure::read('app.isDepositPaymentCashless') && !$groupByManufacturer && $customerId > 0 && count($orderDetails) > 0) {
             echo '<div class="add-payment-deposit-button-wrapper">';
                 echo $this->element('addDepositPaymentOverlay', array(
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
