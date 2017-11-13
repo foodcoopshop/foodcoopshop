@@ -56,7 +56,19 @@
             <i class="fa fa-search"></i> Filtern
         </button>
         <div class="right">
+        
         <?php
+        if (Configure::read('app.isDepositPaymentCashless') && $customerId > 0 && count($orderDetails) > 0) {
+            echo '<div class="add-payment-deposit-button-wrapper">';
+                echo $this->element('addDepositPaymentOverlay', array(
+                    'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
+                    'rowId' => $orderDetails[0]['Order']['id_order'],
+                    'userName' => $orderDetails[0]['Order']['Customer']['name'],
+                    'customerId' => $orderDetails[0]['Order']['Customer']['id_customer'],
+                    'manufacturerId' => null // explicitly unset manufacturerId
+                ));
+            echo '</div>';
+        }
         if (!$appAuth->isManufacturer()) {
             echo $this->element('addShopOrderButton', array(
             'customers' => $customersForShopOrderDropdown
