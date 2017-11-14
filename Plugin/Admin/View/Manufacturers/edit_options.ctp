@@ -72,8 +72,7 @@ echo '<div class="holiday-wrapper">';
         'dateTo' => $this->request->data['Manufacturer']['holiday_to'],
         'nameTo' => 'data[Manufacturer][holiday_to]'
     ));
-    echo '<span class="description small">Die Produkte sind im angegebenen Zeitraum im Shop nicht bestellbar, sie werden also automatisch aktiviert und wieder deaktiviert.';
-        echo '<br />Beide Felder leer bedeutet: Lieferpause ist <b>nicht aktiv</b>.';
+    echo '<span class="description small"><a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Wie verwende ich die Funktion "Lieferpause"?</a>';
     echo '</span>';
     echo '</div>';
 
