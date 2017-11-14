@@ -340,7 +340,10 @@ class Manufacturer extends AppModel
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
-                    $additionalInfo .= ' - ' . $holidayInfo;
+                    if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                        $additionalInfo .= ' - ';
+                    }
+                    $additionalInfo .= $holidayInfo;
                 }
             }
             if ($additionalInfo != '') {
