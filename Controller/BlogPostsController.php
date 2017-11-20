@@ -69,7 +69,12 @@ class BlogPostsController extends FrontendController
 
         $this->set('blogPost', $blogPost);
 
+        // START find neighbors
         array_pop($conditions); // do not filter last condition element blogPostId
+        if (!$this->AppAuth->loggedIn()) {
+            $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
+        }
         $neighbors = $this->BlogPost->find('neighbors', array(
             'field' => 'BlogPost.modified',
             'value' => $blogPost['BlogPost']['modified'],
