@@ -252,6 +252,15 @@ span.product-quantity-for-dialog {
     padding: 5px 6px;
     border-radius: 4px;
 }
+body.products.index .filter-container div.input.select {
+  margin-right: 4px;
+}
+body.products.index button#filter {
+  margin-left: 0;
+}
+body.products.index .bootstrap-select {
+  width: 172px ! important;
+}
 td.right,
 th.right {
     text-align: right;
@@ -976,6 +985,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
