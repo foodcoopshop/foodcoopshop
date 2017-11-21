@@ -22,6 +22,11 @@ App::uses('StringComponent', 'Controller/Component');
 class StringComponentTest extends AppCakeTestCase
 {
 
+    public function setUp()
+    {
+        // do not import database - no database needed for this test
+    }
+
     public function testSlugify()
     {
         $tests = array(
