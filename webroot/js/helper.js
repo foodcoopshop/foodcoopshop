@@ -475,6 +475,21 @@ foodcoopshop.Helper = {
 
     },
 
+    initCkeditorSmallWithUpload: function (name) {
+
+        if (!CKEDITOR.env.isCompatible) {
+            return false;
+        }
+
+        this.destroyCkeditor(name);
+
+        CKEDITOR.timestamp = '2017-11-20';
+        $('textarea#' + name + '.ckeditor').ckeditor({
+            customConfig: '/js/ckeditor/config-small-with-upload.js'
+        });
+
+    },
+
     /**
      * German initialisation for the jQuery UI date picker plugin. Written by
      * Milian Wolff (mail@milianw.de).
@@ -647,4 +662,5 @@ foodcoopshop.Helper = {
     }
 
 }
+
 
