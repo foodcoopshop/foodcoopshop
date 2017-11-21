@@ -409,7 +409,7 @@
     echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown));
     echo '<div class="categories-checkboxes">';
         echo $this->Form->input('Product.CategoryProducts', array(
-            'label' => 'Kategorien auswählen',
+            'label' => '',
             'multiple' => 'checkbox',
             'options' => $categoriesForDropdown
         ));
@@ -417,7 +417,7 @@
         echo '<div class="tax-dropdown-wrapper">';
         echo $this->Form->input('Tax.id_tax', array(
             'type' => 'select',
-            'label' => 'Steuersatz ändern:',
+            'label' => '',
             'options' => $taxesForDropdown,
         ));
         echo '</div>';

@@ -448,6 +448,9 @@ form div.error-message {
     padding: 10px;
     width: 100%;
 }
+.categories-checkboxes.featherlight-inner {
+  max-width: 450px;
+}
 .tax-dropdown-wrapper.featherlight-inner label {
     width: 100%;
 }
@@ -973,6 +976,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 

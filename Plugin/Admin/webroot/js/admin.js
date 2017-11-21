@@ -1366,6 +1366,8 @@ foodcoopshop.Admin = {
     },
 
     editTaxFormAfterLoad : function (productId) {
+        var productName = $('#product-' + productId + ' span.name-for-dialog').html();
+        $('.featherlight-content label').html('Steuersatz ändern: ' + productName);
         var selectedTaxId = $('#tax-id-' + productId).val();
         $('.featherlight-content #TaxIdTax').val(selectedTaxId);
     },
@@ -1440,6 +1442,10 @@ foodcoopshop.Admin = {
     },
 
     editCategoriesFormAfterLoad : function (productId) {
+
+        var productName = $('#product-' + productId + ' span.name-for-dialog').html();
+        $('.featherlight-content label[for="ProductCategoryProducts"]').html('Kategorien ändern: ' + productName);
+
         var selectedCategories = $('#selected-categories-' + productId).val().split(',');
         $('.categories-checkboxes input[type="checkbox"]').each(function () {
             if ($.inArray($(this).val(), selectedCategories) != -1) {
@@ -2414,6 +2420,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
