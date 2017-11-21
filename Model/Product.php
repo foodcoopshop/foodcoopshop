@@ -691,7 +691,7 @@ class Product extends AppModel
         $conditions = array();
         $group = array();
 
-        if ($manufacturerId != '') {
+        if ($manufacturerId != 'all') {
             $conditions['Product.id_manufacturer'] = $manufacturerId;
         } else {
             // do not show any non-associated products that might be found in database

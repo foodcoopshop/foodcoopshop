@@ -17,7 +17,7 @@
      
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
+        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
         ));
         $this->element('highlightRowAfterEdit', array(
@@ -27,7 +27,7 @@
     
     <div class="filter-container">
         <?php
-        if ($manufacturerId != '') {
+        if ($manufacturerId > 0) {
             echo $this->Form->input('productId', array(
                 'type' => 'select',
                 'label' => '',
@@ -40,7 +40,7 @@
                 'type' => 'select',
                 'label' => '',
                 'options' => $manufacturersForDropdown,
-                'empty' => 'alle Hersteller',
+                'empty' => 'Bitte auswählen...',
                 'selected' => isset($manufacturerId) ? $manufacturerId : ''
             ));
         }
@@ -133,6 +133,10 @@
         }
     }
 
+    if (empty($products) && $manufacturerId == '') {
+        echo '<h2 class="info">Bitte wähle einen Hersteller aus.</h2>';
+    }
+
     echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
@@ -140,7 +144,7 @@
     echo '<th>Variante</th>';
     echo '<th>' . $this->Paginator->sort('Product.image', 'Bild') . '</th>';
     echo '<th>' . $this->Paginator->sort('ProductLang.name', 'Name') . '</th>';
-    if ($manufacturerId == '') {
+    if ($manufacturerId == 'all') {
         echo '<th>' . $this->Paginator->sort('Product.id_manufacturer', 'Hersteller') . '</th>';
     }
     echo '<th>Kategorien</th>';
@@ -244,7 +248,7 @@
 
         echo '</td>';
 
-        if ($manufacturerId == '') {
+        if ($manufacturerId == 'all') {
             echo '<td>';
             if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
                 echo $this->Html->link(
@@ -390,7 +394,7 @@
     echo '<tr>';
 
     $colspan = 12;
-    if ($manufacturerId == '') {
+    if ($manufacturerId == 'all') {
         $colspan++;
     }
 

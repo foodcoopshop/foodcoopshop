@@ -67,6 +67,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getChangePassword(),
             $this->Slug->getCustomerProfile(),
             $this->Slug->getProductAdmin(),
+            $this->Slug->getProductAdmin('all'),
             $this->Slug->getReport('product'),
             $this->Slug->getReport('deposit'),
             $this->Slug->getBlogPostListAdmin(),
@@ -98,7 +99,7 @@ class PagesControllerTest extends AppCakeTestCase
     }
 
     /**
-     * test urls that are only available for manufacturers
+     * test urls that are only available for manufacturers or have different content
      */
     public function testAllManufacturerUrls()
     {
@@ -107,7 +108,8 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = array(
             $this->Slug->getManufacturerMyOptions(),
             $this->Slug->getMyDepositList(),
-            $this->Slug->getManufacturerProfile()
+            $this->Slug->getManufacturerProfile(),
+            $this->Slug->getProductAdmin()
         );
 
         $this->assertPagesForErrors($testUrls);
