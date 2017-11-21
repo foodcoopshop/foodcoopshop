@@ -80,6 +80,7 @@ echo '<th></th>';
 echo '</tr>';
 $i = 0;
 $productCountSum = 0;
+$depositSum = null;
 foreach ($manufacturers as $manufacturer) {
     $i ++;
     echo '<tr id="manufacturer-' . $manufacturer['Manufacturer']['id_manufacturer'] . '" class="data">';
@@ -139,6 +140,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td>';
     if ($manufacturer['sum_deposit_delivered'] > 0) {
+        $depositSum += $manufacturer['deposit_credit_balance'];
         $depositSaldoClasses = array();
         if ($manufacturer['deposit_credit_balance'] < 0) {
             $depositSaldoClasses[] = 'negative';
@@ -247,6 +249,10 @@ echo '<tr>';
 echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $productCountSum . '</b></td>';
 $colspan = 10;
+if ($depositSum !== null) {
+    $colspan--;
+    echo '<td><b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b></td>';
+}
 if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
