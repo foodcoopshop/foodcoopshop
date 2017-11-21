@@ -305,20 +305,10 @@
 
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo '<div class="tax-dropdown-wrapper" id="tax-dropdown-wrapper-' . $product['Product']['id_product'] . '">';
-            echo $this->Form->hidden('Product.id_product', array(
-                'value' => $product['Product']['id_product'],
-                'id' => 'tax-product-id-' . $product['Product']['id_product'],
-                'class' => 'product-id'
+            echo $this->Form->hidden('Product.id_tax', array(
+                'id' => 'tax-id-' . $product['Product']['id_product'],
+                'value' => $product['Product']['id_tax']
             ));
-            echo $this->Form->input('Tax.id_tax', array(
-                'type' => 'select',
-                'label' => 'Steuersatz ändern für:<br />' . $product['ProductLang']['name'],
-                'options' => $taxesForDropdown,
-                'selected' => $product['Product']['id_tax'],
-                'id' => 'tax-dropdown-' . $product['Product']['id_product']
-            ));
-            echo '</div>';
             $taxRate = $product['Tax']['rate'];
             echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
@@ -415,12 +405,20 @@
 </div>
 
 <?php
+    // dropdowns and checkboxes for overlays are only rendered once (performance)
     echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown));
     echo '<div class="categories-checkboxes">';
         echo $this->Form->input('Product.CategoryProducts', array(
             'label' => 'Kategorien auswählen',
             'multiple' => 'checkbox',
             'options' => $categoriesForDropdown
+        ));
+        echo '</div>';
+        echo '<div class="tax-dropdown-wrapper">';
+        echo $this->Form->input('Tax.id_tax', array(
+            'type' => 'select',
+            'label' => 'Steuersatz ändern:',
+            'options' => $taxesForDropdown,
         ));
         echo '</div>';
 ?>

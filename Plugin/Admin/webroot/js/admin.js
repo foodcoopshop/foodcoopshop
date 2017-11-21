@@ -1365,6 +1365,11 @@ foodcoopshop.Admin = {
 
     },
 
+    editTaxFormAfterLoad : function (productId) {
+        var selectedTaxId = $('#tax-id-' + productId).val();
+        $('.featherlight-content #TaxIdTax').val(selectedTaxId);
+    },
+
     initProductTaxEditDialog: function (container) {
 
         var button = $(container).find('.product-tax-edit-button');
@@ -1372,28 +1377,28 @@ foodcoopshop.Admin = {
         $(button).on('click', function () {
 
             var objectId = $(this).data('objectId');
-            var formHtml = $('#tax-dropdown-wrapper-' + objectId);
+            var formHtml = $('.tax-dropdown-wrapper');
+
             $.featherlight(
                 foodcoopshop.AppFeatherlight.initLightboxForForms(
                     foodcoopshop.Admin.editTaxFormSave,
-                    null,
+                    foodcoopshop.Admin.editTaxFormAfterLoad,
                     foodcoopshop.AppFeatherlight.closeAndReloadLightbox,
-                    formHtml
+                    formHtml,
+                    objectId
                 )
             );
         });
 
     },
 
-    editTaxFormSave: function () {
-
-        var productId = $('.featherlight-content .product-id').val();
+    editTaxFormSave: function (productId) {
 
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/editTax/',
             {
                 productId: productId,
-                taxId: $('.featherlight-content #tax-dropdown-' + productId).val()
+                taxId: $('.featherlight-content #TaxIdTax').val()
             },
             {
                 onOk: function (data) {
@@ -2409,6 +2414,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
