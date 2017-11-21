@@ -694,8 +694,8 @@ class Product extends AppModel
         if ($manufacturerId != '') {
             $conditions['Product.id_manufacturer'] = $manufacturerId;
         } else {
-            // do not show any products if no manufactuerId is set
-            $conditions['Product.id_manufacturer'] = - 1;
+            // do not show any non-associated products that might be found in database
+            $conditions[] = 'Product.id_manufacturer > 0';
         }
 
         if ($productId != '') {
@@ -715,6 +715,11 @@ class Product extends AppModel
             'Product',
             'CategoryProducts'
         );
+
+        if ($manufacturerId == '') {
+            $contain[] = 'Manufacturer';
+            $fields[0] .= ', Manufacturer.name';
+        }
 
         $pParams = array(
             'fields' => $fields,

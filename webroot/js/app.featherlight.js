@@ -85,7 +85,8 @@ foodcoopshop.AppFeatherlight = {
         onSave,
         additionalAfterOpen,
         lightboxCloseMethod,
-        formHtml
+        formHtml,
+        objectId
 ) {
 
         return this
@@ -117,7 +118,7 @@ foodcoopshop.AppFeatherlight = {
                                 'fa-check'
                             );
                             foodcoopshop.Helper.disableButton($(this));
-                            onSave();
+                            onSave(objectId);
                         }
                     );
 
@@ -126,7 +127,7 @@ foodcoopshop.AppFeatherlight = {
                     });
 
                     if (additionalAfterOpen) {
-                        additionalAfterOpen();
+                        additionalAfterOpen(objectId);
                     }
 
                     foodcoopshop.AppFeatherlight.setMaxHeightInner();

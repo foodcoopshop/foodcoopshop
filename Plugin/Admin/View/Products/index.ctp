@@ -136,10 +136,13 @@
     echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
-    echo '<th class="hide">' . $this->Paginator->sort('Product.id_product', 'ID') . '</th>';
+    echo '<th class="hide">ID</th>';
     echo '<th>Variante</th>';
-    echo '<th>Bild</th>';
+    echo '<th>' . $this->Paginator->sort('Product.image', 'Bild') . '</th>';
     echo '<th>' . $this->Paginator->sort('ProductLang.name', 'Name') . '</th>';
+    if ($manufacturerId == '') {
+        echo '<th>' . $this->Paginator->sort('Product.id_manufacturer', 'Hersteller') . '</th>';
+    }
     echo '<th>Kategorien</th>';
     echo '<th>' . $this->Paginator->sort('Stock.quantity', 'Anzahl') . '</th>';
     echo '<th>' . $this->Paginator->sort('ProductShop.price', 'Preis') . '</th>';
@@ -241,23 +244,23 @@
 
         echo '</td>';
 
+        if ($manufacturerId == '') {
+            echo '<td>';
+            if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+                echo $this->Html->link(
+                    $product['Manufacturer']['name'],
+                    $this->Slug->getProductAdmin($product['Product']['id_manufacturer'])
+                );
+            }
+            echo '</td>';
+        }
+
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo '<div class="categories-checkboxes" id="categories-checkboxes-' . $product['Product']['id_product'] . '">';
-            echo $this->Form->hidden('Product.id_product', array(
-                'value' => $product['Product']['id_product'],
-                'id' => 'categories-product-id-' . $product['Product']['id_product'],
-                'class' => 'product-id'
+            echo $this->Form->hidden('Product.selected_categories', array(
+                'value' => implode(',', $product['selectedCategories']),
+                'id' => 'selected-categories-' . $product['Product']['id_product']
             ));
-            echo $this->Form->input('Product.CategoryProducts', array(
-                'multiple' => 'checkbox',
-                'label' => $product['ProductLang']['name'],
-                'options' => $categoriesForDropdown,
-                'selected' => $product['selectedCategories'],
-                'id' => 'cat-' . $product['Product']['id_product']
-            ));
-            echo '<div class="sc"></div>';
-            echo '</div>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-categories-edit-button',
                 'title' => 'Kategorien ändern',
@@ -395,7 +398,13 @@
     }
 
     echo '<tr>';
-    echo '<td colspan="12"><b>' . $i . '</b> Datensätze</td>';
+
+    $colspan = 12;
+    if ($manufacturerId == '') {
+        $colspan++;
+    }
+
+    echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
     echo '</tr>';
 
     echo '</table>';
@@ -405,4 +414,13 @@
     
 </div>
 
-<?php echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown)); ?>
+<?php
+    echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown));
+    echo '<div class="categories-checkboxes">';
+        echo $this->Form->input('Product.CategoryProducts', array(
+            'label' => 'Kategorien auswählen',
+            'multiple' => 'checkbox',
+            'options' => $categoriesForDropdown
+        ));
+        echo '</div>';
+?>
