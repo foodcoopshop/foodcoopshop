@@ -22,7 +22,7 @@ $options = array(
     'escape' => false
 );
 $options['class'] = 'btn btn-default';
-echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Neue Sofort-Bestellung', 'javascript:void(0);', $options);
+echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
 echo $this->Form->input('shopOrderCustomerId', array(
     'type' => 'select',
     'label' => '',
