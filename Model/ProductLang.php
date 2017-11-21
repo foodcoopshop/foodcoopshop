@@ -63,7 +63,7 @@ class ProductLang extends AppModel
                 $productsLang2save[] = array(
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br>'),
+                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br><img>'),
                     'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><br>'),
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 );
