@@ -14,6 +14,10 @@ CKEDITOR.editorConfig = function ( config ) {
 
     config.startupOutlineBlocks = false;
     config.forcePasteAsPlainText = true;
+    config.contentsCss = [
+        '/js/vendor/ckeditor/contents.css',
+        '/js/ckeditor/config-small-with-upload.css'
+    ];
 
     config.filebrowserBrowseUrl = '/js/vendor/kcfinder/browse.php?type=files';
     config.filebrowserImageBrowseUrl = '/js/vendor/kcfinder/browse.php?type=images';
@@ -33,5 +37,6 @@ CKEDITOR.editorConfig = function ( config ) {
 };
 
 CKEDITOR.timestamp = '4.7.3'; // change this string if version is updated in bower.json
+
 
 
