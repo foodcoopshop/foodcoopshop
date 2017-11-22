@@ -79,8 +79,6 @@ foodcoopshop.AppFeatherlight = {
 
     addLightboxToCkeditorImages : function (selector) {
         $(selector).each(function () {
-            console.log($(this).width());
-            console.log($(this).parent().width());
             if ($(this).width() > $(this).parent().width()) {
                 $(this).wrap('<a class="lightbox" href="' + $(this).attr('src') + '"></a>');
             }
@@ -175,4 +173,5 @@ foodcoopshop.AppFeatherlight = {
     }
 
 }
+
 
