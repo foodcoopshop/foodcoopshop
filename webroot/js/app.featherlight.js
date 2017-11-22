@@ -79,9 +79,7 @@ foodcoopshop.AppFeatherlight = {
 
     addLightboxToCkeditorImages : function (selector) {
         $(selector).each(function () {
-            if ($(this).width() > $(this).parent().width()) {
-                $(this).wrap('<a class="lightbox" href="' + $(this).attr('src') + '"></a>');
-            }
+            $(this).wrap('<a class="lightbox" href="' + $(this).attr('src') + '"></a>');
         });
     },
 
