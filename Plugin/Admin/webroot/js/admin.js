@@ -234,7 +234,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 410,
+            height: 460,
             width: 350,
             modal: true,
 
@@ -322,7 +322,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 410,
+            height: 460,
             width: 350,
             modal: true,
 
@@ -631,8 +631,8 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 570,
-            width: 695,
+            height: 610,
+            width: 795,
             modal: true,
 
             close: function () {
@@ -2434,6 +2434,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 

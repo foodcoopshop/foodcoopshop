@@ -180,9 +180,6 @@ form.fcs-form .bootstrap-select {
     width: 310px;
     margin-bottom: 10px;
 }
-#product-name-edit-form textarea {
-    height: 120px;
-}
 span.name-for-dialog,
 span.quantity-for-dialog,
 span.price-for-dialog,
@@ -352,9 +349,10 @@ div.cke {
 #product-name-edit-form div.textarea-wrapper {
     float: left;
     width: 310px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
-#product-name-edit-form div.textarea-wrapper:last-child {
+#product-name-edit-form div.textarea-wrapper:last-of-type {
+    width: 415px;
     margin-right: 0;
 }
 body.order_details.index .add-payment-deposit-button-wrapper {
@@ -991,6 +989,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
