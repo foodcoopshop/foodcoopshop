@@ -408,6 +408,9 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper .radio label {
     word-break: break-word;
 }
+.product-wrapper .toggle-content.description img {
+  margin-bottom: 3px;
+}
 .blog-post-wrapper div.second-column,
 .product-wrapper div.second-column,
 .manufacturer-wrapper div.second-column {
@@ -1098,6 +1101,7 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
 
 
 
