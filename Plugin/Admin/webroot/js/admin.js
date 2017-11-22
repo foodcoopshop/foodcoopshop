@@ -619,7 +619,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort" />';
         dialogHtml += '</div>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label>';
+        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Lebensmittelkennzeichnung</a>';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
@@ -2434,6 +2434,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
