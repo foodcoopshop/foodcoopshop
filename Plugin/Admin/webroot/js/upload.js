@@ -75,10 +75,11 @@ foodcoopshop.Upload = {
             $(this).featherlight(
                 foodcoopshop.AppFeatherlight.initLightboxForForms(
                     function () {
-                            saveMethod();
+                        saveMethod();
                     },
                     function () {
-                            foodcoopshop.AppFeatherlight.disableSaveButton();
+                        foodcoopshop.AppFeatherlight.disableSaveButton();
+                        foodcoopshop.AppFeatherlight.loadImageSrcFromDataAttribute();
                     },
                     closeMethod,
                     imageUploadForm

@@ -649,6 +649,9 @@ body.payments.my_member_fee #help-container {
     width: 300px;
     margin-bottom: 10px;
 }
+.featherlight-content .mini-upload-form .drop img.existingImage.loading {
+  padding: 20px 118px;
+}
 .featherlight-content .mini-upload-form p.heading {
     font-size: 16px;
     margin-top: -26px;
@@ -985,6 +988,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
