@@ -93,7 +93,7 @@ foodcoopshop.AppFeatherlight = {
         lightboxCloseMethod,
         formHtml,
         objectId
-) {
+    ) {
 
         return this
             .initLightbox({
@@ -168,8 +168,16 @@ foodcoopshop.AppFeatherlight = {
     disableSaveButton: function () {
         var button = $('.featherlight-inner .btn.save');
         foodcoopshop.Helper.disableButton(button);
+    },
+
+    loadImageSrcFromDataAttribute : function () {
+        var img = $('.featherlight-inner .existingImage');
+        if (img.attr('src') != img.data('src')) {
+            img.on('load', function () {
+                $(this).removeClass('loading');
+            }).attr('src', img.data('src'));;
+        }
     }
 
 }
-
 
