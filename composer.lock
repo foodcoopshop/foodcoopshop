@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "2.10.4",
+            "version": "2.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "549c18192643dd1160fd0d094498f24ec4d68dd9"
+                "reference": "10fcd7633d40b100a57054025dd38cd008fded80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/549c18192643dd1160fd0d094498f24ec4d68dd9",
-                "reference": "549c18192643dd1160fd0d094498f24ec4d68dd9",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/10fcd7633d40b100a57054025dd38cd008fded80",
+                "reference": "10fcd7633d40b100a57054025dd38cd008fded80",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-10-19T01:54:49+00:00"
+            "time": "2017-11-21T02:09:55+00:00"
         },
         {
             "name": "composer/installers",
@@ -307,12 +307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/markstory/asset_compress.git",
-                "reference": "0fc76eb367dc6ebb6086b90474086cc789681b6e"
+                "reference": "3a0a919c59eb26e913534973d3c7e5a2a03305e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/0fc76eb367dc6ebb6086b90474086cc789681b6e",
-                "reference": "0fc76eb367dc6ebb6086b90474086cc789681b6e",
+                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/3a0a919c59eb26e913534973d3c7e5a2a03305e7",
+                "reference": "3a0a919c59eb26e913534973d3c7e5a2a03305e7",
                 "shasum": ""
             },
             "require": {
@@ -342,7 +342,7 @@
                 "minifier",
                 "sass"
             ],
-            "time": "2017-10-05T02:02:33+00:00"
+            "time": "2017-11-17T12:41:21+00:00"
         },
         {
             "name": "natxet/CssMin",
@@ -1074,16 +1074,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.28",
+            "version": "v2.8.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "842fb6df22180244b4c65935ce1a88d324e5ff9e"
+                "reference": "d819bf267e901727141fe828ae888486fd21236e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/842fb6df22180244b4c65935ce1a88d324e5ff9e",
-                "reference": "842fb6df22180244b4c65935ce1a88d324e5ff9e",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/d819bf267e901727141fe828ae888486fd21236e",
+                "reference": "d819bf267e901727141fe828ae888486fd21236e",
                 "shasum": ""
             },
             "require": {
@@ -1119,7 +1119,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-05T14:38:30+00:00"
+            "time": "2017-11-05T15:25:56+00:00"
         }
     ],
     "aliases": [],
