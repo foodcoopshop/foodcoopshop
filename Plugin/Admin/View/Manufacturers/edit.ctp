@@ -89,10 +89,12 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
 
+    $buttonOptions = array('class' => 'btn btn-default', 'escape' => false);
+    $buttonIcon = '<i class="fa fa-cogs fa-lg"></i> ';
     if ($appAuth->isManufacturer()) {
-        $optionsLink = $this->Html->link('Hier geht\'s zu deinen Einstellungen', $this->Slug->getManufacturerMyOptions());
+        $optionsLink = $this->Html->link($buttonIcon . 'Hier geht\'s zu deinen Einstellungen', $this->Slug->getManufacturerMyOptions(), $buttonOptions);
     } else {
-        $optionsLink = $this->Html->link('Hier geht\'s zu den Hersteller-Einstellungen', $this->Slug->getManufacturerEditOptions($manufacturerId));
+        $optionsLink = $this->Html->link($buttonIcon . 'Hier geht\'s zu den Hersteller-Einstellungen', $this->Slug->getManufacturerEditOptions($manufacturerId), $buttonOptions);
     }
     echo ' <span class="description">' . $optionsLink . '</span>';
 
