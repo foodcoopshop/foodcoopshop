@@ -53,6 +53,33 @@ class ManufacturersController extends AdminAppController
         $this->render('edit');
     }
 
+    public function setKcFinderUploadPath($manufacturerId)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        if ($this->AppAuth->isManufacturer()) {
+            $manufacturerId = $this->AppAuth->getManufacturerId();
+        } else {
+            $this->recursive = -1;
+            $manufacturer = $this->Manufacturer->find('first', array(
+                'conditions' => array(
+                    'Manufacturer.id_manufacturer' => $manufacturerId
+                )
+            ));
+            $manufacturerId = $manufacturer['Manufacturer']['id_manufacturer'];
+        }
+
+        $_SESSION['KCFINDER'] = array(
+            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
+        );
+        $this->set('data', array(
+            'status' => true,
+            'msg' => 'OK'
+        ));
+        $this->set('_serialize', 'data');
+    }
+
     public function edit($manufacturerId = null)
     {
         $this->setFormReferer();

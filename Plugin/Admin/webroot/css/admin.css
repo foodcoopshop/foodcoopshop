@@ -180,9 +180,6 @@ form.fcs-form .bootstrap-select {
     width: 310px;
     margin-bottom: 10px;
 }
-#product-name-edit-form textarea {
-    height: 120px;
-}
 span.name-for-dialog,
 span.quantity-for-dialog,
 span.price-for-dialog,
@@ -352,9 +349,10 @@ div.cke {
 #product-name-edit-form div.textarea-wrapper {
     float: left;
     width: 310px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
-#product-name-edit-form div.textarea-wrapper:last-child {
+#product-name-edit-form div.textarea-wrapper:last-of-type {
+    width: 415px;
     margin-right: 0;
 }
 body.order_details.index .add-payment-deposit-button-wrapper {
@@ -366,6 +364,14 @@ body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.i
   padding-bottom: 3px;
   background: #fff;
   border-radius: 5px;
+}
+#product-name-edit-form div.textarea-wrapper a {
+  color: red;
+  font-weight: bold;
+  float: right;
+}
+#product-name-edit-form div.textarea-wrapper a:hover  {
+  color: #333;
 }
 #order-detail-product-quantity-edit-form div.textarea-wrapper {
     float: left;
@@ -711,6 +717,12 @@ body.sliders form.mini-upload-form a.img-delete {
 .ui-dialog {
     z-index: 2147483648; /* 1 more than featherlight */
 }
+.cke_dialog_background_cover {
+    z-index: 2147483649 ! important; /* open upload from dialog - 1 more than .ui-dialog */
+}
+.cke_dialog {
+    z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
+}
 #manufacturer-options-edit-form h3 {
     margin-top: 15px;
 }
@@ -988,11 +1000,3 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
-
-
-
-
-
-
-
-

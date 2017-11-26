@@ -53,7 +53,7 @@ if ($product['ProductLang']['description'] != '') {
         'escape' => false
         )
     );
-    echo '<div class="toggle-content">'.$product['ProductLang']['description'].'</div>';
+    echo '<div class="toggle-content description">'.$product['ProductLang']['description'].'</div>';
 }
 
     echo '<br />Hersteller: ';

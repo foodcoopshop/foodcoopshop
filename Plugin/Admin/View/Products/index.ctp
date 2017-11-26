@@ -161,7 +161,7 @@
     foreach ($products as $product) {
         $i ++;
 
-        echo '<tr id="product-' . $product['Product']['id_product'] . '" class="data ' . $product['Product']['rowClass'] . '">';
+        echo '<tr id="product-' . $product['Product']['id_product'] . '" class="data ' . $product['Product']['rowClass'] . '" data-manufacturer-id="'.(isset($product['Product']['id_manufacturer']) ? $product['Product']['id_manufacturer'] : '').'">';
 
         echo '<td class="hide">';
         echo $product['Product']['id_product'];

@@ -234,7 +234,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 410,
+            height: 460,
             width: 350,
             modal: true,
 
@@ -322,7 +322,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 410,
+            height: 460,
             width: 350,
             modal: true,
 
@@ -619,7 +619,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort" />';
         dialogHtml += '</div>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label>';
+        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Lebensmittelkennzeichnung</a>';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
@@ -631,8 +631,8 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 570,
-            width: 695,
+            height: 610,
+            width: 795,
             modal: true,
 
             close: function () {
@@ -698,15 +698,29 @@ foodcoopshop.Admin = {
             $('#' + dialogId).remove();
 
             var dialog = foodcoopshop.Admin.createProductNameEditDialog(container);
-            foodcoopshop.Helper.initCkeditor('dialogDescription');
-            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
-            var nameCell = $(this).parent().parent().parent().parent().find('td:nth-child(4)');
+            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
+            var row = $(this).closest('tr');
+            var nameCell = row.find('td:nth-child(4)');
             $('#' + dialogId + ' #dialogName').val(nameCell.find('span.name-for-dialog').html());
             $('#' + dialogId + ' #dialogUnity').val(nameCell.find('span.unity-for-dialog').html());
             CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
-            CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
-            $('#' + dialogId + ' #dialogProductId').val($(this).parent().parent().parent().parent().find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogProductId').val(row.find('td:nth-child(1)').html());
+
+            var manufacturerId = row.data('manufacturerId');
+            foodcoopshop.Helper.ajaxCall(
+                '/admin/manufacturers/setKcFinderUploadPath/' + manufacturerId,
+                {},
+                {
+                    onOk: function (data) {
+                        foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogDescription');
+                        CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
+                    },
+                    onError: function (data) {
+                        foodcoopshop.Helper.showErrorMessage(data.msg);
+                    }
+                }
+            );
 
             // hide unity field if product has attributes
             var unitySelector = $('#' + dialogId + ' #labelUnity, #' + dialogId + ' #dialogUnity');
@@ -2420,13 +2434,3 @@ foodcoopshop.Admin = {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
