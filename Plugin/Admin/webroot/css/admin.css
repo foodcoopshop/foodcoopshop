@@ -252,6 +252,15 @@ span.product-quantity-for-dialog {
     padding: 5px 6px;
     border-radius: 4px;
 }
+body.products.index .filter-container div.input.select {
+  margin-right: 4px;
+}
+body.products.index button#filter {
+  margin-left: 0;
+}
+body.products.index .bootstrap-select {
+  width: 172px ! important;
+}
 td.right,
 th.right {
     text-align: right;
@@ -448,6 +457,9 @@ form div.error-message {
     padding: 10px;
     width: 100%;
 }
+.categories-checkboxes.featherlight-inner {
+  max-width: 450px;
+}
 .tax-dropdown-wrapper.featherlight-inner label {
     width: 100%;
 }
@@ -636,6 +648,9 @@ body.payments.my_member_fee #help-container {
 .featherlight-content .mini-upload-form .drop img.uploadedFile {
     width: 300px;
     margin-bottom: 10px;
+}
+.featherlight-content .mini-upload-form .drop img.existingImage.loading {
+  padding: 20px 118px;
 }
 .featherlight-content .mini-upload-form p.heading {
     font-size: 16px;
@@ -973,6 +988,9 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
+
+
 
 
 

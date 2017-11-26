@@ -17,7 +17,7 @@
      
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
+        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
         ));
         $this->element('highlightRowAfterEdit', array(
@@ -27,7 +27,7 @@
     
     <div class="filter-container">
         <?php
-        if ($manufacturerId != '') {
+        if ($manufacturerId > 0) {
             echo $this->Form->input('productId', array(
                 'type' => 'select',
                 'label' => '',
@@ -40,7 +40,7 @@
                 'type' => 'select',
                 'label' => '',
                 'options' => $manufacturersForDropdown,
-                'empty' => 'alle Hersteller',
+                'empty' => 'Bitte auswählen...',
                 'selected' => isset($manufacturerId) ? $manufacturerId : ''
             ));
         }
@@ -60,7 +60,7 @@
             // only show button if no manufacturer filter is applied
             if ($manufacturerId > 0) {
                 echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt erstellen', 'javascript:void(0);', array(
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', array(
                     'class' => 'btn btn-default',
                     'escape' => false
                 ));
@@ -133,13 +133,20 @@
         }
     }
 
+    if (empty($products) && $manufacturerId == '') {
+        echo '<h2 class="info">Bitte wähle einen Hersteller aus.</h2>';
+    }
+
     echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
-    echo '<th class="hide">' . $this->Paginator->sort('Product.id_product', 'ID') . '</th>';
+    echo '<th class="hide">ID</th>';
     echo '<th>Variante</th>';
-    echo '<th>Bild</th>';
+    echo '<th>' . $this->Paginator->sort('Product.image', 'Bild') . '</th>';
     echo '<th>' . $this->Paginator->sort('ProductLang.name', 'Name') . '</th>';
+    if ($manufacturerId == 'all') {
+        echo '<th>' . $this->Paginator->sort('Product.id_manufacturer', 'Hersteller') . '</th>';
+    }
     echo '<th>Kategorien</th>';
     echo '<th>' . $this->Paginator->sort('Stock.quantity', 'Anzahl') . '</th>';
     echo '<th>' . $this->Paginator->sort('ProductShop.price', 'Preis') . '</th>';
@@ -241,23 +248,23 @@
 
         echo '</td>';
 
+        if ($manufacturerId == 'all') {
+            echo '<td>';
+            if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+                echo $this->Html->link(
+                    $product['Manufacturer']['name'],
+                    $this->Slug->getProductAdmin($product['Product']['id_manufacturer'])
+                );
+            }
+            echo '</td>';
+        }
+
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo '<div class="categories-checkboxes" id="categories-checkboxes-' . $product['Product']['id_product'] . '">';
-            echo $this->Form->hidden('Product.id_product', array(
-                'value' => $product['Product']['id_product'],
-                'id' => 'categories-product-id-' . $product['Product']['id_product'],
-                'class' => 'product-id'
+            echo $this->Form->hidden('Product.selected_categories', array(
+                'value' => implode(',', $product['selectedCategories']),
+                'id' => 'selected-categories-' . $product['Product']['id_product']
             ));
-            echo $this->Form->input('Product.CategoryProducts', array(
-                'multiple' => 'checkbox',
-                'label' => $product['ProductLang']['name'],
-                'options' => $categoriesForDropdown,
-                'selected' => $product['selectedCategories'],
-                'id' => 'cat-' . $product['Product']['id_product']
-            ));
-            echo '<div class="sc"></div>';
-            echo '</div>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'class' => 'product-categories-edit-button',
                 'title' => 'Kategorien ändern',
@@ -302,20 +309,10 @@
 
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo '<div class="tax-dropdown-wrapper" id="tax-dropdown-wrapper-' . $product['Product']['id_product'] . '">';
-            echo $this->Form->hidden('Product.id_product', array(
-                'value' => $product['Product']['id_product'],
-                'id' => 'tax-product-id-' . $product['Product']['id_product'],
-                'class' => 'product-id'
+            echo $this->Form->hidden('Product.id_tax', array(
+                'id' => 'tax-id-' . $product['Product']['id_product'],
+                'value' => $product['Product']['id_tax']
             ));
-            echo $this->Form->input('Tax.id_tax', array(
-                'type' => 'select',
-                'label' => 'Steuersatz ändern für:<br />' . $product['ProductLang']['name'],
-                'options' => $taxesForDropdown,
-                'selected' => $product['Product']['id_tax'],
-                'id' => 'tax-dropdown-' . $product['Product']['id_product']
-            ));
-            echo '</div>';
             $taxRate = $product['Tax']['rate'];
             echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
@@ -395,7 +392,13 @@
     }
 
     echo '<tr>';
-    echo '<td colspan="12"><b>' . $i . '</b> Datensätze</td>';
+
+    $colspan = 12;
+    if ($manufacturerId == 'all') {
+        $colspan++;
+    }
+
+    echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
     echo '</tr>';
 
     echo '</table>';
@@ -405,4 +408,21 @@
     
 </div>
 
-<?php echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown)); ?>
+<?php
+    // dropdowns and checkboxes for overlays are only rendered once (performance)
+    echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown));
+    echo '<div class="categories-checkboxes">';
+        echo $this->Form->input('Product.CategoryProducts', array(
+            'label' => '',
+            'multiple' => 'checkbox',
+            'options' => $categoriesForDropdown
+        ));
+        echo '</div>';
+        echo '<div class="tax-dropdown-wrapper">';
+        echo $this->Form->input('Tax.id_tax', array(
+            'type' => 'select',
+            'label' => '',
+            'options' => $taxesForDropdown,
+        ));
+        echo '</div>';
+?>

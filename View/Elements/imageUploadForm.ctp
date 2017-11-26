@@ -23,7 +23,7 @@
         </p>
     <div class="drop">
         <?php if ($imageExists) { ?>
-            <?php echo '<img class="existingImage" src="' . $existingImageSrc . '" />'; ?>
+            <?php echo '<img class="existingImage loading" src="/img/ajax-loader.gif" data-src="' . $existingImageSrc . '" />'; ?>
         <?php } ?>
         <p style="font-size:13px;">Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet).</p>
         <a class="upload-button">PC durchsuchen</a>

@@ -708,8 +708,12 @@ class ProductsController extends AdminAppController
         }
         $this->set('active', $active);
 
-        $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active);
-        $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
+        if ($manufacturerId != '') {
+            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active);
+            $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
+        } else {
+            $preparedProducts = array();
+        }
         $this->set('products', $preparedProducts);
 
         $this->loadModel('Manufacturer');
@@ -717,11 +721,13 @@ class ProductsController extends AdminAppController
         $this->set('attributesLangForDropdown', $this->AttributeLang->getForDropdown());
         $this->loadModel('Category');
         $this->set('categoriesForDropdown', $this->Category->getForCheckboxes());
-        $this->set('manufacturersForDropdown', $this->Product->Manufacturer->getForDropdown());
+        $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
+        array_unshift($manufacturersForDropdown, array('all' => 'Alle Hersteller'));
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->loadModel('Tax');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        if ($manufacturerId != '') {
+        if ($manufacturerId > 0) {
             $manufacturer = $this->Manufacturer->find('first', array(
                 'conditions' => array(
                     'Manufacturer.id_manufacturer' => $manufacturerId
