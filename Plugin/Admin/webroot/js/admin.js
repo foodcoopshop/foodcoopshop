@@ -2434,16 +2434,3 @@ foodcoopshop.Admin = {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

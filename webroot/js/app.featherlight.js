@@ -94,7 +94,6 @@ foodcoopshop.AppFeatherlight = {
         formHtml,
         objectId
     ) {
-
         return this
             .initLightbox({
 
