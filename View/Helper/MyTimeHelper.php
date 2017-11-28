@@ -134,7 +134,7 @@ class MyTimeHelper extends TimeHelper
     {
 
         $currentWeekday = date('N', $day);
-        $sendOrderListsWeekdayEnglish = strtolower($this->getWeekdaysEn()[Configure::read('app.sendOrderListsWeekday')]);
+        $sendOrderListsWeekdayEnglish = $this->getWeekdaysEn()[Configure::read('app.sendOrderListsWeekday')];
         $deliveryWeekday = (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
 
         $weekDelta = '-1';
@@ -142,7 +142,7 @@ class MyTimeHelper extends TimeHelper
             $weekDelta = '-2';
         }
 
-        $date = date('d.m.Y', strtotime($weekDelta . ' ' . $sendOrderListsWeekdayEnglish, $day));
+        $date = date('d.m.Y', strtotime($weekDelta . ' week ' . $sendOrderListsWeekdayEnglish, $day));
 
         return $date;
     }
@@ -157,40 +157,32 @@ class MyTimeHelper extends TimeHelper
 
         $currentWeekday = date('N', $day);
 
-        switch (Configure::read('app.sendOrderListsWeekday')) {
-            case 2: // tuesday
-                switch ($currentWeekday) {
-                    case 6: // saturday
-                    case 7: // sunday
-                        $date = date('d.m.Y', strtotime('next monday'));
-                        break;
-                    case 1: // monday
-                        $date = date('d.m.Y');
-                        break;
-                    case 2: // tuesday
-                    case 3: // wednesday
-                    case 4: // thursday
-                    case 5: // friday
-                        $date = date('d.m.Y', strtotime('last monday'));
-                        break;
-                }
-                break;
-            case 3: // wednesday
-                switch ($currentWeekday) {
-                    case 6: // saturday
-                    case 7: // sunday
-                    case 1: // monday
-                        $date = date('d.m.Y', strtotime('next tuesday'));
-                        break;
-                    case 2: // tuesday
-                        $date = date('d.m.Y');
-                        break;
-                    case 3: // wednesday
-                    case 4: // thursday
-                    case 5: // friday
-                        $date = date('d.m.Y', strtotime('last tuesday'));
-                        break;
-                }
+        $oneWeekdayBeforeSendOrderListsWeekday = (Configure::read('app.sendOrderListsWeekday') - 1) % 7;
+        if ($oneWeekdayBeforeSendOrderListsWeekday == 0) {
+            $oneWeekdayBeforeSendOrderListsWeekday = 7;
+        }
+
+        $oneWeekdayBeforeSendOrderListsWeekdayEnglish = $this->getWeekdaysEn()[$oneWeekdayBeforeSendOrderListsWeekday];
+        $deliveryWeekday = (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
+
+//         pr($oneWeekdayBeforeSendOrderListsWeekdayEnglish);
+//         pr($oneWeekdayBeforeSendOrderListsWeekday);
+//         pr($currentWeekday);
+//         pr($deliveryWeekday);
+
+        if ($currentWeekday >= Configure::read('app.sendOrderListsWeekday')) {
+            $weekString = 'last';
+        }
+        if ($currentWeekday < $oneWeekdayBeforeSendOrderListsWeekday || $deliveryWeekday < $currentWeekday) {
+            $weekString = 'next';
+        }
+        if (isset($weekString)) {
+//             pr($weekString . ' ' . $oneWeekdayBeforeSendOrderListsWeekdayEnglish);
+            $date = date('d.m.Y', strtotime($weekString . ' ' . $oneWeekdayBeforeSendOrderListsWeekdayEnglish, $day));
+        }
+
+        if ($currentWeekday == $oneWeekdayBeforeSendOrderListsWeekday) {
+            $date = date('d.m.Y', $day);
         }
 
         return $date;

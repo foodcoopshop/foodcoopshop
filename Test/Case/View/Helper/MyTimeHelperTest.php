@@ -73,9 +73,64 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodFirstDay('05.12.2017', '27.11.2017'); // tuesday
     }
 
+    public function testGetOrderPeriodLastDayWednesdayFriday()
+    {
+        Configure::write('app.deliveryDayDelta', 2);
+        Configure::write('app.sendOrderListsWeekday', 3);
+
+        $this->assertGetOrderPeriodLastDay('27.11.2017', '28.11.2017'); // monday
+        $this->assertGetOrderPeriodLastDay('28.11.2017', '28.11.2017'); // tuesday
+        $this->assertGetOrderPeriodLastDay('29.11.2017', '28.11.2017'); // wednesday
+        $this->assertGetOrderPeriodLastDay('30.11.2017', '28.11.2017'); // thursday
+        $this->assertGetOrderPeriodLastDay('01.12.2017', '28.11.2017'); // friday
+        $this->assertGetOrderPeriodLastDay('02.12.2017', '05.12.2017'); // saturday
+        $this->assertGetOrderPeriodLastDay('03.12.2017', '05.12.2017'); // sunday
+        $this->assertGetOrderPeriodLastDay('04.12.2017', '05.12.2017'); // monday
+        $this->assertGetOrderPeriodLastDay('05.12.2017', '05.12.2017'); // tuesday
+    }
+
+    public function testGetOrderPeriodLastDayTuesdayFriday()
+    {
+        Configure::write('app.deliveryDayDelta', 3);
+        Configure::write('app.sendOrderListsWeekday', 2);
+
+        $this->assertGetOrderPeriodLastDay('27.11.2017', '27.11.2017'); // monday
+        $this->assertGetOrderPeriodLastDay('28.11.2017', '27.11.2017'); // tuesday
+        $this->assertGetOrderPeriodLastDay('29.11.2017', '27.11.2017'); // wednesday
+        $this->assertGetOrderPeriodLastDay('30.11.2017', '27.11.2017'); // thursday
+        $this->assertGetOrderPeriodLastDay('01.12.2017', '27.11.2017'); // friday
+        $this->assertGetOrderPeriodLastDay('02.12.2017', '04.12.2017'); // saturday
+        $this->assertGetOrderPeriodLastDay('03.12.2017', '04.12.2017'); // sunday
+        $this->assertGetOrderPeriodLastDay('04.12.2017', '04.12.2017'); // monday
+        $this->assertGetOrderPeriodLastDay('05.12.2017', '04.12.2017'); // tuesday
+    }
+
+    public function xtestGetOrderPeriodLastDayMondayTuesday()
+    {
+        Configure::write('app.deliveryDayDelta', 1);
+        Configure::write('app.sendOrderListsWeekday', 1);
+
+        $this->assertGetOrderPeriodLastDay('27.11.2017', '03.12.2017'); // monday
+//         $this->assertGetOrderPeriodLastDay('28.11.2017', '03.12.2017'); // tuesday
+//         $this->assertGetOrderPeriodLastDay('29.11.2017', '10.12.2017'); // wednesday
+//         $this->assertGetOrderPeriodLastDay('30.11.2017', '10.12.2017'); // thursday
+//         $this->assertGetOrderPeriodLastDay('01.12.2017', '10.12.2017'); // friday
+//         $this->assertGetOrderPeriodLastDay('02.12.2017', '10.12.2017'); // saturday
+//         $this->assertGetOrderPeriodLastDay('03.12.2017', '10.12.2017'); // sunday
+//         $this->assertGetOrderPeriodLastDay('04.12.2017', '10.12.2017'); // monday
+//         $this->assertGetOrderPeriodLastDay('05.12.2017', '17.12.2017'); // tuesday
+    }
+
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getOrderPeriodFirstDay(strtotime($currentDay));
+        $this->assertEquals($expected, $result);
+    }
+
+    private function assertGetOrderPeriodLastDay($currentDay, $expected)
+    {
+        $result = $this->MyTimeHelper->getOrderPeriodLastDay(strtotime($currentDay));
+        $this->debug($result);
         $this->assertEquals($expected, $result);
     }
 }
