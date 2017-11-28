@@ -216,7 +216,7 @@ class OrdersController extends AdminAppController
 
         $dateFrom = '';
         if ($orderId == '') {
-            $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay();
+            $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay());
         }
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
@@ -225,7 +225,7 @@ class OrdersController extends AdminAppController
 
         $dateTo = '';
         if ($orderId == '') {
-            $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay();
+            $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay(Configure::read('timeHelper')->getCurrentDay());
         }
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];

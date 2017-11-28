@@ -265,13 +265,13 @@ class ManufacturersController extends AdminAppController
 
     public function index()
     {
-        $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay();
+        $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay());
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay();
+        $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay(Configure::read('timeHelper')->getCurrentDay());
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
         }

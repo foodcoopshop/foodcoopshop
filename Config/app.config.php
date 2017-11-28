@@ -103,6 +103,7 @@ Configure::write('app.allowManualOrderListSending', false);
 /**
  * weekday on which the weekly cronjob "SendOrderList" is called
  * the available options are:
+ * - 1 (monday)
  * - 2 (tuesday)
  * - 3 (wednesday)
  * all the other weekdays are not implemented yet!

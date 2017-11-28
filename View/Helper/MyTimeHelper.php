@@ -88,7 +88,7 @@ class MyTimeHelper extends TimeHelper
     public function getDeliveryDay()
     {
         $daysToAddToOrderPeriodLastDay = Configure::read('app.deliveryDayDelta') + 1;
-        $deliveryDate = strtotime($this->getOrderPeriodLastDay() . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        $deliveryDate = strtotime($this->getOrderPeriodLastDay($this->getCurrentDay()) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
         return $deliveryDate;
     }
 
@@ -120,58 +120,46 @@ class MyTimeHelper extends TimeHelper
         return date('Y-m-d H:i:s', $resetDate);
     }
 
+    public function getCurrentDay()
+    {
+        return time();
+    }
+
     /**
-     * implemented for app.sendOrderListsWeekday == tuesday OR wednesday
-     * feel free to improve algorithm :-)
+     * see tests for implementations
+     * @param $day
+     * @return $day
      */
-    public function getOrderPeriodFirstDay()
+    public function getOrderPeriodFirstDay($day)
     {
 
-        $day = date('N', time());
+        $currentWeekday = date('N', $day);
+        $sendOrderListsWeekdayEnglish = strtolower($this->getWeekdaysEn()[Configure::read('app.sendOrderListsWeekday')]);
+        $deliveryWeekday = (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
 
-        switch (Configure::read('app.sendOrderListsWeekday')) {
-            case 2: // tuesday
-                switch ($day) {
-                    case 6: // saturday
-                    case 7: // sunday
-                    case 1: // monday
-                    case 2: // tuesday
-                        $date = date('d.m.Y', strtotime('-1 week tuesday'));
-                        break;
-                    case 3: // wednesday
-                    case 4: // thursday
-                    case 5: // friday
-                        $date = date('d.m.Y', strtotime('-2 week tuesday'));
-                        break;
-                }
-                break;
-            case 3: // wednesday
-                switch ($day) {
-                    case 6: // saturday
-                    case 7: // sunday
-                    case 1: // monday
-                    case 2: // tuesday
-                    case 3: // wednesday
-                        $date = date('d.m.Y', strtotime('-1 week wednesday'));
-                        break;
-                    case 4: // thursday
-                    case 5: // friday
-                        $date = date('d.m.Y', strtotime('-2 week wednesday'));
-                        break;
-                }
-                break;
+        $weekDelta = '-1';
+        if ($currentWeekday <= $deliveryWeekday && $currentWeekday > Configure::read('app.sendOrderListsWeekday')) {
+            $weekDelta = '-2';
         }
+
+        $date = date('d.m.Y', strtotime($weekDelta . ' ' . $sendOrderListsWeekdayEnglish, $day));
 
         return $date;
     }
 
-    public function getOrderPeriodLastDay()
+    /**
+     * implemented for app.sendOrderListsWeekday == monday OR tuesday OR wednesday
+     * @param $day
+     * @return $day
+     */
+    public function getOrderPeriodLastDay($day)
     {
 
-        $day = date('N', time());
+        $currentWeekday = date('N', $day);
+
         switch (Configure::read('app.sendOrderListsWeekday')) {
             case 2: // tuesday
-                switch ($day) {
+                switch ($currentWeekday) {
                     case 6: // saturday
                     case 7: // sunday
                         $date = date('d.m.Y', strtotime('next monday'));
@@ -188,7 +176,7 @@ class MyTimeHelper extends TimeHelper
                 }
                 break;
             case 3: // wednesday
-                switch ($day) {
+                switch ($currentWeekday) {
                     case 6: // saturday
                     case 7: // sunday
                     case 1: // monday
@@ -206,6 +194,20 @@ class MyTimeHelper extends TimeHelper
         }
 
         return $date;
+    }
+
+    public function getWeekdaysEn()
+    {
+        $weekdays = array(
+            1 => 'Monday',
+            2 => 'Tuesday',
+            3 => 'Wednesday',
+            4 => 'Thursday',
+            5 => 'Friday',
+            6 => 'Saturday',
+            7 => 'Sunday'
+        );
+        return $weekdays;
     }
 
     public function getWeekdays()
