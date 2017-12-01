@@ -119,6 +119,7 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('03.12.2017', '03.12.2017'); // sunday
         $this->assertGetOrderPeriodLastDay('04.12.2017', '03.12.2017'); // monday
         $this->assertGetOrderPeriodLastDay('05.12.2017', '03.12.2017'); // tuesday
+        $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
     }
 
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
