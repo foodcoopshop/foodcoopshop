@@ -98,6 +98,7 @@ Configure::write('app.depositForManufacturersStartDate', '2016-01-01');
 /**
  * adds a link to the manufacturer admin to generate and send the order list on click
  * can be useful, if e.g. a member forgot to order and the order lists are already sent
+ * @deprecated - do not use this option any more, will be removed in next version
  */
 Configure::write('app.allowManualOrderListSending', false);
 /**
@@ -120,7 +121,7 @@ Configure::write('app.customerMainNamePart', 'firstname');
 Configure::write('app.categoryAllProducts', 20);
 
 /**
- * @deprecated - do not use this option, it won't make it in the next version
+ * @deprecated - do not use this option any more, will be removed in next version
  */
 Configure::write('app.memberFeeFlexibleEnabled', false);
 
