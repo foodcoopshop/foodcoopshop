@@ -25,11 +25,27 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
-    public function testGetOrderPeriodFirstDayWednesdayFriday()
+    private function prepareWednesdayFridayConfig()
     {
         Configure::write('app.deliveryDayDelta', 2);
         Configure::write('app.sendOrderListsWeekday', 3);
+    }
 
+    private function prepareTuesdayFridayConfig()
+    {
+        Configure::write('app.deliveryDayDelta', 3);
+        Configure::write('app.sendOrderListsWeekday', 2);
+    }
+
+    private function prepareMondayTuesdayConfig()
+    {
+        Configure::write('app.deliveryDayDelta', 1);
+        Configure::write('app.sendOrderListsWeekday', 1);
+    }
+
+    public function testGetOrderPeriodFirstDayWednesdayFriday()
+    {
+        $this->prepareWednesdayFridayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '22.11.2017'); // monday
         $this->assertGetOrderPeriodFirstDay('28.11.2017', '22.11.2017'); // tuesday
         $this->assertGetOrderPeriodFirstDay('29.11.2017', '22.11.2017'); // wednesday
@@ -43,9 +59,7 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     public function testGetOrderPeriodFirstDayTuesdayFriday()
     {
-        Configure::write('app.deliveryDayDelta', 3);
-        Configure::write('app.sendOrderListsWeekday', 2);
-
+        $this->prepareTuesdayFridayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '21.11.2017'); // monday
         $this->assertGetOrderPeriodFirstDay('28.11.2017', '21.11.2017'); // tuesday
         $this->assertGetOrderPeriodFirstDay('29.11.2017', '21.11.2017'); // wednesday
@@ -59,9 +73,7 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     public function testGetOrderPeriodFirstDayMondayTuesday()
     {
-        Configure::write('app.deliveryDayDelta', 1);
-        Configure::write('app.sendOrderListsWeekday', 1);
-
+        $this->prepareMondayTuesdayConfig();
         $this->assertGetOrderPeriodFirstDay('27.11.2017', '20.11.2017'); // monday
         $this->assertGetOrderPeriodFirstDay('28.11.2017', '20.11.2017'); // tuesday
         $this->assertGetOrderPeriodFirstDay('29.11.2017', '27.11.2017'); // wednesday
@@ -75,9 +87,7 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     public function testGetOrderPeriodLastDayWednesdayFriday()
     {
-        Configure::write('app.deliveryDayDelta', 2);
-        Configure::write('app.sendOrderListsWeekday', 3);
-
+        $this->prepareWednesdayFridayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '28.11.2017'); // monday
         $this->assertGetOrderPeriodLastDay('28.11.2017', '28.11.2017'); // tuesday
         $this->assertGetOrderPeriodLastDay('29.11.2017', '28.11.2017'); // wednesday
@@ -91,9 +101,7 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     public function testGetOrderPeriodLastDayTuesdayFriday()
     {
-        Configure::write('app.deliveryDayDelta', 3);
-        Configure::write('app.sendOrderListsWeekday', 2);
-
+        $this->prepareTuesdayFridayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '27.11.2017'); // monday
         $this->assertGetOrderPeriodLastDay('28.11.2017', '27.11.2017'); // tuesday
         $this->assertGetOrderPeriodLastDay('29.11.2017', '27.11.2017'); // wednesday
@@ -107,9 +115,7 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     public function testGetOrderPeriodLastDayMondayTuesday()
     {
-        Configure::write('app.deliveryDayDelta', 1);
-        Configure::write('app.sendOrderListsWeekday', 1);
-
+        $this->prepareMondayTuesdayConfig();
         $this->assertGetOrderPeriodLastDay('27.11.2017', '26.11.2017'); // monday
         $this->assertGetOrderPeriodLastDay('28.11.2017', '26.11.2017'); // tuesday
         $this->assertGetOrderPeriodLastDay('29.11.2017', '03.12.2017'); // wednesday

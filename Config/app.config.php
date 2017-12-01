@@ -102,11 +102,7 @@ Configure::write('app.depositForManufacturersStartDate', '2016-01-01');
 Configure::write('app.allowManualOrderListSending', false);
 /**
  * weekday on which the weekly cronjob "SendOrderList" is called
- * the available options are:
- * - 1 (monday)
- * - 2 (tuesday)
- * - 3 (wednesday)
- * all the other weekdays are not implemented yet!
+ * the available options (in combination with app.deliveryDayDelta) can be found in Test/Case/View/Helper/MyTimeHelperTest.php
  */
 Configure::write('app.sendOrderListsWeekday', 3);
 
