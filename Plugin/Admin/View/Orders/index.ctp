@@ -53,11 +53,9 @@
         <div class="right">
             
         <?php
-        if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
-            echo $this->element('addShopOrderButton', array(
-                'customers' => $customersForDropdown
-            ));
-        }
+        echo $this->element('addShopOrderButton', array(
+            'customers' => $customersForDropdown
+        ));
         ?>
               
         </div>

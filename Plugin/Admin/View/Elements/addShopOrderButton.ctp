@@ -13,21 +13,23 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
-    'script' =>
-        Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()).");"
-));
-echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
-$options = array(
-    'escape' => false
-);
-$options['class'] = 'btn btn-default';
-echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
-echo $this->Form->input('shopOrderCustomerId', array(
-    'type' => 'select',
-    'label' => '',
-    'class' => 'do-not-submit',
-    'empty' => 'Mitglied auswählen...',
-    'options' => $customers
-));
-echo '</div>';
+if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+    $this->element('addScript', array(
+        'script' =>
+            Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()).");"
+    ));
+    echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
+    $options = array(
+        'escape' => false
+    );
+    $options['class'] = 'btn btn-default';
+    echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
+    echo $this->Form->input('shopOrderCustomerId', array(
+        'type' => 'select',
+        'label' => '',
+        'class' => 'do-not-submit',
+        'empty' => 'Mitglied auswählen...',
+        'options' => $customers
+    ));
+    echo '</div>';
+}
