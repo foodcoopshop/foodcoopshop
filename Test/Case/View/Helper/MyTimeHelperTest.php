@@ -128,6 +128,35 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
     }
 
+    public function testGetDateForShopOrderWednesdayFriday()
+    {
+        $this->prepareWednesdayFridayConfig();
+        $this->assertGetDateForShopOrder('29.11.2017', '2017-11-28 00:00:00'); // wednesday
+        $this->assertGetDateForShopOrder('30.11.2017', '2017-11-28 00:00:00'); // thursday
+        $this->assertGetDateForShopOrder('01.12.2017', '2017-11-28 00:00:00'); // friday
+        $this->assertGetDateForShopOrder('02.12.2017', '2017-11-28 00:00:00'); // saturday
+        $this->assertGetDateForShopOrder('03.12.2017', '2017-11-28 00:00:00'); // sunday
+    }
+
+    public function testGetDateForShopOrderTuesdayFriday()
+    {
+        $this->prepareTuesdayFridayConfig();
+        $this->assertGetDateForShopOrder('28.11.2017', '2017-11-27 00:00:00'); // tuesday
+        $this->assertGetDateForShopOrder('29.11.2017', '2017-11-27 00:00:00'); // wednesday
+        $this->assertGetDateForShopOrder('30.11.2017', '2017-11-27 00:00:00'); // thursday
+        $this->assertGetDateForShopOrder('01.12.2017', '2017-11-27 00:00:00'); // friday
+        $this->assertGetDateForShopOrder('02.12.2017', '2017-11-27 00:00:00'); // saturday
+    }
+
+    public function testGetDateForShopOrderMondayTuesday()
+    {
+        $this->prepareMondayTuesdayConfig();
+        $this->assertGetDateForShopOrder('27.11.2017', '2017-11-26 00:00:00'); // monday
+        $this->assertGetDateForShopOrder('28.11.2017', '2017-11-26 00:00:00'); // tuesday
+        $this->assertGetDateForShopOrder('29.11.2017', '2017-11-26 00:00:00'); // wednesday
+        $this->assertGetDateForShopOrder('30.11.2017', '2017-11-26 00:00:00'); // thursday
+    }
+
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getOrderPeriodFirstDay(strtotime($currentDay));
@@ -137,6 +166,12 @@ class MyTimeHelperTest extends AppCakeTestCase
     private function assertGetOrderPeriodLastDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getOrderPeriodLastDay(strtotime($currentDay));
+        $this->assertEquals($expected, $result);
+    }
+
+    private function assertGetDateForShopOrder($currentDay, $expected)
+    {
+        $result = $this->MyTimeHelper->getDateForShopOrder(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 }

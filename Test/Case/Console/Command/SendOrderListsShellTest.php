@@ -36,7 +36,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
-        $newDate = Configure::read('timeHelper')->getDateForShopOrder();
+        $newDate = Configure::read('timeHelper')->getDateForShopOrder(Configure::read('timeHelper')->getCurrentDay());
         $order2update = array(
             'date_add' => $newDate,
         );
