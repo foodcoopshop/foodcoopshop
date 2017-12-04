@@ -120,7 +120,7 @@ class MyTimeHelper extends TimeHelper
         $daysDiff = $currentWeekday - Configure::read('app.sendOrderListsWeekday');
         $daysDiff = ($daysDiff * -1) - 1;
         $resetDate = strtotime($daysDiff . ' day', $day);
-        return date('Y-m-d H:i:s', $resetDate);
+        return date('Y-m-d', $resetDate) . ' 00:00:00';
     }
 
     public function getCurrentDay()

@@ -131,30 +131,30 @@ class MyTimeHelperTest extends AppCakeTestCase
     public function testGetDateForShopOrderWednesdayFriday()
     {
         $this->prepareWednesdayFridayConfig();
-        $this->assertGetDateForShopOrder('29.11.2017', '2017-11-28 00:00:00'); // wednesday
-        $this->assertGetDateForShopOrder('30.11.2017', '2017-11-28 00:00:00'); // thursday
-        $this->assertGetDateForShopOrder('01.12.2017', '2017-11-28 00:00:00'); // friday
-        $this->assertGetDateForShopOrder('02.12.2017', '2017-11-28 00:00:00'); // saturday
-        $this->assertGetDateForShopOrder('03.12.2017', '2017-11-28 00:00:00'); // sunday
+        $this->assertGetDateForShopOrder('29.11.2017 01:00:00', '2017-11-28 00:00:00'); // wednesday
+        $this->assertGetDateForShopOrder('30.11.2017 02:00:00', '2017-11-28 00:00:00'); // thursday
+        $this->assertGetDateForShopOrder('01.12.2017 03:00:00', '2017-11-28 00:00:00'); // friday
+        $this->assertGetDateForShopOrder('02.12.2017 04:00:00', '2017-11-28 00:00:00'); // saturday
+        $this->assertGetDateForShopOrder('03.12.2017 05:00:00', '2017-11-28 00:00:00'); // sunday
     }
 
     public function testGetDateForShopOrderTuesdayFriday()
     {
         $this->prepareTuesdayFridayConfig();
-        $this->assertGetDateForShopOrder('28.11.2017', '2017-11-27 00:00:00'); // tuesday
-        $this->assertGetDateForShopOrder('29.11.2017', '2017-11-27 00:00:00'); // wednesday
-        $this->assertGetDateForShopOrder('30.11.2017', '2017-11-27 00:00:00'); // thursday
-        $this->assertGetDateForShopOrder('01.12.2017', '2017-11-27 00:00:00'); // friday
-        $this->assertGetDateForShopOrder('02.12.2017', '2017-11-27 00:00:00'); // saturday
+        $this->assertGetDateForShopOrder('28.11.2017 06:00:00', '2017-11-27 00:00:00'); // tuesday
+        $this->assertGetDateForShopOrder('29.11.2017 07:00:00', '2017-11-27 00:00:00'); // wednesday
+        $this->assertGetDateForShopOrder('30.11.2017 08:00:00', '2017-11-27 00:00:00'); // thursday
+        $this->assertGetDateForShopOrder('01.12.2017 09:00:00', '2017-11-27 00:00:00'); // friday
+        $this->assertGetDateForShopOrder('02.12.2017 10:00:00', '2017-11-27 00:00:00'); // saturday
     }
 
     public function testGetDateForShopOrderMondayTuesday()
     {
         $this->prepareMondayTuesdayConfig();
-        $this->assertGetDateForShopOrder('27.11.2017', '2017-11-26 00:00:00'); // monday
-        $this->assertGetDateForShopOrder('28.11.2017', '2017-11-26 00:00:00'); // tuesday
-        $this->assertGetDateForShopOrder('29.11.2017', '2017-11-26 00:00:00'); // wednesday
-        $this->assertGetDateForShopOrder('30.11.2017', '2017-11-26 00:00:00'); // thursday
+        $this->assertGetDateForShopOrder('27.11.2017 11:00:00', '2017-11-26 00:00:00'); // monday
+        $this->assertGetDateForShopOrder('28.11.2017 12:00:00', '2017-11-26 00:00:00'); // tuesday
+        $this->assertGetDateForShopOrder('29.11.2017 13:00:00', '2017-11-26 00:00:00'); // wednesday
+        $this->assertGetDateForShopOrder('30.11.2017 14:00:00', '2017-11-26 00:00:00'); // thursday
     }
 
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
