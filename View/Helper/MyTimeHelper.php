@@ -95,13 +95,18 @@ class MyTimeHelper extends TimeHelper
     public function getWeekdaysBetweenOrderSendAndDelivery()
     {
         $weekdays = array();
-        for ($i = Configure::read('app.sendOrderListsWeekday'); $i <= Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta') + 1; $i++) {
+        for ($i = Configure::read('app.sendOrderListsWeekday'); $i <= Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta'); $i++) {
             $weekdays[] = $i;
         }
         return $weekdays;
     }
 
-    private function formatAsWeekday($day)
+    public function getCurrentWeekday()
+    {
+        return $this->formatAsWeekday($this->getCurrentDay());
+    }
+
+    public function formatAsWeekday($day)
     {
         return date('N', $day);
     }

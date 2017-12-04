@@ -36,12 +36,15 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->finishCart();
         $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
-        $newDate = Configure::read('timeHelper')->getDateForShopOrder(Configure::read('timeHelper')->getCurrentDay());
-        $order2update = array(
-            'date_add' => $newDate,
-        );
-        $this->Order->id = $orderId;
-        $this->Order->save($order2update);
+        // reset date if needed
+        $currentWeekday = Configure::read('timeHelper')->getCurrentWeekday();
+        if (in_array($currentWeekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
+            $order2update = array(
+                'date_add' => Configure::read('timeHelper')->getDateForShopOrder(Configure::read('timeHelper')->getCurrentDay()),
+            );
+            $this->Order->id = $orderId;
+            $this->Order->save($order2update);
+        }
 
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all');
