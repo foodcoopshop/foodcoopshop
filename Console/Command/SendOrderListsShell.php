@@ -35,8 +35,8 @@ class SendOrderListsShell extends AppShell
 
         $this->startTimeLogging();
 
-        $dateFrom = date('d.m.Y', strtotime('-7 day'));
-        $dateTo = date('d.m.Y', strtotime('-1 day'));
+        $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay());
+        $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay(Configure::read('timeHelper')->getCurrentDay());
 
         // $dateFrom = '01.02.2016';
         // $dateTo = '29.02.2016';
