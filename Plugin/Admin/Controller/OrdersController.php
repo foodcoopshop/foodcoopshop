@@ -101,7 +101,7 @@ class OrdersController extends AdminAppController
                 )
             ));
 
-            $newDate = Configure::read('timeHelper')->getDateForShopOrder();
+            $newDate = Configure::read('timeHelper')->getDateForShopOrder(Configure::read('timeHelper')->getCurrentDay());
             $order2update = array(
                 'date_add' => $newDate,
                 'current_state' => Configure::read('app.db_config_FCS_SHOP_ORDER_DEFAULT_STATE')
@@ -216,7 +216,7 @@ class OrdersController extends AdminAppController
 
         $dateFrom = '';
         if ($orderId == '') {
-            $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay();
+            $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay());
         }
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
@@ -225,7 +225,7 @@ class OrdersController extends AdminAppController
 
         $dateTo = '';
         if ($orderId == '') {
-            $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay();
+            $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay(Configure::read('timeHelper')->getCurrentDay());
         }
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
