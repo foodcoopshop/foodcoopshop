@@ -12,7 +12,7 @@ services:
     
 addons:
     hosts:
-        - www.foodcoopshop.dev
+        - www.foodcoopshop.localhost
 
 env:
   - DB=mysql
@@ -48,15 +48,15 @@ before_script:
   - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   - php --version
   # configure apache virtual hosts
-  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.dev.conf
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.dev.conf
+  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.localhost.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.localhost.conf
   - sudo a2dissite 000-default
-  - sudo a2ensite www.foodcoopshop.dev.conf
+  - sudo a2ensite www.foodcoopshop.localhost.conf
   - sudo a2enmod rewrite actions fastcgi alias
   - sudo chown -R travis:travis /home/travis/build/foodcoopshop
   - sudo chmod o+rx /home/travis
   - sudo service apache2 restart
-  #- sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
+  #- sudo cat /var/log/apache2/www.foodcoopshop.localhost_error.log
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
