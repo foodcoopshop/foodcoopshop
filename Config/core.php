@@ -36,7 +36,7 @@ $environment = 'live';
 $debug = 0;
 
 if (!empty($_SERVER['SERVER_NAME'])) { // for tests via console
-    if (preg_match('/\.dev$/', $_SERVER['SERVER_NAME'])) { // dev host must end with .dev
+    if (preg_match('/\.localhost$/', $_SERVER['SERVER_NAME'])) { // dev host must end with .localhost
         $environment = 'dev';
         $debug = 2;
     }

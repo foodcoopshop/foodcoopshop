@@ -1263,7 +1263,7 @@ foodcoopshop.Admin = {
     initManualOrderListSend: function (container, weekday) {
 
         $(container).on('click', function () {
-            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.dev', 'https://demo.foodcoopshop.com']) == -1 &&
+            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.localhost', 'https://demo.foodcoopshop.com']) == -1 &&
                 $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
                 alert('Diese Funktion steht heute nicht zur Verfügung.');
                 return;
@@ -1793,7 +1793,7 @@ foodcoopshop.Admin = {
     initAddOrder: function (button, weekday) {
         // auf dev und demo seite immer zulassen (zum testen)
         if ($.inArray(foodcoopshop.Helper.cakeServerName, [
-                'http://www.foodcoopshop.dev',
+                'http://www.foodcoopshop.localhost',
                 'https://demo.foodcoopshop.com'
             ]) == -1 &&
             $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
@@ -2434,3 +2434,5 @@ foodcoopshop.Admin = {
     }
 
 }
+
+
