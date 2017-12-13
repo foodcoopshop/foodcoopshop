@@ -123,7 +123,8 @@ class OrderDetail extends AppModel
         $contain = array(
             'Order',
             'Order.Customer',
-            'Product.Manufacturer.Address'
+            'Product.Manufacturer.Address',
+            'Product.ProductLang'
         );
 
         if ($manufacturerId != '') {

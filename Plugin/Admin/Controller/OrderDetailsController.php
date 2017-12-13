@@ -134,11 +134,17 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('customerId', $customerId);
 
-        $groupByManufacturer = 0;
-        if (! empty($this->params['named']['groupByManufacturer'])) {
-            $groupByManufacturer = $this->params['named']['groupByManufacturer'];
+        $groupBy = '';
+        if (! empty($this->params['named']['groupBy'])) {
+            $groupBy = $this->params['named']['groupBy'];
         }
-        $this->set('groupByManufacturer', $groupByManufacturer);
+
+        // legacy: still allow old variable "groupByManufacturer"
+        if (! empty($this->params['named']['groupByManufacturer'])) {
+            $groupBy = 'manufacturer';
+        }
+
+        $this->set('groupBy', $groupBy);
 
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
 
@@ -156,45 +162,55 @@ class OrderDetailsController extends AdminAppController
 
         $this->loadModel('Manufacturer');
 
-        // prepare group by array
-        if ($groupByManufacturer) {
-            $preparedOrderDetails = array();
-
-            foreach ($orderDetails as $orderDetail) {
-                @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
-                @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
-
-                $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail['Product']['Manufacturer']['variable_member_fee']);
-                $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['variable_member_fee'] = $variableMemberFee;
-
-                @$preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
-
-                $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['manufacturer_id'] = $orderDetail['Product']['Manufacturer']['id_manufacturer'];
-                $preparedOrderDetails[$orderDetail['Product']['id_manufacturer']]['manufacturer_name'] = $orderDetail['Product']['Manufacturer']['name'];
-            }
-            $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.manufacturer_name', 'ASC');
-            $orderDetails = $preparedOrderDetails;
-
-            // not grouped by manufacturer
-        } else {
-            $i = 0;
-
-            foreach ($orderDetails as $orderDetail) {
-                $this->loadModel('Manufacturer');
-                $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
-                $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
-
-                $orderDetails[$i]['rowClass'] = array();
-                if ($bulkOrdersAllowed) {
-                    $orderDetails[$i]['rowClass'][] = 'deactivated';
+        switch ($groupBy) {
+            case 'manufacturer':
+                $preparedOrderDetails = array();
+                foreach ($orderDetails as $orderDetail) {
+                    $key = $orderDetail['Product']['id_manufacturer'];
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
+                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail['Product']['Manufacturer']['variable_member_fee']);
+                    $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
+                    $preparedOrderDetails[$key]['manufacturer_id'] = $key;
+                    $preparedOrderDetails[$key]['name'] = $orderDetail['Product']['Manufacturer']['name'];
                 }
-
-                $i ++;
-            }
+                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.name', 'ASC');
+                $orderDetails = $preparedOrderDetails;
+                break;
+            case 'product':
+                $preparedOrderDetails = array();
+                foreach ($orderDetails as $orderDetail) {
+                    $key = $orderDetail['OrderDetail']['product_id'];
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
+                    $preparedOrderDetails[$key]['product_id'] = $key;
+                    $preparedOrderDetails[$key]['name'] = $orderDetail['Product']['ProductLang']['name'];
+                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail['Product']['Manufacturer']['id_manufacturer'];
+                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail['Product']['Manufacturer']['name'];
+                }
+                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.name', 'ASC');
+                $orderDetails = $preparedOrderDetails;
+                break;
+            default:
+                $i = 0;
+                foreach ($orderDetails as $orderDetail) {
+                    $this->loadModel('Manufacturer');
+                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
+                    $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
+                    $orderDetails[$i]['rowClass'] = array();
+                    if ($bulkOrdersAllowed) {
+                        $orderDetails[$i]['rowClass'][] = 'deactivated';
+                    }
+                    $i ++;
+                }
+                break;
         }
 
         $this->set('orderDetails', $orderDetails);
 
+        $this->set('groupByForDropdown', array('manufacturer' => 'Hersteller', 'product' => 'Produkt'));
         $this->set('customersForDropdown', $this->OrderDetail->Order->Customer->getForDropdown());
         $this->set('manufacturersForDropdown', $this->OrderDetail->Product->Manufacturer->getForDropdown());
 
