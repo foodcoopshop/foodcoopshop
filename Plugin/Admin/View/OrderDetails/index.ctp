@@ -49,9 +49,7 @@
             value="<?php echo $orderId; ?>" />
         <?php } ?>
         <?php echo $this->Form->input('orderState', array('type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState)); ?>
-        <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-            Gruppieren nach: <?php echo $this->Form->input('groupBy', array('type'=>'select', 'label' =>'', 'empty' => 'bitte auswählen...', 'options' => $groupByForDropdown, 'selected' => $groupBy));?>
-        <?php } ?>
+        <?php echo $this->Form->input('groupBy', array('type'=>'select', 'label' =>'', 'empty' => 'bitte auswählen...', 'options' => $groupByForDropdown, 'selected' => $groupBy));?>
         <button id="filter" class="btn btn-success">
             <i class="fa fa-search"></i> Filtern
         </button>

@@ -210,7 +210,11 @@ class OrderDetailsController extends AdminAppController
 
         $this->set('orderDetails', $orderDetails);
 
-        $this->set('groupByForDropdown', array('manufacturer' => 'Hersteller', 'product' => 'Produkt'));
+        $groupByForDropdown = array('product' => 'Nach Produkt gruppiert');
+        if (!$this->AppAuth->isManufacturer()) {
+            $groupByForDropdown['manufacturer'] = 'Nach Hersteller gruppiert';
+        }
+        $this->set('groupByForDropdown', $groupByForDropdown);
         $this->set('customersForDropdown', $this->OrderDetail->Order->Customer->getForDropdown());
         $this->set('manufacturersForDropdown', $this->OrderDetail->Product->Manufacturer->getForDropdown());
 
