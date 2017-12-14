@@ -30,9 +30,7 @@
     ?>
     
     <div class="filter-container">
-        <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-            <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
-        <?php } ?>
+        <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
         <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => array())); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             <?php echo $this->Form->input('manufacturerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '')); ?>
@@ -121,20 +119,44 @@ if (count($orderDetails) > 0 && $groupBy == '') {
 }
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.detail_order_id', 'ID') . '</th>';
-echo '<th class="right">' . $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl') . '</th>';
-echo '<th>' . $this->Paginator->sort('OrderDetail.product_name', 'Produkt') . '</th>';
+echo '<th class="right">';
+if ($groupBy == '') {
+    $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl');
+} else {
+    echo 'Anzahl';
+}
+if ($groupBy == '' || $groupBy == 'product') {
+    echo '<th>';
+    if ($groupBy == '') {
+        echo $this->Paginator->sort('OrderDetail.product_name', 'Produkt');
+    } else {
+        echo 'Produkt';
+    }
+    echo '</th>';
+}
+
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">Hersteller</th>';
-echo '<th class="right">' . $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag') . '</th>';
+echo '<th class="right">';
+if ($groupBy == '') {
+    echo $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag');
+} else {
+    echo 'Betrag';
+}
+echo '</th>';
 if ($groupBy == 'manufacturer' && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
 echo '<th class="right">Pfand</th>';
-echo '<th>' . $this->Paginator->sort('Order.date_add', 'Bestell-Datum') . '</th>';
-echo '<th>Mitglied</th>';
-echo '<th>Status</th>';
-echo '<th style="width:25px;"></th>';
-echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.order_id', 'OrderID') . '</th>';
+if ($groupBy == '') {
+    echo '<th>';
+        $this->Paginator->sort('Order.date_add', 'Bestell-Datum');
+    echo '</th>';
+    echo '<th>Mitglied</th>';
+    echo '<th>'.$this->Paginator->sort('Order.current_state', 'Status').'</th>';
+    echo '<th style="width:25px;"></th>';
+    echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.order_id', 'OrderID') . '</th>';
+}
 echo '</tr>';
 
 $sumPrice = 0;
@@ -199,17 +221,18 @@ foreach ($orderDetails as $orderDetail) {
         $groupByObjectLink = $this->MyHtml->link($orderDetail['name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/' . $groupBy.'Id:' . $orderDetail[$groupBy . '_id'] . '/orderState:' . $orderState . '/customerId:' . $customerId);
     }
 
-    echo '<td>';
-    if ($groupBy == '') {
-        echo $this->MyHtml->link($orderDetail['OrderDetail']['product_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/productId:' . $orderDetail['Product']['id_product'] . '/orderState:' . $orderState, array(
-            'class' => 'name-for-dialog'
-        ));
+    if ($groupBy == '' || $groupBy == 'product') {
+        echo '<td>';
+        if ($groupBy == '') {
+            echo $this->MyHtml->link($orderDetail['OrderDetail']['product_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/productId:' . $orderDetail['Product']['id_product'] . '/orderState:' . $orderState, array(
+                'class' => 'name-for-dialog'
+            ));
+        }
+        if ($groupBy == 'product') {
+            echo $groupByObjectLink;
+        }
+        echo '</td>';
     }
-    if ($groupBy == 'product') {
-        echo $groupByObjectLink;
-    }
-    echo '</td>';
-
     echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
     if ($groupBy == '') {
         echo $this->MyHtml->link($orderDetail['Product']['Manufacturer']['name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/manufacturerId:' . $orderDetail['Product']['Manufacturer']['id_manufacturer'] . '/orderState:' . $orderState . '/customerId:' . $customerId . '/groupBy:'.$groupBy);
@@ -268,45 +291,47 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</td>';
 
-    echo '<td>';
     if ($groupBy == '') {
-        echo $this->Time->formatToDateNTimeLong($orderDetail['Order']['date_add']);
-    }
-    echo '</td>';
+        echo '<td>';
+        if ($groupBy == '') {
+            echo $this->Time->formatToDateNTimeLong($orderDetail['Order']['date_add']);
+        }
+        echo '</td>';
 
-    echo '<td>';
-    if ($groupBy == '') {
-        echo $orderDetail['Order']['Customer']['name'];
-    }
-    echo '</td>';
+        echo '<td>';
+        if ($groupBy == '') {
+            echo $orderDetail['Order']['Customer']['name'];
+        }
+        echo '</td>';
 
-    echo '<td class="hide">';
-    if ($groupBy == '') {
-        echo '<span class="email">' . $orderDetail['Order']['Customer']['email'] . '</span>';
-    }
-    echo '</td>';
+        echo '<td class="hide">';
+        if ($groupBy == '') {
+            echo '<span class="email">' . $orderDetail['Order']['Customer']['email'] . '</span>';
+        }
+        echo '</td>';
 
-    echo '<td>';
-    if ($groupBy == '') {
-        echo $this->MyHtml->getOrderStates()[$orderDetail['Order']['current_state']];
-    }
-    echo '</td>';
+        echo '<td>';
+        if ($groupBy == '') {
+            echo $this->MyHtml->getOrderStates()[$orderDetail['Order']['current_state']];
+        }
+        echo '</td>';
 
-    echo '<td style="text-align:center;">';
-    if ($editRecordAllowed) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
-            'class' => 'delete-order-detail',
-            'id' => 'delete-order-detail-' . $orderDetail['OrderDetail']['id_order_detail'],
-            'title' => 'Produkt stornieren?'
-        ), 'javascript:void(0);');
-    }
-    echo '</td>';
+        echo '<td style="text-align:center;">';
+        if ($editRecordAllowed) {
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+                'class' => 'delete-order-detail',
+                'id' => 'delete-order-detail-' . $orderDetail['OrderDetail']['id_order_detail'],
+                'title' => 'Produkt stornieren?'
+            ), 'javascript:void(0);');
+        }
+        echo '</td>';
 
-    echo '<td class="hide orderId">';
-    if ($groupBy == '') {
-        echo $orderDetail['OrderDetail']['id_order'];
+        echo '<td class="hide orderId">';
+        if ($groupBy == '') {
+            echo $orderDetail['OrderDetail']['id_order'];
+        }
+        echo '</td>';
     }
-    echo '</td>';
 
     echo '</tr>';
 }
@@ -314,10 +339,22 @@ foreach ($orderDetails as $orderDetail) {
 echo '<tr>';
 echo '<td colspan="1"><b>' . $i . '</b></td>';
 echo '<td class="right"><b>' . $sumAmount . 'x</b></td>';
-if ($appAuth->isManufacturer()) {
+if ($groupBy == '') {
+    if ($appAuth->isManufacturer()) {
+        echo '<td></td>';
+    } else {
+        echo '<td colspan="2"></td>';
+    }
+}
+if ($groupBy == 'manufacturer') {
     echo '<td></td>';
-} else {
-    echo '<td colspan="2"></td>';
+}
+if ($groupBy == 'product') {
+    if ($appAuth->isManufacturer()) {
+        echo '<td></td>';
+    } else {
+        echo '<td colspan="2"></td>';
+    }
 }
 echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
 if ($groupBy == 'manufacturer' && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
@@ -329,10 +366,12 @@ if ($sumDeposit > 0) {
     $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
-if ($orderState == 3) {
-    echo '<td colspan="4"></td>';
-} else {
-    echo '<td colspan="3"></td>';
+if ($groupBy == '') {
+    if ($orderState == 3) {
+        echo '<td colspan="4"></td>';
+    } else {
+        echo '<td colspan="3"></td>';
+    }
 }
 echo '</tr>';
 echo '</table>';
