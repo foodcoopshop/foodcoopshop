@@ -120,34 +120,31 @@ if (count($orderDetails) > 0 && $groupBy == '') {
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetail.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">';
-if ($groupBy == '') {
-    $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl');
-} else {
-    echo 'Anzahl';
-}
+    echo $this->Paginator->sort('OrderDetail.product_quantity', 'Anzahl');
+echo '</th>';
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<th>';
-    if ($groupBy == '') {
         echo $this->Paginator->sort('OrderDetail.product_name', 'Produkt');
-    } else {
-        echo 'Produkt';
-    }
     echo '</th>';
 }
 
-echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">Hersteller</th>';
-echo '<th class="right">';
-if ($groupBy == '') {
-    echo $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag');
+echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
+if ($groupBy != '') {
+    echo $this->Paginator->sort('Manufacturer.name', 'Hersteller');
 } else {
-    echo 'Betrag';
+    echo 'Hersteller';
 }
+echo '</th>';
+echo '<th class="right">';
+    echo $this->Paginator->sort('OrderDetail.total_price_tax_incl', 'Betrag');
 echo '</th>';
 if ($groupBy == 'manufacturer' && Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
-echo '<th class="right">Pfand</th>';
+echo '<th class="right">';
+    echo $this->Paginator->sort('OrderDetail.deposit', 'Pfand');
+echo '</th>';
 if ($groupBy == '') {
     echo '<th>';
         $this->Paginator->sort('Order.date_add', 'Bestell-Datum');

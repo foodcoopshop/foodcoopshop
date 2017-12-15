@@ -71,6 +71,38 @@ class OrderDetailsController extends AdminAppController
         return false;
     }
 
+    /**
+     * @param string $manufacturerNameField
+     * @return string
+     */
+    private function getSortFieldForGroupedOrderDetails($manufacturerNameField)
+    {
+        $sortField = 'name';
+        $sortMatches = array(
+            'OrderDetail.product_name' => 'name',
+            'Manufacturer.name' => $manufacturerNameField,
+            'OrderDetail.total_price_tax_incl' => 'sum_price',
+            'OrderDetail.product_quantity' => 'sum_amount',
+            'OrderDetail.deposit' => 'sum_deposit'
+        );
+        if (!empty($this->params['named']['sort']) && isset($sortMatches[$this->params['named']['sort']])) {
+            $sortField = $sortMatches[$this->params['named']['sort']];
+        }
+        return $sortField;
+    }
+
+    /**
+     * @return string
+     */
+    private function getSortDirectionForGroupedOrderDetails()
+    {
+        $sortDirection = 'ASC';
+        if (!empty($this->params['named']['direction']) & in_array($this->params['named']['direction'], array('asc', 'desc'))) {
+            $sortDirection = $this->params['named']['direction'];
+        }
+        return $sortDirection;
+    }
+
     public function index()
     {
 
@@ -175,7 +207,9 @@ class OrderDetailsController extends AdminAppController
                     $preparedOrderDetails[$key]['manufacturer_id'] = $key;
                     $preparedOrderDetails[$key]['name'] = $orderDetail['Product']['Manufacturer']['name'];
                 }
-                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.name', 'ASC');
+                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
+                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
+                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
                 $orderDetails = $preparedOrderDetails;
                 break;
             case 'product':
@@ -190,7 +224,9 @@ class OrderDetailsController extends AdminAppController
                     $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail['Product']['Manufacturer']['id_manufacturer'];
                     $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail['Product']['Manufacturer']['name'];
                 }
-                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.name', 'ASC');
+                $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
+                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
+                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
                 $orderDetails = $preparedOrderDetails;
                 break;
             default:
@@ -210,9 +246,9 @@ class OrderDetailsController extends AdminAppController
 
         $this->set('orderDetails', $orderDetails);
 
-        $groupByForDropdown = array('product' => 'Nach Produkt gruppiert');
+        $groupByForDropdown = array('product' => 'Gruppieren nach Produkt');
         if (!$this->AppAuth->isManufacturer()) {
-            $groupByForDropdown['manufacturer'] = 'Nach Hersteller gruppiert';
+            $groupByForDropdown['manufacturer'] = 'Gruppieren nach Hersteller';
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
         $this->set('customersForDropdown', $this->OrderDetail->Order->Customer->getForDropdown());
