@@ -104,6 +104,7 @@ foodcoopshop.Admin = {
     initFilter: function (callback) {
 
         $('button#filter').on('click', function () {
+            $('.filter-container').css('opacity', '.7');
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
             foodcoopshop.Admin.afterFilterCallback();
@@ -113,12 +114,17 @@ foodcoopshop.Admin = {
                 foodcoopshop.Admin.afterFilterCallback();
             }
         });
-        $('.filter-container select').selectpicker({
+        var filterContainer = $('.filter-container');
+        filterContainer.find('select').selectpicker({
             liveSearch: true,
             showIcon: true
         });
 
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
+
+        filterContainer.find('input:text, input:checkbox, select').on('change', function () {
+            $('button#filter').trigger('click');
+        });
 
     },
 
@@ -2434,5 +2440,6 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
