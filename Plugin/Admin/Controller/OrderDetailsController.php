@@ -97,7 +97,7 @@ class OrderDetailsController extends AdminAppController
     private function getSortDirectionForGroupedOrderDetails()
     {
         $sortDirection = 'ASC';
-        if (!empty($this->params['named']['direction']) & in_array($this->params['named']['direction'], array('asc', 'desc'))) {
+        if (!empty($this->params['named']['direction']) && in_array($this->params['named']['direction'], array('asc', 'desc'))) {
             $sortDirection = $this->params['named']['direction'];
         }
         return $sortDirection;
