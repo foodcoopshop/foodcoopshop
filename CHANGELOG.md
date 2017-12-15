@@ -2,8 +2,9 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...HEAD)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...HEAD)
 
+## v1.5.0 2017-12-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...v1.5.0)
 
 ### Neue Funktionen
 - Sofort-Bestellungen und Pfand-Rückgabe sind jetzt auch in der Liste "Bestellte Produkte" erreichbar. Das spart Zeit beim Abholen der Produkte. Bei der Sofort-Bestellung ist das Mitglied vorausgewählt. / [PR#163](https://github.com/foodcoopshop/foodcoopshop/pull/163) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#155](https://github.com/foodcoopshop/foodcoopshop/issues/155) / <a href="https://github.com/MadPac"><img src="https://github.com/MadPac.png" width="20"></a>
@@ -15,7 +16,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Wenn man das Passwort vergessen hat, muss man jetzt zusätzlich auf einen Bestätigungs-Link klicken, bevor das Passwort tatsächlich geändert wird. / [PR#141](https://github.com/foodcoopshop/foodcoopshop/pull/141) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Urlaubsmodus heißt jetzt *Lieferpause* und kann somit auch für Lieferpausen außerhalb des Urlaubs verwendet werden. / [PR#159](https://github.com/foodcoopshop/foodcoopshop/pull/159) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#158](https://github.com/foodcoopshop/foodcoopshop/issues/158) / <a href="https://github.com/veronimus"><img src="https://github.com/veronimus.png" width="20"></a>
 - Bei den Herstellern können jetzt auch IBANs aus Deutschland eingetragen werden. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/25a5eb17fb2008993a9e6fd914348d84e0dcf093) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
-- Mögliche Kombinationen für Bestelllisten-Versendetag und Liefertag: *Mittwoch-Freitag* / *Dienstag-Freitag* / *Montag-Dienstag*. / [PR#173](https://github.com/foodcoopshop/foodcoopshop/pull/173) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Mehr mögliche Kombinationen für Bestelllisten-Versendetag und Liefertag: *Mittwoch-Freitag* / *Dienstag-Freitag* / *Montag-Dienstag*. / [PR#173](https://github.com/foodcoopshop/foodcoopshop/pull/173) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Anpassungen für die Einbindung des Netzwerk-Moduls in der Version 1.0. / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
