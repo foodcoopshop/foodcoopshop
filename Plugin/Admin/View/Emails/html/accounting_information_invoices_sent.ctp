@@ -31,7 +31,7 @@
 
             <p>
                 Hier findest du die Übersicht zum Überweisen: <br />
-                <?php $link = Configure::read('app.cakeServerName').'/admin/order_details/index/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.'/orderState:'.ORDER_STATE_CASH.','.ORDER_STATE_CASH_FREE.'/groupByManufacturer:1'; ?>
+                <?php $link = Configure::read('app.cakeServerName').'/admin/order_details/index/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.'/orderState:'.ORDER_STATE_CASH.','.ORDER_STATE_CASH_FREE.','.ORDER_STATE_OPEN.'/groupByManufacturer:1'; ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
             
