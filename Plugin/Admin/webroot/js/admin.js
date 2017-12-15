@@ -114,18 +114,18 @@ foodcoopshop.Admin = {
                 foodcoopshop.Admin.afterFilterCallback();
             }
         });
+
         var filterContainer = $('.filter-container');
+        filterContainer.find('input:text, input:checkbox, select').on('change', function () {
+            foodcoopshop.Admin.triggerFilterButton();
+        });
+
         filterContainer.find('select').selectpicker({
             liveSearch: true,
             showIcon: true
         });
 
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
-
-        filterContainer.find('input:text, input:checkbox, select').on('change', function () {
-            foodcoopshop.Admin.triggerFilterButton();
-        });
-
     },
 
     /**
@@ -2446,6 +2446,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
