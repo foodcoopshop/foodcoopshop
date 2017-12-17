@@ -32,11 +32,6 @@ $this->element('addScript', array(
         'empty' => 'alle Hersteller',
         'selected' => $manufacturerId != '' ? $manufacturerId : ''
         ));
-    ?>
-    <button id="filter" class="btn btn-success">
-    <i class="fa fa-search"></i> Filtern
-    </button>
-    <?php
     }
     ?>
     <div class="right"></div>
