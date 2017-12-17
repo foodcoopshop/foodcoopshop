@@ -92,7 +92,6 @@ class OrderDetail extends AppModel
     {
         $conditions = array();
 
-        // if manufacturer is logged in, dateFrom and dateTo is set to '';
         if ($dateFrom != '') {
             $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
@@ -123,22 +122,24 @@ class OrderDetail extends AppModel
         $contain = array(
             'Order',
             'Order.Customer',
-            'Product.Manufacturer.Address'
+            'Product.Manufacturer.Address',
+            'Product.ProductLang'
         );
+
+        if ($customerId != '') {
+            $conditions['Order.id_customer'] = $customerId;
+        }
 
         if ($manufacturerId != '') {
             $conditions['Product.id_manufacturer'] = $manufacturerId;
         }
 
-        // if logged user is manufacturer, always filter by manufacturer id
-        // so that no other order details than the own are shown
-        // overwrite it if manually set by id
+        // override params that manufacturer is not allowed to change
         if ($appAuth->isManufacturer()) {
             $conditions['Product.id_manufacturer'] = $appAuth->getManufacturerId();
-        }
-
-        if ($customerId != '') {
-            $conditions['Order.id_customer'] = $customerId;
+            if ($customerId =! '') {
+                unset($conditions['Order.id_customer']);
+            }
         }
 
         // customers are only allowed to see their own data
