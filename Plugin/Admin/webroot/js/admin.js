@@ -26,6 +26,14 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+
+    addLoaderToSyncProductDataButton : function (button) {
+        button.on('click', function () {
+             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-left');
+             foodcoopshop.Helper.disableButton($(this));
+        });
+    },
+
     selectMainMenuAdmin: function (mainMenuTitle, subMenuTitle) {
         foodcoopshop.Helper.selectMainMenu('#menu', mainMenuTitle, subMenuTitle);
     },
@@ -110,12 +118,21 @@ foodcoopshop.Admin = {
             showIcon: true
         });
 
-        // multiple dropdowns (implemented for orderState) need to be selected manually
-        // therefore data-val must be set!
-        $('.filter-container select[multiple="multiple"]').each(function () {
-            $(this).selectpicker('val', $(this).data('val').toString().split(','));
-        });
+        this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
 
+    },
+
+    /**
+     * multiple dropdowns (implemented for orderState) need to be selected manually
+     * therefore data-val must be set!
+     */
+    setSelectPickerMultipleDropdowns : function (selector) {
+        $(selector).each(function () {
+            var val = $(this).data('val');
+            if (val) {
+                $(this).selectpicker('val', val.toString().split(','));
+            }
+        });
     },
 
     afterFilterCallback: function () {
@@ -141,7 +158,7 @@ foodcoopshop.Admin = {
         }
 
         //.input-block-level due to bootstrap select
-        $('.filter-container').find('input:not(.form-control), select').each(function () {
+        $('.filter-container').find('input:not(.form-control):not(.do-not-submit), select:not(.do-not-submit)').each(function () {
             switch ($(this).prop('tagName').toLowerCase()) {
                 case 'input':
                     switch ($(this).attr('type')) {
@@ -217,7 +234,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 410,
+            height: 460,
             width: 350,
             modal: true,
 
@@ -305,7 +322,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 410,
+            height: 460,
             width: 350,
             modal: true,
 
@@ -447,7 +464,7 @@ foodcoopshop.Admin = {
         var dialogId = 'product-deposit-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label>';
+        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label> (zum Löschen <b>0</b> eintragen)';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -506,10 +523,10 @@ foodcoopshop.Admin = {
         });
 
         $('.product-deposit-edit-button').on('click', function () {
-            var row = $(this).parent().parent().parent().parent().parent();
-            $('#' + dialogId + ' #dialogDepositDeposit').val(row.find('td:nth-child(10) span.deposit-for-dialog').html());
+            var row = $(this).closest('tr');
+            $('#' + dialogId + ' #dialogDepositDeposit').val(row.find('span.deposit-for-dialog').html());
             $('#' + dialogId + ' #dialogDepositProductId').val(row.find('td:nth-child(1)').html());
-            $('#' + dialogId + ' label[for="dialogDepositDeposit"]').html(row.find('td:nth-child(2) span.name-for-dialog').html());
+            $('#' + dialogId + ' label[for="dialogDepositDeposit"]').html(row.find('span.name-for-dialog').html());
             dialog.dialog('open');
         });
 
@@ -518,7 +535,7 @@ foodcoopshop.Admin = {
     initProductPriceEditDialog: function (container) {
 
         var dialogId = 'product-price-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis">';
+        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis ändern">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
         dialogHtml += '<label for="dialogPricePrice">Eingabe in €</label>';
         dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
@@ -579,10 +596,10 @@ foodcoopshop.Admin = {
         });
 
         $('.product-price-edit-button').on('click', function () {
-            var row = $(this).parent().parent().parent().parent().parent();
-            $('#' + dialogId + ' #dialogPricePrice').val(row.find('td:nth-child(7) span.price-for-dialog').html());
+            var row = $(this).closest('tr');
+            $('#' + dialogId + ' #dialogPricePrice').val(row.find('span.price-for-dialog').html());
             $('#' + dialogId + ' #dialogPriceProductId').val(row.find('td:nth-child(1)').html());
-            $('#' + dialogId + ' label[for="dialogPricePrice"]').html(row.find('td:nth-child(2) span.name-for-dialog').html());
+            $('#' + dialogId + ' label[for="dialogPricePrice"]').html(row.find('span.name-for-dialog').html());
             dialog.dialog('open');
         });
 
@@ -602,7 +619,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort" />';
         dialogHtml += '</div>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label>';
+        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Lebensmittelkennzeichnung</a>';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
@@ -614,8 +631,8 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 570,
-            width: 695,
+            height: 610,
+            width: 795,
             modal: true,
 
             close: function () {
@@ -681,15 +698,29 @@ foodcoopshop.Admin = {
             $('#' + dialogId).remove();
 
             var dialog = foodcoopshop.Admin.createProductNameEditDialog(container);
-            foodcoopshop.Helper.initCkeditor('dialogDescription');
-            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
 
-            var nameCell = $(this).parent().parent().parent().parent().find('td:nth-child(4)');
+            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
+            var row = $(this).closest('tr');
+            var nameCell = row.find('td:nth-child(4)');
             $('#' + dialogId + ' #dialogName').val(nameCell.find('span.name-for-dialog').html());
             $('#' + dialogId + ' #dialogUnity').val(nameCell.find('span.unity-for-dialog').html());
             CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
-            CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
-            $('#' + dialogId + ' #dialogProductId').val($(this).parent().parent().parent().parent().find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogProductId').val(row.find('td:nth-child(1)').html());
+
+            var manufacturerId = row.data('manufacturerId');
+            foodcoopshop.Helper.ajaxCall(
+                '/admin/manufacturers/setKcFinderUploadPath/' + manufacturerId,
+                {},
+                {
+                    onOk: function (data) {
+                        foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogDescription');
+                        CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
+                    },
+                    onError: function (data) {
+                        foodcoopshop.Helper.showErrorMessage(data.msg);
+                    }
+                }
+            );
 
             // hide unity field if product has attributes
             var unitySelector = $('#' + dialogId + ' #labelUnity, #' + dialogId + ' #dialogUnity');
@@ -782,9 +813,9 @@ foodcoopshop.Admin = {
         });
 
         $('.product-quantity-edit-button').on('click', function () {
-            $('#' + dialogId + ' #dialogQuantityQuantity').val($(this).parent().parent().parent().parent().find('td:nth-child(6) span.quantity-for-dialog').html().replace(/\./, ''));
-            $('#' + dialogId + ' #dialogQuantityProductId').val($(this).parent().parent().parent().parent().find('td:nth-child(1)').html());
-            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html($(this).parent().parent().parent().parent().find('td:nth-child(3) span.name-for-dialog').html());
+            $('#' + dialogId + ' #dialogQuantityQuantity').val($(this).closest('tr').find('span.quantity-for-dialog').html().replace(/\./, ''));
+            $('#' + dialogId + ' #dialogQuantityProductId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html($(this).closest('tr').find('span.name-for-dialog').html());
             dialog.dialog('open');
         });
 
@@ -1232,7 +1263,7 @@ foodcoopshop.Admin = {
     initManualOrderListSend: function (container, weekday) {
 
         $(container).on('click', function () {
-            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.dev', 'https://demo.foodcoopshop.com']) == -1 &&
+            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.test', 'https://demo.foodcoopshop.com']) == -1 &&
                 $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
                 alert('Diese Funktion steht heute nicht zur Verfügung.');
                 return;
@@ -1348,6 +1379,13 @@ foodcoopshop.Admin = {
 
     },
 
+    editTaxFormAfterLoad : function (productId) {
+        var productName = $('#product-' + productId + ' span.name-for-dialog').html();
+        $('.featherlight-content label').html('Steuersatz ändern: ' + productName);
+        var selectedTaxId = $('#tax-id-' + productId).val();
+        $('.featherlight-content #TaxIdTax').val(selectedTaxId);
+    },
+
     initProductTaxEditDialog: function (container) {
 
         var button = $(container).find('.product-tax-edit-button');
@@ -1355,28 +1393,28 @@ foodcoopshop.Admin = {
         $(button).on('click', function () {
 
             var objectId = $(this).data('objectId');
-            var formHtml = $('#tax-dropdown-wrapper-' + objectId);
+            var formHtml = $('.tax-dropdown-wrapper');
+
             $.featherlight(
                 foodcoopshop.AppFeatherlight.initLightboxForForms(
                     foodcoopshop.Admin.editTaxFormSave,
-                    null,
+                    foodcoopshop.Admin.editTaxFormAfterLoad,
                     foodcoopshop.AppFeatherlight.closeAndReloadLightbox,
-                    formHtml
+                    formHtml,
+                    objectId
                 )
             );
         });
 
     },
 
-    editTaxFormSave: function () {
-
-        var productId = $('.featherlight-content .product-id').val();
+    editTaxFormSave: function (productId) {
 
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/editTax/',
             {
                 productId: productId,
-                taxId: $('.featherlight-content #tax-dropdown-' + productId).val()
+                taxId: $('.featherlight-content #TaxIdTax').val()
             },
             {
                 onOk: function (data) {
@@ -1391,7 +1429,7 @@ foodcoopshop.Admin = {
 
     },
 
-    editCategoriesFormSave: function () {
+    editCategoriesFormSave: function (productId) {
 
         var selectedCategories = [];
         $('.featherlight-content .categories-checkboxes input:checked').each(function () {
@@ -1401,7 +1439,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/editCategories/',
             {
-                productId: $('.featherlight-content .product-id').val(),
+                productId: productId,
                 selectedCategories: selectedCategories
             },
             {
@@ -1417,6 +1455,21 @@ foodcoopshop.Admin = {
 
     },
 
+    editCategoriesFormAfterLoad : function (productId) {
+
+        var productName = $('#product-' + productId + ' span.name-for-dialog').html();
+        $('.featherlight-content label[for="ProductCategoryProducts"]').html('Kategorien ändern: ' + productName);
+
+        var selectedCategories = $('#selected-categories-' + productId).val().split(',');
+        $('.categories-checkboxes input[type="checkbox"]').each(function () {
+            if ($.inArray($(this).val(), selectedCategories) != -1) {
+                $(this).prop('checked', true);
+            } else {
+                $(this).prop('checked', false);
+            }
+        });
+    },
+
     initProductCategoriesEditDialog: function (container) {
 
         var button = $(container).find('.product-categories-edit-button');
@@ -1424,14 +1477,15 @@ foodcoopshop.Admin = {
         $(button).on('click', function () {
 
             var objectId = $(this).data('objectId');
-            var formHtml = $('#categories-checkboxes-' + objectId);
+            var formHtml = $('.categories-checkboxes');
 
             $.featherlight(
                 foodcoopshop.AppFeatherlight.initLightboxForForms(
                     foodcoopshop.Admin.editCategoriesFormSave,
-                    null,
+                    foodcoopshop.Admin.editCategoriesFormAfterLoad,
                     foodcoopshop.AppFeatherlight.closeAndReloadLightbox,
-                    formHtml
+                    formHtml,
+                    objectId
                 )
             );
 
@@ -1732,10 +1786,14 @@ foodcoopshop.Admin = {
 
     },
 
+    /**
+     * @param string button
+     * @param int weekday
+     */
     initAddOrder: function (button, weekday) {
         // auf dev und demo seite immer zulassen (zum testen)
         if ($.inArray(foodcoopshop.Helper.cakeServerName, [
-                'http://www.foodcoopshop.dev',
+                'http://www.foodcoopshop.test',
                 'https://demo.foodcoopshop.com'
             ]) == -1 &&
             $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
@@ -1768,23 +1826,18 @@ foodcoopshop.Admin = {
 
                         // only clone dropdown once
                         if ($('.message-container span.start select').length == 0) {
-                            var customersDropdown = $(
-                                '#add-order-button-wrapper select'
-                            )
-                                .clone(true);
+                            var customersDropdown = $('#add-order-button-wrapper select').clone(true);
                             customersDropdown.attr(
                                 'id',
                                 'customersDropdown'
                             );
                             customersDropdown
                                 .change(function () {
-                                    var newSrc = foodcoopshop.Helper.cakeServerName +
-                                        '/admin/orders/initShopOrder/' +
-                                        $(this).val();
-                                    $('iframe.featherlight-inner')
-                                        .attr('src', newSrc);
+                                    var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
+                                    $('iframe.featherlight-inner').attr('src', newSrc);
                                     $.featherlight.showLoader();
                                 });
+
                             $('iframe.featherlight-inner')
                                 .load(
                                     function () {
@@ -1800,6 +1853,13 @@ foodcoopshop.Admin = {
                             customersDropdown.show();
                             customersDropdown.removeClass('hide');
                             customersDropdown.appendTo('.message-container span.start');
+
+                            // always preselect user if there is a dropdown called #customerId (for call from order detail)
+                            var customerId = $('#customerId').val();
+                            if (customerId > 0) {
+                                customersDropdown.val(customerId);
+                                customersDropdown.trigger('change');
+                            }
                         }
                     }
                 });
@@ -1813,13 +1873,14 @@ foodcoopshop.Admin = {
     addPrintAndHelpIcon: function () {
 
         var html = '<div class="icons">';
-        html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
-        html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
+            html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
+            html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
         html += '</div>';
 
-        $('.filter-container div.right').append(html);
+        var container = $('.filter-container').length > 0 ? $('.filter-container') : $('.filter-container-not-fixed');
+        container.find('div.right').append(html);
 
-        $('.filter-container div.right a.help').on('click', function () {
+        container.find('div.right a.help').on('click', function () {
             $('#help-container').stop(true).animate({
                 height: 'toggle'
             }, 0);

@@ -251,11 +251,13 @@ body.customers.new_password_request #inner-content form {
 body.customers.new_password_request #inner-content form {
     padding: 0;
 }
-#login-form .input label,
-body.customers.new_password_request .input label {
+#login-form .input label {
     width: 95px;
     float: left;
     line-height: 25px;
+}
+body.customers.new_password_request .input label {
+    width: 70px;
 }
 #login-form .input,
 body.customers.new_password_request .input {
@@ -279,9 +281,6 @@ body.customers.new_password_request .input {
     clear: both;
 }
 
-body.customers.new_password_request .btn-success {
-    float: right;
-}
 #login-form .remember-me-wrapper {
     float: left;
     margin-left: 73px;
@@ -409,6 +408,9 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper .radio label {
     word-break: break-word;
 }
+.product-wrapper .toggle-content.description img {
+  margin-bottom: 3px;
+}
 .blog-post-wrapper div.second-column,
 .product-wrapper div.second-column,
 .manufacturer-wrapper div.second-column {
@@ -423,6 +425,10 @@ body.superadmin .product-wrapper .heading h4 {
     overflow: hidden;
     word-wrap: break-word;
     position: relative;
+}
+.product-wrapper div.second-column .toggle-content img {
+    max-width: 100%;
+    height: auto ! important;
 }
 .blog-post-wrapper div.second-column {
     min-height: 148px;
@@ -1074,14 +1080,20 @@ body.products.detail .product-wrapper {
     border-bottom: 1px solid #d6d4d4;
     margin-bottom: 20px;
 }
-#inner-content ul {
+#inner-content ul,
+#info-box ul {
   padding-left: 10px;
   margin-left: 10px;
   margin-top: 10px;
 }
-#inner-content li {
+#inner-content li,
+#info-box li {
     list-style-type: disc;
     line-height: 23px;
+}
+#info-box li {
+    line-height: 19px;
+    padding-bottom: 5px;
 }
 body.blog_posts.detail p.neighbors {
     margin-top: 10px;
@@ -1089,3 +1101,7 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
+
+
+

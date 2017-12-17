@@ -77,7 +77,7 @@ switch ($unsavedConfiguration['Configuration']['type']) {
         ));
         echo $this->Form->input('Configuration.value', array(
             'type' => 'textarea',
-            'label' => $label,
+            'label' => $label . '<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
             'required' => true,
             'class' => 'ckeditor'
         ));

@@ -79,8 +79,18 @@ class ActionLogsController extends AdminAppController
 
         // customers are only allowed to see their own data
         if ($this->AppAuth->isCustomer()) {
-            // configuration of customerMainNamePart can be changed
-            $conditions[] = '(Customer.id_customer = '.$this->AppAuth->getUserId().' OR (CakeActionLog.text REGEXP \'' . $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname') . '\' OR CakeActionLog.text REGEXP \'' . $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname') . '\'))';
+            $tmpCondition  =  '(';
+                $tmpCondition .= 'Customer.id_customer = '.$this->AppAuth->getUserId();
+                // order of first and lastname can be changed Configure::read('app.customerMainNamePart')
+                $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
+            if (Configure::read('app.customerMainNamePart') == 'lastname') {
+                $customerNameForRegex = $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname');
+            }
+                $tmpCondition .= ' OR CakeActionLog.text REGEXP \'' . $customerNameForRegex . '\'';
+            $tmpCondition .= ')';
+            $conditions[] = $tmpCondition;
+            // never show cronjob logs for customers
+            $conditions[] = 'CakeActionLog.type NOT REGEXP \'^cronjob_\'';
         }
 
         $type = '';

@@ -53,6 +53,33 @@ class ManufacturersController extends AdminAppController
         $this->render('edit');
     }
 
+    public function setKcFinderUploadPath($manufacturerId)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        if ($this->AppAuth->isManufacturer()) {
+            $manufacturerId = $this->AppAuth->getManufacturerId();
+        } else {
+            $this->recursive = -1;
+            $manufacturer = $this->Manufacturer->find('first', array(
+                'conditions' => array(
+                    'Manufacturer.id_manufacturer' => $manufacturerId
+                )
+            ));
+            $manufacturerId = $manufacturer['Manufacturer']['id_manufacturer'];
+        }
+
+        $_SESSION['KCFINDER'] = array(
+            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
+        );
+        $this->set('data', array(
+            'status' => true,
+            'msg' => 'OK'
+        ));
+        $this->set('_serialize', 'data');
+    }
+
     public function edit($manufacturerId = null)
     {
         $this->setFormReferer();
@@ -169,6 +196,7 @@ class ManufacturersController extends AdminAppController
                 $this->Manufacturer->ManufacturerLang->save($this->request->data, array(
                     'validate' => false
                 ));
+
                 $this->Manufacturer->Address->save($this->request->data, array(
                     'validate' => false
                 ));
@@ -237,13 +265,13 @@ class ManufacturersController extends AdminAppController
 
     public function index()
     {
-        $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay();
+        $dateFrom = Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay());
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay();
+        $dateTo = Configure::read('timeHelper')->getOrderPeriodLastDay(Configure::read('timeHelper')->getCurrentDay());
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
         }
@@ -323,6 +351,7 @@ class ManufacturersController extends AdminAppController
 
             $this->RequestHandler->renderAs($this, 'pdf');
             $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+                ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
             ), 'F');
@@ -482,6 +511,14 @@ class ManufacturersController extends AdminAppController
             throw new MissingActionException('manufacturer does not exist');
         }
 
+        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+            $this->loadModel('Network.SyncDomain');
+            $this->helpers[] = 'Network.Network';
+            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
+            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
+            $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
+        }
+
         // set default data if manufacturer options are null
         if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturer']['variable_member_fee'] == '') {
             $unsavedManufacturer['Manufacturer']['variable_member_fee'] = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
@@ -530,8 +567,11 @@ class ManufacturersController extends AdminAppController
             $this->request->data['Manufacturer']['holiday_to'] = Configure::read('timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
 
             // values that are the same as default values => null
-            if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['variable_member_fee'] == Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                $this->request->data['Manufacturer']['variable_member_fee'] = null;
+            if (!$this->AppAuth->isManufacturer()) {
+                // only admins and superadmins are allowed to change variable_member_fee
+                if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['variable_member_fee'] == Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                    $this->request->data['Manufacturer']['variable_member_fee'] = null;
+                }
             }
             if ($this->request->data['Manufacturer']['default_tax_id'] == Configure::read('app.defaultTaxId')) {
                 $this->request->data['Manufacturer']['default_tax_id'] = null;
@@ -556,6 +596,12 @@ class ManufacturersController extends AdminAppController
             }
             if ($this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
                 $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
+            }
+
+            if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
+                if ($this->request->data['Manufacturer']['enabled_sync_domains']) {
+                    $this->request->data['Manufacturer']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturer']['enabled_sync_domains']);
+                }
             }
 
             // remove post data that could be set by hacking attempt
@@ -615,51 +661,6 @@ class ManufacturersController extends AdminAppController
         }
     }
 
-    public function changeProductStatusByManufacturer($manufacturerId, $status)
-    {
-        if (! in_array($status, array(
-            APP_OFF,
-            APP_ON
-        ))) {
-            throw new MissingActionException('Status muss 0 oder 1 sein!');
-        }
-
-        // if logged user is manufacturer, then get param manufacturer id is NOT used
-        // but logged user id for security reasons
-        if ($this->AppAuth->isManufacturer()) {
-            $manufacturerId = $this->AppAuth->getManufacturerId();
-        }
-
-        $sql = "UPDATE ".$this->Manufactuer->tablePrefix."product p, ".$this->Manufacturer->tablePrefix."product_shop ps 
-                SET p.active  = " . $status . ",
-                    ps.active = " . $status . "
-                WHERE p.id_product = ps.id_product
-                AND p.id_manufacturer = " . $manufacturerId . ";";
-        $result = $this->Manufacturer->query($sql);
-        $affectedRows = $this->Manufacturer->getAffectedRows() / 2; // two tables affected...
-
-        $manufacturer = $this->Manufacturer->find('first', array(
-            'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
-            )
-        ));
-
-        $statusText = 'deaktiviert';
-        $actionLogType = 'product_set_inactive';
-        if ($status) {
-            $statusText = 'aktiviert';
-            $actionLogType = 'product_set_active';
-        }
-
-        $message = 'Alle Produkte des Herstellers "' . $manufacturer['Manufacturer']['name'] . '" wurden ' . $statusText . '. Veränderte Produkte: ' . $affectedRows;
-        $this->Flash->success($message);
-
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, 'products', $message);
-
-        $this->redirect($this->referer());
-    }
-
     private function prepareInvoiceAndOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
     {
         $results = $this->Manufacturer->getOrderList($manufacturerId, $groupType, $from, $to, $orderState);
@@ -702,6 +703,7 @@ class ManufacturersController extends AdminAppController
     public function getInvoice($manufacturerId, $from, $to)
     {
         $results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+            ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ));
@@ -710,6 +712,7 @@ class ManufacturersController extends AdminAppController
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
         $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
+            ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ));

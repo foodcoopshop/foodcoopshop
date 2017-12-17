@@ -10,6 +10,7 @@ App::uses('MyHtmlHelper', 'View/Helper');
 App::uses('MyTimeHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
 App::uses('Configuration', 'Model');
+App::uses('Manufacturer', 'Model');
 
 /**
  * AppCakeTestCase
@@ -43,6 +44,8 @@ class AppCakeTestCase extends CakeTestCase
 
     public $Customer;
 
+    public $Manufacturer;
+
     public $browser;
 
     /**
@@ -64,11 +67,10 @@ class AppCakeTestCase extends CakeTestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
-        $this->Customer = new Customer();
-        $this->generatePasswordHashes();
-
         $this->Configuration = new Configuration();
-        $this->Configuration->loadConfigurations();
+        $this->Customer = new Customer();
+        $this->Manufacturer = new Manufacturer();
+        $this->generatePasswordHashes();
     }
 
     protected static function resetTestDatabaseData()
@@ -97,9 +99,29 @@ class AppCakeTestCase extends CakeTestCase
         $this->assertEquals(0, $response->status, 'json status should be "0"');
     }
 
+    protected function assert200OkHeader()
+    {
+        $this->assertRegExp('/HTTP\/1.1 200 OK/', $this->browser->getHeaders(), 'header 200 ok not found');
+    }
+
+    protected function assert401UnauthorizedHeader()
+    {
+        $this->assertRegExp('/HTTP\/1.1 401 Unauthorized/', $this->browser->getHeaders(), 'header 401 unauthorized not found');
+    }
+
     protected function assert403ForbiddenHeader()
     {
         $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
+    }
+
+    protected function assertAccessDeniedWithRedirectToLoginForm()
+    {
+        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->browser->getContent());
+    }
+
+    protected function assert404NotFoundHeader()
+    {
+        $this->assertRegExp('/HTTP\/1.1 404 Not Found/', $this->browser->getHeaders(), 'header 404 not found not found');
     }
 
     protected function assertRedirectToLoginPage()
@@ -234,6 +256,16 @@ class AppCakeTestCase extends CakeTestCase
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
+    protected function changeReadOnlyConfiguration($configKey, $value)
+    {
+        $query = 'UPDATE ' . $this->Configuration->tablePrefix . $this->Configuration->useTable.' SET value = :value WHERE name = :configKey';
+        $params = array(
+            'value' => $value,
+            'configKey' => $configKey
+        );
+        return $this->Configuration->getDataSource()->fetchAll($query, $params);
+    }
+
     /**
      * needs to login as superadmin and logs user out automatically
      * eventually create a new browser instance for this method
@@ -348,6 +380,16 @@ class AppCakeTestCase extends CakeTestCase
             )
         ));
         return $this->browser->getJsonDecodedContent();
+    }
+
+    protected function changeManufacturer($manufacturerId, $option, $value)
+    {
+        $query = 'UPDATE ' . $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
+        $params = array(
+            'value' => $value,
+            'manufacturerId' => $manufacturerId
+        );
+        return $this->Manufacturer->getDataSource()->fetchAll($query, $params);
     }
 
     protected function logout()

@@ -139,6 +139,7 @@ table.list th, table.list td {
 }
 body.manufacturers .holiday-wrapper .description {
   margin-left: 0px;
+  margin-top: 5px;
 }
 form.fcs-form label {
   width: 120px;
@@ -149,3 +150,5 @@ form.fcs-form input[type="checkbox"] {
 form.fcs-form .description {
   margin-left: 120px;
 }
+
+

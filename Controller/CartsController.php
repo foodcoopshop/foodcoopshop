@@ -22,6 +22,9 @@ class CartsController extends FrontendController
 
     public function beforeFilter()
     {
+
+        parent::beforeFilter();
+
         if ($this->request->is('ajax')) {
             $message = '';
             if (! $this->AppAuth->loggedIn()) {
@@ -38,8 +41,6 @@ class CartsController extends FrontendController
                 )));
             }
         }
-
-        parent::beforeFilter();
 
         $this->AppAuth->allow('generateCancellationInformationPdf');
     }
@@ -226,7 +227,7 @@ class CartsController extends FrontendController
             }
 
             if (! $product['Manufacturer']['active'] || $product[0]['IsHolidayActive']) {
-                $message = 'Der Hersteller des Produktes "' . $product['ProductLang']['name'] . '" ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = 'Der Hersteller des Produktes "' . $product['ProductLang']['name'] . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
 

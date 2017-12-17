@@ -23,7 +23,7 @@
     #login-form form,
     #login-form .input,
     body.customers.new_password_request form,
-    body.customers.new_password_request .input,
+    #login-form .input, body.customers.new_password_request .input,
     .blog-wrapper.owl-carousel,
     a.blog-post-wrapper img,
     #inner-content iframe {
@@ -237,6 +237,10 @@
     body.customers.new_password_request .input input {
         width: 60% ! important;
     }
+    body.customers.new_password_request .btn-success {
+        float: right;
+        margin-right: 10%;
+    }
     #login-form .input input[type="checkbox"] {
         margin-left: 50% ! important;
     }
@@ -271,6 +275,16 @@
         background: #fff ! important;
         padding: 5px ! important;
         border-left: 1px solid #719f41 ! important;
+    }
+    .sb-right .inner ul {
+       padding-left: 10px;
+       margin-left: 10px;
+       margin-top: 10px;
+    }
+    .sb-right .inner li {
+        list-style-type: disc;
+        line-height: 19px;
+        padding-bottom: 5px;
     }
     .sb-slidebar {
        width: 40% ! important;
@@ -348,4 +362,6 @@
         font-size: 13px;
     }
  }
+
+
 

@@ -101,7 +101,7 @@ echo $this->Form->input('Category.active', array(
 echo $this->Form->input('CategoryLang.description', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Beschreibung'
+    'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
 ));
 
 ?>

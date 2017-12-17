@@ -145,6 +145,14 @@ class CakeActionLog extends AppModel
                 'manufacturer'
             )
         ),
+
+        'product_remotely_changed' => array(
+            'de' => 'Synchronisation: Artikel geändert',
+            'access' => array(
+                'manufacturer'
+            )
+        ),
+
         'orders_state_changed' => array(
             'de' => 'Bestellung: Status geändert'
         ),
@@ -265,6 +273,16 @@ class CakeActionLog extends AppModel
         ),
         'category_deleted' => array(
             'de' => 'Kategorie: gelöscht'
+        ),
+
+        'remote_foodcoop_added' => array(
+            'de' => 'Remote-Foodcoop: erstellt'
+        ),
+        'remote_foodcoop_changed' => array(
+            'de' => 'Remote-Foodcoop: geändert'
+        ),
+        'remote_foodcoop_deleted' => array(
+            'de' => 'Remote-Foodcoop: gelöscht'
         ),
 
         'slider_added' => array(

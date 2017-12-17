@@ -130,6 +130,16 @@ class ConfigurationsController extends AdminAppController
             )
         ));
         $this->set('defaultTax', $defaultTax);
+
+        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+            $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
+            $this->helpers[] = 'Network.Network';
+            $this->loadModel('Network.SyncDomain');
+            $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
+            $this->set('syncDomains', $syncDomains);
+        }
+        $this->set('versionFoodCoopShop', $this->Configuration->getVersion());
+
         $this->set('title_for_layout', 'Einstellungen');
     }
 

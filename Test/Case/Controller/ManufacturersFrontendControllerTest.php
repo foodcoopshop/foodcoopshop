@@ -20,13 +20,12 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
     private $manufacturerId = 5;
     private $today;
-    private $mustNotBeShownString = 'im wohlverdienten Urlaub.</h2>';
+    private $mustNotBeShownString = 'Lieferpause.</h2>';
 
     public function setUp()
     {
         parent::setUp();
         $this->today = date('Y-m-d');
-        $this->loginAsCustomer(); // test database does not show products to guests
     }
 
     public function testHolidayModeTodayToTomorrow()
@@ -38,7 +37,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             $dateFrom,
             $dateTo,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist seit '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat seit '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' Lieferpause.</h2>',
             true,
             false
         );
@@ -76,7 +75,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             $dateFrom,
             null,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist seit '.$this->Time->formatToDateShort($dateFrom).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat seit '.$this->Time->formatToDateShort($dateFrom).' Lieferpause.</h2>',
             true,
             false
         );
@@ -91,7 +90,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             $dateFrom,
             $dateTo,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist von '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat von '.$this->Time->formatToDateShort($dateFrom).' bis '.$this->Time->formatToDateShort($dateTo).' Lieferpause.</h2>',
             true,
             true
         );
@@ -105,7 +104,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->doHolidayModeCheck(
             null,
             $dateTo,
-            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> ist bis '.$this->Time->formatToDateShort($dateTo).' im wohlverdienten Urlaub.</h2>',
+            '<h2 class="info">Der Hersteller <b>Demo Gemüse-Hersteller</b> hat bis '.$this->Time->formatToDateShort($dateTo).' Lieferpause.</h2>',
             true,
             false
         );
@@ -114,6 +113,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     private function doHolidayModeCheck($dateFrom, $dateTo, $expectedString, $expectedStringIsVisible, $productsExpected)
     {
 
+        $this->loginAsCustomer();
         $this->changeManufacturerHolidayMode($this->manufacturerId, $dateFrom, $dateTo);
         $this->browser->get(Configure::read('slugHelper')->getManufacturerDetail($this->manufacturerId, ''));
 
@@ -129,5 +129,43 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         } else {
             $this->assertNotRegExpWithUnquotedString($productsShownPattern, $this->browser->getContent());
         }
+    }
+
+    public function testManufacturerDetailOnlinePublicLoggedOut()
+    {
+        $this->browser->get($this->Slug->getManufacturerDetail(4, 'Demo Manufacturer'));
+        $this->assert200OkHeader();
+    }
+
+    public function testManufacturerDetailOfflinePublicLoggedOut()
+    {
+        $manufacturerId = 4;
+        $this->changeManufacturer($manufacturerId, 'active', 0);
+        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->assert404NotFoundHeader();
+    }
+
+    public function testManufacturerDetailOnlinePrivateLoggedOut()
+    {
+        $manufacturerId = 4;
+        $this->changeManufacturer($manufacturerId, 'is_private', 1);
+        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->assertAccessDeniedWithRedirectToLoginForm();
+    }
+
+    public function testManufacturerDetailOnlinePrivateLoggedIn()
+    {
+        $this->loginAsCustomer();
+        $manufacturerId = 4;
+        $this->changeManufacturer($manufacturerId, 'is_private', 1);
+        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->assert200OkHeader();
+    }
+
+    public function testManufacturerDetailNonExistingLoggedOut()
+    {
+        $manufacturerId = 1;
+        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->assert404NotFoundHeader();
     }
 }

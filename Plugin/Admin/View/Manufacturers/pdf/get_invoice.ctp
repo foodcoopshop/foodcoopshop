@@ -70,9 +70,12 @@ $pdf->renderTable();
 // Produktauflistung End
 
 if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
+    // TODO do that in controller where it belongs to :-)
+    App::uses('Manufacturer', 'Model');
+    $m = new Manufacturer();
     $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
-    $compensatedPrice = round($sumPriceIncl * $variableMemberFee / 100, 2);
-    $newSumPriceIncl = $sumPriceIncl - $compensatedPrice;
+    $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
+    $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
     $firstColumnWidth = 390;
     $secondColumnWidth = 140;
 
@@ -152,17 +155,24 @@ $pdf->lastPage();
 
 $filename = $this->MyHtml->getInvoiceLink($results_product[0]['m']['Hersteller'], $results_product[0]['m']['HerstellerID'], date('Y-m-d'), $newInvoiceNumber);
 
-// if send method is called, prepare chrononlogical folders on server
 if ($saveParam == 'F') {
+    // pdf saved on server
     if (file_exists($filename)) {
         unlink($filename);
     }
-
+    // assure that folder structure exists
     App::uses('Folder', 'Utility');
     $dir = new Folder();
     $path = dirname($filename);
     $dir->create($path);
     $dir->chmod($path, 0755);
+} else {
+    // pdf is generated on the fly and NOT saved on server
+    // set custom filename
+    $filename = explode(DS, $filename);
+    $filename = end($filename);
+    $filename = substr($filename, 11);
+    $filename = $this->params['pass'][1] . '-' . $this->params['pass'][2] . '-' . $filename;
 }
 
 echo $pdf->Output($filename, $saveParam);

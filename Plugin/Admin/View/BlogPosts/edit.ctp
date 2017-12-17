@@ -130,7 +130,7 @@ if ($this->here != $this->Slug->getBlogPostAdd()) {
 echo $this->Form->input('BlogPostLang.content', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Text',
+    'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
     'required' => false
 ));
 

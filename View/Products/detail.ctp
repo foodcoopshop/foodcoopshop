@@ -14,7 +14,8 @@
  */
 $this->element('addScript', array('script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper .first-column a.lightbox');".
+    Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".
     Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('Produkte');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
@@ -26,9 +27,7 @@ $this->element('addScript', array('script' =>
 <h1><?php echo $title_for_layout; ?></h1>
 
 <?php
-foreach ($products as $product) {
     echo $this->element('product/product', array('product' => $product));
-}
 ?>
 
 <?php

@@ -64,7 +64,7 @@ echo $this->Form->input('Manufacturer.active', array(
 
 echo '<div class="holiday-wrapper">';
     echo '<div class="input">';
-        echo '<label>Urlaubsmodus?';
+        echo '<label>Lieferpause?';
     echo '</div>';
     echo $this->element('dateFields', array(
         'dateFrom' => $this->request->data['Manufacturer']['holiday_from'],
@@ -72,8 +72,7 @@ echo '<div class="holiday-wrapper">';
         'dateTo' => $this->request->data['Manufacturer']['holiday_to'],
         'nameTo' => 'data[Manufacturer][holiday_to]'
     ));
-    echo '<span class="description small">Die Produkte sind im angegebenen Zeitraum im Shop nicht bestellbar, sie werden also automatisch aktiviert und wieder deaktiviert.';
-        echo '<br />Beide Felder leer bedeutet: Urlaubsmodus ist <b>nicht aktiv</b>.';
+    echo '<span class="description small"><a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Wie verwende ich die Funktion "Lieferpause"?</a>';
     echo '</span>';
     echo '</div>';
 
@@ -168,6 +167,22 @@ echo '<div class="holiday-wrapper">';
         'label' => 'Ansprechperson',
         'empty' => 'Mitglied auswählen...',
         'options' => $customersForDropdown
+        ));
+    }
+
+    if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
+        $this->element('addScript', array(
+            'script' =>
+                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
+            "
+        ));
+        echo $this->Form->input('Manufacturer.enabled_sync_domains', array(
+            'type' => 'select',
+            'multiple' => true,
+            'data-val' => $this->request->data['Manufacturer']['enabled_sync_domains'],
+            'label' => 'Remote-Foodcoops',
+            'options' => $syncDomainsForDropdown,
+            'after' => '<span class="after small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></div>'
         ));
     }
 

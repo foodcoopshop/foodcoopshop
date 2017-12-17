@@ -48,7 +48,7 @@ Configure::write('app.additionalOrderStatusChangeInfo', '');
 /**
  * your host's name, eg. http://www.yourfoodcoop.com
  */
-Configure::write('app.cakeServerName', 'http://www.foodcoopshop.dev');
+Configure::write('app.cakeServerName', 'http://www.foodcoopshop.test');
 
 /**
  * array of email adresses that receive notifications after new member registrations
@@ -71,4 +71,3 @@ Configure::write('app.emailOrderReminderEnabled', true);
 Configure::write('app.paymentMethods', array(
     'cashless'
 ));
-

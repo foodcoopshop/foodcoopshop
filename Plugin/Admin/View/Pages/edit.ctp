@@ -103,7 +103,7 @@ echo $this->Form->input('Page.active', array(
 echo $this->Form->input('PageLang.content', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Text'
+    'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
 ));
 
 ?>

@@ -19,7 +19,7 @@
         $this->element('addScript', array(
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" . Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" . Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" . Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" . Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
         "
         ));
 
@@ -53,24 +53,9 @@
         <div class="right">
             
         <?php
-        if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
-            $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()) . ");"
-            ));
-            echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
-            $options = array(
-            'escape' => false
-            );
-            $options['class'] = 'btn btn-default';
-            echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Neue Sofort-Bestellung', 'javascript:void(0);', $options);
-            echo $this->Form->input('customerId', array(
-            'type' => 'select',
-            'label' => '',
-            'empty' => 'Mitglied auswählen...',
-            'options' => $customersForDropdown
-            ));
-            echo '</div>';
-        }
+        echo $this->element('addShopOrderButton', array(
+            'customers' => $customersForDropdown
+        ));
         ?>
               
         </div>

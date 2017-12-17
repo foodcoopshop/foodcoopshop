@@ -20,6 +20,27 @@ App::uses('FrontendController', 'Controller');
 class PagesController extends FrontendController
 {
 
+    public function beforeFilter()
+    {
+
+        parent::beforeFilter();
+        switch ($this->action) {
+            case 'detail':
+                $pageId = (int) $this->params['pass'][0];
+                $this->Page->recursive = -1;
+                $page = $this->Page->find('first', array(
+                    'conditions' => array(
+                        'Page.id_cms' => $pageId,
+                        'Page.active' => APP_ON
+                    )
+                ));
+                if (!empty($page) && !$this->AppAuth->loggedIn() && $page['Page']['is_private']) {
+                    $this->AppAuth->deny($this->action);
+                }
+                break;
+        }
+    }
+
     public function home()
     {
 
@@ -67,7 +88,22 @@ class PagesController extends FrontendController
     {
         $pageId = (int) $this->params['pass'][0];
 
-        $page = $this->Page->getPageForFrontend($pageId, $this->AppAuth);
+        $conditions = array(
+            'Page.id_cms' => $pageId,
+            'Page.active' => APP_ON,
+            'PageLang.id_lang' => Configure::read('app.langId'),
+            'PageLang.id_shop' => Configure::read('app.shopId')
+        );
+
+        $page = $this->Page->find('first', array(
+            'conditions' => $conditions,
+            'contain' => array(
+                'PageLang.meta_title',
+                'PageLang.link_rewrite',
+                'PageLang.content'
+            )
+        ));
+
         if (empty($page)) {
             throw new MissingActionException('page not found');
         }
@@ -93,7 +129,7 @@ class PagesController extends FrontendController
 
         $page['children'] = array();
         foreach ($children as $child) {
-            if ($child['Page']['active'] == APP_OFF) {
+            if ($child['Page']['active'] < APP_ON) {
                 continue;
             }
             if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) {

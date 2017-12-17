@@ -12,7 +12,7 @@
     "require": {
         "php": ">=5.6.0",
         "cakephp/cakephp": "2.10.*",
-        "weotch/phpthumb": "1.0.*",
+        "intervention/image": "2.*",
         "tecnickcom/tcpdf": "6.2.*",
         "simpletest/simpletest": "1.1.7",
         "markstory/asset_compress" : "2.x-dev",

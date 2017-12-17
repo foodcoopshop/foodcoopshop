@@ -1,5 +1,5 @@
-<VirtualHost www.foodcoopshop.dev:80>
-    ServerName www.foodcoopshop.dev
+<VirtualHost www.foodcoopshop.test:80>
+    ServerName www.foodcoopshop.test
     DocumentRoot %TRAVIS_BUILD_DIR%/webroot
     
     <Directory %TRAVIS_BUILD_DIR%/webroot>
@@ -21,7 +21,7 @@
   </IfModule>   
 
     LogLevel warn
-    ErrorLog /var/log/apache2/www.foodcoopshop.dev_error.log
-    CustomLog /var/log/apache2/www.foodcoopshop.dev_access.log combined
+    ErrorLog /var/log/apache2/www.foodcoopshop.test_error.log
+    CustomLog /var/log/apache2/www.foodcoopshop.test_access.log combined
     ServerSignature Off
 </VirtualHost>

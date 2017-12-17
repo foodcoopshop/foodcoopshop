@@ -28,7 +28,3 @@ Configure::write('test.meatManufacturerId', 91);
 
 // password for all users is reset to test.loginPassword on Test::setUp()
 Configure::write('test.loginPassword', 'foodcoopshop');
-Configure::write('test.shopOrderTestUser', array(
-    'email' => 'fcs-demo-mitglied@mailinator.com',
-    'name' => 'Demo Mitglied'
-));

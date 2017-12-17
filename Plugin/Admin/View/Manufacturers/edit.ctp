@@ -89,10 +89,12 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
 
+    $buttonOptions = array('class' => 'btn btn-default', 'escape' => false);
+    $buttonIcon = '<i class="fa fa-cogs fa-lg"></i> ';
     if ($appAuth->isManufacturer()) {
-        $optionsLink = $this->Html->link('Hier geht\'s zu deinen Einstellungen', $this->Slug->getManufacturerMyOptions());
+        $optionsLink = $this->Html->link($buttonIcon . 'Hier geht\'s zu deinen Einstellungen', $this->Slug->getManufacturerMyOptions(), $buttonOptions);
     } else {
-        $optionsLink = $this->Html->link('Hier geht\'s zu den Hersteller-Einstellungen', $this->Slug->getManufacturerEditOptions($manufacturerId));
+        $optionsLink = $this->Html->link($buttonIcon . 'Hier geht\'s zu den Hersteller-Einstellungen', $this->Slug->getManufacturerEditOptions($manufacturerId), $buttonOptions);
     }
     echo ' <span class="description">' . $optionsLink . '</span>';
 
@@ -147,7 +149,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         echo $this->Form->input('ManufacturerLang.description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
-        'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt, es können auch Bilder eingefügt werden.</span>'
+        'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt.<br /><br /><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
         ));
     }
     echo '<div class="sc"></div>';

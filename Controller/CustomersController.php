@@ -91,27 +91,77 @@ class CustomersController extends FrontendController
                 return false;
             }
 
-            $newPassword = $this->Customer->setNewPassword($customer['Customer']['id_customer']);
+            $changePasswordCode = StringComponent::createRandomString(12);
+            $customer2save = array(
+                'change_password_code' => $changePasswordCode
+            );
+            $this->Customer->id = $customer['Customer']['id_customer'];
+            $this->Customer->save($customer2save);
 
             // send email
             $email = new AppEmail();
-            $email->template('new_password_request')
+            $email->template('new_password_request_successful')
                 ->emailFormat('html')
-                ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
+                ->subject('Anfrage für neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
                 ->to($this->request->data['Customer']['email'])
                 ->viewVars(array(
-                'password' => $newPassword,
+                'changePasswordCode' => $changePasswordCode,
                 'customer' => $customer
                 ));
 
             if ($email->send()) {
-                $this->Flash->success('Wir haben dir ein neues Passwort zugeschickt.');
-            } else {
-                $this->Flash->error('Das Versenden des neuen Passwortes ist fehlgeschlagen.');
+                $this->Flash->success('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.');
             }
 
             $this->redirect('/');
         }
+    }
+
+    public function generateNewPassword()
+    {
+        $changePasswordCode = $this->params['changePasswordCode'];
+
+        if (!isset($changePasswordCode)) {
+            throw new MissingActionException('change password code not passed');
+        }
+
+        $this->Customer->recursive = -1;
+        $customer = $this->Customer->find('first', array(
+            'conditions' => array(
+                'Customer.change_password_code' => $changePasswordCode
+            )
+        ));
+
+        if (empty($customer)) {
+            throw new MissingActionException('change password code not found');
+        }
+
+        $newPassword = $this->Customer->setNewPassword($customer['Customer']['id_customer']);
+
+        // send email
+        $email = new AppEmail();
+            $email->template('new_password_set_successful')
+            ->emailFormat('html')
+            ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME') . ' generiert')
+            ->to($customer['Customer']['email'])
+            ->viewVars(array(
+                'password' => $newPassword,
+                'customer' => $customer
+            ));
+
+
+        if ($email->send()) {
+            $this->Flash->success('Wir haben dir dein neues Passwort zugeschickt.');
+        }
+
+        // reset change password code
+        $customer2save = array(
+            'change_password_code' => null
+        );
+        $this->Customer->id = $customer['Customer']['id_customer'];
+        $this->Customer->save($customer2save);
+
+        $this->redirect(Configure::read('slugHelper')->getLogin());
     }
 
     public function login()

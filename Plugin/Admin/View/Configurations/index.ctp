@@ -100,6 +100,60 @@ $this->element('addScript', array(
             echo '</tr>';
         }
         ?>
+        
+        <?php if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+            <tr>
+                <td>
+                    <b>Remote-Foodcoops</b>
+                    <br /><div class="small">Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können.<br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>">Infos zum Netzwerk-Modul</a></div>
+                </td>
+                <?php if (!Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
+                <td colspan="2" class="sync-domain-list">
+                <?php
+                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), array(
+                        'class' => 'btn btn-default',
+                        'escape' => false
+                    ));
+                if (!empty($syncDomains)) {
+                    echo '<table class="list">';
+                    echo '<tr class="sort">';
+                    echo '<th>Domain</th>';
+                    echo '<th>Aktiv</th>';
+                    echo '<th></th>';
+                    echo '</th>';
+                }
+
+                foreach ($syncDomains as $syncDomain) {
+                    echo '<tr>';
+                    echo '<td>'.$syncDomain['SyncDomain']['domain'].'</td>';
+                    echo '<td align="center">';
+                    if ($syncDomain['SyncDomain']['active'] == 1) {
+                        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+                    } else {
+                        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+                    }
+                    echo '</td>';
+                    echo '<td>';
+                    echo $this->Html->getJqueryUiIcon(
+                        $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                        array(
+                        'title' => 'Remote-Foodcoop ' . $syncDomain['SyncDomain']['domain'] . ' ändern',
+                        ),
+                        $this->Network->getSyncDomainEdit($syncDomain['SyncDomain']['id'])
+                    );
+                    echo '</td>';
+                    echo '<tr>';
+                }
+                if (!empty($syncDomains)) {
+                    echo '</table>';
+                }
+                    ?>
+                </td>
+                <?php } else { ?>
+                <td colspan="2"><p>Solange der variable Mitgliedsbeitrag aktiviert ist, können für diese Foodcoop keine Remote-Foodcoops erstellt werden.</p></td>
+                <?php } ?>
+        </tr>
+        <?php } ?>
     </table>
 
     <br />
@@ -134,11 +188,25 @@ $this->element('addScript', array(
             echo '</tr>';
         }
         ?>
+        
+        <tr>
+            <td>Version FoodCoopShop</td>
+            <td><?php echo $versionFoodCoopShop; ?></td>
+        </tr>
+
+        <?php if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+        <tr>
+            <td>Version Netzwerk-Modul</td>
+            <td><?php echo $versionNetworkPlugin; ?></td>
+        </tr>
+        <?php } ?>
+
         <tr>
             <td>app.cakeServerName</td>
             <td><a target="_blank"
                 href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
         </tr>
+        
 
         <tr>
             <td>app.emailOrderReminderEnabled</td>

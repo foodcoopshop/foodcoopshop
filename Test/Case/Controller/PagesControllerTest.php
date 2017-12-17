@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
+App::uses('Page', 'Model');
 
 /**
  * PagesControllerTest
@@ -19,6 +20,14 @@ App::uses('AppCakeTestCase', 'Test');
  */
 class PagesControllerTest extends AppCakeTestCase
 {
+
+    public $Page;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->Page = new Page();
+    }
 
     public function testAllPublicUrls()
     {
@@ -57,11 +66,17 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCreditBalance(88),
             $this->Slug->getChangePassword(),
             $this->Slug->getCustomerProfile(),
+            $this->Slug->getProductAdmin(),
+            $this->Slug->getProductAdmin('all'),
             $this->Slug->getReport('product'),
             $this->Slug->getReport('deposit'),
             $this->Slug->getBlogPostListAdmin(),
             $this->Slug->getBlogPostAdd(),
             $this->Slug->getBlogPostEdit(2),
+            $this->Slug->getManufacturerList(),
+            $this->Slug->getManufacturerAdd(),
+            $this->Slug->getManufacturerEdit(5),
+            $this->Slug->getManufacturerEditOptions(5),
             $this->Slug->getAttributesList(),
             $this->Slug->getAttributeAdd(),
             $this->Slug->getAttributeEdit(32),
@@ -84,7 +99,7 @@ class PagesControllerTest extends AppCakeTestCase
     }
 
     /**
-     * test urls that are only available for manufacturers
+     * test urls that are only available for manufacturers or have different content
      */
     public function testAllManufacturerUrls()
     {
@@ -93,7 +108,8 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = array(
             $this->Slug->getManufacturerMyOptions(),
             $this->Slug->getMyDepositList(),
-            $this->Slug->getManufacturerProfile()
+            $this->Slug->getManufacturerProfile(),
+            $this->Slug->getProductAdmin()
         );
 
         $this->assertPagesForErrors($testUrls);
@@ -126,5 +142,54 @@ class PagesControllerTest extends AppCakeTestCase
         );
         $this->assertPagesFor404($testUrls);
         $this->browser->doFoodCoopShopLogout();
+    }
+
+    public function testPageDetailOnlinePublicLoggedOut()
+    {
+        $this->browser->get($this->Slug->getPageDetail(3, 'Demo Page'));
+        $this->assert200OkHeader();
+    }
+
+    public function testPageDetailOfflinePublicLoggedOut()
+    {
+        $pageId = 3;
+        $this->changePage($pageId, 0, 0);
+        $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
+        $this->assert404NotFoundHeader();
+    }
+
+    public function testPageDetailOnlinePrivateLoggedOut()
+    {
+        $pageId = 3;
+        $this->changePage($pageId, 1);
+        $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
+        $this->assertAccessDeniedWithRedirectToLoginForm();
+    }
+
+    public function testPageDetailOnlinePrivateLoggedIn()
+    {
+        $this->loginAsCustomer();
+        $pageId = 3;
+        $this->changePage($pageId, 1);
+        $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
+        $this->assert200OkHeader();
+    }
+
+    public function testPageDetailNonExistingLoggedOut()
+    {
+        $pageId = 30;
+        $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
+        $this->assert404NotFoundHeader();
+    }
+
+    protected function changePage($pageId, $isPrivate = 0, $active = 1)
+    {
+        $sql = 'UPDATE ' . $this->Page->tablePrefix . $this->Page->useTable.' SET is_private = :isPrivate, active = :active WHERE id_cms = :pageId;';
+        $params = array(
+            'pageId' => $pageId,
+            'isPrivate' => $isPrivate,
+            'active' => $active
+        );
+        $this->Page->getDataSource()->fetchAll($sql, $params);
     }
 }

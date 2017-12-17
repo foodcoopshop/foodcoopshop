@@ -77,6 +77,24 @@ class Product extends AppModel
     }
 
     /**
+     * @param int $productId
+     * @param int $manufacturerId
+     * @return boolean success
+     */
+    public function isOwner($productId, $manufacturerId)
+    {
+
+        $this->recursive = -1;
+        $found = $this->find('count', array(
+            'conditions' => array(
+                'Product.id_product' => $productId,
+                'Product.id_manufacturer' => $manufacturerId
+            )
+        ));
+        return (boolean) $found;
+    }
+
+    /**
      *
      * @param string $productId
      *            (eg. 4 or '4-10' or '4'
@@ -178,6 +196,79 @@ class Product extends AppModel
      *  (
      *      [0] => Array
      *          (
+     *              [productId] => (float) deposit
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeDeposit($products)
+    {
+
+        foreach ($products as $product) {
+            $productId = key($product);
+            $deposit = $this->getPriceAsFloat($product[$productId]);
+            if ($deposit < 0) {
+                throw new InvalidParameterException('Eingabeformat von Pfand ist nicht korrekt: '.$product[$productId]);
+            }
+        }
+
+        $success = false;
+        foreach ($products as $product) {
+            $productId = key($product);
+            $deposit = $this->getPriceAsFloat($product[$productId]);
+
+            $ids = $this->getProductIdAndAttributeId($productId);
+
+            if ($ids['attributeId'] > 0) {
+                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                    'conditions' => array(
+                        'CakeDepositProduct.id_product_attribute' => $ids['attributeId']
+                    )
+                ));
+
+                if (empty($oldDeposit)) {
+                    $this->CakeDepositProduct->id = null; // force new insert
+                } else {
+                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                }
+
+                $deposit2save = array(
+                    'id_product_attribute' => $ids['attributeId'],
+                    'deposit' => $deposit
+                );
+            } else {
+                // deposit is set for productId
+                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                    'conditions' => array(
+                        'CakeDepositProduct.id_product' => $productId
+                    )
+                ));
+
+                if (empty($oldDeposit)) {
+                    $this->CakeDepositProduct->id = null; // force new insert
+                } else {
+                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                }
+
+                $deposit2save = array(
+                    'id_product' => $productId,
+                    'deposit' => $deposit
+                );
+            }
+
+            $this->CakeDepositProduct->primaryKey = 'id';
+            $success |= $this->CakeDepositProduct->save($deposit2save);
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
      *              [productId] => (float) price
      *          )
      *  )
@@ -205,7 +296,7 @@ class Product extends AppModel
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+                $success = $this->ProductAttributes->ProductAttributeShop->updateAll(array(
                     'ProductAttributeShop.price' => $netPrice
                 ), array(
                     'ProductAttributeShop.id_product_attribute' => $ids['attributeId']
@@ -300,7 +391,7 @@ class Product extends AppModel
      * @param array $products
      * @return array $preparedProducts
      */
-    public function prepareProductsForBackend($paginator, $pParams)
+    public function prepareProductsForBackend($paginator, $pParams, $addProductNameToAttributes = false)
     {
 
         $paginator->settings = array_merge(array(
@@ -342,7 +433,10 @@ class Product extends AppModel
                 if ($category['id_category'] == Configure::read('app.categoryAllProducts')) {
                     $products[$i]['Categories']['allProductsFound'] = true;
                 } else {
-                    $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                    // check if category was assigned to product but deleted afterwards
+                    if (isset($category['CategoryLang']) && isset($category['CategoryLang']['name'])) {
+                        $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                    }
                 }
             }
 
@@ -400,7 +494,7 @@ class Product extends AppModel
                             'rowClass' => join(' ', $rowClass)
                         ),
                         'ProductLang' => array(
-                            'name' => $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''
@@ -520,6 +614,12 @@ class Product extends AppModel
      */
     public function getNetPriceAfterTaxUpdate($productId, $oldNetPrice, $oldTaxRate)
     {
+
+        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0 €
+        if (is_null($oldTaxRate)) {
+            $oldTaxRate = 0;
+        }
+
         $sql = 'SELECT ROUND(:oldNetPrice / ((100 + t.rate) / 100) * (1 + :oldTaxRate / 100), 6) as new_net_price ';
         $sql .= $this->getTaxJoins();
         $params = array(
@@ -591,11 +691,11 @@ class Product extends AppModel
         $conditions = array();
         $group = array();
 
-        if ($manufacturerId != '') {
+        if ($manufacturerId != 'all') {
             $conditions['Product.id_manufacturer'] = $manufacturerId;
         } else {
-            // do not show any products if no manufactuerId is set
-            $conditions['Product.id_manufacturer'] = - 1;
+            // do not show any non-associated products that might be found in database
+            $conditions[] = 'Product.id_manufacturer > 0';
         }
 
         if ($productId != '') {
@@ -608,13 +708,18 @@ class Product extends AppModel
 
         // DISTINCT: attributes cause duplicate entries
         $fields = array(
-            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax'
+            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, ImageShop.id_image'
         );
 
         $contain = array(
             'Product',
             'CategoryProducts'
         );
+
+        if ($manufacturerId == '') {
+            $contain[] = 'Manufacturer';
+            $fields[0] .= ', Manufacturer.name';
+        }
 
         $pParams = array(
             'fields' => $fields,

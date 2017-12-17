@@ -3,6 +3,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
 [![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+[![Dependency Status](https://dependencyci.com/github/foodcoopshop/foodcoopshop/badge)](https://dependencyci.com/github/foodcoopshop/foodcoopshop)
 
 FoodCoopShop is a free open source software for foodcoops.
 
@@ -17,8 +18,8 @@ FoodCoopShop is a free open source software for foodcoops.
 ## Requirements
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
-* PHP 7.1
-* MySQL 5.4 or higher
+* PHP >= 5.6 and <= 7.1.11
+* MySQL >= 5.6
 * Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration

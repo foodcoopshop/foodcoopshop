@@ -14,6 +14,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use Intervention\Image\ImageManagerStatic as Image;
+
 class ProductsController extends AdminAppController
 {
 
@@ -211,15 +214,14 @@ class ProductsController extends AdminAppController
         $dir->chmod($thumbsPath, 0755);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $thumb = PhpThumbFactory::create(WWW_ROOT . $filename);
-            $dimensions = $thumb->getCurrentDimensions();
+            $image = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
-            if ($dimensions['height'] > $dimensions['width']) {
-                $thumbSize = round($thumbSize * ($dimensions['width'] / $dimensions['height']), 0);
+            if ($image->getHeight() > $image->getWidth()) {
+                $thumbSize = round($thumbSize * ($image->getWidth() / $image->getHeight()), 0);
             }
-            $thumb->resize($thumbSize);
+            $image->widen($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $thumb->save($thumbsFileName);
+            $image->save($thumbsFileName);
         }
 
         $messageString = 'Ein neues Bild zum Produkt: "' . $product['ProductLang']['name'] . '" (Hersteller: "' . $product['Manufacturer']['name'] . '") wurde hochgeladen.';
@@ -569,114 +571,66 @@ class ProductsController extends AdminAppController
 
     public function editDeposit()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
-        $productId = $this->params['data']['productId'];
-        $deposit = trim($this->params['data']['deposit']);
-        $deposit = str_replace(',', '.', $deposit);
+        $originalProductId = $this->params['data']['productId'];
 
-        if (! is_numeric($deposit) || $deposit < 0) {
-            $message = 'input format for deposit is wrong';
-            $this->log($message);
-            die(json_encode(array(
-                'status' => 0,
-                'msg' => $message
-            )));
-        }
-        $deposit = floatval($deposit);
-
-        $ids = $this->Product->getProductIdAndAttributeId($productId);
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $this->Product->recursive = 4;
+        $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
             )
         ));
 
-        $logString = 'Der Pfand des Produktes "' . $oldProduct['ProductLang']['name'] . '"';
+        try {
+            $this->Product->changeDeposit(
+                array(
+                    array($originalProductId => $this->params['data']['deposit'])
+                )
+            );
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+
+        $depositEntity = $oldProduct['CakeDepositProduct'];
+        $productName = $oldProduct['ProductLang']['name'];
 
         if ($ids['attributeId'] > 0) {
             $attributeName = '';
             foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
                 if ($productAttribute['id_product_attribute'] == $ids['attributeId']) {
                     $attributeName = $productAttribute['ProductAttributeCombination']['AttributeLang']['name'];
+                    $depositEntity = $productAttribute['CakeDepositProductAttribute'];
                     break;
                 }
             }
-
-            $logString .= ' (Variante: ' . $attributeName . ') ';
-
-            // deposit is set for $ids['attributeId']
-            $oldDeposit = $this->Product->CakeDepositProduct->find('first', array(
-                'conditions' => array(
-                    'CakeDepositProduct.id_product_attribute' => $ids['attributeId']
-                )
-            ));
-
-            if (empty($oldDeposit)) {
-                $this->Product->CakeDepositProduct->id = null; // force new insert
-            } else {
-                $this->Product->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
-            }
-
-            $deposit2save = array(
-                'id_product_attribute' => $ids['attributeId'],
-                'deposit' => $deposit
-            );
-        } else {
-            // deposit is set for productId
-            $oldDeposit = $this->Product->CakeDepositProduct->find('first', array(
-                'conditions' => array(
-                    'CakeDepositProduct.id_product' => $productId
-                )
-            ));
-
-            if (empty($oldDeposit)) {
-                $this->Product->CakeDepositProduct->id = null; // force new insert
-            } else {
-                $this->Product->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
-            }
-
-            $deposit2save = array(
-                'id_product' => $productId,
-                'deposit' => $deposit
-            );
+            $productName .= ' (Variante: '.$attributeName.')';
         }
 
-        $this->Product->CakeDepositProduct->primaryKey = 'id';
-        $this->Product->CakeDepositProduct->save($deposit2save);
-
-        $logString .= ' wurde von ';
-        if (isset($oldDeposit['CakeDepositProduct'])) {
-            $logString .= Configure::read('htmlHelper')->formatAsEuro($oldDeposit['CakeDepositProduct']['deposit']);
+        $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
+        if (isset($depositEntity['deposit'])) {
+            $logString .= Configure::read('htmlHelper')->formatAsEuro($depositEntity['deposit']);
         } else {
             $logString .= Configure::read('htmlHelper')->formatAsEuro(0);
         }
 
+        $deposit = $this->Product->getPriceAsFloat($this->params['data']['deposit']);
         $logString .= ' auf ' . Configure::read('htmlHelper')->formatAsEuro($deposit) . ' geändert.';
-
-        $email = new AppEmail();
-        $email->template('Admin.deposit_changed')
-            ->to($email->from())
-            ->emailFormat('html')
-            ->subject('Pfand wurde geändert')
-            ->viewVars(array(
-            'logString' => $logString,
-            'appAuth' => $this->AppAuth
-            ))
-            ->send();
 
         $this->CakeActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
-        $this->Flash->success('Der Pfand des Produktes "' . $oldProduct['ProductLang']['name'] . '" wurde erfolgreich geändert.');
+        $this->Flash->success('Der Pfand des Produktes "' . $productName . '" wurde erfolgreich geändert.');
         $this->Session->write('highlightedRowId', $productId);
 
-        die(json_encode(array(
+        $this->set('data', array(
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ));
+
+        $this->set('_serialize', 'data');
     }
 
     public function editName()
@@ -754,8 +708,12 @@ class ProductsController extends AdminAppController
         }
         $this->set('active', $active);
 
-        $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active);
-        $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
+        if ($manufacturerId != '') {
+            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active);
+            $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
+        } else {
+            $preparedProducts = array();
+        }
         $this->set('products', $preparedProducts);
 
         $this->loadModel('Manufacturer');
@@ -763,11 +721,13 @@ class ProductsController extends AdminAppController
         $this->set('attributesLangForDropdown', $this->AttributeLang->getForDropdown());
         $this->loadModel('Category');
         $this->set('categoriesForDropdown', $this->Category->getForCheckboxes());
-        $this->set('manufacturersForDropdown', $this->Product->Manufacturer->getForDropdown());
+        $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
+        array_unshift($manufacturersForDropdown, array('all' => 'Alle Hersteller'));
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->loadModel('Tax');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        if ($manufacturerId != '') {
+        if ($manufacturerId > 0) {
             $manufacturer = $this->Manufacturer->find('first', array(
                 'conditions' => array(
                     'Manufacturer.id_manufacturer' => $manufacturerId
@@ -780,6 +740,16 @@ class ProductsController extends AdminAppController
         }
 
         $this->set('title_for_layout', 'Produkte');
+
+        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
+            $this->loadModel('Network.SyncManufacturer');
+            $this->loadModel('Network.SyncDomain');
+            $this->helpers[] = 'Network.Network';
+            $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer['Manufacturer']['enabled_sync_domains']);
+            $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
+            $this->set('showSyncProductsButton', $showSyncProductsButton);
+        }
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)

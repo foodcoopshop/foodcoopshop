@@ -31,7 +31,11 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-        echo $this->element('renderCss', array('config' => 'admin'));
+    $cssConfigs = array('admin');
+    if ($this->plugin != 'Admin') {
+        $cssConfigs[] = $this->plugin.'.all';
+    }
+    echo $this->element('renderCss', array('configs' => $cssConfigs));
     if ($isMobile) {
         echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
     }
@@ -43,7 +47,7 @@
 
     <div id="container">
         
-        <?php echo $this->element('menu'); ?>
+        <?php echo $this->element('Admin.menu'); ?>
         
         <div id="content">
             <?php echo $this->Session->flash(); ?>
@@ -56,8 +60,11 @@
     <div class="sc"></div>
     
 <?php
-
-echo $this->element('renderJs', array('config' => 'admin'));
+$jsConfigs = array('admin');
+if ($this->plugin != 'Admin') {
+    $jsConfigs[] = $this->plugin.'.all';
+}
+echo $this->element('renderJs', array('configs' => $jsConfigs));
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
@@ -67,8 +74,10 @@ if ($isMobile) {
 }
 echo $this->element('sql_dump');
 
-echo $this->Html->script('vendor/ckeditor/ckeditor');
-echo $this->Html->script('vendor/ckeditor/adapters/jquery');
+if ($this->plugin == 'Admin') {
+    echo $this->Html->script('vendor/ckeditor/ckeditor');
+    echo $this->Html->script('vendor/ckeditor/adapters/jquery');
+}
 
 echo $this->fetch('script'); // all scripts from layouts
 ?>

@@ -45,7 +45,7 @@ class MyHtmlHelper extends HtmlHelper
         }
 
         if ($long) {
-            $result .= 'Der Hersteller <b>' . $name . '</b> ist ';
+            $result .= 'Der Hersteller <b>' . $name . '</b> hat ';
         }
         if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
@@ -59,7 +59,7 @@ class MyHtmlHelper extends HtmlHelper
             $result .= ' bis ' . Configure::read('timeHelper')->formatToDateShort($dateTo);
         }
         if ($long && $result != '') {
-            $result .= ' im wohlverdienten Urlaub.';
+            $result .= ' Lieferpause.';
         }
 
         $result = str_replace('  ', ' ', $result);
@@ -414,7 +414,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getBlogPostImageSrc($blogPostId, $size)
     {
-        $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
@@ -430,7 +429,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getManufacturerImageSrc($manufacturerId, $size)
     {
-        $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getManufacturerThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
 
@@ -446,7 +444,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCategoryImageSrc($categoryId)
     {
-        $imagePath = $this->getUploadImageDir();
         $thumbsPath = $this->getCategoryThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
 
@@ -478,7 +475,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function prepareAsUrl($string)
     {
-        return str_replace(DS, '/', $string);
+        $physicalFile = substr(WWW_ROOT, 0, - 1) . $string;
+        if (file_exists($physicalFile)) {
+            $string .= '?' . filemtime($physicalFile);
+        }
+        $string = str_replace(DS, '/', $string);
+        return $string;
     }
 
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)

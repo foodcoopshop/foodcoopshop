@@ -79,7 +79,6 @@ $homepageAdministrationElement = array(
         'fa-icon' => 'fa-fw fa-pencil-square-o'
     )
 );
-
 $menu = array();
 $logoHtml = '<img class="logo" src="/files/images/logo.jpg" width="100%" />';
 $menu[] = array(
@@ -169,6 +168,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
     $menu[] = $customerProfileMenuElement;
     $menu[] = $blogPostsMenuElement;
+
+    $homepageAdministrationElement['children'][] = array(
+        'slug' => $this->Slug->getPagesListAdmin(),
+        'name' => 'Seiten',
+        'options' => array(
+            'fa-icon' => 'fa-fw fa-pencil-square-o'
+        )
+    );
 
     $homepageAdministrationElement['children'][] = array(
         'slug' => $this->Slug->getCategoriesList(),

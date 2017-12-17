@@ -159,7 +159,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produktes (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
 
         // START test if MANUFACTURER's holiday mode was activated during shopping process
@@ -167,7 +167,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerHolidayMode($manufacturerId, date('Y-m-d'));
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produktes (.*) ist entweder im Urlaub oder nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerHolidayMode($manufacturerId, null);
 
         // START test if stock available for PRODUCT has gone down (eg. by another order)
@@ -251,8 +251,13 @@ class CartsControllerTest extends AppCakeTestCase
     public function testShopOrder()
     {
         $this->loginAsSuperadmin();
-        $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.shopOrderTestUser')['email']);
-        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . Configure::read('test.shopOrderTestUser')['name'] . '\<\/b\> getätigt./', $responseHtml);
+        $testCustomer = $this->Customer->find('first', array(
+            'conditions' => array(
+                'Customer.id_customer' => Configure::read('test.customerId')
+            )
+        ));
+        $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.customerId'));
+        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customer']['name'] . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }
 

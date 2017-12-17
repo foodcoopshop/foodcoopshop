@@ -336,11 +336,14 @@ class Manufacturer extends AppModel
             }
             $holidayInfo = Configure::read('htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
             if ($holidayInfo != '') {
-                $holidayInfo = 'Urlaub ' . $holidayInfo;
+                $holidayInfo = 'Lieferpause ' . $holidayInfo;
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
-                    $additionalInfo .= ' - ' . $holidayInfo;
+                    if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                        $additionalInfo .= ' - ';
+                    }
+                    $additionalInfo .= $holidayInfo;
                 }
             }
             if ($additionalInfo != '') {
@@ -352,6 +355,36 @@ class Manufacturer extends AppModel
             );
         }
         return $manufacturersForMenu;
+    }
+
+    /**
+     * @param float $price
+     * @param integer $variableMemberFee
+     * @return float
+     */
+    public function increasePriceWithVariableMemberFee($price, $variableMemberFee)
+    {
+        return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
+    }
+
+    /**
+     * @param float $price
+     * @param integer $variableMemberFee
+     * @return float
+     */
+    public function decreasePriceWithVariableMemberFee($price, $variableMemberFee)
+    {
+        return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
+    }
+
+    /**
+     * @param float $price
+     * @param integer $variableMemberFee
+     * @return float
+     */
+    public function getVariableMemberFeeAsFloat($price, $variableMemberFee)
+    {
+        return round($price * $variableMemberFee / 100, 2);
     }
 
     public function getForDropdown()

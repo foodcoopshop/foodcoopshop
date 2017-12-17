@@ -17,6 +17,9 @@ App::uses('AppController', 'Controller');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use Intervention\Image\ImageManagerStatic as Image;
+
 class AdminAppController extends AppController
 {
 
@@ -29,11 +32,6 @@ class AdminAppController extends AppController
     {
         parent::beforeFilter();
         $this->loadModel(Inflector::singularize($this->name)); // force cake to load corresponding model in main app folder
-    }
-
-    public function setFormReferer()
-    {
-        $this->set('referer', isset($this->request->data['referer']) ? $this->request->data['referer'] : $this->referer());
     }
 
     /**
@@ -70,15 +68,14 @@ class AdminAppController extends AppController
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         foreach ($imageSizes as $thumbSize => $options) {
-            $thumb = PhpThumbFactory::create(WWW_ROOT . $filename);
-            $dimensions = $thumb->getCurrentDimensions();
+            $image = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
-            if ($dimensions['height'] > $dimensions['width']) {
-                $thumbSize = round($thumbSize * ($dimensions['width'] / $dimensions['height']), 0);
+            if ($image->getHeight() > $image->getWidth()) {
+                $thumbSize = round($thumbSize * ($image->getWidth() / $image->getHeight()), 0);
             }
-            $thumb->resize($thumbSize);
+            $image->widen($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $thumb->save($thumbsFileName);
+            $image->save($thumbsFileName);
         }
 
         return $imageId . $options['suffix'] . '.' . $extension;

@@ -5,14 +5,14 @@ sudo: required
 php:
   - 5.6
   - 7.0
-  - 7.1
+  - 7.1.11
 
 services:
   - mysql
     
 addons:
     hosts:
-        - www.foodcoopshop.dev
+        - www.foodcoopshop.test
 
 env:
   - DB=mysql
@@ -25,6 +25,8 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
+  - bash ./Config/travis/install-mysql-5.7.sh
+  - mysql --version
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
@@ -44,19 +46,21 @@ before_script:
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then sudo sed -e "s?group = nobody?group = travis?g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  - php --version
   # configure apache virtual hosts
-  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.dev.conf
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.dev.conf
+  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.test.conf
   - sudo a2dissite 000-default
-  - sudo a2ensite www.foodcoopshop.dev.conf
+  - sudo a2ensite www.foodcoopshop.test.conf
   - sudo a2enmod rewrite actions fastcgi alias
   - sudo chown -R travis:travis /home/travis/build/foodcoopshop
   - sudo chmod o+rx /home/travis
   - sudo service apache2 restart
-  #- sudo cat /var/log/apache2/www.foodcoopshop.dev_error.log
+  #- sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
+  #- sudo cat ./tmp/logs/error.log
   
 notifications:
   email: false

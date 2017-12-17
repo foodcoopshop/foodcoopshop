@@ -325,7 +325,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-photo-autumn.jpg',
+            '/img/bg-v1.5.0.jpg',
             {
                 positionY: 'top',
                 speed: 400
@@ -440,7 +440,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2016-08-29';
+        CKEDITOR.timestamp = '2017-11-20';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js'
         });
@@ -471,6 +471,21 @@ foodcoopshop.Helper = {
         CKEDITOR.timestamp = '2016-08-29';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
+        });
+
+    },
+
+    initCkeditorSmallWithUpload: function (name) {
+
+        if (!CKEDITOR.env.isCompatible) {
+            return false;
+        }
+
+        this.destroyCkeditor(name);
+
+        CKEDITOR.timestamp = '2017-11-20';
+        $('textarea#' + name + '.ckeditor').ckeditor({
+            customConfig: '/js/ckeditor/config-small-with-upload.js'
         });
 
     },
@@ -511,6 +526,15 @@ foodcoopshop.Helper = {
             };
             $.datepicker.setDefaults($.datepicker.regional['de']);
         });
+    },
+
+    /**
+     * @return value of an object by given path (separated by .)
+     */
+    resolveIndex : function (path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : undefined
+        }, obj || self)
     },
 
     getRandomCode: function () {
@@ -638,4 +662,7 @@ foodcoopshop.Helper = {
     }
 
 }
+
+
+
 

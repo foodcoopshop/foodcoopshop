@@ -213,6 +213,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testAutomaticAddingOfCustomerRecord()
     {
+
         $this->loginAsSuperadmin();
 
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)

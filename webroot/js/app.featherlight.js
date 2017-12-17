@@ -77,6 +77,12 @@ foodcoopshop.AppFeatherlight = {
 
     },
 
+    addLightboxToCkeditorImages : function (selector) {
+        $(selector).each(function () {
+            $(this).wrap('<a class="lightbox" href="' + $(this).attr('src') + '"></a>');
+        });
+    },
+
     setMaxHeightInner : function () {
         $('.featherlight-inner').css('max-height', $('.featherlight-content').height());
     },
@@ -85,9 +91,9 @@ foodcoopshop.AppFeatherlight = {
         onSave,
         additionalAfterOpen,
         lightboxCloseMethod,
-        formHtml
-) {
-
+        formHtml,
+        objectId
+    ) {
         return this
             .initLightbox({
 
@@ -117,7 +123,7 @@ foodcoopshop.AppFeatherlight = {
                                 'fa-check'
                             );
                             foodcoopshop.Helper.disableButton($(this));
-                            onSave();
+                            onSave(objectId);
                         }
                     );
 
@@ -126,7 +132,7 @@ foodcoopshop.AppFeatherlight = {
                     });
 
                     if (additionalAfterOpen) {
-                        additionalAfterOpen();
+                        additionalAfterOpen(objectId);
                     }
 
                     foodcoopshop.AppFeatherlight.setMaxHeightInner();
@@ -161,6 +167,16 @@ foodcoopshop.AppFeatherlight = {
     disableSaveButton: function () {
         var button = $('.featherlight-inner .btn.save');
         foodcoopshop.Helper.disableButton(button);
+    },
+
+    loadImageSrcFromDataAttribute : function () {
+        var img = $('.featherlight-inner .existingImage');
+        if (img.attr('src') != img.data('src')) {
+            img.on('load', function () {
+                $(this).removeClass('loading');
+            }).attr('src', img.data('src'));;
+        }
     }
 
 }
+

@@ -6,6 +6,7 @@
 CKEDITOR.editorConfig = function ( config ) {
 
     config.width = 308;
+    config.height = 250;
     config.format_tags = 'p';
     config.language = 'de';
 
@@ -26,4 +27,6 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = '4.7.1'; // change this string if version is updated
+CKEDITOR.timestamp = '4.7.3'; // change this string if version is updated in bower.json
+
+

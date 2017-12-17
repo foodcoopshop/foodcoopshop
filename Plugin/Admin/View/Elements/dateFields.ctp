@@ -28,7 +28,7 @@ $this->element('addScript', array(
         title="1 Tag vor" href="javascript:void(0)"><i
         class="fa fa-arrow-circle-right fa"></i></a>
         
-    <?php if (isset($dateTo)) { ?>
+    <?php if (!isset($showDateTo) || $showDateTo) { ?>
          bis <a
         class="btn-arrow btn-previous-day" title="1 Tag zurück"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
