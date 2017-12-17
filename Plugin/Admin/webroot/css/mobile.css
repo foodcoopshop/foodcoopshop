@@ -37,6 +37,10 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
 .bootstrap-select {
     width: 150px ! important;
 }
+#reload-filter-loader {
+  left: 42vw;
+  margin-left: 0;
+}
 .sb-toggle-left {
     float: left;
     margin: 3px 5px 0 3px;
@@ -150,6 +154,7 @@ form.fcs-form input[type="checkbox"] {
 form.fcs-form .description {
   margin-left: 120px;
 }
+
 
 
 
