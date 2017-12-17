@@ -38,9 +38,6 @@
             ));
         }
         ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
         <div class="right">
             <?php
             echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
