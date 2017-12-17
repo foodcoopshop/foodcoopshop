@@ -51,10 +51,6 @@
             'selected' => isset($active) ? $active : ''
         ));
         ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
-
         <div class="right">
             <?php
             // only show button if no manufacturer filter is applied

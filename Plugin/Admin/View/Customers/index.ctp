@@ -33,9 +33,6 @@
             class="datepicker" value="<?php echo $dateFrom; ?>" /> bis <input
             id="dateTo" type="text" class="datepicker"
             value="<?php echo $dateTo; ?>" />
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
         <div class="right"></div>
     </div>
 

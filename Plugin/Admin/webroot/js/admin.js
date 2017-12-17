@@ -103,12 +103,6 @@ foodcoopshop.Admin = {
 
     initFilter: function (callback) {
 
-        $('button#filter').on('click', function () {
-            $('.filter-container').css('opacity', '.7');
-            foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
-            foodcoopshop.Admin.afterFilterCallback();
-        });
         $('input:text').keyup(function (e) {
             if (e.keyCode == 13) {
                 foodcoopshop.Admin.afterFilterCallback();
@@ -117,7 +111,7 @@ foodcoopshop.Admin = {
 
         var filterContainer = $('.filter-container');
         filterContainer.find('input:text, input:checkbox, select').on('change', function () {
-            foodcoopshop.Admin.triggerFilterButton();
+            foodcoopshop.Admin.triggerFilter();
         });
 
         filterContainer.find('select').selectpicker({
@@ -1505,8 +1499,12 @@ foodcoopshop.Admin = {
 
     },
 
-    triggerFilterButton : function () {
-        $('button#filter').trigger('click');
+    triggerFilter : function () {
+        $('#reload-filter-loader').remove();
+        var table = $('table.list');
+        table.css('opacity', '.4');
+        table.after('<i id="reload-filter-loader" class="fa fa-spin fa-spinner fa-5x"></i>');
+        foodcoopshop.Admin.afterFilterCallback();
     },
 
     initNextAndPreviousDayLinks: function () {
@@ -1515,14 +1513,14 @@ foodcoopshop.Admin = {
             var date = datepicker.datepicker('getDate');
             date.setDate(date.getDate() - 1)
             datepicker.datepicker('setDate', date);
-            foodcoopshop.Admin.triggerFilterButton();
+            foodcoopshop.Admin.triggerFilter();
         });
         $('.btn-next-day').on('click', function () {
             var datepicker = $(this).prev();
             var date = datepicker.datepicker('getDate');
             date.setDate(date.getDate() + 1)
             datepicker.datepicker('setDate', date);
-            foodcoopshop.Admin.triggerFilterButton();
+            foodcoopshop.Admin.triggerFilter();
         });
     },
 
@@ -2446,6 +2444,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
