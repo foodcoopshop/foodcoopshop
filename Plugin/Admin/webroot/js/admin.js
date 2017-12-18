@@ -1501,9 +1501,8 @@ foodcoopshop.Admin = {
 
     triggerFilter : function () {
         $('#reload-filter-loader').remove();
-        var table = $('table.list');
-        table.css('opacity', '.4');
-        table.closest('#content').append('<i id="reload-filter-loader" class="fa fa-spin fa-spinner fa-5x"></i>');
+        $('#content').css('opacity', '.4');
+        $('#content').append('<i id="reload-filter-loader" class="fa fa-spin fa-spinner fa-5x"></i>');
         foodcoopshop.Admin.afterFilterCallback();
     },
 
@@ -2444,6 +2443,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
