@@ -103,23 +103,23 @@ foodcoopshop.Admin = {
 
     initFilter: function (callback) {
 
-        $('button#filter').on('click', function () {
-            foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
-            foodcoopshop.Admin.afterFilterCallback();
-        });
         $('input:text').keyup(function (e) {
             if (e.keyCode == 13) {
                 foodcoopshop.Admin.afterFilterCallback();
             }
         });
-        $('.filter-container select').selectpicker({
+
+        var filterContainer = $('.filter-container');
+        filterContainer.find('input:text, input:checkbox, select').on('change', function () {
+            foodcoopshop.Admin.triggerFilter();
+        });
+
+        filterContainer.find('select').selectpicker({
             liveSearch: true,
             showIcon: true
         });
 
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
-
     },
 
     /**
@@ -1499,18 +1499,27 @@ foodcoopshop.Admin = {
 
     },
 
+    triggerFilter : function () {
+        $('#reload-filter-loader').remove();
+        $('#content').css('opacity', '.4');
+        $('#content').append('<i id="reload-filter-loader" class="fa fa-spin fa-spinner fa-5x"></i>');
+        foodcoopshop.Admin.afterFilterCallback();
+    },
+
     initNextAndPreviousDayLinks: function () {
         $('.btn-previous-day').on('click', function () {
             var datepicker = $(this).next();
             var date = datepicker.datepicker('getDate');
             date.setDate(date.getDate() - 1)
             datepicker.datepicker('setDate', date);
+            foodcoopshop.Admin.triggerFilter();
         });
         $('.btn-next-day').on('click', function () {
             var datepicker = $(this).prev();
             var date = datepicker.datepicker('getDate');
             date.setDate(date.getDate() + 1)
             datepicker.datepicker('setDate', date);
+            foodcoopshop.Admin.triggerFilter();
         });
     },
 
@@ -2434,5 +2443,11 @@ foodcoopshop.Admin = {
     }
 
 }
+
+
+
+
+
+
 
 
