@@ -1908,7 +1908,6 @@ foodcoopshop.Admin = {
         $(window).scroll(function () {
             $('#menu').css('left', -$(window).scrollLeft());
             $('.filter-container').css('margin-left', -$(window).scrollLeft());
-//            $('#reload-filter-loader').css('margin-left', -$(window).scrollLeft());
         });
         $('#menu').show();
     },
@@ -2446,6 +2445,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
