@@ -83,6 +83,7 @@ body.taxes.edit #flashMessage {
     background: -o-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#B3CC9A,GradientType=1);
     border-bottom-right-radius: 15px;
+    position: relative;
 }
 body.pages.home #content {
     background: transparent;
@@ -1015,6 +1016,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
