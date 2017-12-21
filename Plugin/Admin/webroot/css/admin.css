@@ -252,7 +252,7 @@ body.products.index .filter-container div.input.select {
 body.products.index .bootstrap-select {
   width: 172px ! important;
 }
-#reload-filter-loader {
+#filter-loader {
   position: fixed;
   top: 10px;
   margin-left: -290px;
@@ -1015,5 +1015,6 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 

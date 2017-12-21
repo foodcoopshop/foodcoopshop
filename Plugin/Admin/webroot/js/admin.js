@@ -1500,11 +1500,11 @@ foodcoopshop.Admin = {
     },
 
     triggerFilter : function () {
-        $('#reload-filter-loader').remove();
+        $('#filter-loader').remove();
         $('#content').css('opacity', '.4');
-        $('#container').append('<i id="reload-filter-loader" class="fa fa-spinner"></i>');
+        $('#container').append('<i id="filter-loader" class="fa fa-spinner"></i>');
         var marginTop = $('.filter-container').outerHeight();
-        $('#reload-filter-loader').css('top', marginTop + 20);
+        $('#filter-loader').css('top', marginTop + 20);
         foodcoopshop.Admin.afterFilterCallback();
     },
 
@@ -2445,4 +2445,5 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
