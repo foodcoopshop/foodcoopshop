@@ -256,8 +256,7 @@ body.products.index .bootstrap-select {
 #filter-loader {
   position: fixed;
   top: 10px;
-  margin-left: -290px;
-  left: 50%;
+  left: 590px;
   color: #719f41;
   font-size: 8em;
   animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear;
@@ -1016,6 +1015,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
