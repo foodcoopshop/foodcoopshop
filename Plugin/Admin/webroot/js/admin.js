@@ -110,7 +110,7 @@ foodcoopshop.Admin = {
         });
 
         var filterContainer = $('.filter-container');
-        filterContainer.find('input:text, input:checkbox, select').on('change', function () {
+        filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
             foodcoopshop.Admin.triggerFilter();
         });
 
@@ -2445,5 +2445,6 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
