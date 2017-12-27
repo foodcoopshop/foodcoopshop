@@ -31,9 +31,6 @@ if ($paymentType == 'product') {
     <h1><?php echo $title_for_layout; ?></h1>
     <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
     <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
-    <button id="filter" class="btn btn-success">
-        <i class="fa fa-search"></i> Filtern
-    </button>
     <div class="right"></div>
 </div>
 

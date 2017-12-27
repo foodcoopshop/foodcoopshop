@@ -83,6 +83,7 @@ body.taxes.edit #flashMessage {
     background: -o-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#B3CC9A,GradientType=1);
     border-bottom-right-radius: 15px;
+    position: relative;
 }
 body.pages.home #content {
     background: transparent;
@@ -107,9 +108,6 @@ body.pages.display #menu a.help {
 }
 .filter-container .checkbox input[type="checkbox"] {
   margin-top: 6px;
-}
-button#filter {
-    margin-left: 2px;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover {
@@ -252,11 +250,28 @@ span.product-quantity-for-dialog {
 body.products.index .filter-container div.input.select {
   margin-right: 4px;
 }
-body.products.index button#filter {
-  margin-left: 0;
-}
 body.products.index .bootstrap-select {
   width: 172px ! important;
+}
+#filter-loader {
+  position: fixed;
+  top: 10px;
+  left: 590px;
+  color: #719f41;
+  font-size: 8em;
+  animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear;
+  -moz-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Firefox */
+  -webkit-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
+}
+@-moz-keyframes reload-loader-animation /* Firefox */ {
+    0% {color:#719f41;}
+    50% {color:orange;}
+    100% {color:#719f41;}
+}
+@-webkit-keyframes reload-loader-animation /* Safari and Chrome */ {
+    0% {color:#719f41;}
+    50% {color:orange;}
+    100% {color:#719f41;}
 }
 td.right,
 th.right {
@@ -1000,3 +1015,8 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
+
+
+
+

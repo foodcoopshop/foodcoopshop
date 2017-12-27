@@ -37,6 +37,10 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
 .bootstrap-select {
     width: 150px ! important;
 }
+#filter-loader {
+  left: 36vw;
+  margin-left: 0;
+}
 .sb-toggle-left {
     float: left;
     margin: 3px 5px 0 3px;
@@ -123,7 +127,7 @@ body.pages.home #content {
 table.list th, table.list td {
     padding: 2px ! important;
 }
-.input.select, .input.checkbox, .input.text, div.date-field-wrapper, button#filter {
+.input.select, .input.checkbox, .input.text, div.date-field-wrapper {
     margin-top: 2px;
     margin-bottom: 2px;
 }
@@ -150,5 +154,9 @@ form.fcs-form input[type="checkbox"] {
 form.fcs-form .description {
   margin-left: 120px;
 }
+
+
+
+
 
 
