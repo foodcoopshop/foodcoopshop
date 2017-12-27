@@ -418,7 +418,7 @@
         echo $this->Form->input('Product.CategoryProducts', array(
             'label' => '',
             'multiple' => 'checkbox',
-            'options' => $categoriesForDropdown
+            'options' => $categoriesForSelect
         ));
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';
