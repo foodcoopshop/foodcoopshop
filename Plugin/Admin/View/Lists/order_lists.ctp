@@ -26,9 +26,6 @@
     
     <div class="filter-container">
         Abholtag <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'showDateTo' => false)); ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
         <div class="right"></div>
     </div>
 

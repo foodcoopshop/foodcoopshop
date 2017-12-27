@@ -25,9 +25,6 @@
     <div class="filter-container">
         <h1>Seiten</h1>
         <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
         <div class="right">
             <?php
             echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';

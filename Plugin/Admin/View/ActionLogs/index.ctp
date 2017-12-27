@@ -34,9 +34,6 @@
             <?php echo $this->Form->input('type', array('class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '')); ?>
         <?php } ?>
         <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
         <div class="right"></div>
     </div>
 

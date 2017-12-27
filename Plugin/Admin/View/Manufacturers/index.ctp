@@ -30,9 +30,6 @@
     <div class="filter-container">
         <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
         <?php echo $this->Form->input('active', array('type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '')); ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
         <div class="right">
             <?php
             echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';

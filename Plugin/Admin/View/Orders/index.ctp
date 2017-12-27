@@ -46,18 +46,12 @@
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
             Gruppieren nach Mitglied: <?php echo $this->Form->input('groupByCustomer', array('type'=>'checkbox', 'label' =>'', 'checked' => $groupByCustomer));?>
         <?php } ?>
-        <button id="filter" class="btn btn-success">
-            <i class="fa fa-search"></i> Filtern
-        </button>
-
         <div class="right">
-            
-        <?php
-        echo $this->element('addShopOrderButton', array(
-            'customers' => $customersForDropdown
-        ));
-        ?>
-              
+            <?php
+            echo $this->element('addShopOrderButton', array(
+                'customers' => $customersForDropdown
+            ));
+            ?>
         </div>
 
     </div>
