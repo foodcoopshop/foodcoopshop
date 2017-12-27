@@ -33,8 +33,8 @@ class CategoriesController extends AdminAppController
     {
         $this->setFormReferer();
 
-        $categoriesForDropdown = $this->Category->getForCheckboxes($categoryId);
-        $this->set('categoriesForDropdown', $categoriesForDropdown);
+        $categoriesForSelect = $this->Category->getForSelect($categoryId);
+        $this->set('categoriesForSelect', $categoriesForSelect);
 
         if ($categoryId > 0) {
             $unsavedCategory = $this->Category->find('first', array(

@@ -84,7 +84,7 @@ class Category extends AppModel
         return $categories;
     }
 
-    public function getForCheckboxes($excludeCategoryId = null)
+    public function getForSelect($excludeCategoryId = null)
     {
         $conditions = array();
         if ($excludeCategoryId) {

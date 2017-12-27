@@ -60,7 +60,7 @@ echo $this->Form->input('Category.id_parent', array(
     'type' => 'select',
     'label' => 'Übergeordnete Kategorie',
     'empty' => 'Keine (oberste Ebene)',
-    'options' => $categoriesForDropdown
+    'options' => $categoriesForSelect
 ));
 
 echo '<div class="input">';
