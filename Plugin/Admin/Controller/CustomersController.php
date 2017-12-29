@@ -316,7 +316,7 @@ class CustomersController extends AdminAppController
         ));
 
         $customerAddress2update = array(
-            'other' => $customerComment
+            'comment' => $customerComment
         );
 
         $this->Customer->AddressCustomer->id = $oldCustomer['AddressCustomer']['id_address'];
@@ -325,7 +325,7 @@ class CustomersController extends AdminAppController
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['other'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
+        $this->CakeActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode(array(
             'status' => 1,

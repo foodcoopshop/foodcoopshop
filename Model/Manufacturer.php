@@ -38,8 +38,7 @@ class Manufacturer extends AppModel
         'Address' => array(
             'className' => 'AddressManufacturer',
             'conditions' => array(
-                'Address.alias' => 'manufacturer',
-                'Address.deleted' => 0
+                'Address.id_manufacturer > ' . APP_OFF
             ),
             'foreignKey' => 'id_manufacturer'
         ),
@@ -500,8 +499,7 @@ class Manufacturer extends AppModel
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
                 AND pl.id_lang = 1
-                AND ma.deleted = 0
-                AND ma.alias = 'manufacturer'
+                AND ma.id_manufacturer > 0
                 AND o.current_state IN(:orderStates)
                 ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
 

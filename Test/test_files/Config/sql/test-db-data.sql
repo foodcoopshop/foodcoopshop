@@ -53,13 +53,13 @@ TRUNCATE TABLE `fcs_tax`;
 
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
 INSERT INTO `fcs_address` VALUES
-(153,2,0,87,0,0,0,'Ihre Adresse','','Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','foodcoopshop-demo-mitglied@mailinator.com','','','2014-12-02 12:19:31','2014-12-02 12:19:31',1,0),
-(154,2,0,88,0,0,0,'Ihre Adresse','','Admin','Demo','Demostrasse 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','','','2014-12-02 12:28:44','2014-12-02 12:28:44',1,0),
-(173,2,0,0,4,0,0,'manufacturer','','Fleisch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','','','2014-05-27 22:20:18','2015-04-07 16:18:28',1,0),
-(177,2,0,0,15,0,0,'manufacturer','','Milch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','','','2014-06-04 21:46:38','2015-10-16 10:06:52',1,0),
-(180,2,0,0,5,0,0,'manufacturer','','Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
-(181,2,0,0,16,0,0,'manufacturer','','Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','','','2014-05-14 21:20:05','2015-12-30 00:54:35',1,0),
-(182,2,NULL,92,0,0,0,'',NULL,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com',NULL,NULL,'2017-07-26 13:19:19','2017-07-26 13:19:19',1,0);
+(153,87,0,'Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','foodcoopshop-demo-mitglied@mailinator.com','2014-12-02 12:19:31','2014-12-02 12:19:31'),
+(154,88,0,'Admin','Demo','Demostrasse 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','2014-12-02 12:28:44','2014-12-02 12:28:44'),
+(173,0,4,'Fleisch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','2014-05-27 22:20:18','2015-04-07 16:18:28'),
+(177,0,15,'Milch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','2014-06-04 21:46:38','2015-10-16 10:06:52'),
+(180,0,5,'Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
+(181,0,16,'Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
+(182,92,0,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19');
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
@@ -635,7 +635,7 @@ INSERT INTO `fcs_configuration` VALUES
 (544,NULL,NULL,1,'FCS_CART_ENABLED','Ist die Bestell-Funktion aktiviert?<br /><div class=\"small\">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>','1','boolean',10,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (545,NULL,NULL,1,'FCS_ACCOUNTING_EMAIL','E-Mail-Adresse des Finanzverantwortlichen<br /><div class=\"small\">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>','','text',110,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (546,NULL,NULL,1,'FCS_AUTHENTICATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea',160,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(547,NULL,NULL,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?<br /><div class="small">Die Preise werden nicht angezeigt.</div>','0','boolean',20,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(547,NULL,NULL,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?<br /><div class=\"small\">Die Preise werden nicht angezeigt.</div>','0','boolean',20,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (548,NULL,NULL,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',50,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (549,NULL,NULL,1,'FCS_MINIMAL_CREDIT_BALANCE','Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class=\"small\">Z.B.: \"100\" für 100 € im Minus. 0 bedeutet \"kein Bestell-Limit\".</div>','100','number',125,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (550,NULL,NULL,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',130,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
@@ -649,8 +649,8 @@ INSERT INTO `fcs_configuration` VALUES
 (558,NULL,NULL,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,NULL,NULL,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (560,NULL,NULL,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','17','readonly',10,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
-(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','17','readonly',20,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
+(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','18','readonly',10,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
+(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','18','readonly',20,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
 (563,NULL,NULL,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','1','readonly',30,'2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,NULL,NULL,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','1','boolean',13,'2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,NULL,NULL,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),

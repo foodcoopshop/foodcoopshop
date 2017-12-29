@@ -32,9 +32,6 @@ class Customer extends AppModel
     public $hasOne = array(
         'AddressCustomer' => array(
             'className' => 'AddressCustomer',
-            'conditions' => array(
-                'AddressCustomer.deleted' => 0
-            ),
             'foreignKey' => 'id_customer'
         )
     );

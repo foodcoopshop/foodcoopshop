@@ -85,8 +85,7 @@ class AppAuthComponent extends AuthComponent
         $this->manufacturer = $mm->find('first', array(
             'conditions' => array(
                 'Address.email' => $this->user('email'),
-                'Address.alias' => 'manufacturer',
-                'Address.deleted' => 0
+                'Address.id_manufacturer > ' . APP_OFF
             )
         ));
     }
