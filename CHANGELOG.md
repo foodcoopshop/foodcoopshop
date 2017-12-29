@@ -4,12 +4,25 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...HEAD)
 
+### Herzlichen Dank an alle beteiligten Personen
+* [SaibotP](https://github.com/SaibotP)
+* [EvaSee](https://github.com/EvaSee)
+* [mrothauer](https://github.com/mrothauer)
+
 ### Neue Funktionen
 - Neuer Filter bei den Produkten im Admin-Bereich: *Kategorie* / [PR#185](https://github.com/foodcoopshop/foodcoopshop/pull/185) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#166](https://github.com/foodcoopshop/foodcoopshop/issues/166) / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
 - Im Admin-Bereich muss nicht mehr auf *Filtern* geklickt werden, das geht jetzt automatisch. / [PR#184](https://github.com/foodcoopshop/foodcoopshop/pull/184) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#180](https://github.com/foodcoopshop/foodcoopshop/issues/180) / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
-- Hersteller und Mitglieder können ab sofort eine übersichtliche Tabelle über ihren Umsatz bzw. ihre Einkäufe erstellen. Sie sehen dann, wie oft ein bestimmtes Produkt verkauft bzw. bestellt wurde. Das funktioniert über die neue Funktion **Gruppieren nach Produkt** (im Admin-Bereich unter *Bestellte Produkte*). Hersteller können ab sofort auch auch das **Datum ihrer Bestellungen** frei wählen. / [PR#179](https://github.com/foodcoopshop/foodcoopshop/pull/179) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#175](https://github.com/foodcoopshop/foodcoopshop/issues/175) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
+- **Gruppierung nach Produkt** ist jetzt für bestellte Produkte möglich. Hersteller und Mitglieder können so ihre Bestellungen noch übersichtliche anzeigen bzw. auswerten. Hersteller können ab sofort auch auch das **Datum ihrer Bestellungen** frei wählen und so alte Bestellungen anzeigen. / [PR#179](https://github.com/foodcoopshop/foodcoopshop/pull/179) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#175](https://github.com/foodcoopshop/foodcoopshop/issues/175) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
 
 ## v1.5.0 2017-12-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...v1.5.0)
+
+### Herzlichen Dank an alle beteiligten Personen
+* [EvaSee](https://github.com/EvaSee)
+* [MacPac](https://github.com/MadPac)
+* [veronimus](https://github.com/veronimus)
+* [christiankaindl](https://github.com/christiankaindl)
+* [k-pd](https://github.com/k-pd)
+* [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
 - Sofort-Bestellungen und Pfand-Rückgabe sind jetzt auch in der Liste "Bestellte Produkte" erreichbar. Das spart Zeit beim Abholen der Produkte. Bei der Sofort-Bestellung ist das Mitglied vorausgewählt. / [PR#163](https://github.com/foodcoopshop/foodcoopshop/pull/163) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#155](https://github.com/foodcoopshop/foodcoopshop/issues/155) / <a href="https://github.com/MadPac"><img src="https://github.com/MadPac.png" width="20"></a>
@@ -21,14 +34,14 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Wenn man das Passwort vergessen hat, muss man jetzt zusätzlich auf einen Bestätigungs-Link klicken, bevor das Passwort tatsächlich geändert wird. / [PR#141](https://github.com/foodcoopshop/foodcoopshop/pull/141) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Urlaubsmodus heißt jetzt *Lieferpause* und kann somit auch für Lieferpausen außerhalb des Urlaubs verwendet werden. / [PR#159](https://github.com/foodcoopshop/foodcoopshop/pull/159) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#158](https://github.com/foodcoopshop/foodcoopshop/issues/158) / <a href="https://github.com/veronimus"><img src="https://github.com/veronimus.png" width="20"></a>
 - Bei den Herstellern können jetzt auch IBANs aus Deutschland eingetragen werden. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/25a5eb17fb2008993a9e6fd914348d84e0dcf093) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
-- Mehr mögliche Kombinationen für Bestelllisten-Versendetag und Liefertag: *Mittwoch-Freitag* / *Dienstag-Freitag* / *Montag-Dienstag*. / [PR#173](https://github.com/foodcoopshop/foodcoopshop/pull/173) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Mehr mögliche Kombinationen für Bestelllisten-Versendetag und Liefertag: *Mittwoch-Freitag* / *Dienstag-Freitag* / *Montag-Dienstag*. / [PR#173](https://github.com/foodcoopshop/foodcoopshop/pull/173) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#151](https://github.com/foodcoopshop/foodcoopshop/issues/151) / <a href="https://github.com/christiankaindl"><img src="https://github.com/christiankaindl.png" width="20"></a>
 - Anpassungen für die Einbindung des Netzwerk-Moduls in der Version 1.0. / [PR#129](https://github.com/foodcoopshop/foodcoopshop/pull/129) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
 - Wenn der Steuersatz eines Produktes 0% betragen hat und geändert wird, wurde der Preis auf € 0 zurückgesetzt. / [PR#153](https://github.com/foodcoopshop/foodcoopshop/pull/153) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bereits hochgeladene Bilder, die durch neue ersetzt wurden, werden jetzt auch am Frontend sofort angezeigt. / [PR#138](https://github.com/foodcoopshop/foodcoopshop/pull/138) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die automatische Backup-Funktion über die konfigurierbare BCC-Adresse hat nicht korrekt funktioniert. / [PR#136](https://github.com/foodcoopshop/foodcoopshop/pull/136) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Gelöschte Unterseiten wurden auf der übergeordneten Seite als Button angezeigt. / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Gelöschte Unterseiten wurden auf der übergeordneten Seite als Button angezeigt. / [PR#135](https://github.com/foodcoopshop/foodcoopshop/pull/135) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#131](https://github.com/foodcoopshop/foodcoopshop/issues/131) / <a href="https://github.com/veronimus"><img src="https://github.com/veronimus.png" width="20"></a>
 
 ### Für Entwickler
 - MySQL 5.7 wird jetzt wirklich unterstützt, es gab da noch ein paar Probleme. Außerdem verwendet Travis-CI jetzt auch MySQL 5.7. / [PR#161](https://github.com/foodcoopshop/foodcoopshop/pull/161) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
