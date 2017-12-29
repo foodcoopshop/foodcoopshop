@@ -38,27 +38,12 @@ DROP TABLE IF EXISTS `fcs_attribute`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_attribute` (
   `id_attribute` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_attribute_group` int(10) unsigned NOT NULL DEFAULT '0',
-  `color` varchar(32) DEFAULT NULL,
-  `position` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(128) DEFAULT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_attribute`),
-  KEY `attribute_group` (`id_attribute_group`),
-  KEY `position` (`position`)
+  PRIMARY KEY (`id_attribute`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_attribute_lang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_attribute_lang` (
-  `id_attribute` int(10) unsigned NOT NULL DEFAULT '0',
-  `id_lang` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(128) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id_attribute`,`id_lang`),
-  KEY `id_lang` (`id_lang`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_cake_action_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

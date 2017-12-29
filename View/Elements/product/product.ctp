@@ -141,7 +141,7 @@ if ($product['ProductLang']['description'] != '') {
             echo '<div class="radio">
                            <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttribute']['id_product_attribute'].'">
                                <input type="radio" name="product-'.$product['Product']['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                           $attribute['ProductAttributeCombination']['AttributeLang']['name'].'
+                           $attribute['ProductAttributeCombination']['Attribute']['name'].'
                            </label>
                        </div>';
         }

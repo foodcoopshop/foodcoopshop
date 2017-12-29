@@ -12,7 +12,6 @@
 -- Truncate tables before insertion
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
-TRUNCATE TABLE `fcs_attribute_lang`;
 TRUNCATE TABLE `fcs_cake_action_logs`;
 TRUNCATE TABLE `fcs_cake_cart_products`;
 TRUNCATE TABLE `fcs_cake_carts`;
@@ -56,9 +55,6 @@ TRUNCATE TABLE `fcs_tax`;
 
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_attribute_lang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_attribute_lang` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cake_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_cake_action_logs` ENABLE KEYS */;

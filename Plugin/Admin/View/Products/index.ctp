@@ -413,7 +413,7 @@
 
 <?php
     // dropdowns and checkboxes for overlays are only rendered once (performance)
-    echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesLangForDropdown));
+    echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown));
     echo '<div class="categories-checkboxes">';
         echo $this->Form->input('Product.CategoryProducts', array(
             'label' => '',

@@ -498,7 +498,7 @@ class Product extends AppModel
                             'rowClass' => join(' ', $rowClass)
                         ),
                         'ProductLang' => array(
-                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['Attribute']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''

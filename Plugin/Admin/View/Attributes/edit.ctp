@@ -44,9 +44,8 @@ echo $this->Form->create('Attribute', array(
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Attribute.id_attribute');
-echo $this->Form->hidden('AttributeLang.id_attribute');
 
-echo $this->Form->input('AttributeLang.name', array(
+echo $this->Form->input('Attribute.name', array(
     'div' => array(
         'class' => 'long text input'
     ),

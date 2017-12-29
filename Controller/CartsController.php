@@ -203,13 +203,13 @@ class CartsController extends FrontendController
                         $stockAvailableQuantity = $attribute['StockAvailable']['quantity'];
                         // stock available check for attribute
                         if ($stockAvailableQuantity < $ccp['amount']) {
-                            $this->loadModel('AttributeLang');
-                            $attributeLang = $this->AttributeLang->find('first', array(
+                            $this->loadModel('Attribute');
+                            $attribute = $this->Attribute->find('first', array(
                                 'conditions' => array(
-                                    'AttributeLang.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
+                                    'Attribute.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
                                 )
                             ));
-                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attributeLang['AttributeLang']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute['Attribute']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                             $cartErrors[$ccp['productId']][] = $message;
                         }
                         break;
@@ -647,13 +647,13 @@ class CartsController extends FrontendController
                     $attributeIdFound = true;
                     // stock available check for attribute
                     if ($attribute['StockAvailable']['quantity'] < $combinedAmount && $amount > 0) {
-                        $this->loadModel('AttributeLang');
-                        $attributeLang = $this->AttributeLang->find('first', array(
+                        $this->loadModel('Attribute');
+                        $attribute = $this->Attribute->find('first', array(
                             'conditions' => array(
-                                'AttributeLang.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
+                                'Attribute.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
                             )
                         ));
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attributeLang['AttributeLang']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailable']['quantity'];
+                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute['Attribute']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailable']['quantity'];
                         die(json_encode(array(
                             'status' => 0,
                             'msg' => $message,

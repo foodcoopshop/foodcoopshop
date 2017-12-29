@@ -249,13 +249,13 @@ class ProductsController extends AdminAppController
 
         foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
             if ($productAttribute['ProductAttributeCombination']['id_product_attribute'] == $productAttributeId) {
-                $attributeLang = $productAttribute['ProductAttributeCombination']['AttributeLang']['name'];
+                $attribute = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
             }
         }
 
         $this->Product->deleteProductAttribute($productId, $productAttributeId, $oldProduct);
 
-        $messageString = 'Die Variante "' . $attributeLang . '" des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich gelöscht.';
+        $messageString = 'Die Variante "' . $attribute . '" des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich gelöscht.';
         $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
 
@@ -273,7 +273,7 @@ class ProductsController extends AdminAppController
         $this->Product->addProductAttribute($productId, $productAttributeId);
 
         // get new data
-        $this->Product->recursive = 3; // to get product attribute combination => AttributeLang
+        $this->Product->recursive = 3; // to get product attribute combination => Attribute
         $newProduct = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
@@ -282,12 +282,12 @@ class ProductsController extends AdminAppController
         foreach ($newProduct['ProductAttributes'] as $productAttribute) {
             if ($productAttribute['ProductAttributeCombination']['id_attribute'] == $productAttributeId) {
                 $productAttributeIdForHighlighting = $productAttribute['ProductAttributeCombination']['id_product_attribute'];
-                $attributeLang = $productAttribute['ProductAttributeCombination']['AttributeLang']['name'];
+                $attribute = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
             }
         }
         $this->Session->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
-        $messageString = 'Die Variante "' . $attributeLang . '" für das Produkt "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
+        $messageString = 'Die Variante "' . $attribute . '" für das Produkt "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
         $this->CakeActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
 
@@ -486,7 +486,7 @@ class ProductsController extends AdminAppController
                     continue;
                 }
                 $oldProduct['ProductLang'] = array(
-                    'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['AttributeLang']['name']
+                    'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['Attribute']['name']
                 );
                 $oldProduct['StockAvailable'] = array(
                     'quantity' => $attribute['StockAvailable']['quantity']
@@ -538,7 +538,7 @@ class ProductsController extends AdminAppController
                     continue;
                 }
                 $oldProduct['ProductLang'] = array(
-                    'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['AttributeLang']['name']
+                    'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['Attribute']['name']
                 );
                 $oldProduct['ProductShop'] = array(
                     'price' => $attribute['ProductAttributeShop']['price']
@@ -602,7 +602,7 @@ class ProductsController extends AdminAppController
             $attributeName = '';
             foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
                 if ($productAttribute['id_product_attribute'] == $ids['attributeId']) {
-                    $attributeName = $productAttribute['ProductAttributeCombination']['AttributeLang']['name'];
+                    $attributeName = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
                     $depositEntity = $productAttribute['CakeDepositProductAttribute'];
                     break;
                 }
@@ -723,8 +723,8 @@ class ProductsController extends AdminAppController
         $this->set('products', $preparedProducts);
 
         $this->loadModel('Manufacturer');
-        $this->loadModel('AttributeLang');
-        $this->set('attributesLangForDropdown', $this->AttributeLang->getForDropdown());
+        $this->loadModel('Attribute');
+        $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
         $this->loadModel('Category');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
         $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
@@ -778,7 +778,7 @@ class ProductsController extends AdminAppController
             'recursive' => 3
         ));
 
-        $message = 'Die Standard-Variante des Produktes "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombination']['AttributeLang']['name'] . '" geändert.';
+        $message = 'Die Standard-Variante des Produktes "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombination']['Attribute']['name'] . '" geändert.';
         $this->Flash->success($message);
         $this->CakeActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
 

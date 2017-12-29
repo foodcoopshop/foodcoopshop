@@ -99,7 +99,7 @@ class CakeCart extends AppModel
                     'productId' => $cartProduct['CakeCartProduct']['id_product'] . '-' . $cartProduct['CakeCartProduct']['id_product_attribute'],
                     'productName' => $cartProduct['ProductLang']['name'],
                     'productLink' => $productLink,
-                    'unity' => $cartProduct['ProductAttribute']['ProductAttributeCombination']['AttributeLang']['name'],
+                    'unity' => $cartProduct['ProductAttribute']['ProductAttributeCombination']['Attribute']['name'],
                     'amount' => $cartProduct['CakeCartProduct']['amount'],
                     'manufacturerId' => $cartProduct['Product']['id_manufacturer'],
                     'manufacturerLink' => $manufacturerLink,
