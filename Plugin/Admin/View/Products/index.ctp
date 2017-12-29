@@ -40,7 +40,7 @@
                 'type' => 'select',
                 'label' => '',
                 'options' => $manufacturersForDropdown,
-                'empty' => 'Bitte auswählen...',
+                'empty' => 'Bitte wählen...',
                 'selected' => isset($manufacturerId) ? $manufacturerId : ''
             ));
         }
@@ -49,6 +49,13 @@
             'label' => '',
             'options' => $this->MyHtml->getActiveStates(),
             'selected' => isset($active) ? $active : ''
+        ));
+        echo $this->Form->input('category', array(
+            'type' => 'select',
+            'label' => '',
+            'empty' => 'Kategorie auswählen...',
+            'options' => $categoriesForSelect,
+            'selected' => isset($category) ? $category : ''
         ));
         ?>
         <div class="right">
@@ -411,7 +418,7 @@
         echo $this->Form->input('Product.CategoryProducts', array(
             'label' => '',
             'multiple' => 'checkbox',
-            'options' => $categoriesForDropdown
+            'options' => $categoriesForSelect
         ));
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';

@@ -114,9 +114,19 @@ foodcoopshop.Admin = {
             foodcoopshop.Admin.triggerFilter();
         });
 
-        filterContainer.find('select').selectpicker({
-            liveSearch: true,
-            showIcon: true
+        filterContainer.find('select').each(function () {
+            var options = {
+                liveSearch: true,
+                showIcon: true
+            };
+            if ($(this).attr('multiple') == 'multiple') {
+                var emptyElement = $(this).find('option').first();
+                if (emptyElement.val() == '') {
+                    options.noneSelectedText = emptyElement.html();
+                    emptyElement.remove();
+                }
+            }
+            $(this).selectpicker(options);
         });
 
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
@@ -2445,6 +2455,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 

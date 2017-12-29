@@ -703,13 +703,19 @@ class ProductsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         $active = 'all'; // default value
-        if (isset($this->params['named']['active'])) { // klappt bei orderState auch mit !empty( - hier nicht... strange
+        if (isset($this->params['named']['active'])) {
             $active = $this->params['named']['active'];
         }
         $this->set('active', $active);
 
+        $category = ''; // default value
+        if (!empty($this->params['named']['category'])) {
+            $category = $this->params['named']['category'];
+        }
+        $this->set('category', $category);
+
         if ($manufacturerId != '') {
-            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active);
+            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active, $category);
             $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
         } else {
             $preparedProducts = array();
@@ -720,7 +726,7 @@ class ProductsController extends AdminAppController
         $this->loadModel('AttributeLang');
         $this->set('attributesLangForDropdown', $this->AttributeLang->getForDropdown());
         $this->loadModel('Category');
-        $this->set('categoriesForDropdown', $this->Category->getForCheckboxes());
+        $this->set('categoriesForSelect', $this->Category->getForSelect());
         $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
         array_unshift($manufacturersForDropdown, array('all' => 'Alle Hersteller'));
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);

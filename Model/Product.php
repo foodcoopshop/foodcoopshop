@@ -38,6 +38,9 @@ class Product extends AppModel
         ),
         'Tax' => array(
             'foreignKey' => 'id_tax'
+        ),
+        'CategoryProduct' => array(
+            'foreignKey' => 'id_product'
         )
     );
 
@@ -417,6 +420,8 @@ class Product extends AppModel
 
         $products = $paginator->paginate('Product');
 
+
+
         $i = 0;
         $preparedProducts = array();
         foreach ($products as $product) {
@@ -439,7 +444,6 @@ class Product extends AppModel
                     }
                 }
             }
-
             $products[$i]['selectedCategories'] = Set::extract('{n}.id_category', $product['CategoryProducts']);
             $products[$i]['Deposit'] = 0;
 
@@ -686,7 +690,7 @@ class Product extends AppModel
         return $netPrice;
     }
 
-    public function getProductParams($appAuth, $productId, $manufacturerId, $active)
+    public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category)
     {
         $conditions = array();
         $group = array();
@@ -704,6 +708,10 @@ class Product extends AppModel
 
         if ($active != 'all') {
             $conditions['Product.active'] = $active;
+        }
+
+        if ($category != '') {
+            $conditions['CategoryProduct.id_category'] = (int) $category;
         }
 
         // DISTINCT: attributes cause duplicate entries
