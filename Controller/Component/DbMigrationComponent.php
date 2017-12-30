@@ -28,7 +28,7 @@ class DbMigrationComponent extends Component
     public function initialize(Controller $controller)
     {
         $controller->loadModel('Configuration');
-        $controller->loadModel('CakeActionLog');
+        $controller->loadModel('ActionLog');
 
         $this->dbMigration = new DbMigration(
             function ($string = '') use (&$controller) {
@@ -41,7 +41,7 @@ class DbMigrationComponent extends Component
             },
             function ($type = '', $string = '') use (&$controller) {
             // $stdLog
-                return $controller->CakeActionLog->customSave($type, 0, 0, '', $string);
+                return $controller->ActionLog->customSave($type, 0, 0, '', $string);
             },
             function ($string = '') use (&$controller) {
             // $findConf

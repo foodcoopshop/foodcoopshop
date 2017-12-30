@@ -25,7 +25,7 @@
             ?>
         </tr>
         
-        <?php foreach ($cakeCartProducts as $product) { ?>
+        <?php foreach ($cartProducts as $product) { ?>
 
             <?php
             if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {

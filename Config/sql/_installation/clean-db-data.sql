@@ -10,14 +10,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Truncate tables before insertion
+TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
-TRUNCATE TABLE `fcs_cake_action_logs`;
-TRUNCATE TABLE `fcs_cake_cart_products`;
-TRUNCATE TABLE `fcs_cake_carts`;
-TRUNCATE TABLE `fcs_cake_deposits`;
-TRUNCATE TABLE `fcs_cake_invoices`;
-TRUNCATE TABLE `fcs_cake_payments`;
+TRUNCATE TABLE `fcs_cart_products`;
+TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
 TRUNCATE TABLE `fcs_category_lang`;
 TRUNCATE TABLE `fcs_category_product`;
@@ -25,17 +22,20 @@ TRUNCATE TABLE `fcs_cms`;
 TRUNCATE TABLE `fcs_cms_lang`;
 TRUNCATE TABLE `fcs_configuration`;
 TRUNCATE TABLE `fcs_customer`;
+TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_email_logs`;
 TRUNCATE TABLE `fcs_homeslider_slides`;
 TRUNCATE TABLE `fcs_homeslider_slides_lang`;
 TRUNCATE TABLE `fcs_image`;
 TRUNCATE TABLE `fcs_image_lang`;
 TRUNCATE TABLE `fcs_image_shop`;
+TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_manufacturer_lang`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_orders`;
+TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
@@ -50,29 +50,20 @@ TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
 
+/*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_cake_action_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_action_logs` ENABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cart_products` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_cake_cart_products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_cart_products` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_carts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_carts` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_deposits` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_deposits` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_invoices` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_invoices` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_payments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_payments` ENABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_carts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_carts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
 INSERT INTO `fcs_category` VALUES
@@ -135,6 +126,9 @@ INSERT INTO `fcs_configuration` VALUES
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_deposits` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
 
@@ -157,6 +151,9 @@ INSERT INTO `fcs_homeslider_slides_lang` VALUES
 /*!40000 ALTER TABLE `fcs_image_shop` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_image_shop` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_invoices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_invoices` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
@@ -171,6 +168,9 @@ INSERT INTO `fcs_homeslider_slides_lang` VALUES
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;

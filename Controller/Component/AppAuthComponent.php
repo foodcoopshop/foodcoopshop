@@ -184,17 +184,17 @@ class AppAuthComponent extends AuthComponent
         return $c->getCreditBalance($this->getUserId());
     }
 
-    public function setCakeCart($cakeCart)
+    public function setCart($cart)
     {
-        $this->Cart->cakeCart = $cakeCart;
+        $this->Cart->cart = $cart;
     }
 
-    public function getCakeCart()
+    public function getCart()
     {
         if (! $this->loggedIn()) {
             return null;
         }
-        $cc = ClassRegistry::init('CakeCart');
-        return $cc->getCakeCart($this->getUserId());
+        $cc = ClassRegistry::init('Cart');
+        return $cc->getCart($this->getUserId());
     }
 }

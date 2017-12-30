@@ -123,8 +123,8 @@ if ($product['ProductLang']['description'] != '') {
             if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
                 echo '<div class="line">';
                 echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShop']['gross_price']). '</div>';
-                if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
-                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
+                if (!empty($attribute['DepositProductAttribute']['deposit'])) {
+                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttribute']['deposit']) . '</b> Pfand</div>';
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
                 echo '</div>';
@@ -151,8 +151,8 @@ if ($product['ProductLang']['description'] != '') {
         if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
             echo '<div class="line">';
             echo '<div class="price">' . $this->Html->formatAsEuro($product['Product']['gross_price']) . '</div>';
-            if ($product['CakeDeposit']['deposit']) {
-                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
+            if ($product['Deposit']['deposit']) {
+                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['Deposit']['deposit']).'</b> Pfand</div>';
             }
                 echo '</div>';
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';

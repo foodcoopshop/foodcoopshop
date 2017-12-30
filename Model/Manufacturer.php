@@ -48,11 +48,11 @@ class Manufacturer extends AppModel
     );
 
     public $hasMany = array(
-        'CakeInvoices' => array(
-            'className' => 'CakeInvoice',
+        'Invoices' => array(
+            'className' => 'Invoice',
             'foreignKey' => 'id_manufacturer',
             'order' => array(
-                'CakeInvoices.send_date DESC'
+                'Invoices.send_date DESC'
             ),
             'limit' => 1
         )

@@ -65,7 +65,7 @@ class SlidersController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 $this->Slider->save($this->request->data['Slider'], array(
                     'validate' => false
@@ -94,11 +94,11 @@ class SlidersController extends AdminAppController
                     $this->Slider->saveField('active', APP_DEL, false);
                     $this->deleteUploadedImage($this->Slider->id, Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
                     $message = 'Der Slideshow-Bild "' . $this->request->data['SliderLang']['id_homeslider_slides'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
+                    $this->ActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Der Slideshow-Bild "' . $this->request->data['SliderLang']['id_homeslider_slides'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gespeichert.');
                 }
 

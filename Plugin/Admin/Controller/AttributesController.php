@@ -67,7 +67,7 @@ class AttributesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 $this->Attribute->save($this->request->data['Attribute'], array(
                     'validate' => false
@@ -83,11 +83,11 @@ class AttributesController extends AdminAppController
                 if (isset($this->request->data['Attribute']['delete_attribute']) && $this->request->data['Attribute']['delete_attribute']) {
                     $this->Attribute->delete($this->Attribute->id); // cascade does not work here
                     $message = 'Die Variante "' . $this->request->data['Attribute']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
+                    $this->ActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Die Variante "' . $this->request->data['Attribute']['name'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
                 }
 

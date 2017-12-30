@@ -272,9 +272,9 @@ class CustomersController extends FrontendController
                     ));
 
                     // write action log
-                    $this->loadModel('CakeActionLog');
+                    $this->loadModel('ActionLog');
                     $message = 'Das Mitglied ' . $this->request->data['Customer']['firstname'] . ' ' . $this->request->data['Customer']['lastname'] . ' hat ein Mitgliedskonto erstellt.';
-                    $this->CakeActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
+                    $this->ActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
 
                     // START send confirmation email to customer
                     $attachments = array();

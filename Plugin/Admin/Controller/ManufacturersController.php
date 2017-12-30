@@ -149,7 +149,7 @@ class ManufacturersController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 if (is_null($manufacturerId)) {
                     // default value for new manufacturer
@@ -210,7 +210,7 @@ class ManufacturersController extends AdminAppController
                 }
 
                 $message = 'Der Hersteller "' . $this->request->data['Manufacturer']['name'] . '" wurde ' . $messageSuffix;
-                $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
+                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
                 $this->Flash->success('Der Hersteller wurde erfolgreich gespeichert.');
 
                 if ($this->here == Configure::read('slugHelper')->getManufacturerProfile()) {
@@ -257,8 +257,8 @@ class ManufacturersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturerId, 'manufacturer', $message);
+        $this->loadModel('ActionLog');
+        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturerId, 'manufacturer', $message);
 
         $this->redirect($this->referer());
     }
@@ -300,14 +300,14 @@ class ManufacturersController extends AdminAppController
         $manufacturers = $this->Paginator->paginate('Manufacturer');
 
         $this->loadModel('Product');
-        $this->loadModel('CakePayment');
+        $this->loadModel('Payment');
         $this->loadModel('OrderDetail');
 
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
             $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturer']['id_manufacturer'], false);
-            $sumDepositReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
             if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
@@ -343,8 +343,8 @@ class ManufacturersController extends AdminAppController
         } else {
             // generate and save invoice number
             $invoiceNumber = 1; // default
-            if (! empty($manufacturer['CakeInvoices'])) {
-                $invoiceNumber = $manufacturer['CakeInvoices'][0]['invoice_number'] + 1;
+            if (! empty($manufacturer['Invoices'])) {
+                $invoiceNumber = $manufacturer['Invoices'][0]['invoice_number'] + 1;
             }
             $newInvoiceNumber = $this->Manufacturer->formatInvoiceNumber($invoiceNumber);
             $this->set('newInvoiceNumber', $newInvoiceNumber);
@@ -370,8 +370,8 @@ class ManufacturersController extends AdminAppController
                 'invoice_number' => $invoiceNumber,
                 'user_id' => $loggedUser['id_customer']
             );
-            $this->Manufacturer->CakeInvoices->id = null;
-            $this->Manufacturer->CakeInvoices->save($invoice2Save);
+            $this->Manufacturer->Invoices->id = null;
+            $this->Manufacturer->Invoices->save($invoice2Save);
 
             $invoicePeriodMonthAndYear = Configure::read('timeHelper')->getLastMonthNameAndYear();
 
@@ -643,8 +643,8 @@ class ManufacturersController extends AdminAppController
 
                 $this->Flash->success($message);
 
-                $this->loadModel('CakeActionLog');
-                $this->CakeActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturerId, 'manufacturers', $message);
+                $this->loadModel('ActionLog');
+                $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturerId, 'manufacturers', $message);
 
                 $this->redirect($this->data['referer']);
             } else {

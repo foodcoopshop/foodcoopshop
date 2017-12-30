@@ -129,7 +129,7 @@ class AppModel extends Model
         return "Product.id_product,
                 ProductLang.name, ProductLang.description_short, ProductLang.description, ProductLang.unity,
                 ProductShop.price, ProductShop.date_add,
-                CakeDeposit.deposit,
+                Deposit.deposit,
                 ImageLang.id_image, ImageLang.legend,
                 Manufacturer.id_manufacturer, Manufacturer.name,
                 StockAvailable.quantity ";
@@ -146,7 +146,7 @@ class AppModel extends Model
                 LEFT JOIN ".$this->tablePrefix."image Image ON Image.id_product = Product.id_product AND (Image.cover IS NULL OR Image.cover = 1)
                 LEFT JOIN ".$this->tablePrefix."image_lang ImageLang ON ImageLang.id_image = Image.id_image
                 LEFT JOIN ".$this->tablePrefix."image_shop ImageShop ON ImageShop.id_image = Image.id_image
-                LEFT JOIN ".$this->tablePrefix."cake_deposits CakeDeposit ON Product.id_product = CakeDeposit.id_product
+                LEFT JOIN ".$this->tablePrefix."deposits Deposit ON Product.id_product = Deposit.id_product
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturer ON Manufacturer.id_manufacturer = Product.id_manufacturer ";
     }
 

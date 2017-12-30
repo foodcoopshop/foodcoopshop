@@ -103,7 +103,7 @@ class PagesController extends AdminAppController
             if (empty($errors)) {
                 $this->request->data['Page']['id_customer'] = $this->AppAuth->getUserId();
 
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 $this->Page->save($this->request->data['Page'], array(
                     'validate' => false
@@ -126,11 +126,11 @@ class PagesController extends AdminAppController
                 if (isset($this->request->data['Page']['delete_page']) && $this->request->data['Page']['delete_page']) {
                     $this->Page->saveField('active', APP_DEL, false);
                     $message = 'Die Seite "' . $this->request->data['PageLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('page_deleted', $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
+                    $this->ActionLog->customSave('page_deleted', $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
                     $this->Flash->success('Die Seite wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Die Seite "' . $this->request->data['PageLang']['meta_title'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
                     $this->Flash->success('Die Seite wurde erfolgreich gespeichert.');
                 }
 

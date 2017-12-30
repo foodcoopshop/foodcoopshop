@@ -1,6 +1,6 @@
 <?php
 /**
- * CakeCart
+ * Cart
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakeCart extends AppModel
+class Cart extends AppModel
 {
 
     public $primaryKey = 'id_cart';
@@ -30,7 +30,7 @@ class CakeCart extends AppModel
     );
 
     public $hasMany = array(
-        'CakeCartProducts' => array(
+        'CartProducts' => array(
             'foreignKey' => 'id_cart'
         )
     );
@@ -40,28 +40,28 @@ class CakeCart extends AppModel
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
 
-    public function getCakeCart($customerId)
+    public function getCart($customerId)
     {
         $this->recursive = - 1;
-        $cakeCart = $this->find('first', array(
+        $cart = $this->find('first', array(
             'conditions' => array(
-                'CakeCart.status' => APP_ON,
-                'CakeCart.id_customer' => $customerId
+                'Cart.status' => APP_ON,
+                'Cart.id_customer' => $customerId
             )
         ));
-        if (empty($cakeCart)) {
+        if (empty($cart)) {
             $this->id = null;
             $cart2save = array(
                 'id_customer' => $customerId
             );
-            $cakeCart = $this->save($cart2save);
+            $cart = $this->save($cart2save);
         }
 
-        $ccp = ClassRegistry::init('CakeCartProduct');
+        $ccp = ClassRegistry::init('CartProduct');
         $ccp->recursive = 3;
-        $cakeCartProducts = $ccp->find('all', array(
+        $cartProducts = $ccp->find('all', array(
             'conditions' => array(
-                'CakeCartProduct.id_cart' => $cakeCart['CakeCart']['id_cart']
+                'CartProduct.id_cart' => $cart['Cart']['id_cart']
             ),
             'order' => array(
                 'ProductLang.name' => 'ASC'
@@ -69,10 +69,10 @@ class CakeCart extends AppModel
         ));
 
         $preparedCart = array(
-            'CakeCart' => $cakeCart['CakeCart'],
-            'CakeCartProducts' => array()
+            'Cart' => $cart['Cart'],
+            'CartProducts' => array()
         );
-        foreach ($cakeCartProducts as &$cartProduct) {
+        foreach ($cartProducts as &$cartProduct) {
             $manufacturerLink = Configure::read('htmlHelper')->link($cartProduct['Product']['Manufacturer']['name'], Configure::read('slugHelper')->getManufacturerDetail($cartProduct['Product']['Manufacturer']['id_manufacturer'], $cartProduct['Product']['Manufacturer']['name']));
 
             $imageId = 0;
@@ -86,7 +86,7 @@ class CakeCart extends AppModel
             $productLink = Configure::read('htmlHelper')->link(
                 $cartProduct['ProductLang']['name'],
                 Configure::read('slugHelper')->getProductDetail(
-                    $cartProduct['CakeCartProduct']['id_product'],
+                    $cartProduct['CartProduct']['id_product'],
                     $cartProduct['ProductLang']['name']
                 ),
                 array('class' => 'product-name')
@@ -94,67 +94,67 @@ class CakeCart extends AppModel
 
             if (isset($cartProduct['ProductAttribute']['ProductAttributeCombination'])) {
                 // attribute
-                $preparedCart['CakeCartProducts'][] = array(
-                    'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
-                    'productId' => $cartProduct['CakeCartProduct']['id_product'] . '-' . $cartProduct['CakeCartProduct']['id_product_attribute'],
+                $preparedCart['CartProducts'][] = array(
+                    'cartProductId' => $cartProduct['CartProduct']['id_cart_product'],
+                    'productId' => $cartProduct['CartProduct']['id_product'] . '-' . $cartProduct['CartProduct']['id_product_attribute'],
                     'productName' => $cartProduct['ProductLang']['name'],
                     'productLink' => $productLink,
                     'unity' => $cartProduct['ProductAttribute']['ProductAttributeCombination']['Attribute']['name'],
-                    'amount' => $cartProduct['CakeCartProduct']['amount'],
+                    'amount' => $cartProduct['CartProduct']['amount'],
                     'manufacturerId' => $cartProduct['Product']['id_manufacturer'],
                     'manufacturerLink' => $manufacturerLink,
                     'manufacturerName' => $cartProduct['Product']['Manufacturer']['name'],
                     'image' => $productImage,
-                    'deposit' => isset($cartProduct['ProductAttribute']['CakeDepositProductAttribute']['deposit']) ? $cartProduct['ProductAttribute']['CakeDepositProductAttribute']['deposit'] * $cartProduct['CakeCartProduct']['amount'] : 0, // * 1 to convert to float
-                    'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['ProductAttribute']['ProductAttributeShop']['price']) * $cartProduct['CakeCartProduct']['amount'],
-                    'priceExcl' => $cartProduct['ProductAttribute']['ProductAttributeShop']['price'] * $cartProduct['CakeCartProduct']['amount'],
+                    'deposit' => isset($cartProduct['ProductAttribute']['DepositProductAttribute']['deposit']) ? $cartProduct['ProductAttribute']['DepositProductAttribute']['deposit'] * $cartProduct['CartProduct']['amount'] : 0, // * 1 to convert to float
+                    'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['ProductAttribute']['ProductAttributeShop']['price']) * $cartProduct['CartProduct']['amount'],
+                    'priceExcl' => $cartProduct['ProductAttribute']['ProductAttributeShop']['price'] * $cartProduct['CartProduct']['amount'],
                     'tax' => $ccp->Product->getUnitTax(
                         $ccp->Product->getGrossPrice(
                             $cartProduct['Product']['id_product'],
                             $cartProduct['ProductAttribute']['ProductAttributeShop']['price']
-                        ) * $cartProduct['CakeCartProduct']['amount'],
+                        ) * $cartProduct['CartProduct']['amount'],
                         $cartProduct['ProductAttribute']['ProductAttributeShop']['price'],
-                        $cartProduct['CakeCartProduct']['amount']
-                    ) * $cartProduct['CakeCartProduct']['amount']
+                        $cartProduct['CartProduct']['amount']
+                    ) * $cartProduct['CartProduct']['amount']
                 );
             } else {
                 // no attribute
-                $preparedCart['CakeCartProducts'][] = array(
-                    'cakeCartProductId' => $cartProduct['CakeCartProduct']['id_cart_product'],
-                    'productId' => $cartProduct['CakeCartProduct']['id_product'],
+                $preparedCart['CartProducts'][] = array(
+                    'cartProductId' => $cartProduct['CartProduct']['id_cart_product'],
+                    'productId' => $cartProduct['CartProduct']['id_product'],
                     'productName' => $cartProduct['ProductLang']['name'],
                     'productLink' => $productLink,
                     'unity' => $cartProduct['Product']['ProductLang']['unity'],
-                    'amount' => $cartProduct['CakeCartProduct']['amount'],
+                    'amount' => $cartProduct['CartProduct']['amount'],
                     'manufacturerId' => $cartProduct['Product']['id_manufacturer'],
                     'manufacturerLink' => $manufacturerLink,
                     'manufacturerName' => $cartProduct['Product']['Manufacturer']['name'],
                     'image' => $productImage,
-                    'deposit' => isset($cartProduct['Product']['CakeDepositProduct']['deposit']) ? $cartProduct['Product']['CakeDepositProduct']['deposit'] * $cartProduct['CakeCartProduct']['amount'] : 0,
-                    'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['Product']['ProductShop']['price']) * $cartProduct['CakeCartProduct']['amount'],
-                    'priceExcl' => $cartProduct['Product']['ProductShop']['price'] * $cartProduct['CakeCartProduct']['amount'],
+                    'deposit' => isset($cartProduct['Product']['DepositProduct']['deposit']) ? $cartProduct['Product']['DepositProduct']['deposit'] * $cartProduct['CartProduct']['amount'] : 0,
+                    'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['Product']['ProductShop']['price']) * $cartProduct['CartProduct']['amount'],
+                    'priceExcl' => $cartProduct['Product']['ProductShop']['price'] * $cartProduct['CartProduct']['amount'],
                     'tax' => $ccp->Product->getUnitTax(
                         $ccp->Product->getGrossPrice(
                             $cartProduct['Product']['id_product'],
                             $cartProduct['Product']['ProductShop']['price']
-                        ) * $cartProduct['CakeCartProduct']['amount'],
+                        ) * $cartProduct['CartProduct']['amount'],
                         $cartProduct['Product']['ProductShop']['price'],
-                        $cartProduct['CakeCartProduct']['amount']
-                    ) * $cartProduct['CakeCartProduct']['amount']
+                        $cartProduct['CartProduct']['amount']
+                    ) * $cartProduct['CartProduct']['amount']
                 );
             }
         }
 
         // sum up deposits and products
-        $preparedCart['CakeCartDepositSum'] = 0;
-        $preparedCart['CakeCartProductSum'] = 0;
-        $preparedCart['CakeCartProductSumExcl'] = 0;
-        $preparedCart['CakeCartTaxSum'] = 0;
-        foreach ($preparedCart['CakeCartProducts'] as $p) {
-            $preparedCart['CakeCartDepositSum'] += $p['deposit'];
-            $preparedCart['CakeCartProductSum'] += $p['price'];
-            $preparedCart['CakeCartTaxSum'] += $p['tax'];
-            $preparedCart['CakeCartProductSumExcl'] += $p['priceExcl'];
+        $preparedCart['CartDepositSum'] = 0;
+        $preparedCart['CartProductSum'] = 0;
+        $preparedCart['CartProductSumExcl'] = 0;
+        $preparedCart['CartTaxSum'] = 0;
+        foreach ($preparedCart['CartProducts'] as $p) {
+            $preparedCart['CartDepositSum'] += $p['deposit'];
+            $preparedCart['CartProductSum'] += $p['price'];
+            $preparedCart['CartTaxSum'] += $p['tax'];
+            $preparedCart['CartProductSumExcl'] += $p['priceExcl'];
         }
         return $preparedCart;
     }

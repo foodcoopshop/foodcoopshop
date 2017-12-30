@@ -22,18 +22,18 @@
         <td>
 
             <p>
-                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('timeHelper')->formatToDateNTimeShort($request['CakePayment']['date_add']); ?></b> über <b>€ <?php echo Configure::read('htmlHelper')->formatAsDecimal($request['CakePayment']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
+                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('timeHelper')->formatToDateNTimeShort($request['Payment']['date_add']); ?></b> über <b>€ <?php echo Configure::read('htmlHelper')->formatAsDecimal($request['Payment']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
                 
-                <?php if ($request['CakePayment']['approval'] == -1) { ?>
+                <?php if ($request['Payment']['approval'] == -1) { ?>
                     Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto.
                 <?php } ?>
                 
             </p>
             
             <?php
-            if ($request['CakePayment']['approval_comment'] != '') {
+            if ($request['Payment']['approval_comment'] != '') {
                 echo '<p>Kommentar:<br />';
-                echo '<b>"'.$request['CakePayment']['approval_comment'] . '</b>"';
+                echo '<b>"'.$request['Payment']['approval_comment'] . '</b>"';
                 echo '</p>';
             }
             ?>

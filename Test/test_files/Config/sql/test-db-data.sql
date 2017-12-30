@@ -10,14 +10,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Truncate tables before insertion
+TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
-TRUNCATE TABLE `fcs_cake_action_logs`;
-TRUNCATE TABLE `fcs_cake_cart_products`;
-TRUNCATE TABLE `fcs_cake_carts`;
-TRUNCATE TABLE `fcs_cake_deposits`;
-TRUNCATE TABLE `fcs_cake_invoices`;
-TRUNCATE TABLE `fcs_cake_payments`;
+TRUNCATE TABLE `fcs_cart_products`;
+TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
 TRUNCATE TABLE `fcs_category_lang`;
 TRUNCATE TABLE `fcs_category_product`;
@@ -25,17 +22,20 @@ TRUNCATE TABLE `fcs_cms`;
 TRUNCATE TABLE `fcs_cms_lang`;
 TRUNCATE TABLE `fcs_configuration`;
 TRUNCATE TABLE `fcs_customer`;
+TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_email_logs`;
 TRUNCATE TABLE `fcs_homeslider_slides`;
 TRUNCATE TABLE `fcs_homeslider_slides_lang`;
 TRUNCATE TABLE `fcs_image`;
 TRUNCATE TABLE `fcs_image_lang`;
 TRUNCATE TABLE `fcs_image_shop`;
+TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_manufacturer_lang`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_orders`;
+TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
@@ -49,6 +49,9 @@ TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
+
+/*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
 INSERT INTO `fcs_address` VALUES
@@ -122,28 +125,11 @@ INSERT INTO `fcs_attribute` VALUES
 (86,'5 Stück',1,NULL,NULL);
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_cake_action_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_action_logs` ENABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cart_products` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_cake_cart_products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_cart_products` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_carts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_carts` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_deposits` DISABLE KEYS */;
-INSERT INTO `fcs_cake_deposits` VALUES
-(1,346,0,0.5),
-(2,0,9,0.5),
-(3,0,10,0.5),
-(4,0,11,0.5);
-/*!40000 ALTER TABLE `fcs_cake_deposits` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_invoices` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_invoices` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cake_payments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cake_payments` ENABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_carts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_carts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
 INSERT INTO `fcs_category` VALUES
@@ -606,6 +592,14 @@ INSERT INTO `fcs_customer` VALUES
 (92,1,1,0,5,1,1,NULL,NULL,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,NULL,0,NULL,NULL,0,NULL,0.000000,0,0,'-1','1000-01-01',NULL,1,0,0,'2016-09-29 16:26:12','2016-09-29 16:26:12');
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
+INSERT INTO `fcs_deposits` VALUES
+(1,346,0,0.5),
+(2,0,9,0.5),
+(3,0,10,0.5),
+(4,0,11,0.5);
+/*!40000 ALTER TABLE `fcs_deposits` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
 
@@ -640,6 +634,9 @@ INSERT INTO `fcs_image_shop` VALUES
 (157,1,1,338);
 /*!40000 ALTER TABLE `fcs_image_shop` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_invoices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_invoices` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
 (4,'Demo Fleisch-Hersteller','2014-05-14 13:23:02','2015-05-15 13:31:41',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,NULL,NULL),
@@ -666,6 +663,9 @@ INSERT INTO `fcs_order_detail_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 INSERT INTO `fcs_product` VALUES

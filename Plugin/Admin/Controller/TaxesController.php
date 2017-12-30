@@ -69,7 +69,7 @@ class TaxesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 $this->Tax->save($this->request->data['Tax'], array(
                     'validate' => false
@@ -85,7 +85,7 @@ class TaxesController extends AdminAppController
                 if (isset($this->request->data['Tax']['delete_tax']) && $this->request->data['Tax']['delete_tax']) {
                     $this->Tax->delete($this->Tax->id); // cascade does not work here
                     $message = 'Der Steuersatz "' . Configure::read('htmlHelper')->formatAsPercent($this->request->data['Tax']['rate']) . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('tax_deleted', $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
+                    $this->ActionLog->customSave('tax_deleted', $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
                     $this->Flash->success('Der Steuersatz wurde erfolgreich gelöscht.');
                 } else {
                     if ($taxId > 0) {
@@ -94,7 +94,7 @@ class TaxesController extends AdminAppController
                         $taxRate = $this->request->data['Tax']['rate'];
                     }
                     $message = 'Der Steuersatz "' . Configure::read('htmlHelper')->formatAsPercent($taxRate) . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
                     $this->Flash->success('Der Steuersatz wurde erfolgreich gespeichert.');
                 }
 

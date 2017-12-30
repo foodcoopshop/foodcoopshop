@@ -112,7 +112,7 @@ class BlogPostsController extends AdminAppController
                     $this->request->data['BlogPost']['modified'] = false;
                 }
 
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 if (is_null($blogPostId) && $this->AppAuth->isManufacturer()) {
                     $this->request->data['BlogPost']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
@@ -152,11 +152,11 @@ class BlogPostsController extends AdminAppController
                 if (isset($this->request->data['BlogPost']['delete_blog_post']) && $this->request->data['BlogPost']['delete_blog_post']) {
                     $this->BlogPost->saveField('active', APP_DEL, false);
                     $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('blog_post_deleted', $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
+                    $this->ActionLog->customSave('blog_post_deleted', $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
                     $this->Flash->success('Der Blog-Artikel wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
                     $this->Flash->success('Der Blog-Artikel wurde erfolgreich gespeichert.');
                 }
 

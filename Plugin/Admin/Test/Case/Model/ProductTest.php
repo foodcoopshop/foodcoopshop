@@ -484,9 +484,9 @@ class ProductTest extends AppCakeTestCase
             ));
 
             if ($productAndAttributeId['attributeId'] == 0) {
-                $resultEntity = $changedProduct['CakeDepositProduct'];
+                $resultEntity = $changedProduct['DepositProduct'];
             } else {
-                $resultEntity = $changedProduct['ProductAttributes'][0]['CakeDepositProductAttribute'];
+                $resultEntity = $changedProduct['ProductAttributes'][0]['DepositProductAttribute'];
             }
             $this->assertEquals($expectedDeposit, $this->Product->getPriceAsFloat($resultEntity['deposit']), 'changing the deposit did not work');
         }

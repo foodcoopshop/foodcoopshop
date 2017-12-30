@@ -1,6 +1,6 @@
 <?php
 /**
- * CakeDepositAttribute
+ * DepositProduct
  *
  * fake model for using associations with foreign keys that are not the id of the model
  *
@@ -16,10 +16,10 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakeDepositAttribute extends AppModel
+class DepositProduct extends AppModel
 {
 
-    public $useTable = 'cake_deposits';
+    public $useTable = 'deposits';
 
-    public $primaryKey = 'id_product_attribute';
+    public $primaryKey = 'id_product';
 }

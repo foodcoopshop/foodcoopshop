@@ -45,7 +45,7 @@ class Product extends AppModel
     );
 
     public $hasOne = array(
-        'CakeDepositProduct' => array(
+        'DepositProduct' => array(
             'foreignKey' => 'id_product'
         ),
         'ImageShop' => array(
@@ -223,16 +223,16 @@ class Product extends AppModel
             $ids = $this->getProductIdAndAttributeId($productId);
 
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                $oldDeposit = $this->DepositProduct->find('first', array(
                     'conditions' => array(
-                        'CakeDepositProduct.id_product_attribute' => $ids['attributeId']
+                        'DepositProduct.id_product_attribute' => $ids['attributeId']
                     )
                 ));
 
                 if (empty($oldDeposit)) {
-                    $this->CakeDepositProduct->id = null; // force new insert
+                    $this->DepositProduct->id = null; // force new insert
                 } else {
-                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                    $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
                 }
 
                 $deposit2save = array(
@@ -241,16 +241,16 @@ class Product extends AppModel
                 );
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                $oldDeposit = $this->DepositProduct->find('first', array(
                     'conditions' => array(
-                        'CakeDepositProduct.id_product' => $productId
+                        'DepositProduct.id_product' => $productId
                     )
                 ));
 
                 if (empty($oldDeposit)) {
-                    $this->CakeDepositProduct->id = null; // force new insert
+                    $this->DepositProduct->id = null; // force new insert
                 } else {
-                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                    $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
                 }
 
                 $deposit2save = array(
@@ -259,8 +259,8 @@ class Product extends AppModel
                 );
             }
 
-            $this->CakeDepositProduct->primaryKey = 'id';
-            $success |= $this->CakeDepositProduct->save($deposit2save);
+            $this->DepositProduct->primaryKey = 'id';
+            $success |= $this->DepositProduct->save($deposit2save);
         }
 
         return $success;
@@ -412,7 +412,7 @@ class Product extends AppModel
             'hasOne' => 'ManufacturerLang'
         ));
         $this->Manufacturer->unbindModel(array(
-            'hasMany' => 'CakeInvoices'
+            'hasMany' => 'Invoices'
         ));
         $this->ProductLang->unbindModel(array(
             'belongsTo' => 'Product'
@@ -455,7 +455,7 @@ class Product extends AppModel
                 $rowClass[] = 'deactivated';
             }
 
-            @$products[$i]['Deposit'] = $product['CakeDepositProduct']['deposit'];
+            @$products[$i]['Deposit'] = $product['DepositProduct']['deposit'];
             if (empty($products[$i]['Tax'])) {
                 $products[$i]['Tax']['rate'] = 0;
                 $product = $products[$i];
@@ -512,7 +512,7 @@ class Product extends AppModel
                         'StockAvailable' => array(
                             'quantity' => $attribute['StockAvailable']['quantity']
                         ),
-                        'Deposit' => isset($attribute['CakeDepositProductAttribute']['deposit']) ? $attribute['CakeDepositProductAttribute']['deposit'] : 0,
+                        'Deposit' => isset($attribute['DepositProductAttribute']['deposit']) ? $attribute['DepositProductAttribute']['deposit'] : 0,
                         'Categories' => array(
                             'names' => array(),
                             'allProductsFound' => true
@@ -545,7 +545,7 @@ class Product extends AppModel
                 'CategoryProducts'
             ),
             'hasOne' => array(
-                'CakeDepositProduct',
+                'DepositProduct',
                 'ImageShop'
             )
         ));

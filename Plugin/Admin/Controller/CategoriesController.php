@@ -76,7 +76,7 @@ class CategoriesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 $this->request->data['CategoryLang']['id_lang'] = Configure::read('app.langId');
                 $this->Category->save($this->request->data['Category'], array(
@@ -108,11 +108,11 @@ class CategoriesController extends AdminAppController
                     $this->Category->delete($this->Category->id); // cascade does not work here
                     $this->Category->CategoryLang->delete($this->Category->id); // CategoryLang record needs to be deleted manually
                     $message = 'Die Kategorie "' . $this->request->data['CategoryLang']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categorys', $message);
+                    $this->ActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categorys', $message);
                     $this->Flash->success('Die Kategorie wurde erfolgreich gelöscht.');
                 } else {
                     $message = 'Die Kategorie "' . $this->request->data['CategoryLang']['name'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
                     $this->Flash->success('Die Kategorie wurde erfolgreich gespeichert.');
                 }
 

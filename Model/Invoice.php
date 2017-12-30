@@ -1,6 +1,6 @@
 <?php
 /**
- * CakeInvoice
+ * Invoice
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,6 +14,6 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakeInvoice extends AppModel
+class Invoice extends AppModel
 {
 }

@@ -1,8 +1,6 @@
 <?php
 /**
- * CakeDepositProduct
- *
- * fake model for using associations with foreign keys that are not the id of the model
+ * Deposit
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -16,10 +14,6 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakeDepositProduct extends AppModel
+class Deposit extends AppModel
 {
-
-    public $useTable = 'cake_deposits';
-
-    public $primaryKey = 'id_product';
 }

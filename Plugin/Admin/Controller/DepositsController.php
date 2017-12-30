@@ -86,13 +86,13 @@ class DepositsController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
 
         $this->loadModel('OrderDetail');
-        $this->loadModel('CakePayment');
+        $this->loadModel('Payment');
 
         $orderState = Configure::read('htmlHelper')->getOrderStateIdsAsCsv();
         $this->set('orderState', $orderState);
 
         $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
-        $depositsReturned = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
+        $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         // TODO add year 2020 on 31.12.2019
         $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2019);
@@ -169,8 +169,8 @@ class DepositsController extends AdminAppController
         ));
         $this->set('manufacturer', $manufacturer);
 
-        $this->loadModel('CakePayment');
-        $payments = $this->CakePayment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
+        $this->loadModel('Payment');
+        $payments = $this->Payment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
 
         $this->set('payments', $payments);
 
