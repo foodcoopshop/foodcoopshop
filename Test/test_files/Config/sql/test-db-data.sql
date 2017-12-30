@@ -21,9 +21,7 @@ TRUNCATE TABLE `fcs_configuration`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_email_logs`;
-TRUNCATE TABLE `fcs_image`;
-TRUNCATE TABLE `fcs_image_lang`;
-TRUNCATE TABLE `fcs_image_shop`;
+TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_manufacturer_lang`;
@@ -560,26 +558,12 @@ INSERT INTO `fcs_deposits` VALUES
 /*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_image` DISABLE KEYS */;
-INSERT INTO `fcs_image` VALUES
-(154,60,2,1),
-(156,340,1,NULL),
-(157,338,1,NULL);
-/*!40000 ALTER TABLE `fcs_image` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_image_lang` DISABLE KEYS */;
-INSERT INTO `fcs_image_lang` VALUES
-(154,1,'Milch'),
-(156,1,'Beuschl'),
-(157,1,'Streichwurst');
-/*!40000 ALTER TABLE `fcs_image_lang` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_image_shop` DISABLE KEYS */;
-INSERT INTO `fcs_image_shop` VALUES
-(154,1,1,60),
-(156,1,1,340),
-(157,1,1,338);
-/*!40000 ALTER TABLE `fcs_image_shop` ENABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_images` DISABLE KEYS */;
+INSERT INTO `fcs_images` VALUES
+(154,60),
+(156,340),
+(157,338);
+/*!40000 ALTER TABLE `fcs_images` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_invoices` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_invoices` ENABLE KEYS */;

@@ -134,25 +134,19 @@ class ProductsController extends AdminAppController
         ));
 
         // delete db entries
-        $this->Product->ImageShop->Image->deleteAll(array(
-            'Image.id_image' => $product['ImageShop']['id_image']
-        ), false);
-        $this->Product->ImageShop->deleteAll(array(
-            'ImageShop.id_image' => $product['ImageShop']['id_image']
-        ), false);
-        $this->Product->ImageShop->ImageLang->deleteAll(array(
-            'ImageLang.id_image' => $product['ImageShop']['id_image']
+        $this->Product->Image->deleteAll(array(
+            'Image.id_image' => $product['Image']['id_image']
         ), false);
 
         // delete physical files
-        $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($product['ImageShop']['id_image']);
+        $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($product['Image']['id_image']);
         $thumbsPath = Configure::read('htmlHelper')->getProductThumbsPath($imageIdAsPath);
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $thumbsFileName = $thumbsPath . DS . $product['ImageShop']['id_image'] . $options['suffix'] . '.jpg';
+            $thumbsFileName = $thumbsPath . DS . $product['Image']['id_image'] . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
 
-        $messageString = 'Bild (Id: ' . $product['ImageShop']['id_image'] . ') wurde erfolgreich gelöscht. Produkt: "' . $product['ProductLang']['name'] . '", Hersteller: "' . $product['Manufacturer']['name'] . '"';
+        $messageString = 'Bild (Id: ' . $product['Image']['id_image'] . ') wurde erfolgreich gelöscht. Produkt: "' . $product['ProductLang']['name'] . '", Hersteller: "' . $product['Manufacturer']['name'] . '"';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -175,32 +169,14 @@ class ProductsController extends AdminAppController
             )
         ));
 
-        $imageId = 0;
-        if ($product['ImageShop']['id_image'] == '') {
-            // product does not yet have image => create the necessary db entries
-            $this->Product->ImageShop->Image->save(array(
-                'id_product' => $productId,
-                'position' => 1
-            ));
-            $imageId = $this->Product->ImageShop->Image->getLastInsertID();
-            $this->Product->ImageShop->save(array(
-                'id_image' => $imageId,
-                'id_shop' => 1,
-                'cover' => 1,
+        if ($product['Image']['id_image'] == '') {
+            // product does not yet have image => create the necessary record
+            $this->Product->Image->save(array(
                 'id_product' => $productId
             ));
-            $this->Product->ImageShop->ImageLang->save(array(
-                'id_image' => $imageId,
-                'id_lang' => 1,
-                'legend' => $product['ProductLang']['name']
-            ));
+            $imageId = $this->Product->Image->getLastInsertID();
         } else {
-            // product has already image => overwrite image file only (no new db entries)
-            $imageId = $product['ImageShop']['id_image'];
-            $this->Product->ImageShop->ImageLang->id = $product['ImageShop']['id_image'];
-            $this->Product->ImageShop->ImageLang->save(array(
-                'legend' => $product['ProductLang']['name'] . '-' . StringComponent::createRandomString(3)
-            ));
+            $imageId = $product['Image']['id_image'];
         }
 
         // not (yet) implemented for attributes, only for productIds!

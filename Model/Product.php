@@ -48,15 +48,10 @@ class Product extends AppModel
         'DepositProduct' => array(
             'foreignKey' => 'id_product'
         ),
-        'ImageShop' => array(
-            'className' => 'ImageShop',
+        'Image' => array(
             'foreignKey' => 'id_product',
-            'conditions' => array(
-                'ImageShop.id_shop' => 1,
-                'ImageShop.cover' => 1
-            ),
             'order' => array(
-                'ImageShop.id_image' => 'DESC'
+                'Image.id_image' => 'DESC'
             )
         )
     );
@@ -517,7 +512,7 @@ class Product extends AppModel
                             'names' => array(),
                             'allProductsFound' => true
                         ),
-                        'ImageShop' => null
+                        'Image' => null
                     );
                     $preparedProducts[] = $preparedProduct;
                 }
@@ -716,7 +711,7 @@ class Product extends AppModel
 
         // DISTINCT: attributes cause duplicate entries
         $fields = array(
-            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, ImageShop.id_image'
+            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, Image.id_image'
         );
 
         $contain = array(

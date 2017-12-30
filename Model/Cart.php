@@ -76,13 +76,11 @@ class Cart extends AppModel
             $manufacturerLink = Configure::read('htmlHelper')->link($cartProduct['Product']['Manufacturer']['name'], Configure::read('slugHelper')->getManufacturerDetail($cartProduct['Product']['Manufacturer']['id_manufacturer'], $cartProduct['Product']['Manufacturer']['name']));
 
             $imageId = 0;
-            $imageLegend = '';
-            if (isset($cartProduct['Product']['ImageShop']['ImageLang'])) {
-                $imageId = $cartProduct['Product']['ImageShop']['ImageLang']['id_image'];
-                $imageLegend = $cartProduct['Product']['ImageShop']['ImageLang']['legend'];
+            if (isset($cartProduct['Product']['Image'])) {
+                $imageId = $cartProduct['Product']['Image']['id_image'];
             }
 
-            $productImage = Configure::read('htmlHelper')->image(Configure::read('htmlHelper')->getProductImageSrc($imageId, $imageLegend, 'home'));
+            $productImage = Configure::read('htmlHelper')->image(Configure::read('htmlHelper')->getProductImageSrc($imageId, 'home'));
             $productLink = Configure::read('htmlHelper')->link(
                 $cartProduct['ProductLang']['name'],
                 Configure::read('slugHelper')->getProductDetail(

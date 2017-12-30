@@ -78,3 +78,8 @@ ALTER TABLE `fcs_sliders` ADD `image` VARCHAR(255) CHARACTER SET utf8 COLLATE ut
 UPDATE fcs_sliders s JOIN fcs_homeslider_slides_lang hsl ON s.id_slider = hsl.id_homeslider_slides SET s.image = hsl.image;
 DROP TABLE fcs_homeslider_slides_lang;
 
+RENAME TABLE `fcs_image_shop` TO `fcs_images`;
+DELETE FROM fcs_images WHERE cover = 0;
+ALTER TABLE `fcs_images` DROP `id_shop`, DROP `cover`;
+DROP TABLE fcs_image;
+DROP TABLE fcs_image_lang;

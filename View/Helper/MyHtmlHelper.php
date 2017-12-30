@@ -457,7 +457,7 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
-    public function getProductImageSrc($imageId, $legend, $size)
+    public function getProductImageSrc($imageId, $size)
     {
         $imageIdAsPath = $this->getProductImageIdAsPath($imageId);
         $thumbsPath = $this->getProductThumbsPath($imageIdAsPath);

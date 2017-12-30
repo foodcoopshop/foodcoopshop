@@ -16,12 +16,12 @@
 echo '<div class="product-wrapper">';
 
     echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getProductImageSrc($product['ImageLang']['id_image'], $product['ImageLang']['legend'], 'thickbox');
+        $srcLargeImage = $this->Html->getProductImageSrc($product['Image']['id_image'], 'thickbox');
         $largeImageExists = preg_match('/de-default/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a class="lightbox" href="'.$srcLargeImage.'">';
 }
-            echo '<img src="' . $this->Html->getProductImageSrc($product['ImageLang']['id_image'], $product['ImageLang']['legend'], 'home'). '" />';
+            echo '<img src="' . $this->Html->getProductImageSrc($product['Image']['id_image'], 'home'). '" />';
 if (!$largeImageExists) {
     echo '</a>';
 }

@@ -179,7 +179,7 @@
         }
         echo '</td>';
 
-        $imageExists = $product['ImageShop']['id_image'] != '';
+        $imageExists = $product['Image']['id_image'] != '';
         echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && !$imageExists ? 'not-available' : '') . '">';
         if ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
@@ -191,7 +191,7 @@
                 'id' => $product['Product']['id_product'],
                 'action' => '/admin/tools/doTmpImageUpload/' . $product['Product']['id_product'],
                 'imageExists' => $imageExists,
-                'existingImageSrc' => $imageExists ? $this->Html->getProductImageSrc($product['ImageShop']['id_image'], $product['ImageShop']['ImageLang']['legend'], 'thickbox') : ''
+                'existingImageSrc' => $imageExists ? $this->Html->getProductImageSrc($product['Image']['id_image'], 'thickbox') : ''
             ));
         }
         echo '</td>';
