@@ -31,3 +31,8 @@ RENAME TABLE `fcs_cake_invoices` TO `fcs_invoices`;
 RENAME TABLE `fcs_cake_payments` TO `fcs_payments`;
 
 ALTER TABLE `fcs_orders` CHANGE `id_cake_cart` `id_cart` INT(10) NOT NULL DEFAULT '0';
+
+ALTER TABLE `fcs_category` DROP `id_shop_default`, DROP `position`, DROP `is_root_category`;
+ALTER TABLE `fcs_category` ADD `name` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `id_parent`, ADD `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `name`;
+UPDATE fcs_category c JOIN fcs_category_lang cl ON cl.id_category = c.id_category SET c.name = cl.name, c.description = cl.description;
+DROP TABLE fcs_category_lang;

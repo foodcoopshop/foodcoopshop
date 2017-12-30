@@ -439,8 +439,8 @@ class Product extends AppModel
                     $products[$i]['Categories']['allProductsFound'] = true;
                 } else {
                     // check if category was assigned to product but deleted afterwards
-                    if (isset($category['CategoryLang']) && isset($category['CategoryLang']['name'])) {
-                        $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                    if (isset($category['Category']) && isset($category['Category']['name'])) {
+                        $products[$i]['Categories']['names'][] = $category['Category']['name'];
                     }
                 }
             }

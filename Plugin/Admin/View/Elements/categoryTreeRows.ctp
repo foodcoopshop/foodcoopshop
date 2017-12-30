@@ -39,7 +39,7 @@ foreach ($categories as $category) {
     if ($subRow) {
         echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left: ' . (($category['Category']['level_depth'] - 2) * 10) . 'px;"></i>';
     }
-        echo $category['CategoryLang']['name'];
+        echo $category['Category']['name'];
     echo '</td>';
 
     echo '<td>';
@@ -59,7 +59,7 @@ foreach ($categories as $category) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
         'title' => 'Seite anzeigen',
         'target' => '_blank'
-        ), $this->Slug->getCategoryDetail($category['Category']['id_category'], $category['CategoryLang']['name']));
+        ), $this->Slug->getCategoryDetail($category['Category']['id_category'], $category['Category']['name']));
     }
     echo '</td>';
 

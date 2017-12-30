@@ -30,9 +30,14 @@ class Category extends AppModel
     public $useTable = 'category';
     public $primaryKey = 'id_category';
 
-    public $hasOne = array(
-        'CategoryLang' => array(
-            'foreignKey' => 'id_category'
+    public $validate = array(
+        'name' => array(
+            'notBlank' => array(
+                'rule' => array(
+                    'notBlank'
+                ),
+                'message' => 'Bitte gib einen Namen an.'
+            )
         )
     );
 
@@ -45,7 +50,7 @@ class Category extends AppModel
             if (! $item['Category']['active']) {
                 $statusString = ' (offline)';
             }
-            $this->flattenedArray[$item['Category']['id_category']] = $separator . $item['CategoryLang']['name'] . $statusString;
+            $this->flattenedArray[$item['Category']['id_category']] = $separator . $item['Category']['name'] . $statusString;
             if (! empty($item['children'])) {
                 $this->flattenNestedArrayWithChildren($item['children'], str_repeat('-', $item['Category']['level_depth'] - 1) . ' ');
             }
@@ -78,7 +83,7 @@ class Category extends AppModel
         $categories = $this->find('threaded', array(
             'conditions' => $conditions,
             'order' => array(
-                'CategoryLang.name' => 'ASC'
+                'Category.name' => 'ASC'
             )
         ));
         return $categories;
@@ -176,8 +181,8 @@ class Category extends AppModel
         $productCount = $this->getProductsByCategoryId($item['Category']['id_category'], false, '', 0, true);
 
         $tmpMenuItem = array(
-            'name' => $item['CategoryLang']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
-            'slug' => Configure::read('slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['CategoryLang']['name'])
+            'name' => $item['Category']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
+            'slug' => Configure::read('slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['Category']['name'])
         );
         if (! empty($item['children'])) {
             foreach ($item['children'] as $index => $child) {

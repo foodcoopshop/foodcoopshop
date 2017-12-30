@@ -91,15 +91,14 @@ DROP TABLE IF EXISTS `fcs_category`;
 CREATE TABLE `fcs_category` (
   `id_category` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_parent` int(10) unsigned NOT NULL DEFAULT '0',
-  `id_shop_default` int(10) unsigned NOT NULL DEFAULT '1',
+  `name` varchar(128) NOT NULL,
+  `description` text NOT NULL,
   `level_depth` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `nleft` int(10) unsigned NOT NULL DEFAULT '0',
   `nright` int(10) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `position` int(10) unsigned NOT NULL DEFAULT '0',
-  `is_root_category` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_category`),
   KEY `category_parent` (`id_parent`),
   KEY `nleftrightactive` (`nleft`,`nright`,`active`),
@@ -108,25 +107,6 @@ CREATE TABLE `fcs_category` (
   KEY `activenleft` (`active`,`nleft`),
   KEY `activenright` (`active`,`nright`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_category_lang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_category_lang` (
-  `id_category` int(10) unsigned NOT NULL DEFAULT '0',
-  `id_shop` int(11) unsigned NOT NULL DEFAULT '1',
-  `id_lang` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(128) NOT NULL DEFAULT '',
-  `description` text,
-  `link_rewrite` varchar(128) NOT NULL DEFAULT '',
-  `meta_title` varchar(128) DEFAULT NULL,
-  `meta_keywords` varchar(255) DEFAULT NULL,
-  `meta_description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_category`,`id_shop`,`id_lang`),
-  KEY `category_name` (`name`),
-  KEY `id_lang` (`id_lang`),
-  KEY `id_shop` (`id_shop`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_category_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

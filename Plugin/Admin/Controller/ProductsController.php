@@ -432,19 +432,19 @@ class ProductsController extends AdminAppController
             'id_product' => $productId
         ));
 
-        $this->loadModel('CategoryLang');
+        $this->loadModel('Category');
         $selectedCategoryNames = array();
         foreach ($selectedCategories as $selectedCategory) {
             // only add if entry of passed id exists in category lang table
-            $oldCategory = $this->CategoryLang->find('first', array(
+            $oldCategory = $this->Category->find('first', array(
                 'conditions' => array(
-                    'CategoryLang.id_category' => $selectedCategory
+                    'Category.id_category' => $selectedCategory
                 )
             ));
             if (! empty($oldCategory)) {
                 // do not track "alle-produkte"
                 if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
-                    $selectedCategoryNames[] = $oldCategory['CategoryLang']['name'];
+                    $selectedCategoryNames[] = $oldCategory['Category']['name'];
                 }
                 $sql = 'INSERT INTO ' . $this->CategoryProduct->tablePrefix . $this->CategoryProduct->useTable . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
                 $this->CategoryProduct->query($sql);

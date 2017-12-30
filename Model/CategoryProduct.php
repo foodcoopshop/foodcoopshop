@@ -21,7 +21,7 @@ class CategoryProduct extends AppModel
     public $primaryKey = 'id_product';
 
     public $belongsTo = array(
-        'CategoryLang' => array(
+        'Category' => array(
             'foreignKey' => 'id_category'
         )
     );
