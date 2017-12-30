@@ -114,7 +114,6 @@ DROP TABLE IF EXISTS `fcs_category_product`;
 CREATE TABLE `fcs_category_product` (
   `id_category` int(10) unsigned NOT NULL DEFAULT '0',
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
-  `position` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_category`,`id_product`),
   KEY `id_product` (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
