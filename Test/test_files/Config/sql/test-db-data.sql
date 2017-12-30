@@ -21,8 +21,6 @@ TRUNCATE TABLE `fcs_configuration`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_email_logs`;
-TRUNCATE TABLE `fcs_homeslider_slides`;
-TRUNCATE TABLE `fcs_homeslider_slides_lang`;
 TRUNCATE TABLE `fcs_image`;
 TRUNCATE TABLE `fcs_image_lang`;
 TRUNCATE TABLE `fcs_image_shop`;
@@ -40,6 +38,7 @@ TRUNCATE TABLE `fcs_product_attribute_combination`;
 TRUNCATE TABLE `fcs_product_attribute_shop`;
 TRUNCATE TABLE `fcs_product_lang`;
 TRUNCATE TABLE `fcs_product_shop`;
+TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_smart_blog_post`;
 TRUNCATE TABLE `fcs_smart_blog_post_lang`;
 TRUNCATE TABLE `fcs_smart_blog_post_shop`;
@@ -507,47 +506,47 @@ INSERT INTO `fcs_category_product` VALUES
 
 /*!40000 ALTER TABLE `fcs_configuration` DISABLE KEYS */;
 INSERT INTO `fcs_configuration` VALUES
-(11,NULL,NULL,1,'FCS_PRODUCT_AVAILABILITY_LOW','Geringe Verfügbarkeit<br /><div class=\"small\">Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?</div>','10','number',60,'2017-07-26 13:19:19','2014-06-01 01:40:34'),
-(31,NULL,NULL,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?','7','number',70,'2017-07-26 13:19:19','2014-05-14 21:15:45'),
-(164,NULL,NULL,1,'FCS_CUSTOMER_GROUP','Welcher Gruppe sollen neu registrierte Mitglieder zugewiesen werden?','3','dropdown',40,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(456,NULL,NULL,1,'FCS_FOOTER_CMS_TEXT','Zusätzlicher Text für den Footer',NULL,'textarea_big',80,'2014-06-11 17:50:55','2016-07-01 21:47:47'),
-(508,NULL,NULL,1,'FCS_FACEBOOK_URL','Facebook-Url für die Einbindung im Footer','https://www.facebook.com/FoodCoopShop/','text',90,'2015-07-08 13:23:54','2015-07-08 13:23:54'),
-(538,NULL,NULL,1,'FCS_REGISTRATION_EMAIL_TEXT','Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><img src=\"/js/vendor/famfamfam-silk/dist/png/information.png?1483041252\" alt=\"\"> E-Mail-Vorschau anzeigen</a>','','textarea_big',170,'2016-06-26 00:00:00','2016-06-26 00:00:00'),
-(543,NULL,NULL,1,'FCS_RIGHT_INFO_BOX_HTML','Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class=\"small\">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als \"Überschrift 3\" formatieren.<br />Die Variable {ABHOLTAG} zeigt automatisch das richtige Abholdatum an.</div>','<h3>Abholzeiten</h3>\r\n\r\n<p>Wenn du deine Produkte jetzt bestellst, kannst du sie am <strong>{ABHOLTAG}</strong>&nbsp;zwischen 17 und 19 Uhr abholen.</p>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\r\n','textarea_big',150,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(544,NULL,NULL,1,'FCS_CART_ENABLED','Ist die Bestell-Funktion aktiviert?<br /><div class=\"small\">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>','1','boolean',10,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(545,NULL,NULL,1,'FCS_ACCOUNTING_EMAIL','E-Mail-Adresse des Finanzverantwortlichen<br /><div class=\"small\">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>','','text',110,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(546,NULL,NULL,1,'FCS_AUTHENTICATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea',160,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(547,NULL,NULL,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?<br /><div class=\"small\">Die Preise werden nicht angezeigt.</div>','0','boolean',20,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(548,NULL,NULL,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',50,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(549,NULL,NULL,1,'FCS_MINIMAL_CREDIT_BALANCE','Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class=\"small\">Z.B.: \"100\" für 100 € im Minus. 0 bedeutet \"kein Bestell-Limit\".</div>','100','number',125,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(550,NULL,NULL,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',130,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(551,NULL,NULL,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bankverbindung für die Mitgliedsbeitrags-Einzahlungen\".','MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',140,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(552,NULL,NULL,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',120,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(553,NULL,NULL,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup).<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',300,'2016-10-06 00:00:00','2016-10-06 00:00:00'),
-(554,NULL,NULL,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',180,'2016-11-27 00:00:00','2016-11-27 00:00:00'),
-(555,NULL,NULL,1,'FCS_PAYMENT_PRODUCT_MAXIMUM','Maximalbetrag für jede Guthaben-Aufladung in Euro','500','number',127,'2016-11-28 00:00:00','2016-11-28 00:00:00'),
-(556,NULL,NULL,1,'FCS_APP_NAME','Name der Foodcoop','FoodCoop Test','text',5,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(557,NULL,NULL,1,'FCS_APP_ADDRESS','Adresse der Foodcoop<br /><div class=\"small\">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>','Demostra&szlig;e 4,<br />\r\nA-4564 Demostadt','textarea',6,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(558,NULL,NULL,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(559,NULL,NULL,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(560,NULL,NULL,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(561,NULL,NULL,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','18','readonly',10,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
-(562,NULL,NULL,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','18','readonly',20,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
-(563,NULL,NULL,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','1','readonly',30,'2017-07-05 00:00:00','2017-07-05 00:00:00'),
-(564,NULL,NULL,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','1','boolean',13,'2017-07-09 00:00:00','2017-07-09 00:00:00'),
-(565,NULL,NULL,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
-(566,NULL,NULL,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
-(567,NULL,NULL,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00');
+(11,1,'FCS_PRODUCT_AVAILABILITY_LOW','Geringe Verfügbarkeit<br /><div class=\"small\">Ab welcher verfügbaren Produkt-Anzahl soll beim Bestellen der Hinweis \"(x verfügbar\") angezeigt werden?</div>','10','number',60,'2017-07-26 13:19:19','2014-06-01 01:40:34'),
+(31,1,'FCS_DAYS_SHOW_PRODUCT_AS_NEW','Wie viele Tage sollen Produkte \"als neu markiert\" bleiben?','7','number',70,'2017-07-26 13:19:19','2014-05-14 21:15:45'),
+(164,1,'FCS_CUSTOMER_GROUP','Welcher Gruppe sollen neu registrierte Mitglieder zugewiesen werden?','3','dropdown',40,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(456,1,'FCS_FOOTER_CMS_TEXT','Zusätzlicher Text für den Footer',NULL,'textarea_big',80,'2014-06-11 17:50:55','2016-07-01 21:47:47'),
+(508,1,'FCS_FACEBOOK_URL','Facebook-Url für die Einbindung im Footer','https://www.facebook.com/FoodCoopShop/','text',90,'2015-07-08 13:23:54','2015-07-08 13:23:54'),
+(538,1,'FCS_REGISTRATION_EMAIL_TEXT','Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><img src=\"/js/vendor/famfamfam-silk/dist/png/information.png?1483041252\" alt=\"\"> E-Mail-Vorschau anzeigen</a>','','textarea_big',170,'2016-06-26 00:00:00','2016-06-26 00:00:00'),
+(543,1,'FCS_RIGHT_INFO_BOX_HTML','Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class=\"small\">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als \"Überschrift 3\" formatieren.<br />Die Variable {ABHOLTAG} zeigt automatisch das richtige Abholdatum an.</div>','<h3>Abholzeiten</h3>\r\n\r\n<p>Wenn du deine Produkte jetzt bestellst, kannst du sie am <strong>{ABHOLTAG}</strong>&nbsp;zwischen 17 und 19 Uhr abholen.</p>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\r\n','textarea_big',150,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(544,1,'FCS_CART_ENABLED','Ist die Bestell-Funktion aktiviert?<br /><div class=\"small\">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>','1','boolean',10,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(545,1,'FCS_ACCOUNTING_EMAIL','E-Mail-Adresse des Finanzverantwortlichen<br /><div class=\"small\">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>','','text',110,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(546,1,'FCS_AUTHENTICATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea',160,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?<br /><div class=\"small\">Die Preise werden nicht angezeigt.</div>','0','boolean',20,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',50,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(549,1,'FCS_MINIMAL_CREDIT_BALANCE','Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class=\"small\">Z.B.: \"100\" für 100 € im Minus. 0 bedeutet \"kein Bestell-Limit\".</div>','100','number',125,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(550,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',130,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(551,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bankverbindung für die Mitgliedsbeitrags-Einzahlungen\".','MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',140,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',120,'2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup).<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',300,'2016-10-06 00:00:00','2016-10-06 00:00:00'),
+(554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',180,'2016-11-27 00:00:00','2016-11-27 00:00:00'),
+(555,1,'FCS_PAYMENT_PRODUCT_MAXIMUM','Maximalbetrag für jede Guthaben-Aufladung in Euro','500','number',127,'2016-11-28 00:00:00','2016-11-28 00:00:00'),
+(556,1,'FCS_APP_NAME','Name der Foodcoop','FoodCoop Test','text',5,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(557,1,'FCS_APP_ADDRESS','Adresse der Foodcoop<br /><div class=\"small\">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>','Demostra&szlig;e 4,<br />\r\nA-4564 Demostadt','textarea',6,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(558,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',7,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(559,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(560,1,'FCS_SHOP_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(561,1,'FCS_DB_VERSION','Version der Datenbank-Struktur','18','readonly',10,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
+(562,0,'FCS_DB_UPDATE','Version des letzten versuchten Datenbank-Updates','18','readonly',20,'2017-03-13 00:00:00','2017-07-26 00:00:00'),
+(563,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','1','readonly',30,'2017-07-05 00:00:00','2017-07-05 00:00:00'),
+(564,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','1','boolean',13,'2017-07-09 00:00:00','2017-07-09 00:00:00'),
+(565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
+(566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
+(567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,1,1,1,3,1,0,NULL,NULL,NULL,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,NULL,1,'88.117.53.105','2014-12-02 12:19:31',0,NULL,0.000000,0,0,'d39a3a43e5d9aedc566bc211895cd16c','1000-01-01',NULL,1,0,0,'2014-12-02 12:19:31','2015-12-06 23:37:44'),
-(88,1,1,1,4,1,0,NULL,NULL,NULL,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,NULL,1,'88.117.53.105','2014-12-02 12:28:43',0,NULL,0.000000,0,0,'c1064e463d615234b31d0a3d8095985c','1000-01-01',NULL,1,0,0,'2014-12-02 12:28:43','2016-09-29 16:25:09'),
-(89,1,1,1,4,1,0,NULL,NULL,NULL,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,NULL,0,NULL,NULL,0,NULL,0.000000,0,0,'28f90fbd45ee72f09399c68195244a69','1000-01-01',NULL,1,0,0,'2014-12-02 12:37:26','2015-03-11 18:12:10'),
-(90,1,1,1,4,1,0,NULL,NULL,NULL,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,NULL,0,NULL,NULL,0,NULL,0.000000,0,0,'82230af5ed33a8b80df6e2ad426d76f2','1000-01-01',NULL,1,0,0,'2014-12-02 12:37:49','2015-03-11 18:11:54'),
-(91,1,1,1,4,1,0,NULL,NULL,NULL,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,NULL,0,NULL,NULL,0,NULL,0.000000,0,0,'50e86f1cf90b2b9b22dc84dd58e40efc','1000-01-01',NULL,1,0,0,'2014-12-02 12:38:12','2015-03-11 18:11:47'),
-(92,1,1,0,5,1,1,NULL,NULL,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,NULL,0,NULL,NULL,0,NULL,0.000000,0,0,'-1','1000-01-01',NULL,1,0,0,'2016-09-29 16:26:12','2016-09-29 16:26:12');
+(87,3,NULL,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:19:31','2015-12-06 23:37:44'),
+(88,4,NULL,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:28:43','2016-09-29 16:25:09'),
+(89,4,NULL,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:26','2015-03-11 18:12:10'),
+(90,4,NULL,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:49','2015-03-11 18:11:54'),
+(91,4,NULL,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:38:12','2015-03-11 18:11:47'),
+(92,5,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,0,'1000-01-01',1,'2016-09-29 16:26:12','2016-09-29 16:26:12');
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
@@ -560,16 +559,6 @@ INSERT INTO `fcs_deposits` VALUES
 
 /*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_homeslider_slides` DISABLE KEYS */;
-INSERT INTO `fcs_homeslider_slides` VALUES
-(6,0,1);
-/*!40000 ALTER TABLE `fcs_homeslider_slides` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_homeslider_slides_lang` DISABLE KEYS */;
-INSERT INTO `fcs_homeslider_slides_lang` VALUES
-(6,1,'FoodCoopShop','<h2>FoodCoopShop</h2>\r\n<p>Die Software f&uuml;r eure Foodcoop.</p>','Die Software für eure Foodcoop','#','2be64c60e6126c9085fd9d9717532a14e5a5bb4e_slide4.png');
-/*!40000 ALTER TABLE `fcs_homeslider_slides_lang` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_image` DISABLE KEYS */;
 INSERT INTO `fcs_image` VALUES
@@ -626,8 +615,8 @@ INSERT INTO `fcs_order_detail_tax` VALUES
 INSERT INTO `fcs_pages` VALUES
 (3,'Statuten','',1,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
 (4,'Über uns','',3,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
-(8,'Links','<h4><strong>Links</strong></h4>\r\n<ul>\r\n<li><a href=\"https://www.foodcoopshop.com\" target=\"_blank\">foodcoopshop.com</a>&nbsp;- Die Software f&uuml;r eure Foodcoop</li>\r\n<li><a href=\"http://www.fairteiler-scharnstein.at\" target=\"_blank\">Fairteiler Scharnstein</a></li>\r\n</ul>',2,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
-(9,'Impressum','<h4>Impressum</h4>\r\n<p>Content</p>',0,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
+(8,'Links','<h4><strong>Links</strong></h4>\r\n<ul>\r\n<li><a href=\"http://www.foodcoopshop.com\" target=\"_blank\">foodcoopshop.com</a>&nbsp;- Die Software f&uuml;r eure Foodcoop</li>\r\n<li><a href=\"http://www.fairteiler-scharnstein.at\" target=\"_blank\">Fairteiler Scharnstein</a></li>\r\n</ul>',2,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
+(9,'Impressum','<h4>Impressum</h4>\r\n<p>Der Autor dieser Seite &uuml;bernehmen keinerlei Gew&auml;hr f&uuml;r die Aktualit&auml;t, Korrektheit, Vollst&auml;ndigkeit oder Qualit&auml;t der bereitgestellten Informationen. Haftungsanspr&uuml;che gegen die Autoren, welche sich auf Sch&auml;den materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollst&auml;ndiger Informationen verursacht wurden, sind grunds&auml;tzlich ausgeschlossen, sofern seitens des Autors kein nachweislich vors&auml;tzliches oder grob fahrl&auml;ssiges Verschulden vorliegt. Alle Angebote sind freibleibend und unverbindlich. Der Autor beh&auml;lt es sich ausdr&uuml;cklich vor, Teile der Seiten oder das gesamte Angebot ohne gesonderte Ank&uuml;ndigung zu ver&auml;ndern, zu erg&auml;nzen, zu l&ouml;schen oder die Ver&ouml;ffentlichung zeitweise oder endg&uuml;ltig einzustellen.</p>\r\n<p><strong>Urheber- und Kennzeichenrecht</strong></p>\r\n<p>Alle innerhalb des Internetangebotes genannten und gegebenenfalls durch Dritte gesch&uuml;tzten Marken- und Warenzeichen unterliegen uneingeschr&auml;nkt den Bestimmungen des jeweils g&uuml;ltigen Kennzeichenrechts und den Besitzrechten der jeweiligen eingetragenen Eigent&uuml;mer. Allein aufgrund der blo&szlig;en Nennung ist nicht der Schluss zu ziehen, dass Markenzeichen nicht durch Rechte Dritter gesch&uuml;tzt sind. Das Copyright f&uuml;r ver&ouml;ffentlichte, vom Autor selbst erstellte Objekte bleiben allein bei den Autoren der Seiten. Eine Vervielf&auml;ltigung oder Verwendung solcher Grafiken, Tondokumente, Videosequenzen und Texte in anderen elektronischen oder gedruckten Publikationen ist ohne ausdr&uuml;ckliche Zustimmung der Autoren nicht gestattet.</p>\r\n<p><strong>Verweise und Links</strong></p>\r\n<p>Bei direkten oder indirekten Verweisen auf fremde Webseiten (\"Hyperlinks\"), die au&szlig;erhalb des Verantwortungsbereiches des Autors liegen, w&uuml;rde eine Haftungsverpflichtung ausschlie&szlig;lich in dem Fall in Kraft treten, in dem der Autor von den Inhalten Kenntnis hat und es ihnen technisch m&ouml;glich und zumutbar w&auml;re, die Nutzung im Falle rechtswidriger Inhalte zu verhindern. Der Autor erkl&auml;rt hiermit ausdr&uuml;cklich, dass zum Zeitpunkt der Linksetzung keine illegalen Inhalte auf den zu verlinkenden Seiten erkennbar waren. Auf die aktuelle und zuk&uuml;nftige Gestaltung, die Inhalte oder die Urheberschaft der verlinkten/verkn&uuml;pften Seiten hat der Autor keinerlei Einfluss. Deshalb distanziert er sich hiermit ausdr&uuml;cklich von allen Inhalten aller verlinkten/verkn&uuml;pften Seiten, die nach der Linksetzung ver&auml;ndert wurden. Diese Feststellung gilt f&uuml;r alle innerhalb des eigenen Internetangebotes gesetzten Links und Verweise sowie f&uuml;r Fremdeintr&auml;ge in allen Formen von Datenbanken, auf deren Inhalt externe Schreibzugriffe m&ouml;glich sind. F&uuml;r illegale, fehlerhafte oder unvollst&auml;ndige Inhalte und insbesondere f&uuml;r Sch&auml;den, die aus der Nutzung oder Nichtnutzung solcherart dargebotener Informationen entstehen, haftet allein der Anbieter der Seite, auf welche verwiesen wurde, nicht derjenige, der &uuml;ber Links auf die jeweilige Ver&ouml;ffentlichung lediglich verweist.</p>\r\n<p><strong>Google Analytics</strong></p>\r\n<p>Diese Website benutzt Google Analytics, einen Webanalysedienst der Google Inc. (&bdquo;Google&ldquo;). Google Analytics verwendet sog. &bdquo;Cookies&ldquo;, Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie erm&ouml;glichen. Die durch den Cookie erzeugten Informationen &uuml;ber Ihre Benutzung dieser Website (einschlie&szlig;lich Ihrer IP-Adresse) wird an einen Server von Google in den USA &uuml;bertragen und dort gespeichert. Google wird diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports &uuml;ber die Websiteaktivit&auml;ten f&uuml;r die Websitebetreiber zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen zu erbringen. Auch wird Google diese Informationen gegebenenfalls an Dritte &uuml;bertragen, sofern dies gesetzlich vorgeschrieben oder soweit Dritte diese Daten im Auftrag von Google verarbeiten. Google wird in keinem Fall Ihre IP-Adresse mit anderen Daten von Google in Verbindung bringen. Sie k&ouml;nnen die Installation der Cookies durch eine entsprechende Einstellung Ihrer Browser Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht s&auml;mtliche Funktionen dieser Website vollumf&auml;nglich nutzen k&ouml;nnen. Durch die Nutzung dieser Website erkl&auml;ren Sie sich mit der Bearbeitung der &uuml;ber Sie erhobenen Daten durch Google in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden.</p>',0,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
 (10,'Mitmachen','',4,'header',1,'',0,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0),
 (11,'Newsletter','',5,'header',-1,'',3,0,'2016-09-12 14:59:53','2016-08-29 13:36:43',0,NULL,0,0);
 /*!40000 ALTER TABLE `fcs_pages` ENABLE KEYS */;
@@ -783,6 +772,11 @@ INSERT INTO `fcs_product_shop` VALUES
 (362,1,20,0.000000,'2016-05-25 13:15:31','2016-05-25 13:15:31');
 /*!40000 ALTER TABLE `fcs_product_shop` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
+INSERT INTO `fcs_sliders` VALUES
+(6,'2be64c60e6126c9085fd9d9717532a14e5a5bb4e_slide4.png',0,1);
+/*!40000 ALTER TABLE `fcs_sliders` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_smart_blog_post` DISABLE KEYS */;
 INSERT INTO `fcs_smart_blog_post` VALUES
 (2,2,0,0,0,1,0,1,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',30,1,1,'0','');
@@ -790,7 +784,7 @@ INSERT INTO `fcs_smart_blog_post` VALUES
 
 /*!40000 ALTER TABLE `fcs_smart_blog_post_lang` DISABLE KEYS */;
 INSERT INTO `fcs_smart_blog_post_lang` VALUES
-(2,'1','Demo Blog Artikel','','','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet</p>','Demo-Blog-Artikel');
+(2,'1','Demo Blog Artikel','','','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>','Demo-Blog-Artikel');
 /*!40000 ALTER TABLE `fcs_smart_blog_post_lang` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_smart_blog_post_shop` DISABLE KEYS */;

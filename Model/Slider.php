@@ -17,29 +17,7 @@
 class Slider extends AppModel
 {
 
-    public $useTable = 'homeslider_slides';
-
-    public $primaryKey = 'id_homeslider_slides';
-
-    public $hasOne = array(
-        'SliderLang' => array(
-            'foreignKey' => 'id_homeslider_slides'
-        )
-    );
-
-    public function getForHome()
-    {
-        $slides = $this->find('all', array(
-            'conditions' => array(
-                'Slider.active' => APP_ON,
-                'SliderLang.id_lang' => Configure::read('app.langId')
-            ),
-            'order' => array(
-                'Slider.position' => 'ASC'
-            )
-        ));
-        return $slides;
-    }
+    public $primaryKey = 'id_slider';
 
     public $validate = array(
         'position' => array(
@@ -51,6 +29,27 @@ class Slider extends AppModel
                 ),
                 'message' => 'Bitte gibt eine Zahl von 0 bis 100 an'
             )
+        ),
+        'image' => array(
+            'notBlank' => array(
+                'rule' => array(
+                    'notBlank'
+                ),
+                'message' => 'Bitte lade ein Bild hoch.'
+            )
         )
     );
+
+    public function getForHome()
+    {
+        $slides = $this->find('all', array(
+            'conditions' => array(
+                'Slider.active' => APP_ON
+            ),
+            'order' => array(
+                'Slider.position' => 'ASC'
+            )
+        ));
+        return $slides;
+    }
 }

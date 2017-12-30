@@ -48,3 +48,33 @@ ALTER TABLE `fcs_cms`
   DROP `indexation`;
 RENAME TABLE `fcs_cms` TO `fcs_pages`;
 DROP TABLE fcs_cms_lang;
+
+ALTER TABLE `fcs_configuration` DROP `id_shop_group`, DROP `id_shop`;
+
+ALTER TABLE `fcs_customer`
+  DROP `id_shop_group`,
+  DROP `id_shop`,
+  DROP `id_gender`,
+  DROP `id_lang`,
+  DROP `id_risk`,
+  DROP `siret`,
+  DROP `ape`,
+  DROP `birthday`,
+  DROP `ip_registration_newsletter`,
+  DROP `newsletter_date_add`,
+  DROP `optin`,
+  DROP `website`,
+  DROP `outstanding_allow_amount`,
+  DROP `show_public_prices`,
+  DROP `max_payment_days`,
+  DROP `secure_key`,
+  DROP `note`,
+  DROP `is_guest`,
+  DROP `deleted`;
+
+RENAME TABLE `fcs_homeslider_slides` TO `fcs_sliders`;
+ALTER TABLE `fcs_sliders` CHANGE `id_homeslider_slides` `id_slider` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `fcs_sliders` ADD `image` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `id_slider`;
+UPDATE fcs_sliders s JOIN fcs_homeslider_slides_lang hsl ON s.id_slider = hsl.id_homeslider_slides SET s.image = hsl.image;
+DROP TABLE fcs_homeslider_slides_lang;
+
