@@ -606,10 +606,14 @@ class CartsController extends FrontendController
 
         // get product data from database
         $this->loadModel('Product');
-        $this->Product->recursive = 2;
+        $this->Product->recursive = 3;
+        $this->Product->Behaviors->load('Containable');
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
+            ),
+            'contain' => array(
+                'ProductLang', 'StockAvailable', 'ProductAttributes', 'ProductAttributes.StockAvailable', 'ProductAttributes.ProductAttributeCombination.Attribute'
             )
         ));
 
@@ -647,13 +651,7 @@ class CartsController extends FrontendController
                     $attributeIdFound = true;
                     // stock available check for attribute
                     if ($attribute['StockAvailable']['quantity'] < $combinedAmount && $amount > 0) {
-                        $this->loadModel('Attribute');
-                        $attribute = $this->Attribute->find('first', array(
-                            'conditions' => array(
-                                'Attribute.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
-                            )
-                        ));
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute['Attribute']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailable']['quantity'];
+                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute['ProductAttributeCombination']['Attribute']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailable']['quantity'];
                         die(json_encode(array(
                             'status' => 0,
                             'msg' => $message,
