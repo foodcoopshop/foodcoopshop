@@ -76,7 +76,7 @@ class Cart extends AppModel
             $manufacturerLink = Configure::read('htmlHelper')->link($cartProduct['Product']['Manufacturer']['name'], Configure::read('slugHelper')->getManufacturerDetail($cartProduct['Product']['Manufacturer']['id_manufacturer'], $cartProduct['Product']['Manufacturer']['name']));
 
             $imageId = 0;
-            if (isset($cartProduct['Product']['Image'])) {
+            if (!empty($cartProduct['Product']['Image'])) {
                 $imageId = $cartProduct['Product']['Image']['id_image'];
             }
 
