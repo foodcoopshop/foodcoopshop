@@ -46,6 +46,7 @@ class DbMigrationComponent extends Component
             function ($string = '') use (&$controller) {
             // $findConf
                 return $controller->Configuration->find('first', array(
+                    'fields' => array('Configuration.id_configuration', 'Configuration.name', 'Configuration.value'),
                     'conditions' => array(
                         'Configuration.name' => $string
                     )
