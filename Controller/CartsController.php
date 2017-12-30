@@ -289,14 +289,10 @@ class CartsController extends FrontendController
             // START save order
             $this->Order->id = null;
             $order2save = array(
-                'id_shop' => Configure::read('app.shopId'),
-                'id_lang' => Configure::read('app.langId'),
                 'id_customer' => $this->AppAuth->getUserId(),
                 'id_cart' => $this->AppAuth->Cart->getCartId(),
                 'id_currency' => 1,
                 'current_state' => ORDER_STATE_OPEN,
-                'id_lang' => Configure::read('app.langId'),
-                'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
                 'total_deposit' => $this->AppAuth->Cart->getDepositSum(),

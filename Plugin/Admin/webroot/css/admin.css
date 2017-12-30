@@ -435,7 +435,7 @@ body.configurations.index td.sync-domain-list a.btn {
     width: 100%;
 }
 
-#manufacturer-profile label[for="ManufacturerLangDescription"] {
+#manufacturer-profile label[for="ManufacturerDescription"] {
     float: none;
 }
 
@@ -1015,6 +1015,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 

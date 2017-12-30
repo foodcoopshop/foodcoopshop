@@ -158,8 +158,7 @@ class AppModel extends Model
                     AND ProductLang.id_lang = :langId
                     AND Product.active = :active
                     AND ".$this->getManufacturerHolidayConditions()."
-                    AND Manufacturer.active = :active
-                    AND ProductShop.id_shop = :shopId ";
+                    AND Manufacturer.active = :active ";
 
         if (! $this->loggedIn()) {
             $conditions .= 'AND Manufacturer.is_private = :isPrivate ';

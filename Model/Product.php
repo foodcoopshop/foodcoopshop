@@ -404,9 +404,6 @@ class Product extends AppModel
 
         // reduce data
         $this->Manufacturer->unbindModel(array(
-            'hasOne' => 'ManufacturerLang'
-        ));
-        $this->Manufacturer->unbindModel(array(
             'hasMany' => 'Invoices'
         ));
         $this->ProductLang->unbindModel(array(

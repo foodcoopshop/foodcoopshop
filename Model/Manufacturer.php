@@ -41,9 +41,6 @@ class Manufacturer extends AppModel
                 'Address.id_manufacturer > ' . APP_OFF
             ),
             'foreignKey' => 'id_manufacturer'
-        ),
-        'ManufacturerLang' => array(
-            'foreignKey' => 'id_manufacturer'
         )
     );
 

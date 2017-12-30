@@ -251,8 +251,6 @@ class CustomersController extends FrontendController
                     $this->Customer->id = null;
                     $this->request->data['Customer']['active'] = Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
                     $this->request->data['Customer']['id_default_group'] = Configure::read('app.db_config_FCS_CUSTOMER_GROUP');
-                    $this->request->data['Customer']['id_lang'] = Configure::read('app.langId');
-                    $this->request->data['Customer']['id_shop'] = Configure::read('app.shopId');
                     $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
 
                     $newCustomer = $this->Customer->save($this->request->data['Customer'], array(

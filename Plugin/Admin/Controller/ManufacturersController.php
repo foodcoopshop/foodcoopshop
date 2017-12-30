@@ -117,11 +117,7 @@ class ManufacturersController extends AdminAppController
             $this->Manufacturer->set($this->request->data['Manufacturer']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Manufacturer'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-
-            foreach ($this->request->data['ManufacturerLang'] as $key => &$data) {
+            foreach ($this->request->data['Manufacturer'] as $key => &$data) {
                 if (! in_array($key, array(
                     'description',
                     'short_description'
@@ -143,10 +139,6 @@ class ManufacturersController extends AdminAppController
             if (! $this->Manufacturer->Address->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->Address->validationErrors);
             }
-            $this->Manufacturer->ManufacturerLang->set($this->request->data['ManufacturerLang']);
-            if (! $this->Manufacturer->ManufacturerLang->validates()) {
-                $errors = array_merge($errors, $this->Manufacturer->ManufacturerLang->validationErrors);
-            }
 
             if (empty($errors)) {
                 $this->loadModel('ActionLog');
@@ -158,18 +150,14 @@ class ManufacturersController extends AdminAppController
                 $this->Manufacturer->save($this->request->data['Manufacturer'], array(
                     'validate' => false
                 ));
-                $this->request->data['ManufacturerLang']['id_manufacturer'] = $this->Manufacturer->id;
-                $this->request->data['ManufacturerLang']['id_lang'] = Configure::read('app.langId');
 
                 if (is_null($manufacturerId)) {
                     $customer = array();
                     $this->request->data['Address']['id_manufacturer'] = $this->Manufacturer->id;
-                    $this->request->data['Address']['alias'] = 'manufacturer';
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'manufacturer_added';
                 } else {
                     $customer = $this->Manufacturer->getCustomerRecord($unsavedManufacturer);
-                    $this->Manufacturer->ManufacturerLang->id = $this->Manufacturer->id;
                     $this->Manufacturer->Address->id = $unsavedManufacturer['Address']['id_address'];
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'manufacturer_changed';
@@ -192,10 +180,6 @@ class ManufacturersController extends AdminAppController
                     'id_lang' => Configure::read('app.langId')
                 );
                 $this->Customer->save($customerData, false);
-
-                $this->Manufacturer->ManufacturerLang->save($this->request->data, array(
-                    'validate' => false
-                ));
 
                 $this->Manufacturer->Address->save($this->request->data, array(
                     'validate' => false

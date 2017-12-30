@@ -101,3 +101,14 @@ ALTER TABLE `fcs_smart_blog_post`
 RENAME TABLE `fcs_smart_blog_post` TO `fcs_blog_posts`;
 DROP TABLE fcs_smart_blog_post_lang;
 DROP TABLE fcs_smart_blog_post_shop;
+
+ALTER TABLE `fcs_orders` DROP `reference`, DROP `id_shop`;
+ALTER TABLE `fcs_order_detail` DROP `id_shop`;
+ALTER TABLE `fcs_product_shop` DROP `id_shop`;
+ALTER TABLE `fcs_order_detail_tax` DROP `id_tax`;
+ALTER TABLE `fcs_stock_available` DROP `id_shop`;
+
+ALTER TABLE `fcs_manufacturer` ADD `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `name`, 
+ADD `short_description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `description`;
+UPDATE fcs_manufacturer m JOIN fcs_manufacturer_lang l ON m.id_manufacturer= l.id_manufacturer SET m.description = l.description, m.short_description = l.short_description;
+DROP TABLE fcs_manufacturer_lang;
