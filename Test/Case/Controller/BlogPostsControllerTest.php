@@ -78,7 +78,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
     {
-        $sql = 'UPDATE ' . $this->BlogPost->tablePrefix . $this->BlogPost->useTable.' SET is_private = :isPrivate, id_manufacturer = :manufacturerId, active = :active WHERE id_smart_blog_post = :blogPostId;';
+        $sql = 'UPDATE ' . $this->BlogPost->tablePrefix . $this->BlogPost->useTable.' SET is_private = :isPrivate, id_manufacturer = :manufacturerId, active = :active WHERE id_blog_post = :blogPostId;';
         $params = array(
             'blogPostId' => $blogPostId,
             'isPrivate' => $isPrivate,

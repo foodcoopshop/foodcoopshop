@@ -13,6 +13,7 @@
 TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
+TRUNCATE TABLE `fcs_blog_posts`;
 TRUNCATE TABLE `fcs_cart_products`;
 TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
@@ -37,9 +38,6 @@ TRUNCATE TABLE `fcs_product_attribute_shop`;
 TRUNCATE TABLE `fcs_product_lang`;
 TRUNCATE TABLE `fcs_product_shop`;
 TRUNCATE TABLE `fcs_sliders`;
-TRUNCATE TABLE `fcs_smart_blog_post`;
-TRUNCATE TABLE `fcs_smart_blog_post_lang`;
-TRUNCATE TABLE `fcs_smart_blog_post_shop`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
@@ -119,6 +117,11 @@ INSERT INTO `fcs_attribute` VALUES
 (85,'4 Stück',1,NULL,NULL),
 (86,'5 Stück',1,NULL,NULL);
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
+INSERT INTO `fcs_blog_posts` VALUES
+(2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',0,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',1);
+/*!40000 ALTER TABLE `fcs_blog_posts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_cart_products` ENABLE KEYS */;
@@ -760,21 +763,6 @@ INSERT INTO `fcs_product_shop` VALUES
 INSERT INTO `fcs_sliders` VALUES
 (6,'2be64c60e6126c9085fd9d9717532a14e5a5bb4e_slide4.png',0,1);
 /*!40000 ALTER TABLE `fcs_sliders` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_smart_blog_post` DISABLE KEYS */;
-INSERT INTO `fcs_smart_blog_post` VALUES
-(2,2,0,0,0,1,0,1,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',30,1,1,'0','');
-/*!40000 ALTER TABLE `fcs_smart_blog_post` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_smart_blog_post_lang` DISABLE KEYS */;
-INSERT INTO `fcs_smart_blog_post_lang` VALUES
-(2,'1','Demo Blog Artikel','','','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>','Demo-Blog-Artikel');
-/*!40000 ALTER TABLE `fcs_smart_blog_post_lang` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_smart_blog_post_shop` DISABLE KEYS */;
-INSERT INTO `fcs_smart_blog_post_shop` VALUES
-(26,2,1);
-/*!40000 ALTER TABLE `fcs_smart_blog_post_shop` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
 INSERT INTO `fcs_stock_available` VALUES

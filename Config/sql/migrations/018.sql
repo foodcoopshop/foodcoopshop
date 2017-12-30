@@ -83,3 +83,21 @@ DELETE FROM fcs_images WHERE cover = 0;
 ALTER TABLE `fcs_images` DROP `id_shop`, DROP `cover`;
 DROP TABLE fcs_image;
 DROP TABLE fcs_image_lang;
+
+ALTER TABLE `fcs_smart_blog_post` ADD `title` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `id_smart_blog_post`, 
+ADD `short_description` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `title`,
+ADD `content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `short_description`;
+UPDATE fcs_smart_blog_post sbp JOIN fcs_smart_blog_post_lang l ON sbp.id_smart_blog_post= l.id_smart_blog_post SET sbp.title = l.meta_title, sbp.content = l.content, sbp.short_description = l.short_description;
+ALTER TABLE `fcs_smart_blog_post` CHANGE `id_smart_blog_post` `id_blog_post` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `fcs_smart_blog_post`
+  DROP `id_author`,
+  DROP `available`,
+  DROP `viewed`,
+  DROP `comment_status`,
+  DROP `id_category`,
+  DROP `post_type`,
+  DROP `image`,
+  DROP `position`;
+RENAME TABLE `fcs_smart_blog_post` TO `fcs_blog_posts`;
+DROP TABLE fcs_smart_blog_post_lang;
+DROP TABLE fcs_smart_blog_post_shop;

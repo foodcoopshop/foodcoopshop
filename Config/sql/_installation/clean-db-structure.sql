@@ -59,6 +59,24 @@ CREATE TABLE `fcs_attribute` (
   PRIMARY KEY (`id_attribute`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_blog_posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_blog_posts` (
+  `id_blog_post` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(150) NOT NULL,
+  `short_description` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `id_customer` int(11) unsigned NOT NULL DEFAULT '0',
+  `id_manufacturer` int(11) unsigned NOT NULL DEFAULT '0',
+  `is_private` int(11) unsigned NOT NULL DEFAULT '0',
+  `active` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime DEFAULT NULL,
+  `is_featured` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_blog_post`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_cart_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -462,54 +480,6 @@ CREATE TABLE `fcs_sliders` (
   `position` int(10) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_slider`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_smart_blog_post`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_smart_blog_post` (
-  `id_smart_blog_post` int(11) NOT NULL AUTO_INCREMENT,
-  `id_author` int(11) DEFAULT NULL,
-  `id_customer` int(11) unsigned NOT NULL DEFAULT '0',
-  `id_manufacturer` int(11) unsigned NOT NULL DEFAULT '0',
-  `is_private` int(11) unsigned NOT NULL DEFAULT '0',
-  `id_category` int(11) DEFAULT NULL,
-  `position` int(11) DEFAULT NULL,
-  `active` int(11) DEFAULT NULL,
-  `available` int(11) DEFAULT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` datetime DEFAULT NULL,
-  `viewed` int(11) DEFAULT NULL,
-  `is_featured` int(11) DEFAULT NULL,
-  `comment_status` int(11) DEFAULT NULL,
-  `post_type` varchar(45) DEFAULT NULL,
-  `image` varchar(245) DEFAULT NULL,
-  PRIMARY KEY (`id_smart_blog_post`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_smart_blog_post_lang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_smart_blog_post_lang` (
-  `id_smart_blog_post` int(11) NOT NULL DEFAULT '0',
-  `id_lang` varchar(45) NOT NULL DEFAULT '',
-  `meta_title` varchar(150) DEFAULT NULL,
-  `meta_keyword` varchar(200) DEFAULT NULL,
-  `meta_description` varchar(450) DEFAULT NULL,
-  `short_description` varchar(450) DEFAULT NULL,
-  `content` text,
-  `link_rewrite` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_smart_blog_post`,`id_lang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_smart_blog_post_shop`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_smart_blog_post_shop` (
-  `id_smart_blog_post_shop` int(11) NOT NULL AUTO_INCREMENT,
-  `id_smart_blog_post` int(11) NOT NULL DEFAULT '0',
-  `id_shop` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_smart_blog_post_shop`,`id_smart_blog_post`,`id_shop`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_stock_available`;

@@ -14,11 +14,11 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('BlogPostLangContent');" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['BlogPost']['id_smart_blog_post']) ? $this->request->data['BlogPost']['id_smart_blog_post'] : "") . "', 'BlogPost');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('BlogPostContent');" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['BlogPost']['id_blog_post']) ? $this->request->data['BlogPost']['id_blog_post'] : "") . "', 'BlogPost');
     "
 ));
 
-$idForImageUpload = isset($this->request->data['BlogPost']['id_smart_blog_post']) ? $this->request->data['BlogPost']['id_smart_blog_post'] : StringComponent::createRandomString(6);
+$idForImageUpload = isset($this->request->data['BlogPost']['id_blog_post']) ? $this->request->data['BlogPost']['id_blog_post'] : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getBlogPostImageSrc($idForImageUpload, 'single');
 if (isset($this->request->data['BlogPost']['tmp_image']) && $this->request->data['BlogPost']['tmp_image'] != '') {
     $imageSrc = str_replace('\\', '/', $this->request->data['BlogPost']['tmp_image']);
@@ -51,15 +51,15 @@ echo $this->Form->create('BlogPost', array(
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('BlogPost.id_smart_blog_post');
-echo $this->Form->input('BlogPostLang.meta_title', array(
+echo $this->Form->hidden('BlogPost.id_blog_post');
+echo $this->Form->input('BlogPost.title', array(
     'div' => array(
         'class' => 'long text input'
     ),
     'label' => 'Titel',
     'required' => true
 ));
-echo $this->Form->input('BlogPostLang.short_description', array(
+echo $this->Form->input('BlogPost.short_description', array(
     'div' => array(
         'class' => 'long text input'
     ),
@@ -127,7 +127,7 @@ if ($this->here != $this->Slug->getBlogPostAdd()) {
     ));
 }
 
-echo $this->Form->input('BlogPostLang.content', array(
+echo $this->Form->input('BlogPost.content', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
