@@ -45,10 +45,10 @@ class Page extends AppModel
                 'message' => 'Bitte gibt eine Zahl von 0 bis 1000 an'
             )
         ),
-        'url' => array(
+        'extern_url' => array(
             'allowEmpty' => true,
             'rule' => array(
-                'url',
+                'extern_url',
                 true
             ),
             'message' => 'Bitte gibt eine gültige Internet-Adresse an.'

@@ -102,8 +102,8 @@ class PagesController extends FrontendController
         }
 
         // redirect direct call of page with link
-        if ($page['Page']['url'] != '') {
-            $this->redirect($page['Page']['url']);
+        if ($page['Page']['extern_url'] != '') {
+            $this->redirect($page['Page']['extern_url']);
         }
 
         $children = $this->Page->children(

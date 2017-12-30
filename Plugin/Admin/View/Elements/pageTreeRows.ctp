@@ -65,11 +65,11 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td align="center">';
-    if ($page['Page']['url'] != '') {
+    if ($page['Page']['extern_url'] != '') {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), array(
             'target' => '_blank',
-            'title' => $page['Page']['url']
-        ), $page['Page']['url']);
+            'title' => $page['Page']['extern_url']
+        ), $page['Page']['extern_url']);
     }
     echo '</td>';
 

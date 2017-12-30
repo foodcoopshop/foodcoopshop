@@ -76,7 +76,7 @@ class PagesController extends AdminAppController
             // validate data - do not use $this->Page->saveAll()
             $this->Page->id = $pageId;
 
-            $this->request->data['Page']['url'] = StringComponent::addHttpToUrl($this->request->data['Page']['url']);
+            $this->request->data['Page']['extern_url'] = StringComponent::addHttpToUrl($this->request->data['Page']['extern_url']);
 
             $this->Page->set($this->request->data['Page']);
 

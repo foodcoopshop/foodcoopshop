@@ -44,8 +44,8 @@ class MenuHelper extends Helper
             $children = array();
             if (!empty($page['children'])) {
                 foreach ($page['children'] as $childPage) {
-                    if ($childPage['Page']['url'] != '') {
-                        $slug = $childPage['Page']['url'];
+                    if ($childPage['Page']['extern_url'] != '') {
+                        $slug = $childPage['Page']['extern_url'];
                     } else {
                         $slug = Configure::read('slugHelper')->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']);
                     }
@@ -55,8 +55,8 @@ class MenuHelper extends Helper
                     );
                 }
             }
-            if ($page['Page']['url'] != '') {
-                $slug = $page['Page']['url'];
+            if ($page['Page']['extern_url'] != '') {
+                $slug = $page['Page']['extern_url'];
             } else {
                 $slug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
             }
