@@ -56,7 +56,7 @@ class PagesController extends AdminAppController
         if ($pageId > 0) {
             $unsavedPage = $this->Page->find('first', array(
                 'conditions' => array(
-                    'Page.id_cms' => $pageId
+                    'Page.id_page' => $pageId
                 )
             ));
         } else {
@@ -81,10 +81,7 @@ class PagesController extends AdminAppController
             $this->Page->set($this->request->data['Page']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Page'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-            foreach ($this->request->data['PageLang'] as $key => &$data) {
+            foreach ($this->request->data['Page'] as $key => &$data) {
                 if ($key != 'content') {
                     $data = strip_tags(trim($data));
                 }
@@ -93,11 +90,6 @@ class PagesController extends AdminAppController
             $errors = array();
             if (! $this->Page->validates()) {
                 $errors = array_merge($errors, $this->Page->validationErrors);
-            }
-
-            $this->Page->PageLang->set($this->request->data['PageLang']);
-            if (! $this->Page->PageLang->validates()) {
-                $errors = array_merge($errors, $this->Page->PageLang->validationErrors);
             }
 
             if (empty($errors)) {
@@ -109,27 +101,20 @@ class PagesController extends AdminAppController
                     'validate' => false
                 ));
                 if (is_null($pageId)) {
-                    $this->request->data['PageLang']['id_cms'] = $this->Page->id;
-                    $this->request->data['PageLang']['id_lang'] = Configure::read('app.langId');
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'page_added';
                 } else {
-                    $this->Page->PageLang->id = $pageId;
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'page_changed';
                 }
 
-                $this->Page->PageLang->save($this->request->data, array(
-                    'validate' => false
-                ));
-
                 if (isset($this->request->data['Page']['delete_page']) && $this->request->data['Page']['delete_page']) {
                     $this->Page->saveField('active', APP_DEL, false);
-                    $message = 'Die Seite "' . $this->request->data['PageLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
+                    $message = 'Die Seite "' . $this->request->data['Page']['title'] . '" wurde erfolgreich gelöscht.';
                     $this->ActionLog->customSave('page_deleted', $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
                     $this->Flash->success('Die Seite wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Die Seite "' . $this->request->data['PageLang']['meta_title'] . '" wurde ' . $messageSuffix;
+                    $message = 'Die Seite "' . $this->request->data['Page']['title'] . '" wurde ' . $messageSuffix;
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
                     $this->Flash->success('Die Seite wurde erfolgreich gespeichert.');
                 }

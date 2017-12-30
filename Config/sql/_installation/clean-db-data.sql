@@ -17,8 +17,6 @@ TRUNCATE TABLE `fcs_cart_products`;
 TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
 TRUNCATE TABLE `fcs_category_product`;
-TRUNCATE TABLE `fcs_cms`;
-TRUNCATE TABLE `fcs_cms_lang`;
 TRUNCATE TABLE `fcs_configuration`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
@@ -34,6 +32,7 @@ TRUNCATE TABLE `fcs_manufacturer_lang`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_orders`;
+TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
@@ -73,12 +72,6 @@ INSERT INTO `fcs_category` VALUES
 
 /*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_category_product` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cms` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cms` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_cms_lang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_cms_lang` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_configuration` DISABLE KEYS */;
 INSERT INTO `fcs_configuration` VALUES
@@ -160,6 +153,9 @@ INSERT INTO `fcs_homeslider_slides_lang` VALUES
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_pages` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;

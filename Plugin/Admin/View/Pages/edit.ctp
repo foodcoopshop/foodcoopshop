@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('PageLangContent');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Page']['id_cms']) ? $this->request->data['Page']['id_cms'] : "") . "', 'Page');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('PageContent');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Page']['id_page']) ? $this->request->data['Page']['id_page'] : "") . "', 'Page');
     "
 ));
 
@@ -44,8 +44,8 @@ echo $this->Form->create('Page', array(
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Page.id_cms');
-echo $this->Form->input('PageLang.meta_title', array(
+echo $this->Form->hidden('Page.id_page');
+echo $this->Form->input('Page.title', array(
     'label' => 'Seitentitel',
     'required' => true
 ));
@@ -100,7 +100,7 @@ echo $this->Form->input('Page.active', array(
     'type' => 'checkbox'
 ));
 
-echo $this->Form->input('PageLang.content', array(
+echo $this->Form->input('Page.content', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'

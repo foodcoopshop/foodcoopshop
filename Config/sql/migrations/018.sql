@@ -38,3 +38,13 @@ UPDATE fcs_category c JOIN fcs_category_lang cl ON cl.id_category = c.id_categor
 DROP TABLE fcs_category_lang;
 
 ALTER TABLE `fcs_category_product` DROP `position`;
+
+ALTER TABLE `fcs_cms` ADD `title` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `id_cms`, ADD `content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `title`;
+UPDATE fcs_cms c JOIN fcs_cms_lang cl ON cl.id_cms= c.id_cms SET c.title = cl.meta_title, c.content = cl.content;
+ALTER TABLE `fcs_cms` CHANGE `id_cms` `id_page` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `fcs_cms` CHANGE `url` `extern_url` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
+ALTER TABLE `fcs_cms`
+  DROP `id_cms_category`,
+  DROP `indexation`;
+RENAME TABLE `fcs_cms` TO `fcs_pages`;
+DROP TABLE fcs_cms_lang;

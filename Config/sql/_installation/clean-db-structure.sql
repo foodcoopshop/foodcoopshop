@@ -118,43 +118,6 @@ CREATE TABLE `fcs_category_product` (
   KEY `id_product` (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_cms`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_cms` (
-  `id_cms` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_cms_category` int(10) unsigned NOT NULL DEFAULT '0',
-  `position` int(10) unsigned NOT NULL DEFAULT '0',
-  `menu_type` varchar(255) NOT NULL DEFAULT 'header',
-  `active` tinyint(4) NOT NULL DEFAULT '0',
-  `url` varchar(255) NOT NULL DEFAULT '',
-  `indexation` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
-  `is_private` int(11) unsigned NOT NULL DEFAULT '0',
-  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `full_width` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `id_parent` int(10) unsigned DEFAULT NULL,
-  `lft` int(10) unsigned NOT NULL DEFAULT '0',
-  `rght` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_cms`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_cms_lang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_cms_lang` (
-  `id_cms` int(10) unsigned NOT NULL DEFAULT '0',
-  `id_lang` int(10) unsigned NOT NULL DEFAULT '0',
-  `meta_title` varchar(128) NOT NULL DEFAULT '',
-  `meta_description` varchar(255) DEFAULT NULL,
-  `meta_keywords` varchar(255) DEFAULT NULL,
-  `content` longtext,
-  `link_rewrite` varchar(128) NOT NULL DEFAULT '',
-  `id_shop` int(10) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id_cms`,`id_shop`,`id_lang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_configuration`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -434,6 +397,28 @@ CREATE TABLE `fcs_orders` (
   KEY `current_state` (`current_state`),
   KEY `reference` (`reference`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_pages` (
+  `id_page` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(128) NOT NULL,
+  `content` text NOT NULL,
+  `position` int(10) unsigned NOT NULL DEFAULT '0',
+  `menu_type` varchar(255) NOT NULL DEFAULT 'header',
+  `active` tinyint(4) NOT NULL DEFAULT '0',
+  `extern_url` varchar(255) NOT NULL DEFAULT '',
+  `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_private` int(11) unsigned NOT NULL DEFAULT '0',
+  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `full_width` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `id_parent` int(10) unsigned DEFAULT NULL,
+  `lft` int(10) unsigned NOT NULL DEFAULT '0',
+  `rght` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_page`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

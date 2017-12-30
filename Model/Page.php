@@ -17,8 +17,8 @@
 class Page extends AppModel
 {
 
-    public $useTable = 'cms';
-    public $primaryKey = 'id_cms';
+    public $useTable = 'pages';
+    public $primaryKey = 'id_page';
 
     public $actsAs = array(
         'Containable',
@@ -28,9 +28,6 @@ class Page extends AppModel
     );
 
     public $belongsTo = array(
-        'PageLang' => array(
-            'foreignKey' => 'id_cms'
-        ),
         'Customer' => array(
             'foreignKey' => 'id_customer'
         )
@@ -55,6 +52,21 @@ class Page extends AppModel
                 true
             ),
             'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
+        ),
+        'title' => array(
+            'notBlank' => array(
+                'rule' => array(
+                    'notBlank'
+                ),
+                'message' => 'Bitte gib einen Titel an.'
+            ),
+            'minLength' => array(
+                'rule' => array(
+                    'minLength',
+                    3
+                ),
+                'message' => 'Bitte gib mindestens 3 Zeichen ein.'
+            )
         )
     );
 
@@ -66,12 +78,10 @@ class Page extends AppModel
             'order' => array(
                 'Page.menu_type' => 'DESC',
                 'Page.position' => 'ASC',
-                'PageLang.meta_title' => 'ASC'
+                'Page.title' => 'ASC'
             ),
             'contain' => array(
-                'Customer.name',
-                'PageLang.meta_title',
-                'PageLang.link_rewrite'
+                'Customer.name'
             )
         ));
         return $pages;
@@ -84,23 +94,20 @@ class Page extends AppModel
             'Page.active > ' . APP_DEL
         );
         if ($pageIdToExcluce > 0) {
-            $conditions[] = 'Page.id_cms != ' . $pageIdToExcluce;
+            $conditions[] = 'Page.id_page != ' . $pageIdToExcluce;
         }
         $pages = $this->find('all', array(
             'conditions' => $conditions,
             'order' => array(
                 'Page.menu_type' => 'DESC',
                 'Page.position' => 'ASC',
-                'PageLang.meta_title' => 'ASC'
-            ),
-            'contain' => array(
-                'PageLang.meta_title'
+                'Page.title' => 'ASC'
             )
         ));
 
         $preparedPages = array();
         foreach ($pages as $page) {
-            $preparedPages[$page['Page']['id_cms']] = $page['PageLang']['meta_title'] . ' - ' . Configure::read('htmlHelper')->getMenuType($page['Page']['menu_type']);
+            $preparedPages[$page['Page']['id_page']] = $page['Page']['title'] . ' - ' . Configure::read('htmlHelper')->getMenuType($page['Page']['menu_type']);
         }
         return $preparedPages;
     }
