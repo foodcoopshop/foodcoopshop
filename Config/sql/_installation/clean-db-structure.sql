@@ -230,8 +230,8 @@ DROP TABLE IF EXISTS `fcs_manufacturer`;
 CREATE TABLE `fcs_manufacturer` (
   `id_manufacturer` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `short_description` text NOT NULL,
+  `description` text NOT NULL DEFAULT '',
+  `short_description` text NOT NULL DEFAULT '',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '0',

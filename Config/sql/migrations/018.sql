@@ -108,7 +108,7 @@ ALTER TABLE `fcs_product_shop` DROP `id_shop`;
 ALTER TABLE `fcs_order_detail_tax` DROP `id_tax`;
 ALTER TABLE `fcs_stock_available` DROP `id_shop`;
 
-ALTER TABLE `fcs_manufacturer` ADD `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `name`, 
-ADD `short_description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `description`;
+ALTER TABLE `fcs_manufacturer` ADD `description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `name`, 
+ADD `short_description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `description`;
 UPDATE fcs_manufacturer m JOIN fcs_manufacturer_lang l ON m.id_manufacturer= l.id_manufacturer SET m.description = l.description, m.short_description = l.short_description;
 DROP TABLE fcs_manufacturer_lang;
