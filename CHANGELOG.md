@@ -14,6 +14,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Im Admin-Bereich muss nicht mehr auf *Filtern* geklickt werden, das geht jetzt automatisch. / [PR#184](https://github.com/foodcoopshop/foodcoopshop/pull/184) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#180](https://github.com/foodcoopshop/foodcoopshop/issues/180) / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
 - **Gruppierung nach Produkt** ist jetzt für bestellte Produkte möglich. Hersteller und Mitglieder können so ihre Bestellungen noch übersichtliche anzeigen bzw. auswerten. Hersteller können ab sofort auch auch das **Datum ihrer Bestellungen** frei wählen und so alte Bestellungen anzeigen. / [PR#179](https://github.com/foodcoopshop/foodcoopshop/pull/179) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#175](https://github.com/foodcoopshop/foodcoopshop/issues/175) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
 
+### Für Entwickler
+- Viele nicht benutzte Datenbank-Felder wurden entfernt und die Anzahl der Tabellen von 40 auf 31 verringert. / [PR#189](https://github.com/foodcoopshop/foodcoopshop/pull/189) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v1.5.0 2017-12-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...v1.5.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
