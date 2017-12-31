@@ -161,7 +161,7 @@ class Configuration extends AppModel
     public function getConfigurations()
     {
         $configurations = $this->find('all', array(
-            'fields' => array('Configuration.id_configuration', 'Configuration.name', 'Configuration.value'),
+            'fields' => array('Configuration.id_configuration', 'Configuration.name', 'Configuration.value', 'Configuration.type', 'Configuration.text'),
             'conditions' => array(
                 'Configuration.active' => APP_ON
             ),
