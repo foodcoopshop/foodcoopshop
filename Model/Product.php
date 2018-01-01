@@ -682,7 +682,7 @@ class Product extends AppModel
         return $netPrice;
     }
 
-    public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category)
+    public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category = '')
     {
         $conditions = array();
         $group = array();
