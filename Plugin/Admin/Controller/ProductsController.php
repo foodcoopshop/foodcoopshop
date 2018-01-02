@@ -690,8 +690,20 @@ class ProductsController extends AdminAppController
         }
         $this->set('category', $category);
 
+        $isQuantityZero = 0; // default value
+        if (!empty($this->params['named']['isQuantityZero'])) {
+            $isQuantityZero = $this->params['named']['isQuantityZero'];
+        }
+        $this->set('isQuantityZero', $isQuantityZero);
+
+        $isPriceZero = 0; // default value
+        if (!empty($this->params['named']['isPriceZero'])) {
+            $isPriceZero = $this->params['named']['isPriceZero'];
+        }
+        $this->set('isPriceZero', $isPriceZero);
+
         if ($manufacturerId != '') {
-            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active, $category);
+            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active, $category, $isQuantityZero, $isPriceZero);
             $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
         } else {
             $preparedProducts = array();
