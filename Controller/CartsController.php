@@ -293,6 +293,7 @@ class CartsController extends FrontendController
                 'id_cart' => $this->AppAuth->Cart->getCartId(),
                 'id_currency' => 1,
                 'current_state' => ORDER_STATE_OPEN,
+                'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
                 'total_deposit' => $this->AppAuth->Cart->getDepositSum(),
