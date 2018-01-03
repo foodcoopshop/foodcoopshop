@@ -38,7 +38,7 @@ class Manufacturer extends AppModel
         'Address' => array(
             'className' => 'AddressManufacturer',
             'conditions' => array(
-                'Address.id_manufacturer > ' . APP_OFF
+                'Address.id_manufacturer > 0'
             ),
             'foreignKey' => 'id_manufacturer'
         )
