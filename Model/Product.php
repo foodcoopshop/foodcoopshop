@@ -826,7 +826,7 @@ class Product extends AppModel
 
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
         // with custom sql
-        $this->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, id_shop, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', 1, ' . $defaultQuantity . ')');
+        $this->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
 
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }
