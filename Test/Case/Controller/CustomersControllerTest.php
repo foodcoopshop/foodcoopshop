@@ -136,6 +136,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
         // 4) save user and check record
         $email = 'new-foodcoopshop-member-1@mailinator.com';
+        $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($data, $email);
         $emailLogs = $this->EmailLog->find('all');
         $this->assertEmailLogs($emailLogs[0], 'Willkommen', array('war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'), array($email));

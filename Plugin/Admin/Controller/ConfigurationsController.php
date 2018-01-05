@@ -73,9 +73,9 @@ class ConfigurationsController extends AdminAppController
                     'validate' => false
                 ));
 
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
                 $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
-                $this->CakeActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configuration']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configuration']['value'] . '"</i>');
+                $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configuration']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configuration']['value'] . '"</i>');
 
                 $this->redirect($this->data['referer']);
             } else {

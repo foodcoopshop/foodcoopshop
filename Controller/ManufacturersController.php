@@ -57,7 +57,7 @@ class ManufacturersController extends FrontendController
             'order' => array(
                 'Manufacturer.name' => 'ASC'
             ),
-            'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
+            'fields' => array('Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ));
 
         if (empty($manufacturers)) {
@@ -86,7 +86,7 @@ class ManufacturersController extends FrontendController
         );
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => $conditions,
-            'fields' => array('Manufacturer.*', 'ManufacturerLang.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
+            'fields' => array('Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ));
 
         if (empty($manufacturer)) {

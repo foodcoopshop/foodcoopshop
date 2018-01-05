@@ -43,7 +43,7 @@ if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->l
         echo '</a>';
     }
 
-        echo $manufacturer['ManufacturerLang']['description'];
+        echo $manufacturer['Manufacturer']['description'];
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {

@@ -14,14 +14,14 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Slider']['id_homeslider_slides']) ? $this->request->data['Slider']['id_homeslider_slides'] : "") . "', 'Slider');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Slider']['id_slider']) ? $this->request->data['Slider']['id_slider'] : "") . "', 'Slider');
     "
 ));
-$idForImageUpload = isset($this->request->data['SliderLang']['id_homeslider_slides']) ? $this->request->data['SliderLang']['id_homeslider_slides'] : StringComponent::createRandomString(6);
+$idForImageUpload = isset($this->request->data['Slider']['id_slider']) ? $this->request->data['Slider']['id_slider'] : StringComponent::createRandomString(6);
 
 $imageSrc = false;
 if ($this->here != $this->Slug->getSliderAdd()) {
-    $imageSrc = $this->Html->getSliderImageSrc($this->request->data['SliderLang']['image']);
+    $imageSrc = $this->Html->getSliderImageSrc($this->request->data['Slider']['image']);
     if (isset($this->request->data['Slider']['tmp_image']) && $this->request->data['Slider']['tmp_image'] != '') {
         $imageSrc = str_replace('\\', '/', $this->request->data['Slider']['tmp_image']);
     }
@@ -52,9 +52,8 @@ echo $this->Form->create('Slider', array(
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Slider.id_homeslider_slides');
-echo $this->Form->hidden('SliderLang.id_homeslider_slides');
-echo $this->Form->hidden('SliderLang.image');
+echo $this->Form->hidden('Slider.id_slider');
+echo $this->Form->hidden('Slider.image');
 
 echo '<div class="input">';
 echo '<label>Slideshow-Bild';

@@ -67,8 +67,8 @@ class CustomersController extends AdminAppController
 
         $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde von <b>' . Configure::read('htmlHelper')->getGroupName($oldCustomer['Customer']['id_default_group']) . '</b> auf <b>' . Configure::read('htmlHelper')->getGroupName($groupId) . '</b> geändert.';
         $this->Flash->success($messageString);
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
+        $this->loadModel('ActionLog');
+        $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
         die(json_encode(array(
             'status' => 1
@@ -156,8 +156,8 @@ class CustomersController extends AdminAppController
             }
             $message .= ' hat sein Passwort geändert.';
 
-            $this->loadModel('CakeActionLog');
-            $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
+            $this->loadModel('ActionLog');
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__('your new password successfully set'));
             $this->redirect($this->referer());
         }
@@ -218,9 +218,9 @@ class CustomersController extends AdminAppController
 
                 $this->renewAuthSession();
 
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
                 $message = 'Das Mitglied ' . $unsavedCustomer['Customer']['name'] . ' hat sein Profil geändert.';
-                $this->CakeActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $message);
+                $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $message);
 
                 $this->Flash->success('Deine Änderungen wurden erfolgreich gepeichert.');
                 $this->redirect($this->referer());
@@ -296,8 +296,8 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
+        $this->loadModel('ActionLog');
+        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
     }
@@ -316,7 +316,7 @@ class CustomersController extends AdminAppController
         ));
 
         $customerAddress2update = array(
-            'other' => $customerComment
+            'comment' => $customerComment
         );
 
         $this->Customer->AddressCustomer->id = $oldCustomer['AddressCustomer']['id_address'];
@@ -324,8 +324,8 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['other'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
+        $this->loadModel('ActionLog');
+        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode(array(
             'status' => 1,
@@ -390,13 +390,13 @@ class CustomersController extends AdminAppController
         $customers = $this->Paginator->paginate('Customer');
 
         $i = 0;
-        $this->loadModel('CakePayment');
+        $this->loadModel('Payment');
         $this->loadModel('Order');
         foreach ($customers as $customer) {
             if (Configure::read('htmlHelper')->paymentIsCashless()) {
-                $paymentProductSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'product');
-                $paymentPaybackSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'payback');
-                $paymentDepositSum = $this->CakePayment->getSum($customer['Customer']['id_customer'], 'deposit');
+                $paymentProductSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'product');
+                $paymentPaybackSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'payback');
+                $paymentDepositSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'deposit');
 
                 $sumTotalProduct = 0;
                 $sumTotalDeposit = 0;
@@ -464,7 +464,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('customers', $customers);
 
-        $this->set('manufacturerDepositMoneySum', $this->CakePayment->getManufacturerDepositMoneySum());
+        $this->set('manufacturerDepositMoneySum', $this->Payment->getManufacturerDepositMoneySum());
         $this->set('title_for_layout', 'Mitglieder');
     }
 }

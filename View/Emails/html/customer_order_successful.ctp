@@ -31,7 +31,7 @@
 <?php echo $this->element('email/tableHead', array('cellpadding' => 6)); ?>
     <?php echo $this->element('email/orderedProductsTable', array(
         'manufacturerId' => null,
-        'cakeCartProducts' => $cart['CakeCartProducts'],
+        'cartProducts' => $cart['CartProducts'],
         'depositSum' => $depositSum,
         'productSum' => $productSum,
         'productAndDepositSum' => $productAndDepositSum

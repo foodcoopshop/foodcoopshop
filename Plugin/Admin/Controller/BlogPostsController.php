@@ -28,7 +28,7 @@ class BlogPostsController extends AdminAppController
                 if ($this->AppAuth->isManufacturer()) {
                     $blogPost = $this->BlogPost->find('first', array(
                         'conditions' => array(
-                            'BlogPost.id_smart_blog_post' => $this->params['pass'][0]
+                            'BlogPost.id_blog_post' => $this->params['pass'][0]
                         )
                     ));
                     if ($blogPost['BlogPost']['id_manufacturer'] != $this->AppAuth->getManufacturerId()) {
@@ -63,7 +63,7 @@ class BlogPostsController extends AdminAppController
         if ($blogPostId > 0) {
             $unsavedBlogPost = $this->BlogPost->find('first', array(
                 'conditions' => array(
-                    'BlogPost.id_smart_blog_post' => $blogPostId
+                    'BlogPost.id_blog_post' => $blogPostId
                 )
             ));
             // default value
@@ -88,20 +88,15 @@ class BlogPostsController extends AdminAppController
             $this->BlogPost->set($this->request->data['BlogPost']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['BlogPost'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-            foreach ($this->request->data['BlogPostLang'] as $key => &$data) {
+            foreach ($this->request->data['BlogPost'] as $key => &$data) {
                 if ($key != 'content') {
                     $data = strip_tags(trim($data));
                 }
             }
 
             $errors = array();
-
-            $this->BlogPost->BlogPostLang->set($this->request->data['BlogPostLang']);
-            if (! $this->BlogPost->BlogPostLang->validates()) {
-                $errors = array_merge($errors, $this->BlogPost->BlogPostLang->validationErrors);
+            if (! $this->BlogPost->validates()) {
+                $errors = array_merge($errors, $this->BlogPost->validationErrors);
             }
 
             if (empty($errors)) {
@@ -112,7 +107,7 @@ class BlogPostsController extends AdminAppController
                     $this->request->data['BlogPost']['modified'] = false;
                 }
 
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 if (is_null($blogPostId) && $this->AppAuth->isManufacturer()) {
                     $this->request->data['BlogPost']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
@@ -122,24 +117,12 @@ class BlogPostsController extends AdminAppController
                     'validate' => false
                 ));
                 if (is_null($blogPostId)) {
-                    $this->request->data['BlogPostLang']['id_smart_blog_post'] = $this->BlogPost->id;
-                    $this->request->data['BlogPostLang']['id_lang'] = Configure::read('app.langId');
-                    $this->request->data['BlogPostShop']['id_smart_blog_post'] = $this->BlogPost->id;
-                    $this->request->data['BlogPostShop']['id_shop'] = Configure::read('app.shopId');
-                    $this->BlogPost->BlogPostShop->save($this->request->data, array(
-                        'validate' => false
-                    ));
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'blog_post_added';
                 } else {
-                    $this->BlogPost->BlogPostLang->id = $blogPostId;
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'blog_post_changed';
                 }
-
-                $this->BlogPost->BlogPostLang->save($this->request->data, array(
-                    'validate' => false
-                ));
 
                 if ($this->request->data['BlogPost']['tmp_image'] != '') {
                     $this->saveUploadedImage($this->BlogPost->id, $this->request->data['BlogPost']['tmp_image'], Configure::read('htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
@@ -151,12 +134,12 @@ class BlogPostsController extends AdminAppController
 
                 if (isset($this->request->data['BlogPost']['delete_blog_post']) && $this->request->data['BlogPost']['delete_blog_post']) {
                     $this->BlogPost->saveField('active', APP_DEL, false);
-                    $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('blog_post_deleted', $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
+                    $message = 'Der Blog-Artikel "' . $this->request->data['BlogPost']['title'] . '" wurde erfolgreich gelöscht.';
+                    $this->ActionLog->customSave('blog_post_deleted', $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
                     $this->Flash->success('Der Blog-Artikel wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Der Blog-Artikel "' . $this->request->data['BlogPostLang']['meta_title'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
+                    $message = 'Der Blog-Artikel "' . $this->request->data['BlogPost']['title'] . '" wurde ' . $messageSuffix;
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->BlogPost->id, 'blog_posts', $message);
                     $this->Flash->success('Der Blog-Artikel wurde erfolgreich gespeichert.');
                 }
 

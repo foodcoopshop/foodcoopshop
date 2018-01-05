@@ -184,7 +184,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)
     {
-        $sql = 'UPDATE ' . $this->Page->tablePrefix . $this->Page->useTable.' SET is_private = :isPrivate, active = :active WHERE id_cms = :pageId;';
+        $sql = 'UPDATE ' . $this->Page->tablePrefix . $this->Page->useTable.' SET is_private = :isPrivate, active = :active WHERE id_page = :pageId;';
         $params = array(
             'pageId' => $pageId,
             'isPrivate' => $isPrivate,

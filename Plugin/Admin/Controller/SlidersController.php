@@ -31,7 +31,7 @@ class SlidersController extends AdminAppController
         if ($sliderId > 0) {
             $unsavedSlider = $this->Slider->find('first', array(
                 'conditions' => array(
-                    'Slider.id_homeslider_slides' => $sliderId
+                    'Slider.id_slider' => $sliderId
                 )
             ));
             // default value
@@ -59,46 +59,34 @@ class SlidersController extends AdminAppController
                 $errors = array_merge($errors, $this->Slider->validationErrors);
             }
 
-            $this->Slider->SliderLang->set($this->request->data['SliderLang']);
-            if (! $this->Slider->SliderLang->validates()) {
-                $errors = array_merge($errors, $this->Slider->SliderLang->validationErrors);
-            }
-
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
                 $this->Slider->save($this->request->data['Slider'], array(
                     'validate' => false
                 ));
                 if (is_null($sliderId)) {
-                    $this->request->data['SliderLang']['id_homeslider_slides'] = $this->Slider->id;
-                    $this->request->data['SliderLang']['id_lang'] = Configure::read('app.langId');
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'slider_added';
                 } else {
-                    $this->Slider->SliderLang->id = $sliderId;
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'slider_changed';
                 }
 
-                $this->Slider->SliderLang->save($this->request->data, array(
-                    'validate' => false
-                ));
-
                 if ($this->request->data['Slider']['tmp_image'] != '') {
                     $filename = $this->saveUploadedImage($this->Slider->id, $this->request->data['Slider']['tmp_image'], Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-                    $this->Slider->SliderLang->saveField('image', $filename, false);
+                    $this->Slider->saveField('image', $filename, false);
                 }
 
                 if (isset($this->request->data['Slider']['delete_slider']) && $this->request->data['Slider']['delete_slider']) {
                     $this->Slider->saveField('active', APP_DEL, false);
                     $this->deleteUploadedImage($this->Slider->id, Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-                    $message = 'Der Slideshow-Bild "' . $this->request->data['SliderLang']['id_homeslider_slides'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
+                    $message = 'Der Slideshow-Bild "' . $this->request->data['Slider']['id_slider'] . '" wurde erfolgreich gelöscht.';
+                    $this->ActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Der Slideshow-Bild "' . $this->request->data['SliderLang']['id_homeslider_slides'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
+                    $message = 'Der Slideshow-Bild "' . $this->request->data['Slider']['id_slider'] . '" wurde ' . $messageSuffix;
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gespeichert.');
                 }
 

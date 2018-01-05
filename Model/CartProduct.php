@@ -1,6 +1,6 @@
 <?php
 /**
- * CakeCartProduct
+ * CartProduct
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakeCartProduct extends AppModel
+class CartProduct extends AppModel
 {
 
     public $primaryKey = 'id_cart_product';
@@ -38,9 +38,9 @@ class CakeCartProduct extends AppModel
     public function remove($productId, $attributeId, $cartId)
     {
         $cartProduct2remove = array(
-            'CakeCartProduct.id_product' => $productId,
-            'CakeCartProduct.id_product_attribute' => $attributeId,
-            'CakeCartProduct.id_cart' => $cartId
+            'CartProduct.id_product' => $productId,
+            'CartProduct.id_product_attribute' => $attributeId,
+            'CartProduct.id_cart' => $cartId
         );
         return $this->deleteAll($cartProduct2remove, false);
     }

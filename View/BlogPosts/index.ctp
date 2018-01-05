@@ -28,14 +28,14 @@ $this->element('addScript', array('script' =>
 foreach ($blogPosts as $blogPost) {
     echo '<div class="blog-post-wrapper">';
 
-    $blogDetailLink = $this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_smart_blog_post'], $blogPost['BlogPostLang']['meta_title']);
+    $blogDetailLink = $this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_blog_post'], $blogPost['BlogPost']['title']);
     echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
     if (!$largeImageExists) {
         echo '<a data-featherlight="image" href="'.$srcLargeImage.'">';
     }
-        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'home'). '" />';
+        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'home'). '" />';
     if (!$largeImageExists) {
         echo '</a>';
     }
@@ -43,10 +43,10 @@ foreach ($blogPosts as $blogPost) {
 
         echo '<div class="second-column">';
         echo '<h4>'.$this->Html->link(
-            $blogPost['BlogPostLang']['meta_title'],
+            $blogPost['BlogPost']['title'],
             $blogDetailLink
         ).'</h4>';
-        echo $blogPost['BlogPostLang']['short_description'].'<br />';
+        echo $blogPost['BlogPost']['short_description'].'<br />';
         echo $this->Html->link(
             '<i class="fa fa-plus-circle"></i> Mehr anzeigen',
             $blogDetailLink,
@@ -59,7 +59,7 @@ foreach ($blogPosts as $blogPost) {
             array(
             'title' => 'Bearbeiten'
             ),
-            $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post'])
+            $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_blog_post'])
         );
     }
 

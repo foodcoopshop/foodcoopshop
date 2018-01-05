@@ -42,7 +42,7 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
         $this->Customer->unbindModel(array(
-            'hasMany' => array('PaidCashFreeOrders', 'CakePayments', 'ValidOrder')
+            'hasMany' => array('PaidCashFreeOrders', 'Payments', 'ValidOrder')
         ));
 
         $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay()). '\'';
@@ -83,7 +83,7 @@ class EmailOrderReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->CakeActionLog->customSave('cronjob_email_order_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_email_order_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());

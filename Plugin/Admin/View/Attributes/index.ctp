@@ -51,7 +51,7 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('Attribute.id_attribute', 'ID') . '</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('AttributeLang.name', 'Name') . '</th>';
+echo '<th>' . $this->Paginator->sort('Attribute.name', 'Name') . '</th>';
 echo '<th>Aktivierten Produkten zugewiesen?</th>';
 echo '<th>Deaktivierten Produkten zugewiesen?</th>';
 echo '<th>' . $this->Paginator->sort('Attribute.modified', 'geändert am') . '</th>';
@@ -80,7 +80,7 @@ foreach ($attributes as $attribute) {
     echo '</td>';
 
     echo '<td>';
-    echo $attribute['AttributeLang']['name'];
+    echo $attribute['Attribute']['name'];
     echo '</td>';
 
     echo '<td style="width:300px;">';

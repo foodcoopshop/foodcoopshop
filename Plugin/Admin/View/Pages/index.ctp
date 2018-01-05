@@ -49,9 +49,9 @@
 echo '<table class="list">';
 
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Page.id_cms', 'ID') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('Page.id_page', 'ID') . '</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('PageLang.meta_title', 'Seitenitel') . '</th>';
+echo '<th>' . $this->Paginator->sort('Page.title', 'Titel') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.menu_type', 'Menü') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.position', 'Reihenfolge im Menü') . '</th>';
 echo '<th>' . $this->Paginator->sort('Page.is_private', 'Nur für Mitglieder') . '</th>';

@@ -50,9 +50,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'firmengericht' => '',
                 'aufsichtsbehoerde' => '',
                 'kammer' => '',
-                'homepage' => ''
-            ),
-            'ManufacturerLang' => array(
+                'homepage' => '',
                 'short_description' => 'Test Description'
             ),
             'Address' => array(

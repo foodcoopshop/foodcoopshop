@@ -79,7 +79,6 @@ class CategoriesController extends FrontendController
             'conditions' => array(
                 'Category.id_category' => $categoryId,
                 'Category.active' => APP_ON,
-                'CategoryLang.id_shop' => Configure::read('app.shopId')
             )
         ));
 
@@ -87,7 +86,7 @@ class CategoriesController extends FrontendController
             throw new MissingActionException('category not found');
         }
 
-        $correctSlug = Configure::read('slugHelper')->getCategoryDetail($categoryId, $category['CategoryLang']['name']);
+        $correctSlug = Configure::read('slugHelper')->getCategoryDetail($categoryId, $category['Category']['name']);
         if ($correctSlug != Configure::read('slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
@@ -103,6 +102,6 @@ class CategoriesController extends FrontendController
 
         $this->set('category', $category);
 
-        $this->set('title_for_layout', $category['CategoryLang']['name']);
+        $this->set('title_for_layout', $category['Category']['name']);
     }
 }

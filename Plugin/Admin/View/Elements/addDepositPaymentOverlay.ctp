@@ -30,7 +30,7 @@ if (isset($manufacturerId)) {
     if ($appAuth->isAdmin() || $appAuth->isManufacturer()) {
         echo '<p style="margin-top:10px;">Bitte trage hier den Wert des Leergebindes ein,<br />
             das vom Hersteller zurückgenommen wird.</p>';
-        echo $this->Form->hidden('CakePayment.text', array(
+        echo $this->Form->hidden('Payment.text', array(
             'value' => 'empty_glasses'
         ));
     }
@@ -45,21 +45,21 @@ if (isset($manufacturerId)) {
     }
 }
 
-echo $this->Form->input('CakePayment.amount', array(
+echo $this->Form->input('Payment.amount', array(
     'label' => 'Betrag in €',
     'type' => 'string'
 ));
 
-echo $this->Form->hidden('CakePayment.type', array(
+echo $this->Form->hidden('Payment.type', array(
     'value' => 'deposit'
 ));
 if (isset($customerId)) {
-    echo $this->Form->hidden('CakePayment.customerId', array(
+    echo $this->Form->hidden('Payment.customerId', array(
         'value' => $customerId
     ));
 }
 if (isset($manufacturerId)) {
-    echo $this->Form->hidden('CakePayment.manufacturerId', array(
+    echo $this->Form->hidden('Payment.manufacturerId', array(
         'value' => $manufacturerId
     ));
 }

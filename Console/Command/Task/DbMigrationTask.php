@@ -27,7 +27,7 @@ class DbMigrationTask extends Shell
     public function execute(Shell $shell)
     {
         $shell->loadModel('Configuration');
-        $shell->loadModel('CakeActionLog');
+        $shell->loadModel('ActionLog');
 
         $this->dbMigration = new DbMigration(
             function ($string = '') use (&$shell) {
@@ -40,7 +40,7 @@ class DbMigrationTask extends Shell
             },
             function ($type = '', $string = '') use (&$shell) {
             // $stdLog
-                return $shell->CakeActionLog->customSave($type, 0, 0, '', $string);
+                return $shell->ActionLog->customSave($type, 0, 0, '', $string);
             },
             function ($string = '') use (&$shell) {
             // $findConf
