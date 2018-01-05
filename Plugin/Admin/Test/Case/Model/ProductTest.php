@@ -325,6 +325,7 @@ class ProductTest extends AppCakeTestCase
 
      /**
      * @expectedException InvalidParameterException
+     * @expectedExceptionMessage Product.active for product 102 needs to be 0 or 1
      */
     public function testChangeStatusWithStringStatus()
     {
@@ -336,6 +337,7 @@ class ProductTest extends AppCakeTestCase
 
     /**
      * @expectedException InvalidParameterException
+     * @expectedExceptionMessage Product.active for product 102 needs to be 0 or 1
      */
     public function testChangeStatusWithInvalidIntegerStatus()
     {
@@ -347,6 +349,7 @@ class ProductTest extends AppCakeTestCase
 
     /**
      * @expectedException InvalidParameterException
+     * @expectedExceptionMessage change status is not allowed for product attributes
      */
     public function testChangeStatusForProductAttribute()
     {
