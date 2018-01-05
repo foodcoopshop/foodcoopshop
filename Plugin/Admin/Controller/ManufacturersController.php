@@ -297,6 +297,7 @@ class ManufacturersController extends AdminAppController
             if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturers[$i]['Manufacturer']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
             }
+            $manufacturers[$i]['sum_open_order_detail'] = $this->OrderDetail->getOpenOrderDetailSum($manufacturer['Manufacturer']['id_manufacturer'], $dateFrom, $dateTo);
             $i++;
         }
         $this->set('manufacturers', $manufacturers);
