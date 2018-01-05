@@ -175,7 +175,7 @@ form.fcs-form .bootstrap-select {
 #product-deposit-edit-form input,
 #product-name-edit-form textarea,
 #product-quantity-edit-form input {
-    width: 310px;
+    width: 300px;
     margin-bottom: 10px;
 }
 span.name-for-dialog,
@@ -435,7 +435,7 @@ body.configurations.index td.sync-domain-list a.btn {
     width: 100%;
 }
 
-#manufacturer-profile label[for="ManufacturerLangDescription"] {
+#manufacturer-profile label[for="ManufacturerDescription"] {
     float: none;
 }
 
@@ -888,7 +888,7 @@ form.fcs-form .input.select .after.small {
     top: 9px;
     font-size: 15px;
 }
-.featherlight-content #CakePaymentText {
+.featherlight-content #PaymentText {
     width: 100%;
     height: 150px;
     margin-bottom: 10px;
@@ -1015,6 +1015,8 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
+
 
 
 

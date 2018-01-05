@@ -85,8 +85,7 @@ class AppAuthComponent extends AuthComponent
         $this->manufacturer = $mm->find('first', array(
             'conditions' => array(
                 'Address.email' => $this->user('email'),
-                'Address.alias' => 'manufacturer',
-                'Address.deleted' => 0
+                'Address.id_manufacturer > ' . APP_OFF
             )
         ));
     }
@@ -185,17 +184,17 @@ class AppAuthComponent extends AuthComponent
         return $c->getCreditBalance($this->getUserId());
     }
 
-    public function setCakeCart($cakeCart)
+    public function setCart($cart)
     {
-        $this->Cart->cakeCart = $cakeCart;
+        $this->Cart->cart = $cart;
     }
 
-    public function getCakeCart()
+    public function getCart()
     {
         if (! $this->loggedIn()) {
             return null;
         }
-        $cc = ClassRegistry::init('CakeCart');
-        return $cc->getCakeCart($this->getUserId());
+        $cc = ClassRegistry::init('Cart');
+        return $cc->getCart($this->getUserId());
     }
 }

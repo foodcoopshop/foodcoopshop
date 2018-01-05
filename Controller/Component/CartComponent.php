@@ -17,12 +17,12 @@
 class CartComponent extends Component
 {
 
-    public $cakeCart = null;
+    public $cart = null;
 
     public function getProducts()
     {
-        if ($this->cakeCart !== null) {
-            return $this->cakeCart['CakeCartProducts'];
+        if ($this->cart !== null) {
+            return $this->cart['CartProducts'];
         }
         return null;
     }
@@ -34,45 +34,45 @@ class CartComponent extends Component
 
     public function getTaxSum()
     {
-        if ($this->cakeCart !== null) {
-            return $this->cakeCart['CakeCartTaxSum'];
+        if ($this->cart !== null) {
+            return $this->cart['CartTaxSum'];
         }
         return 0;
     }
 
     public function getDepositSum()
     {
-        if ($this->cakeCart !== null) {
-            return $this->cakeCart['CakeCartDepositSum'];
+        if ($this->cart !== null) {
+            return $this->cart['CartDepositSum'];
         }
         return 0;
     }
 
     public function getProductSum()
     {
-        if ($this->cakeCart !== null) {
-            return $this->cakeCart['CakeCartProductSum'];
+        if ($this->cart !== null) {
+            return $this->cart['CartProductSum'];
         }
         return 0;
     }
 
     public function getProductSumExcl()
     {
-        if ($this->cakeCart !== null) {
-            return $this->cakeCart['CakeCartProductSumExcl'];
+        if ($this->cart !== null) {
+            return $this->cart['CartProductSumExcl'];
         }
         return 0;
     }
 
     public function getCartId()
     {
-        return $this->cakeCart['CakeCart']['id_cart'];
+        return $this->cart['Cart']['id_cart'];
     }
 
     public function markAsSaved()
     {
-        if ($this->cakeCart !== null) {
-            $cc = ClassRegistry::init('CakeCart');
+        if ($this->cart !== null) {
+            $cc = ClassRegistry::init('Cart');
             $cc->id = $this->getCartId();
             $cc->save(array(
                 'status' => APP_OFF

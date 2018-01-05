@@ -29,9 +29,6 @@ class ProductAttributeCombination extends AppModel
         'Attribute' => array(
             'foreignKey' => 'id_attribute'
         ),
-        'AttributeLang' => array(
-            'foreignKey' => 'id_attribute'
-        ),
         'ProductAttribute' => array(
             'foreignKey' => 'id_product_attribute'
         )

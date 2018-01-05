@@ -335,8 +335,8 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' Der Warenbestand wurde auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->loadModel('ActionLog');
+        $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
 
         $this->Flash->success($message);
 
@@ -415,8 +415,8 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editPriceReason . '"</b>';
         }
 
-        $this->loadModel('CakeActionLog');
-        $this->CakeActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->loadModel('ActionLog');
+        $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
         die(json_encode(array(
@@ -503,8 +503,8 @@ class OrderDetailsController extends AdminAppController
 
             $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
-            $this->loadModel('CakeActionLog');
-            $this->CakeActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
+            $this->loadModel('ActionLog');
+            $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
         }
 
 

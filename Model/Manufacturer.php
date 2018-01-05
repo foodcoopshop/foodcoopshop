@@ -38,22 +38,18 @@ class Manufacturer extends AppModel
         'Address' => array(
             'className' => 'AddressManufacturer',
             'conditions' => array(
-                'Address.alias' => 'manufacturer',
-                'Address.deleted' => 0
+                'Address.id_manufacturer > 0'
             ),
-            'foreignKey' => 'id_manufacturer'
-        ),
-        'ManufacturerLang' => array(
             'foreignKey' => 'id_manufacturer'
         )
     );
 
     public $hasMany = array(
-        'CakeInvoices' => array(
-            'className' => 'CakeInvoice',
+        'Invoices' => array(
+            'className' => 'Invoice',
             'foreignKey' => 'id_manufacturer',
             'order' => array(
-                'CakeInvoices.send_date DESC'
+                'Invoices.send_date DESC'
             ),
             'limit' => 1
         )
@@ -500,8 +496,7 @@ class Manufacturer extends AppModel
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
                 AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
                 AND pl.id_lang = 1
-                AND ma.deleted = 0
-                AND ma.alias = 'manufacturer'
+                AND ma.id_manufacturer > 0
                 AND o.current_state IN(:orderStates)
                 ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
 

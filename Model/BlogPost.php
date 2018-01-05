@@ -17,17 +17,7 @@
 class BlogPost extends AppModel
 {
 
-    public $useTable = 'smart_blog_post';
-    public $primaryKey = 'id_smart_blog_post';
-
-    public $hasOne = array(
-        'BlogPostLang' => array(
-            'foreignKey' => 'id_smart_blog_post'
-        ),
-        'BlogPostShop' => array(
-            'foreignKey' => 'id_smart_blog_post'
-        )
-    );
+    public $primaryKey = 'id_blog_post';
 
     public $belongsTo = array(
         'Customer' => array(
@@ -35,6 +25,43 @@ class BlogPost extends AppModel
         ),
         'Manufacturer' => array(
             'foreignKey' => 'id_manufacturer'
+        )
+    );
+
+    public $validate = array(
+        'title' => array(
+            'notBlank' => array(
+                'rule' => array(
+                    'notBlank'
+                ),
+                'message' => 'Bitte gib einen Titel an.'
+            ),
+            'minLength' => array(
+                'rule' => array(
+                    'minLength',
+                    3
+                ),
+                'message' => 'Bitte gib mindestens 3 Zeichen ein.'
+            )
+        ),
+        'short_description' => array(
+            'maxLength' => array(
+                'rule' => array(
+                    'maxLength',
+                    100
+                ),
+                'message' => 'Bitte gib maximal 100 Zeichen ein.'
+            )
+        ),
+        'content' => array(
+            'minLength' => array(
+                'rule' => array(
+                    'minLength',
+                    3
+                ),
+                'message' => 'Bitte gib mindestens 3 Zeichen ein.',
+                'allowEmpty' => true
+            )
         )
     );
 
@@ -46,9 +73,7 @@ class BlogPost extends AppModel
     public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
     {
         $conditions = array(
-            'BlogPost.active' => APP_ON,
-            'BlogPostLang.id_lang' => Configure::read('app.langId'),
-            'BlogPostShop.id_shop' => Configure::read('app.shopId')
+            'BlogPost.active' => APP_ON
         );
         if (! $appAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;

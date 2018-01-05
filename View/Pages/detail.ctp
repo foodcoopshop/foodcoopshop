@@ -21,13 +21,13 @@ if ($page['Page']['full_width']) {
     echo $this->Html->css('page-full-width');
 }
 
-echo '<h1>'.$page['PageLang']['meta_title'].'</h1>';
+echo '<h1>'.$page['Page']['title'].'</h1>';
 
 if (!empty($page['children'])) {
     foreach ($page['children'] as $childPage) {
         echo '<p>'.$this->Html->link(
-            $childPage['PageLang']['meta_title'],
-            $this->Slug->getPageDetail($childPage['Page']['id_cms'], $childPage['PageLang']['meta_title']),
+            $childPage['Page']['title'],
+            $this->Slug->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']),
             array(
                 'class' => 'btn btn-success'
             )
@@ -41,8 +41,8 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         array(
             'title' => 'Bearbeiten'
         ),
-        $this->Slug->getPageEdit($page['Page']['id_cms'])
+        $this->Slug->getPageEdit($page['Page']['id_page'])
     );
 }
 
-echo $page['PageLang']['content'];
+echo $page['Page']['content'];

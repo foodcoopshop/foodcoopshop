@@ -22,20 +22,20 @@ $this->element('addScript', array('script' =>
 
 <?php
     echo '<div class="img-wrapper">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a href="'.$srcLargeImage.'">';
-    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'single'). '" />';
+    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'single'). '" />';
     echo '</a>';
 }
     echo '</div>';
 
-if ($blogPost['BlogPostLang']['short_description'] != '') {
-    echo '<p><b>'.$blogPost['BlogPostLang']['short_description'].'</b></p>';
+if ($blogPost['BlogPost']['short_description'] != '') {
+    echo '<p><b>'.$blogPost['BlogPost']['short_description'].'</b></p>';
 }
 
-    echo $blogPost['BlogPostLang']['content'];
+    echo $blogPost['BlogPost']['content'];
 
     echo '<p><i>';
         echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost['BlogPost']['modified']);
@@ -56,7 +56,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         array(
         'title' => 'Bearbeiten'
         ),
-        $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post'])
+        $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_blog_post'])
     );
 }
 

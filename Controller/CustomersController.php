@@ -251,8 +251,6 @@ class CustomersController extends FrontendController
                     $this->Customer->id = null;
                     $this->request->data['Customer']['active'] = Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
                     $this->request->data['Customer']['id_default_group'] = Configure::read('app.db_config_FCS_CUSTOMER_GROUP');
-                    $this->request->data['Customer']['id_lang'] = Configure::read('app.langId');
-                    $this->request->data['Customer']['id_shop'] = Configure::read('app.shopId');
                     $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
 
                     $newCustomer = $this->Customer->save($this->request->data['Customer'], array(
@@ -272,9 +270,9 @@ class CustomersController extends FrontendController
                     ));
 
                     // write action log
-                    $this->loadModel('CakeActionLog');
+                    $this->loadModel('ActionLog');
                     $message = 'Das Mitglied ' . $this->request->data['Customer']['firstname'] . ' ' . $this->request->data['Customer']['lastname'] . ' hat ein Mitgliedskonto erstellt.';
-                    $this->CakeActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
+                    $this->ActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
 
                     // START send confirmation email to customer
                     $attachments = array();

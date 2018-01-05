@@ -64,37 +64,28 @@ class CategoriesController extends AdminAppController
                 $this->request->data['Category']['id_parent'] = 2;
             }
 
-            foreach ($this->request->data['CategoryLang'] as $key => &$data) {
+            foreach ($this->request->data['Category'] as $key => &$data) {
                 $data = strip_tags(trim($data));
             }
 
             $errors = array();
-            $this->Category->CategoryLang->set($this->request->data['CategoryLang']);
-
-            if (! $this->Category->CategoryLang->validates()) {
-                $errors = array_merge($errors, $this->Category->CategoryLang->validationErrors);
+            if (! $this->Category->validates()) {
+                $errors = array_merge($errors, $this->Category->validationErrors);
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
-                $this->request->data['CategoryLang']['id_lang'] = Configure::read('app.langId');
                 $this->Category->save($this->request->data['Category'], array(
                     'validate' => false
                 ));
                 if (is_null($categoryId)) {
-                    $this->request->data['CategoryLang']['id_category'] = $this->Category->id;
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'category_added';
                 } else {
-                    $this->Category->CategoryLang->id = $categoryId;
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'category_changed';
                 }
-
-                $this->Category->CategoryLang->save($this->request->data, array(
-                    'validate' => false
-                ));
 
                 if ($this->request->data['Category']['tmp_image'] != '') {
                     $this->saveUploadedImage($this->Category->id, $this->request->data['Category']['tmp_image'], Configure::read('htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
@@ -106,13 +97,12 @@ class CategoriesController extends AdminAppController
 
                 if (isset($this->request->data['Category']['delete_category']) && $this->request->data['Category']['delete_category']) {
                     $this->Category->delete($this->Category->id); // cascade does not work here
-                    $this->Category->CategoryLang->delete($this->Category->id); // CategoryLang record needs to be deleted manually
-                    $message = 'Die Kategorie "' . $this->request->data['CategoryLang']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categorys', $message);
+                    $message = 'Die Kategorie "' . $this->request->data['Category']['name'] . '" wurde erfolgreich gelöscht.';
+                    $this->ActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categorys', $message);
                     $this->Flash->success('Die Kategorie wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Die Kategorie "' . $this->request->data['CategoryLang']['name'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
+                    $message = 'Die Kategorie "' . $this->request->data['Category']['name'] . '" wurde ' . $messageSuffix;
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
                     $this->Flash->success('Die Kategorie wurde erfolgreich gespeichert.');
                 }
 

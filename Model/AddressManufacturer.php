@@ -98,9 +98,7 @@ class AddressManufacturer extends Address
     public function uniqueEmailWithFlagCheck($check)
     {
         $conditions = array(
-            $this->alias . '.email' => $check['email'],
-            $this->alias . '.deleted' => APP_OFF,
-            $this->alias . '.active' => APP_ON
+            $this->alias . '.email' => $check['email']
         );
 
         // if manufacturer address already exists

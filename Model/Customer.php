@@ -32,9 +32,6 @@ class Customer extends AppModel
     public $hasOne = array(
         'AddressCustomer' => array(
             'className' => 'AddressCustomer',
-            'conditions' => array(
-                'AddressCustomer.deleted' => 0
-            ),
             'foreignKey' => 'id_customer'
         )
     );
@@ -134,14 +131,14 @@ class Customer extends AppModel
             'limit' => 1,
             'foreignKey' => 'id_customer'
         ),
-        'CakePayments' => array(
-            'className' => 'CakePayment',
+        'Payments' => array(
+            'className' => 'Payment',
             'foreignKey' => 'id_customer',
             'order' => array(
-                'CakePayments.date_add' => 'desc'
+                'Payments.date_add' => 'desc'
             ),
             'conditions' => array(
-                'CakePayments.status' => APP_ON
+                'Payments.status' => APP_ON
             )
         )
     );
@@ -227,8 +224,8 @@ class Customer extends AppModel
 
     public function getCreditBalance($customerId)
     {
-        App::uses('CakePayment', 'Model');
-        $cp = new CakePayment();
+        App::uses('Payment', 'Model');
+        $cp = new Payment();
         $paymentSumProduct = $cp->getSum($customerId, 'product');
         $paybackSumProduct = $cp->getSum($customerId, 'payback');
         $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
@@ -251,7 +248,7 @@ class Customer extends AppModel
         // TODO no other solution found to exclude those models (contain did not work)
         unset($this->hasMany['PaidCashFreeOrders']);
         unset($this->hasMany['ActiveOrders']);
-        unset($this->hasMany['CakePayments']);
+        unset($this->hasMany['Payments']);
 
         $customers = $this->find('all', array(
             'conditions' => $this->getConditionToExcludeHostingUser(),

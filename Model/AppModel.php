@@ -129,8 +129,8 @@ class AppModel extends Model
         return "Product.id_product,
                 ProductLang.name, ProductLang.description_short, ProductLang.description, ProductLang.unity,
                 ProductShop.price, ProductShop.date_add,
-                CakeDeposit.deposit,
-                ImageLang.id_image, ImageLang.legend,
+                Deposit.deposit,
+                Image.id_image,
                 Manufacturer.id_manufacturer, Manufacturer.name,
                 StockAvailable.quantity ";
     }
@@ -143,10 +143,8 @@ class AppModel extends Model
         return "LEFT JOIN ".$this->tablePrefix."product_shop ProductShop ON Product.id_product = ProductShop.id_product
                 LEFT JOIN ".$this->tablePrefix."product_lang ProductLang ON Product.id_product = ProductLang.id_product
                 LEFT JOIN ".$this->tablePrefix."stock_available StockAvailable ON Product.id_product = StockAvailable.id_product
-                LEFT JOIN ".$this->tablePrefix."image Image ON Image.id_product = Product.id_product AND (Image.cover IS NULL OR Image.cover = 1)
-                LEFT JOIN ".$this->tablePrefix."image_lang ImageLang ON ImageLang.id_image = Image.id_image
-                LEFT JOIN ".$this->tablePrefix."image_shop ImageShop ON ImageShop.id_image = Image.id_image
-                LEFT JOIN ".$this->tablePrefix."cake_deposits CakeDeposit ON Product.id_product = CakeDeposit.id_product
+                LEFT JOIN ".$this->tablePrefix."images Image ON Image.id_product = Product.id_product
+                LEFT JOIN ".$this->tablePrefix."deposits Deposit ON Product.id_product = Deposit.id_product
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturer ON Manufacturer.id_manufacturer = Product.id_manufacturer ";
     }
 
@@ -158,12 +156,9 @@ class AppModel extends Model
         $conditions = "WHERE 1
                     AND StockAvailable.id_product_attribute = 0
                     AND ProductLang.id_lang = :langId
-                    AND (ImageLang.id_lang = :langId OR ImageLang.id_lang IS NULL)
                     AND Product.active = :active
                     AND ".$this->getManufacturerHolidayConditions()."
-                    AND Manufacturer.active = :active
-                    AND ProductShop.id_shop = :shopId
-                    AND (ImageShop.id_shop = :shopId OR ImageShop.id_shop IS NULL) ";
+                    AND Manufacturer.active = :active ";
 
         if (! $this->loggedIn()) {
             $conditions .= 'AND Manufacturer.is_private = :isPrivate ';
@@ -193,7 +188,7 @@ class AppModel extends Model
      */
     protected function getOrdersForProductListQuery()
     {
-        return " ORDER BY ProductLang.name ASC, ImageShop.id_image DESC;";
+        return " ORDER BY ProductLang.name ASC, Image.id_image DESC;";
     }
 
     /**

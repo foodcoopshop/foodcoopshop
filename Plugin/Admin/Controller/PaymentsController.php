@@ -55,7 +55,7 @@ class PaymentsController extends AdminAppController
 
     public function beforeFilter()
     {
-        $this->loadModel('CakePayment');
+        $this->loadModel('Payment');
         $this->loadModel('Customer');
         $this->loadModel('Manufacturer');
         parent::beforeFilter();
@@ -64,10 +64,10 @@ class PaymentsController extends AdminAppController
     public function previewEmail($paymentId, $approval)
     {
 
-        $payment = $this->CakePayment->find('first', array(
+        $payment = $this->Payment->find('first', array(
             'conditions' => array(
-                'CakePayment.id' => $paymentId,
-                'CakePayment.type' => 'product'
+                'Payment.id' => $paymentId,
+                'Payment.type' => 'product'
             )
         ));
         if (empty($payment)) {
@@ -78,8 +78,8 @@ class PaymentsController extends AdminAppController
             throw new MissingActionException('approval not implemented');
         }
 
-        $payment['CakePayment']['approval'] = $approval;
-        $payment['CakePayment']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
+        $payment['Payment']['approval'] = $approval;
+        $payment['Payment']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
         $email = new AppEmail();
         $email->template('Admin.payment_status_changed')
             ->emailFormat('html')
@@ -102,10 +102,10 @@ class PaymentsController extends AdminAppController
 
         $this->setFormReferer();
 
-        $unsavedPayment = $this->CakePayment->find('first', array(
+        $unsavedPayment = $this->Payment->find('first', array(
             'conditions' => array(
-                'CakePayment.id' => $paymentId,
-                'CakePayment.type' => 'product'
+                'Payment.id' => $paymentId,
+                'Payment.type' => 'product'
             )
         ));
 
@@ -120,28 +120,28 @@ class PaymentsController extends AdminAppController
         if (empty($this->request->data)) {
             $this->request->data = $unsavedPayment;
         } else {
-            // validate data - do not use $this->CakePayment->saveAll()
-            $this->CakePayment->id = $paymentId;
-            $this->CakePayment->set($this->request->data['CakePayment']);
+            // validate data - do not use $this->Payment->saveAll()
+            $this->Payment->id = $paymentId;
+            $this->Payment->set($this->request->data['Payment']);
 
             $errors = array();
-            $this->CakePayment->validator()['approval'] = $this->CakePayment->getNumberRangeConfigurationRule(-1, 1);
+            $this->Payment->validator()['approval'] = $this->Payment->getNumberRangeConfigurationRule(-1, 1);
 
-            if (! $this->CakePayment->validates()) {
-                $errors = array_merge($errors, $this->CakePayment->validationErrors);
+            if (! $this->Payment->validates()) {
+                $errors = array_merge($errors, $this->Payment->validationErrors);
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
+                $this->loadModel('ActionLog');
 
-                $this->request->data['CakePayment']['date_changed'] = date('Y-m-d H:i:s');
-                $this->request->data['CakePayment']['changed_by'] = $this->AppAuth->getUserId();
+                $this->request->data['Payment']['date_changed'] = date('Y-m-d H:i:s');
+                $this->request->data['Payment']['changed_by'] = $this->AppAuth->getUserId();
 
-                $this->CakePayment->save($this->request->data['CakePayment'], array(
+                $this->Payment->save($this->request->data['Payment'], array(
                     'validate' => false
                 ));
 
-                switch ($this->request->data['CakePayment']['approval']) {
+                switch ($this->request->data['Payment']['approval']) {
                     case -1:
                         $actionLogType = 'payment_product_approval_not_ok';
                         break;
@@ -153,10 +153,10 @@ class PaymentsController extends AdminAppController
                         break;
                 }
 
-                $newStatusAsString = Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['CakePayment']['approval']];
+                $newStatusAsString = Configure::read('htmlHelper')->getApprovalStates()[$this->request->data['Payment']['approval']];
 
                 $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
-                if ($this->request->data['CakePayment']['send_email']) {
+                if ($this->request->data['Payment']['send_email']) {
                     $email = new AppEmail();
                     $email->template('Admin.payment_status_changed')
                         ->emailFormat('html')
@@ -172,10 +172,10 @@ class PaymentsController extends AdminAppController
                     $message .= ' und eine E-Mail an das Mitglied verschickt';
                 }
 
-                $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->CakePayment->id, 'payments', $message.' (PaymentId: ' . $this->CakePayment->id.').');
+                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Payment->id, 'payments', $message.' (PaymentId: ' . $this->Payment->id.').');
                 $this->Flash->success($message.'.');
 
-                $this->Session->write('highlightedRowId', $this->CakePayment->id);
+                $this->Session->write('highlightedRowId', $this->Payment->id);
 
                 $this->redirect($this->data['referer']);
             } else {
@@ -327,9 +327,9 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        // add entry in table cake_payments
-        $this->CakePayment->id = null; // force insert
-        $this->CakePayment->save(array(
+        // add entry in table payments
+        $this->Payment->id = null; // force insert
+        $this->Payment->save(array(
             'status' => APP_ON,
             'type' => $type,
             'id_customer' => $customerId,
@@ -342,14 +342,14 @@ class PaymentsController extends AdminAppController
             'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
         ));
 
-        $this->loadModel('CakeActionLog');
+        $this->loadModel('ActionLog');
         $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('htmlHelper')->formatAsEuro($amount);
 
         if ($type == 'member_fee') {
             $message .= ', für ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($text);
         }
 
-        $this->CakeActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $this->CakePayment->getLastInsertId(), 'payments', $message);
+        $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $this->Payment->getLastInsertId(), 'payments', $message);
 
         if (in_array($actionLogType, array('deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'))) {
             $message .= ' Der Betrag ist ';
@@ -373,7 +373,7 @@ class PaymentsController extends AdminAppController
             'status' => 1,
             'msg' => 'ok',
             'amount' => $amount,
-            'paymentId' => $this->CakePayment->getLastInsertId()
+            'paymentId' => $this->Payment->getLastInsertId()
         )));
     }
 
@@ -383,10 +383,10 @@ class PaymentsController extends AdminAppController
 
         $paymentId = $this->params['data']['paymentId'];
 
-        $payment = $this->CakePayment->find('first', array(
+        $payment = $this->Payment->find('first', array(
             'conditions' => array(
-                'CakePayment.id' => $paymentId,
-                'CakePayment.approval <> ' . APP_ON
+                'Payment.id' => $paymentId,
+                'Payment.approval <> ' . APP_ON
             )
         ));
 
@@ -401,28 +401,28 @@ class PaymentsController extends AdminAppController
 
         // TODO add payment owner check (also for manufacturers!)
 
-        // update table cake_payments
-        $this->CakePayment->id = $paymentId;
-        $this->CakePayment->save(array(
+        // update table payments
+        $this->Payment->id = $paymentId;
+        $this->Payment->save(array(
             'status' => APP_DEL,
             'date_changed' => date('Y-m-d H:i:s')
         ));
 
-        $this->loadModel('CakeActionLog');
+        $this->loadModel('ActionLog');
 
-        $actionLogType = $payment['CakePayment']['type'];
-        if ($payment['CakePayment']['type'] == 'deposit') {
+        $actionLogType = $payment['Payment']['type'];
+        if ($payment['Payment']['type'] == 'deposit') {
             $userType = 'customer';
-            if ($payment['CakePayment']['id_manufacturer'] > 0) {
+            if ($payment['Payment']['id_manufacturer'] > 0) {
                 $userType = 'manufacturer';
             }
             $actionLogType .= '_'.$userType;
         }
 
 
-        $message = 'Die Zahlung (' . Configure::read('htmlHelper')->formatAsEuro($payment['CakePayment']['amount']). ', '. Configure::read('htmlHelper')->getPaymentText($payment['CakePayment']['type']) .')';
+        $message = 'Die Zahlung (' . Configure::read('htmlHelper')->formatAsEuro($payment['Payment']['amount']). ', '. Configure::read('htmlHelper')->getPaymentText($payment['Payment']['type']) .')';
 
-        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['CakePayment']['id_customer']) {
+        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['Payment']['id_customer']) {
             if (isset($payment['Customer']['name'])) {
                 $username = $payment['Customer']['name'];
             } else {
@@ -433,7 +433,7 @@ class PaymentsController extends AdminAppController
 
         $message .= ' wurde erfolgreich gelöscht.';
 
-        $this->CakeActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
+        $this->ActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
         $this->Flash->success($message);
 
@@ -489,7 +489,7 @@ class PaymentsController extends AdminAppController
                 'member_fee',
                 'member_fee_flexible'
             );
-            $sumMemberFeeFlexbile = $this->CakePayment->getSum($this->AppAuth->getUserId(), 'member_fee_flexible');
+            $sumMemberFeeFlexbile = $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee_flexible');
             $this->set('sumMemberFeeFlexible', $sumMemberFeeFlexbile);
         }
 
@@ -498,7 +498,7 @@ class PaymentsController extends AdminAppController
         ));
         $this->preparePayments();
 
-        $sumMemberFee = $sumMemberFeeFlexbile + $this->CakePayment->getSum($this->AppAuth->getUserId(), 'member_fee');
+        $sumMemberFee = $sumMemberFeeFlexbile + $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee');
         $this->set('sumMemberFee', $sumMemberFee);
     }
 
@@ -527,7 +527,7 @@ class PaymentsController extends AdminAppController
 
     private function preparePayments()
     {
-        $this->Customer->hasMany['CakePayments']['conditions'][] = 'CakePayments.type IN ("' . join('", "', $this->allowedPaymentTypes) . '")';
+        $this->Customer->hasMany['Payments']['conditions'][] = 'Payments.type IN ("' . join('", "', $this->allowedPaymentTypes) . '")';
 
         $customer = $this->Customer->find('first', array(
             'conditions' => array(
@@ -536,8 +536,8 @@ class PaymentsController extends AdminAppController
         ));
 
         $payments = array();
-        if (!empty($customer['CakePayments'])) {
-            foreach ($customer['CakePayments'] as $payment) {
+        if (!empty($customer['Payments'])) {
+            foreach ($customer['Payments'] as $payment) {
                 $text = Configure::read('htmlHelper')->getPaymentText($payment['type']);
                 if ($payment['type'] == 'member_fee') {
                     $text .= ' für: ' . Configure::read('htmlHelper')->getMemberFeeTextForFrontend($payment['text']);

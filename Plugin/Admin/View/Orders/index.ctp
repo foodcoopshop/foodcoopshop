@@ -199,14 +199,14 @@
             echo '<div id="add-payment-member-fee-flexible-form-' . $order['Order']['id_order'] . '" class="add-payment-form add-payment-member-fee-flexible-form">';
             echo '<h3>Flexiblen Mitgliedsbeitrag eintragen</h3>';
             echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order['Order']['name'] . '</b> eintragen:</p>';
-            echo $this->Form->input('CakePayment.amount', array(
+            echo $this->Form->input('Payment.amount', array(
                 'label' => 'Betrag in €',
                 'type' => 'string'
             ));
-            echo $this->Form->hidden('CakePayment.type', array(
+            echo $this->Form->hidden('Payment.type', array(
                 'value' => 'member_fee_flexible'
             ));
-            echo $this->Form->hidden('CakePayment.customerId', array(
+            echo $this->Form->hidden('Payment.customerId', array(
                 'value' => $order['Customer']['id_customer']
             ));
             echo '</div>';
