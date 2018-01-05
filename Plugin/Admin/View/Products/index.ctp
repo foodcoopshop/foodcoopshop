@@ -58,6 +58,9 @@
             'selected' => isset($category) ? $category : ''
         ));
         ?>
+        Anzahl 0? <?php echo $this->Form->input('isQuantityZero', array('type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero));?>
+        Preis 0? <?php echo $this->Form->input('isPriceZero', array('type'=>'checkbox', 'label' =>'', 'checked' => $isPriceZero));?>
+        
         <div class="right">
             <?php
             // only show button if no manufacturer filter is applied
@@ -151,8 +154,8 @@
         echo '<th>' . $this->Paginator->sort('Product.id_manufacturer', 'Hersteller') . '</th>';
     }
     echo '<th>Kategorien</th>';
-    echo '<th>' . $this->Paginator->sort('Stock.quantity', 'Anzahl') . '</th>';
-    echo '<th>' . $this->Paginator->sort('ProductShop.price', 'Preis') . '</th>';
+    echo '<th>Anzahl</th>';
+    echo '<th>Preis</th>';
     echo '<th>' . $this->Paginator->sort('Tax.rate', 'Steuersatz') . '</th>';
     echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('ProductShop.date_add', 'Neu?') . '</th>';
     echo '<th>Pfand</th>';
