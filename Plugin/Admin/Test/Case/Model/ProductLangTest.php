@@ -56,6 +56,7 @@ class ProductLangTest extends AppCakeTestCase
 
     /**
      * @expectedException InvalidParameterException
+     * @expectedExceptionMessage change name is not allowed for product attributes
      */
     public function testChangeNameForProductAttribute()
     {

@@ -22,7 +22,7 @@ In the 4th year of existance, FoodCoopShop continues to grow. Here you can take 
 ## Requirements
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
-* PHP >= 5.6 and <= 7.1.11
+* PHP >= 7.0 and <= 7.2
 * MySQL >= 5.6
 * Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
