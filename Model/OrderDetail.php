@@ -71,14 +71,12 @@ class OrderDetail extends AppModel
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-
         $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
-
         if ($groupByMonth) {
             $sql .= 'GROUP BY monthAndYear ';
-            $sql .= 'ORDER BY monthAndYear DESC ';
+            $sql .= 'ORDER BY monthAndYear DESC;';
         } else {
-            $sql .= 'ORDER BY o.date_add DESC ';
+            $sql .= 'ORDER BY o.date_add DESC;';
         }
         $params = array(
             'manufacturerId' => $manufacturerId,
@@ -86,6 +84,37 @@ class OrderDetail extends AppModel
         );
         $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
         return $orderDetails;
+    }
+
+    /**
+     * @param int $manufacturerId
+     * @param date $dateFrom
+     * @param date $dateTo
+     * @return float
+     */
+    public function getOpenOrderDetailSum($manufacturerId, $dateFrom, $dateTo)
+    {
+        $sql = 'SELECT SUM(od.total_price_tax_incl) as sumOrderDetail ';
+        $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
+        $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
+        $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
+        $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
+        $sql .= 'AND o.current_state = :orderStateOpen ';
+        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :dateFrom ';
+        $sql .= 'AND DATE_FORMAT(o.date_add, \'%d.%m.%Y\') <= :dateTo ';
+        $sql .= 'GROUP BY p.id_manufacturer ';
+        $params = array(
+            'manufacturerId' => $manufacturerId,
+            'orderStateOpen' => ORDER_STATE_OPEN,
+            'dateFrom' => Configure::read('timeHelper')->formatToDbFormatDate($dateFrom),
+            'dateTo' => Configure::read('timeHelper')->formatToDbFormatDate($dateTo),
+        );
+        $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
+        if (isset($orderDetails[0])) {
+            return $orderDetails[0][0]['sumOrderDetail'];
+        } else {
+            return 0;
+        }
     }
 
     public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit)
