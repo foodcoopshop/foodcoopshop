@@ -30,7 +30,7 @@ class BlogPostsController extends FrontendController
                 $blogPostId = (int) $this->params['pass'][0];
                 $blogPost = $this->BlogPost->find('first', array(
                     'conditions' => array(
-                        'BlogPost.id_smart_blog_post' => $blogPostId,
+                        'BlogPost.id_blog_post' => $blogPostId,
                         'BlogPost.active' => APP_ON
                     )
                 ));
@@ -48,11 +48,9 @@ class BlogPostsController extends FrontendController
         $blogPostId = (int) $this->params['pass'][0];
 
         $conditions = array(
-            'BlogPost.active' => APP_ON,
-            'BlogPostLang.id_lang' => Configure::read('app.langId'),
-            'BlogPostShop.id_shop' => Configure::read('app.shopId')
+            'BlogPost.active' => APP_ON
         );
-        $conditions['BlogPost.id_smart_blog_post'] = $blogPostId; // needs to be last element of conditions
+        $conditions['BlogPost.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
         $blogPost = $this->BlogPost->find('first', array(
             'conditions' => $conditions
@@ -62,7 +60,7 @@ class BlogPostsController extends FrontendController
             throw new MissingActionException('blogPost not found');
         }
 
-        $correctSlug = Configure::read('slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPostLang']['meta_title']);
+        $correctSlug = Configure::read('slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPost']['title']);
         if ($correctSlug != Configure::read('slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
@@ -85,15 +83,13 @@ class BlogPostsController extends FrontendController
         ));
         $this->set('neighbors', $neighbors);
 
-        $this->set('title_for_layout', $blogPost['BlogPostLang']['meta_title']);
+        $this->set('title_for_layout', $blogPost['BlogPost']['title']);
     }
 
     public function index()
     {
         $conditions = array(
-            'BlogPost.active' => APP_ON,
-            'BlogPostLang.id_lang' => Configure::read('app.langId'),
-            'BlogPostShop.id_shop' => Configure::read('app.shopId')
+            'BlogPost.active' => APP_ON
         );
 
         if (isset($this->params['manufacturerSlug'])) {

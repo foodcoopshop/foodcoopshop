@@ -26,20 +26,20 @@ foreach ($pages as $page) {
     echo '<tr class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
-    echo $page['Page']['id_cms'];
+    echo $page['Page']['id_page'];
     echo '</td>';
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
-    ), $this->Slug->getPageEdit($page['Page']['id_cms']));
+    ), $this->Slug->getPageEdit($page['Page']['id_page']));
     echo '</td>';
 
     echo '<td>';
     if ($subRow) {
         echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right: 5px;"></i>';
     }
-    echo $page['PageLang']['meta_title'];
+    echo $page['Page']['title'];
     echo '</td>';
 
     echo '<td>';
@@ -65,11 +65,11 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td align="center">';
-    if ($page['Page']['url'] != '') {
+    if ($page['Page']['extern_url'] != '') {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), array(
             'target' => '_blank',
-            'title' => $page['Page']['url']
-        ), $page['Page']['url']);
+            'title' => $page['Page']['extern_url']
+        ), $page['Page']['extern_url']);
     }
     echo '</td>';
 
@@ -94,7 +94,7 @@ foreach ($pages as $page) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Seite anzeigen',
             'target' => '_blank'
-        ), $this->Slug->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']));
+        ), $this->Slug->getPageDetail($page['Page']['id_page'], $page['Page']['title']));
     }
     echo '</td>';
 

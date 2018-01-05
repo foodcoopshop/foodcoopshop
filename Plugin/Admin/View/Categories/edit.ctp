@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('CategoryLangDescription');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : "") . "', 'Category');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : "") . "', 'Category');
     "
 ));
 $idForImageUpload = isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : StringComponent::createRandomString(6);
@@ -50,9 +50,8 @@ echo $this->Form->create('Category', array(
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Category.id_category');
-echo $this->Form->hidden('CategoryLang.id_category');
 
-echo $this->Form->input('CategoryLang.name', array(
+echo $this->Form->input('Category.name', array(
     'label' => 'Name',
     'required' => true
 ));
@@ -98,7 +97,7 @@ echo $this->Form->input('Category.active', array(
     'type' => 'checkbox'
 ));
 
-echo $this->Form->input('CategoryLang.description', array(
+echo $this->Form->input('Category.description', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'

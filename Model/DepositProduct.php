@@ -1,6 +1,8 @@
 <?php
 /**
- * CategoryLang
+ * DepositProduct
+ *
+ * fake model for using associations with foreign keys that are not the id of the model
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,20 +16,10 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CategoryLang extends AppModel
+class DepositProduct extends AppModel
 {
 
-    public $useTable = 'category_lang';
-    public $primaryKey = 'id_category';
+    public $useTable = 'deposits';
 
-    public $validate = array(
-        'name' => array(
-            'notBlank' => array(
-                'rule' => array(
-                    'notBlank'
-                ),
-                'message' => 'Bitte gib einen Namen an.'
-            )
-        )
-    );
+    public $primaryKey = 'id_product';
 }

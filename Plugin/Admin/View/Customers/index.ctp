@@ -224,9 +224,9 @@ foreach ($customers as $customer) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             array(
-                'class' => 'customer-comment-edit-button' . ($customer['AddressCustomer']['other'] == '' ? ' disabled' : ''),
-                'title' => $customer['AddressCustomer']['other'] != '' ? $customer['AddressCustomer']['other'] : 'Kommentar hinzufügen',
-                'data-title-for-overlay' => $customer['AddressCustomer']['other'] != '' ? $customer['AddressCustomer']['other'] : 'Kommentar hinzufügen'
+                'class' => 'customer-comment-edit-button' . ($customer['AddressCustomer']['comment'] == '' ? ' disabled' : ''),
+                'title' => $customer['AddressCustomer']['comment'] != '' ? $customer['AddressCustomer']['comment'] : 'Kommentar hinzufügen',
+                'data-title-for-overlay' => $customer['AddressCustomer']['comment'] != '' ? $customer['AddressCustomer']['comment'] : 'Kommentar hinzufügen'
             ),
             'javascript:void(0);'
         );

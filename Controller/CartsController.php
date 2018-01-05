@@ -143,9 +143,9 @@ class CartsController extends FrontendController
         }
 
         $this->set('title_for_layout', 'Warenkorb abschließen');
-        $cart = $this->AppAuth->getCakeCart();
+        $cart = $this->AppAuth->getCart();
 
-        $this->loadModel('CakeCart');
+        $this->loadModel('Cart');
         $this->loadModel('Product');
 
         // START check if no amount is 0
@@ -154,15 +154,15 @@ class CartsController extends FrontendController
             $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
             if ($ccp['amount'] == 0) {
                 $this->log('amount of cart productId ' . $ids['productId'] . ' (attributeId : ' . $ids['attributeId'] . ') was 0 and therefore removed from cart');
-                $ccp = ClassRegistry::init('CakeCartProduct');
+                $ccp = ClassRegistry::init('CartProduct');
                 $ccp->remove($ids['productId'], $ids['attributeId'], $this->AppAuth->Cart->getCartId());
                 $productWithAmount0Found = true;
             }
         }
 
         if ($productWithAmount0Found) {
-            $cart = $this->AppAuth->getCakeCart();
-            $this->AppAuth->setCakeCart($cart);
+            $cart = $this->AppAuth->getCart();
+            $this->AppAuth->setCart($cart);
         }
         // END check if no amount is 0
 
@@ -203,13 +203,13 @@ class CartsController extends FrontendController
                         $stockAvailableQuantity = $attribute['StockAvailable']['quantity'];
                         // stock available check for attribute
                         if ($stockAvailableQuantity < $ccp['amount']) {
-                            $this->loadModel('AttributeLang');
-                            $attributeLang = $this->AttributeLang->find('first', array(
+                            $this->loadModel('Attribute');
+                            $attribute = $this->Attribute->find('first', array(
                                 'conditions' => array(
-                                    'AttributeLang.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
+                                    'Attribute.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
                                 )
                             ));
-                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attributeLang['AttributeLang']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute['Attribute']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                             $cartErrors[$ccp['productId']][] = $message;
                         }
                         break;
@@ -235,7 +235,7 @@ class CartsController extends FrontendController
             $orderDetails2save[] = array(
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
-                'product_name' => $this->CakeCart->getProductNameWithUnity($ccp['productName'], $ccp['unity']),
+                'product_name' => $this->Cart->getProductNameWithUnity($ccp['productName'], $ccp['unity']),
                 'product_quantity' => $ccp['amount'],
                 'product_price' => $ccp['priceExcl'],
                 'total_price_tax_excl' => $ccp['priceExcl'],
@@ -289,14 +289,10 @@ class CartsController extends FrontendController
             // START save order
             $this->Order->id = null;
             $order2save = array(
-                'id_shop' => Configure::read('app.shopId'),
-                'id_lang' => Configure::read('app.langId'),
                 'id_customer' => $this->AppAuth->getUserId(),
-                'id_cart' => 0,
-                'id_cake_cart' => $this->AppAuth->Cart->getCartId(),
+                'id_cart' => $this->AppAuth->Cart->getCartId(),
                 'id_currency' => 1,
                 'current_state' => ORDER_STATE_OPEN,
-                'id_lang' => Configure::read('app.langId'),
                 'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
@@ -370,7 +366,7 @@ class CartsController extends FrontendController
             $this->OrderDetailTax->saveAll($orderDetailTax2save);
             // END save order_detail_tax
 
-            $this->sendShopOrderNotificationToManufacturers($cart['CakeCartProducts'], $order);
+            $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
 
             // START update stock available
             $i = 0;
@@ -384,8 +380,8 @@ class CartsController extends FrontendController
             $this->AppAuth->Cart->markAsSaved();
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
-            $this->loadModel('CakeActionLog');
-            $this->CakeActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
+            $this->loadModel('ActionLog');
+            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
             // START send confirmation email to customer
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
@@ -424,7 +420,7 @@ class CartsController extends FrontendController
         $this->render('detail');
     }
 
-    public function sendShopOrderNotificationToManufacturers($cakeCartProducts, $order)
+    public function sendShopOrderNotificationToManufacturers($cartProducts, $order)
     {
 
         if (!$this->Session->check('Auth.shopOrderCustomer')) {
@@ -432,8 +428,8 @@ class CartsController extends FrontendController
         }
 
         $manufacturers = array();
-        foreach ($cakeCartProducts as $cakeCartProduct) {
-            $manufacturers[$cakeCartProduct['manufacturerId']][] = $cakeCartProduct;
+        foreach ($cartProducts as $cartProduct) {
+            $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
         $this->loadModel('Manufacturer');
@@ -464,7 +460,7 @@ class CartsController extends FrontendController
                 ->viewVars(array(
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
-                    'cart' => array('CakeCartProducts' => $cakeCartProducts),
+                    'cart' => array('CartProducts' => $cartProducts),
                     'originalLoggedCustomer' => $this->Session->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
@@ -547,8 +543,8 @@ class CartsController extends FrontendController
             $attributeId = (int) $explodedProductId[1];
         }
 
-        $cakeCart = $this->AppAuth->getCakeCart();
-        $this->AppAuth->setCakeCart($cakeCart);
+        $cart = $this->AppAuth->getCart();
+        $this->AppAuth->setCart($cart);
 
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
@@ -560,12 +556,12 @@ class CartsController extends FrontendController
             )));
         }
 
-        $ccp = ClassRegistry::init('CakeCartProduct');
-        $ccp->remove($productId, $attributeId, $cakeCart['CakeCart']['id_cart']);
+        $ccp = ClassRegistry::init('CartProduct');
+        $ccp->remove($productId, $attributeId, $cart['Cart']['id_cart']);
 
         // update cart to update field date_upd
-        $cc = ClassRegistry::init('CakeCart');
-        $cc->id = $cakeCart['CakeCart']['id_cart'];
+        $cc = ClassRegistry::init('Cart');
+        $cc->id = $cart['Cart']['id_cart'];
         $cc->updateDateUpd();
 
         // ajax calls do not call beforeRender
@@ -606,10 +602,14 @@ class CartsController extends FrontendController
 
         // get product data from database
         $this->loadModel('Product');
-        $this->Product->recursive = 2;
+        $this->Product->recursive = 3;
+        $this->Product->Behaviors->load('Containable');
         $product = $this->Product->find('first', array(
             'conditions' => array(
                 'Product.id_product' => $productId
+            ),
+            'contain' => array(
+                'ProductLang', 'StockAvailable', 'ProductAttributes', 'ProductAttributes.StockAvailable', 'ProductAttributes.ProductAttributeCombination.Attribute'
             )
         ));
 
@@ -647,13 +647,7 @@ class CartsController extends FrontendController
                     $attributeIdFound = true;
                     // stock available check for attribute
                     if ($attribute['StockAvailable']['quantity'] < $combinedAmount && $amount > 0) {
-                        $this->loadModel('AttributeLang');
-                        $attributeLang = $this->AttributeLang->find('first', array(
-                            'conditions' => array(
-                                'AttributeLang.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
-                            )
-                        ));
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attributeLang['AttributeLang']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailable']['quantity'];
+                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute['ProductAttributeCombination']['Attribute']['name'] . '" des Produktes "' . $product['ProductLang']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailable']['quantity'];
                         die(json_encode(array(
                             'status' => 0,
                             'msg' => $message,
@@ -674,25 +668,25 @@ class CartsController extends FrontendController
         }
 
         // update amount if cart product already exists
-        $cakeCart = $this->AppAuth->getCakeCart();
-        $this->AppAuth->setCakeCart($cakeCart);
-        $ccp = ClassRegistry::init('CakeCartProduct');
+        $cart = $this->AppAuth->getCart();
+        $this->AppAuth->setCart($cart);
+        $ccp = ClassRegistry::init('CartProduct');
         $ccp->id = null;
         if ($existingCartProduct) {
-            $ccp->id = $existingCartProduct['cakeCartProductId'];
+            $ccp->id = $existingCartProduct['cartProductId'];
         }
 
         $cartProduct2save = array(
             'id_product' => $productId,
             'amount' => $combinedAmount,
             'id_product_attribute' => $attributeId,
-            'id_cart' => $cakeCart['CakeCart']['id_cart']
+            'id_cart' => $cart['Cart']['id_cart']
         );
         $ccp->save($cartProduct2save);
 
         // update cart to update field date_upd
-        $cc = ClassRegistry::init('CakeCart');
-        $cc->id = $cakeCart['CakeCart']['id_cart'];
+        $cc = ClassRegistry::init('Cart');
+        $cc->id = $cart['Cart']['id_cart'];
         $cc->updateDateUpd();
 
         // ajax calls do not call beforeRender

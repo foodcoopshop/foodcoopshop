@@ -15,8 +15,8 @@
 
 $this->element('addScript', array(
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerLangDescription');" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerLangShortDescription');" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerDescription');" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerShortDescription');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');"
 ));
@@ -133,7 +133,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     ));
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        echo $this->Form->input('ManufacturerLang.short_description', array(
+        echo $this->Form->input('Manufacturer.short_description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
         'label' => 'Kurze Beschreibung<br /><br /><span class="small">Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden.</span>',
@@ -148,7 +148,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         echo '<p>Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf "bearbeiten" klicken.</p>';
         echo '</div>';
     } else {
-        echo $this->Form->input('ManufacturerLang.description', array(
+        echo $this->Form->input('Manufacturer.description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
         'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt.<br /><br /><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'

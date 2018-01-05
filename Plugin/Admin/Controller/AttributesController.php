@@ -59,47 +59,35 @@ class AttributesController extends AdminAppController
             foreach ($this->request->data['Attribute'] as &$data) {
                 $data = strip_tags(trim($data));
             }
-            foreach ($this->request->data['AttributeLang'] as $key => &$data) {
-                $data = strip_tags(trim($data));
-            }
 
             $errors = array();
-            $this->Attribute->AttributeLang->set($this->request->data['AttributeLang']);
-            if (! $this->Attribute->AttributeLang->validates()) {
-                $errors = array_merge($errors, $this->Attribute->AttributeLang->validationErrors);
+            $this->Attribute->set($this->request->data['Attribute']);
+            if (! $this->Attribute->validates()) {
+                $errors = array_merge($errors, $this->Attribute->validationErrors);
             }
 
             if (empty($errors)) {
-                $this->loadModel('CakeActionLog');
-
-                $this->request->data['AttributeLang']['id_lang'] = Configure::read('app.langId');
+                $this->loadModel('ActionLog');
 
                 $this->Attribute->save($this->request->data['Attribute'], array(
                     'validate' => false
                 ));
                 if (is_null($attributeId)) {
-                    $this->request->data['AttributeLang']['id_attribute'] = $this->Attribute->id;
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'attribute_added';
                 } else {
-                    $this->Attribute->AttributeLang->id = $attributeId;
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'attribute_changed';
                 }
 
-                $this->Attribute->AttributeLang->save($this->request->data, array(
-                    'validate' => false
-                ));
-
                 if (isset($this->request->data['Attribute']['delete_attribute']) && $this->request->data['Attribute']['delete_attribute']) {
                     $this->Attribute->delete($this->Attribute->id); // cascade does not work here
-                    $this->Attribute->AttributeLang->delete($this->Attribute->id); // AttributeLang record needs to be deleted manually
-                    $message = 'Die Variante "' . $this->request->data['AttributeLang']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->CakeActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
+                    $message = 'Die Variante "' . $this->request->data['Attribute']['name'] . '" wurde erfolgreich gelöscht.';
+                    $this->ActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Die Variante "' . $this->request->data['AttributeLang']['name'] . '" wurde ' . $messageSuffix;
-                    $this->CakeActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
+                    $message = 'Die Variante "' . $this->request->data['Attribute']['name'] . '" wurde ' . $messageSuffix;
+                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
                 }
 
@@ -119,7 +107,7 @@ class AttributesController extends AdminAppController
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'AttributeLang.name' => 'ASC'
+                'Attribute.name' => 'ASC'
             )
         ), $this->Paginator->settings);
         $attributes = $this->Paginator->paginate('Attribute');

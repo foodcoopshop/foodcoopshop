@@ -21,7 +21,7 @@ class BackupDatabaseShell extends AppShell
 {
 
     public $uses = array(
-        'CakeActionLog'
+        'ActionLog'
     );
 
     public function main()
@@ -88,7 +88,7 @@ class BackupDatabaseShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->CakeActionLog->customSave('cronjob_backup_database', $this->browser->getLoggedUserId(), 0, '', $message . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_backup_database', $this->browser->getLoggedUserId(), 0, '', $message . '<br />' . $this->getRuntime());
         $this->out($this->getRuntime());
     }
 }

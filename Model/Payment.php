@@ -1,6 +1,6 @@
 <?php
 /**
- * CakePayment
+ * Payment
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,7 +14,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakePayment extends AppModel
+class Payment extends AppModel
 {
 
     public $belongsTo = array(
@@ -37,13 +37,13 @@ class CakePayment extends AppModel
     private function getManufacturerDepositConditions($manufacturerId = null)
     {
         $conditions = array(
-            'CakePayment.status' => APP_ON,
-            'CakePayment.id_customer' => 0
+            'Payment.status' => APP_ON,
+            'Payment.id_customer' => 0
         );
         if (!is_null($manufacturerId)) {
-            $conditions['CakePayment.id_manufacturer'] = $manufacturerId;
+            $conditions['Payment.id_manufacturer'] = $manufacturerId;
         }
-        $conditions['CakePayment.type'] = 'deposit';
+        $conditions['Payment.type'] = 'deposit';
         return $conditions;
     }
 
@@ -55,12 +55,12 @@ class CakePayment extends AppModel
     public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear)
     {
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
-        $conditions['DATE_FORMAT(CakePayment.date_add, \'%Y-%c\')'] = $monthAndYear;
+        $conditions['DATE_FORMAT(Payment.date_add, \'%Y-%c\')'] = $monthAndYear;
 
         $paymentSum = $this->find('all', array(
-            'fields' => 'CakePayment.*',
+            'fields' => 'Payment.*',
             'conditions' => $conditions,
-            'order' => array('CakePayment.date_add' => 'DESC'),
+            'order' => array('Payment.date_add' => 'DESC'),
         ));
 
         return $paymentSum;
@@ -73,12 +73,12 @@ class CakePayment extends AppModel
     {
 
         $conditions = $this->getManufacturerDepositConditions();
-        $conditions['CakePayment.text'] = 'money';
+        $conditions['Payment.text'] = 'money';
 
         $paymentSum = $this->find('all', array(
             'fields' => 'SUM(amount) as sumManufacturerMoneyDeposit',
             'conditions' => $conditions,
-            'order' => array('CakePayment.date_add' => 'DESC'),
+            'order' => array('Payment.date_add' => 'DESC'),
         ));
 
         return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
@@ -98,12 +98,12 @@ class CakePayment extends AppModel
             'SUM(amount) as sumDepositReturned'
         );
         if ($groupByMonth) {
-            $fields[] = 'DATE_FORMAT(CakePayment.date_add, \'%Y-%c\') as monthAndYear';
+            $fields[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%c\') as monthAndYear';
         }
         $paymentSum = $this->find('all', array(
             'fields' => $fields,
             'conditions' => $conditions,
-            'order' => $groupByMonth ? array('monthAndYear' => 'DESC') : array('CakePayment.date_add' => 'DESC'),
+            'order' => $groupByMonth ? array('monthAndYear' => 'DESC') : array('Payment.date_add' => 'DESC'),
             'group' => $groupByMonth ? 'monthAndYear' : null
         ));
 
@@ -118,12 +118,12 @@ class CakePayment extends AppModel
     public function getSum($customerId, $type)
     {
         $conditions = array(
-            'CakePayment.id_customer' => $customerId,
-            'CakePayment.id_manufacturer' => 0,
-            'CakePayment.status' => APP_ON
+            'Payment.id_customer' => $customerId,
+            'Payment.id_manufacturer' => 0,
+            'Payment.status' => APP_ON
         );
 
-        $conditions['CakePayment.type'] = $type;
+        $conditions['Payment.type'] = $type;
 
         $paymentSum = $this->find('all', array(
             'fields' => array(

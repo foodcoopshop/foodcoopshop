@@ -1,6 +1,6 @@
 <?php
 /**
- * BlogPostShop
+ * Deposit
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,9 +14,6 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class BlogPostShop extends AppModel
+class Deposit extends AppModel
 {
-
-    public $useTable = 'smart_blog_post_shop';
-    public $primaryKey = 'id_smart_blog_post_shop';
 }

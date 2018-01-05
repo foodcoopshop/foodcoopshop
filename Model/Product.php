@@ -45,18 +45,13 @@ class Product extends AppModel
     );
 
     public $hasOne = array(
-        'CakeDepositProduct' => array(
+        'DepositProduct' => array(
             'foreignKey' => 'id_product'
         ),
-        'ImageShop' => array(
-            'className' => 'ImageShop',
+        'Image' => array(
             'foreignKey' => 'id_product',
-            'conditions' => array(
-                'ImageShop.id_shop' => 1,
-                'ImageShop.cover' => 1
-            ),
             'order' => array(
-                'ImageShop.id_image' => 'DESC'
+                'Image.id_image' => 'DESC'
             )
         )
     );
@@ -223,16 +218,16 @@ class Product extends AppModel
             $ids = $this->getProductIdAndAttributeId($productId);
 
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                $oldDeposit = $this->DepositProduct->find('first', array(
                     'conditions' => array(
-                        'CakeDepositProduct.id_product_attribute' => $ids['attributeId']
+                        'DepositProduct.id_product_attribute' => $ids['attributeId']
                     )
                 ));
 
                 if (empty($oldDeposit)) {
-                    $this->CakeDepositProduct->id = null; // force new insert
+                    $this->DepositProduct->id = null; // force new insert
                 } else {
-                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                    $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
                 }
 
                 $deposit2save = array(
@@ -241,16 +236,16 @@ class Product extends AppModel
                 );
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->CakeDepositProduct->find('first', array(
+                $oldDeposit = $this->DepositProduct->find('first', array(
                     'conditions' => array(
-                        'CakeDepositProduct.id_product' => $productId
+                        'DepositProduct.id_product' => $productId
                     )
                 ));
 
                 if (empty($oldDeposit)) {
-                    $this->CakeDepositProduct->id = null; // force new insert
+                    $this->DepositProduct->id = null; // force new insert
                 } else {
-                    $this->CakeDepositProduct->id = $oldDeposit['CakeDepositProduct']['id'];
+                    $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
                 }
 
                 $deposit2save = array(
@@ -259,8 +254,8 @@ class Product extends AppModel
                 );
             }
 
-            $this->CakeDepositProduct->primaryKey = 'id';
-            $success |= $this->CakeDepositProduct->save($deposit2save);
+            $this->DepositProduct->primaryKey = 'id';
+            $success |= $this->DepositProduct->save($deposit2save);
         }
 
         return $success;
@@ -409,10 +404,7 @@ class Product extends AppModel
 
         // reduce data
         $this->Manufacturer->unbindModel(array(
-            'hasOne' => 'ManufacturerLang'
-        ));
-        $this->Manufacturer->unbindModel(array(
-            'hasMany' => 'CakeInvoices'
+            'hasMany' => 'Invoices'
         ));
         $this->ProductLang->unbindModel(array(
             'belongsTo' => 'Product'
@@ -439,8 +431,8 @@ class Product extends AppModel
                     $products[$i]['Categories']['allProductsFound'] = true;
                 } else {
                     // check if category was assigned to product but deleted afterwards
-                    if (isset($category['CategoryLang']) && isset($category['CategoryLang']['name'])) {
-                        $products[$i]['Categories']['names'][] = $category['CategoryLang']['name'];
+                    if (isset($category['Category']) && isset($category['Category']['name'])) {
+                        $products[$i]['Categories']['names'][] = $category['Category']['name'];
                     }
                 }
             }
@@ -455,7 +447,7 @@ class Product extends AppModel
                 $rowClass[] = 'deactivated';
             }
 
-            @$products[$i]['Deposit'] = $product['CakeDepositProduct']['deposit'];
+            @$products[$i]['Deposit'] = $product['DepositProduct']['deposit'];
             if (empty($products[$i]['Tax'])) {
                 $products[$i]['Tax']['rate'] = 0;
                 $product = $products[$i];
@@ -498,7 +490,7 @@ class Product extends AppModel
                             'rowClass' => join(' ', $rowClass)
                         ),
                         'ProductLang' => array(
-                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['AttributeLang']['name'],
+                            'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['Attribute']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''
@@ -512,12 +504,12 @@ class Product extends AppModel
                         'StockAvailable' => array(
                             'quantity' => $attribute['StockAvailable']['quantity']
                         ),
-                        'Deposit' => isset($attribute['CakeDepositProductAttribute']['deposit']) ? $attribute['CakeDepositProductAttribute']['deposit'] : 0,
+                        'Deposit' => isset($attribute['DepositProductAttribute']['deposit']) ? $attribute['DepositProductAttribute']['deposit'] : 0,
                         'Categories' => array(
                             'names' => array(),
                             'allProductsFound' => true
                         ),
-                        'ImageShop' => null
+                        'Image' => null
                     );
                     $preparedProducts[] = $preparedProduct;
                 }
@@ -545,7 +537,7 @@ class Product extends AppModel
                 'CategoryProducts'
             ),
             'hasOne' => array(
-                'CakeDepositProduct',
+                'DepositProduct',
                 'ImageShop'
             )
         ));
@@ -716,7 +708,7 @@ class Product extends AppModel
 
         // DISTINCT: attributes cause duplicate entries
         $fields = array(
-            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, ImageShop.id_image'
+            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, Image.id_image'
         );
 
         $contain = array(
@@ -834,7 +826,7 @@ class Product extends AppModel
 
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
         // with custom sql
-        $this->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, id_shop, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', 1, ' . $defaultQuantity . ')');
+        $this->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
 
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }

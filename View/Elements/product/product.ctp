@@ -16,12 +16,12 @@
 echo '<div class="product-wrapper">';
 
     echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getProductImageSrc($product['ImageLang']['id_image'], $product['ImageLang']['legend'], 'thickbox');
+        $srcLargeImage = $this->Html->getProductImageSrc($product['Image']['id_image'], 'thickbox');
         $largeImageExists = preg_match('/de-default/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a class="lightbox" href="'.$srcLargeImage.'">';
 }
-            echo '<img src="' . $this->Html->getProductImageSrc($product['ImageLang']['id_image'], $product['ImageLang']['legend'], 'home'). '" />';
+            echo '<img src="' . $this->Html->getProductImageSrc($product['Image']['id_image'], 'home'). '" />';
 if (!$largeImageExists) {
     echo '</a>';
 }
@@ -123,8 +123,8 @@ if ($product['ProductLang']['description'] != '') {
             if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
                 echo '<div class="line">';
                 echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShop']['gross_price']). '</div>';
-                if (!empty($attribute['CakeDepositProductAttribute']['deposit'])) {
-                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['CakeDepositProductAttribute']['deposit']) . '</b> Pfand</div>';
+                if (!empty($attribute['DepositProductAttribute']['deposit'])) {
+                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttribute']['deposit']) . '</b> Pfand</div>';
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
                 echo '</div>';
@@ -141,7 +141,7 @@ if ($product['ProductLang']['description'] != '') {
             echo '<div class="radio">
                            <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttribute']['id_product_attribute'].'">
                                <input type="radio" name="product-'.$product['Product']['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                           $attribute['ProductAttributeCombination']['AttributeLang']['name'].'
+                           $attribute['ProductAttributeCombination']['Attribute']['name'].'
                            </label>
                        </div>';
         }
@@ -151,8 +151,8 @@ if ($product['ProductLang']['description'] != '') {
         if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
             echo '<div class="line">';
             echo '<div class="price">' . $this->Html->formatAsEuro($product['Product']['gross_price']) . '</div>';
-            if ($product['CakeDeposit']['deposit']) {
-                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['CakeDeposit']['deposit']).'</b> Pfand</div>';
+            if ($product['Deposit']['deposit']) {
+                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['Deposit']['deposit']).'</b> Pfand</div>';
             }
                 echo '</div>';
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';

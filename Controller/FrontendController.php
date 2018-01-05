@@ -177,6 +177,6 @@ class FrontendController extends AppController
             $this->set('shoppingLimitReached', $shoppingLimitReached);
         }
 
-        $this->AppAuth->setCakeCart($this->AppAuth->getCakeCart());
+        $this->AppAuth->setCart($this->AppAuth->getCart());
     }
 }

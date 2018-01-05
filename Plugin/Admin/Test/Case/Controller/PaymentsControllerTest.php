@@ -1,8 +1,8 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('CakeActionLog', 'Model');
-App::uses('CakePayment', 'Model');
+App::uses('ActionLog', 'Model');
+App::uses('Payment', 'Model');
 App::uses('Customer', 'Model');
 
 /**
@@ -26,8 +26,8 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->CakeActionLog = new CakeActionLog();
-        $this->CakePayment = new CakePayment();
+        $this->ActionLog = new ActionLog();
+        $this->Payment = new Payment();
     }
 
     public function testAddPaymentLoggedOut()
@@ -155,12 +155,12 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->browser->getJsonDecodedContent();
 
         // change approval to APP_ON via sql query
-        $query = 'UPDATE ' . $this->CakePayment->tablePrefix . $this->CakePayment->useTable.' SET approval = :approval WHERE id = :paymentId';
+        $query = 'UPDATE ' . $this->Payment->tablePrefix . $this->Payment->useTable.' SET approval = :approval WHERE id = :paymentId';
         $params = array(
             'approval' => APP_ON,
             'paymentId' => $addResponse->paymentId
         );
-        $this->CakePayment->getDataSource()->fetchAll($query, $params);
+        $this->Payment->getDataSource()->fetchAll($query, $params);
 
         $this->deletePayment($addResponse->paymentId);
         $deleteResponse = $this->browser->getJsonDecodedContent();
@@ -182,7 +182,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
     }
 
-    private function addDepositToManufacturer($depositText, $cakeActionLogText)
+    private function addDepositToManufacturer($depositText, $ActionLogText)
     {
         $this->Customer = new Customer();
 
@@ -190,19 +190,19 @@ class PaymentsControllerTest extends AppCakeTestCase
         $amountToAdd = 10;
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
 
-        $manufacturerDepositSum = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0][0]['sumDepositReturned']);
 
         $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText);
         $this->assertEquals(1, $jsonDecodedContent->status);
         $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
-        $manufacturerDepositSum = $this->CakePayment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
+        $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEquals($amountToAdd, $manufacturerDepositSum[0][0]['sumDepositReturned']);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
             'payment_deposit_manufacturer_added',
             'payments',
-            $cakeActionLogText
+            $ActionLogText
         );
     }
 
@@ -218,15 +218,15 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
     {
-        $lastActionLog = $this->CakeActionLog->find('all', array(
+        $lastActionLog = $this->ActionLog->find('all', array(
             'conditions' => array(
-                'CakeActionLog.customer_id' => $customerId
+                'ActionLog.customer_id' => $customerId
             ),
-            'order' => array('CakeActionLog.date' => 'DESC')
+            'order' => array('ActionLog.date' => 'DESC')
         ));
-        $this->assertEquals($expectedType, $lastActionLog[0]['CakeActionLog']['type'], 'cake action log type not correct');
-        $this->assertEquals($expectedObjectType, $lastActionLog[0]['CakeActionLog']['object_type'], 'cake action log object type not correct');
-        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['CakeActionLog']['text'], 'cake action log text not correct');
+        $this->assertEquals($expectedType, $lastActionLog[0]['ActionLog']['type'], 'cake action log type not correct');
+        $this->assertEquals($expectedObjectType, $lastActionLog[0]['ActionLog']['object_type'], 'cake action log object type not correct');
+        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['ActionLog']['text'], 'cake action log text not correct');
     }
 
     /**

@@ -30,7 +30,7 @@ class PagesController extends FrontendController
                 $this->Page->recursive = -1;
                 $page = $this->Page->find('first', array(
                     'conditions' => array(
-                        'Page.id_cms' => $pageId,
+                        'Page.id_page' => $pageId,
                         'Page.active' => APP_ON
                     )
                 ));
@@ -89,19 +89,12 @@ class PagesController extends FrontendController
         $pageId = (int) $this->params['pass'][0];
 
         $conditions = array(
-            'Page.id_cms' => $pageId,
-            'Page.active' => APP_ON,
-            'PageLang.id_lang' => Configure::read('app.langId'),
-            'PageLang.id_shop' => Configure::read('app.shopId')
+            'Page.id_page' => $pageId,
+            'Page.active' => APP_ON
         );
 
         $page = $this->Page->find('first', array(
-            'conditions' => $conditions,
-            'contain' => array(
-                'PageLang.meta_title',
-                'PageLang.link_rewrite',
-                'PageLang.content'
-            )
+            'conditions' => $conditions
         ));
 
         if (empty($page)) {
@@ -109,22 +102,18 @@ class PagesController extends FrontendController
         }
 
         // redirect direct call of page with link
-        if ($page['Page']['url'] != '') {
-            $this->redirect($page['Page']['url']);
+        if ($page['Page']['extern_url'] != '') {
+            $this->redirect($page['Page']['extern_url']);
         }
 
-        $recursive = 2; // for PageLang
         $children = $this->Page->children(
             $pageId,
             false,
             null,
             array(
                 'Page.position' => 'ASC',
-                'PageLang.meta_title' => 'ASC'
-            ),
-            null,
-            1,
-            $recursive
+                'Page.title' => 'ASC'
+            )
         );
 
         $page['children'] = array();
@@ -138,13 +127,13 @@ class PagesController extends FrontendController
             $page['children'][] = $child;
         }
 
-        $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_cms'], $page['PageLang']['meta_title']);
+        $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
         if ($correctSlug != Configure::read('slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 
         $this->set('page', $page);
-        $this->set('title_for_layout', $page['PageLang']['meta_title']);
+        $this->set('title_for_layout', $page['Page']['title']);
     }
 
     public function termsOfUse()

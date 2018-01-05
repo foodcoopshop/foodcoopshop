@@ -2253,20 +2253,20 @@ foodcoopshop.Admin = {
 
     addPaymentFormSave: function () {
 
-        var amount = $('.featherlight-content #CakePaymentAmount').val();
+        var amount = $('.featherlight-content #PaymentAmount').val();
         if (isNaN(parseFloat(amount.replace(/,/, '.')))) {
             alert('Bitte gib eine Zahl ein.');
             foodcoopshop.AppFeatherlight.enableSaveButton();
             return;
         }
 
-        var type = $('.featherlight-content #CakePaymentType').val();
-        var customerIdDomElement = $('.featherlight-content #CakePaymentCustomerId');
-        var manufacturerIdDomElement = $('.featherlight-content #CakePaymentManufacturerId');
+        var type = $('.featherlight-content #PaymentType').val();
+        var customerIdDomElement = $('.featherlight-content #PaymentCustomerId');
+        var manufacturerIdDomElement = $('.featherlight-content #PaymentManufacturerId');
 
         var text = '';
-        if ($('.featherlight-content #CakePaymentText').length > 0) {
-            text = $('.featherlight-content #CakePaymentText').val().trim();
+        if ($('.featherlight-content #PaymentText').length > 0) {
+            text = $('.featherlight-content #PaymentText').val().trim();
         }
 
         // radio buttons only if deposit is added to manufacurers
@@ -2455,6 +2455,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 

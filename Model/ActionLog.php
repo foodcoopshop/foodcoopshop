@@ -1,6 +1,6 @@
 <?php
 /**
- * CakeActionLog
+ * ActionLog
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,14 +14,14 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CakeActionLog extends AppModel
+class ActionLog extends AppModel
 {
     /*
      * Supported structure:
      * {type_id} => array(
      *     'de' => 'text to show in German language',
      *     'access' => array(
-     *         'manufacturer',  // uncertain how that works
+     *         'manufacturer', // uncertain how that works
      *     ),
      *     'class' => array(  // classification of log entry
      *         'info',  // for info only, default
@@ -445,7 +445,7 @@ class CakeActionLog extends AppModel
                 'object_type' => 'blog_posts'
             )
         ),
-        'CakePayment' => array(
+        'Payment' => array(
             'foreignKey' => 'object_id',
             'conditions' => array(
                 'object_type' => 'payments'

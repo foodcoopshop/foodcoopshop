@@ -61,13 +61,13 @@
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('BlogPost.id_smart_blog_post', 'ID') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('BlogPost.id_blog_post', 'ID') . '</th>';
 echo '<th>Bild</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('BlogPost.is_featured', 'Start-Seite') . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPost.is_private', 'Nur für Mitglieder') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPostLang.meta_title', 'Titel') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPostLang.short_description', 'Kurze Beschreibung') . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPost.title', 'Titel') . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPost.short_description', 'Kurze Beschreibung') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customer.name', 'geändert von') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.name', 'Hersteller') . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPost.modified', 'geändert am') . '</th>';
@@ -85,19 +85,19 @@ foreach ($blogPosts as $blogPost) {
     if (! $blogPost['BlogPost']['active']) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr id="blogPost-' . $blogPost['BlogPost']['id_smart_blog_post'] . '" class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="blogPost-' . $blogPost['BlogPost']['id_blog_post'] . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
-    echo $blogPost['BlogPost']['id_smart_blog_post'];
+    echo $blogPost['BlogPost']['id_blog_post'];
     echo '</td>';
 
     echo '<td align="center" style="background-color: #fff;">';
-    $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'single');
+    $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'single');
     $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
     if (! $largeImageExists) {
         echo '<a class="lightbox" href="' . $srcLargeImage . '">';
     }
-    echo '<img width="90" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_smart_blog_post'], 'home') . '" />';
+    echo '<img width="90" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'home') . '" />';
     if (! $largeImageExists) {
         echo '</a>';
     }
@@ -106,7 +106,7 @@ foreach ($blogPosts as $blogPost) {
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
-    ), $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_smart_blog_post']));
+    ), $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_blog_post']));
     echo '</td>';
 
     echo '<td align="center">';
@@ -122,11 +122,11 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td>';
-    echo $blogPost['BlogPostLang']['meta_title'];
+    echo $blogPost['BlogPost']['title'];
     echo '</td>';
 
     echo '<td>';
-    echo $blogPost['BlogPostLang']['short_description'];
+    echo $blogPost['BlogPost']['short_description'];
     echo '</td>';
 
     echo '<td>';
@@ -158,7 +158,7 @@ foreach ($blogPosts as $blogPost) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Blog-Artikel anzeigen',
             'target' => '_blank'
-        ), $this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_smart_blog_post'], $blogPost['BlogPostLang']['meta_title']));
+        ), $this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_blog_post'], $blogPost['BlogPost']['title']));
     }
     echo '</td>';
 

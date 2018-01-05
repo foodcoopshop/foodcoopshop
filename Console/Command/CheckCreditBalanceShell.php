@@ -20,7 +20,7 @@ class CheckCreditBalanceShell extends AppShell
 
     public $uses = array(
         'Customer',
-        'CakeActionLog'
+        'ActionLog'
     );
 
     public function main()
@@ -77,7 +77,7 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->CakeActionLog->customSave('cronjob_check_credit_balance', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_check_credit_balance', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());

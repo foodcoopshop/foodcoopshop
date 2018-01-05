@@ -186,9 +186,5 @@ class Order extends AppModel
         // update table orders
         $this->id = $orderId;
         $this->save($order2update);
-
-        // update table order_invoice
-        unset($order2update['total_paid']);
-        unset($order2update['total_paid_real']);
     }
 }

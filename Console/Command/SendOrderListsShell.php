@@ -21,7 +21,7 @@ class SendOrderListsShell extends AppShell
         'Manufacturer',
         'Order',
         'Customer',
-        'CakeActionLog',
+        'ActionLog',
         'Configuration' // for unit test mock object
     );
 
@@ -44,7 +44,7 @@ class SendOrderListsShell extends AppShell
         // 1) get all manufacturers (not only active ones)
         $this->Manufacturer->unbindModel(array(
             'hasMany' => array(
-                'CakeInvoices'
+                'Invoices'
             )
         ));
         $manufacturers = $this->Manufacturer->find('all', array(
@@ -105,7 +105,7 @@ class SendOrderListsShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->CakeActionLog->customSave('cronjob_send_order_lists', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_send_order_lists', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
 

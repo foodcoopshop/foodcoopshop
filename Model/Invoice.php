@@ -1,6 +1,6 @@
 <?php
 /**
- * ImageLang
+ * Invoice
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,10 +14,6 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ImageLang extends AppModel
+class Invoice extends AppModel
 {
-
-    public $useTable = 'image_lang';
-
-    public $primaryKey = 'id_image';
 }

@@ -32,7 +32,7 @@ class ReportsController extends AdminAppController
 
     public function payments($paymentType)
     {
-        $this->loadModel('CakePayment', 'Model');
+        $this->loadModel('Payment', 'Model');
 
         $dateFrom = Configure::read('timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->params['named']['dateFrom'])) {
@@ -53,29 +53,29 @@ class ReportsController extends AdminAppController
         $this->set('customerId', $customerId);
 
         $conditions = array(
-            'CakePayment.type' => $paymentType
+            'Payment.type' => $paymentType
         );
-        $conditions[] = 'DATE_FORMAT(CakePayment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(CakePayment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         if ($customerId != '') {
-            $conditions['CakePayment.id_customer'] = $customerId;
+            $conditions['Payment.id_customer'] = $customerId;
         }
 
         // exluce "empty_glasses" deposit payments for manufacturers
-        $conditions[] = "((CakePayment.id_manufacturer > 0 && CakePayment.text = 'money') || CakePayment.id_manufacturer = 0)";
+        $conditions[] = "((Payment.id_manufacturer > 0 && Payment.text = 'money') || Payment.id_manufacturer = 0)";
 
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'CakePayment.date_add' => 'DESC'
+                'Payment.date_add' => 'DESC'
             )
         ), $this->Paginator->settings);
 
-        $payments = $this->Paginator->paginate('CakePayment');
+        $payments = $this->Paginator->paginate('Payment');
         $this->set('payments', $payments);
 
-        $this->set('customersForDropdown', $this->CakePayment->Customer->getForDropdown());
+        $this->set('customersForDropdown', $this->Payment->Customer->getForDropdown());
         $this->set('title_for_layout', 'Bericht: ' . Configure::read('htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', in_array($paymentType, array(

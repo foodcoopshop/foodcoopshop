@@ -28,7 +28,7 @@ class AppShell extends Shell
     public $browser;
 
     public $uses = array(
-        'CakeActionLog',
+        'ActionLog',
         'Customer'
     );
 

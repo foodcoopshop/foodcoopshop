@@ -28,8 +28,8 @@ class ProductAttribute extends AppModel
         'StockAvailable' => array(
             'foreignKey' => 'id_product_attribute'
         ),
-        'CakeDepositProductAttribute' => array(
-            'className' => 'CakeDeposit',
+        'DepositProductAttribute' => array(
+            'className' => 'Deposit',
             'foreignKey' => 'id_product_attribute'
         ),
         'ProductAttributeShop' => array(

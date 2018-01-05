@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('CakeCart', 'Model');
+App::uses('Cart', 'Model');
 App::uses('Product', 'Model');
 App::uses('Order', 'Model');
 App::uses('StockAvailable', 'Model');
@@ -44,7 +44,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->CakeCart = new CakeCart();
+        $this->Cart = new Cart();
         $this->Product = new Product();
         $this->Order = new Order();
         $this->StockAvailable = new StockAvailable();
@@ -88,8 +88,8 @@ class CartsControllerTest extends AppCakeTestCase
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
-        $this->assertEquals(array(), $cakeCart['CakeCartProducts'], 'cart must be empty');
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals(array(), $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
         $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
@@ -109,9 +109,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // check if product was placed in cart
-        $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
-        $this->assertEquals($this->productId1, $cakeCart['CakeCartProducts'][0]['productId'], 'product id not found in cart');
-        $this->assertEquals($amount1, $cakeCart['CakeCartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals($this->productId1, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
+        $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
 
         // try to add an amount that is not available any more
         $this->addTooManyProducts($this->productId1, 99, $amount1, 'Die gewünschte Anzahl (101) des Produktes "Artischocke" ist leider nicht mehr verfügbar. Verfügbare Menge: 98', 0);
@@ -124,9 +124,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // check if product was placed in cart
-        $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
-        $this->assertEquals($this->productId2, $cakeCart['CakeCartProducts'][1]['productId'], 'product id not found in cart');
-        $this->assertEquals($amount2, $cakeCart['CakeCartProducts'][1]['amount'], 'amount not found in cart or amount wrong');
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals($this->productId2, $cart['CartProducts'][1]['productId'], 'product id not found in cart');
+        $this->assertEquals($amount2, $cart['CartProducts'][1]['amount'], 'amount not found in cart or amount wrong');
 
         // try to add an amount that is not available any more
         $this->addTooManyProducts($this->productId2, 48, $amount2, 'Die gewünschte Anzahl (51) der Variante "0,5l" des Produktes "Milch" ist leider nicht mehr verfügbar. Verfügbare Menge: 20', 1);
@@ -139,10 +139,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // cake cart status check BEFORE finish
-        $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
-        $this->assertEquals($cakeCart['CakeCart']['status'], 1, 'cake cart status wrong');
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
 
-        $this->assertEquals($cakeCart['CakeCart']['id_cart'], 1, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']['id_cart'], 1, 'cake cart id wrong');
 
         /**
          * START finish cart
@@ -214,7 +214,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertNotEquals(array(), $order, 'order not correct');
         $this->assertEquals($order['Order']['id_order'], $orderId, 'order id not correct');
         $this->assertEquals($order['Order']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
-        $this->assertEquals($order['Order']['id_cake_cart'], 1, 'order cake_id not correct');
+        $this->assertEquals($order['Order']['id_cart'], 1, 'order cart_id not correct');
         $this->assertEquals($order['Order']['current_state'], 3, 'order current_state not correct');
         $this->assertEquals($order['Order']['total_deposit'], 2.5, 'order total_deposit not correct');
         $this->assertEquals($order['Order']['total_paid_tax_excl'], 5.578515, 'order total_paid_tax_excl not correct');
@@ -237,9 +237,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
-        $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
-        $this->assertEquals($cakeCart['CakeCart']['id_cart'], 2, 'cake cart id wrong');
-        $this->assertEquals(array(), $cakeCart['CakeCartProducts'], 'cake cart products not empty');
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
+        $this->assertEquals(array(), $cart['CartProducts'], 'cake cart products not empty');
 
         // check email to customer
         $emailLogs = $this->EmailLog->find('all');
@@ -281,7 +281,7 @@ class CartsControllerTest extends AppCakeTestCase
         // only one order with the cake cart id should have been created
         $orders = $this->Order->find('all', array(
             'conditions' => array(
-                'Order.id_cake_cart' => 1
+                'Order.id_cart' => 1
             )
         ));
         $this->assertEquals(1, count($orders), 'more than one order inserted');
@@ -297,12 +297,12 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatusAfterFinish()
     {
-        $cakeCart = $this->CakeCart->find('first', array(
+        $cart = $this->Cart->find('first', array(
             'conditions' => array(
-                'CakeCart.id_cart' => 1
+                'Cart.id_cart' => 1
             )
         ));
-        $this->assertEquals($cakeCart['CakeCart']['status'], 0, 'cake cart status wrong');
+        $this->assertEquals($cart['Cart']['status'], 0, 'cake cart status wrong');
     }
 
     private function addTooManyProducts($productId, $amount, $expectedAmount, $expectedErrorMessage, $productIndex)
@@ -312,8 +312,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
         $this->assertJsonError();
-        $cakeCart = $this->CakeCart->getCakeCart($this->browser->getLoggedUserId());
-        $this->assertEquals($expectedAmount, $cakeCart['CakeCartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals($expectedAmount, $cart['CartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
     }
 
     private function checkValidationError()

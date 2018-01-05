@@ -44,9 +44,9 @@ if (!empty($category)) {
             echo '<img src="' . $categoryImgSrc. '" />';
         echo '</div>';
     }
-    if ($category['CategoryLang']['description'] != '') {
+    if ($category['Category']['description'] != '') {
         echo '<div class="description-wrapper">';
-            echo $category['CategoryLang']['description'];
+            echo $category['Category']['description'];
         echo '</div>';
     }
 }
