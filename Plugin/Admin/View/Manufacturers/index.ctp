@@ -64,6 +64,7 @@ echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Lieferpause') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturer.is_private', 'Nur für Mitglieder') . '</th>';
+echo '<th title="Summe offener Bestellungen im oben angegebenen Zeitraum">O.B</th>';
 echo '<th>Opt.</th>';
 if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
@@ -190,6 +191,12 @@ foreach ($manufacturers as $manufacturer) {
     }
     echo '</td>';
 
+    echo '<td class="right">';
+    if ($manufacturer['sum_open_order_detail'] > 0) {
+        echo $this->Html->formatAsEuro($manufacturer['sum_open_order_detail']);
+    }
+    echo '</td>';
+
     echo '<td>';
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')),
@@ -245,7 +252,7 @@ foreach ($manufacturers as $manufacturer) {
 echo '<tr>';
 echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $productCountSum . '</b></td>';
-$colspan = 10;
+$colspan = 11;
 if ($depositSum !== null) {
     $colspan--;
     echo '<td><b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b></td>';
