@@ -409,10 +409,29 @@ class Product extends AppModel
         $this->ProductLang->unbindModel(array(
             'belongsTo' => 'Product'
         ));
+        $this->Manufacturer->unbindModel(array(
+            'belongsTo' => 'Customer',
+            'hasOne' => 'Address'
+        ));
+
+        $quantityIsZeroFilterOn = false;
+        $priceIsZeroFilterOn = false;
+        foreach ($pParams['conditions'] as $condition) {
+            if (preg_match('/'.$this->getIsQuantityZeroCondition().'/', $condition)) {
+                $this->ProductAttributes->hasOne['StockAvailable']['conditions'] = array(
+                    'StockAvailable.quantity' => 0
+                );
+                $quantityIsZeroFilterOn = true;
+            }
+            if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
+                $this->ProductAttributes->hasOne['ProductAttributeShop']['conditions'] = array(
+                    'ProductAttributeShop.price' => 0
+                );
+                $priceIsZeroFilterOn = true;
+            }
+        }
 
         $products = $paginator->paginate('Product');
-
-
 
         $i = 0;
         $preparedProducts = array();
@@ -465,7 +484,15 @@ class Product extends AppModel
             $i ++;
 
             if (! empty($product['ProductAttributes'])) {
+                $currentPreparedProduct = count($preparedProducts) - 1;
+                $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] = 0;
+
                 foreach ($product['ProductAttributes'] as $attribute) {
+                    if (($quantityIsZeroFilterOn && empty($attribute['StockAvailable'])) || ($priceIsZeroFilterOn && empty($attribute['ProductAttributeShop']))) {
+                        $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] ++;
+                        continue;
+                    }
+
                     $grossPrice = 0;
                     if (! empty($attribute['ProductAttributeShop']['price'])) {
                         $grossPrice = $this->getGrossPrice($product['Product']['id_product'], $attribute['ProductAttributeShop']['price']);
@@ -512,6 +539,17 @@ class Product extends AppModel
                         'Image' => null
                     );
                     $preparedProducts[] = $preparedProduct;
+                }
+            }
+        }
+
+        // price zero filter is difficult to implement, because if there are attributes assigned to the product, the product's price is always 0
+        // which would lead to always showing the main product of attributes if price zero filter is set
+        // this is not the case for quantity zero filter, because the main product's quantity is the sum of the associated attribute quantities
+        if ($priceIsZeroFilterOn) {
+            foreach ($preparedProducts as $key => $preparedProduct) {
+                if (isset($preparedProducts[$key]['AttributesRemoved']) && $preparedProducts[$key]['AttributesRemoved'] == count($preparedProducts[$key]['ProductAttributes'])) {
+                    unset($preparedProducts[$key]);
                 }
             }
         }
@@ -682,7 +720,17 @@ class Product extends AppModel
         return $netPrice;
     }
 
-    public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category = '')
+    private function getIsQuantityZeroCondition()
+    {
+        return 'StockAvailable.quantity = 0';
+    }
+
+    private function getIsPriceZeroCondition()
+    {
+        return 'ProductShop.price = 0';
+    }
+
+    public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category = '', $isQuantityZero = 0, $isPriceZero = 0)
     {
         $conditions = array();
         $group = array();
@@ -706,9 +754,17 @@ class Product extends AppModel
             $conditions['CategoryProduct.id_category'] = (int) $category;
         }
 
+        if ($isQuantityZero != '') {
+            $conditions[] = $this->getIsQuantityZeroCondition();
+        }
+
+        if ($isPriceZero != '') {
+            $conditions[] = $this->getIsPriceZeroCondition();
+        }
+
         // DISTINCT: attributes cause duplicate entries
         $fields = array(
-            'DISTINCT Product.id_product, Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, Image.id_image'
+            'DISTINCT Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, Image.id_image'
         );
 
         $contain = array(
