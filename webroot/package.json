@@ -4,6 +4,10 @@
   "authors": [
     "Mario Rothauer <office@foodcoopshop.com>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/foodcoopshop/foodcoopshop.git"
+  },
   "license": "MIT",
   "homepage": "https://www.foodcoopshop.com",
   "scripts": {
@@ -17,7 +21,7 @@
     "bootstrap-select": "~1.12.4",
     "featherlight": "1.7.8",
     "jquery-backstretch": "~2.1.16",
-    "fontawesome": "~4.7",
+    "font-awesome": "~4.7",
     "jquery.cycle2": "~2.1.6",
     "jquery.scrollto": "~2.1.2",
     "owl.carousel": "~2.2.0",
