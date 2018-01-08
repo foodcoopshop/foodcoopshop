@@ -53,7 +53,12 @@ $headers = array(
 );
 
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType);
-$pdf->addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl);
+$pdf->addLastSumRow(
+    $headers,
+    $this->Html->formatAsDecimal($sumPriceExcl),
+    $this->Html->formatAsDecimal($sumTax),
+    $this->Html->formatAsDecimal($sumPriceIncl)
+);
 $pdf->renderTable();
 
 $pdf->Ln(5);
