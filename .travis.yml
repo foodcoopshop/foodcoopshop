@@ -31,8 +31,9 @@ before_script:
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install --prefer-dist
   - cp ./Config/travis/* ./Config/
-  - npm install -g bower
-  - bower install
+  - cd ./webroot
+  - npm install
+  - cd ..
   - bash ./Console/cake asset_compress build
   # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
