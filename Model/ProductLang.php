@@ -39,6 +39,7 @@ class ProductLang extends AppModel
      *                      [description] => grünes Gemüse: Strunk mit Röschen auch angeschwollenen Knospen-1
      *                      [description_short] => kbA, vom Gemüsehof Wild-Obermayr-1
      *                      [unity] => ca. 0,4 kg-1
+     *                      [is_declaration_ok] => 1
      *                  )
      *          )
      *  )
@@ -65,7 +66,8 @@ class ProductLang extends AppModel
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
                     'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br><img>'),
                     'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><br>'),
-                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
+                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
+                    'is_declaration_ok' => (isset($name['is_declaration_ok']) ? (bool) $name['is_declaration_ok'] : 0)
                 );
             }
         }

@@ -628,7 +628,8 @@ class ProductsController extends AdminAppController
                         'name' => $this->params['data']['name'],
                         'description' => $this->params['data']['description'],
                         'description_short' => $this->params['data']['descriptionShort'],
-                        'unity' => $this->params['data']['unity']
+                        'unity' => $this->params['data']['unity'],
+                        'is_declaration_ok' => $this->params['data']['isDeclarationOk']
                     ))
                 )
             );
