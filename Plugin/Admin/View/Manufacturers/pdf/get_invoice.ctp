@@ -52,10 +52,10 @@ $pdf->infoTextForFooter .= ', Rechnung Nr. ' . $newInvoiceNumber;
 // Produktauflistung Start
 $widths = array(
     30,
-    360,
-    45,
-    50,
-    45
+    335,
+    55,
+    55,
+    55
 );
 $headers = array(
     'Anzahl',
@@ -65,7 +65,12 @@ $headers = array(
     'Preis inkl.'
 );
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
-$pdf->addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl);
+$pdf->addLastSumRow(
+    $headers,
+    $this->Html->formatAsDecimal($sumPriceExcl),
+    $this->Html->formatAsDecimal($sumTax),
+    $this->Html->formatAsDecimal($sumPriceIncl)
+);
 $pdf->renderTable();
 // Produktauflistung End
 
@@ -73,11 +78,10 @@ if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMem
     // TODO do that in controller where it belongs to :-)
     App::uses('Manufacturer', 'Model');
     $m = new Manufacturer();
-    $sumPriceIncl = str_replace(',', '.', $sumPriceIncl);
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
-    $firstColumnWidth = 390;
-    $secondColumnWidth = 140;
+    $firstColumnWidth = 365;
+    $secondColumnWidth = 165;
 
     $html = '<table border="1" cellspacing="0" cellpadding="1">';
 
