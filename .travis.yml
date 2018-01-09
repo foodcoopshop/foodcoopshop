@@ -32,7 +32,6 @@ before_script:
   - composer install
   - cp ./Config/travis/* ./Config/
   - cd ./webroot
-  - npm i -g npm
   - npm install
   - cd ..
   - bash ./Console/cake asset_compress build
