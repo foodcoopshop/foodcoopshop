@@ -170,13 +170,23 @@ form.fcs-form .bootstrap-select {
     right: 20px;
     top: 10px;
 }
-#product-name-edit-form input,
+#product-name-edit-form input[type="text"],
 #product-price-edit-form input,
 #product-deposit-edit-form input,
 #product-name-edit-form textarea,
 #product-quantity-edit-form input {
     width: 300px;
     margin-bottom: 10px;
+}
+#product-name-edit-form label.is-declaration-ok {
+  line-height: 24px;
+}
+#product-name-edit-form label.is-declaration-ok input {
+  float: left;
+  margin-right: 5px;
+}
+.label-description-short {
+  margin-top: 29px;
 }
 span.name-for-dialog,
 span.quantity-for-dialog,
@@ -188,6 +198,18 @@ span.product-price-for-dialog,
 span.product-quantity-for-dialog {
     line-height: 21px;
     margin-left: 5px;
+}
+
+span.is-declaration-ok-wrapper,
+span.product-declaration-header {
+  float: right;
+  margin-left: 5px;
+}
+span.is-declaration-ok-wrapper .fa-check {
+  color: #719f41;
+}
+span.is-declaration-ok-wrapper .fa-close {
+  color: #f3515c;
 }
 
 .filter-container {
@@ -1015,6 +1037,7 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
+
 
 
 
