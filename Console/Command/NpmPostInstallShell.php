@@ -29,7 +29,7 @@ class NpmPostInstallShell extends AppShell
     {
         $this->vendorDir = WWW_ROOT . 'node_modules';
         $this->copyAdaptedKcfinderFiles();
-        //$this->copyJqueryUiImages();
+        $this->copyJqueryUiImages();
         $this->copyBoostrapFonts();
         $this->copyFontawesomeFonts();
     }
@@ -54,7 +54,7 @@ class NpmPostInstallShell extends AppShell
      */
     private function copyJqueryUiImages()
     {
-        $folder = new Folder($this->vendorDir . DS . 'jquery-ui' . DS . 'themes' . DS . 'smoothness' . DS . 'images' . DS);
+        $folder = new Folder($this->vendorDir . DS . 'jquery-ui-npm' . DS . 'images' . DS);
         $folder->copy(WWW_ROOT . 'cache' . DS . 'images');
         $this->out('JQueryUI images copied.');
     }
