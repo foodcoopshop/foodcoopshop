@@ -16,14 +16,14 @@ CKEDITOR.editorConfig = function ( config ) {
     config.startupOutlineBlocks = false;
     config.forcePasteAsPlainText = true;
     config.contentsCss = [
-        '/js/vendor/ckeditor/contents.css',
+        '/node_modules/ckeditor/contents.css',
         '/js/ckeditor/config-small-with-upload.css'
     ];
 
-    config.filebrowserBrowseUrl = '/js/vendor/kcfinder/browse.php?type=files';
-    config.filebrowserImageBrowseUrl = '/js/vendor/kcfinder/browse.php?type=images';
-    config.filebrowserUploadUrl = '/js/vendor/kcfinder/upload.php?type=files';
-    config.filebrowserImageUploadUrl = '/js/vendor/kcfinder/upload.php?type=images';
+    config.filebrowserBrowseUrl = '/node_modules/kcfinder/browse.php?type=files';
+    config.filebrowserImageBrowseUrl = '/node_modules/kcfinder/browse.php?type=images';
+    config.filebrowserUploadUrl = '/node_modules/kcfinder/upload.php?type=files';
+    config.filebrowserImageUploadUrl = '/node_modules/kcfinder/upload.php?type=images';
 
     // The toolbar groups arrangement, optimized for two toolbar rows.
     config.toolbarGroups = [
@@ -38,6 +38,7 @@ CKEDITOR.editorConfig = function ( config ) {
 };
 
 CKEDITOR.timestamp = '4.8.0'; // change this string if version is updated in bower.json
+
 
 
 

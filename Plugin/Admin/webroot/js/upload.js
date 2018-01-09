@@ -102,7 +102,7 @@ foodcoopshop.Upload = {
             // bind delete button
             if (imageUploadForm.find('a.img-delete').length == 0) {
                 if (imageUploadForm.find('img.existingImage').length == 1) {
-                    $('<a title="löschen" class="modify-icon img-delete" href="javascript:void(0);"><img src="/js/vendor/famfamfam-silk/dist/png/delete.png" /></a>').appendTo(imageUploadForm.find('.drop'));
+                    $('<a title="löschen" class="modify-icon img-delete" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/delete.png" /></a>').appendTo(imageUploadForm.find('.drop'));
                     imageUploadForm.find('a.img-delete').on('click', function (e) {
                         e.preventDefault();
                         $('<div></div>').appendTo('body')
@@ -210,8 +210,8 @@ foodcoopshop.Upload = {
                         container.prepend($('<img />').
                              attr('src', result.filename).
                              addClass('uploadedFile'));
-                        container.append('<a title="gegen den Uhrzeigersinn drehen" class="modify-icon img-rotate-acw" href="javascript:void(0);"><img src="/js/vendor/famfamfam-silk/dist/png/arrow_rotate_anticlockwise.png" /></a>');
-                        container.append('<a title="im Uhrzeigersinn drehen" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/js/vendor/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
+                        container.append('<a title="gegen den Uhrzeigersinn drehen" class="modify-icon img-rotate-acw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_anticlockwise.png" /></a>');
+                        container.append('<a title="im Uhrzeigersinn drehen" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/js/node_modules/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
 
                         container.find('.img-rotate-acw').on('click', function () {
                                foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC
@@ -270,4 +270,5 @@ foodcoopshop.Upload = {
     }
 
 }
+
 

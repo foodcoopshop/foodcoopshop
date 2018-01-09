@@ -103,10 +103,10 @@ table.list th.icon {
   padding-left: 15px;
 }
 .sort a.asc {
-  background-image: url(/js/vendor/famfamfam-silk/dist/png/bullet_arrow_up.png);
+  background-image: url(/node_modules/famfamfam-silk/dist/png/bullet_arrow_up.png);
   background-position: 0px -1px;
 }
 .sort a.desc {
-  background-image: url(/js/vendor/famfamfam-silk/dist/png/bullet_arrow_down.png);
+  background-image: url(/jquery-ui-npm/famfamfam-silk/dist/png/bullet_arrow_down.png);
   background-position: 0px 0px;
 }
