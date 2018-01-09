@@ -54,7 +54,7 @@ class NpmPostInstallShell extends AppShell
      */
     private function copyJqueryUiImages()
     {
-        $folder = new Folder($this->vendorDir . DS . 'jquery-ui-npm' . DS . 'images' . DS);
+        $folder = new Folder($this->vendorDir . DS . 'jquery-ui-dist' . DS . 'images' . DS);
         $folder->copy(WWW_ROOT . 'cache' . DS . 'images');
         $this->out('JQueryUI images copied.');
     }

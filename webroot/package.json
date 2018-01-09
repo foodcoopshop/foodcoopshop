@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "jquery": "~1.12.4",
-    "jquery-ui-npm": "~1.12",
+    "jquery-ui-dist": "~1.12",
     "ckeditor": "~4.8",
     "bootstrap": "~3.3.7",
     "bootstrap-select": "~1.12.4",
