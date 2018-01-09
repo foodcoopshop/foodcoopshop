@@ -61,14 +61,17 @@ class ProductLang extends AppModel
             if (strlen($newName) < 2) {
                 throw new InvalidParameterException('Der Name des Produktes <b>'.$newName.'</b> muss mindestens zwei Zeichen lang sein.');
             } else {
-                $productsLang2save[] = array(
+                $tmpProductLang2Save = array(
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
                     'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br><img>'),
                     'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><br>'),
-                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity']))),
-                    'is_declaration_ok' => (isset($name['is_declaration_ok']) ? (bool) $name['is_declaration_ok'] : 0)
+                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 );
+                if (isset($name['is_declaration_ok'])) {
+                    $tmpProductLang2Save['is_declaration_ok'] = (bool) $name['is_declaration_ok'];
+                }
+                $productsLang2save[] = $tmpProductLang2Save;
             }
         }
 

@@ -678,7 +678,7 @@ foodcoopshop.Admin = {
                             unity: $('#dialogUnity').val(),
                             descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData(),
                             description: CKEDITOR.instances['dialogDescription'].getData(),
-                            isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0
+                            isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0
                         },
                         {
                             onOk: function (data) {
@@ -2459,6 +2459,7 @@ foodcoopshop.Admin = {
     }
 
 }
+
 
 
 
