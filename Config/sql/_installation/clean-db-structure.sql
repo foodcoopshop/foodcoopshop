@@ -207,10 +207,10 @@ DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_images` (
-  `id_image` int(11) unsigned NOT NULL DEFAULT '0',
+  `id_image` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_image`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -230,8 +230,8 @@ DROP TABLE IF EXISTS `fcs_manufacturer`;
 CREATE TABLE `fcs_manufacturer` (
   `id_manufacturer` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '',
-  `description` text NOT NULL DEFAULT '',
-  `short_description` text NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `short_description` text NOT NULL,
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '0',
