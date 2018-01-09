@@ -625,11 +625,12 @@ foodcoopshop.Admin = {
         dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span style="font-weight:normal">(z.B. 1 kg, 0,5 l)</span></label><br />';
         dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescriptionShort">Kurze Beschreibung</label><br />';
+        dialogHtml += '<label for="dialogDescriptionShort" class="label-description-short">Kurze Beschreibung</label><br />';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort" />';
         dialogHtml += '</div>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Lebensmittelkennzeichnung</a>';
+        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><br />';
+        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />Produktdeklaration OK?</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Hilfe</a><br />';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
@@ -641,7 +642,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 610,
+            height: 640,
             width: 795,
             modal: true,
 
@@ -650,6 +651,7 @@ foodcoopshop.Admin = {
                 $('#dialogUnity').val('');
                 $('#cke_dialogDescriptionShort').val('');
                 $('#cke_dialogDescription').val('');
+                $('#dialogIsDeclarationOk').prop('checked', false);
                 $('#dialogProductId').val('');
             },
 
@@ -675,7 +677,8 @@ foodcoopshop.Admin = {
                             name: $('#dialogName').val(),
                             unity: $('#dialogUnity').val(),
                             descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData(),
-                            description: CKEDITOR.instances['dialogDescription'].getData()
+                            description: CKEDITOR.instances['dialogDescription'].getData(),
+                            isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0
                         },
                         {
                             onOk: function (data) {
@@ -713,6 +716,7 @@ foodcoopshop.Admin = {
             var row = $(this).closest('tr');
             var nameCell = row.find('td:nth-child(4)');
             $('#' + dialogId + ' #dialogName').val(nameCell.find('span.name-for-dialog').html());
+            $('#' + dialogId + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
             $('#' + dialogId + ' #dialogUnity').val(nameCell.find('span.unity-for-dialog').html());
             CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
             $('#' + dialogId + ' #dialogProductId').val(row.find('td:nth-child(1)').html());
@@ -2455,6 +2459,8 @@ foodcoopshop.Admin = {
     }
 
 }
+
+
 
 
 
