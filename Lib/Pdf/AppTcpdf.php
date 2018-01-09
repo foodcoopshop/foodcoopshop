@@ -197,7 +197,7 @@ class AppTcpdf extends TCPDF
         return $colspan;
     }
 
-    public function addLastSumRow($headers, $sumAmount, $sumPriceExcl, $sumTax, $sumPriceIncl)
+    public function addLastSumRow($headers, $sumPriceExcl, $sumTax, $sumPriceIncl)
     {
         $colspan = $this->getCorrectColspan($headers);
 

@@ -673,9 +673,9 @@ class ManufacturersController extends AdminAppController
             $sumTax += $result['odt']['MWSt'];
             $sumAmount += $result['od']['Menge'];
         }
-        $this->set('sumPriceExcl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceExcl));
-        $this->set('sumTax', Configure::read('htmlHelper')->formatAsDecimal($sumTax));
-        $this->set('sumPriceIncl', Configure::read('htmlHelper')->formatAsDecimal($sumPriceIncl));
+        $this->set('sumPriceExcl', $sumPriceExcl);
+        $this->set('sumTax', $sumTax);
+        $this->set('sumPriceIncl', $sumPriceIncl);
         $this->set('sumAmount', $sumAmount);
 
         $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
