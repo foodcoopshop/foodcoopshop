@@ -43,7 +43,7 @@ header('Pragma: no-cache');
     <?php
         echo $this->element('renderCss', array('configs' => array('frontend')));
     if ($isMobile) {
-        echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend'));
+        echo $this->Html->css(array('/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend'));
     }
     ?>
     
@@ -113,7 +113,7 @@ header('Pragma: no-cache');
     echo $this->element('renderJs', array('configs' => array('frontend')));
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(array('/js/vendor/slidebars/dist/slidebars'));
+    echo $this->Html->script(array('/node_modules/slidebars/dist/slidebars'));
     // add script BEFORE all scripts that are loaded in views (block)
     echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();", array('block'));
 }

@@ -222,7 +222,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getFamFamFamPath($icon)
     {
-        return '/js/vendor/famfamfam-silk/dist/png/'.$icon;
+        return '/node_modules/famfamfam-silk/dist/png/'.$icon;
     }
 
     public function getGroupName($groupId)
