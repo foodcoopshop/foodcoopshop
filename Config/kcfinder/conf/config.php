@@ -17,7 +17,7 @@
  * even if you are using session configuration.
  * See http://kcfinder.sunhater.com/install for setting descriptions
  */
-$_CONFIG = array(
+return array(
 
     // GENERAL SETTINGS
 
