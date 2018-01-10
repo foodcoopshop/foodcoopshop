@@ -149,7 +149,7 @@
     echo '<th class="hide">ID</th>';
     echo '<th>Variante</th>';
     echo '<th>' . $this->Paginator->sort('Product.image', 'Bild') . '</th>';
-    echo '<th>' . $this->Paginator->sort('ProductLang.name', 'Name') . '</th>';
+    echo '<th>' . $this->Paginator->sort('ProductLang.name', 'Name') . '<span class="product-declaration-header">' . $this->Paginator->sort('ProductLang.is_declaration_ok', 'Produktdeklaration') . '</span></th>';
     if ($manufacturerId == 'all') {
         echo '<th>' . $this->Paginator->sort('Product.id_manufacturer', 'Hersteller') . '</th>';
     }
@@ -231,8 +231,12 @@
         }
 
         echo '<span class="name-for-dialog">';
-        echo $product['ProductLang']['name'];
+            echo $product['ProductLang']['name'];
         echo '</span>';
+
+        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+            echo '<span data-is-declaration-ok="'.$product['ProductLang']['is_declaration_ok'].'" class="is-declaration-ok-wrapper">' . ($product['ProductLang']['is_declaration_ok'] ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
+        }
 
         // show unity only if product has no attributes and field "unity" is not empty
         if (empty($product['ProductAttributes'])) {
