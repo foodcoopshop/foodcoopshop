@@ -328,7 +328,7 @@ foodcoopshop.Helper = {
             '/img/bg-v1.5.0.jpg',
             {
                 positionY: 'top',
-                speed: 400
+                transitionDuration: 400
             }
         );
     },
@@ -662,6 +662,7 @@ foodcoopshop.Helper = {
     }
 
 }
+
 
 
 
