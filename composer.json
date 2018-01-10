@@ -34,10 +34,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "bash devtools/setup-git.sh && bash devtools/install-kcfinder.sh"
+            "bash devtools/composer-post-install.sh"
         ],
         "post-update-cmd": [
-            "bash devtools/setup-git.sh && bash devtools/install-kcfinder.sh"
+            "bash devtools/composer-post-install.sh"
         ]
     }
 }
