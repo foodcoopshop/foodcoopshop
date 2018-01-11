@@ -40,7 +40,7 @@ Install the composer vendors (use the "--prefer-dist" option to avoid downloadin
 $ composer install
 ```
 
-Install the nmp components
+Install the npm components
 ```
 $ cd webroot
 $ npm install

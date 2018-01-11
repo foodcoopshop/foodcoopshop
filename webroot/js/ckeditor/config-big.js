@@ -36,7 +36,8 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = '4.8.0'; // change this string if version is updated in bower.json
+CKEDITOR.timestamp = '4.8.0'; // change this string if version is updated in package.json
+
 
 
 

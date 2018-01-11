@@ -211,7 +211,7 @@ foodcoopshop.Upload = {
                              attr('src', result.filename).
                              addClass('uploadedFile'));
                         container.append('<a title="gegen den Uhrzeigersinn drehen" class="modify-icon img-rotate-acw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_anticlockwise.png" /></a>');
-                        container.append('<a title="im Uhrzeigersinn drehen" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/js/node_modules/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
+                        container.append('<a title="im Uhrzeigersinn drehen" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
 
                         container.find('.img-rotate-acw').on('click', function () {
                                foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC
@@ -270,5 +270,6 @@ foodcoopshop.Upload = {
     }
 
 }
+
 
 
