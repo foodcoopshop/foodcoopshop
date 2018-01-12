@@ -42,8 +42,7 @@ $ composer install
 
 Install the npm components
 ```
-$ cd webroot
-$ npm install
+$ npm --prefix ./webroot install ./webroot
 ```
 
 ## Setting permissions
