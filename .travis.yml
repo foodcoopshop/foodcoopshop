@@ -31,9 +31,7 @@ before_script:
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
   - composer install
   - cp ./Config/travis/* ./Config/
-  - cd ./webroot
-  - npm install
-  - cd ..
+  - npm --prefix ./webroot install ./webroot
   - bash ./Console/cake asset_compress build
   # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
