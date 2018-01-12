@@ -24,7 +24,7 @@ In the 4th year of existance, FoodCoopShop continues to grow. Here you can take 
 * Apache with `mod_rewrite`
 * PHP >= 7.0 and < 7.2
 * MySQL >= 5.6
-* Nodejs and bower ([installation](https://www.npmjs.com/package/bower)) developer packages
+* Nodejs and npm ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 
@@ -40,9 +40,9 @@ Install the composer vendors (use the "--prefer-dist" option to avoid downloadin
 $ composer install
 ```
 
-Install the bower components
+Install packages from package.json
 ```
-$ bower install
+$ npm --prefix ./webroot install ./webroot
 ```
 
 ## Setting permissions

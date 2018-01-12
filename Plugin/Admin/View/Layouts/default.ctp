@@ -37,7 +37,7 @@
     }
     echo $this->element('renderCss', array('configs' => $cssConfigs));
     if ($isMobile) {
-        echo $this->Html->css(array('/js/vendor/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
+        echo $this->Html->css(array('/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
     }
     ?>
     
@@ -68,15 +68,15 @@ echo $this->element('renderJs', array('configs' => $jsConfigs));
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(array('/js/vendor/slidebars/dist/slidebars'));
+    echo $this->Html->script(array('/node_modules/slidebars/dist/slidebars'));
     // add script BEFORE all scripts that are loaded in views (block)
     echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();", array('block'));
 }
 echo $this->element('sql_dump');
 
 if ($this->plugin == 'Admin') {
-    echo $this->Html->script('vendor/ckeditor/ckeditor');
-    echo $this->Html->script('vendor/ckeditor/adapters/jquery');
+    echo $this->Html->script('/node_modules/ckeditor/ckeditor');
+    echo $this->Html->script('/node_modules/ckeditor/adapters/jquery');
 }
 
 echo $this->fetch('script'); // all scripts from layouts

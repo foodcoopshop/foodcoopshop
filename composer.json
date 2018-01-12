@@ -17,7 +17,8 @@
         "simpletest/simpletest": "1.1.7",
         "markstory/asset_compress" : "2.x-dev",
         "tedivm/jshrink" : "1.2.0",
-        "natxet/CssMin": "3.0.4"
+        "natxet/CssMin": "3.0.4",
+        "sunhater/kcfinder": "dev-master#3.12"
     },
     "require-dev": {
         "phpunit/phpunit": "5.*",
@@ -33,10 +34,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "bash devtools/setup-git.sh"
+            "bash devtools/composer-post-install.sh"
         ],
         "post-update-cmd": [
-            "bash devtools/setup-git.sh"
+            "bash devtools/composer-post-install.sh"
         ]
     }
 }

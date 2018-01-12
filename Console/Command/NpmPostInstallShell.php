@@ -3,7 +3,7 @@
 App::uses('Folder', 'Utility');
 
 /**
- * BowerPostInstallShell
+ * NpmPostInstallShell
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,15 +17,17 @@ App::uses('Folder', 'Utility');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class BowerPostInstallShell extends AppShell
+class NpmPostInstallShell extends AppShell
 {
 
+    public $vendorDir;
     /**
      * do not call parent::main because db connection might not be available
      * @see AppShell::main()
      */
     public function main()
     {
+        $this->vendorDir = WWW_ROOT . 'node_modules';
         $this->copyAdaptedKcfinderFiles();
         $this->copyJqueryUiImages();
         $this->copyBoostrapFonts();
@@ -34,14 +36,14 @@ class BowerPostInstallShell extends AppShell
 
     private function copyFontawesomeFonts()
     {
-        $folder = new Folder(WWW_ROOT . 'js' . DS . 'vendor' . DS . 'fontawesome' . DS . 'fonts' . DS);
+        $folder = new Folder($this->vendorDir . DS . 'font-awesome' . DS . 'fonts' . DS);
         $folder->copy(WWW_ROOT . 'fonts');
         $this->out('Fontawesome fonts copied.');
     }
 
     private function copyBoostrapFonts()
     {
-        $folder = new Folder(WWW_ROOT . 'js' . DS . 'vendor' . DS . 'bootstrap' . DS . 'dist' . DS . 'fonts' . DS);
+        $folder = new Folder($this->vendorDir . DS . 'bootstrap' . DS . 'dist' . DS . 'fonts' . DS);
         $folder->copy(WWW_ROOT . 'fonts');
         $this->out('Boostrap fonts copied.');
     }
@@ -52,7 +54,7 @@ class BowerPostInstallShell extends AppShell
      */
     private function copyJqueryUiImages()
     {
-        $folder = new Folder(WWW_ROOT . 'js' . DS . 'vendor' . DS . 'jquery-ui' . DS . 'themes' . DS . 'smoothness' . DS . 'images' . DS);
+        $folder = new Folder($this->vendorDir . DS . 'components-jqueryui' . DS. 'themes' . DS . 'smoothness' . DS . 'images' . DS);
         $folder->copy(WWW_ROOT . 'cache' . DS . 'images');
         $this->out('JQueryUI images copied.');
     }
@@ -67,7 +69,7 @@ class BowerPostInstallShell extends AppShell
         );
 
         foreach ($adaptedFiles as $file) {
-            copy($file, preg_replace('/Config/', 'webroot' . DS . 'js' . DS . 'vendor', $file));
+            copy($file, preg_replace('/Config/', 'webroot' . DS . 'node_modules', $file));
             $this->out('KCFinder config file ' . $file . ' copied successfully.');
         }
     }

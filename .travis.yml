@@ -29,10 +29,9 @@ before_script:
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
   - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
-  - composer install --prefer-dist
+  - composer install
   - cp ./Config/travis/* ./Config/
-  - npm install -g bower
-  - bower install
+  - npm --prefix ./webroot install ./webroot
   - bash ./Console/cake asset_compress build
   # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
@@ -52,7 +51,7 @@ before_script:
   - sudo a2dissite 000-default
   - sudo a2ensite www.foodcoopshop.test.conf
   - sudo a2enmod rewrite actions fastcgi alias
-  - sudo chown -R travis:travis /home/travis/build/foodcoopshop
+  - sudo chown -R travis:travis $TRAVIS_BUILD_DIR
   - sudo chmod o+rx /home/travis
   - sudo service apache2 restart
   #- sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
