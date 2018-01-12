@@ -20,6 +20,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Der variable Mitgliedsbeitrag wurde bei Rechnungen über 1.000 € falsch berechnet. / [PR#195](https://github.com/foodcoopshop/foodcoopshop/pull/195) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- Npm wird jetzt anstatt Bower als Dependency Manager verwendet. / [PR#199](https://github.com/foodcoopshop/foodcoopshop/pull/199) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Viele nicht benutzte Datenbank-Felder wurden entfernt und die Anzahl der Tabellen von 40 auf 31 reduziert. / [PR#189](https://github.com/foodcoopshop/foodcoopshop/pull/189) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v1.5.0 2017-12-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.4.0...v1.5.0)
