@@ -75,7 +75,7 @@ echo $this->Form->input('Page.full_width', array(
     'type' => 'checkbox',
     'after' => '<span class="after small">Inhalt der Seite wird verbreitert, indem das linke Menü ausgeblendet wird.</span>'
 ));
-echo $this->Form->input('Page.url', array(
+echo $this->Form->input('Page.extern_url', array(
     'placeholder' => 'z.B. http://www.foodcoopshop.com, kann auch leer bleiben',
     'label' => 'Link auf externe Seite?<br /><span class="small">Menüpunkt führt auf diese Webseite (der Inhalt der Seite wird nicht angezeigt).</span>',
     'div' => array(

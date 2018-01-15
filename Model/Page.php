@@ -48,7 +48,7 @@ class Page extends AppModel
         'extern_url' => array(
             'allowEmpty' => true,
             'rule' => array(
-                'extern_url',
+                'url',
                 true
             ),
             'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
