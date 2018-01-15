@@ -266,7 +266,7 @@ class OrderDetailsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
 
         $orderDetailId = (int) $this->params['data']['orderDetailId'];
-        $productQuantity = $this->params['data']['productQuantity'];
+        $productQuantity = trim($this->params['data']['productQuantity']);
         $editQuantityReason = strip_tags(html_entity_decode($this->params['data']['editQuantityReason']));
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 1) {
@@ -353,7 +353,7 @@ class OrderDetailsController extends AdminAppController
         $orderDetailId = (int) $this->params['data']['orderDetailId'];
         $editPriceReason = strip_tags(html_entity_decode($this->params['data']['editPriceReason']));
 
-        $productPrice = $this->params['data']['productPrice'];
+        $productPrice = trim($this->params['data']['productPrice']);
         $productPrice = str_replace(',', '.', $productPrice);
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
@@ -408,7 +408,7 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
 
-        $email->send();
+        //$email->send();
 
         $message .= ' versendet.';
         if ($editPriceReason != '') {
