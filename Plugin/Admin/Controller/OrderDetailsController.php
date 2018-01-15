@@ -408,7 +408,7 @@ class OrderDetailsController extends AdminAppController
             $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
         }
 
-        //$email->send();
+        $email->send();
 
         $message .= ' versendet.';
         if ($editPriceReason != '') {
