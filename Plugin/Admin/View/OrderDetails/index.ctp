@@ -239,7 +239,7 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</td>';
 
-    echo '<td class="right">';
+    echo '<td class="right' . ($orderDetail['OrderDetail']['total_price_tax_incl'] == 0 ? ' not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {
         if ($editRecordAllowed) {
