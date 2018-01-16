@@ -5,6 +5,7 @@ sudo: required
 php:
   - 7.0
   - 7.1
+  - 7.2
 
 services:
   - mysql
@@ -24,21 +25,21 @@ before_script:
   - echo -e '#!/usr/bin/env bash\nexit 0' | sudo tee /usr/sbin/sendmail
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' | sudo tee "/home/travis/.phpenv/versions/`php -i | grep "PHP Version" | head -n 1 | grep -o -P '\d+\.\d+\.\d+.*'`/etc/conf.d/sendmail.ini"
   # start build
-  - bash ./Config/travis/install-mysql-5.7.sh
+  - bash ./config/travis/install-mysql-5.7.sh
   - mysql --version
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
-  - mysql foodcoopshop_test < ./Config/sql/_installation/clean-db-structure.sql
-  - mysql foodcoopshop_test < ./Test/test_files/Config/sql/test-db-data.sql
+  - mysql foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
+  - mysql foodcoopshop_test < ./tests/test_files/Config/sql/test-db-data.sql
   - composer install
-  - cp ./Config/travis/* ./Config/
+  - cp ./Config/travis/* ./config/
   - npm --prefix ./webroot install ./webroot
-  - bash ./Console/cake asset_compress build
+  - bash ./bin/cake asset_compress build
   # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm, runs as travis:travis
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   # for PHP7 inclusion of additional config files works
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo sudo cp ./Config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then sudo sudo cp ./config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/; fi
   # for PHP5 modify main config file
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then sudo sed -e "s?user = nobody?user = travis?g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then sudo sed -e "s?group = nobody?group = travis?g" --in-place ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
@@ -46,7 +47,7 @@ before_script:
   - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   - php --version
   # configure apache virtual hosts
-  - sudo cp -f ./Config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
+  - sudo cp -f ./config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.test.conf
   - sudo a2dissite 000-default
   - sudo a2ensite www.foodcoopshop.test.conf
@@ -58,7 +59,7 @@ before_script:
 
 script:
   - ./Console/cake test app AllFoodCoopShopTests --stderr
-  #- sudo cat ./tmp/logs/error.log
+  #- sudo cat ./logs/error.log
   
 notifications:
   email: false

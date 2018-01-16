@@ -11,7 +11,7 @@
   "license": "MIT",
   "homepage": "https://www.foodcoopshop.com",
   "scripts": {
-    "install": "bash ../Console/cake NpmPostInstall"
+    "install": "bash ../bin/cake NpmPostInstall"
   },
   "dependencies": {
     "blueimp-file-upload": "~9.18.0",

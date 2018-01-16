@@ -11,33 +11,54 @@
     ],
     "require": {
         "php": ">7.0.0",
-        "cakephp/cakephp": "2.10.*",
+        "cakephp/cakephp": "3.5.*",
+        "mobiledetect/mobiledetectlib": "2.*",
+        "cakephp/migrations": "~1.0",
+        "cakephp/plugin-installer": "~1.0",
+        "markstory/asset_compress": "3.2.*",
         "intervention/image": "2.*",
         "tecnickcom/tcpdf": "6.2.*",
         "simpletest/simpletest": "1.1.7",
-        "markstory/asset_compress" : "2.x-dev",
-        "tedivm/jshrink" : "1.2.0",
-        "natxet/CssMin": "3.0.4",
+        "linkorb/jsmin-php": "1.*",
+        "natxet/CssMin": "3.*",
         "sunhater/kcfinder": "dev-master#3.12"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.*",
-        "squizlabs/php_codesniffer": "2.*"
+        "psy/psysh": "@stable",
+        "cakephp/debug_kit": "~3.2",
+        "cakephp/bake": "~1.1",
+        "cakephp/cakephp-codesniffer": "^3.0",
+        "simpletest/simpletest": "1.1.*",
+        "phpunit/phpunit": "<6.0.0"
     },
-    "config": {
-        "vendor-dir": "Vendor/"
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
     },
-    "extra": {
-        "installer-paths": {
-            "Plugin/AssetCompress": ["markstory/asset_compress"]
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
         }
     },
     "scripts": {
         "post-install-cmd": [
+            "App\\Console\\Installer::postInstall",
             "bash devtools/composer-post-install.sh"
         ],
         "post-update-cmd": [
             "bash devtools/composer-post-install.sh"
-        ]
-    }
+        ],
+        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
+        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
+        "check": [
+            "@test",
+            "@cs-check"
+        ],
+        "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
+        "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
+        "test": "phpunit --colors=always"
+    },
+    "prefer-stable": true
 }
