@@ -47,11 +47,11 @@ if ($product['ProductLang']['description'] != '') {
     echo $this->Html->link(
         '<i class="fa"></i> Mehr anzeigen',
         'javascript:void(0);',
-        array(
+        [
         'class' => 'toggle-link',
         'title' => 'Mehr Infos zu "'.$product['ProductLang']['name'].'" anzeigen',
         'escape' => false
-        )
+        ]
     );
     echo '<div class="toggle-content description">'.$product['ProductLang']['description'].'</div>';
 }
@@ -66,9 +66,9 @@ if ($product['ProductLang']['description'] != '') {
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['Manufacturer']['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-            array(
+            [
                 'title' => 'Produkt bearbeiten'
-            ),
+            ],
             $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['Manufacturer']['id_manufacturer'] : null), $product['Product']['id_product'])
         );
     }
@@ -83,7 +83,7 @@ if ($product['ProductLang']['description'] != '') {
         // 1) kick attributes if quantity = 0
         $hasCheckedAttribute = false;
         $i = 0;
-        $preparedProductAttributes = array();
+        $preparedProductAttributes = [];
         foreach ($product['attributes'] as $attribute) {
             if ($attribute['StockAvailable']['quantity'] > 0) {
                 $preparedProductAttributes[] = $attribute;
@@ -115,7 +115,7 @@ if ($product['ProductLang']['description'] != '') {
 
         // render remaining attributes (with attribute "checked")
         foreach ($preparedProductAttributes as $attribute) {
-            $entityClasses = array('entity-wrapper');
+            $entityClasses = ['entity-wrapper'];
             if ($attribute['checked']) {
                 $entityClasses[] = 'active';
             }
@@ -128,10 +128,10 @@ if ($product['ProductLang']['description'] != '') {
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShop']['tax']) . '</div>';
                 echo '</div>';
-                echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']));
-                echo $this->element('product/amountWrapper', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
-                echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailable']['quantity']));
-                echo $this->element('product/notAvailableInfo', array('stockAvailable' => $attribute['StockAvailable']['quantity']));
+                echo $this->element('product/hiddenProductIdField', ['productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute']]);
+                echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailable']['quantity']]);
+                echo $this->element('product/cartButton', ['productId' => $product['Product']['id_product'] . '-' . $attribute['ProductAttribute']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailable']['quantity']]);
+                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailable']['quantity']]);
             }
             echo '</div>';
         }
@@ -156,10 +156,10 @@ if ($product['ProductLang']['description'] != '') {
             }
                 echo '</div>';
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['Product']['tax']) . '</div>';
-                echo $this->element('product/hiddenProductIdField', array('productId' => $product['Product']['id_product']));
-                echo $this->element('product/amountWrapper', array('stockAvailable' => $product['StockAvailable']['quantity']));
-                echo $this->element('product/cartButton', array('productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']));
-                echo $this->element('product/notAvailableInfo', array('stockAvailable' => $product['StockAvailable']['quantity']));
+                echo $this->element('product/hiddenProductIdField', ['productId' => $product['Product']['id_product']]);
+                echo $this->element('product/amountWrapper', ['stockAvailable' => $product['StockAvailable']['quantity']]);
+                echo $this->element('product/cartButton', ['productId' => $product['Product']['id_product'], 'stockAvailable' => $product['StockAvailable']['quantity']]);
+                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['StockAvailable']['quantity']]);
         }
         echo '</div>';
 

@@ -81,13 +81,13 @@ class AppSimpleBrowser extends SimpleBrowser
 
     public function doFoodCoopShopLogin()
     {
-        $this->post($this->Slug->getLogin(), array(
-            'Customer' => array(
+        $this->post($this->Slug->getLogin(), [
+            'Customer' => [
                 'email' => $this->loginEmail,
                 'passwd' => $this->loginPassword
-            ),
+            ],
             'remember_me' => false
-        ));
+        ]);
 
         if (preg_match('/Anmelden ist fehlgeschlagen./', $this->getContent())) {
             print_r('Falsche Zugangsdaten für FCS Login');
@@ -101,11 +101,11 @@ class AppSimpleBrowser extends SimpleBrowser
     public function getLoggedUser()
     {
         $this->Customer->recursive = - 1;
-        $user = $this->Customer->find('first', array(
-            'conditions' => array(
+        $user = $this->Customer->find('first', [
+            'conditions' => [
                 'Customer.email' => $this->loginEmail
-            )
-        ));
+            ]
+        ]);
         return $user;
     }
 

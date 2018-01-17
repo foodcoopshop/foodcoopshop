@@ -21,26 +21,26 @@ class OrderDetail extends AppModel
 
     public $primaryKey = 'id_order_detail';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Containable'
-    );
+    ];
 
-    public $belongsTo = array(
-        'Order' => array(
+    public $belongsTo = [
+        'Order' => [
             'foreignKey' => 'id_order'
-        ),
-        'OrderDetailTax' => array(
+        ],
+        'OrderDetailTax' => [
             'foreignKey' => 'id_order_detail'
-        ),
-        'Product' => array(
+        ],
+        'Product' => [
             'foreignKey' => 'product_id', // !sic, id_ vertauscht
             'type' => 'INNER'
-        ) // for manufacturer name filter
+        ] // for manufacturer name filter
     ,
-        'ProductAttribute' => array(
+        'ProductAttribute' => [
             'foreignKey' => 'product_attribute_id'
-        )
-    );
+        ]
+    ];
 
     public function deleteOrderDetail($orderDetailId)
     {
@@ -78,10 +78,10 @@ class OrderDetail extends AppModel
         } else {
             $sql .= 'ORDER BY o.date_add DESC;';
         }
-        $params = array(
+        $params = [
             'manufacturerId' => $manufacturerId,
             'depositForManufacturersStartDate' => Configure::read('AppConfig.depositForManufacturersStartDate')
-        );
+        ];
         $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
         return $orderDetails;
     }
@@ -103,12 +103,12 @@ class OrderDetail extends AppModel
         $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :dateFrom ';
         $sql .= 'AND DATE_FORMAT(o.date_add, \'%d.%m.%Y\') <= :dateTo ';
         $sql .= 'GROUP BY p.id_manufacturer ';
-        $params = array(
+        $params = [
             'manufacturerId' => $manufacturerId,
             'orderStateOpen' => ORDER_STATE_OPEN,
             'dateFrom' => Configure::read('timeHelper')->formatToDbFormatDate($dateFrom),
             'dateTo' => Configure::read('timeHelper')->formatToDbFormatDate($dateTo),
-        );
+        ];
         $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
         if (isset($orderDetails[0])) {
             return $orderDetails[0][0]['sumOrderDetail'];
@@ -119,7 +119,7 @@ class OrderDetail extends AppModel
 
     public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit)
     {
-        $conditions = array();
+        $conditions = [];
 
         if ($dateFrom != '') {
             $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
@@ -148,12 +148,12 @@ class OrderDetail extends AppModel
             $conditions[] = 'OrderDetail.deposit > 0';
         }
 
-        $contain = array(
+        $contain = [
             'Order',
             'Order.Customer',
             'Product.Manufacturer.Address',
             'Product.ProductLang'
-        );
+        ];
 
         if ($customerId != '') {
             $conditions['Order.id_customer'] = $customerId;
@@ -176,10 +176,10 @@ class OrderDetail extends AppModel
             $conditions['Order.id_customer'] = $appAuth->getUserId();
         }
 
-        $odParams = array(
+        $odParams = [
             'conditions' => $conditions,
             'contain' => $contain
-        );
+        ];
 
         return $odParams;
     }

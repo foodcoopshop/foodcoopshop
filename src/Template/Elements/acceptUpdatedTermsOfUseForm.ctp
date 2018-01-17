@@ -19,9 +19,9 @@ if (!$appAuth->loggedIn() || $appAuth->termsOfUseAccepted()) {
     return false;
 }
 
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-form a.terms-of-use-overlay');"
-));
+]);
 ?>
 <div class="accept-updated-terms-of-use-form">
     <h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
@@ -35,11 +35,11 @@ $this->element('addScript', array('script' =>
             echo $this->element('legal/termsOfUse');
         }
             echo '</div>';
-            echo $this->Form->input('Customer.terms_of_use_accepted_date', array(
+            echo $this->Form->input('Customer.terms_of_use_accepted_date', [
                 'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
                 'type' => 'checkbox',
                 'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString()
-            ));
+            ]);
         ?>
         <br />
         <button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Speichern</button>

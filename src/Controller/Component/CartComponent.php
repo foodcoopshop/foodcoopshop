@@ -74,9 +74,9 @@ class CartComponent extends Component
         if ($this->cart !== null) {
             $cc = ClassRegistry::init('Cart');
             $cc->id = $this->getCartId();
-            $cc->save(array(
+            $cc->save([
                 'status' => APP_OFF
-            ));
+            ]);
         }
     }
 

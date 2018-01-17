@@ -77,11 +77,11 @@ class StringComponent extends Component
      */
     public static function nl2br2($string)
     {
-        $string = str_replace(array(
+        $string = str_replace([
             "\r\n",
             "\r",
             "\n"
-        ), "<br />", $string);
+        ], "<br />", $string);
         return $string;
     }
 
@@ -96,14 +96,14 @@ class StringComponent extends Component
     public static function slugify($string, $separator = '-')
     {
         $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
-        $special_cases = array(
+        $special_cases = [
             '&' => 'and',
             "'" => '',
             'ä' => 'ae',
             'ö' => 'oe',
             'ü' => 'ue',
             'ß' => 'ss'
-        );
+        ];
         $string = mb_strtolower(trim($string), 'UTF-8');
         $string = str_replace(array_keys($special_cases), array_values($special_cases), $string);
         $string = preg_replace($accents_regex, '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
@@ -145,13 +145,13 @@ class StringComponent extends Component
         $script = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';
         $script .= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
         $script .= 'document.getElementById("' . $id . '").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
-        $script = "eval(\"" . str_replace(array(
+        $script = "eval(\"" . str_replace([
             "\\",
             '"'
-        ), array(
+        ], [
             "\\\\",
             '\"'
-        ), $script) . "\")";
+        ], $script) . "\")";
         $script = '<script type="text/javascript">/*<![CDATA[*/' . $script . '/*]]>*/</script>';
 
         return '<span id="' . $id . '">[javascript protected email address]</span>' . $script;

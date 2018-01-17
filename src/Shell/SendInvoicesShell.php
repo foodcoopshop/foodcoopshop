@@ -17,12 +17,12 @@
 class SendInvoicesShell extends AppShell
 {
 
-    public $uses = array(
+    public $uses = [
         'Manufacturer',
         'Order',
         'Customer',
         'ActionLog'
-    );
+    ];
 
     /**
      * sends invoices to manufacturers who have orders from the last month
@@ -40,33 +40,33 @@ class SendInvoicesShell extends AppShell
         // $dateTo = '29.02.2016';
 
         // 1) get all manufacturers (not only active ones)
-        $this->Manufacturer->unbindModel(array(
-            'hasMany' => array(
+        $this->Manufacturer->unbindModel([
+            'hasMany' => [
                 'Invoices'
-            )
-        ));
-        $manufacturers = $this->Manufacturer->find('all', array(
-            'order' => array(
+            ]
+        ]);
+        $manufacturers = $this->Manufacturer->find('all', [
+            'order' => [
                 'Manufacturer.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
         // 2) get all orders in the given date range
         $this->Order->recursive = 2;
-        $orders = $this->Order->find('all', array(
-            'conditions' => array(
+        $orders = $this->Order->find('all', [
+            'conditions' => [
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'Order.current_state IN (' . join(",", array(
+                'Order.current_state IN (' . join(",", [
                     ORDER_STATE_OPEN,
                     ORDER_STATE_CASH,
                     ORDER_STATE_CASH_FREE
-                )) . ')'
-            )
-        ));
+                ]) . ')'
+            ]
+        ]);
 
         // 3) add up the order detail by manufacturer
-        $manufacturerOrders = array();
+        $manufacturerOrders = [];
         foreach ($orders as $order) {
             foreach ($order['OrderDetails'] as $orderDetail) {
                 @$manufacturerOrders[$orderDetail['Product']['id_manufacturer']]['order_detail_quantity_sum'] += $orderDetail['product_quantity'];
@@ -112,10 +112,10 @@ class SendInvoicesShell extends AppShell
                 ->to($accountingEmail)
                 ->emailFormat('html')
                 ->subject('Rechnungen für ' . Configure::read('timeHelper')->getLastMonthNameAndYear() . ' wurden verschickt')
-                ->viewVars(array(
+                ->viewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo
-                ))
+                ])
                 ->send();
         }
         // END send email to accounting employee

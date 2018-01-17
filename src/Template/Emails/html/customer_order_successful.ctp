@@ -28,14 +28,14 @@
     </tbody>
 </table>
 
-<?php echo $this->element('email/tableHead', array('cellpadding' => 6)); ?>
-    <?php echo $this->element('email/orderedProductsTable', array(
+<?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
+    <?php echo $this->element('email/orderedProductsTable', [
         'manufacturerId' => null,
         'cartProducts' => $cart['CartProducts'],
         'depositSum' => $depositSum,
         'productSum' => $productSum,
         'productAndDepositSum' => $productAndDepositSum
-    )); ?>
+    ]); ?>
 </table>
 
 <?php echo $this->element('email/tableHead'); ?>

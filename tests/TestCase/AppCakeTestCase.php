@@ -206,7 +206,7 @@ class AppCakeTestCase extends CakeTestCase
      * @param array $expectedCcEmails
      * @param array $expectedBccEmails
      */
-    protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = array(), $expectedToEmails = array(), $expectedCcEmails = array(), $expectedBccEmails = array())
+    protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = [], $expectedToEmails = [], $expectedCcEmails = [], $expectedBccEmails = [])
     {
 
         $fromAddress = json_decode($emailLog['EmailLog']['from_address']);
@@ -223,19 +223,19 @@ class AppCakeTestCase extends CakeTestCase
             $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLog']['message'], 'email message wrong');
         }
 
-        $preparedToAddresses = array();
+        $preparedToAddresses = [];
         foreach ($toAddress as $email) {
             $preparedToAddresses[] = $email;
         }
         $this->assertEquals($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong', 0, 0, true);
 
-        $preparedCcAddresses = array();
+        $preparedCcAddresses = [];
         foreach ($ccAddress as $email) {
             $preparedCcAddresses[] = $email;
         }
         $this->assertEquals($preparedCcAddresses, $expectedCcEmails, 'email cc_addresses wrong', 0, 0, true);
 
-        $preparedBccAddresses = array();
+        $preparedBccAddresses = [];
         foreach ($bccAddress as $email) {
             $preparedBccAddresses[] = $email;
         }
@@ -250,19 +250,19 @@ class AppCakeTestCase extends CakeTestCase
         App::uses('AppPasswordHasher', 'Controller/Component/Auth');
         $ph = new AppPasswordHasher();
         $sql = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
-        $params = array(
+        $params = [
             'passwd' => $ph->hash(Configure::read('test.loginPassword'))
-        );
+        ];
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
     protected function changeReadOnlyConfiguration($configKey, $value)
     {
         $query = 'UPDATE ' . $this->Configuration->tablePrefix . $this->Configuration->useTable.' SET value = :value WHERE name = :configKey';
-        $params = array(
+        $params = [
             'value' => $value,
             'configKey' => $configKey
-        );
+        ];
         return $this->Configuration->getDataSource()->fetchAll($query, $params);
     }
 
@@ -276,18 +276,18 @@ class AppCakeTestCase extends CakeTestCase
     protected function changeConfiguration($configKey, $newValue)
     {
         $this->loginAsSuperadmin();
-        $configuration = $this->Configuration->find('first', array(
-            'conditions' => array(
+        $configuration = $this->Configuration->find('first', [
+            'conditions' => [
                 'Configuration.active' => APP_ON,
                 'Configuration.name' => $configKey
-            )
-        ));
-        $this->browser->post('/admin/configurations/edit/'.$configuration['Configuration']['id_configuration'], array(
-            'Configuration' => array(
+            ]
+        ]);
+        $this->browser->post('/admin/configurations/edit/'.$configuration['Configuration']['id_configuration'], [
+            'Configuration' => [
                 'value' => $newValue
-            ),
+            ],
             'referer' => ''
-        ));
+        ]);
         $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent(), 'configuration edit failed');
         $this->Configuration->loadConfigurations();
         $this->logout();
@@ -302,11 +302,11 @@ class AppCakeTestCase extends CakeTestCase
     protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = null, $dateTo = null)
     {
         $sql = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
-        $params = array(
+        $params = [
             'manufacturerId' => $manufacturerId,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo
-        );
+        ];
         $this->Customer->getDataSource()->fetchAll($sql, $params);
     }
 
@@ -321,13 +321,13 @@ class AppCakeTestCase extends CakeTestCase
         App::uses('Shell', 'Console');
         App::uses('AppShell', 'Console/Command');
 
-        $out = $this->getMock('ConsoleOutput', array(), array(), '', false);
-        $in = $this->getMock('ConsoleInput', array(), array(), '', false);
+        $out = $this->getMock('ConsoleOutput', [], [], '', false);
+        $in = $this->getMock('ConsoleInput', [], [], '', false);
 
         return $this->getMock(
             $cakeShell,
-            array('in', 'err', 'createFile', '_stop', 'clear'),
-            array($out, $out, $in)
+            ['in', 'err', 'createFile', '_stop', 'clear'],
+            [$out, $out, $in]
         );
     }
 
@@ -339,12 +339,12 @@ class AppCakeTestCase extends CakeTestCase
      */
     protected function addProductToCart($productId, $amount)
     {
-        $this->browser->ajaxPost('/warenkorb/ajaxAdd', array(
-            'data' => array(
+        $this->browser->ajaxPost('/warenkorb/ajaxAdd', [
+            'data' => [
                 'productId' => $productId,
                 'amount' => $amount
-            )
-        ));
+            ]
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 
@@ -353,15 +353,15 @@ class AppCakeTestCase extends CakeTestCase
     {
         $this->browser->post(
             $this->Slug->getCartFinish(),
-            array(
-                'data' => array(
-                    'Order' => array(
+            [
+                'data' => [
+                    'Order' => [
                         'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
                         'cancellation_terms_accepted' => $cancellation_terms_accepted,
                         'comment' => $comment
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
     }
 
@@ -373,22 +373,22 @@ class AppCakeTestCase extends CakeTestCase
      */
     protected function changeProductPrice($productId, $price)
     {
-        $this->browser->ajaxPost('/admin/products/editPrice', array(
-            'data' => array(
+        $this->browser->ajaxPost('/admin/products/editPrice', [
+            'data' => [
                 'productId' => $productId,
                 'price' => $price
-            )
-        ));
+            ]
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 
     protected function changeManufacturer($manufacturerId, $option, $value)
     {
         $query = 'UPDATE ' . $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
-        $params = array(
+        $params = [
             'value' => $value,
             'manufacturerId' => $manufacturerId
-        );
+        ];
         return $this->Manufacturer->getDataSource()->fetchAll($query, $params);
     }
 

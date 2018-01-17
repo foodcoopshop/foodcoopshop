@@ -28,12 +28,12 @@ class PagesController extends FrontendController
             case 'detail':
                 $pageId = (int) $this->params['pass'][0];
                 $this->Page->recursive = -1;
-                $page = $this->Page->find('first', array(
-                    'conditions' => array(
+                $page = $this->Page->find('first', [
+                    'conditions' => [
                         'Page.id_page' => $pageId,
                         'Page.active' => APP_ON
-                    )
-                ));
+                    ]
+                ]);
                 if (!empty($page) && !$this->AppAuth->loggedIn() && $page['Page']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
@@ -88,14 +88,14 @@ class PagesController extends FrontendController
     {
         $pageId = (int) $this->params['pass'][0];
 
-        $conditions = array(
+        $conditions = [
             'Page.id_page' => $pageId,
             'Page.active' => APP_ON
-        );
+        ];
 
-        $page = $this->Page->find('first', array(
+        $page = $this->Page->find('first', [
             'conditions' => $conditions
-        ));
+        ]);
 
         if (empty($page)) {
             throw new MissingActionException('page not found');
@@ -110,13 +110,13 @@ class PagesController extends FrontendController
             $pageId,
             false,
             null,
-            array(
+            [
                 'Page.position' => 'ASC',
                 'Page.title' => 'ASC'
-            )
+            ]
         );
 
-        $page['children'] = array();
+        $page['children'] = [];
         foreach ($children as $child) {
             if ($child['Page']['active'] < APP_ON) {
                 continue;

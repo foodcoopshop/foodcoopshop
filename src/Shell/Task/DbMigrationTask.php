@@ -44,15 +44,15 @@ class DbMigrationTask extends Shell
             },
             function ($string = '') use (&$shell) {
             // $findConf
-                return $shell->Configuration->find('first', array(
-                    'conditions' => array(
+                return $shell->Configuration->find('first', [
+                    'conditions' => [
                         'Configuration.name' => $string
-                    )
-                ));
+                    ]
+                ]);
             },
-            function (array $conf = array()) use (&$shell) {
+            function (array $conf = []) use (&$shell) {
             // $saveConf
-                $shell->Configuration->save($conf, array('validate' => false));
+                $shell->Configuration->save($conf, ['validate' => false]);
             },
             function ($string = '') use (&$shell) {
             // $query

@@ -20,7 +20,7 @@ $pdf->SetLeftMargin(16);
 if (!empty($manufacturers)) {
     foreach ($manufacturers as $manufacturer) {
         $i = 0;
-        $orderDetails = array();
+        $orderDetails = [];
         foreach ($manufacturer as $detail) {
             $orderDetails[] = $detail['OrderDetail'];
         }
@@ -40,18 +40,18 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($this->Html->getManufacturerImprint($detail['Manufacturer'], 'pdf', false), true, false, true, false, '');
             $pdf->Ln(6);
 
-            $widths = array(
+            $widths = [
                 45,
                 270,
                 45,
                 45
-            );
-            $headers = array(
+            ];
+            $headers = [
                 'Anzahl',
                 'Produkt',
                 'Preis',
                 'Pfand'
-            );
+            ];
 
             $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 

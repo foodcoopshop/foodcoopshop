@@ -3,9 +3,9 @@
 class EmailConfig
 {
 
-    public $default = array(
+    public $default = [
         'transport' => 'Mail',
         'from' => 'you@localhost',
         'charset' => 'utf-8',
-    );
+    ];
 }

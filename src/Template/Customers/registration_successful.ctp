@@ -12,9 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
-));
+]);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
@@ -32,8 +32,8 @@ $this->element('addScript', array('script' =>
 <?php
 if (!empty($blogPosts)) {
     echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
-    echo $this->element('blogPosts', array(
+    echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
-    ));
+    ]);
 }
 ?>

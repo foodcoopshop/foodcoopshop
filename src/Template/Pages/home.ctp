@@ -13,14 +13,14 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
-));
+]);
 
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
 echo '<h1>Aktuelles</h1>';
-echo $this->element('blogPosts', array(
+echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
     'useCarousel' => false
-));
+]);

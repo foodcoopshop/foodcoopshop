@@ -22,64 +22,64 @@ App::uses('AppPasswordHasher', 'Controller/Component/Auth');
 class AppController extends Controller
 {
 
-    public $components = array(
+    public $components = [
         'RequestHandler', // to parse xml extensions
         'Session',
-        'Flash' => array(
+        'Flash' => [
             'clear' => true
-        ),
+        ],
         'String',
         'Cookie',
-        'Paginator' => array(
+        'Paginator' => [
             'maxLimit' => 100000, // eg for retrieving order details for 1 year
             'limit' => 100000
-        ),
-        'AppAuth' => array(
-            'loginAction' => array(
+        ],
+        'AppAuth' => [
+            'loginAction' => [
                 'plugin' => null,
                 'controller' => 'customers',
                 'action' => 'login'
-            ),
+            ],
             'unauthorizedRedirect' => false,
             'authError' => 'Zugriff verweigert, bitte melde dich an.',
             // non acl-authorization: uses function isAuthorized in Controller
-            'authorize' => array(
+            'authorize' => [
                 'Controller'
-            ),
-            'authenticate' => array(
-                'Form' => array(
+            ],
+            'authenticate' => [
+                'Form' => [
                     'userModel' => 'Customer',
-                    'fields' => array(
+                    'fields' => [
                         'username' => 'email',
                         'password' => 'passwd'
-                    ),
-                    'passwordHasher' => array(
+                    ],
+                    'passwordHasher' => [
                         'className' => 'App'
-                    ),
-                    'scope' => array(
+                    ],
+                    'scope' => [
                         'Customer.active' => true
-                    )
-                )
-            )
-        ),
+                    ]
+                ]
+            ]
+        ],
         'Cart',
         'DbMigration',
-    );
+    ];
 
-    public $helpers = array(
-        'Html' => array(
+    public $helpers = [
+        'Html' => [
             'className' => 'MyHtml'
-        ),
-        'Time' => array(
+        ],
+        'Time' => [
             'className' => 'MyTime'
-        ),
+        ],
         'Session',
         'Form',
         'Menu',
         'Slug',
         'AssetCompress.AssetCompress',
         'Text'
-    );
+    ];
 
     public function beforeRender()
     {
@@ -125,12 +125,12 @@ class AppController extends Controller
             $cookie = $this->Cookie->read('remember_me_cookie');
             if (isset($cookie['email']) && isset($cookie['passwd'])) { // not set in cronjobs
                 $this->loadModel('Customer');
-                $customer = $this->Customer->find('first', array(
-                    'conditions' => array(
+                $customer = $this->Customer->find('first', [
+                    'conditions' => [
                         'Customer.email' => $cookie['email'],
                         'Customer.passwd' => $cookie['passwd']
-                    )
-                ));
+                    ]
+                ]);
                 if ($customer && ! $this->AppAuth->login($customer['Customer'])) {
                     $this->redirect($this->AppAuth->logout());
                 }
@@ -139,11 +139,11 @@ class AppController extends Controller
 
         if ($this->AppAuth->isManufacturer()) {
             $this->loadModel('Manufacturer');
-            $manufacturer = $this->Manufacturer->find('first', array(
-                'conditions' => array(
+            $manufacturer = $this->Manufacturer->find('first', [
+                'conditions' => [
                     'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
-                )
-            ));
+                ]
+            ]);
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
@@ -158,11 +158,11 @@ class AppController extends Controller
     protected function renewAuthSession()
     {
         $this->loadModel('Customer');
-        $customer = $this->Customer->find('first', array(
-            'conditions' => array(
+        $customer = $this->Customer->find('first', [
+            'conditions' => [
                 'Customer.id_customer' => $this->AppAuth->getUserId()
-            )
-        ));
+            ]
+        ]);
         if (! empty($customer)) {
             $this->AppAuth->login($customer['Customer']);
         }
@@ -187,10 +187,10 @@ class AppController extends Controller
     {
         if ($this->request->is('ajax')) {
             $this->response->statusCode(500);
-            $response = array(
+            $response = [
                 'status' => APP_OFF,
                 'msg' => $error->getMessage()
-            );
+            ];
             $this->set(compact('response'));
             $this->render('/Errors/errorjson');
         }

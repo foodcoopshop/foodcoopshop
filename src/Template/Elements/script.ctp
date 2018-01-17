@@ -13,4 +13,4 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->Html->script($url, array('inline' => false));
+$this->Html->script($url, ['inline' => false]);

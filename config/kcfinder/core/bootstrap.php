@@ -56,7 +56,7 @@ if (!function_exists("json_encode")) {
     {
 
         if (is_array($data)) {
-            $ret = array();
+            $ret = [];
 
             // OBJECT
             if (array_keys($data) !== range(0, count($data) - 1)) {

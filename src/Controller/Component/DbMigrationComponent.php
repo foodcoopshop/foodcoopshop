@@ -45,16 +45,16 @@ class DbMigrationComponent extends Component
             },
             function ($string = '') use (&$controller) {
             // $findConf
-                return $controller->Configuration->find('first', array(
-                    'fields' => array('Configuration.id_configuration', 'Configuration.name', 'Configuration.value'),
-                    'conditions' => array(
+                return $controller->Configuration->find('first', [
+                    'fields' => ['Configuration.id_configuration', 'Configuration.name', 'Configuration.value'],
+                    'conditions' => [
                         'Configuration.name' => $string
-                    )
-                ));
+                    ]
+                ]);
             },
-            function (array $conf = array()) use (&$controller) {
+            function (array $conf = []) use (&$controller) {
             // $saveConf
-                $controller->Configuration->save($conf, array('validate' => false));
+                $controller->Configuration->save($conf, ['validate' => false]);
             },
             function ($string = '') use (&$controller) {
             // $query

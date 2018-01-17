@@ -12,10 +12,10 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.blog_posts.detail .img-wrapper a');"
-));
+]);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
@@ -53,9 +53,9 @@ if (!empty($blogPost['Manufacturer']['id_manufacturer'])) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-        array(
+        [
         'title' => 'Bearbeiten'
-        ),
+        ],
         $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_blog_post'])
     );
 }
@@ -67,17 +67,17 @@ if (!empty($neighbors['prev']) || !empty($neighbors['next'])) {
     echo '<h2>Weitere Beiträge</h2>';
 }
 if (!empty($neighbors['next'])) {
-    echo $this->element('blogPosts', array(
-    'blogPosts' => array($neighbors['next']),
+    echo $this->element('blogPosts', [
+    'blogPosts' => [$neighbors['next']],
     'useCarousel' => false,
     'style' => 'float: left;'
-    ));
+    ]);
 }
 if (!empty($neighbors['prev'])) {
-    echo $this->element('blogPosts', array(
-    'blogPosts' => array($neighbors['prev']),
+    echo $this->element('blogPosts', [
+    'blogPosts' => [$neighbors['prev']],
     'useCarousel' => false,
     'style' => 'float: right;'
-    ));
+    ]);
 }
 ?>

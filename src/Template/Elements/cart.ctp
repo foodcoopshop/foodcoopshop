@@ -18,20 +18,20 @@ if (!$appAuth->loggedIn() || $appAuth->isManufacturer() || !Configure::read('App
 }
 
 if ($appAuth->Cart->getProducts() !== null) {
-    $this->element('addScript', array('script' =>
+    $this->element('addScript', ['script' =>
         Configure::read('AppConfig.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
-    ));
+    ]);
 
     if (!empty($cartErrors)) {
-        $this->element('addScript', array('script' =>
+        $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
-        ));
+        ]);
     }
     if ($this->name == 'Carts' && $this->action == 'detail') {
-        $this->element('addScript', array('script' =>
+        $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();".
             Configure::read('AppConfig.jsNamespace').".Cart.initChangeAmountLinks();"
-        ));
+        ]);
     }
 }
 ?>
@@ -44,12 +44,12 @@ if ($appAuth->Cart->getProducts() !== null) {
         <?php
         if ($appAuth->loggedIn() && $this->Html->paymentIsCashless()) {
             if ($this->Session->read('Auth.shopOrderCustomer')) {
-                $this->element('addScript', array('script' =>
+                $this->element('addScript', ['script' =>
                     Configure::read('AppConfig.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
-                ));
+                ]);
                 echo '<p class="shop-order-customer-info">Diese Bestellung wird für <b>'.$this->Session->read('Auth.shopOrderCustomer')['Customer']['name'].'</b> getätigt. <b><a class="btn btn-default" href="javascript:void(0);">Sofort-Bestellung abbrechen?</a></b></p>';
             }
-            $class = array('payment');
+            $class = ['payment'];
             if ($creditBalance < 0) { // set in AppController
                 $class[] = 'negative';
             }

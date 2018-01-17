@@ -28,12 +28,12 @@ class BlogPostsController extends FrontendController
         switch ($this->action) {
             case 'detail':
                 $blogPostId = (int) $this->params['pass'][0];
-                $blogPost = $this->BlogPost->find('first', array(
-                    'conditions' => array(
+                $blogPost = $this->BlogPost->find('first', [
+                    'conditions' => [
                         'BlogPost.id_blog_post' => $blogPostId,
                         'BlogPost.active' => APP_ON
-                    )
-                ));
+                    ]
+                ]);
                 if (!empty($blogPost) && !$this->AppAuth->loggedIn()
                     && ($blogPost['BlogPost']['is_private'] || (isset($blogPost['Manufacturer']) && $blogPost['Manufacturer']['is_private']))
                     ) {
@@ -47,14 +47,14 @@ class BlogPostsController extends FrontendController
     {
         $blogPostId = (int) $this->params['pass'][0];
 
-        $conditions = array(
+        $conditions = [
             'BlogPost.active' => APP_ON
-        );
+        ];
         $conditions['BlogPost.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
-        $blogPost = $this->BlogPost->find('first', array(
+        $blogPost = $this->BlogPost->find('first', [
             'conditions' => $conditions
-        ));
+        ]);
 
         if (empty($blogPost)) {
             throw new MissingActionException('blogPost not found');
@@ -73,14 +73,14 @@ class BlogPostsController extends FrontendController
             $conditions['BlogPost.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
-        $neighbors = $this->BlogPost->find('neighbors', array(
+        $neighbors = $this->BlogPost->find('neighbors', [
             'field' => 'BlogPost.modified',
             'value' => $blogPost['BlogPost']['modified'],
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'BlogPost.modified' => 'DESC'
-            )
-        ));
+            ]
+        ]);
         $this->set('neighbors', $neighbors);
 
         $this->set('title_for_layout', $blogPost['BlogPost']['title']);
@@ -88,20 +88,20 @@ class BlogPostsController extends FrontendController
 
     public function index()
     {
-        $conditions = array(
+        $conditions = [
             'BlogPost.active' => APP_ON
-        );
+        ];
 
         if (isset($this->params['manufacturerSlug'])) {
             $manufacturerId = (int) $this->params['manufacturerSlug'];
             $this->loadModel('Manufacturer');
             $this->Manufacturer->recursive = 1;
-            $manufacturer = $this->Manufacturer->find('first', array(
-                'conditions' => array(
+            $manufacturer = $this->Manufacturer->find('first', [
+                'conditions' => [
                     'Manufacturer.id_manufacturer' => $manufacturerId,
                     'Manufacturer.active' => APP_ON
-                )
-            ));
+                ]
+            ]);
             if (empty($manufacturer)) {
                 throw new MissingActionException('manufacturer not found or not active');
             }
@@ -114,12 +114,12 @@ class BlogPostsController extends FrontendController
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
 
-        $blogPosts = $this->BlogPost->find('all', array(
+        $blogPosts = $this->BlogPost->find('all', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'BlogPost.modified' => 'DESC'
-            )
-        ));
+            ]
+        ]);
 
         $this->set('blogPosts', $blogPosts);
         $this->set('title_for_layout', 'Aktuelles');

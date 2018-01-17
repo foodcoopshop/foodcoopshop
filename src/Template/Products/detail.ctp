@@ -12,7 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
@@ -21,20 +21,20 @@ $this->element('addScript', array('script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('AppConfig.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();"
-));
+]);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
 
 <?php
-    echo $this->element('product/product', array('product' => $product));
+    echo $this->element('product/product', ['product' => $product]);
 ?>
 
 <?php
 if (!empty($blogPosts)) {
     echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
-    echo $this->element('blogPosts', array(
+    echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
-    ));
+    ]);
 }
 ?>

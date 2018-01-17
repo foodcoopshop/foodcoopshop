@@ -21,11 +21,11 @@ class ProductLang extends AppModel
 
     public $primaryKey = 'id_product';
 
-    public $belongsTo = array(
-        'Product' => array(
+    public $belongsTo = [
+        'Product' => [
             'foreignKey' => 'id_product'
-        )
-    );
+        ]
+    ];
 
     /**
      * @param array $products
@@ -48,7 +48,7 @@ class ProductLang extends AppModel
     public function changeName($products)
     {
 
-        $productsLang2save = array();
+        $productsLang2save = [];
 
         foreach ($products as $product) {
             $productId = key($product);
@@ -61,13 +61,13 @@ class ProductLang extends AppModel
             if (strlen($newName) < 2) {
                 throw new InvalidParameterException('Der Name des Produktes <b>'.$newName.'</b> muss mindestens zwei Zeichen lang sein.');
             } else {
-                $tmpProductLang2Save = array(
+                $tmpProductLang2Save = [
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
                     'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br><img>'),
                     'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><br>'),
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
-                );
+                ];
                 if (isset($name['is_declaration_ok'])) {
                     $tmpProductLang2Save['is_declaration_ok'] = (bool) $name['is_declaration_ok'];
                 }

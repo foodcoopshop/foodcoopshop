@@ -17,31 +17,31 @@
 class Category extends AppModel
 {
 
-    public $actsAs = array(
-        'Tree' => array(
+    public $actsAs = [
+        'Tree' => [
             'left' => 'nleft',
             'right' => 'nright',
             'parent' => 'id_parent',
             'level' => 'level_depth'
-        ),
+        ],
         'Content'
-    );
+    ];
 
     public $useTable = 'category';
     public $primaryKey = 'id_category';
 
-    public $validate = array(
-        'name' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'name' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib einen Namen an.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
-    private $flattenedArray = array();
+    private $flattenedArray = [];
 
     private function flattenNestedArrayWithChildren($array, $separator = '')
     {
@@ -61,9 +61,9 @@ class Category extends AppModel
 
     public function getForMenu()
     {
-        $conditions = array(
+        $conditions = [
             $this->alias . '.active' => APP_ON
-        );
+        ];
         $categories = $this->getThreaded($conditions);
         $categorieForMenu = $this->prepareTreeResultForMenu($categories);
         return $categorieForMenu;
@@ -74,24 +74,24 @@ class Category extends AppModel
         return $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('AppConfig.categoryAllProducts') . ')';
     }
 
-    public function getThreaded($conditions = array())
+    public function getThreaded($conditions = [])
     {
-        $conditions = array_merge($conditions, array(
+        $conditions = array_merge($conditions, [
             $this->getExcludeCondition()
-        ));
+        ]);
 
-        $categories = $this->find('threaded', array(
+        $categories = $this->find('threaded', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Category.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
         return $categories;
     }
 
     public function getForSelect($excludeCategoryId = null)
     {
-        $conditions = array();
+        $conditions = [];
         if ($excludeCategoryId) {
             $conditions[] = 'Category.id_category != ' . $excludeCategoryId;
         }
@@ -105,11 +105,11 @@ class Category extends AppModel
      */
     public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false)
     {
-        $params = array(
+        $params = [
             'active' => APP_ON,
             'langId' => Configure::read('AppConfig.langId'),
             'shopId' => Configure::read('AppConfig.shopId')
-        );
+        ];
         if (! $this->loggedIn()) {
             $params['isPrivate'] = APP_OFF;
         }
@@ -169,7 +169,7 @@ class Category extends AppModel
      */
     public function prepareTreeResultForMenu($items)
     {
-        $itemsForMenu = array();
+        $itemsForMenu = [];
         foreach ($items as $index => $item) {
             $itemsForMenu[] = $this->buildItemForTree($item, $index);
         }
@@ -180,10 +180,10 @@ class Category extends AppModel
     {
         $productCount = $this->getProductsByCategoryId($item['Category']['id_category'], false, '', 0, true);
 
-        $tmpMenuItem = array(
+        $tmpMenuItem = [
             'name' => $item['Category']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
             'slug' => Configure::read('slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['Category']['name'])
-        );
+        ];
         if (! empty($item['children'])) {
             foreach ($item['children'] as $index => $child) {
                 $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);

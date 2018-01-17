@@ -16,7 +16,7 @@
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
     
-        <?php echo $this->element('email/greeting', array('data' => $data)); ?>
+        <?php echo $this->element('email/greeting', ['data' => $data]); ?>
     
         <tr>
             <td>

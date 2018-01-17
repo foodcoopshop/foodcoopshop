@@ -18,10 +18,10 @@
 class CheckCreditBalanceShell extends AppShell
 {
 
-    public $uses = array(
+    public $uses = [
         'Customer',
         'ActionLog'
-    );
+    ];
 
     public function main()
     {
@@ -39,14 +39,14 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->Customer->dropManufacturersInNextFind();
         $this->Customer->recursive = -1;
-        $customers = $this->Customer->find('all', array(
-            'conditions' => array(
+        $customers = $this->Customer->find('all', [
+            'conditions' => [
                 'Customer.active' => 1
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'Customer.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
         $i = 0;
         $outString = '';
@@ -64,10 +64,10 @@ class CheckCreditBalanceShell extends AppShell
                     ->to($customer['Customer']['email'])
                     ->emailFormat('html')
                     ->subject('Dein Guthaben ist aufgebraucht')
-                    ->viewVars(array(
+                    ->viewVars([
                     'customer' => $customer,
                     'delta' => $delta
-                    ))
+                    ])
                     ->send();
             }
         }

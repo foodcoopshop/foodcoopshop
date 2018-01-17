@@ -20,7 +20,7 @@ App::uses('ModelBehavior', 'Model');
 class ContentBehavior extends ModelBehavior
 {
 
-    public function beforeSave(Model $model, $options = array())
+    public function beforeSave(Model $model, $options = [])
     {
         $this->saveDateFields($model);
         parent::beforeSave($model, $options);

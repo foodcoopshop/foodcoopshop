@@ -27,12 +27,12 @@ class ProductsController extends FrontendController
         $this->loadModel('Product');
         $productId = (int) $this->params['pass'][0];
 
-        $product = $this->Product->find('first', array(
-            'conditions' => array(
+        $product = $this->Product->find('first', [
+            'conditions' => [
                 'Product.id_product' => $productId,
                 'Product.active' => APP_ON
-            )
-        ));
+            ]
+        ]);
         if (! Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->loggedIn()

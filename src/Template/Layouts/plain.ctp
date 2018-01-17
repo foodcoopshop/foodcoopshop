@@ -25,10 +25,10 @@
     <?php echo $this->element('jsNamespace'); ?>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
-    <?php echo $this->element('renderCss', array('configs' => array('plain'))); ?>
+    <?php echo $this->element('renderCss', ['configs' => ['plain']]); ?>
     <?php
     if ($isMobile) {
-        echo $this->Html->css(array('mobile-plain'));
+        echo $this->Html->css(['mobile-plain']);
     }
     ?>
     
@@ -66,12 +66,12 @@
     
 <?php
 
-    echo $this->element('renderJs', array('configs' => array('frontend')));
+    echo $this->element('renderJs', ['configs' => ['frontend']]);
 
 if ($this->name != 'CakeError' || Configure::read('debug') == 0) {
-    $this->element('addScript', array('script' =>
+    $this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.initAnystretch();"
-    ));
+    ]);
 }
 
     echo $this->fetch('script'); // all scripts from layouts

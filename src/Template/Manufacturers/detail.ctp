@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox, .manufacturer-infos a.lightbox');".
@@ -21,7 +21,7 @@ $this->element('addScript', array('script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('AppConfig.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();"
-));
+]);
 ?>
 
 <h1><?php echo $manufacturer['Manufacturer']['name']; ?>
@@ -57,9 +57,9 @@ if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appA
     if (isset($manufacturerEditSlug)) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-            array(
+            [
             'title' => 'Bearbeiten'
-            ),
+            ],
             $manufacturerEditSlug
         );
     }
@@ -70,9 +70,9 @@ if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appA
 <?php
 if (!empty($blogPosts)) {
     echo '<h2>Aktuelles von '.$manufacturer['Manufacturer']['name'].'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']).'">Zum Blog von '.$manufacturer['Manufacturer']['name'].'</a></h2><div class="sc"></div>';
-    echo $this->element('blogPosts', array(
+    echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
-    ));
+    ]);
 }
 
 $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturer']['name']);
@@ -82,7 +82,7 @@ if ($manufacturerHolidayString != '') {
 
 if (!empty($manufacturer['Products'])) {
     foreach ($manufacturer['Products'] as $product) {
-        echo $this->element('product/product', array('product' => $product));
+        echo $this->element('product/product', ['product' => $product]);
     }
 }
 

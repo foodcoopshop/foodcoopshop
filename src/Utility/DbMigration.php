@@ -94,10 +94,10 @@ class DbMigration
         if (is_callable($this->findConf)) {
             return call_user_func($this->findConf, $string);
         }
-        return array();
+        return [];
     }
 
-    protected function doSaveConf(array $conf = array())
+    protected function doSaveConf(array $conf = [])
     {
         if (is_callable($this->saveConf)) {
             return call_user_func($this->saveConf, $conf);
@@ -152,7 +152,7 @@ class DbMigration
     {
         $db = Configure::read('AppConfig.db_config_FCS_DB_VERSION');
         if (strlen($db) == 0) {  // the DB version config value doesn't exist
-            $avail = array('0'); // do the very first DB migration
+            $avail = ['0']; // do the very first DB migration
         } else if (!is_numeric($db)) {
             // on a previous fail, do not retry but inform user
             $this->toStdErr('DB update error');
@@ -295,7 +295,7 @@ class DbMigration
      */
     protected function getDbMigrationsVersions($activeVersion)
     {
-        $result = array();
+        $result = [];
         $activeVersion = (int)$activeVersion;
         $dir = new Folder(Configure::read('AppConfig.folder.migrations'));
         $files = $dir->find('^[0-9][0-9][0-9]\.sql$');

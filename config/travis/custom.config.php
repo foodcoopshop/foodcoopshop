@@ -53,7 +53,7 @@ Configure::write('app.cakeServerName', 'http://www.foodcoopshop.test');
 /**
  * array of email adresses that receive notifications after new member registrations
  */
-Configure::write('app.registrationNotificationEmails', array());
+Configure::write('app.registrationNotificationEmails', []);
 
 /**
  * whether to apply a member fee to the members account balance
@@ -68,6 +68,6 @@ Configure::write('app.emailOrderReminderEnabled', true);
 /**
  * valid options of array: 'cashless' or 'cash' (or both but this is not recommended)
  */
-Configure::write('app.paymentMethods', array(
+Configure::write('app.paymentMethods', [
     'cashless'
-));
+]);

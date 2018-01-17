@@ -27,10 +27,10 @@ class AppShell extends Shell
 
     public $browser;
 
-    public $uses = array(
+    public $uses = [
         'ActionLog',
         'Customer'
-    );
+    ];
 
     public function main()
     {

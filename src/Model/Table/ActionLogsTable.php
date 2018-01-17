@@ -30,446 +30,446 @@ class ActionLog extends AppModel
      *     ),
      * ),
      */
-    public $types = array(
-        'product_added' => array(
+    public $types = [
+        'product_added' => [
             'de' => 'Produkt: erstellt',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_attribute_added' => array(
+            ]
+        ],
+        'product_attribute_added' => [
             'de' => 'Produkt: Variante erstellt',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_image_added' => array(
+            ]
+        ],
+        'product_image_added' => [
             'de' => 'Produkt: Bild hochgeladen',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_image_deleted' => array(
+            ]
+        ],
+        'product_image_deleted' => [
             'de' => 'Produkt: Bild gelöscht',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_attribute_deleted' => array(
+            ]
+        ],
+        'product_attribute_deleted' => [
             'de' => 'Produkt: Variante gelöscht',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_set_inactive' => array(
+            ]
+        ],
+        'product_set_inactive' => [
             'de' => 'Produkt: deaktiviert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_set_active' => array(
+            ]
+        ],
+        'product_set_active' => [
             'de' => 'Produkt: aktiviert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_quantity_changed' => array(
+            ]
+        ],
+        'product_quantity_changed' => [
             'de' => 'Produkt: Anzahl geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_price_changed' => array(
+            ]
+        ],
+        'product_price_changed' => [
             'de' => 'Produkt: Preis geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_name_changed' => array(
+            ]
+        ],
+        'product_name_changed' => [
             'de' => 'Produkt: Name geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_unity_changed' => array(
+            ]
+        ],
+        'product_unity_changed' => [
             'de' => 'Produkt: Einheit geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_description_changed' => array(
+            ]
+        ],
+        'product_description_changed' => [
             'de' => 'Produkt: Beschreibung geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_description_short_changed' => array(
+            ]
+        ],
+        'product_description_short_changed' => [
             'de' => 'Produkt: Beschreibung kurz geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_deposit_changed' => array(
+            ]
+        ],
+        'product_deposit_changed' => [
             'de' => 'Produkt: Pfand geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_tax_changed' => array(
+            ]
+        ],
+        'product_tax_changed' => [
             'de' => 'Produkt: Steuersatz geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_categories_changed' => array(
+            ]
+        ],
+        'product_categories_changed' => [
             'de' => 'Produkt: Kategorien geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_set_to_old' => array(
+            ]
+        ],
+        'product_set_to_old' => [
             'de' => 'Produkt: nicht mehr als "neu" anzeigen',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_set_to_new' => array(
+            ]
+        ],
+        'product_set_to_new' => [
             'de' => 'Produkt: als "neu" angezeigen',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'product_default_attribute_changed' => array(
+            ]
+        ],
+        'product_default_attribute_changed' => [
             'de' => 'Produkt: Standard-Variante geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
+            ]
+        ],
 
-        'product_remotely_changed' => array(
+        'product_remotely_changed' => [
             'de' => 'Synchronisation: Artikel geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
+            ]
+        ],
 
-        'orders_state_changed' => array(
+        'orders_state_changed' => [
             'de' => 'Bestellung: Status geändert'
-        ),
-        'orders_closed' => array(
+        ],
+        'orders_closed' => [
             'de' => 'Bestellungen: abgeschlossen'
-        ),
-        'order_comment_changed' => array(
+        ],
+        'order_comment_changed' => [
             'de' => 'Bestellung: Kommentar geändert'
-        ),
-        'orders_date_changed' => array(
+        ],
+        'orders_date_changed' => [
             'de' => 'Bestellung: rückdatiert'
-        ),
-        'orders_shop_added' => array(
+        ],
+        'orders_shop_added' => [
             'de' => 'Bestellung: Sofort-Bestellung getätigt'
-        ),
-        'order_detail_product_price_changed' => array(
+        ],
+        'order_detail_product_price_changed' => [
             'de' => 'Bestelltes Produkt: Preis geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'order_detail_product_quantity_changed' => array(
+            ]
+        ],
+        'order_detail_product_quantity_changed' => [
             'de' => 'Bestelltes Produkt: Anzahl geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'order_detail_cancelled' => array(
+            ]
+        ],
+        'order_detail_cancelled' => [
             'de' => 'Bestelltes Produkt: storniert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
+            ]
+        ],
 
-        'payment_product_added' => array(
+        'payment_product_added' => [
             'de' => 'Mitglied: Guthaben-Aufladung eingetragen'
-        ),
-        'payment_product_approval_ok' => array(
+        ],
+        'payment_product_approval_ok' => [
             'de' => 'Guthaben-Aufladung: bestätigt'
-        ),
-        'payment_product_approval_open' => array(
+        ],
+        'payment_product_approval_open' => [
             'de' => 'Guthaben-Aufladung: Bestätigung offen'
-        ),
-        'payment_product_approval_not_ok' => array(
+        ],
+        'payment_product_approval_not_ok' => [
             'de' => 'Guthaben-Aufladung: da stimmt was nicht...'
-        ),
-        'payment_payback_added' => array(
+        ],
+        'payment_payback_added' => [
             'de' => 'Mitglied: Rückzahlung eingetragen'
-        ),
-        'payment_payback_deleted' => array(
+        ],
+        'payment_payback_deleted' => [
             'de' => 'Mitglied: Rückzahlung gelöscht'
-        ),
-        'payment_product_deleted' => array(
+        ],
+        'payment_product_deleted' => [
             'de' => 'Mitglied: Guthaben gelöscht'
-        ),
-        'payment_deposit_customer_added' => array(
+        ],
+        'payment_deposit_customer_added' => [
             'de' => 'Mitglied: Pfand-Betrag eingetragen'
-        ),
-        'payment_deposit_manufacturer_added' => array(
+        ],
+        'payment_deposit_manufacturer_added' => [
             'de' => 'Hersteller: Pfand-Rücknahme eingetragen',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'payment_deposit_customer_deleted' => array(
+            ]
+        ],
+        'payment_deposit_customer_deleted' => [
             'de' => 'Mitglied: Pfand-Betrag gelöscht'
-        ),
-        'payment_deposit_manufacturer_deleted' => array(
+        ],
+        'payment_deposit_manufacturer_deleted' => [
             'de' => 'Hersteller: Pfand-Rücknahme gelöscht',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'payment_member_fee_added' => array(
+            ]
+        ],
+        'payment_member_fee_added' => [
             'de' => 'Mitglied: Mitgliedsbeitrag eingetragen'
-        ),
-        'payment_member_fee_deleted' => array(
+        ],
+        'payment_member_fee_deleted' => [
             'de' => 'Mitglied: Mitgliedsbeitrag gelöscht'
-        ),
-        'payment_member_fee_flexible_added' => array(
+        ],
+        'payment_member_fee_flexible_added' => [
             'de' => 'Mitglied: Flexibler Mitgliedsbeitrag eingetragen'
-        ),
-        'payment_member_fee_flexible_deleted' => array(
+        ],
+        'payment_member_fee_flexible_deleted' => [
             'de' => 'Mitglied: Flexibler Mitgliedsbeitrag gelöscht'
-        ),
+        ],
 
-        'blog_post_added' => array(
+        'blog_post_added' => [
             'de' => 'Blog-Artikel: erstellt'
-        ),
-        'blog_post_changed' => array(
+        ],
+        'blog_post_changed' => [
             'de' => 'Blog-Artikel: geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'blog_post_deleted' => array(
+            ]
+        ],
+        'blog_post_deleted' => [
             'de' => 'Blog-Artikel: gelöscht',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
+            ]
+        ],
 
-        'page_added' => array(
+        'page_added' => [
             'de' => 'Seite: erstellt'
-        ),
-        'page_changed' => array(
+        ],
+        'page_changed' => [
             'de' => 'Seite: geändert'
-        ),
-        'page_deleted' => array(
+        ],
+        'page_deleted' => [
             'de' => 'Seite: gelöscht'
-        ),
+        ],
 
-        'category_added' => array(
+        'category_added' => [
             'de' => 'Kategorie: erstellt'
-        ),
-        'category_changed' => array(
+        ],
+        'category_changed' => [
             'de' => 'Kategorie: geändert'
-        ),
-        'category_deleted' => array(
+        ],
+        'category_deleted' => [
             'de' => 'Kategorie: gelöscht'
-        ),
+        ],
 
-        'remote_foodcoop_added' => array(
+        'remote_foodcoop_added' => [
             'de' => 'Remote-Foodcoop: erstellt'
-        ),
-        'remote_foodcoop_changed' => array(
+        ],
+        'remote_foodcoop_changed' => [
             'de' => 'Remote-Foodcoop: geändert'
-        ),
-        'remote_foodcoop_deleted' => array(
+        ],
+        'remote_foodcoop_deleted' => [
             'de' => 'Remote-Foodcoop: gelöscht'
-        ),
+        ],
 
-        'slider_added' => array(
+        'slider_added' => [
             'de' => 'Slideshow-Bild: erstellt'
-        ),
-        'slider_changed' => array(
+        ],
+        'slider_changed' => [
             'de' => 'Slideshow-Bild: geändert'
-        ),
-        'slider_deleted' => array(
+        ],
+        'slider_deleted' => [
             'de' => 'Slideshow-Bild: gelöscht'
-        ),
+        ],
 
-        'tax_added' => array(
+        'tax_added' => [
             'de' => 'Steuersatz: erstellt'
-        ),
-        'tax_changed' => array(
+        ],
+        'tax_changed' => [
             'de' => 'Steuersatz: geändert'
-        ),
-        'tax_deleted' => array(
+        ],
+        'tax_deleted' => [
             'de' => 'Steuersatz: gelöscht'
-        ),
+        ],
 
-        'customer_registered' => array(
+        'customer_registered' => [
             'de' => 'Mitglied: Mitgliedskonto erstellt'
-        ),
-        'customer_profile_changed' => array(
+        ],
+        'customer_profile_changed' => [
             'de' => 'Mitglied: Profil geändert'
-        ),
-        'customer_password_changed' => array(
+        ],
+        'customer_password_changed' => [
             'de' => 'Mitglied: Passwort geändert'
-        ),
-        'customer_order_finished' => array(
+        ],
+        'customer_order_finished' => [
             'de' => 'Mitglied: Bestellung getätigt'
-        ),
-        'customer_set_inactive' => array(
+        ],
+        'customer_set_inactive' => [
             'de' => 'Mitglied: deaktiviert'
-        ),
-        'customer_set_active' => array(
+        ],
+        'customer_set_active' => [
             'de' => 'Mitglied: aktiviert'
-        ),
-        'customer_comment_changed' => array(
+        ],
+        'customer_comment_changed' => [
             'de' => 'Mitglied: Kommentar geändert'
-        ),
-        'customer_group_changed' => array(
+        ],
+        'customer_group_changed' => [
             'de' => 'Mitglied: Gruppe geändert'
-        ),
+        ],
 
-        'manufacturer_description_changed' => array(
+        'manufacturer_description_changed' => [
             'de' => 'Hersteller: Beschreibung geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'manufacturer_options_changed' => array(
+            ]
+        ],
+        'manufacturer_options_changed' => [
             'de' => 'Hersteller: Einstellungen geändert'
-        ),
-        'manufacturer_additional_text_for_invoice_changed' => array(
+        ],
+        'manufacturer_additional_text_for_invoice_changed' => [
             'de' => 'Hersteller: Zusatztext für Rechnung geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'manufacturer_password_changed' => array(
+            ]
+        ],
+        'manufacturer_password_changed' => [
             'de' => 'Hersteller: Passwort geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'manufacturer_set_inactive' => array(
+            ]
+        ],
+        'manufacturer_set_inactive' => [
             'de' => 'Hersteller: deaktiviert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'manufacturer_set_active' => array(
+            ]
+        ],
+        'manufacturer_set_active' => [
             'de' => 'Hersteller: aktiviert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'manufacturer_added' => array(
+            ]
+        ],
+        'manufacturer_added' => [
             'de' => 'Hersteller: erstellt'
-        ),
-        'manufacturer_changed' => array(
+        ],
+        'manufacturer_changed' => [
             'de' => 'Hersteller: geändert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
+            ]
+        ],
 
-        'cronjob_backup_database' => array(
+        'cronjob_backup_database' => [
             'de' => 'Cronjob: Datenbank gebackupt'
-        ),
-        'cronjob_send_order_lists' => array(
+        ],
+        'cronjob_send_order_lists' => [
             'de' => 'Cronjob: Bestelllisten verschickt'
-        ),
-        'cronjob_send_invoices' => array(
+        ],
+        'cronjob_send_invoices' => [
             'de' => 'Cronjob: Rechnungen verschickt'
-        ),
-        'cronjob_sms_reminder' => array(
+        ],
+        'cronjob_sms_reminder' => [
             'de' => 'Cronjob: SMS-Bestellerinnerung'
-        ),
-        'cronjob_email_order_reminder' => array(
+        ],
+        'cronjob_email_order_reminder' => [
             'de' => 'Cronjob: E-Mail-Bestellerinnerung'
-        ),
-        'cronjob_check_credit_balance' => array(
+        ],
+        'cronjob_check_credit_balance' => [
             'de' => 'Cronjob: Guthaben überprüfen'
-        ),
-        'superadmin_deploy_successful' => array(
+        ],
+        'superadmin_deploy_successful' => [
             'de' => 'Superadmin: Update eingespielt',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            )
-        ),
-        'superadmin_deploy_failed' => array(
+            ]
+        ],
+        'superadmin_deploy_failed' => [
             'de' => 'Superadmin: Update gescheitert',
-            'access' => array(
+            'access' => [
                 'manufacturer'
-            ),
-            'class' => array(
+            ],
+            'class' => [
                 'fail',
-            ),
-        ),
+            ],
+        ],
 
-        'attribute_added' => array(
+        'attribute_added' => [
             'de' => 'Variante erstellt'
-        ),
-        'attribute_changed' => array(
+        ],
+        'attribute_changed' => [
             'de' => 'Variante geändert'
-        ),
-        'attribute_deleted' => array(
+        ],
+        'attribute_deleted' => [
             'de' => 'Variante gelöscht'
-        ),
+        ],
 
-        'configuration_changed' => array(
+        'configuration_changed' => [
             'de' => 'Einstellung geändert'
-        )
-    )
+        ]
+    ]
     ;
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'customer_id'
-        ),
-        'Product' => array(
+        ],
+        'Product' => [
             'foreignKey' => 'object_id',
-            'conditions' => array(
+            'conditions' => [
                 'object_type' => 'products'
-            )
-        ),
-        'Manufacturer' => array(
+            ]
+        ],
+        'Manufacturer' => [
             'foreignKey' => 'object_id',
-            'conditions' => array(
+            'conditions' => [
                 'object_type' => 'manufacturers'
-            )
-        ),
-        'BlogPost' => array(
+            ]
+        ],
+        'BlogPost' => [
             'foreignKey' => 'object_id',
-            'conditions' => array(
+            'conditions' => [
                 'object_type' => 'blog_posts'
-            )
-        ),
-        'Payment' => array(
+            ]
+        ],
+        'Payment' => [
             'foreignKey' => 'object_id',
-            'conditions' => array(
+            'conditions' => [
                 'object_type' => 'payments'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function customSave($type, $customerId, $objectId, $objectType, $text)
     {
         $this->id = null;
-        $data2save = array(
+        $data2save = [
             'type' => $type,
             'customer_id' => $customerId,
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
             'date' => date('Y-m-d H:i:s')
-        );
+        ];
         $this->save($data2save);
     }
 
     public function getTypesForDropdown($appAuth)
     {
-        $result = array();
+        $result = [];
         foreach ($this->types as $type => $value) {
             if ($appAuth->isManufacturer()) {
                 if (isset($value['access']) && in_array('manufacturer', $value['access'])) {

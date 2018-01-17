@@ -18,7 +18,7 @@
     
         <tr>
             <?php
-            $columns = array('Anzahl', 'Produkte', 'Hersteller', 'Preis', 'Pfand');
+            $columns = ['Anzahl', 'Produkte', 'Hersteller', 'Preis', 'Pfand'];
             foreach ($columns as $column) {
                 echo '<td align="center" style="padding: 10px;font-weight:bold;border:1px solid #d6d4d4;background-color:#fbfbfb;">'.$column.'</td>';
             }

@@ -12,15 +12,15 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
     Configure::read('AppConfig.jsNamespace').".Cart.initCartFinish();"
-));
+]);
 if (!$appAuth->termsOfUseAccepted()) {
-    $this->element('addScript', array('script' =>
+    $this->element('addScript', ['script' =>
         Configure::read('AppConfig.jsNamespace') . ".Helper.disableButton($('#OrderDetailForm button.btn-success'));"
-    ));
+    ]);
 }
 ?>
 
@@ -59,49 +59,49 @@ if (!$appAuth->termsOfUseAccepted()) {
         </p>
     
             <?php
-            echo $this->Form->create('Order', array(
+            echo $this->Form->create('Order', [
                 'class' => 'fcs-form',
                 'url' => $this->Slug->getCartFinish()
-            ));
+            ]);
 
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/generalTermsAndConditions');
             echo '</div>';
-            echo $this->Form->input('Order.general_terms_and_conditions_accepted', array(
+            echo $this->Form->input('Order.general_terms_and_conditions_accepted', [
                 'label' => 'Ich akzeptiere die <a href="#general-terms-and-conditions">AGB</a>.',
                 'type' => 'checkbox'
-            ));
+            ]);
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
                 echo $this->element('legal/cancellationTerms');
             echo '</div>';
-            echo $this->Form->input('Order.cancellation_terms_accepted', array(
+            echo $this->Form->input('Order.cancellation_terms_accepted', [
                 'label' => 'Ich nehme das <a href="#cancellation-terms">Rücktrittsrecht</a> zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren.',
                 'type' => 'checkbox'
-            ));
+            ]);
         ?>
         <div class="sc"></div>
         
         <?php
         if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) {
-            $this->element('addScript', array('script' =>
+            $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();"
-            ));
+            ]);
             if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Order']['comment'] != '') {
-                $this->element('addScript', array('script' =>
+                $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
-                ));
+                ]);
             }
-            echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', array(
+            echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Nachricht an den Abholdienst schreiben?',
             'escape' => false
-            ));
+            ]);
             echo '<div class="toggle-content order-comment">';
-            echo $this->Form->input('Order.comment', array(
+            echo $this->Form->input('Order.comment', [
                 'type' => 'textarea',
                 'placeholder' => 'Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht.',
                 'label' => ''
-            ));
+            ]);
             echo '</div>';
         }
         ?>

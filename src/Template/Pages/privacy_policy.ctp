@@ -14,7 +14,7 @@
  */
 ?>
 <?php
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
-));
+]);
 echo $this->element('legal/privacyPolicy');

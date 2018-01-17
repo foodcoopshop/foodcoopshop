@@ -21,39 +21,39 @@ class ProductAttributeCombination extends AppModel
 
     public $primaryKey = 'id_attribute';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Containable'
-    );
+    ];
 
-    public $belongsTo = array(
-        'Attribute' => array(
+    public $belongsTo = [
+        'Attribute' => [
             'foreignKey' => 'id_attribute'
-        ),
-        'ProductAttribute' => array(
+        ],
+        'ProductAttribute' => [
             'foreignKey' => 'id_product_attribute'
-        )
-    );
+        ]
+    ];
 
     public function getCombinationCounts($attributeId)
     {
         $this->recursive = 2;
 
-        $combinations = $this->find('all', array(
-            'conditions' => array(
+        $combinations = $this->find('all', [
+            'conditions' => [
                 'Attribute.id_attribute' => $attributeId
-            ),
-            'contain' => array(
+            ],
+            'contain' => [
                 'Attribute',
                 'ProductAttribute.Product.ProductLang',
                 'ProductAttribute.Product.ProductShop',
                 'ProductAttribute.Product.Manufacturer'
-            )
-        ));
+            ]
+        ]);
 
-        $return = array(
-            'online' => array(),
-            'offline' => array()
-        );
+        $return = [
+            'online' => [],
+            'offline' => []
+        ];
         foreach ($combinations as $combination) {
             $preparedProduct = $combination['ProductAttribute']['Product'];
 

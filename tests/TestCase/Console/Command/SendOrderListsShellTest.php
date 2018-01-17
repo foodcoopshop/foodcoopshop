@@ -39,9 +39,9 @@ class SendOrderListsShellTest extends AppCakeTestCase
         // reset date if needed
         $currentWeekday = Configure::read('timeHelper')->getCurrentWeekday();
         if (in_array($currentWeekday, Configure::read('timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
-            $order2update = array(
+            $order2update = [
                 'date_add' => Configure::read('timeHelper')->getDateForShopOrder(Configure::read('timeHelper')->getCurrentDay()),
-            );
+            ];
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
         }
@@ -49,7 +49,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all');
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs($emailLogs[1], 'Bestellungen für den', array('im Anhang findest du zwei Bestelllisten'), array(Configure::read('test.loginEmailVegetableManufacturer')));
+        $this->assertEmailLogs($emailLogs[1], 'Bestellungen für den', ['im Anhang findest du zwei Bestelllisten'], [Configure::read('test.loginEmailVegetableManufacturer')]);
     }
 
     public function tearDown()

@@ -20,9 +20,9 @@ App::uses('CakeNumber', 'Utility');
 class BackupDatabaseShell extends AppShell
 {
 
-    public $uses = array(
+    public $uses = [
         'ActionLog'
-    );
+    ];
 
     public function main()
     {
@@ -39,9 +39,9 @@ class BackupDatabaseShell extends AppShell
         $dbConfig = ConnectionManager::getDataSource('default')->config;
 
         // tables whose data should not be dumped
-        $ignoredTables = array(
+        $ignoredTables = [
             //$dbConfig['prefix'] . 'name_of_ignored_table',
-        );
+        ];
 
         $backupdir = APP . DS . 'files_private' . DS . 'db-backups';
         $filename = 'db-backup-' . date('Y-m-d_H-i-s', time()) . '.sql';
@@ -79,9 +79,9 @@ class BackupDatabaseShell extends AppShell
         $Email = new CakeEmail(Configure::read('debugEmailConfig'));
         $Email->to(Configure::read('AppConfig.hostingEmail'))
             ->subject($message . ': ' . Configure::read('AppConfig.cakeServerName'))
-            ->attachments(array(
+            ->attachments([
             $zipFilename
-            ))
+            ])
             ->send();
 
         $this->out($message);

@@ -77,7 +77,7 @@ class MyHtmlHelper extends HtmlHelper
         if (!isset($manufacturer['Manufacturer'])) {
             $manufacturer['Manufacturer'] = $manufacturer;
         }
-        $imprintLines = array();
+        $imprintLines = [];
         $imprintLines[] = '<b>'.$manufacturer['Manufacturer']['name'].'</b>';
         if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname']) {
             $imprintLines[] = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
@@ -100,7 +100,7 @@ class MyHtmlHelper extends HtmlHelper
 
         if (!$addressOnly) {
             if ($manufacturer['Manufacturer']['homepage'] != '') {
-                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], array('options' => array('target' => '_blank'))) : $manufacturer['Manufacturer']['homepage']);
+                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], ['options' => ['target' => '_blank']]) : $manufacturer['Manufacturer']['homepage']);
             }
             $imprintLines[] = ''; // new line
             if ($manufacturer['Manufacturer']['uid_number'] != '') {
@@ -148,10 +148,10 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getMenuTypes()
     {
-        return array(
+        return [
             'header' => 'Header (oben)',
             'footer' => 'Footer (unten)'
-        );
+        ];
     }
 
     public function paymentIsCashless()
@@ -172,10 +172,10 @@ class MyHtmlHelper extends HtmlHelper
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
             case 'FCS_ORDER_COMMENT_ENABLED':
-                return array(
+                return [
                     APP_ON => 'ja',
                     APP_OFF => 'nein'
-                );
+                ];
                 break;
             case 'FCS_SHOP_ORDER_DEFAULT_STATE':
                 return self::getVisibleOrderStates();
@@ -209,11 +209,11 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getGroups()
     {
-        return array(
+        return [
             CUSTOMER_GROUP_MEMBER => 'Mitglied',
             CUSTOMER_GROUP_ADMIN => 'Admin',
             CUSTOMER_GROUP_SUPERADMIN => 'Superadmin'
-        );
+        ];
     }
 
     /**
@@ -258,15 +258,15 @@ class MyHtmlHelper extends HtmlHelper
     public function getCustomerOrderBy()
     {
         if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
-            return array(
+            return [
                 'Customer.lastname' => 'ASC',
                 'Customer.firstname' => 'ASC'
-            );
+            ];
         } else {
-            return array(
+            return [
                 'Customer.firstname' => 'ASC',
                 'Customer.lastname' => 'ASC'
-            );
+            ];
         }
     }
 
@@ -287,9 +287,9 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getJqueryUiIcon($icon, $options, $url = '')
     {
-        $options['escape'] = array(
+        $options['escape'] = [
             true
-        );
+        ];
 
         $return = '<ul class="jquery-ui-icon">';
         $return .= '<li class="ui-state-default ui-corner-all">';
@@ -309,7 +309,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getMemberFeeTextForFrontend($text)
     {
         $explodedText = explode(',', $text);
-        $preparedText = array();
+        $preparedText = [];
         foreach ($explodedText as $t) {
             $explodedDate = explode('-', $t);
             $preparedText[] = Configure::read('timeHelper')->getMonthName($explodedDate[1]) . ' ' . $explodedDate[0];
@@ -319,11 +319,11 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getPaymentTexts()
     {
-        $paymentTexts = array(
+        $paymentTexts = [
             'product' => 'Guthaben-Aufladung',
             'payback' => 'Rückzahlung',
             'deposit' => 'Pfand-Rückgabe'
-        );
+        ];
         if (Configure::read('AppConfig.memberFeeEnabled')) {
             $paymentTexts['member_fee'] = 'Mitgliedsbeitrag';
         }
@@ -340,19 +340,19 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getSuperadminProductPaymentTexts($appAuth)
     {
-        $paymentTexts = array(
+        $paymentTexts = [
             'product' => self::getPaymentText('product'),
             'payback' => self::getPaymentText('payback')
-        );
+        ];
         return $paymentTexts;
     }
 
     public function getManufacturerDepositPaymentTexts()
     {
-        $paymentTexts = array(
+        $paymentTexts = [
             'empty_glasses' => 'Leergebinde',
             'money' => 'Ausgleichszahlung'
-        );
+        ];
         return $paymentTexts;
     }
 
@@ -505,20 +505,20 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getApprovalStates()
     {
-        return array(
+        return [
             1 => 'bestätigt',
             0 => 'offen',
             -1 => 'da stimmt was nicht...'
-        );
+        ];
     }
 
     public function getActiveStates()
     {
-        return array(
+        return [
             1 => 'aktiviert',
             0 => 'deaktiviert',
             'all' => 'alle'
-        );
+        ];
     }
 
     public function getVisibleOrderStates()
@@ -543,7 +543,7 @@ class MyHtmlHelper extends HtmlHelper
         return join(',', self::getOrderStateIds());
     }
 
-    public function __construct(View $View, $settings = array())
+    public function __construct(View $View, $settings = [])
     {
 
         // wrap js block with jquery document ready

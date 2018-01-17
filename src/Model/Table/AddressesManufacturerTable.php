@@ -20,74 +20,74 @@ App::uses('Address', 'Model');
 class AddressManufacturer extends Address
 {
 
-    public $validate = array(
-        'firstname' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'firstname' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib den Vornamen des Rechnungsempfängers an.'
-            )
-        ),
-        'lastname' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'lastname' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib den Nachnamen des Rechnungsempfängers an.'
-            )
-        ),
-        'email' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'email' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib eine E-Mail-Adresse an.'
-            ),
-            'uniqueEmailWithFlagCheck' => array(
-                'rule' => array(
+            ],
+            'uniqueEmailWithFlagCheck' => [
+                'rule' => [
                     'uniqueEmailWithFlagCheck'
-                ),
+                ],
                 'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
-            ),
-            'email' => array(
-                'rule' => array(
+            ],
+            'email' => [
+                'rule' => [
                     'email'
-                ),
+                ],
                 'message' => 'Diese E-Mail-Adresse ist nicht gültig.'
-            )
-        ),
-        'postcode' => array(
-            'regex' => array(
-                'rule' => array(
+            ]
+        ],
+        'postcode' => [
+            'regex' => [
+                'rule' => [
                     'phone',
                     ZIP_REGEX
-                ), // phone takes regex
+                ], // phone takes regex
                 'message' => 'Die PLZ ist nicht gültig.',
                 'allowEmpty' => true
-            )
-        ),
-        'phone_mobile' => array(
-            'phone' => array(
-                'rule' => array(
+            ]
+        ],
+        'phone_mobile' => [
+            'phone' => [
+                'rule' => [
                     'phone',
                     PHONE_REGEX
-                ),
+                ],
                 'message' => 'Die Handynummer ist nicht gültig.',
                 'allowEmpty' => true
-            )
-        ),
-        'phone' => array(
-            'phone' => array(
-                'rule' => array(
+            ]
+        ],
+        'phone' => [
+            'phone' => [
+                'rule' => [
                     'phone',
                     PHONE_REGEX
-                ),
+                ],
                 'allowEmpty' => true,
                 'message' => 'Die Telefonnummer ist nicht gültig.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     /**
      * for addresses only
@@ -97,18 +97,18 @@ class AddressManufacturer extends Address
      */
     public function uniqueEmailWithFlagCheck($check)
     {
-        $conditions = array(
+        $conditions = [
             $this->alias . '.email' => $check['email']
-        );
+        ];
 
         // if manufacturer address already exists
         if ($this->id > 0) {
             $conditions[] = $this->alias . '.id_address <> ' . $this->id;
         }
 
-        $found = $this->find('count', array(
+        $found = $this->find('count', [
             'conditions' => $conditions
-        ));
+        ]);
         if ($found == 0) {
             return true;
         }

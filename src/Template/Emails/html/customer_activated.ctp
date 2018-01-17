@@ -16,14 +16,14 @@
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
     
-        <?php echo $this->element('email/greeting', array('data' => $data)); ?>
+        <?php echo $this->element('email/greeting', ['data' => $data]); ?>
         
         <tr>
             <td>
                 
                 <p>Dein Mitgliedkonto bei "<?php echo Configure::read('AppConfig.db_config_FCS_APP_NAME'); ?>" wurde soeben aktiviert.</p>
                 
-                <?php echo $this->element('email/profileLinks', array('data' => $data, 'newPassword' => $newPassword)); ?>
+                <?php echo $this->element('email/profileLinks', ['data' => $data, 'newPassword' => $newPassword]); ?>
                 
             </td>
             

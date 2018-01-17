@@ -13,25 +13,25 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$menu = array();
+$menu = [];
 if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
-    $menu[] = array(
+    $menu[] = [
         'name' => 'Produkte', 'slug' => $this->Slug->getAllProducts(),
         'children' => $categoriesForMenu
-    );
+    ];
 }
 
 if (!empty($manufacturersForMenu)) {
-    $menu[] = array(
+    $menu[] = [
         'name' => 'Hersteller', 'slug' => $this->Slug->getManufacturerList(),
         'children' => $manufacturersForMenu
-    );
+    ];
 }
 
-$menu[] = array(
+$menu[] = [
     'name' => 'Aktuelles', 'slug' => $this->Slug->getBlogList()
-);
+];
 
 $menu = array_merge($menu, $this->Menu->buildPageMenu($pagesForHeader));
 
-echo $this->Menu->render($menu, array('id' => 'main-menu', 'class' => 'horizontal menu'));
+echo $this->Menu->render($menu, ['id' => 'main-menu', 'class' => 'horizontal menu']);

@@ -66,7 +66,7 @@ class AppEmail extends CakeEmail
     public function logEmailInDatabase($content)
     {
         $emailLogModel = new EmailLog();
-        $email2save = array(
+        $email2save = [
             'from_address' => json_encode($this->from()),
             'to_address' => json_encode($this->to()),
             'cc_address' => json_encode($this->cc()),
@@ -74,7 +74,7 @@ class AppEmail extends CakeEmail
             'subject' => $this->_originalSubject,
             'headers' => json_encode($this->getHeaders()),
             'message' => $this->_renderTemplates($content)['html']
-        );
+        ];
         $emailLogModel->id = null;
         return $emailLogModel->save($email2save);
     }
@@ -104,9 +104,9 @@ class AppEmail extends CakeEmail
                 // avoid endless loops if this email also not works
                 if ($this->from() != $fallbackEmailConfig['from']) {
                     $this->config($fallbackEmailConfig);
-                    $this->from(array(
+                    $this->from([
                         key($this->from()) => Configure::read('AppConfig.db_config_FCS_APP_NAME')
-                    ));
+                    ]);
                     CakeLog::write('info', 'email was sent with fallback config');
                     return $this->send($content);
                 }

@@ -94,7 +94,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getWeekdaysBetweenOrderSendAndDelivery($delta = 0)
     {
-        $weekdays = array();
+        $weekdays = [];
         for ($i = Configure::read('AppConfig.sendOrderListsWeekday'); $i <= Configure::read('AppConfig.sendOrderListsWeekday') + Configure::read('AppConfig.deliveryDayDelta') + $delta; $i++) {
             $weekdays[] = $i;
         }
@@ -197,7 +197,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getWeekdays()
     {
-        $weekdays = array(
+        $weekdays = [
           0 => 'Sonntag',
           1 => 'Montag',
           2 => 'Dienstag',
@@ -205,13 +205,13 @@ class MyTimeHelper extends TimeHelper
           4 => 'Donnerstag',
           5 => 'Freitag',
           6 => 'Samstag'
-        );
+        ];
         return $weekdays;
     }
 
     public function getMonths()
     {
-        $months = array(
+        $months = [
             1 => 'Jänner',
             2 => 'Februar',
             3 => 'März',
@@ -224,14 +224,14 @@ class MyTimeHelper extends TimeHelper
             10 => 'Oktober',
             11 => 'November',
             12 => 'Dezember'
-        );
+        ];
         return $months;
     }
 
     public function getAllMonthsForYear($year)
     {
         $months = $this->getMonths();
-        $monthsForYear = array();
+        $monthsForYear = [];
         foreach ($months as $key => $value) {
             $monthsForYear[$year.'-'.$key] = $value . ' ' . $year;
         }
@@ -256,7 +256,7 @@ class MyTimeHelper extends TimeHelper
 
         $startDate = strtotime($startDate);
 
-        $days = array();
+        $days = [];
         for ($i=1; $i<=$n; $i++) {
             $deltaString = '-' . $i . ' days';
             $weekDay = date('w', strtotime($deltaString, $startDate));

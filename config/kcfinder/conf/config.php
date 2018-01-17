@@ -17,7 +17,7 @@
  * even if you are using session configuration.
  * See http://kcfinder.sunhater.com/install for setting descriptions
  */
-return array(
+return [
 
     // GENERAL SETTINGS
 
@@ -26,7 +26,7 @@ return array(
     'uploadDir' => "",
     'theme' => "default",
 
-    'types' => array(
+    'types' => [
 
         // (F)CKEditor types
         'files' => "",
@@ -37,7 +37,7 @@ return array(
         'file' => "",
         'media' => "swf flv avi mpg mpeg qt mov wmv asf rm",
         'image' => "*img"
-    ),
+    ],
 
     // IMAGE SETTINGS
 
@@ -64,36 +64,36 @@ return array(
     'dirPerms' => 0755,
     'filePerms' => 0644,
 
-    'access' => array(
+    'access' => [
 
-        'files' => array(
+        'files' => [
             'upload' => true,
             'delete' => true,
             'copy' => true,
             'move' => true,
             'rename' => true
-        ),
+        ],
 
-        'dirs' => array(
+        'dirs' => [
             'create' => true,
             'delete' => true,
             'rename' => true
-        )
-    ),
+        ]
+    ],
 
     'deniedExts' => "exe com msi bat cgi pl php phps phtml php3 php4 php5 php6 py pyc pyo pcgi pcgi3 pcgi4 pcgi5 pchi6",
 
     // MISC SETTINGS
 
-    'filenameChangeChars' => array(/*
+    'filenameChangeChars' => [/*
         ' ' => "_",
         ':' => "."
-    */),
+    */],
 
-    'dirnameChangeChars' => array(/*
+    'dirnameChangeChars' => [/*
         ' ' => "_",
         ':' => "."
-    */),
+    */],
 
     'mime_magic' => "",
 
@@ -108,7 +108,7 @@ return array(
     // '_tinyMCEPath' => "/tiny_mce",
 
     '_sessionVar' => "KCFINDER"
-)
+]
 // '_sessionLifetime' => 30,
 // '_sessionDir' => "/full/directory/path",
 // '_sessionDomain' => ".mysite.com",

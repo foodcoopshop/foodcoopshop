@@ -39,9 +39,9 @@ class MenuHelper extends Helper
     public function buildPageMenu($pages)
     {
 
-        $menu = array();
+        $menu = [];
         foreach ($pages as $page) {
-            $children = array();
+            $children = [];
             if (!empty($page['children'])) {
                 foreach ($page['children'] as $childPage) {
                     if ($childPage['Page']['extern_url'] != '') {
@@ -49,10 +49,10 @@ class MenuHelper extends Helper
                     } else {
                         $slug = Configure::read('slugHelper')->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']);
                     }
-                    $children[] = array(
+                    $children[] = [
                         'name' => $childPage['Page']['title'],
                         'slug' => $slug
-                    );
+                    ];
                 }
             }
             if ($page['Page']['extern_url'] != '') {
@@ -60,11 +60,11 @@ class MenuHelper extends Helper
             } else {
                 $slug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
             }
-            $menu[] = array(
+            $menu[] = [
                 'name' => $page['Page']['title'],
                 'slug' => $slug,
                 'children' => $children
-            );
+            ];
         }
         return $menu;
     }
@@ -72,7 +72,7 @@ class MenuHelper extends Helper
     private function buildMenuItem($item, $index)
     {
 
-        $liClass = array();
+        $liClass = [];
         if (!empty($item['children'])) {
             $liClass[] = 'has-children';
             $liClass[] = 'has-icon';
@@ -94,7 +94,7 @@ class MenuHelper extends Helper
         return $tmpMenuItem;
     }
 
-    private function renderMenuElement($slug, $name, $style = '', $class = array(), $fontAwesomeIconClass = '')
+    private function renderMenuElement($slug, $name, $style = '', $class = [], $fontAwesomeIconClass = '')
     {
 
         if ($style != '') {
@@ -144,13 +144,13 @@ class MenuHelper extends Helper
             }
 
             if ($this->plugin != '') {
-                $menuElement = array('slug' => 'javascript:void(0);', 'name' => 'Abmelden<br /><span>'.$userName.'</span>', 'options' => array('fa-icon' => 'fa-fw fa-sign-out', 'class' => array('logout-button')));
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => 'Abmelden<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out', 'class' => ['logout-button']]];
             } else {
-                $menuElement = array('slug' => 'javascript:void(0);', 'name' => 'Abmelden', 'options' => array('class' => array('logout-button')));
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => 'Abmelden', 'options' => ['class' => ['logout-button']]];
             }
         } else {
             if ($this->plugin == '') {
-                $menuElement = array('slug' => Configure::read('slugHelper')->getLogin(), 'name' => 'Anmelden');
+                $menuElement = ['slug' => Configure::read('slugHelper')->getLogin(), 'name' => 'Anmelden'];
             }
         }
         return $menuElement;
@@ -159,16 +159,16 @@ class MenuHelper extends Helper
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('htmlHelper')->paymentIsCashless()) {
-            return array('slug' => Configure::read('slugHelper')->getMyCreditBalance(), 'name' => 'Guthaben', 'options' => array('fa-icon' => 'fa-fw fa-euro'));
+            return ['slug' => Configure::read('slugHelper')->getMyCreditBalance(), 'name' => 'Guthaben', 'options' => ['fa-icon' => 'fa-fw fa-euro']];
         }
-        return array();
+        return [];
     }
 
     public function getPaymentMemberFeeMenuElement()
     {
         if (Configure::read('AppConfig.memberFeeEnabled')) {
-            return array('slug' => Configure::read('slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => array('fa-icon' => 'fa-fw fa-heart'));
+            return ['slug' => Configure::read('slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => ['fa-icon' => 'fa-fw fa-heart']];
         }
-        return array();
+        return [];
     }
 }

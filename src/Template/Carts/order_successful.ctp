@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
-));
+]);
 ?>
 
 <h1>Bestellung abgeschlossen</h1>
@@ -43,8 +43,8 @@ $this->element('addScript', array('script' =>
 <?php
 if (!empty($blogPosts)) {
     echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
-    echo $this->element('blogPosts', array(
+    echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
-    ));
+    ]);
 }
 ?>

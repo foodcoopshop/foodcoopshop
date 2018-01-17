@@ -29,20 +29,20 @@ class StringComponentTest extends AppCakeTestCase
 
     public function testSlugify()
     {
-        $tests = array(
-            array(
+        $tests = [
+            [
                 'name' => 'Getränke alkoholisch',
                 'slug' => 'getraenke-alkoholisch'
-            ),
-            array(
+            ],
+            [
                 'name' => 'Die Äpfel der letzten Saison',
                 'slug' => 'die-aepfel-der-letzten-saison'
-            ),
-            array(
+            ],
+            [
                 'name' => 'Öle und Essig',
                 'slug' => 'oele-und-essig'
-            )
-        );
+            ]
+        ];
 
         foreach ($tests as $test) {
             $result = StringComponent::slugify($test['name']);
@@ -52,20 +52,20 @@ class StringComponentTest extends AppCakeTestCase
 
     public function testRemoveIdFromSlug()
     {
-        $tests = array(
-            array(
+        $tests = [
+            [
                 'url' => '1-bla-bla-bla',
                 'slug' => 'bla-bla-bla'
-            ),
-            array(
+            ],
+            [
                 'url' => '25-getraenke-alkoholisch',
                 'slug' => 'getraenke-alkoholisch'
-            ),
-            array(
+            ],
+            [
                 'url' => '29-heilmassage-mittermeier',
                 'slug' => 'heilmassage-mittermeier'
-            )
-        );
+            ]
+        ];
 
         foreach ($tests as $test) {
             $result = StringComponent::removeIdFromSlug($test['url']);

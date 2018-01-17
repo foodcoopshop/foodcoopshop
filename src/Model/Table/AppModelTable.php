@@ -44,7 +44,7 @@ class AppModel extends Model
      * logs validation errors
      * @see Model::validates()
      */
-    public function validates($options = array())
+    public function validates($options = [])
     {
         $hasErrors = parent::validates($options);
         if (! empty($this->validationErrors)) {
@@ -67,13 +67,13 @@ class AppModel extends Model
      */
     public function getMultipleEmailValidationRule($allowEmpty = false)
     {
-        $validationRules = array(
-          'rule' => array(
+        $validationRules = [
+          'rule' => [
               'multipleEmails'
-          ),
+          ],
           'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).',
           'allowEmpty' => $allowEmpty
-        );
+        ];
         return $validationRules;
     }
 
@@ -92,24 +92,24 @@ class AppModel extends Model
 
     public function getNumberRangeConfigurationRule($min, $max)
     {
-        $validationRules = array();
+        $validationRules = [];
         $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
-        $validationRules[] = array(
-            'rule' => array(
+        $validationRules[] = [
+            'rule' => [
                 'comparison',
                 '>=',
                 $min
-            ),
+            ],
             'message' => $message
-        );
-        $validationRules[] = array(
-            'rule' => array(
+        ];
+        $validationRules[] = [
+            'rule' => [
                 'comparison',
                 '<=',
                 $max
-            ),
+            ],
             'message' => $message
-        );
+        ];
         return $validationRules;
     }
 
@@ -207,7 +207,7 @@ class AppModel extends Model
      */
     public static function interpolateQuery($query, $params)
     {
-        $keys = array();
+        $keys = [];
 
         // build a regular expression for each parameter
         foreach ($params as $key => $value) {

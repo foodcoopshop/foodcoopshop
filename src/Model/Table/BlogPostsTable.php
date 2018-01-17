@@ -19,51 +19,51 @@ class BlogPost extends AppModel
 
     public $primaryKey = 'id_blog_post';
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'id_customer'
-        ),
-        'Manufacturer' => array(
+        ],
+        'Manufacturer' => [
             'foreignKey' => 'id_manufacturer'
-        )
-    );
+        ]
+    ];
 
-    public $validate = array(
-        'title' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'title' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib einen Titel an.'
-            ),
-            'minLength' => array(
-                'rule' => array(
+            ],
+            'minLength' => [
+                'rule' => [
                     'minLength',
                     3
-                ),
+                ],
                 'message' => 'Bitte gib mindestens 3 Zeichen ein.'
-            )
-        ),
-        'short_description' => array(
-            'maxLength' => array(
-                'rule' => array(
+            ]
+        ],
+        'short_description' => [
+            'maxLength' => [
+                'rule' => [
                     'maxLength',
                     100
-                ),
+                ],
                 'message' => 'Bitte gib maximal 100 Zeichen ein.'
-            )
-        ),
-        'content' => array(
-            'minLength' => array(
-                'rule' => array(
+            ]
+        ],
+        'content' => [
+            'minLength' => [
+                'rule' => [
                     'minLength',
                     3
-                ),
+                ],
                 'message' => 'Bitte gib mindestens 3 Zeichen ein.',
                 'allowEmpty' => true
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function findFeatured($appAuth)
     {
@@ -72,9 +72,9 @@ class BlogPost extends AppModel
 
     public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
     {
-        $conditions = array(
+        $conditions = [
             'BlogPost.active' => APP_ON
-        );
+        ];
         if (! $appAuth->loggedIn()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
@@ -86,13 +86,13 @@ class BlogPost extends AppModel
             $conditions['BlogPost.is_featured'] = true;
         }
 
-        $blogPosts = $this->find('all', array(
+        $blogPosts = $this->find('all', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'BlogPost.modified' => 'DESC'
-            ),
+            ],
             'limit' => $limit
-        ));
+        ]);
 
         return $blogPosts;
     }

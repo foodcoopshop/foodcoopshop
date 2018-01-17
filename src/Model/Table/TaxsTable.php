@@ -21,36 +21,36 @@ class Tax extends AppModel
 
     public $primaryKey = 'id_tax';
  // sic! for binding from taxroulesgroup
-    public $validate = array(
-        'rate' => array(
-            'range' => array(
-                'rule' => array(
+    public $validate = [
+        'rate' => [
+            'range' => [
+                'rule' => [
                     'range',
                     0,
                     100
-                ),
+                ],
                 'message' => 'Bitte gibt eine Zahl von 0,01 bis 99,99 an'
-            ),
-            'unique' => array(
+            ],
+            'unique' => [
                 'rule' => 'isUnique',
                 'message' => 'Dieser Steuersatz wird bereits verwendet.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function getForDropdown()
     {
-        $taxes = $this->find('all', array(
-            'conditions' => array(
+        $taxes = $this->find('all', [
+            'conditions' => [
                 'Tax.active' => APP_ON
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'Tax.rate' => 'ASC'
-            )
-        ));
-        $preparedTaxes = array(
+            ]
+        ]);
+        $preparedTaxes = [
             0 => '0 %'
-        );
+        ];
         foreach ($taxes as $tax) {
             $preparedTaxes[$tax['Tax']['id_tax']] = Configure::read('htmlHelper')->formatAsPercent($tax['Tax']['rate']);
         }

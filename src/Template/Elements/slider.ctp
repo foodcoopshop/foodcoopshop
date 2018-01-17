@@ -14,9 +14,9 @@
  */
 
 if (!empty($sliders)) {
-    $this->element('addScript', array('script' =>
+    $this->element('addScript', ['script' =>
         Configure::read('AppConfig.jsNamespace').".Helper.initSlider();"
-    ));
+    ]);
     echo '<div id="slider">';
     foreach ($sliders as $slider) {
         echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider['Slider']['image']).'" />';

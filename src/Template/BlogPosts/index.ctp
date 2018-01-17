@@ -12,10 +12,10 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages();"
-));
+]);
 ?>
 
 <h1><?php echo $title_for_layout; ?>
@@ -50,15 +50,15 @@ foreach ($blogPosts as $blogPost) {
         echo $this->Html->link(
             '<i class="fa fa-plus-circle"></i> Mehr anzeigen',
             $blogDetailLink,
-            array('escape' => false)
+            ['escape' => false]
         );
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-            array(
+            [
             'title' => 'Bearbeiten'
-            ),
+            ],
             $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_blog_post'])
         );
     }
@@ -70,7 +70,7 @@ foreach ($blogPosts as $blogPost) {
         echo $this->Html->link(
             'Blog-Artikel anzeigen',
             $blogDetailLink,
-            array('class' => 'btn btn-success')
+            ['class' => 'btn btn-success']
         );
 
         echo '<div class="additional-info">';

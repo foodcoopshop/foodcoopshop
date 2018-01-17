@@ -19,21 +19,21 @@ class Cart extends AppModel
 
     public $primaryKey = 'id_cart';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Content'
-    );
+    ];
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'id_customer'
-        )
-    );
+        ]
+    ];
 
-    public $hasMany = array(
-        'CartProducts' => array(
+    public $hasMany = [
+        'CartProducts' => [
             'foreignKey' => 'id_cart'
-        )
-    );
+        ]
+    ];
 
     public function getProductNameWithUnity($productName, $unity)
     {
@@ -43,35 +43,35 @@ class Cart extends AppModel
     public function getCart($customerId)
     {
         $this->recursive = - 1;
-        $cart = $this->find('first', array(
-            'conditions' => array(
+        $cart = $this->find('first', [
+            'conditions' => [
                 'Cart.status' => APP_ON,
                 'Cart.id_customer' => $customerId
-            )
-        ));
+            ]
+        ]);
         if (empty($cart)) {
             $this->id = null;
-            $cart2save = array(
+            $cart2save = [
                 'id_customer' => $customerId
-            );
+            ];
             $cart = $this->save($cart2save);
         }
 
         $ccp = ClassRegistry::init('CartProduct');
         $ccp->recursive = 3;
-        $cartProducts = $ccp->find('all', array(
-            'conditions' => array(
+        $cartProducts = $ccp->find('all', [
+            'conditions' => [
                 'CartProduct.id_cart' => $cart['Cart']['id_cart']
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'ProductLang.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
-        $preparedCart = array(
+        $preparedCart = [
             'Cart' => $cart['Cart'],
-            'CartProducts' => array()
-        );
+            'CartProducts' => []
+        ];
         foreach ($cartProducts as &$cartProduct) {
             $manufacturerLink = Configure::read('htmlHelper')->link($cartProduct['Product']['Manufacturer']['name'], Configure::read('slugHelper')->getManufacturerDetail($cartProduct['Product']['Manufacturer']['id_manufacturer'], $cartProduct['Product']['Manufacturer']['name']));
 
@@ -87,12 +87,12 @@ class Cart extends AppModel
                     $cartProduct['CartProduct']['id_product'],
                     $cartProduct['ProductLang']['name']
                 ),
-                array('class' => 'product-name')
+                ['class' => 'product-name']
             );
 
             if (isset($cartProduct['ProductAttribute']['ProductAttributeCombination'])) {
                 // attribute
-                $preparedCart['CartProducts'][] = array(
+                $preparedCart['CartProducts'][] = [
                     'cartProductId' => $cartProduct['CartProduct']['id_cart_product'],
                     'productId' => $cartProduct['CartProduct']['id_product'] . '-' . $cartProduct['CartProduct']['id_product_attribute'],
                     'productName' => $cartProduct['ProductLang']['name'],
@@ -114,10 +114,10 @@ class Cart extends AppModel
                         $cartProduct['ProductAttribute']['ProductAttributeShop']['price'],
                         $cartProduct['CartProduct']['amount']
                     ) * $cartProduct['CartProduct']['amount']
-                );
+                ];
             } else {
                 // no attribute
-                $preparedCart['CartProducts'][] = array(
+                $preparedCart['CartProducts'][] = [
                     'cartProductId' => $cartProduct['CartProduct']['id_cart_product'],
                     'productId' => $cartProduct['CartProduct']['id_product'],
                     'productName' => $cartProduct['ProductLang']['name'],
@@ -139,7 +139,7 @@ class Cart extends AppModel
                         $cartProduct['Product']['ProductShop']['price'],
                         $cartProduct['CartProduct']['amount']
                     ) * $cartProduct['CartProduct']['amount']
-                );
+                ];
             }
         }
 

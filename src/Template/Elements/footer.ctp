@@ -16,10 +16,10 @@
 <div class="first-column">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
-        $menu[] = array('name' => 'Nutzungsbedingungen', 'slug' => $this->Slug->getTermsOfUse());
-        $menu[] = array('name' => 'Datenschutzerklärung', 'slug' => $this->Slug->getPrivacyPolicy());
+        $menu[] = ['name' => 'Nutzungsbedingungen', 'slug' => $this->Slug->getTermsOfUse()];
+        $menu[] = ['name' => 'Datenschutzerklärung', 'slug' => $this->Slug->getPrivacyPolicy()];
         echo '<h2>Informationen</h2>';
-        echo $this->Menu->render($menu, array('id' => 'footer-menu', 'class' => 'menu'));
+        echo $this->Menu->render($menu, ['id' => 'footer-menu', 'class' => 'menu']);
     ?>
 </div>
 

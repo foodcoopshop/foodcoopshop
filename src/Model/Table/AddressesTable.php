@@ -23,8 +23,8 @@ abstract class Address extends AppModel
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
-        $this->virtualFields = array(
+        $this->virtualFields = [
             'name' => "TRIM(CONCAT(`{$this->alias}`.`firstname`,' ',`{$this->alias}`.`lastname`))"
-        );
+        ];
     }
 }

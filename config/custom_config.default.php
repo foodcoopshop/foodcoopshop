@@ -80,7 +80,7 @@ return [
         /**
          * array of email adresses that receive notifications after new member registrations
          */
-        'registrationNotificationEmails' => array(),
+        'registrationNotificationEmails' => [],
         
         /**
          * whether to apply a member fee to the members account balance
@@ -95,8 +95,8 @@ return [
         /**
          * valid options of array: 'cashless' or 'cash' (or both but this is not recommended)
          */
-        'paymentMethods' => array(
+        'paymentMethods' => [
             'cashless'
-        )
+        ]
     ]
 ];

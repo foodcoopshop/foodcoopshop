@@ -56,11 +56,11 @@ class FrontendController extends AppController
             $product['Product']['tax'] = $grossPrice - $product['ProductShop']['price'];
             $product['Product']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
 
-            $product['attributes'] = $this->ProductAttribute->find('all', array(
-                'conditions' => array(
+            $product['attributes'] = $this->ProductAttribute->find('all', [
+                'conditions' => [
                     'ProductAttribute.id_product' => $product['Product']['id_product']
-                )
-            ));
+                ]
+            ]);
             foreach ($product['attributes'] as &$attribute) {
                 $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShop']['id_product'], $attribute['ProductAttributeShop']['price']);
                 $attribute['ProductAttributeShop']['gross_price'] = $grossPrice;
@@ -99,26 +99,26 @@ class FrontendController extends AppController
 
         $this->resetOriginalLoggedCustomer();
 
-        $categoriesForMenu = array();
+        $categoriesForMenu = [];
         if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn()) {
             $this->loadModel('Category');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu();
-            array_unshift($categoriesForMenu, array(
+            array_unshift($categoriesForMenu, [
                 'slug' => '/neue-produkte',
                 'name' => 'Neue Produkte <span class="additional-info"> (' . $newProductsCount . ')</span>',
-                'options' => array(
+                'options' => [
                     'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
-                )
-            ));
-            array_unshift($categoriesForMenu, array(
+                ]
+            ]);
+            array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('slugHelper')->getAllProducts(),
                 'name' => 'Alle Produkte <span class="additional-info"> (' . $allProductsCount . ')</span>',
-                'options' => array(
+                'options' => [
                     'fa-icon' => 'fa-tags'
-                )
-            ));
+                ]
+            ]);
         }
         $this->set('categoriesForMenu', $categoriesForMenu);
 
@@ -127,7 +127,7 @@ class FrontendController extends AppController
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
         $this->loadModel('Page');
-        $conditions = array();
+        $conditions = [];
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';
         if (! $this->AppAuth->loggedIn()) {
@@ -135,8 +135,8 @@ class FrontendController extends AppController
         }
 
         $pages = $this->Page->findAllGroupedByMenu($conditions);
-        $pagesForHeader = array();
-        $pagesForFooter = array();
+        $pagesForHeader = [];
+        $pagesForFooter = [];
         foreach ($pages as $page) {
             if ($page['Page']['menu_type'] == 'header') {
                 $pagesForHeader[] = $page;

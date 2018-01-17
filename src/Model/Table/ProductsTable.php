@@ -23,49 +23,49 @@ class Product extends AppModel
     public $useTable = 'product';
     public $primaryKey = 'id_product';
 
-    public $belongsTo = array(
-        'Manufacturer' => array(
+    public $belongsTo = [
+        'Manufacturer' => [
             'foreignKey' => 'id_manufacturer'
-        ),
-        'ProductLang' => array(
+        ],
+        'ProductLang' => [
             'foreignKey' => 'id_product'
-        ),
-        'ProductShop' => array(
+        ],
+        'ProductShop' => [
             'foreignKey' => 'id_product'
-        ),
-        'StockAvailable' => array(
+        ],
+        'StockAvailable' => [
             'foreignKey' => 'id_product'
-        ),
-        'Tax' => array(
+        ],
+        'Tax' => [
             'foreignKey' => 'id_tax'
-        ),
-        'CategoryProduct' => array(
+        ],
+        'CategoryProduct' => [
             'foreignKey' => 'id_product'
-        )
-    );
+        ]
+    ];
 
-    public $hasOne = array(
-        'DepositProduct' => array(
+    public $hasOne = [
+        'DepositProduct' => [
             'foreignKey' => 'id_product'
-        ),
-        'Image' => array(
+        ],
+        'Image' => [
             'foreignKey' => 'id_product',
-            'order' => array(
+            'order' => [
                 'Image.id_image' => 'DESC'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
-    public $hasMany = array(
-        'ProductAttributes' => array(
+    public $hasMany = [
+        'ProductAttributes' => [
             'className' => 'ProductAttribute',
             'foreignKey' => 'id_product'
-        ),
-        'CategoryProducts' => array(
+        ],
+        'CategoryProducts' => [
             'className' => 'CategoryProduct',
             'foreignKey' => 'id_product'
-        )
-    );
+        ]
+    ];
 
     public function __construct($id = false, $table = null, $ds = null)
     {
@@ -83,12 +83,12 @@ class Product extends AppModel
     {
 
         $this->recursive = -1;
-        $found = $this->find('count', array(
-            'conditions' => array(
+        $found = $this->find('count', [
+            'conditions' => [
                 'Product.id_product' => $productId,
                 'Product.id_manufacturer' => $manufacturerId
-            )
-        ));
+            ]
+        ]);
         return (boolean) $found;
     }
 
@@ -106,10 +106,10 @@ class Product extends AppModel
             $productId = $explodedProductId[0];
             $attributeId = $explodedProductId[1];
         }
-        return array(
+        return [
             'productId' => $productId,
             'attributeId' => $attributeId
-        );
+        ];
     }
 
     /**
@@ -127,7 +127,7 @@ class Product extends AppModel
     public function changeStatus($products)
     {
 
-        $products2save = array();
+        $products2save = [];
 
         foreach ($products as $product) {
             $productId = key($product);
@@ -136,14 +136,14 @@ class Product extends AppModel
                 throw new InvalidParameterException('change status is not allowed for product attributes');
             }
             $status = $product[$ids['productId']];
-            $whitelist = array(APP_OFF, APP_ON);
+            $whitelist = [APP_OFF, APP_ON];
             if (!in_array($status, $whitelist, true)) { // last param for type check
                 throw new InvalidParameterException('Product.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
-                $products2save[] = array(
+                $products2save[] = [
                     'id_product' => $ids['productId'],
                     'active' => $status
-                );
+                ];
             }
         }
 
@@ -218,11 +218,11 @@ class Product extends AppModel
             $ids = $this->getProductIdAndAttributeId($productId);
 
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->DepositProduct->find('first', array(
-                    'conditions' => array(
+                $oldDeposit = $this->DepositProduct->find('first', [
+                    'conditions' => [
                         'DepositProduct.id_product_attribute' => $ids['attributeId']
-                    )
-                ));
+                    ]
+                ]);
 
                 if (empty($oldDeposit)) {
                     $this->DepositProduct->id = null; // force new insert
@@ -230,17 +230,17 @@ class Product extends AppModel
                     $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
                 }
 
-                $deposit2save = array(
+                $deposit2save = [
                     'id_product_attribute' => $ids['attributeId'],
                     'deposit' => $deposit
-                );
+                ];
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->DepositProduct->find('first', array(
-                    'conditions' => array(
+                $oldDeposit = $this->DepositProduct->find('first', [
+                    'conditions' => [
                         'DepositProduct.id_product' => $productId
-                    )
-                ));
+                    ]
+                ]);
 
                 if (empty($oldDeposit)) {
                     $this->DepositProduct->id = null; // force new insert
@@ -248,10 +248,10 @@ class Product extends AppModel
                     $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
                 }
 
-                $deposit2save = array(
+                $deposit2save = [
                     'id_product' => $productId,
                     'deposit' => $deposit
-                );
+                ];
             }
 
             $this->DepositProduct->primaryKey = 'id';
@@ -294,15 +294,15 @@ class Product extends AppModel
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $success = $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+                $success = $this->ProductAttributes->ProductAttributeShop->updateAll([
                     'ProductAttributeShop.price' => $netPrice
-                ), array(
+                ], [
                     'ProductAttributeShop.id_product_attribute' => $ids['attributeId']
-                ));
+                ]);
             } else {
-                $product2update = array(
+                $product2update = [
                     'price' => $netPrice
-                );
+                ];
                 $this->ProductShop->id = $ids['productId'];
                 $success |= $this->ProductShop->save($product2update);
             }
@@ -341,17 +341,17 @@ class Product extends AppModel
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->StockAvailable->updateAll(array(
+                $this->StockAvailable->updateAll([
                     'StockAvailable.quantity' => $quantity
-                ), array(
+                ], [
                     'StockAvailable.id_product_attribute' => $ids['attributeId'],
                     'StockAvailable.id_product' => $ids['productId']
-                ));
+                ]);
                 $this->StockAvailable->updateQuantityForMainProduct($ids['productId']);
             } else {
-                $product2update = array(
+                $product2update = [
                     'quantity' => $quantity
-                );
+                ];
                 $this->StockAvailable->id = $ids['productId'];
                 $this->StockAvailable->save($product2update);
             }
@@ -365,14 +365,14 @@ class Product extends AppModel
      */
     public function getCountByManufacturerId($manufacturerId, $useHolidayMode = false)
     {
-        $productCount = $this->find('count', array(
+        $productCount = $this->find('count', [
             'fields' => 'DISTINCT ' . $this->name . '.id_product',
-            'conditions' => array(
+            'conditions' => [
                 $this->name . '.active' => APP_ON,
                 $useHolidayMode ? $this->getManufacturerHolidayConditions() : null,
                 $this->name . '.id_manufacturer' => $manufacturerId
-            )
-        ));
+            ]
+        ]);
         return $productCount;
     }
 
@@ -392,41 +392,41 @@ class Product extends AppModel
     public function prepareProductsForBackend($paginator, $pParams, $addProductNameToAttributes = false)
     {
 
-        $paginator->settings = array_merge(array(
+        $paginator->settings = array_merge([
             'conditions' => $pParams['conditions'],
             'contain' => $pParams['contain'],
             'order' => $pParams['order'],
             'fields' => $pParams['fields'],
             'group' => $pParams['group']
-        ), $paginator->settings);
+        ], $paginator->settings);
 
         $this->recursive = 3;
 
         // reduce data
-        $this->Manufacturer->unbindModel(array(
+        $this->Manufacturer->unbindModel([
             'hasMany' => 'Invoices'
-        ));
-        $this->ProductLang->unbindModel(array(
+        ]);
+        $this->ProductLang->unbindModel([
             'belongsTo' => 'Product'
-        ));
-        $this->Manufacturer->unbindModel(array(
+        ]);
+        $this->Manufacturer->unbindModel([
             'belongsTo' => 'Customer',
             'hasOne' => 'Address'
-        ));
+        ]);
 
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
         foreach ($pParams['conditions'] as $condition) {
             if (preg_match('/'.$this->getIsQuantityZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->hasOne['StockAvailable']['conditions'] = array(
+                $this->ProductAttributes->hasOne['StockAvailable']['conditions'] = [
                     'StockAvailable.quantity' => 0
-                );
+                ];
                 $quantityIsZeroFilterOn = true;
             }
             if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->hasOne['ProductAttributeShop']['conditions'] = array(
+                $this->ProductAttributes->hasOne['ProductAttributeShop']['conditions'] = [
                     'ProductAttributeShop.price' => 0
-                );
+                ];
                 $priceIsZeroFilterOn = true;
             }
         }
@@ -434,12 +434,12 @@ class Product extends AppModel
         $products = $paginator->paginate('Product');
 
         $i = 0;
-        $preparedProducts = array();
+        $preparedProducts = [];
         foreach ($products as $product) {
-            $products[$i]['Categories'] = array(
-                'names' => array(),
+            $products[$i]['Categories'] = [
+                'names' => [],
                 'allProductsFound' => false
-            );
+            ];
             foreach ($product['CategoryProducts'] as $category) {
                 if ($category['id_category'] == 2) {
                     continue; // do not consider category "produkte" - why was it needed???
@@ -461,7 +461,7 @@ class Product extends AppModel
             $products[$i]['Product']['is_new'] = $this->isNew($product['ProductShop']['date_add']);
             $products[$i]['Product']['gross_price'] = $this->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
 
-            $rowClass = array();
+            $rowClass = [];
             if (! $product['Product']['active']) {
                 $rowClass[] = 'deactivated';
             }
@@ -498,9 +498,9 @@ class Product extends AppModel
                         $grossPrice = $this->getGrossPrice($product['Product']['id_product'], $attribute['ProductAttributeShop']['price']);
                     }
 
-                    $rowClass = array(
+                    $rowClass = [
                         'sub-row'
-                    );
+                    ];
                     if (! $product['Product']['active']) {
                         $rowClass[] = 'deactivated';
                     }
@@ -509,35 +509,35 @@ class Product extends AppModel
                         $rowClass[] = 'custom-odd';
                     }
 
-                    $preparedProduct = array(
-                        'Product' => array(
+                    $preparedProduct = [
+                        'Product' => [
                             'id_product' => $product['Product']['id_product'] . '-' . $attribute['id_product_attribute'],
                             'gross_price' => $grossPrice,
                             'active' => - 1,
                             'rowClass' => join(' ', $rowClass)
-                        ),
-                        'ProductLang' => array(
+                        ],
+                        'ProductLang' => [
                             'name' => ($addProductNameToAttributes ? $product['ProductLang']['name'] . ' : ' : '') . $attribute['ProductAttributeCombination']['Attribute']['name'],
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''
-                        ),
-                        'Manufacturer' => array(
+                        ],
+                        'Manufacturer' => [
                             'name' => $product['Manufacturer']['name']
-                        ),
-                        'ProductAttributeShop' => array(
+                        ],
+                        'ProductAttributeShop' => [
                             'default_on' => $attribute['ProductAttributeShop']['default_on']
-                        ),
-                        'StockAvailable' => array(
+                        ],
+                        'StockAvailable' => [
                             'quantity' => $attribute['StockAvailable']['quantity']
-                        ),
+                        ],
                         'Deposit' => isset($attribute['DepositProductAttribute']['deposit']) ? $attribute['DepositProductAttribute']['deposit'] : 0,
-                        'Categories' => array(
-                            'names' => array(),
+                        'Categories' => [
+                            'names' => [],
                             'allProductsFound' => true
-                        ),
+                        ],
                         'Image' => null
-                    );
+                    ];
                     $preparedProducts[] = $preparedProduct;
                 }
             }
@@ -559,7 +559,7 @@ class Product extends AppModel
 
     public function getForDropdown($appAuth, $manufacturerId)
     {
-        $conditions = array();
+        $conditions = [];
 
         if ($appAuth->isManufacturer()) {
             $manufacturerId = $appAuth->getManufacturerId();
@@ -569,33 +569,33 @@ class Product extends AppModel
             $conditions['Manufacturer.id_manufacturer'] = $manufacturerId;
         }
 
-        $this->unbindModel(array(
-            'hasMany' => array(
+        $this->unbindModel([
+            'hasMany' => [
                 'ProductAttributes',
                 'CategoryProducts'
-            ),
-            'hasOne' => array(
+            ],
+            'hasOne' => [
                 'DepositProduct',
                 'ImageShop'
-            )
-        ));
+            ]
+        ]);
         // ->find('list') a does not return associated model data
-        $products = $this->find('all', array(
-            'fields' => array(
+        $products = $this->find('all', [
+            'fields' => [
                 'Product.id_product',
                 'ProductLang.name',
                 'Manufacturer.name',
                 'Product.active'
-            ),
+            ],
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Product.active' => 'DESC',
                 'ProductLang.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
-        $offlineProducts = array();
-        $onlineProducts = array();
+        $offlineProducts = [];
+        $onlineProducts = [];
         foreach ($products as $product) {
             $productNameForDropdown = $product['ProductLang']['name'] . ' - ' . $product['Manufacturer']['name'];
             if ($product['Product']['active'] == 0) {
@@ -605,7 +605,7 @@ class Product extends AppModel
             }
         }
 
-        $productsForDropdown = array();
+        $productsForDropdown = [];
         if (! empty($onlineProducts)) {
             $onlineCount = count($onlineProducts);
             $productsForDropdown['online-' . $onlineCount] = $onlineProducts;
@@ -656,11 +656,11 @@ class Product extends AppModel
 
         $sql = 'SELECT ROUND(:oldNetPrice / ((100 + t.rate) / 100) * (1 + :oldTaxRate / 100), 6) as new_net_price ';
         $sql .= $this->getTaxJoins();
-        $params = array(
+        $params = [
             'oldNetPrice' => $oldNetPrice,
             'oldTaxRate' => $oldTaxRate,
             'productId' => $productId
-        );
+        ];
         $rate = $this->getDataSource()->fetchAll($sql, $params);
 
         // if tax == 0 %, tax is empty
@@ -678,10 +678,10 @@ class Product extends AppModel
         $productId = (int) $productId;
         $sql = 'SELECT ROUND(:netPrice * (100 + t.rate) / 100, 2) as gross_price ';
         $sql .= $this->getTaxJoins();
-        $params = array(
+        $params = [
             'netPrice' => $netPrice,
             'productId' => $productId
-        );
+        ];
         $rate = $this->getDataSource()->fetchAll($sql, $params);
 
         // if tax == 0% rate is empty...
@@ -704,10 +704,10 @@ class Product extends AppModel
 
         $sql = 'SELECT ROUND(:grossPrice / (100 + t.rate) * 100, 6) as net_price ';
         $sql .= $this->getTaxJoins();
-        $params = array(
+        $params = [
             'productId' => $productId,
             'grossPrice' => $grossPrice
-        );
+        ];
         $rate = $this->getDataSource()->fetchAll($sql, $params);
 
         // if tax == 0% rate is empty...
@@ -732,8 +732,8 @@ class Product extends AppModel
 
     public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category = '', $isQuantityZero = 0, $isPriceZero = 0)
     {
-        $conditions = array();
-        $group = array();
+        $conditions = [];
+        $group = [];
 
         if ($manufacturerId != 'all') {
             $conditions['Product.id_manufacturer'] = $manufacturerId;
@@ -763,87 +763,87 @@ class Product extends AppModel
         }
 
         // DISTINCT: attributes cause duplicate entries
-        $fields = array(
+        $fields = [
             'DISTINCT Product.id_product, Product.active, Product.id_manufacturer, Product.id_tax, ProductLang.*, Image.id_image'
-        );
+        ];
 
-        $contain = array(
+        $contain = [
             'Product',
             'CategoryProducts'
-        );
+        ];
 
         if ($manufacturerId == '') {
             $contain[] = 'Manufacturer';
             $fields[0] .= ', Manufacturer.name';
         }
 
-        $pParams = array(
+        $pParams = [
             'fields' => $fields,
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Product.active' => 'DESC',
                 'ProductLang.name' => 'ASC'
-            ),
+            ],
             'contain' => $contain,
             'group' => $group
-        );
+        ];
 
         return $pParams;
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)
     {
-        $productAttributes = $this->ProductAttributes->find('all', array(
-            'conditions' => array(
+        $productAttributes = $this->ProductAttributes->find('all', [
+            'conditions' => [
                 'ProductAttributes.id_product' => $productId
-            )
-        ));
+            ]
+        ]);
         $productAttributeIds = Set::extract('{n}.ProductAttributes.id_product_attribute', $productAttributes);
 
         // first set all associated attributes to 0
-        $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+        $this->ProductAttributes->ProductAttributeShop->updateAll([
             'ProductAttributeShop.default_on' => 0
-        ), array(
+        ], [
             'id_product_attribute IN (' . join(', ', $productAttributeIds) . ')',
             'id_shop' => 1
-        ));
+        ]);
 
         // then set the new one
-        $this->ProductAttributes->ProductAttributeShop->updateAll(array(
+        $this->ProductAttributes->ProductAttributeShop->updateAll([
             'ProductAttributeShop.default_on' => 1
-        ), array(
+        ], [
             'ProductAttributeShop.id_product_attribute' => $productAttributeId,
             'ProductAttributeShop.id_shop' => 1
-        ));
+        ]);
     }
 
     public function deleteProductAttribute($productId, $attributeId, $oldProduct)
     {
 
-        $pac = $this->ProductAttributes->ProductAttributeCombination->find('first', array(
-            'conditions' => array(
+        $pac = $this->ProductAttributes->ProductAttributeCombination->find('first', [
+            'conditions' => [
                 'ProductAttributeCombination.id_product_attribute' => $attributeId
-            )
-        ));
+            ]
+        ]);
         $productAttributeId = $pac['ProductAttributeCombination']['id_product_attribute'];
 
-        $this->ProductAttributes->deleteAll(array(
+        $this->ProductAttributes->deleteAll([
             'ProductAttributes.id_product_attribute' => $productAttributeId
-        ), false);
+        ], false);
 
-        $this->ProductAttributes->ProductAttributeCombination->deleteAll(array(
+        $this->ProductAttributes->ProductAttributeCombination->deleteAll([
             'ProductAttributeCombination.id_product_attribute' => $productAttributeId
-        ), false);
+        ], false);
 
-        $this->ProductAttributes->ProductAttributeShop->deleteAll(array(
+        $this->ProductAttributes->ProductAttributeShop->deleteAll([
             'ProductAttributeShop.id_product_attribute' => $productAttributeId
-        ), false);
+        ], false);
 
         // deleteAll can only get primary key as condition
         $this->StockAvailable->primaryKey = 'id_product_attribute';
-        $this->StockAvailable->deleteAll(array(
+        $this->StockAvailable->deleteAll([
             'StockAvailable.id_product_attribute' => $attributeId
-        ), false);
+        ], false);
 
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }
@@ -852,33 +852,33 @@ class Product extends AppModel
     {
         $defaultQuantity = 999;
 
-        $productAttributesCount = $this->ProductAttributes->find('count', array(
-            'conditions' => array(
+        $productAttributesCount = $this->ProductAttributes->find('count', [
+            'conditions' => [
                 'ProductAttributes.id_product' => $productId
-            )
-        ));
+            ]
+        ]);
 
-        $this->ProductAttributes->save(array(
+        $this->ProductAttributes->save([
             'id_product' => $productId,
             'default_on' => $productAttributesCount == 0 ? 1 : 0
-        ));
+        ]);
         $productAttributeId = $this->ProductAttributes->getLastInsertID();
 
         // INSERT in ProductAttributeCombination tricky because of set primary_key
         $this->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
 
-        $this->ProductAttributes->ProductAttributeShop->save(array(
+        $this->ProductAttributes->ProductAttributeShop->save([
             'id_product_attribute' => $productAttributeId,
             'default_on' => $productAttributesCount == 0 ? 1 : 0,
             'id_shop' => 1,
             'id_product' => $productId
-        ));
+        ]);
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
         $this->ProductShop->id = $productId;
-        $this->ProductShop->save(array(
+        $this->ProductShop->save([
             'price' => 0
-        ));
+        ]);
 
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
         // with custom sql
@@ -894,34 +894,34 @@ class Product extends AppModel
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer['Manufacturer']['default_tax_id']);
 
         // INSERT PRODUCT
-        $this->save(array(
+        $this->save([
             'id_manufacturer' => $manufacturer['Manufacturer']['id_manufacturer'],
             'id_category_default' => Configure::read('AppConfig.categoryAllProducts'),
             'id_tax' => $defaultTaxId,
             'unity' => '',
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
-        ));
+        ]);
         $newProductId = $this->getLastInsertID();
 
         // INSERT PRODUCT_SHOP
-        $this->ProductShop->save(array(
+        $this->ProductShop->save([
             'id_product' => $newProductId,
             'id_shop' => 1,
             'id_category_default' => Configure::read('AppConfig.categoryAllProducts'),
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
-        ));
+        ]);
 
         // INSERT CATEGORY_PRODUCTS
-        $this->CategoryProducts->save(array(
+        $this->CategoryProducts->save([
             'id_category' => Configure::read('AppConfig.categoryAllProducts'),
             'id_product' => $newProductId
-        ));
+        ]);
 
         // INSERT PRODUCT_LANG
         $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer['Manufacturer']['name']);
-        $this->ProductLang->save(array(
+        $this->ProductLang->save([
             'id_product' => $newProductId,
             'id_lang' => 1,
             'id_shop' => 1,
@@ -929,20 +929,20 @@ class Product extends AppModel
             'description' => '',
             'description_short' => '',
             'unity' => ''
-        ));
+        ]);
 
         // INSERT STOCK AVAILABLE
-        $this->StockAvailable->save(array(
+        $this->StockAvailable->save([
             'id_product' => $newProductId,
             'id_shop' => 1,
             'quantity' => $defaultQuantity
-        ));
+        ]);
 
-        $newProduct = $this->find('first', array(
-            'conditions' => array(
+        $newProduct = $this->find('first', [
+            'conditions' => [
                 'Product.id_product' => $newProductId
-            )
-        ));
+            ]
+        ]);
         return $newProduct;
     }
 }

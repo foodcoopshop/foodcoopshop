@@ -13,12 +13,12 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$menu = array();
+$menu = [];
 
 $adminSlug = '/admin';
 $adminName = 'Admin-Bereich';
 $profileSlug = $this->Slug->getCustomerProfile();
-$class = array('btn btn-success');
+$class = ['btn btn-success'];
 $userName = $appAuth->user('firstname') . ' ' . $appAuth->user('lastname');
 if ($appAuth->isManufacturer()) {
     $profileSlug = $this->Slug->getManufacturerProfile();
@@ -27,13 +27,13 @@ if ($appAuth->isManufacturer()) {
 }
 if ($appAuth->loggedIn()) {
     if (!CakeSession::read('Auth.shopOrderCustomer')) {
-        $menu[] = array('slug' => $adminSlug, 'name' => $adminName, 'options' => array('class' => $class));
-        $menu[] = array('slug' => $profileSlug, 'name' =>  $userName);
+        $menu[] = ['slug' => $adminSlug, 'name' => $adminName, 'options' => ['class' => $class]];
+        $menu[] = ['slug' => $profileSlug, 'name' =>  $userName];
     } else {
-        $menu[] = array('slug' => 'javascript:alert(\'Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus.\');', 'name' =>  'Eingeloggt: ' . $userName);
+        $menu[] = ['slug' => 'javascript:alert(\'Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus.\');', 'name' =>  'Eingeloggt: ' . $userName];
     }
 }
 if (!CakeSession::read('Auth.shopOrderCustomer')) {
     $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 }
-echo $this->Menu->render($menu, array('id' => 'user-menu', 'class' => 'horizontal menu'));
+echo $this->Menu->render($menu, ['id' => 'user-menu', 'class' => 'horizontal menu']);

@@ -20,12 +20,12 @@ App::uses('AuthComponent', 'Controller/Component');
 class AppAuthComponent extends AuthComponent
 {
 
-    public $components = array(
+    public $components = [
         'Session',
         'Flash',
         'RequestHandler',
         'Cart'
-    );
+    ];
 
     public $manufacturer;
 
@@ -82,12 +82,12 @@ class AppAuthComponent extends AuthComponent
         $mm = new Manufacturer();
 
         $mm->recursive = 2; // for Customer.AddressCustomer
-        $this->manufacturer = $mm->find('first', array(
-            'conditions' => array(
+        $this->manufacturer = $mm->find('first', [
+            'conditions' => [
                 'Address.email' => $this->user('email'),
                 'Address.id_manufacturer > ' . APP_OFF
-            )
-        ));
+            ]
+        ]);
     }
 
     public function isSuperadmin()

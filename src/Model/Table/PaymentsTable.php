@@ -17,29 +17,29 @@
 class Payment extends AppModel
 {
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'id_customer'
-        ),
-        'Manufacturer' => array(
+        ],
+        'Manufacturer' => [
             'foreignKey' => 'id_manufacturer'
-        ),
-        'CreatedBy' => array(
+        ],
+        'CreatedBy' => [
             'className' => 'Customer',
             'foreignKey' => 'created_by'
-        ),
-        'ChangedBy' => array(
+        ],
+        'ChangedBy' => [
             'className' => 'Customer',
             'foreignKey' => 'changed_by'
-        ),
-    );
+        ],
+    ];
 
     private function getManufacturerDepositConditions($manufacturerId = null)
     {
-        $conditions = array(
+        $conditions = [
             'Payment.status' => APP_ON,
             'Payment.id_customer' => 0
-        );
+        ];
         if (!is_null($manufacturerId)) {
             $conditions['Payment.id_manufacturer'] = $manufacturerId;
         }
@@ -57,11 +57,11 @@ class Payment extends AppModel
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
         $conditions['DATE_FORMAT(Payment.date_add, \'%Y-%c\')'] = $monthAndYear;
 
-        $paymentSum = $this->find('all', array(
+        $paymentSum = $this->find('all', [
             'fields' => 'Payment.*',
             'conditions' => $conditions,
-            'order' => array('Payment.date_add' => 'DESC'),
-        ));
+            'order' => ['Payment.date_add' => 'DESC'],
+        ]);
 
         return $paymentSum;
     }
@@ -75,11 +75,11 @@ class Payment extends AppModel
         $conditions = $this->getManufacturerDepositConditions();
         $conditions['Payment.text'] = 'money';
 
-        $paymentSum = $this->find('all', array(
+        $paymentSum = $this->find('all', [
             'fields' => 'SUM(amount) as sumManufacturerMoneyDeposit',
             'conditions' => $conditions,
-            'order' => array('Payment.date_add' => 'DESC'),
-        ));
+            'order' => ['Payment.date_add' => 'DESC'],
+        ]);
 
         return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
     }
@@ -94,18 +94,18 @@ class Payment extends AppModel
 
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
 
-        $fields = array(
+        $fields = [
             'SUM(amount) as sumDepositReturned'
-        );
+        ];
         if ($groupByMonth) {
             $fields[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%c\') as monthAndYear';
         }
-        $paymentSum = $this->find('all', array(
+        $paymentSum = $this->find('all', [
             'fields' => $fields,
             'conditions' => $conditions,
-            'order' => $groupByMonth ? array('monthAndYear' => 'DESC') : array('Payment.date_add' => 'DESC'),
+            'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payment.date_add' => 'DESC'],
             'group' => $groupByMonth ? 'monthAndYear' : null
-        ));
+        ]);
 
         return $paymentSum;
     }
@@ -117,20 +117,20 @@ class Payment extends AppModel
      */
     public function getSum($customerId, $type)
     {
-        $conditions = array(
+        $conditions = [
             'Payment.id_customer' => $customerId,
             'Payment.id_manufacturer' => 0,
             'Payment.status' => APP_ON
-        );
+        ];
 
         $conditions['Payment.type'] = $type;
 
-        $paymentSum = $this->find('all', array(
-            'fields' => array(
+        $paymentSum = $this->find('all', [
+            'fields' => [
                 'SUM(amount) as SumAmount'
-            ),
+            ],
             'conditions' => $conditions
-        ));
+        ]);
 
         return $paymentSum[0][0]['SumAmount'];
     }

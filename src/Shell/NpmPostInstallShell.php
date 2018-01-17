@@ -64,10 +64,10 @@ class NpmPostInstallShell extends AppShell
     {
         $kcfinderConfigDir = APP . 'Config' . DS . 'kcfinder' . DS;
 
-        $adaptedFiles = array(
+        $adaptedFiles = [
             $kcfinderConfigDir . 'conf' . DS . 'config.php',
             $kcfinderConfigDir . 'core' . DS . 'bootstrap.php'
-        );
+        ];
 
         foreach ($adaptedFiles as $file) {
             copy($file, preg_replace('/config/', 'webroot' . DS . 'node_modules', $file));

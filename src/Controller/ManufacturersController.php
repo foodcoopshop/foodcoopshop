@@ -28,12 +28,12 @@ class ManufacturersController extends FrontendController
             case 'detail':
                 $manufacturerId = (int) $this->params['pass'][0];
                 $this->Manufacturer->recursive = -1;
-                $manufacturer = $this->Manufacturer->find('first', array(
-                    'conditions' => array(
+                $manufacturer = $this->Manufacturer->find('first', [
+                    'conditions' => [
                         'Manufacturer.id_manufacturer' => $manufacturerId,
                         'Manufacturer.active' => APP_ON
-                    )
-                ));
+                    ]
+                ]);
                 if (!empty($manufacturer) && !$this->AppAuth->loggedIn() && $manufacturer['Manufacturer']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
@@ -45,20 +45,20 @@ class ManufacturersController extends FrontendController
     {
         $this->Manufacturer->recursive = 1;
 
-        $conditions = array(
+        $conditions = [
             'Manufacturer.active' => APP_ON
-        );
+        ];
         if (! $this->AppAuth->loggedIn()) {
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
 
-        $manufacturers = $this->Manufacturer->find('all', array(
+        $manufacturers = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Manufacturer.name' => 'ASC'
-            ),
-            'fields' => array('Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
-        ));
+            ],
+            'fields' => ['Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+        ]);
 
         if (empty($manufacturers)) {
             throw new MissingActionException('no manufacturers available');
@@ -80,14 +80,14 @@ class ManufacturersController extends FrontendController
         $manufacturerId = (int) $this->params['pass'][0];
 
         $this->Manufacturer->recursive = 1;
-        $conditions = array(
+        $conditions = [
             'Manufacturer.id_manufacturer' => $manufacturerId,
             'Manufacturer.active' => APP_ON
-        );
-        $manufacturer = $this->Manufacturer->find('first', array(
+        ];
+        $manufacturer = $this->Manufacturer->find('first', [
             'conditions' => $conditions,
-            'fields' => array('Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
-        ));
+            'fields' => ['Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+        ]);
 
         if (empty($manufacturer)) {
             throw new MissingActionException('manufacturer not found or not active');

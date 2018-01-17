@@ -25,8 +25,8 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->EmailOrderReminder->main();
         $emailLogs = $this->EmailLog->find('all');
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs($emailLogs[0], 'Bestell-Erinnerung', array('Hallo Demo Admin,', 'ist schon wieder der letzte Bestelltag'), array(Configure::read('test.loginEmailAdmin')));
-        $this->assertEmailLogs($emailLogs[1], 'Bestell-Erinnerung', array('Hallo Demo Mitglied,', 'ist schon wieder der letzte Bestelltag'), array(Configure::read('test.loginEmailCustomer')));
+        $this->assertEmailLogs($emailLogs[0], 'Bestell-Erinnerung', ['Hallo Demo Admin,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailAdmin')]);
+        $this->assertEmailLogs($emailLogs[1], 'Bestell-Erinnerung', ['Hallo Demo Mitglied,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailCustomer')]);
     }
 
     public function testIfServiceNotSubscribed()

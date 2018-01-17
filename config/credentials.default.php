@@ -33,17 +33,17 @@ return [
          * FROM address
          * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
          */
-        'debugEmailConfig' => array(
+        'debugEmailConfig' => [
             'host' => 'mail.example.com',
             'port' => 25,
             'username' => 'example@example.com',
             'password' => 'my-password',
             'transport' => 'Smtp',
-            'from' => array(
+            'from' => [
                 'example@example.com' => 'Example'
-            ),
+            ],
             'emailFormat' => 'html'
-        ),
+        ],
         
         /**
          * TO address

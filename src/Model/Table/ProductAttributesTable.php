@@ -21,26 +21,26 @@ class ProductAttribute extends AppModel
 
     public $primaryKey = 'id_product_attribute';
 
-    public $hasOne = array(
-        'ProductAttributeCombination' => array(
+    public $hasOne = [
+        'ProductAttributeCombination' => [
             'foreignKey' => 'id_product_attribute'
-        ),
-        'StockAvailable' => array(
+        ],
+        'StockAvailable' => [
             'foreignKey' => 'id_product_attribute'
-        ),
-        'DepositProductAttribute' => array(
+        ],
+        'DepositProductAttribute' => [
             'className' => 'Deposit',
             'foreignKey' => 'id_product_attribute'
-        ),
-        'ProductAttributeShop' => array(
+        ],
+        'ProductAttributeShop' => [
             'className' => 'ProductAttributeShop',
             'foreignKey' => 'id_product_attribute'
-        )
-    );
+        ]
+    ];
 
-    public $belongsTo = array(
-        'Product' => array(
+    public $belongsTo = [
+        'Product' => [
             'foreignKey' => 'id_product'
-        )
-    );
+        ]
+    ];
 }

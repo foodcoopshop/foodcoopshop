@@ -35,25 +35,25 @@ class EmailOrderReminderShell extends AppShell
 
         $this->startTimeLogging();
 
-        $conditions = array(
+        $conditions = [
             'Customer.newsletter' => 1,
             'Customer.active' => 1
-        );
+        ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
-        $this->Customer->unbindModel(array(
-            'hasMany' => array('PaidCashFreeOrders', 'Payments', 'ValidOrder')
-        ));
+        $this->Customer->unbindModel([
+            'hasMany' => ['PaidCashFreeOrders', 'Payments', 'ValidOrder']
+        ]);
 
         $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('timeHelper')->getOrderPeriodFirstDay(Configure::read('timeHelper')->getCurrentDay()). '\'';
         $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('timeHelper')->getOrderPeriodLastDay(Configure::read('timeHelper')->getCurrentDay()). '\'';
 
-        $customers = $this->Customer->find('all', array(
+        $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Customer.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
         $i = 0;
         $outString = '';
@@ -68,10 +68,10 @@ class EmailOrderReminderShell extends AppShell
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
                 ->subject('Bestell-Erinnerung ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
-                ->viewVars(array(
+                ->viewVars([
                   'customer' => $customer,
                   'lastOrderDayAsString' => (Configure::read('AppConfig.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
-                ))
+                ])
                 ->send();
 
             $outString .= $customer['Customer']['name'] . '<br />';

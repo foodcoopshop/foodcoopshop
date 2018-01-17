@@ -41,19 +41,19 @@ header('Pragma: no-cache');
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-        echo $this->element('renderCss', array('configs' => array('frontend')));
+        echo $this->element('renderCss', ['configs' => ['frontend']]);
     if ($isMobile) {
-        echo $this->Html->css(array('/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend'));
+        echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend']);
     }
     ?>
     
 </head>
 
 <?php
-    $bodyClasses = array(
+    $bodyClasses = [
         Inflector::tableize($this->name),
         Inflector::singularize(Inflector::tableize($this->action))
-    );
+    ];
     if ($appAuth->isSuperadmin()) {
         $bodyClasses[] = 'superadmin';
     }
@@ -81,7 +81,7 @@ header('Pragma: no-cache');
         
         <div id="content">
             <?php echo $this->Session->flash(); ?>
-            <?php echo $this->element('slider', array('slides' => !empty($slides) ? $slides : array())); ?>         
+            <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>         
             <?php echo $this->element('sidebar'); ?>
             <div id="inner-content">
                 <?php echo $this->fetch('content'); ?>
@@ -110,12 +110,12 @@ header('Pragma: no-cache');
     <?php echo $this->element('sql_dump'); ?>
     
 <?php
-    echo $this->element('renderJs', array('configs' => array('frontend')));
+    echo $this->element('renderJs', ['configs' => ['frontend']]);
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(array('/node_modules/slidebars/dist/slidebars'));
+    echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
     // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(Configure::read('AppConfig.jsNamespace').".Mobile.initMenusFrontend();", array('block'));
+    echo $this->MyHtml->scriptBlock(Configure::read('AppConfig.jsNamespace').".Mobile.initMenusFrontend();", ['block']);
 }
     echo $this->fetch('script'); // all scripts from layouts
 ?>

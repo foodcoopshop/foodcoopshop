@@ -18,9 +18,9 @@ if (empty($blogPosts)) {
 }
 
 if (!isset($useCarousel) || $useCarousel) {
-    $this->element('addScript', array('script' =>
+    $this->element('addScript', ['script' =>
         Configure::read('AppConfig.jsNamespace').".Helper.initBlogPostCarousel();"
-    ));
+    ]);
 }
 
 if (isset($style) && $style != '') {

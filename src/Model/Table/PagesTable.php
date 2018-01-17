@@ -20,92 +20,92 @@ class Page extends AppModel
     public $useTable = 'pages';
     public $primaryKey = 'id_page';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Containable',
-        'Tree' => array(
+        'Tree' => [
             'parent' => 'id_parent'
-        )
-    );
+        ]
+    ];
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'id_customer'
-        )
-    );
+        ]
+    ];
 
-    public $validate = array(
-        'position' => array(
-            'number' => array(
+    public $validate = [
+        'position' => [
+            'number' => [
                 'allowEmpty' => true,
-                'rule' => array(
+                'rule' => [
                     'range',
                     - 1,
                     1001
-                ),
+                ],
                 'message' => 'Bitte gibt eine Zahl von 0 bis 1000 an'
-            )
-        ),
-        'extern_url' => array(
+            ]
+        ],
+        'extern_url' => [
             'allowEmpty' => true,
-            'rule' => array(
+            'rule' => [
                 'url',
                 true
-            ),
+            ],
             'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
-        ),
-        'title' => array(
-            'notBlank' => array(
-                'rule' => array(
+        ],
+        'title' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib einen Titel an.'
-            ),
-            'minLength' => array(
-                'rule' => array(
+            ],
+            'minLength' => [
+                'rule' => [
                     'minLength',
                     3
-                ),
+                ],
                 'message' => 'Bitte gib mindestens 3 Zeichen ein.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function findAllGroupedByMenu($conditions)
     {
 
-        $pages = $this->find('threaded', array(
+        $pages = $this->find('threaded', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Page.menu_type' => 'DESC',
                 'Page.position' => 'ASC',
                 'Page.title' => 'ASC'
-            ),
-            'contain' => array(
+            ],
+            'contain' => [
                 'Customer.name'
-            )
-        ));
+            ]
+        ]);
         return $pages;
     }
 
     public function getMainPagesForDropdown($pageIdToExcluce = null)
     {
-        $conditions = array(
+        $conditions = [
             'Page.id_parent IS NULL',
             'Page.active > ' . APP_DEL
-        );
+        ];
         if ($pageIdToExcluce > 0) {
             $conditions[] = 'Page.id_page != ' . $pageIdToExcluce;
         }
-        $pages = $this->find('all', array(
+        $pages = $this->find('all', [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Page.menu_type' => 'DESC',
                 'Page.position' => 'ASC',
                 'Page.title' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
-        $preparedPages = array();
+        $preparedPages = [];
         foreach ($pages as $page) {
             $preparedPages[$page['Page']['id_page']] = $page['Page']['title'] . ' - ' . Configure::read('htmlHelper')->getMenuType($page['Page']['menu_type']);
         }

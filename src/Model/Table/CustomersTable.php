@@ -24,54 +24,54 @@ class Customer extends AppModel
 
     public $primaryKey = 'id_customer';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Content'
-    );
+    ];
 
     // key needs to be called "address customer" for a working validation in customer::profile
-    public $hasOne = array(
-        'AddressCustomer' => array(
+    public $hasOne = [
+        'AddressCustomer' => [
             'className' => 'AddressCustomer',
             'foreignKey' => 'id_customer'
-        )
-    );
+        ]
+    ];
 
-    public $validate = array(
-        'firstname' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'firstname' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deinen Vornamen an.'
-            )
-        ),
-        'lastname' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'lastname' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deinen Nachnamen an.'
-            )
-        ),
-        'email' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'email' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deine E-Mail-Adresse an.'
-            ),
-            'email' => array(
-                'rule' => array(
+            ],
+            'email' => [
+                'rule' => [
                     'email'
-                ),
+                ],
                 'message' => 'Diese E-Mail-Adresse ist nicht gültig.'
-            ),
-            'unique' => array(
+            ],
+            'unique' => [
                 'rule' => 'isUnique',
                 'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function setNewPassword($customerId)
     {
@@ -79,9 +79,9 @@ class Customer extends AppModel
         $ph = new AppPasswordHasher();
 
         $newPassword = StringComponent::createRandomString(8);
-        $customer2save = array(
+        $customer2save = [
             'passwd' => $ph->hash($newPassword)
-        );
+        ];
         $this->id = $customerId;
         $this->save($customer2save, false); // false: keine validation();
         return $newPassword;
@@ -92,14 +92,14 @@ class Customer extends AppModel
      */
     public function isCustomerPassword($customerId, $hashedPassword)
     {
-        $customer = $this->find('first', array(
-            'conditions' => array(
+        $customer = $this->find('first', [
+            'conditions' => [
                 'Customer.id_customer' => $customerId
-            ),
-            'fields' => array(
+            ],
+            'fields' => [
                 'Customer.passwd'
-            )
-        ));
+            ]
+        ]);
 
         if ($hashedPassword == $customer['Customer']['passwd']) {
             return true;
@@ -108,40 +108,40 @@ class Customer extends AppModel
         }
     }
 
-    public $hasMany = array(
-        'ActiveOrders' => array(
+    public $hasMany = [
+        'ActiveOrders' => [
             'className' => 'Order',
             'foreignKey' => 'id_customer',
-            'conditions' => array(),
-            'order' => array(
+            'conditions' => [],
+            'order' => [
                 'ActiveOrders.date_add' => 'DESC'
-            )
-        ),
-        'PaidCashFreeOrders' => array(
+            ]
+        ],
+        'PaidCashFreeOrders' => [
             'className' => 'Order',
             'foreignKey' => 'id_customer',
-            'conditions' => array(),
-            'order' => array(
+            'conditions' => [],
+            'order' => [
                 'PaidCashFreeOrders.date_add' => 'DESC'
-            )
-        ),
+            ]
+        ],
         // has many does not produce multiple records - this should be hasOne ideally...
-        'ValidOrder' => array(
+        'ValidOrder' => [
             'className' => 'Order',
             'limit' => 1,
             'foreignKey' => 'id_customer'
-        ),
-        'Payments' => array(
+        ],
+        'Payments' => [
             'className' => 'Payment',
             'foreignKey' => 'id_customer',
-            'order' => array(
+            'order' => [
                 'Payments.date_add' => 'desc'
-            ),
-            'conditions' => array(
+            ],
+            'conditions' => [
                 'Payments.status' => APP_ON
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function __construct($id = false, $table = null, $ds = null)
     {
@@ -152,23 +152,23 @@ class Customer extends AppModel
             $virtualNameField = "`{$this->alias}`.`lastname`,' ',`{$this->alias}`.`firstname`)";
         }
 
-        $this->virtualFields = array(
+        $this->virtualFields = [
             'name' => "TRIM(CONCAT(" . $virtualNameField . ")"
-        );
-        $this->hasMany['ValidOrder']['conditions'] = array(
+        ];
+        $this->hasMany['ValidOrder']['conditions'] = [
             'ValidOrder.current_state IN (' . Configure::read('htmlHelper')->getOrderStateIdsAsCsv() . ')'
-        );
-        $this->hasMany['ActiveOrders']['conditions'] = array(
+        ];
+        $this->hasMany['ActiveOrders']['conditions'] = [
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
-        );
+        ];
         $this->hasMany['PaidCashFreeOrders']['conditions'][] = 'PaidCashFreeOrders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')';
     }
 
     public function getConditionToExcludeHostingUser()
     {
-        return array(
+        return [
             'Customer.email != \'' . Configure::read('AppConfig.hostingEmail') . '\''
-        );
+        ];
     }
 
     public function dropManufacturersInNextFind()
@@ -187,11 +187,11 @@ class Customer extends AppModel
         $mm = ClassRegistry::init('Manufacturer');
 
         $mm->recursive = 1;
-        $manufacturer = $mm->find('first', array(
-            'conditions' => array(
+        $manufacturer = $mm->find('first', [
+            'conditions' => [
                 'Address.email' => $customer['Customer']['email']
-            )
-        ));
+            ]
+        ]);
 
         return $manufacturer;
     }
@@ -202,11 +202,11 @@ class Customer extends AppModel
      */
     public function getManufacturerByCustomerId($customerId)
     {
-        $customer = $this->find('first', array(
-            'conditions' => array(
+        $customer = $this->find('first', [
+            'conditions' => [
                 'Customer.id_customer' => $customerId
-            )
-        ));
+            ]
+        ]);
         if (!empty($customer)) {
             return $this->getManufacturerRecord($customer);
         }
@@ -250,22 +250,22 @@ class Customer extends AppModel
         unset($this->hasMany['ActiveOrders']);
         unset($this->hasMany['Payments']);
 
-        $customers = $this->find('all', array(
+        $customers = $this->find('all', [
             'conditions' => $this->getConditionToExcludeHostingUser(),
-            'fields' => array(
+            'fields' => [
                 'Customer.' . $index,
                 'Customer.name',
                 'Customer.active',
                 'Customer.email'
-            ),
+            ],
             'order' => Configure::read('htmlHelper')->getCustomerOrderBy()
-        ));
+        ]);
 
-        $offlineCustomers = array();
-        $onlineCustomers = array();
-        $notYetOrderedCustomers = array();
-        $offlineManufacturers = array();
-        $onlineManufacturers = array();
+        $offlineCustomers = [];
+        $onlineCustomers = [];
+        $notYetOrderedCustomers = [];
+        $offlineManufacturers = [];
+        $onlineManufacturers = [];
         foreach ($customers as $customer) {
             $userNameForDropdown = $customer['Customer']['name'];
 
@@ -299,7 +299,7 @@ class Customer extends AppModel
             }
         }
 
-        $customersForDropdown = array();
+        $customersForDropdown = [];
         if (! empty($onlineCustomers)) {
             $customersForDropdown['Mitglieder: aktiv'] = $onlineCustomers;
         }

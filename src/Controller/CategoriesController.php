@@ -75,12 +75,12 @@ class CategoriesController extends FrontendController
     {
         $categoryId = (int) $this->params['pass'][0];
 
-        $category = $this->Category->find('first', array(
-            'conditions' => array(
+        $category = $this->Category->find('first', [
+            'conditions' => [
                 'Category.id_category' => $categoryId,
                 'Category.active' => APP_ON,
-            )
-        ));
+            ]
+        ]);
 
         if (empty($category)) {
             throw new MissingActionException('category not found');

@@ -12,10 +12,10 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.first-column a.lightbox');"
-));
+]);
 ?>
 
 <h1>Hersteller
@@ -61,7 +61,7 @@ foreach ($manufacturers as $manufacturer) {
             echo $this->Html->link(
                 'Alle Produkte anzeigen' . ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']),
-                array('class' => 'btn btn-success')
+                ['class' => 'btn btn-success']
             );
         echo '</div>';
 

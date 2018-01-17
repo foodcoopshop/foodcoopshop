@@ -50,10 +50,10 @@ return [
     ],
     'AppConfig' => [
         'jsNamespace', 'foodcoopshop',
-        'visibleOrderStates' => array(
+        'visibleOrderStates' => [
             ORDER_STATE_OPEN => 'offen',
             ORDER_STATE_CASH_FREE => 'abgeschlossen',
-        ),
+        ],
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS.'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
@@ -112,25 +112,25 @@ return [
         /**
          * image upload sizes and suffixes
          */
-        'productImageSizes' => array(
-            '150' => array('suffix' => '-home_default'),      // list page
-            '358' => array('suffix' => '-large_default'),     // detail page
-            '800' => array('suffix' => '-thickbox_default')   // lightbox
-        ),
-        'blogPostImageSizes' => array(
-            '170' => array('suffix' => '-home-default'),     // detail / list page
-            '800' => array('suffix' => '-single-default')    // lightbox
-        ),
-        'manufacturerImageSizes' => array(
-            '200' => array('suffix' => '-medium_default'),  // detail / list page
-            '800' => array('suffix' => '-large_default')    // lightbox
-        ),
-        'categoryImageSizes' => array(
-            '717' => array('suffix' => '-category_default') // detail AND lightbox
-        ),
-        'sliderImageSizes', array(
-            '905' => array('suffix' => '-slider') // detail AND lightbox
-        ),
+        'productImageSizes' => [
+            '150' => ['suffix' => '-home_default'],      // list page
+            '358' => ['suffix' => '-large_default'],     // detail page
+            '800' => ['suffix' => '-thickbox_default']   // lightbox
+        ],
+        'blogPostImageSizes' => [
+            '170' => ['suffix' => '-home-default'],     // detail / list page
+            '800' => ['suffix' => '-single-default']    // lightbox
+        ],
+        'manufacturerImageSizes' => [
+            '200' => ['suffix' => '-medium_default'],  // detail / list page
+            '800' => ['suffix' => '-large_default']    // lightbox
+        ],
+        'categoryImageSizes' => [
+            '717' => ['suffix' => '-category_default'] // detail AND lightbox
+        ],
+        'sliderImageSizes', [
+            '905' => ['suffix' => '-slider'] // detail AND lightbox
+        ],
         'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',
         
         'langId' => 1,

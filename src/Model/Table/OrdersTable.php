@@ -19,28 +19,28 @@ class Order extends AppModel
 
     public $primaryKey = 'id_order';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Content'
-    );
+    ];
 
-    public $states = array(
+    public $states = [
         'actual' => 3,
         'paid' => 2,
         'closed' => 5
-    );
+    ];
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'id_customer'
-        )
-    );
+        ]
+    ];
 
-    public $hasMany = array(
-        'OrderDetails' => array(
+    public $hasMany = [
+        'OrderDetails' => [
             'className' => 'OrderDetail',
             'foreignKey' => 'id_order'
-        )
-    );
+        ]
+    ];
 
     private function getOrderStateCondition($orderState)
     {
@@ -51,54 +51,54 @@ class Order extends AppModel
 
     public function getCountByCustomerId($customerId)
     {
-        $conditions = array(
+        $conditions = [
             $this->name . '.id_customer' => $customerId
-        );
+        ];
         $conditions[] = $this->getOrderStateCondition(Configure::read('htmlHelper')->getOrderStateIdsAsCsv());
-        $orderCount = $this->find('count', array(
+        $orderCount = $this->find('count', [
             'conditions' => $conditions
-        ));
+        ]);
         return $orderCount;
     }
 
     public function getSumProduct($customerId)
     {
-        $conditions = array(
+        $conditions = [
             'Order.id_customer' => $customerId,
             'Order.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
-        );
+        ];
 
-        $ordersSum = $this->find('all', array(
-            'fields' => array(
+        $ordersSum = $this->find('all', [
+            'fields' => [
                 'SUM(total_paid) as SumTotalPaid'
-            ),
+            ],
             'conditions' => $conditions
-        ));
+        ]);
 
         return $ordersSum[0][0]['SumTotalPaid'];
     }
 
     public function getSumDeposit($customerId)
     {
-        $conditions = array(
+        $conditions = [
             'Order.id_customer' => $customerId,
             'Order.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
             'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.depositPaymentCashlessStartDate') . '\''
-        );
+        ];
 
-        $ordersSum = $this->find('all', array(
-            'fields' => array(
+        $ordersSum = $this->find('all', [
+            'fields' => [
                 'SUM(total_deposit) as SumTotalDeposit'
-            ),
+            ],
             'conditions' => $conditions
-        ));
+        ]);
 
         return $ordersSum[0][0]['SumTotalDeposit'];
     }
 
     public function getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $appAuth)
     {
-        $conditions = array();
+        $conditions = [];
 
         if ($dateFrom != '') {
             $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
@@ -107,7 +107,7 @@ class Order extends AppModel
             $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
-        $group = array();
+        $group = [];
 
         if ($orderState != '') {
             $conditions[] = $this->getOrderStateCondition($orderState);
@@ -126,13 +126,13 @@ class Order extends AppModel
             $conditions['Order.id_order'] = $orderId;
         }
 
-        $fields = array(
+        $fields = [
             'Order.*',
             'Customer.*'
-        );
-        $contain = array(
+        ];
+        $contain = [
             'OrderDetails'
-        );
+        ];
         if ($groupByCustomer) {
             $fields[] = 'SUM(Order.total_paid) AS Order_total_paid';
             $fields[] = 'COUNT(Order.total_paid) AS Order_count';
@@ -140,13 +140,13 @@ class Order extends AppModel
             $group[] = 'Customer.id_customer';
         }
 
-        $orderParams = array(
+        $orderParams = [
             'conditions' => $conditions,
             'order' => Configure::read('htmlHelper')->getCustomerOrderBy(),
             'fields' => $fields,
             'group' => $group,
             'contain' => $contain
-        );
+        ];
         return $orderParams;
     }
 
@@ -156,14 +156,14 @@ class Order extends AppModel
 
         // get new sums
         $this->OrderDetails->recursive = - 1;
-        $orderDetails = $this->OrderDetails->find('first', array(
-            'fields' => array(
+        $orderDetails = $this->OrderDetails->find('first', [
+            'fields' => [
                 'SUM(OrderDetails.total_price_tax_excl) AS sumPriceExcl',
                 'SUM(OrderDetails.total_price_tax_incl) AS sumPriceIncl',
                 'SUM(OrderDetails.deposit) AS sumDeposit'
-            ),
+            ],
             'group' => 'OrderDetails.id_order HAVING OrderDetails.id_order = ' . $orderId
-        ));
+        ]);
 
         // if last order_detail was deleted, $orderDetails is empty => avoid notices
         if (empty($orderDetails)) {
@@ -176,12 +176,12 @@ class Order extends AppModel
             $sumDeposit = $orderDetails[0]['sumDeposit'];
         }
 
-        $order2update = array(
+        $order2update = [
             'total_paid' => $sumPriceIncl,
             'total_paid_tax_incl' => $sumPriceIncl,
             'total_paid_tax_excl' => $sumPriceExcl,
             'total_deposit' => $sumDeposit
-        );
+        ];
 
         // update table orders
         $this->id = $orderId;

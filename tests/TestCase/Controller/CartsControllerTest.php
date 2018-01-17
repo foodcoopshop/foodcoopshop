@@ -89,7 +89,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
-        $this->assertEquals(array(), $cart['CartProducts'], 'cart must be empty');
+        $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
         $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
@@ -206,12 +206,12 @@ class CartsControllerTest extends AppCakeTestCase
          * START check order
          */
         $this->Order->recursive = 2;
-        $order = $this->Order->find('first', array(
-            'conditions' => array(
+        $order = $this->Order->find('first', [
+            'conditions' => [
                 'Order.id_order' => $orderId
-            )
-        ));
-        $this->assertNotEquals(array(), $order, 'order not correct');
+            ]
+        ]);
+        $this->assertNotEquals([], $order, 'order not correct');
         $this->assertEquals($order['Order']['id_order'], $orderId, 'order id not correct');
         $this->assertEquals($order['Order']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
         $this->assertEquals($order['Order']['id_cart'], 1, 'order cart_id not correct');
@@ -239,11 +239,11 @@ class CartsControllerTest extends AppCakeTestCase
         // check new (empty) cart
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
         $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
-        $this->assertEquals(array(), $cart['CartProducts'], 'cake cart products not empty');
+        $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
         // check email to customer
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[0], 'Bestellbestätigung', array('Artischocke : Stück', 'Hallo Demo Superadmin,'), array(Configure::read('test.loginEmailSuperadmin')));
+        $this->assertEmailLogs($emailLogs[0], 'Bestellbestätigung', ['Artischocke : Stück', 'Hallo Demo Superadmin,'], [Configure::read('test.loginEmailSuperadmin')]);
 
         $this->browser->doFoodCoopShopLogout();
     }
@@ -251,11 +251,11 @@ class CartsControllerTest extends AppCakeTestCase
     public function testShopOrder()
     {
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('first', array(
-            'conditions' => array(
+        $testCustomer = $this->Customer->find('first', [
+            'conditions' => [
                 'Customer.id_customer' => Configure::read('test.customerId')
-            )
-        ));
+            ]
+        ]);
         $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.customerId'));
         $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customer']['name'] . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
@@ -279,11 +279,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
 
         // only one order with the cake cart id should have been created
-        $orders = $this->Order->find('all', array(
-            'conditions' => array(
+        $orders = $this->Order->find('all', [
+            'conditions' => [
                 'Order.id_cart' => 1
-            )
-        ));
+            ]
+        ]);
         $this->assertEquals(1, count($orders), 'more than one order inserted');
 
         foreach ($orders[0]['OrderDetails'] as $orderDetail) {
@@ -297,11 +297,11 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatusAfterFinish()
     {
-        $cart = $this->Cart->find('first', array(
-            'conditions' => array(
+        $cart = $this->Cart->find('first', [
+            'conditions' => [
                 'Cart.id_cart' => 1
-            )
-        ));
+            ]
+        ]);
         $this->assertEquals($cart['Cart']['status'], 0, 'cake cart status wrong');
     }
 
@@ -323,12 +323,12 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function changeStockAvailable($productId, $amount)
     {
-        $this->browser->post('/admin/products/editQuantity/', array(
-            'data' => array(
+        $this->browser->post('/admin/products/editQuantity/', [
+            'data' => [
                 'productId' => $productId,
                 'quantity' => $amount
-            )
-        ));
+            ]
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 
@@ -337,12 +337,12 @@ class CartsControllerTest extends AppCakeTestCase
         $ids = $this->Product->getProductIdAndAttributeId($productId);
 
         // get changed product
-        $stockAvailable = $this->StockAvailable->find('first', array(
-            'conditions' => array(
+        $stockAvailable = $this->StockAvailable->find('first', [
+            'conditions' => [
                 'StockAvailable.id_product' => $ids['productId'],
                 'StockAvailable.id_product_attribute' => $ids['attributeId']
-            )
-        ));
+            ]
+        ]);
 
         // stock available check of changed product
         $this->assertEquals($stockAvailable['StockAvailable']['quantity'], $result, 'stockavailable quantity wrong');
@@ -391,11 +391,11 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function removeProduct($productId)
     {
-        $this->browser->ajaxPost('/warenkorb/ajaxRemove', array(
-            'data' => array(
+        $this->browser->ajaxPost('/warenkorb/ajaxRemove', [
+            'data' => [
                 'productId' => $productId
-            )
-        ));
+            ]
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 }

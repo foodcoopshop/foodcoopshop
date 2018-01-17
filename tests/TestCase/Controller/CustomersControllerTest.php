@@ -47,11 +47,11 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.', $this->browser->getContent());
 
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[0], 'Anfrage für neues Passwort für FoodCoop Test', array('bitte klicke auf folgenden Link, um dein neues Passwort zu generieren'), array(Configure::read('test.loginEmailCustomer')));
+        $this->assertEmailLogs($emailLogs[0], 'Anfrage für neues Passwort für FoodCoop Test', ['bitte klicke auf folgenden Link, um dein neues Passwort zu generieren'], [Configure::read('test.loginEmailCustomer')]);
 
-        $customer = $this->Customer->find('first', array(
+        $customer = $this->Customer->find('first', [
             'email' => Configure::read('test.loginEmailCustomer')
-        ));
+        ]);
 
         $this->browser->get($this->Slug->getApproveNewPassword('non-existing-code'));
         $this->assert404NotFoundHeader();
@@ -61,7 +61,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . $this->Slug->getLogin());
 
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', array('du hast gerade ein neues Passwort generiert, es lautet:'), array(Configure::read('test.loginEmailCustomer')));
+        $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', ['du hast gerade ein neues Passwort generiert, es lautet:'], [Configure::read('test.loginEmailCustomer')]);
 
         preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[1]['EmailLog']['message'], $matches);
 
@@ -73,35 +73,35 @@ class CustomersControllerTest extends AppCakeTestCase
 
     private function doPostNewPasswordRequest($email)
     {
-        $this->browser->post($this->Slug->getNewPasswordRequest(), array(
-            'data' => array(
-                'Customer' => array(
+        $this->browser->post($this->Slug->getNewPasswordRequest(), [
+            'data' => [
+                'Customer' => [
                     'email' => $email
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
     }
 
     public function testRegistration()
     {
-        $data = array(
-            'Customer' => array(
+        $data = [
+            'Customer' => [
                 'email' => '',
                 'firstname' => '',
                 'lastname' => '',
                 'newsletter' => 1,
                 'terms_of_use_accepted_date' => 0
-            ),
+            ],
             'antiSpam' => 0,
-            'AddressCustomer' => array(
+            'AddressCustomer' => [
                 'address1' => '',
                 'address2' => '',
                 'postcode' => '',
                 'city' => '',
                 'phone_mobile' => '',
                 'phone' => ''
-            )
-        );
+            ]
+        ];
 
         // 1) check for spam protection
         $response = $this->addCustomer($data);
@@ -139,7 +139,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($data, $email);
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[0], 'Willkommen', array('war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'), array($email));
+        $this->assertEmailLogs($emailLogs[0], 'Willkommen', ['war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'], [$email]);
 
 
         // 5) register again with changed configuration
@@ -149,7 +149,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->saveAndCheckValidCustomer($data, $email);
 
         $emailLogs = $this->EmailLog->find('all');
-        $this->assertEmailLogs($emailLogs[1], 'Willkommen', array('war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'), array($email));
+        $this->assertEmailLogs($emailLogs[1], 'Willkommen', ['war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'], [$email]);
     }
 
     private function saveAndCheckValidCustomer($data, $email)
@@ -180,11 +180,11 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Deine Registrierung war erfolgreich.', $response);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/registrierung/abgeschlossen');
 
-        $customer = $this->Customer->find('first', array(
-            'conditions' => array(
+        $customer = $this->Customer->find('first', [
+            'conditions' => [
                 'Customer.email' => $customerEmail
-            )
-        ));
+            ]
+        ]);
 
         // check customer record
         $this->assertEquals((bool) Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customer']['active'], 'saving field active failed');
@@ -218,9 +218,9 @@ class CustomersControllerTest extends AppCakeTestCase
      */
     private function addCustomer($data)
     {
-        $this->browser->post($this->Slug->getRegistration(), array(
+        $this->browser->post($this->Slug->getRegistration(), [
             'data' => $data
-        ));
+        ]);
         return $this->browser->getContent();
     }
 }

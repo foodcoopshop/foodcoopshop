@@ -19,29 +19,29 @@ class CartProduct extends AppModel
 
     public $primaryKey = 'id_cart_product';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Content'
-    );
+    ];
 
-    public $belongsTo = array(
-        'Product' => array(
+    public $belongsTo = [
+        'Product' => [
             'foreignKey' => 'id_product'
-        ),
-        'ProductLang' => array(
+        ],
+        'ProductLang' => [
             'foreignKey' => 'id_product'
-        ),
-        'ProductAttribute' => array(
+        ],
+        'ProductAttribute' => [
             'foreignKey' => 'id_product_attribute'
-        )
-    );
+        ]
+    ];
 
     public function remove($productId, $attributeId, $cartId)
     {
-        $cartProduct2remove = array(
+        $cartProduct2remove = [
             'CartProduct.id_product' => $productId,
             'CartProduct.id_product_attribute' => $attributeId,
             'CartProduct.id_cart' => $cartId
-        );
+        ];
         return $this->deleteAll($cartProduct2remove, false);
     }
 }

@@ -31,7 +31,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function testAllPublicUrls()
     {
-        $testUrls = array(
+        $testUrls = [
             $this->Slug->getHome(),
             $this->Slug->getManufacturerList(),
             $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
@@ -45,7 +45,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getLogin(),
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy()
-        );
+        ];
         $this->assertPagesForErrors($testUrls);
     }
 
@@ -56,7 +56,7 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $testUrls = array(
+        $testUrls = [
             $this->Slug->getCartDetail(),
             $this->Slug->getPagesListAdmin(),
             $this->Slug->getPageAdd(),
@@ -91,7 +91,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSliderEdit(6),
             $this->Slug->getConfigurationsList(),
             $this->Slug->getConfigurationEdit(544)
-        );
+        ];
 
         $this->assertPagesForErrors($testUrls);
 
@@ -105,12 +105,12 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $this->loginAsMeatManufacturer();
 
-        $testUrls = array(
+        $testUrls = [
             $this->Slug->getManufacturerMyOptions(),
             $this->Slug->getMyDepositList(),
             $this->Slug->getManufacturerProfile(),
             $this->Slug->getProductAdmin()
-        );
+        ];
 
         $this->assertPagesForErrors($testUrls);
 
@@ -120,11 +120,11 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function test404PagesLoggedOut()
     {
-        $testUrls = array(
+        $testUrls = [
             '/xxx',
             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
             $this->Slug->getPageDetail(4234, 'not valid page name'),
-        );
+        ];
         $this->assertPagesFor404($testUrls);
     }
 
@@ -136,10 +136,10 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $testUrls = array(
+        $testUrls = [
             $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
-        );
+        ];
         $this->assertPagesFor404($testUrls);
         $this->browser->doFoodCoopShopLogout();
     }
@@ -185,11 +185,11 @@ class PagesControllerTest extends AppCakeTestCase
     protected function changePage($pageId, $isPrivate = 0, $active = 1)
     {
         $sql = 'UPDATE ' . $this->Page->tablePrefix . $this->Page->useTable.' SET is_private = :isPrivate, active = :active WHERE id_page = :pageId;';
-        $params = array(
+        $params = [
             'pageId' => $pageId,
             'isPrivate' => $isPrivate,
             'active' => $active
-        );
+        ];
         $this->Page->getDataSource()->fetchAll($sql, $params);
     }
 }

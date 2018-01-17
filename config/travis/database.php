@@ -3,7 +3,7 @@
 class DATABASE_CONFIG
 {
 
-    public $default = array(
+    public $default = [
         'datasource' => 'Database/Mysql',
         'persistent' => false,
         'database' => 'foodcoopshop_test',
@@ -12,9 +12,9 @@ class DATABASE_CONFIG
         'password' => '',
         'prefix' => 'fcs_',
         'encoding' => 'utf8'
-    );
+    ];
 
-    public $test = array(
+    public $test = [
         'datasource' => 'Database/Mysql',
         'persistent' => false,
         'database' => 'foodcoopshop_test',
@@ -23,5 +23,5 @@ class DATABASE_CONFIG
         'password' => '',
         'prefix' => 'fcs_',
         'encoding' => 'utf8'
-    );
+    ];
 }

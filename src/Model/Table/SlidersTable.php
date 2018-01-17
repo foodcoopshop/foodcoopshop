@@ -19,37 +19,37 @@ class Slider extends AppModel
 
     public $primaryKey = 'id_slider';
 
-    public $validate = array(
-        'position' => array(
-            'number' => array(
-                'rule' => array(
+    public $validate = [
+        'position' => [
+            'number' => [
+                'rule' => [
                     'range',
                     - 1,
                     101
-                ),
+                ],
                 'message' => 'Bitte gibt eine Zahl von 0 bis 100 an'
-            )
-        ),
-        'image' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'image' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte lade ein Bild hoch.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function getForHome()
     {
-        $slides = $this->find('all', array(
-            'conditions' => array(
+        $slides = $this->find('all', [
+            'conditions' => [
                 'Slider.active' => APP_ON
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'Slider.position' => 'ASC'
-            )
-        ));
+            ]
+        ]);
         return $slides;
     }
 }

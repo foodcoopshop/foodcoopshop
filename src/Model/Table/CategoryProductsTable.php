@@ -20,9 +20,9 @@ class CategoryProduct extends AppModel
     public $useTable = 'category_product';
     public $primaryKey = 'id_product';
 
-    public $belongsTo = array(
-        'Category' => array(
+    public $belongsTo = [
+        'Category' => [
             'foreignKey' => 'id_category'
-        )
-    );
+        ]
+    ];
 }

@@ -12,9 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
-));
+]);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
@@ -24,7 +24,7 @@ $this->element('addScript', array('script' =>
     <p>Bitte gib deine E-Mail-Adresse an und klicke dann auf "Senden".</p>
     <p>Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst.</p>
     
-    <?php echo $this->Form->input('Customer.email', array('label' => 'E-Mail')); ?>
+    <?php echo $this->Form->input('Customer.email', ['label' => 'E-Mail']); ?>
     <button type="submit" class="btn btn-success">Senden</button>
     
 </form>

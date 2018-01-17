@@ -48,7 +48,7 @@ class Configuration extends AppModel
 
     public function enableValidations($name)
     {
-        $validationRules = array();
+        $validationRules = [];
 
         switch ($name) {
             // booleans
@@ -97,78 +97,78 @@ class Configuration extends AppModel
 
     private function getEqualsToMultipleValuesRule($values)
     {
-        $validationRules = array();
-        $validationRules[] = array(
-            'rule' => array(
+        $validationRules = [];
+        $validationRules[] = [
+            'rule' => [
                 'inList',
                 array_keys($values)
-            ),
+            ],
             'message' => 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values))
-        );
+        ];
 
         return $validationRules;
     }
 
     private function getEmailValidationRule($allowEmpty = false)
     {
-        $validationRules = array();
-        $validationRules[] = array(
-            'rule' => array(
+        $validationRules = [];
+        $validationRules[] = [
+            'rule' => [
                 'email',
                 true
-            ),
+            ],
             'message' => 'Bitte gibt eine gültige E-Mail-Adresse an.',
             'allowEmpty' => $allowEmpty
-        );
+        ];
         return $validationRules;
     }
 
     private function getUrlValidationRule($allowEmpty = false)
     {
-        $validationRules = array();
-        $validationRules[] = array(
-            'rule' => array(
+        $validationRules = [];
+        $validationRules[] = [
+            'rule' => [
                 'url',
                 true
-            ),
+            ],
             'message' => 'Bitte gibt eine gültige Url an.',
             'allowEmpty' => $allowEmpty
-        );
+        ];
         return $validationRules;
     }
 
     private function getCharactersRangeRule($min, $max)
     {
-        $validationRules = array();
+        $validationRules = [];
         $message = 'Die Anzahl der Zeichen muss zwischen ' . $min . ' und ' . $max . ' liegen.';
-        $validationRules[] = array(
-            'rule' => array(
+        $validationRules[] = [
+            'rule' => [
                 'minLength',
                 $min
-            ),
+            ],
             'message' => $message
-        );
-        $validationRules[] = array(
-            'rule' => array(
+        ];
+        $validationRules[] = [
+            'rule' => [
                 'maxLength',
                 $max
-            ),
+            ],
             'message' => $message
-        );
+        ];
         return $validationRules;
     }
 
     public function getConfigurations()
     {
-        $configurations = $this->find('all', array(
-            'fields' => array('Configuration.id_configuration', 'Configuration.name', 'Configuration.value', 'Configuration.type', 'Configuration.text'),
-            'conditions' => array(
+        $configurations = $this->find('all', [
+            'fields' => ['Configuration.id_configuration', 'Configuration.name', 'Configuration.value', 'Configuration.type', 'Configuration.text'],
+            'conditions' => [
                 'Configuration.active' => APP_ON
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'Configuration.position' => 'ASC'
-            )
-        ));
+            ]
+        ]);
         return $configurations;
     }
 

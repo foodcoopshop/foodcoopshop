@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array('script' =>
+$this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
-));
+]);
 
 if ($page['Page']['full_width']) {
     echo $this->Html->css('page-full-width');
@@ -28,9 +28,9 @@ if (!empty($page['children'])) {
         echo '<p>'.$this->Html->link(
             $childPage['Page']['title'],
             $this->Slug->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']),
-            array(
+            [
                 'class' => 'btn btn-success'
-            )
+            ]
         ).'</p>';
     }
 }
@@ -38,9 +38,9 @@ if (!empty($page['children'])) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-        array(
+        [
             'title' => 'Bearbeiten'
-        ),
+        ],
         $this->Slug->getPageEdit($page['Page']['id_page'])
     );
 }

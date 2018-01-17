@@ -20,31 +20,31 @@ class Attribute extends AppModel
     public $useTable = 'attribute';
     public $primaryKey = 'id_attribute';
 
-    public $validate = array(
-        'name' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'name' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib einen Namen an.'
-            ),
-            'unique' => array(
+            ],
+            'unique' => [
                 'rule' => 'isUnique',
                 'message' => 'Eine Variante mit dem Namen existiert bereits.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     public function getForDropdown()
     {
         $this->recursive = 2;
-        $attributes = $this->find('all', array(
-            'order' => array(
+        $attributes = $this->find('all', [
+            'order' => [
                 'Attribute.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
-        $attributesForDropdown = array();
+        $attributesForDropdown = [];
         foreach ($attributes as $attribute) {
             $attributesForDropdown[$attribute['Attribute']['id_attribute']] = $attribute['Attribute']['name'];
         }

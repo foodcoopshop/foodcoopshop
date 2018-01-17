@@ -20,62 +20,62 @@ App::uses('Address', 'Model');
 class AddressCustomer extends Address
 {
 
-    public $validate = array(
-        'address1' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'address1' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deine Straße an.'
-            )
-        ),
-        'postcode' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'postcode' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deine PLZ an.'
-            ),
-            'regex' => array(
-                'rule' => array(
+            ],
+            'regex' => [
+                'rule' => [
                     'phone',
                     ZIP_REGEX
-                ), // phone takes regex
+                ], // phone takes regex
                 'message' => 'Die PLZ ist nicht gültig.'
-            )
-        ),
-        'city' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'city' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deinen Ort an.'
-            )
-        ),
-        'phone_mobile' => array(
-            'notBlank' => array(
-                'rule' => array(
+            ]
+        ],
+        'phone_mobile' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib deine Handynummer an.'
-            ),
-            'phone' => array(
-                'rule' => array(
+            ],
+            'phone' => [
+                'rule' => [
                     'phone',
                     PHONE_REGEX
-                ),
+                ],
                 'message' => 'Die Handynummer ist nicht gültig.'
-            )
-        ),
-        'phone' => array(
-            'phone' => array(
-                'rule' => array(
+            ]
+        ],
+        'phone' => [
+            'phone' => [
+                'rule' => [
                     'phone',
                     PHONE_REGEX
-                ),
+                ],
                 'allowEmpty' => true,
                 'message' => 'Die Telefonnummer ist nicht gültig.'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 }

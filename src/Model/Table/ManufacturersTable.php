@@ -24,83 +24,83 @@ class Manufacturer extends AppModel
 
     public $primaryKey = 'id_manufacturer';
 
-    public $actsAs = array(
+    public $actsAs = [
         'Content'
-    );
+    ];
 
-    public $belongsTo = array(
-        'Customer' => array(
+    public $belongsTo = [
+        'Customer' => [
             'foreignKey' => 'id_customer'
-        )
-    );
+        ]
+    ];
 
-    public $hasOne = array(
-        'Address' => array(
+    public $hasOne = [
+        'Address' => [
             'className' => 'AddressManufacturer',
-            'conditions' => array(
+            'conditions' => [
                 'Address.id_manufacturer > 0'
-            ),
+            ],
             'foreignKey' => 'id_manufacturer'
-        )
-    );
+        ]
+    ];
 
-    public $hasMany = array(
-        'Invoices' => array(
+    public $hasMany = [
+        'Invoices' => [
             'className' => 'Invoice',
             'foreignKey' => 'id_manufacturer',
-            'order' => array(
+            'order' => [
                 'Invoices.send_date DESC'
-            ),
+            ],
             'limit' => 1
-        )
-    );
+        ]
+    ];
 
-    public $validate = array(
-        'name' => array(
-            'notBlank' => array(
-                'rule' => array(
+    public $validate = [
+        'name' => [
+            'notBlank' => [
+                'rule' => [
                     'notBlank'
-                ),
+                ],
                 'message' => 'Bitte gib einen Namen an.'
-            ),
-            'minLength' => array(
-                'rule' => array(
+            ],
+            'minLength' => [
+                'rule' => [
                     'between',
                     3,
                     64
-                ), // 64 is set in db
+                ], // 64 is set in db
                 'message' => 'Bitte gib zwischen 3 und 64 Zeichen ein.'
-            )
-        ),
-        'iban' => array(
-            'regex' => array(
-                'rule' => array(
+            ]
+        ],
+        'iban' => [
+            'regex' => [
+                'rule' => [
                     'phone',
                     IBAN_REGEX
-                ), // phone takes regex
+                ], // phone takes regex
                 'allowEmpty' => true,
                 'message' => 'Bitte gib einen gültigen IBAN ein.'
-            )
-        ),
-        'bic' => array(
-            'regex' => array(
-                'rule' => array(
+            ]
+        ],
+        'bic' => [
+            'regex' => [
+                'rule' => [
                     'phone',
                     BIC_REGEX
-                ), // phone takes regex
+                ], // phone takes regex
                 'allowEmpty' => true,
                 'message' => 'Bitte gib einen gültigen BIC ein.'
-            )
-        ),
-        'homepage' => array(
+            ]
+        ],
+        'homepage' => [
             'allowEmpty' => true,
-            'rule' => array(
+            'rule' => [
                 'url',
                 true
-            ),
+            ],
             'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
-        )
-    );
+        ]
+    ];
 
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
@@ -225,7 +225,7 @@ class Manufacturer extends AppModel
      */
     public function getOptionSendOrderListCc($sendOrderListCc)
     {
-        $ccRecipients = array();
+        $ccRecipients = [];
         if ($sendOrderListCc == '') {
             return $ccRecipients;
         }
@@ -248,18 +248,18 @@ class Manufacturer extends AppModel
         $cm = ClassRegistry::init('Customer');
 
         $cm->recursive = 1;
-        $customer = $cm->find('first', array(
-            'conditions' => array(
+        $customer = $cm->find('first', [
+            'conditions' => [
                 'Customer.email' => $manufacturer['Address']['email']
-            )
-        ));
+            ]
+        ]);
 
         if (empty($customer['AddressCustomer']['id_address'])) {
             return $customer;
         }
 
         if (!empty($customer['AddressCustomer'])) {
-            return array();
+            return [];
         }
 
         return $customer;
@@ -271,11 +271,11 @@ class Manufacturer extends AppModel
      */
     public function getCustomerByManufacturerId($manufacturerId)
     {
-        $manufacturer = $this->find('first', array(
-            'conditions' => array(
+        $manufacturer = $this->find('first', [
+            'conditions' => [
                 'Manufacturer.id_manufacturer' => $manufacturerId
-            )
-        ));
+            ]
+        ]);
         if (!empty($manufacturer)) {
             return $this->getCustomerRecord($manufacturer);
         }
@@ -302,28 +302,28 @@ class Manufacturer extends AppModel
             $productModel = ClassRegistry::init('Product');
         }
         $this->recursive = - 1;
-        $conditions = array(
+        $conditions = [
             'Manufacturer.active' => APP_ON
-        );
+        ];
         if (! $this->loggedIn()) {
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
 
-        $manufacturers = $this->find('all', array(
-            'fields' => array(
+        $manufacturers = $this->find('all', [
+            'fields' => [
                 'Manufacturer.id_manufacturer',
                 'Manufacturer.name',
                 'Manufacturer.holiday_from',
                 'Manufacturer.holiday_to',
                 '!'.$this->getManufacturerHolidayConditions().' as IsHolidayActive'
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'Manufacturer.name' => 'ASC'
-            ),
+            ],
             'conditions' => $conditions
-        ));
+        ]);
 
-        $manufacturersForMenu = array();
+        $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
             $additionalInfo = '';
@@ -345,10 +345,10 @@ class Manufacturer extends AppModel
             if ($additionalInfo != '') {
                 $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
             }
-            $manufacturersForMenu[] = array(
+            $manufacturersForMenu[] = [
                 'name' => $manufacturerName,
                 'slug' => Configure::read('slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
-            );
+            ];
         }
         return $manufacturersForMenu;
     }
@@ -386,19 +386,19 @@ class Manufacturer extends AppModel
     public function getForDropdown()
     {
         $this->recursive = - 1;
-        $manufacturers = $this->find('all', array(
-            'fields' => array(
+        $manufacturers = $this->find('all', [
+            'fields' => [
                 'Manufacturer.id_manufacturer',
                 'Manufacturer.name',
                 'Manufacturer.active'
-            ),
-            'order' => array(
+            ],
+            'order' => [
                 'Manufacturer.name' => 'ASC'
-            )
-        ));
+            ]
+        ]);
 
-        $offlineManufacturers = array();
-        $onlineManufacturers = array();
+        $offlineManufacturers = [];
+        $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerNameForDropdown = $manufacturer['Manufacturer']['name'];
             if ($manufacturer['Manufacturer']['active'] == 0) {
@@ -407,7 +407,7 @@ class Manufacturer extends AppModel
                 $onlineManufacturers[$manufacturer['Manufacturer']['id_manufacturer']] = $manufacturerNameForDropdown;
             }
         }
-        $manufacturersForDropdown = array();
+        $manufacturersForDropdown = [];
         if (! empty($onlineManufacturers)) {
             $manufacturersForDropdown['online'] = $onlineManufacturers;
         }
@@ -428,12 +428,12 @@ class Manufacturer extends AppModel
         $sql .= "AND Manufacturer.id_manufacturer = :manufacturerId";
         $sql .= $this->getOrdersForProductListQuery();
 
-        $params = array(
+        $params = [
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
             'langId' => Configure::read('AppConfig.langId'),
             'shopId' => Configure::read('AppConfig.shopId')
-        );
+        ];
         if (! $this->loggedIn()) {
             $params['isPrivate'] = APP_OFF;
         }
@@ -500,12 +500,12 @@ class Manufacturer extends AppModel
                 AND o.current_state IN(:orderStates)
                 ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
 
-        $params = array(
+        $params = [
             'manufacturerId' => $manufacturerId,
             'dateFrom' => "'" . Configure::read('timeHelper')->formatToDbFormatDate($from) . "'",
             'dateTo' => "'" . Configure::read('timeHelper')->formatToDbFormatDate($to) . "'",
             'orderStates' => join(',', $orderState)
-        );
+        ];
         // strange behavior: if $this->getDataSource()->fetchAll is used, $results is empty
         // problem seems to be caused by date fields
         // with interpolateQuery and normal fire of sql statemt, result is not empty and works...
