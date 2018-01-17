@@ -16,18 +16,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-date_default_timezone_set('Europe/Vienna');
-
-App::uses('MyHtmlHelper', 'View/Helper');
-App::uses('View', 'View');
-Configure::write('htmlHelper', new MyHtmlHelper(new View()));
-App::uses('MyTimeHelper', 'View/Helper');
-Configure::write('timeHelper', new MyTimeHelper(new View()));
-App::uses('SlugHelper', 'View/Helper');
-Configure::write('slugHelper', new SlugHelper(new View()));
-
-Configure::write('app.jsNamespace', 'foodcoopshop');
-
 define('APP_ON', 1);
 define('APP_OFF', 0);
 define('APP_DEL', -1);
@@ -51,115 +39,117 @@ define('HTTPS_REGEX', '/^https\:\/\//');
 // copied from Cake/Utility/Validation.php with additional $ at the end
 define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
 
-Configure::write('app.visibleOrderStates', array(
-    ORDER_STATE_OPEN => 'offen',
-    ORDER_STATE_CASH_FREE => 'abgeschlossen',
-));
-
-Configure::write('app.filesDir', DS.'files');
-Configure::write('app.tmpWwwDir', DS.'tmp');
-Configure::write('app.uploadedImagesDir', Configure::read('app.filesDir') . DS . 'images');
-
-Configure::write('app.folder.migrations', APP . 'Config' . DS . 'sql' . DS . 'migrations');
-Configure::write('app.folder.invoices', APP . 'files_private'. DS . 'invoices');
-Configure::write('app.folder.order_lists', APP . 'files_private' . DS .'order_lists');
-Configure::write('app.folder.invoices_with_current_year_and_month', Configure::read('app.folder.invoices').DS.date('Y').DS.date('m'));
-Configure::write('app.folder.order_lists_with_current_year_and_month', Configure::read('app.folder.order_lists').DS.date('Y').DS.date('m'));
-
-/**
- * @deprecated since v1.4
- * use FCS_USE_VARIABLE_MEMBER_FEE instead (database)
- */
-//Configure::write('app.useManufacturerCompensationPercentage', false);
-
-/**
- * @deprecated since v1.4
- * use FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE instead (database)
- */
-//Configure::write('app.defaultCompensationPercentage', 0);
-
-Configure::write('app.manufacturerComponensationInfoText', 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.');
-/**
- * all the default values in this block can be overwritten in the manufacturer settings
- */
-Configure::write('app.defaultSendOrderList', true);
-Configure::write('app.defaultSendInvoice', true);
-Configure::write('app.defaultTaxId', 2);
-Configure::write('app.defaultBulkOrdersAllowed', false);
-Configure::write('app.defaultSendShopOrderNotification', true);
-Configure::write('app.defaultSendOrderedProductDeletedNotification', true);
-Configure::write('app.defaultSendOrderedProductPriceChangedNotification', true);
-Configure::write('app.defaultSendOrderedProductQuantityChangedNotification', true);
-
-Configure::write('app.isDepositPaymentCashless', true);
-Configure::write('app.depositPaymentCashlessStartDate', '2016-01-01');
-Configure::write('app.depositForManufacturersStartDate', '2016-01-01');
-
-/**
- * adds a link to the manufacturer admin to generate and send the order list on click
- * can be useful, if e.g. a member forgot to order and the order lists are already sent
- * @deprecated - do not use this option any more, will be removed in next version
- */
-Configure::write('app.allowManualOrderListSending', false);
-/**
- * weekday on which the weekly cronjob "SendOrderList" is called
- * the available options (in combination with app.deliveryDayDelta) can be found in Test/Case/View/Helper/MyTimeHelperTest.php
- */
-Configure::write('app.sendOrderListsWeekday', 3);
-
-/**
- * should names of members be shown as "John Doe" or "Doe John"
- * options:
- * - firstname
- * - lastname
- */
-Configure::write('app.customerMainNamePart', 'firstname');
-
-/**
- * id of the category "all products"
- */
-Configure::write('app.categoryAllProducts', 20);
-
-/**
- * @deprecated - do not use this option any more, will be removed in next version
- */
-Configure::write('app.memberFeeFlexibleEnabled', false);
-
-/**
- * image upload sizes and suffixes
- */
-Configure::write('app.productImageSizes', array(
-     '150' => array('suffix' => '-home_default'),      // list page
-     '358' => array('suffix' => '-large_default'),     // detail page
-     '800' => array('suffix' => '-thickbox_default')   // lightbox
-));
-Configure::write('app.blogPostImageSizes', array(
-     '170' => array('suffix' => '-home-default'),     // detail / list page
-     '800' => array('suffix' => '-single-default')    // lightbox
-));
-Configure::write('app.manufacturerImageSizes', array(
-     '200' => array('suffix' => '-medium_default'),  // detail / list page
-     '800' => array('suffix' => '-large_default')    // lightbox
-));
-Configure::write('app.categoryImageSizes', array(
-     '717' => array('suffix' => '-category_default') // detail AND lightbox
-));
-Configure::write('app.sliderImageSizes', array(
-    '905' => array('suffix' => '-slider') // detail AND lightbox
-));
-Configure::write('app.tmpUploadImagesDir', Configure::read('app.tmpWwwDir').DS.'images');
-
-Configure::write('app.langId', 1);
-Configure::write('app.shopId', 1);
-Configure::write('app.countryId', 2); // austria: 2, germany: 1
-
-/**
- * if you work on windows, change to e.g
- * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
- */
-Configure::write('app.mysqlDumpCommand', 'mysqldump');
-
-/**
- * date of the last update of terms of use
- */
-Configure::write('app.termsOfUseLastUpdate', '2016-11-28');
+return [
+    'Email' => [
+        'default' => [
+            'emailFormat' => 'html',
+            'transport' => 'default',
+            'charset' => 'utf-8',
+            'headerCharset' => 'utf-8',
+        ],
+    ],
+    'AppConfig' => [
+        'jsNamespace', 'foodcoopshop',
+        'visibleOrderStates' => array(
+            ORDER_STATE_OPEN => 'offen',
+            ORDER_STATE_CASH_FREE => 'abgeschlossen',
+        ),
+        'filesDir' => DS . 'files',
+        'tmpWwwDir' => DS.'tmp',
+        'uploadedImagesDir' => DS . 'files' . DS . 'images',
+        'folder.migrations' => APP . 'Config' . DS . 'sql' . DS . 'migrations',
+        'folder.invoices' => APP . 'files_private'. DS . 'invoices',
+        'folder.order_lists' => APP . 'files_private' . DS .'order_lists',
+        'folder.invoices_with_current_year_and_month' => APP . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
+        'folder.order_lists_with_current_year_and_month' => APP . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
+        
+        'manufacturerComponensationInfoText' => 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.',
+        /**
+         * all the default values in this block can be overwritten in the manufacturer settings
+         */
+        'defaultSendOrderList' => true,
+        'defaultSendInvoice' => true,
+        'defaultTaxId' => 2,
+        'defaultBulkOrdersAllowed' => false,
+        'defaultSendShopOrderNotification' => true,
+        'defaultSendOrderedProductDeletedNotification' => true,
+        'defaultSendOrderedProductPriceChangedNotification' => true,
+        'defaultSendOrderedProductQuantityChangedNotification' => true,
+        'isDepositPaymentCashless' => true,
+        'depositPaymentCashlessStartDate' => '2016-01-01',
+        'depositForManufacturersStartDate' => '2016-01-01',
+                
+        /**
+         * adds a link to the manufacturer admin to generate and send the order list on click
+         * can be useful, if e.g. a member forgot to order and the order lists are already sent
+         * @deprecated - do not use this option any more, will be removed in next version
+         */
+        'allowManualOrderListSending' => false,
+        /**
+         * weekday on which the weekly cronjob "SendOrderList" is called
+         * the available options (in combination with deliveryDayDelta) can be found in Test/Case/View/Helper/MyTimeHelperTest.php
+         */
+        'sendOrderListsWeekday' => 3,
+        
+        /**
+         * should names of members be shown as "John Doe" or "Doe John"
+         * options:
+         * - firstname
+         * - lastname
+         */
+        'customerMainNamePart' => 'firstname',
+        
+        /**
+         * id of the category "all products"
+         */
+        'categoryAllProducts' => 20,
+        
+        /**
+         * @deprecated - do not use this option any more, will be removed in next version
+         */
+        'memberFeeFlexibleEnabled' => false,
+        
+        /**
+         * image upload sizes and suffixes
+         */
+        'productImageSizes' => array(
+            '150' => array('suffix' => '-home_default'),      // list page
+            '358' => array('suffix' => '-large_default'),     // detail page
+            '800' => array('suffix' => '-thickbox_default')   // lightbox
+        ),
+        'blogPostImageSizes' => array(
+            '170' => array('suffix' => '-home-default'),     // detail / list page
+            '800' => array('suffix' => '-single-default')    // lightbox
+        ),
+        'manufacturerImageSizes' => array(
+            '200' => array('suffix' => '-medium_default'),  // detail / list page
+            '800' => array('suffix' => '-large_default')    // lightbox
+        ),
+        'categoryImageSizes' => array(
+            '717' => array('suffix' => '-category_default') // detail AND lightbox
+        ),
+        'sliderImageSizes', array(
+            '905' => array('suffix' => '-slider') // detail AND lightbox
+        ),
+        'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',
+        
+        'langId' => 1,
+        'shopId' => 1,
+        'countryId' => 2, // austria: 2, germany: 1
+        
+        /**
+         * if you work on windows, change to e.g
+         * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
+         */
+        'mysqlDumpCommand' => 'mysqldump',
+        
+        /**
+         * date of the last update of terms of use
+         */
+        'termsOfUseLastUpdate' => '2016-11-28',
+        
+        'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
+        'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
+        'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View())
+    ]
+];
