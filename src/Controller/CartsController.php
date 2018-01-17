@@ -23,7 +23,7 @@ class CartsController extends FrontendController
     public function beforeFilter(Event $event)
     {
 
-        parent::beforeFilter();
+        parent::beforeFilter($event);
 
         if ($this->request->is('ajax')) {
             $message = '';

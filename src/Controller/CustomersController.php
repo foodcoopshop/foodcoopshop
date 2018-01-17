@@ -22,7 +22,7 @@ class CustomersController extends FrontendController
 
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter();
+        parent::beforeFilter($event);
         $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
     }
 

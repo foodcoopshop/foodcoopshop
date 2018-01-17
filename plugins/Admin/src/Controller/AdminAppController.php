@@ -30,7 +30,7 @@ class AdminAppController extends AppController
 
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter();
+        parent::beforeFilter($event);
         $this->loadModel(Inflector::singularize($this->name)); // force cake to load corresponding model in main app folder
     }
 

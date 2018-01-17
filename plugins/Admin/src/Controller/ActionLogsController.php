@@ -25,7 +25,7 @@ class ActionLogsController extends AdminAppController
         $this->loadModel('ActionLog');
         $this->loadModel('Customer');
         $this->loadModel('Product');
-        parent::beforeFilter();
+        parent::beforeFilter($event);
     }
 
     public function index()

@@ -39,14 +39,13 @@ class AppController extends Controller
         parent::initialize();
         
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Session');
-        $this->loadComponent('AppFlash', [
+        $this->loadComponent('Flash', [
             'clear' => true
         ]);
         $this->loadComponent('String');
         $this->loadComponent('Cookie');
         $this->loadComponent('Cart');
-        $this->loadComponent('DbMigration');
+//         $this->loadComponent('DbMigration');
         
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
@@ -99,7 +98,7 @@ class AppController extends Controller
 
     public function beforeRender(Event $event)
     {
-        parent::beforeRender();
+        parent::beforeRender($event);
         $this->set('appAuth', $this->AppAuth);
         $loggedUser = $this->AppAuth->user();
         $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
@@ -117,7 +116,8 @@ class AppController extends Controller
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
-
+        
+        /*
         switch ($this->DbMigration->doDbMigrations()) {
             case -1:  // always abort what is done and return home.
                 $this->redirect('/');
@@ -135,6 +135,7 @@ class AppController extends Controller
                 }
                 break;
         }
+        */
 
         // auto login if cookie is set
         if (! $this->AppAuth->loggedIn() && $this->Cookie->read('remember_me_cookie') !== null) {
@@ -164,7 +165,7 @@ class AppController extends Controller
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
-        parent::beforeFilter();
+        parent::beforeFilter($event);
     }
 
     /**

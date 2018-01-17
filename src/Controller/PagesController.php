@@ -28,7 +28,7 @@ class PagesController extends FrontendController
     public function beforeFilter(Event $event)
     {
 
-        parent::beforeFilter();
+        parent::beforeFilter($event);
         switch ($this->action) {
             case 'detail':
                 $pageId = (int) $this->params['pass'][0];

@@ -1,8 +1,9 @@
 <?php
 
-use Cake\Controller\Component;
+namespace App\Controller\Component;
 
-App::uses('DbMigration', 'Utility');
+use Cake\Controller\Component;
+use App\Utility\DbMigration;
 
 /**
  * DbMigrationComponent
@@ -26,8 +27,9 @@ class DbMigrationComponent extends Component
      */
     protected $dbMigration = null;
 
-    public function initialize(Controller $controller)
+    public function initialize(array $config)
     {
+        $controller = $this->getController;
         $controller->loadModel('Configuration');
         $controller->loadModel('ActionLog');
 

@@ -83,7 +83,7 @@ class ProductsController extends AdminAppController
     public function beforeFilter(Event $event)
     {
         $this->loadModel('ActionLog');
-        parent::beforeFilter();
+        parent::beforeFilter($event);
     }
 
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)

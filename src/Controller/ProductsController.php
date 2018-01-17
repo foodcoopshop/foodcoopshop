@@ -22,7 +22,7 @@ class ProductsController extends FrontendController
 
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter();
+        parent::beforeFilter($event);
 
         $this->loadModel('Product');
         $productId = (int) $this->params['pass'][0];

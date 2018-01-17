@@ -23,7 +23,7 @@ class ManufacturersController extends FrontendController
     public function beforeFilter(Event $event)
     {
 
-        parent::beforeFilter();
+        parent::beforeFilter($event);
         switch ($this->action) {
             case 'detail':
                 $manufacturerId = (int) $this->params['pass'][0];

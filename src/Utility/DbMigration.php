@@ -1,7 +1,11 @@
 <?php
 
-App::uses('Folder', 'Utility');
-App::uses('File', 'Utility');
+namespace App\Utility;
+
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 
 /**
  * DbMigration

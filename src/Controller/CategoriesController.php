@@ -22,7 +22,7 @@ class CategoriesController extends FrontendController
 
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter();
+        parent::beforeFilter($event);
         if (! (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn())) {
             $this->AppAuth->deny($this->action);
         } else {

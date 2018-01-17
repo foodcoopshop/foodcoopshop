@@ -30,6 +30,7 @@ class FrontendController extends AppController
      * @param Response $response
      * @return
      */
+    /*
     public function __construct(ServerRequest $request = null, Response $response = null, $name = null, $eventManager = null, $components = null)
     {
         $defaultUrl = Configure::read('AppConfig.slugHelper')->getAllProducts();
@@ -37,6 +38,7 @@ class FrontendController extends AppController
         $this->components['AppAuth']['logoutRedirect'] = $redirectUrl;
         return parent::__construct($request, $response, $name, $eventManager, $components);
     }
+    */
 
     public function isAuthorized($user)
     {
@@ -93,7 +95,7 @@ class FrontendController extends AppController
     public function beforeRender(Event $event)
     {
 
-        parent::beforeRender();
+        parent::beforeRender($event);
 
         // when a shop order was placed, the pdfs that are rendered for the order confirmation email
         // called this method and therefore called resetOriginalLoggedCustomer() => email was sent t
@@ -156,7 +158,7 @@ class FrontendController extends AppController
 
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter();
+        parent::beforeFilter($event);
 
         if (($this->name == 'Categories' && $this->action == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized

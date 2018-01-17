@@ -58,7 +58,7 @@ class PaymentsController extends AdminAppController
         $this->loadModel('Payment');
         $this->loadModel('Customer');
         $this->loadModel('Manufacturer');
-        parent::beforeFilter();
+        parent::beforeFilter($event);
     }
 
     public function previewEmail($paymentId, $approval)
