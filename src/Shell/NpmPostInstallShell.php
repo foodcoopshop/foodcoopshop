@@ -1,6 +1,7 @@
 <?php
+namespace App\Shell;
 
-App::uses('Folder', 'Utility');
+use Cake\Utility\Folder;
 
 /**
  * NpmPostInstallShell
@@ -69,7 +70,7 @@ class NpmPostInstallShell extends AppShell
         );
 
         foreach ($adaptedFiles as $file) {
-            copy($file, preg_replace('/Config/', 'webroot' . DS . 'node_modules', $file));
+            copy($file, preg_replace('/config/', 'webroot' . DS . 'node_modules', $file));
             $this->out('KCFinder config file ' . $file . ' copied successfully.');
         }
     }
