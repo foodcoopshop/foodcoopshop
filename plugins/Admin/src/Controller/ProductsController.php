@@ -150,7 +150,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -204,7 +204,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -261,13 +261,13 @@ class ProductsController extends AdminAppController
                 $attribute = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
             }
         }
-        $this->Session->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
+        $this->request->session()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
         $messageString = 'Die Variante "' . $attribute . '" für das Produkt "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -298,7 +298,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct['Product']['id_product'], 'products', $messageString);
 
-        $this->Session->write('highlightedRowId', $newProduct['Product']['id_product']);
+        $this->request->session()->write('highlightedRowId', $newProduct['Product']['id_product']);
         $this->redirect($this->referer());
     }
 
@@ -376,7 +376,7 @@ class ProductsController extends AdminAppController
 
         $this->Flash->success($messageString);
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -431,7 +431,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -483,7 +483,7 @@ class ProductsController extends AdminAppController
         $quantity = $this->Product->getQuantityAsInteger($this->params['data']['quantity']);
         $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
         $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . $oldProduct['StockAvailable']['quantity'] . ' auf ' . $quantity . ' geändert.');
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -535,7 +535,7 @@ class ProductsController extends AdminAppController
         $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($price) . ' geändert.');
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         $this->set('data', array(
             'status' => 1,
@@ -599,7 +599,7 @@ class ProductsController extends AdminAppController
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
         $this->Flash->success('Der Pfand des Produktes "' . $productName . '" wurde erfolgreich geändert.');
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         $this->set('data', array(
             'status' => 1,
@@ -652,7 +652,7 @@ class ProductsController extends AdminAppController
             $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert. <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLang']['description_short'] . '</div> neu: <div class="changed">' . $this->params['data']['descriptionShort'] . '</div>');
         }
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         die(json_encode(array(
             'status' => 1,
@@ -816,7 +816,7 @@ class ProductsController extends AdminAppController
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -847,7 +847,7 @@ class ProductsController extends AdminAppController
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde ' . $statusText . '.');
 
-        $this->Session->write('highlightedRowId', $productId);
+        $this->request->session()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }

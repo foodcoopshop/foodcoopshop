@@ -175,7 +175,7 @@ class PaymentsController extends AdminAppController
                 $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Payment->id, 'payments', $message.' (PaymentId: ' . $this->Payment->id.').');
                 $this->Flash->success($message.'.');
 
-                $this->Session->write('highlightedRowId', $this->Payment->id);
+                $this->request->session()->write('highlightedRowId', $this->Payment->id);
 
                 $this->redirect($this->data['referer']);
             } else {

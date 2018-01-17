@@ -80,15 +80,15 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->Session->read('Auth.originalLoggedCustomer')) {
-            $this->AppAuth->login($this->Session->read('Auth.originalLoggedCustomer'));
+        if ($this->request->session()->read('Auth.originalLoggedCustomer')) {
+            $this->AppAuth->login($this->request->session()->read('Auth.originalLoggedCustomer'));
         }
     }
 
     protected function destroyShopOrderCustomer()
     {
-        $this->Session->delete('Auth.shopOrderCustomer');
-        $this->Session->delete('Auth.originalLoggedCustomer');
+        $this->request->session()->delete('Auth.shopOrderCustomer');
+        $this->request->session()->delete('Auth.originalLoggedCustomer');
     }
 
     // is not called on ajax actions!
@@ -171,9 +171,9 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
-        if ($this->Session->read('Auth.shopOrderCustomer')) {
-            $this->Session->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->login($this->Session->read('Auth.shopOrderCustomer')['Customer']);
+        if ($this->request->session()->read('Auth.shopOrderCustomer')) {
+            $this->request->session()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
+            $this->AppAuth->login($this->request->session()->read('Auth.shopOrderCustomer')['Customer']);
         }
 
         if ($this->AppAuth->user() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {

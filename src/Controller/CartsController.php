@@ -394,7 +394,7 @@ class CartsController extends FrontendController
                     ->viewVars([
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
-                    'originalLoggedCustomer' => $this->Session->check('Auth.originalLoggedCustomer') ? $this->Session->read('Auth.originalLoggedCustomer') : null,
+                        'originalLoggedCustomer' => $this->request->session()->check('Auth.originalLoggedCustomer') ? $this->request->session()->read('Auth.originalLoggedCustomer') : null,
                     'order' => $order,
                     'depositSum' => $this->AppAuth->Cart->getDepositSum(),
                     'productSum' => $this->AppAuth->Cart->getProductSum(),
@@ -423,7 +423,7 @@ class CartsController extends FrontendController
     public function sendShopOrderNotificationToManufacturers($cartProducts, $order)
     {
 
-        if (!$this->Session->check('Auth.shopOrderCustomer')) {
+        if (!$this->request->session()->check('Auth.shopOrderCustomer')) {
             return false;
         }
 
@@ -461,7 +461,7 @@ class CartsController extends FrontendController
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->Session->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->request->session()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,

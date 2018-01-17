@@ -143,7 +143,7 @@ class BlogPostsController extends AdminAppController
                     $this->Flash->success('Der Blog-Artikel wurde erfolgreich gespeichert.');
                 }
 
-                $this->Session->write('highlightedRowId', $this->BlogPost->id);
+                $this->request->session()->write('highlightedRowId', $this->BlogPost->id);
                 $this->redirect($this->data['referer']);
             } else {
                 $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');

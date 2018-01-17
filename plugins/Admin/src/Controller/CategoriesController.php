@@ -106,7 +106,7 @@ class CategoriesController extends AdminAppController
                     $this->Flash->success('Die Kategorie wurde erfolgreich gespeichert.');
                 }
 
-                $this->Session->write('highlightedRowId', $this->Category->id);
+                $this->request->session()->write('highlightedRowId', $this->Category->id);
                 $this->redirect($this->data['referer']);
             } else {
                 $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');

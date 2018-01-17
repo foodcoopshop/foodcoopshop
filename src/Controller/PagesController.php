@@ -50,9 +50,6 @@ class PagesController extends FrontendController
     public function home()
     {
         
-        pr('xxx');
-        exit;
-        
         /**
          * START: security keys check
          */

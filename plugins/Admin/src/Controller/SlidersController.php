@@ -90,7 +90,7 @@ class SlidersController extends AdminAppController
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gespeichert.');
                 }
 
-                $this->Session->write('highlightedRowId', $this->Slider->id);
+                $this->request->session()->write('highlightedRowId', $this->Slider->id);
                 $this->redirect($this->data['referer']);
             } else {
                 $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');

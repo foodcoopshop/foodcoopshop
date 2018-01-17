@@ -115,7 +115,7 @@ class OrdersController extends AdminAppController
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
             $this->Flash->success($message);
 
-            $this->Session->write('highlightedRowId', $orderId);
+            $this->request->session()->write('highlightedRowId', $orderId);
             $this->redirect($this->referer());
         } else {
             die('order id not correct: ' + $orderId);
@@ -295,7 +295,7 @@ class OrdersController extends AdminAppController
             )
         ));
         if (! empty($shopOrderCustomer)) {
-            $this->Session->write('Auth.shopOrderCustomer', $shopOrderCustomer);
+            $this->request->session()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
             $this->Flash->error('Es wurde kein Mitglied mit der Id <b>' . $customerId . '</b> gefunden.');
         }

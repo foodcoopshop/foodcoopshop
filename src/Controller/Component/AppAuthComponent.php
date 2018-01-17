@@ -4,6 +4,7 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * AppAuthComponent
@@ -81,16 +82,15 @@ class AppAuthComponent extends AuthComponent
             return;
         }
 
-        App::uses('Manufacturer', 'Model');
-        $mm = new Manufacturer();
-
-        $mm->recursive = 2; // for Customer.AddressCustomer
-        $this->manufacturer = $mm->find('first', [
+        /*
+        $mm = TableRegistry::get('Manufacturers');
+        $this->manufacturer = $mm->find('all', [
             'conditions' => [
-                'Address.email' => $this->user('email'),
-                'Address.id_manufacturer > ' . APP_OFF
+                'Addresses.email' => $this->user('email'),
+                'Addresses.id_manufacturer > ' . APP_OFF
             ]
-        ]);
+        ])->first();
+        */
     }
 
     public function isSuperadmin()
