@@ -107,7 +107,7 @@ class Page extends AppModel
 
         $preparedPages = [];
         foreach ($pages as $page) {
-            $preparedPages[$page['Page']['id_page']] = $page['Page']['title'] . ' - ' . Configure::read('htmlHelper')->getMenuType($page['Page']['menu_type']);
+            $preparedPages[$page['Page']['id_page']] = $page['Page']['title'] . ' - ' . Configure::read('AppConfig.htmlHelper')->getMenuType($page['Page']['menu_type']);
         }
         return $preparedPages;
     }

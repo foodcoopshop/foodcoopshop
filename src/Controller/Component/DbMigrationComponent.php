@@ -1,6 +1,7 @@
 <?php
 
-App::uses('Component', 'Controller');
+use Cake\Controller\Component;
+
 App::uses('DbMigration', 'Utility');
 
 /**

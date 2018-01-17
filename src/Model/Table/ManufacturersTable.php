@@ -330,7 +330,7 @@ class Manufacturer extends AppModel
             if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             }
-            $holidayInfo = Configure::read('htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+            $holidayInfo = Configure::read('AppConfig.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
             if ($holidayInfo != '') {
                 $holidayInfo = 'Lieferpause ' . $holidayInfo;
                 if ($manufacturer[0]['IsHolidayActive']) {
@@ -347,7 +347,7 @@ class Manufacturer extends AppModel
             }
             $manufacturersForMenu[] = [
                 'name' => $manufacturerName,
-                'slug' => Configure::read('slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
+                'slug' => Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
             ];
         }
         return $manufacturersForMenu;
@@ -457,14 +457,14 @@ class Manufacturer extends AppModel
     {
         switch ($order) {
             case 'product':
-                $orderClause = 'od.product_name ASC, t.rate ASC, ' . Configure::read('htmlHelper')->getCustomerNameForSql() . ' ASC';
+                $orderClause = 'od.product_name ASC, t.rate ASC, ' . Configure::read('AppConfig.htmlHelper')->getCustomerNameForSql() . ' ASC';
                 break;
             case 'customer':
-                $orderClause = Configure::read('htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
+                $orderClause = Configure::read('AppConfig.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
 
-        $customerNameAsSql = Configure::read('htmlHelper')->getCustomerNameForSql();
+        $customerNameAsSql = Configure::read('AppConfig.htmlHelper')->getCustomerNameForSql();
 
         $sql = "SELECT
         m.id_manufacturer HerstellerID,
@@ -502,8 +502,8 @@ class Manufacturer extends AppModel
 
         $params = [
             'manufacturerId' => $manufacturerId,
-            'dateFrom' => "'" . Configure::read('timeHelper')->formatToDbFormatDate($from) . "'",
-            'dateTo' => "'" . Configure::read('timeHelper')->formatToDbFormatDate($to) . "'",
+            'dateFrom' => "'" . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($from) . "'",
+            'dateTo' => "'" . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($to) . "'",
             'orderStates' => join(',', $orderState)
         ];
         // strange behavior: if $this->getDataSource()->fetchAll is used, $results is empty

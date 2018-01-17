@@ -1,6 +1,9 @@
 <?php
 
-App::uses('TimeHelper', 'View/Helper');
+namespace App\View\Helper;
+
+use Cake\Core\Configure;
+use Cake\View\Helper\TimeHelper;
 
 /**
  * MyTimeHelper

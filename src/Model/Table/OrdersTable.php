@@ -54,7 +54,7 @@ class Order extends AppModel
         $conditions = [
             $this->name . '.id_customer' => $customerId
         ];
-        $conditions[] = $this->getOrderStateCondition(Configure::read('htmlHelper')->getOrderStateIdsAsCsv());
+        $conditions[] = $this->getOrderStateCondition(Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv());
         $orderCount = $this->find('count', [
             'conditions' => $conditions
         ]);
@@ -101,10 +101,10 @@ class Order extends AppModel
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         $group = [];
@@ -142,7 +142,7 @@ class Order extends AppModel
 
         $orderParams = [
             'conditions' => $conditions,
-            'order' => Configure::read('htmlHelper')->getCustomerOrderBy(),
+            'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy(),
             'fields' => $fields,
             'group' => $group,
             'contain' => $contain

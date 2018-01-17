@@ -115,7 +115,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
         $this->loginAsCustomer();
         $this->changeManufacturerHolidayMode($this->manufacturerId, $dateFrom, $dateTo);
-        $this->browser->get(Configure::read('slugHelper')->getManufacturerDetail($this->manufacturerId, ''));
+        $this->browser->get(Configure::read('AppConfig.slugHelper')->getManufacturerDetail($this->manufacturerId, ''));
 
         if ($expectedStringIsVisible) {
             $this->assertRegExpWithUnquotedString($expectedString, $this->browser->getContent());

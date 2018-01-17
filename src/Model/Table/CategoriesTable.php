@@ -182,7 +182,7 @@ class Category extends AppModel
 
         $tmpMenuItem = [
             'name' => $item['Category']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
-            'slug' => Configure::read('slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['Category']['name'])
+            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['Category']['name'])
         ];
         if (! empty($item['children'])) {
             foreach ($item['children'] as $index => $child) {

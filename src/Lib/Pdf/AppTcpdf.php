@@ -92,16 +92,16 @@ class AppTcpdf extends TCPDF
 
                 if (in_array('Preis exkl.', $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
+                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
                 }
 
                 if (in_array('MWSt.', $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
+                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
                 }
 
                 $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
+                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
 
                 $indexForWidth ++;
                 $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . $result[0]['Bestelldatum'] . '</td>';
@@ -158,7 +158,7 @@ class AppTcpdf extends TCPDF
 
         if (in_array('Preis exkl.', $headers)) {
             $colspan --;
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceExclSum) . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceExclSum) . '</td>';
             $indexForWidth ++;
         }
 
@@ -166,13 +166,13 @@ class AppTcpdf extends TCPDF
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
-                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)';
+                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)';
             }
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;
         }
 
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('htmlHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceInclSum) . '</td>';
         $indexForWidth ++;
 
         if ($colspan > 0) {
@@ -258,7 +258,7 @@ class AppTcpdf extends TCPDF
         $this->setFontSize(10);
 
         $convertedHeaderRight = '<br />'.Configure::read('AppConfig.db_config_FCS_APP_NAME').'<br />'.Configure::read('AppConfig.db_config_FCS_APP_ADDRESS').'<br />'.Configure::read('AppConfig.db_config_FCS_APP_EMAIL');
-        $convertedHeaderRight = Configure::read('htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
+        $convertedHeaderRight = Configure::read('AppConfig.htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
 
         // add additional line break on top if short address
         $lineCount = substr_count($convertedHeaderRight, "\n");

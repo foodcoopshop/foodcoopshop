@@ -73,7 +73,7 @@ echo '<th>' . $this->Paginator->sort('Customer.id_default_group', 'Gruppe') . '<
 echo '<th>' . $this->Paginator->sort('Customer.email', 'E-Mail') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customer.active', 'Status') . '</th>';
 echo '<th>Bestellungen</th>';
-if (Configure::read('htmlHelper')->paymentIsCashless()) {
+if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
     echo '<th>Guthaben</th>';
 }
 if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
@@ -109,7 +109,7 @@ foreach ($customers as $customer) {
         $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer['order_count'] . 'x bestellt."></i> ' . $customerName;
     }
 
-    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customer']['id_customer'] . '/sort:Order.date_add/direction:desc/', array(
+    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customer']['id_customer'] . '/sort:Order.date_add/direction:desc/', array(
         'title' => 'Zu allen Bestellungen von ' . $customer['Customer']['name'],
         'escape' => false
     )) . '</span>';

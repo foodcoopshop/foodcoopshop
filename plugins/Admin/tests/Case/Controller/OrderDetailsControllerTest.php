@@ -118,7 +118,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('AppConfig.htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -133,7 +133,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('AppConfig.htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array(Configure::read('test.loginEmailVegetableManufacturer'));
@@ -151,7 +151,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('AppConfig.htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -169,7 +169,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('AppConfig.htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -187,7 +187,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder['OrderDetails'][0]['id_order_detail'], $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('AppConfig.htmlHelper')->formatAsDecimal($changedOrder['OrderDetails'][0]['total_price_tax_incl']), 'order detail price was not changed properly');
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -303,7 +303,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId, 1);
         $this->addProductToCart($this->productId, 1);
         $this->finishCart();
-        $orderId = Configure::read('htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->Order->recursive = 2;
         $order = $this->Order->find('first', array(

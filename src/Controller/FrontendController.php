@@ -1,6 +1,11 @@
 <?php
 
-App::uses('AppController', 'Controller');
+namespace App\Controller;
+
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 
 /**
  * FrontendController
@@ -21,16 +26,16 @@ class FrontendController extends AppController
 {
 
     /**
-     * @param CakeRequest $request
-     * @param CakeResponse $response
+     * @param ServerRequest $request
+     * @param Response $response
      * @return
      */
-    public function __construct($request = null, $response = null)
+    public function __construct(ServerRequest $request = null, Response $response = null, $name = null, $eventManager = null, $components = null)
     {
-        $defaultUrl = Configure::read('slugHelper')->getAllProducts();
+        $defaultUrl = Configure::read('AppConfig.slugHelper')->getAllProducts();
         $redirectUrl = ! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $defaultUrl;
         $this->components['AppAuth']['logoutRedirect'] = $redirectUrl;
-        return parent::__construct($request, $response);
+        return parent::__construct($request, $response, $name, $eventManager, $components);
     }
 
     public function isAuthorized($user)
@@ -85,7 +90,7 @@ class FrontendController extends AppController
     }
 
     // is not called on ajax actions!
-    public function beforeRender()
+    public function beforeRender(Event $event)
     {
 
         parent::beforeRender();
@@ -113,7 +118,7 @@ class FrontendController extends AppController
                 ]
             ]);
             array_unshift($categoriesForMenu, [
-                'slug' => Configure::read('slugHelper')->getAllProducts(),
+                'slug' => Configure::read('AppConfig.slugHelper')->getAllProducts(),
                 'name' => 'Alle Produkte <span class="additional-info"> (' . $allProductsCount . ')</span>',
                 'options' => [
                     'fa-icon' => 'fa-tags'
@@ -149,7 +154,7 @@ class FrontendController extends AppController
         $this->set('pagesForFooter', $pagesForFooter);
     }
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter();
 
@@ -169,7 +174,7 @@ class FrontendController extends AppController
             $this->AppAuth->login($this->Session->read('Auth.shopOrderCustomer')['Customer']);
         }
 
-        if ($this->AppAuth->loggedIn() && Configure::read('htmlHelper')->paymentIsCashless()) {
+        if ($this->AppAuth->loggedIn() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 

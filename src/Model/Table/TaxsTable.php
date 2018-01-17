@@ -52,7 +52,7 @@ class Tax extends AppModel
             0 => '0 %'
         ];
         foreach ($taxes as $tax) {
-            $preparedTaxes[$tax['Tax']['id_tax']] = Configure::read('htmlHelper')->formatAsPercent($tax['Tax']['rate']);
+            $preparedTaxes[$tax['Tax']['id_tax']] = Configure::read('AppConfig.htmlHelper')->formatAsPercent($tax['Tax']['rate']);
         }
         return $preparedTaxes;
     }

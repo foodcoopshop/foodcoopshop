@@ -37,7 +37,7 @@ if (! isset($newInvoiceNumber)) {
 
 $html .= '<td width="330">';
 $html .= '<h2>Rechnung Nr.: ' . $newInvoiceNumber . '</h2>';
-$html .= '<h3>Bestellungen vom ' . Configure::read('timeHelper')->getLastMonthNameAndYear() . '</h3>';
+$html .= '<h3>Bestellungen vom ' . Configure::read('AppConfig.timeHelper')->getLastMonthNameAndYear() . '</h3>';
 $html .= '<h3>Rechnungsdatum: ' . date('d.m.Y') . '</h3>';
 $html .= '</td>';
 $html .= '</tr></table>';

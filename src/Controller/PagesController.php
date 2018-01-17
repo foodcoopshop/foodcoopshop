@@ -1,6 +1,10 @@
 <?php
 
-App::uses('FrontendController', 'Controller');
+namespace App\Controller;
+
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+use Cake\Event\Event;
 
 /**
  * PagesController
@@ -20,7 +24,8 @@ App::uses('FrontendController', 'Controller');
 class PagesController extends FrontendController
 {
 
-    public function beforeFilter()
+    /*
+    public function beforeFilter(Event $event)
     {
 
         parent::beforeFilter();
@@ -40,10 +45,14 @@ class PagesController extends FrontendController
                 break;
         }
     }
+    */
 
     public function home()
     {
-
+        
+        pr('xxx');
+        exit;
+        
         /**
          * START: security keys check
          */
@@ -127,8 +136,8 @@ class PagesController extends FrontendController
             $page['children'][] = $child;
         }
 
-        $correctSlug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
-        if ($correctSlug != Configure::read('slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 

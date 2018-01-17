@@ -88,11 +88,11 @@ class CategoriesController extends AdminAppController
                 }
 
                 if ($this->request->data['Category']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->Category->id, $this->request->data['Category']['tmp_image'], Configure::read('htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
+                    $this->saveUploadedImage($this->Category->id, $this->request->data['Category']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
                 }
 
                 if ($this->request->data['Category']['delete_image']) {
-                    $this->deleteUploadedImage($this->Category->id, Configure::read('htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
+                    $this->deleteUploadedImage($this->Category->id, Configure::read('AppConfig.htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
                 }
 
                 if (isset($this->request->data['Category']['delete_category']) && $this->request->data['Category']['delete_category']) {

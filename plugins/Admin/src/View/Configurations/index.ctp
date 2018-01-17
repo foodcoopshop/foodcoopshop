@@ -53,7 +53,7 @@ $this->element('addScript', array(
                 continue;
             }
 
-            if (! Configure::read('htmlHelper')->paymentIsCashless() && in_array($configuration['Configuration']['name'], array(
+            if (! Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && in_array($configuration['Configuration']['name'], array(
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE'
             ))) {

@@ -29,10 +29,10 @@ class ContentBehavior extends ModelBehavior
     public function saveDateFields(Model $model)
     {
         if ((is_null($model->id) || empty($model->id)) && $model->hasField('date_add')) {
-            $model->data[$model->name]['date_add'] = Configure::read('timeHelper')->getCurrentDateForDatabase();
+            $model->data[$model->name]['date_add'] = Configure::read('AppConfig.timeHelper')->getCurrentDateForDatabase();
         }
         if ($model->hasField('date_upd')) {
-            $model->data[$model->name]['date_upd'] = Configure::read('timeHelper')->getCurrentDateForDatabase();
+            $model->data[$model->name]['date_upd'] = Configure::read('AppConfig.timeHelper')->getCurrentDateForDatabase();
         }
     }
 
@@ -44,6 +44,6 @@ class ContentBehavior extends ModelBehavior
      */
     public function updateDateUpd(Model $model)
     {
-        $model->saveField('date_upd', Configure::read('timeHelper')->getCurrentDateForDatabase());
+        $model->saveField('date_upd', Configure::read('AppConfig.timeHelper')->getCurrentDateForDatabase());
     }
 }

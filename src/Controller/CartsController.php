@@ -20,7 +20,7 @@ App::uses('FrontendController', 'Controller');
 class CartsController extends FrontendController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
 
         parent::beforeFilter();
@@ -168,7 +168,7 @@ class CartsController extends FrontendController
 
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
             $this->Flash->error('Dein Warenkorb war leer.');
-            $this->redirect(Configure::read('slugHelper')->getCartDetail());
+            $this->redirect(Configure::read('AppConfig.slugHelper')->getCartDetail());
         }
 
         $cartErrors = [];
@@ -311,7 +311,7 @@ class CartsController extends FrontendController
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
                 $this->log($message);
-                $this->redirect(Configure::read('slugHelper')->getCartFinish());
+                $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinish());
             }
 
             $orderId = $order['Order']['id_order'];
@@ -335,7 +335,7 @@ class CartsController extends FrontendController
                 $message = 'Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
                 $this->log($message);
-                $this->redirect(Configure::read('slugHelper')->getCartFinish());
+                $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinish());
             }
 
             $orderDetailTax2save = [];
@@ -381,7 +381,7 @@ class CartsController extends FrontendController
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->loadModel('ActionLog');
-            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
+            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
             // START send confirmation email to customer
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
@@ -413,7 +413,7 @@ class CartsController extends FrontendController
             // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
 
-            $this->redirect(Configure::read('slugHelper')->getCartFinished($orderId));
+            $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinished($orderId));
         }
 
         $this->action = 'detail';

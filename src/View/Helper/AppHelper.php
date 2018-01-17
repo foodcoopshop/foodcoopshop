@@ -1,6 +1,6 @@
 <?php
 
-App::uses('Helper', 'View');
+use Cake\View\Helper;
 
 /**
  * MenuHelper

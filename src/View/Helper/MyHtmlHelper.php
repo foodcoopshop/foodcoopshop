@@ -1,5 +1,10 @@
 <?php
-App::uses('HtmlHelper', 'View/Helper');
+
+namespace App\View\Helper;
+
+use Cake\Core\Configure;
+use Cake\View\View;
+use Cake\View\Helper\HtmlHelper;
 
 /**
  * MyHtmlHelper
@@ -35,28 +40,28 @@ class MyHtmlHelper extends HtmlHelper
         $result = '';
 
         // both from and to date not set
-        if (Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+        if (Configure::read('AppConfig.timeHelper')->isDatabaseDateNotSet($dateTo) && Configure::read('AppConfig.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             return $result;
         }
 
         // holiday over?
-        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo) && $dateTo < date('Y-m-d')) {
+        if (!Configure::read('AppConfig.timeHelper')->isDatabaseDateNotSet($dateTo) && $dateTo < date('Y-m-d')) {
             return $result;
         }
 
         if ($long) {
             $result .= 'Der Hersteller <b>' . $name . '</b> hat ';
         }
-        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+        if (!Configure::read('AppConfig.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
                 $result .= 'seit';
             } else {
                 $result .= 'von';
             }
-            $result .= ' ' . Configure::read('timeHelper')->formatToDateShort($dateFrom);
+            $result .= ' ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($dateFrom);
         }
-        if (!Configure::read('timeHelper')->isDatabaseDateNotSet($dateTo)) {
-            $result .= ' bis ' . Configure::read('timeHelper')->formatToDateShort($dateTo);
+        if (!Configure::read('AppConfig.timeHelper')->isDatabaseDateNotSet($dateTo)) {
+            $result .= ' bis ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($dateTo);
         }
         if ($long && $result != '') {
             $result .= ' Lieferpause.';
@@ -312,7 +317,7 @@ class MyHtmlHelper extends HtmlHelper
         $preparedText = [];
         foreach ($explodedText as $t) {
             $explodedDate = explode('-', $t);
-            $preparedText[] = Configure::read('timeHelper')->getMonthName($explodedDate[1]) . ' ' . $explodedDate[0];
+            $preparedText[] = Configure::read('AppConfig.timeHelper')->getMonthName($explodedDate[1]) . ' ' . $explodedDate[0];
         }
         return implode(', ', $preparedText);
     }
@@ -543,7 +548,8 @@ class MyHtmlHelper extends HtmlHelper
         return join(',', self::getOrderStateIds());
     }
 
-    public function __construct(View $View, $settings = [])
+    /*
+    public function __construct(View $View, array $config = [])
     {
 
         // wrap js block with jquery document ready
@@ -555,6 +561,7 @@ class MyHtmlHelper extends HtmlHelper
               //]]>
           </script>";
 
-        parent::__construct($View, $settings);
+        parent::__construct($View, $config);
     }
+    */
 }

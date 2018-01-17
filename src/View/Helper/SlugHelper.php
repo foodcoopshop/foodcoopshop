@@ -1,6 +1,10 @@
 <?php
 
-App::uses('StringComponent', 'Controller/Component');
+namespace App\View\Helper;
+
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+use Cake\View\Helper;
 
 /**
  * SlugHelper

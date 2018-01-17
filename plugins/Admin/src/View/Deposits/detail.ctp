@@ -30,7 +30,7 @@ $this->element('addScript', array(
 
 <?php
 
-echo '<br /><p>Für '.Configure::read('timeHelper')->getMonthName($month) . ' ' . $year.'</p>';
+echo '<br /><p>Für '.Configure::read('AppConfig.timeHelper')->getMonthName($month) . ' ' . $year.'</p>';
 
 echo '<table class="list no-clone-last-row">';
 echo '<tr class="sort">';

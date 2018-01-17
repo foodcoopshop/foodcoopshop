@@ -1,6 +1,6 @@
 <?php
 
-App::uses('AuthComponent', 'Controller/Component');
+use Cake\Controller\Component\AuthComponent;
 
 /**
  * AppAuthComponent

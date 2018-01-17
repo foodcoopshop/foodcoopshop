@@ -20,7 +20,7 @@ App::uses('FrontendController', 'Controller');
 class ProductsController extends FrontendController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter();
 
@@ -61,8 +61,8 @@ class ProductsController extends FrontendController
 
         $this->set('product', $product[0]);
 
-        $correctSlug = Configure::read('slugHelper')->getProductDetail($productId, $product[0]['ProductLang']['name']);
-        if ($correctSlug != Configure::read('slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['ProductLang']['name']);
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 

@@ -28,7 +28,7 @@ class AdminAppController extends AppController
         return $this->AppAuth->loggedIn();
     }
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter();
         $this->loadModel(Inflector::singularize($this->name)); // force cake to load corresponding model in main app folder

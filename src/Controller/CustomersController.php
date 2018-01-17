@@ -20,7 +20,7 @@ App::uses('FrontendController', 'Controller');
 class CustomersController extends FrontendController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter();
         $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
@@ -161,21 +161,21 @@ class CustomersController extends FrontendController
         $this->Customer->id = $customer['Customer']['id_customer'];
         $this->Customer->save($customer2save);
 
-        $this->redirect(Configure::read('slugHelper')->getLogin());
+        $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
     }
 
     public function login()
     {
         $this->set('title_for_layout', 'Anmelden');
 
-        if (! $this->request->is('post') && $this->here == Configure::read('slugHelper')->getRegistration()) {
-            $this->redirect(Configure::read('slugHelper')->getLogin());
+        if (! $this->request->is('post') && $this->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
+            $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
         }
 
         /**
          * login start
          */
-        if ($this->here == Configure::read('slugHelper')->getLogin()) {
+        if ($this->here == Configure::read('AppConfig.slugHelper')->getLogin()) {
             if ($this->AppAuth->loggedIn()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
             }
@@ -200,17 +200,17 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        if ($this->here == Configure::read('slugHelper')->getRegistration()) {
+        if ($this->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
             if ($this->AppAuth->loggedIn()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
-                $this->redirect(Configure::read('slugHelper')->getLogin());
+                $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
             }
 
             // prevent spam
             // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
             if ($this->request->data['antiSpam'] == 'lalala' || $this->request->data['antiSpam'] < 3) {
                 $this->Flash->error('S-p-a-m-!');
-                $this->redirect(Configure::read('slugHelper')->getLogin());
+                $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
             }
 
             if (! empty($this->request->data)) {

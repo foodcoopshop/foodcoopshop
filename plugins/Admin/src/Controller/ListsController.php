@@ -34,7 +34,7 @@ class ListsController extends AdminAppController
         $path = realpath(Configure::read('AppConfig.folder.order_lists'));
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 
-        $dateFrom = date('d.m.Y', Configure::read('timeHelper')->getDeliveryDay(Configure::read('timeHelper')->getCurrentDay()));
+        $dateFrom = date('d.m.Y', Configure::read('AppConfig.timeHelper')->getDeliveryDay(Configure::read('AppConfig.timeHelper')->getCurrentDay()));
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
         }

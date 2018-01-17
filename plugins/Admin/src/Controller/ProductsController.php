@@ -80,7 +80,7 @@ class ProductsController extends AdminAppController
         }
     }
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         $this->loadModel('ActionLog');
         parent::beforeFilter();
@@ -139,8 +139,8 @@ class ProductsController extends AdminAppController
         ), false);
 
         // delete physical files
-        $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($product['Image']['id_image']);
-        $thumbsPath = Configure::read('htmlHelper')->getProductThumbsPath($imageIdAsPath);
+        $imageIdAsPath = Configure::read('AppConfig.htmlHelper')->getProductImageIdAsPath($product['Image']['id_image']);
+        $thumbsPath = Configure::read('AppConfig.htmlHelper')->getProductThumbsPath($imageIdAsPath);
         foreach (Configure::read('AppConfig.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $product['Image']['id_image'] . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
@@ -180,8 +180,8 @@ class ProductsController extends AdminAppController
         }
 
         // not (yet) implemented for attributes, only for productIds!
-        $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($imageId);
-        $thumbsPath = Configure::read('htmlHelper')->getProductThumbsPath($imageIdAsPath);
+        $imageIdAsPath = Configure::read('AppConfig.htmlHelper')->getProductImageIdAsPath($imageId);
+        $thumbsPath = Configure::read('AppConfig.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
         // recursively create path
         App::uses('Folder', 'Utility');
@@ -357,13 +357,13 @@ class ProductsController extends AdminAppController
             ));
 
             if (! empty($tax)) {
-                $taxRate = Configure::read('htmlHelper')->formatTaxRate($tax['Tax']['rate']);
+                $taxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($tax['Tax']['rate']);
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
             if (! empty($oldProduct['Tax'])) {
-                $oldTaxRate = Configure::read('htmlHelper')->formatTaxRate($oldProduct['Tax']['rate']);
+                $oldTaxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($oldProduct['Tax']['rate']);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
@@ -534,7 +534,7 @@ class ProductsController extends AdminAppController
 
         $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . Configure::read('htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('htmlHelper')->formatAsEuro($price) . ' geändert.');
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($price) . ' geändert.');
         $this->Session->write('highlightedRowId', $productId);
 
         $this->set('data', array(
@@ -588,13 +588,13 @@ class ProductsController extends AdminAppController
 
         $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
         if (isset($depositEntity['deposit'])) {
-            $logString .= Configure::read('htmlHelper')->formatAsEuro($depositEntity['deposit']);
+            $logString .= Configure::read('AppConfig.htmlHelper')->formatAsEuro($depositEntity['deposit']);
         } else {
-            $logString .= Configure::read('htmlHelper')->formatAsEuro(0);
+            $logString .= Configure::read('AppConfig.htmlHelper')->formatAsEuro(0);
         }
 
         $deposit = $this->Product->getPriceAsFloat($this->params['data']['deposit']);
-        $logString .= ' auf ' . Configure::read('htmlHelper')->formatAsEuro($deposit) . ' geändert.';
+        $logString .= ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 

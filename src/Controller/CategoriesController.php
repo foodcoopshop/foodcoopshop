@@ -20,7 +20,7 @@ App::uses('FrontendController', 'Controller');
 class CategoriesController extends FrontendController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter();
         if (! (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn())) {
@@ -86,8 +86,8 @@ class CategoriesController extends FrontendController
             throw new MissingActionException('category not found');
         }
 
-        $correctSlug = Configure::read('slugHelper')->getCategoryDetail($categoryId, $category['Category']['name']);
-        if ($correctSlug != Configure::read('slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, $category['Category']['name']);
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 

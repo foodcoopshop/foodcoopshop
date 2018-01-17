@@ -1,8 +1,9 @@
 <?php
 
-App::uses('Controller', 'Controller');
-App::uses('AppEmail', 'Lib');
-App::uses('AppPasswordHasher', 'Controller/Component/Auth');
+namespace App\Controller;
+
+use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * CartComponent
@@ -22,33 +23,42 @@ App::uses('AppPasswordHasher', 'Controller/Component/Auth');
 class AppController extends Controller
 {
 
-    public $components = [
-        'RequestHandler', // to parse xml extensions
-        'Session',
-        'Flash' => [
+    
+    /**
+     * Initialization hook method.
+     *
+     * Use this method to add common initialization code like loading components.
+     *
+     * e.g. `$this->loadComponent('Security');`
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        
+        parent::initialize();
+        
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Session');
+        $this->loadComponent('AppFlash', [
             'clear' => true
-        ],
-        'String',
-        'Cookie',
-        'Paginator' => [
-            'maxLimit' => 100000, // eg for retrieving order details for 1 year
-            'limit' => 100000
-        ],
-        'AppAuth' => [
-            'loginAction' => [
-                'plugin' => null,
-                'controller' => 'customers',
-                'action' => 'login'
-            ],
-            'unauthorizedRedirect' => false,
+        ]);
+        $this->loadComponent('String');
+        $this->loadComponent('Cookie');
+        $this->loadComponent('Cart');
+        $this->loadComponent('DbMigration');
+        
+        $this->loadComponent('AppAuth', [
+            'logoutRedirect' => '/',
             'authError' => 'Zugriff verweigert, bitte melde dich an.',
-            // non acl-authorization: uses function isAuthorized in Controller
+            'loginError' => 'Zugriff verweigert, bitte melde dich an.',
             'authorize' => [
                 'Controller'
             ],
+            'unauthorizedRedirect' => false,
             'authenticate' => [
                 'Form' => [
-                    'userModel' => 'Customer',
+                    'userModel' => 'Customers',
                     'fields' => [
                         'username' => 'email',
                         'password' => 'passwd'
@@ -57,14 +67,20 @@ class AppController extends Controller
                         'className' => 'App'
                     ],
                     'scope' => [
-                        'Customer.active' => true
-                    ]
+                        'Customers.active' => true
+                    ],
+                    'finder' => 'auth' // UsersTable::findAuth
                 ]
-            ]
-        ],
-        'Cart',
-        'DbMigration',
-    ];
+            ],
+            'storage' => 'Session'
+        ]);
+        
+        $this->paginate = [
+            'limit' => 100000,
+            'maxLimit' => 100000
+        ];
+        
+    }
 
     public $helpers = [
         'Html' => [
@@ -81,7 +97,7 @@ class AppController extends Controller
         'Text'
     ];
 
-    public function beforeRender()
+    public function beforeRender(Event $event)
     {
         parent::beforeRender();
         $this->set('appAuth', $this->AppAuth);
@@ -93,7 +109,7 @@ class AppController extends Controller
         }
     }
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
 
         $isMobile = false;

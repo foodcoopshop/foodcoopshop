@@ -1,6 +1,7 @@
 <?php
+namespace App\Controller\Component;
 
-App::uses('Component', 'Controller');
+use Cake\Controller\Component;
 
 /**
  * StringComponent

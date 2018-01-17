@@ -20,7 +20,7 @@ App::uses('Customer', 'Model');
 class ActionLogsController extends AdminAppController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
         $this->loadModel('ActionLog');
         $this->loadModel('Customer');
@@ -44,8 +44,8 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         $customerId = '';
         if (! empty($this->params['named']['customerId'])) {

@@ -57,7 +57,7 @@ class ProductAttributeCombination extends AppModel
         foreach ($combinations as $combination) {
             $preparedProduct = $combination['ProductAttribute']['Product'];
 
-            $preparedProduct['link'] = Configure::read('htmlHelper')->link($preparedProduct['ProductLang']['name'] . ' - ' . $preparedProduct['Manufacturer']['name'], Configure::read('slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLang']['name']));
+            $preparedProduct['link'] = Configure::read('AppConfig.htmlHelper')->link($preparedProduct['ProductLang']['name'] . ' - ' . $preparedProduct['Manufacturer']['name'], Configure::read('AppConfig.slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLang']['name']));
 
             if ($combination['ProductAttribute']['Product']['active'] == 1) {
                 $return['online'][] = $preparedProduct;

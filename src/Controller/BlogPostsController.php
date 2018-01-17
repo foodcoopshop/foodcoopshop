@@ -20,7 +20,7 @@ App::uses('FrontendController', 'Controller');
 class BlogPostsController extends FrontendController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
 
         parent::beforeFilter();
@@ -60,8 +60,8 @@ class BlogPostsController extends FrontendController
             throw new MissingActionException('blogPost not found');
         }
 
-        $correctSlug = Configure::read('slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPost']['title']);
-        if ($correctSlug != Configure::read('slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPost']['title']);
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 

@@ -74,13 +74,13 @@ class SlidersController extends AdminAppController
                 }
 
                 if ($this->request->data['Slider']['tmp_image'] != '') {
-                    $filename = $this->saveUploadedImage($this->Slider->id, $this->request->data['Slider']['tmp_image'], Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
+                    $filename = $this->saveUploadedImage($this->Slider->id, $this->request->data['Slider']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
                     $this->Slider->saveField('image', $filename, false);
                 }
 
                 if (isset($this->request->data['Slider']['delete_slider']) && $this->request->data['Slider']['delete_slider']) {
                     $this->Slider->saveField('active', APP_DEL, false);
-                    $this->deleteUploadedImage($this->Slider->id, Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
+                    $this->deleteUploadedImage($this->Slider->id, Configure::read('AppConfig.htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
                     $message = 'Der Slideshow-Bild "' . $this->request->data['Slider']['id_slider'] . '" wurde erfolgreich gelöscht.';
                     $this->ActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gelöscht.');

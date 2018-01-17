@@ -125,11 +125,11 @@ class BlogPostsController extends AdminAppController
                 }
 
                 if ($this->request->data['BlogPost']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->BlogPost->id, $this->request->data['BlogPost']['tmp_image'], Configure::read('htmlHelper')->getBlogPostThumbsPath(), Configure::read('AppConfig.blogPostImageSizes'));
+                    $this->saveUploadedImage($this->BlogPost->id, $this->request->data['BlogPost']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getBlogPostThumbsPath(), Configure::read('AppConfig.blogPostImageSizes'));
                 }
 
                 if ($this->request->data['BlogPost']['delete_image']) {
-                    $this->deleteUploadedImage($this->BlogPost->id, Configure::read('htmlHelper')->getBlogPostThumbsPath(), Configure::read('AppConfig.blogPostImageSizes'));
+                    $this->deleteUploadedImage($this->BlogPost->id, Configure::read('AppConfig.htmlHelper')->getBlogPostThumbsPath(), Configure::read('AppConfig.blogPostImageSizes'));
                 }
 
                 if (isset($this->request->data['BlogPost']['delete_blog_post']) && $this->request->data['BlogPost']['delete_blog_post']) {

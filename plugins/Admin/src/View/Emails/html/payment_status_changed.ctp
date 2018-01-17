@@ -22,7 +22,7 @@
         <td>
 
             <p>
-                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('timeHelper')->formatToDateNTimeShort($request['Payment']['date_add']); ?></b> über <b>€ <?php echo Configure::read('htmlHelper')->formatAsDecimal($request['Payment']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
+                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('AppConfig.timeHelper')->formatToDateNTimeShort($request['Payment']['date_add']); ?></b> über <b>€ <?php echo Configure::read('AppConfig.htmlHelper')->formatAsDecimal($request['Payment']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
                 
                 <?php if ($request['Payment']['approval'] == -1) { ?>
                     Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto.

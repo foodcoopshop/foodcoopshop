@@ -88,17 +88,17 @@ class DepositsController extends AdminAppController
         $this->loadModel('OrderDetail');
         $this->loadModel('Payment');
 
-        $orderState = Configure::read('htmlHelper')->getOrderStateIdsAsCsv();
+        $orderState = Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv();
         $this->set('orderState', $orderState);
 
         $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
         $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         // TODO add year 2020 on 31.12.2019
-        $monthsAndYear = Configure::read('timeHelper')->getAllMonthsForYear(2019);
-        $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2018), $monthsAndYear);
-        $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2017), $monthsAndYear);
-        $monthsAndYear = array_merge(Configure::read('timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);
+        $monthsAndYear = Configure::read('AppConfig.timeHelper')->getAllMonthsForYear(2019);
+        $monthsAndYear = array_merge(Configure::read('AppConfig.timeHelper')->getAllMonthsForYear(2018), $monthsAndYear);
+        $monthsAndYear = array_merge(Configure::read('AppConfig.timeHelper')->getAllMonthsForYear(2017), $monthsAndYear);
+        $monthsAndYear = array_merge(Configure::read('AppConfig.timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);
         $monthsAndYear = array_reverse($monthsAndYear);
 
         $deposits = array();
@@ -135,8 +135,8 @@ class DepositsController extends AdminAppController
                 $monthAndYearExploded = explode('-', $monthAndYear);
                 $year  = $monthAndYearExploded[0];
                 $month = $monthAndYearExploded[1];
-                $deposits[$monthAndYear]['dateFrom'] = '01.' . Configure::read('htmlHelper')->addLeadingZero($month) . '.' . $year;
-                $deposits[$monthAndYear]['dateTo'] = Configure::read('timeHelper')->getLastDayOfGivenMonth($monthAndYear) . '.' . Configure::read('htmlHelper')->addLeadingZero($month) . '.' . $year;
+                $deposits[$monthAndYear]['dateFrom'] = '01.' . Configure::read('AppConfig.htmlHelper')->addLeadingZero($month) . '.' . $year;
+                $deposits[$monthAndYear]['dateTo'] = Configure::read('AppConfig.timeHelper')->getLastDayOfGivenMonth($monthAndYear) . '.' . Configure::read('AppConfig.htmlHelper')->addLeadingZero($month) . '.' . $year;
             }
         }
 

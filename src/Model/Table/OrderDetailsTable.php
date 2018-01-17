@@ -106,8 +106,8 @@ class OrderDetail extends AppModel
         $params = [
             'manufacturerId' => $manufacturerId,
             'orderStateOpen' => ORDER_STATE_OPEN,
-            'dateFrom' => Configure::read('timeHelper')->formatToDbFormatDate($dateFrom),
-            'dateTo' => Configure::read('timeHelper')->formatToDbFormatDate($dateTo),
+            'dateFrom' => Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom),
+            'dateTo' => Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo),
         ];
         $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
         if (isset($orderDetails[0])) {
@@ -122,10 +122,10 @@ class OrderDetail extends AppModel
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         if ($orderState != '') {

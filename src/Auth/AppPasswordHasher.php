@@ -1,6 +1,8 @@
 <?php
 
-App::uses('AbstractPasswordHasher', 'Controller/Component/Auth');
+use Cake\Core\Configure;
+
+use Cake\Auth\AbstractPasswordHasher;
 
 /**
  * AppPasswordHasher

@@ -20,7 +20,7 @@ App::uses('FrontendController', 'Controller');
 class ManufacturersController extends FrontendController
 {
 
-    public function beforeFilter()
+    public function beforeFilter(Event $event)
     {
 
         parent::beforeFilter();
@@ -93,8 +93,8 @@ class ManufacturersController extends FrontendController
             throw new MissingActionException('manufacturer not found or not active');
         }
 
-        $correctSlug = Configure::read('slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']);
-        if ($correctSlug != Configure::read('slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']);
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 

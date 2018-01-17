@@ -1,6 +1,7 @@
 <?php
 
-App::uses('Helper', 'View');
+use Cake\Core\Configure;
+use Cake\View\Helper;
 
 /**
  * MenuHelper
@@ -47,7 +48,7 @@ class MenuHelper extends Helper
                     if ($childPage['Page']['extern_url'] != '') {
                         $slug = $childPage['Page']['extern_url'];
                     } else {
-                        $slug = Configure::read('slugHelper')->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']);
+                        $slug = Configure::read('AppConfig.slugHelper')->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']);
                     }
                     $children[] = [
                         'name' => $childPage['Page']['title'],
@@ -58,7 +59,7 @@ class MenuHelper extends Helper
             if ($page['Page']['extern_url'] != '') {
                 $slug = $page['Page']['extern_url'];
             } else {
-                $slug = Configure::read('slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
+                $slug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
             }
             $menu[] = [
                 'name' => $page['Page']['title'],
@@ -150,7 +151,7 @@ class MenuHelper extends Helper
             }
         } else {
             if ($this->plugin == '') {
-                $menuElement = ['slug' => Configure::read('slugHelper')->getLogin(), 'name' => 'Anmelden'];
+                $menuElement = ['slug' => Configure::read('AppConfig.slugHelper')->getLogin(), 'name' => 'Anmelden'];
             }
         }
         return $menuElement;
@@ -158,8 +159,8 @@ class MenuHelper extends Helper
 
     public function getPaymentProductMenuElement()
     {
-        if (Configure::read('htmlHelper')->paymentIsCashless()) {
-            return ['slug' => Configure::read('slugHelper')->getMyCreditBalance(), 'name' => 'Guthaben', 'options' => ['fa-icon' => 'fa-fw fa-euro']];
+        if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
+            return ['slug' => Configure::read('AppConfig.slugHelper')->getMyCreditBalance(), 'name' => 'Guthaben', 'options' => ['fa-icon' => 'fa-fw fa-euro']];
         }
         return [];
     }
@@ -167,7 +168,7 @@ class MenuHelper extends Helper
     public function getPaymentMemberFeeMenuElement()
     {
         if (Configure::read('AppConfig.memberFeeEnabled')) {
-            return ['slug' => Configure::read('slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => ['fa-icon' => 'fa-fw fa-heart']];
+            return ['slug' => Configure::read('AppConfig.slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => ['fa-icon' => 'fa-fw fa-heart']];
         }
         return [];
     }

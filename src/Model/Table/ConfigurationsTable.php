@@ -69,7 +69,7 @@ class Configuration extends AppModel
                 $validationRules = $this->getNumberRangeConfigurationRule(50, 1000);
                 break;
             case 'FCS_SHOP_ORDER_DEFAULT_STATE':
-                $validationRules = $this->getEqualsToMultipleValuesRule(Configure::read('htmlHelper')->getVisibleOrderStates());
+                $validationRules = $this->getEqualsToMultipleValuesRule(Configure::read('AppConfig.htmlHelper')->getVisibleOrderStates());
                 break;
             case 'FCS_CUSTOMER_GROUP':
                 $validationRules = $this->getNumberRangeConfigurationRule(CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);

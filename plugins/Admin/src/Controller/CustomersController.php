@@ -37,7 +37,7 @@ class CustomersController extends AdminAppController
         $customerId = (int) $this->params['data']['customerId'];
         $groupId = (int) $this->params['data']['groupId'];
 
-        if (! in_array($groupId, array_keys(Configure::read('htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
+        if (! in_array($groupId, array_keys(Configure::read('AppConfig.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
             $this->log($message);
             die(json_encode(array(
@@ -65,7 +65,7 @@ class CustomersController extends AdminAppController
         $this->Customer->id = $customerId;
         $this->Customer->saveField('id_default_group', $groupId, false);
 
-        $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde von <b>' . Configure::read('htmlHelper')->getGroupName($oldCustomer['Customer']['id_default_group']) . '</b> auf <b>' . Configure::read('htmlHelper')->getGroupName($groupId) . '</b> geändert.';
+        $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde von <b>' . Configure::read('AppConfig.htmlHelper')->getGroupName($oldCustomer['Customer']['id_default_group']) . '</b> auf <b>' . Configure::read('AppConfig.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
         $this->Flash->success($messageString);
         $this->loadModel('ActionLog');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
@@ -393,7 +393,7 @@ class CustomersController extends AdminAppController
         $this->loadModel('Payment');
         $this->loadModel('Order');
         foreach ($customers as $customer) {
-            if (Configure::read('htmlHelper')->paymentIsCashless()) {
+            if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
                 $paymentProductSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'product');
                 $paymentPaybackSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'payback');
                 $paymentDepositSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'deposit');

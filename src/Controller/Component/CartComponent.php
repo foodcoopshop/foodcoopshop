@@ -14,6 +14,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Controller\Component;
+
 class CartComponent extends Component
 {
 

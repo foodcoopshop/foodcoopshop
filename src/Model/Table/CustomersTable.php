@@ -156,7 +156,7 @@ class Customer extends AppModel
             'name' => "TRIM(CONCAT(" . $virtualNameField . ")"
         ];
         $this->hasMany['ValidOrder']['conditions'] = [
-            'ValidOrder.current_state IN (' . Configure::read('htmlHelper')->getOrderStateIdsAsCsv() . ')'
+            'ValidOrder.current_state IN (' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . ')'
         ];
         $this->hasMany['ActiveOrders']['conditions'] = [
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
@@ -258,7 +258,7 @@ class Customer extends AppModel
                 'Customer.active',
                 'Customer.email'
             ],
-            'order' => Configure::read('htmlHelper')->getCustomerOrderBy()
+            'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy()
         ]);
 
         $offlineCustomers = [];

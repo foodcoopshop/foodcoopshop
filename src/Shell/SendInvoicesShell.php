@@ -33,8 +33,8 @@ class SendInvoicesShell extends AppShell
 
         $this->startTimeLogging();
 
-        $dateFrom = Configure::read('timeHelper')->getFirstDayOfLastMonth();
-        $dateTo = Configure::read('timeHelper')->getLastDayOfLastMonth();
+        $dateFrom = Configure::read('AppConfig.timeHelper')->getFirstDayOfLastMonth();
+        $dateTo = Configure::read('AppConfig.timeHelper')->getLastDayOfLastMonth();
 
         // $dateFrom = '01.02.2016';
         // $dateTo = '29.02.2016';
@@ -55,8 +55,8 @@ class SendInvoicesShell extends AppShell
         $this->Order->recursive = 2;
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
                 'Order.current_state IN (' . join(",", [
                     ORDER_STATE_OPEN,
                     ORDER_STATE_CASH,
@@ -94,7 +94,7 @@ class SendInvoicesShell extends AppShell
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
             if (isset($manufacturer['current_order_count']) && $sendInvoice) {
                 $productString = ($manufacturer['order_detail_quantity_sum'] == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
+                $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
@@ -111,7 +111,7 @@ class SendInvoicesShell extends AppShell
             $email->template('Admin.accounting_information_invoices_sent')
                 ->to($accountingEmail)
                 ->emailFormat('html')
-                ->subject('Rechnungen für ' . Configure::read('timeHelper')->getLastMonthNameAndYear() . ' wurden verschickt')
+                ->subject('Rechnungen für ' . Configure::read('AppConfig.timeHelper')->getLastMonthNameAndYear() . ' wurden verschickt')
                 ->viewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo
