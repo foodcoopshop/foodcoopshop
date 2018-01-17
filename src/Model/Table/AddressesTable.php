@@ -1,7 +1,9 @@
 <?php
+
+namespace App\Model\Table\AddressTable;
+use App\Model\Table\AppTable;
+
 /**
- * Address
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +16,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-abstract class Address extends AppModel
+
+abstract class AddressTable extends AppTable
 {
 
     public $useTable = 'address';

@@ -1,7 +1,9 @@
 <?php
+
+use App\Controller\Component\StringComponent;
+use App\Model\Table\AppTable;
+
 /**
- * ProductLang
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +16,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ProductLang extends AppModel
+class ProductLangsTable extends AppTable
 {
 
     public $useTable = 'product_lang';

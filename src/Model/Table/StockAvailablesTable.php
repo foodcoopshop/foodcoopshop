@@ -1,7 +1,8 @@
 <?php
+
+use App\Model\Table\AppTable;
+
 /**
- * StockAvailable
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +15,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class StockAvailable extends AppModel
+class StockAvailablesTable extends AppTable
 {
 
     public $useTable = 'stock_available';

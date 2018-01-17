@@ -1,6 +1,7 @@
 <?php
 
-App::uses('ConfigFileMissingException', 'Error/Exceptions');
+use App\Model\Table\AppTable;
+use Cake\Core\Configure;
 
 /**
  * Configuration
@@ -17,7 +18,7 @@ App::uses('ConfigFileMissingException', 'Error/Exceptions');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Configuration extends AppModel
+class ConfigurationsTable extends AppTable
 {
 
     public $useTable = 'configuration';

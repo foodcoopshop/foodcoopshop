@@ -1,7 +1,8 @@
 <?php
+
+use App\Model\Table\AppTable;
+
 /**
- * CartProduct
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +15,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CartProduct extends AppModel
+class CartProductsTable extends AppTable
 {
 
     public $primaryKey = 'id_cart_product';

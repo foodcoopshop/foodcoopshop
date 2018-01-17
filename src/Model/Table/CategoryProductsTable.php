@@ -1,7 +1,8 @@
 <?php
+
+use App\Model\Table\AppTable;
+
 /**
- * CategoryProduct
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +15,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CategoryProduct extends AppModel
+class CategoryProductsTable extends AppTable
 {
 
     public $useTable = 'category_product';

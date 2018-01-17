@@ -1,7 +1,9 @@
 <?php
+
+use App\Model\Table\AppTable;
+use Cake\Core\Configure;
+
 /**
- * Order
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +16,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Order extends AppModel
+class OrdersTable extends AppTable
 {
 
     public $primaryKey = 'id_order';

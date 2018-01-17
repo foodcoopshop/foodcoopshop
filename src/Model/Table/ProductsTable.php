@@ -1,10 +1,8 @@
 <?php
 
-App::uses('InvalidParameterException', 'Error/Exceptions');
+use App\Model\Table\AppTable;
 
 /**
- * Product
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -17,7 +15,7 @@ App::uses('InvalidParameterException', 'Error/Exceptions');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Product extends AppModel
+class ProductsTable extends AppTable
 {
 
     public $useTable = 'product';

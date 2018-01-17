@@ -1,9 +1,9 @@
 <?php
 
-App::uses('AppModel', 'Model');
+use App\Model\Table\AppTable;
+use Cake\Core\Configure;
 
 /**
- * Manufacturer
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,7 +17,8 @@ App::uses('AppModel', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Manufacturer extends AppModel
+
+class ManufacturersTable extends AppTable
 {
 
     public $useTable = 'manufacturer';

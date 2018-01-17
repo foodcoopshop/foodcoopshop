@@ -1,10 +1,8 @@
 <?php
 
-App::uses('Address', 'Model');
+use App\Model\Table\AddressTable\AddressTable;
 
 /**
- * AddressManufacturer
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -17,7 +15,7 @@ App::uses('Address', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AddressManufacturer extends Address
+class AddressManufacturer extends AddressTable
 {
 
     public $validate = [

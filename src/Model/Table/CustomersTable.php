@@ -1,10 +1,10 @@
 <?php
 
-App::uses('AppModel', 'Model');
+use App\Controller\Component\StringComponent;
+use App\Model\Table\AppTable;
+use Cake\Core\Configure;
 
 /**
- * Customer
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -17,7 +17,7 @@ App::uses('AppModel', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Customer extends AppModel
+class CustomersTable extends AppTable
 {
 
     public $useTable = 'customer';

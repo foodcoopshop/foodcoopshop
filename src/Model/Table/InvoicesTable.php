@@ -1,7 +1,8 @@
 <?php
+
+use App\Model\Table\AppTable;
+
 /**
- * Invoice
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,6 +15,6 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Invoice extends AppModel
+class InvoicesTable extends AppTable
 {
 }

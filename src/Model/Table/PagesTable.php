@@ -1,7 +1,9 @@
 <?php
+
+use App\Model\Table\AppTable;
+use Cake\Core\Configure;
+
 /**
- * Page
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +16,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Page extends AppModel
+class PagesTable extends AppTable
 {
 
     public $useTable = 'pages';

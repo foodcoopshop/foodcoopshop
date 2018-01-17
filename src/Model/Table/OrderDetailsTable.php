@@ -1,7 +1,8 @@
 <?php
+
+use App\Model\Table\AppTable;
+
 /**
- * OrderDetail
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -14,7 +15,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class OrderDetail extends AppModel
+class OrderDetailsTable extends AppTable
 {
 
     public $useTable = 'order_detail';

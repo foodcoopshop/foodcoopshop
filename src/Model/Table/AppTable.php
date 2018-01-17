@@ -1,10 +1,10 @@
 <?php
 
-App::uses('Model', 'Model');
+namespace App\Model\Table;
+
+use Cake\ORM\Table;
 
 /**
- * AppModel
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -17,7 +17,7 @@ App::uses('Model', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AppModel extends Model
+class AppTable extends Table
 {
 
     /**
@@ -31,10 +31,7 @@ class AppModel extends Model
 
         // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initSimpleBrowser()
         if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
-               // unit tests called via web browser
-               || $_SERVER['PHP_SELF'] == '/test.php'
-               // unit tests called via console
-               || (php_sapi_name() == 'cli' && $_SERVER['argv'][3] && $_SERVER['argv'][3] == 'test')) {
+            || (php_sapi_name() == 'cli' && $_SERVER['argv'][3] && $_SERVER['argv'][3] == 'test')) {
             $this->setDataSource('test');
         }
         parent::__construct($id, $table, $ds);

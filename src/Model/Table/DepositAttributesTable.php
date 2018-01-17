@@ -1,7 +1,8 @@
 <?php
+
+use App\Model\Table\AppTable;
+
 /**
- * DepositAttribute
- *
  * fake model for using associations with foreign keys that are not the id of the model
  *
  * FoodCoopShop - The open source software for your foodcoop
@@ -16,7 +17,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class DepositAttribute extends AppModel
+class DepositAttributesTable extends AppTable
 {
 
     public $useTable = 'deposits';
