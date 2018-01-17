@@ -58,7 +58,7 @@ before_script:
   #- sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
-  - ./Console/cake test app AllFoodCoopShopTests --stderr
+  - vendor/bin/phpunit --stderr
   #- sudo cat ./logs/error.log
   
 notifications:
