@@ -1,4 +1,11 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * ManufacturersController
  *
@@ -14,6 +21,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 class ManufacturersController extends AdminAppController
 {
 
@@ -141,7 +149,7 @@ class ManufacturersController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 if (is_null($manufacturerId)) {
                     // default value for new manufacturer
@@ -165,7 +173,7 @@ class ManufacturersController extends AdminAppController
 
                 // update or create customer record (for login)
                 // customer might also be missing for existing manufacturers
-                $this->loadModel('Customer');
+                $this->Customer = TableRegistry::get('Customers');
                 if (! empty($customer)) {
                     $this->Customer->id = $customer['Customer']['id_customer'];
                 } else {
@@ -241,7 +249,7 @@ class ManufacturersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturerId, 'manufacturer', $message);
 
         $this->redirect($this->referer());
@@ -283,9 +291,9 @@ class ManufacturersController extends AdminAppController
         ), $this->Paginator->settings);
         $manufacturers = $this->Paginator->paginate('Manufacturer');
 
-        $this->loadModel('Product');
-        $this->loadModel('Payment');
-        $this->loadModel('OrderDetail');
+        $this->Product = TableRegistry::get('Products');
+        $this->Payment = TableRegistry::get('Payments');
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
 
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
@@ -497,7 +505,7 @@ class ManufacturersController extends AdminAppController
         }
 
         if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->loadModel('Network.SyncDomain');
+            $this->Network.SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
@@ -628,7 +636,7 @@ class ManufacturersController extends AdminAppController
 
                 $this->Flash->success($message);
 
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
                 $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturerId, 'manufacturers', $message);
 
                 $this->redirect($this->data['referer']);
@@ -637,11 +645,11 @@ class ManufacturersController extends AdminAppController
             }
         }
 
-        $this->loadModel('Tax');
+        $this->Tax = TableRegistry::get('Taxs');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (!$this->AppAuth->isManufacturer()) {
-            $this->loadModel('Customer');
+            $this->Customer = TableRegistry::get('Customers');
             $this->set('customersForDropdown', $this->Customer->getForDropdown());
         }
     }

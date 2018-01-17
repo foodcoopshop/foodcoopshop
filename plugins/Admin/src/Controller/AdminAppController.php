@@ -1,6 +1,11 @@
 <?php
 
-App::uses('AppController', 'Controller');
+namespace Admin\Controller;
+
+use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\Utility\Inflector;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * AdminAppController
@@ -17,8 +22,6 @@ App::uses('AppController', 'Controller');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-use Intervention\Image\ImageManagerStatic as Image;
 
 class AdminAppController extends AppController
 {

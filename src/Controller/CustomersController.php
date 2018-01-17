@@ -1,5 +1,10 @@
 <?php
 
+use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 App::uses('FrontendController', 'Controller');
 
 /**
@@ -270,12 +275,11 @@ class CustomersController extends FrontendController
                     ]);
 
                     // write action log
-                    $this->loadModel('ActionLog');
+                    $this->ActionLog = TableRegistry::get('ActionLogs');
                     $message = 'Das Mitglied ' . $this->request->data['Customer']['firstname'] . ' ' . $this->request->data['Customer']['lastname'] . ' hat ein Mitgliedskonto erstellt.';
                     $this->ActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
 
                     // START send confirmation email to customer
-                    $attachments = [];
                     $email = new AppEmail();
                     if (Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
@@ -323,7 +327,7 @@ class CustomersController extends FrontendController
     {
         $this->set('title_for_layout', 'Mitgliedskonto erfolgreich erstellt');
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
     }

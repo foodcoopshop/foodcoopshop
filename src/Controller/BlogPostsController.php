@@ -1,6 +1,11 @@
 <?php
 
-App::uses('FrontendController', 'Controller');
+use App\Controller\FrontendController;
+use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * BlogPostsController
@@ -94,7 +99,7 @@ class BlogPostsController extends FrontendController
 
         if (isset($this->params['manufacturerSlug'])) {
             $manufacturerId = (int) $this->params['manufacturerSlug'];
-            $this->loadModel('Manufacturer');
+            $this->Manufacturer = TableRegistry::get('Manufacturers');
             $this->Manufacturer->recursive = 1;
             $manufacturer = $this->Manufacturer->find('first', [
                 'conditions' => [

@@ -1,4 +1,9 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * BlogPostsController
  *
@@ -14,6 +19,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 class BlogPostsController extends AdminAppController
 {
 
@@ -52,7 +58,7 @@ class BlogPostsController extends AdminAppController
     public function edit($blogPostId = null)
     {
         $this->setFormReferer();
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
 
         $_SESSION['KCFINDER'] = array(
@@ -107,7 +113,7 @@ class BlogPostsController extends AdminAppController
                     $this->request->data['BlogPost']['modified'] = false;
                 }
 
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 if (is_null($blogPostId) && $this->AppAuth->isManufacturer()) {
                     $this->request->data['BlogPost']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
@@ -198,10 +204,10 @@ class BlogPostsController extends AdminAppController
 
         $this->set('title_for_layout', 'Blog-Artikel');
 
-        $this->loadModel('Customer');
+        $this->Customer = TableRegistry::get('Customers');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
     }
 }

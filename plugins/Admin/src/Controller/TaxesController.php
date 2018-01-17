@@ -1,4 +1,9 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * TaxesController
  *
@@ -69,7 +74,7 @@ class TaxesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 $this->Tax->save($this->request->data['Tax'], array(
                     'validate' => false

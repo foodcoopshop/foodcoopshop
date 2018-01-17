@@ -1,4 +1,10 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * PagesController
  *
@@ -95,7 +101,7 @@ class PagesController extends AdminAppController
             if (empty($errors)) {
                 $this->request->data['Page']['id_customer'] = $this->AppAuth->getUserId();
 
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 $this->Page->save($this->request->data['Page'], array(
                     'validate' => false
@@ -151,7 +157,7 @@ class PagesController extends AdminAppController
 
         $this->set('title_for_layout', 'Seiten');
 
-        $this->loadModel('Customer');
+        $this->Customer = TableRegistry::get('Customers');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
     }
 }

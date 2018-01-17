@@ -1,5 +1,10 @@
 <?php
 
+use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 App::uses('FrontendController', 'Controller');
 
 /**
@@ -32,7 +37,7 @@ class CategoriesController extends FrontendController
 
     public function newProducts()
     {
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
@@ -58,7 +63,7 @@ class CategoriesController extends FrontendController
 
         $this->set('keyword', $keyword);
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
@@ -91,7 +96,7 @@ class CategoriesController extends FrontendController
             $this->redirect($correctSlug);
         }
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 

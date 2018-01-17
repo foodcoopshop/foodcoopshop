@@ -1,4 +1,9 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * ReportsController
  *
@@ -32,7 +37,7 @@ class ReportsController extends AdminAppController
 
     public function payments($paymentType)
     {
-        $this->loadModel('Payment', 'Model');
+        $this->Payment = TableRegistry::get('Payments');
 
         $dateFrom = Configure::read('AppConfig.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->params['named']['dateFrom'])) {

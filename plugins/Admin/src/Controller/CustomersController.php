@@ -1,4 +1,9 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * CustomersController
  *
@@ -14,6 +19,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 class CustomersController extends AdminAppController
 {
 
@@ -67,7 +73,7 @@ class CustomersController extends AdminAppController
 
         $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde von <b>' . Configure::read('AppConfig.htmlHelper')->getGroupName($oldCustomer['Customer']['id_default_group']) . '</b> auf <b>' . Configure::read('AppConfig.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
         $this->Flash->success($messageString);
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
         die(json_encode(array(
@@ -156,7 +162,7 @@ class CustomersController extends AdminAppController
             }
             $message .= ' hat sein Passwort geändert.';
 
-            $this->loadModel('ActionLog');
+            $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__('your new password successfully set'));
             $this->redirect($this->referer());
@@ -218,7 +224,7 @@ class CustomersController extends AdminAppController
 
                 $this->renewAuthSession();
 
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
                 $message = 'Das Mitglied ' . $unsavedCustomer['Customer']['name'] . ' hat sein Profil geändert.';
                 $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $message);
 
@@ -296,7 +302,7 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
@@ -324,7 +330,7 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode(array(
@@ -390,8 +396,8 @@ class CustomersController extends AdminAppController
         $customers = $this->Paginator->paginate('Customer');
 
         $i = 0;
-        $this->loadModel('Payment');
-        $this->loadModel('Order');
+        $this->Payment = TableRegistry::get('Payments');
+        $this->Order = TableRegistry::get('Orders');
         foreach ($customers as $customer) {
             if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
                 $paymentProductSum = $this->Payment->getSum($customer['Customer']['id_customer'], 'product');

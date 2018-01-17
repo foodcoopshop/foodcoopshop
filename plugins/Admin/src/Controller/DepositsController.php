@@ -1,4 +1,10 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * DepositsController
 *
@@ -14,6 +20,7 @@
 * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
 * @link          https://www.foodcoopshop.com
 */
+
 class DepositsController extends AdminAppController
 {
 
@@ -69,7 +76,7 @@ class DepositsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
         $this->set('manufacturerId', $manufacturerId);
 
@@ -85,8 +92,8 @@ class DepositsController extends AdminAppController
         ));
         $this->set('manufacturer', $manufacturer);
 
-        $this->loadModel('OrderDetail');
-        $this->loadModel('Payment');
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->Payment = TableRegistry::get('Payments');
 
         $orderState = Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv();
         $this->set('orderState', $orderState);
@@ -159,7 +166,7 @@ class DepositsController extends AdminAppController
 
         $manufacturerId = $this->getManufacturerId();
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
         $manufacturer = $this->Manufacturer->find('first', array(
@@ -169,7 +176,7 @@ class DepositsController extends AdminAppController
         ));
         $this->set('manufacturer', $manufacturer);
 
-        $this->loadModel('Payment');
+        $this->Payment = TableRegistry::get('Payments');
         $payments = $this->Payment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
 
         $this->set('payments', $payments);

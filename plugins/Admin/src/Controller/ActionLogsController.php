@@ -1,6 +1,9 @@
 <?php
 
-App::uses('Customer', 'Model');
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * ActionLogsController
@@ -22,9 +25,9 @@ class ActionLogsController extends AdminAppController
 
     public function beforeFilter(Event $event)
     {
-        $this->loadModel('ActionLog');
-        $this->loadModel('Customer');
-        $this->loadModel('Product');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->Customer = TableRegistry::get('Customers');
+        $this->Product = TableRegistry::get('Products');
         parent::beforeFilter($event);
     }
 

@@ -1,4 +1,8 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+
 /**
  * CategoriesController
  *
@@ -14,6 +18,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 class CategoriesController extends AdminAppController
 {
 
@@ -74,7 +79,7 @@ class CategoriesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 $this->Category->save($this->request->data['Category'], array(
                     'validate' => false

@@ -1,4 +1,8 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\ORM\TableRegistry;
+
 /**
  * AttributesController
  *
@@ -14,6 +18,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 class AttributesController extends AdminAppController
 {
 
@@ -39,7 +44,7 @@ class AttributesController extends AdminAppController
                     'Attribute.id_attribute' => $attributeId
                 )
             ));
-            $this->loadModel('ProductAttributeCombination');
+            $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
             $unsavedAttribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         } else {
             $unsavedAttribute = array();
@@ -67,7 +72,7 @@ class AttributesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 $this->Attribute->save($this->request->data['Attribute'], array(
                     'validate' => false
@@ -112,7 +117,7 @@ class AttributesController extends AdminAppController
         ), $this->Paginator->settings);
         $attributes = $this->Paginator->paginate('Attribute');
 
-        $this->loadModel('ProductAttributeCombination');
+        $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
         foreach ($attributes as &$attribute) {
             $attribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attribute['Attribute']['id_attribute']);
         }

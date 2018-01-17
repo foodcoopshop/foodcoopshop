@@ -1,6 +1,8 @@
 <?php
 
-App::uses('Folder', 'Utility');
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 /**
  * ListsController
@@ -90,7 +92,7 @@ class ListsController extends AdminAppController
                     'customer_list_link' => $customerListLink
                 );
 
-                $files = Set::sort($files, '{n}.manufacturer_name', 'asc');
+                $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
             }
         }
         $this->set('files', $files);

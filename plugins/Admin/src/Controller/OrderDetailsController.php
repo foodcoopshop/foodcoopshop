@@ -1,4 +1,10 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+
 /**
  * OrderDetailsController
 *
@@ -192,7 +198,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetails = $this->Paginator->paginate('OrderDetail');
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
 
         switch ($groupBy) {
             case 'manufacturer':
@@ -209,7 +215,7 @@ class OrderDetailsController extends AdminAppController
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
+                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
                 $orderDetails = $preparedOrderDetails;
                 break;
             case 'product':
@@ -226,13 +232,13 @@ class OrderDetailsController extends AdminAppController
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Set::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
+                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
                 $orderDetails = $preparedOrderDetails;
                 break;
             default:
                 $i = 0;
                 foreach ($orderDetails as $orderDetail) {
-                    $this->loadModel('Manufacturer');
+                    $this->Manufacturer = TableRegistry::get('Manufacturers');
                     $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
                     $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
                     $orderDetails[$i]['rowClass'] = array();
@@ -314,7 +320,7 @@ class OrderDetailsController extends AdminAppController
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Order']['Customer']['name'] . '</b>';
 
         // never send email to manufacturer if bulk orders are allowed
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
         $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_quantity_changed_notification']);
 
@@ -335,7 +341,7 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' Der Warenbestand wurde auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
 
         $this->Flash->success($message);
@@ -399,7 +405,7 @@ class OrderDetailsController extends AdminAppController
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Order']['Customer']['name'] . '</b>';
 
         // never send email to manufacturer if bulk orders are allowed
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_price_changed_notification']);
 
@@ -415,7 +421,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editPriceReason . '"</b>';
         }
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
@@ -483,7 +489,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' und eine E-Mail an <b>' . $orderDetail['Order']['Customer']['name'] . '</b>';
 
             // never send email to manufacturer if bulk orders are allowed
-            $this->loadModel('Manufacturer');
+            $this->Manufacturer = TableRegistry::get('Manufacturers');
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
             $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail['Product']['Manufacturer']['send_ordered_product_deleted_notification']);
 
@@ -503,7 +509,7 @@ class OrderDetailsController extends AdminAppController
 
             $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
-            $this->loadModel('ActionLog');
+            $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
         }
 

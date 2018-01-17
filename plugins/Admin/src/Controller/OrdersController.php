@@ -1,4 +1,10 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * OrdersController
  *
@@ -54,7 +60,7 @@ class OrdersController extends AdminAppController
 
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Order']['id_order'] . ' von '.$oldOrder['Customer']['firstname'] . ' ' . $oldOrder['Customer']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Order']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
 
         die(json_encode(array(
@@ -111,7 +117,7 @@ class OrdersController extends AdminAppController
 
             $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
 
-            $this->loadModel('ActionLog');
+            $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
             $this->Flash->success($message);
 
@@ -139,7 +145,7 @@ class OrdersController extends AdminAppController
         }
 
         $message = count($orderIds) . ' Bestellungen wurden erfolgreich abgeschlossen';
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('orders_closed', $this->AppAuth->getUserId(), 0, 'orders', $message . ': ' . join(', ', $orderIds));
 
         $this->Flash->success($message . '.');
@@ -171,7 +177,7 @@ class OrdersController extends AdminAppController
             ));
         }
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
 
         $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customer']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('AppConfig.htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
@@ -287,7 +293,7 @@ class OrdersController extends AdminAppController
             throw new MissingActionException('customerId not passed');
         }
 
-        $this->loadModel('Customer');
+        $this->Customer = TableRegistry::get('Customers');
         $this->Customer->recursive = - 1;
         $shopOrderCustomer = $this->Customer->find('first', array(
             'conditions' => array(
@@ -323,7 +329,7 @@ class OrdersController extends AdminAppController
         $this->Order->save($order2update);
 
         $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder['Customer']['name'] . ' wurde vom ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($oldOrder['Order']['date_add']) . ' auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);

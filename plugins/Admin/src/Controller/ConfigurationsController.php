@@ -1,4 +1,10 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * ConfigurationsController
  *
@@ -14,6 +20,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
 class ConfigurationsController extends AdminAppController
 {
 
@@ -73,7 +80,7 @@ class ConfigurationsController extends AdminAppController
                     'validate' => false
                 ));
 
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
                 $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
                 $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configuration']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configuration']['value'] . '"</i>');
 
@@ -86,7 +93,7 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
-        $configurations = $this->Configuration->getConfigurations();
+        $this->Configuration->getConfigurations();
         $email = new AppEmail();
         $email
             ->emailFormat('html')
@@ -123,7 +130,7 @@ class ConfigurationsController extends AdminAppController
     public function index()
     {
         $this->set('configurations', $this->Configuration->getConfigurations());
-        $this->loadModel('Tax');
+        $this->Tax = TableRegistry::get('Taxs');
         $defaultTax = $this->Tax->find('first', array(
             'conditions' => array(
                 'Tax.id_tax' => Configure::read('AppConfig.defaultTaxId')
@@ -134,7 +141,7 @@ class ConfigurationsController extends AdminAppController
         if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
             $this->helpers[] = 'Network.Network';
-            $this->loadModel('Network.SyncDomain');
+            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);
         }

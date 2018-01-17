@@ -1,6 +1,9 @@
 <?php
 
-App::uses('FrontendController', 'Controller');
+use App\Controller\FrontendController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * CartsController
@@ -97,7 +100,7 @@ class CartsController extends FrontendController
     private function generateOrderConfirmation($order, $orderDetails, $orderDetailsTax)
     {
 
-        $this->loadModel('Product');
+        $this->Product = TableRegistry::get('Products');
         $this->set('order', $order);
         $manufacturers = [];
         foreach ($orderDetails as $orderDetail) {
@@ -145,8 +148,8 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCart();
 
-        $this->loadModel('Cart');
-        $this->loadModel('Product');
+        $this->Cart = TableRegistry::get('Carts');
+        $this->Product = TableRegistry::get('Products');
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
@@ -203,7 +206,7 @@ class CartsController extends FrontendController
                         $stockAvailableQuantity = $attribute['StockAvailable']['quantity'];
                         // stock available check for attribute
                         if ($stockAvailableQuantity < $ccp['amount']) {
-                            $this->loadModel('Attribute');
+                            $this->Attribute = TableRegistry::get('Attributes');
                             $attribute = $this->Attribute->find('first', [
                                 'conditions' => [
                                     'Attribute.id_attribute' => $attribute['ProductAttributeCombination']['id_attribute']
@@ -262,7 +265,7 @@ class CartsController extends FrontendController
         $this->set('cartErrors', $cartErrors);
 
 
-        $this->loadModel('Order');
+        $this->Order = TableRegistry::get('Orders');
         $formErrors = false;
         if (!isset($this->request->data['Order']['general_terms_and_conditions_accepted']) || $this->request->data['Order']['general_terms_and_conditions_accepted'] != 1) {
             $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
@@ -339,7 +342,7 @@ class CartsController extends FrontendController
             }
 
             $orderDetailTax2save = [];
-            $this->loadModel('OrderDetailTax');
+            $this->OrderDetailTax = TableRegistry::get('OrderDetailTaxs');
             foreach ($orderDetails as $orderDetail) {
                 // should not be necessary but a user somehow managed to set product_quantity as 0
                 $quantity = $orderDetail['OrderDetails']['product_quantity'];
@@ -380,7 +383,7 @@ class CartsController extends FrontendController
             $this->AppAuth->Cart->markAsSaved();
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
-            $this->loadModel('ActionLog');
+            $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
             // START send confirmation email to customer
@@ -432,7 +435,7 @@ class CartsController extends FrontendController
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->Manufacturer->recursive = 1;
 
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
@@ -477,7 +480,7 @@ class CartsController extends FrontendController
     {
         $orderId = (int) $this->params['pass'][0];
 
-        $this->loadModel('Order');
+        $this->Order = TableRegistry::get('Orders');
         $order = $this->Order->find('first', [
             'conditions' => [
                 'Order.id_order' => $orderId,
@@ -490,7 +493,7 @@ class CartsController extends FrontendController
 
         $this->set('order', $order);
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
@@ -601,7 +604,7 @@ class CartsController extends FrontendController
         }
 
         // get product data from database
-        $this->loadModel('Product');
+        $this->Product = TableRegistry::get('Products');
         $this->Product->recursive = 3;
         $this->Product->Behaviors->load('Containable');
         $product = $this->Product->find('first', [

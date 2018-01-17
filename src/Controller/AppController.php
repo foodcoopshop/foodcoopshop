@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * CartComponent
@@ -141,7 +142,7 @@ class AppController extends Controller
         if (! $this->AppAuth->user() && $this->Cookie->read('remember_me_cookie') !== null) {
             $cookie = $this->Cookie->read('remember_me_cookie');
             if (isset($cookie['email']) && isset($cookie['passwd'])) { // not set in cronjobs
-                $this->loadModel('Customer');
+                $this->Customer = TableRegistry::get('Customers');
                 $customer = $this->Customer->find('first', [
                     'conditions' => [
                         'Customer.email' => $cookie['email'],
@@ -155,7 +156,7 @@ class AppController extends Controller
         }
 
         if ($this->AppAuth->isManufacturer()) {
-            $this->loadModel('Manufacturer');
+            $this->Manufacturer = TableRegistry::get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('first', [
                 'conditions' => [
                     'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
@@ -174,7 +175,7 @@ class AppController extends Controller
      */
     protected function renewAuthSession()
     {
-        $this->loadModel('Customer');
+        $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('first', [
             'conditions' => [
                 'Customer.id_customer' => $this->AppAuth->getUserId()

@@ -1,4 +1,8 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Core\Configure;
+
 /**
  * SlidersController
  *
@@ -60,7 +64,7 @@ class SlidersController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 $this->Slider->save($this->request->data['Slider'], array(
                     'validate' => false

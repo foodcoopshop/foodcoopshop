@@ -1,5 +1,10 @@
 <?php
 
+use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 App::uses('FrontendController', 'Controller');
 
 /**
@@ -103,7 +108,7 @@ class ManufacturersController extends FrontendController
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
         $this->set('blogPosts', $blogPosts);
 

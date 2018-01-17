@@ -1,4 +1,10 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * ProductsController
  *
@@ -82,7 +88,7 @@ class ProductsController extends AdminAppController
 
     public function beforeFilter(Event $event)
     {
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         parent::beforeFilter($event);
     }
 
@@ -281,7 +287,7 @@ class ProductsController extends AdminAppController
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
                 'Manufacturer.id_manufacturer' => $manufacturerId
@@ -349,7 +355,7 @@ class ProductsController extends AdminAppController
                 $this->Product->ProductShop->save($product2update);
             }
 
-            $this->loadModel('Tax');
+            $this->Tax = TableRegistry::get('Taxs');
             $tax = $this->Tax->find('first', array(
                 'conditions' => array(
                     'Tax.id_tax' => $taxId
@@ -403,12 +409,12 @@ class ProductsController extends AdminAppController
             )
         ));
 
-        $this->loadModel('CategoryProduct');
+        $this->CategoryProduct = TableRegistry::get('CategoryProducts');
         $this->CategoryProduct->deleteAll(array(
             'id_product' => $productId
         ));
 
-        $this->loadModel('Category');
+        $this->Category = TableRegistry::get('Categorys');
         $selectedCategoryNames = array();
         foreach ($selectedCategories as $selectedCategory) {
             // only add if entry of passed id exists in category lang table
@@ -711,15 +717,15 @@ class ProductsController extends AdminAppController
         }
         $this->set('products', $preparedProducts);
 
-        $this->loadModel('Manufacturer');
-        $this->loadModel('Attribute');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Attribute = TableRegistry::get('Attributes');
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
-        $this->loadModel('Category');
+        $this->Category = TableRegistry::get('Categorys');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
         $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
         array_unshift($manufacturersForDropdown, array('all' => 'Alle Hersteller'));
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        $this->loadModel('Tax');
+        $this->Tax = TableRegistry::get('Taxs');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if ($manufacturerId > 0) {
@@ -737,8 +743,8 @@ class ProductsController extends AdminAppController
         $this->set('title_for_layout', 'Produkte');
 
         if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
-            $this->loadModel('Network.SyncManufacturer');
-            $this->loadModel('Network.SyncDomain');
+            $this->SyncManufacturer = TableRegistry::get('Network.SyncManufacturers');
+            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
             $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer['Manufacturer']['enabled_sync_domains']);

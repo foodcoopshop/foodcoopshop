@@ -1,5 +1,10 @@
 <?php
 
+use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 App::uses('FrontendController', 'Controller');
 
 /**
@@ -24,7 +29,7 @@ class ProductsController extends FrontendController
     {
         parent::beforeFilter($event);
 
-        $this->loadModel('Product');
+        $this->Product = TableRegistry::get('Products');
         $productId = (int) $this->params['pass'][0];
 
         $product = $this->Product->find('first', [
@@ -47,11 +52,11 @@ class ProductsController extends FrontendController
     {
         $productId = (int) $this->params['pass'][0];
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->loadModel('Category');
+        $this->Category = TableRegistry::get('Categorys');
         $product = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
 

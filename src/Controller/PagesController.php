@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use Cake\Controller\Exception\MissingActionException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * PagesController
@@ -81,13 +83,13 @@ class PagesController extends FrontendController
          * END: security keys check
          */
 
-        $this->loadModel('BlogPost');
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', 'Willkommen');
 
-        $this->loadModel('Slider');
+        $this->Slider = TableRegistry::get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
     }

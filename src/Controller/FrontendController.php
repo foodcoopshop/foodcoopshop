@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
+use Cake\ORM\TableRegistry;
 
 /**
  * FrontendController
@@ -53,8 +54,8 @@ class FrontendController extends AppController
      */
     protected function prepareProductsForFrontend($products)
     {
-        $this->loadModel('Product');
-        $this->loadModel('ProductAttribute');
+        $this->Product = TableRegistry::get('Products');
+        $this->ProductAttribute = TableRegistry::get('ProductAttributes');
         $this->ProductAttribute->recursive = 2; // for attribute lang
 
         foreach ($products as &$product) {
@@ -108,7 +109,7 @@ class FrontendController extends AppController
 
         $categoriesForMenu = [];
         if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->loadModel('Category');
+            $this->Category = TableRegistry::get('Categorys');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu();
@@ -129,11 +130,11 @@ class FrontendController extends AppController
         }
         $this->set('categoriesForMenu', $categoriesForMenu);
 
-        $this->loadModel('Manufacturer');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
-        $this->loadModel('Page');
+        $this->Page = TableRegistry::get('Pages');
         $conditions = [];
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';

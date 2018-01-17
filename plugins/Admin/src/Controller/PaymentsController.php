@@ -1,4 +1,11 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+
 /**
  * PaymentsController
  *
@@ -55,9 +62,9 @@ class PaymentsController extends AdminAppController
 
     public function beforeFilter(Event $event)
     {
-        $this->loadModel('Payment');
-        $this->loadModel('Customer');
-        $this->loadModel('Manufacturer');
+        $this->Payment = TableRegistry::get('Payments');
+        $this->Customer = TableRegistry::get('Customers');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         parent::beforeFilter($event);
     }
 
@@ -132,7 +139,7 @@ class PaymentsController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->loadModel('ActionLog');
+                $this->ActionLog = TableRegistry::get('ActionLogs');
 
                 $this->request->data['Payment']['date_changed'] = date('Y-m-d H:i:s');
                 $this->request->data['Payment']['changed_by'] = $this->AppAuth->getUserId();
@@ -342,7 +349,7 @@ class PaymentsController extends AdminAppController
             'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
         ));
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($amount);
 
         if ($type == 'member_fee') {
@@ -408,7 +415,7 @@ class PaymentsController extends AdminAppController
             'date_changed' => date('Y-m-d H:i:s')
         ));
 
-        $this->loadModel('ActionLog');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
 
         $actionLogType = $payment['Payment']['type'];
         if ($payment['Payment']['type'] == 'deposit') {
@@ -575,7 +582,7 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        $payments = Set::sort($payments, '{n}.date', 'desc');
+        $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         $this->set('customerId', $this->getCustomerId());
 

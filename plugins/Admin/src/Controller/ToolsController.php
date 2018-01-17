@@ -1,4 +1,9 @@
 <?php
+
+use Admin\Controller\AdminAppController;
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+
 /**
  * ToolsController
  *
