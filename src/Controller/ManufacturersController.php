@@ -34,7 +34,7 @@ class ManufacturersController extends FrontendController
                         'Manufacturer.active' => APP_ON
                     ]
                 ]);
-                if (!empty($manufacturer) && !$this->AppAuth->loggedIn() && $manufacturer['Manufacturer']['is_private']) {
+                if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer['Manufacturer']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
                 break;
@@ -48,7 +48,7 @@ class ManufacturersController extends FrontendController
         $conditions = [
             'Manufacturer.active' => APP_ON
         ];
-        if (! $this->AppAuth->loggedIn()) {
+        if (! $this->AppAuth->user()) {
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
 
@@ -64,7 +64,7 @@ class ManufacturersController extends FrontendController
             throw new MissingActionException('no manufacturers available');
         }
 
-        if ($this->AppAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($this->AppAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = ClassRegistry::init('Product');
             foreach ($manufacturers as &$manufacturer) {
                 $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer'], true);
@@ -98,7 +98,7 @@ class ManufacturersController extends FrontendController
             $this->redirect($correctSlug);
         }
 
-        if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn()) {
+        if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $products = $this->Manufacturer->getProductsByManufacturerId($manufacturerId);
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }

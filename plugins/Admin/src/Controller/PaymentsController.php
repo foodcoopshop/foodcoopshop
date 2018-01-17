@@ -21,10 +21,10 @@ class PaymentsController extends AdminAppController
     {
         switch ($this->action) {
             case 'overview':
-                return Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                return Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'myMemberFee':
-                return Configure::read('AppConfig.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                return Configure::read('AppConfig.memberFeeEnabled') && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'product':
                 // allow redirects for legacy links
@@ -45,10 +45,10 @@ class PaymentsController extends AdminAppController
                 break;
             case 'add':
             case 'changeState':
-                return $this->AppAuth->loggedIn();
+                return $this->AppAuth->user();
                 break;
             default:
-                return $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                return $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
         }
     }

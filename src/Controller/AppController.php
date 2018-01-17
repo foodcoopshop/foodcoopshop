@@ -138,7 +138,7 @@ class AppController extends Controller
         */
 
         // auto login if cookie is set
-        if (! $this->AppAuth->loggedIn() && $this->Cookie->read('remember_me_cookie') !== null) {
+        if (! $this->AppAuth->user() && $this->Cookie->read('remember_me_cookie') !== null) {
             $cookie = $this->Cookie->read('remember_me_cookie');
             if (isset($cookie['email']) && isset($cookie['passwd'])) { // not set in cronjobs
                 $this->loadModel('Customer');

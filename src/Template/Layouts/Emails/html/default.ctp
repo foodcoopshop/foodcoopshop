@@ -53,7 +53,7 @@
                         echo '<a href="mailto:'.Configure::read('AppConfig.db_config_FCS_APP_EMAIL').'">'.Configure::read('AppConfig.db_config_FCS_APP_EMAIL').'</a><br />';
                         echo '<a href="'.Configure::read('AppConfig.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('AppConfig.cakeServerName')).'</a>';
                     ?>
-                    <?php if (isset($appAuth) && $appAuth->loggedIn()) { ?>
+                    <?php if (isset($appAuth) && $appAuth->user()) { ?>
                         <br /><br />Eingeloggt:
                             <?php
                             if ($appAuth->isManufacturer()) {

@@ -35,7 +35,7 @@ class ProductsController extends FrontendController
         ]);
         if (! Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
-              && !$this->AppAuth->loggedIn()
+              && !$this->AppAuth->user()
               && (isset($product['Manufacturer']) && $product['Manufacturer']['is_private'])
               )
             ) {

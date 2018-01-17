@@ -176,7 +176,7 @@ class CustomersController extends FrontendController
          * login start
          */
         if ($this->here == Configure::read('AppConfig.slugHelper')->getLogin()) {
-            if ($this->AppAuth->loggedIn()) {
+            if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
             }
             if ($this->request->is('post')) {
@@ -201,7 +201,7 @@ class CustomersController extends FrontendController
          * registration start
          */
         if ($this->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
-            if ($this->AppAuth->loggedIn()) {
+            if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
                 $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
             }

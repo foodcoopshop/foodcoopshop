@@ -69,7 +69,7 @@ header('Pragma: no-cache');
                     <img class="logo" src="/files/images/logo.jpg" />
                 </a>
             </div>
-            <?php if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) { ?>
+            <?php if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
                 <form id="product-search" action="/suche">
                     <input placeholder="Suche" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>

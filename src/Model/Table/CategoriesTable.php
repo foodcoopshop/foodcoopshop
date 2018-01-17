@@ -110,7 +110,7 @@ class Category extends AppModel
             'langId' => Configure::read('AppConfig.langId'),
             'shopId' => Configure::read('AppConfig.shopId')
         ];
-        if (! $this->loggedIn()) {
+        if (! $this->user()) {
             $params['isPrivate'] = APP_OFF;
         }
 

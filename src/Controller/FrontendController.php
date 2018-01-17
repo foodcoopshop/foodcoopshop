@@ -107,7 +107,7 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $categoriesForMenu = [];
-        if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn()) {
+        if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->loadModel('Category');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true, '', 0, true);
@@ -137,7 +137,7 @@ class FrontendController extends AppController
         $conditions = [];
         $conditions['Page.active'] = APP_ON;
         $conditions[] = 'Page.position > 0';
-        if (! $this->AppAuth->loggedIn()) {
+        if (! $this->AppAuth->user()) {
             $conditions['Page.is_private'] = APP_OFF;
         }
 
@@ -176,7 +176,7 @@ class FrontendController extends AppController
             $this->AppAuth->login($this->Session->read('Auth.shopOrderCustomer')['Customer']);
         }
 
-        if ($this->AppAuth->loggedIn() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
+        if ($this->AppAuth->user() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 

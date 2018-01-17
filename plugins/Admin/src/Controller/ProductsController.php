@@ -26,7 +26,7 @@ class ProductsController extends AdminAppController
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
-                return $this->AppAuth->loggedIn();
+                return $this->AppAuth->user();
                 break;
             default:
                 if (!empty($this->params['data']['productId'])) {

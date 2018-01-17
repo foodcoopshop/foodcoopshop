@@ -160,7 +160,7 @@ class AppModel extends Model
                     AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturer.active = :active ";
 
-        if (! $this->loggedIn()) {
+        if (! $this->user()) {
             $conditions .= 'AND Manufacturer.is_private = :isPrivate ';
         }
         return $conditions;

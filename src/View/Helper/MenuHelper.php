@@ -138,7 +138,7 @@ class MenuHelper extends Helper
 
     public function getAuthMenuElement($appAuth)
     {
-        if ($appAuth->loggedIn()) {
+        if ($appAuth->user()) {
             $userName = $appAuth->getAbbreviatedUserName();
             if ($appAuth->isManufacturer()) {
                 $userName = $appAuth->getManufacturerName();

@@ -33,7 +33,7 @@ class ManufacturersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
             default:
-                return $this->AppAuth->loggedIn();
+                return $this->AppAuth->user();
                 break;
         }
     }

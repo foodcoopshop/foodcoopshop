@@ -46,7 +46,7 @@ $this->element('addScript', ['script' =>
         
   </form>
   
-    <?php if (!$appAuth->loggedIn()) { ?>
+    <?php if (!$appAuth->user()) { ?>
     <?php
         $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace').".Helper.initRegistrationForm('".$this->request->is('post')."');"

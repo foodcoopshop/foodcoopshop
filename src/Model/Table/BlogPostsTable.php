@@ -75,7 +75,7 @@ class BlogPost extends AppModel
         $conditions = [
             'BlogPost.active' => APP_ON
         ];
-        if (! $appAuth->loggedIn()) {
+        if (! $appAuth->user()) {
             $conditions['BlogPost.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }

@@ -27,7 +27,7 @@ class CartsController extends FrontendController
 
         if ($this->request->is('ajax')) {
             $message = '';
-            if (! $this->AppAuth->loggedIn()) {
+            if (! $this->AppAuth->user()) {
                 $message = 'Du bist nicht angemeldet.';
             }
             if ($this->AppAuth->isManufacturer()) {
@@ -47,7 +47,7 @@ class CartsController extends FrontendController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->loggedIn() && Configure::read('AppConfig.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
+        return $this->AppAuth->user() && Configure::read('AppConfig.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
     }
 
     public function detail()

@@ -24,7 +24,7 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
                 break;
             case 'changePassword':
-                return $this->AppAuth->loggedIn();
+                return $this->AppAuth->user();
                 break;
             default:
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();

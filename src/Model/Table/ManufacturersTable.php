@@ -298,14 +298,14 @@ class Manufacturer extends AppModel
 
     public function getForMenu($appAuth)
     {
-        if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = ClassRegistry::init('Product');
         }
         $this->recursive = - 1;
         $conditions = [
             'Manufacturer.active' => APP_ON
         ];
-        if (! $this->loggedIn()) {
+        if (! $this->user()) {
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
 
@@ -327,7 +327,7 @@ class Manufacturer extends AppModel
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
             $additionalInfo = '';
-            if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             }
             $holidayInfo = Configure::read('AppConfig.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
@@ -336,7 +336,7 @@ class Manufacturer extends AppModel
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
-                    if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                    if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                         $additionalInfo .= ' - ';
                     }
                     $additionalInfo .= $holidayInfo;
@@ -434,7 +434,7 @@ class Manufacturer extends AppModel
             'langId' => Configure::read('AppConfig.langId'),
             'shopId' => Configure::read('AppConfig.shopId')
         ];
-        if (! $this->loggedIn()) {
+        if (! $this->user()) {
             $params['isPrivate'] = APP_OFF;
         }
 

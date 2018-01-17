@@ -27,7 +27,7 @@ $this->element('addScript', ['script' =>
 <h1><?php echo $manufacturer['Manufacturer']['name']; ?>
 
 <?php
-if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
+if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
     echo '<span>'.count($manufacturer['Products']) . ' gefunden</span>';
 }
 ?>

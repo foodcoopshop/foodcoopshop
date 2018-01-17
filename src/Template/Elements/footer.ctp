@@ -48,7 +48,7 @@ if (Configure::read('AppConfig.db_config_FCS_FOOTER_CMS_TEXT') != '') {
     echo '<p class="additional-footer-info">'.Configure::read('AppConfig.db_config_FCS_FOOTER_CMS_TEXT').'</p>';
 }
 
-if ($appAuth->loggedIn()) {
+if ($appAuth->user()) {
     if ($this->Html->paymentIsCashless() && Configure::read('AppConfig.db_config_FCS_BANK_ACCOUNT_DATA') != '') {
         echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>Kontodaten (Guthaben aufladen):</b> '.Configure::read('AppConfig.db_config_FCS_BANK_ACCOUNT_DATA').'</p>';
     }

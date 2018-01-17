@@ -15,7 +15,7 @@
 ?>
 <?php
 
-if (!$appAuth->loggedIn() || $appAuth->termsOfUseAccepted()) {
+if (!$appAuth->user() || $appAuth->termsOfUseAccepted()) {
     return false;
 }
 

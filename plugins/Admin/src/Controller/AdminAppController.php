@@ -25,7 +25,7 @@ class AdminAppController extends AppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->loggedIn();
+        return $this->AppAuth->user();
     }
 
     public function beforeFilter(Event $event)

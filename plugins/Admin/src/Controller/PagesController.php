@@ -21,7 +21,7 @@ class PagesController extends AdminAppController
     {
         switch ($this->action) {
             case 'home':
-                if ($this->AppAuth->loggedIn()) {
+                if ($this->AppAuth->user()) {
                     return true;
                 }
                 break;

@@ -25,7 +25,7 @@ if ($appAuth->isManufacturer()) {
     $adminName = 'Hersteller-Bereich';
     $userName = $appAuth->getManufacturerName();
 }
-if ($appAuth->loggedIn()) {
+if ($appAuth->user()) {
     if (!CakeSession::read('Auth.shopOrderCustomer')) {
         $menu[] = ['slug' => $adminSlug, 'name' => $adminName, 'options' => ['class' => $class]];
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName];

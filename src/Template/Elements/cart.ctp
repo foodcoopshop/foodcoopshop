@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$appAuth->loggedIn() || $appAuth->isManufacturer() || !Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
+if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
     return;
 }
 
@@ -42,7 +42,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     
     <div class="inner">
         <?php
-        if ($appAuth->loggedIn() && $this->Html->paymentIsCashless()) {
+        if ($appAuth->user() && $this->Html->paymentIsCashless()) {
             if ($this->Session->read('Auth.shopOrderCustomer')) {
                 $this->element('addScript', ['script' =>
                     Configure::read('AppConfig.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"

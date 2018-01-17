@@ -39,7 +39,7 @@ class PagesController extends FrontendController
                         'Page.active' => APP_ON
                     ]
                 ]);
-                if (!empty($page) && !$this->AppAuth->loggedIn() && $page['Page']['is_private']) {
+                if (!empty($page) && !$this->AppAuth->user() && $page['Page']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
                 break;
@@ -130,7 +130,7 @@ class PagesController extends FrontendController
             if ($child['Page']['active'] < APP_ON) {
                 continue;
             }
-            if (!$this->AppAuth->loggedIn() && $child['Page']['is_private']) {
+            if (!$this->AppAuth->user() && $child['Page']['is_private']) {
                 continue;
             }
             $page['children'][] = $child;
