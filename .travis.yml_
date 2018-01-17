@@ -29,7 +29,7 @@ before_script:
   - mysql --version
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
   - mysql foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
-  - mysql foodcoopshop_test < ./tests/test_files/Config/sql/test-db-data.sql
+  - mysql foodcoopshop_test < ./tests/test_files/config/sql/test-db-data.sql
   - composer install
   - cp ./Config/travis/* ./config/
   - npm --prefix ./webroot install ./webroot
