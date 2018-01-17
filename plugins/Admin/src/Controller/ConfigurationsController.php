@@ -43,7 +43,7 @@ class ConfigurationsController extends AdminAppController
 
         if ($unsavedConfiguration['Configuration']['type'] == 'textarea') {
             $_SESSION['KCFINDER'] = array(
-                'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
+                'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             );
         }
@@ -96,7 +96,7 @@ class ConfigurationsController extends AdminAppController
 
         switch ($configurationName) {
             case 'FCS_REGISTRATION_EMAIL_TEXT':
-                if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                if (Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                     $template = 'customer_registered_active';
                 } else {
                     $template = 'customer_registered_inactive';
@@ -126,12 +126,12 @@ class ConfigurationsController extends AdminAppController
         $this->loadModel('Tax');
         $defaultTax = $this->Tax->find('first', array(
             'conditions' => array(
-                'Tax.id_tax' => Configure::read('app.defaultTaxId')
+                'Tax.id_tax' => Configure::read('AppConfig.defaultTaxId')
             )
         ));
         $this->set('defaultTax', $defaultTax);
 
-        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+        if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
             $this->helpers[] = 'Network.Network';
             $this->loadModel('Network.SyncDomain');
@@ -146,7 +146,7 @@ class ConfigurationsController extends AdminAppController
     public function sendTestEmail()
     {
         $email = new AppEmail();
-        $success = $email->to(Configure::read('app.hostingEmail'))
+        $success = $email->to(Configure::read('AppConfig.hostingEmail'))
             ->subject('Test E-Mail')
             ->template('send_test_email_template')
             ->emailFormat('html')

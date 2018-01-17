@@ -47,7 +47,7 @@ class CartsController extends FrontendController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->loggedIn() && Configure::read('app.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
+        return $this->AppAuth->loggedIn() && Configure::read('AppConfig.db_config_FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
     }
 
     public function detail()
@@ -272,7 +272,7 @@ class CartsController extends FrontendController
             $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
             $formErrors = true;
         }
-        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) {
             $orderComment = strip_tags(trim($this->request->data['Order']['comment']), '<strong><b>');
             $maxOrderCommentCount = 500;
             if (strlen($orderComment) > $maxOrderCommentCount) {
@@ -300,7 +300,7 @@ class CartsController extends FrontendController
                 'general_terms_and_conditions_accepted' => $this->request->data['Order']['general_terms_and_conditions_accepted'],
                 'cancellation_terms_accepted' => $this->request->data['Order']['cancellation_terms_accepted']
             );
-            if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+            if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) {
                 $order2save['comment'] = $orderComment;
             }
             $order = $this->Order->save($order2save, array(

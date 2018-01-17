@@ -15,7 +15,7 @@
 
 if (!empty($sliders)) {
     $this->element('addScript', array('script' =>
-        Configure::read('app.jsNamespace').".Helper.initSlider();"
+        Configure::read('AppConfig.jsNamespace').".Helper.initSlider();"
     ));
     echo '<div id="slider">';
     foreach ($sliders as $slider) {

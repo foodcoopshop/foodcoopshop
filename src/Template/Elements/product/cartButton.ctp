@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$appAuth->loggedIn() || !Configure::read('app.db_config_FCS_CART_ENABLED')) {
+if (!$appAuth->loggedIn() || !Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
     return;
 }
 ?>
@@ -22,7 +22,7 @@ if (!$appAuth->loggedIn() || !Configure::read('app.db_config_FCS_CART_ENABLED'))
     <?php
     if ($stockAvailable == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
         $this->element('addScript', array('script' =>
-            Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
+            Configure::read('AppConfig.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
         ));
     }
     ?>

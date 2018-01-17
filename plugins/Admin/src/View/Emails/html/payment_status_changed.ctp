@@ -40,7 +40,7 @@
             
             <p>
                 Hier der Link zu deinem Guthaben-System:<br />
-                <a href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
+                <a href="<?php echo Configure::read('AppConfig.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('AppConfig.cakeServerName').'/admin/payments/product'; ?></a>
             </p>
             
         </td>

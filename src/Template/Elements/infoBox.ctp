@@ -14,6 +14,6 @@
  */
 ?><div id="info-box" class="box">
     <?php
-       echo preg_replace('/{ABHOLTAG}/', $this->Time->getFormattedDeliveryDateByCurrentDay(), Configure::read('app.db_config_FCS_RIGHT_INFO_BOX_HTML'));
+       echo preg_replace('/{ABHOLTAG}/', $this->Time->getFormattedDeliveryDateByCurrentDay(), Configure::read('AppConfig.db_config_FCS_RIGHT_INFO_BOX_HTML'));
     ?>
 </div>

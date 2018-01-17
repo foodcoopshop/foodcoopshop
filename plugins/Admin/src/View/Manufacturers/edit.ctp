@@ -14,11 +14,11 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerDescription');" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerShortDescription');" .
-        Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
-        Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');"
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerDescription');" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('ManufacturerShortDescription');" .
+        Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');"
 ));
 
 $idForImageUpload = isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : StringComponent::createRandomString(6);

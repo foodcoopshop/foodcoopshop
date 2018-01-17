@@ -17,7 +17,7 @@
 
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
+        'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();"
         ));
         $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#tax-'

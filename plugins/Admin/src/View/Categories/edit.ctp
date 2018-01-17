@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : "") . "', 'Category');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : "") . "', 'Category');
     "
 ));
 $idForImageUpload = isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : StringComponent::createRandomString(6);

@@ -102,7 +102,7 @@ class SlugHelper extends Helper
 
     public function getAllProducts()
     {
-        return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), 'alle-produkte');
+        return $this->getCategoryDetail(Configure::read('AppConfig.categoryAllProducts'), 'alle-produkte');
     }
 
     public function getCategoryDetail($categoryId, $name)

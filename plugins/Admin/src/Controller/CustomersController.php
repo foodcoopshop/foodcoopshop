@@ -402,7 +402,7 @@ class CustomersController extends AdminAppController
                 $sumTotalDeposit = 0;
                 foreach ($customer['PaidCashFreeOrders'] as $paidCashFreeOrder) {
                     $sumTotalProduct += $paidCashFreeOrder['total_paid'];
-                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
+                    if (Configure::read('AppConfig.isDepositPaymentCashless') && strtotime($paidCashFreeOrder['date_add']) > strtotime(Configure::read('AppConfig.depositPaymentCashlessStartDate'))) {
                         $sumTotalDeposit += $paidCashFreeOrder['total_deposit'];
                     }
                 }
@@ -411,7 +411,7 @@ class CustomersController extends AdminAppController
                 $customers[$i]['payment_deposit_delta'] = round($paymentDepositSum - $sumTotalDeposit, 2);
 
                 // combine deposit delta in product delta to show same credit balance in list like in personal payment product page
-                if (Configure::read('app.isDepositPaymentCashless')) {
+                if (Configure::read('AppConfig.isDepositPaymentCashless')) {
                     $customers[$i]['payment_product_delta'] += $customers[$i]['payment_deposit_delta'];
                 }
             }

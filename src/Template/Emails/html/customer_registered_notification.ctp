@@ -23,9 +23,9 @@
                 
                 <p>Es gab gerade eine neue Registrierung: <b><?php echo $data['Customer']['firstname']; ?> <?php echo $data['Customer']['lastname']; ?></b> (<?php echo $data['Customer']['email']; ?>) aus <b><?php echo $data['AddressCustomer']['city']; ?></b></p>
                 
-                <?php $link = Configure::read('app.cakeServerName').'/admin/customers/index/active:'.(Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
+                <?php $link = Configure::read('AppConfig.cakeServerName').'/admin/customers/index/active:'.(Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
                 
-                <?php if (!Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
+                <?php if (!Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
                     <p>Hier kannst du das neue Mitglied aktivieren und die Daten einsehen:
                 <?php } else { ?>
                     <p>Hier kannst du die Daten des neuen Mitglieds einsehen:

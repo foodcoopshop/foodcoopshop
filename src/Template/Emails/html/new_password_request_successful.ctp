@@ -25,7 +25,7 @@
                     bitte klicke auf folgenden Link, um dein neues Passwort zu generieren:<br />
                 </p>
                 
-                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?></a>
+                <a href="<?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?>"><?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?></a>
                 
             </td>
             

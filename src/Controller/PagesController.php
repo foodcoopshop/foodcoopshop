@@ -49,7 +49,7 @@ class PagesController extends FrontendController
          */
         $showKeyGeneratorWebsite = 0;
         $securityErrors = 0;
-        if (Configure::read('app.cookieKey') == '') {
+        if (Configure::read('AppConfig.cookieKey') == '') {
             echo '<p>Please copy this <b>app.cookieKey</b> to your config.custom.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }

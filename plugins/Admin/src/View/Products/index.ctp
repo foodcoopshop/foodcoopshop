@@ -17,7 +17,7 @@
      
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
+        'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
         ));
         $this->element('highlightRowAfterEdit', array(
@@ -75,7 +75,7 @@
 
             if (isset($showSyncProductsButton) && $showSyncProductsButton) {
                 $this->element('addScript', array(
-                    'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
+                    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
                 ));
                 echo '<div class="toggle-sync-button-wrapper">';
                     echo $this->Html->link(
@@ -124,8 +124,8 @@
             </li>
             <li>Du siehst, für welche Produkte wir Pfand einheben. Möchtest du den
                 Pfand ändern, sag uns bitte Bescheid.</li>
-            <li><b>Neue Produkte</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
-                href="<?php echo Configure::read('app.cakeServerName'); ?>/neue-produkte"
+            <li><b>Neue Produkte</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
+                href="<?php echo Configure::read('AppConfig.cakeServerName'); ?>/neue-produkte"
                 target="_blank">"Neue Produkte"</a> auf.</li>
         </ul>
     </div>
@@ -339,7 +339,7 @@
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', array(
                     'class' => 'icon-with-text change-new-state change-new-state-active',
                     'id' => 'change-new-state-' . $product['Product']['id_product'],
-                    'title' => 'Produkt die nächsten ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
+                    'title' => 'Produkt die nächsten ' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
                 ), 'javascript:void(0);');
             } else {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', array(
@@ -354,7 +354,7 @@
         echo '<td>';
         if (empty($product['ProductAttributes'])) {
             echo '<div class="table-cell-wrapper price">';
-            if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
+            if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('AppConfig.isDepositPaymentCashless')) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                     'class' => 'product-deposit-edit-button',
                     'title' => 'Zum Ändern des Pfands anklicken'

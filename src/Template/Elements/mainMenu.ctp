@@ -14,7 +14,7 @@
  */
 
 $menu = array();
-if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
+if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) {
     $menu[] = array(
         'name' => 'Produkte', 'slug' => $this->Slug->getAllProducts(),
         'children' => $categoriesForMenu

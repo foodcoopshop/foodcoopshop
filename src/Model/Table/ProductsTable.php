@@ -378,7 +378,7 @@ class Product extends AppModel
 
     public function isNew($date)
     {
-        $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
+        $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
         if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
             return true;
         }
@@ -446,7 +446,7 @@ class Product extends AppModel
                 }
 
                 // assignment to "all products" has to be checked... otherwise show error message
-                if ($category['id_category'] == Configure::read('app.categoryAllProducts')) {
+                if ($category['id_category'] == Configure::read('AppConfig.categoryAllProducts')) {
                     $products[$i]['Categories']['allProductsFound'] = true;
                 } else {
                     // check if category was assigned to product but deleted afterwards
@@ -896,7 +896,7 @@ class Product extends AppModel
         // INSERT PRODUCT
         $this->save(array(
             'id_manufacturer' => $manufacturer['Manufacturer']['id_manufacturer'],
-            'id_category_default' => Configure::read('app.categoryAllProducts'),
+            'id_category_default' => Configure::read('AppConfig.categoryAllProducts'),
             'id_tax' => $defaultTaxId,
             'unity' => '',
             'date_add' => date('Y-m-d H:i:s'),
@@ -908,14 +908,14 @@ class Product extends AppModel
         $this->ProductShop->save(array(
             'id_product' => $newProductId,
             'id_shop' => 1,
-            'id_category_default' => Configure::read('app.categoryAllProducts'),
+            'id_category_default' => Configure::read('AppConfig.categoryAllProducts'),
             'date_add' => date('Y-m-d H:i:s'),
             'date_upd' => date('Y-m-d H:i:s')
         ));
 
         // INSERT CATEGORY_PRODUCTS
         $this->CategoryProducts->save(array(
-            'id_category' => Configure::read('app.categoryAllProducts'),
+            'id_category' => Configure::read('AppConfig.categoryAllProducts'),
             'id_product' => $newProductId
         ));
 

@@ -20,15 +20,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="initial-scale=1.0">
         <meta name="format-detection" content="telephone=no">
-        <title><?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
+        <title><?php echo Configure::read('AppConfig.db_config_FCS_APP_NAME'); ?></title>
     </head>
     
     <table width="742" cellpadding="0" border="0" cellspacing="0" style="color:#000;font-family:Arial;">
         <tbody>
             <tr>
                 <td align="center" valign="middle" style="padding-bottom: 20px;">
-                    <a href="<?php echo Configure::read('app.cakeServerName'); ?>">
-                        <img src="<?php echo Configure::read('app.cakeServerName').'/files/images/logo.jpg'; ?>" width="150" />
+                    <a href="<?php echo Configure::read('AppConfig.cakeServerName'); ?>">
+                        <img src="<?php echo Configure::read('AppConfig.cakeServerName').'/files/images/logo.jpg'; ?>" width="150" />
                     </a>
                 </td>
             </tr>
@@ -45,13 +45,13 @@
                 <td style="padding-top:20px;font-size:12px;">
                     Diese E-Mail wurde automatisch erstellt.
                         <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink) { ?>
-                           Du kannst sie <a href="<?php echo Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions(); ?>">in deinen Einstellungen abbestellen</a>.
+                           Du kannst sie <a href="<?php echo Configure::read('AppConfig.cakeServerName') . $this->Slug->getManufacturerMyOptions(); ?>">in deinen Einstellungen abbestellen</a>.
                         <?php } ?><br /><br />
                     --<br />
                     <?php
-                        echo Configure::read('app.db_config_FCS_APP_ADDRESS').'<br />';
-                        echo '<a href="mailto:'.Configure::read('app.db_config_FCS_APP_EMAIL').'">'.Configure::read('app.db_config_FCS_APP_EMAIL').'</a><br />';
-                        echo '<a href="'.Configure::read('app.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('app.cakeServerName')).'</a>';
+                        echo Configure::read('AppConfig.db_config_FCS_APP_ADDRESS').'<br />';
+                        echo '<a href="mailto:'.Configure::read('AppConfig.db_config_FCS_APP_EMAIL').'">'.Configure::read('AppConfig.db_config_FCS_APP_EMAIL').'</a><br />';
+                        echo '<a href="'.Configure::read('AppConfig.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('AppConfig.cakeServerName')).'</a>';
                     ?>
                     <?php if (isset($appAuth) && $appAuth->loggedIn()) { ?>
                         <br /><br />Eingeloggt:

@@ -141,7 +141,7 @@ class ProductsController extends AdminAppController
         // delete physical files
         $imageIdAsPath = Configure::read('htmlHelper')->getProductImageIdAsPath($product['Image']['id_image']);
         $thumbsPath = Configure::read('htmlHelper')->getProductThumbsPath($imageIdAsPath);
-        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+        foreach (Configure::read('AppConfig.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $product['Image']['id_image'] . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
@@ -189,7 +189,7 @@ class ProductsController extends AdminAppController
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);
 
-        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+        foreach (Configure::read('AppConfig.productImageSizes') as $thumbSize => $options) {
             $image = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($image->getHeight() > $image->getWidth()) {
@@ -394,7 +394,7 @@ class ProductsController extends AdminAppController
             $selectedCategories = $this->params['data']['selectedCategories'];
         }
 
-        $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle-produkte'
+        $selectedCategories[] = Configure::read('AppConfig.categoryAllProducts'); // always add 'alle-produkte'
         $selectedCategories = array_unique($selectedCategories);
 
         $oldProduct = $this->Product->find('first', array(
@@ -419,7 +419,7 @@ class ProductsController extends AdminAppController
             ));
             if (! empty($oldCategory)) {
                 // do not track "alle-produkte"
-                if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
+                if ($selectedCategory != Configure::read('AppConfig.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory['Category']['name'];
                 }
                 $sql = 'INSERT INTO ' . $this->CategoryProduct->tablePrefix . $this->CategoryProduct->useTable . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
@@ -736,7 +736,7 @@ class ProductsController extends AdminAppController
 
         $this->set('title_for_layout', 'Produkte');
 
-        if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
+        if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->loadModel('Network.SyncManufacturer');
             $this->loadModel('Network.SyncDomain');
             $this->helpers[] = 'Network.Network';
@@ -807,7 +807,7 @@ class ProductsController extends AdminAppController
         $statusText = 'ab sofort nicht mehr als "neu" angezeigt';
         $actionLogType = 'product_set_to_old';
         if ($status) {
-            $statusText = 'jetzt ' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
+            $statusText = 'jetzt ' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
             $actionLogType = 'product_set_to_new';
         }
 

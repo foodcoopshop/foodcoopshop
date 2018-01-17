@@ -17,22 +17,22 @@
      
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
+        'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" . Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" . Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
+            datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('AppConfig.cakeServerName') . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('AppConfig.visibleOrderStates')) . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('AppConfig.additionalOrderStatusChangeInfo') . "');" . Configure::read('AppConfig.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('AppConfig.paymentMethods')) . ");" . Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
         "
         ));
 
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
+        if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
             $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
+            'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
             ));
         }
-        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', array(
                 'script' =>
-                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
-                    Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
+                    Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
+                    Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ));
         }
         $this->element('highlightRowAfterEdit', array(
@@ -79,7 +79,7 @@
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
-            <?php if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED')) { ?>
+            <?php if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) { ?>
                     <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
             <?php } ?>
         </ul>
@@ -98,10 +98,10 @@
     } else {
         echo '<th class="right">Betrag</th>';
     }
-    if (Configure::read('app.isDepositPaymentCashless')) {
+    if (Configure::read('AppConfig.isDepositPaymentCashless')) {
         echo '<th>Pfand</th>';
     }
-    if (Configure::read('app.memberFeeFlexibleEnabled')) {
+    if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
         echo '<th>Flexi</th>';
     }
     if (! $groupByCustomer) {
@@ -144,7 +144,7 @@
         echo '</td>';
 
         echo '<td style="max-width: 200px;">';
-        if (Configure::read('app.db_config_FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
+        if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
             echo '<span class="order-comment-wrapper">';
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
@@ -178,7 +178,7 @@
         echo $this->Html->formatAsEuro($paidField);
         echo '</td>';
 
-        if (Configure::read('app.isDepositPaymentCashless')) {
+        if (Configure::read('AppConfig.isDepositPaymentCashless')) {
             echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
                 echo $this->element('addDepositPaymentOverlay', array(
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
@@ -189,7 +189,7 @@
             echo '</td>';
         }
 
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
+        if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
             echo '<td style="width:72px;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('heart.png')) . ' Flexi', array(
                 'title' => 'Flexiblen Mitgliedsbeitrag eintragen',
@@ -276,12 +276,12 @@
 
     if (count($orders) > 0 && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
         $this->element('addScript', array(
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();"
+            'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();"
         ));
         echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
         if (! $groupByCustomer && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
             $this->element('addScript', array(
-                'script' => Configure::read('app.jsNamespace') . ".Admin.initCloseOrdersButton();" . Configure::read('app.jsNamespace') . ".Admin.initGenerateOrdersAsPdf();"
+                'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initCloseOrdersButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initGenerateOrdersAsPdf();"
             ));
             echo '<button class="btn btn-default generate-orders-as-pdf"><i class="fa fa-file-pdf-o"></i> Bestellungen als PDF generieren</button>';
             echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Bestellungen abschließen</button>';

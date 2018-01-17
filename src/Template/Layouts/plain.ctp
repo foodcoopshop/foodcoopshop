@@ -19,7 +19,7 @@
     <meta name="theme-color" content="#719f41">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('AppConfig.db_config_FCS_APP_NAME'); ?></title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     
     <?php echo $this->element('jsNamespace'); ?>
@@ -70,7 +70,7 @@
 
 if ($this->name != 'CakeError' || Configure::read('debug') == 0) {
     $this->element('addScript', array('script' =>
-    Configure::read('app.jsNamespace').".Helper.initAnystretch();"
+    Configure::read('AppConfig.jsNamespace').".Helper.initAnystretch();"
     ));
 }
 

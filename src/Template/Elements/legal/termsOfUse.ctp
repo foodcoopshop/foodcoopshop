@@ -19,10 +19,10 @@
 
 <p>
     <?php
-    if (Configure::read('app.db_config_FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('app.db_config_FCS_PLATFORM_OWNER');
+    if (Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER') != '') {
+        echo Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER');
     } else {
-        echo Configure::read('app.db_config_FCS_APP_NAME');
+        echo Configure::read('AppConfig.db_config_FCS_APP_NAME');
         echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
     }
     ?>
@@ -32,7 +32,7 @@
 
 <h2>1. Geltung der Nutzungsbedingungen</h2>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p> 
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('AppConfig.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p> 
 
 <p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
@@ -54,7 +54,7 @@
 
 <h2>4. Rücktrittsrecht</h2>
 
-<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Hersteller direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('app.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. <b>Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</b></p> 
+<p>4.1. Der Nutzer schließt den Vertrag mit dem jeweiligen Hersteller direkt. Der Nutzer erhält Informationen über das Rücktrittsrecht <a href="<?php echo Configure::read('AppConfig.cakeServerName'); ?>/Informationen-ueber-Ruecktrittsrecht.pdf" target="_blank">hier</a>. <b>Grundsätzlich ist das Rücktrittsrecht für die Lieferung von Lebensmittel ausgeschlossen.</b></p> 
 
 <p>4.2. Der jeweilige Hersteller wird von den alternativen Streitbeilegungsstellen "Online-Streitbeilegung" (https://webgate.ec.europa.eu/odr) sowie "Internetombudsmann" (www.ombudsmann.at) erfasst. Der Nutzer hat auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p> 
 
@@ -71,13 +71,13 @@
 <?php if ($this->Html->paymentIsCashless()) { ?>
 <h2>6. Guthabenkonto</h2>
 
-<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
+<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('AppConfig.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
 
 <?php
-if (Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE') == 0) {
+if (Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE') == 0) {
     echo 'Auch bei einem negativen Kontostand sind weitere Bestellungen möglich.';
 } else {
-    echo 'Bis zu einem Kontostand von ' . $this->MyHtml->formatAsEuro(Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
+    echo 'Bis zu einem Kontostand von ' . $this->MyHtml->formatAsEuro(Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
 }
 ?>
 

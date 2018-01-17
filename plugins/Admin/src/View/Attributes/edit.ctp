@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Attribute']['id_attribute']) ? $this->request->data['Attribute']['id_attribute'] : "") . "', 'Attribute');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Attribute']['id_attribute']) ? $this->request->data['Attribute']['id_attribute'] : "") . "', 'Attribute');
     "
 ));
 ?>

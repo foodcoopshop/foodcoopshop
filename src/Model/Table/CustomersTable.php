@@ -148,7 +148,7 @@ class Customer extends AppModel
         parent::__construct($id, $table, $ds);
 
         $virtualNameField = "`{$this->alias}`.`firstname`,' ',`{$this->alias}`.`lastname`)";
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
+        if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
             $virtualNameField = "`{$this->alias}`.`lastname`,' ',`{$this->alias}`.`firstname`)";
         }
 
@@ -167,7 +167,7 @@ class Customer extends AppModel
     public function getConditionToExcludeHostingUser()
     {
         return array(
-            'Customer.email != \'' . Configure::read('app.hostingEmail') . '\''
+            'Customer.email != \'' . Configure::read('AppConfig.hostingEmail') . '\''
         );
     }
 

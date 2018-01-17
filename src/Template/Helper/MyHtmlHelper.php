@@ -128,7 +128,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getAddressFromAddressConfiguration()
     {
-        return Configure::read('app.db_config_FCS_APP_ADDRESS');
+        return Configure::read('AppConfig.db_config_FCS_APP_ADDRESS');
     }
 
     /**
@@ -136,7 +136,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getEmailFromAddressConfiguration()
     {
-        return Configure::read('app.db_config_FCS_APP_EMAIL');
+        return Configure::read('AppConfig.db_config_FCS_APP_EMAIL');
     }
 
     public function prepareDbTextForPDF($string)
@@ -156,7 +156,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function paymentIsCashless()
     {
-        return in_array('cashless', Configure::read('app.paymentMethods'));
+        return in_array('cashless', Configure::read('AppConfig.paymentMethods'));
     }
 
     public function br2nl($input)
@@ -257,7 +257,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCustomerOrderBy()
     {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
+        if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
             return array(
                 'Customer.lastname' => 'ASC',
                 'Customer.firstname' => 'ASC'
@@ -278,7 +278,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCustomerNameForSql()
     {
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
+        if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
             return "CONCAT(c.lastname, ' ', c.firstname)";
         } else {
             return "CONCAT(c.firstname, ' ', c.lastname)";
@@ -324,10 +324,10 @@ class MyHtmlHelper extends HtmlHelper
             'payback' => 'Rückzahlung',
             'deposit' => 'Pfand-Rückgabe'
         );
-        if (Configure::read('app.memberFeeEnabled')) {
+        if (Configure::read('AppConfig.memberFeeEnabled')) {
             $paymentTexts['member_fee'] = 'Mitgliedsbeitrag';
         }
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
+        if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
             $paymentTexts['member_fee_flexible'] = 'Flexibler Mitgliedsbeitrag';
         }
         return $paymentTexts;
@@ -403,19 +403,19 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getUploadImageDir()
     {
-        return substr(WWW_ROOT, 0, - 1) . Configure::read('app.uploadedImagesDir');
+        return substr(WWW_ROOT, 0, - 1) . Configure::read('AppConfig.uploadedImagesDir');
     }
 
     public function getSliderImageSrc($sliderImage)
     {
-        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'sliders' . DS;
+        $urlPrefix = Configure::read('AppConfig.uploadedImagesDir') . DS . 'sliders' . DS;
         return $this->prepareAsUrl($urlPrefix . $sliderImage);
     }
 
     public function getBlogPostImageSrc($blogPostId, $size)
     {
         $thumbsPath = $this->getBlogPostThumbsPath();
-        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
+        $urlPrefix = Configure::read('AppConfig.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
         $imageFilename = $blogPostId . '-' . $size . '-default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
@@ -430,7 +430,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerImageSrc($manufacturerId, $size)
     {
         $thumbsPath = $this->getManufacturerThumbsPath();
-        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
+        $urlPrefix = Configure::read('AppConfig.uploadedImagesDir') . DS . 'manufacturers' . DS;
 
         $imageFilename = $manufacturerId . '-' . $size . '_default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
@@ -445,7 +445,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getCategoryImageSrc($categoryId)
     {
         $thumbsPath = $this->getCategoryThumbsPath();
-        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
+        $urlPrefix = Configure::read('AppConfig.uploadedImagesDir') . DS . 'categories' . DS;
 
         $imageFilename = $categoryId . '-category_default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
@@ -461,7 +461,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $imageIdAsPath = $this->getProductImageIdAsPath($imageId);
         $thumbsPath = $this->getProductThumbsPath($imageIdAsPath);
-        $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'products' . DS;
+        $urlPrefix = Configure::read('AppConfig.uploadedImagesDir') . DS . 'products' . DS;
 
         $imageFilename = $imageId . '-' . $size . '_default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
@@ -485,15 +485,15 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
     {
-        $url = Configure::read('app.folder.order_lists_with_current_year_and_month') . DS;
-        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')) . '.pdf';
+        $url = Configure::read('AppConfig.folder.order_lists_with_current_year_and_month') . DS;
+        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('AppConfig.db_config_FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
-        $url = Configure::read('app.folder.invoices_with_current_year_and_month') . DS;
-        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('app.db_config_FCS_APP_NAME')) . '.pdf';
+        $url = Configure::read('AppConfig.folder.invoices_with_current_year_and_month') . DS;
+        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('AppConfig.db_config_FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
@@ -523,7 +523,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getVisibleOrderStates()
     {
-        return Configure::read('app.visibleOrderStates');
+        return Configure::read('AppConfig.visibleOrderStates');
     }
 
     public function getOrderStates()

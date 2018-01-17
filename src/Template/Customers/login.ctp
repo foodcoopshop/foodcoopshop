@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 $this->element('addScript', array('script' =>
-    Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
-    Configure::read('app.jsNamespace').".Helper.initLoginForm();"
+    Configure::read('AppConfig.jsNamespace').".Helper.init();".
+    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
+    Configure::read('AppConfig.jsNamespace').".Helper.initLoginForm();"
 ));
 ?>
 <div id="login-form" class="form">  
@@ -49,7 +49,7 @@ $this->element('addScript', array('script' =>
     <?php if (!$appAuth->loggedIn()) { ?>
     <?php
         $this->element('addScript', array('script' =>
-            Configure::read('app.jsNamespace').".Helper.initRegistrationForm('".$this->request->is('post')."');"
+            Configure::read('AppConfig.jsNamespace').".Helper.initRegistrationForm('".$this->request->is('post')."');"
         ));
     ?>
       <div class="sc"></div>
@@ -61,8 +61,8 @@ $this->element('addScript', array('script' =>
 
               echo '<div class="detail-form">';
 
-            if (Configure::read('app.db_config_FCS_AUTHENTICATION_INFO_TEXT') != '') {
-                echo '<p>'.Configure::read('app.db_config_FCS_AUTHENTICATION_INFO_TEXT').'</p>';
+            if (Configure::read('AppConfig.db_config_FCS_AUTHENTICATION_INFO_TEXT') != '') {
+                echo '<p>'.Configure::read('AppConfig.db_config_FCS_AUTHENTICATION_INFO_TEXT').'</p>';
             }
 
                   echo $this->Form->hidden('antiSpam', array('value' => 'lalala'));
@@ -79,7 +79,7 @@ $this->element('addScript', array('script' =>
                   echo $this->Form->input('AddressCustomer.phone_mobile', array('label' => 'Handy', 'required' => true));
                   echo $this->Form->input('AddressCustomer.phone', array('label' => 'Telefon'));
 
-            if (Configure::read('app.emailOrderReminderEnabled')) {
+            if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
                 echo $this->Form->input('Customer.newsletter', array('label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox'));
             }
 

@@ -76,8 +76,8 @@ class AppShell extends Shell
     public function initSimpleBrowser()
     {
         $this->browser = new AppSimpleBrowser();
-        $this->browser->loginEmail = Configure::read('app.adminEmail');
-        $this->browser->loginPassword = Configure::read('app.adminPassword');
+        $this->browser->loginEmail = Configure::read('AppConfig.adminEmail');
+        $this->browser->loginPassword = Configure::read('AppConfig.adminPassword');
 
         if ($_SERVER['PHP_SELF'] == '/test.php' // unit tests called via web browser
             // unit tests called via console

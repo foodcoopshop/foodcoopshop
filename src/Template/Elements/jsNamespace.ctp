@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<?php if (!Configure::read('app.jsNamespace')) {
+<?php if (!Configure::read('AppConfig.jsNamespace')) {
     return;
 } ?>
 
 <script type="text/javascript">
-    if(!window.<?php echo Configure::read('app.jsNamespace'); ?>) { <?php echo Configure::read('app.jsNamespace'); ?> = window.<?php echo Configure::read('app.jsNamespace'); ?> = {}; }
+    if(!window.<?php echo Configure::read('AppConfig.jsNamespace'); ?>) { <?php echo Configure::read('AppConfig.jsNamespace'); ?> = window.<?php echo Configure::read('AppConfig.jsNamespace'); ?> = {}; }
 </script>

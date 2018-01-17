@@ -59,7 +59,7 @@ class BackupDatabaseShell extends AppShell
             $ignoredTableString .= '--ignore-table=' . $dbConfig['database'] . '.' . $ignoredTable . ' ';
         }
 
-        $cmdString = Configure::read('app.mysqlDumpCommand');
+        $cmdString = Configure::read('AppConfig.mysqlDumpCommand');
         $cmdString .= " -u " . $dbConfig['login'] . " -p" . $dbConfig['password'] . " --allow-keywords " . $ignoredTableString . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
 
@@ -77,8 +77,8 @@ class BackupDatabaseShell extends AppShell
         // email zipped file
         App::uses('CakeEmail', 'Network/Email');
         $Email = new CakeEmail(Configure::read('debugEmailConfig'));
-        $Email->to(Configure::read('app.hostingEmail'))
-            ->subject($message . ': ' . Configure::read('app.cakeServerName'))
+        $Email->to(Configure::read('AppConfig.hostingEmail'))
+            ->subject($message . ': ' . Configure::read('AppConfig.cakeServerName'))
             ->attachments(array(
             $zipFilename
             ))

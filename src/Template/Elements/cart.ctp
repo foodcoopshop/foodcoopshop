@@ -13,24 +13,24 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$appAuth->loggedIn() || $appAuth->isManufacturer() || !Configure::read('app.db_config_FCS_CART_ENABLED')) {
+if (!$appAuth->loggedIn() || $appAuth->isManufacturer() || !Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
     return;
 }
 
 if ($appAuth->Cart->getProducts() !== null) {
     $this->element('addScript', array('script' =>
-        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
+        Configure::read('AppConfig.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
     ));
 
     if (!empty($cartErrors)) {
         $this->element('addScript', array('script' =>
-            Configure::read('app.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
+            Configure::read('AppConfig.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
         ));
     }
     if ($this->name == 'Carts' && $this->action == 'detail') {
         $this->element('addScript', array('script' =>
-            Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
-            Configure::read('app.jsNamespace').".Cart.initChangeAmountLinks();"
+            Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();".
+            Configure::read('AppConfig.jsNamespace').".Cart.initChangeAmountLinks();"
         ));
     }
 }
@@ -45,7 +45,7 @@ if ($appAuth->Cart->getProducts() !== null) {
         if ($appAuth->loggedIn() && $this->Html->paymentIsCashless()) {
             if ($this->Session->read('Auth.shopOrderCustomer')) {
                 $this->element('addScript', array('script' =>
-                    Configure::read('app.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
+                    Configure::read('AppConfig.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
                 ));
                 echo '<p class="shop-order-customer-info">Diese Bestellung wird für <b>'.$this->Session->read('Auth.shopOrderCustomer')['Customer']['name'].'</b> getätigt. <b><a class="btn btn-default" href="javascript:void(0);">Sofort-Bestellung abbrechen?</a></b></p>';
             }
@@ -56,7 +56,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             echo '<div class="credit-balance-wrapper">';
               echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">Dein Guthaben</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
             if ($shoppingLimitReached) {
-                echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('app.db_config_FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
+                echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
                 echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
                 echo 'Guthaben aufladen';
                 echo '</a></p>';

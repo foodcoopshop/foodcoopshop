@@ -41,7 +41,7 @@ class AppSimpleBrowser extends SimpleBrowser
         $this->Customer = new Customer();
 
         $this->setConnectionTimeout(300); // 5 min should be enough
-        $this->baseUrl = Configure::read('app.cakeServerName');
+        $this->baseUrl = Configure::read('AppConfig.cakeServerName');
         $this->adminPrefix = '/admin';
     }
 

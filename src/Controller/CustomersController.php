@@ -102,7 +102,7 @@ class CustomersController extends FrontendController
             $email = new AppEmail();
             $email->template('new_password_request_successful')
                 ->emailFormat('html')
-                ->subject('Anfrage für neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME'))
+                ->subject('Anfrage für neues Passwort für ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
                 ->to($this->request->data['Customer']['email'])
                 ->viewVars(array(
                 'changePasswordCode' => $changePasswordCode,
@@ -142,7 +142,7 @@ class CustomersController extends FrontendController
         $email = new AppEmail();
             $email->template('new_password_set_successful')
             ->emailFormat('html')
-            ->subject('Neues Passwort für ' . Configure::read('app.db_config_FCS_APP_NAME') . ' generiert')
+            ->subject('Neues Passwort für ' . Configure::read('AppConfig.db_config_FCS_APP_NAME') . ' generiert')
             ->to($customer['Customer']['email'])
             ->viewVars(array(
                 'password' => $newPassword,
@@ -249,8 +249,8 @@ class CustomersController extends FrontendController
                 if (empty($errors) && !$checkboxErrors) {
                     // save customer
                     $this->Customer->id = null;
-                    $this->request->data['Customer']['active'] = Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
-                    $this->request->data['Customer']['id_default_group'] = Configure::read('app.db_config_FCS_CUSTOMER_GROUP');
+                    $this->request->data['Customer']['active'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
+                    $this->request->data['Customer']['id_default_group'] = Configure::read('AppConfig.db_config_FCS_CUSTOMER_GROUP');
                     $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
 
                     $newCustomer = $this->Customer->save($this->request->data['Customer'], array(
@@ -263,7 +263,7 @@ class CustomersController extends FrontendController
 
                     // save address
                     $this->request->data['AddressCustomer']['id_customer'] = $newCustomer['Customer']['id_customer'];
-                    $this->request->data['AddressCustomer']['id_country'] = Configure::read('app.countryId');
+                    $this->request->data['AddressCustomer']['id_country'] = Configure::read('AppConfig.countryId');
                     $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
                     $this->Customer->AddressCustomer->save($this->request->data['Customer'], array(
                         'validate' => false
@@ -277,7 +277,7 @@ class CustomersController extends FrontendController
                     // START send confirmation email to customer
                     $attachments = array();
                     $email = new AppEmail();
-                    if (Configure::read('app.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                    if (Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
                         $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($newCustomer['Customer']), 'mimetype' => 'application/pdf')));
                     } else {
@@ -296,11 +296,11 @@ class CustomersController extends FrontendController
                     // END send confirmation email to customer
 
                     // START send notification email
-                    if (! empty(Configure::read('app.registrationNotificationEmails'))) {
+                    if (! empty(Configure::read('AppConfig.registrationNotificationEmails'))) {
                         $email = new AppEmail();
                         $email->template('customer_registered_notification')
                             ->emailFormat('html')
-                            ->to(Configure::read('app.registrationNotificationEmails'))
+                            ->to(Configure::read('AppConfig.registrationNotificationEmails'))
                             ->subject('Neue Registrierung: ' . $this->request->data['Customer']['firstname'] . ' ' . $this->request->data['Customer']['lastname'])
                             ->viewVars(array(
                             'appAuth' => $this->AppAuth,

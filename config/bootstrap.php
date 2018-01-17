@@ -221,12 +221,12 @@ mb_internal_encoding('UTF-8');
 /*
 // App::uses('ClassRegistry', 'Utility');
 Registry::init('Configuration')->loadConfigurations();
-if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', array(
         'routes' => true
     ));
 }
-if (Configure::read('app.emailErrorLoggingEnabled')) {
+if (Configure::read('AppConfig.emailErrorLoggingEnabled')) {
     Plugin::load('EmailErrorLog', array(
         'bootstrap' => true
     ));

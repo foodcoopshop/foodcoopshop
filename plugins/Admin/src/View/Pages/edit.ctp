@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('PageContent');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Page']['id_page']) ? $this->request->data['Page']['id_page'] : "") . "', 'Page');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('PageContent');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Page']['id_page']) ? $this->request->data['Page']['id_page'] : "") . "', 'Page');
     "
 ));
 

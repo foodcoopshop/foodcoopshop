@@ -17,12 +17,12 @@
 
 <h2>1. Allgemeines</h2>
 
-<p>1.1. Die Webseiten von <b>"<?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?>"</b>, erreichbar unter der Domain <?php echo Configure::read('app.cakeServerName'); ?>,  werden von "
+<p>1.1. Die Webseiten von <b>"<?php echo Configure::read('AppConfig.db_config_FCS_APP_NAME'); ?>"</b>, erreichbar unter der Domain <?php echo Configure::read('AppConfig.cakeServerName'); ?>,  werden von "
     <?php
-    if (Configure::read('app.db_config_FCS_PLATFORM_OWNER') != '') {
-        echo str_replace('<br />', ', ', Configure::read('app.db_config_FCS_PLATFORM_OWNER'));
+    if (Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER') != '') {
+        echo str_replace('<br />', ', ', Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER'));
     } else {
-        echo Configure::read('app.db_config_FCS_APP_NAME');
+        echo Configure::read('AppConfig.db_config_FCS_APP_NAME');
         echo ', '.str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration());
     }
     ?>

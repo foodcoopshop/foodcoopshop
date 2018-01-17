@@ -17,7 +17,7 @@
 
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
+        'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();"
         ));
         $this->element('highlightRowAfterEdit', array(
         'rowIdPrefix' => '#attribute-'

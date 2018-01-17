@@ -29,7 +29,7 @@ header('Pragma: no-cache');
     <meta name="theme-color" content="#719f41">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('app.db_config_FCS_APP_NAME'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('AppConfig.db_config_FCS_APP_NAME'); ?></title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -69,7 +69,7 @@ header('Pragma: no-cache');
                     <img class="logo" src="/files/images/logo.jpg" />
                 </a>
             </div>
-            <?php if (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) { ?>
+            <?php if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->loggedIn()) { ?>
                 <form id="product-search" action="/suche">
                     <input placeholder="Suche" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
@@ -115,7 +115,7 @@ if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
     echo $this->Html->script(array('/node_modules/slidebars/dist/slidebars'));
     // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();", array('block'));
+    echo $this->MyHtml->scriptBlock(Configure::read('AppConfig.jsNamespace').".Mobile.initMenusFrontend();", array('block'));
 }
     echo $this->fetch('script'); // all scripts from layouts
 ?>

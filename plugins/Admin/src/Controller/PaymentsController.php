@@ -24,7 +24,7 @@ class PaymentsController extends AdminAppController
                 return Configure::read('htmlHelper')->paymentIsCashless() && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'myMemberFee':
-                return Configure::read('app.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
+                return Configure::read('AppConfig.memberFeeEnabled') && $this->AppAuth->loggedIn() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'product':
                 // allow redirects for legacy links
@@ -215,8 +215,8 @@ class PaymentsController extends AdminAppController
         $amount = preg_replace('/[^0-9,.]/', '', $amount);
         $amount = floatval(str_replace(',', '.', $amount));
 
-        if ($type == 'product' && $amount > Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')) {
-            $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('app.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM');
+        if ($type == 'product' && $amount > Configure::read('AppConfig.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')) {
+            $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('AppConfig.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM');
             $this->log($message);
             die(json_encode(array('status'=>0,'msg'=>$message)));
         }
@@ -484,7 +484,7 @@ class PaymentsController extends AdminAppController
             'member_fee'
         );
         $sumMemberFeeFlexbile = 0;
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
+        if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
             $this->allowedPaymentTypes = array(
                 'member_fee',
                 'member_fee_flexible'
@@ -513,7 +513,7 @@ class PaymentsController extends AdminAppController
             'payback',
             'deposit'
         );
-        if (! Configure::read('app.isDepositPaymentCashless')) {
+        if (! Configure::read('AppConfig.isDepositPaymentCashless')) {
             $this->allowedPaymentTypes = array(
                 'product',
                 'payback'
@@ -565,7 +565,7 @@ class PaymentsController extends AdminAppController
                     'date' => $order['date_add'],
                     'year' => Configure::read('timeHelper')->getYearFromDbDate($order['date_add']),
                     'amount' => $order['total_paid'] * - 1,
-                    'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
+                    'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('AppConfig.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
                     'type' => 'order',
                     'text' => Configure::read('htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order_details/index/dateFrom:' . Configure::read('timeHelper')->formatToDateShort($order['date_add']) . '/dateTo:' . Configure::read('timeHelper')->formatToDateShort($order['date_add']) . '/orderId:' . $order['id_order'] . '/customerId:' . $order['id_customer'], array(
                         'title' => 'Bestellung anzeigen'

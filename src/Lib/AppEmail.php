@@ -42,8 +42,8 @@ class AppEmail extends CakeEmail
     {
         parent::__construct('default');
 
-        if (Configure::read('app.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
-            $this->addBcc(Configure::read('app.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC'));
+        if (Configure::read('AppConfig.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
+            $this->addBcc(Configure::read('AppConfig.db_config_FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }
 
@@ -88,7 +88,7 @@ class AppEmail extends CakeEmail
     public function send($content = null)
     {
         try {
-            if (Configure::read('app.db_config_FCS_EMAIL_LOG_ENABLED')) {
+            if (Configure::read('AppConfig.db_config_FCS_EMAIL_LOG_ENABLED')) {
                 $this->logEmailInDatabase($content);
             }
             return parent::send($content);
@@ -105,7 +105,7 @@ class AppEmail extends CakeEmail
                 if ($this->from() != $fallbackEmailConfig['from']) {
                     $this->config($fallbackEmailConfig);
                     $this->from(array(
-                        key($this->from()) => Configure::read('app.db_config_FCS_APP_NAME')
+                        key($this->from()) => Configure::read('AppConfig.db_config_FCS_APP_NAME')
                     ));
                     CakeLog::write('info', 'email was sent with fallback config');
                     return $this->send($content);

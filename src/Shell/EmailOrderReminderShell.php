@@ -9,7 +9,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
+ * Cronjob works properly if it's called on Configure::read('AppConfig.sendOrderListsWeekDay') -1 or -2
  * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
  *
  * @since         FoodCoopShop 1.0.0
@@ -25,7 +25,7 @@ class EmailOrderReminderShell extends AppShell
     {
         parent::main();
 
-        if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('app.db_config_FCS_CART_ENABLED')) {
+        if (! Configure::read('AppConfig.emailOrderReminderEnabled') || ! Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
             return;
         }
 
@@ -67,10 +67,10 @@ class EmailOrderReminderShell extends AppShell
             $Email->to($customer['Customer']['email'])
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
-                ->subject('Bestell-Erinnerung ' . Configure::read('app.db_config_FCS_APP_NAME'))
+                ->subject('Bestell-Erinnerung ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
                 ->viewVars(array(
                   'customer' => $customer,
-                  'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
+                  'lastOrderDayAsString' => (Configure::read('AppConfig.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
                 ))
                 ->send();
 

@@ -80,7 +80,7 @@ class OrderDetail extends AppModel
         }
         $params = array(
             'manufacturerId' => $manufacturerId,
-            'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate')
+            'depositForManufacturersStartDate' => Configure::read('AppConfig.depositForManufacturersStartDate')
         );
         $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
         return $orderDetails;

@@ -43,17 +43,17 @@ class MyTimeHelper extends TimeHelper
     public function recalcDeliveryDayDelta()
     {
         switch (date('N')) {
-            case Configure::read('app.sendOrderListsWeekday'): // today is app.sendOrderListsWeekday
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta');
+            case Configure::read('AppConfig.sendOrderListsWeekday'): // today is app.sendOrderListsWeekday
+                $newDeliveryDelta = Configure::read('AppConfig.deliveryDayDelta');
                 break;
-            case Configure::read('app.sendOrderListsWeekday') + 1:
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta') - 1;
+            case Configure::read('AppConfig.sendOrderListsWeekday') + 1:
+                $newDeliveryDelta = Configure::read('AppConfig.deliveryDayDelta') - 1;
                 break;
-            case Configure::read('app.sendOrderListsWeekday') + 2:
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta') - 2;
+            case Configure::read('AppConfig.sendOrderListsWeekday') + 2:
+                $newDeliveryDelta = Configure::read('AppConfig.deliveryDayDelta') - 2;
                 break;
-            case Configure::read('app.sendOrderListsWeekday') + 3:
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta') - 3;
+            case Configure::read('AppConfig.sendOrderListsWeekday') + 3:
+                $newDeliveryDelta = Configure::read('AppConfig.deliveryDayDelta') - 3;
                 break;
         }
         if (isset($newDeliveryDelta)) {
@@ -77,7 +77,7 @@ class MyTimeHelper extends TimeHelper
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
         $day = $this->formatAsWeekday(time());
 
-        if ($day >= Configure::read('app.sendOrderListsWeekday') && $day <= $weekdayDeliveryDate) {
+        if ($day >= Configure::read('AppConfig.sendOrderListsWeekday') && $day <= $weekdayDeliveryDate) {
             $deliveryDate = strtotime('+ 1 week ' . $weekdayStringDeliveryDate);
         }
 
@@ -87,7 +87,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getDeliveryDay($day)
     {
-        $daysToAddToOrderPeriodLastDay = Configure::read('app.deliveryDayDelta') + 1;
+        $daysToAddToOrderPeriodLastDay = Configure::read('AppConfig.deliveryDayDelta') + 1;
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($day) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
         return $deliveryDate;
     }
@@ -95,7 +95,7 @@ class MyTimeHelper extends TimeHelper
     public function getWeekdaysBetweenOrderSendAndDelivery($delta = 0)
     {
         $weekdays = array();
-        for ($i = Configure::read('app.sendOrderListsWeekday'); $i <= Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta') + $delta; $i++) {
+        for ($i = Configure::read('AppConfig.sendOrderListsWeekday'); $i <= Configure::read('AppConfig.sendOrderListsWeekday') + Configure::read('AppConfig.deliveryDayDelta') + $delta; $i++) {
             $weekdays[] = $i;
         }
         return $weekdays;
@@ -117,7 +117,7 @@ class MyTimeHelper extends TimeHelper
     public function getDateForShopOrder($day)
     {
         $currentWeekday = $this->formatAsWeekday($day);
-        $daysDiff = $currentWeekday - Configure::read('app.sendOrderListsWeekday');
+        $daysDiff = $currentWeekday - Configure::read('AppConfig.sendOrderListsWeekday');
         $daysDiff = ($daysDiff * -1) - 1;
         $resetDate = strtotime($daysDiff . ' day', $day);
         return date('Y-m-d', $resetDate) . ' 00:00:00';
@@ -130,7 +130,7 @@ class MyTimeHelper extends TimeHelper
 
     private function getDeliveryWeekday()
     {
-        return (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
+        return (Configure::read('AppConfig.sendOrderListsWeekday') + Configure::read('AppConfig.deliveryDayDelta')) % 7;
     }
 
     /**
@@ -142,7 +142,7 @@ class MyTimeHelper extends TimeHelper
     {
 
         $currentWeekday = $this->formatAsWeekday($day);
-        $dateDiff = 7 - Configure::read('app.sendOrderListsWeekday') + $currentWeekday;
+        $dateDiff = 7 - Configure::read('AppConfig.sendOrderListsWeekday') + $currentWeekday;
         $date = strtotime('-' . $dateDiff . ' day ', $day);
 
         if ($currentWeekday > $this->getDeliveryWeekday()) {
@@ -169,25 +169,25 @@ class MyTimeHelper extends TimeHelper
         }
 
         if ($currentWeekday == $this->getDeliveryWeekday()) {
-            $dateDiff = -1 - Configure::read('app.deliveryDayDelta');
+            $dateDiff = -1 - Configure::read('AppConfig.deliveryDayDelta');
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 1) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 5;
+            $dateDiff = (Configure::read('AppConfig.deliveryDayDelta') * -1) + 5;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 2) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 4;
+            $dateDiff = (Configure::read('AppConfig.deliveryDayDelta') * -1) + 4;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 3) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 3;
+            $dateDiff = (Configure::read('AppConfig.deliveryDayDelta') * -1) + 3;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 4) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 2;
+            $dateDiff = (Configure::read('AppConfig.deliveryDayDelta') * -1) + 2;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 5) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 1;
+            $dateDiff = (Configure::read('AppConfig.deliveryDayDelta') * -1) + 1;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
-            $dateDiff = Configure::read('app.deliveryDayDelta') * -1;
+            $dateDiff = Configure::read('AppConfig.deliveryDayDelta') * -1;
         }
 
         $date = date('d.m.Y', strtotime($dateDiff . ' day ', $day));

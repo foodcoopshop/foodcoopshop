@@ -15,13 +15,13 @@
 
 $this->element('addScript', array(
     'script' =>
-        Configure::read('app.jsNamespace') . ".Helper.showContent();" .
-        Configure::read('app.jsNamespace') . ".Helper.initAnystretch();" .
-        Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" .
-        Configure::read('app.jsNamespace') . ".Helper.initMenu();" .
-        Configure::read('app.jsNamespace') . ".Helper.initScrolltopButton();" .
-        Configure::read('app.jsNamespace') . ".Mobile.autoOpenSidebarLeft();" .
-        Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();"
+        Configure::read('AppConfig.jsNamespace') . ".Helper.showContent();" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initAnystretch();" .
+        Configure::read('AppConfig.jsNamespace') . ".Admin.setMenuFixed();" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initMenu();" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initScrolltopButton();" .
+        Configure::read('AppConfig.jsNamespace') . ".Mobile.autoOpenSidebarLeft();" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initLogoutButton();"
 ));
 
 echo '<div id="home">';

@@ -81,9 +81,9 @@ class ActionLogsController extends AdminAppController
         if ($this->AppAuth->isCustomer()) {
             $tmpCondition  =  '(';
                 $tmpCondition .= 'Customer.id_customer = '.$this->AppAuth->getUserId();
-                // order of first and lastname can be changed Configure::read('app.customerMainNamePart')
+                // order of first and lastname can be changed Configure::read('AppConfig.customerMainNamePart')
                 $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
-            if (Configure::read('app.customerMainNamePart') == 'lastname') {
+            if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
                 $customerNameForRegex = $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname');
             }
                 $tmpCondition .= ' OR ActionLog.text REGEXP \'' . $customerNameForRegex . '\'';

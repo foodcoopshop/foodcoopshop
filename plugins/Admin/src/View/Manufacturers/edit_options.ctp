@@ -15,9 +15,9 @@
 
 $this->element('addScript', array(
     'script' =>
-        Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');".
-        Configure::read('app.jsNamespace') . ".Helper.initDatepicker(); var datefieldSelector = $('input.datepicker');datefieldSelector.datepicker();
+        Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
+        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');".
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker(); var datefieldSelector = $('input.datepicker');datefieldSelector.datepicker();
     "
 ));
 
@@ -135,7 +135,7 @@ echo '<div class="holiday-wrapper">';
     echo '<h2>Sonstige Einstellungen</h2>';
 
 
-    if (Configure::read('app.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
+    if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
         echo $this->Form->input('Manufacturer.variable_member_fee', array(
         'label' => 'Variabler Mitgliedsbeitrag in %',
         'div' => array(
@@ -173,7 +173,7 @@ echo '<div class="holiday-wrapper">';
     if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
         $this->element('addScript', array(
             'script' =>
-                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
+                Configure::read('AppConfig.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
             "
         ));
         echo $this->Form->input('Manufacturer.enabled_sync_domains', array(

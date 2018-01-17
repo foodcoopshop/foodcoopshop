@@ -13,8 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 $this->element('addScript', array('script' =>
-    Configure::read('app.jsNamespace').'.Helper.appendFlashMessageCloser();'.
-    Configure::read('app.jsNamespace').'.Helper.bindFlashMessageCloser();
+    Configure::read('AppConfig.jsNamespace').'.Helper.appendFlashMessageCloser();'.
+    Configure::read('AppConfig.jsNamespace').'.Helper.bindFlashMessageCloser();
 '));
 ?>
 <div id="<?php echo h($key) ?>Message" class="error"><?php echo $message; ?></div>

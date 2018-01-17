@@ -23,7 +23,7 @@ class CategoriesController extends FrontendController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        if (! (Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn())) {
+        if (! (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->loggedIn())) {
             $this->AppAuth->deny($this->action);
         } else {
             $this->AppAuth->allow($this->action);
@@ -36,7 +36,7 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
+        $products = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
@@ -62,7 +62,7 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, $keyword);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 

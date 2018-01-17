@@ -15,7 +15,7 @@
 
 $helpText = '<li><b>Hallo ' . $appAuth->getUserFirstname() . '!</b></li>
         <li>Um deinen Mitgliedsbeitrag einzuzahlen, überweise bitte mittels E-Banking oder per Erlagschein den gewünschten Betrag auf folgendes Konto:</li>
-        <li><b>' . Configure::read('app.db_config_FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') . '</b></li>
+        <li><b>' . Configure::read('AppConfig.db_config_FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') . '</b></li>
         <li>Bitte gib als Buchungstext "Mitgliedsbeitrag", deinen Namen und den Zeitraum an, für den dein Mitgliedsbeitrag gedacht ist.</li>
         <li>Klicke dann auf ' . $this->Html->image($this->Html->getFamFamFamPath('heart.png')) .' "Eingezahlten Mitgliedsbeitrag eintragen" und gib folgendes ein:
             <br />- den Betrag, den du gerade überwiesen hast

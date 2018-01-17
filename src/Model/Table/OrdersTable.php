@@ -83,7 +83,7 @@ class Order extends AppModel
         $conditions = array(
             'Order.id_customer' => $customerId,
             'Order.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
-            'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
+            'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.depositPaymentCashlessStartDate') . '\''
         );
 
         $ordersSum = $this->find('all', array(

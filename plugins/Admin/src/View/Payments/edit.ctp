@@ -15,10 +15,10 @@
 
 $this->element('addScript', array(
     'script' =>
-        Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('PaymentApprovalComment');" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
-        Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['Payment']['id'] . "', 'Payment');
+        Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
+        Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('PaymentApprovalComment');" .
+        Configure::read('AppConfig.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
+        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" .$this->request->data['Payment']['id'] . "', 'Payment');
         $('#PaymentApproval').on('change', function() {
             var emailCheckbox = $('#PaymentSendEmail');
             if ($(this).val() == -1) {

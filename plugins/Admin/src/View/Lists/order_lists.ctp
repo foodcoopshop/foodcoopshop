@@ -17,9 +17,9 @@
      
         <?php
         $this->element('addScript', array(
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
+        'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();
+            datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();
         "
         ));
     ?>

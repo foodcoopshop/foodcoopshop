@@ -166,7 +166,7 @@ class MenuHelper extends Helper
 
     public function getPaymentMemberFeeMenuElement()
     {
-        if (Configure::read('app.memberFeeEnabled')) {
+        if (Configure::read('AppConfig.memberFeeEnabled')) {
             return array('slug' => Configure::read('slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => array('fa-icon' => 'fa-fw fa-heart'));
         }
         return array();

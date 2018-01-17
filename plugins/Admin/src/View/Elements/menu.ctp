@@ -139,7 +139,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         )
     );
 
-    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+    if (date('Y-m-d') > Configure::read('AppConfig.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = array(
             'slug' => $this->Slug->getDepositList(),
             'name' => 'Pfandkonto',
@@ -255,7 +255,7 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-cogs'
         )
     );
-    if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
+    if (date('Y-m-d') > Configure::read('AppConfig.depositForManufacturersStartDate')) {
         $od = ClassRegistry::init('OrderDetail');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {

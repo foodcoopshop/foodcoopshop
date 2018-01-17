@@ -31,7 +31,7 @@ class ListsController extends AdminAppController
             'Manufacturer'
         );
 
-        $path = realpath(Configure::read('app.folder.order_lists'));
+        $path = realpath(Configure::read('AppConfig.folder.order_lists'));
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 
         $dateFrom = date('d.m.Y', Configure::read('timeHelper')->getDeliveryDay(Configure::read('timeHelper')->getCurrentDay()));
@@ -80,7 +80,7 @@ class ListsController extends AdminAppController
                     )
                 ));
 
-                $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
+                $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('AppConfig.folder.order_lists'), '', $name);
                 $customerListLink = str_replace($matches[1], 'Mitglied', $productListLink);
 
                 $files[] = array(
@@ -105,7 +105,7 @@ class ListsController extends AdminAppController
     {
         $this->autoRender = false;
 
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder.order_lists')) . DS . $this->params->query['file'];
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('AppConfig.folder.order_lists')) . DS . $this->params->query['file'];
         $explodedString = explode('\\', $filenameWithPath);
 
         header('Content-Type: application/pdf');

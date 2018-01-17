@@ -150,7 +150,7 @@ class DbMigration
      */
     public function doDbMigrations()
     {
-        $db = Configure::read('app.db_config_FCS_DB_VERSION');
+        $db = Configure::read('AppConfig.db_config_FCS_DB_VERSION');
         if (strlen($db) == 0) {  // the DB version config value doesn't exist
             $avail = array('0'); // do the very first DB migration
         } else if (!is_numeric($db)) {
@@ -204,7 +204,7 @@ class DbMigration
                 $this->doSaveConf($tried);
             }
 
-            $file = new File(Configure::read('app.folder.migrations') . DS . sprintf('%1$03d', $migration) . '.sql');
+            $file = new File(Configure::read('AppConfig.folder.migrations') . DS . sprintf('%1$03d', $migration) . '.sql');
 
             if (!$file->readable()) {
                 if (is_array($conf)) {
@@ -297,7 +297,7 @@ class DbMigration
     {
         $result = array();
         $activeVersion = (int)$activeVersion;
-        $dir = new Folder(Configure::read('app.folder.migrations'));
+        $dir = new Folder(Configure::read('AppConfig.folder.migrations'));
         $files = $dir->find('^[0-9][0-9][0-9]\.sql$');
         unset($dir);
 

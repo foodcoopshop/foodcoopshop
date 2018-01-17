@@ -33,7 +33,7 @@ class ProductsController extends FrontendController
                 'Product.active' => APP_ON
             )
         ));
-        if (! Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
+        if (! Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->loggedIn()
               && (isset($product['Manufacturer']) && $product['Manufacturer']['is_private'])
@@ -52,7 +52,7 @@ class ProductsController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->loadModel('Category');
-        $product = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
 
         if (empty($product) || !isset($product[0])) {

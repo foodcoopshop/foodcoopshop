@@ -110,7 +110,7 @@ class Manufacturer extends AppModel
     {
         $result = $sendOrderedProductDeletedNotification;
         if ($sendOrderedProductDeletedNotification == '') {
-            $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
+            $result = Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification');
         }
         return (boolean) $result;
     }
@@ -123,7 +123,7 @@ class Manufacturer extends AppModel
     {
         $result = $sendOrderedProductPriceChangedNotification;
         if ($sendOrderedProductPriceChangedNotification == '') {
-            $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
+            $result = Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification');
         }
         return (boolean) $result;
     }
@@ -136,7 +136,7 @@ class Manufacturer extends AppModel
     {
         $result = $sendOrderedProductQuantityChangedNotification;
         if ($sendOrderedProductQuantityChangedNotification == '') {
-            $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+            $result = Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification');
         }
         return (boolean) $result;
     }
@@ -149,7 +149,7 @@ class Manufacturer extends AppModel
     {
         $result = $sendShopOrderNotification;
         if ($sendShopOrderNotification == '') {
-            $result = Configure::read('app.defaultSendShopOrderNotification');
+            $result = Configure::read('AppConfig.defaultSendShopOrderNotification');
         }
         return (boolean) $result;
     }
@@ -162,7 +162,7 @@ class Manufacturer extends AppModel
     {
         $result = $sendInvoice;
         if ($sendInvoice == '') {
-            $result = Configure::read('app.defaultSendInvoice');
+            $result = Configure::read('AppConfig.defaultSendInvoice');
         }
         return (boolean) $result;
     }
@@ -175,7 +175,7 @@ class Manufacturer extends AppModel
     {
         $result = $bulkOrdersAllowed;
         if ($bulkOrdersAllowed == '') {
-            $result = Configure::read('app.defaultBulkOrdersAllowed');
+            $result = Configure::read('AppConfig.defaultBulkOrdersAllowed');
         }
         return $result;
     }
@@ -188,7 +188,7 @@ class Manufacturer extends AppModel
     {
         $result = $defaultTaxId;
         if ($defaultTaxId == '') {
-            $result = Configure::read('app.defaultTaxId');
+            $result = Configure::read('AppConfig.defaultTaxId');
         }
         return $result;
     }
@@ -201,7 +201,7 @@ class Manufacturer extends AppModel
     {
         $result = $variableMemberFee;
         if ($variableMemberFee == '') {
-            $result = Configure::read('app.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+            $result = Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;
     }
@@ -214,7 +214,7 @@ class Manufacturer extends AppModel
     {
         $result = $sendOrderList;
         if ($sendOrderList == '') {
-            $result = Configure::read('app.defaultSendOrderList');
+            $result = Configure::read('AppConfig.defaultSendOrderList');
         }
         return (boolean) $result;
     }
@@ -298,7 +298,7 @@ class Manufacturer extends AppModel
 
     public function getForMenu($appAuth)
     {
-        if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = ClassRegistry::init('Product');
         }
         $this->recursive = - 1;
@@ -327,7 +327,7 @@ class Manufacturer extends AppModel
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];
             $additionalInfo = '';
-            if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
             }
             $holidayInfo = Configure::read('htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
@@ -336,7 +336,7 @@ class Manufacturer extends AppModel
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
-                    if ($appAuth->loggedIn() || Configure::read('app.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                    if ($appAuth->loggedIn() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                         $additionalInfo .= ' - ';
                     }
                     $additionalInfo .= $holidayInfo;
@@ -431,8 +431,8 @@ class Manufacturer extends AppModel
         $params = array(
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
-            'langId' => Configure::read('app.langId'),
-            'shopId' => Configure::read('app.shopId')
+            'langId' => Configure::read('AppConfig.langId'),
+            'shopId' => Configure::read('AppConfig.shopId')
         );
         if (! $this->loggedIn()) {
             $params['isPrivate'] = APP_OFF;

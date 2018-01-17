@@ -19,7 +19,7 @@ if (empty($blogPosts)) {
 
 if (!isset($useCarousel) || $useCarousel) {
     $this->element('addScript', array('script' =>
-        Configure::read('app.jsNamespace').".Helper.initBlogPostCarousel();"
+        Configure::read('AppConfig.jsNamespace').".Helper.initBlogPostCarousel();"
     ));
 }
 

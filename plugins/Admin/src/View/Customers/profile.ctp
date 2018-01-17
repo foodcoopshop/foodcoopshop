@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . $appAuth->getUserId() . "', 'Customers');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . $appAuth->getUserId() . "', 'Customers');
     "
 ));
 ?>
@@ -79,7 +79,7 @@ echo $this->Form->input('AddressCustomer.phone', array(
     'label' => 'Telefon'
 ));
 
-if (Configure::read('app.emailOrderReminderEnabled')) {
+if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
     echo $this->Form->input('Customer.newsletter', array(
         'label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.',
         'type' => 'checkbox'

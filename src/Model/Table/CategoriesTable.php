@@ -71,7 +71,7 @@ class Category extends AppModel
 
     public function getExcludeCondition()
     {
-        return $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
+        return $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('AppConfig.categoryAllProducts') . ')';
     }
 
     public function getThreaded($conditions = array())
@@ -107,8 +107,8 @@ class Category extends AppModel
     {
         $params = array(
             'active' => APP_ON,
-            'langId' => Configure::read('app.langId'),
-            'shopId' => Configure::read('app.shopId')
+            'langId' => Configure::read('AppConfig.langId'),
+            'shopId' => Configure::read('AppConfig.shopId')
         );
         if (! $this->loggedIn()) {
             $params['isPrivate'] = APP_OFF;
@@ -137,7 +137,7 @@ class Category extends AppModel
         }
 
         if ($filterByNewProducts) {
-            $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('app.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
+            $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
             $sql .= " AND DATE_FORMAT(ProductShop.date_add, '%Y-%m-%d') > :dateAdd";
         }
 
