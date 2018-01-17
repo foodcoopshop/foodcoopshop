@@ -146,10 +146,10 @@ return [
         /**
          * date of the last update of terms of use
          */
-        'termsOfUseLastUpdate' => '2016-11-28',
+        'termsOfUseLastUpdate' => '2016-11-28'
         
-        'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
-        'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
-        'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View())
+//         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
+//         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
+//         'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View())
     ]
 ];

@@ -6,68 +6,98 @@
  * Routes are very important mechanism that allows you to freely connect
  * different URLs to chosen controllers and their actions (functions).
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.2.9
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-    Router::parseExtensions('pdf');
+use Cake\Core\Plugin;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
+use Cake\Routing\Route\DashedRoute;
 
 /**
- * Here, we are connecting '/' (base path) to controller called 'Pages',
- * its action called 'display', and we pass a param to select the view file
- * to use (in this case, /app/View/Pages/home.ctp)...
+ * The default class to use for all routes
+ *
+ * The following route classes are supplied with CakePHP and are appropriate
+ * to set as the default:
+ *
+ * - Route
+ * - InflectedRoute
+ * - DashedRoute
+ *
+ * If no call is made to `Router::defaultRouteClass()`, the class used is
+ * `Route` (`Cake\Routing\Route\Route`)
+ *
+ * Note that `Route` does not do any inflections on URLs which will result in
+ * inconsistently cased URLs when used with `:plugin`, `:controller` and
+ * `:action` markers.
+ *
  */
-    // app home
-    Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
+Router::defaultRouteClass(DashedRoute::class);
 
-    Router::connect('/anmelden', array('controller' => 'customers', 'action' => 'login'));
-    Router::connect('/registrierung', array('controller' => 'customers', 'action' => 'login'));
-    Router::connect('/registrierung/abgeschlossen', array('controller' => 'customers', 'action' => 'registrationSuccessful'));
-    Router::connect('/logout', array('controller' => 'customers', 'action' => 'logout'));
-    Router::connect('/Informationen-ueber-Ruecktrittsrecht', array('controller' => 'carts', 'action' => 'generateCancellationInformationPdf'));
-    Router::connect('/nutzungsbedingungen', array('controller' => 'pages', 'action' => 'termsOfUse'));
-    Router::connect('/datenschutzerklaerung', array('controller' => 'pages', 'action' => 'privacyPolicy'));
-    Router::connect('/nutzungsbedingungen-akzeptieren', array('controller' => 'customers', 'action' => 'acceptUpdatedTermsOfUse'));
-
-    Router::connect('/neue-produkte', array('controller' => 'categories', 'action' => 'newProducts'));
-    Router::connect('/neues-passwort-anfordern', array('controller' => 'customers', 'action' => 'newPasswordRequest'));
-    Router::connect('/neues-passwort-generieren/:changePasswordCode', array('controller' => 'customers', 'action' => 'generateNewPassword'));
-
-    Router::connect('/aktuelles', array('controller' => 'blog_posts', 'action' => 'index'));
-    Router::connect('/aktuelles/*', array('controller' => 'blog_posts', 'action' => 'detail'));
-    Router::connect('/suche/*', array('controller' => 'categories', 'action' => 'search'));
-    Router::connect('/kategorie/*', array('controller' => 'categories', 'action' => 'detail'));
-    Router::connect('/produkt/*', array('controller' => 'products', 'action' => 'detail'));
-    Router::connect('/hersteller', array('controller' => 'manufacturers', 'action' => 'index'));
-    Router::connect('/hersteller/:manufacturerSlug/aktuelles', array('controller' => 'blog_posts', 'action' => 'index'));
-    Router::connect('/hersteller/*', array('controller' => 'manufacturers', 'action' => 'detail'));
-    Router::connect('/content/*', array('controller' => 'pages', 'action' => 'detail'));
-    Router::connect('/warenkorb/anzeigen', array('controller' => 'carts', 'action' => 'detail'));
-    Router::connect('/warenkorb/abschliessen', array('controller' => 'carts', 'action' => 'finish'));
-    Router::connect('/warenkorb/abgeschlossen/*', array('controller' => 'carts', 'action' => 'orderSuccessful'));
-    Router::connect('/warenkorb/:action', array('controller' => 'carts'));
-
-    // home for admin
-    Router::connect('/admin', array('plugin' => 'admin', 'controller' => 'pages', 'action' => 'home'));
-
+Router::scope('/', function (RouteBuilder $routes) {
+    
+    $routes->connect('/', array('controller' => 'pages', 'action' => 'home'));
+    
+    $routes->connect('/anmelden', array('controller' => 'customers', 'action' => 'login'));
+    $routes->connect('/registrierung', array('controller' => 'customers', 'action' => 'login'));
+    $routes->connect('/registrierung/abgeschlossen', array('controller' => 'customers', 'action' => 'registrationSuccessful'));
+    $routes->connect('/logout', array('controller' => 'customers', 'action' => 'logout'));
+    $routes->connect('/Informationen-ueber-Ruecktrittsrecht', array('controller' => 'carts', 'action' => 'generateCancellationInformationPdf'));
+    $routes->connect('/nutzungsbedingungen', array('controller' => 'pages', 'action' => 'termsOfUse'));
+    $routes->connect('/datenschutzerklaerung', array('controller' => 'pages', 'action' => 'privacyPolicy'));
+    $routes->connect('/nutzungsbedingungen-akzeptieren', array('controller' => 'customers', 'action' => 'acceptUpdatedTermsOfUse'));
+    
+    $routes->connect('/neue-produkte', array('controller' => 'categories', 'action' => 'newProducts'));
+    $routes->connect('/neues-passwort-anfordern', array('controller' => 'customers', 'action' => 'newPasswordRequest'));
+    $routes->connect('/neues-passwort-generieren/:changePasswordCode', array('controller' => 'customers', 'action' => 'generateNewPassword'));
+    
+    $routes->connect('/aktuelles', array('controller' => 'blog_posts', 'action' => 'index'));
+    $routes->connect('/aktuelles/*', array('controller' => 'blog_posts', 'action' => 'detail'));
+    $routes->connect('/suche/*', array('controller' => 'categories', 'action' => 'search'));
+    $routes->connect('/kategorie/*', array('controller' => 'categories', 'action' => 'detail'));
+    $routes->connect('/produkt/*', array('controller' => 'products', 'action' => 'detail'));
+    $routes->connect('/hersteller', array('controller' => 'manufacturers', 'action' => 'index'));
+    $routes->connect('/hersteller/:manufacturerSlug/aktuelles', array('controller' => 'blog_posts', 'action' => 'index'));
+    $routes->connect('/hersteller/*', array('controller' => 'manufacturers', 'action' => 'detail'));
+    $routes->connect('/content/*', array('controller' => 'pages', 'action' => 'detail'));
+    $routes->connect('/warenkorb/anzeigen', array('controller' => 'carts', 'action' => 'detail'));
+    $routes->connect('/warenkorb/abschliessen', array('controller' => 'carts', 'action' => 'finish'));
+    $routes->connect('/warenkorb/abgeschlossen/*', array('controller' => 'carts', 'action' => 'orderSuccessful'));
+    $routes->connect('/warenkorb/:action', array('controller' => 'carts'));
+    
+    // für normale cake routings (users controller)
+    $routes->connect('/:controller/:action');
+    
+    /**
+     * Connect catchall routes for all controllers.
+     *
+     * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
+     *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
+     *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'DashedRoute']);`
+     *
+     * Any route class can be used with this method, such as:
+     * - DashedRoute
+     * - InflectedRoute
+     * - Route
+     * - Or your own route class
+     *
+     * You can remove these routes once you've connected the
+     * routes you want in your application.
+     */
+    $routes->fallbacks(DashedRoute::class);
+});
+    
 /**
- * Load all plugin routes. See the CakePlugin documentation on
+ * Load all plugin routes. See the Plugin documentation on
  * how to customize the loading of plugin routes.
  */
-    CakePlugin::routes();
-
-/**
- * Load the CakePHP default routes. Only remove this if you do not want to use
- * the built-in default routes.
- */
-    require CAKE . 'Config' . DS . 'routes.php';
+Plugin::routes();

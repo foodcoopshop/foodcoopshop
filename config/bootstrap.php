@@ -55,7 +55,6 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
-    Configure::load('app_config', 'default');
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -65,7 +64,9 @@ try {
  * You can use a file like app_local.php to provide local overrides to your
  * shared configuration.
  */
-Configure::load('app_custom', 'default');
+Configure::load('app_config', 'default');
+Configure::load('custom_config', 'default');
+Configure::load('credentials', 'default');
 
 /*
  * When debug = true the metadata cache should only last
@@ -205,34 +206,28 @@ if (Configure::read('debug')) {
 
 // foodcoopshop
 Plugin::load('AssetCompress', ['bootstrap' => true]);
-Plugin::load('Admin', [
-    'bootstrap' => false,
-    'routes' => true,
-    'autoload' => true
-]);
+// Plugin::load('Admin', [
+//     'bootstrap' => false,
+//     'routes' => true,
+//     'autoload' => true
+// ]);
 
 date_default_timezone_set('Europe/Berlin');
 locale_set_default('de');
 setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
 
-/*
-config('app.config');
-config('custom.config');
-CakePlugin::load('Admin');
-CakePlugin::load('AssetCompress', array(
-    'bootstrap' => true
-));
 
-App::uses('ClassRegistry', 'Utility');
-ClassRegistry::init('Configuration')->loadConfigurations();
+/*
+// App::uses('ClassRegistry', 'Utility');
+Registry::init('Configuration')->loadConfigurations();
 if (Configure::read('app.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
-    CakePlugin::load('Network', array(
+    Plugin::load('Network', array(
         'routes' => true
     ));
 }
 if (Configure::read('app.emailErrorLoggingEnabled')) {
-    CakePlugin::load('EmailErrorLog', array(
+    Plugin::load('EmailErrorLog', array(
         'bootstrap' => true
     ));
 }

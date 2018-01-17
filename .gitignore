@@ -1,6 +1,5 @@
 # CakePHP specific files #
 ##########################
-/config/app.php
 /config/.env
 
 # OS generated files #
@@ -27,6 +26,7 @@ Thumbs.db
 *.tmPreferences.cache
 # Eclipse
 .settings/*
+/.project
 # JetBrains, aka PHPStorm, IntelliJ IDEA
 .idea/*
 # NetBeans
@@ -36,13 +36,8 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 
-# FoodCoopShop specific files#
-##############################
-/config/database.php
-/config/email.php
+# FoodCoopShop specific files #
+###############################
 /config/credentials.php
-/config/custom.config.php
-
-/.project
-/.settings
+/config/custom_config.php
 /webroot/node_modules
