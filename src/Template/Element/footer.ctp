@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+
 ?>
 <div class="first-column">
     <?php

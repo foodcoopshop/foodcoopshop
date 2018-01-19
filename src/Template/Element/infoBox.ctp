@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?><div id="info-box" class="box">
     <?php
        echo preg_replace('/{ABHOLTAG}/', $this->Time->getFormattedDeliveryDateByCurrentDay(), Configure::read('AppConfig.db_config_FCS_RIGHT_INFO_BOX_HTML'));

@@ -13,15 +13,17 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 if (!empty($sliders)) {
     $this->element('addScript', ['script' =>
         Configure::read('AppConfig.jsNamespace').".Helper.initSlider();"
     ]);
     echo '<div id="slider">';
     foreach ($sliders as $slider) {
-        echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider['Sliders']['image']).'" />';
+        echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
     }
-    if (count($sliders) > 1) {
+    if ($sliders->count() > 1) {
         echo '<div class=cycle-pager></div>';
     }
     echo '</div>';

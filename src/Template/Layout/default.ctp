@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+
 ?>
 <?php
 // to always get an up-to-date cart if "browser back" or "duplicate tab" is used
@@ -52,7 +55,7 @@ header('Pragma: no-cache');
 <?php
     $bodyClasses = [
         Inflector::tableize($this->name),
-        Inflector::singularize(Inflector::tableize($this->action))
+        Inflector::singularize(Inflector::tableize($this->request->getParam('action')))
     ];
     if ($appAuth->isSuperadmin()) {
         $bodyClasses[] = 'superadmin';
@@ -80,7 +83,10 @@ header('Pragma: no-cache');
         </div>
         
         <div id="content">
-            <?php echo $this->Session->flash(); ?>
+            <?php
+                echo $this->Flash->render();
+                echo $this->Flash->render('auth');
+            ?>
             <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>         
             <?php echo $this->element('sidebar'); ?>
             <div id="inner-content">
@@ -107,7 +113,6 @@ header('Pragma: no-cache');
     <?php echo $this->element('scrollToTopButton'); ?>
     
     <div class="sc"></div>
-    <?php echo $this->element('sql_dump'); ?>
     
 <?php
     echo $this->element('renderJs', ['configs' => ['frontend']]);

@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -39,7 +42,7 @@
     <div id="container">
     
             <div id="content">
-            <?php echo $this->Session->flash(); ?>
+            <?php echo $this->Flash->render(); ?>
             <div id="inner-content">
                 <?php echo $this->fetch('content'); ?>
                 <?php
@@ -62,7 +65,6 @@
     </div>
     
     <div class="sc"></div>
-    <?php echo $this->element('sql_dump'); ?>
     
 <?php
 
