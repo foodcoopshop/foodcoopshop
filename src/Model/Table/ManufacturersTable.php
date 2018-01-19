@@ -306,7 +306,7 @@ class ManufacturersTable extends AppTable
         $conditions = [
             'Manufacturer.active' => APP_ON
         ];
-        if (! $this->user()) {
+        if (! $appAuth->user()) {
             $conditions['Manufacturer.is_private'] = APP_OFF;
         }
 

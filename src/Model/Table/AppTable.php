@@ -119,7 +119,7 @@ class AppTable extends Table
     /**
      * @return boolean
      */
-    protected function loggedIn()
+    protected function user()
     {
         return (boolean) CakeSession::read('Auth.User.id_customer');
     }
