@@ -89,12 +89,12 @@
     echo '<table class="list">';
 
     echo '<tr class="sort">';
-    echo '<th class="hide">' . $this->Paginator->sort('Order.id_order', 'ID') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Customer.name', 'Mitglied') . '</th>';
+    echo '<th class="hide">' . $this->Paginator->sort('Orders.id_order', 'ID') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.name', 'Mitglied') . '</th>';
     echo '<th></th>';
-    echo '<th class="hide">' . $this->Paginator->sort('Customer.email', 'E-Mail') . '</th>';
+    echo '<th class="hide">' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
     if (! $groupByCustomer) {
-        echo '<th class="right">' . $this->Paginator->sort('Order.total_paid', 'Betrag') . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('Orders.total_paid', 'Betrag') . '</th>';
     } else {
         echo '<th class="right">Betrag</th>';
     }
@@ -105,7 +105,7 @@
         echo '<th>Flexi</th>';
     }
     if (! $groupByCustomer) {
-        echo '<th>' . $this->Paginator->sort('Order.date_add', 'Bestelldatum') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Orders.date_add', 'Bestelldatum') . '</th>';
     } else {
         echo '<th>Anzahl Bestellungen</th>';
     }
@@ -117,7 +117,7 @@
     $i = 0;
 
     foreach ($orders as $order) {
-        $paidField = $order['Order']['total_paid'];
+        $paidField = $order['Orders']['total_paid'];
         if ($groupByCustomer) {
             $paidField = $order[0]['Order_total_paid'];
         }
@@ -128,18 +128,18 @@
         $rowClass = array(
             'data'
         );
-        if (! $groupByCustomer && in_array($order['Order']['current_state'], array(
+        if (! $groupByCustomer && in_array($order['Orders']['current_state'], array(
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ))) {
             $rowClass[] = 'selected';
         }
 
-        echo '<tr id="order-' . $order['Order']['id_order'] . '" class="' . join(' ', $rowClass) . '">';
+        echo '<tr id="order-' . $order['Orders']['id_order'] . '" class="' . join(' ', $rowClass) . '">';
 
         echo '<td class="hide order-id">';
         if (! $groupByCustomer) {
-            echo $order['Order']['id_order'];
+            echo $order['Orders']['id_order'];
         }
         echo '</td>';
 
@@ -149,29 +149,29 @@
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
                     array(
-                    'class' => 'order-comment-edit-button' . ($order['Order']['comment'] == '' ? ' disabled' : ''),
-                    'title' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen',
-                    'data-title-for-overlay' => $order['Order']['comment'] != '' ? $order['Order']['comment'] : 'Kommentar hinzufügen'
+                    'class' => 'order-comment-edit-button' . ($order['Orders']['comment'] == '' ? ' disabled' : ''),
+                    'title' => $order['Orders']['comment'] != '' ? $order['Orders']['comment'] : 'Kommentar hinzufügen',
+                    'data-title-for-overlay' => $order['Orders']['comment'] != '' ? $order['Orders']['comment'] : 'Kommentar hinzufügen'
                     ),
                     'javascript:void(0);'
                 );
             echo '</span>';
         }
-        if ($order['Customer']['order_count'] <= 3) {
-            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order['Customer']['order_count'] . 'x bestellt."></i></span>';
+        if ($order['Customers']['order_count'] <= 3) {
+            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order['Customers']['order_count'] . 'x bestellt."></i></span>';
         }
-        echo '<span class="customer-name">'.$order['Order']['name'].'</span>'; // !sic Order.name, related virtual field is copied in controller
+        echo '<span class="customer-name">'.$order['Orders']['name'].'</span>'; // !sic Order.name, related virtual field is copied in controller
         echo '</td>';
 
         echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), array(
-            'title' => 'Alle bestellten Produkte von ' . $order['Order']['name'] . ' anzeigen',
+            'title' => 'Alle bestellten Produkte von ' . $order['Orders']['name'] . ' anzeigen',
             'class' => 'icon-with-text'
-        ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customer']['id_customer'] . '/orderState:' . $orderState);
+        ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customers']['id_customer'] . '/orderState:' . $orderState);
         echo '</td>';
 
         echo '<td class="hide">';
-        echo '<span class="email">' . $order['Customer']['email'] . '</span>';
+        echo '<span class="email">' . $order['Customers']['email'] . '</span>';
         echo '</td>';
 
         echo '<td class="right">';
@@ -182,9 +182,9 @@
             echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
                 echo $this->element('addDepositPaymentOverlay', array(
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
-                    'rowId' => $order['Order']['id_order'],
-                    'userName' => $order['Order']['name'],
-                    'customerId' => $order['Customer']['id_customer']
+                    'rowId' => $order['Orders']['id_order'],
+                    'userName' => $order['Orders']['name'],
+                    'customerId' => $order['Customers']['id_customer']
                 ));
             echo '</td>';
         }
@@ -194,20 +194,20 @@
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('heart.png')) . ' Flexi', array(
                 'title' => 'Flexiblen Mitgliedsbeitrag eintragen',
                 'class' => 'add-payment-member-fee-flexible-button icon-with-text',
-                'data-object-id' => $order['Order']['id_order']
+                'data-object-id' => $order['Orders']['id_order']
             ), 'javascript:void(0);');
-            echo '<div id="add-payment-member-fee-flexible-form-' . $order['Order']['id_order'] . '" class="add-payment-form add-payment-member-fee-flexible-form">';
+            echo '<div id="add-payment-member-fee-flexible-form-' . $order['Orders']['id_order'] . '" class="add-payment-form add-payment-member-fee-flexible-form">';
             echo '<h3>Flexiblen Mitgliedsbeitrag eintragen</h3>';
-            echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order['Order']['name'] . '</b> eintragen:</p>';
-            echo $this->Form->input('Payment.amount', array(
+            echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order['Orders']['name'] . '</b> eintragen:</p>';
+            echo $this->Form->input('Payments.amount', array(
                 'label' => 'Betrag in €',
                 'type' => 'string'
             ));
-            echo $this->Form->hidden('Payment.type', array(
+            echo $this->Form->hidden('Payments.type', array(
                 'value' => 'member_fee_flexible'
             ));
-            echo $this->Form->hidden('Payment.customerId', array(
-                'value' => $order['Customer']['id_customer']
+            echo $this->Form->hidden('Payments.customerId', array(
+                'value' => $order['Customers']['id_customer']
             ));
             echo '</div>';
             echo '<div class="sc"></div>';
@@ -216,7 +216,7 @@
 
         echo '<td style="width: 100px;">';
         if (! $groupByCustomer) {
-            echo $this->Time->formatToDateNTimeShort($order['Order']['date_add']);
+            echo $this->Time->formatToDateNTimeShort($order['Orders']['date_add']);
         } else {
             echo $order[0]['Order_count'];
         }
@@ -224,9 +224,9 @@
 
         echo '<td'.(!$isMobile ? ' style="width: 247px;"' : '').'>';
         if (! $groupByCustomer) {
-            echo '<span class="truncate" style="float: left; width: 77px;">' . $this->MyHtml->getOrderStates()[$order['Order']['current_state']] . '</span>';
+            echo '<span class="truncate" style="float: left; width: 77px;">' . $this->MyHtml->getOrderStates()[$order['Orders']['current_state']] . '</span>';
             $statusChangeIcon = 'accept';
-            if ($order['Order']['current_state'] == ORDER_STATE_OPEN) {
+            if ($order['Orders']['current_state'] == ORDER_STATE_OPEN) {
                 $statusChangeIcon = 'error';
             }
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
@@ -239,12 +239,12 @@
         echo '</td>';
 
         echo '<td class="date-icon icon">';
-        if ($order['Order']['current_state'] == 3) {
+        if ($order['Orders']['current_state'] == 3) {
             echo '<div class="last-n-days-dropdown">';
-            echo $this->Form->input('date_add_' . $order['Order']['id_order'], array(
+            echo $this->Form->input('date_add_' . $order['Orders']['id_order'], array(
                 'type' => 'select',
                 'label' => '',
-                'options' => $this->MyTime->getLastNDays(5, $order['Order']['date_add'])
+                'options' => $this->MyTime->getLastNDays(5, $order['Orders']['date_add'])
             ));
             echo '</div>';
             if (! $groupByCustomer) {

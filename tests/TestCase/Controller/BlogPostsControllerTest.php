@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('BlogPost', 'Model');
+App::uses('BlogPosts', 'Model');
 
 /**
  *

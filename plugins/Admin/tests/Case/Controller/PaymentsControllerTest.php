@@ -1,9 +1,9 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('ActionLog', 'Model');
-App::uses('Payment', 'Model');
-App::uses('Customer', 'Model');
+App::uses('ActionLogs', 'Model');
+App::uses('Payments, 'Model');
+App::uses('Customers', 'Model');
 
 /**
  * PaymentsControllerTest
@@ -220,13 +220,13 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $lastActionLog = $this->ActionLog->find('all', array(
             'conditions' => array(
-                'ActionLog.customer_id' => $customerId
+                'ActionLogs.customer_id' => $customerId
             ),
-            'order' => array('ActionLog.date' => 'DESC')
+            'order' => array('ActionLogs.date' => 'DESC')
         ));
-        $this->assertEquals($expectedType, $lastActionLog[0]['ActionLog']['type'], 'cake action log type not correct');
-        $this->assertEquals($expectedObjectType, $lastActionLog[0]['ActionLog']['object_type'], 'cake action log object type not correct');
-        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['ActionLog']['text'], 'cake action log text not correct');
+        $this->assertEquals($expectedType, $lastActionLog[0]['ActionLogs']['type'], 'cake action log type not correct');
+        $this->assertEquals($expectedObjectType, $lastActionLog[0]['ActionLogs']['object_type'], 'cake action log object type not correct');
+        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['ActionLogs']['text'], 'cake action log text not correct');
     }
 
     /**

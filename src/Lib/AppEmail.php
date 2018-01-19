@@ -1,7 +1,7 @@
 <?php
 
 App::uses('CakeEmail', 'Network/Email');
-App::uses('EmailLog', 'Model');
+App::uses('EmailLogs', 'Model');
 
 /**
  * AppEmail

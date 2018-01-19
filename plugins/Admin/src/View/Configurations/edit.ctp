@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Configuration']['id_Configuration']) ? $this->request->data['Configuration']['id_Configuration'] : "") . "', 'Configuration');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Configurations']['id_Configuration']) ? $this->request->data['Configurations']['id_Configuration'] : "") . "', 'Configurations');
     "
 ));
 
@@ -39,16 +39,16 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Configuration', array(
+echo $this->Form->create('Configurations', array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Configuration.id_configuration');
 
-$label = $unsavedConfiguration['Configuration']['text'];
+$label = $unsavedConfiguration['Configurations']['text'];
 
-switch ($unsavedConfiguration['Configuration']['type']) {
+switch ($unsavedConfiguration['Configurations']['type']) {
     case 'number':
     case 'text':
         echo $this->Form->input('Configuration.value', array(
@@ -87,7 +87,7 @@ switch ($unsavedConfiguration['Configuration']['type']) {
         echo $this->Form->input('Configuration.value', array(
             'type' => 'select',
             'label' => $label,
-            'options' => $this->Html->getConfigurationDropdownOptions($unsavedConfiguration['Configuration']['name']),
+            'options' => $this->Html->getConfigurationDropdownOptions($unsavedConfiguration['Configurations']['name']),
             'required' => true
         ));
         break;

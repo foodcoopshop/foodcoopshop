@@ -30,8 +30,8 @@ class DbMigrationComponent extends Component
     public function initialize(array $config)
     {
         $controller = $this->getController;
-        $controller->loadModel('Configuration');
-        $controller->loadModel('ActionLog');
+        $controller->loadModel('Configurations');
+        $controller->loadModel('ActionLogs');
 
         $this->dbMigration = new DbMigration(
             function ($string = '') use (&$controller) {

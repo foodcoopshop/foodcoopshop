@@ -9,8 +9,8 @@ App::uses('SlugHelper', 'View/Helper');
 App::uses('MyHtmlHelper', 'View/Helper');
 App::uses('MyTimeHelper', 'View/Helper');
 App::uses('ConnectionManager', 'Model');
-App::uses('Configuration', 'Model');
-App::uses('Manufacturer', 'Model');
+App::uses('Configurations', 'Model');
+App::uses('Manufacturers', 'Model');
 
 /**
  * AppCakeTestCase
@@ -209,18 +209,18 @@ class AppCakeTestCase extends CakeTestCase
     protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = [], $expectedToEmails = [], $expectedCcEmails = [], $expectedBccEmails = [])
     {
 
-        $fromAddress = json_decode($emailLog['EmailLog']['from_address']);
-        $toAddress = json_decode($emailLog['EmailLog']['to_address']);
-        $ccAddress = json_decode($emailLog['EmailLog']['cc_address']);
-        $bccAddress = json_decode($emailLog['EmailLog']['bcc_address']);
+        $fromAddress = json_decode($emailLog['EmailLogs']['from_address']);
+        $toAddress = json_decode($emailLog['EmailLogs']['to_address']);
+        $ccAddress = json_decode($emailLog['EmailLogs']['cc_address']);
+        $bccAddress = json_decode($emailLog['EmailLogs']['bcc_address']);
 
         $this->assertNotEmpty($fromAddress, 'email from_address must not be empty');
 
         if ($expectedSubjectPattern != '') {
-            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog['EmailLog']['subject'], 'email subject wrong');
+            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog['EmailLogs']['subject'], 'email subject wrong');
         }
         foreach ($expectedMessagePatterns as $expectedMessagePattern) {
-            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLog']['message'], 'email message wrong');
+            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLogs']['message'], 'email message wrong');
         }
 
         $preparedToAddresses = [];
@@ -282,8 +282,8 @@ class AppCakeTestCase extends CakeTestCase
                 'Configuration.name' => $configKey
             ]
         ]);
-        $this->browser->post('/admin/configurations/edit/'.$configuration['Configuration']['id_configuration'], [
-            'Configuration' => [
+        $this->browser->post('/admin/configurations/edit/'.$configuration['Configurations']['id_configuration'], [
+            'Configurations' => [
                 'value' => $newValue
             ],
             'referer' => ''
@@ -355,7 +355,7 @@ class AppCakeTestCase extends CakeTestCase
             $this->Slug->getCartFinish(),
             [
                 'data' => [
-                    'Order' => [
+                    'Orders' => [
                         'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
                         'cancellation_terms_accepted' => $cancellation_terms_accepted,
                         'comment' => $comment

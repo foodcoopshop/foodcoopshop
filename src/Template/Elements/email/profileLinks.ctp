@@ -16,7 +16,7 @@
 <p>
     Zum Bestellen kannst du dich hier einloggen:<br />
     <a href="<?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getLogin(); ?>"><?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getLogin(); ?></a><br /><br />
-    E-Mail-Adresse: <?php echo $data['Customer']['email']; ?><br />
+    E-Mail-Adresse: <?php echo $data['Customers']['email']; ?><br />
     Passwort: <?php echo $newPassword; ?>
 </p>
 

@@ -62,14 +62,14 @@ class OrderDetailsController extends AdminAppController
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
             $orderDetail = $this->OrderDetail->find('first', array(
                 'conditions' => array(
-                    'OrderDetail.id_order_detail' => $orderDetailId
+                    'OrderDetails.id_order_detail' => $orderDetailId
                 )
             ));
             if (!empty($orderDetail)) {
-                if ($this->AppAuth->isManufacturer() && $orderDetail['Product']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
+                if ($this->AppAuth->isManufacturer() && $orderDetail['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && $orderDetail['Order']['id_customer'] == $this->AppAuth->getUserId()) {
+                if ($this->AppAuth->isCustomer() && $orderDetail['Orders']['id_customer'] == $this->AppAuth->getUserId()) {
                     return true;
                 }
             }
@@ -85,11 +85,11 @@ class OrderDetailsController extends AdminAppController
     {
         $sortField = 'name';
         $sortMatches = array(
-            'OrderDetail.product_name' => 'name',
-            'Manufacturer.name' => $manufacturerNameField,
-            'OrderDetail.total_price_tax_incl' => 'sum_price',
-            'OrderDetail.product_quantity' => 'sum_amount',
-            'OrderDetail.deposit' => 'sum_deposit'
+            'OrderDetails.product_name' => 'name',
+            'Manufacturers.name' => $manufacturerNameField,
+            'OrderDetails.total_price_tax_incl' => 'sum_price',
+            'OrderDetails.product_quantity' => 'sum_amount',
+            'OrderDetails.deposit' => 'sum_deposit'
         );
         if (!empty($this->params['named']['sort']) && isset($sortMatches[$this->params['named']['sort']])) {
             $sortField = $sortMatches[$this->params['named']['sort']];
@@ -190,13 +190,13 @@ class OrderDetailsController extends AdminAppController
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
             'order' => array(
-                'Product.id_manufacturer' => 'ASC',
-                'Order.date_add' => 'DESC',
-                'OrderDetail.product_name' => 'ASC'
+                'Products.id_manufacturer' => 'ASC',
+                'Orders.date_add' => 'DESC',
+                'OrderDetails.product_name' => 'ASC'
             )
         ), $this->Paginator->settings);
 
-        $orderDetails = $this->Paginator->paginate('OrderDetail');
+        $orderDetails = $this->Paginator->paginate('OrderDetails');
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
 
@@ -204,14 +204,14 @@ class OrderDetailsController extends AdminAppController
             case 'manufacturer':
                 $preparedOrderDetails = array();
                 foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail['Product']['id_manufacturer'];
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
-                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail['Product']['Manufacturer']['variable_member_fee']);
+                    $key = $orderDetail['Products']['id_manufacturer'];
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetails']['total_price_tax_incl'];
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetails']['product_quantity'];
+                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail['Products']['Manufacturers']['variable_member_fee']);
                     $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetails']['deposit'];
                     $preparedOrderDetails[$key]['manufacturer_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail['Product']['Manufacturer']['name'];
+                    $preparedOrderDetails[$key]['name'] = $orderDetail['Products']['Manufacturers']['name'];
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
@@ -221,14 +221,14 @@ class OrderDetailsController extends AdminAppController
             case 'product':
                 $preparedOrderDetails = array();
                 foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail['OrderDetail']['product_id'];
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetail']['total_price_tax_incl'];
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetail']['product_quantity'];
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetail']['deposit'];
+                    $key = $orderDetail['OrderDetails']['product_id'];
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetails']['total_price_tax_incl'];
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetails']['product_quantity'];
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetails']['deposit'];
                     $preparedOrderDetails[$key]['product_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail['Product']['ProductLang']['name'];
-                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail['Product']['Manufacturer']['id_manufacturer'];
-                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail['Product']['Manufacturer']['name'];
+                    $preparedOrderDetails[$key]['name'] = $orderDetail['Products']['ProductLangs']['name'];
+                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail['Products']['Manufacturers']['id_manufacturer'];
+                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail['Products']['Manufacturers']['name'];
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
@@ -239,7 +239,7 @@ class OrderDetailsController extends AdminAppController
                 $i = 0;
                 foreach ($orderDetails as $orderDetail) {
                     $this->Manufacturer = TableRegistry::get('Manufacturers');
-                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
+                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
                     $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
                     $orderDetails[$i]['rowClass'] = array();
                     if ($bulkOrdersAllowed) {
@@ -287,29 +287,29 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->recursive = 2;
         $oldOrderDetail = $this->OrderDetail->find('first', array(
             'conditions' => array(
-                'OrderDetail.id_order_detail' => $orderDetailId
+                'OrderDetails.id_order_detail' => $orderDetailId
             ),
             'contain' => array(
-                'Order',
-                'Order.Customer',
-                'Product.Manufacturer',
-                'Product.Manufacturer.Address'
+                'Orders',
+                'Orders.Customer',
+                'Products.Manufacturer',
+                'Products.Manufacturer.Address'
             )
         ));
 
-        $productPrice = $oldOrderDetail['OrderDetail']['total_price_tax_incl'] / $oldOrderDetail['OrderDetail']['product_quantity'] * $productQuantity;
+        $productPrice = $oldOrderDetail['OrderDetails']['total_price_tax_incl'] / $oldOrderDetail['OrderDetails']['product_quantity'] * $productQuantity;
 
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $productQuantity);
-        $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail['OrderDetail']['product_quantity']);
+        $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail['OrderDetails']['product_quantity']);
 
-        $message = 'Die Anzahl des bestellten Produktes <b>' . $oldOrderDetail['OrderDetail']['product_name'] . '" </b> wurde erfolgreich von ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ' auf ' . $productQuantity . ' geändert';
+        $message = 'Die Anzahl des bestellten Produktes <b>' . $oldOrderDetail['OrderDetails']['product_name'] . '" </b> wurde erfolgreich von ' . $oldOrderDetail['OrderDetails']['product_quantity'] . ' auf ' . $productQuantity . ' geändert';
 
         // send email to customer
         $email = new AppEmail();
         $email->template('Admin.order_detail_quantity_changed')
-        ->to($oldOrderDetail['Order']['Customer']['email'])
+        ->to($oldOrderDetail['Orders']['Customers']['email'])
         ->emailFormat('html')
-        ->subject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail['OrderDetail']['product_name'])
+        ->subject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
         ->viewVars(array(
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
@@ -317,18 +317,18 @@ class OrderDetailsController extends AdminAppController
             'editQuantityReason' => $editQuantityReason
         ));
 
-        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Order']['Customer']['name'] . '</b>';
+        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Orders']['Customers']['name'] . '</b>';
 
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
-        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_quantity_changed_notification']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
+        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($oldOrderDetail['Products']['Manufacturers']['send_ordered_product_quantity_changed_notification']);
 
         // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
         $weekday = date('N');
         if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('AppConfig.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductQuantityChangedNotification) {
-            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Product']['Manufacturer']['name'] . '</b>';
-            $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
+            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Products']['Manufacturers']['name'] . '</b>';
+            $email->addCC($oldOrderDetail['Products']['Manufacturers']['Addresses']['email']);
         }
 
         $email->send();
@@ -375,26 +375,26 @@ class OrderDetailsController extends AdminAppController
 
         $oldOrderDetail = $this->OrderDetail->find('first', array(
             'conditions' => array(
-                'OrderDetail.id_order_detail' => $orderDetailId
+                'OrderDetails.id_order_detail' => $orderDetailId
             ),
             'contain' => array(
-                'Order',
-                'Order.Customer',
-                'Product.Manufacturer',
-                'Product.Manufacturer.Address'
+                'Orders',
+                'Orders.Customer',
+                'Products.Manufacturer',
+                'Products.Manufacturer.Address'
             )
         ));
 
-        $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetail']['product_quantity']);
+        $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetails']['product_quantity']);
 
-        $message = 'Der Preis des bestellten Produktes "' . $oldOrderDetail['OrderDetail']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetail']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetail']['total_price_tax_incl']) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
+        $message = 'Der Preis des bestellten Produktes "' . $oldOrderDetail['OrderDetails']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetails']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetails']['total_price_tax_incl']) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
 
         // send email to customer
         $email = new AppEmail();
         $email->template('Admin.order_detail_price_changed')
-        ->to($oldOrderDetail['Order']['Customer']['email'])
+        ->to($oldOrderDetail['Orders']['Customers']['email'])
         ->emailFormat('html')
-        ->subject('Preis korrigiert: ' . $oldOrderDetail['OrderDetail']['product_name'])
+        ->subject('Preis korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
         ->viewVars(array(
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
@@ -402,16 +402,16 @@ class OrderDetailsController extends AdminAppController
             'editPriceReason' => $editPriceReason
         ));
 
-        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Order']['Customer']['name'] . '</b>';
+        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Orders']['Customers']['name'] . '</b>';
 
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail['Product']['Manufacturer']['send_ordered_product_price_changed_notification']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail['Products']['Manufacturers']['send_ordered_product_price_changed_notification']);
 
-        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail['OrderDetail']['total_price_tax_incl'] > 0.00 && $sendOrderedProductPriceChangedNotification) {
-            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Product']['Manufacturer']['name'] . '</b>';
-            $email->addCC($oldOrderDetail['Product']['Manufacturer']['Address']['email']);
+        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail['OrderDetails']['total_price_tax_incl'] > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Products']['Manufacturers']['name'] . '</b>';
+            $email->addCC($oldOrderDetail['Products']['Manufacturers']['Addresses']['email']);
         }
 
         $email->send();
@@ -452,19 +452,19 @@ class OrderDetailsController extends AdminAppController
         foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('first', array(
                 'conditions' => array(
-                    'OrderDetail.id_order_detail' => $orderDetailId
+                    'OrderDetails.id_order_detail' => $orderDetailId
                 ),
                 'contain' => array(
-                    'Order',
-                    'Order.Customer',
-                    'Product.StockAvailable',
-                    'Product.Manufacturer',
-                    'Product.Manufacturer.Address',
-                    'ProductAttribute.StockAvailable'
+                    'Orders',
+                    'Orders.Customer',
+                    'Products.StockAvailable',
+                    'Products.Manufacturer',
+                    'Products.Manufacturer.Address',
+                    'ProductAttributes.StockAvailable'
                 )
             ));
 
-            $message = 'Produkt "' . $orderDetail['OrderDetail']['product_name'] . '" (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($orderDetail['OrderDetail']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Order']['id_order'] . ' vom ' . Configure::read('AppConfig.timeHelper')->formatToDateNTimeLong($orderDetail['Order']['date_add']) . ' wurde erfolgreich storniert';
+            $message = 'Produkt "' . $orderDetail['OrderDetails']['product_name'] . '" (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($orderDetail['OrderDetails']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Orders']['id_order'] . ' vom ' . Configure::read('AppConfig.timeHelper')->formatToDateNTimeLong($orderDetail['Orders']['date_add']) . ' wurde erfolgreich storniert';
 
             // delete row
             $this->OrderDetail->deleteOrderDetail($orderDetailId);
@@ -472,32 +472,32 @@ class OrderDetailsController extends AdminAppController
             // update sum in table orders
             $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($orderDetail);
 
-            $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetail']['product_quantity'] * 2);
+            $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetails']['product_quantity'] * 2);
 
             // send email to customer
             $email = new AppEmail();
             $email->template('Admin.order_detail_deleted')
             ->emailFormat('html')
-            ->to($orderDetail['Order']['Customer']['email'])
-            ->subject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetail']['product_name'])
+            ->to($orderDetail['Orders']['Customers']['email'])
+            ->subject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetails']['product_name'])
             ->viewVars(array(
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ));
 
-            $message .= ' und eine E-Mail an <b>' . $orderDetail['Order']['Customer']['name'] . '</b>';
+            $message .= ' und eine E-Mail an <b>' . $orderDetail['Orders']['Customers']['name'] . '</b>';
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::get('Manufacturers');
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Product']['Manufacturer']['bulk_orders_allowed']);
-            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail['Product']['Manufacturer']['send_ordered_product_deleted_notification']);
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
+            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail['Products']['Manufacturers']['send_ordered_product_deleted_notification']);
 
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
             if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('AppConfig.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
-                $message .= ' sowie an den Hersteller <b>' . $orderDetail['Product']['Manufacturer']['name'] . '</b>';
-                $email->addCC($orderDetail['Product']['Manufacturer']['Address']['email']);
+                $message .= ' sowie an den Hersteller <b>' . $orderDetail['Products']['Manufacturers']['name'] . '</b>';
+                $email->addCC($orderDetail['Products']['Manufacturers']['Addresses']['email']);
             }
 
             $email->send();
@@ -507,10 +507,10 @@ class OrderDetailsController extends AdminAppController
                 $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetail']['product_quantity'] . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+            $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetails']['product_quantity'] . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
             $this->ActionLog = TableRegistry::get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetail']['product_id'], 'products', $message);
+            $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetails']['product_id'], 'products', $message);
         }
 
 
@@ -530,7 +530,7 @@ class OrderDetailsController extends AdminAppController
 
     private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productQuantity)
     {
-        $unitPriceExcl = $this->OrderDetail->Product->getNetPrice($oldOrderDetail['OrderDetail']['product_id'], $productPrice / $productQuantity);
+        $unitPriceExcl = $this->OrderDetail->Product->getNetPrice($oldOrderDetail['OrderDetails']['product_id'], $productPrice / $productQuantity);
         $unitTaxAmount = $this->OrderDetail->Product->getUnitTax($productPrice, $unitPriceExcl, $productQuantity);
         $totalTaxAmount = $unitTaxAmount * $productQuantity;
         $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
@@ -543,9 +543,9 @@ class OrderDetailsController extends AdminAppController
             'unit_price_tax_excl' => round($unitPriceExcl, 2),
             'product_price' => $unitPriceExcl,
             'product_quantity' => $productQuantity,
-            'deposit' => $oldOrderDetail['OrderDetail']['deposit'] / $oldOrderDetail['OrderDetail']['product_quantity'] * $productQuantity
+            'deposit' => $oldOrderDetail['OrderDetails']['deposit'] / $oldOrderDetail['OrderDetails']['product_quantity'] * $productQuantity
         );
-        $this->OrderDetail->id = $oldOrderDetail['OrderDetail']['id_order_detail'];
+        $this->OrderDetail->id = $oldOrderDetail['OrderDetails']['id_order_detail'];
         $this->OrderDetail->save($orderDetail2save);
 
         // update order detail tax for invoices
@@ -553,19 +553,19 @@ class OrderDetailsController extends AdminAppController
             'unit_amount' => $unitTaxAmount,
             'total_amount' => $totalTaxAmount
         );
-        $this->OrderDetail->OrderDetailTax->id = $oldOrderDetail['OrderDetail']['id_order_detail'];
+        $this->OrderDetail->OrderDetailTax->id = $oldOrderDetail['OrderDetails']['id_order_detail'];
         $this->OrderDetail->OrderDetailTax->save($odt2save);
 
         // update sum in orders
         $newOrderDetail = $this->OrderDetail->find('first', array(
             'conditions' => array(
-                'OrderDetail.id_order_detail' => $oldOrderDetail['OrderDetail']['id_order_detail']
+                'OrderDetails.id_order_detail' => $oldOrderDetail['OrderDetails']['id_order_detail']
             ),
             'contain' => array(
-                'Order',
-                'Order.Customer',
-                'Product.StockAvailable',
-                'Product.Manufacturer',
+                'Orders',
+                'Orders.Customer',
+                'Products.StockAvailable',
+                'Products.Manufacturer',
                 'ProductAttribute.StockAvailable'
             )
         ));
@@ -579,20 +579,20 @@ class OrderDetailsController extends AdminAppController
     {
 
         $stockAvailableObject = $this->OrderDetail->Product;
-        $stockAvailableIndex = 'Product';
+        $stockAvailableIndex = 'Products';
 
         // if attribute, the following index exists:
-        if (! empty($orderDetail['ProductAttribute']['StockAvailable'])) {
+        if (! empty($orderDetail['ProductAttributes']['StockAvailables'])) {
             $stockAvailableObject = $this->OrderDetail->ProductAttribute;
-            $stockAvailableIndex = 'ProductAttribute';
+            $stockAvailableIndex = 'ProductAttributes';
         }
 
         // do the acutal updates for increasing quantity
         if (isset($stockAvailableObject) && isset($stockAvailableIndex)) {
             $backedUpPrimaryKey = $stockAvailableObject->StockAvailable->primaryKey;
             $stockAvailableObject->StockAvailable->primaryKey = 'id_stock_available'; // primary key was already set in model... works :-)
-            $stockAvailableObject->StockAvailable->id = $orderDetail[$stockAvailableIndex]['StockAvailable']['id_stock_available'];
-            $newQuantity = $orderDetail[$stockAvailableIndex]['StockAvailable']['quantity'] + $orderDetailQuantityBeforeQuantityChange - $orderDetail['OrderDetail']['product_quantity'];
+            $stockAvailableObject->StockAvailable->id = $orderDetail[$stockAvailableIndex]['StockAvailables']['id_stock_available'];
+            $newQuantity = $orderDetail[$stockAvailableIndex]['StockAvailables']['quantity'] + $orderDetailQuantityBeforeQuantityChange - $orderDetail['OrderDetails']['product_quantity'];
             $stockAvailableObject->StockAvailable->save(array(
                 'quantity' => $newQuantity
             ));

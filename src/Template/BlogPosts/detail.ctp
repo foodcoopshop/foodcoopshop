@@ -22,29 +22,29 @@ $this->element('addScript', ['script' =>
 
 <?php
     echo '<div class="img-wrapper">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a href="'.$srcLargeImage.'">';
-    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'single'). '" />';
+    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'single'). '" />';
     echo '</a>';
 }
     echo '</div>';
 
-if ($blogPost['BlogPost']['short_description'] != '') {
-    echo '<p><b>'.$blogPost['BlogPost']['short_description'].'</b></p>';
+if ($blogPost['BlogPosts']['short_description'] != '') {
+    echo '<p><b>'.$blogPost['BlogPosts']['short_description'].'</b></p>';
 }
 
-    echo $blogPost['BlogPost']['content'];
+    echo $blogPost['BlogPosts']['content'];
 
     echo '<p><i>';
-        echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost['BlogPost']['modified']);
-if (!empty($blogPost['Manufacturer']['id_manufacturer'])) {
+        echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost['BlogPosts']['modified']);
+if (!empty($blogPost['Manufacturers']['id_manufacturer'])) {
     echo '<br />';
-    if ($blogPost['Manufacturer']['active']) {
-        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturer']['id_manufacturer'], $blogPost['Manufacturer']['name']).'">Zum Blog von  ' . $blogPost['Manufacturer']['name'].'</a>';
+    if ($blogPost['Manufacturers']['active']) {
+        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name']).'">Zum Blog von  ' . $blogPost['Manufacturers']['name'].'</a>';
     } else {
-        echo 'von ' . $blogPost['Manufacturer']['name'];
+        echo 'von ' . $blogPost['Manufacturers']['name'];
     }
 }
     echo '</i></p>';
@@ -56,7 +56,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         [
         'title' => 'Bearbeiten'
         ],
-        $this->Slug->getBlogPostEdit($blogPost['BlogPost']['id_blog_post'])
+        $this->Slug->getBlogPostEdit($blogPost['BlogPosts']['id_blog_post'])
     );
 }
 

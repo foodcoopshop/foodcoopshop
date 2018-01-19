@@ -18,10 +18,10 @@ class SendInvoicesShell extends AppShell
 {
 
     public $uses = [
-        'Manufacturer',
-        'Order',
-        'Customer',
-        'ActionLog'
+        'Manufacturers',
+        'Orders',
+        'Customers',
+        'ActionLogs'
     ];
 
     /**
@@ -47,7 +47,7 @@ class SendInvoicesShell extends AppShell
         ]);
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
-                'Manufacturer.name' => 'ASC'
+                'Manufacturers.name' => 'ASC'
             ]
         ]);
 
@@ -57,7 +57,7 @@ class SendInvoicesShell extends AppShell
             'conditions' => [
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'Order.current_state IN (' . join(",", [
+                'Orders.current_state IN (' . join(",", [
                     ORDER_STATE_OPEN,
                     ORDER_STATE_CASH,
                     ORDER_STATE_CASH_FREE
@@ -69,17 +69,17 @@ class SendInvoicesShell extends AppShell
         $manufacturerOrders = [];
         foreach ($orders as $order) {
             foreach ($order['OrderDetails'] as $orderDetail) {
-                @$manufacturerOrders[$orderDetail['Product']['id_manufacturer']]['order_detail_quantity_sum'] += $orderDetail['product_quantity'];
-                @$manufacturerOrders[$orderDetail['Product']['id_manufacturer']]['order_detail_price_sum'] += $orderDetail['total_price_tax_incl'];
+                @$manufacturerOrders[$orderDetail['Products']['id_manufacturer']]['order_detail_quantity_sum'] += $orderDetail['product_quantity'];
+                @$manufacturerOrders[$orderDetail['Products']['id_manufacturer']]['order_detail_price_sum'] += $orderDetail['total_price_tax_incl'];
             }
         }
 
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            @$manufacturers[$i]['current_order_count'] = $manufacturerOrders[$manufacturer['Manufacturer']['id_manufacturer']];
-            @$manufacturers[$i]['order_detail_quantity_sum'] = $manufacturerOrders[$manufacturer['Manufacturer']['id_manufacturer']]['order_detail_quantity_sum'];
-            @$manufacturers[$i]['order_detail_price_sum'] = $manufacturerOrders[$manufacturer['Manufacturer']['id_manufacturer']]['order_detail_price_sum'];
+            @$manufacturers[$i]['current_order_count'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']];
+            @$manufacturers[$i]['order_detail_quantity_sum'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']]['order_detail_quantity_sum'];
+            @$manufacturers[$i]['order_detail_price_sum'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']]['order_detail_price_sum'];
             $i ++;
         }
 
@@ -91,11 +91,11 @@ class SendInvoicesShell extends AppShell
         $this->browser->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {
-            $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
+            $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturers']['send_invoice']);
             if (isset($manufacturer['current_order_count']) && $sendInvoice) {
                 $productString = ($manufacturer['order_detail_quantity_sum'] == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
+                $outString .= ' - ' . $manufacturer['Manufacturers']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
+                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }

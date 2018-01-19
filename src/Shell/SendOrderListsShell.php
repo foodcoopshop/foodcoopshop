@@ -18,11 +18,11 @@ class SendOrderListsShell extends AppShell
 {
 
     public $uses = [
-        'Manufacturer',
-        'Order',
-        'Customer',
-        'ActionLog',
-        'Configuration' // for unit test mock object
+        'Manufacturers',
+        'Orders',
+        'Customers',
+        'ActionLogs',
+        'Configurations' // for unit test mock object
     ];
 
     /**
@@ -49,7 +49,7 @@ class SendOrderListsShell extends AppShell
         ]);
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
-                'Manufacturer.name' => 'ASC'
+                'Manufacturers.name' => 'ASC'
             ]
         ]);
 
@@ -59,7 +59,7 @@ class SendOrderListsShell extends AppShell
             'conditions' => [
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'Order.current_state' => ORDER_STATE_OPEN
+                'Orders.current_state' => ORDER_STATE_OPEN
             ]
         ]);
 
@@ -67,16 +67,16 @@ class SendOrderListsShell extends AppShell
         $manufacturerOrders = [];
         foreach ($orders as $order) {
             foreach ($order['OrderDetails'] as $orderDetail) {
-                @$manufacturerOrders[$orderDetail['Product']['id_manufacturer']]['order_detail_quantity_sum'] += $orderDetail['product_quantity'];
-                @$manufacturerOrders[$orderDetail['Product']['id_manufacturer']]['order_detail_price_sum'] += $orderDetail['total_price_tax_incl'];
+                @$manufacturerOrders[$orderDetail['Products']['id_manufacturer']]['order_detail_quantity_sum'] += $orderDetail['product_quantity'];
+                @$manufacturerOrders[$orderDetail['Products']['id_manufacturer']]['order_detail_price_sum'] += $orderDetail['total_price_tax_incl'];
             }
         }
 
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            @$manufacturers[$i]['order_detail_quantity_sum'] = $manufacturerOrders[$manufacturer['Manufacturer']['id_manufacturer']]['order_detail_quantity_sum'];
-            @$manufacturers[$i]['order_detail_price_sum'] = $manufacturerOrders[$manufacturer['Manufacturer']['id_manufacturer']]['order_detail_price_sum'];
+            @$manufacturers[$i]['order_detail_quantity_sum'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']]['order_detail_quantity_sum'];
+            @$manufacturers[$i]['order_detail_price_sum'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']]['order_detail_price_sum'];
             $i ++;
         }
 
@@ -88,12 +88,12 @@ class SendOrderListsShell extends AppShell
         $this->browser->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
-            $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturer']['send_order_list']);
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
+            $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturers']['send_order_list']);
             if (isset($manufacturer['order_detail_quantity_sum']) && $sendOrderList && !$bulkOrdersAllowed) {
                 $productString = ($manufacturer['order_detail_quantity_sum'] == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer['Manufacturer']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
+                $outString .= ' - ' . $manufacturer['Manufacturers']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
+                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }

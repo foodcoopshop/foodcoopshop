@@ -44,12 +44,12 @@ class CategoriesController extends AdminAppController
         if ($categoryId > 0) {
             $unsavedCategory = $this->Category->find('first', array(
                 'conditions' => array(
-                    'Category.id_category' => $categoryId
+                    'Categories.id_category' => $categoryId
                 )
             ));
         } else {
             $unsavedCategory = array(
-                'Category' => array(
+                'Categories' => array(
                     'active' => APP_ON
                 )
             );
@@ -63,13 +63,13 @@ class CategoriesController extends AdminAppController
         } else {
             // validate data - do not use $this->Category->saveAll()
             $this->Category->id = $categoryId;
-            $this->Category->set($this->request->data['Category']);
+            $this->Category->set($this->request->data['Categories']);
 
-            if ($this->request->data['Category']['id_parent'] == 0) {
-                $this->request->data['Category']['id_parent'] = 2;
+            if ($this->request->data['Categories']['id_parent'] == 0) {
+                $this->request->data['Categories']['id_parent'] = 2;
             }
 
-            foreach ($this->request->data['Category'] as $key => &$data) {
+            foreach ($this->request->data['Categories'] as $key => &$data) {
                 $data = strip_tags(trim($data));
             }
 
@@ -81,7 +81,7 @@ class CategoriesController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Category->save($this->request->data['Category'], array(
+                $this->Category->save($this->request->data['Categories'], array(
                     'validate' => false
                 ));
                 if (is_null($categoryId)) {
@@ -92,21 +92,21 @@ class CategoriesController extends AdminAppController
                     $actionLogType = 'category_changed';
                 }
 
-                if ($this->request->data['Category']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->Category->id, $this->request->data['Category']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
+                if ($this->request->data['Categories']['tmp_image'] != '') {
+                    $this->saveUploadedImage($this->Category->id, $this->request->data['Categories']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
                 }
 
-                if ($this->request->data['Category']['delete_image']) {
+                if ($this->request->data['Categories']['delete_image']) {
                     $this->deleteUploadedImage($this->Category->id, Configure::read('AppConfig.htmlHelper')->getCategoryThumbsPath(), Configure::read('AppConfig.categoryImageSizes'));
                 }
 
-                if (isset($this->request->data['Category']['delete_category']) && $this->request->data['Category']['delete_category']) {
+                if (isset($this->request->data['Categories']['delete_category']) && $this->request->data['Categories']['delete_category']) {
                     $this->Category->delete($this->Category->id); // cascade does not work here
-                    $message = 'Die Kategorie "' . $this->request->data['Category']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->ActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categorys', $message);
+                    $message = 'Die Kategorie "' . $this->request->data['Categories']['name'] . '" wurde erfolgreich gelöscht.';
+                    $this->ActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
                     $this->Flash->success('Die Kategorie wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Die Kategorie "' . $this->request->data['Category']['name'] . '" wurde ' . $messageSuffix;
+                    $message = 'Die Kategorie "' . $this->request->data['Categories']['name'] . '" wurde ' . $messageSuffix;
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
                     $this->Flash->success('Die Kategorie wurde erfolgreich gespeichert.');
                 }
@@ -123,7 +123,7 @@ class CategoriesController extends AdminAppController
     {
         $conditions = array();
         $conditions[] = $this->Category->getExcludeCondition();
-        $conditions[] = 'Category.active > ' . APP_DEL;
+        $conditions[] = 'Categories.active > ' . APP_DEL;
 
         $totalCategoriesCount = $this->Category->find('count', array(
             'conditions' => $conditions

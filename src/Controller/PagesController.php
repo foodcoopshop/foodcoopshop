@@ -37,11 +37,11 @@ class PagesController extends FrontendController
                 $this->Page->recursive = -1;
                 $page = $this->Page->find('first', [
                     'conditions' => [
-                        'Page.id_page' => $pageId,
-                        'Page.active' => APP_ON
+                        'Pages.id_page' => $pageId,
+                        'Pages.active' => APP_ON
                     ]
                 ]);
-                if (!empty($page) && !$this->AppAuth->user() && $page['Page']['is_private']) {
+                if (!empty($page) && !$this->AppAuth->user() && $page['Pages']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
                 break;
@@ -99,8 +99,8 @@ class PagesController extends FrontendController
         $pageId = (int) $this->params['pass'][0];
 
         $conditions = [
-            'Page.id_page' => $pageId,
-            'Page.active' => APP_ON
+            'Pages.id_page' => $pageId,
+            'Pages.active' => APP_ON
         ];
 
         $page = $this->Page->find('first', [
@@ -112,8 +112,8 @@ class PagesController extends FrontendController
         }
 
         // redirect direct call of page with link
-        if ($page['Page']['extern_url'] != '') {
-            $this->redirect($page['Page']['extern_url']);
+        if ($page['Pages']['extern_url'] != '') {
+            $this->redirect($page['Pages']['extern_url']);
         }
 
         $children = $this->Page->children(
@@ -121,29 +121,29 @@ class PagesController extends FrontendController
             false,
             null,
             [
-                'Page.position' => 'ASC',
-                'Page.title' => 'ASC'
+                'Pages.position' => 'ASC',
+                'Pages.title' => 'ASC'
             ]
         );
 
         $page['children'] = [];
         foreach ($children as $child) {
-            if ($child['Page']['active'] < APP_ON) {
+            if ($child['Pages']['active'] < APP_ON) {
                 continue;
             }
-            if (!$this->AppAuth->user() && $child['Page']['is_private']) {
+            if (!$this->AppAuth->user() && $child['Pages']['is_private']) {
                 continue;
             }
             $page['children'][] = $child;
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Pages']['id_page'], $page['Pages']['title']);
         if ($correctSlug != Configure::read('AppConfig.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 
         $this->set('page', $page);
-        $this->set('title_for_layout', $page['Page']['title']);
+        $this->set('title_for_layout', $page['Pages']['title']);
     }
 
     public function termsOfUse()

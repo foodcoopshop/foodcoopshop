@@ -59,20 +59,20 @@ class FrontendController extends AppController
         $this->ProductAttribute->recursive = 2; // for attribute lang
 
         foreach ($products as &$product) {
-            $grossPrice = $this->Product->getGrossPrice($product['Product']['id_product'], $product['ProductShop']['price']);
-            $product['Product']['gross_price'] = $grossPrice;
-            $product['Product']['tax'] = $grossPrice - $product['ProductShop']['price'];
-            $product['Product']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
+            $grossPrice = $this->Product->getGrossPrice($product['Products']['id_product'], $product['ProductShop']['price']);
+            $product['Products']['gross_price'] = $grossPrice;
+            $product['Products']['tax'] = $grossPrice - $product['ProductShop']['price'];
+            $product['Products']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
 
             $product['attributes'] = $this->ProductAttribute->find('all', [
                 'conditions' => [
-                    'ProductAttribute.id_product' => $product['Product']['id_product']
+                    'ProductAttributes.id_product' => $product['Products']['id_product']
                 ]
             ]);
             foreach ($product['attributes'] as &$attribute) {
-                $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShop']['id_product'], $attribute['ProductAttributeShop']['price']);
-                $attribute['ProductAttributeShop']['gross_price'] = $grossPrice;
-                $attribute['ProductAttributeShop']['tax'] = $grossPrice - $attribute['ProductAttributeShop']['price'];
+                $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShops']['id_product'], $attribute['ProductAttributeShops']['price']);
+                $attribute['ProductAttributeShops']['gross_price'] = $grossPrice;
+                $attribute['ProductAttributeShops']['tax'] = $grossPrice - $attribute['ProductAttributeShops']['price'];
             }
         }
 
@@ -109,7 +109,7 @@ class FrontendController extends AppController
 
         $categoriesForMenu = [];
         if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->Category = TableRegistry::get('Categorys');
+            $this->Category = TableRegistry::get('Categories');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu();
@@ -131,25 +131,26 @@ class FrontendController extends AppController
         $this->set('categoriesForMenu', $categoriesForMenu);
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
+        
         $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
         $this->Page = TableRegistry::get('Pages');
         $conditions = [];
-        $conditions['Page.active'] = APP_ON;
-        $conditions[] = 'Page.position > 0';
+        $conditions['Pages.active'] = APP_ON;
+        $conditions[] = 'Pages.position > 0';
         if (! $this->AppAuth->user()) {
-            $conditions['Page.is_private'] = APP_OFF;
+            $conditions['Pages.is_private'] = APP_OFF;
         }
 
         $pages = $this->Page->findAllGroupedByMenu($conditions);
         $pagesForHeader = [];
         $pagesForFooter = [];
         foreach ($pages as $page) {
-            if ($page['Page']['menu_type'] == 'header') {
+            if ($page['Pages']['menu_type'] == 'header') {
                 $pagesForHeader[] = $page;
             }
-            if ($page['Page']['menu_type'] == 'footer') {
+            if ($page['Pages']['menu_type'] == 'footer') {
                 $pagesForFooter[] = $page;
             }
         }
@@ -174,7 +175,7 @@ class FrontendController extends AppController
          */
         if ($this->request->session()->read('Auth.shopOrderCustomer')) {
             $this->request->session()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->login($this->request->session()->read('Auth.shopOrderCustomer')['Customer']);
+            $this->AppAuth->login($this->request->session()->read('Auth.shopOrderCustomer')['Customers']);
         }
 
         if ($this->AppAuth->user() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {

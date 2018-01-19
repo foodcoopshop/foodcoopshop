@@ -21,7 +21,7 @@ class BackupDatabaseShell extends AppShell
 {
 
     public $uses = [
-        'ActionLog'
+        'ActionLogs'
     ];
 
     public function main()

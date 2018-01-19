@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('EmailLog', 'Model');
+App::uses('EmailLogs', 'Model');
 
 /**
  * CustomersControllerTest
@@ -56,14 +56,14 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->browser->get($this->Slug->getApproveNewPassword('non-existing-code'));
         $this->assert404NotFoundHeader();
 
-        $this->browser->get($this->Slug->getApproveNewPassword($customer['Customer']['change_password_code']));
+        $this->browser->get($this->Slug->getApproveNewPassword($customer['Customers']['change_password_code']));
         $this->assertRegExpWithUnquotedString('Wir haben dir dein neues Passwort zugeschickt.', $this->browser->getContent());
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . $this->Slug->getLogin());
 
         $emailLogs = $this->EmailLog->find('all');
         $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', ['du hast gerade ein neues Passwort generiert, es lautet:'], [Configure::read('test.loginEmailCustomer')]);
 
-        preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[1]['EmailLog']['message'], $matches);
+        preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[1]['EmailLogs']['message'], $matches);
 
         // script would break if login does not work - no complaints means login works :-)
         $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
@@ -75,7 +75,7 @@ class CustomersControllerTest extends AppCakeTestCase
     {
         $this->browser->post($this->Slug->getNewPasswordRequest(), [
             'data' => [
-                'Customer' => [
+                'Customers' => [
                     'email' => $email
                 ]
             ]
@@ -85,7 +85,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function testRegistration()
     {
         $data = [
-            'Customer' => [
+            'Customers' => [
                 'email' => '',
                 'firstname' => '',
                 'lastname' => '',
@@ -121,7 +121,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
 
         // 3) check for wrong data
-        $data['Customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
+        $data['Customers']['email'] = 'fcs-demo-mitglied@mailinator.com';
         $data['AddressCustomer']['postcode'] = 'ABCDEF';
         $data['AddressCustomer']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
         $data['AddressCustomer']['phone'] = '897++asdf+d';
@@ -165,10 +165,10 @@ class CustomersControllerTest extends AppCakeTestCase
         $customerPhoneMobile = '+436989898';
         $customerPhone = '07659856565';
 
-        $data['Customer']['email'] = $customerEmail;
-        $data['Customer']['firstname'] = $customerFirstname;
-        $data['Customer']['lastname'] = $customerLastname;
-        $data['Customer']['terms_of_use_accepted_date'] = 1;
+        $data['Customers']['email'] = $customerEmail;
+        $data['Customers']['firstname'] = $customerFirstname;
+        $data['Customers']['lastname'] = $customerLastname;
+        $data['Customers']['terms_of_use_accepted_date'] = 1;
         $data['AddressCustomer']['city'] = $customerCity;
         $data['AddressCustomer']['address1'] = $customerAddress1;
         $data['AddressCustomer']['address2'] = $customerAddress2;
@@ -182,18 +182,18 @@ class CustomersControllerTest extends AppCakeTestCase
 
         $customer = $this->Customer->find('first', [
             'conditions' => [
-                'Customer.email' => $customerEmail
+                'Customers.email' => $customerEmail
             ]
         ]);
 
         // check customer record
-        $this->assertEquals((bool) Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customer']['active'], 'saving field active failed');
-        $this->assertEquals((int) Configure::read('AppConfig.db_config_FCS_CUSTOMER_GROUP'), $customer['Customer']['id_default_group'], 'saving user group failed');
-        $this->assertEquals($customerEmail, $customer['Customer']['email'], 'saving field email failed');
-        $this->assertEquals($customerFirstname, $customer['Customer']['firstname'], 'saving field firstname failed');
-        $this->assertEquals($customerLastname, $customer['Customer']['lastname'], 'saving field lastname failed');
-        $this->assertEquals(1, $customer['Customer']['newsletter'], 'saving field newsletter failed');
-        $this->assertEquals(date('Y-m-d'), $customer['Customer']['terms_of_use_accepted_date'], 'saving field terms_of_use_accepted_date failed');
+        $this->assertEquals((bool) Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customers']['active'], 'saving field active failed');
+        $this->assertEquals((int) Configure::read('AppConfig.db_config_FCS_CUSTOMER_GROUP'), $customer['Customers']['id_default_group'], 'saving user group failed');
+        $this->assertEquals($customerEmail, $customer['Customers']['email'], 'saving field email failed');
+        $this->assertEquals($customerFirstname, $customer['Customers']['firstname'], 'saving field firstname failed');
+        $this->assertEquals($customerLastname, $customer['Customers']['lastname'], 'saving field lastname failed');
+        $this->assertEquals(1, $customer['Customers']['newsletter'], 'saving field newsletter failed');
+        $this->assertEquals(date('Y-m-d'), $customer['Customers']['terms_of_use_accepted_date'], 'saving field terms_of_use_accepted_date failed');
 
         // check address record
         $this->assertEquals($customerFirstname, $customer['AddressCustomer']['firstname'], 'saving field firstname failed');

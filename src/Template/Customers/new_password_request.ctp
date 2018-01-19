@@ -24,7 +24,7 @@ $this->element('addScript', ['script' =>
     <p>Bitte gib deine E-Mail-Adresse an und klicke dann auf "Senden".</p>
     <p>Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst.</p>
     
-    <?php echo $this->Form->input('Customer.email', ['label' => 'E-Mail']); ?>
+    <?php echo $this->Form->input('Customers.email', ['label' => 'E-Mail']); ?>
     <button type="submit" class="btn btn-success">Senden</button>
     
 </form>

@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 class ConfigurationsTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('configuration');
         parent::initialize($config);
@@ -182,7 +182,7 @@ class ConfigurationsTable extends AppTable
     {
         $configurations = $this->getConfigurations();
         foreach ($configurations as $configuration) {
-            Configure::write('app.db_config_' . $configuration['Configuration']['name'], $configuration['Configuration']['value']);
+            Configure::write('app.db_config_' . $configuration['Configurations']['name'], $configuration['Configurations']['value']);
         }
     }
 }

@@ -425,28 +425,28 @@ class ActionLogsTable extends AppTable
     ;
 
     public $belongsTo = [
-        'Customer' => [
+        'Customers' => [
             'foreignKey' => 'customer_id'
         ],
-        'Product' => [
+        'Products' => [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'products'
             ]
         ],
-        'Manufacturer' => [
+        'Manufacturers' => [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'manufacturers'
             ]
         ],
-        'BlogPost' => [
+        'BlogPosts' => [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'blog_posts'
             ]
         ],
-        'Payment' => [
+        'Payments => [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'payments'

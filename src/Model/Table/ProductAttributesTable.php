@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class ProductAttributesTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('product_attribute');
         parent::initialize($config);
@@ -27,24 +27,24 @@ class ProductAttributesTable extends AppTable
     public $primaryKey = 'id_product_attribute';
 
     public $hasOne = [
-        'ProductAttributeCombination' => [
+        'ProductAttributeCombinations' => [
             'foreignKey' => 'id_product_attribute'
         ],
-        'StockAvailable' => [
+        'StockAvailables' => [
             'foreignKey' => 'id_product_attribute'
         ],
         'DepositProductAttribute' => [
             'className' => 'Deposit',
             'foreignKey' => 'id_product_attribute'
         ],
-        'ProductAttributeShop' => [
-            'className' => 'ProductAttributeShop',
+        'ProductAttributeShops' => [
+            'className' => 'ProductAttributeShops',
             'foreignKey' => 'id_product_attribute'
         ]
     ];
 
     public $belongsTo = [
-        'Product' => [
+        'Products' => [
             'foreignKey' => 'id_product'
         ]
     ];

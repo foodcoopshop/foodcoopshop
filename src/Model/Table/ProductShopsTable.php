@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class ProductShopsTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('product_shop');
         parent::initialize($config);

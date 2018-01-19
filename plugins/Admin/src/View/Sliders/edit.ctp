@@ -14,16 +14,16 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Slider']['id_slider']) ? $this->request->data['Slider']['id_slider'] : "") . "', 'Slider');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : "") . "', 'Sliders');
     "
 ));
-$idForImageUpload = isset($this->request->data['Slider']['id_slider']) ? $this->request->data['Slider']['id_slider'] : StringComponent::createRandomString(6);
+$idForImageUpload = isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : StringComponent::createRandomString(6);
 
 $imageSrc = false;
 if ($this->here != $this->Slug->getSliderAdd()) {
-    $imageSrc = $this->Html->getSliderImageSrc($this->request->data['Slider']['image']);
-    if (isset($this->request->data['Slider']['tmp_image']) && $this->request->data['Slider']['tmp_image'] != '') {
-        $imageSrc = str_replace('\\', '/', $this->request->data['Slider']['tmp_image']);
+    $imageSrc = $this->Html->getSliderImageSrc($this->request->data['Sliders']['image']);
+    if (isset($this->request->data['Sliders']['tmp_image']) && $this->request->data['Sliders']['tmp_image'] != '') {
+        $imageSrc = str_replace('\\', '/', $this->request->data['Sliders']['tmp_image']);
     }
 }
 ?>
@@ -47,13 +47,13 @@ if ($this->here != $this->Slug->getSliderAdd()) {
 
 <?php
 
-echo $this->Form->create('Slider', array(
+echo $this->Form->create('Sliders', array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Slider.id_slider');
-echo $this->Form->hidden('Slider.image');
+echo $this->Form->hidden('Sliders.id_slider');
+echo $this->Form->hidden('Sliders.image');
 
 echo '<div class="input">';
 echo '<label>Slideshow-Bild';
@@ -68,23 +68,23 @@ echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $t
     'data-object-id' => $idForImageUpload
 ), 'javascript:void(0);');
 echo '</div>';
-echo $this->Form->hidden('Slider.tmp_image');
+echo $this->Form->hidden('Sliders.tmp_image');
 echo '</div>';
 
-echo $this->Form->input('Slider.position', array(
+echo $this->Form->input('Sliders.position', array(
     'div' => array(
         'class' => 'short text input'
     ),
     'label' => 'Reihenfolge',
     'type' => 'text'
 ));
-echo $this->Form->input('Slider.active', array(
+echo $this->Form->input('Sliders.active', array(
     'label' => 'Aktiv?',
     'type' => 'checkbox'
 ));
 
 if ($this->here != $this->Slug->getSliderAdd()) {
-    echo $this->Form->input('Slider.delete_slider', array(
+    echo $this->Form->input('Sliders.delete_slider', array(
         'label' => 'Slideshow-Bild löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'

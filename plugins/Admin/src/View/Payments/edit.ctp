@@ -18,7 +18,7 @@ $this->element('addScript', array(
         Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
         Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('PaymentApprovalComment');" .
         Configure::read('AppConfig.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
-        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" .$this->request->data['Payment']['id'] . "', 'Payment');
+        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" .$this->request->data['Payments']['id'] . "', 'Payments);
         $('#PaymentApproval').on('change', function() {
             var emailCheckbox = $('#PaymentSendEmail');
             if ($(this).val() == -1) {
@@ -51,31 +51,31 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Payment', array(
+echo $this->Form->create('Payments, array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Payment.id');
-echo $this->Form->hidden('Customer.name');
+echo $this->Form->hidden('Payments.id');
+echo $this->Form->hidden('Customers.name');
 echo $this->Form->hidden('ChangedBy.name');
-echo $this->Form->hidden('Payment.amount');
-echo $this->Form->hidden('Payment.date_add');
-echo $this->Form->hidden('Payment.date_changed');
+echo $this->Form->hidden('Payments.amount');
+echo $this->Form->hidden('Payments.date_add');
+echo $this->Form->hidden('Payments.date_changed');
 
-echo '<p><label>Mitglied</label>' . $this->request->data['Customer']['name'].'</p>';
-echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($this->request->data['Payment']['amount']).'</p>';
-echo '<p><label>Datum der Aufladung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payment']['date_add']).'</p>';
-echo '<p><label>Datum der letzten Änderung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payment']['date_changed']).'</p>';
+echo '<p><label>Mitglied</label>' . $this->request->data['Customers']['name'].'</p>';
+echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($this->request->data['Payments']['amount']).'</p>';
+echo '<p><label>Datum der Aufladung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payments']['date_add']).'</p>';
+echo '<p><label>Datum der letzten Änderung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payments']['date_changed']).'</p>';
 echo '<p><label>Letzter Bearbeiter</label>' . $this->request->data['ChangedBy']['name'].'</p>';
 
-echo $this->Form->input('Payment.approval', array(
+echo $this->Form->input('Payments.approval', array(
     'type' => 'select',
     'label' => 'Status',
     'options' => $this->Html->getApprovalStates()
 ));
 
-echo $this->Form->input('Payment.send_email', array(
+echo $this->Form->input('Payments.send_email', array(
     'label' => 'E-Mail versenden?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).<br /><span style="float: left;">E-Mail-Vorschau:</span>'.
@@ -85,7 +85,7 @@ echo $this->Form->input('Payment.send_email', array(
                 'class' => 'email-template-info',
                 'target' => '_blank'
             ),
-            '/admin/payments/previewEmail/'.$this->request->data['Payment']['id'].'/1'
+            '/admin/payments/previewEmail/'.$this->request->data['Payments']['id'].'/1'
         ).'&nbsp;'.
         $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
@@ -93,12 +93,12 @@ echo $this->Form->input('Payment.send_email', array(
                 'class' => 'email-template-info',
                 'target' => '_blank'
             ),
-            '/admin/payments/previewEmail/'.$this->request->data['Payment']['id'].'/-1'
+            '/admin/payments/previewEmail/'.$this->request->data['Payments']['id'].'/-1'
         ).
     '</span>'
 ));
 
-echo $this->Form->input('Payment.approval_comment', array(
+echo $this->Form->input('Payments.approval_comment', array(
     'type' => 'textarea',
     'label' => 'Kommentar',
     'class' => 'ckeditor'

@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class OrderDetailTaxesTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('order_detail_tax');
         parent::initialize($config);

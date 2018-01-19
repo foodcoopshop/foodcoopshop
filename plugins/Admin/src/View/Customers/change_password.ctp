@@ -37,18 +37,18 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Customer', array(
+echo $this->Form->create('Customers', array(
     'class' => 'fcs-form'
 ));
 
-echo $this->Form->input('Customer.passwd', array(
+echo $this->Form->input('Customers.passwd', array(
     'label' => __('Password : Old Password *')
 ));
-echo $this->Form->input('Customer.passwd_new_1', array(
+echo $this->Form->input('Customers.passwd_new_1', array(
     'label' => __('Password : New Password *'),
     'type' => 'password'
 ));
-echo $this->Form->input('Customer.passwd_new_2', array(
+echo $this->Form->input('Customers.passwd_new_2', array(
     'label' => __('Password : New Password Repeat *'),
     'type' => 'password'
 ));

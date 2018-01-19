@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Tax']['id_tax']) ? $this->request->data['Tax']['id_tax'] : "") . "', 'Tax');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Taxes']['id_tax']) ? $this->request->data['Taxes']['id_tax'] : "") . "', 'Taxes');
     "
 ));
 ?>
@@ -38,17 +38,17 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Tax', array(
+echo $this->Form->create('Taxes', array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Tax.id_tax');
+echo $this->Form->hidden('Taxes.id_tax');
 
 if ($this->here != $this->Slug->getTaxAdd()) {
-    echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($unsavedTax['Tax']['rate']) . '</p>';
+    echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($unsavedTax['Taxes']['rate']) . '</p>';
 } else {
-    echo $this->Form->input('Tax.rate', array(
+    echo $this->Form->input('Taxes.rate', array(
         'div' => array(
             'class' => 'long text input'
         ),
@@ -57,7 +57,7 @@ if ($this->here != $this->Slug->getTaxAdd()) {
     ));
 }
 
-echo $this->Form->input('Tax.active', array(
+echo $this->Form->input('Taxes.active', array(
     'label' => 'Steuersatz aktiv?'
 ));
 

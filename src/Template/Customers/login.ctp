@@ -29,8 +29,8 @@ $this->element('addScript', ['script' =>
   <form action="<?php echo $this->Slug->getLogin(); ?>" id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          echo $this->Form->input('Customer.email', ['label' => 'E-Mail', 'required' => false]);
-          echo $this->Form->input('Customer.passwd', ['label' => 'Passwort']);
+          echo $this->Form->input('Customers.email', ['label' => 'E-Mail', 'required' => false]);
+          echo $this->Form->input('Customers.passwd', ['label' => 'Passwort']);
           echo '<div class="remember-me-wrapper">';
               echo $this->Form->checkbox('remember_me') . '<label for="remember_me">Angemeldet bleiben</label>';
           echo '</div>';
@@ -57,7 +57,7 @@ $this->element('addScript', ['script' =>
       <form action="/registrierung" id="RegistrationForm" method="post" accept-charset="utf-8" novalidate>
             <?php
 
-              echo $this->Form->input('Customer.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
+              echo $this->Form->input('Customers.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
 
               echo '<div class="detail-form">';
 
@@ -67,8 +67,8 @@ $this->element('addScript', ['script' =>
 
                   echo $this->Form->hidden('antiSpam', ['value' => 'lalala']);
 
-                  echo $this->Form->input('Customer.firstname', ['label' => 'Vorname', 'required' => true]);
-                  echo $this->Form->input('Customer.lastname', ['label' => 'Nachname', 'required' => true]);
+                  echo $this->Form->input('Customers.firstname', ['label' => 'Vorname', 'required' => true]);
+                  echo $this->Form->input('Customers.lastname', ['label' => 'Nachname', 'required' => true]);
 
                   echo $this->Form->input('AddressCustomer.address1', ['label' => 'Straße', 'required' => true]);
                   echo $this->Form->input('AddressCustomer.address2', ['label' => 'Adresszusatz']);
@@ -80,13 +80,13 @@ $this->element('addScript', ['script' =>
                   echo $this->Form->input('AddressCustomer.phone', ['label' => 'Telefon']);
 
             if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
-                echo $this->Form->input('Customer.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
+                echo $this->Form->input('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
             }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
-                  echo $this->Form->input('Customer.terms_of_use_accepted_date', [
+                  echo $this->Form->input('Customers.terms_of_use_accepted_date', [
                       'label' => 'Ich akzeptiere die <a href="#terms-of-use">Nutzungsbedingungen</a>',
                       'type' => 'checkbox'
                   ]);

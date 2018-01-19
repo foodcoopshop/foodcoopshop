@@ -20,10 +20,10 @@ class BlogPostsTable extends AppTable
     public $primaryKey = 'id_blog_post';
     
     public $belongsTo = [
-        'Customer' => [
+        'Customers' => [
             'foreignKey' => 'id_customer'
         ],
-        'Manufacturer' => [
+        'Manufacturers' => [
             'foreignKey' => 'id_manufacturer'
         ]
     ];
@@ -73,23 +73,23 @@ class BlogPostsTable extends AppTable
     public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
     {
         $conditions = [
-            'BlogPost.active' => APP_ON
+            'BlogPosts.active' => APP_ON
         ];
         if (! $appAuth->user()) {
-            $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
         if ($manufacturerId) {
-            $conditions['BlogPost.id_manufacturer'] = $manufacturerId;
+            $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
         }
         if ($isFeatured) {
-            $conditions['BlogPost.is_featured'] = true;
+            $conditions['BlogPosts.is_featured'] = true;
         }
 
         $blogPosts = $this->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'BlogPost.modified' => 'DESC'
+                'BlogPosts.modified' => 'DESC'
             ],
             'limit' => $limit
         ]);

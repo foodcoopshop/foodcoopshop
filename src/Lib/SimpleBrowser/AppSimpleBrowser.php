@@ -3,7 +3,7 @@
 App::uses('Controller', 'Controller');
 App::uses('View', 'View');
 App::uses('SlugHelper', 'View/Helper');
-App::uses('Customer', 'Model');
+App::uses('Customers', 'Model');
 
 /**
  * AppSimpleBrowser
@@ -82,7 +82,7 @@ class AppSimpleBrowser extends SimpleBrowser
     public function doFoodCoopShopLogin()
     {
         $this->post($this->Slug->getLogin(), [
-            'Customer' => [
+            'Customers' => [
                 'email' => $this->loginEmail,
                 'passwd' => $this->loginPassword
             ],
@@ -103,7 +103,7 @@ class AppSimpleBrowser extends SimpleBrowser
         $this->Customer->recursive = - 1;
         $user = $this->Customer->find('first', [
             'conditions' => [
-                'Customer.email' => $this->loginEmail
+                'Customers.email' => $this->loginEmail
             ]
         ]);
         return $user;
@@ -113,7 +113,7 @@ class AppSimpleBrowser extends SimpleBrowser
     {
         $loggedUser = $this->getLoggedUser();
         if (! empty($loggedUser)) {
-            return $loggedUser['Customer']['id_customer'];
+            return $loggedUser['Customers']['id_customer'];
         }
         return 0;
     }

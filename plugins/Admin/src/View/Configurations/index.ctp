@@ -49,24 +49,24 @@ $this->element('addScript', array(
 
         <?php
         foreach ($configurations as $configuration) {
-            if ($configuration['Configuration']['type'] == 'readonly') {
+            if ($configuration['Configurations']['type'] == 'readonly') {
                 continue;
             }
 
-            if (! Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && in_array($configuration['Configuration']['name'], array(
+            if (! Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && in_array($configuration['Configurations']['name'], array(
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE'
             ))) {
                 continue;
             }
-            if (! Configure::read('AppConfig.memberFeeEnabled') && $configuration['Configuration']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
+            if (! Configure::read('AppConfig.memberFeeEnabled') && $configuration['Configurations']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
                 continue;
             }
 
             echo '<tr>';
 
             echo '<td class="first">';
-            echo $configuration['Configuration']['text'];
+            echo $configuration['Configurations']['text'];
             echo '</td>';
 
             echo '<td style="width:30px;">';
@@ -74,24 +74,24 @@ $this->element('addScript', array(
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
                 'title' => 'Einstellung bearbeiten',
                 'class' => 'edit-configuration-button'
-            ), $this->Slug->getConfigurationEdit($configuration['Configuration']['id_configuration'], $configuration['Configuration']['name']));
+            ), $this->Slug->getConfigurationEdit($configuration['Configurations']['id_configuration'], $configuration['Configurations']['name']));
 
             echo '</td>';
 
             echo '<td>';
 
-            switch ($configuration['Configuration']['type']) {
+            switch ($configuration['Configurations']['type']) {
                 case 'number':
                 case 'text':
                 case 'textarea':
                 case 'textarea_big':
-                    echo $configuration['Configuration']['value'];
+                    echo $configuration['Configurations']['value'];
                     break;
                 case 'dropdown':
-                    echo $this->Html->getConfigurationDropdownOption($configuration['Configuration']['name'], $configuration['Configuration']['value']);
+                    echo $this->Html->getConfigurationDropdownOption($configuration['Configurations']['name'], $configuration['Configurations']['value']);
                     break;
                 case 'boolean':
-                    echo (boolean) $configuration['Configuration']['value'] ? 'ja' : 'nein';
+                    echo (boolean) $configuration['Configurations']['value'] ? 'ja' : 'nein';
                     break;
             }
 
@@ -171,18 +171,18 @@ $this->element('addScript', array(
 
         <?php
         foreach ($configurations as $configuration) {
-            if ($configuration['Configuration']['type'] != 'readonly') {
+            if ($configuration['Configurations']['type'] != 'readonly') {
                 continue;
             }
 
             echo '<tr>';
 
             echo '<td class="first">';
-            echo $configuration['Configuration']['text'];
+            echo $configuration['Configurations']['text'];
             echo '</td>';
 
             echo '<td>';
-            echo $configuration['Configuration']['value'];
+            echo $configuration['Configurations']['value'];
             echo '</td>';
 
             echo '</tr>';
@@ -317,7 +317,7 @@ $this->element('addScript', array(
 
         <tr>
             <td>app.defaultTax</td>
-            <td><?php echo $this->Html->formatAsPercent($defaultTax['Tax']['rate']); ?> - <?php echo $defaultTax['Tax']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
+            <td><?php echo $this->Html->formatAsPercent($defaultTax['Taxes']['rate']); ?> - <?php echo $defaultTax['Taxes']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
         </tr>
 
         <tr>

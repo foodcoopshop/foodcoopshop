@@ -37,7 +37,7 @@ class AppTable extends Table
         parent::__construct($id, $table, $ds);
     }
     
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('fcs_' . $this->getTable());
         parent::initialize($config);

@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 class CustomersTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('customer');
         parent::initialize($config);
@@ -98,14 +98,14 @@ class CustomersTable extends AppTable
     {
         $customer = $this->find('first', [
             'conditions' => [
-                'Customer.id_customer' => $customerId
+                'Customers.id_customer' => $customerId
             ],
             'fields' => [
-                'Customer.passwd'
+                'Customers.passwd'
             ]
         ]);
 
-        if ($hashedPassword == $customer['Customer']['passwd']) {
+        if ($hashedPassword == $customer['Customers']['passwd']) {
             return true;
         } else {
             return false;
@@ -114,7 +114,7 @@ class CustomersTable extends AppTable
 
     public $hasMany = [
         'ActiveOrders' => [
-            'className' => 'Order',
+            'className' => 'Orders',
             'foreignKey' => 'id_customer',
             'conditions' => [],
             'order' => [
@@ -122,7 +122,7 @@ class CustomersTable extends AppTable
             ]
         ],
         'PaidCashFreeOrders' => [
-            'className' => 'Order',
+            'className' => 'Orders',
             'foreignKey' => 'id_customer',
             'conditions' => [],
             'order' => [
@@ -131,12 +131,12 @@ class CustomersTable extends AppTable
         ],
         // has many does not produce multiple records - this should be hasOne ideally...
         'ValidOrder' => [
-            'className' => 'Order',
+            'className' => 'Orders',
             'limit' => 1,
             'foreignKey' => 'id_customer'
         ],
         'Payments' => [
-            'className' => 'Payment',
+            'className' => 'Payments,
             'foreignKey' => 'id_customer',
             'order' => [
                 'Payments.date_add' => 'desc'
@@ -171,7 +171,7 @@ class CustomersTable extends AppTable
     public function getConditionToExcludeHostingUser()
     {
         return [
-            'Customer.email != \'' . Configure::read('AppConfig.hostingEmail') . '\''
+            'Customers.email != \'' . Configure::read('AppConfig.hostingEmail') . '\''
         ];
     }
 
@@ -188,12 +188,12 @@ class CustomersTable extends AppTable
      */
     public function getManufacturerRecord($customer)
     {
-        $mm = ClassRegistry::init('Manufacturer');
+        $mm = ClassRegistry::init('Manufacturers');
 
         $mm->recursive = 1;
         $manufacturer = $mm->find('first', [
             'conditions' => [
-                'Address.email' => $customer['Customer']['email']
+                'Addresses.email' => $customer['Customers']['email']
             ]
         ]);
 
@@ -208,7 +208,7 @@ class CustomersTable extends AppTable
     {
         $customer = $this->find('first', [
             'conditions' => [
-                'Customer.id_customer' => $customerId
+                'Customers.id_customer' => $customerId
             ]
         ]);
         if (!empty($customer)) {
@@ -221,20 +221,20 @@ class CustomersTable extends AppTable
     {
         $manufacturer = $this->getManufacturerByCustomerId($customerId);
         if (!empty($manufacturer)) {
-            return $manufacturer['Manufacturer']['id_manufacturer'];
+            return $manufacturer['Manufacturers']['id_manufacturer'];
         }
         return 0;
     }
 
     public function getCreditBalance($customerId)
     {
-        App::uses('Payment', 'Model');
+        App::uses('Payments, 'Model');
         $cp = new Payment();
         $paymentSumProduct = $cp->getSum($customerId, 'product');
         $paybackSumProduct = $cp->getSum($customerId, 'payback');
         $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
 
-        App::uses('Order', 'Model');
+        App::uses('Orders', 'Model');
         $o = new Order();
         $productSum = $o->getSumProduct($customerId);
         $depositSum = $o->getSumDeposit($customerId);
@@ -257,10 +257,10 @@ class CustomersTable extends AppTable
         $customers = $this->find('all', [
             'conditions' => $this->getConditionToExcludeHostingUser(),
             'fields' => [
-                'Customer.' . $index,
-                'Customer.name',
-                'Customer.active',
-                'Customer.email'
+                'Customers.' . $index,
+                'Customers.name',
+                'Customers.active',
+                'Customers.email'
             ],
             'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy()
         ]);
@@ -271,33 +271,33 @@ class CustomersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($customers as $customer) {
-            $userNameForDropdown = $customer['Customer']['name'];
+            $userNameForDropdown = $customer['Customers']['name'];
 
             $manufacturerIncluded = false;
             if ($includeManufacturers) {
                 $manufacturer = $this->getManufacturerRecord($customer);
                 if ($manufacturer) {
-                    if ($manufacturer['Manufacturer']['active']) {
-                        $onlineManufacturers[$customer['Customer'][$index]] = $manufacturer['Manufacturer']['name'];
+                    if ($manufacturer['Manufacturers']['active']) {
+                        $onlineManufacturers[$customer['Customers'][$index]] = $manufacturer['Manufacturers']['name'];
                     } else {
-                        $offlineManufacturers[$customer['Customer'][$index]] = $manufacturer['Manufacturer']['name'];
+                        $offlineManufacturers[$customer['Customers'][$index]] = $manufacturer['Manufacturers']['name'];
                     }
                     $manufacturerIncluded = true;
                 }
             }
 
             if (! $manufacturerIncluded) {
-                if ($customer['Customer']['active'] == 0) {
-                    $offlineCustomers[$customer['Customer'][$index]] = $userNameForDropdown;
+                if ($customer['Customers']['active'] == 0) {
+                    $offlineCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
                 } else {
                     if (! $includeManufacturers) {
                         if (empty($customer['ValidOrder'])) {
-                            $notYetOrderedCustomers[$customer['Customer'][$index]] = $userNameForDropdown;
+                            $notYetOrderedCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
                         } else {
-                            $onlineCustomers[$customer['Customer'][$index]] = $userNameForDropdown;
+                            $onlineCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
                         }
                     } else {
-                        $onlineCustomers[$customer['Customer'][$index]] = $userNameForDropdown;
+                        $onlineCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
                     }
                 }
             }

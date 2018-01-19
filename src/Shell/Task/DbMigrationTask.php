@@ -26,8 +26,8 @@ class DbMigrationTask extends Shell
 
     public function execute(Shell $shell)
     {
-        $shell->loadModel('Configuration');
-        $shell->loadModel('ActionLog');
+        $shell->loadModel('Configurations');
+        $shell->loadModel('ActionLogs');
 
         $this->dbMigration = new DbMigration(
             function ($string = '') use (&$shell) {

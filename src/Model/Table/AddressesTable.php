@@ -20,7 +20,7 @@ namespace App\Model\Table;
 abstract class AddressTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('address');
         parent::initialize($config);

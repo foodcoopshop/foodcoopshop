@@ -45,24 +45,24 @@ class MenuHelper extends Helper
             $children = [];
             if (!empty($page['children'])) {
                 foreach ($page['children'] as $childPage) {
-                    if ($childPage['Page']['extern_url'] != '') {
-                        $slug = $childPage['Page']['extern_url'];
+                    if ($childPage['Pages']['extern_url'] != '') {
+                        $slug = $childPage['Pages']['extern_url'];
                     } else {
-                        $slug = Configure::read('AppConfig.slugHelper')->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']);
+                        $slug = Configure::read('AppConfig.slugHelper')->getPageDetail($childPage['Pages']['id_page'], $childPage['Pages']['title']);
                     }
                     $children[] = [
-                        'name' => $childPage['Page']['title'],
+                        'name' => $childPage['Pages']['title'],
                         'slug' => $slug
                     ];
                 }
             }
-            if ($page['Page']['extern_url'] != '') {
-                $slug = $page['Page']['extern_url'];
+            if ($page['Pages']['extern_url'] != '') {
+                $slug = $page['Pages']['extern_url'];
             } else {
-                $slug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Page']['id_page'], $page['Page']['title']);
+                $slug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Pages']['id_page'], $page['Pages']['title']);
             }
             $menu[] = [
-                'name' => $page['Page']['title'],
+                'name' => $page['Pages']['title'],
                 'slug' => $slug,
                 'children' => $children
             ];

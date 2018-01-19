@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('Product', 'Model');
+App::uses('Products', 'Model');
 
 /**
  *

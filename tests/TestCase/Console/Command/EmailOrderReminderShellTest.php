@@ -1,7 +1,7 @@
 <?php
 App::uses('EmailOrderReminderShell', 'Console/Command');
 App::uses('AppCakeTestCase', 'Test');
-App::uses('EmailLog', 'Model');
+App::uses('EmailLogs', 'Model');
 
 /**
  * TODO

@@ -175,14 +175,14 @@ class DbMigration
             $tried = $this->doFindConf('FCS_DB_UPDATE');
 
             // catch unsuccessful update attempt
-            if ($conf['Configuration']['value'] != $tried['Configuration']['value']) {
+            if ($conf['Configurations']['value'] != $tried['Configurations']['value']) {
                 $this->logDbMigrationsFailure(
-                    $conf['Configuration']['value'],
-                    $tried['Configuration']['value']
+                    $conf['Configurations']['value'],
+                    $tried['Configurations']['value']
                 );
 
                 // prevent endless looping on unrecoverable error
-                $conf['Configuration']['value'] = 'SQL not executed ' . $tried['Configuration']['value'];
+                $conf['Configurations']['value'] = 'SQL not executed ' . $tried['Configurations']['value'];
                 $this->doSaveConf($conf);
 
                 // inform user
@@ -197,14 +197,14 @@ class DbMigration
         foreach ($avail as $migration) {
             // note the initial version before doing the actual update
             if (is_array($conf)) {
-                $from = $conf['Configuration']['value'];
+                $from = $conf['Configurations']['value'];
             } else {
                 $from = '---';
             }
 
             // note the destination version before doing the actual update
             if (is_array($tried)) {
-                $tried['Configuration']['value'] = $migration;
+                $tried['Configurations']['value'] = $migration;
                 $this->doSaveConf($tried);
             }
 
@@ -213,12 +213,12 @@ class DbMigration
             if (!$file->readable()) {
                 if (is_array($conf)) {
                     $this->logDbMigrationsFailure(
-                        $conf['Configuration']['value'],
+                        $conf['Configurations']['value'],
                         $migration
                     );
 
                     // prevent endless looping on unrecoverable error
-                    $conf['Configuration']['value'] = 'Cannot Read File ' . $migration;
+                    $conf['Configurations']['value'] = 'Cannot Read File ' . $migration;
                     $this->doSaveConf($conf);
                 } else {
                     $this->logDbMigrationsFailure(
@@ -259,14 +259,14 @@ class DbMigration
 
             if (is_array($conf)) {
                 // catch unsuccessful update attempt
-                if ($conf['Configuration']['value'] != $migration) {
+                if ($conf['Configurations']['value'] != $migration) {
                     $this->logDbMigrationsFailure(
-                        $conf['Configuration']['value'],
+                        $conf['Configurations']['value'],
                         $migration
                     );
 
                     // prevent endless looping on unrecoverable error
-                    $conf['Configuration']['value'] = 'SQL not executed ' . $migration;
+                    $conf['Configurations']['value'] = 'SQL not executed ' . $migration;
                     $this->doSaveConf($conf);
 
                     // inform user

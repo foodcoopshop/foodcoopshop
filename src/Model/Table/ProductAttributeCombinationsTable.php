@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 class ProductAttributeCombinationsTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('product_attribute_combination');
         parent::initialize($config);
@@ -32,10 +32,10 @@ class ProductAttributeCombinationsTable extends AppTable
     ];
 
     public $belongsTo = [
-        'Attribute' => [
+        'Attributes' => [
             'foreignKey' => 'id_attribute'
         ],
-        'ProductAttribute' => [
+        'ProductAttributes' => [
             'foreignKey' => 'id_product_attribute'
         ]
     ];
@@ -46,13 +46,13 @@ class ProductAttributeCombinationsTable extends AppTable
 
         $combinations = $this->find('all', [
             'conditions' => [
-                'Attribute.id_attribute' => $attributeId
+                'Attributes.id_attribute' => $attributeId
             ],
             'contain' => [
-                'Attribute',
-                'ProductAttribute.Product.ProductLang',
-                'ProductAttribute.Product.ProductShop',
-                'ProductAttribute.Product.Manufacturer'
+                'Attributes',
+                'ProductAttributes.Products.ProductLangs',
+                'ProductAttributes.Products.ProductShops',
+                'ProductAttributes.Products.Manufacturers'
             ]
         ]);
 
@@ -61,15 +61,15 @@ class ProductAttributeCombinationsTable extends AppTable
             'offline' => []
         ];
         foreach ($combinations as $combination) {
-            $preparedProduct = $combination['ProductAttribute']['Product'];
+            $preparedProduct = $combination['ProductAttributes']['Products'];
 
-            $preparedProduct['link'] = Configure::read('AppConfig.htmlHelper')->link($preparedProduct['ProductLang']['name'] . ' - ' . $preparedProduct['Manufacturer']['name'], Configure::read('AppConfig.slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLang']['name']));
+            $preparedProduct['link'] = Configure::read('AppConfig.htmlHelper')->link($preparedProduct['ProductLangs']['name'] . ' - ' . $preparedProduct['Manufacturers']['name'], Configure::read('AppConfig.slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLangs']['name']));
 
-            if ($combination['ProductAttribute']['Product']['active'] == 1) {
+            if ($combination['ProductAttributes']['Products']['active'] == 1) {
                 $return['online'][] = $preparedProduct;
             }
 
-            if ($combination['ProductAttribute']['Product']['active'] == 0) {
+            if ($combination['ProductAttributes']['Products']['active'] == 0) {
                 $return['offline'][] = $preparedProduct;
             }
         }

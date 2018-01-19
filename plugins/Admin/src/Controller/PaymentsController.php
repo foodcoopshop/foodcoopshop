@@ -73,8 +73,8 @@ class PaymentsController extends AdminAppController
 
         $payment = $this->Payment->find('first', array(
             'conditions' => array(
-                'Payment.id' => $paymentId,
-                'Payment.type' => 'product'
+                'Payments.id' => $paymentId,
+                'Payments.type' => 'product'
             )
         ));
         if (empty($payment)) {
@@ -85,12 +85,12 @@ class PaymentsController extends AdminAppController
             throw new MissingActionException('approval not implemented');
         }
 
-        $payment['Payment']['approval'] = $approval;
-        $payment['Payment']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
+        $payment['Payments']['approval'] = $approval;
+        $payment['Payments']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
         $email = new AppEmail();
         $email->template('Admin.payment_status_changed')
             ->emailFormat('html')
-            ->to($payment['Customer']['email'])
+            ->to($payment['Customers']['email'])
             ->viewVars(array(
                 'appAuth' => $this->AppAuth,
                 'data' => $payment,
@@ -111,8 +111,8 @@ class PaymentsController extends AdminAppController
 
         $unsavedPayment = $this->Payment->find('first', array(
             'conditions' => array(
-                'Payment.id' => $paymentId,
-                'Payment.type' => 'product'
+                'Payments.id' => $paymentId,
+                'Payments.type' => 'product'
             )
         ));
 
@@ -129,7 +129,7 @@ class PaymentsController extends AdminAppController
         } else {
             // validate data - do not use $this->Payment->saveAll()
             $this->Payment->id = $paymentId;
-            $this->Payment->set($this->request->data['Payment']);
+            $this->Payment->set($this->request->data['Payments']);
 
             $errors = array();
             $this->Payment->validator()['approval'] = $this->Payment->getNumberRangeConfigurationRule(-1, 1);
@@ -141,14 +141,14 @@ class PaymentsController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->request->data['Payment']['date_changed'] = date('Y-m-d H:i:s');
-                $this->request->data['Payment']['changed_by'] = $this->AppAuth->getUserId();
+                $this->request->data['Payments']['date_changed'] = date('Y-m-d H:i:s');
+                $this->request->data['Payments']['changed_by'] = $this->AppAuth->getUserId();
 
-                $this->Payment->save($this->request->data['Payment'], array(
+                $this->Payment->save($this->request->data['Payments'], array(
                     'validate' => false
                 ));
 
-                switch ($this->request->data['Payment']['approval']) {
+                switch ($this->request->data['Payments']['approval']) {
                     case -1:
                         $actionLogType = 'payment_product_approval_not_ok';
                         break;
@@ -160,14 +160,14 @@ class PaymentsController extends AdminAppController
                         break;
                 }
 
-                $newStatusAsString = Configure::read('AppConfig.htmlHelper')->getApprovalStates()[$this->request->data['Payment']['approval']];
+                $newStatusAsString = Configure::read('AppConfig.htmlHelper')->getApprovalStates()[$this->request->data['Payments']['approval']];
 
-                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customer']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
-                if ($this->request->data['Payment']['send_email']) {
+                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customers']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
+                if ($this->request->data['Payments']['send_email']) {
                     $email = new AppEmail();
                     $email->template('Admin.payment_status_changed')
                         ->emailFormat('html')
-                        ->to($unsavedPayment['Customer']['email'])
+                        ->to($unsavedPayment['Customers']['email'])
                         ->subject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
                         ->viewVars(array(
                             'appAuth' => $this->AppAuth,
@@ -255,7 +255,7 @@ class PaymentsController extends AdminAppController
                 $this->Customer->recursive = - 1;
                 $customer = $this->Customer->find('first', array(
                     'conditions' => array(
-                        'Customer.id_customer' => $customerId
+                        'Customers.id_customer' => $customerId
                     )
                 ));
                 if (empty($customer)) {
@@ -266,7 +266,7 @@ class PaymentsController extends AdminAppController
                         'msg' => $msg
                     )));
                 }
-                $message .= ' für ' . $customer['Customer']['name'];
+                $message .= ' für ' . $customer['Customers']['name'];
             }
 
             $manufacturerId = (int) $this->params['data']['manufacturerId'];
@@ -276,7 +276,7 @@ class PaymentsController extends AdminAppController
                 $this->Manufacturer->recursive = - 1;
                 $manufacturer = $this->Manufacturer->find('first', array(
                     'conditions' => array(
-                        'Manufacturer.id_manufacturer' => $manufacturerId
+                        'Manufacturers.id_manufacturer' => $manufacturerId
                     )
                 ));
 
@@ -290,7 +290,7 @@ class PaymentsController extends AdminAppController
                 }
 
                 $message = 'Pfand-Rücknahme ('.Configure::read('AppConfig.htmlHelper')->getManufacturerDepositPaymentText($text).')';
-                $message .= ' für ' . $manufacturer['Manufacturer']['name'];
+                $message .= ' für ' . $manufacturer['Manufacturers']['name'];
             }
 
 
@@ -309,11 +309,11 @@ class PaymentsController extends AdminAppController
             $this->Customer->recursive = - 1;
             $customer = $this->Customer->find('first', array(
                 'conditions' => array(
-                    'Customer.id_customer' => $customerId
+                    'Customers.id_customer' => $customerId
                 )
             ));
             if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
-                $message .= ' für ' . $customer['Customer']['name'];
+                $message .= ' für ' . $customer['Customers']['name'];
             }
             // security check
             if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
@@ -362,13 +362,13 @@ class PaymentsController extends AdminAppController
             $message .= ' Der Betrag ist ';
             switch ($actionLogType) {
                 case 'deposit_customer':
-                    $message .= 'im Guthaben-System von ' . $customer['Customer']['name'];
+                    $message .= 'im Guthaben-System von ' . $customer['Customers']['name'];
                     break;
                 case 'deposit_manufacturer':
-                    $message .= 'im Pfandkonto von ' . $manufacturer['Manufacturer']['name'];
+                    $message .= 'im Pfandkonto von ' . $manufacturer['Manufacturers']['name'];
                     break;
                 case 'member_fee_flexible':
-                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer['Customer']['name'];
+                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer['Customers']['name'];
                     break;
             }
             $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
@@ -392,8 +392,8 @@ class PaymentsController extends AdminAppController
 
         $payment = $this->Payment->find('first', array(
             'conditions' => array(
-                'Payment.id' => $paymentId,
-                'Payment.approval <> ' . APP_ON
+                'Payments.id' => $paymentId,
+                'Payments.approval <> ' . APP_ON
             )
         ));
 
@@ -417,23 +417,23 @@ class PaymentsController extends AdminAppController
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
 
-        $actionLogType = $payment['Payment']['type'];
-        if ($payment['Payment']['type'] == 'deposit') {
+        $actionLogType = $payment['Payments']['type'];
+        if ($payment['Payments']['type'] == 'deposit') {
             $userType = 'customer';
-            if ($payment['Payment']['id_manufacturer'] > 0) {
+            if ($payment['Payments']['id_manufacturer'] > 0) {
                 $userType = 'manufacturer';
             }
             $actionLogType .= '_'.$userType;
         }
 
 
-        $message = 'Die Zahlung (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($payment['Payment']['amount']). ', '. Configure::read('AppConfig.htmlHelper')->getPaymentText($payment['Payment']['type']) .')';
+        $message = 'Die Zahlung (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($payment['Payments']['amount']). ', '. Configure::read('AppConfig.htmlHelper')->getPaymentText($payment['Payments']['type']) .')';
 
-        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['Payment']['id_customer']) {
-            if (isset($payment['Customer']['name'])) {
-                $username = $payment['Customer']['name'];
+        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['Payments']['id_customer']) {
+            if (isset($payment['Customers']['name'])) {
+                $username = $payment['Customers']['name'];
             } else {
-                $username = $payment['Manufacturer']['name'];
+                $username = $payment['Manufacturers']['name'];
             }
             $message .= ' von ' . $username;
         }
@@ -538,7 +538,7 @@ class PaymentsController extends AdminAppController
 
         $customer = $this->Customer->find('first', array(
             'conditions' => array(
-                'Customer.id_customer' => $this->getCustomerId()
+                'Customers.id_customer' => $this->getCustomerId()
             )
         ));
 
@@ -590,7 +590,7 @@ class PaymentsController extends AdminAppController
 
         $title = $this->viewVars['title_for_layout'];
         if (in_array($this->action, array('product', 'member_fee'))) {
-            $title .= ' von ' . $customer['Customer']['name'];
+            $title .= ' von ' . $customer['Customers']['name'];
         }
         $this->set('title_for_layout', $title);
 

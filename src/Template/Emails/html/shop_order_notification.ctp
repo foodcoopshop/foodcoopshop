@@ -18,13 +18,13 @@
     
         <tr>
             <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
+                Hallo <?php echo $manufacturer['Addresses']['firstname']; ?>,
             </td>
         </tr>
 
         <tr>
             <td>
-                <p>Soeben wurde von <b><?php echo $originalLoggedCustomer['name']; ?></b> eine Sofort-Bestellung für <b><?php echo $appAuth->getUsername(); ?></b> getätigt (Bestellung Nr. <?php echo $order['Order']['id_order']; ?>).</p>
+                <p>Soeben wurde von <b><?php echo $originalLoggedCustomer['name']; ?></b> eine Sofort-Bestellung für <b><?php echo $appAuth->getUsername(); ?></b> getätigt (Bestellung Nr. <?php echo $order['Orders']['id_order']; ?>).</p>
                 <p>Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint.</p>
             </td>
         </tr>
@@ -34,7 +34,7 @@
 
 <?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
     <?php echo $this->element('email/orderedProductsTable', [
-        'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer'],
+        'manufacturerId' => $manufacturer['Manufacturers']['id_manufacturer'],
         'cartProducts' => $cart['CartProducts'],
         'depositSum' => $depositSum,
         'productSum' => $productSum,

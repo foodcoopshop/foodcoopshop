@@ -19,7 +19,7 @@ if (!empty($sliders)) {
     ]);
     echo '<div id="slider">';
     foreach ($sliders as $slider) {
-        echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider['Slider']['image']).'" />';
+        echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider['Sliders']['image']).'" />';
     }
     if (count($sliders) > 1) {
         echo '<div class=cycle-pager></div>';

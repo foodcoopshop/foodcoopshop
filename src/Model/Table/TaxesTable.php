@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 class TaxesTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('tax');
         parent::initialize($config);
@@ -48,17 +48,17 @@ class TaxesTable extends AppTable
     {
         $taxes = $this->find('all', [
             'conditions' => [
-                'Tax.active' => APP_ON
+                'Taxes.active' => APP_ON
             ],
             'order' => [
-                'Tax.rate' => 'ASC'
+                'Taxes.rate' => 'ASC'
             ]
         ]);
         $preparedTaxes = [
             0 => '0 %'
         ];
         foreach ($taxes as $tax) {
-            $preparedTaxes[$tax['Tax']['id_tax']] = Configure::read('AppConfig.htmlHelper')->formatAsPercent($tax['Tax']['rate']);
+            $preparedTaxes[$tax['Taxes']['id_tax']] = Configure::read('AppConfig.htmlHelper')->formatAsPercent($tax['Taxes']['rate']);
         }
         return $preparedTaxes;
     }

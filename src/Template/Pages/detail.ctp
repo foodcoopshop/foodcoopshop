@@ -17,17 +17,17 @@ $this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
 ]);
 
-if ($page['Page']['full_width']) {
+if ($page['Pages']['full_width']) {
     echo $this->Html->css('page-full-width');
 }
 
-echo '<h1>'.$page['Page']['title'].'</h1>';
+echo '<h1>'.$page['Pages']['title'].'</h1>';
 
 if (!empty($page['children'])) {
     foreach ($page['children'] as $childPage) {
         echo '<p>'.$this->Html->link(
-            $childPage['Page']['title'],
-            $this->Slug->getPageDetail($childPage['Page']['id_page'], $childPage['Page']['title']),
+            $childPage['Pages']['title'],
+            $this->Slug->getPageDetail($childPage['Pages']['id_page'], $childPage['Pages']['title']),
             [
                 'class' => 'btn btn-success'
             ]
@@ -41,8 +41,8 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         [
             'title' => 'Bearbeiten'
         ],
-        $this->Slug->getPageEdit($page['Page']['id_page'])
+        $this->Slug->getPageEdit($page['Pages']['id_page'])
     );
 }
 
-echo $page['Page']['content'];
+echo $page['Pages']['content'];

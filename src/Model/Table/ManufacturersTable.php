@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  *
@@ -21,7 +22,7 @@ use Cake\Core\Configure;
 class ManufacturersTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('manufacturer');
         parent::initialize($config);
@@ -34,16 +35,16 @@ class ManufacturersTable extends AppTable
     ];
 
     public $belongsTo = [
-        'Customer' => [
+        'Customers' => [
             'foreignKey' => 'id_customer'
         ]
     ];
 
     public $hasOne = [
-        'Address' => [
+        'Addresses' => [
             'className' => 'AddressManufacturer',
             'conditions' => [
-                'Address.id_manufacturer > 0'
+                'Addresses.id_manufacturer > 0'
             ],
             'foreignKey' => 'id_manufacturer'
         ]
@@ -51,7 +52,7 @@ class ManufacturersTable extends AppTable
 
     public $hasMany = [
         'Invoices' => [
-            'className' => 'Invoice',
+            'className' => 'Invoices',
             'foreignKey' => 'id_manufacturer',
             'order' => [
                 'Invoices.send_date DESC'
@@ -250,12 +251,12 @@ class ManufacturersTable extends AppTable
      */
     public function getCustomerRecord($manufacturer)
     {
-        $cm = ClassRegistry::init('Customer');
+        $cm = ClassRegistry::init('Customers');
 
         $cm->recursive = 1;
         $customer = $cm->find('first', [
             'conditions' => [
-                'Customer.email' => $manufacturer['Address']['email']
+                'Customers.email' => $manufacturer['Addresses']['email']
             ]
         ]);
 
@@ -278,7 +279,7 @@ class ManufacturersTable extends AppTable
     {
         $manufacturer = $this->find('first', [
             'conditions' => [
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             ]
         ]);
         if (!empty($manufacturer)) {
@@ -291,7 +292,7 @@ class ManufacturersTable extends AppTable
     {
         $customer = $this->getCustomerByManufacturerId($manufacturerId);
         if (!empty($customer)) {
-            return $$customer['Customer']['id_customer'];
+            return $$customer['Customers']['id_customer'];
         }
         return 0;
     }
@@ -303,39 +304,41 @@ class ManufacturersTable extends AppTable
 
     public function getForMenu($appAuth)
     {
+        return [];
+        
         if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = TableRegistry::get('Product');
+            $productModel = TableRegistry::get('Products');
         }
         $this->recursive = - 1;
         $conditions = [
-            'Manufacturer.active' => APP_ON
+            'Manufacturers.active' => APP_ON
         ];
         if (! $appAuth->user()) {
-            $conditions['Manufacturer.is_private'] = APP_OFF;
+            $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
         $manufacturers = $this->find('all', [
             'fields' => [
-                'Manufacturer.id_manufacturer',
-                'Manufacturer.name',
-                'Manufacturer.holiday_from',
-                'Manufacturer.holiday_to',
+                'Manufacturers.id_manufacturer',
+                'Manufacturers.name',
+                'Manufacturers.holiday_from',
+                'Manufacturers.holiday_to',
                 '!'.$this->getManufacturerHolidayConditions().' as IsHolidayActive'
             ],
             'order' => [
-                'Manufacturer.name' => 'ASC'
+                'Manufacturers.name' => 'ASC'
             ],
             'conditions' => $conditions
         ]);
         
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
-            $manufacturerName = $manufacturer['Manufacturer']['name'];
+            $manufacturerName = $manufacturer['Manufacturers']['name'];
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
+                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
             }
-            $holidayInfo = Configure::read('AppConfig.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+            $holidayInfo = Configure::read('AppConfig.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
             if ($holidayInfo != '') {
                 $holidayInfo = 'Lieferpause ' . $holidayInfo;
                 if ($manufacturer[0]['IsHolidayActive']) {
@@ -352,7 +355,7 @@ class ManufacturersTable extends AppTable
             }
             $manufacturersForMenu[] = [
                 'name' => $manufacturerName,
-                'slug' => Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
+                'slug' => Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name'])
             ];
         }
         return $manufacturersForMenu;
@@ -393,23 +396,23 @@ class ManufacturersTable extends AppTable
         $this->recursive = - 1;
         $manufacturers = $this->find('all', [
             'fields' => [
-                'Manufacturer.id_manufacturer',
-                'Manufacturer.name',
-                'Manufacturer.active'
+                'Manufacturers.id_manufacturer',
+                'Manufacturers.name',
+                'Manufacturers.active'
             ],
             'order' => [
-                'Manufacturer.name' => 'ASC'
+                'Manufacturers.name' => 'ASC'
             ]
         ]);
 
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
-            $manufacturerNameForDropdown = $manufacturer['Manufacturer']['name'];
-            if ($manufacturer['Manufacturer']['active'] == 0) {
-                $offlineManufacturers[$manufacturer['Manufacturer']['id_manufacturer']] = $manufacturerNameForDropdown;
+            $manufacturerNameForDropdown = $manufacturer['Manufacturers']['name'];
+            if ($manufacturer['Manufacturers']['active'] == 0) {
+                $offlineManufacturers[$manufacturer['Manufacturers']['id_manufacturer']] = $manufacturerNameForDropdown;
             } else {
-                $onlineManufacturers[$manufacturer['Manufacturer']['id_manufacturer']] = $manufacturerNameForDropdown;
+                $onlineManufacturers[$manufacturer['Manufacturers']['id_manufacturer']] = $manufacturerNameForDropdown;
             }
         }
         $manufacturersForDropdown = [];

@@ -2,10 +2,10 @@
 
 App::uses('AppCakeTestCase', 'Test');
 App::uses('Cart', 'Model');
-App::uses('Product', 'Model');
-App::uses('Order', 'Model');
-App::uses('StockAvailable', 'Model');
-App::uses('EmailLog', 'Model');
+App::uses('Products', 'Model');
+App::uses('Orders', 'Model');
+App::uses('StockAvailables', 'Model');
+App::uses('EmailLogs', 'Model');
 
 /**
  * CartsControllerTest
@@ -208,20 +208,20 @@ class CartsControllerTest extends AppCakeTestCase
         $this->Order->recursive = 2;
         $order = $this->Order->find('first', [
             'conditions' => [
-                'Order.id_order' => $orderId
+                'Orders.id_order' => $orderId
             ]
         ]);
         $this->assertNotEquals([], $order, 'order not correct');
-        $this->assertEquals($order['Order']['id_order'], $orderId, 'order id not correct');
-        $this->assertEquals($order['Order']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
-        $this->assertEquals($order['Order']['id_cart'], 1, 'order cart_id not correct');
-        $this->assertEquals($order['Order']['current_state'], 3, 'order current_state not correct');
-        $this->assertEquals($order['Order']['total_deposit'], 2.5, 'order total_deposit not correct');
-        $this->assertEquals($order['Order']['total_paid_tax_excl'], 5.578515, 'order total_paid_tax_excl not correct');
-        $this->assertEquals($order['Order']['total_paid_tax_incl'], 6.136364, 'order total_paid_tax_incl not correct');
-        $this->assertEquals($order['Order']['general_terms_and_conditions_accepted'], 1, 'order general_terms_and_conditions_accepted not correct');
-        $this->assertEquals($order['Order']['cancellation_terms_accepted'], 1, 'order cancellation_terms_accepted not correct');
-        $this->assertEquals($order['Order']['comment'], $orderComment, 'order comment not correct');
+        $this->assertEquals($order['Orders']['id_order'], $orderId, 'order id not correct');
+        $this->assertEquals($order['Orders']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
+        $this->assertEquals($order['Orders']['id_cart'], 1, 'order cart_id not correct');
+        $this->assertEquals($order['Orders']['current_state'], 3, 'order current_state not correct');
+        $this->assertEquals($order['Orders']['total_deposit'], 2.5, 'order total_deposit not correct');
+        $this->assertEquals($order['Orders']['total_paid_tax_excl'], 5.578515, 'order total_paid_tax_excl not correct');
+        $this->assertEquals($order['Orders']['total_paid_tax_incl'], 6.136364, 'order total_paid_tax_incl not correct');
+        $this->assertEquals($order['Orders']['general_terms_and_conditions_accepted'], 1, 'order general_terms_and_conditions_accepted not correct');
+        $this->assertEquals($order['Orders']['cancellation_terms_accepted'], 1, 'order cancellation_terms_accepted not correct');
+        $this->assertEquals($order['Orders']['comment'], $orderComment, 'order comment not correct');
 
         // check order_details for product1
         $this->checkOrderDetails($order['OrderDetails'][0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.305786, 3.64, 0.17, 0.34, 2);
@@ -253,11 +253,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $testCustomer = $this->Customer->find('first', [
             'conditions' => [
-                'Customer.id_customer' => Configure::read('test.customerId')
+                'Customers.id_customer' => Configure::read('test.customerId')
             ]
         ]);
         $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.customerId'));
-        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customer']['name'] . '\<\/b\> getätigt./', $responseHtml);
+        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customers']['name'] . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }
 
@@ -281,7 +281,7 @@ class CartsControllerTest extends AppCakeTestCase
         // only one order with the cake cart id should have been created
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'Order.id_cart' => 1
+                'Orders.id_cart' => 1
             ]
         ]);
         $this->assertEquals(1, count($orders), 'more than one order inserted');
@@ -299,7 +299,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $cart = $this->Cart->find('first', [
             'conditions' => [
-                'Cart.id_cart' => 1
+                'Carts.id_cart' => 1
             ]
         ]);
         $this->assertEquals($cart['Cart']['status'], 0, 'cake cart status wrong');
@@ -339,13 +339,13 @@ class CartsControllerTest extends AppCakeTestCase
         // get changed product
         $stockAvailable = $this->StockAvailable->find('first', [
             'conditions' => [
-                'StockAvailable.id_product' => $ids['productId'],
-                'StockAvailable.id_product_attribute' => $ids['attributeId']
+                'StockAvailables.id_product' => $ids['productId'],
+                'StockAvailables.id_product_attribute' => $ids['attributeId']
             ]
         ]);
 
         // stock available check of changed product
-        $this->assertEquals($stockAvailable['StockAvailable']['quantity'], $result, 'stockavailable quantity wrong');
+        $this->assertEquals($stockAvailable['StockAvailables']['quantity'], $result, 'stockavailable quantity wrong');
     }
 
     private function checkOrderDetails($orderDetail, $name, $quantity, $productAttributeId, $deposit, $productPrice, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
@@ -362,8 +362,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail['id_tax'], $taxId, 'order_detail id_tax not correct');
 
         // check order_details_tax
-        $this->assertEquals($orderDetail['OrderDetailTax']['unit_amount'], $taxUnitAmount, 'order_detail tax unit amount not correct');
-        $this->assertEquals($orderDetail['OrderDetailTax']['total_amount'], $taxTotalAmount, 'order_detail tax total amount not correct');
+        $this->assertEquals($orderDetail['OrderDetailTaxes']['unit_amount'], $taxUnitAmount, 'order_detail tax unit amount not correct');
+        $this->assertEquals($orderDetail['OrderDetailTaxes']['total_amount'], $taxTotalAmount, 'order_detail tax total amount not correct');
     }
 
     /**

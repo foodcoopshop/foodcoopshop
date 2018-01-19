@@ -25,7 +25,7 @@ class CartsTable extends AppTable
     ];
 
     public $belongsTo = [
-        'Customer' => [
+        'Customers' => [
             'foreignKey' => 'id_customer'
         ]
     ];
@@ -46,8 +46,8 @@ class CartsTable extends AppTable
         $this->recursive = - 1;
         $cart = $this->find('first', [
             'conditions' => [
-                'Cart.status' => APP_ON,
-                'Cart.id_customer' => $customerId
+                'Carts.status' => APP_ON,
+                'Carts.id_customer' => $customerId
             ]
         ]);
         if (empty($cart)) {
@@ -58,14 +58,14 @@ class CartsTable extends AppTable
             $cart = $this->save($cart2save);
         }
 
-        $ccp = ClassRegistry::init('CartProduct');
+        $ccp = ClassRegistry::init('CartProducts');
         $ccp->recursive = 3;
         $cartProducts = $ccp->find('all', [
             'conditions' => [
-                'CartProduct.id_cart' => $cart['Cart']['id_cart']
+                'CartProducts.id_cart' => $cart['Cart']['id_cart']
             ],
             'order' => [
-                'ProductLang.name' => 'ASC'
+                'ProductLangs.name' => 'ASC'
             ]
         ]);
 
@@ -74,72 +74,72 @@ class CartsTable extends AppTable
             'CartProducts' => []
         ];
         foreach ($cartProducts as &$cartProduct) {
-            $manufacturerLink = Configure::read('AppConfig.htmlHelper')->link($cartProduct['Product']['Manufacturer']['name'], Configure::read('AppConfig.slugHelper')->getManufacturerDetail($cartProduct['Product']['Manufacturer']['id_manufacturer'], $cartProduct['Product']['Manufacturer']['name']));
+            $manufacturerLink = Configure::read('AppConfig.htmlHelper')->link($cartProduct['Products']['Manufacturers']['name'], Configure::read('AppConfig.slugHelper')->getManufacturerDetail($cartProduct['Products']['Manufacturers']['id_manufacturer'], $cartProduct['Products']['Manufacturers']['name']));
 
             $imageId = 0;
-            if (!empty($cartProduct['Product']['Image'])) {
-                $imageId = $cartProduct['Product']['Image']['id_image'];
+            if (!empty($cartProduct['Products']['Images'])) {
+                $imageId = $cartProduct['Products']['Images']['id_image'];
             }
 
             $productImage = Configure::read('AppConfig.htmlHelper')->image(Configure::read('AppConfig.htmlHelper')->getProductImageSrc($imageId, 'home'));
             $productLink = Configure::read('AppConfig.htmlHelper')->link(
-                $cartProduct['ProductLang']['name'],
+                $cartProduct['ProductLangs']['name'],
                 Configure::read('AppConfig.slugHelper')->getProductDetail(
-                    $cartProduct['CartProduct']['id_product'],
-                    $cartProduct['ProductLang']['name']
+                    $cartProduct['CartProducts']['id_product'],
+                    $cartProduct['ProductLangs']['name']
                 ),
                 ['class' => 'product-name']
             );
 
-            if (isset($cartProduct['ProductAttribute']['ProductAttributeCombination'])) {
+            if (isset($cartProduct['ProductAttributes']['ProductAttributeCombinations'])) {
                 // attribute
                 $preparedCart['CartProducts'][] = [
-                    'cartProductId' => $cartProduct['CartProduct']['id_cart_product'],
-                    'productId' => $cartProduct['CartProduct']['id_product'] . '-' . $cartProduct['CartProduct']['id_product_attribute'],
-                    'productName' => $cartProduct['ProductLang']['name'],
+                    'cartProductId' => $cartProduct['CartProducts']['id_cart_product'],
+                    'productId' => $cartProduct['CartProducts']['id_product'] . '-' . $cartProduct['CartProducts']['id_product_attribute'],
+                    'productName' => $cartProduct['ProductLangs']['name'],
                     'productLink' => $productLink,
-                    'unity' => $cartProduct['ProductAttribute']['ProductAttributeCombination']['Attribute']['name'],
-                    'amount' => $cartProduct['CartProduct']['amount'],
-                    'manufacturerId' => $cartProduct['Product']['id_manufacturer'],
+                    'unity' => $cartProduct['ProductAttributes']['ProductAttributeCombinations']['Attributes']['name'],
+                    'amount' => $cartProduct['CartProducts']['amount'],
+                    'manufacturerId' => $cartProduct['Products']['id_manufacturer'],
                     'manufacturerLink' => $manufacturerLink,
-                    'manufacturerName' => $cartProduct['Product']['Manufacturer']['name'],
+                    'manufacturerName' => $cartProduct['Products']['Manufacturers']['name'],
                     'image' => $productImage,
-                    'deposit' => isset($cartProduct['ProductAttribute']['DepositProductAttribute']['deposit']) ? $cartProduct['ProductAttribute']['DepositProductAttribute']['deposit'] * $cartProduct['CartProduct']['amount'] : 0, // * 1 to convert to float
-                    'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['ProductAttribute']['ProductAttributeShop']['price']) * $cartProduct['CartProduct']['amount'],
-                    'priceExcl' => $cartProduct['ProductAttribute']['ProductAttributeShop']['price'] * $cartProduct['CartProduct']['amount'],
+                    'deposit' => isset($cartProduct['ProductAttributes']['DepositProductAttribute']['deposit']) ? $cartProduct['ProductAttributes']['DepositProductAttribute']['deposit'] * $cartProduct['CartProducts']['amount'] : 0, // * 1 to convert to float
+                    'price' => $ccp->Product->getGrossPrice($cartProduct['Products']['id_product'], $cartProduct['ProductAttributes']['ProductAttributeShops']['price']) * $cartProduct['CartProducts']['amount'],
+                    'priceExcl' => $cartProduct['ProductAttributes']['ProductAttributeShops']['price'] * $cartProduct['CartProducts']['amount'],
                     'tax' => $ccp->Product->getUnitTax(
                         $ccp->Product->getGrossPrice(
-                            $cartProduct['Product']['id_product'],
-                            $cartProduct['ProductAttribute']['ProductAttributeShop']['price']
-                        ) * $cartProduct['CartProduct']['amount'],
-                        $cartProduct['ProductAttribute']['ProductAttributeShop']['price'],
-                        $cartProduct['CartProduct']['amount']
-                    ) * $cartProduct['CartProduct']['amount']
+                            $cartProduct['Products']['id_product'],
+                            $cartProduct['ProductAttributes']['ProductAttributeShops']['price']
+                        ) * $cartProduct['CartProducts']['amount'],
+                        $cartProduct['ProductAttributes']['ProductAttributeShops']['price'],
+                        $cartProduct['CartProducts']['amount']
+                    ) * $cartProduct['CartProducts']['amount']
                 ];
             } else {
                 // no attribute
                 $preparedCart['CartProducts'][] = [
-                    'cartProductId' => $cartProduct['CartProduct']['id_cart_product'],
-                    'productId' => $cartProduct['CartProduct']['id_product'],
-                    'productName' => $cartProduct['ProductLang']['name'],
+                    'cartProductId' => $cartProduct['CartProducts']['id_cart_product'],
+                    'productId' => $cartProduct['CartProducts']['id_product'],
+                    'productName' => $cartProduct['ProductLangs']['name'],
                     'productLink' => $productLink,
-                    'unity' => $cartProduct['Product']['ProductLang']['unity'],
-                    'amount' => $cartProduct['CartProduct']['amount'],
-                    'manufacturerId' => $cartProduct['Product']['id_manufacturer'],
+                    'unity' => $cartProduct['Products']['ProductLangs']['unity'],
+                    'amount' => $cartProduct['CartProducts']['amount'],
+                    'manufacturerId' => $cartProduct['Products']['id_manufacturer'],
                     'manufacturerLink' => $manufacturerLink,
-                    'manufacturerName' => $cartProduct['Product']['Manufacturer']['name'],
+                    'manufacturerName' => $cartProduct['Products']['Manufacturers']['name'],
                     'image' => $productImage,
-                    'deposit' => isset($cartProduct['Product']['DepositProduct']['deposit']) ? $cartProduct['Product']['DepositProduct']['deposit'] * $cartProduct['CartProduct']['amount'] : 0,
-                    'price' => $ccp->Product->getGrossPrice($cartProduct['Product']['id_product'], $cartProduct['Product']['ProductShop']['price']) * $cartProduct['CartProduct']['amount'],
-                    'priceExcl' => $cartProduct['Product']['ProductShop']['price'] * $cartProduct['CartProduct']['amount'],
+                    'deposit' => isset($cartProduct['Products']['DepositProduct']['deposit']) ? $cartProduct['Products']['DepositProduct']['deposit'] * $cartProduct['CartProducts']['amount'] : 0,
+                    'price' => $ccp->Product->getGrossPrice($cartProduct['Products']['id_product'], $cartProduct['Products']['ProductShop']['price']) * $cartProduct['CartProducts']['amount'],
+                    'priceExcl' => $cartProduct['Products']['ProductShop']['price'] * $cartProduct['CartProducts']['amount'],
                     'tax' => $ccp->Product->getUnitTax(
                         $ccp->Product->getGrossPrice(
-                            $cartProduct['Product']['id_product'],
-                            $cartProduct['Product']['ProductShop']['price']
-                        ) * $cartProduct['CartProduct']['amount'],
-                        $cartProduct['Product']['ProductShop']['price'],
-                        $cartProduct['CartProduct']['amount']
-                    ) * $cartProduct['CartProduct']['amount']
+                            $cartProduct['Products']['id_product'],
+                            $cartProduct['Products']['ProductShop']['price']
+                        ) * $cartProduct['CartProducts']['amount'],
+                        $cartProduct['Products']['ProductShop']['price'],
+                        $cartProduct['CartProducts']['amount']
+                    ) * $cartProduct['CartProducts']['amount']
                 ];
             }
         }

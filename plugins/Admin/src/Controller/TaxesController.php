@@ -41,13 +41,13 @@ class TaxesController extends AdminAppController
         if ($taxId > 0) {
             $unsavedTax = $this->Tax->find('first', array(
                 'conditions' => array(
-                    'Tax.id_tax' => $taxId
+                    'Taxes.id_tax' => $taxId
                 )
             ));
         } else {
             // default value
             $unsavedTax = array(
-                'Tax' => array(
+                'Taxes' => array(
                     'active' => true
                 )
             );
@@ -61,10 +61,10 @@ class TaxesController extends AdminAppController
         } else {
             // validate data - do not use $this->Tax->saveAll()
             $this->Tax->id = $taxId;
-            $this->Tax->set($this->request->data['Tax']);
+            $this->Tax->set($this->request->data['Taxes']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Tax'] as &$data) {
+            foreach ($this->request->data['Taxes'] as &$data) {
                 $data = strip_tags(trim($data));
             }
 
@@ -76,7 +76,7 @@ class TaxesController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Tax->save($this->request->data['Tax'], array(
+                $this->Tax->save($this->request->data['Taxes'], array(
                     'validate' => false
                 ));
                 if (is_null($taxId)) {
@@ -87,16 +87,16 @@ class TaxesController extends AdminAppController
                     $actionLogType = 'tax_changed';
                 }
 
-                if (isset($this->request->data['Tax']['delete_tax']) && $this->request->data['Tax']['delete_tax']) {
+                if (isset($this->request->data['Taxes']['delete_tax']) && $this->request->data['Taxes']['delete_tax']) {
                     $this->Tax->delete($this->Tax->id); // cascade does not work here
-                    $message = 'Der Steuersatz "' . Configure::read('AppConfig.htmlHelper')->formatAsPercent($this->request->data['Tax']['rate']) . '" wurde erfolgreich gelöscht.';
+                    $message = 'Der Steuersatz "' . Configure::read('AppConfig.htmlHelper')->formatAsPercent($this->request->data['Taxes']['rate']) . '" wurde erfolgreich gelöscht.';
                     $this->ActionLog->customSave('tax_deleted', $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
                     $this->Flash->success('Der Steuersatz wurde erfolgreich gelöscht.');
                 } else {
                     if ($taxId > 0) {
-                        $taxRate = $unsavedTax['Tax']['rate'];
+                        $taxRate = $unsavedTax['Taxes']['rate'];
                     } else {
-                        $taxRate = $this->request->data['Tax']['rate'];
+                        $taxRate = $this->request->data['Taxes']['rate'];
                     }
                     $message = 'Der Steuersatz "' . Configure::read('AppConfig.htmlHelper')->formatAsPercent($taxRate) . '" wurde ' . $messageSuffix;
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
@@ -114,15 +114,15 @@ class TaxesController extends AdminAppController
     public function index()
     {
         $conditions = array();
-        $conditions[] = 'Tax.active > ' . APP_DEL;
+        $conditions[] = 'Taxes.active > ' . APP_DEL;
 
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'Tax.rate' => 'ASC'
+                'Taxes.rate' => 'ASC'
             )
         ), $this->Paginator->settings);
-        $taxes = $this->Paginator->paginate('Tax');
+        $taxes = $this->Paginator->paginate('Taxes');
         $this->set('taxes', $taxes);
 
         $this->set('title_for_layout', 'Steuersätze');

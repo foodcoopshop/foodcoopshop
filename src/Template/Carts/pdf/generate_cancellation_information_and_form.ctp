@@ -42,7 +42,7 @@ if (!empty($manufacturers)) {
 
             $pdf->AddPage();
 
-            $pdf->infoTextForFooter = 'Rücktrittsformular ' . $product['Manufacturer']['name'];
+            $pdf->infoTextForFooter = 'Rücktrittsformular ' . $product['Manufacturers']['name'];
 
             $html = '<h1>Rücktrittsformular</h1>';
             $pdf->writeHTML($html, true, false, true, false, '');
@@ -52,7 +52,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(8);
 
-            $html = $this->Html->getManufacturerImprint($product['Manufacturer'], 'pdf', true);
+            $html = $this->Html->getManufacturerImprint($product['Manufacturers'], 'pdf', true);
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(4);
 
@@ -64,7 +64,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
 
-            $html = '<p>Bestellt am (*): '.$this->Time->formatToDateNTimeLong($order['Order']['date_add']).'</p>';
+            $html = '<p>Bestellt am (*): '.$this->Time->formatToDateNTimeLong($order['Orders']['date_add']).'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<p>Erhalten am (*): </p>';

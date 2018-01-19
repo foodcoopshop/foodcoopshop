@@ -66,15 +66,15 @@ echo '<tr class="sort">';
 $colspan = 3;
 if ($paymentType == 'product') {
     echo '<th style="width:25px;"></th>';
-    echo '<th style="width:50px;">' . $this->Paginator->sort('Payment.approval', 'Status') . '</th>';
+    echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', 'Status') . '</th>';
     $colspan = $colspan + 2;
 }
-echo '<th>' . $this->Paginator->sort('Customer.name', 'Mitglied') . '</th>';
-echo '<th>' . $this->Paginator->sort('Payment.date_add', 'Eingetragen am') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.name', 'Mitglied') . '</th>';
+echo '<th>' . $this->Paginator->sort('Payments.date_add', 'Eingetragen am') . '</th>';
 echo '<th>' . $this->Paginator->sort('CreatedBy.name', 'Eingetragen von') . '</th>';
 echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
 if ($showTextColumn) {
-    echo '<th>' . $this->Paginator->sort('Payment.text', 'Text') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Payments.text', 'Text') . '</th>';
 }
 echo '</tr>';
 
@@ -84,15 +84,15 @@ $paymentSum = 0;
 foreach ($payments as $payment) {
     $rowClass = '';
     $additionalText = '';
-    if ($payment['Payment']['status'] == APP_DEL) {
+    if ($payment['Payments']['status'] == APP_DEL) {
         $rowClass = 'deactivated';
-        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $this->Time->formatToDateNTimeShort($payment['Payment']['date_changed']) . ' - scheint in der Summe nicht auf)';
+        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $this->Time->formatToDateNTimeShort($payment['Payments']['date_changed']) . ' - scheint in der Summe nicht auf)';
     } else {
         $i ++;
-        $paymentSum += $payment['Payment']['amount'];
+        $paymentSum += $payment['Payments']['amount'];
     }
 
-    echo '<tr id="cakePayment-'.$payment['Payment']['id'].'" class="data ' . $rowClass . '">';
+    echo '<tr id="cakePayment-'.$payment['Payments']['id'].'" class="data ' . $rowClass . '">';
 
     if ($paymentType == 'product') {
         echo '<td>';
@@ -101,11 +101,11 @@ foreach ($payments as $payment) {
                 array(
                 'title' => 'Bearbeiten'
                 ),
-                $this->Slug->getPaymentEdit($payment['Payment']['id'])
+                $this->Slug->getPaymentEdit($payment['Payments']['id'])
             );
         echo '</td>';
         echo '<td>';
-        switch ($payment['Payment']['approval']) {
+        switch ($payment['Payments']['approval']) {
             case -1:
                 echo $this->Html->image(
                     $this->Html->getFamFamFamPath('delete.png'),
@@ -125,13 +125,13 @@ foreach ($payments as $payment) {
                 );
                 break;
         }
-        if ($payment['Payment']['approval_comment'] != '') {
+        if ($payment['Payments']['approval_comment'] != '') {
             echo '<span class="payment-approval-comment-wrapper">';
             echo $this->Html->getJqueryUiIcon(
                 $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
                 array(
                 'class' => 'payment-approval-comment',
-                'title' => $payment['Payment']['approval_comment']
+                'title' => $payment['Payments']['approval_comment']
                 ),
                 'javascript:void(0);'
             );
@@ -141,39 +141,39 @@ foreach ($payments as $payment) {
     }
 
     echo '<td>';
-    if (!empty($payment['Manufacturer']['name'])) {
-        echo $payment['Manufacturer']['name'];
+    if (!empty($payment['Manufacturers']['name'])) {
+        echo $payment['Manufacturers']['name'];
     } else {
-        echo $payment['Customer']['name'];
+        echo $payment['Customers']['name'];
     }
         echo $additionalText;
     echo '</td>';
 
     echo '<td style="text-align:right;width:110px;">';
-        echo $this->Time->formatToDateNTimeShort($payment['Payment']['date_add']);
+        echo $this->Time->formatToDateNTimeShort($payment['Payments']['date_add']);
     echo '</td>';
 
     echo '<td>';
-    if ($payment['CreatedBy']['id_customer'] != $payment['Payment']['id_customer']) {
+    if ($payment['CreatedBy']['id_customer'] != $payment['Payments']['id_customer']) {
         echo $payment['CreatedBy']['name'];
     }
     echo '</td>';
 
     echo '<td style="text-align:right;">';
-        echo $this->Html->formatAsEuro($payment['Payment']['amount']);
+        echo $this->Html->formatAsEuro($payment['Payments']['amount']);
     echo '</td>';
 
     if ($showTextColumn) {
         echo '<td>';
         switch ($paymentType) {
             case 'member_fee':
-                echo $this->Html->getMemberFeeTextForFrontend($payment['Payment']['text']);
+                echo $this->Html->getMemberFeeTextForFrontend($payment['Payments']['text']);
                 break;
             case 'deposit':
-                echo $this->Html->getManufacturerDepositPaymentText($payment['Payment']['text']);
+                echo $this->Html->getManufacturerDepositPaymentText($payment['Payments']['text']);
                 break;
             default:
-                echo $payment['Payment']['text'];
+                echo $payment['Payments']['text'];
         }
         echo '</td>';
     }

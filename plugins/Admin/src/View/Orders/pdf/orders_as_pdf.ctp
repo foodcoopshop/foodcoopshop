@@ -22,13 +22,13 @@ $pdf->infoTextForFooter = 'Bestellungen';
 $j = 1;
 foreach ($orders as $order) {
     $pdf->Ln(5);
-    $pdf->writeHTML('<h2>' . $order['Customer']['name'] . '</h2>', true, false, true, false, '');
-    $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Order']['date_add']) . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h2>' . $order['Customers']['name'] . '</h2>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Orders']['date_add']) . '</h3>', true, false, true, false, '');
 
-    if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED') && $order['Order']['comment'] != '') {
+    if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED') && $order['Orders']['comment'] != '') {
         $pdf->SetRightMargin(16);
         $pdf->Ln(2);
-        $pdf->writeHTML('<p><b>Kommentar: </b>' . $order['Order']['comment'] . '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p><b>Kommentar: </b>' . $order['Orders']['comment'] . '</p>', true, false, true, false, '');
     }
 
     $pdf->Ln(5);
@@ -69,7 +69,7 @@ foreach ($orders as $order) {
         }
         $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail['product_quantity'] . 'x</td>';
         $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail['product_name'] . '</td>';
-        $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail['Product']['Manufacturer']['name'] . '</td>';
+        $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail['Products']['Manufacturers']['name'] . '</td>';
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">' . $this->Html->formatAsEuro($orderDetail['total_price_tax_incl']) . '</td>';
 
         $deposit = $orderDetail['deposit'];

@@ -32,14 +32,14 @@ class OrdersTable extends AppTable
     ];
 
     public $belongsTo = [
-        'Customer' => [
+        'Customers' => [
             'foreignKey' => 'id_customer'
         ]
     ];
 
     public $hasMany = [
         'OrderDetails' => [
-            'className' => 'OrderDetail',
+            'className' => 'OrderDetails',
             'foreignKey' => 'id_order'
         ]
     ];
@@ -47,7 +47,7 @@ class OrdersTable extends AppTable
     private function getOrderStateCondition($orderState)
     {
         $orderStates = explode(',', $orderState);
-        $condition = 'Order.current_state IN (' . join(', ', $orderStates) . ')';
+        $condition = 'Orders.current_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
 
@@ -66,8 +66,8 @@ class OrdersTable extends AppTable
     public function getSumProduct($customerId)
     {
         $conditions = [
-            'Order.id_customer' => $customerId,
-            'Order.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
+            'Orders.id_customer' => $customerId,
+            'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
         ];
 
         $ordersSum = $this->find('all', [
@@ -83,8 +83,8 @@ class OrdersTable extends AppTable
     public function getSumDeposit($customerId)
     {
         $conditions = [
-            'Order.id_customer' => $customerId,
-            'Order.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
+            'Orders.id_customer' => $customerId,
+            'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
             'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.depositPaymentCashlessStartDate') . '\''
         ];
 
@@ -116,21 +116,21 @@ class OrdersTable extends AppTable
         }
 
         if ($customerId != '') {
-            $conditions['Customer.id_customer'] = $customerId;
+            $conditions['Customers.id_customer'] = $customerId;
         }
 
         // customers are only allowed to see their own data
         if ($appAuth->isCustomer()) {
-            $conditions['Customer.id_customer'] = $appAuth->getUserId();
+            $conditions['Customers.id_customer'] = $appAuth->getUserId();
         }
 
         if ($orderId != '') {
-            $conditions['Order.id_order'] = $orderId;
+            $conditions['Orders.id_order'] = $orderId;
         }
 
         $fields = [
-            'Order.*',
-            'Customer.*'
+            'Orders.*',
+            'Customers.*'
         ];
         $contain = [
             'OrderDetails'
@@ -139,7 +139,7 @@ class OrdersTable extends AppTable
             $fields[] = 'SUM(Order.total_paid) AS Order_total_paid';
             $fields[] = 'COUNT(Order.total_paid) AS Order_count';
             $fields[] = 'SUM(Order.total_deposit) AS Order_total_deposit';
-            $group[] = 'Customer.id_customer';
+            $group[] = 'Customers.id_customer';
         }
 
         $orderParams = [
@@ -154,7 +154,7 @@ class OrdersTable extends AppTable
 
     public function recalculateOrderDetailPricesInOrder($order)
     {
-        $orderId = $order['OrderDetail']['id_order'];
+        $orderId = $order['OrderDetails']['id_order'];
 
         // get new sums
         $this->OrderDetails->recursive = - 1;

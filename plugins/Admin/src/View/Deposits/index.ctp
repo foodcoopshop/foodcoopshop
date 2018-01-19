@@ -47,7 +47,7 @@ if (empty($manufacturer)) {
 <div id="help-container">
     <ul>
         <?php echo $this->element('docs/abholdienst'); ?>
-        <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturer']['name']; ?></b> verwaltet.</li>
+        <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturers']['name']; ?></b> verwaltet.</li>
         <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('AppConfig.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
         <li><b>Produkt mit Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
         <li><b>Leergebinde zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
@@ -74,9 +74,9 @@ if ($appAuth->isSuperadmin()) {
 }
     echo $this->element('addDepositPaymentOverlay', array(
         'buttonText' => $buttonText,
-        'rowId' => $manufacturer['Manufacturer']['id_manufacturer'],
-        'userName' => $manufacturer['Manufacturer']['name'],
-        'manufacturerId' => $manufacturer['Manufacturer']['id_manufacturer']
+        'rowId' => $manufacturer['Manufacturers']['id_manufacturer'],
+        'userName' => $manufacturer['Manufacturers']['name'],
+        'manufacturerId' => $manufacturer['Manufacturers']['id_manufacturer']
     ));
     echo '</div>';
     echo '<div class="sc"></div>';

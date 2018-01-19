@@ -50,16 +50,16 @@ class CustomersController extends FrontendController
         }
 
         $checkboxErrors = false;
-        if (!isset($this->request->data['Customer']['terms_of_use_accepted_date']) || $this->request->data['Customer']['terms_of_use_accepted_date'] != 1) {
+        if (!isset($this->request->data['Customers']['terms_of_use_accepted_date']) || $this->request->data['Customers']['terms_of_use_accepted_date'] != 1) {
             $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
             $checkboxErrors = true;
         }
 
-        $this->Customer->set($this->request->data['Customer']);
+        $this->Customer->set($this->request->data['Customers']);
         if (!$checkboxErrors) {
             $this->Customer->id = $this->AppAuth->getUserId();
-            $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
-            $this->Customer->save($this->request->data['Customer'], false);
+            $this->request->data['Customers']['terms_of_use_accepted_date'] = date('Y-m-d');
+            $this->Customer->save($this->request->data['Customers'], false);
             $this->Flash->success('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
             $this->renewAuthSession();
             $this->redirect($this->referer());
@@ -84,14 +84,14 @@ class CustomersController extends FrontendController
         unset($this->Customer->validate['email']['unique']); // unique not needed here
 
         if ($this->Customer->validates()) {
-            $customer = $this->Customer->findByEmail($this->request->data['Customer']['email']);
+            $customer = $this->Customer->findByEmail($this->request->data['Customers']['email']);
 
             if (empty($customer)) {
                 $this->Customer->invalidate('email', 'Wir haben diese E-Mail-Adresse nicht gefunden.');
                 return false;
             }
 
-            if ($customer['Customer']['active'] !== true) {
+            if ($customer['Customers']['active'] !== true) {
                 $this->Flash->error('Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.');
                 return false;
             }
@@ -100,7 +100,7 @@ class CustomersController extends FrontendController
             $customer2save = [
                 'change_password_code' => $changePasswordCode
             ];
-            $this->Customer->id = $customer['Customer']['id_customer'];
+            $this->Customer->id = $customer['Customers']['id_customer'];
             $this->Customer->save($customer2save);
 
             // send email
@@ -108,7 +108,7 @@ class CustomersController extends FrontendController
             $email->template('new_password_request_successful')
                 ->emailFormat('html')
                 ->subject('Anfrage für neues Passwort für ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
-                ->to($this->request->data['Customer']['email'])
+                ->to($this->request->data['Customers']['email'])
                 ->viewVars([
                 'changePasswordCode' => $changePasswordCode,
                 'customer' => $customer
@@ -133,7 +133,7 @@ class CustomersController extends FrontendController
         $this->Customer->recursive = -1;
         $customer = $this->Customer->find('first', [
             'conditions' => [
-                'Customer.change_password_code' => $changePasswordCode
+                'Customers.change_password_code' => $changePasswordCode
             ]
         ]);
 
@@ -141,14 +141,14 @@ class CustomersController extends FrontendController
             throw new MissingActionException('change password code not found');
         }
 
-        $newPassword = $this->Customer->setNewPassword($customer['Customer']['id_customer']);
+        $newPassword = $this->Customer->setNewPassword($customer['Customers']['id_customer']);
 
         // send email
         $email = new AppEmail();
             $email->template('new_password_set_successful')
             ->emailFormat('html')
             ->subject('Neues Passwort für ' . Configure::read('AppConfig.db_config_FCS_APP_NAME') . ' generiert')
-            ->to($customer['Customer']['email'])
+            ->to($customer['Customers']['email'])
             ->viewVars([
                 'password' => $newPassword,
                 'customer' => $customer
@@ -163,7 +163,7 @@ class CustomersController extends FrontendController
         $customer2save = [
             'change_password_code' => null
         ];
-        $this->Customer->id = $customer['Customer']['id_customer'];
+        $this->Customer->id = $customer['Customers']['id_customer'];
         $this->Customer->save($customer2save);
 
         $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
@@ -191,8 +191,8 @@ class CustomersController extends FrontendController
                         unset($this->request->data['remember_me']);
                         App::uses('AppPasswordHasher', 'Controller/Component/Auth');
                         $ph = new AppPasswordHasher();
-                        $this->request->data['Customer']['passwd'] = $ph->hash($this->request->data['Customer']['passwd']);
-                        $this->Cookie->write('remember_me_cookie', $this->request->data['Customer'], true, '6 days');
+                        $this->request->data['Customers']['passwd'] = $ph->hash($this->request->data['Customers']['passwd']);
+                        $this->Cookie->write('remember_me_cookie', $this->request->data['Customers'], true, '6 days');
                     }
 
                     $this->redirect($this->AppAuth->redirect());
@@ -220,10 +220,10 @@ class CustomersController extends FrontendController
 
             if (! empty($this->request->data)) {
                 // validate data - do not use $this->Customer->saveAll()
-                $this->Customer->set($this->request->data['Customer']);
+                $this->Customer->set($this->request->data['Customers']);
 
                 // quick and dirty solution for stripping html tags, use html purifier here
-                foreach ($this->request->data['Customer'] as &$data) {
+                foreach ($this->request->data['Customers'] as &$data) {
                     $data = strip_tags(trim($data));
                 }
                 foreach ($this->request->data['AddressCustomer'] as &$data) {
@@ -231,9 +231,9 @@ class CustomersController extends FrontendController
                 }
 
                 // create email, firstname and lastname in adress record
-                $this->request->data['AddressCustomer']['firstname'] = $this->request->data['Customer']['firstname'];
-                $this->request->data['AddressCustomer']['lastname'] = $this->request->data['Customer']['lastname'];
-                $this->request->data['AddressCustomer']['email'] = $this->request->data['Customer']['email'];
+                $this->request->data['AddressCustomer']['firstname'] = $this->request->data['Customers']['firstname'];
+                $this->request->data['AddressCustomer']['lastname'] = $this->request->data['Customers']['lastname'];
+                $this->request->data['AddressCustomer']['email'] = $this->request->data['Customers']['email'];
                 $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
 
                 $errors = [];
@@ -246,7 +246,7 @@ class CustomersController extends FrontendController
                 }
 
                 $checkboxErrors = false;
-                if (!isset($this->request->data['Customer']['terms_of_use_accepted_date']) || $this->request->data['Customer']['terms_of_use_accepted_date'] != 1) {
+                if (!isset($this->request->data['Customers']['terms_of_use_accepted_date']) || $this->request->data['Customers']['terms_of_use_accepted_date'] != 1) {
                     $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
                     $checkboxErrors = true;
                 }
@@ -254,42 +254,42 @@ class CustomersController extends FrontendController
                 if (empty($errors) && !$checkboxErrors) {
                     // save customer
                     $this->Customer->id = null;
-                    $this->request->data['Customer']['active'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
-                    $this->request->data['Customer']['id_default_group'] = Configure::read('AppConfig.db_config_FCS_CUSTOMER_GROUP');
-                    $this->request->data['Customer']['terms_of_use_accepted_date'] = date('Y-m-d');
+                    $this->request->data['Customers']['active'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
+                    $this->request->data['Customers']['id_default_group'] = Configure::read('AppConfig.db_config_FCS_CUSTOMER_GROUP');
+                    $this->request->data['Customers']['terms_of_use_accepted_date'] = date('Y-m-d');
 
-                    $newCustomer = $this->Customer->save($this->request->data['Customer'], [
+                    $newCustomer = $this->Customer->save($this->request->data['Customers'], [
                         'validate' => false
                     ]);
 
                     // set new password (after customer save!)
-                    $newPassword = $this->Customer->setNewPassword($newCustomer['Customer']['id_customer']);
-                    $this->request->data['Customer']['passwd'] = $newPassword;
+                    $newPassword = $this->Customer->setNewPassword($newCustomer['Customers']['id_customer']);
+                    $this->request->data['Customers']['passwd'] = $newPassword;
 
                     // save address
-                    $this->request->data['AddressCustomer']['id_customer'] = $newCustomer['Customer']['id_customer'];
+                    $this->request->data['AddressCustomer']['id_customer'] = $newCustomer['Customers']['id_customer'];
                     $this->request->data['AddressCustomer']['id_country'] = Configure::read('AppConfig.countryId');
                     $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
-                    $this->Customer->AddressCustomer->save($this->request->data['Customer'], [
+                    $this->Customer->AddressCustomer->save($this->request->data['Customers'], [
                         'validate' => false
                     ]);
 
                     // write action log
                     $this->ActionLog = TableRegistry::get('ActionLogs');
-                    $message = 'Das Mitglied ' . $this->request->data['Customer']['firstname'] . ' ' . $this->request->data['Customer']['lastname'] . ' hat ein Mitgliedskonto erstellt.';
-                    $this->ActionLog->customSave('customer_registered', $newCustomer['Customer']['id_customer'], $newCustomer['Customer']['id_customer'], 'customers', $message);
+                    $message = 'Das Mitglied ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'] . ' hat ein Mitgliedskonto erstellt.';
+                    $this->ActionLog->customSave('customer_registered', $newCustomer['Customers']['id_customer'], $newCustomer['Customers']['id_customer'], 'customers', $message);
 
                     // START send confirmation email to customer
                     $email = new AppEmail();
                     if (Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
-                        $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer['Customer']), 'mimetype' => 'application/pdf']]);
+                        $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer['Customers']), 'mimetype' => 'application/pdf']]);
                     } else {
                         $template = 'customer_registered_inactive';
                     }
                     $email->template($template)
                         ->emailFormat('html')
-                        ->to($this->request->data['Customer']['email'])
+                        ->to($this->request->data['Customers']['email'])
                         ->subject('Willkommen')
                         ->viewVars([
                         'appAuth' => $this->AppAuth,
@@ -305,7 +305,7 @@ class CustomersController extends FrontendController
                         $email->template('customer_registered_notification')
                             ->emailFormat('html')
                             ->to(Configure::read('AppConfig.registrationNotificationEmails'))
-                            ->subject('Neue Registrierung: ' . $this->request->data['Customer']['firstname'] . ' ' . $this->request->data['Customer']['lastname'])
+                            ->subject('Neue Registrierung: ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'])
                             ->viewVars([
                             'appAuth' => $this->AppAuth,
                             'data' => $this->request->data

@@ -21,7 +21,7 @@
                 
                 <p><b>Lieber Verantwortliche für neue Mitglieder,</b></p>
                 
-                <p>Es gab gerade eine neue Registrierung: <b><?php echo $data['Customer']['firstname']; ?> <?php echo $data['Customer']['lastname']; ?></b> (<?php echo $data['Customer']['email']; ?>) aus <b><?php echo $data['AddressCustomer']['city']; ?></b></p>
+                <p>Es gab gerade eine neue Registrierung: <b><?php echo $data['Customers']['firstname']; ?> <?php echo $data['Customers']['lastname']; ?></b> (<?php echo $data['Customers']['email']; ?>) aus <b><?php echo $data['AddressCustomer']['city']; ?></b></p>
                 
                 <?php $link = Configure::read('AppConfig.cakeServerName').'/admin/customers/index/active:'.(Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
                 

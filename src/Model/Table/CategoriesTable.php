@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class CategoriesTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('category');
         parent::initialize($config);
@@ -53,12 +53,12 @@ class CategoriesTable extends AppTable
     {
         foreach ($array as $item) {
             $statusString = '';
-            if (! $item['Category']['active']) {
+            if (! $item['Categories']['active']) {
                 $statusString = ' (offline)';
             }
-            $this->flattenedArray[$item['Category']['id_category']] = $separator . $item['Category']['name'] . $statusString;
+            $this->flattenedArray[$item['Categories']['id_category']] = $separator . $item['Categories']['name'] . $statusString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item['children'], str_repeat('-', $item['Category']['level_depth'] - 1) . ' ');
+                $this->flattenNestedArrayWithChildren($item['children'], str_repeat('-', $item['Categories']['level_depth'] - 1) . ' ');
             }
         }
 
@@ -89,7 +89,7 @@ class CategoriesTable extends AppTable
         $categories = $this->find('threaded', [
             'conditions' => $conditions,
             'order' => [
-                'Category.name' => 'ASC'
+                'Categories.name' => 'ASC'
             ]
         ]);
         return $categories;
@@ -99,7 +99,7 @@ class CategoriesTable extends AppTable
     {
         $conditions = [];
         if ($excludeCategoryId) {
-            $conditions[] = 'Category.id_category != ' . $excludeCategoryId;
+            $conditions[] = 'Categories.id_category != ' . $excludeCategoryId;
         }
         $categories = $this->getThreaded($conditions);
         $flattenedCategories = $this->flattenNestedArrayWithChildren($categories);
@@ -184,11 +184,11 @@ class CategoriesTable extends AppTable
 
     private function buildItemForTree($item, $index)
     {
-        $productCount = $this->getProductsByCategoryId($item['Category']['id_category'], false, '', 0, true);
+        $productCount = $this->getProductsByCategoryId($item['Categories']['id_category'], false, '', 0, true);
 
         $tmpMenuItem = [
-            'name' => $item['Category']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
-            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item['Category']['id_category'], $item['Category']['name'])
+            'name' => $item['Categories']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
+            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item['Categories']['id_category'], $item['Categories']['name'])
         ];
         if (! empty($item['children'])) {
             foreach ($item['children'] as $index => $child) {

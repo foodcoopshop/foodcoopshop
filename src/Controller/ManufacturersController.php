@@ -35,11 +35,11 @@ class ManufacturersController extends FrontendController
                 $this->Manufacturer->recursive = -1;
                 $manufacturer = $this->Manufacturer->find('first', [
                     'conditions' => [
-                        'Manufacturer.id_manufacturer' => $manufacturerId,
-                        'Manufacturer.active' => APP_ON
+                        'Manufacturers.id_manufacturer' => $manufacturerId,
+                        'Manufacturers.active' => APP_ON
                     ]
                 ]);
-                if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer['Manufacturer']['is_private']) {
+                if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer['Manufacturers']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
                 break;
@@ -51,18 +51,18 @@ class ManufacturersController extends FrontendController
         $this->Manufacturer->recursive = 1;
 
         $conditions = [
-            'Manufacturer.active' => APP_ON
+            'Manufacturers.active' => APP_ON
         ];
         if (! $this->AppAuth->user()) {
-            $conditions['Manufacturer.is_private'] = APP_OFF;
+            $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
         $manufacturers = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'Manufacturer.name' => 'ASC'
+                'Manufacturers.name' => 'ASC'
             ],
-            'fields' => ['Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+            'fields' => ['Manufacturers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
         ]);
 
         if (empty($manufacturers)) {
@@ -70,9 +70,9 @@ class ManufacturersController extends FrontendController
         }
 
         if ($this->AppAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = ClassRegistry::init('Product');
+            $productModel = ClassRegistry::init('Products');
             foreach ($manufacturers as &$manufacturer) {
-                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer'], true);
+                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer'], true);
             }
         }
 
@@ -86,19 +86,19 @@ class ManufacturersController extends FrontendController
 
         $this->Manufacturer->recursive = 1;
         $conditions = [
-            'Manufacturer.id_manufacturer' => $manufacturerId,
-            'Manufacturer.active' => APP_ON
+            'Manufacturers.id_manufacturer' => $manufacturerId,
+            'Manufacturers.active' => APP_ON
         ];
         $manufacturer = $this->Manufacturer->find('first', [
             'conditions' => $conditions,
-            'fields' => ['Manufacturer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+            'fields' => ['Manufacturers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
         ]);
 
         if (empty($manufacturer)) {
             throw new MissingActionException('manufacturer not found or not active');
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']);
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
         if ($correctSlug != Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
@@ -113,6 +113,6 @@ class ManufacturersController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->set('manufacturer', $manufacturer);
-        $this->set('title_for_layout', $manufacturer['Manufacturer']['name']);
+        $this->set('title_for_layout', $manufacturer['Manufacturers']['name']);
     }
 }

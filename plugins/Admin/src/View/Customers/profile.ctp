@@ -37,19 +37,19 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Customer', array(
+echo $this->Form->create('Customers', array(
     'class' => 'fcs-form'
 ));
 
-echo $this->Form->input('Customer.firstname', array(
+echo $this->Form->input('Customers.firstname', array(
     'label' => 'Vorname',
     'required' => true
 ));
-echo $this->Form->input('Customer.lastname', array(
+echo $this->Form->input('Customers.lastname', array(
     'label' => 'Nachname',
     'required' => true
 ));
-echo $this->Form->input('Customer.email', array(
+echo $this->Form->input('Customers.email', array(
     'label' => 'E-Mail-Adresse',
     'required' => true
 ));
@@ -80,7 +80,7 @@ echo $this->Form->input('AddressCustomer.phone', array(
 ));
 
 if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
-    echo $this->Form->input('Customer.newsletter', array(
+    echo $this->Form->input('Customers.newsletter', array(
         'label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.',
         'type' => 'checkbox'
     ));

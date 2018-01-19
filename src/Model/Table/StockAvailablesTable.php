@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class StockAvailablesTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('stock_available');
         parent::initialize($config);

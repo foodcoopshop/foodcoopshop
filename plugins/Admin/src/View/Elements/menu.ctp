@@ -256,7 +256,7 @@ if ($appAuth->isManufacturer()) {
         )
     );
     if (date('Y-m-d') > Configure::read('AppConfig.depositForManufacturersStartDate')) {
-        $od = ClassRegistry::init('OrderDetail');
+        $od = ClassRegistry::init('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {
             $menu[] = array(
@@ -279,8 +279,8 @@ if ($appAuth->isManufacturer()) {
 $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
 $footerHtml = '';
-if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer['Customer']) && !empty($appAuth->manufacturer['Customer']['AddressCustomer'])) {
-    $footerHtml = '<b>Ansprechperson</b><br />' . $appAuth->manufacturer['Customer']['firstname'] . ' ' . $appAuth->manufacturer['Customer']['lastname'] . ', ' . $appAuth->manufacturer['Customer']['email']. ', ' . $appAuth->manufacturer['Customer']['AddressCustomer']['phone_mobile'];
+if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer['Customers']) && !empty($appAuth->manufacturer['Customers']['AddressCustomer'])) {
+    $footerHtml = '<b>Ansprechperson</b><br />' . $appAuth->manufacturer['Customers']['firstname'] . ' ' . $appAuth->manufacturer['Customers']['lastname'] . ', ' . $appAuth->manufacturer['Customers']['email']. ', ' . $appAuth->manufacturer['Customers']['AddressCustomer']['phone_mobile'];
 }
 
 echo $this->Menu->render($menu, array(

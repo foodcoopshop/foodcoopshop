@@ -19,18 +19,18 @@ class PaymentsTable extends AppTable
 {
 
     public $belongsTo = [
-        'Customer' => [
+        'Customers' => [
             'foreignKey' => 'id_customer'
         ],
-        'Manufacturer' => [
+        'Manufacturers' => [
             'foreignKey' => 'id_manufacturer'
         ],
         'CreatedBy' => [
-            'className' => 'Customer',
+            'className' => 'Customers',
             'foreignKey' => 'created_by'
         ],
         'ChangedBy' => [
-            'className' => 'Customer',
+            'className' => 'Customers',
             'foreignKey' => 'changed_by'
         ],
     ];
@@ -38,13 +38,13 @@ class PaymentsTable extends AppTable
     private function getManufacturerDepositConditions($manufacturerId = null)
     {
         $conditions = [
-            'Payment.status' => APP_ON,
-            'Payment.id_customer' => 0
+            'Payments.status' => APP_ON,
+            'Payments.id_customer' => 0
         ];
         if (!is_null($manufacturerId)) {
-            $conditions['Payment.id_manufacturer'] = $manufacturerId;
+            $conditions['Payments.id_manufacturer'] = $manufacturerId;
         }
-        $conditions['Payment.type'] = 'deposit';
+        $conditions['Payments.type'] = 'deposit';
         return $conditions;
     }
 
@@ -59,9 +59,9 @@ class PaymentsTable extends AppTable
         $conditions['DATE_FORMAT(Payment.date_add, \'%Y-%c\')'] = $monthAndYear;
 
         $paymentSum = $this->find('all', [
-            'fields' => 'Payment.*',
+            'fields' => 'Payments.*',
             'conditions' => $conditions,
-            'order' => ['Payment.date_add' => 'DESC'],
+            'order' => ['Payments.date_add' => 'DESC'],
         ]);
 
         return $paymentSum;
@@ -74,12 +74,12 @@ class PaymentsTable extends AppTable
     {
 
         $conditions = $this->getManufacturerDepositConditions();
-        $conditions['Payment.text'] = 'money';
+        $conditions['Payments.text'] = 'money';
 
         $paymentSum = $this->find('all', [
             'fields' => 'SUM(amount) as sumManufacturerMoneyDeposit',
             'conditions' => $conditions,
-            'order' => ['Payment.date_add' => 'DESC'],
+            'order' => ['Payments.date_add' => 'DESC'],
         ]);
 
         return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
@@ -104,7 +104,7 @@ class PaymentsTable extends AppTable
         $paymentSum = $this->find('all', [
             'fields' => $fields,
             'conditions' => $conditions,
-            'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payment.date_add' => 'DESC'],
+            'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payments.date_add' => 'DESC'],
             'group' => $groupByMonth ? 'monthAndYear' : null
         ]);
 
@@ -119,12 +119,12 @@ class PaymentsTable extends AppTable
     public function getSum($customerId, $type)
     {
         $conditions = [
-            'Payment.id_customer' => $customerId,
-            'Payment.id_manufacturer' => 0,
-            'Payment.status' => APP_ON
+            'Payments.id_customer' => $customerId,
+            'Payments.id_manufacturer' => 0,
+            'Payments.status' => APP_ON
         ];
 
-        $conditions['Payment.type'] = $type;
+        $conditions['Payments.type'] = $type;
 
         $paymentSum = $this->find('all', [
             'fields' => [

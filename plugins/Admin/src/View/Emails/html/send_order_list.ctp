@@ -18,7 +18,7 @@
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
+                Hallo <?php echo $manufacturer['Addresses']['firstname']; ?>,
             </td>
     </tr>
 
@@ -31,8 +31,8 @@
                 <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('AppConfig.cakeServerName'); ?>/admin"><?php echo Configure::read('AppConfig.cakeServerName'); ?>/admin</a>
             </p>
             
-            <?php if (!empty($manufacturer['Customer']['name'])) { ?>
-                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'] . ', ' . $manufacturer['Customer']['email'] . ', ' . $manufacturer['Customer']['AddressCustomer']['phone_mobile']; ?></p>
+            <?php if (!empty($manufacturer['Customers']['name'])) { ?>
+                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customers']['firstname'] . ' ' . $manufacturer['Customers']['lastname'] . ', ' . $manufacturer['Customers']['email'] . ', ' . $manufacturer['Customers']['AddressCustomer']['phone_mobile']; ?></p>
             <?php } ?>
 
             <ul style="padding-left: 10px;">

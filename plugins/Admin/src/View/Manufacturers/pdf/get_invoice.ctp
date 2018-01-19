@@ -76,7 +76,7 @@ $pdf->renderTable();
 
 if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     // TODO do that in controller where it belongs to :-)
-    App::uses('Manufacturer', 'Model');
+    App::uses('Manufacturers', 'Model');
     $m = new Manufacturer();
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);

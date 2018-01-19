@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('Page', 'Model');
+App::uses('Pages', 'Model');
 
 /**
  * PagesControllerTest

@@ -35,15 +35,15 @@ class SlidersController extends AdminAppController
         if ($sliderId > 0) {
             $unsavedSlider = $this->Slider->find('first', array(
                 'conditions' => array(
-                    'Slider.id_slider' => $sliderId
+                    'Sliders.id_slider' => $sliderId
                 )
             ));
             // default value
-            $unsavedSlider['Slider']['update_modified_field'] = APP_ON;
+            $unsavedSlider['Sliders']['update_modified_field'] = APP_ON;
         } else {
             // default values for new sliders
             $unsavedSlider = array(
-                'Slider' => array(
+                'Sliders' => array(
                     'active' => APP_ON,
                     'position' => 10
                 )
@@ -56,7 +56,7 @@ class SlidersController extends AdminAppController
         } else {
             // validate data - do not use $this->Slider->saveAll()
             $this->Slider->id = $sliderId;
-            $this->Slider->set($this->request->data['Slider']);
+            $this->Slider->set($this->request->data['Sliders']);
 
             $errors = array();
             if (! $this->Slider->validates()) {
@@ -66,7 +66,7 @@ class SlidersController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Slider->save($this->request->data['Slider'], array(
+                $this->Slider->save($this->request->data['Sliders'], array(
                     'validate' => false
                 ));
                 if (is_null($sliderId)) {
@@ -77,19 +77,19 @@ class SlidersController extends AdminAppController
                     $actionLogType = 'slider_changed';
                 }
 
-                if ($this->request->data['Slider']['tmp_image'] != '') {
-                    $filename = $this->saveUploadedImage($this->Slider->id, $this->request->data['Slider']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
+                if ($this->request->data['Sliders']['tmp_image'] != '') {
+                    $filename = $this->saveUploadedImage($this->Slider->id, $this->request->data['Sliders']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
                     $this->Slider->saveField('image', $filename, false);
                 }
 
-                if (isset($this->request->data['Slider']['delete_slider']) && $this->request->data['Slider']['delete_slider']) {
+                if (isset($this->request->data['Sliders']['delete_slider']) && $this->request->data['Sliders']['delete_slider']) {
                     $this->Slider->saveField('active', APP_DEL, false);
                     $this->deleteUploadedImage($this->Slider->id, Configure::read('AppConfig.htmlHelper')->getSliderThumbsPath(), Configure::read('AppConfig.sliderImageSizes'));
-                    $message = 'Der Slideshow-Bild "' . $this->request->data['Slider']['id_slider'] . '" wurde erfolgreich gelöscht.';
+                    $message = 'Der Slideshow-Bild "' . $this->request->data['Sliders']['id_slider'] . '" wurde erfolgreich gelöscht.';
                     $this->ActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Der Slideshow-Bild "' . $this->request->data['Slider']['id_slider'] . '" wurde ' . $messageSuffix;
+                    $message = 'Der Slideshow-Bild "' . $this->request->data['Sliders']['id_slider'] . '" wurde ' . $messageSuffix;
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
                     $this->Flash->success('Der Slideshow-Bild wurde erfolgreich gespeichert.');
                 }
@@ -105,15 +105,15 @@ class SlidersController extends AdminAppController
     public function index()
     {
         $conditions = array();
-        $conditions[] = 'Slider.active > ' . APP_DEL;
+        $conditions[] = 'Sliders.active > ' . APP_DEL;
 
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'Slider.position' => 'ASC'
+                'Sliders.position' => 'ASC'
             )
         ), $this->Paginator->settings);
-        $sliders = $this->Paginator->paginate('Slider');
+        $sliders = $this->Paginator->paginate('Sliders');
         $this->set('sliders', $sliders);
         $this->set('title_for_layout', 'Slideshow');
     }

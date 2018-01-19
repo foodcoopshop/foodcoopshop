@@ -22,7 +22,7 @@
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-                vielen Dank für deine Bestellung Nr. <?php echo $order['Order']['id_order']; ?> vom <?php echo $this->MyTime->formatToDateNTimeLongWithSecs($order['Order']['date_add']); ?>.
+                vielen Dank für deine Bestellung Nr. <?php echo $order['Orders']['id_order']; ?> vom <?php echo $this->MyTime->formatToDateNTimeLongWithSecs($order['Orders']['date_add']); ?>.
             </td>
         </tr>
     </tbody>

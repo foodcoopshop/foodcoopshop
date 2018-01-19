@@ -145,11 +145,11 @@ class AppController extends Controller
                 $this->Customer = TableRegistry::get('Customers');
                 $customer = $this->Customer->find('first', [
                     'conditions' => [
-                        'Customer.email' => $cookie['email'],
-                        'Customer.passwd' => $cookie['passwd']
+                        'Customers.email' => $cookie['email'],
+                        'Customers.passwd' => $cookie['passwd']
                     ]
                 ]);
-                if ($customer && ! $this->AppAuth->login($customer['Customer'])) {
+                if ($customer && ! $this->AppAuth->login($customer['Customers'])) {
                     $this->redirect($this->AppAuth->logout());
                 }
             }
@@ -159,10 +159,10 @@ class AppController extends Controller
             $this->Manufacturer = TableRegistry::get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('first', [
                 'conditions' => [
-                    'Manufacturer.id_manufacturer' => $this->AppAuth->getManufacturerId()
+                    'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
                 ]
             ]);
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
@@ -178,11 +178,11 @@ class AppController extends Controller
         $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('first', [
             'conditions' => [
-                'Customer.id_customer' => $this->AppAuth->getUserId()
+                'Customers.id_customer' => $this->AppAuth->getUserId()
             ]
         ]);
         if (! empty($customer)) {
-            $this->AppAuth->login($customer['Customer']);
+            $this->AppAuth->login($customer['Customers']);
         }
     }
 

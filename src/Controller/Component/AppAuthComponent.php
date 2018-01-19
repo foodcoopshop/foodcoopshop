@@ -126,7 +126,7 @@ class AppAuthComponent extends AuthComponent
         }
 
         if (! empty($this->manufacturer)) {
-            return $this->manufacturer['Manufacturer']['id_manufacturer'];
+            return $this->manufacturer['Manufacturers']['id_manufacturer'];
         }
 
         return 0;
@@ -139,7 +139,7 @@ class AppAuthComponent extends AuthComponent
         }
 
         if (! empty($this->manufacturer)) {
-            return $this->manufacturer['Manufacturer']['name'];
+            return $this->manufacturer['Manufacturers']['name'];
         }
 
         return '';
@@ -182,7 +182,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalance()
     {
-        App::uses('Customer', 'Model');
+        App::uses('Customers', 'Model');
         $c = new Customer();
         return $c->getCreditBalance($this->getUserId());
     }

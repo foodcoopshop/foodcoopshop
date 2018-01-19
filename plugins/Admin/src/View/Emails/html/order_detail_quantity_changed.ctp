@@ -16,19 +16,19 @@
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', array('data' => $oldOrderDetail['Order'])); ?>
+        <?php echo $this->element('email/greeting', array('data' => $oldOrderDetail['Orders'])); ?>
         
         <tr>
         <td>
 
             <p>
-                Die Anzahl des Produktes <b><?php echo $oldOrderDetail['OrderDetail']['product_name']; ?></b> wurde korrigiert. Du hast am <?php echo $this->MyTime->formatToDateNTimeShort($oldOrderDetail['Order']['date_add']); ?> beim Hersteller <b><?php echo $oldOrderDetail['Product']['Manufacturer']['name']; ?></b>
+                Die Anzahl des Produktes <b><?php echo $oldOrderDetail['OrderDetails']['product_name']; ?></b> wurde korrigiert. Du hast am <?php echo $this->MyTime->formatToDateNTimeShort($oldOrderDetail['Orders']['date_add']); ?> beim Hersteller <b><?php echo $oldOrderDetail['Products']['Manufacturers']['name']; ?></b>
                 bestellt.
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alte Anzahl: <b><?php echo $oldOrderDetail['OrderDetail']['product_quantity']; ?></b></li>
-                <li>Neue Anzahl: <b><?php echo $newOrderDetail['OrderDetail']['product_quantity']; ?></b></li>
+                <li>Alte Anzahl: <b><?php echo $oldOrderDetail['OrderDetails']['product_quantity']; ?></b></li>
+                <li>Neue Anzahl: <b><?php echo $newOrderDetail['OrderDetails']['product_quantity']; ?></b></li>
             </ul>
 
             <p>

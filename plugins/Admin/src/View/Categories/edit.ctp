@@ -14,13 +14,13 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : "") . "', 'Category');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : "") . "', 'Categories');
     "
 ));
-$idForImageUpload = isset($this->request->data['Category']['id_category']) ? $this->request->data['Category']['id_category'] : StringComponent::createRandomString(6);
+$idForImageUpload = isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getCategoryImageSrc($idForImageUpload);
-if (isset($this->request->data['Category']['tmp_image']) && $this->request->data['Category']['tmp_image'] != '') {
-    $imageSrc = str_replace('\\', '/', $this->request->data['Category']['tmp_image']);
+if (isset($this->request->data['Categories']['tmp_image']) && $this->request->data['Categories']['tmp_image'] != '') {
+    $imageSrc = str_replace('\\', '/', $this->request->data['Categories']['tmp_image']);
 }
 
 ?>
@@ -44,18 +44,18 @@ if (isset($this->request->data['Category']['tmp_image']) && $this->request->data
 
 <?php
 
-echo $this->Form->create('Category', array(
+echo $this->Form->create('Categories', array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Category.id_category');
+echo $this->Form->hidden('Categories.id_category');
 
-echo $this->Form->input('Category.name', array(
+echo $this->Form->input('Categories.name', array(
     'label' => 'Name',
     'required' => true
 ));
-echo $this->Form->input('Category.id_parent', array(
+echo $this->Form->input('Categories.id_parent', array(
     'type' => 'select',
     'label' => 'Übergeordnete Kategorie',
     'empty' => 'Keine (oberste Ebene)',
@@ -75,29 +75,29 @@ echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $t
     'data-object-id' => $idForImageUpload
 ), 'javascript:void(0);');
 echo '</div>';
-echo $this->Form->hidden('Category.tmp_image');
+echo $this->Form->hidden('Categories.tmp_image');
 echo '</div>';
 
-echo $this->Form->input('Category.delete_image', array(
+echo $this->Form->input('Categories.delete_image', array(
     'label' => 'Bild löschen?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Speichern nicht vergessen</span>'
 ));
 
 if ($this->here != $this->Slug->getCategoryAdd()) {
-    echo $this->Form->input('Category.delete_category', array(
+    echo $this->Form->input('Categories.delete_category', array(
         'label' => 'Kategorie löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
     ));
 }
 
-echo $this->Form->input('Category.active', array(
+echo $this->Form->input('Categories.active', array(
     'label' => 'Aktiv?',
     'type' => 'checkbox'
 ));
 
-echo $this->Form->input('Category.description', array(
+echo $this->Form->input('Categories.description', array(
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'

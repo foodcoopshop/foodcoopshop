@@ -30,7 +30,7 @@ class ListsController extends AdminAppController
     public function orderLists()
     {
         $this->uses = array(
-            'Manufacturer'
+            'Manufacturers'
         );
 
         $path = realpath(Configure::read('AppConfig.folder.order_lists'));
@@ -78,7 +78,7 @@ class ListsController extends AdminAppController
 
                 $manufacturer = $this->Manufacturer->find('first', array(
                     'conditions' => array(
-                        'Manufacturer.id_manufacturer' => $manufacturerId
+                        'Manufacturers.id_manufacturer' => $manufacturerId
                     )
                 ));
 
@@ -87,7 +87,7 @@ class ListsController extends AdminAppController
 
                 $files[] = array(
                     'delivery_date' => $deliveryDate,
-                    'manufacturer_name' => $manufacturer['Manufacturer']['name'],
+                    'manufacturer_name' => $manufacturer['Manufacturers']['name'],
                     'product_list_link' => $productListLink,
                     'customer_list_link' => $customerListLink
                 );

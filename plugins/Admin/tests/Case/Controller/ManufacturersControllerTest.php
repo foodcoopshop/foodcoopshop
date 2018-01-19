@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('Manufacturer', 'Model');
+App::uses('Manufacturers', 'Model');
 
 /**
  * ManufacturersControllerTest
@@ -34,7 +34,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $manufacturerData = array(
-            'Manufacturer' => array(
+            'Manufacturers' => array(
                 'name' => 'Test Manufacturer',
                 'bank_name' => 'Test Bank',
                 'iban' => 'Iban',
@@ -53,7 +53,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'homepage' => '',
                 'short_description' => 'Test Description'
             ),
-            'Address' => array(
+            'Addresses' => array(
                 'firstname' => '',
                 'lastname' => '',
                 'email' => 'fcs-demo-gemuese-hersteller@mailinator.com',
@@ -77,12 +77,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte gib den Nachnamen des Rechnungsempfängers an.', $response);
 
         // set proper data and post again
-        $manufacturerData['Manufacturer']['iban'] = 'AT193357281080332578';
-        $manufacturerData['Manufacturer']['bic'] = 'BFKKAT2K';
-        $manufacturerData['Address']['email'] = 'test-manufacturer@mailinator.com';
-        $manufacturerData['Address']['firstname'] = 'Test';
-        $manufacturerData['Address']['lastname'] = 'Manufacturer';
-        $manufacturerData['Manufacturer']['homepage'] = 'www.foodcoopshop.com';
+        $manufacturerData['Manufacturers']['iban'] = 'AT193357281080332578';
+        $manufacturerData['Manufacturers']['bic'] = 'BFKKAT2K';
+        $manufacturerData['Addresses']['email'] = 'test-manufacturer@mailinator.com';
+        $manufacturerData['Addresses']['firstname'] = 'Test';
+        $manufacturerData['Addresses']['lastname'] = 'Manufacturers';
+        $manufacturerData['Manufacturers']['homepage'] = 'www.foodcoopshop.com';
 
         $response = $this->add($manufacturerData);
 
@@ -91,12 +91,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
         // get inserted manufacturer from database and check detail page for patterns
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.name' => $manufacturerData['Manufacturer']['name']
+                'Manufacturers.name' => $manufacturerData['Manufacturers']['name']
             )
         ));
 
-        $response = $this->browser->get($this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']));
-        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer['Manufacturer']['name'], $response);
+        $response = $this->browser->get($this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']));
+        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer['Manufacturers']['name'], $response);
 
         $this->doTestCustomerRecord($manufacturer);
 
@@ -120,7 +120,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturerOld = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
@@ -147,29 +147,29 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturerNew = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
-        $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew['Manufacturer']['send_order_list']);
+        $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew['Manufacturers']['send_order_list']);
         $this->assertEquals($sendOrderList, $newSendOrderList, 'saving option send_order_list failed');
 
-        $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturerNew['Manufacturer']['send_invoice']);
+        $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturerNew['Manufacturers']['send_invoice']);
         $this->assertEquals($sendInvoice, $newSendInvoice, 'saving option invoice failed');
 
-        $sendOrderListCc = $this->Manufacturer->getOptionSendOrderListCc($manufacturerNew['Manufacturer']['send_order_list_cc']);
+        $sendOrderListCc = $this->Manufacturer->getOptionSendOrderListCc($manufacturerNew['Manufacturers']['send_order_list_cc']);
         $this->assertEquals($sendOrderListCc, $newSendOrderListCc, 'saving option send_order_list_cc failed');
 
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew['Manufacturer']['send_ordered_product_price_changed_notification']);
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew['Manufacturers']['send_ordered_product_price_changed_notification']);
         $this->assertEquals($sendOrderedProductPriceChangedNotification, $newSendOrderedProductPriceChangedNotification, 'saving option send_ordered_product_price_changed_notification failed');
 
-        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($manufacturerNew['Manufacturer']['send_ordered_product_quantity_changed_notification']);
+        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($manufacturerNew['Manufacturers']['send_ordered_product_quantity_changed_notification']);
         $this->assertEquals($sendOrderedProductQuantityChangedNotification, $newSendOrderedProductQuantityChangedNotification, 'saving option send_ordered_product_quantity_changed_notification failed');
 
-        $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturerNew['Manufacturer']['send_shop_order_notification']);
+        $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturerNew['Manufacturers']['send_shop_order_notification']);
         $this->assertEquals($sendShopOrderNotification, $newSendShopOrderNotification, 'saving option send_shop_order_notification failed');
 
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew['Manufacturer']['bulk_orders_allowed']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew['Manufacturers']['bulk_orders_allowed']);
         $this->assertEquals($bulkOrdersAllowed, $newBulkOrdersAllowed, 'saving option bulk_orders_allowed failed');
 
         $this->logout();
@@ -201,7 +201,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
         $this->doTestCustomerRecord($manufacturer);
@@ -224,7 +224,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
         $this->doTestCustomerRecord($manufacturer);
@@ -235,9 +235,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
     private function doTestCustomerRecord($manufacturer)
     {
         $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer);
-        $this->assertEquals($manufacturer['Address']['firstname'], $customerRecord['Customer']['firstname']);
-        $this->assertEquals($manufacturer['Address']['lastname'], $customerRecord['Customer']['lastname']);
-        $this->assertEquals(APP_ON, $customerRecord['Customer']['active']);
+        $this->assertEquals($manufacturer['Addresses']['firstname'], $customerRecord['Customers']['firstname']);
+        $this->assertEquals($manufacturer['Addresses']['lastname'], $customerRecord['Customers']['lastname']);
+        $this->assertEquals(APP_ON, $customerRecord['Customers']['active']);
     }
 
     /**

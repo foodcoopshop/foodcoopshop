@@ -2,7 +2,7 @@
 
 App::uses('InvalidParameterException', 'Error/Exceptions');
 App::uses('AppCakeTestCase', 'Test');
-App::uses('Product', 'Model');
+App::uses('Products', 'Model');
 
 /**
  * ProductTest
@@ -444,21 +444,21 @@ class ProductTest extends AppCakeTestCase
                 $expectedQuantity = $forceUseThisQuantity;
             }
             if ($productAndAttributeId['attributeId'] == 0) {
-                $contain = array('StockAvailable');
+                $contain = array('StockAvailables');
             } else {
                 $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
                 $contain = array('ProductAttributes.StockAvailable');
             }
             $changedProduct = $this->Product->find('first', array(
                 'conditions' => array(
-                    'Product.id_product' => $productId
+                    'Products.id_product' => $productId
                 ),
                 'contain' => $contain
             ));
             if ($productAndAttributeId['attributeId'] == 0) {
-                $result = $changedProduct['StockAvailable']['quantity'];
+                $result = $changedProduct['StockAvailables']['quantity'];
             } else {
-                $result = $changedProduct['ProductAttributes'][0]['StockAvailable']['quantity'];
+                $result = $changedProduct['ProductAttributes'][0]['StockAvailables']['quantity'];
             }
             $this->assertEquals($expectedQuantity, $result, 'changing the quantity flag did not work');
         }
@@ -482,7 +482,7 @@ class ProductTest extends AppCakeTestCase
 
             $changedProduct = $this->Product->find('first', array(
                 'conditions' => array(
-                    'Product.id_product' => $productId
+                    'Products.id_product' => $productId
                 )
             ));
 
@@ -514,14 +514,14 @@ class ProductTest extends AppCakeTestCase
             }
             $changedProduct = $this->Product->find('first', array(
                 'conditions' => array(
-                    'Product.id_product' => $productId
+                    'Products.id_product' => $productId
                 ),
                 'contain' => $contain
             ));
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct['ProductShop'];
             } else {
-                $resultEntity = $changedProduct['ProductAttributes'][0]['ProductAttributeShop'];
+                $resultEntity = $changedProduct['ProductAttributes'][0]['ProductAttributeShops'];
             }
             $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $resultEntity['price']), 'changing the price did not work');
         }
@@ -538,10 +538,10 @@ class ProductTest extends AppCakeTestCase
             $this->Product->recursive = -1;
             $changedProduct = $this->Product->find('first', array(
                 'conditions' => array(
-                    'Product.id_product' => $productId,
+                    'Products.id_product' => $productId,
                 )
             ));
-            $this->assertEquals($expectedStatus, $changedProduct['Product']['active'], 'changing the active flag did not work');
+            $this->assertEquals($expectedStatus, $changedProduct['Products']['active'], 'changing the active flag did not work');
         }
     }
 }

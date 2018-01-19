@@ -2,7 +2,7 @@
 
 App::uses('InvalidParameterException', 'Error/Exceptions');
 App::uses('AppCakeTestCase', 'Test');
-App::uses('ProductLang', 'Model');
+App::uses('ProductLangs', 'Model');
 
 /**
  * ProductLangTest
@@ -98,13 +98,13 @@ class ProductLangTest extends AppCakeTestCase
             $this->ProductLang->recursive = -1;
             $changedProduct = $this->ProductLang->find('first', array(
                 'conditions' => array(
-                    'ProductLang.id_product' => $productId,
+                    'ProductLangs.id_product' => $productId,
                 )
             ));
-            $this->assertEquals($expectedResults['name'], $changedProduct['ProductLang']['name'], 'changing the name did not work');
-            $this->assertEquals($expectedResults['unity'], $changedProduct['ProductLang']['unity'], 'changing the unity did not work');
-            $this->assertEquals($expectedResults['description'], $changedProduct['ProductLang']['description'], 'changing the description did not work');
-            $this->assertEquals($expectedResults['description_short'], $changedProduct['ProductLang']['description_short'], 'changing the description short did not work');
+            $this->assertEquals($expectedResults['name'], $changedProduct['ProductLangs']['name'], 'changing the name did not work');
+            $this->assertEquals($expectedResults['unity'], $changedProduct['ProductLangs']['unity'], 'changing the unity did not work');
+            $this->assertEquals($expectedResults['description'], $changedProduct['ProductLangs']['description'], 'changing the description did not work');
+            $this->assertEquals($expectedResults['description_short'], $changedProduct['ProductLangs']['description_short'], 'changing the description short did not work');
         }
     }
 }

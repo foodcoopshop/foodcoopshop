@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', array(
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Attribute']['id_attribute']) ? $this->request->data['Attribute']['id_attribute'] : "") . "', 'Attribute');
+    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Attributes']['id_attribute']) ? $this->request->data['Attributes']['id_attribute'] : "") . "', 'Attributes');
     "
 ));
 ?>
@@ -38,14 +38,14 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Attribute', array(
+echo $this->Form->create('Attributes', array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Attribute.id_attribute');
+echo $this->Form->hidden('Attributes.id_attribute');
 
-echo $this->Form->input('Attribute.name', array(
+echo $this->Form->input('Attributes.name', array(
     'div' => array(
         'class' => 'long text input'
     ),
@@ -55,7 +55,7 @@ echo $this->Form->input('Attribute.name', array(
 
 if ($this->here != $this->Slug->getAttributeAdd()) {
     $hasCombinedProducts = count($unsavedAttribute['CombinationProducts']['online']) > 0 || count($unsavedAttribute['CombinationProducts']['offline']) > 0;
-    echo $this->Form->input('Attribute.delete_attribute', array(
+    echo $this->Form->input('Attributes.delete_attribute', array(
         'label' => 'Variante löschen?',
         'disabled' => ($hasCombinedProducts ? 'disabled' : ''),
         'type' => 'checkbox',

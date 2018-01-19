@@ -79,50 +79,50 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getManufacturerImprint($manufacturer, $outputType, $addressOnly)
     {
-        if (!isset($manufacturer['Manufacturer'])) {
-            $manufacturer['Manufacturer'] = $manufacturer;
+        if (!isset($manufacturer['Manufacturers'])) {
+            $manufacturer['Manufacturers'] = $manufacturer;
         }
         $imprintLines = [];
-        $imprintLines[] = '<b>'.$manufacturer['Manufacturer']['name'].'</b>';
-        if ($manufacturer['Manufacturer']['name'] != $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname']) {
-            $imprintLines[] = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
+        $imprintLines[] = '<b>'.$manufacturer['Manufacturers']['name'].'</b>';
+        if ($manufacturer['Manufacturers']['name'] != $manufacturer['Addresses']['firstname'] . ' ' . $manufacturer['Addresses']['lastname']) {
+            $imprintLines[] = $manufacturer['Addresses']['firstname'] . ' ' . $manufacturer['Addresses']['lastname'];
         }
-        $address = $manufacturer['Address']['address1'];
-        if ($manufacturer['Address']['address2'] != '') {
-            $address .= ' / ' . $manufacturer['Address']['address2'];
+        $address = $manufacturer['Addresses']['address1'];
+        if ($manufacturer['Addresses']['address2'] != '') {
+            $address .= ' / ' . $manufacturer['Addresses']['address2'];
         }
         $imprintLines[] = $address;
-        if (!($manufacturer['Address']['postcode'] == '' || $manufacturer['Address']['city'] == '')) {
-            $imprintLines[] = @$manufacturer['Address']['postcode'] . ' ' . @$manufacturer['Address']['city'];
+        if (!($manufacturer['Addresses']['postcode'] == '' || $manufacturer['Addresses']['city'] == '')) {
+            $imprintLines[] = @$manufacturer['Addresses']['postcode'] . ' ' . @$manufacturer['Addresses']['city'];
         }
-        if ($manufacturer['Address']['phone_mobile'] != '') {
-            $imprintLines[] = 'Mobil: ' . $manufacturer['Address']['phone_mobile'];
+        if ($manufacturer['Addresses']['phone_mobile'] != '') {
+            $imprintLines[] = 'Mobil: ' . $manufacturer['Addresses']['phone_mobile'];
         }
-        if ($manufacturer['Address']['phone'] != '') {
-            $imprintLines[] = 'Telefon: ' . $manufacturer['Address']['phone'];
+        if ($manufacturer['Addresses']['phone'] != '') {
+            $imprintLines[] = 'Telefon: ' . $manufacturer['Addresses']['phone'];
         }
-        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer['Address']['email']) : $manufacturer['Address']['email']);
+        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer['Addresses']['email']) : $manufacturer['Addresses']['email']);
 
         if (!$addressOnly) {
-            if ($manufacturer['Manufacturer']['homepage'] != '') {
-                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturer']['homepage'], $manufacturer['Manufacturer']['homepage'], ['options' => ['target' => '_blank']]) : $manufacturer['Manufacturer']['homepage']);
+            if ($manufacturer['Manufacturers']['homepage'] != '') {
+                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturers']['homepage'], $manufacturer['Manufacturers']['homepage'], ['options' => ['target' => '_blank']]) : $manufacturer['Manufacturers']['homepage']);
             }
             $imprintLines[] = ''; // new line
-            if ($manufacturer['Manufacturer']['uid_number'] != '') {
-                $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturer']['uid_number'];
+            if ($manufacturer['Manufacturers']['uid_number'] != '') {
+                $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturers']['uid_number'];
             }
 
-            if ($manufacturer['Manufacturer']['firmenbuchnummer'] != '') {
-                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturer']['firmenbuchnummer'];
+            if ($manufacturer['Manufacturers']['firmenbuchnummer'] != '') {
+                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturers']['firmenbuchnummer'];
             }
-            if ($manufacturer['Manufacturer']['firmengericht'] != '') {
-                $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturer']['firmengericht'];
+            if ($manufacturer['Manufacturers']['firmengericht'] != '') {
+                $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturers']['firmengericht'];
             }
-            if ($manufacturer['Manufacturer']['aufsichtsbehoerde'] != '') {
-                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturer']['aufsichtsbehoerde'];
+            if ($manufacturer['Manufacturers']['aufsichtsbehoerde'] != '') {
+                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturers']['aufsichtsbehoerde'];
             }
-            if ($manufacturer['Manufacturer']['kammer'] != '') {
-                $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturer']['kammer'];
+            if ($manufacturer['Manufacturers']['kammer'] != '') {
+                $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturers']['kammer'];
             }
         }
         return '<p>'.implode('<br />', $imprintLines).'</p>';
@@ -264,13 +264,13 @@ class MyHtmlHelper extends HtmlHelper
     {
         if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
             return [
-                'Customer.lastname' => 'ASC',
-                'Customer.firstname' => 'ASC'
+                'Customers.lastname' => 'ASC',
+                'Customers.firstname' => 'ASC'
             ];
         } else {
             return [
-                'Customer.firstname' => 'ASC',
-                'Customer.lastname' => 'ASC'
+                'Customers.firstname' => 'ASC',
+                'Customers.lastname' => 'ASC'
             ];
         }
     }

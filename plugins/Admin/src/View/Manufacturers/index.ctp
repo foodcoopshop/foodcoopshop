@@ -53,17 +53,17 @@
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Manufacturer.id_manufacturer', 'ID') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
 echo '<th>Logo</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.name', 'Name') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturers.name', 'Name') . '</th>';
 echo '<th style="width:83px;">Produkte</th>';
 echo '<th>Pfand</th>';
-echo '<th>' . $this->Paginator->sort('Customer.name', 'Ansprechperson') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.iban', 'IBAN') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.active', 'Aktiv') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.holiday_from', 'Lieferpause') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturer.is_private', 'Nur für Mitglieder') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.name', 'Ansprechperson') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturers.iban', 'IBAN') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturers.active', 'Aktiv') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', 'Lieferpause') . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th title="Summe offener Bestellungen im oben angegebenen Zeitraum">O.B</th>';
 echo '<th>Opt.</th>';
 if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
@@ -81,17 +81,17 @@ $productCountSum = 0;
 $depositSum = null;
 foreach ($manufacturers as $manufacturer) {
     $i ++;
-    echo '<tr id="manufacturer-' . $manufacturer['Manufacturer']['id_manufacturer'] . '" class="data">';
+    echo '<tr id="manufacturer-' . $manufacturer['Manufacturers']['id_manufacturer'] . '" class="data">';
     echo '<td class="hide">';
-    echo $manufacturer['Manufacturer']['id_manufacturer'];
+    echo $manufacturer['Manufacturers']['id_manufacturer'];
     echo '</td>';
     echo '<td align="center" style="background-color: #fff;">';
-    $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'large');
+    $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturers']['id_manufacturer'], 'large');
     $largeImageExists = preg_match('/de-default-large_default/', $srcLargeImage);
     if (! $largeImageExists) {
         echo '<a class="lightbox" href="' . $srcLargeImage . '">';
     }
-    echo '<img width="50" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium') . '" />';
+    echo '<img width="50" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturers']['id_manufacturer'], 'medium') . '" />';
     if (! $largeImageExists) {
         echo '</a>';
     }
@@ -99,17 +99,17 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
-    ), $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']));
+    ), $this->Slug->getManufacturerEdit($manufacturer['Manufacturers']['id_manufacturer']));
     echo '</td>';
 
     echo '<td>';
 
-    $details = $manufacturer['Address']['firstname'] . ' ' . $manufacturer['Address']['lastname'];
-    if ($manufacturer['Address']['phone_mobile'] != '') {
-        $details .= '<br />'.$manufacturer['Address']['phone_mobile'];
+    $details = $manufacturer['Addresses']['firstname'] . ' ' . $manufacturer['Addresses']['lastname'];
+    if ($manufacturer['Addresses']['phone_mobile'] != '') {
+        $details .= '<br />'.$manufacturer['Addresses']['phone_mobile'];
     }
-    if ($manufacturer['Address']['phone'] != '') {
-        $details .= '<br />' . $manufacturer['Address']['phone'];
+    if ($manufacturer['Addresses']['phone'] != '') {
+        $details .= '<br />' . $manufacturer['Addresses']['phone'];
     }
         echo '<div class="manufacturer-details-wrapper">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), array(
@@ -118,9 +118,9 @@ foreach ($manufacturers as $manufacturer) {
             ), 'javascript:void(0);');
         echo '</div>';
 
-        echo '<b>' . $manufacturer['Manufacturer']['name'] . '</b><br />';
-        echo $manufacturer['Address']['city'];
-        echo '<br /><span class="email">' . $manufacturer['Address']['email'] . '</span><br />';
+        echo '<b>' . $manufacturer['Manufacturers']['name'] . '</b><br />';
+        echo $manufacturer['Addresses']['city'];
+        echo '<br /><span class="email">' . $manufacturer['Addresses']['email'] . '</span><br />';
     echo '</td>';
 
     echo '<td style="width:140px;">';
@@ -129,10 +129,10 @@ foreach ($manufacturers as $manufacturer) {
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;' . $productString,
         array(
-        'title' => 'Alle Produkte von ' . $manufacturer['Manufacturer']['name'] . ' anzeigen',
+        'title' => 'Alle Produkte von ' . $manufacturer['Manufacturers']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
         ),
-        $this->Slug->getProductAdmin($manufacturer['Manufacturer']['id_manufacturer'])
+        $this->Slug->getProductAdmin($manufacturer['Manufacturers']['id_manufacturer'])
     );
     echo '</td>';
 
@@ -148,7 +148,7 @@ foreach ($manufacturers as $manufacturer) {
         if ($appAuth->isManufacturer()) {
             $depositOverviewUrl = $this->Slug->getMyDepositList();
         } else {
-            $depositOverviewUrl = $this->Slug->getDepositList($manufacturer['Manufacturer']['id_manufacturer']);
+            $depositOverviewUrl = $this->Slug->getDepositList($manufacturer['Manufacturers']['id_manufacturer']);
         }
         echo $this->Html->getJqueryUiIcon(
             'Pfand:&nbsp;' . $depositSaldoHtml,
@@ -162,31 +162,31 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-    if (!empty($manufacturer['Customer'])) {
-        echo $manufacturer['Customer']['firstname'] . ' ' . $manufacturer['Customer']['lastname'];
+    if (!empty($manufacturer['Customers'])) {
+        echo $manufacturer['Customers']['firstname'] . ' ' . $manufacturer['Customers']['lastname'];
     }
     echo '</td>';
 
     echo '<td style="text-align:center;width:42px;">';
-    if ($manufacturer['Manufacturer']['iban'] != '') {
+    if ($manufacturer['Manufacturers']['iban'] != '') {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
-    if ($manufacturer['Manufacturer']['active'] == 1) {
+    if ($manufacturer['Manufacturers']['active'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
-    if ($manufacturer['Manufacturer']['active'] == '') {
+    if ($manufacturer['Manufacturers']['active'] == '') {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
     }
     echo '</td>';
 
     echo '<td>';
-        echo $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+        echo $this->Html->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
     echo '</td>';
 
     echo '<td align="center">';
-    if ($manufacturer['Manufacturer']['is_private'] == 1) {
+    if ($manufacturer['Manufacturers']['is_private'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     }
     echo '</td>';
@@ -203,23 +203,23 @@ foreach ($manufacturers as $manufacturer) {
         array(
             'title' => 'Hersteller-Einstellungen bearbeiten'
         ),
-        $this->Slug->getManufacturerEditOptions($manufacturer['Manufacturer']['id_manufacturer'])
+        $this->Slug->getManufacturerEditOptions($manufacturer['Manufacturers']['id_manufacturer'])
     );
     echo '</td>';
 
     if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
-            echo $manufacturer['Manufacturer']['variable_member_fee'].'%';
+            echo $manufacturer['Manufacturers']['variable_member_fee'].'%';
         echo '</td>';
     }
 
     echo '<td style="width:140px;">';
     echo 'Bestellliste prüfen<br />';
-    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
             'target' => '_blank'
         ));
     echo ' / ';
-    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
         'target' => '_blank'
     ));
     echo '</td>';
@@ -233,13 +233,13 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     echo '<td>';
-    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice/' . $manufacturer['Manufacturer']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
         'target' => '_blank'
     ));
     echo '</td>';
     echo '<td style="width: 29px;">';
-    if ($manufacturer['Manufacturer']['active']) {
-        $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']);
+    if ($manufacturer['Manufacturers']['active']) {
+        $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
             'title' => 'Hersteller-Seite',
             'target' => '_blank'

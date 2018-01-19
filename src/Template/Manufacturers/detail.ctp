@@ -24,7 +24,7 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 
-<h1><?php echo $manufacturer['Manufacturer']['name']; ?>
+<h1><?php echo $manufacturer['Manufacturers']['name']; ?>
 
 <?php
 if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
@@ -35,21 +35,21 @@ if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appA
 
 <div class="manufacturer-infos">
     <?php
-        $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'large');
+        $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturers']['id_manufacturer'], 'large');
         $largeImageExists = preg_match('/de-default/', $srcLargeImage);
     if (!$largeImageExists) {
         echo '<a class="lightbox" href="'.$srcLargeImage.'">';
-        echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium'). '" />';
+        echo '<img class="manufacturer-logo" src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturers']['id_manufacturer'], 'medium'). '" />';
         echo '</a>';
     }
 
-        echo $manufacturer['Manufacturer']['description'];
+        echo $manufacturer['Manufacturers']['description'];
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-            $manufacturerEditSlug = $this->Slug->getManufacturerEdit($manufacturer['Manufacturer']['id_manufacturer']);
+            $manufacturerEditSlug = $this->Slug->getManufacturerEdit($manufacturer['Manufacturers']['id_manufacturer']);
         }
-        if ($appAuth->isManufacturer() && $appAuth->getManufacturerId() == $manufacturer['Manufacturer']['id_manufacturer']) {
+        if ($appAuth->isManufacturer() && $appAuth->getManufacturerId() == $manufacturer['Manufacturers']['id_manufacturer']) {
             $manufacturerEditSlug = $this->Slug->getManufacturerProfile();
         }
     }
@@ -69,13 +69,13 @@ if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appA
 
 <?php
 if (!empty($blogPosts)) {
-    echo '<h2>Aktuelles von '.$manufacturer['Manufacturer']['name'].'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']).'">Zum Blog von '.$manufacturer['Manufacturer']['name'].'</a></h2><div class="sc"></div>';
+    echo '<h2>Aktuelles von '.$manufacturer['Manufacturers']['name'].'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']).'">Zum Blog von '.$manufacturer['Manufacturers']['name'].'</a></h2><div class="sc"></div>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);
 }
 
-$manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturer']['name']);
+$manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturers']['name']);
 if ($manufacturerHolidayString != '') {
     echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
 }

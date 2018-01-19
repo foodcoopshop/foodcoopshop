@@ -48,7 +48,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('configurationId', $configurationId);
         $this->set('title_for_layout', 'Einstellung bearbeiten');
 
-        if ($unsavedConfiguration['Configuration']['type'] == 'textarea') {
+        if ($unsavedConfiguration['Configurations']['type'] == 'textarea') {
             $_SESSION['KCFINDER'] = array(
                 'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
@@ -60,13 +60,13 @@ class ConfigurationsController extends AdminAppController
         } else {
             // validate data - do not use $this->Configuration->saveAll()
             $this->Configuration->id = $configurationId;
-            $this->Configuration->set($this->request->data['Configuration']);
+            $this->Configuration->set($this->request->data['Configurations']);
 
-            $this->Configuration->enableValidations($unsavedConfiguration['Configuration']['name']);
+            $this->Configuration->enableValidations($unsavedConfiguration['Configurations']['name']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            if ($unsavedConfiguration['Configuration']['type'] != 'textarea') {
-                $data = strip_tags($this->request->data['Configuration']['value']);
+            if ($unsavedConfiguration['Configurations']['type'] != 'textarea') {
+                $data = strip_tags($this->request->data['Configurations']['value']);
             }
 
             $errors = array();
@@ -76,13 +76,13 @@ class ConfigurationsController extends AdminAppController
 
             if (empty($errors)) {
                 $this->Configuration->id = $configurationId;
-                $this->Configuration->save($this->request->data['Configuration'], array(
+                $this->Configuration->save($this->request->data['Configurations'], array(
                     'validate' => false
                 ));
 
                 $this->ActionLog = TableRegistry::get('ActionLogs');
                 $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
-                $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configuration']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configuration']['value'] . '"</i>');
+                $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configurations']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configurations']['value'] . '"</i>');
 
                 $this->redirect($this->data['referer']);
             } else {
@@ -110,7 +110,7 @@ class ConfigurationsController extends AdminAppController
                 }
                 $email->template($template);
                 $email->viewVars(array(
-                    'data' => array('Customer' => array(
+                    'data' => array('Customers' => array(
                         'firstname' => 'Vorname',
                         'lastname' => 'Nachname',
                         'email' => 'vorname.nachname@example.com'
@@ -133,7 +133,7 @@ class ConfigurationsController extends AdminAppController
         $this->Tax = TableRegistry::get('Taxs');
         $defaultTax = $this->Tax->find('first', array(
             'conditions' => array(
-                'Tax.id_tax' => Configure::read('AppConfig.defaultTaxId')
+                'Taxes.id_tax' => Configure::read('AppConfig.defaultTaxId')
             )
         ));
         $this->set('defaultTax', $defaultTax);

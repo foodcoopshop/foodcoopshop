@@ -62,13 +62,13 @@ class PagesController extends AdminAppController
         if ($pageId > 0) {
             $unsavedPage = $this->Page->find('first', array(
                 'conditions' => array(
-                    'Page.id_page' => $pageId
+                    'Pages.id_page' => $pageId
                 )
             ));
         } else {
             // default values for new pages
             $unsavedPage = array(
-                'Page' => array(
+                'Pages' => array(
                     'active' => APP_ON,
                     'position' => 10
                 )
@@ -82,12 +82,12 @@ class PagesController extends AdminAppController
             // validate data - do not use $this->Page->saveAll()
             $this->Page->id = $pageId;
 
-            $this->request->data['Page']['extern_url'] = StringComponent::addHttpToUrl($this->request->data['Page']['extern_url']);
+            $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->data['Pages']['extern_url']);
 
-            $this->Page->set($this->request->data['Page']);
+            $this->Page->set($this->request->data['Pages']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Page'] as $key => &$data) {
+            foreach ($this->request->data['Pages'] as $key => &$data) {
                 if ($key != 'content') {
                     $data = strip_tags(trim($data));
                 }
@@ -99,11 +99,11 @@ class PagesController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->request->data['Page']['id_customer'] = $this->AppAuth->getUserId();
+                $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
 
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Page->save($this->request->data['Page'], array(
+                $this->Page->save($this->request->data['Pages'], array(
                     'validate' => false
                 ));
                 if (is_null($pageId)) {
@@ -114,13 +114,13 @@ class PagesController extends AdminAppController
                     $actionLogType = 'page_changed';
                 }
 
-                if (isset($this->request->data['Page']['delete_page']) && $this->request->data['Page']['delete_page']) {
+                if (isset($this->request->data['Pages']['delete_page']) && $this->request->data['Pages']['delete_page']) {
                     $this->Page->saveField('active', APP_DEL, false);
-                    $message = 'Die Seite "' . $this->request->data['Page']['title'] . '" wurde erfolgreich gelöscht.';
+                    $message = 'Die Seite "' . $this->request->data['Pages']['title'] . '" wurde erfolgreich gelöscht.';
                     $this->ActionLog->customSave('page_deleted', $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
                     $this->Flash->success('Die Seite wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Die Seite "' . $this->request->data['Page']['title'] . '" wurde ' . $messageSuffix;
+                    $message = 'Die Seite "' . $this->request->data['Pages']['title'] . '" wurde ' . $messageSuffix;
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
                     $this->Flash->success('Die Seite wurde erfolgreich gespeichert.');
                 }
@@ -140,12 +140,12 @@ class PagesController extends AdminAppController
         if (! empty($this->params['named']['customerId'])) {
             $customerId = $this->params['named']['customerId'];
             $conditions = array(
-                'Page.id_customer' => $customerId
+                'Pages.id_customer' => $customerId
             );
         }
         $this->set('customerId', $customerId);
 
-        $conditions[] = 'Page.active > ' . APP_DEL;
+        $conditions[] = 'Pages.active > ' . APP_DEL;
 
         $totalPagesCount = $this->Page->find('count', array(
             'conditions' => $conditions

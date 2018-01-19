@@ -18,13 +18,13 @@ $this->element('addScript', array(
         Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerDescription');" .
         Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('ManufacturerShortDescription');" .
         Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
-        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');"
+        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturers']['id_manufacturer']) ? $this->request->data['Manufacturers']['id_manufacturer'] : "") . "', 'Manufacturers');"
 ));
 
-$idForImageUpload = isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : StringComponent::createRandomString(6);
+$idForImageUpload = isset($this->request->data['Manufacturers']['id_manufacturer']) ? $this->request->data['Manufacturers']['id_manufacturer'] : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getManufacturerImageSrc($idForImageUpload, 'large');
-if (isset($this->request->data['Manufacturer']['tmp_image']) && $this->request->data['Manufacturer']['tmp_image'] != '') {
-    $imageSrc = str_replace('\\', '/', $this->request->data['Manufacturer']['tmp_image']);
+if (isset($this->request->data['Manufacturers']['tmp_image']) && $this->request->data['Manufacturers']['tmp_image'] != '') {
+    $imageSrc = str_replace('\\', '/', $this->request->data['Manufacturers']['tmp_image']);
 }
 $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 ?>
@@ -52,38 +52,38 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 
 <?php
 
-    echo $this->Form->create('Manufacturer', array(
+    echo $this->Form->create('Manufacturers', array(
         'class' => 'fcs-form'
     ));
 
     echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-    echo $this->Form->hidden('Manufacturer.id_manufacturer');
-    echo $this->Form->hidden('Address.id_address');
+    echo $this->Form->hidden('Manufacturers.id_manufacturer');
+    echo $this->Form->hidden('Addresses.id_address');
 
     echo '<h2>Allgemein</h2>';
 
     $imprintString = $appAuth->isManufacturer() ? 'in deinem Impressum' : 'im Impressum des Herstellers';
 
-    echo $this->Form->input('Manufacturer.name', array(
+    echo $this->Form->input('Manufacturers.name', array(
         'type' => 'text',
         'label' => 'Name',
         'required' => true
     ));
-    echo $this->Form->input('Address.email', array(
+    echo $this->Form->input('Addresses.email', array(
         'type' => 'text',
         'label' => 'E-Mail-Adresse',
         'required' => true,
         'after' => '<span class="after small">Wird '.$imprintString.'  spamgeschützt angezeigt</span>'
     ));
-    echo $this->Form->input('Address.phone_mobile', array(
+    echo $this->Form->input('Addresses.phone_mobile', array(
         'label' => 'Handy',
         'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
-    echo $this->Form->input('Address.phone', array(
+    echo $this->Form->input('Addresses.phone', array(
         'label' => 'Telefon',
         'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
     ));
-    echo $this->Form->input('Manufacturer.homepage', array(
+    echo $this->Form->input('Manufacturers.homepage', array(
         'placeholder' => 'z.B. https://www.foodcoopshop.com',
         'label' => 'Homepage',
         'after' => '<span class="after small">Wird '.$imprintString.' angezeigt</span>'
@@ -104,7 +104,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 
     echo '<h2>Profil';
     if ($this->here != $this->Slug->getManufacturerAdd()) {
-        echo ' <span>' . $this->Html->link('Hier geht\'s zum Hersteller-Profil', $this->Slug->getManufacturerDetail($manufacturerId, $unsavedManufacturer['Manufacturer']['name']), array(
+        echo ' <span>' . $this->Html->link('Hier geht\'s zum Hersteller-Profil', $this->Slug->getManufacturerDetail($manufacturerId, $unsavedManufacturer['Manufacturers']['name']), array(
         'target' => '_blank'
         )) . '</span>';
     }
@@ -123,17 +123,17 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     'data-object-id' => $idForImageUpload
     ), 'javascript:void(0);');
     echo '</div>';
-    echo $this->Form->hidden('Manufacturer.tmp_image');
+    echo $this->Form->hidden('Manufacturers.tmp_image');
     echo '</div>';
 
-    echo $this->Form->input('Manufacturer.delete_image', array(
+    echo $this->Form->input('Manufacturers.delete_image', array(
     'label' => 'Logo löschen?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Speichern nicht vergessen</span>'
     ));
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        echo $this->Form->input('Manufacturer.short_description', array(
+        echo $this->Form->input('Manufacturers.short_description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
         'label' => 'Kurze Beschreibung<br /><br /><span class="small">Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden.</span>',
@@ -148,7 +148,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         echo '<p>Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf "bearbeiten" klicken.</p>';
         echo '</div>';
     } else {
-        echo $this->Form->input('Manufacturer.description', array(
+        echo $this->Form->input('Manufacturers.description', array(
         'class' => 'ckeditor',
         'type' => 'textarea',
         'label' => $label . '<br /><br /><span class="small">Wird auf der Hersteller-Seite angezeigt.<br /><br /><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
@@ -157,69 +157,69 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     echo '<div class="sc"></div>';
 
     echo '<h2>Bankdaten <span>werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet</span></h2>';
-    echo $this->Form->input('Manufacturer.bank_name', array(
+    echo $this->Form->input('Manufacturers.bank_name', array(
     'label' => 'Bank'
     ));
-    echo $this->Form->input('Manufacturer.iban', array(
+    echo $this->Form->input('Manufacturers.iban', array(
     'label' => 'IBAN',
     'maxLength' => ''
     ));
-    echo $this->Form->input('Manufacturer.bic', array(
+    echo $this->Form->input('Manufacturers.bic', array(
     'label' => 'BIC',
     'maxLength' => ''
     ));
     echo '<div class="sc"></div>';
 
     echo '<h2>Firmendaten <span>für dein Impressum deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten rechts.</span></h2>';
-    echo $this->Form->input('Address.firstname', array(
+    echo $this->Form->input('Addresses.firstname', array(
     'label' => 'Vorname',
     'required' => true
     ));
-    echo $this->Form->input('Address.lastname', array(
+    echo $this->Form->input('Addresses.lastname', array(
     'label' => 'Nachname',
     'required' => true
     ));
-    echo $this->Form->input('Address.address1', array(
+    echo $this->Form->input('Addresses.address1', array(
     'label' => 'Straße'
     ));
-    echo $this->Form->input('Address.address2', array(
+    echo $this->Form->input('Addresses.address2', array(
     'label' => 'Adresszusatz'
     ));
 
-    echo $this->Form->input('Address.postcode', array(
+    echo $this->Form->input('Addresses.postcode', array(
     'label' => 'PLZ'
     ));
-    echo $this->Form->input('Address.city', array(
+    echo $this->Form->input('Addresses.city', array(
     'label' => 'Ort'
     ));
 
-    echo $this->Form->input('Manufacturer.uid_number', array(
+    echo $this->Form->input('Manufacturers.uid_number', array(
     'label' => 'UID-Nummer',
     'after' => '<span class="after small">sofern vorhanden</span>'
     ));
 
-    echo $this->Form->input('Manufacturer.firmenbuchnummer', array(
+    echo $this->Form->input('Manufacturers.firmenbuchnummer', array(
     'label' => 'Firmenbuchnummer',
     'after' => '<span class="after small">sofern vorhanden</span>'
     ));
 
-    echo $this->Form->input('Manufacturer.firmengericht', array(
+    echo $this->Form->input('Manufacturers.firmengericht', array(
     'label' => 'Firmengericht',
     'after' => '<span class="after small">sofern vorhanden</span>'
     ));
 
-    echo $this->Form->input('Manufacturer.aufsichtsbehoerde', array(
+    echo $this->Form->input('Manufacturers.aufsichtsbehoerde', array(
     'label' => 'Aufsichtsbehörde',
     'after' => '<span class="after small">sofern vorhanden</span>'
     ));
 
-    echo $this->Form->input('Manufacturer.kammer', array(
+    echo $this->Form->input('Manufacturers.kammer', array(
     'placeholder' => 'z.B. Landwirtschaftskammer',
     'label' => 'Kammer',
     'after' => '<span class="after small">sofern vorhanden</span>'
     ));
 
-    echo $this->Form->input('Manufacturer.additional_text_for_invoice', array(
+    echo $this->Form->input('Manufacturers.additional_text_for_invoice', array(
     'type' => 'textarea',
     'label' => 'Zusatztext für Rechnung' . '<br /><br /><span class="small">Wird am Ende der Übersichtsseite deiner Rechnung eingefügt.<br />z.B.: "Durchschnittsteuersatz 10% zzgl. Zusatzsteuer 10%"</span>',
     'cols' => 81

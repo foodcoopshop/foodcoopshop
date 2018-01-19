@@ -20,19 +20,17 @@ class PagesTable extends AppTable
 {
 
     public $primaryKey = 'id_page';
-
-    public $actsAs = [
-        'Containable',
-        'Tree' => [
+    
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->addBehavior('Tree', [
             'parent' => 'id_parent'
-        ]
-    ];
-
-    public $belongsTo = [
-        'Customer' => [
+        ]);
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
-        ]
-    ];
+        ]);
+    }
 
     public $validate = [
         'position' => [
@@ -77,12 +75,12 @@ class PagesTable extends AppTable
         $pages = $this->find('threaded', [
             'conditions' => $conditions,
             'order' => [
-                'Page.menu_type' => 'DESC',
-                'Page.position' => 'ASC',
-                'Page.title' => 'ASC'
+                'Pages.menu_type' => 'DESC',
+                'Pages.position' => 'ASC',
+                'Pages.title' => 'ASC'
             ],
             'contain' => [
-                'Customer.name'
+                'Customers.name'
             ]
         ]);
         return $pages;
@@ -91,24 +89,24 @@ class PagesTable extends AppTable
     public function getMainPagesForDropdown($pageIdToExcluce = null)
     {
         $conditions = [
-            'Page.id_parent IS NULL',
-            'Page.active > ' . APP_DEL
+            'Pages.id_parent IS NULL',
+            'Pages.active > ' . APP_DEL
         ];
         if ($pageIdToExcluce > 0) {
-            $conditions[] = 'Page.id_page != ' . $pageIdToExcluce;
+            $conditions[] = 'Pages.id_page != ' . $pageIdToExcluce;
         }
         $pages = $this->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'Page.menu_type' => 'DESC',
-                'Page.position' => 'ASC',
-                'Page.title' => 'ASC'
+                'Pages.menu_type' => 'DESC',
+                'Pages.position' => 'ASC',
+                'Pages.title' => 'ASC'
             ]
         ]);
 
         $preparedPages = [];
         foreach ($pages as $page) {
-            $preparedPages[$page['Page']['id_page']] = $page['Page']['title'] . ' - ' . Configure::read('AppConfig.htmlHelper')->getMenuType($page['Page']['menu_type']);
+            $preparedPages[$page['Pages']['id_page']] = $page['Pages']['title'] . ' - ' . Configure::read('AppConfig.htmlHelper')->getMenuType($page['Pages']['menu_type']);
         }
         return $preparedPages;
     }

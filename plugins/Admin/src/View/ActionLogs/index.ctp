@@ -51,11 +51,11 @@
 
 echo '<table class="list no-hover">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('ActionLog.id', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLog.type', 'Aktivitäts-Typ') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLog.date', 'Datum') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLog.text', 'Text') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customer.name', 'Benutzer') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('ActionLogs.id', 'ID') . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.type', 'Aktivitäts-Typ') . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.date', 'Datum') . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.text', 'Text') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.name', 'Benutzer') . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -63,39 +63,39 @@ $i = 0;
 foreach ($actionLogs as $actionLog) {
     $i ++;
 
-    $actionType = $actionLogModel->types[$actionLog['ActionLog']['type']];
+    $actionType = $actionLogModel->types[$actionLog['ActionLogs']['type']];
     $actionClass = empty($actionType['class']) ? array() : $actionType['class'];
     $actionClass = array_merge(array('data'), $actionClass);
 
     echo '<tr class="' . implode(' ', $actionClass) . '">';
 
     echo '<td class="hide">';
-    echo $actionLog['ActionLog']['id'];
+    echo $actionLog['ActionLogs']['id'];
     echo '</td>';
 
     echo '<td>';
     echo $this->Html->link(
         $actionType['de'],
-        '/admin/action_logs/index/type:'.$actionLog['ActionLog']['type'].'/productId:'.$productId.'/customerId:'.$customerId.'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
+        '/admin/action_logs/index/type:'.$actionLog['ActionLogs']['type'].'/productId:'.$productId.'/customerId:'.$customerId.'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
     );
     echo '</td>';
 
     echo '<td>';
-    echo $this->Time->formatToDateNTimeLongWithSecs($actionLog['ActionLog']['date']);
+    echo $this->Time->formatToDateNTimeLongWithSecs($actionLog['ActionLogs']['date']);
     echo '</td>';
 
     echo '<td>';
-    echo $actionLog['ActionLog']['text'];
+    echo $actionLog['ActionLogs']['text'];
     echo '</td>';
 
     echo '<td>';
-    $name = $actionLog['Customer']['name'];
-    if (isset($actionLog['Customer']['Manufacturer'])) {
-        $name = $actionLog['Customer']['Manufacturer']['name'];
+    $name = $actionLog['Customers']['name'];
+    if (isset($actionLog['Customers']['Manufacturers'])) {
+        $name = $actionLog['Customers']['Manufacturers']['name'];
     }
     echo $this->Html->link(
         $name,
-        '/admin/action_logs/index/type:'.$type.'/productId:'.$productId.'/customerId:'.$actionLog['Customer']['id_customer'].'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
+        '/admin/action_logs/index/type:'.$type.'/productId:'.$productId.'/customerId:'.$actionLog['Customers']['id_customer'].'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
     );
     echo '</td>';
 
@@ -105,60 +105,60 @@ foreach ($actionLogs as $actionLog) {
     $targetBlank = true;
 
     // products
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'products' && ! ($actionLog['ActionLog']['type'] == 'product_set_inactive')) {
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'products' && ! ($actionLog['ActionLogs']['type'] == 'product_set_inactive')) {
         $showLink = true;
         $title = 'Produkt anzeigen';
-        $url = $this->Slug->getProductDetail($actionLog['ActionLog']['object_id'], '');
+        $url = $this->Slug->getProductDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // manufacturers
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'manufacturers') {
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'manufacturers') {
         $showLink = true;
         $title = 'Hersteller anzeigen';
-        $url = $this->Slug->getManufacturerDetail($actionLog['ActionLog']['object_id'], '');
+        $url = $this->Slug->getManufacturerDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // blog_posts
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'blog_posts' && ! (in_array($actionLog['ActionLog']['type'], array(
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'blog_posts' && ! (in_array($actionLog['ActionLogs']['type'], array(
         'blog_post_deleted'
     )))) {
         $showLink = true;
         $title = 'Blog-Artikel anzeigen';
-        $url = $this->Slug->getBlogPostDetail($actionLog['ActionLog']['object_id'], '');
+        $url = $this->Slug->getBlogPostDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // pages
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'pages' && ! (in_array($actionLog['ActionLog']['type'], array(
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'pages' && ! (in_array($actionLog['ActionLogs']['type'], array(
         'page_deleted'
     )))) {
         $showLink = true;
         $title = 'Seite anzeigen';
-        $url = $this->Slug->getPageDetail($actionLog['ActionLog']['object_id'], '');
+        $url = $this->Slug->getPageDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // categories
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'categories' && ! (in_array($actionLog['ActionLog']['type'], array(
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'categories' && ! (in_array($actionLog['ActionLogs']['type'], array(
         'category_deleted'
     )))) {
         $showLink = true;
         $title = 'Kategorie anzeigen';
-        $url = $this->Slug->getCategoryDetail($actionLog['ActionLog']['object_id'], '');
+        $url = $this->Slug->getCategoryDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // order details
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'order_details') {
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'order_details') {
         $showLink = true;
         $title = 'Bestelltes Produkt anzeigen';
-        $url = '/admin/order_details/index/orderDetailId:' . $actionLog['ActionLog']['object_id'];
+        $url = '/admin/order_details/index/orderDetailId:' . $actionLog['ActionLogs']['object_id'];
         $targetBlank = false;
     }
 
     // orders
-    if ($actionLog['ActionLog']['object_id'] > 0 && $actionLog['ActionLog']['object_type'] == 'orders') {
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'orders') {
         $showLink = true;
         $title = 'Bestellung anzeigen';
         // manually add ORDER_STATE_CANCELLED to orderState to show cancelled orders
-        $url = '/admin/orders/index/orderId:' . $actionLog['ActionLog']['object_id'] . '/orderState:' . join(',', array_keys($this->Html->getOrderStates()));
+        $url = '/admin/orders/index/orderId:' . $actionLog['ActionLogs']['object_id'] . '/orderState:' . join(',', array_keys($this->Html->getOrderStates()));
         $targetBlank = false;
     }
 

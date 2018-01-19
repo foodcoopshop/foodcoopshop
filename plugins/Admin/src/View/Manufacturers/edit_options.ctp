@@ -16,7 +16,7 @@
 $this->element('addScript', array(
     'script' =>
         Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
-        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturer']['id_manufacturer']) ? $this->request->data['Manufacturer']['id_manufacturer'] : "") . "', 'Manufacturer');".
+        Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturers']['id_manufacturer']) ? $this->request->data['Manufacturers']['id_manufacturer'] : "") . "', 'Manufacturers');".
         Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker(); var datefieldSelector = $('input.datepicker');datefieldSelector.datepicker();
     "
 ));
@@ -46,16 +46,16 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Manufacturer', array(
+echo $this->Form->create('Manufacturers', array(
     'class' => 'fcs-form'
 ));
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Manufacturer.id_manufacturer');
+echo $this->Form->hidden('Manufacturers.id_manufacturer');
 
 echo '<h2>Sichtbarkeit der Produkte</h2>';
 
-echo $this->Form->input('Manufacturer.active', array(
+echo $this->Form->input('Manufacturers.active', array(
     'label' => 'Aktiv?',
     'disabled' => ($appAuth->isManufacturer() ? 'disabled' : ''),
     'type' => 'checkbox',
@@ -67,16 +67,16 @@ echo '<div class="holiday-wrapper">';
         echo '<label>Lieferpause?';
     echo '</div>';
     echo $this->element('dateFields', array(
-        'dateFrom' => $this->request->data['Manufacturer']['holiday_from'],
+        'dateFrom' => $this->request->data['Manufacturers']['holiday_from'],
         'nameFrom' => 'data[Manufacturer][holiday_from]',
-        'dateTo' => $this->request->data['Manufacturer']['holiday_to'],
+        'dateTo' => $this->request->data['Manufacturers']['holiday_to'],
         'nameTo' => 'data[Manufacturer][holiday_to]'
     ));
     echo '<span class="description small"><a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Wie verwende ich die Funktion "Lieferpause"?</a>';
     echo '</span>';
     echo '</div>';
 
-    echo $this->Form->input('Manufacturer.is_private', array(
+    echo $this->Form->input('Manufacturers.is_private', array(
     'label' => 'Nur für Mitglieder?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt.</span>'
@@ -85,47 +85,47 @@ echo '<div class="holiday-wrapper">';
 
     echo '<h2>Benachrichtigungen</h2>';
 
-    echo $this->Form->input('Manufacturer.send_order_list', array(
+    echo $this->Form->input('Manufacturers.send_order_list', array(
     'label' => 'Bestelllisten per E-Mail',
     'type' => 'checkbox',
     'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte wöchentlich per E-Mail die Bestelllisten erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
-    echo $this->Form->input('Manufacturer.send_order_list_cc', array(
+    echo $this->Form->input('Manufacturers.send_order_list_cc', array(
     'label' => 'CC-Empfänger für Bestell-Listen-Versand',
     'after' => '<span class="after small">Mehrere Empfänger mit , trennen.</span>'
     ));
 
-    echo $this->Form->input('Manufacturer.send_invoice', array(
+    echo $this->Form->input('Manufacturers.send_invoice', array(
     'label' => 'Rechnungen per E-Mail',
     'type' => 'checkbox',
         'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte monatlich per E-Mail die Rechnungen erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
-    echo $this->Form->input('Manufacturer.send_ordered_product_deleted_notification', array(
+    echo $this->Form->input('Manufacturers.send_ordered_product_deleted_notification', array(
         'label' => 'Stornierungen',
         'type' => 'checkbox',
         'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Stornierung eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
-    echo $this->Form->input('Manufacturer.send_ordered_product_price_changed_notification', array(
+    echo $this->Form->input('Manufacturers.send_ordered_product_price_changed_notification', array(
         'label' => 'Preis-Änderungen von bestellten Produkten',
         'type' => 'checkbox',
         'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
-    echo $this->Form->input('Manufacturer.send_ordered_product_quantity_changed_notification', array(
+    echo $this->Form->input('Manufacturers.send_ordered_product_quantity_changed_notification', array(
         'label' => 'Änderungen der bestellten Anzahl',
         'type' => 'checkbox',
         'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
-    echo $this->Form->input('Manufacturer.send_shop_order_notification', array(
+    echo $this->Form->input('Manufacturers.send_shop_order_notification', array(
     'label' => 'Sofortbestellungen',
     'type' => 'checkbox',
     'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Sofort-Bestellung eine Info-Mail erhalten.</span>'
@@ -136,7 +136,7 @@ echo '<div class="holiday-wrapper">';
 
 
     if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
-        echo $this->Form->input('Manufacturer.variable_member_fee', array(
+        echo $this->Form->input('Manufacturers.variable_member_fee', array(
         'label' => 'Variabler Mitgliedsbeitrag in %',
         'div' => array(
             'class' => 'short text input'
@@ -146,14 +146,14 @@ echo '<div class="holiday-wrapper">';
         ));
     }
 
-    echo $this->Form->input('Manufacturer.default_tax_id', array(
+    echo $this->Form->input('Manufacturers.default_tax_id', array(
     'type' => 'select',
     'label' => 'Voreingestellter Steuersatz für neue Produkte',
     'options' => $taxesForDropdown
     ));
 
     if (!$appAuth->isManufacturer()) {
-        echo $this->Form->input('Manufacturer.bulk_orders_allowed', array(
+        echo $this->Form->input('Manufacturers.bulk_orders_allowed', array(
         'label' => 'Hersteller optimiert für Sammelbestellungen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Deaktiviert alle Benachrichtigungen, außer den Rechnungsversand. Mehr Infos findest du im <a href="https://foodcoopshop.github.io/de/sammelbestellungen" target="_blank">Leitfaden für Sammelbestellungen</a>.</span>'
@@ -162,7 +162,7 @@ echo '<div class="holiday-wrapper">';
     }
 
     if (!$appAuth->isManufacturer()) {
-        echo $this->Form->input('Manufacturer.id_customer', array(
+        echo $this->Form->input('Manufacturers.id_customer', array(
         'type' => 'select',
         'label' => 'Ansprechperson',
         'empty' => 'Mitglied auswählen...',
@@ -176,10 +176,10 @@ echo '<div class="holiday-wrapper">';
                 Configure::read('AppConfig.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
             "
         ));
-        echo $this->Form->input('Manufacturer.enabled_sync_domains', array(
+        echo $this->Form->input('Manufacturers.enabled_sync_domains', array(
             'type' => 'select',
             'multiple' => true,
-            'data-val' => $this->request->data['Manufacturer']['enabled_sync_domains'],
+            'data-val' => $this->request->data['Manufacturers']['enabled_sync_domains'],
             'label' => 'Remote-Foodcoops',
             'options' => $syncDomainsForDropdown,
             'after' => '<span class="after small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></div>'

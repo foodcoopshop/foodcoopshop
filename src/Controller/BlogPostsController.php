@@ -35,12 +35,12 @@ class BlogPostsController extends FrontendController
                 $blogPostId = (int) $this->params['pass'][0];
                 $blogPost = $this->BlogPost->find('first', [
                     'conditions' => [
-                        'BlogPost.id_blog_post' => $blogPostId,
-                        'BlogPost.active' => APP_ON
+                        'BlogPosts.id_blog_post' => $blogPostId,
+                        'BlogPosts.active' => APP_ON
                     ]
                 ]);
                 if (!empty($blogPost) && !$this->AppAuth->user()
-                    && ($blogPost['BlogPost']['is_private'] || (isset($blogPost['Manufacturer']) && $blogPost['Manufacturer']['is_private']))
+                    && ($blogPost['BlogPosts']['is_private'] || (isset($blogPost['Manufacturers']) && $blogPost['Manufacturers']['is_private']))
                     ) {
                         $this->AppAuth->deny($this->action);
                 }
@@ -53,9 +53,9 @@ class BlogPostsController extends FrontendController
         $blogPostId = (int) $this->params['pass'][0];
 
         $conditions = [
-            'BlogPost.active' => APP_ON
+            'BlogPosts.active' => APP_ON
         ];
-        $conditions['BlogPost.id_blog_post'] = $blogPostId; // needs to be last element of conditions
+        $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
         $blogPost = $this->BlogPost->find('first', [
             'conditions' => $conditions
@@ -65,7 +65,7 @@ class BlogPostsController extends FrontendController
             throw new MissingActionException('blogPost not found');
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPost']['title']);
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPosts']['title']);
         if ($correctSlug != Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
@@ -75,26 +75,26 @@ class BlogPostsController extends FrontendController
         // START find neighbors
         array_pop($conditions); // do not filter last condition element blogPostId
         if (!$this->AppAuth->user()) {
-            $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
         $neighbors = $this->BlogPost->find('neighbors', [
-            'field' => 'BlogPost.modified',
-            'value' => $blogPost['BlogPost']['modified'],
+            'field' => 'BlogPosts.modified',
+            'value' => $blogPost['BlogPosts']['modified'],
             'conditions' => $conditions,
             'order' => [
-                'BlogPost.modified' => 'DESC'
+                'BlogPosts.modified' => 'DESC'
             ]
         ]);
         $this->set('neighbors', $neighbors);
 
-        $this->set('title_for_layout', $blogPost['BlogPost']['title']);
+        $this->set('title_for_layout', $blogPost['BlogPosts']['title']);
     }
 
     public function index()
     {
         $conditions = [
-            'BlogPost.active' => APP_ON
+            'BlogPosts.active' => APP_ON
         ];
 
         if (isset($this->params['manufacturerSlug'])) {
@@ -103,26 +103,26 @@ class BlogPostsController extends FrontendController
             $this->Manufacturer->recursive = 1;
             $manufacturer = $this->Manufacturer->find('first', [
                 'conditions' => [
-                    'Manufacturer.id_manufacturer' => $manufacturerId,
-                    'Manufacturer.active' => APP_ON
+                    'Manufacturers.id_manufacturer' => $manufacturerId,
+                    'Manufacturers.active' => APP_ON
                 ]
             ]);
             if (empty($manufacturer)) {
                 throw new MissingActionException('manufacturer not found or not active');
             }
             $this->set('manufacturer', $manufacturer);
-            $conditions['BlogPost.id_manufacturer'] = $manufacturerId;
+            $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
         }
 
         if (! $this->AppAuth->user()) {
-            $conditions['BlogPost.is_private'] = APP_OFF;
+            $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
         }
 
         $blogPosts = $this->BlogPost->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'BlogPost.modified' => 'DESC'
+                'BlogPosts.modified' => 'DESC'
             ]
         ]);
 

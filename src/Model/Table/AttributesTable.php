@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class AttributesTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('attribute');
         parent::initialize($config);
@@ -46,13 +46,13 @@ class AttributesTable extends AppTable
         $this->recursive = 2;
         $attributes = $this->find('all', [
             'order' => [
-                'Attribute.name' => 'ASC'
+                'Attributes.name' => 'ASC'
             ]
         ]);
 
         $attributesForDropdown = [];
         foreach ($attributes as $attribute) {
-            $attributesForDropdown[$attribute['Attribute']['id_attribute']] = $attribute['Attribute']['name'];
+            $attributesForDropdown[$attribute['Attributes']['id_attribute']] = $attribute['Attributes']['name'];
         }
 
         return $attributesForDropdown;

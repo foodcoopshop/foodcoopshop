@@ -34,14 +34,14 @@ class ProductsController extends FrontendController
 
         $product = $this->Product->find('first', [
             'conditions' => [
-                'Product.id_product' => $productId,
-                'Product.active' => APP_ON
+                'Products.id_product' => $productId,
+                'Products.active' => APP_ON
             ]
         ]);
         if (! Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->user()
-              && (isset($product['Manufacturer']) && $product['Manufacturer']['is_private'])
+              && (isset($product['Manufacturers']) && $product['Manufacturers']['is_private'])
               )
             ) {
             $this->AppAuth->deny($this->action);
@@ -56,7 +56,7 @@ class ProductsController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::get('Categorys');
+        $this->Category = TableRegistry::get('Categories');
         $product = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
 
@@ -66,11 +66,11 @@ class ProductsController extends FrontendController
 
         $this->set('product', $product[0]);
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['ProductLang']['name']);
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['ProductLangs']['name']);
         if ($correctSlug != Configure::read('AppConfig.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
             $this->redirect($correctSlug);
         }
 
-        $this->set('title_for_layout', $product[0]['ProductLang']['name']);
+        $this->set('title_for_layout', $product[0]['ProductLangs']['name']);
     }
 }

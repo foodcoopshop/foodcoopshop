@@ -20,34 +20,34 @@ foreach ($categories as $category) {
     if ($subRow) {
         $rowClass[] = 'sub-row';
     }
-    if (! $category['Category']['active']) {
+    if (! $category['Categories']['active']) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr id="category-' . $category['Category']['id_category'] . '" class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="category-' . $category['Categories']['id_category'] . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
-        echo $category['Category']['id_category'];
+        echo $category['Categories']['id_category'];
     echo '</td>';
 
     echo '<td>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
             'title' => 'Bearbeiten'
-        ), $this->Slug->getCategoryEdit($category['Category']['id_category']));
+        ), $this->Slug->getCategoryEdit($category['Categories']['id_category']));
     echo '</td>';
 
     echo '<td>';
     if ($subRow) {
-        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left: ' . (($category['Category']['level_depth'] - 2) * 10) . 'px;"></i>';
+        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left: ' . (($category['Categories']['level_depth'] - 2) * 10) . 'px;"></i>';
     }
-        echo $category['Category']['name'];
+        echo $category['Categories']['name'];
     echo '</td>';
 
     echo '<td>';
-        echo $this->Time->formatToDateNTimeLongWithSecs($category['Category']['date_upd']);
+        echo $this->Time->formatToDateNTimeLongWithSecs($category['Categories']['date_upd']);
     echo '</td>';
 
     echo '<td align="center">';
-    if ($category['Category']['active'] == 1) {
+    if ($category['Categories']['active'] == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
@@ -55,11 +55,11 @@ foreach ($categories as $category) {
     echo '</td>';
 
     echo '<td style="width:20px;">';
-    if ($category['Category']['active']) {
+    if ($category['Categories']['active']) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
         'title' => 'Seite anzeigen',
         'target' => '_blank'
-        ), $this->Slug->getCategoryDetail($category['Category']['id_category'], $category['Category']['name']));
+        ), $this->Slug->getCategoryDetail($category['Categories']['id_category'], $category['Categories']['name']));
     }
     echo '</td>';
 

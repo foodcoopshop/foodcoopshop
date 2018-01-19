@@ -16,21 +16,21 @@
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', array('data' => $orderDetail['Order'])); ?>
+        <?php echo $this->element('email/greeting', array('data' => $orderDetail['Orders'])); ?>
                 
         <tr>
         <td>
 
             <p>
-                <b><?php echo $orderDetail['OrderDetail']['product_name']; ?></b>
+                <b><?php echo $orderDetail['OrderDetails']['product_name']; ?></b>
                 kann leider nicht geliefert werden.
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail['OrderDetail']['total_price_tax_incl']); ?></b></li>
-                <li>Anzahl: <b><?php echo $orderDetail['OrderDetail']['product_quantity']; ?></b></li>
-                <li>Hersteller: <b><?php echo $orderDetail['Product']['Manufacturer']['name']; ?></b></li>
-                <li>Bestelldatum: <b><?php echo $this->MyTime->formatToDateNTimeShort($orderDetail['Order']['date_add']); ?></b></li>
+                <li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail['OrderDetails']['total_price_tax_incl']); ?></b></li>
+                <li>Anzahl: <b><?php echo $orderDetail['OrderDetails']['product_quantity']; ?></b></li>
+                <li>Hersteller: <b><?php echo $orderDetail['Products']['Manufacturers']['name']; ?></b></li>
+                <li>Bestelldatum: <b><?php echo $this->MyTime->formatToDateNTimeShort($orderDetail['Orders']['date_add']); ?></b></li>
             </ul>
 
             <p>

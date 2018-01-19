@@ -1,8 +1,8 @@
 <?php
 App::uses('SendOrderListsShell', 'Console/Command');
 App::uses('AppCakeTestCase', 'Test');
-App::uses('EmailLog', 'Model');
-App::uses('Order', 'Model');
+App::uses('EmailLogs', 'Model');
+App::uses('Orders', 'Model');
 
 class SendOrderListsShellTest extends AppCakeTestCase
 {

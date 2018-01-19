@@ -25,13 +25,13 @@ class CartProductsTable extends AppTable
     ];
 
     public $belongsTo = [
-        'Product' => [
+        'Products' => [
             'foreignKey' => 'id_product'
         ],
-        'ProductLang' => [
+        'ProductLangs' => [
             'foreignKey' => 'id_product'
         ],
-        'ProductAttribute' => [
+        'ProductAttributes' => [
             'foreignKey' => 'id_product_attribute'
         ]
     ];
@@ -39,9 +39,9 @@ class CartProductsTable extends AppTable
     public function remove($productId, $attributeId, $cartId)
     {
         $cartProduct2remove = [
-            'CartProduct.id_product' => $productId,
-            'CartProduct.id_product_attribute' => $attributeId,
-            'CartProduct.id_cart' => $cartId
+            'CartProducts.id_product' => $productId,
+            'CartProducts.id_product_attribute' => $attributeId,
+            'CartProducts.id_cart' => $cartId
         ];
         return $this->deleteAll($cartProduct2remove, false);
     }

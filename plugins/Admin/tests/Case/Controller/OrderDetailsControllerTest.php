@@ -1,9 +1,9 @@
 <?php
 
 App::uses('AppCakeTestCase', 'Test');
-App::uses('Order', 'Model');
-App::uses('EmailLog', 'Model');
-App::uses('Manufacturer', 'Model');
+App::uses('Orders', 'Model');
+App::uses('EmailLogs', 'Model');
+App::uses('Manufacturers', 'Model');
 
 /**
  * OrderDetailsControllerTest
@@ -56,7 +56,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->logout();
         $this->loginAsVegetableManufacturer();
 
-        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Order']['id_order']);
+        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Orders']['id_order']);
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
         $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
@@ -66,7 +66,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getOrder();
-        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Order']['id_order']);
+        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Orders']['id_order']);
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -86,7 +86,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_deleted_notification', 0);
 
-        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Order']['id_order']);
+        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Orders']['id_order']);
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -101,7 +101,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
-        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Order']['id_order']);
+        $this->assertRemoveFromDatabase(array($this->mockOrder['OrderDetails'][0]['id_order_detail']), $this->mockOrder['Orders']['id_order']);
 
         $expectedToEmails = array(Configure::read('test.loginEmailSuperadmin'));
         $expectedCcEmails = array();
@@ -273,7 +273,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->Order->recursive = 2;
         $order = $this->Order->find('first', array(
             'conditions' => array(
-                'Order.id_order' => $this->mockOrder['Order']['id_order']
+                'Orders.id_order' => $this->mockOrder['Orders']['id_order']
             )
         ));
         return $order;
@@ -286,7 +286,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->Order->recursive = 2;
         $order = $this->Order->find('first', array(
             'conditions' => array(
-                'Order.id_order' => $orderId
+                'Orders.id_order' => $orderId
             )
         ));
 
@@ -308,7 +308,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->Order->recursive = 2;
         $order = $this->Order->find('first', array(
             'conditions' => array(
-                'Order.id_order' => $orderId
+                'Orders.id_order' => $orderId
             )
         ));
 

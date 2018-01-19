@@ -41,7 +41,7 @@ class AttributesController extends AdminAppController
         if ($attributeId > 0) {
             $unsavedAttribute = $this->Attribute->find('first', array(
                 'conditions' => array(
-                    'Attribute.id_attribute' => $attributeId
+                    'Attributes.id_attribute' => $attributeId
                 )
             ));
             $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
@@ -58,15 +58,15 @@ class AttributesController extends AdminAppController
         } else {
             // validate data - do not use $this->Attribute->saveAll()
             $this->Attribute->id = $attributeId;
-            $this->Attribute->set($this->request->data['Attribute']);
+            $this->Attribute->set($this->request->data['Attributes']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Attribute'] as &$data) {
+            foreach ($this->request->data['Attributes'] as &$data) {
                 $data = strip_tags(trim($data));
             }
 
             $errors = array();
-            $this->Attribute->set($this->request->data['Attribute']);
+            $this->Attribute->set($this->request->data['Attributes']);
             if (! $this->Attribute->validates()) {
                 $errors = array_merge($errors, $this->Attribute->validationErrors);
             }
@@ -74,7 +74,7 @@ class AttributesController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Attribute->save($this->request->data['Attribute'], array(
+                $this->Attribute->save($this->request->data['Attributes'], array(
                     'validate' => false
                 ));
                 if (is_null($attributeId)) {
@@ -85,13 +85,13 @@ class AttributesController extends AdminAppController
                     $actionLogType = 'attribute_changed';
                 }
 
-                if (isset($this->request->data['Attribute']['delete_attribute']) && $this->request->data['Attribute']['delete_attribute']) {
+                if (isset($this->request->data['Attributes']['delete_attribute']) && $this->request->data['Attributes']['delete_attribute']) {
                     $this->Attribute->delete($this->Attribute->id); // cascade does not work here
-                    $message = 'Die Variante "' . $this->request->data['Attribute']['name'] . '" wurde erfolgreich gelöscht.';
+                    $message = 'Die Variante "' . $this->request->data['Attributes']['name'] . '" wurde erfolgreich gelöscht.';
                     $this->ActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
                 } else {
-                    $message = 'Die Variante "' . $this->request->data['Attribute']['name'] . '" wurde ' . $messageSuffix;
+                    $message = 'Die Variante "' . $this->request->data['Attributes']['name'] . '" wurde ' . $messageSuffix;
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
                     $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
                 }
@@ -107,19 +107,19 @@ class AttributesController extends AdminAppController
     public function index()
     {
         $conditions = array();
-        $conditions[] = 'Attribute.active > ' . APP_DEL;
+        $conditions[] = 'Attributes.active > ' . APP_DEL;
 
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'Attribute.name' => 'ASC'
+                'Attributes.name' => 'ASC'
             )
         ), $this->Paginator->settings);
-        $attributes = $this->Paginator->paginate('Attribute');
+        $attributes = $this->Paginator->paginate('Attributes');
 
         $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
         foreach ($attributes as &$attribute) {
-            $attribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attribute['Attribute']['id_attribute']);
+            $attribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attribute['Attributes']['id_attribute']);
         }
 
         $this->set('attributes', $attributes);

@@ -36,8 +36,8 @@ class EmailOrderReminderShell extends AppShell
         $this->startTimeLogging();
 
         $conditions = [
-            'Customer.newsletter' => 1,
-            'Customer.active' => 1
+            'Customers.newsletter' => 1,
+            'Customers.active' => 1
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
@@ -51,7 +51,7 @@ class EmailOrderReminderShell extends AppShell
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'Customer.name' => 'ASC'
+                'Customers.name' => 'ASC'
             ]
         ]);
 
@@ -64,7 +64,7 @@ class EmailOrderReminderShell extends AppShell
             }
 
             $Email = new AppEmail();
-            $Email->to($customer['Customer']['email'])
+            $Email->to($customer['Customers']['email'])
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
                 ->subject('Bestell-Erinnerung ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
@@ -74,7 +74,7 @@ class EmailOrderReminderShell extends AppShell
                 ])
                 ->send();
 
-            $outString .= $customer['Customer']['name'] . '<br />';
+            $outString .= $customer['Customers']['name'] . '<br />';
 
             $i ++;
         }

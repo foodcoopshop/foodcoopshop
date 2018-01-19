@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class CategoryProductsTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('category_product');
         parent::initialize($config);
@@ -27,7 +27,7 @@ class CategoryProductsTable extends AppTable
     public $primaryKey = 'id_product';
 
     public $belongsTo = [
-        'Category' => [
+        'Categories' => [
             'foreignKey' => 'id_category'
         ]
     ];

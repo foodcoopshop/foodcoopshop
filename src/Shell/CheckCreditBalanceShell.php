@@ -19,8 +19,8 @@ class CheckCreditBalanceShell extends AppShell
 {
 
     public $uses = [
-        'Customer',
-        'ActionLog'
+        'Customers',
+        'ActionLogs'
     ];
 
     public function main()
@@ -41,10 +41,10 @@ class CheckCreditBalanceShell extends AppShell
         $this->Customer->recursive = -1;
         $customers = $this->Customer->find('all', [
             'conditions' => [
-                'Customer.active' => 1
+                'Customers.active' => 1
             ],
             'order' => [
-                'Customer.name' => 'ASC'
+                'Customers.name' => 'ASC'
             ]
         ]);
 
@@ -52,16 +52,16 @@ class CheckCreditBalanceShell extends AppShell
         $outString = '';
 
         foreach ($customers as $customer) {
-            $delta = $this->Customer->getCreditBalance($customer['Customer']['id_customer']);
+            $delta = $this->Customer->getCreditBalance($customer['Customers']['id_customer']);
 
             if ($delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
                 $delta = '€ ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
-                $outString .= $customer['Customer']['name'] . ': ' . $delta . '<br />';
+                $outString .= $customer['Customers']['name'] . ': ' . $delta . '<br />';
                 $email = new AppEmail();
                 $email->template('Admin.check_credit_balance')
-                    ->to($customer['Customer']['email'])
+                    ->to($customer['Customers']['email'])
                     ->emailFormat('html')
                     ->subject('Dein Guthaben ist aufgebraucht')
                     ->viewVars([

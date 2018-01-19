@@ -32,12 +32,12 @@ if (isset($style) && $style != '') {
 echo '<div class="blog-wrapper"'.$style.'>';
 
 foreach ($blogPosts as $blogPost) {
-    echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost['BlogPost']['id_blog_post'], $blogPost['BlogPost']['title']).'">';
+    echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost['BlogPosts']['id_blog_post'], $blogPost['BlogPosts']['title']).'">';
     echo '<span class="img-wrapper">';
-        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPost']['id_blog_post'], 'home'). '" />';
+        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'home'). '" />';
     echo '</span>';
-    echo '<h3>'.$blogPost['BlogPost']['title'].'</h3>';
-    echo '<span class="desc">'.$blogPost['BlogPost']['short_description'].'</span>';
+    echo '<h3>'.$blogPost['BlogPosts']['title'].'</h3>';
+    echo '<span class="desc">'.$blogPost['BlogPosts']['short_description'].'</span>';
     echo '</a>';
 }
 

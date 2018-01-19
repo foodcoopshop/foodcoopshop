@@ -42,23 +42,23 @@ echo '</tr>';
 
 $sum = 0;
 foreach ($payments as $payment) {
-    $sum += $payment['Payment']['amount'];
-    echo '<tr class="data ' . $payment['Payment']['type'] . '">';
+    $sum += $payment['Payments']['amount'];
+    echo '<tr class="data ' . $payment['Payments']['type'] . '">';
 
         echo '<td class="hide">';
-            echo $payment['Payment']['id'];
+            echo $payment['Payments']['id'];
         echo '</td>';
 
         echo '<td>';
-            echo $this->Time->formatToDateNTimeLong($payment['Payment']['date_add']);
+            echo $this->Time->formatToDateNTimeLong($payment['Payments']['date_add']);
         echo '</td>';
 
         echo '<td>';
-            echo $this->Html->getManufacturerDepositPaymentText($payment['Payment']['text']);
+            echo $this->Html->getManufacturerDepositPaymentText($payment['Payments']['text']);
         echo '</td>';
 
         echo '<td style="text-align:right;" class="negative">';
-            echo $this->Html->formatAsEuro($payment['Payment']['amount'] * -1);
+            echo $this->Html->formatAsEuro($payment['Payments']['amount'] * -1);
         echo '</td>';
 
         echo '<td style="text-align:center;">';

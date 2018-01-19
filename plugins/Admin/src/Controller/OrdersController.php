@@ -32,10 +32,10 @@ class OrdersController extends AdminAppController
     {
         $order = $this->Order->find('first', array(
             'conditions' => array(
-                'Order.id_order' => $orderId
+                'Orders.id_order' => $orderId
             )
         ));
-        $order['OrderDetail']['id_order'] = $orderId;
+        $order['OrderDetails']['id_order'] = $orderId;
         $this->Order->recalculateOrderDetailPricesInOrder($order);
     }
 
@@ -48,20 +48,20 @@ class OrdersController extends AdminAppController
 
         $oldOrder = $this->Order->find('first', array(
             'conditions' => array(
-                'Order.id_order' => $orderId
+                'Orders.id_order' => $orderId
             )
         ));
 
         $order2update = array(
             'comment' => $orderComment
         );
-        $this->Order->id = $oldOrder['Order']['id_order'];
+        $this->Order->id = $oldOrder['Orders']['id_order'];
         $this->Order->save($order2update);
 
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Order']['id_order'] . ' von '.$oldOrder['Customer']['firstname'] . ' ' . $oldOrder['Customer']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Order']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Orders']['id_order'] . ' von '.$oldOrder['Customers']['firstname'] . ' ' . $oldOrder['Customers']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Orders']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
 
         die(json_encode(array(
             'status' => 1,
@@ -81,7 +81,7 @@ class OrdersController extends AdminAppController
         );
         $orders = $this->Order->find('all', array(
             'conditions' => array(
-                'Order.id_order IN(' . $this->params['named']['orderIds'] . ')'
+                'Orders.id_order IN(' . $this->params['named']['orderIds'] . ')'
             ),
             'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy()
         ));
@@ -100,10 +100,10 @@ class OrdersController extends AdminAppController
         if ($orderId > 0) {
             $order = $this->Order->find('first', array(
                 'conditions' => array(
-                    'Order.id_order' => $orderId
+                    'Orders.id_order' => $orderId
                 ),
                 'order' => array(
-                    'Order.date_add' => 'DESC'
+                    'Orders.date_add' => 'DESC'
                 )
             ));
 
@@ -115,7 +115,7 @@ class OrdersController extends AdminAppController
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
 
-            $message = 'Sofort-Bestellung Nr. (' . $order['Order']['id_order'] . ') für ' . $order['Customer']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
+            $message = 'Sofort-Bestellung Nr. (' . $order['Orders']['id_order'] . ') für ' . $order['Customers']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
 
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
@@ -166,7 +166,7 @@ class OrdersController extends AdminAppController
         foreach ($orderIds as $orderId) {
             $oldOrder = $this->Order->find('first', array(
                 'conditions' => array(
-                    'Order.id_order' => $orderId
+                    'Orders.id_order' => $orderId
                 )
             ));
 
@@ -179,7 +179,7 @@ class OrdersController extends AdminAppController
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
 
-        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customer']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('AppConfig.htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
+        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customers']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('AppConfig.htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);
@@ -268,9 +268,9 @@ class OrdersController extends AdminAppController
 
         $this->Order->virtualFields = $this->Order->Customer->virtualFields; // to get related virtual field "Customer.name"
 
-        $orders = $this->Paginator->paginate('Order');
+        $orders = $this->Paginator->paginate('Orders');
         foreach ($orders as &$order) {
-            $order['Customer']['order_count'] = $this->Order->getCountByCustomerId($order['Order']['id_customer']);
+            $order['Customers']['order_count'] = $this->Order->getCountByCustomerId($order['Orders']['id_customer']);
         }
         $this->set('orders', $orders);
 
@@ -297,7 +297,7 @@ class OrdersController extends AdminAppController
         $this->Customer->recursive = - 1;
         $shopOrderCustomer = $this->Customer->find('first', array(
             'conditions' => array(
-                'Customer.id_customer' => $customerId
+                'Customers.id_customer' => $customerId
             )
         ));
         if (! empty($shopOrderCustomer)) {
@@ -318,7 +318,7 @@ class OrdersController extends AdminAppController
 
         $oldOrder = $this->Order->find('first', array(
             'conditions' => array(
-                'Order.id_order' => $orderId
+                'Orders.id_order' => $orderId
             )
         ));
 
@@ -328,7 +328,7 @@ class OrdersController extends AdminAppController
         $this->Order->id = $orderId;
         $this->Order->save($order2update);
 
-        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder['Customer']['name'] . ' wurde vom ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($oldOrder['Order']['date_add']) . ' auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
+        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder['Customers']['name'] . ' wurde vom ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($oldOrder['Orders']['date_add']) . ' auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 

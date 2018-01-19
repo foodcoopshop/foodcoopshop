@@ -59,7 +59,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         </p>
     
             <?php
-            echo $this->Form->create('Order', [
+            echo $this->Form->create('Orders', [
                 'class' => 'fcs-form',
                 'url' => $this->Slug->getCartFinish()
             ]);
@@ -67,14 +67,14 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/generalTermsAndConditions');
             echo '</div>';
-            echo $this->Form->input('Order.general_terms_and_conditions_accepted', [
+            echo $this->Form->input('Orders.general_terms_and_conditions_accepted', [
                 'label' => 'Ich akzeptiere die <a href="#general-terms-and-conditions">AGB</a>.',
                 'type' => 'checkbox'
             ]);
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
                 echo $this->element('legal/cancellationTerms');
             echo '</div>';
-            echo $this->Form->input('Order.cancellation_terms_accepted', [
+            echo $this->Form->input('Orders.cancellation_terms_accepted', [
                 'label' => 'Ich nehme das <a href="#cancellation-terms">Rücktrittsrecht</a> zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren.',
                 'type' => 'checkbox'
             ]);
@@ -86,7 +86,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Order']['comment'] != '') {
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Orders']['comment'] != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
                 ]);
@@ -97,7 +97,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             'escape' => false
             ]);
             echo '<div class="toggle-content order-comment">';
-            echo $this->Form->input('Order.comment', [
+            echo $this->Form->input('Orders.comment', [
                 'type' => 'textarea',
                 'placeholder' => 'Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht.',
                 'label' => ''

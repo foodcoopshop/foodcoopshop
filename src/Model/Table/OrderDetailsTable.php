@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class OrderDetailsTable extends AppTable
 {
 
-    public function initialize($config)
+    public function initialize(array $config)
     {
         $this->setTable('order_detail');
         parent::initialize($config);
@@ -31,18 +31,18 @@ class OrderDetailsTable extends AppTable
     ];
 
     public $belongsTo = [
-        'Order' => [
+        'Orders' => [
             'foreignKey' => 'id_order'
         ],
-        'OrderDetailTax' => [
+        'OrderDetailTaxes' => [
             'foreignKey' => 'id_order_detail'
         ],
-        'Product' => [
+        'Products' => [
             'foreignKey' => 'product_id', // !sic, id_ vertauscht
             'type' => 'INNER'
         ] // for manufacturer name filter
     ,
-        'ProductAttribute' => [
+        'ProductAttributes' => [
             'foreignKey' => 'product_attribute_id'
         ]
     ];
@@ -56,7 +56,7 @@ class OrderDetailsTable extends AppTable
     private function getOrderStateCondition($orderState)
     {
         $orderStates = explode(',', $orderState);
-        $condition = 'Order.current_state IN (' . join(', ', $orderStates) . ')';
+        $condition = 'Orders.current_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
 
@@ -138,47 +138,47 @@ class OrderDetailsTable extends AppTable
         }
 
         if ($productId != '') {
-            $conditions['OrderDetail.product_id'] = $productId;
+            $conditions['OrderDetails.product_id'] = $productId;
         }
 
         if ($orderDetailId != '') {
-            $conditions['OrderDetail.id_order_detail'] = $orderDetailId;
+            $conditions['OrderDetails.id_order_detail'] = $orderDetailId;
         }
 
         if ($orderId != '') {
-            $conditions['Order.id_order'] = $orderId;
+            $conditions['Orders.id_order'] = $orderId;
         }
 
         if ($deposit != '') {
-            $conditions[] = 'OrderDetail.deposit > 0';
+            $conditions[] = 'OrderDetails.deposit > 0';
         }
 
         $contain = [
-            'Order',
-            'Order.Customer',
-            'Product.Manufacturer.Address',
-            'Product.ProductLang'
+            'Orders',
+            'Orders.Customer',
+            'Products.Manufacturer.Address',
+            'Products.ProductLang'
         ];
 
         if ($customerId != '') {
-            $conditions['Order.id_customer'] = $customerId;
+            $conditions['Orders.id_customer'] = $customerId;
         }
 
         if ($manufacturerId != '') {
-            $conditions['Product.id_manufacturer'] = $manufacturerId;
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
         }
 
         // override params that manufacturer is not allowed to change
         if ($appAuth->isManufacturer()) {
-            $conditions['Product.id_manufacturer'] = $appAuth->getManufacturerId();
+            $conditions['Products.id_manufacturer'] = $appAuth->getManufacturerId();
             if ($customerId =! '') {
-                unset($conditions['Order.id_customer']);
+                unset($conditions['Orders.id_customer']);
             }
         }
 
         // customers are only allowed to see their own data
         if ($appAuth->isCustomer()) {
-            $conditions['Order.id_customer'] = $appAuth->getUserId();
+            $conditions['Orders.id_customer'] = $appAuth->getUserId();
         }
 
         $odParams = [

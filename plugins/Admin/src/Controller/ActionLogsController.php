@@ -57,7 +57,7 @@ class ActionLogsController extends AdminAppController
         $this->set('customerId', $customerId);
 
         if ($customerId != '') {
-            $conditions['ActionLog.customer_id'] = $customerId;
+            $conditions['ActionLogs.customer_id'] = $customerId;
         }
 
         $productId = '';
@@ -67,8 +67,8 @@ class ActionLogsController extends AdminAppController
         $this->set('productId', $productId);
 
         if ($productId != '') {
-            $conditions['ActionLog.object_type'] = "products";
-            $conditions['ActionLog.object_id'] = $productId;
+            $conditions['ActionLogs.object_type'] = "products";
+            $conditions['ActionLogs.object_id'] = $productId;
         }
 
         // manufacturers should only see their own product logs
@@ -83,7 +83,7 @@ class ActionLogsController extends AdminAppController
         // customers are only allowed to see their own data
         if ($this->AppAuth->isCustomer()) {
             $tmpCondition  =  '(';
-                $tmpCondition .= 'Customer.id_customer = '.$this->AppAuth->getUserId();
+                $tmpCondition .= 'Customers.id_customer = '.$this->AppAuth->getUserId();
                 // order of first and lastname can be changed Configure::read('AppConfig.customerMainNamePart')
                 $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
             if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
@@ -93,27 +93,27 @@ class ActionLogsController extends AdminAppController
             $tmpCondition .= ')';
             $conditions[] = $tmpCondition;
             // never show cronjob logs for customers
-            $conditions[] = 'ActionLog.type NOT REGEXP \'^cronjob_\'';
+            $conditions[] = 'ActionLogs.type NOT REGEXP \'^cronjob_\'';
         }
 
         $type = '';
         if (! empty($this->params['named']['type'])) {
             $type = $this->params['named']['type'];
-            $conditions[] = 'ActionLog.type = \'' . $type . '\'';
+            $conditions[] = 'ActionLogs.type = \'' . $type . '\'';
         }
         $this->set('type', $type);
 
         $this->Paginator->settings = array_merge($this->Paginator->settings, array(
             'conditions' => $conditions,
             'order' => array(
-                'ActionLog.date' => 'DESC'
+                'ActionLogs.date' => 'DESC'
             )
         ));
-        $actionLogs = $this->Paginator->paginate('ActionLog');
+        $actionLogs = $this->Paginator->paginate('ActionLogs');
         foreach ($actionLogs as &$actionLog) {
             $manufacturer = $this->Customer->getManufacturerRecord($actionLog);
             if ($manufacturer) {
-                $actionLog['Customer']['Manufacturer'] = $manufacturer['Manufacturer'];
+                $actionLog['Customers']['Manufacturers'] = $manufacturer['Manufacturers'];
             }
         }
         $this->set('actionLogs', $actionLogs);

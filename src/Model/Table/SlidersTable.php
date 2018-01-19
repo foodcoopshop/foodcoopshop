@@ -45,10 +45,10 @@ class SlidersTable extends AppTable
     {
         $slides = $this->find('all', [
             'conditions' => [
-                'Slider.active' => APP_ON
+                'Sliders.active' => APP_ON
             ],
             'order' => [
-                'Slider.position' => 'ASC'
+                'Sliders.position' => 'ASC'
             ]
         ]);
         return $slides;

@@ -32,12 +32,12 @@ foreach ($manufacturers as $manufacturer) {
     echo '<div class="manufacturer-wrapper">';
 
         echo '<div class="first-column">';
-            $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'large');
+            $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer['Manufacturers']['id_manufacturer'], 'large');
             $largeImageExists = preg_match('/de-default/', $srcLargeImage);
     if (!$largeImageExists) {
         echo '<a class="lightbox" href="'.$srcLargeImage.'">';
     }
-            echo '<img src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturer']['id_manufacturer'], 'medium'). '" />';
+            echo '<img src="' . $this->Html->getManufacturerImageSrc($manufacturer['Manufacturers']['id_manufacturer'], 'medium'). '" />';
     if (!$largeImageExists) {
         echo '</a>';
     }
@@ -45,12 +45,12 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="second-column">';
             echo '<h4>'.$this->Html->link(
-                $manufacturer['Manufacturer']['name'],
-                $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name'])
+                $manufacturer['Manufacturers']['name'],
+                $this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name'])
             ).'</h4>';
-            echo $manufacturer['Manufacturer']['short_description'];
+            echo $manufacturer['Manufacturers']['short_description'];
 
-            $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturer']['holiday_from'], $manufacturer['Manufacturer']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturer']['name']);
+            $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturers']['name']);
     if ($manufacturerHolidayString != '') {
         echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
     }
@@ -60,7 +60,7 @@ foreach ($manufacturers as $manufacturer) {
         echo '<div class="third-column">';
             echo $this->Html->link(
                 'Alle Produkte anzeigen' . ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
-                $this->Slug->getManufacturerDetail($manufacturer['Manufacturer']['id_manufacturer'], $manufacturer['Manufacturer']['name']),
+                $this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']),
                 ['class' => 'btn btn-success']
             );
         echo '</div>';

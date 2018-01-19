@@ -22,7 +22,7 @@ if (!empty($manufacturers)) {
         $i = 0;
         $orderDetails = [];
         foreach ($manufacturer as $detail) {
-            $orderDetails[] = $detail['OrderDetail'];
+            $orderDetails[] = $detail['OrderDetails'];
         }
 
         foreach ($manufacturer as $detail) {
@@ -32,12 +32,12 @@ if (!empty($manufacturers)) {
 
             $pdf->AddPage();
 
-            $pdf->infoTextForFooter = 'Bestellübersicht ' . $detail['Manufacturer']['name'];
+            $pdf->infoTextForFooter = 'Bestellübersicht ' . $detail['Manufacturers']['name'];
 
-            $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $this->Time->formatToDateNTimeLong($order['Order']['date_add']).'</h3>', true, false, true, false, '');
+            $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $this->Time->formatToDateNTimeLong($order['Orders']['date_add']).'</h3>', true, false, true, false, '');
             $pdf->Ln(8);
 
-            $pdf->writeHTML($this->Html->getManufacturerImprint($detail['Manufacturer'], 'pdf', false), true, false, true, false, '');
+            $pdf->writeHTML($this->Html->getManufacturerImprint($detail['Manufacturers'], 'pdf', false), true, false, true, false, '');
             $pdf->Ln(6);
 
             $widths = [
@@ -88,7 +88,7 @@ if (!empty($manufacturers)) {
 
                 $sumPrice += $orderDetail['total_price_tax_incl'];
                 $sumQuantity += $orderDetail['product_quantity'];
-                $sumOrderDetailTax += $orderDetail['OrderDetailTax']['total_amount'];
+                $sumOrderDetailTax += $orderDetail['OrderDetailTaxes']['total_amount'];
 
                 $pdf->table .= '</tr>';
 

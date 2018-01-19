@@ -35,7 +35,7 @@ $this->element('addScript', ['script' =>
             echo $this->element('legal/termsOfUse');
         }
             echo '</div>';
-            echo $this->Form->input('Customer.terms_of_use_accepted_date', [
+            echo $this->Form->input('Customers.terms_of_use_accepted_date', [
                 'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
                 'type' => 'checkbox',
                 'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString()

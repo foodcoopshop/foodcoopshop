@@ -58,13 +58,13 @@ class ReportsController extends AdminAppController
         $this->set('customerId', $customerId);
 
         $conditions = array(
-            'Payment.type' => $paymentType
+            'Payments.type' => $paymentType
         );
         $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         if ($customerId != '') {
-            $conditions['Payment.id_customer'] = $customerId;
+            $conditions['Payments.id_customer'] = $customerId;
         }
 
         // exluce "empty_glasses" deposit payments for manufacturers
@@ -73,11 +73,11 @@ class ReportsController extends AdminAppController
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'Payment.date_add' => 'DESC'
+                'Payments.date_add' => 'DESC'
             )
         ), $this->Paginator->settings);
 
-        $payments = $this->Paginator->paginate('Payment');
+        $payments = $this->Paginator->paginate('Payments);
         $this->set('payments', $payments);
 
         $this->set('customersForDropdown', $this->Payment->Customer->getForDropdown());

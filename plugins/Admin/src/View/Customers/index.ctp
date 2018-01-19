@@ -67,19 +67,19 @@ echo $this->Form->input('selectGroupId', array(
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Customer.id_customer', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customer.name', 'Name') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customer.id_default_group', 'Gruppe') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customer.email', 'E-Mail') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customer.active', 'Status') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.name', 'Name') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.id_default_group', 'Gruppe') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.active', 'Status') . '</th>';
 echo '<th>Bestellungen</th>';
 if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
     echo '<th>Guthaben</th>';
 }
 if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customer.newsletter', 'Email') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.newsletter', 'Email') . '</th>';
 }
-echo '<th>' . $this->Paginator->sort('Customer.date_add', 'Registrier-Datum') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.date_add', 'Registrier-Datum') . '</th>';
 echo '<th>Letztes Bestelldatum</th>';
 echo '<th>Komm.</th>';
 echo '</tr>';
@@ -99,18 +99,18 @@ foreach ($customers as $customer) {
     echo '<tr class="data">';
 
     echo '<td class="hide">';
-    echo $customer['Customer']['id_customer'];
+    echo $customer['Customers']['id_customer'];
     echo '</td>';
 
     echo '<td>';
 
-    $customerName = $customer['Customer']['name'];
+    $customerName = $customer['Customers']['name'];
     if ($customer['order_count'] <= 3) {
         $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer['order_count'] . 'x bestellt."></i> ' . $customerName;
     }
 
-    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customer']['id_customer'] . '/sort:Order.date_add/direction:desc/', array(
-        'title' => 'Zu allen Bestellungen von ' . $customer['Customer']['name'],
+    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customers']['id_customer'] . '/sort:Order.date_add/direction:desc/', array(
+        'title' => 'Zu allen Bestellungen von ' . $customer['Customers']['name'],
         'escape' => false
     )) . '</span>';
 
@@ -138,38 +138,38 @@ foreach ($customers as $customer) {
 
     echo '<td>';
 
-    if ($appAuth->getGroupId() >= $customer['Customer']['id_default_group']) {
+    if ($appAuth->getGroupId() >= $customer['Customers']['id_default_group']) {
         echo '<div class="table-cell-wrapper group">';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
             'class' => 'customer-group-edit-button',
             'title' => 'Zum Ändern der Gruppe anklicken'
         ), 'javascript:void(0);');
-        echo '<span>' . $this->Html->getGroupName($customer['Customer']['id_default_group']) . '</span>';
+        echo '<span>' . $this->Html->getGroupName($customer['Customers']['id_default_group']) . '</span>';
         echo '</div>';
     } else {
-        echo $this->Html->getGroupName($customer['Customer']['id_default_group']);
+        echo $this->Html->getGroupName($customer['Customers']['id_default_group']);
     }
-    echo '<span class="group-for-dialog">' . $customer['Customer']['id_default_group'] . '</span>';
+    echo '<span class="group-for-dialog">' . $customer['Customers']['id_default_group'] . '</span>';
     echo '</td>';
 
     echo '<td>';
-    echo '<span class="email">' . $customer['Customer']['email'] . '</span>';
+    echo '<span class="email">' . $customer['Customers']['email'] . '</span>';
     echo '</td>';
 
     echo '<td style="text-align:center;padding-left:10px;width:42px;">';
 
-    if ($customer['Customer']['active'] == 1) {
+    if ($customer['Customers']['active'] == 1) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), array(
             'class' => 'set-state-to-inactive change-active-state',
-            'id' => 'change-active-state-' . $customer['Customer']['id_customer'],
+            'id' => 'change-active-state-' . $customer['Customers']['id_customer'],
             'title' => 'Zum Deaktivieren anklicken'
         ), 'javascript:void(0);');
     }
 
-    if ($customer['Customer']['active'] == '') {
+    if ($customer['Customers']['active'] == '') {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
             'class' => 'set-state-to-active change-active-state',
-            'id' => 'change-active-state-' . $customer['Customer']['id_customer'],
+            'id' => 'change-active-state-' . $customer['Customers']['id_customer'],
             'title' => 'Zum Aktivieren anklicken'
         ), 'javascript:void(0);');
     }
@@ -193,7 +193,7 @@ foreach ($customers as $customer) {
                 'class' => 'icon-with-text',
                 'title' => 'Guthaben anzeigen'
                 ),
-                $this->Slug->getCreditBalance($customer['Customer']['id_customer'])
+                $this->Slug->getCreditBalance($customer['Customers']['id_customer'])
             );
         } else {
             if ($customer['payment_product_delta'] != 0) {
@@ -207,13 +207,13 @@ foreach ($customers as $customer) {
 
     if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
         echo '<td>';
-        echo $customer['Customer']['newsletter'];
-        $sumEmailReminders += $customer['Customer']['newsletter'];
+        echo $customer['Customers']['newsletter'];
+        $sumEmailReminders += $customer['Customers']['newsletter'];
         echo '</td>';
     }
 
     echo '<td>';
-    echo $this->Time->formatToDateShort($customer['Customer']['date_add']);
+    echo $this->Time->formatToDateShort($customer['Customers']['date_add']);
     echo '</td>';
 
     echo '<td>';

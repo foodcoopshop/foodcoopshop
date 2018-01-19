@@ -71,10 +71,10 @@ class ManufacturersController extends AdminAppController
             $this->recursive = -1;
             $manufacturer = $this->Manufacturer->find('first', array(
                 'conditions' => array(
-                    'Manufacturer.id_manufacturer' => $manufacturerId
+                    'Manufacturers.id_manufacturer' => $manufacturerId
                 )
             ));
-            $manufacturerId = $manufacturer['Manufacturer']['id_manufacturer'];
+            $manufacturerId = $manufacturer['Manufacturers']['id_manufacturer'];
         }
 
         $_SESSION['KCFINDER'] = array(
@@ -95,7 +95,7 @@ class ManufacturersController extends AdminAppController
         if ($manufacturerId > 0) {
             $unsavedManufacturer = $this->Manufacturer->find('first', array(
                 'conditions' => array(
-                    'Manufacturer.id_manufacturer' => $manufacturerId
+                    'Manufacturers.id_manufacturer' => $manufacturerId
                 )
             ));
 
@@ -118,14 +118,14 @@ class ManufacturersController extends AdminAppController
             $this->Manufacturer->id = $manufacturerId;
 
             // for making regex work, remove whitespace
-            $this->request->data['Manufacturer']['iban'] = str_replace(' ', '', $this->request->data['Manufacturer']['iban']);
-            $this->request->data['Manufacturer']['bic'] = str_replace(' ', '', $this->request->data['Manufacturer']['bic']);
-            $this->request->data['Manufacturer']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturer']['homepage']);
+            $this->request->data['Manufacturers']['iban'] = str_replace(' ', '', $this->request->data['Manufacturers']['iban']);
+            $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->data['Manufacturers']['bic']);
+            $this->request->data['Manufacturers']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturers']['homepage']);
 
-            $this->Manufacturer->set($this->request->data['Manufacturer']);
+            $this->Manufacturer->set($this->request->data['Manufacturers']);
 
             // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Manufacturer'] as $key => &$data) {
+            foreach ($this->request->data['Manufacturers'] as $key => &$data) {
                 if (! in_array($key, array(
                     'description',
                     'short_description'
@@ -134,7 +134,7 @@ class ManufacturersController extends AdminAppController
                 }
             }
 
-            foreach ($this->request->data['Address'] as &$data) {
+            foreach ($this->request->data['Addresses'] as &$data) {
                 $data = strip_tags(trim($data));
             }
 
@@ -142,7 +142,7 @@ class ManufacturersController extends AdminAppController
             if (! $this->Manufacturer->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->validationErrors);
             }
-            $this->Manufacturer->Address->set($this->request->data['Address']);
+            $this->Manufacturer->Address->set($this->request->data['Addresses']);
 
             if (! $this->Manufacturer->Address->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->Address->validationErrors);
@@ -153,20 +153,20 @@ class ManufacturersController extends AdminAppController
 
                 if (is_null($manufacturerId)) {
                     // default value for new manufacturer
-                    $this->request->data['Manufacturer']['active'] = APP_ON;
+                    $this->request->data['Manufacturers']['active'] = APP_ON;
                 }
-                $this->Manufacturer->save($this->request->data['Manufacturer'], array(
+                $this->Manufacturer->save($this->request->data['Manufacturers'], array(
                     'validate' => false
                 ));
 
                 if (is_null($manufacturerId)) {
                     $customer = array();
-                    $this->request->data['Address']['id_manufacturer'] = $this->Manufacturer->id;
+                    $this->request->data['Addresses']['id_manufacturer'] = $this->Manufacturer->id;
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'manufacturer_added';
                 } else {
                     $customer = $this->Manufacturer->getCustomerRecord($unsavedManufacturer);
-                    $this->Manufacturer->Address->id = $unsavedManufacturer['Address']['id_address'];
+                    $this->Manufacturer->Address->id = $unsavedManufacturer['Addresses']['id_address'];
                     $messageSuffix = 'geändert.';
                     $actionLogType = 'manufacturer_changed';
                 }
@@ -175,15 +175,15 @@ class ManufacturersController extends AdminAppController
                 // customer might also be missing for existing manufacturers
                 $this->Customer = TableRegistry::get('Customers');
                 if (! empty($customer)) {
-                    $this->Customer->id = $customer['Customer']['id_customer'];
+                    $this->Customer->id = $customer['Customers']['id_customer'];
                 } else {
                     $this->Customer->id = null;
                 }
                 $customerData = array(
                     'id_customer' => $this->Customer->id,
-                    'email' => $this->data['Address']['email'],
-                    'firstname' => $this->data['Address']['firstname'],
-                    'lastname' => $this->data['Address']['lastname'],
+                    'email' => $this->data['Addresses']['email'],
+                    'firstname' => $this->data['Addresses']['firstname'],
+                    'lastname' => $this->data['Addresses']['lastname'],
                     'active' => APP_ON,
                     'id_lang' => Configure::read('AppConfig.langId')
                 );
@@ -193,15 +193,15 @@ class ManufacturersController extends AdminAppController
                     'validate' => false
                 ));
 
-                if ($this->request->data['Manufacturer']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->Manufacturer->id, $this->request->data['Manufacturer']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getManufacturerThumbsPath(), Configure::read('AppConfig.manufacturerImageSizes'));
+                if ($this->request->data['Manufacturers']['tmp_image'] != '') {
+                    $this->saveUploadedImage($this->Manufacturer->id, $this->request->data['Manufacturers']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getManufacturerThumbsPath(), Configure::read('AppConfig.manufacturerImageSizes'));
                 }
 
-                if ($this->request->data['Manufacturer']['delete_image']) {
+                if ($this->request->data['Manufacturers']['delete_image']) {
                     $this->deleteUploadedImage($this->Manufacturer->id, Configure::read('AppConfig.htmlHelper')->getManufacturerThumbsPath(), Configure::read('AppConfig.manufacturerImageSizes'));
                 }
 
-                $message = 'Der Hersteller "' . $this->request->data['Manufacturer']['name'] . '" wurde ' . $messageSuffix;
+                $message = 'Der Hersteller "' . $this->request->data['Manufacturers']['name'] . '" wurde ' . $messageSuffix;
                 $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
                 $this->Flash->success('Der Hersteller wurde erfolgreich gespeichert.');
 
@@ -240,11 +240,11 @@ class ManufacturersController extends AdminAppController
         $this->Manufacturer->recursive = - 1;
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
-        $message = 'Der Hersteller "' . $manufacturer['Manufacturer']['name'] . '" wurde erfolgreich ' . $statusText;
+        $message = 'Der Hersteller "' . $manufacturer['Manufacturers']['name'] . '" wurde erfolgreich ' . $statusText;
         $message .= '.';
 
         $this->Flash->success($message);
@@ -278,18 +278,18 @@ class ManufacturersController extends AdminAppController
         $conditions = array();
         if ($active != 'all') {
             $conditions = array(
-                'Manufacturer.active' => $active
+                'Manufacturers.active' => $active
             );
         }
 
         $this->Paginator->settings = array_merge(array(
             'conditions' => $conditions,
             'order' => array(
-                'Manufacturer.name' => 'ASC'
+                'Manufacturers.name' => 'ASC'
             ),
-            'fields' => array('Manufacturer.*', 'Customer.*', 'Address.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
+            'fields' => array('Manufacturers.*', 'Customers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
         ), $this->Paginator->settings);
-        $manufacturers = $this->Paginator->paginate('Manufacturer');
+        $manufacturers = $this->Paginator->paginate('Manufacturers');
 
         $this->Product = TableRegistry::get('Products');
         $this->Payment = TableRegistry::get('Payments');
@@ -297,15 +297,15 @@ class ManufacturersController extends AdminAppController
 
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturer']['id_manufacturer']);
-            $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturer']['id_manufacturer'], false);
-            $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturer']['id_manufacturer'], false);
+            $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
+            $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturers']['id_manufacturer'], false);
+            $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturers']['id_manufacturer'], false);
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
             if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
-                $manufacturers[$i]['Manufacturer']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+                $manufacturers[$i]['Manufacturers']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             }
-            $manufacturers[$i]['sum_open_order_detail'] = $this->OrderDetail->getOpenOrderDetailSum($manufacturer['Manufacturer']['id_manufacturer'], $dateFrom, $dateTo);
+            $manufacturers[$i]['sum_open_order_detail'] = $this->OrderDetail->getOpenOrderDetailSum($manufacturer['Manufacturers']['id_manufacturer'], $dateFrom, $dateTo);
             $i++;
         }
         $this->set('manufacturers', $manufacturers);
@@ -318,7 +318,7 @@ class ManufacturersController extends AdminAppController
         $this->Manufacturer->recursive = 2; // for email
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
@@ -351,10 +351,10 @@ class ManufacturersController extends AdminAppController
 
             // generate invoice
             $this->render('get_invoice');
-            $invoicePdfUrl = Configure::read('AppConfig.htmlHelper')->getInvoiceLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
+            $invoicePdfUrl = Configure::read('AppConfig.htmlHelper')->getInvoiceLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
             $invoicePdfFile = $invoicePdfUrl;
 
-            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer['Manufacturer']['name'] . '" erfolgreich versendet an ' . $manufacturer['Address']['email'] . '.</a>');
+            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer['Manufacturers']['name'] . '" erfolgreich versendet an ' . $manufacturer['Addresses']['email'] . '.</a>');
 
             $loggedUser = $this->AppAuth->user();
             $invoice2Save = array(
@@ -368,10 +368,10 @@ class ManufacturersController extends AdminAppController
 
             $invoicePeriodMonthAndYear = Configure::read('AppConfig.timeHelper')->getLastMonthNameAndYear();
 
-            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturer']['send_invoice']);
+            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturers']['send_invoice']);
             if ($sendEmail) {
                 $email->template('Admin.send_invoice')
-                    ->to($manufacturer['Address']['email'])
+                    ->to($manufacturer['Addresses']['email'])
                     ->attachments(array(
                     $invoicePdfFile
                     ))
@@ -395,20 +395,20 @@ class ManufacturersController extends AdminAppController
     {
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
-        return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
+        return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
     }
 
     private function getOptionVariableMemberFee($manufacturerId)
     {
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
-        return $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+        return $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
     }
 
     public function sendOrderList($manufacturerId, $from, $to)
@@ -418,7 +418,7 @@ class ManufacturersController extends AdminAppController
         $this->Manufacturer->recursive = 2; // for email
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
@@ -437,7 +437,7 @@ class ManufacturersController extends AdminAppController
 
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Produkt');
+            $productPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Produkt');
             $productPdfFile = $productPdfUrl;
 
             // generate order list by customer
@@ -445,18 +445,18 @@ class ManufacturersController extends AdminAppController
                 ORDER_STATE_OPEN
             ), 'F');
             $this->render('get_order_list_by_customer');
-            $customerPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturer']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Mitglied');
+            $customerPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Mitglied');
             $customerPdfFile = $customerPdfUrl;
 
-            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturer']['send_order_list']);
-            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer['Manufacturer']['send_order_list_cc']);
+            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturers']['send_order_list']);
+            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer['Manufacturers']['send_order_list_cc']);
 
-            $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer['Manufacturer']['name'] . '" erfolgreich generiert';
+            $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer['Manufacturers']['name'] . '" erfolgreich generiert';
 
             if ($sendEmail) {
-                $flashMessage .= ' und an ' . $manufacturer['Address']['email'] . ' versendet';
+                $flashMessage .= ' und an ' . $manufacturer['Addresses']['email'] . ' versendet';
                 $email->template('Admin.send_order_list')
-                    ->to($manufacturer['Address']['email'])
+                    ->to($manufacturer['Addresses']['email'])
                     ->emailFormat('html')
                     ->cc($ccRecipients)
                     -> // works also with empty array!
@@ -496,7 +496,7 @@ class ManufacturersController extends AdminAppController
 
         $unsavedManufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
@@ -513,107 +513,107 @@ class ManufacturersController extends AdminAppController
         }
 
         // set default data if manufacturer options are null
-        if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturer']['variable_member_fee'] == '') {
-            $unsavedManufacturer['Manufacturer']['variable_member_fee'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+        if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturers']['variable_member_fee'] == '') {
+            $unsavedManufacturer['Manufacturers']['variable_member_fee'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_order_list'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_order_list'] = Configure::read('AppConfig.defaultSendOrderList');
+        if ($unsavedManufacturer['Manufacturers']['send_order_list'] == '') {
+            $unsavedManufacturer['Manufacturers']['send_order_list'] = Configure::read('AppConfig.defaultSendOrderList');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_invoice'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_invoice'] = Configure::read('AppConfig.defaultSendInvoice');
+        if ($unsavedManufacturer['Manufacturers']['send_invoice'] == '') {
+            $unsavedManufacturer['Manufacturers']['send_invoice'] = Configure::read('AppConfig.defaultSendInvoice');
         }
-        if ($unsavedManufacturer['Manufacturer']['default_tax_id'] == '') {
-            $unsavedManufacturer['Manufacturer']['default_tax_id'] = Configure::read('AppConfig.defaultTaxId');
+        if ($unsavedManufacturer['Manufacturers']['default_tax_id'] == '') {
+            $unsavedManufacturer['Manufacturers']['default_tax_id'] = Configure::read('AppConfig.defaultTaxId');
         }
-        if (!$this->AppAuth->isManufacturer() && $unsavedManufacturer['Manufacturer']['bulk_orders_allowed'] == '') {
-            $unsavedManufacturer['Manufacturer']['bulk_orders_allowed'] = Configure::read('AppConfig.defaultBulkOrdersAllowed');
+        if (!$this->AppAuth->isManufacturer() && $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] == '') {
+            $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] = Configure::read('AppConfig.defaultBulkOrdersAllowed');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_shop_order_notification'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_shop_order_notification'] = Configure::read('AppConfig.defaultSendShopOrderNotification');
+        if ($unsavedManufacturer['Manufacturers']['send_shop_order_notification'] == '') {
+            $unsavedManufacturer['Manufacturers']['send_shop_order_notification'] = Configure::read('AppConfig.defaultSendShopOrderNotification');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_ordered_product_deleted_notification'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_ordered_product_deleted_notification'] = Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification');
+        if ($unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] == '') {
+            $unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] = Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_ordered_product_price_changed_notification'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_ordered_product_price_changed_notification'] = Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification');
+        if ($unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] == '') {
+            $unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] = Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification');
         }
-        if ($unsavedManufacturer['Manufacturer']['send_ordered_product_quantity_changed_notification'] == '') {
-            $unsavedManufacturer['Manufacturer']['send_ordered_product_quantity_changed_notification'] = Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification');
+        if ($unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] == '') {
+            $unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] = Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification');
         }
 
-        $unsavedManufacturer['Manufacturer']['holiday_from'] = Configure::read('AppConfig.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_from']);
-        $unsavedManufacturer['Manufacturer']['holiday_to'] = Configure::read('AppConfig.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturer']['holiday_to']);
+        $unsavedManufacturer['Manufacturers']['holiday_from'] = Configure::read('AppConfig.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_from']);
+        $unsavedManufacturer['Manufacturers']['holiday_to'] = Configure::read('AppConfig.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_to']);
 
         $this->set('unsavedManufacturer', $unsavedManufacturer);
         $this->set('manufacturerId', $manufacturerId);
-        $this->set('title_for_layout', $unsavedManufacturer['Manufacturer']['name'].': Einstellungen bearbeiten');
+        $this->set('title_for_layout', $unsavedManufacturer['Manufacturers']['name'].': Einstellungen bearbeiten');
 
         if (empty($this->request->data)) {
             $this->request->data = $unsavedManufacturer;
         } else {
             // html could be manipulated and checkbox disabled attribute removed
             if ($this->AppAuth->isManufacturer()) {
-                unset($this->request->data['Manufacturer']['active']);
+                unset($this->request->data['Manufacturers']['active']);
             }
 
-            $this->request->data['Manufacturer']['holiday_from'] = Configure::read('AppConfig.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_from']);
-            $this->request->data['Manufacturer']['holiday_to'] = Configure::read('AppConfig.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturer']['holiday_to']);
+            $this->request->data['Manufacturers']['holiday_from'] = Configure::read('AppConfig.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_from']);
+            $this->request->data['Manufacturers']['holiday_to'] = Configure::read('AppConfig.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_to']);
 
             // values that are the same as default values => null
             if (!$this->AppAuth->isManufacturer()) {
                 // only admins and superadmins are allowed to change variable_member_fee
-                if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturer']['variable_member_fee'] == Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                    $this->request->data['Manufacturer']['variable_member_fee'] = null;
+                if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturers']['variable_member_fee'] == Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                    $this->request->data['Manufacturers']['variable_member_fee'] = null;
                 }
             }
-            if ($this->request->data['Manufacturer']['default_tax_id'] == Configure::read('AppConfig.defaultTaxId')) {
-                $this->request->data['Manufacturer']['default_tax_id'] = null;
+            if ($this->request->data['Manufacturers']['default_tax_id'] == Configure::read('AppConfig.defaultTaxId')) {
+                $this->request->data['Manufacturers']['default_tax_id'] = null;
             }
-            if ($this->request->data['Manufacturer']['send_order_list'] == Configure::read('AppConfig.defaultSendOrderList')) {
-                $this->request->data['Manufacturer']['send_order_list'] = null;
+            if ($this->request->data['Manufacturers']['send_order_list'] == Configure::read('AppConfig.defaultSendOrderList')) {
+                $this->request->data['Manufacturers']['send_order_list'] = null;
             }
-            if ($this->request->data['Manufacturer']['send_invoice'] == Configure::read('AppConfig.defaultSendInvoice')) {
-                $this->request->data['Manufacturer']['send_invoice'] = null;
+            if ($this->request->data['Manufacturers']['send_invoice'] == Configure::read('AppConfig.defaultSendInvoice')) {
+                $this->request->data['Manufacturers']['send_invoice'] = null;
             }
-            if (!$this->AppAuth->isManufacturer() && $this->request->data['Manufacturer']['bulk_orders_allowed'] == Configure::read('AppConfig.defaultBulkOrdersAllowed')) {
-                $this->request->data['Manufacturer']['bulk_orders_allowed'] = null;
+            if (!$this->AppAuth->isManufacturer() && $this->request->data['Manufacturers']['bulk_orders_allowed'] == Configure::read('AppConfig.defaultBulkOrdersAllowed')) {
+                $this->request->data['Manufacturers']['bulk_orders_allowed'] = null;
             }
-            if ($this->request->data['Manufacturer']['send_shop_order_notification'] == Configure::read('AppConfig.defaultSendShopOrderNotification')) {
-                $this->request->data['Manufacturer']['send_shop_order_notification'] = null;
+            if ($this->request->data['Manufacturers']['send_shop_order_notification'] == Configure::read('AppConfig.defaultSendShopOrderNotification')) {
+                $this->request->data['Manufacturers']['send_shop_order_notification'] = null;
             }
-            if ($this->request->data['Manufacturer']['send_ordered_product_deleted_notification'] == Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification')) {
-                $this->request->data['Manufacturer']['send_ordered_product_deleted_notification'] = null;
+            if ($this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] == Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification')) {
+                $this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] = null;
             }
-            if ($this->request->data['Manufacturer']['send_ordered_product_price_changed_notification'] == Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification')) {
-                $this->request->data['Manufacturer']['send_ordered_product_price_changed_notification'] = null;
+            if ($this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] == Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification')) {
+                $this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] = null;
             }
-            if ($this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] == Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification')) {
-                $this->request->data['Manufacturer']['send_ordered_product_quantity_changed_notification'] = null;
+            if ($this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] == Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification')) {
+                $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
             }
 
             if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
-                if ($this->request->data['Manufacturer']['enabled_sync_domains']) {
-                    $this->request->data['Manufacturer']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturer']['enabled_sync_domains']);
+                if ($this->request->data['Manufacturers']['enabled_sync_domains']) {
+                    $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturers']['enabled_sync_domains']);
                 }
             }
 
             // remove post data that could be set by hacking attempt
             if ($this->AppAuth->isManufacturer()) {
-                unset($this->request->data['Manufacturer']['bulk_orders_allowed']);
-                unset($this->request->data['Manufacturer']['variable_member_fee']);
-                unset($this->request->data['Manufacturer']['id_customer']);
+                unset($this->request->data['Manufacturers']['bulk_orders_allowed']);
+                unset($this->request->data['Manufacturers']['variable_member_fee']);
+                unset($this->request->data['Manufacturers']['id_customer']);
             }
 
             // validate data - do not use $this->Manufacturer->saveAll()
             $this->Manufacturer->id = $manufacturerId;
-            $this->Manufacturer->set($this->request->data['Manufacturer']);
+            $this->Manufacturer->set($this->request->data['Manufacturers']);
 
             $this->Manufacturer->validator()['send_order_list'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 2);
 
             if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $this->Manufacturer->validator()['variable_member_fee'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
             }
-            if (!empty($this->request->data['Manufacturer']['send_order_list_cc'])) {
+            if (!empty($this->request->data['Manufacturers']['send_order_list_cc'])) {
                 $this->Manufacturer->validator()['send_order_list_cc'] = $this->Manufacturer->getMultipleEmailValidationRule(true);
             }
 
@@ -623,11 +623,11 @@ class ManufacturersController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->Manufacturer->save($this->request->data['Manufacturer'], array(
+                $this->Manufacturer->save($this->request->data['Manufacturers'], array(
                     'validate' => false
                 ));
 
-                $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturer']['name'] . '</b>';
+                $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturers']['name'] . '</b>';
                 if ($this->here == Configure::read('AppConfig.slugHelper')->getManufacturerMyOptions()) {
                     $message = 'Deine Einstellungen';
                     $this->renewAuthSession();
@@ -734,13 +734,13 @@ class ManufacturersController extends AdminAppController
     {
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
         $this->set('manufacturer', $manufacturer);
 
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturer']['bulk_orders_allowed']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
         if ($bulkOrdersAllowed) {
             $orderStates = Configure::read('AppConfig.htmlHelper')->getOrderStateIds();
         } else {

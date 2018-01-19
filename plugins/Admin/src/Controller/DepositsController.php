@@ -87,7 +87,7 @@ class DepositsController extends AdminAppController
 
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
         $this->set('manufacturer', $manufacturer);
@@ -153,7 +153,7 @@ class DepositsController extends AdminAppController
 
         $title = 'Pfandkonto für ';
         if ($this->AppAuth->isManufacturer()) {
-            $title .= $manufacturer['Manufacturer']['name'];
+            $title .= $manufacturer['Manufacturers']['name'];
         }
         $this->set('title_for_layout', $title);
     }
@@ -171,7 +171,7 @@ class DepositsController extends AdminAppController
 
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
         $this->set('manufacturer', $manufacturer);
@@ -189,6 +189,6 @@ class DepositsController extends AdminAppController
         $month = $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
-        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer['Manufacturer']['name']);
+        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer['Manufacturers']['name']);
     }
 }

@@ -18,7 +18,7 @@
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                Hallo <?php echo $manufacturer['Address']['firstname']; ?>,
+                Hallo <?php echo $manufacturer['Addresses']['firstname']; ?>,
             </td>
     </tr>
 

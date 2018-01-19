@@ -49,12 +49,12 @@
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Attribute.id_attribute', 'ID') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('Attributes.id_attribute', 'ID') . '</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Attribute.name', 'Name') . '</th>';
+echo '<th>' . $this->Paginator->sort('Attributes.name', 'Name') . '</th>';
 echo '<th>Aktivierten Produkten zugewiesen?</th>';
 echo '<th>Deaktivierten Produkten zugewiesen?</th>';
-echo '<th>' . $this->Paginator->sort('Attribute.modified', 'geändert am') . '</th>';
+echo '<th>' . $this->Paginator->sort('Attributes.modified', 'geändert am') . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -64,23 +64,23 @@ foreach ($attributes as $attribute) {
     $rowClass = array(
         'data'
     );
-    if (! $attribute['Attribute']['active']) {
+    if (! $attribute['Attributes']['active']) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr id="attribute-' . $attribute['Attribute']['id_attribute'] . '" class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="attribute-' . $attribute['Attributes']['id_attribute'] . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
-    echo $attribute['Attribute']['id_attribute'];
+    echo $attribute['Attributes']['id_attribute'];
     echo '</td>';
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
         'title' => 'Bearbeiten'
-    ), $this->Slug->getAttributeEdit($attribute['Attribute']['id_attribute']));
+    ), $this->Slug->getAttributeEdit($attribute['Attributes']['id_attribute']));
     echo '</td>';
 
     echo '<td>';
-    echo $attribute['Attribute']['name'];
+    echo $attribute['Attributes']['name'];
     echo '</td>';
 
     echo '<td style="width:300px;">';
@@ -106,8 +106,8 @@ foreach ($attributes as $attribute) {
     echo '</td>';
 
     echo '<td>';
-    if ($attribute['Attribute']['modified'] != '') {
-        echo $this->Time->formatToDateNTimeLongWithSecs($attribute['Attribute']['modified']);
+    if ($attribute['Attributes']['modified'] != '') {
+        echo $this->Time->formatToDateNTimeLongWithSecs($attribute['Attributes']['modified']);
     }
     echo '</td>';
 

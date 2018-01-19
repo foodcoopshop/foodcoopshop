@@ -40,7 +40,7 @@ class ProductsController extends AdminAppController
                     $productId = $ids['productId'];
                     $product = $this->Product->find('first', array(
                         'conditions' => array(
-                            'Product.id_product' => $productId
+                            'Products.id_product' => $productId
                         )
                     ));
                     if (empty($product)) {
@@ -74,10 +74,10 @@ class ProductsController extends AdminAppController
                     }
                     $product = $this->Product->find('first', array(
                         'conditions' => array(
-                            'Product.id_product' => $productId
+                            'Products.id_product' => $productId
                         )
                     ));
-                    if (!empty($product) && $product['Product']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
+                    if (!empty($product) && $product['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
                         return true;
                     }
                 }
@@ -135,24 +135,24 @@ class ProductsController extends AdminAppController
 
         $product = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
         // delete db entries
         $this->Product->Image->deleteAll(array(
-            'Image.id_image' => $product['Image']['id_image']
+            'Images.id_image' => $product['Images']['id_image']
         ), false);
 
         // delete physical files
-        $imageIdAsPath = Configure::read('AppConfig.htmlHelper')->getProductImageIdAsPath($product['Image']['id_image']);
+        $imageIdAsPath = Configure::read('AppConfig.htmlHelper')->getProductImageIdAsPath($product['Images']['id_image']);
         $thumbsPath = Configure::read('AppConfig.htmlHelper')->getProductThumbsPath($imageIdAsPath);
         foreach (Configure::read('AppConfig.productImageSizes') as $thumbSize => $options) {
-            $thumbsFileName = $thumbsPath . DS . $product['Image']['id_image'] . $options['suffix'] . '.jpg';
+            $thumbsFileName = $thumbsPath . DS . $product['Images']['id_image'] . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
 
-        $messageString = 'Bild (Id: ' . $product['Image']['id_image'] . ') wurde erfolgreich gelöscht. Produkt: "' . $product['ProductLang']['name'] . '", Hersteller: "' . $product['Manufacturer']['name'] . '"';
+        $messageString = 'Bild (Id: ' . $product['Images']['id_image'] . ') wurde erfolgreich gelöscht. Produkt: "' . $product['ProductLangs']['name'] . '", Hersteller: "' . $product['Manufacturers']['name'] . '"';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -171,18 +171,18 @@ class ProductsController extends AdminAppController
 
         $product = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
-        if ($product['Image']['id_image'] == '') {
+        if ($product['Images']['id_image'] == '') {
             // product does not yet have image => create the necessary record
             $this->Product->Image->save(array(
                 'id_product' => $productId
             ));
             $imageId = $this->Product->Image->getLastInsertID();
         } else {
-            $imageId = $product['Image']['id_image'];
+            $imageId = $product['Images']['id_image'];
         }
 
         // not (yet) implemented for attributes, only for productIds!
@@ -206,7 +206,7 @@ class ProductsController extends AdminAppController
             $image->save($thumbsFileName);
         }
 
-        $messageString = 'Ein neues Bild zum Produkt: "' . $product['ProductLang']['name'] . '" (Hersteller: "' . $product['Manufacturer']['name'] . '") wurde hochgeladen.';
+        $messageString = 'Ein neues Bild zum Produkt: "' . $product['ProductLangs']['name'] . '" (Hersteller: "' . $product['Manufacturers']['name'] . '") wurde hochgeladen.';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -225,21 +225,21 @@ class ProductsController extends AdminAppController
         $this->Product->recursive = 4;
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
         foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
-            if ($productAttribute['ProductAttributeCombination']['id_product_attribute'] == $productAttributeId) {
-                $attribute = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
+            if ($productAttribute['ProductAttributeCombinations']['id_product_attribute'] == $productAttributeId) {
+                $attribute = $productAttribute['ProductAttributeCombinations']['Attributes']['name'];
             }
         }
 
         $this->Product->deleteProductAttribute($productId, $productAttributeId, $oldProduct);
 
-        $messageString = 'Die Variante "' . $attribute . '" des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich gelöscht.';
+        $messageString = 'Die Variante "' . $attribute . '" des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde erfolgreich gelöscht.';
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
+        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct['Products']['id_product'], 'products', $messageString);
 
         $this->redirect($this->referer());
     }
@@ -248,7 +248,7 @@ class ProductsController extends AdminAppController
     {
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -258,20 +258,20 @@ class ProductsController extends AdminAppController
         $this->Product->recursive = 3; // to get product attribute combination => Attribute
         $newProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
         foreach ($newProduct['ProductAttributes'] as $productAttribute) {
-            if ($productAttribute['ProductAttributeCombination']['id_attribute'] == $productAttributeId) {
-                $productAttributeIdForHighlighting = $productAttribute['ProductAttributeCombination']['id_product_attribute'];
-                $attribute = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
+            if ($productAttribute['ProductAttributeCombinations']['id_attribute'] == $productAttributeId) {
+                $productAttributeIdForHighlighting = $productAttribute['ProductAttributeCombinations']['id_product_attribute'];
+                $attribute = $productAttribute['ProductAttributeCombinations']['Attributes']['name'];
             }
         }
         $this->request->session()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
-        $messageString = 'Die Variante "' . $attribute . '" für das Produkt "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
+        $messageString = 'Die Variante "' . $attribute . '" für das Produkt "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Product']['id_product'], 'products', $messageString);
+        $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Products']['id_product'], 'products', $messageString);
 
         $this->request->session()->write('highlightedRowId', $productId);
 
@@ -290,7 +290,7 @@ class ProductsController extends AdminAppController
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('first', array(
             'conditions' => array(
-                'Manufacturer.id_manufacturer' => $manufacturerId
+                'Manufacturers.id_manufacturer' => $manufacturerId
             )
         ));
 
@@ -300,11 +300,11 @@ class ProductsController extends AdminAppController
 
         $newProduct = $this->Product->add($manufacturer);
 
-        $messageString = 'Ein neues Produkt für "' . $manufacturer['Manufacturer']['name'] . '" wurde erfolgreich erstellt.';
+        $messageString = 'Ein neues Produkt für "' . $manufacturer['Manufacturers']['name'] . '" wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct['Product']['id_product'], 'products', $messageString);
+        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct['Products']['id_product'], 'products', $messageString);
 
-        $this->request->session()->write('highlightedRowId', $newProduct['Product']['id_product']);
+        $this->request->session()->write('highlightedRowId', $newProduct['Products']['id_product']);
         $this->redirect($this->referer());
     }
 
@@ -318,11 +318,11 @@ class ProductsController extends AdminAppController
         $this->Product->recursive = 2; // to get ProductAttributeShop
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
-        if ($taxId != $oldProduct['Product']['id_tax']) {
+        if ($taxId != $oldProduct['Products']['id_tax']) {
             $product2update = array(
                 'id_tax' => $taxId
             );
@@ -338,7 +338,7 @@ class ProductsController extends AdminAppController
                 // update net price of all attributes
                 foreach ($oldProduct['ProductAttributes'] as $attribute) {
                     // netPrice needs to be calculated new - product tax has been saved above...
-                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute['ProductAttributeShop']['price'], $oldProduct['Tax']['rate']);
+                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute['ProductAttributeShops']['price'], $oldProduct['Taxes']['rate']);
                     $this->Product->ProductAttributes->ProductAttributeShop->updateAll(array(
                         'ProductAttributeShop.price' => $newNetPrice
                     ), array(
@@ -347,7 +347,7 @@ class ProductsController extends AdminAppController
                 }
             } else {
                 // update price of product without attributes
-                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct['ProductShop']['price'], $oldProduct['Tax']['rate']);
+                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct['ProductShop']['price'], $oldProduct['Taxes']['rate']);
                 $product2update = array(
                     'price' => $newNetPrice
                 );
@@ -358,23 +358,23 @@ class ProductsController extends AdminAppController
             $this->Tax = TableRegistry::get('Taxs');
             $tax = $this->Tax->find('first', array(
                 'conditions' => array(
-                    'Tax.id_tax' => $taxId
+                    'Taxes.id_tax' => $taxId
                 )
             ));
 
             if (! empty($tax)) {
-                $taxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($tax['Tax']['rate']);
+                $taxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($tax['Taxes']['rate']);
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
-            if (! empty($oldProduct['Tax'])) {
-                $oldTaxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($oldProduct['Tax']['rate']);
+            if (! empty($oldProduct['Taxes'])) {
+                $oldTaxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($oldProduct['Taxes']['rate']);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
 
-            $messageString = 'Der Steuersatz des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich von  ' . $oldTaxRate . '% auf ' . $taxRate . '% geändert.';
+            $messageString = 'Der Steuersatz des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich von  ' . $oldTaxRate . '% auf ' . $taxRate . '% geändert.';
             $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
         } else {
             $messageString = 'Es wurden keine Änderungen gespeichert.';
@@ -405,7 +405,7 @@ class ProductsController extends AdminAppController
 
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -414,26 +414,26 @@ class ProductsController extends AdminAppController
             'id_product' => $productId
         ));
 
-        $this->Category = TableRegistry::get('Categorys');
+        $this->Category = TableRegistry::get('Categories');
         $selectedCategoryNames = array();
         foreach ($selectedCategories as $selectedCategory) {
             // only add if entry of passed id exists in category lang table
             $oldCategory = $this->Category->find('first', array(
                 'conditions' => array(
-                    'Category.id_category' => $selectedCategory
+                    'Categories.id_category' => $selectedCategory
                 )
             ));
             if (! empty($oldCategory)) {
                 // do not track "alle-produkte"
                 if ($selectedCategory != Configure::read('AppConfig.categoryAllProducts')) {
-                    $selectedCategoryNames[] = $oldCategory['Category']['name'];
+                    $selectedCategoryNames[] = $oldCategory['Categories']['name'];
                 }
                 $sql = 'INSERT INTO ' . $this->CategoryProduct->tablePrefix . $this->CategoryProduct->useTable . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
                 $this->CategoryProduct->query($sql);
             }
         }
 
-        $messageString = 'Die Kategorien des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
+        $messageString = 'Die Kategorien des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -457,7 +457,7 @@ class ProductsController extends AdminAppController
         $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -467,11 +467,11 @@ class ProductsController extends AdminAppController
                 if ($attribute['id_product_attribute'] != $ids['attributeId']) {
                     continue;
                 }
-                $oldProduct['ProductLang'] = array(
-                    'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['Attribute']['name']
+                $oldProduct['ProductLangs'] = array(
+                    'name' => $oldProduct['ProductLangs']['name'] . ' : ' . $attribute['ProductAttributeCombinations']['Attributes']['name']
                 );
-                $oldProduct['StockAvailable'] = array(
-                    'quantity' => $attribute['StockAvailable']['quantity']
+                $oldProduct['StockAvailables'] = array(
+                    'quantity' => $attribute['StockAvailables']['quantity']
                 );
             }
         }
@@ -487,8 +487,8 @@ class ProductsController extends AdminAppController
         }
 
         $quantity = $this->Product->getQuantityAsInteger($this->params['data']['quantity']);
-        $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . $oldProduct['StockAvailable']['quantity'] . ' auf ' . $quantity . ' geändert.');
+        $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich geändert.');
+        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturers']['name'] . '</b> wurde von ' . $oldProduct['StockAvailables']['quantity'] . ' auf ' . $quantity . ' geändert.');
         $this->request->session()->write('highlightedRowId', $productId);
 
         die(json_encode(array(
@@ -509,7 +509,7 @@ class ProductsController extends AdminAppController
         $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -519,11 +519,11 @@ class ProductsController extends AdminAppController
                 if ($attribute['id_product_attribute'] != $ids['attributeId']) {
                     continue;
                 }
-                $oldProduct['ProductLang'] = array(
-                    'name' => $oldProduct['ProductLang']['name'] . ' : ' . $attribute['ProductAttributeCombination']['Attribute']['name']
+                $oldProduct['ProductLangs'] = array(
+                    'name' => $oldProduct['ProductLangs']['name'] . ' : ' . $attribute['ProductAttributeCombinations']['Attributes']['name']
                 );
                 $oldProduct['ProductShop'] = array(
-                    'price' => $attribute['ProductAttributeShop']['price']
+                    'price' => $attribute['ProductAttributeShops']['price']
                 );
             }
         }
@@ -539,8 +539,8 @@ class ProductsController extends AdminAppController
         }
 
         $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
-        $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLang']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturer']['name'] . '</b> wurde von ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($price) . ' geändert.');
+        $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich geändert.');
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturers']['name'] . '</b> wurde von ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($price) . ' geändert.');
         $this->request->session()->write('highlightedRowId', $productId);
 
         $this->set('data', array(
@@ -563,7 +563,7 @@ class ProductsController extends AdminAppController
         $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -578,13 +578,13 @@ class ProductsController extends AdminAppController
         }
 
         $depositEntity = $oldProduct['DepositProduct'];
-        $productName = $oldProduct['ProductLang']['name'];
+        $productName = $oldProduct['ProductLangs']['name'];
 
         if ($ids['attributeId'] > 0) {
             $attributeName = '';
             foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
                 if ($productAttribute['id_product_attribute'] == $ids['attributeId']) {
-                    $attributeName = $productAttribute['ProductAttributeCombination']['Attribute']['name'];
+                    $attributeName = $productAttribute['ProductAttributeCombinations']['Attributes']['name'];
                     $depositEntity = $productAttribute['DepositProductAttribute'];
                     break;
                 }
@@ -623,7 +623,7 @@ class ProductsController extends AdminAppController
 
         $oldProduct = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -645,17 +645,17 @@ class ProductsController extends AdminAppController
 
         $this->Flash->success('Das Produkt wurde erfolgreich geändert.');
 
-        if ($this->params['data']['name'] != $oldProduct['ProductLang']['name']) {
-            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde umbenannt in <i>"' . $this->params['data']['name'] . '"</i>.');
+        if ($this->params['data']['name'] != $oldProduct['ProductLangs']['name']) {
+            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde umbenannt in <i>"' . $this->params['data']['name'] . '"</i>.');
         }
-        if ($this->params['data']['unity'] != $oldProduct['ProductLang']['unity']) {
-            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert in <i>"' . $this->params['data']['unity'] . '"</i>.');
+        if ($this->params['data']['unity'] != $oldProduct['ProductLangs']['unity']) {
+            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde geändert in <i>"' . $this->params['data']['unity'] . '"</i>.');
         }
-        if ($this->params['data']['description'] != $oldProduct['ProductLang']['description']) {
-            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLang']['description'] . '</div>neu: <div class="changed">' . $this->params['data']['description'] . ' </div>');
+        if ($this->params['data']['description'] != $oldProduct['ProductLangs']['description']) {
+            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLangs']['description'] . '</div>neu: <div class="changed">' . $this->params['data']['description'] . ' </div>');
         }
-        if ($this->params['data']['descriptionShort'] != $oldProduct['ProductLang']['description_short']) {
-            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes "' . $oldProduct['ProductLang']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturer']['name'] . '" wurde geändert. <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLang']['description_short'] . '</div> neu: <div class="changed">' . $this->params['data']['descriptionShort'] . '</div>');
+        if ($this->params['data']['descriptionShort'] != $oldProduct['ProductLangs']['description_short']) {
+            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde geändert. <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLangs']['description_short'] . '</div> neu: <div class="changed">' . $this->params['data']['descriptionShort'] . '</div>');
         }
 
         $this->request->session()->write('highlightedRowId', $productId);
@@ -720,7 +720,7 @@ class ProductsController extends AdminAppController
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->Attribute = TableRegistry::get('Attributes');
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
-        $this->Category = TableRegistry::get('Categorys');
+        $this->Category = TableRegistry::get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
         $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
         array_unshift($manufacturersForDropdown, array('all' => 'Alle Hersteller'));
@@ -731,12 +731,12 @@ class ProductsController extends AdminAppController
         if ($manufacturerId > 0) {
             $manufacturer = $this->Manufacturer->find('first', array(
                 'conditions' => array(
-                    'Manufacturer.id_manufacturer' => $manufacturerId
+                    'Manufacturers.id_manufacturer' => $manufacturerId
                 ),
-                'fields' => array('Manufacturer.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
+                'fields' => array('Manufacturers.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
             ));
             $this->set('manufacturer', $manufacturer);
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturer']['variable_member_fee']);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             $this->set('variableMemberFee', $variableMemberFee);
         }
 
@@ -747,7 +747,7 @@ class ProductsController extends AdminAppController
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
-            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer['Manufacturer']['enabled_sync_domains']);
+            $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer['Manufacturers']['enabled_sync_domains']);
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
             $this->set('showSyncProductsButton', $showSyncProductsButton);
         }
@@ -762,7 +762,7 @@ class ProductsController extends AdminAppController
 
         $product = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -773,7 +773,7 @@ class ProductsController extends AdminAppController
             'recursive' => 3
         ));
 
-        $message = 'Die Standard-Variante des Produktes "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombination']['Attribute']['name'] . '" geändert.';
+        $message = 'Die Standard-Variante des Produktes "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombinations']['Attributes']['name'] . '" geändert.';
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
 
@@ -806,7 +806,7 @@ class ProductsController extends AdminAppController
 
         $product = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -817,7 +817,7 @@ class ProductsController extends AdminAppController
             $actionLogType = 'product_set_to_new';
         }
 
-        $message = 'Das Produkt "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wird ' . $statusText . '.';
+        $message = 'Das Produkt "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wird ' . $statusText . '.';
         $this->Flash->success($message);
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
@@ -838,7 +838,7 @@ class ProductsController extends AdminAppController
 
         $product = $this->Product->find('first', array(
             'conditions' => array(
-                'Product.id_product' => $productId
+                'Products.id_product' => $productId
             )
         ));
 
@@ -849,9 +849,9 @@ class ProductsController extends AdminAppController
             $actionLogType = 'product_set_active';
         }
 
-        $this->Flash->success('Das Produkt "' . $product['ProductLang']['name'] . '" wurde erfolgreich ' . $statusText . '.');
+        $this->Flash->success('Das Produkt "' . $product['ProductLangs']['name'] . '" wurde erfolgreich ' . $statusText . '.');
 
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $product['ProductLang']['name'] . '" vom Hersteller "' . $product['Manufacturer']['name'] . '" wurde ' . $statusText . '.');
+        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wurde ' . $statusText . '.');
 
         $this->request->session()->write('highlightedRowId', $productId);
 
