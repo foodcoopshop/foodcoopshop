@@ -51,7 +51,7 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Payments, array(
+echo $this->Form->create('Payments', array(
     'class' => 'fcs-form'
 ));
 

@@ -104,7 +104,10 @@ class PagesController extends FrontendController
         ];
 
         $page = $this->Page->find('first', [
-            'conditions' => $conditions
+            'conditions' => $conditions,
+            'contain' => [
+                'Customers'
+            ]
         ]);
 
         if (empty($page)) {

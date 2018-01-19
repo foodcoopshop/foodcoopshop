@@ -96,12 +96,12 @@ class AddressManufacturer extends AddressTable
     public function uniqueEmailWithFlagCheck($check)
     {
         $conditions = [
-            $this->alias . '.email' => $check['email']
+            $this->getAlias() . '.email' => $check['email']
         ];
 
         // if manufacturer address already exists
         if ($this->id > 0) {
-            $conditions[] = $this->alias . '.id_address <> ' . $this->id;
+            $conditions[] = $this->getAlias() . '.id_address <> ' . $this->id;
         }
 
         $found = $this->find('count', [

@@ -2,7 +2,7 @@
 
 App::uses('AppCakeTestCase', 'Test');
 App::uses('ActionLogs', 'Model');
-App::uses('Payments, 'Model');
+App::uses('Payments', 'Model');
 App::uses('Customers', 'Model');
 
 /**

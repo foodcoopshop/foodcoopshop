@@ -1,7 +1,7 @@
 <?php
 
-use App\Controller\Component\StringComponent;
 namespace App\Model\Table;
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
 /**
@@ -79,10 +79,8 @@ class CustomersTable extends AppTable
 
     public function setNewPassword($customerId)
     {
-        App::uses('AppPasswordHasher', 'Controller/Component/Auth');
-        $ph = new AppPasswordHasher();
-
-        $newPassword = StringComponent::createRandomString(8);
+//         $ph = new AppPasswordHasher();
+//         $newPassword = StringComponent::createRandomString(8);
         $customer2save = [
             'passwd' => $ph->hash($newPassword)
         ];
@@ -136,7 +134,7 @@ class CustomersTable extends AppTable
             'foreignKey' => 'id_customer'
         ],
         'Payments' => [
-            'className' => 'Payments,
+            'className' => 'Payments',
             'foreignKey' => 'id_customer',
             'order' => [
                 'Payments.date_add' => 'desc'
@@ -151,9 +149,9 @@ class CustomersTable extends AppTable
     {
         parent::__construct($id, $table, $ds);
 
-        $virtualNameField = "`{$this->alias}`.`firstname`,' ',`{$this->alias}`.`lastname`)";
+        $virtualNameField = "`{$this->getAlias()}`.`firstname`,' ',`{$this->getAlias()}`.`lastname`)";
         if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
-            $virtualNameField = "`{$this->alias}`.`lastname`,' ',`{$this->alias}`.`firstname`)";
+            $virtualNameField = "`{$this->getAlias()}`.`lastname`,' ',`{$this->getAlias()}`.`firstname`)";
         }
 
         $this->virtualFields = [
@@ -228,7 +226,7 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
-        App::uses('Payments, 'Model');
+        App::uses('Payments', 'Model');
         $cp = new Payment();
         $paymentSumProduct = $cp->getSum($customerId, 'product');
         $paybackSumProduct = $cp->getSum($customerId, 'payback');

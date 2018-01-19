@@ -32,7 +32,7 @@ abstract class AddressTable extends AppTable
     {
         parent::__construct($id, $table, $ds);
         $this->virtualFields = [
-            'name' => "TRIM(CONCAT(`{$this->alias}`.`firstname`,' ',`{$this->alias}`.`lastname`))"
+            'name' => "TRIM(CONCAT(`{$this->getAlias()}`.`firstname`,' ',`{$this->getAlias()}`.`lastname`))"
         ];
     }
 }

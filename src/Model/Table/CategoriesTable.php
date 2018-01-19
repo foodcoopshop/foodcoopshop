@@ -68,7 +68,7 @@ class CategoriesTable extends AppTable
     public function getForMenu()
     {
         $conditions = [
-            $this->alias . '.active' => APP_ON
+            $this->getAlias() . '.active' => APP_ON
         ];
         $categories = $this->getThreaded($conditions);
         $categorieForMenu = $this->prepareTreeResultForMenu($categories);
@@ -77,7 +77,7 @@ class CategoriesTable extends AppTable
 
     public function getExcludeCondition()
     {
-        return $this->alias . '.id_category NOT IN(1, 2, ' . Configure::read('AppConfig.categoryAllProducts') . ')';
+        return $this->getAlias() . '.id_category NOT IN(1, 2, ' . Configure::read('AppConfig.categoryAllProducts') . ')';
     }
 
     public function getThreaded($conditions = [])
