@@ -1,5 +1,7 @@
 <?php
 
+namespace App\View\Helper;
+
 use Cake\Core\Configure;
 use Cake\View\Helper;
 

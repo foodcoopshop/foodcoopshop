@@ -82,21 +82,6 @@ class AppController extends Controller
         
     }
 
-    public $helpers = [
-        'Html' => [
-            'className' => 'MyHtml'
-        ],
-        'Time' => [
-            'className' => 'MyTime'
-        ],
-        'Session',
-        'Form',
-        'Menu',
-        'Slug',
-        'AssetCompress.AssetCompress',
-        'Text'
-    ];
-
     public function beforeRender(Event $event)
     {
         parent::beforeRender($event);

@@ -3,7 +3,6 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 
 /**
