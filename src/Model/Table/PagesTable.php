@@ -80,7 +80,7 @@ class PagesTable extends AppTable
                 'Pages.title' => 'ASC'
             ],
             'contain' => [
-                'Customers.name'
+                'Customers'
             ]
         ]);
         return $pages;
