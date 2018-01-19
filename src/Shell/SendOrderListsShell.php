@@ -27,7 +27,7 @@ class SendOrderListsShell extends AppShell
 
     /**
      * sends order lists to manufacturers who have current orders
-     * does not check the field Manufacturer.active! (can be theoretically offline when this cronjob runs)
+     * does not check the field Manufacturers.active! (can be theoretically offline when this cronjob runs)
      */
     public function main()
     {

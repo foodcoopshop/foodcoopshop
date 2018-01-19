@@ -19,15 +19,17 @@ class BlogPostsTable extends AppTable
 
     public $primaryKey = 'id_blog_post';
     
-    public $belongsTo = [
-        'Customers' => [
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
-        ],
-        'Manufacturers' => [
+        ]);
+        $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
-        ]
-    ];
-
+        ]);
+    }
+    
     public $validate = [
         'title' => [
             'notBlank' => [
@@ -77,7 +79,7 @@ class BlogPostsTable extends AppTable
         ];
         if (! $appAuth->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
-            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
+            $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
         if ($manufacturerId) {
             $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
@@ -90,6 +92,9 @@ class BlogPostsTable extends AppTable
             'conditions' => $conditions,
             'order' => [
                 'BlogPosts.modified' => 'DESC'
+            ],
+            'contain' => [
+                'Manufacturers'
             ],
             'limit' => $limit
         ]);

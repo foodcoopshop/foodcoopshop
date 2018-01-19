@@ -291,9 +291,9 @@ class OrderDetailsController extends AdminAppController
             ),
             'contain' => array(
                 'Orders',
-                'Orders.Customer',
-                'Products.Manufacturer',
-                'Products.Manufacturer.Address'
+                'Orders.Customers',
+                'Products.Manufacturers',
+                'Products.Manufacturers.Address'
             )
         ));
 

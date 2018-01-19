@@ -73,11 +73,11 @@ class ActionLogsController extends AdminAppController
 
         // manufacturers should only see their own product logs
         if ($this->AppAuth->isManufacturer()) {
-            $conditions[] = '( (BlogPost.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Product.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Payment.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
-                ' OR Manufacturer.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ') '.
-              ' OR (ActionLog.customer_id = ' .$this->AppAuth->getUserId().') )';
+            $conditions[] = '( (BlogPosts.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+                ' OR Products.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+                ' OR Payments.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+                ' OR Manufacturers.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ') '.
+              ' OR (ActionLogs.customer_id = ' .$this->AppAuth->getUserId().') )';
         }
 
         // customers are only allowed to see their own data
@@ -89,7 +89,7 @@ class ActionLogsController extends AdminAppController
             if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
                 $customerNameForRegex = $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname');
             }
-                $tmpCondition .= ' OR ActionLog.text REGEXP \'' . $customerNameForRegex . '\'';
+                $tmpCondition .= ' OR ActionLogs.text REGEXP \'' . $customerNameForRegex . '\'';
             $tmpCondition .= ')';
             $conditions[] = $tmpCondition;
             // never show cronjob logs for customers

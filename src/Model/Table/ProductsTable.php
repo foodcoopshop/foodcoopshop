@@ -777,7 +777,7 @@ class ProductsTable extends AppTable
 
         if ($manufacturerId == '') {
             $contain[] = 'Manufacturers';
-            $fields[0] .= ', Manufacturer.name';
+            $fields[0] .= ', Manufacturers.name';
         }
 
         $pParams = [

@@ -76,7 +76,7 @@ class BlogPostsController extends FrontendController
         array_pop($conditions); // do not filter last condition element blogPostId
         if (!$this->AppAuth->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
-            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
+            $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
         $neighbors = $this->BlogPost->find('neighbors', [
             'field' => 'BlogPosts.modified',
@@ -116,7 +116,7 @@ class BlogPostsController extends FrontendController
 
         if (! $this->AppAuth->user()) {
             $conditions['BlogPosts.is_private'] = APP_OFF;
-            $conditions[] = '(Manufacturer.is_private IS NULL OR Manufacturer.is_private = ' . APP_OFF.')';
+            $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
 
         $blogPosts = $this->BlogPost->find('all', [

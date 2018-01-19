@@ -129,13 +129,13 @@ class AppTable extends Table
      */
     protected function getFieldsForProductListQuery()
     {
-        return "Product.id_product,
-                ProductLang.name, ProductLang.description_short, ProductLang.description, ProductLang.unity,
-                ProductShop.price, ProductShop.date_add,
-                Deposit.deposit,
-                Image.id_image,
-                Manufacturer.id_manufacturer, Manufacturer.name,
-                StockAvailable.quantity ";
+        return "Products.id_product,
+                ProductLangs.name, ProductLangs.description_short, ProductLangs.description, ProductLangs.unity,
+                ProductShops.price, ProductShops.date_add,
+                Deposits.deposit,
+                Images.id_image,
+                Manufacturers.id_manufacturer, Manufacturers.name,
+                StockAvailables.quantity ";
     }
 
     /**
@@ -143,12 +143,12 @@ class AppTable extends Table
      */
     protected function getJoinsForProductListQuery()
     {
-        return "LEFT JOIN ".$this->tablePrefix."product_shop ProductShop ON Product.id_product = ProductShop.id_product
-                LEFT JOIN ".$this->tablePrefix."product_lang ProductLang ON Product.id_product = ProductLang.id_product
-                LEFT JOIN ".$this->tablePrefix."stock_available StockAvailable ON Product.id_product = StockAvailable.id_product
-                LEFT JOIN ".$this->tablePrefix."images Image ON Image.id_product = Product.id_product
-                LEFT JOIN ".$this->tablePrefix."deposits Deposit ON Product.id_product = Deposit.id_product
-                LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturer ON Manufacturer.id_manufacturer = Product.id_manufacturer ";
+        return "LEFT JOIN ".$this->tablePrefix."product_shop ProductShops ON Products.id_product = ProductShops.id_product
+                LEFT JOIN ".$this->tablePrefix."product_lang ProductLangs ON Products.id_product = ProductLangs.id_product
+                LEFT JOIN ".$this->tablePrefix."stock_available StockAvailables ON Products.id_product = StockAvailables.id_product
+                LEFT JOIN ".$this->tablePrefix."images Images ON Images.id_product = Products.id_product
+                LEFT JOIN ".$this->tablePrefix."deposits Deposits ON Products.id_product = Deposits.id_product
+                LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturers ON Manufacturers.id_manufacturer = Products.id_manufacturer ";
     }
 
     /**
@@ -157,14 +157,14 @@ class AppTable extends Table
     protected function getConditionsForProductListQuery()
     {
         $conditions = "WHERE 1
-                    AND StockAvailable.id_product_attribute = 0
-                    AND ProductLang.id_lang = :langId
-                    AND Product.active = :active
+                    AND StockAvailables.id_product_attribute = 0
+                    AND ProductLangs.id_lang = :langId
+                    AND Products.active = :active
                     AND ".$this->getManufacturerHolidayConditions()."
-                    AND Manufacturer.active = :active ";
+                    AND Manufacturers.active = :active ";
 
         if (! $this->user()) {
-            $conditions .= 'AND Manufacturer.is_private = :isPrivate ';
+            $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
         return $conditions;
     }
@@ -175,12 +175,12 @@ class AppTable extends Table
     public function getManufacturerHolidayConditions()
     {
         $condition  = ' IF ( ';
-        $condition .=       '`Manufacturer`.`holiday_from` IS NULL && `Manufacturer`.`holiday_to` IS NULL, 1,'; // from and to date are not set
+        $condition .=       '`Manufacturers`.`holiday_from` IS NULL && `Manufacturers`.`holiday_to` IS NULL, 1,'; // from and to date are not set
         $condition .=       'IF (';
-        $condition .=              '(`Manufacturer`.`holiday_from` IS NOT NULL AND `Manufacturer`.`holiday_to`   IS NULL AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
-        $condition .=           'OR (`Manufacturer`.`holiday_to`   IS NOT NULL AND `Manufacturer`.`holiday_from` IS NULL AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
-        $condition .=           'OR (`Manufacturer`.`holiday_from` IS NOT NULL AND `Manufacturer`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d")) ';  // only from date is set
-        $condition .=           'OR (`Manufacturer`.`holiday_to`   IS NOT NULL AND `Manufacturer`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")), '; // to date is over
+        $condition .=              '(`Manufacturers`.`holiday_from` IS NOT NULL AND `Manufacturers`.`holiday_to`   IS NULL AND `Manufacturers`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
+        $condition .=           'OR (`Manufacturers`.`holiday_to`   IS NOT NULL AND `Manufacturers`.`holiday_from` IS NULL AND `Manufacturers`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
+        $condition .=           'OR (`Manufacturers`.`holiday_from` IS NOT NULL AND `Manufacturers`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d")) ';  // only from date is set
+        $condition .=           'OR (`Manufacturers`.`holiday_to`   IS NOT NULL AND `Manufacturers`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")), '; // to date is over
         $condition .=       '1, 0)';
         $condition .=   ')';
         return $condition;
@@ -191,7 +191,7 @@ class AppTable extends Table
      */
     protected function getOrdersForProductListQuery()
     {
-        return " ORDER BY ProductLang.name ASC, Image.id_image DESC;";
+        return " ORDER BY ProductLangs.name ASC, Image.id_image DESC;";
     }
 
     /**

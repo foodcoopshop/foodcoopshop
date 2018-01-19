@@ -430,10 +430,10 @@ class ManufacturersTable extends AppTable
     {
         $sql = "SELECT ";
         $sql .= $this->getFieldsForProductListQuery();
-        $sql .= "FROM ".$this->tablePrefix."product Product ";
+        $sql .= "FROM ".$this->tablePrefix."product Products ";
         $sql .= $this->getJoinsForProductListQuery();
         $sql .= $this->getConditionsForProductListQuery();
-        $sql .= "AND Manufacturer.id_manufacturer = :manufacturerId";
+        $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
         $sql .= $this->getOrdersForProductListQuery();
 
         $params = [

@@ -155,9 +155,9 @@ class OrderDetailsTable extends AppTable
 
         $contain = [
             'Orders',
-            'Orders.Customer',
-            'Products.Manufacturer.Address',
-            'Products.ProductLang'
+            'Orders.Customers',
+            'Products.Manufacturers.Addresses',
+            'Products.ProductLangs'
         ];
 
         if ($customerId != '') {
