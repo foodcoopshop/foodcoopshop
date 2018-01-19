@@ -18,7 +18,11 @@ namespace App\Model\Table;
 class OrderDetailTaxesTable extends AppTable
 {
 
-    public $useTable = 'order_detail_tax';
+    public function initialize($config)
+    {
+        $this->setTable('order_detail_tax');
+        parent::initialize($config);
+    }
 
     public $primaryKey = 'id_order_detail';
 }

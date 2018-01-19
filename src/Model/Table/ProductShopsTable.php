@@ -18,7 +18,11 @@ namespace App\Model\Table;
 class ProductShopsTable extends AppTable
 {
 
-    public $useTable = 'product_shop';
-
+    public function initialize($config)
+    {
+        $this->setTable('product_shop');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_product';
 }

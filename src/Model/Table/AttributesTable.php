@@ -18,7 +18,12 @@ namespace App\Model\Table;
 class AttributesTable extends AppTable
 {
 
-    public $useTable = 'attribute';
+    public function initialize($config)
+    {
+        $this->setTable('attribute');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_attribute';
 
     public $validate = [

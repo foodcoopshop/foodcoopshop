@@ -18,7 +18,12 @@ namespace App\Model\Table;
 class CategoryProductsTable extends AppTable
 {
 
-    public $useTable = 'category_product';
+    public function initialize($config)
+    {
+        $this->setTable('category_product');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_product';
 
     public $belongsTo = [

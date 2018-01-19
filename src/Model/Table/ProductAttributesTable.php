@@ -18,8 +18,12 @@ namespace App\Model\Table;
 class ProductAttributesTable extends AppTable
 {
 
-    public $useTable = 'product_attribute';
-
+    public function initialize($config)
+    {
+        $this->setTable('product_attribute');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_product_attribute';
 
     public $hasOne = [

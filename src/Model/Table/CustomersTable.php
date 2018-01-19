@@ -20,8 +20,12 @@ use Cake\Core\Configure;
 class CustomersTable extends AppTable
 {
 
-    public $useTable = 'customer';
-
+    public function initialize($config)
+    {
+        $this->setTable('customer');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_customer';
 
     public $actsAs = [

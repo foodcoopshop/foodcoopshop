@@ -21,7 +21,12 @@ use Cake\Core\Configure;
 class ConfigurationsTable extends AppTable
 {
 
-    public $useTable = 'configuration';
+    public function initialize($config)
+    {
+        $this->setTable('configuration');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_configuration';
 
     /**

@@ -18,8 +18,12 @@ namespace App\Model\Table;
 class OrderDetailsTable extends AppTable
 {
 
-    public $useTable = 'order_detail';
-
+    public function initialize($config)
+    {
+        $this->setTable('order_detail');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_order_detail';
 
     public $actsAs = [

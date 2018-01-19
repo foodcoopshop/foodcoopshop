@@ -21,8 +21,12 @@ use Cake\Core\Configure;
 class ManufacturersTable extends AppTable
 {
 
-    public $useTable = 'manufacturer';
-
+    public function initialize($config)
+    {
+        $this->setTable('manufacturer');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_manufacturer';
 
     public $actsAs = [
@@ -300,7 +304,7 @@ class ManufacturersTable extends AppTable
     public function getForMenu($appAuth)
     {
         if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = ClassRegistry::init('Product');
+            $productModel = TableRegistry::get('Product');
         }
         $this->recursive = - 1;
         $conditions = [
@@ -323,7 +327,7 @@ class ManufacturersTable extends AppTable
             ],
             'conditions' => $conditions
         ]);
-
+        
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturer']['name'];

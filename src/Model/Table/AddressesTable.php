@@ -20,7 +20,12 @@ namespace App\Model\Table;
 abstract class AddressTable extends AppTable
 {
 
-    public $useTable = 'address';
+    public function initialize($config)
+    {
+        $this->setTable('address');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_address';
 
     public function __construct($id = false, $table = null, $ds = null)

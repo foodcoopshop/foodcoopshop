@@ -18,6 +18,12 @@ namespace App\Model\Table;
 class CategoriesTable extends AppTable
 {
 
+    public function initialize($config)
+    {
+        $this->setTable('category');
+        parent::initialize($config);
+    }
+    
     public $actsAs = [
         'Tree' => [
             'left' => 'nleft',
@@ -28,7 +34,6 @@ class CategoriesTable extends AppTable
         'Content'
     ];
 
-    public $useTable = 'category';
     public $primaryKey = 'id_category';
 
     public $validate = [

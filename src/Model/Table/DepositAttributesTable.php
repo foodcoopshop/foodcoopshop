@@ -20,7 +20,11 @@ namespace App\Model\Table;
 class DepositAttributesTable extends AppTable
 {
 
-    public $useTable = 'deposits';
-
+    public function initialize($config)
+    {
+        $this->setTable('desposits');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_product_attribute';
 }

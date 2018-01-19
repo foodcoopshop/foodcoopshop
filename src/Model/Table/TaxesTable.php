@@ -19,8 +19,12 @@ use Cake\Core\Configure;
 class TaxesTable extends AppTable
 {
 
-    public $useTable = 'tax';
-
+    public function initialize($config)
+    {
+        $this->setTable('tax');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_tax';
  // sic! for binding from taxroulesgroup
     public $validate = [

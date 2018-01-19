@@ -18,8 +18,12 @@ namespace App\Model\Table;
 class StockAvailablesTable extends AppTable
 {
 
-    public $useTable = 'stock_available';
-
+    public function initialize($config)
+    {
+        $this->setTable('stock_available');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_product';
 
     public function updateQuantityForMainProduct($productId)

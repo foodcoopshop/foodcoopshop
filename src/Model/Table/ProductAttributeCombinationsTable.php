@@ -19,7 +19,11 @@ use Cake\Core\Configure;
 class ProductAttributeCombinationsTable extends AppTable
 {
 
-    public $useTable = 'product_attribute_combination';
+    public function initialize($config)
+    {
+        $this->setTable('product_attribute_combination');
+        parent::initialize($config);
+    }
 
     public $primaryKey = 'id_attribute';
 

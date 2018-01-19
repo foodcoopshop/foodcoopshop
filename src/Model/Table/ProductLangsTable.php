@@ -19,8 +19,12 @@ namespace App\Model\Table;
 class ProductLangsTable extends AppTable
 {
 
-    public $useTable = 'product_lang';
-
+    public function initialize($config)
+    {
+        $this->setTable('product_lang');
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_product';
 
     public $belongsTo = [

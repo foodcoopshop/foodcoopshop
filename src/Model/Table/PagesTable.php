@@ -19,7 +19,6 @@ use Cake\Core\Configure;
 class PagesTable extends AppTable
 {
 
-    public $useTable = 'pages';
     public $primaryKey = 'id_page';
 
     public $actsAs = [

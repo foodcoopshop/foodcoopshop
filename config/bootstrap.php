@@ -41,6 +41,7 @@ use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 
@@ -217,10 +218,8 @@ locale_set_default('de');
 setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
 
-
 /*
-// App::uses('ClassRegistry', 'Utility');
-Registry::init('Configuration')->loadConfigurations();
+TableRegistry::get('Configuration')->loadConfigurations();
 if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', array(
         'routes' => true
