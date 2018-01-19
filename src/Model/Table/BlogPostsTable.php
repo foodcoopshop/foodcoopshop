@@ -1,6 +1,5 @@
 <?php
-
-use App\Model\Table\AppTable;
+namespace App\Model\Table;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -19,7 +18,7 @@ class BlogPostsTable extends AppTable
 {
 
     public $primaryKey = 'id_blog_post';
-
+    
     public $belongsTo = [
         'Customer' => [
             'foreignKey' => 'id_customer'

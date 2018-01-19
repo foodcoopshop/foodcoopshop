@@ -36,6 +36,12 @@ class AppTable extends Table
         }
         parent::__construct($id, $table, $ds);
     }
+    
+    public function initialize($config)
+    {
+        $this->setTable('fcs_' . $this->getTable());
+        parent::initialize($config);
+    }
 
     /**
      * logs validation errors

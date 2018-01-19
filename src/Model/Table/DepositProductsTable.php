@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Table\AppTable;
+namespace App\Model\Table;
 
 /**
  * fake model for using associations with foreign keys that are not the id of the model

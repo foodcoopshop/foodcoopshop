@@ -1,7 +1,7 @@
 <?php
 
 use App\Controller\Component\StringComponent;
-use App\Model\Table\AppTable;
+namespace App\Model\Table;
 use Cake\Core\Configure;
 
 /**

@@ -42,7 +42,8 @@ return [
             'host' => '',
             'username' => '',
             'password' => '',
-            'database' => ''
+            'database' => '',
+            'prefix' => 'fcs_'
         ]
     ],
     'AppConfig' => [
