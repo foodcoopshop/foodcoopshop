@@ -88,7 +88,7 @@ echo '<div class="holiday-wrapper">';
     echo $this->Form->input('Manufacturer.send_order_list', array(
     'label' => 'Bestelllisten per E-Mail',
     'type' => 'checkbox',
-    'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte wöchentlich per E-Mail die Bestelllisten erhalten.</span>'
+        'after' => '<span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte - falls es Bestellungen gibt - diese am '.$this->Time->getWeekdayName(Configure::read('app.sendOrderListsWeekday')).' per E-Mail erhalten.</span>'
     ));
     echo '<div class="sc"></div>';
 
