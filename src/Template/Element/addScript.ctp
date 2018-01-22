@@ -13,4 +13,4 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->MyHtml->scriptBlock($script, ['inline'=>false, 'safe' => false]);
+$this->MyHtml->scriptBlock($script, ['block' => true, 'safe' => false]);

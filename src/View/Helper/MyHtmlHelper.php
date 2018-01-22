@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 
 /**
@@ -23,6 +24,20 @@ use Cake\View\Helper\HtmlHelper;
 class MyHtmlHelper extends HtmlHelper
 {
 
+    public function __construct(View $View, array $config = [])
+    {
+        // wrap js block with jquery document ready
+        $this->_defaultConfig['templates']['javascriptblock'] =
+        "<script{{attrs}}>
+            //<![CDATA[
+                $(document).ready(function() {
+                    {{content}}
+                });
+            //]]>
+        </script>";
+        parent::__construct($View, $config);
+    }
+    
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number
