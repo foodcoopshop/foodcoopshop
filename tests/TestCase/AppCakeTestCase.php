@@ -1,16 +1,18 @@
 <?php
+namespace App\Test\TestCase;
 
-require_once('test_files/Config/test.config.php');
+//require_once('test_files/config/test.config.php');
 
-App::uses('Controller', 'Controller');
-App::uses('View', 'View');
-App::uses('AppSimpleBrowser', 'Lib/SimpleBrowser');
-App::uses('SlugHelper', 'View/Helper');
-App::uses('MyHtmlHelper', 'View/Helper');
-App::uses('MyTimeHelper', 'View/Helper');
-App::uses('ConnectionManager', 'Model');
-App::uses('Configurations', 'Model');
-App::uses('Manufacturers', 'Model');
+use App\View\Helper\MyHtmlHelper;
+use App\View\Helper\MyTimeHelper;
+use App\View\Helper\SlugHelper;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
+use Cake\ORM\TableRegistry;
+use Cake\View\View;
+use AppPasswordHasher;
+use AppSimpleBrowser;
 
 /**
  * AppCakeTestCase
@@ -27,7 +29,7 @@ App::uses('Manufacturers', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AppCakeTestCase extends CakeTestCase
+abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
 {
 
     protected static $dbConnection;
@@ -50,9 +52,6 @@ class AppCakeTestCase extends CakeTestCase
 
     /**
      * called before every test method
-     *
-     * {@inheritDoc}
-     * @see CakeTestCase::setUp()
      */
     public function setUp()
     {
@@ -67,9 +66,9 @@ class AppCakeTestCase extends CakeTestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
-        $this->Configuration = new Configuration();
-        $this->Customer = new Customer();
-        $this->Manufacturer = new Manufacturer();
+        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Customer = TableRegistry::get('Customers');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->generatePasswordHashes();
     }
 
@@ -247,7 +246,6 @@ class AppCakeTestCase extends CakeTestCase
      */
     protected function generatePasswordHashes()
     {
-        App::uses('AppPasswordHasher', 'Controller/Component/Auth');
         $ph = new AppPasswordHasher();
         $sql = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
         $params = [
@@ -316,15 +314,11 @@ class AppCakeTestCase extends CakeTestCase
      */
     protected function createMockShell($cakeShell)
     {
-        App::uses('ConsoleOutput', 'Console');
-        App::uses('ConsoleInput', 'Console');
-        App::uses('Shell', 'Console');
-        App::uses('AppShell', 'Console/Command');
 
-        $out = $this->getMock('ConsoleOutput', [], [], '', false);
-        $in = $this->getMock('ConsoleInput', [], [], '', false);
+        $out = $this->createMock('ConsoleOutput', [], [], '', false);
+        $in = $this->createMock('ConsoleInput', [], [], '', false);
 
-        return $this->getMock(
+        return $this->createMock(
             $cakeShell,
             ['in', 'err', 'createFile', '_stop', 'clear'],
             [$out, $out, $in]

@@ -1,8 +1,7 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Component', 'Controller');
-App::uses('StringComponent', 'Controller/Component');
+use App\Controller\Component\StringComponent;
+use App\Test\TestCase\AppCakeTestCase;
 
 /**
  * StringComponentTest
