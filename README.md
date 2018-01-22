@@ -38,7 +38,7 @@ There's still a lot going on! In its 4th year of existance, FoodCoopShop continu
 * If You work on a local machine, do not change the owner of the files to www-data. Instead set permissions as shown below
 
 ## Install required packages
-Install the composer vendors (use the "--prefer-dist" option to avoid downloading VCS meta data)
+Install the composer vendors
 ```
 $ composer install
 ```
@@ -61,4 +61,6 @@ $ chmod a+w -R ./webroot/tmp
 ## Unit Testing
 * Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](https://book.cakephp.org/3.0/en/development/testing.html)
 * Import [this dump](Config/sql/_installation/clean-db-structure.sql) into your test database
-* The test suite **AllFoodCoopShopTests** runs all tests of the application
+```
+$ vendor/bin/phpunit
+```
