@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (! $appAuth->user() || $this->action == 'iframeStartPage') {
+if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
     return;
 }
 ?>

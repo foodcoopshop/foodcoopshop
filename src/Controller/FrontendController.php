@@ -161,7 +161,7 @@ class FrontendController extends AppController
     {
         parent::beforeFilter($event);
 
-        if (($this->name == 'Categories' && $this->action == 'detail') || $this->name == 'Carts') {
+        if (($this->name == 'Categories' && $this->request->action == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
             $this->AppAuth->allow();

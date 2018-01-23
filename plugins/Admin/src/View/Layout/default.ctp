@@ -43,7 +43,7 @@
     
 </head>
 <body
-    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->action)); ?>">
+    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->action)); ?>">
 
     <div id="container">
         

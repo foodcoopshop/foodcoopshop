@@ -26,7 +26,7 @@ class PaymentsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'overview':
                 return Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
@@ -586,7 +586,7 @@ class PaymentsController extends AdminAppController
         $this->set('column_title', $this->viewVars['title_for_layout']);
 
         $title = $this->viewVars['title_for_layout'];
-        if (in_array($this->action, array('product', 'member_fee'))) {
+        if (in_array($this->request->action, array('product', 'member_fee'))) {
             $title .= ' von ' . $customer['Customers']['name'];
         }
         $this->set('title_for_layout', $title);

@@ -29,7 +29,7 @@ class ManufacturersController extends FrontendController
     {
 
         parent::beforeFilter($event);
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'detail':
                 $manufacturerId = (int) $this->params['pass'][0];
                 $manufacturer = $this->Manufacturer->find('all', [
@@ -39,7 +39,7 @@ class ManufacturersController extends FrontendController
                     ]
                 ])->first();
                 if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer['Manufacturers']['is_private']) {
-                    $this->AppAuth->deny($this->action);
+                    $this->AppAuth->deny($this->request->action);
                 }
                 break;
         }

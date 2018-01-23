@@ -25,7 +25,7 @@ class BlogPostsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'edit':
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;

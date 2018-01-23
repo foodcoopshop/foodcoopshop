@@ -28,7 +28,7 @@ class DepositsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'index':
             case 'detail':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();

@@ -37,7 +37,7 @@ use Cake\Utility\Inflector;
     
     
 </head>
-<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->action)); ?> <?php echo Configure::read('debug') == 2 ? 'dev' : ''; ?>">
+<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->action)); ?> <?php echo Configure::read('debug') == 2 ? 'dev' : ''; ?>">
     
     <div id="container">
     

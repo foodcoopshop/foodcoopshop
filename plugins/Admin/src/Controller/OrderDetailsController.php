@@ -25,7 +25,7 @@ class OrderDetailsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'delete':
             case 'editProductPrice':
             case 'editProductQuantity':

@@ -27,7 +27,7 @@ class ManufacturersController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'profile':
             case 'myOptions':
                 return $this->AppAuth->isManufacturer();

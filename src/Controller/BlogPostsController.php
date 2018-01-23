@@ -42,7 +42,7 @@ class BlogPostsController extends FrontendController
                 if (!empty($blogPost) && !$this->AppAuth->user()
                     && ($blogPost['BlogPosts']['is_private'] || (isset($blogPost['Manufacturers']) && $blogPost['Manufacturers']['is_private']))
                     ) {
-                        $this->AppAuth->deny($this->action);
+                        $this->AppAuth->deny($this->request->action);
                 }
                 break;
         }

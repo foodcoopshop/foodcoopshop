@@ -27,7 +27,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             Configure::read('AppConfig.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
         ]);
     }
-    if ($this->name == 'Carts' && $this->action == 'detail') {
+    if ($this->name == 'Carts' && $this->request->action == 'detail') {
         $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();".
             Configure::read('AppConfig.jsNamespace').".Cart.initChangeAmountLinks();"

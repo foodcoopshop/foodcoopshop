@@ -44,7 +44,7 @@ class ProductsController extends FrontendController
               && (isset($product['Manufacturers']) && $product['Manufacturers']['is_private'])
               )
             ) {
-            $this->AppAuth->deny($this->action);
+                $this->AppAuth->deny($this->request->action);
         }
     }
 

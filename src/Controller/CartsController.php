@@ -417,7 +417,7 @@ class CartsController extends FrontendController
             $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinished($orderId));
         }
 
-        $this->action = 'detail';
+        $this->request->action = 'detail';
         $this->render('detail');
     }
 
