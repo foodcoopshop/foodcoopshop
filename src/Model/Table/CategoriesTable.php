@@ -158,7 +158,8 @@ class CategoriesTable extends AppTable
         }
 
         $sql .= $this->getOrdersForProductListQuery();
-        $products = $this->getDataSource()->fetchAll($sql, $params);
+        $statement = $this->getConnection()->prepare($sql);
+        $products = $statement->execute($params);
 
         if (! $countMode) {
             return $products;

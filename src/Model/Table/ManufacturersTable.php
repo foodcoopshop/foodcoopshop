@@ -443,8 +443,9 @@ class ManufacturersTable extends AppTable
             $params['isPrivate'] = APP_OFF;
         }
 
-        $products = $this->getDataSource()->fetchAll($sql, $params);
-
+        $statement = $this->getConnection()->prepare($sql);
+        $products = $statement->execute($params);
+        
         return $products;
     }
 

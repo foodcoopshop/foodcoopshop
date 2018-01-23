@@ -299,13 +299,14 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
 
     protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = null, $dateTo = null)
     {
-        $sql = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
+        $query = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
         $params = [
             'manufacturerId' => $manufacturerId,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo
         ];
-        $this->dbConnection->fetchAll($sql, $params);
+        $statement = self::$dbConnection->prepare($query);
+        $statement->execute($params);
     }
 
     /**
@@ -383,7 +384,8 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
             'value' => $value,
             'manufacturerId' => $manufacturerId
         ];
-        return $this->dbConnection->fetchAll($query, $params);
+        $statement = self::$dbConnection->prepare($query);
+        return $statement->execute($params);
     }
 
     protected function logout()

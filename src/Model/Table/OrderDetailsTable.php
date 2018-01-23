@@ -87,7 +87,10 @@ class OrderDetailsTable extends AppTable
             'manufacturerId' => $manufacturerId,
             'depositForManufacturersStartDate' => Configure::read('AppConfig.depositForManufacturersStartDate')
         ];
-        $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
+        
+        $statement = $this->getConnection()->prepare($sql);
+        $orderDetails = $statement->execute($params);
+        
         return $orderDetails;
     }
 
@@ -114,7 +117,10 @@ class OrderDetailsTable extends AppTable
             'dateFrom' => Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom),
             'dateTo' => Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo),
         ];
-        $orderDetails = $this->getDataSource()->fetchAll($sql, $params);
+        
+        $statement = $this->getConnection()->prepare($sql);
+        $orderDetails = $statement->execute($params);
+        
         if (isset($orderDetails[0])) {
             return $orderDetails[0][0]['sumOrderDetail'];
         } else {

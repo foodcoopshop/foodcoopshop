@@ -661,7 +661,8 @@ class ProductsTable extends AppTable
             'oldTaxRate' => $oldTaxRate,
             'productId' => $productId
         ];
-        $rate = $this->getDataSource()->fetchAll($sql, $params);
+        $statement = $this->getConnection()->prepare($sql);
+        $rate = $statement->execute($params);
 
         // if tax == 0 %, tax is empty
         if (empty($rate)) {
@@ -682,7 +683,8 @@ class ProductsTable extends AppTable
             'netPrice' => $netPrice,
             'productId' => $productId
         ];
-        $rate = $this->getDataSource()->fetchAll($sql, $params);
+        $statement = $this->getConnection()->prepare($sql);
+        $rate = $statement->execute($params);
 
         // if tax == 0% rate is empty...
         if (empty($rate)) {
@@ -708,8 +710,9 @@ class ProductsTable extends AppTable
             'productId' => $productId,
             'grossPrice' => $grossPrice
         ];
-        $rate = $this->getDataSource()->fetchAll($sql, $params);
-
+        $statement = $this->getConnection()->prepare($sql);
+        $rate = $statement->execute($params);
+        
         // if tax == 0% rate is empty...
         if (empty($rate)) {
             $netPrice = $grossPrice;
