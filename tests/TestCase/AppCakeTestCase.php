@@ -28,7 +28,7 @@ use Cake\View\View;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
+abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 {
 
     protected static $dbConnection;
