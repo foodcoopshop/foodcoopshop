@@ -131,10 +131,10 @@ class FrontendController extends AppController
         $pagesForHeader = [];
         $pagesForFooter = [];
         foreach ($pages as $page) {
-            if ($page['Pages']['menu_type'] == 'header') {
+            if ($page->menu_type == 'header') {
                 $pagesForHeader[] = $page;
             }
-            if ($page['Pages']['menu_type'] == 'footer') {
+            if ($page->menu_type == 'footer') {
                 $pagesForFooter[] = $page;
             }
         }
