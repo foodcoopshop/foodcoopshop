@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 if (empty($blogPosts)) {
     return;
 }
@@ -32,12 +34,12 @@ if (isset($style) && $style != '') {
 echo '<div class="blog-wrapper"'.$style.'>';
 
 foreach ($blogPosts as $blogPost) {
-    echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost['BlogPosts']['id_blog_post'], $blogPost['BlogPosts']['title']).'">';
+    echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title).'">';
     echo '<span class="img-wrapper">';
-        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'home'). '" />';
+        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'home'). '" />';
     echo '</span>';
-    echo '<h3>'.$blogPost['BlogPosts']['title'].'</h3>';
-    echo '<span class="desc">'.$blogPost['BlogPosts']['short_description'].'</span>';
+    echo '<h3>'.$blogPost->title.'</h3>';
+    echo '<span class="desc">'.$blogPost->short_description.'</span>';
     echo '</a>';
 }
 
