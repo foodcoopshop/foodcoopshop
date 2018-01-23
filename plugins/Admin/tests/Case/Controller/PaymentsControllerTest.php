@@ -192,13 +192,13 @@ class PaymentsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
 
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
-        $this->assertEmpty($manufacturerDepositSum[0][0]['sumDepositReturned']);
+        $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
 
         $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText);
         $this->assertEquals(1, $jsonDecodedContent->status);
         $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
-        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0][0]['sumDepositReturned']);
+        $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
             'payment_deposit_manufacturer_added',

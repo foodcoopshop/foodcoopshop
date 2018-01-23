@@ -77,7 +77,7 @@ class OrdersTable extends AppTable
             'conditions' => $conditions
         ]);
 
-        return $ordersSum[0][0]['SumTotalPaid'];
+        return $ordersSum[0]['SumTotalPaid'];
     }
 
     public function getSumDeposit($customerId)
@@ -95,7 +95,7 @@ class OrdersTable extends AppTable
             'conditions' => $conditions
         ]);
 
-        return $ordersSum[0][0]['SumTotalDeposit'];
+        return $ordersSum[0]['SumTotalDeposit'];
     }
 
     public function getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $appAuth)

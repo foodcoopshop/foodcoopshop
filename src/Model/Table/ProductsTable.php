@@ -2,6 +2,9 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -73,8 +76,7 @@ class ProductsTable extends AppTable
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
-        App::uses('Configurations', 'Model');
-        $this->Configuration = new Configuration();
+        $this->Configuration = TableRegistry::get('Configurations');
     }
 
     /**
@@ -669,7 +671,7 @@ class ProductsTable extends AppTable
         if (empty($rate)) {
             $newNetPrice = $oldNetPrice * (1 + $oldTaxRate / 100);
         } else {
-            $newNetPrice = $rate[0][0]['new_net_price'];
+            $newNetPrice = $rate[0]['new_net_price'];
         }
 
         return $newNetPrice;
@@ -692,7 +694,7 @@ class ProductsTable extends AppTable
         if (empty($rate)) {
             $grossPrice = $netPrice;
         } else {
-            $grossPrice = $rate[0][0]['gross_price'];
+            $grossPrice = $rate[0]['gross_price'];
         }
 
         return $grossPrice;
@@ -720,7 +722,7 @@ class ProductsTable extends AppTable
         if (empty($rate)) {
             $netPrice = $grossPrice;
         } else {
-            $netPrice = $rate[0][0]['net_price'];
+            $netPrice = $rate[0]['net_price'];
         }
 
         return $netPrice;

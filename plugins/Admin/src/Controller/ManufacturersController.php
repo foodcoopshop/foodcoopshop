@@ -298,8 +298,8 @@ class ManufacturersController extends AdminAppController
             $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturers']['id_manufacturer'], false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturers']['id_manufacturer'], false);
-            $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
-            $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
+            $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0]['sumDepositDelivered'];
+            $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
             if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturers[$i]['Manufacturers']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             }

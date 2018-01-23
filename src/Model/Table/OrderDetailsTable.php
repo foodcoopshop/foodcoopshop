@@ -123,7 +123,7 @@ class OrderDetailsTable extends AppTable
         $orderDetails = $statement->execute($params);
         
         if (isset($orderDetails[0])) {
-            return $orderDetails[0][0]['sumOrderDetail'];
+            return $orderDetails[0]['sumOrderDetail'];
         } else {
             return 0;
         }

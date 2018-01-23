@@ -82,7 +82,7 @@ class PaymentsTable extends AppTable
             'order' => ['Payments.date_add' => 'DESC'],
         ]);
 
-        return $paymentSum[0][0]['sumManufacturerMoneyDeposit'];
+        return $paymentSum[0]['sumManufacturerMoneyDeposit'];
     }
 
     /**
@@ -133,6 +133,6 @@ class PaymentsTable extends AppTable
             'conditions' => $conditions
         ]);
 
-        return $paymentSum[0][0]['SumAmount'];
+        return $paymentSum[0]['SumAmount'];
     }
 }
