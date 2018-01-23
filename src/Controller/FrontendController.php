@@ -26,21 +26,6 @@ use Cake\ORM\TableRegistry;
 class FrontendController extends AppController
 {
 
-    /**
-     * @param ServerRequest $request
-     * @param Response $response
-     * @return
-     */
-    /*
-    public function __construct(ServerRequest $request = null, Response $response = null, $name = null, $eventManager = null, $components = null)
-    {
-        $defaultUrl = Configure::read('AppConfig.slugHelper')->getAllProducts();
-        $redirectUrl = ! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $defaultUrl;
-        $this->components['AppAuth']['logoutRedirect'] = $redirectUrl;
-        return parent::__construct($request, $response, $name, $eventManager, $components);
-    }
-    */
-
     public function isAuthorized($user)
     {
         return true;
