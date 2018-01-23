@@ -73,7 +73,6 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
     protected static function resetTestDatabaseData()
     {
         self::$dbConnection = ConnectionManager::get('test');
-        pr(self::$dbConnection);
         self::$testDumpDir = ROOT . DS .  'tests' . DS . 'test_files' . DS . 'config' . DS . 'sql' . DS;
         self::importDump(self::$testDumpDir . 'test-db-data.sql');
     }
