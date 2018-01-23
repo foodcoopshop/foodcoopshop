@@ -57,11 +57,11 @@ return [
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS.'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
-        'folder.migrations' => APP . 'Config' . DS . 'sql' . DS . 'migrations',
-        'folder.invoices' => APP . 'files_private'. DS . 'invoices',
-        'folder.order_lists' => APP . 'files_private' . DS .'order_lists',
-        'folder.invoices_with_current_year_and_month' => APP . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
-        'folder.order_lists_with_current_year_and_month' => APP . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
+        'folder.migrations' => ROOT . 'config' . DS . 'sql' . DS . 'migrations',
+        'folder.invoices' => ROOT . 'files_private'. DS . 'invoices',
+        'folder.order_lists' => ROOT . 'files_private' . DS .'order_lists',
+        'folder.invoices_with_current_year_and_month' => ROOT . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
+        'folder.order_lists_with_current_year_and_month' => ROOT . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
         
         'manufacturerComponensationInfoText' => 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.',
         /**
