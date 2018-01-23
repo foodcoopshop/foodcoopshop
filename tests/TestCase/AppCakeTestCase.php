@@ -274,12 +274,12 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
     protected function changeConfiguration($configKey, $newValue)
     {
         $this->loginAsSuperadmin();
-        $configuration = $this->Configuration->find('first', [
+        $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configuration.active' => APP_ON,
                 'Configuration.name' => $configKey
             ]
-        ]);
+        ])->first();
         $this->browser->post('/admin/configurations/edit/'.$configuration['Configurations']['id_configuration'], [
             'Configurations' => [
                 'value' => $newValue

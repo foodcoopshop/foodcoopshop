@@ -94,14 +94,14 @@ class CustomersTable extends AppTable
      */
     public function isCustomerPassword($customerId, $hashedPassword)
     {
-        $customer = $this->find('first', [
+        $customer = $this->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ],
             'fields' => [
                 'Customers.passwd'
             ]
-        ]);
+        ])->first();
 
         if ($hashedPassword == $customer['Customers']['passwd']) {
             return true;
@@ -189,11 +189,11 @@ class CustomersTable extends AppTable
         $mm = ClassRegistry::init('Manufacturers');
 
         $mm->recursive = 1;
-        $manufacturer = $mm->find('first', [
+        $manufacturer = $mm->find('all', [
             'conditions' => [
                 'Addresses.email' => $customer['Customers']['email']
             ]
-        ]);
+        ])->first();
 
         return $manufacturer;
     }
@@ -204,11 +204,11 @@ class CustomersTable extends AppTable
      */
     public function getManufacturerByCustomerId($customerId)
     {
-        $customer = $this->find('first', [
+        $customer = $this->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ]
-        ]);
+        ])->first();
         if (!empty($customer)) {
             return $this->getManufacturerRecord($customer);
         }

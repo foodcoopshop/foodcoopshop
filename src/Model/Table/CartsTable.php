@@ -44,12 +44,12 @@ class CartsTable extends AppTable
     public function getCart($customerId)
     {
         $this->recursive = - 1;
-        $cart = $this->find('first', [
+        $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
                 'Carts.id_customer' => $customerId
             ]
-        ]);
+        ])->first();
         if (empty($cart)) {
             $this->id = null;
             $cart2save = [

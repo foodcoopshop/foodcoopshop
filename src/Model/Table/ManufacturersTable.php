@@ -254,11 +254,11 @@ class ManufacturersTable extends AppTable
         $cm = ClassRegistry::init('Customers');
 
         $cm->recursive = 1;
-        $customer = $cm->find('first', [
+        $customer = $cm->find('all', [
             'conditions' => [
                 'Customers.email' => $manufacturer['Addresses']['email']
             ]
-        ]);
+        ])->first();
 
         if (empty($customer['AddressCustomer']['id_address'])) {
             return $customer;
@@ -277,11 +277,11 @@ class ManufacturersTable extends AppTable
      */
     public function getCustomerByManufacturerId($manufacturerId)
     {
-        $manufacturer = $this->find('first', [
+        $manufacturer = $this->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
-        ]);
+        ])->first();
         if (!empty($manufacturer)) {
             return $this->getCustomerRecord($manufacturer);
         }

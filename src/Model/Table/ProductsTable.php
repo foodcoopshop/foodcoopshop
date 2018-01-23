@@ -221,11 +221,11 @@ class ProductsTable extends AppTable
             $ids = $this->getProductIdAndAttributeId($productId);
 
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->DepositProduct->find('first', [
+                $oldDeposit = $this->DepositProduct->find('all', [
                     'conditions' => [
                         'DepositProduct.id_product_attribute' => $ids['attributeId']
                     ]
-                ]);
+                ])->first();
 
                 if (empty($oldDeposit)) {
                     $this->DepositProduct->id = null; // force new insert
@@ -239,11 +239,11 @@ class ProductsTable extends AppTable
                 ];
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->DepositProduct->find('first', [
+                $oldDeposit = $this->DepositProduct->find('all', [
                     'conditions' => [
                         'DepositProduct.id_product' => $productId
                     ]
-                ]);
+                ])->first();
 
                 if (empty($oldDeposit)) {
                     $this->DepositProduct->id = null; // force new insert
@@ -823,11 +823,11 @@ class ProductsTable extends AppTable
     public function deleteProductAttribute($productId, $attributeId, $oldProduct)
     {
 
-        $pac = $this->ProductAttributes->ProductAttributeCombination->find('first', [
+        $pac = $this->ProductAttributes->ProductAttributeCombination->find('all', [
             'conditions' => [
                 'ProductAttributeCombination.id_product_attribute' => $attributeId
             ]
-        ]);
+        ])->first();
         $productAttributeId = $pac['ProductAttributeCombinations']['id_product_attribute'];
 
         $this->ProductAttributes->deleteAll([
@@ -941,11 +941,11 @@ class ProductsTable extends AppTable
             'quantity' => $defaultQuantity
         ]);
 
-        $newProduct = $this->find('first', [
+        $newProduct = $this->find('all', [
             'conditions' => [
                 'Products.id_product' => $newProductId
             ]
-        ]);
+        ])->first();
         return $newProduct;
     }
 }

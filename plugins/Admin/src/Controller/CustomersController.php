@@ -52,11 +52,11 @@ class CustomersController extends AdminAppController
             )));
         }
 
-        $oldCustomer = $this->Customer->find('first', array(
+        $oldCustomer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId
             )
-        ));
+        ))->first();
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
         if ($this->AppAuth->getGroupId() < $oldCustomer['Customers']['id_default_group']) {
@@ -174,11 +174,11 @@ class CustomersController extends AdminAppController
         $customerId = $this->AppAuth->getUserId();
 
         $this->Customer->recursive = 1;
-        $unsavedCustomer = $this->Customer->find('first', array(
+        $unsavedCustomer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId
             )
-        ));
+        ))->first();
 
         $this->set('title_for_layout', 'Profil ändern');
 
@@ -262,11 +262,11 @@ class CustomersController extends AdminAppController
         ));
 
         $this->Customer->recursive = - 1;
-        $customer = $this->Customer->find('first', array(
+        $customer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId
             )
-        ));
+        ))->first();
 
         $statusText = 'deaktiviert';
         $actionLogType = 'customer_set_inactive';
@@ -315,11 +315,11 @@ class CustomersController extends AdminAppController
         $customerId = $this->params['data']['customerId'];
         $customerComment = htmlspecialchars_decode($this->params['data']['customerComment']);
 
-        $oldCustomer = $this->Customer->find('first', array(
+        $oldCustomer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId
             )
-        ));
+        ))->first();
 
         $customerAddress2update = array(
             'comment' => $customerComment

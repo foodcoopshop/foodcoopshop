@@ -32,12 +32,12 @@ class ProductsController extends FrontendController
         $this->Product = TableRegistry::get('Products');
         $productId = (int) $this->params['pass'][0];
 
-        $product = $this->Product->find('first', [
+        $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId,
                 'Products.active' => APP_ON
             ]
-        ]);
+        ])->first();
         if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->user()

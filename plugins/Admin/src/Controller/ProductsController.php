@@ -38,11 +38,11 @@ class ProductsController extends AdminAppController
                 if (!empty($this->params['data']['productId'])) {
                     $ids = $this->Product->getProductIdAndAttributeId($this->params['data']['productId']);
                     $productId = $ids['productId'];
-                    $product = $this->Product->find('first', array(
+                    $product = $this->Product->find('all', array(
                         'conditions' => array(
                             'Products.id_product' => $productId
                         )
-                    ));
+                    ))->first();
                     if (empty($product)) {
                         return false;
                     }
@@ -72,11 +72,11 @@ class ProductsController extends AdminAppController
                     if (!isset($productId)) {
                         return false;
                     }
-                    $product = $this->Product->find('first', array(
+                    $product = $this->Product->find('all', array(
                         'conditions' => array(
                             'Products.id_product' => $productId
                         )
-                    ));
+                    ))->first();
                     if (!empty($product) && $product['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
                         return true;
                     }
@@ -133,11 +133,11 @@ class ProductsController extends AdminAppController
             )));
         }
 
-        $product = $this->Product->find('first', array(
+		$product = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+		))->first();
 
         // delete db entries
         $this->Product->Image->deleteAll(array(
@@ -169,11 +169,11 @@ class ProductsController extends AdminAppController
         $filename = $this->params['data']['filename'];
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-        $product = $this->Product->find('first', array(
+        $product = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         if ($product['Images']['id_image'] == '') {
             // product does not yet have image => create the necessary record
@@ -223,11 +223,11 @@ class ProductsController extends AdminAppController
 
         // get new data
         $this->Product->recursive = 4;
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
             if ($productAttribute['ProductAttributeCombinations']['id_product_attribute'] == $productAttributeId) {
@@ -246,21 +246,21 @@ class ProductsController extends AdminAppController
 
     public function addProductAttribute($productId, $productAttributeId)
     {
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         $this->Product->addProductAttribute($productId, $productAttributeId);
 
         // get new data
         $this->Product->recursive = 3; // to get product attribute combination => Attribute
-        $newProduct = $this->Product->find('first', array(
+        $newProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
         foreach ($newProduct['ProductAttributes'] as $productAttribute) {
             if ($productAttribute['ProductAttributeCombinations']['id_attribute'] == $productAttributeId) {
                 $productAttributeIdForHighlighting = $productAttribute['ProductAttributeCombinations']['id_product_attribute'];
@@ -288,11 +288,11 @@ class ProductsController extends AdminAppController
         }
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
 
         if (empty($manufacturer)) {
             throw new MissingActionException('manufacturer not existing');
@@ -316,11 +316,11 @@ class ProductsController extends AdminAppController
         $taxId = (int) $this->params['data']['taxId'];
 
         $this->Product->recursive = 2; // to get ProductAttributeShop
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         if ($taxId != $oldProduct['Products']['id_tax']) {
             $product2update = array(
@@ -356,11 +356,11 @@ class ProductsController extends AdminAppController
             }
 
             $this->Tax = TableRegistry::get('Taxs');
-            $tax = $this->Tax->find('first', array(
+            $tax = $this->Tax->find('all', array(
                 'conditions' => array(
                     'Taxes.id_tax' => $taxId
                 )
-            ));
+            ))->first();
 
             if (! empty($tax)) {
                 $taxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($tax['Taxes']['rate']);
@@ -403,7 +403,7 @@ class ProductsController extends AdminAppController
         $selectedCategories[] = Configure::read('AppConfig.categoryAllProducts'); // always add 'alle-produkte'
         $selectedCategories = array_unique($selectedCategories);
 
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
@@ -418,11 +418,11 @@ class ProductsController extends AdminAppController
         $selectedCategoryNames = array();
         foreach ($selectedCategories as $selectedCategory) {
             // only add if entry of passed id exists in category lang table
-            $oldCategory = $this->Category->find('first', array(
+            $oldCategory = $this->Category->find('all', array(
                 'conditions' => array(
                     'Categories.id_category' => $selectedCategory
                 )
-            ));
+            ))->first();
             if (! empty($oldCategory)) {
                 // do not track "alle-produkte"
                 if ($selectedCategory != Configure::read('AppConfig.categoryAllProducts')) {
@@ -455,11 +455,11 @@ class ProductsController extends AdminAppController
         $productId = $ids['productId'];
 
         $this->Product->recursive = 3; // for attribute lang
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         if ($ids['attributeId'] > 0) {
             // override values for messages
@@ -507,11 +507,11 @@ class ProductsController extends AdminAppController
         $productId = $ids['productId'];
 
         $this->Product->recursive = 3; // for attribute lang
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         if ($ids['attributeId'] > 0) {
             // override values for messages
@@ -561,11 +561,11 @@ class ProductsController extends AdminAppController
         $productId = $ids['productId'];
 
         $this->Product->recursive = 3; // for attribute lang
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         try {
             $this->Product->changeDeposit(
@@ -621,11 +621,11 @@ class ProductsController extends AdminAppController
 
         $productId = $this->params['data']['productId'];
 
-        $oldProduct = $this->Product->find('first', array(
+        $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         try {
             $this->Product->ProductLang->changeName(
@@ -729,12 +729,12 @@ class ProductsController extends AdminAppController
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if ($manufacturerId > 0) {
-            $manufacturer = $this->Manufacturer->find('first', array(
+            $manufacturer = $this->Manufacturer->find('all', array(
                 'conditions' => array(
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ),
                 'fields' => array('Manufacturers.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
-            ));
+            ))->first();
             $this->set('manufacturer', $manufacturer);
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             $this->set('variableMemberFee', $variableMemberFee);
@@ -760,18 +760,18 @@ class ProductsController extends AdminAppController
 
         $this->Product->changeDefaultAttributeId($productId, $productAttributeId);
 
-        $product = $this->Product->find('first', array(
+        $product = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
-        $productAttribute = $this->Product->ProductAttributes->find('first', array(
+        $productAttribute = $this->Product->ProductAttributes->find('all', array(
             'conditions' => array(
                 'ProductAttributes.id_product_attribute' => $productAttributeId
             ),
             'recursive' => 3
-        ));
+        ))->first();
 
         $message = 'Die Standard-Variante des Produktes "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombinations']['Attributes']['name'] . '" geändert.';
         $this->Flash->success($message);
@@ -804,11 +804,11 @@ class ProductsController extends AdminAppController
                 AND p.id_product = " . $productId . ";";
         $result = $this->Product->query($sql);
 
-        $product = $this->Product->find('first', array(
+        $product = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         $statusText = 'ab sofort nicht mehr als "neu" angezeigt';
         $actionLogType = 'product_set_to_old';
@@ -836,11 +836,11 @@ class ProductsController extends AdminAppController
             )
         );
 
-        $product = $this->Product->find('first', array(
+        $product = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
             )
-        ));
+        ))->first();
 
         $statusText = 'deaktiviert';
         $actionLogType = 'product_set_inactive';

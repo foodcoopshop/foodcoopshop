@@ -206,11 +206,11 @@ class CartsControllerTest extends AppCakeTestCase
          * START check order
          */
         $this->Order->recursive = 2;
-        $order = $this->Order->find('first', [
+        $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
             ]
-        ]);
+        ])->first();
         $this->assertNotEquals([], $order, 'order not correct');
         $this->assertEquals($order['Orders']['id_order'], $orderId, 'order id not correct');
         $this->assertEquals($order['Orders']['id_customer'], $this->browser->getLoggedUserId(), 'order customer_id not correct');
@@ -251,11 +251,11 @@ class CartsControllerTest extends AppCakeTestCase
     public function testShopOrder()
     {
         $this->loginAsSuperadmin();
-        $testCustomer = $this->Customer->find('first', [
+        $testCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
-        ]);
+        ])->first();
         $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.customerId'));
         $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customers']['name'] . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
@@ -297,11 +297,11 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatusAfterFinish()
     {
-        $cart = $this->Cart->find('first', [
+        $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => 1
             ]
-        ]);
+        ])->first();
         $this->assertEquals($cart['Cart']['status'], 0, 'cake cart status wrong');
     }
 
@@ -337,12 +337,12 @@ class CartsControllerTest extends AppCakeTestCase
         $ids = $this->Product->getProductIdAndAttributeId($productId);
 
         // get changed product
-        $stockAvailable = $this->StockAvailable->find('first', [
+        $stockAvailable = $this->StockAvailable->find('all', [
             'conditions' => [
                 'StockAvailables.id_product' => $ids['productId'],
                 'StockAvailables.id_product_attribute' => $ids['attributeId']
             ]
-        ]);
+        ])->first();
 
         // stock available check of changed product
         $this->assertEquals($stockAvailable['StockAvailables']['quantity'], $result, 'stockavailable quantity wrong');

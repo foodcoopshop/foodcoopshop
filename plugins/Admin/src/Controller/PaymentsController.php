@@ -71,12 +71,12 @@ class PaymentsController extends AdminAppController
     public function previewEmail($paymentId, $approval)
     {
 
-        $payment = $this->Payment->find('first', array(
+        $payment = $this->Payment->find('all', array(
             'conditions' => array(
                 'Payments.id' => $paymentId,
                 'Payments.type' => 'product'
             )
-        ));
+        ))->first();
         if (empty($payment)) {
             throw new MissingActionException('payment not found');
         }
@@ -109,12 +109,12 @@ class PaymentsController extends AdminAppController
 
         $this->setFormReferer();
 
-        $unsavedPayment = $this->Payment->find('first', array(
+        $unsavedPayment = $this->Payment->find('all', array(
             'conditions' => array(
                 'Payments.id' => $paymentId,
                 'Payments.type' => 'product'
             )
-        ));
+        ))->first();
 
         if (empty($unsavedPayment)) {
             throw new MissingActionException('payment not found');
@@ -253,11 +253,11 @@ class PaymentsController extends AdminAppController
             if ($customerId > 0) {
                 $userType = 'customer';
                 $this->Customer->recursive = - 1;
-                $customer = $this->Customer->find('first', array(
+                $customer = $this->Customer->find('all', array(
                     'conditions' => array(
                         'Customers.id_customer' => $customerId
                     )
-                ));
+                ))->first();
                 if (empty($customer)) {
                     $msg = 'customer id not correct: ' . $customerId;
                     $this->log($msg);
@@ -274,11 +274,11 @@ class PaymentsController extends AdminAppController
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
                 $this->Manufacturer->recursive = - 1;
-                $manufacturer = $this->Manufacturer->find('first', array(
+                $manufacturer = $this->Manufacturer->find('all', array(
                     'conditions' => array(
                         'Manufacturers.id_manufacturer' => $manufacturerId
                     )
-                ));
+                ))->first();
 
                 if (empty($manufacturer)) {
                     $msg = 'manufacturer id not correct: ' . $manufacturerId;
@@ -307,11 +307,11 @@ class PaymentsController extends AdminAppController
             'member_fee'
         ))) {
             $this->Customer->recursive = - 1;
-            $customer = $this->Customer->find('first', array(
+            $customer = $this->Customer->find('all', array(
                 'conditions' => array(
                     'Customers.id_customer' => $customerId
                 )
-            ));
+            ))->first();
             if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
                 $message .= ' für ' . $customer['Customers']['name'];
             }
@@ -390,12 +390,12 @@ class PaymentsController extends AdminAppController
 
         $paymentId = $this->params['data']['paymentId'];
 
-        $payment = $this->Payment->find('first', array(
+        $payment = $this->Payment->find('all', array(
             'conditions' => array(
                 'Payments.id' => $paymentId,
                 'Payments.approval <> ' . APP_ON
             )
-        ));
+        ))->first();
 
         if (empty($payment)) {
             $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
@@ -536,11 +536,11 @@ class PaymentsController extends AdminAppController
     {
         $this->Customer->hasMany['Payments']['conditions'][] = 'Payments.type IN ("' . join('", "', $this->allowedPaymentTypes) . '")';
 
-        $customer = $this->Customer->find('first', array(
+        $customer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $this->getCustomerId()
             )
-        ));
+        ))->first();
 
         $payments = array();
         if (!empty($customer['Payments'])) {

@@ -30,11 +30,11 @@ class OrdersController extends AdminAppController
 
     public function recalculateOrderDetailPricesInOrder($orderId)
     {
-        $order = $this->Order->find('first', array(
+        $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId
             )
-        ));
+        ))->first();
         $order['OrderDetails']['id_order'] = $orderId;
         $this->Order->recalculateOrderDetailPricesInOrder($order);
     }
@@ -46,11 +46,11 @@ class OrdersController extends AdminAppController
         $orderId = $this->params['data']['orderId'];
         $orderComment = htmlspecialchars_decode(strip_tags(trim($this->params['data']['orderComment']), '<strong><b>'));
 
-        $oldOrder = $this->Order->find('first', array(
+        $oldOrder = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId
             )
-        ));
+        ))->first();
 
         $order2update = array(
             'comment' => $orderComment
@@ -98,14 +98,14 @@ class OrdersController extends AdminAppController
         $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->params->query['url']);
 
         if ($orderId > 0) {
-            $order = $this->Order->find('first', array(
+            $order = $this->Order->find('all', array(
                 'conditions' => array(
                     'Orders.id_order' => $orderId
                 ),
                 'order' => array(
                     'Orders.date_add' => 'DESC'
                 )
-            ));
+            ))->first();
 
             $newDate = Configure::read('AppConfig.timeHelper')->getDateForShopOrder(Configure::read('AppConfig.timeHelper')->getCurrentDay());
             $order2update = array(
@@ -164,11 +164,11 @@ class OrdersController extends AdminAppController
         $orderState = $this->params['data']['orderState'];
 
         foreach ($orderIds as $orderId) {
-            $oldOrder = $this->Order->find('first', array(
+            $oldOrder = $this->Order->find('all', array(
                 'conditions' => array(
                     'Orders.id_order' => $orderId
                 )
-            ));
+            ))->first();
 
             // update table order
             $this->Order->id = $orderId;
@@ -295,11 +295,11 @@ class OrdersController extends AdminAppController
 
         $this->Customer = TableRegistry::get('Customers');
         $this->Customer->recursive = - 1;
-        $shopOrderCustomer = $this->Customer->find('first', array(
+        $shopOrderCustomer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId
             )
-        ));
+        ))->first();
         if (! empty($shopOrderCustomer)) {
             $this->request->session()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
@@ -316,11 +316,11 @@ class OrdersController extends AdminAppController
         $orderId = $this->params['data']['orderId'];
         $date = $this->params['data']['date'];
 
-        $oldOrder = $this->Order->find('first', array(
+        $oldOrder = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId
             )
-        ));
+        ))->first();
 
         $order2update = array(
             'date_add' => $date

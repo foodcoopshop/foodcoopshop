@@ -60,11 +60,11 @@ class OrderDetailsController extends AdminAppController
     private function checkOrderDetailIdAccess($orderDetailId)
     {
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
-            $orderDetail = $this->OrderDetail->find('first', array(
+            $orderDetail = $this->OrderDetail->find('all', array(
                 'conditions' => array(
                     'OrderDetails.id_order_detail' => $orderDetailId
                 )
-            ));
+            ))->first();
             if (!empty($orderDetail)) {
                 if ($this->AppAuth->isManufacturer() && $orderDetail['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
                     return true;
@@ -285,7 +285,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         $this->OrderDetail->recursive = 2;
-        $oldOrderDetail = $this->OrderDetail->find('first', array(
+        $oldOrderDetail = $this->OrderDetail->find('all', array(
             'conditions' => array(
                 'OrderDetails.id_order_detail' => $orderDetailId
             ),
@@ -295,7 +295,7 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers',
                 'Products.Manufacturers.Address'
             )
-        ));
+        ))->first();
 
         $productPrice = $oldOrderDetail['OrderDetails']['total_price_tax_incl'] / $oldOrderDetail['OrderDetails']['product_quantity'] * $productQuantity;
 
@@ -373,7 +373,7 @@ class OrderDetailsController extends AdminAppController
 
         $productPrice = floatval($productPrice);
 
-        $oldOrderDetail = $this->OrderDetail->find('first', array(
+        $oldOrderDetail = $this->OrderDetail->find('all', array(
             'conditions' => array(
                 'OrderDetails.id_order_detail' => $orderDetailId
             ),
@@ -383,7 +383,7 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturer',
                 'Products.Manufacturer.Address'
             )
-        ));
+        ))->first();
 
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetails']['product_quantity']);
 
@@ -450,7 +450,7 @@ class OrderDetailsController extends AdminAppController
 
         $flashMessage = '';
         foreach ($orderDetailIds as $orderDetailId) {
-            $orderDetail = $this->OrderDetail->find('first', array(
+            $orderDetail = $this->OrderDetail->find('all', array(
                 'conditions' => array(
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ),
@@ -462,7 +462,7 @@ class OrderDetailsController extends AdminAppController
                     'Products.Manufacturer.Address',
                     'ProductAttributes.StockAvailable'
                 )
-            ));
+            ))->first();
 
             $message = 'Produkt "' . $orderDetail['OrderDetails']['product_name'] . '" (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($orderDetail['OrderDetails']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Orders']['id_order'] . ' vom ' . Configure::read('AppConfig.timeHelper')->formatToDateNTimeLong($orderDetail['Orders']['date_add']) . ' wurde erfolgreich storniert';
 
@@ -557,7 +557,7 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->OrderDetailTax->save($odt2save);
 
         // update sum in orders
-        $newOrderDetail = $this->OrderDetail->find('first', array(
+        $newOrderDetail = $this->OrderDetail->find('all', array(
             'conditions' => array(
                 'OrderDetails.id_order_detail' => $oldOrderDetail['OrderDetails']['id_order_detail']
             ),
@@ -568,7 +568,7 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturer',
                 'ProductAttribute.StockAvailable'
             )
-        ));
+        ))->first();
 
         $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($newOrderDetail);
 

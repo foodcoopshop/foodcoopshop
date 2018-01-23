@@ -39,11 +39,11 @@ class TaxesController extends AdminAppController
         $this->setFormReferer();
 
         if ($taxId > 0) {
-            $unsavedTax = $this->Tax->find('first', array(
+            $unsavedTax = $this->Tax->find('all', array(
                 'conditions' => array(
                     'Taxes.id_tax' => $taxId
                 )
-            ));
+            ))->first();
         } else {
             // default value
             $unsavedTax = array(

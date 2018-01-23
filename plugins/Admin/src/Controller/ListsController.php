@@ -76,11 +76,11 @@ class ListsController extends AdminAppController
                     return;
                 }
 
-                $manufacturer = $this->Manufacturer->find('first', array(
+                $manufacturer = $this->Manufacturer->find('all', array(
                     'conditions' => array(
                         'Manufacturers.id_manufacturer' => $manufacturerId
                     )
-                ));
+                ))->first();
 
                 $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('AppConfig.folder.order_lists'), '', $name);
                 $customerListLink = str_replace($matches[1], 'Mitglied', $productListLink);

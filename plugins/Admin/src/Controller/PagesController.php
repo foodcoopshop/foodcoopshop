@@ -60,11 +60,11 @@ class PagesController extends AdminAppController
         $this->set('mainPagesForDropdown', $this->Page->getMainPagesForDropdown($pageId));
 
         if ($pageId > 0) {
-            $unsavedPage = $this->Page->find('first', array(
+            $unsavedPage = $this->Page->find('all', array(
                 'conditions' => array(
                     'Pages.id_page' => $pageId
                 )
-            ));
+            ))->first();
         } else {
             // default values for new pages
             $unsavedPage = array(

@@ -69,11 +69,11 @@ class ManufacturersController extends AdminAppController
             $manufacturerId = $this->AppAuth->getManufacturerId();
         } else {
             $this->recursive = -1;
-            $manufacturer = $this->Manufacturer->find('first', array(
+            $manufacturer = $this->Manufacturer->find('all', array(
                 'conditions' => array(
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 )
-            ));
+            ))->first();
             $manufacturerId = $manufacturer['Manufacturers']['id_manufacturer'];
         }
 
@@ -93,11 +93,11 @@ class ManufacturersController extends AdminAppController
         $this->setFormReferer();
 
         if ($manufacturerId > 0) {
-            $unsavedManufacturer = $this->Manufacturer->find('first', array(
+            $unsavedManufacturer = $this->Manufacturer->find('all', array(
                 'conditions' => array(
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 )
-            ));
+            ))->first();
 
             $_SESSION['KCFINDER'] = array(
                 'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
@@ -238,11 +238,11 @@ class ManufacturersController extends AdminAppController
         }
 
         $this->Manufacturer->recursive = - 1;
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
 
         $message = 'Der Hersteller "' . $manufacturer['Manufacturers']['name'] . '" wurde erfolgreich ' . $statusText;
         $message .= '.';
@@ -316,11 +316,11 @@ class ManufacturersController extends AdminAppController
     public function sendInvoice($manufacturerId, $from, $to)
     {
         $this->Manufacturer->recursive = 2; // for email
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
 
         // generate and save PDF - should be done here because count of results will be checked
         $product_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
@@ -393,21 +393,21 @@ class ManufacturersController extends AdminAppController
 
     private function getOptionBulkOrdersAllowed($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
         return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
     }
 
     private function getOptionVariableMemberFee($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
         return $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
     }
 
@@ -416,11 +416,11 @@ class ManufacturersController extends AdminAppController
         Configure::read('AppConfig.timeHelper')->recalcDeliveryDayDelta();
 
         $this->Manufacturer->recursive = 2; // for email
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
 
         // generate and save PDF - should be done here because count of results will be checked
         $productResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
@@ -494,11 +494,11 @@ class ManufacturersController extends AdminAppController
 
         $this->setFormReferer();
 
-        $unsavedManufacturer = $this->Manufacturer->find('first', array(
+        $unsavedManufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
 
         if (empty($unsavedManufacturer)) {
             throw new MissingActionException('manufacturer does not exist');
@@ -732,11 +732,11 @@ class ManufacturersController extends AdminAppController
      */
     public function getAllowedOrderStates($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
 
         $this->set('manufacturer', $manufacturer);
 

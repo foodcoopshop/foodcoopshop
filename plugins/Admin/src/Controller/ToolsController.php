@@ -115,11 +115,11 @@ class ToolsController extends AdminAppController
 
         $this->loadModel($objectClass);
 
-        $object = $this->$objectClass->find('first', array(
+        $object = $this->$objectClass->find('all', array(
             'conditions' => array(
                 $objectClass . '.' . $this->$objectClass->primaryKey => $id
             )
-        ));
+        ))->first();
 
         die(json_encode(array(
             'status' => 1,

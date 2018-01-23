@@ -271,11 +271,11 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         }
 
         $this->Order->recursive = 2;
-        $order = $this->Order->find('first', array(
+        $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $this->mockOrder['Orders']['id_order']
             )
-        ));
+        ))->first();
         return $order;
     }
 
@@ -284,11 +284,11 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
 
         $this->Order->recursive = 2;
-        $order = $this->Order->find('first', array(
+        $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId
             )
-        ));
+        ))->first();
 
         $this->assertEquals(0, count($order['OrderDetails']), 'order detail was not deleted properly');
     }
@@ -306,11 +306,11 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->Order->recursive = 2;
-        $order = $this->Order->find('first', array(
+        $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId
             )
-        ));
+        ))->first();
 
         return $order;
     }

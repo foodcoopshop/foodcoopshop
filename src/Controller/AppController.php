@@ -128,12 +128,12 @@ class AppController extends Controller
             $cookie = $this->Cookie->read('remember_me_cookie');
             if (isset($cookie['email']) && isset($cookie['passwd'])) { // not set in cronjobs
                 $this->Customer = TableRegistry::get('Customers');
-                $customer = $this->Customer->find('first', [
+                $customer = $this->Customer->find('all', [
                     'conditions' => [
                         'Customers.email' => $cookie['email'],
                         'Customers.passwd' => $cookie['passwd']
                     ]
-                ]);
+                ])->first();
                 if ($customer && ! $this->AppAuth->login($customer['Customers'])) {
                     $this->redirect($this->AppAuth->logout());
                 }
@@ -142,11 +142,11 @@ class AppController extends Controller
 
         if ($this->AppAuth->isManufacturer()) {
             $this->Manufacturer = TableRegistry::get('Manufacturers');
-            $manufacturer = $this->Manufacturer->find('first', [
+            $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
                 ]
-            ]);
+            ])->first();
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
@@ -161,11 +161,11 @@ class AppController extends Controller
     protected function renewAuthSession()
     {
         $this->Customer = TableRegistry::get('Customers');
-        $customer = $this->Customer->find('first', [
+        $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()
             ]
-        ]);
+        ])->first();
         if (! empty($customer)) {
             $this->AppAuth->login($customer['Customers']);
         }

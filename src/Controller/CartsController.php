@@ -105,11 +105,11 @@ class CartsController extends FrontendController
         $manufacturers = [];
         foreach ($orderDetails as $orderDetail) {
             $this->Product->recursive = 2;
-            $product = $this->Product->find('first', [
+            $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $orderDetail['OrderDetails']['product_id']
                 ]
-            ]);
+            ])->first();
             // avoid extra db request and attach taxes manually to order details
             foreach ($orderDetailsTax as $tax) {
                 if ($tax['id_order_detail'] == $orderDetail['OrderDetails']['id_order_detail']) {
@@ -182,12 +182,12 @@ class CartsController extends FrontendController
             $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
 
             $this->Product->recursive = 2;
-            $product = $this->Product->find('first', [
+            $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
                 ],
                 'fields' => ['Products.*', '!'.$this->Product->getManufacturerHolidayConditions().' as IsHolidayActive']
-            ]);
+            ])->first();
             $products[] = $product;
 
             $stockAvailableQuantity = $product['StockAvailables']['quantity'];
@@ -207,11 +207,11 @@ class CartsController extends FrontendController
                         // stock available check for attribute
                         if ($stockAvailableQuantity < $ccp['amount']) {
                             $this->Attribute = TableRegistry::get('Attributes');
-                            $attribute = $this->Attribute->find('first', [
+                            $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute['ProductAttributeCombinations']['id_attribute']
                                 ]
-                            ]);
+                            ])->first();
                             $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute['Attributes']['name'] . '" des Produktes "' . $product['ProductLangs']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                             $cartErrors[$ccp['productId']][] = $message;
                         }
@@ -439,11 +439,11 @@ class CartsController extends FrontendController
         $this->Manufacturer->recursive = 1;
 
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
-            $manufacturer = $this->Manufacturer->find('first', [
+            $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ]
-            ]);
+            ])->first();
 
             $depositSum = 0;
             $productSum = 0;
@@ -481,12 +481,12 @@ class CartsController extends FrontendController
         $orderId = (int) $this->params['pass'][0];
 
         $this->Order = TableRegistry::get('Orders');
-        $order = $this->Order->find('first', [
+        $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId,
                 'Orders.id_customer' => $this->AppAuth->getUserId()
             ]
-        ]);
+        ])->first();
         if (empty($order)) {
             throw new MissingActionException('order not found');
         }
@@ -607,14 +607,14 @@ class CartsController extends FrontendController
         $this->Product = TableRegistry::get('Products');
         $this->Product->recursive = 3;
         $this->Product->Behaviors->load('Containable');
-        $product = $this->Product->find('first', [
+        $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
             ],
             'contain' => [
                 'ProductLangs', 'StockAvailables', 'ProductAttributes', 'ProductAttributes.StockAvailable', 'ProductAttributes.ProductAttributeCombination.Attribute'
             ]
-        ]);
+        ])->first();
 
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         $combinedAmount = $amount;

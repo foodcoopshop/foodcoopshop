@@ -85,11 +85,11 @@ class DepositsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
         $this->set('manufacturer', $manufacturer);
 
         $this->OrderDetail = TableRegistry::get('OrderDetails');
@@ -169,11 +169,11 @@ class DepositsController extends AdminAppController
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
-        $manufacturer = $this->Manufacturer->find('first', array(
+        $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
             )
-        ));
+        ))->first();
         $this->set('manufacturer', $manufacturer);
 
         $this->Payment = TableRegistry::get('Payments');

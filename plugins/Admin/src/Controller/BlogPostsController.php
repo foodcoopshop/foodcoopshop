@@ -32,11 +32,11 @@ class BlogPostsController extends AdminAppController
                 }
                 // manufacturer owner check
                 if ($this->AppAuth->isManufacturer()) {
-                    $blogPost = $this->BlogPost->find('first', array(
+                    $blogPost = $this->BlogPost->find('all', array(
                         'conditions' => array(
                             'BlogPosts.id_blog_post' => $this->params['pass'][0]
                         )
-                    ));
+                    ))->first();
                     if ($blogPost['BlogPosts']['id_manufacturer'] != $this->AppAuth->getManufacturerId()) {
                         return false;
                     }
@@ -67,11 +67,11 @@ class BlogPostsController extends AdminAppController
         );
 
         if ($blogPostId > 0) {
-            $unsavedBlogPost = $this->BlogPost->find('first', array(
+            $unsavedBlogPost = $this->BlogPost->find('all', array(
                 'conditions' => array(
                     'BlogPosts.id_blog_post' => $blogPostId
                 )
-            ));
+            ))->first();
             // default value
             $unsavedBlogPost['BlogPosts']['update_modified_field'] = APP_ON;
         } else {

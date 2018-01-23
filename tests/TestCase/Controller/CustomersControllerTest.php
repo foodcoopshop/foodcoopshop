@@ -49,9 +49,9 @@ class CustomersControllerTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all');
         $this->assertEmailLogs($emailLogs[0], 'Anfrage für neues Passwort für FoodCoop Test', ['bitte klicke auf folgenden Link, um dein neues Passwort zu generieren'], [Configure::read('test.loginEmailCustomer')]);
 
-        $customer = $this->Customer->find('first', [
+        $customer = $this->Customer->find('all', [
             'email' => Configure::read('test.loginEmailCustomer')
-        ]);
+        ])->first();
 
         $this->browser->get($this->Slug->getApproveNewPassword('non-existing-code'));
         $this->assert404NotFoundHeader();
@@ -180,11 +180,11 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Deine Registrierung war erfolgreich.', $response);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/registrierung/abgeschlossen');
 
-        $customer = $this->Customer->find('first', [
+        $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.email' => $customerEmail
             ]
-        ]);
+        ])->first();
 
         // check customer record
         $this->assertEquals((bool) Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customers']['active'], 'saving field active failed');

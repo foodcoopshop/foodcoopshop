@@ -42,11 +42,11 @@ class CategoriesController extends AdminAppController
         $this->set('categoriesForSelect', $categoriesForSelect);
 
         if ($categoryId > 0) {
-            $unsavedCategory = $this->Category->find('first', array(
+            $unsavedCategory = $this->Category->find('all', array(
                 'conditions' => array(
                     'Categories.id_category' => $categoryId
                 )
-            ));
+            ))->first();
         } else {
             $unsavedCategory = array(
                 'Categories' => array(

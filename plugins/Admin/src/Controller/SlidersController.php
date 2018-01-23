@@ -33,11 +33,11 @@ class SlidersController extends AdminAppController
         $this->setFormReferer();
 
         if ($sliderId > 0) {
-            $unsavedSlider = $this->Slider->find('first', array(
+            $unsavedSlider = $this->Slider->find('all', array(
                 'conditions' => array(
                     'Sliders.id_slider' => $sliderId
                 )
-            ));
+            ))->first();
             // default value
             $unsavedSlider['Sliders']['update_modified_field'] = APP_ON;
         } else {

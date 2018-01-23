@@ -33,12 +33,12 @@ class ConfigurationsController extends AdminAppController
     {
         $this->setFormReferer();
 
-        $unsavedConfiguration = $this->Configuration->find('first', array(
+        $unsavedConfiguration = $this->Configuration->find('all', array(
             'conditions' => array(
-                'Configuration.id_configuration' => $configurationId,
-                'Configuration.active' => APP_ON
+                'id_configuration' => $configurationId,
+                'active' => APP_ON
             )
-        ));
+        ))->first();
 
         if (empty($unsavedConfiguration)) {
             throw new MissingActionException('configuration not found');
@@ -131,11 +131,11 @@ class ConfigurationsController extends AdminAppController
     {
         $this->set('configurations', $this->Configuration->getConfigurations());
         $this->Tax = TableRegistry::get('Taxs');
-        $defaultTax = $this->Tax->find('first', array(
+        $defaultTax = $this->Tax->find('all', array(
             'conditions' => array(
                 'Taxes.id_tax' => Configure::read('AppConfig.defaultTaxId')
             )
-        ));
+        ))->first();
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {

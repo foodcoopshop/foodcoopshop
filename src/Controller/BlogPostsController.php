@@ -33,12 +33,12 @@ class BlogPostsController extends FrontendController
         switch ($this->action) {
             case 'detail':
                 $blogPostId = (int) $this->params['pass'][0];
-                $blogPost = $this->BlogPost->find('first', [
+                $blogPost = $this->BlogPost->find('all', [
                     'conditions' => [
                         'BlogPosts.id_blog_post' => $blogPostId,
                         'BlogPosts.active' => APP_ON
                     ]
-                ]);
+                ])->first();
                 if (!empty($blogPost) && !$this->AppAuth->user()
                     && ($blogPost['BlogPosts']['is_private'] || (isset($blogPost['Manufacturers']) && $blogPost['Manufacturers']['is_private']))
                     ) {
@@ -57,9 +57,9 @@ class BlogPostsController extends FrontendController
         ];
         $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
-        $blogPost = $this->BlogPost->find('first', [
+        $blogPost = $this->BlogPost->find('all', [
             'conditions' => $conditions
-        ]);
+        ])->first();
 
         if (empty($blogPost)) {
             throw new MissingActionException('blogPost not found');
@@ -101,12 +101,12 @@ class BlogPostsController extends FrontendController
             $manufacturerId = (int) $this->params['manufacturerSlug'];
             $this->Manufacturer = TableRegistry::get('Manufacturers');
             $this->Manufacturer->recursive = 1;
-            $manufacturer = $this->Manufacturer->find('first', [
+            $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId,
                     'Manufacturers.active' => APP_ON
                 ]
-            ]);
+            ])->first();
             if (empty($manufacturer)) {
                 throw new MissingActionException('manufacturer not found or not active');
             }

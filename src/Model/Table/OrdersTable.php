@@ -158,14 +158,14 @@ class OrdersTable extends AppTable
 
         // get new sums
         $this->OrderDetails->recursive = - 1;
-        $orderDetails = $this->OrderDetails->find('first', [
+        $orderDetails = $this->OrderDetails->find('all', [
             'fields' => [
                 'SUM(OrderDetails.total_price_tax_excl) AS sumPriceExcl',
                 'SUM(OrderDetails.total_price_tax_incl) AS sumPriceIncl',
                 'SUM(OrderDetails.deposit) AS sumDeposit'
             ],
             'group' => 'OrderDetails.id_order HAVING OrderDetails.id_order = ' . $orderId
-        ]);
+        ])->first();
 
         // if last order_detail was deleted, $orderDetails is empty => avoid notices
         if (empty($orderDetails)) {

@@ -96,11 +96,11 @@ class ProductLangTest extends AppCakeTestCase
         foreach ($products as $product) {
             $productId = key($product);
             $this->ProductLang->recursive = -1;
-            $changedProduct = $this->ProductLang->find('first', array(
+            $changedProduct = $this->ProductLang->find('all', array(
                 'conditions' => array(
                     'ProductLangs.id_product' => $productId,
                 )
-            ));
+            ))->first();
             $this->assertEquals($expectedResults['name'], $changedProduct['ProductLangs']['name'], 'changing the name did not work');
             $this->assertEquals($expectedResults['unity'], $changedProduct['ProductLangs']['unity'], 'changing the unity did not work');
             $this->assertEquals($expectedResults['description'], $changedProduct['ProductLangs']['description'], 'changing the description did not work');

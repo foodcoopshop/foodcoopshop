@@ -33,12 +33,12 @@ class ManufacturersController extends FrontendController
             case 'detail':
                 $manufacturerId = (int) $this->params['pass'][0];
                 $this->Manufacturer->recursive = -1;
-                $manufacturer = $this->Manufacturer->find('first', [
+                $manufacturer = $this->Manufacturer->find('all', [
                     'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
                         'Manufacturers.active' => APP_ON
                     ]
-                ]);
+                ])->first();
                 if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer['Manufacturers']['is_private']) {
                     $this->AppAuth->deny($this->action);
                 }
@@ -89,10 +89,10 @@ class ManufacturersController extends FrontendController
             'Manufacturers.id_manufacturer' => $manufacturerId,
             'Manufacturers.active' => APP_ON
         ];
-        $manufacturer = $this->Manufacturer->find('first', [
+        $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'fields' => ['Manufacturers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
-        ]);
+        ])->first();
 
         if (empty($manufacturer)) {
             throw new MissingActionException('manufacturer not found or not active');

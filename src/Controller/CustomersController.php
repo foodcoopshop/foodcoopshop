@@ -131,11 +131,11 @@ class CustomersController extends FrontendController
         }
 
         $this->Customer->recursive = -1;
-        $customer = $this->Customer->find('first', [
+        $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.change_password_code' => $changePasswordCode
             ]
-        ]);
+        ])->first();
 
         if (empty($customer)) {
             throw new MissingActionException('change password code not found');

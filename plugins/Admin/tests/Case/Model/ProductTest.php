@@ -449,12 +449,12 @@ class ProductTest extends AppCakeTestCase
                 $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
                 $contain = array('ProductAttributes.StockAvailable');
             }
-            $changedProduct = $this->Product->find('first', array(
+            $changedProduct = $this->Product->find('all', array(
                 'conditions' => array(
                     'Products.id_product' => $productId
                 ),
                 'contain' => $contain
-            ));
+            ))->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $result = $changedProduct['StockAvailables']['quantity'];
             } else {
@@ -480,11 +480,11 @@ class ProductTest extends AppCakeTestCase
                 $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
             }
 
-            $changedProduct = $this->Product->find('first', array(
+            $changedProduct = $this->Product->find('all', array(
                 'conditions' => array(
                     'Products.id_product' => $productId
                 )
-            ));
+            ))->first();
 
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct['DepositProduct'];
@@ -512,12 +512,12 @@ class ProductTest extends AppCakeTestCase
                 $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
                 $contain = array('ProductAttributes.ProductAttributeShop');
             }
-            $changedProduct = $this->Product->find('first', array(
+            $changedProduct = $this->Product->find('all', array(
                 'conditions' => array(
                     'Products.id_product' => $productId
                 ),
                 'contain' => $contain
-            ));
+            ))->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct['ProductShop'];
             } else {
@@ -536,11 +536,11 @@ class ProductTest extends AppCakeTestCase
                 $expectedStatus = $forceUseThisStatus;
             }
             $this->Product->recursive = -1;
-            $changedProduct = $this->Product->find('first', array(
+            $changedProduct = $this->Product->find('all', array(
                 'conditions' => array(
                     'Products.id_product' => $productId,
                 )
-            ));
+            ))->first();
             $this->assertEquals($expectedStatus, $changedProduct['Products']['active'], 'changing the active flag did not work');
         }
     }

@@ -39,11 +39,11 @@ class AttributesController extends AdminAppController
         $this->setFormReferer();
 
         if ($attributeId > 0) {
-            $unsavedAttribute = $this->Attribute->find('first', array(
+            $unsavedAttribute = $this->Attribute->find('all', array(
                 'conditions' => array(
                     'Attributes.id_attribute' => $attributeId
                 )
-            ));
+            ))->first();
             $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
             $unsavedAttribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         } else {
