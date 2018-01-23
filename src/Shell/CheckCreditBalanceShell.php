@@ -15,6 +15,11 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+namespace App\Shell;
+
+use Cake\Core\Configure;
+
 class CheckCreditBalanceShell extends AppShell
 {
 
@@ -34,8 +39,6 @@ class CheckCreditBalanceShell extends AppShell
         $this->initSimpleBrowser(); // for loggedUserId
 
         $this->startTimeLogging();
-
-        App::uses('AppEmail', 'Lib');
 
         $this->Customer->dropManufacturersInNextFind();
         $this->Customer->recursive = -1;

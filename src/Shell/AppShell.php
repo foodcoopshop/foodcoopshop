@@ -1,7 +1,10 @@
 <?php
 
-App::uses('Shell', 'Console');
-App::uses('AppSimpleBrowser', 'Lib/SimpleBrowser');
+namespace App\Shell;
+
+use App\Lib\SimpleBrowser\AppSimpleBrowser;
+use Cake\Console\Shell;
+use Cake\Core\Configure;
 
 /**
  * AppShell
@@ -37,11 +40,12 @@ class AppShell extends Shell
 
         error_reporting(0); // disable all error messages
 
+        /*
         $dbMigration = $this->Tasks->load('DbMigration');
         switch ($dbMigration->execute($this)) {
             case -2:  // DB unusable, can't run.
             case -1:  // Update fail made DB unusable, can't run
-                $this->error('DB unusable', 'A DB update left the DB in an unusable state. Contact developers to recover from that...');
+                $this->abort('DB unusable', 'A DB update left the DB in an unusable state. Contact developers to recover from that...');
                 exit();
 
             case 1:  // DB was updated, try to run in a new shell, then exit
@@ -55,6 +59,7 @@ class AppShell extends Shell
                 $this->out('Seems like everything went fine.');
                 exit();
         }
+        */
     }
 
     public function startTimeLogging()

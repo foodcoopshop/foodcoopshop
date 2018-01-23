@@ -18,6 +18,11 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+namespace App\Shell;
+
+use Cake\Core\Configure;
+
 class EmailOrderReminderShell extends AppShell
 {
 

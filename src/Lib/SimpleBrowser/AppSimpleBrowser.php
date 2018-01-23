@@ -1,9 +1,13 @@
 <?php
 
-App::uses('Controller', 'Controller');
-App::uses('View', 'View');
-App::uses('SlugHelper', 'View/Helper');
-App::uses('Customers', 'Model');
+namespace App\Lib\SimpleBrowser;
+
+use App\View\Helper\SlugHelper;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+use Cake\View\View;
+use SimpleBrowser;
 
 /**
  * AppSimpleBrowser
@@ -36,9 +40,9 @@ class AppSimpleBrowser extends SimpleBrowser
         parent::__construct();
 
         $Controller = new Controller();
-        $View = new View($Controller);
+        $View = new View();
         $this->Slug = new SlugHelper($View);
-        $this->Customer = new Customer();
+        $this->Customer = TableRegistry::get('Customers');
 
         $this->setConnectionTimeout(300); // 5 min should be enough
         $this->baseUrl = Configure::read('AppConfig.cakeServerName');
@@ -101,11 +105,11 @@ class AppSimpleBrowser extends SimpleBrowser
     public function getLoggedUser()
     {
         $this->Customer->recursive = - 1;
-        $user = $this->Customer->find('first', [
+        $user = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.email' => $this->loginEmail
             ]
-        ]);
+        ])->first();
         return $user;
     }
 
@@ -113,7 +117,7 @@ class AppSimpleBrowser extends SimpleBrowser
     {
         $loggedUser = $this->getLoggedUser();
         if (! empty($loggedUser)) {
-            return $loggedUser['Customers']['id_customer'];
+            return $loggedUser->id_customer;
         }
         return 0;
     }

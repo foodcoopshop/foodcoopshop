@@ -446,7 +446,7 @@ class ActionLogsTable extends AppTable
                 'object_type' => 'blog_posts'
             ]
         ],
-        'Payments => [
+        'Payments' => [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'payments'

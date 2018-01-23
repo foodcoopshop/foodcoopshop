@@ -1,8 +1,4 @@
 <?php
-namespace App\Shell;
-
-use Cake\Utility\Folder;
-
 /**
  * NpmPostInstallShell
  *
@@ -18,6 +14,11 @@ use Cake\Utility\Folder;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+namespace App\Shell;
+
+use Cake\Filesystem\Folder;
+
 class NpmPostInstallShell extends AppShell
 {
 

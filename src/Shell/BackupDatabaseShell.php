@@ -15,14 +15,16 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('CakeNumber', 'Utility');
+namespace App\Shell;
+
+use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
+use Cake\I18n\Number;
+use Cake\Mailer\Email;
+use Cake\ORM\TableRegistry;
 
 class BackupDatabaseShell extends AppShell
 {
-
-    public $uses = [
-        'ActionLogs'
-    ];
 
     public function main()
     {
@@ -31,19 +33,15 @@ class BackupDatabaseShell extends AppShell
         ini_set('max_execution_time', 300);
         ini_set('memory_limit', '256M');
 
+        $this->ActionLog = TableRegistry::get('ActionLogs');
+        
         $this->startTimeLogging();
 
         $this->initSimpleBrowser(); // for loggedUserId
 
-        App::uses('ConnectionManager', 'Model');
-        $dbConfig = ConnectionManager::getDataSource('default')->config;
+        $dbConfig = ConnectionManager::getConfig('default');
 
-        // tables whose data should not be dumped
-        $ignoredTables = [
-            //$dbConfig['prefix'] . 'name_of_ignored_table',
-        ];
-
-        $backupdir = APP . DS . 'files_private' . DS . 'db-backups';
+        $backupdir = ROOT . DS . 'files_private' . DS . 'db-backups';
         $filename = 'db-backup-' . date('Y-m-d_H-i-s', time()) . '.sql';
 
         if (! is_dir($backupdir)) {
@@ -54,32 +52,26 @@ class BackupDatabaseShell extends AppShell
             }
         }
 
-        $ignoredTableString = ' ';
-        foreach ($ignoredTables as $ignoredTable) {
-            $ignoredTableString .= '--ignore-table=' . $dbConfig['database'] . '.' . $ignoredTable . ' ';
-        }
-
         $cmdString = Configure::read('AppConfig.mysqlDumpCommand');
-        $cmdString .= " -u " . $dbConfig['login'] . " -p" . $dbConfig['password'] . " --allow-keywords " . $ignoredTableString . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
+        $cmdString .= " -u " . $dbConfig['username'] . " -p" . $dbConfig['password'] . " --allow-keywords " . $ignoredTableString . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
 
         // START zip and file sql file
-        $zip = new ZipArchive();
+        $zip = new \ZipArchive();
         $zipFilename = str_replace('.sql', '.zip', $backupdir . DS . $filename);
-        $zip->open($zipFilename, ZipArchive::CREATE);
+        $zip->open($zipFilename, \ZipArchive::CREATE);
         $zip->addFile($backupdir . DS . $filename, $filename); // 2nd param for no folders in zip file
         $zip->close();
         unlink($backupdir . DS . $filename);
         // END zip and delete sql file
 
-        $message = 'Datenbank-Backup erfolgreich ('.CakeNumber::toReadableSize(filesize($zipFilename)).').';
+        $message = 'Datenbank-Backup erfolgreich ('.Number::toReadableSize(filesize($zipFilename)).').';
 
         // email zipped file
-        App::uses('CakeEmail', 'Network/Email');
-        $Email = new CakeEmail(Configure::read('debugEmailConfig'));
-        $Email->to(Configure::read('AppConfig.hostingEmail'))
-            ->subject($message . ': ' . Configure::read('AppConfig.cakeServerName'))
-            ->attachments([
+        $Email = new Email(Configure::read('debugEmailConfig'));
+        $Email->setTo(Configure::read('AppConfig.hostingEmail'))
+            ->setSubject($message . ': ' . Configure::read('AppConfig.cakeServerName'))
+            ->setAttachments([
             $zipFilename
             ])
             ->send();
