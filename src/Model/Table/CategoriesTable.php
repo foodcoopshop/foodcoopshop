@@ -23,19 +23,15 @@ class CategoriesTable extends AppTable
     public function initialize(array $config)
     {
         $this->setTable('category');
-        parent::initialize($config);
-    }
-    
-    public $actsAs = [
-        'Tree' => [
+        $this->addBehavior('Tree', [
             'left' => 'nleft',
             'right' => 'nright',
             'parent' => 'id_parent',
             'level' => 'level_depth'
-        ],
-        'Content'
-    ];
-
+        ]);
+        parent::initialize($config);
+    }
+    
     public $primaryKey = 'id_category';
 
     public $validate = [
@@ -89,6 +85,7 @@ class CategoriesTable extends AppTable
         ]);
 
         $categories = $this->find('threaded', [
+            'parentField' => 'id_parent',
             'conditions' => $conditions,
             'order' => [
                 'Categories.name' => 'ASC'
@@ -192,11 +189,12 @@ class CategoriesTable extends AppTable
 
         $tmpMenuItem = [
             'name' => $item->name . ' <span class="additional-info">(' . $productCount . ')</span>',
-            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item->id_category, $item->name)
+            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item->id_category, $item->name),
+            'children' => []
         ];
         if (! empty($item->children)) {
             foreach ($item->children as $index => $child) {
-                $tmpMenuItem->children[] = $this->buildItemForTree($child, $index);
+                $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);
             }
         }
 
