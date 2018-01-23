@@ -284,7 +284,6 @@ class OrderDetailsController extends AdminAppController
             )));
         }
 
-        $this->OrderDetail->recursive = 2;
         $oldOrderDetail = $this->OrderDetail->find('all', array(
             'conditions' => array(
                 'OrderDetails.id_order_detail' => $orderDetailId

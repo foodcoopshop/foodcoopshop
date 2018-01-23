@@ -100,7 +100,6 @@ class BlogPostsController extends FrontendController
         if (isset($this->params['manufacturerSlug'])) {
             $manufacturerId = (int) $this->params['manufacturerSlug'];
             $this->Manufacturer = TableRegistry::get('Manufacturers');
-            $this->Manufacturer->recursive = 1;
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId,

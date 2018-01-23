@@ -252,7 +252,6 @@ class PaymentsController extends AdminAppController
             $customerId = (int) $this->params['data']['customerId'];
             if ($customerId > 0) {
                 $userType = 'customer';
-                $this->Customer->recursive = - 1;
                 $customer = $this->Customer->find('all', array(
                     'conditions' => array(
                         'Customers.id_customer' => $customerId
@@ -273,7 +272,6 @@ class PaymentsController extends AdminAppController
 
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
-                $this->Manufacturer->recursive = - 1;
                 $manufacturer = $this->Manufacturer->find('all', array(
                     'conditions' => array(
                         'Manufacturers.id_manufacturer' => $manufacturerId
@@ -306,7 +304,6 @@ class PaymentsController extends AdminAppController
             'payback',
             'member_fee'
         ))) {
-            $this->Customer->recursive = - 1;
             $customer = $this->Customer->find('all', array(
                 'conditions' => array(
                     'Customers.id_customer' => $customerId

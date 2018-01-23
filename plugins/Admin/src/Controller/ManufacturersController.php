@@ -68,7 +68,6 @@ class ManufacturersController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         } else {
-            $this->recursive = -1;
             $manufacturer = $this->Manufacturer->find('all', array(
                 'conditions' => array(
                     'Manufacturers.id_manufacturer' => $manufacturerId
@@ -237,7 +236,6 @@ class ManufacturersController extends AdminAppController
             $actionLogType = 'manufacturer_set_active';
         }
 
-        $this->Manufacturer->recursive = - 1;
         $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -315,7 +313,6 @@ class ManufacturersController extends AdminAppController
 
     public function sendInvoice($manufacturerId, $from, $to)
     {
-        $this->Manufacturer->recursive = 2; // for email
         $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -415,7 +412,6 @@ class ManufacturersController extends AdminAppController
     {
         Configure::read('AppConfig.timeHelper')->recalcDeliveryDayDelta();
 
-        $this->Manufacturer->recursive = 2; // for email
         $manufacturer = $this->Manufacturer->find('all', array(
             'conditions' => array(
                 'Manufacturers.id_manufacturer' => $manufacturerId

@@ -253,7 +253,6 @@ class ManufacturersTable extends AppTable
     {
         $cm = ClassRegistry::init('Customers');
 
-        $cm->recursive = 1;
         $customer = $cm->find('all', [
             'conditions' => [
                 'Customers.email' => $manufacturer['Addresses']['email']
@@ -309,7 +308,6 @@ class ManufacturersTable extends AppTable
         if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
         }
-        $this->recursive = - 1;
         $conditions = [
             'Manufacturers.active' => APP_ON
         ];
@@ -393,7 +391,6 @@ class ManufacturersTable extends AppTable
 
     public function getForDropdown()
     {
-        $this->recursive = - 1;
         $manufacturers = $this->find('all', [
             'fields' => [
                 'Manufacturers.id_manufacturer',

@@ -42,8 +42,6 @@ class ProductAttributeCombinationsTable extends AppTable
 
     public function getCombinationCounts($attributeId)
     {
-        $this->recursive = 2;
-
         $combinations = $this->find('all', [
             'conditions' => [
                 'Attributes.id_attribute' => $attributeId

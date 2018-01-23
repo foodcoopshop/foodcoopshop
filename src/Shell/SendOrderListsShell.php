@@ -58,7 +58,6 @@ class SendOrderListsShell extends AppShell
         ]);
 
         // 2) get all orders in the given date range
-        $this->Order->recursive = 2;
         $orders = $this->Order->find('all', [
             'conditions' => [
                 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',

@@ -43,7 +43,6 @@ class CartsTable extends AppTable
 
     public function getCart($customerId)
     {
-        $this->recursive = - 1;
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
@@ -59,7 +58,6 @@ class CartsTable extends AppTable
         }
 
         $ccp = ClassRegistry::init('CartProducts');
-        $ccp->recursive = 3;
         $cartProducts = $ccp->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['Cart']['id_cart']

@@ -222,7 +222,6 @@ class ProductsController extends AdminAppController
     {
 
         // get new data
-        $this->Product->recursive = 4;
         $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
@@ -255,7 +254,6 @@ class ProductsController extends AdminAppController
         $this->Product->addProductAttribute($productId, $productAttributeId);
 
         // get new data
-        $this->Product->recursive = 3; // to get product attribute combination => Attribute
         $newProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
@@ -315,7 +313,6 @@ class ProductsController extends AdminAppController
         $productId = (int) $this->params['data']['productId'];
         $taxId = (int) $this->params['data']['taxId'];
 
-        $this->Product->recursive = 2; // to get ProductAttributeShop
         $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
@@ -454,7 +451,6 @@ class ProductsController extends AdminAppController
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
@@ -506,7 +502,6 @@ class ProductsController extends AdminAppController
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
@@ -560,7 +555,6 @@ class ProductsController extends AdminAppController
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
 
-        $this->Product->recursive = 3; // for attribute lang
         $oldProduct = $this->Product->find('all', array(
             'conditions' => array(
                 'Products.id_product' => $productId
@@ -769,8 +763,7 @@ class ProductsController extends AdminAppController
         $productAttribute = $this->Product->ProductAttributes->find('all', array(
             'conditions' => array(
                 'ProductAttributes.id_product_attribute' => $productAttributeId
-            ),
-            'recursive' => 3
+            )
         ))->first();
 
         $message = 'Die Standard-Variante des Produktes "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombinations']['Attributes']['name'] . '" geändert.';

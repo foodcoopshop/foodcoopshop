@@ -85,7 +85,6 @@ class ProductsTable extends AppTable
     public function isOwner($productId, $manufacturerId)
     {
 
-        $this->recursive = -1;
         $found = $this->find('count', [
             'conditions' => [
                 'Products.id_product' => $productId,
@@ -402,8 +401,6 @@ class ProductsTable extends AppTable
             'fields' => $pParams['fields'],
             'group' => $pParams['group']
         ], $paginator->settings);
-
-        $this->recursive = 3;
 
         // reduce data
         $this->Manufacturer->unbindModel([

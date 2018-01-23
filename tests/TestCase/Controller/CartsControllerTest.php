@@ -205,7 +205,6 @@ class CartsControllerTest extends AppCakeTestCase
         /**
          * START check order
          */
-        $this->Order->recursive = 2;
         $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId

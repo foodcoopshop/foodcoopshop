@@ -43,7 +43,6 @@ class AttributesTable extends AppTable
 
     public function getForDropdown()
     {
-        $this->recursive = 2;
         $attributes = $this->find('all', [
             'order' => [
                 'Attributes.name' => 'ASC'

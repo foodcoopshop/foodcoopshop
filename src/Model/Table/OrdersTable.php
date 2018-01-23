@@ -157,7 +157,6 @@ class OrdersTable extends AppTable
         $orderId = $order['OrderDetails']['id_order'];
 
         // get new sums
-        $this->OrderDetails->recursive = - 1;
         $orderDetails = $this->OrderDetails->find('all', [
             'fields' => [
                 'SUM(OrderDetails.total_price_tax_excl) AS sumPriceExcl',

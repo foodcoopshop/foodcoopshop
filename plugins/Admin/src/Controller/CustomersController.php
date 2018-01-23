@@ -173,7 +173,6 @@ class CustomersController extends AdminAppController
     {
         $customerId = $this->AppAuth->getUserId();
 
-        $this->Customer->recursive = 1;
         $unsavedCustomer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId
@@ -261,7 +260,6 @@ class CustomersController extends AdminAppController
             'active' => $status
         ));
 
-        $this->Customer->recursive = - 1;
         $customer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId

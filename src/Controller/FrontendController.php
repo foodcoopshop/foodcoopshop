@@ -56,7 +56,6 @@ class FrontendController extends AppController
     {
         $this->Product = TableRegistry::get('Products');
         $this->ProductAttribute = TableRegistry::get('ProductAttributes');
-        $this->ProductAttribute->recursive = 2; // for attribute lang
 
         foreach ($products as &$product) {
             $grossPrice = $this->Product->getGrossPrice($product['Products']['id_product'], $product['ProductShop']['price']);

@@ -130,7 +130,6 @@ class CustomersController extends FrontendController
             throw new MissingActionException('change password code not passed');
         }
 
-        $this->Customer->recursive = -1;
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.change_password_code' => $changePasswordCode

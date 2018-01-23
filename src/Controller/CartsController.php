@@ -104,7 +104,6 @@ class CartsController extends FrontendController
         $this->set('order', $order);
         $manufacturers = [];
         foreach ($orderDetails as $orderDetail) {
-            $this->Product->recursive = 2;
             $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $orderDetail['OrderDetails']['product_id']
@@ -181,7 +180,6 @@ class CartsController extends FrontendController
         foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
             $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
 
-            $this->Product->recursive = 2;
             $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
@@ -436,7 +434,6 @@ class CartsController extends FrontendController
         }
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $this->Manufacturer->recursive = 1;
 
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
             $manufacturer = $this->Manufacturer->find('all', [
@@ -605,7 +602,6 @@ class CartsController extends FrontendController
 
         // get product data from database
         $this->Product = TableRegistry::get('Products');
-        $this->Product->recursive = 3;
         $this->Product->Behaviors->load('Containable');
         $product = $this->Product->find('all', [
             'conditions' => [

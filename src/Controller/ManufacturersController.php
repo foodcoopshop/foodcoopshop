@@ -32,7 +32,6 @@ class ManufacturersController extends FrontendController
         switch ($this->action) {
             case 'detail':
                 $manufacturerId = (int) $this->params['pass'][0];
-                $this->Manufacturer->recursive = -1;
                 $manufacturer = $this->Manufacturer->find('all', [
                     'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -48,7 +47,6 @@ class ManufacturersController extends FrontendController
 
     public function index()
     {
-        $this->Manufacturer->recursive = 1;
 
         $conditions = [
             'Manufacturers.active' => APP_ON
@@ -84,7 +82,6 @@ class ManufacturersController extends FrontendController
     {
         $manufacturerId = (int) $this->params['pass'][0];
 
-        $this->Manufacturer->recursive = 1;
         $conditions = [
             'Manufacturers.id_manufacturer' => $manufacturerId,
             'Manufacturers.active' => APP_ON

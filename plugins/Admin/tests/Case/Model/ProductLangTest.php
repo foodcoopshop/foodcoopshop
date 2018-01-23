@@ -95,7 +95,6 @@ class ProductLangTest extends AppCakeTestCase
     {
         foreach ($products as $product) {
             $productId = key($product);
-            $this->ProductLang->recursive = -1;
             $changedProduct = $this->ProductLang->find('all', array(
                 'conditions' => array(
                     'ProductLangs.id_product' => $productId,

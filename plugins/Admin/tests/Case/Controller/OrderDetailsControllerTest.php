@@ -270,7 +270,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
             return false;
         }
 
-        $this->Order->recursive = 2;
         $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $this->mockOrder['Orders']['id_order']
@@ -283,7 +282,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
 
-        $this->Order->recursive = 2;
         $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId
@@ -305,7 +303,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->finishCart();
         $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
-        $this->Order->recursive = 2;
         $order = $this->Order->find('all', array(
             'conditions' => array(
                 'Orders.id_order' => $orderId

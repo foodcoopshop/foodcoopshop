@@ -104,7 +104,6 @@ class AppSimpleBrowser extends SimpleBrowser
 
     public function getLoggedUser()
     {
-        $this->Customer->recursive = - 1;
         $user = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.email' => $this->loginEmail

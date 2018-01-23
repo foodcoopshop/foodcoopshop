@@ -75,7 +75,6 @@ class OrdersController extends AdminAppController
             throw new MissingActionException('wrong order id set');
         }
 
-        $this->Order->recursive = 3;
         $this->Order->hasMany['OrderDetails']['order'] = array(
             'OrderDetails.product_name' => 'ASC'
         );
@@ -294,7 +293,6 @@ class OrdersController extends AdminAppController
         }
 
         $this->Customer = TableRegistry::get('Customers');
-        $this->Customer->recursive = - 1;
         $shopOrderCustomer = $this->Customer->find('all', array(
             'conditions' => array(
                 'Customers.id_customer' => $customerId

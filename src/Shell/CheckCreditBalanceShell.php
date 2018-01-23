@@ -41,7 +41,6 @@ class CheckCreditBalanceShell extends AppShell
         $this->startTimeLogging();
 
         $this->Customer->dropManufacturersInNextFind();
-        $this->Customer->recursive = -1;
         $customers = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.active' => 1

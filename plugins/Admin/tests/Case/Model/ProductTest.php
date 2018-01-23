@@ -476,7 +476,6 @@ class ProductTest extends AppCakeTestCase
             }
             $expectedDeposit = str_replace(',', '.', $expectedDeposit);
             if ($productAndAttributeId['attributeId'] > 0) {
-                $this->Product->recursive = 3;
                 $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
             }
 
@@ -535,7 +534,6 @@ class ProductTest extends AppCakeTestCase
             if ($forceUseThisStatus) {
                 $expectedStatus = $forceUseThisStatus;
             }
-            $this->Product->recursive = -1;
             $changedProduct = $this->Product->find('all', array(
                 'conditions' => array(
                     'Products.id_product' => $productId,
