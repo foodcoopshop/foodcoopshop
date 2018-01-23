@@ -2,6 +2,9 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *

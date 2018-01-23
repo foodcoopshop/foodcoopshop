@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Network\AppSession;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 
@@ -123,7 +124,11 @@ class AppTable extends Table
      */
     protected function user()
     {
-        return (boolean) CakeSession::read('Auth.User.id_customer');
+        $session = new AppSession();
+        if ($session->read('Auth.User.id_customer') !== null) {
+            return $session->read('Auth.User.id_customer');
+        }
+        return false;
     }
 
     /**
@@ -193,7 +198,7 @@ class AppTable extends Table
      */
     protected function getOrdersForProductListQuery()
     {
-        return " ORDER BY ProductLangs.name ASC, Image.id_image DESC;";
+        return " ORDER BY ProductLangs.name ASC, Images.id_image DESC;";
     }
 
     /**

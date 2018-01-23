@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -126,11 +128,11 @@ class CategoriesTable extends AppTable
         } else {
             $sql .= $this->getFieldsForProductListQuery();
         }
-        $sql .= "FROM ".$this->tablePrefix."product Product ";
+        $sql .= "FROM ".$this->tablePrefix."product Products ";
 
         if (! $filterByNewProducts) {
-            $sql .= "LEFT JOIN ".$this->tablePrefix."category_product CategoryProduct ON CategoryProduct.id_product = Product.id_product
-                 LEFT JOIN ".$this->tablePrefix."category Category ON CategoryProduct.id_category = Category.id_category ";
+            $sql .= "LEFT JOIN ".$this->tablePrefix."category_product CategoryProducts ON CategoryProducts.id_product = Products.id_product
+                 LEFT JOIN ".$this->tablePrefix."category Categories ON CategoryProducts.id_category = Categories.id_category ";
         }
 
         $sql .= $this->getJoinsForProductListQuery();
@@ -138,33 +140,34 @@ class CategoriesTable extends AppTable
 
         if (! $filterByNewProducts) {
             $params['categoryId'] = $categoryId;
-            $sql .= " AND CategoryProduct.id_category = :categoryId ";
-            $sql .= " AND Category.active = :active";
+            $sql .= " AND CategoryProducts.id_category = :categoryId ";
+            $sql .= " AND Categories.active = :active";
         }
 
         if ($filterByNewProducts) {
             $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
-            $sql .= " AND DATE_FORMAT(ProductShop.date_add, '%Y-%m-%d') > :dateAdd";
+            $sql .= " AND DATE_FORMAT(ProductShops.date_add, '%Y-%m-%d') > :dateAdd";
         }
 
         if ($keyword != '') {
             $params['keyword'] = '%' . $keyword . '%';
-            $sql .= " AND (ProductLang.name LIKE :keyword OR ProductLang.description_short LIKE :keyword) ";
+            $sql .= " AND (ProductLangs.name LIKE :keyword OR ProductLangs.description_short LIKE :keyword) ";
         }
 
         if ($productId > 0) {
             $params['productId'] = $productId;
-            $sql .= " AND Product.id_product = :productId ";
+            $sql .= " AND Products.id_product = :productId ";
         }
 
         $sql .= $this->getOrdersForProductListQuery();
         $statement = $this->getConnection()->prepare($sql);
-        $products = $statement->execute($params);
-
+        $statement->execute($params);
+        $products = $statement->fetchAll('assoc');
+        
         if (! $countMode) {
             return $products;
         } else {
-            return $products[0][0]['count'];
+            return $products[0]['count'];
         }
 
         return $products;
@@ -185,15 +188,15 @@ class CategoriesTable extends AppTable
 
     private function buildItemForTree($item, $index)
     {
-        $productCount = $this->getProductsByCategoryId($item['Categories']['id_category'], false, '', 0, true);
+        $productCount = $this->getProductsByCategoryId($item->id_category, false, '', 0, true);
 
         $tmpMenuItem = [
-            'name' => $item['Categories']['name'] . ' <span class="additional-info">(' . $productCount . ')</span>',
-            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item['Categories']['id_category'], $item['Categories']['name'])
+            'name' => $item->name . ' <span class="additional-info">(' . $productCount . ')</span>',
+            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item->id_category, $item->name)
         ];
-        if (! empty($item['children'])) {
-            foreach ($item['children'] as $index => $child) {
-                $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);
+        if (! empty($item->children)) {
+            foreach ($item->children as $index => $child) {
+                $tmpMenuItem->children[] = $this->buildItemForTree($child, $index);
             }
         }
 

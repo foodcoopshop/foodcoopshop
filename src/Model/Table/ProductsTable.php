@@ -662,8 +662,9 @@ class ProductsTable extends AppTable
             'productId' => $productId
         ];
         $statement = $this->getConnection()->prepare($sql);
-        $rate = $statement->execute($params);
-
+        $statement->execute($params);
+        $rate = $statement->fetchAll('assoc');
+        
         // if tax == 0 %, tax is empty
         if (empty($rate)) {
             $newNetPrice = $oldNetPrice * (1 + $oldTaxRate / 100);
@@ -684,7 +685,8 @@ class ProductsTable extends AppTable
             'productId' => $productId
         ];
         $statement = $this->getConnection()->prepare($sql);
-        $rate = $statement->execute($params);
+        $statement->execute($params);
+        $rate = $statement->fetchAll('assoc');
 
         // if tax == 0% rate is empty...
         if (empty($rate)) {
@@ -711,7 +713,8 @@ class ProductsTable extends AppTable
             'grossPrice' => $grossPrice
         ];
         $statement = $this->getConnection()->prepare($sql);
-        $rate = $statement->execute($params);
+        $statement->execute($params);
+        $rate = $statement->fetchAll('assoc');
         
         // if tax == 0% rate is empty...
         if (empty($rate)) {

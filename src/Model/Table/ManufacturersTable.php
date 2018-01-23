@@ -444,7 +444,8 @@ class ManufacturersTable extends AppTable
         }
 
         $statement = $this->getConnection()->prepare($sql);
-        $products = $statement->execute($params);
+        $statement->execute($params);
+        $products = $statement->fetchAll('assoc');
         
         return $products;
     }

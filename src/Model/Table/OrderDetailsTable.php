@@ -89,7 +89,8 @@ class OrderDetailsTable extends AppTable
         ];
         
         $statement = $this->getConnection()->prepare($sql);
-        $orderDetails = $statement->execute($params);
+        $statement->execute($params);
+        $orderDetails = $statement->fetchAll('assoc');
         
         return $orderDetails;
     }
