@@ -108,7 +108,7 @@ class SendInvoicesShell extends AppShell
         $this->browser->doFoodCoopShopLogout();
 
         // START send email to accounting employee
-        $accountingEmail = Configure::read('AppConfig.db_config_FCS_ACCOUNTING_EMAIL');
+        $accountingEmail = Configure::read('AppConfigDb.FCS_ACCOUNTING_EMAIL');
         if ($accountingEmail != '') {
             App::uses('AppEmail', 'Lib');
             $email = new AppEmail();

@@ -154,7 +154,7 @@ class DbMigration
      */
     public function doDbMigrations()
     {
-        $db = Configure::read('AppConfig.db_config_FCS_DB_VERSION');
+        $db = Configure::read('AppConfigDb.FCS_DB_VERSION');
         if (strlen($db) == 0) {  // the DB version config value doesn't exist
             $avail = ['0']; // do the very first DB migration
         } else if (!is_numeric($db)) {

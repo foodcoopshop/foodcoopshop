@@ -19,10 +19,10 @@
 
 <p>
     <?php
-    if (Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER');
+    if (Configure::read('AppConfigDb.FCS_PLATFORM_OWNER') != '') {
+        echo Configure::read('AppConfigDb.FCS_PLATFORM_OWNER');
     } else {
-        echo Configure::read('AppConfig.db_config_FCS_APP_NAME');
+        echo Configure::read('AppConfigDb.FCS_APP_NAME');
         echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
     }
     ?>
@@ -53,7 +53,7 @@
 <p>2.7. Der Betreiber hat das Recht, Produkte, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
 
 <?php
-if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFeeForTermsOfUse > 0) {
+if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFeeForTermsOfUse > 0) {
     ?>
     <p>2.8. Für jede über die Plattform verkaufte Ware oder Dienstleistung steht dem Betreiber eine Provision in Höhe von <?php echo $variableMemberFeeForTermsOfUse; ?>% des Umsatzes zuzüglich einer allfälligen Umsatzsteuer zu. Der Betreiber ist berechtigt, diesen Betrag unmittelbar vor der Auszahlung an den Hersteller einzubehalten. Der Hersteller bekommt die Rechnungen der verkauften Produkte (inklusive der einbehaltenen Beträge) automatisch per E-Mail.</p>
     <?php

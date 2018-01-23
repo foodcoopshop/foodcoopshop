@@ -25,7 +25,7 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('AppConfig.db_config_FCS_APP_NAME'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('AppConfigDb.FCS_APP_NAME'); ?></title>
 
     <?php echo $this->element('jsNamespace'); ?>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>

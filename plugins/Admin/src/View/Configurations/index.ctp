@@ -101,13 +101,13 @@ $this->element('addScript', array(
         }
         ?>
         
-        <?php if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+        <?php if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
             <tr>
                 <td>
                     <b>Remote-Foodcoops</b>
                     <br /><div class="small">Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können.<br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>">Infos zum Netzwerk-Modul</a></div>
                 </td>
-                <?php if (!Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
+                <?php if (!Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
                     echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), array(
@@ -194,7 +194,7 @@ $this->element('addScript', array(
             <td><?php echo $versionFoodCoopShop; ?></td>
         </tr>
 
-        <?php if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+        <?php if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
         <tr>
             <td>Version Netzwerk-Modul</td>
             <td><?php echo $versionNetworkPlugin; ?></td>

@@ -108,7 +108,7 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $categoriesForMenu = [];
-        if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Category = TableRegistry::get('Categories');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true, '', 0, true);
@@ -182,7 +182,7 @@ class FrontendController extends AppController
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 
-            $shoppingLimitReached = Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE') * - 1;
+            $shoppingLimitReached = Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
         }
 

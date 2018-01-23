@@ -74,7 +74,7 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 // Produktauflistung End
 
-if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
+if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     // TODO do that in controller where it belongs to :-)
     App::uses('Manufacturers', 'Model');
     $m = new Manufacturer();

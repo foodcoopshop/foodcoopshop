@@ -103,7 +103,7 @@ class ConfigurationsController extends AdminAppController
 
         switch ($configurationName) {
             case 'FCS_REGISTRATION_EMAIL_TEXT':
-                if (Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                if (Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                     $template = 'customer_registered_active';
                 } else {
                     $template = 'customer_registered_inactive';
@@ -138,7 +138,7 @@ class ConfigurationsController extends AdminAppController
         ));
         $this->set('defaultTax', $defaultTax);
 
-        if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+        if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
             $this->helpers[] = 'Network.Network';
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');

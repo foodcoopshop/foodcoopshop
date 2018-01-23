@@ -28,7 +28,7 @@
             'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
             ));
         }
-        if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', array(
                 'script' =>
                     Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
@@ -79,7 +79,7 @@
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
-            <?php if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) { ?>
+            <?php if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) { ?>
                     <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
             <?php } ?>
         </ul>
@@ -144,7 +144,7 @@
         echo '</td>';
 
         echo '<td style="max-width: 200px;">';
-        if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
+        if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
             echo '<span class="order-comment-wrapper">';
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),

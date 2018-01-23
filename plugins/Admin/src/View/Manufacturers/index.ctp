@@ -66,7 +66,7 @@ echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', 'Lieferpause'
 echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th title="Summe offener Bestellungen im oben angegebenen Zeitraum">O.B</th>';
 echo '<th>Opt.</th>';
-if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
 }
 echo '<th></th>';
@@ -207,7 +207,7 @@ foreach ($manufacturers as $manufacturer) {
     );
     echo '</td>';
 
-    if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+    if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
             echo $manufacturer['Manufacturers']['variable_member_fee'].'%';
         echo '</td>';
@@ -257,7 +257,7 @@ if ($depositSum !== null) {
     $colspan--;
     echo '<td><b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b></td>';
 }
-if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
 if (Configure::read('AppConfig.allowManualOrderListSending')) {

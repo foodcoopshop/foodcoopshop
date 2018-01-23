@@ -218,16 +218,14 @@ locale_set_default('de');
 setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
 
-/*
 TableRegistry::get('Configurations')->loadConfigurations();
-if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', array(
         'routes' => true
     ));
 }
-if (Configure::read('AppConfig.emailErrorLoggingEnabled')) {
-    Plugin::load('EmailErrorLog', array(
-        'bootstrap' => true
-    ));
-}
-*/
+// if (Configure::read('AppConfig.emailErrorLoggingEnabled')) {
+//     Plugin::load('EmailErrorLog', array(
+//         'bootstrap' => true
+//     ));
+// }

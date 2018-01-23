@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$appAuth->user() || !Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
+if (!$appAuth->user() || !Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
     return;
 }
 ?>

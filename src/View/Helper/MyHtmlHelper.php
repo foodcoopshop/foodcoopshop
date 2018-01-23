@@ -147,7 +147,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getAddressFromAddressConfiguration()
     {
-        return Configure::read('AppConfig.db_config_FCS_APP_ADDRESS');
+        return Configure::read('AppConfigDb.FCS_APP_ADDRESS');
     }
 
     /**
@@ -155,7 +155,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getEmailFromAddressConfiguration()
     {
-        return Configure::read('AppConfig.db_config_FCS_APP_EMAIL');
+        return Configure::read('AppConfigDb.FCS_APP_EMAIL');
     }
 
     public function prepareDbTextForPDF($string)
@@ -505,14 +505,14 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
     {
         $url = Configure::read('AppConfig.folder.order_lists_with_current_year_and_month') . DS;
-        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('AppConfig.db_config_FCS_APP_NAME')) . '.pdf';
+        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('AppConfigDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
         $url = Configure::read('AppConfig.folder.invoices_with_current_year_and_month') . DS;
-        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('AppConfig.db_config_FCS_APP_NAME')) . '.pdf';
+        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('AppConfigDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 

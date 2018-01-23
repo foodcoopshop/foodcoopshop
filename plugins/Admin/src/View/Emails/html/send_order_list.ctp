@@ -53,7 +53,7 @@
                 Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern.
             </p>
 
-            <?php if (!Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
+            <?php if (!Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
             <p>
                 Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung
                 deiner Produkte zu überprüfen, musst du angemeldet sein.

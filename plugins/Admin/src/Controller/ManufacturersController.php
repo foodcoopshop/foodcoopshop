@@ -302,7 +302,7 @@ class ManufacturersController extends AdminAppController
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturers']['id_manufacturer'], false);
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0][0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0][0]['sumDepositDelivered'] - $sumDepositReturned[0][0]['sumDepositReturned'];
-            if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+            if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturers[$i]['Manufacturers']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             }
             $manufacturers[$i]['sum_open_order_detail'] = $this->OrderDetail->getOpenOrderDetailSum($manufacturer['Manufacturers']['id_manufacturer'], $dateFrom, $dateTo);
@@ -504,7 +504,7 @@ class ManufacturersController extends AdminAppController
             throw new MissingActionException('manufacturer does not exist');
         }
 
-        if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED')) {
+        if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->Network.SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
@@ -513,8 +513,8 @@ class ManufacturersController extends AdminAppController
         }
 
         // set default data if manufacturer options are null
-        if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturers']['variable_member_fee'] == '') {
-            $unsavedManufacturer['Manufacturers']['variable_member_fee'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+        if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturers']['variable_member_fee'] == '') {
+            $unsavedManufacturer['Manufacturers']['variable_member_fee'] = Configure::read('AppConfigDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         if ($unsavedManufacturer['Manufacturers']['send_order_list'] == '') {
             $unsavedManufacturer['Manufacturers']['send_order_list'] = Configure::read('AppConfig.defaultSendOrderList');
@@ -562,7 +562,7 @@ class ManufacturersController extends AdminAppController
             // values that are the same as default values => null
             if (!$this->AppAuth->isManufacturer()) {
                 // only admins and superadmins are allowed to change variable_member_fee
-                if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturers']['variable_member_fee'] == Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturers']['variable_member_fee'] == Configure::read('AppConfigDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
                     $this->request->data['Manufacturers']['variable_member_fee'] = null;
                 }
             }
@@ -610,7 +610,7 @@ class ManufacturersController extends AdminAppController
 
             $this->Manufacturer->validator()['send_order_list'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 2);
 
-            if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+            if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $this->Manufacturer->validator()['variable_member_fee'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
             }
             if (!empty($this->request->data['Manufacturers']['send_order_list_cc'])) {

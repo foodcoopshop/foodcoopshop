@@ -107,7 +107,7 @@ class CustomersController extends FrontendController
             $email = new AppEmail();
             $email->template('new_password_request_successful')
                 ->emailFormat('html')
-                ->subject('Anfrage für neues Passwort für ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
+                ->subject('Anfrage für neues Passwort für ' . Configure::read('AppConfigDb.FCS_APP_NAME'))
                 ->to($this->request->data['Customers']['email'])
                 ->viewVars([
                 'changePasswordCode' => $changePasswordCode,
@@ -147,7 +147,7 @@ class CustomersController extends FrontendController
         $email = new AppEmail();
             $email->template('new_password_set_successful')
             ->emailFormat('html')
-            ->subject('Neues Passwort für ' . Configure::read('AppConfig.db_config_FCS_APP_NAME') . ' generiert')
+            ->subject('Neues Passwort für ' . Configure::read('AppConfigDb.FCS_APP_NAME') . ' generiert')
             ->to($customer['Customers']['email'])
             ->viewVars([
                 'password' => $newPassword,
@@ -254,8 +254,8 @@ class CustomersController extends FrontendController
                 if (empty($errors) && !$checkboxErrors) {
                     // save customer
                     $this->Customer->id = null;
-                    $this->request->data['Customers']['active'] = Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE');
-                    $this->request->data['Customers']['id_default_group'] = Configure::read('AppConfig.db_config_FCS_CUSTOMER_GROUP');
+                    $this->request->data['Customers']['active'] = Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE');
+                    $this->request->data['Customers']['id_default_group'] = Configure::read('AppConfigDb.FCS_CUSTOMER_GROUP');
                     $this->request->data['Customers']['terms_of_use_accepted_date'] = date('Y-m-d');
 
                     $newCustomer = $this->Customer->save($this->request->data['Customers'], [
@@ -281,7 +281,7 @@ class CustomersController extends FrontendController
 
                     // START send confirmation email to customer
                     $email = new AppEmail();
-                    if (Configure::read('AppConfig.db_config_FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                    if (Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
                         $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer['Customers']), 'mimetype' => 'application/pdf']]);
                     } else {

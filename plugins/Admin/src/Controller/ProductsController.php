@@ -742,7 +742,7 @@ class ProductsController extends AdminAppController
 
         $this->set('title_for_layout', 'Produkte');
 
-        if (Configure::read('AppConfig.db_config_FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
+        if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = TableRegistry::get('Network.SyncManufacturers');
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
@@ -813,7 +813,7 @@ class ProductsController extends AdminAppController
         $statusText = 'ab sofort nicht mehr als "neu" angezeigt';
         $actionLogType = 'product_set_to_old';
         if ($status) {
-            $statusText = 'jetzt ' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
+            $statusText = 'jetzt ' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
             $actionLogType = 'product_set_to_new';
         }
 

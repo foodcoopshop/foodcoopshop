@@ -143,7 +143,7 @@ class CategoriesTable extends AppTable
         }
 
         if ($filterByNewProducts) {
-            $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
+            $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
             $sql .= " AND DATE_FORMAT(ProductShop.date_add, '%Y-%m-%d') > :dateAdd";
         }
 

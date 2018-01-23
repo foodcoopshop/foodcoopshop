@@ -124,7 +124,7 @@
             </li>
             <li>Du siehst, für welche Produkte wir Pfand einheben. Möchtest du den
                 Pfand ändern, sag uns bitte Bescheid.</li>
-            <li><b>Neue Produkte</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
+            <li><b>Neue Produkte</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
                 href="<?php echo Configure::read('AppConfig.cakeServerName'); ?>/neue-produkte"
                 target="_blank">"Neue Produkte"</a> auf.</li>
         </ul>
@@ -339,7 +339,7 @@
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', array(
                     'class' => 'icon-with-text change-new-state change-new-state-active',
                     'id' => 'change-new-state-' . $product['Products']['id_product'],
-                    'title' => 'Produkt die nächsten ' . Configure::read('AppConfig.db_config_FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
+                    'title' => 'Produkt die nächsten ' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
                 ), 'javascript:void(0);');
             } else {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', array(

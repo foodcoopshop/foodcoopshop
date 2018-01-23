@@ -19,10 +19,10 @@
 
 <p>
     <?php
-    if (Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('AppConfig.db_config_FCS_PLATFORM_OWNER');
+    if (Configure::read('AppConfigDb.FCS_PLATFORM_OWNER') != '') {
+        echo Configure::read('AppConfigDb.FCS_PLATFORM_OWNER');
     } else {
-        echo Configure::read('AppConfig.db_config_FCS_APP_NAME');
+        echo Configure::read('AppConfigDb.FCS_APP_NAME');
         echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
     }
     ?>
@@ -71,13 +71,13 @@
 <?php if ($this->Html->paymentIsCashless()) { ?>
 <h2>6. Guthabenkonto</h2>
 
-<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('AppConfig.db_config_FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
+<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsEuro(Configure::read('AppConfigDb.FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
 
 <?php
-if (Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE') == 0) {
+if (Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE') == 0) {
     echo 'Auch bei einem negativen Kontostand sind weitere Bestellungen möglich.';
 } else {
-    echo 'Bis zu einem Kontostand von ' . $this->MyHtml->formatAsEuro(Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
+    echo 'Bis zu einem Kontostand von ' . $this->MyHtml->formatAsEuro(Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
 }
 ?>
 

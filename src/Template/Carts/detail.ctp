@@ -39,7 +39,7 @@ if (!$appAuth->termsOfUseAccepted()) {
     
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
         
-        <?php if (Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('AppConfig.manufacturerComponensationInfoText') != '') { ?>
+        <?php if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('AppConfig.manufacturerComponensationInfoText') != '') { ?>
             <p><b><?php echo Configure::read('AppConfig.manufacturerComponensationInfoText'); ?></b></p>
         <?php } ?>
 
@@ -82,7 +82,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         <div class="sc"></div>
         
         <?php
-        if (Configure::read('AppConfig.db_config_FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', ['script' =>
             Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);

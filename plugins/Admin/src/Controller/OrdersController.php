@@ -110,7 +110,7 @@ class OrdersController extends AdminAppController
             $newDate = Configure::read('AppConfig.timeHelper')->getDateForShopOrder(Configure::read('AppConfig.timeHelper')->getCurrentDay());
             $order2update = array(
                 'date_add' => $newDate,
-                'current_state' => Configure::read('AppConfig.db_config_FCS_SHOP_ORDER_DEFAULT_STATE')
+                'current_state' => Configure::read('AppConfigDb.FCS_SHOP_ORDER_DEFAULT_STATE')
             );
             $this->Order->id = $orderId;
             $this->Order->save($order2update);

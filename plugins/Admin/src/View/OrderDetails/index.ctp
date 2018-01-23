@@ -135,7 +135,7 @@ echo '</th>';
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', 'Betrag');
 echo '</th>';
-if ($groupBy == 'manufacturer' && Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+if ($groupBy == 'manufacturer' && Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
@@ -255,7 +255,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '</div>';
     echo '</td>';
 
-    if ($groupBy == 'manufacturer' && Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+    if ($groupBy == 'manufacturer' && Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
 
         echo '<td>';
@@ -351,7 +351,7 @@ if ($groupBy == 'product') {
     }
 }
 echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
-if ($groupBy == 'manufacturer' && Configure::read('AppConfig.db_config_FCS_USE_VARIABLE_MEMBER_FEE')) {
+if ($groupBy == 'manufacturer' && Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
     echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }

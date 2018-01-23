@@ -167,12 +167,12 @@ class ConfigurationsTable extends AppTable
     public function getConfigurations()
     {
         $configurations = $this->find('all', [
-            'fields' => ['Configuration.id_configuration', 'Configuration.name', 'Configuration.value', 'Configuration.type', 'Configuration.text'],
+            'fields' => ['id_configuration', 'name', 'value', 'type', 'text'],
             'conditions' => [
-                'Configuration.active' => APP_ON
+                'active' => APP_ON
             ],
             'order' => [
-                'Configuration.position' => 'ASC'
+                'position' => 'ASC'
             ]
         ]);
         return $configurations;
@@ -182,7 +182,7 @@ class ConfigurationsTable extends AppTable
     {
         $configurations = $this->getConfigurations();
         foreach ($configurations as $configuration) {
-            Configure::write('app.db_config_' . $configuration['Configurations']['name'], $configuration['Configurations']['value']);
+            Configure::write('AppConfigDb.' . $configuration->name, $configuration->value);
         }
     }
 }

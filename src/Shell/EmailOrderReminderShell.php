@@ -30,7 +30,7 @@ class EmailOrderReminderShell extends AppShell
     {
         parent::main();
 
-        if (! Configure::read('AppConfig.emailOrderReminderEnabled') || ! Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
+        if (! Configure::read('AppConfig.emailOrderReminderEnabled') || ! Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
             return;
         }
 
@@ -72,7 +72,7 @@ class EmailOrderReminderShell extends AppShell
             $Email->to($customer['Customers']['email'])
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
-                ->subject('Bestell-Erinnerung ' . Configure::read('AppConfig.db_config_FCS_APP_NAME'))
+                ->subject('Bestell-Erinnerung ' . Configure::read('AppConfigDb.FCS_APP_NAME'))
                 ->viewVars([
                   'customer' => $customer,
                   'lastOrderDayAsString' => (Configure::read('AppConfig.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'

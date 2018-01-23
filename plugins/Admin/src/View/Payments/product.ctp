@@ -15,7 +15,7 @@
 
 $helpText = '<li><b>Hallo ' . $appAuth->getUserFirstname() . '!</b></li>
         <li>Um Guthaben aufzuladen, überweise bitte mittels E-Banking oder per Erlagschein den gewünschten Betrag auf folgendes Konto:</li>
-        <li><b>' . Configure::read('AppConfig.db_config_FCS_BANK_ACCOUNT_DATA') . '</b></li>
+        <li><b>' . Configure::read('AppConfigDb.FCS_BANK_ACCOUNT_DATA') . '</b></li>
         <li>Bitte gib als Buchungstext "Guthaben-Aufladung" und deinen Namen an.</li>
         <li>Klicke dann auf ' . $this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . ' "Eingezahltes Guthaben eintragen" und gib den Betrag, den du gerade überwiesen hast, in unser System ein. Fertig.</li>
         <li>In der ersten und letzten Zeile siehst du deinen <b>aktuellen Kontostand</b>. Du bekommst eine automatische <b>Erinnerungsmail</b> zugeschickt, falls du dein Konto mal überziehst. Bestellen kannst du trotzdem.</li>

@@ -20,7 +20,7 @@ $this->element('addScript', ['script' =>
 
 <h1>Hersteller
 <?php
-if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
     echo '<span>'.count($manufacturers) . ' gefunden</span>';
 }
 ?>
@@ -59,7 +59,7 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="third-column">';
             echo $this->Html->link(
-                'Alle Produkte anzeigen' . ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
+                'Alle Produkte anzeigen' . ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']),
                 ['class' => 'btn btn-success']
             );

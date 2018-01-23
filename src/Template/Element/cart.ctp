@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('AppConfig.db_config_FCS_CART_ENABLED')) {
+if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
     return;
 }
 
@@ -56,7 +56,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             echo '<div class="credit-balance-wrapper">';
               echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">Dein Guthaben</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
             if ($shoppingLimitReached) {
-                echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('AppConfig.db_config_FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
+                echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
                 echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
                 echo 'Guthaben aufladen';
                 echo '</a></p>';

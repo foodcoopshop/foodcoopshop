@@ -38,7 +38,7 @@ class ProductsController extends FrontendController
                 'Products.active' => APP_ON
             ]
         ]);
-        if (! Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
+        if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->user()
               && (isset($product['Manufacturers']) && $product['Manufacturers']['is_private'])

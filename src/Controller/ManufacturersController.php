@@ -69,7 +69,7 @@ class ManufacturersController extends FrontendController
             throw new MissingActionException('no manufacturers available');
         }
 
-        if ($this->AppAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($this->AppAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = ClassRegistry::init('Products');
             foreach ($manufacturers as &$manufacturer) {
                 $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer'], true);
@@ -103,7 +103,7 @@ class ManufacturersController extends FrontendController
             $this->redirect($correctSlug);
         }
 
-        if (Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $products = $this->Manufacturer->getProductsByManufacturerId($manufacturerId);
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }

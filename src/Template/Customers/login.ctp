@@ -61,8 +61,8 @@ $this->element('addScript', ['script' =>
 
               echo '<div class="detail-form">';
 
-            if (Configure::read('AppConfig.db_config_FCS_AUTHENTICATION_INFO_TEXT') != '') {
-                echo '<p>'.Configure::read('AppConfig.db_config_FCS_AUTHENTICATION_INFO_TEXT').'</p>';
+            if (Configure::read('AppConfigDb.FCS_AUTHENTICATION_INFO_TEXT') != '') {
+                echo '<p>'.Configure::read('AppConfigDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
             }
 
                   echo $this->Form->hidden('antiSpam', ['value' => 'lalala']);

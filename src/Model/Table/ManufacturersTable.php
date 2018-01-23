@@ -207,7 +207,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $variableMemberFee;
         if ($variableMemberFee == '') {
-            $result = Configure::read('AppConfig.db_config_FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+            $result = Configure::read('AppConfigDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;
     }
@@ -306,7 +306,7 @@ class ManufacturersTable extends AppTable
     {
         return [];
         
-        if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
         }
         $this->recursive = - 1;
@@ -335,7 +335,7 @@ class ManufacturersTable extends AppTable
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturers']['name'];
             $additionalInfo = '';
-            if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
             }
             $holidayInfo = Configure::read('AppConfig.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
@@ -344,7 +344,7 @@ class ManufacturersTable extends AppTable
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
-                    if ($appAuth->user() || Configure::read('AppConfig.db_config_FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                    if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                         $additionalInfo .= ' - ';
                     }
                     $additionalInfo .= $holidayInfo;
