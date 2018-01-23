@@ -456,7 +456,6 @@ class ActionLogsTable extends AppTable
 
     public function customSave($type, $customerId, $objectId, $objectType, $text)
     {
-        $this->id = null;
         $data2save = [
             'type' => $type,
             'customer_id' => $customerId,
@@ -465,7 +464,7 @@ class ActionLogsTable extends AppTable
             'text' => $text,
             'date' => date('Y-m-d H:i:s')
         ];
-        $this->save($data2save);
+        $this->save($this->newEntity($data2save));
     }
 
     public function getTypesForDropdown($appAuth)
