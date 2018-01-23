@@ -475,7 +475,7 @@ class CartsController extends FrontendController
 
     public function orderSuccessful($orderId)
     {
-        $orderId = (int) $this->params['pass'][0];
+        $orderId = (int) $this->request->getParam('pass')[0];
 
         $this->Order = TableRegistry::get('Orders');
         $order = $this->Order->find('all', [

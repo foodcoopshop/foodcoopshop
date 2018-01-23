@@ -30,7 +30,7 @@ class ProductsController extends FrontendController
         parent::beforeFilter($event);
 
         $this->Product = TableRegistry::get('Products');
-        $productId = (int) $this->params['pass'][0];
+        $productId = (int) $this->request->getParam('pass')[0];
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -50,7 +50,7 @@ class ProductsController extends FrontendController
 
     public function detail()
     {
-        $productId = (int) $this->params['pass'][0];
+        $productId = (int) $this->request->getParam('pass')[0];
 
         $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
@@ -67,7 +67,7 @@ class ProductsController extends FrontendController
         $this->set('product', $product[0]);
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['ProductLangs']['name']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

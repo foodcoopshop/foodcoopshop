@@ -33,7 +33,7 @@ class PagesController extends FrontendController
         parent::beforeFilter($event);
         switch ($this->request->action) {
             case 'detail':
-                $pageId = (int) $this->params['pass'][0];
+                $pageId = (int) $this->request->getParam('pass')[0];
                 $page = $this->Page->find('all', [
                     'conditions' => [
                         'Pages.id_page' => $pageId,
@@ -95,7 +95,7 @@ class PagesController extends FrontendController
 
     public function detail()
     {
-        $pageId = (int) $this->params['pass'][0];
+        $pageId = (int) $this->request->getParam('pass')[0];
 
         $conditions = [
             'Pages.id_page' => $pageId,
@@ -140,7 +140,7 @@ class PagesController extends FrontendController
         }
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Pages']['id_page'], $page['Pages']['title']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

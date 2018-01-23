@@ -66,8 +66,8 @@ class ProductsController extends AdminAppController
                         $productId = $ids['productId'];
                     }
                     // param productId is passed as first argument of url
-                    if (!empty($this->params['pass'][0])) {
-                        $productId = $this->params['pass'][0];
+                    if (!empty($this->request->getParam('pass')[0])) {
+                        $productId = $this->request->getParam('pass')[0];
                     }
                     if (!isset($productId)) {
                         return false;

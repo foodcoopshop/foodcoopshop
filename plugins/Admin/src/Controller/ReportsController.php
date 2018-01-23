@@ -24,8 +24,8 @@ class ReportsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        if (isset($this->params['pass'][0])) {
-            switch ($this->params['pass'][0]) {
+        if (isset($this->request->getParam('pass')[0])) {
+            switch ($this->request->getParam('pass')[0]) {
                 // allow deposit for cash configuration
                 case 'deposit':
                     return $this->AppAuth->isSuperadmin();

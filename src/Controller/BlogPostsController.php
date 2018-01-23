@@ -32,7 +32,7 @@ class BlogPostsController extends FrontendController
 
         switch ($this->action) {
             case 'detail':
-                $blogPostId = (int) $this->params['pass'][0];
+                $blogPostId = (int) $this->request->getParam('pass')[0];
                 $blogPost = $this->BlogPost->find('all', [
                     'conditions' => [
                         'BlogPosts.id_blog_post' => $blogPostId,
@@ -50,7 +50,7 @@ class BlogPostsController extends FrontendController
 
     public function detail()
     {
-        $blogPostId = (int) $this->params['pass'][0];
+        $blogPostId = (int) $this->request->getParam('pass')[0];
 
         $conditions = [
             'BlogPosts.active' => APP_ON
@@ -66,7 +66,7 @@ class BlogPostsController extends FrontendController
         }
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPosts']['title']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

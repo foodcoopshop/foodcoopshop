@@ -31,7 +31,7 @@ class ManufacturersController extends FrontendController
         parent::beforeFilter($event);
         switch ($this->request->action) {
             case 'detail':
-                $manufacturerId = (int) $this->params['pass'][0];
+                $manufacturerId = (int) $this->request->getParam('pass')[0];
                 $manufacturer = $this->Manufacturer->find('all', [
                     'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -80,7 +80,7 @@ class ManufacturersController extends FrontendController
 
     public function detail()
     {
-        $manufacturerId = (int) $this->params['pass'][0];
+        $manufacturerId = (int) $this->request->getParam('pass')[0];
 
         $conditions = [
             'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -96,7 +96,7 @@ class ManufacturersController extends FrontendController
         }
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

@@ -34,7 +34,7 @@ class BlogPostsController extends AdminAppController
                 if ($this->AppAuth->isManufacturer()) {
                     $blogPost = $this->BlogPost->find('all', array(
                         'conditions' => array(
-                            'BlogPosts.id_blog_post' => $this->params['pass'][0]
+                            'BlogPosts.id_blog_post' => $this->request->getParam('pass')[0]
                         )
                     ))->first();
                     if ($blogPost['BlogPosts']['id_manufacturer'] != $this->AppAuth->getManufacturerId()) {
