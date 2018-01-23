@@ -24,6 +24,7 @@ class PagesTable extends AppTable
     public function initialize(array $config)
     {
         parent::initialize($config);
+        
         $this->addBehavior('Tree', [
             'parent' => 'id_parent'
         ]);
@@ -73,6 +74,7 @@ class PagesTable extends AppTable
     {
 
         $pages = $this->find('threaded', [
+            'parentField' => 'id_parent',
             'conditions' => $conditions,
             'order' => [
                 'Pages.menu_type' => 'DESC',
