@@ -63,7 +63,7 @@ class NpmPostInstallShell extends AppShell
 
     private function copyAdaptedKcfinderFiles()
     {
-        $kcfinderConfigDir = ROOT . 'config' . DS . 'kcfinder' . DS;
+        $kcfinderConfigDir = ROOT . DS . 'config' . DS . 'kcfinder' . DS;
 
         $adaptedFiles = [
             $kcfinderConfigDir . 'conf' . DS . 'config.php',
