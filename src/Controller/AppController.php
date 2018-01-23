@@ -46,7 +46,6 @@ class AppController extends Controller
         $this->loadComponent('String');
         $this->loadComponent('Cookie');
         $this->loadComponent('Cart');
-//         $this->loadComponent('DbMigration');
         
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
@@ -103,26 +102,6 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
         
-        /*
-        switch ($this->DbMigration->doDbMigrations()) {
-            case -1:  // always abort what is done and return home.
-                $this->redirect('/');
-                break;
-            case -2:  // abort if not home.
-                if ($this->request->here != '/') {  // went away from home?
-                    $this->redirect('/');  // return home. DB is unusable, remember?
-                }
-                break;
-            case 1:  // always abort what is done but pick up work
-                if ($this->request->is('get')) {
-                    $this->redirect($this->request->here);  // redirect to the request URL -> start all over...
-                } else { // bad luck...input is lost, do not recover from that.
-                    $this->redirect('/');
-                }
-                break;
-        }
-        */
-
         // auto login if cookie is set
         if (! $this->AppAuth->user() && $this->Cookie->read('remember_me_cookie') !== null) {
             $cookie = $this->Cookie->read('remember_me_cookie');
