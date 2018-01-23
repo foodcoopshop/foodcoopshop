@@ -39,7 +39,6 @@ class AppSimpleBrowser extends SimpleBrowser
     {
         parent::__construct();
 
-        $Controller = new Controller();
         $View = new View();
         $this->Slug = new SlugHelper($View);
         $this->Customer = TableRegistry::get('Customers');
