@@ -156,7 +156,7 @@ class CartsController extends FrontendController
             $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
             if ($ccp['amount'] == 0) {
                 $this->log('amount of cart productId ' . $ids['productId'] . ' (attributeId : ' . $ids['attributeId'] . ') was 0 and therefore removed from cart');
-                $ccp = ClassRegistry::init('CartProducts');
+                $ccp = TableRegistry::get('CartProducts');
                 $ccp->remove($ids['productId'], $ids['attributeId'], $this->AppAuth->Cart->getCartId());
                 $productWithAmount0Found = true;
             }
@@ -556,11 +556,11 @@ class CartsController extends FrontendController
             ]));
         }
 
-        $ccp = ClassRegistry::init('CartProducts');
+        $ccp = TableRegistry::get('CartProducts');
         $ccp->remove($productId, $attributeId, $cart['Cart']['id_cart']);
 
         // update cart to update field date_upd
-        $cc = ClassRegistry::init('Cart');
+        $cc = TableRegistry::get('Cart');
         $cc->id = $cart['Cart']['id_cart'];
         $cc->updateDateUpd();
 
@@ -669,7 +669,7 @@ class CartsController extends FrontendController
         // update amount if cart product already exists
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
-        $ccp = ClassRegistry::init('CartProducts');
+        $ccp = TableRegistry::get('CartProducts');
         $ccp->id = null;
         if ($existingCartProduct) {
             $ccp->id = $existingCartProduct['cartProductId'];
@@ -684,7 +684,7 @@ class CartsController extends FrontendController
         $ccp->save($cartProduct2save);
 
         // update cart to update field date_upd
-        $cc = ClassRegistry::init('Cart');
+        $cc = TableRegistry::get('Cart');
         $cc->id = $cart['Cart']['id_cart'];
         $cc->updateDateUpd();
 

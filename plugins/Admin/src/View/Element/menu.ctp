@@ -256,7 +256,7 @@ if ($appAuth->isManufacturer()) {
         )
     );
     if (date('Y-m-d') > Configure::read('AppConfig.depositForManufacturersStartDate')) {
-        $od = ClassRegistry::init('OrderDetails');
+        $od = TableRegistry::get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {
             $menu[] = array(

@@ -197,7 +197,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->user()) {
             return null;
         }
-        $cc = ClassRegistry::init('Cart');
+        $cc = TableRegistry::get('Cart');
         return $cc->getCart($this->getUserId());
     }
 }

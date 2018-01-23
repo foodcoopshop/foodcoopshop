@@ -68,7 +68,7 @@ class ManufacturersController extends FrontendController
         }
 
         if ($this->AppAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = ClassRegistry::init('Products');
+            $productModel = TableRegistry::get('Products');
             foreach ($manufacturers as &$manufacturer) {
                 $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer'], true);
             }

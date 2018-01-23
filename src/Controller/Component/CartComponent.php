@@ -78,7 +78,7 @@ class CartComponent extends Component
     public function markAsSaved()
     {
         if ($this->cart !== null) {
-            $cc = ClassRegistry::init('Cart');
+            $cc = TableRegistry::get('Cart');
             $cc->id = $this->getCartId();
             $cc->save([
                 'status' => APP_OFF

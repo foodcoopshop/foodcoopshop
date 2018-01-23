@@ -57,7 +57,7 @@ class CartsTable extends AppTable
             $cart = $this->save($cart2save);
         }
 
-        $ccp = ClassRegistry::init('CartProducts');
+        $ccp = TableRegistry::get('CartProducts');
         $cartProducts = $ccp->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['Cart']['id_cart']

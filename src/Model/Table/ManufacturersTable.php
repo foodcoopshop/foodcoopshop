@@ -251,7 +251,7 @@ class ManufacturersTable extends AppTable
      */
     public function getCustomerRecord($manufacturer)
     {
-        $cm = ClassRegistry::init('Customers');
+        $cm = TableRegistry::get('Customers');
 
         $customer = $cm->find('all', [
             'conditions' => [

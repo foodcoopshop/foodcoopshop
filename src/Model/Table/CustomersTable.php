@@ -186,7 +186,7 @@ class CustomersTable extends AppTable
      */
     public function getManufacturerRecord($customer)
     {
-        $mm = ClassRegistry::init('Manufacturers');
+        $mm = TableRegistry::get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
                 'Addresses.email' => $customer['Customers']['email']
