@@ -207,11 +207,11 @@ if (Configure::read('debug')) {
 
 // foodcoopshop
 Plugin::load('AssetCompress', ['bootstrap' => true]);
-// Plugin::load('Admin', [
-//     'bootstrap' => false,
-//     'routes' => true,
-//     'autoload' => true
-// ]);
+Plugin::load('Admin', [
+    'bootstrap' => false,
+    'routes' => true,
+    'autoload' => true
+]);
 
 date_default_timezone_set('Europe/Berlin');
 locale_set_default('de');
