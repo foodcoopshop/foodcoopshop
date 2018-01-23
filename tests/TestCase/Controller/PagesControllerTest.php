@@ -33,20 +33,18 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $testUrls = [
             $this->Slug->getHome(),
-            /*
-            $this->Slug->getManufacturerList(),
-            $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
-            $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
-            $this->Slug->getBlogList(),
+//             $this->Slug->getManufacturerList(),
+//             $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
+//             $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
+//             $this->Slug->getBlogList(),
             $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
-            $this->Slug->getProductDetail(339, 'Kartoffel'),
-            $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
-            $this->Slug->getNewPasswordRequest(),
-            $this->Slug->getPageDetail(9, 'Impressum'),
-            $this->Slug->getLogin(),
-            $this->Slug->getTermsOfUse(),
-            $this->Slug->getPrivacyPolicy()
-            */
+//             $this->Slug->getProductDetail(339, 'Kartoffel'),
+//             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
+//             $this->Slug->getNewPasswordRequest(),
+//             $this->Slug->getPageDetail(9, 'Impressum'),
+//             $this->Slug->getLogin(),
+//             $this->Slug->getTermsOfUse(),
+//             $this->Slug->getPrivacyPolicy()
         ];
         $this->assertPagesForErrors($testUrls);
     }

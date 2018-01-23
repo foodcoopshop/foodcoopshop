@@ -1,11 +1,13 @@
 <?php
 
+namespace App\Controller;
+
+use App\Controller\FrontendController;
 use App\Controller\Component\StringComponent;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-
-App::uses('FrontendController', 'Controller');
 
 /**
  * CategoriesController
@@ -78,21 +80,22 @@ class CategoriesController extends FrontendController
 
     public function detail()
     {
-        $categoryId = (int) $this->params['pass'][0];
+        $categoryId = (int) $this->request->getParam('pass')[0];
 
+        $this->Category = TableRegistry::get('Categories');
         $category = $this->Category->find('all', [
             'conditions' => [
                 'Categories.id_category' => $categoryId,
                 'Categories.active' => APP_ON,
             ]
         ])->first();
-
+        
         if (empty($category)) {
             throw new MissingActionException('category not found');
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, $category['Categories']['name']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->params['pass'][0]))) {
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, $category->name);
+        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
@@ -107,6 +110,6 @@ class CategoriesController extends FrontendController
 
         $this->set('category', $category);
 
-        $this->set('title_for_layout', $category['Categories']['name']);
+        $this->set('title_for_layout', $category->name);
     }
 }

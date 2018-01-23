@@ -43,20 +43,27 @@ class FrontendController extends AppController
         $this->ProductAttribute = TableRegistry::get('ProductAttributes');
 
         foreach ($products as &$product) {
-            $grossPrice = $this->Product->getGrossPrice($product['Products']['id_product'], $product['ProductShop']['price']);
-            $product['Products']['gross_price'] = $grossPrice;
-            $product['Products']['tax'] = $grossPrice - $product['ProductShop']['price'];
-            $product['Products']['is_new'] = $this->Product->isNew($product['ProductShop']['date_add']);
+            $grossPrice = $this->Product->getGrossPrice($product['id_product'], $product['price']);
+            $product['gross_price'] = $grossPrice;
+            $product['tax'] = $grossPrice - $product['price'];
+            $product['is_new'] = $this->Product->isNew($product['date_add']);
 
             $product['attributes'] = $this->ProductAttribute->find('all', [
                 'conditions' => [
-                    'ProductAttributes.id_product' => $product['Products']['id_product']
+                    'ProductAttributes.id_product' => $product['id_product']
+                ],
+                'contain' => [
+                    'ProductAttributeShops',
+                    'StockAvailables',
+                    'ProductAttributeCombinations.Attributes'
                 ]
-            ]);
-            foreach ($product['attributes'] as &$attribute) {
+            ])->toArray();
+            $i = 0;
+            foreach ($product['attributes'] as $attribute) {
                 $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShops']['id_product'], $attribute['ProductAttributeShops']['price']);
-                $attribute['ProductAttributeShops']['gross_price'] = $grossPrice;
-                $attribute['ProductAttributeShops']['tax'] = $grossPrice - $attribute['ProductAttributeShops']['price'];
+                $product['attributes'][$i]['ProductAttributeShops']['gross_price'] = $grossPrice;
+                $product['attributes'][$i]['ProductAttributeShops']['tax'] = $grossPrice - $attribute['ProductAttributeShops']['price'];
+                $i++;
             }
         }
 

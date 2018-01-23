@@ -141,7 +141,7 @@ class AppTable extends Table
                 ProductShops.price, ProductShops.date_add,
                 Deposits.deposit,
                 Images.id_image,
-                Manufacturers.id_manufacturer, Manufacturers.name,
+                Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 StockAvailables.quantity ";
     }
 

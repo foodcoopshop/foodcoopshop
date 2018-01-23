@@ -23,22 +23,16 @@ class ProductAttributeCombinationsTable extends AppTable
     {
         $this->setTable('product_attribute_combination');
         parent::initialize($config);
+        
+        $this->belongsTo('Attributes', [
+            'foreignKey' => 'id_attribute'
+        ]);
+        $this->belongsTo('ProductAttributes', [
+            'foreignKey' => 'id_product_attribute'
+        ]);
     }
 
     public $primaryKey = 'id_attribute';
-
-    public $actsAs = [
-        'Containable'
-    ];
-
-    public $belongsTo = [
-        'Attributes' => [
-            'foreignKey' => 'id_attribute'
-        ],
-        'ProductAttributes' => [
-            'foreignKey' => 'id_product_attribute'
-        ]
-    ];
 
     public function getCombinationCounts($attributeId)
     {

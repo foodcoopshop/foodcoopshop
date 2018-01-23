@@ -22,30 +22,26 @@ class ProductAttributesTable extends AppTable
     {
         $this->setTable('product_attribute');
         parent::initialize($config);
+        
+        $this->belongsTo('Products', [
+            'foreignKey' => 'id_product'
+        ]);
+        $this->hasOne('ProductAttributeCombinations', [
+            'foreignKey' => 'id_product_attribute'
+        ]);
+        $this->hasOne('StockAvailables', [
+            'foreignKey' => 'id_product_attribute'
+        ]);
+        $this->hasOne('DepositProductAttribute', [
+            'className' => 'Deposit',
+            'foreignKey' => 'id_product_attribute'
+        ]);
+        $this->hasOne('ProductAttributeShops', [
+            'className' => 'ProductAttributeShops',
+            'foreignKey' => 'id_product_attribute'
+        ]);
     }
     
     public $primaryKey = 'id_product_attribute';
 
-    public $hasOne = [
-        'ProductAttributeCombinations' => [
-            'foreignKey' => 'id_product_attribute'
-        ],
-        'StockAvailables' => [
-            'foreignKey' => 'id_product_attribute'
-        ],
-        'DepositProductAttribute' => [
-            'className' => 'Deposit',
-            'foreignKey' => 'id_product_attribute'
-        ],
-        'ProductAttributeShops' => [
-            'className' => 'ProductAttributeShops',
-            'foreignKey' => 'id_product_attribute'
-        ]
-    ];
-
-    public $belongsTo = [
-        'Products' => [
-            'foreignKey' => 'id_product'
-        ]
-    ];
 }
