@@ -3,16 +3,15 @@ namespace App\Test\TestCase;
 
 //require_once('test_files/config/test.config.php');
 
+use App\Auth\AppPasswordHasher;
+use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\SlugHelper;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
-use AppPasswordHasher;
-use AppSimpleBrowser;
 
 /**
  * AppCakeTestCase
@@ -61,8 +60,7 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
 
         self::resetTestDatabaseData();
 
-        $Controller = new Controller();
-        $View = new View($Controller);
+        $View = new View();
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
@@ -74,8 +72,8 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
 
     protected static function resetTestDatabaseData()
     {
-        self::$dbConnection = ConnectionManager::getDataSource('test');
-        self::$testDumpDir = APP . 'Test' . DS . 'test_files' . DS . 'Config' . DS . 'sql' . DS;
+        self::$dbConnection = ConnectionManager::get('test');
+        self::$testDumpDir = ROOT . DS .  'tests' . DS . 'test_files' . DS . 'config' . DS . 'sql' . DS;
         self::importDump(self::$testDumpDir . 'test-db-data.sql');
     }
 
@@ -247,11 +245,12 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
     protected function generatePasswordHashes()
     {
         $ph = new AppPasswordHasher();
-        $sql = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
+        $query = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
         $params = [
             'passwd' => $ph->hash(Configure::read('test.loginPassword'))
         ];
-        $this->Customer->getDataSource()->fetchAll($sql, $params);
+        $statement = self::$dbConnection->prepare($query);
+        $statement->execute($params);
     }
 
     protected function changeReadOnlyConfiguration($configKey, $value)
@@ -261,7 +260,8 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
             'value' => $value,
             'configKey' => $configKey
         ];
-        return $this->Configuration->getDataSource()->fetchAll($query, $params);
+        $statement = self::$dbConnection->prepare($query);
+        return $statement->execute($params);
     }
 
     /**
@@ -305,7 +305,7 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo
         ];
-        $this->Customer->getDataSource()->fetchAll($sql, $params);
+        $this->dbConnection->fetchAll($sql, $params);
     }
 
     /**
@@ -383,7 +383,7 @@ abstract class AppCakeTestCase extends \PHPUnit_Framework_TestCase
             'value' => $value,
             'manufacturerId' => $manufacturerId
         ];
-        return $this->Manufacturer->getDataSource()->fetchAll($query, $params);
+        return $this->dbConnection->fetchAll($query, $params);
     }
 
     protected function logout()

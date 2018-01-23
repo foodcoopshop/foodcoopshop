@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Auth;
+
 use Cake\Core\Configure;
 
 use Cake\Auth\AbstractPasswordHasher;

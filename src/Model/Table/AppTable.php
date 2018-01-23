@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 
 /**
@@ -20,26 +21,27 @@ use Cake\ORM\Table;
 class AppTable extends Table
 {
 
+    public $tablePrefix = 'fcs_'; // legacy from CakePHP2
+    
     /**
      * for unit testing, database source needs to be changed to 'test'
      * @param string $id
      * @param string $table
      * @param string $ds
      */
-    public function __construct($id = false, $table = null, $ds = null)
+    public function __construct(array $config = [])
     {
-
         // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initSimpleBrowser()
         if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
-            || (php_sapi_name() == 'cli' && $_SERVER['argv'][3] && $_SERVER['argv'][3] == 'test')) {
-            $this->setDataSource('test');
+            || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
+            $this->setConnection(ConnectionManager::get('test'));
         }
-        parent::__construct($id, $table, $ds);
+        parent::__construct($config);
     }
     
     public function initialize(array $config)
     {
-        $this->setTable('fcs_' . $this->getTable());
+        $this->setTable($this->tablePrefix . $this->getTable());
         parent::initialize($config);
     }
 

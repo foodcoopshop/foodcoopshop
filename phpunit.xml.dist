@@ -15,6 +15,7 @@
     <testsuites>
         <testsuite name="App Test Suite">
             <file>tests/TestCase/Controller/Component/StringComponentTest.php</file>
+            <file>tests/TestCase/Controller/PagesControllerTest.php</file>
         </testsuite>
     </testsuites>
 
