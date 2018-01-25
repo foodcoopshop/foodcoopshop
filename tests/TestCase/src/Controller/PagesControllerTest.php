@@ -32,6 +32,7 @@ class PagesControllerTest extends AppCakeTestCase
     public function testAllPublicUrls()
     {
         
+        $this->markTestIncomplete();
         $testUrls = [
             $this->Slug->getHome(),
 //             $this->Slug->getManufacturerList(),
