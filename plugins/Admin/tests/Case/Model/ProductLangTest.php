@@ -1,9 +1,5 @@
 <?php
 
-App::uses('InvalidParameterException', 'Error/Exceptions');
-App::uses('AppCakeTestCase', 'Test');
-App::uses('ProductLangs', 'Model');
-
 /**
  * ProductLangTest
  *
@@ -19,6 +15,10 @@ App::uses('ProductLangs', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Error\Exception\InvalidParameterException;
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
+
 class ProductLangTest extends AppCakeTestCase
 {
 
@@ -27,7 +27,7 @@ class ProductLangTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->ProductLang = new ProductLang();
+        $this->ProductLang = TableRegistry::get('ProductLangs');
     }
 
     public function testChangeNameWithOneProductAndInvalidStringName()

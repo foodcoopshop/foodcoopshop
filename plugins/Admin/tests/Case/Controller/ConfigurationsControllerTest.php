@@ -1,7 +1,5 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-
 /**
  * ConfigurationsControllerTest
  *
@@ -17,6 +15,8 @@ App::uses('AppCakeTestCase', 'Test');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+
 class ConfigurationsControllerTest extends AppCakeTestCase
 {
 

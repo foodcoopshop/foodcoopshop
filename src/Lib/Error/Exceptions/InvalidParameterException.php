@@ -12,7 +12,12 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class InvalidParameterException extends CakeException
+
+namespace App\Error\Exception;
+
+use Cake\Core\Exception\Exception;
+
+class InvalidParameterException extends Exception
 {
 
 }

@@ -1,7 +1,10 @@
 <?php
 
-App::uses('CakeEmail', 'Network/Email');
-App::uses('EmailLogs', 'Model');
+namespace App\Lib;
+
+use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Cake\Mailer\Email;
 
 /**
  * AppEmail
@@ -18,7 +21,7 @@ App::uses('EmailLogs', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AppEmail extends CakeEmail
+class AppEmail extends Email
 {
 
     private $_originalSubject = '';

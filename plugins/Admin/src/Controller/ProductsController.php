@@ -2,6 +2,7 @@
 
 use Admin\Controller\AdminAppController;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -190,7 +191,6 @@ class ProductsController extends AdminAppController
         $thumbsPath = Configure::read('AppConfig.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
         // recursively create path
-        App::uses('Folder', 'Utility');
         $dir = new Folder();
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);

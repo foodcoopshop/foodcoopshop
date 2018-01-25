@@ -13,7 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('AppTcpdf', 'Lib/Pdf');
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 

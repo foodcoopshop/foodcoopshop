@@ -1,7 +1,8 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('EmailLogs', 'Model');
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * CustomersControllerTest
@@ -26,7 +27,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = new EmailLog();
+        $this->EmailLog = TableRegistry::get('EmailLogs');
     }
 
     public function testNewPasswordRequestWithWrongEmail()

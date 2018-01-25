@@ -1,11 +1,11 @@
 <?php
 
+namespace App\Controller;
+
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-
-App::uses('FrontendController', 'Controller');
 
 /**
  * ProductsController

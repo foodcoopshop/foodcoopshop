@@ -13,7 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('AppTcpdf', 'Lib/Pdf');
+use Cake\Core\Configure;
+
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();

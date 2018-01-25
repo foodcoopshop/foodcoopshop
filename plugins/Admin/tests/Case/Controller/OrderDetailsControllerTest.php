@@ -1,10 +1,5 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Orders', 'Model');
-App::uses('EmailLogs', 'Model');
-App::uses('Manufacturers', 'Model');
-
 /**
  * OrderDetailsControllerTest
  *
@@ -20,6 +15,10 @@ App::uses('Manufacturers', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 class OrderDetailsControllerTest extends AppCakeTestCase
 {
 
@@ -44,9 +43,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Order = new Order();
-        $this->EmailLog = new EmailLog();
-        $this->Manufacturer = new Manufacturer();
+        $this->Order = TableRegistry::get('Orders');
+        $this->EmailLog = TableRegistry::get('EmailLogs');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
     }
 
     public function testCancellationAsManufacturer()

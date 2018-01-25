@@ -13,7 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('AppTcpdf', 'Lib/Pdf');
+use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
+
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
@@ -75,7 +77,6 @@ if ($saveParam == 'F') {
         unlink($filename);
     }
     // assure that folder structure exists
-    App::uses('Folder', 'Utility');
     $dir = new Folder();
     $path = dirname($filename);
     $dir->create($path);

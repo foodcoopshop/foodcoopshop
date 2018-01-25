@@ -1,8 +1,5 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Products', 'Model');
-
 /**
  * ProductsControllerTest
  *
@@ -18,6 +15,9 @@ App::uses('Products', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
+
 class ProductsControllerTest extends AppCakeTestCase
 {
 
@@ -26,7 +26,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = new Product();
+        $this->Product = TableRegistry::get('Products');
     }
 
     public function testEditPriceWithInvalidPriceAsSuperadmin()

@@ -1,13 +1,13 @@
 <?php
-App::uses('EmailOrderReminderShell', 'Console/Command');
-App::uses('AppCakeTestCase', 'Test');
-App::uses('EmailLogs', 'Model');
 
 /**
  * TODO
  * - add test after order is placed
  * - consider weekday of calling the test - virutal host needs preset date
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
+
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
     public $EmailLog;
@@ -16,7 +16,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = new EmailLog();
+        $this->EmailLog = TableRegistry::get('EmailLogs');
         $this->EmailOrderReminder = $this->createMockShell('EmailOrderReminderShell');
     }
 

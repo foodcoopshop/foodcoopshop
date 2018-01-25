@@ -4,6 +4,7 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
 
 /**

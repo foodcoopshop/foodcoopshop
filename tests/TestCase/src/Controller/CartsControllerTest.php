@@ -1,12 +1,5 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Cart', 'Model');
-App::uses('Products', 'Model');
-App::uses('Orders', 'Model');
-App::uses('StockAvailables', 'Model');
-App::uses('EmailLogs', 'Model');
-
 /**
  * CartsControllerTest
  *
@@ -22,6 +15,10 @@ App::uses('EmailLogs', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 class CartsControllerTest extends AppCakeTestCase
 {
 
@@ -44,11 +41,11 @@ class CartsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Cart = new Cart();
-        $this->Product = new Product();
-        $this->Order = new Order();
-        $this->StockAvailable = new StockAvailable();
-        $this->EmailLog = new EmailLog();
+        $this->Cart = TableRegistry::get('Carts');
+        $this->Product = TableRegistry::get('Products');
+        $this->Order = TableRegistry::get('Orders');
+        $this->StockAvailable = TableRegistry::get('StockAvailables');
+        $this->EmailLog = new TableRegistry::get('EmailLogs');
     }
 
     public function testAddLoggedOut()

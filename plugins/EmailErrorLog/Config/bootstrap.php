@@ -13,7 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('CakeLog', 'Log');
 CakeLog::config('email', array(
     'engine' => 'EmailErrorLog.EmailErrorLog',
     'to' => Configure::read('AppConfig.debugEmail'),

@@ -1,9 +1,8 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('ActionLogs', 'Model');
-App::uses('Payments', 'Model');
-App::uses('Customers', 'Model');
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * PaymentsControllerTest
@@ -26,8 +25,8 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->ActionLog = new ActionLog();
-        $this->Payment = new Payment();
+        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->Payment = TableRegistry::get('Payments');
     }
 
     public function testAddPaymentLoggedOut()

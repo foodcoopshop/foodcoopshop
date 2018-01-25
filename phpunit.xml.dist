@@ -14,8 +14,10 @@
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
         <testsuite name="App Test Suite">
-            <file>tests/TestCase/Controller/Component/StringComponentTest.php</file>
-            <file>tests/TestCase/Controller/PagesControllerTest.php</file>
+            <file>tests/TestCase/config/GlobalTest.php</file>
+            <file>tests/TestCase/src/Controller/Component/StringComponentTest.php</file>
+            <file>tests/TestCase/src/Controller/PagesControllerTest.php</file>
+            <!--<file>tests/TestCase/View/Helper/MyTimeHelperTest.php</file>-->
         </testsuite>
     </testsuites>
 

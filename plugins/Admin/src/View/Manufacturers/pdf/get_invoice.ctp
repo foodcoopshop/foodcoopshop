@@ -13,7 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-App::uses('AppTcpdf', 'Lib/Pdf');
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
@@ -76,8 +78,7 @@ $pdf->renderTable();
 
 if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     // TODO do that in controller where it belongs to :-)
-    App::uses('Manufacturers', 'Model');
-    $m = new Manufacturer();
+    $m = TableRegistry::get('Manufacturers'):
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
     $firstColumnWidth = 365;
@@ -165,7 +166,6 @@ if ($saveParam == 'F') {
         unlink($filename);
     }
     // assure that folder structure exists
-    App::uses('Folder', 'Utility');
     $dir = new Folder();
     $path = dirname($filename);
     $dir->create($path);

@@ -1,7 +1,4 @@
 <?php
-
-App::uses('AppCakeTestCase', 'Test');
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -15,6 +12,8 @@ App::uses('AppCakeTestCase', 'Test');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+
 class GlobalTest extends AppCakeTestCase
 {
 

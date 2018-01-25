@@ -1,8 +1,8 @@
 <?php
-App::uses('SendOrderListsShell', 'Console/Command');
-App::uses('AppCakeTestCase', 'Test');
-App::uses('EmailLogs', 'Model');
-App::uses('Orders', 'Model');
+
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class SendOrderListsShellTest extends AppCakeTestCase
 {
@@ -13,8 +13,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = new EmailLog();
-        $this->Order = new Order();
+        $this->EmailLog = TableRegistry::get('EmailLogs');
+        $this->Order = TableRegistry::get('Orders');
         $this->SendOrderLists = $this->createMockShell('SendOrderListsShell');
     }
 

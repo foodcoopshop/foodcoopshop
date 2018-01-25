@@ -1,8 +1,4 @@
 <?php
-
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Products', 'Model');
-
 /**
  *
  * FoodCoopShop - The open source software for your foodcoop
@@ -17,6 +13,9 @@ App::uses('Products', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
+
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
 
@@ -25,7 +24,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = new Product();
+        $this->Product = TableRegistry::get('Products');
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', true);
     }
 

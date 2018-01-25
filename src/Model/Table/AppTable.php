@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Network\AppSession;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
+use Cake\Validation\Validation;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -85,7 +86,6 @@ class AppTable extends Table
 
     public function multipleEmails($check)
     {
-        App::import('Validation', 'Cake/Utility');
         $emails = explode(',', reset($check));
         foreach ($emails as $email) {
             $validates = Validation::email($email);

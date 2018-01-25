@@ -1,6 +1,8 @@
 <?php
 
-use App\Controller\FrontendController;
+namespace App\Controller;
+
+use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;

@@ -1,9 +1,4 @@
 <?php
-
-App::uses('AppCakeTestCase', 'Test');
-App::uses('View', 'View');
-App::uses('MyTimeHelper', 'View/Helper');
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,6 +12,11 @@ App::uses('MyTimeHelper', 'View/Helper');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use App\View\Helper\MyTimeHelper;
+use Cake\Core\Configure;
+use Cake\View\View;
+
 class MyTimeHelperTest extends AppCakeTestCase
 {
 

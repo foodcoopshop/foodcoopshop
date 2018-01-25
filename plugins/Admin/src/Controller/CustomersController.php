@@ -1,7 +1,9 @@
 <?php
 
 use Admin\Controller\AdminAppController;
+use App\Auth\AppPasswordHasher;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -97,7 +99,6 @@ class CustomersController extends AdminAppController
 
         $error = 0;
 
-        App::uses('AppPasswordHasher', 'Controller/Component/Auth');
         $ph = new AppPasswordHasher();
 
         if (! $this->Customer->isCustomerPassword($this->AppAuth->getUserId(), $ph->hash($password))) {

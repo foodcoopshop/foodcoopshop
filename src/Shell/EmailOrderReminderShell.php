@@ -34,8 +34,6 @@ class EmailOrderReminderShell extends AppShell
             return;
         }
 
-        App::uses('AppEmail', 'Lib');
-
         $this->initSimpleBrowser(); // for loggedUserId
 
         $this->startTimeLogging();

@@ -1,8 +1,7 @@
 <?php
-
-App::uses('InvalidParameterException', 'Error/Exceptions');
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Products', 'Model');
+use App\Error\Exception\InvalidParameterException;
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
 
 /**
  * ProductTest
@@ -27,7 +26,7 @@ class ProductTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = new Product();
+        $this->Product = TableRegistry::get('Products');
         // behavior needs to be attached on the fly in order not to break the app
         $this->Product->Behaviors->load('Containable');
     }

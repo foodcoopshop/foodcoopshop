@@ -1,7 +1,5 @@
 <?php
 
-App::uses('ModelBehavior', 'Model');
-
 /**
  * ContentBehavior
  *
@@ -17,7 +15,10 @@ App::uses('ModelBehavior', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ContentBehavior extends ModelBehavior
+use Cake\Core\Configure;
+use Cake\ORM\Behavior;
+
+class ContentBehavior extends Behavior
 {
 
     public function beforeSave(Model $model, $options = [])

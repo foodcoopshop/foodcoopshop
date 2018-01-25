@@ -16,6 +16,7 @@
  */
 namespace App\Shell;
 
+use App\Lib\AppEmail;
 use Cake\Core\Configure;
 
 class SendInvoicesShell extends AppShell
@@ -109,7 +110,6 @@ class SendInvoicesShell extends AppShell
         // START send email to accounting employee
         $accountingEmail = Configure::read('AppConfigDb.FCS_ACCOUNTING_EMAIL');
         if ($accountingEmail != '') {
-            App::uses('AppEmail', 'Lib');
             $email = new AppEmail();
             $email->template('Admin.accounting_information_invoices_sent')
                 ->to($accountingEmail)

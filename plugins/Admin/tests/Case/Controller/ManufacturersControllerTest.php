@@ -1,8 +1,5 @@
 <?php
 
-App::uses('AppCakeTestCase', 'Test');
-App::uses('Manufacturers', 'Model');
-
 /**
  * ManufacturersControllerTest
  *
@@ -18,6 +15,9 @@ App::uses('Manufacturers', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
+
 class ManufacturersControllerTest extends AppCakeTestCase
 {
 
@@ -26,7 +26,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Manufacturer = new Manufacturer();
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
     }
 
     public function testAdd()

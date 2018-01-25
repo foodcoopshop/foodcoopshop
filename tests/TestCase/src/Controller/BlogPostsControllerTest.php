@@ -1,8 +1,4 @@
 <?php
-
-App::uses('AppCakeTestCase', 'Test');
-App::uses('BlogPosts', 'Model');
-
 /**
  *
  * FoodCoopShop - The open source software for your foodcoop
@@ -17,6 +13,9 @@ App::uses('BlogPosts', 'Model');
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\AppCakeTestCase;
+use Cake\ORM\TableRegistry;
+
 class BlogPostsControllerTest extends AppCakeTestCase
 {
 
@@ -25,7 +24,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->BlogPost = new BlogPost();
+        $this->BlogPost = TableRegistry::get('BlogPosts');
     }
 
     public function testBlogPostDetailOnlinePublicLoggedOut()
