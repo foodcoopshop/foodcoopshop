@@ -26,51 +26,41 @@ class ProductsTable extends AppTable
         $this->setTable('product');
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
-    }
-
-    public $belongsTo = [
-        'Manufacturers' => [
+        $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
-        ],
-        'ProductLangs' => [
+        ]);
+        $this->belongsTo('ProductLangs', [
             'foreignKey' => 'id_product'
-        ],
-        'ProductShop' => [
+        ]);
+        $this->belongsTo('ProductShop', [
             'foreignKey' => 'id_product'
-        ],
-        'StockAvailables' => [
+        ]);
+        $this->belongsTo('StockAvailables', [
             'foreignKey' => 'id_product'
-        ],
-        'Taxes' => [
+        ]);
+        $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
-        ],
-        'CategoryProducts' => [
+        ]);
+        $this->belongsTo('CategoryProducts', [
             'foreignKey' => 'id_product'
-        ]
-    ];
-
-    public $hasOne = [
-        'DepositProduct' => [
+        ]);
+        $this->hasOne('DepositProduct', [
             'foreignKey' => 'id_product'
-        ],
-        'Images' => [
+        ]);
+        $this->hasOne('Images', [
             'foreignKey' => 'id_product',
             'order' => [
                 'Images.id_image' => 'DESC'
             ]
-        ]
-    ];
-
-    public $hasMany = [
-        'ProductAttributes' => [
-            'className' => 'ProductAttributes',
+        ]);
+        $this->hasMany('ProductAttributes', [
             'foreignKey' => 'id_product'
-        ],
-        'CategoryProducts' => [
-            'className' => 'CategoryProducts',
+        ]);
+        $this->hasMany('CategoryProducts', [
             'foreignKey' => 'id_product'
-        ]
-    ];
+        ]);
+        
+    }
 
     public function __construct($id = false, $table = null, $ds = null)
     {

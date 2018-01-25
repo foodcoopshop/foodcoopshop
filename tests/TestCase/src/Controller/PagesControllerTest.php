@@ -1,5 +1,5 @@
 <?php
--
+
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
 
@@ -39,7 +39,7 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
 //             $this->Slug->getBlogList(),
             $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
-//             $this->Slug->getProductDetail(339, 'Kartoffel'),
+            $this->Slug->getProductDetail(339, 'Kartoffel'),
 //             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
 //             $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(9, 'Impressum'),
@@ -138,7 +138,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $testUrls = [
-//             $this->Slug->getProductDetail(4234, 'not valid product name'),
+            $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         ];
         $this->assertPagesFor404($testUrls);

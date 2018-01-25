@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -41,7 +42,7 @@ class ProductsController extends FrontendController
         if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->user()
-              && (isset($product['Manufacturers']) && $product['Manufacturers']['is_private'])
+              && (!empty($product->manufacturer) && $product->manufacturer->is_private)
               )
             ) {
                 $this->AppAuth->deny($this->request->action);
@@ -66,11 +67,11 @@ class ProductsController extends FrontendController
 
         $this->set('product', $product[0]);
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['ProductLangs']['name']);
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['name']);
         if ($correctSlug != Configure::read('AppConfig.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
-        $this->set('title_for_layout', $product[0]['ProductLangs']['name']);
+        $this->set('title_for_layout', $product[0]['name']);
     }
 }

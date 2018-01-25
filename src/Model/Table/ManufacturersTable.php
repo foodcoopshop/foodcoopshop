@@ -47,7 +47,6 @@ class ManufacturersTable extends AppTable
 
     public $hasMany = [
         'Invoices' => [
-            'className' => 'Invoices',
             'foreignKey' => 'id_manufacturer',
             'order' => [
                 'Invoices.send_date DESC'

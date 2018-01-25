@@ -26,7 +26,6 @@ class OrdersTable extends AppTable
             'foreignKey' => 'id_customer'
         ]);
         $this->hasMany('OrderDetails', [
-            'className' => 'OrderDetail',
             'foreignKey' => 'id_order'
         ]);
         $this->setPrimaryKey('id_order');

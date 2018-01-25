@@ -134,7 +134,6 @@ class CustomersTable extends AppTable
             'foreignKey' => 'id_customer'
         ],
         'Payments' => [
-            'className' => 'Payments',
             'foreignKey' => 'id_customer',
             'order' => [
                 'Payments.date_add' => 'desc'
