@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm();
     "
-));
+]);
 ?>
 
 <div class="filter-container">
@@ -37,21 +37,21 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Customers', array(
+echo $this->Form->create('Customers', [
     'class' => 'fcs-form'
-));
+]);
 
-echo $this->Form->input('Customers.passwd', array(
+echo $this->Form->input('Customers.passwd', [
     'label' => __('Password : Old Password *')
-));
-echo $this->Form->input('Customers.passwd_new_1', array(
+]);
+echo $this->Form->input('Customers.passwd_new_1', [
     'label' => __('Password : New Password *'),
     'type' => 'password'
-));
-echo $this->Form->input('Customers.passwd_new_2', array(
+]);
+echo $this->Form->input('Customers.passwd_new_2', [
     'label' => __('Password : New Password Repeat *'),
     'type' => 'password'
-));
+]);
 
 ?>
 

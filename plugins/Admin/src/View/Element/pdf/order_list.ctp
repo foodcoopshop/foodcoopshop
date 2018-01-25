@@ -39,20 +39,20 @@ if (! $bulkOrdersAllowed && Configure::read('AppConfigDb.FCS_DELIVERY_DETAILS_FO
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(5);
 
-$widths = array(
+$widths = [
     30,
     235,
     45,
     50,
     144
-);
-$headers = array(
+];
+$headers = [
     'Anzahl',
     'Produkt',
     'Preis',
     'Datum',
     'Mitglied'
-);
+];
 
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType);
 $pdf->addLastSumRow(

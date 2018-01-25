@@ -39,18 +39,18 @@ class TaxesController extends AdminAppController
         $this->setFormReferer();
 
         if ($taxId > 0) {
-            $unsavedTax = $this->Tax->find('all', array(
-                'conditions' => array(
+            $unsavedTax = $this->Tax->find('all', [
+                'conditions' => [
                     'Taxes.id_tax' => $taxId
-                )
-            ))->first();
+                ]
+            ])->first();
         } else {
             // default value
-            $unsavedTax = array(
-                'Taxes' => array(
+            $unsavedTax = [
+                'Taxes' => [
                     'active' => true
-                )
-            );
+                ]
+            ];
         }
 
         $this->set('unsavedTax', $unsavedTax);
@@ -68,7 +68,7 @@ class TaxesController extends AdminAppController
                 $data = strip_tags(trim($data));
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->Tax->validates()) {
                 $errors = array_merge($errors, $this->Tax->validationErrors);
             }
@@ -76,9 +76,9 @@ class TaxesController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Tax->save($this->request->data['Taxes'], array(
+                $this->Tax->save($this->request->data['Taxes'], [
                     'validate' => false
-                ));
+                ]);
                 if (is_null($taxId)) {
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'tax_added';
@@ -113,15 +113,15 @@ class TaxesController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
         $conditions[] = 'Taxes.active > ' . APP_DEL;
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Taxes.rate' => 'ASC'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
         $taxes = $this->Paginator->paginate('Taxes');
         $this->set('taxes', $taxes);
 

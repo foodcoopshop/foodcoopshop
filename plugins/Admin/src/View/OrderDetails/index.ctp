@@ -16,7 +16,7 @@
 <div id="order-details-list">
     
     <?php
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" .
@@ -26,46 +26,46 @@
             Configure::read('AppConfig.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');".
             Configure::read('AppConfig.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('AppConfig.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
-    ));
+    ]);
     ?>
     
     <div class="filter-container">
-        <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
-        <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => array())); ?>
+        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+        <?php echo $this->Form->input('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-            <?php echo $this->Form->input('manufacturerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '')); ?>
+            <?php echo $this->Form->input('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '']); ?>
         <?php } ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>    
-            <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
         <?php } ?>
         <?php if ($appAuth->isCustomer()) { ?>
             <?php // for preselecting customer in shop order dropdown ?>
-            <?php echo $this->Form->hidden('customerId', array('value' => isset($customerId) ? $customerId: '')); ?>
+            <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
         <?php } ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
             <input id="orderId" type="text" placeholder="Bestell-Nr."
             value="<?php echo $orderId; ?>" />
         <?php } ?>
-        <?php echo $this->Form->input('orderState', array('type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState)); ?>
-        <?php echo $this->Form->input('groupBy', array('type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'selected' => $groupBy));?>
+        <?php echo $this->Form->input('orderState', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState]); ?>
+        <?php echo $this->Form->input('groupBy', ['type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'selected' => $groupBy]);?>
         <div class="right">
         
         <?php
         if (Configure::read('AppConfig.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
             echo '<div class="add-payment-deposit-button-wrapper">';
-                echo $this->element('addDepositPaymentOverlay', array(
+                echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
                     'rowId' => $orderDetails[0]['Orders']['id_order'],
                     'userName' => $orderDetails[0]['Orders']['Customers']['name'],
                     'customerId' => $orderDetails[0]['Orders']['Customers']['id_customer'],
                     'manufacturerId' => null // explicitly unset manufacturerId
-                ));
+                ]);
             echo '</div>';
         }
         if (!$appAuth->isManufacturer()) {
-            echo $this->element('addShopOrderButton', array(
+            echo $this->element('addShopOrderButton', [
             'customers' => $customersForShopOrderDropdown
-            ));
+            ]);
         }
         ?>
         </div>
@@ -109,9 +109,9 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th style="width:20px;">';
 if (count($orderDetails) > 0 && $groupBy == '') {
-    $this->element('addScript', array(
+    $this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initRowMarkerAll();"
-    ));
+    ]);
     echo '<input type="checkbox" id="row-marker-all" />';
 }
 echo '</th>';
@@ -194,10 +194,10 @@ foreach ($orderDetails as $orderDetail) {
     echo '<div class="table-cell-wrapper quantity">';
     if ($groupBy == '') {
         if ($orderDetail['OrderDetails']['product_quantity'] > 1 && $editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'order-detail-product-quantity-edit-button',
                 'title' => 'Zum Ändern der Anzahl anklicken'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         $quantity = $orderDetail['OrderDetails']['product_quantity'];
         $style = '';
@@ -218,9 +218,9 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '' || $groupBy == 'product') {
         echo '<td>';
         if ($groupBy == '') {
-            echo $this->MyHtml->link($orderDetail['OrderDetails']['product_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/productId:' . $orderDetail['Products']['id_product'] . '/orderState:' . $orderState, array(
+            echo $this->MyHtml->link($orderDetail['OrderDetails']['product_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/productId:' . $orderDetail['Products']['id_product'] . '/orderState:' . $orderState, [
                 'class' => 'name-for-dialog'
-            ));
+            ]);
         }
         if ($groupBy == 'product') {
             echo $groupByObjectLink;
@@ -243,10 +243,10 @@ foreach ($orderDetails as $orderDetail) {
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {
         if ($editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'order-detail-product-price-edit-button',
                 'title' => 'Zum Ändern des Preises anklicken'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail['OrderDetails']['total_price_tax_incl']) . '</span>';
     } else {
@@ -312,11 +312,11 @@ foreach ($orderDetails as $orderDetail) {
 
         echo '<td style="text-align:center;">';
         if ($editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-order-detail',
                 'id' => 'delete-order-detail-' . $orderDetail['OrderDetails']['id_order_detail'],
                 'title' => 'Produkt stornieren?'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         echo '</td>';
 
@@ -379,13 +379,13 @@ if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAu
 }
 
 if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId != '') {
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('AppConfig.additionalOrderStatusChangeInfo') . "');" . Configure::read('AppConfig.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('AppConfig.paymentMethods')) . ");" . Configure::read('AppConfig.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('AppConfig.visibleOrderStates')) . "');"
-    ));
+    ]);
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        $this->element('addScript', array(
+        $this->element('addScript', [
             'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initChangeOrderStateFromOrderDetails();"
-        ));
+        ]);
         $buttonExists = true;
         $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> Bestellstatus ändern</button>';
     }

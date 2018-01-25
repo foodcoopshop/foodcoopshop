@@ -13,15 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
-));
+]);
 
-echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . $buttonText, array(
+echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . $buttonText, [
     'title' => 'Pfand-Betrag eintragen',
     'class' => 'add-payment-deposit-button icon-with-text',
     'data-object-id' => $rowId
-), 'javascript:void(0);');
+], 'javascript:void(0);');
 echo '<div id="add-payment-deposit-form-' . $rowId . '" class="add-payment-form add-payment-deposit-form">';
 echo '<h3>Pfand eintragen</h3>';
 echo '<p>Pfand-Betrag für <b>' . $userName . '</b> eintragen:</p>';
@@ -30,9 +30,9 @@ if (isset($manufacturerId)) {
     if ($appAuth->isAdmin() || $appAuth->isManufacturer()) {
         echo '<p style="margin-top:10px;">Bitte trage hier den Wert des Leergebindes ein,<br />
             das vom Hersteller zurückgenommen wird.</p>';
-        echo $this->Form->hidden('Payments.text', array(
+        echo $this->Form->hidden('Payments.text', [
             'value' => 'empty_glasses'
-        ));
+        ]);
     }
 
     if ($appAuth->isSuperadmin()) {
@@ -45,23 +45,23 @@ if (isset($manufacturerId)) {
     }
 }
 
-echo $this->Form->input('Payments.amount', array(
+echo $this->Form->input('Payments.amount', [
     'label' => 'Betrag in €',
     'type' => 'string'
-));
+]);
 
-echo $this->Form->hidden('Payments.type', array(
+echo $this->Form->hidden('Payments.type', [
     'value' => 'deposit'
-));
+]);
 if (isset($customerId)) {
-    echo $this->Form->hidden('Payments.customerId', array(
+    echo $this->Form->hidden('Payments.customerId', [
         'value' => $customerId
-    ));
+    ]);
 }
 if (isset($manufacturerId)) {
-    echo $this->Form->hidden('Payments.manufacturerId', array(
+    echo $this->Form->hidden('Payments.manufacturerId', [
         'value' => $manufacturerId
-    ));
+    ]);
 }
 echo '</div>';
 echo '<div class="sc"></div>';

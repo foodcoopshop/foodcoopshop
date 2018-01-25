@@ -85,11 +85,11 @@ class DepositsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
         $this->set('manufacturer', $manufacturer);
 
         $this->OrderDetail = TableRegistry::get('OrderDetails');
@@ -108,7 +108,7 @@ class DepositsController extends AdminAppController
         $monthsAndYear = array_merge(Configure::read('AppConfig.timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);
         $monthsAndYear = array_reverse($monthsAndYear);
 
-        $deposits = array();
+        $deposits = [];
         $sumDepositsDelivered = 0;
         $sumDepositsReturned = 0;
         foreach ($monthsAndYear as $monthAndYear => $monthAndYearAsString) {
@@ -169,11 +169,11 @@ class DepositsController extends AdminAppController
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
         $this->set('manufacturer', $manufacturer);
 
         $this->Payment = TableRegistry::get('Payments');

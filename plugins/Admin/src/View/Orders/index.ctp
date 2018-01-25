@@ -16,41 +16,41 @@
 <div id="orders-list">
      
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('AppConfig.cakeServerName') . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('AppConfig.visibleOrderStates')) . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('AppConfig.additionalOrderStatusChangeInfo') . "');" . Configure::read('AppConfig.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('AppConfig.paymentMethods')) . ");" . Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
         "
-        ));
+        ]);
 
         if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
-            $this->element('addScript', array(
+            $this->element('addScript', [
             'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
-            ));
+            ]);
         }
         if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) {
-            $this->element('addScript', array(
+            $this->element('addScript', [
                 'script' =>
                     Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
                     Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
-            ));
+            ]);
         }
-        $this->element('highlightRowAfterEdit', array(
+        $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#order-'
-        ));
+        ]);
     ?>
     
     <div class="filter-container">
-        <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
-        <?php echo $this->Form->input('orderState', array('type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState)); ?>
+        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+        <?php echo $this->Form->input('orderState', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState]); ?>
         <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-            Gruppieren nach Mitglied: <?php echo $this->Form->input('groupByCustomer', array('type'=>'checkbox', 'label' =>'', 'checked' => $groupByCustomer));?>
+            Gruppieren nach Mitglied: <?php echo $this->Form->input('groupByCustomer', ['type'=>'checkbox', 'label' =>'', 'checked' => $groupByCustomer]);?>
         <?php } ?>
         <div class="right">
             <?php
-            echo $this->element('addShopOrderButton', array(
+            echo $this->element('addShopOrderButton', [
                 'customers' => $customersForDropdown
-            ));
+            ]);
             ?>
         </div>
 
@@ -125,13 +125,13 @@
         $sumPrice += $paidField;
         $i ++;
 
-        $rowClass = array(
+        $rowClass = [
             'data'
-        );
-        if (! $groupByCustomer && in_array($order['Orders']['current_state'], array(
+        ];
+        if (! $groupByCustomer && in_array($order['Orders']['current_state'], [
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
-        ))) {
+        ])) {
             $rowClass[] = 'selected';
         }
 
@@ -148,11 +148,11 @@
             echo '<span class="order-comment-wrapper">';
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
-                    array(
+                    [
                     'class' => 'order-comment-edit-button' . ($order['Orders']['comment'] == '' ? ' disabled' : ''),
                     'title' => $order['Orders']['comment'] != '' ? $order['Orders']['comment'] : 'Kommentar hinzufügen',
                     'data-title-for-overlay' => $order['Orders']['comment'] != '' ? $order['Orders']['comment'] : 'Kommentar hinzufügen'
-                    ),
+                    ],
                     'javascript:void(0);'
                 );
             echo '</span>';
@@ -164,10 +164,10 @@
         echo '</td>';
 
         echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
             'title' => 'Alle bestellten Produkte von ' . $order['Orders']['name'] . ' anzeigen',
             'class' => 'icon-with-text'
-        ), '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customers']['id_customer'] . '/orderState:' . $orderState);
+        ], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order['Customers']['id_customer'] . '/orderState:' . $orderState);
         echo '</td>';
 
         echo '<td class="hide">';
@@ -180,35 +180,35 @@
 
         if (Configure::read('AppConfig.isDepositPaymentCashless')) {
             echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
-                echo $this->element('addDepositPaymentOverlay', array(
+                echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
                     'rowId' => $order['Orders']['id_order'],
                     'userName' => $order['Orders']['name'],
                     'customerId' => $order['Customers']['id_customer']
-                ));
+                ]);
             echo '</td>';
         }
 
         if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
             echo '<td style="width:72px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('heart.png')) . ' Flexi', array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('heart.png')) . ' Flexi', [
                 'title' => 'Flexiblen Mitgliedsbeitrag eintragen',
                 'class' => 'add-payment-member-fee-flexible-button icon-with-text',
                 'data-object-id' => $order['Orders']['id_order']
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
             echo '<div id="add-payment-member-fee-flexible-form-' . $order['Orders']['id_order'] . '" class="add-payment-form add-payment-member-fee-flexible-form">';
             echo '<h3>Flexiblen Mitgliedsbeitrag eintragen</h3>';
             echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order['Orders']['name'] . '</b> eintragen:</p>';
-            echo $this->Form->input('Payments.amount', array(
+            echo $this->Form->input('Payments.amount', [
                 'label' => 'Betrag in €',
                 'type' => 'string'
-            ));
-            echo $this->Form->hidden('Payments.type', array(
+            ]);
+            echo $this->Form->hidden('Payments.type', [
                 'value' => 'member_fee_flexible'
-            ));
-            echo $this->Form->hidden('Payments.customerId', array(
+            ]);
+            echo $this->Form->hidden('Payments.customerId', [
                 'value' => $order['Customers']['id_customer']
-            ));
+            ]);
             echo '</div>';
             echo '<div class="sc"></div>';
             echo '</td>';
@@ -230,10 +230,10 @@
                 $statusChangeIcon = 'error';
             }
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' Bestellstatus ändern' : ''), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' Bestellstatus ändern' : ''), [
                     'title' => 'Bestellstatus ändern',
                     'class' => 'change-order-state-button icon-with-text'
-                ), 'javascript:void(0);');
+                ], 'javascript:void(0);');
             }
         }
         echo '</td>';
@@ -241,17 +241,17 @@
         echo '<td class="date-icon icon">';
         if ($order['Orders']['current_state'] == 3) {
             echo '<div class="last-n-days-dropdown">';
-            echo $this->Form->input('date_add_' . $order['Orders']['id_order'], array(
+            echo $this->Form->input('date_add_' . $order['Orders']['id_order'], [
                 'type' => 'select',
                 'label' => '',
                 'options' => $this->MyTime->getLastNDays(5, $order['Orders']['date_add'])
-            ));
+            ]);
             echo '</div>';
             if (! $groupByCustomer) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('calendar.png')), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('calendar.png')), [
                     'title' => 'Bestellung rückdatieren',
                     'class' => 'edit-button'
-                ), 'javascript:void(0);');
+                ], 'javascript:void(0);');
             }
         }
         echo '</td>';
@@ -275,14 +275,14 @@
     echo '<div class="bottom-button-container">';
 
     if (count($orders) > 0 && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
-        $this->element('addScript', array(
+        $this->element('addScript', [
             'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();"
-        ));
+        ]);
         echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
         if (! $groupByCustomer && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
-            $this->element('addScript', array(
+            $this->element('addScript', [
                 'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initCloseOrdersButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initGenerateOrdersAsPdf();"
-            ));
+            ]);
             echo '<button class="btn btn-default generate-orders-as-pdf"><i class="fa fa-file-pdf-o"></i> Bestellungen als PDF generieren</button>';
             echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Bestellungen abschließen</button>';
         }

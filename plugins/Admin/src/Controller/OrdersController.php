@@ -30,11 +30,11 @@ class OrdersController extends AdminAppController
 
     public function recalculateOrderDetailPricesInOrder($orderId)
     {
-        $order = $this->Order->find('all', array(
-            'conditions' => array(
+        $order = $this->Order->find('all', [
+            'conditions' => [
                 'Orders.id_order' => $orderId
-            )
-        ))->first();
+            ]
+        ])->first();
         $order['OrderDetails']['id_order'] = $orderId;
         $this->Order->recalculateOrderDetailPricesInOrder($order);
     }
@@ -46,15 +46,15 @@ class OrdersController extends AdminAppController
         $orderId = $this->params['data']['orderId'];
         $orderComment = htmlspecialchars_decode(strip_tags(trim($this->params['data']['orderComment']), '<strong><b>'));
 
-        $oldOrder = $this->Order->find('all', array(
-            'conditions' => array(
+        $oldOrder = $this->Order->find('all', [
+            'conditions' => [
                 'Orders.id_order' => $orderId
-            )
-        ))->first();
+            ]
+        ])->first();
 
-        $order2update = array(
+        $order2update = [
             'comment' => $orderComment
-        );
+        ];
         $this->Order->id = $oldOrder['Orders']['id_order'];
         $this->Order->save($order2update);
 
@@ -63,10 +63,10 @@ class OrdersController extends AdminAppController
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Orders']['id_order'] . ' von '.$oldOrder['Customers']['firstname'] . ' ' . $oldOrder['Customers']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Orders']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 
     public function ordersAsPdf()
@@ -75,15 +75,15 @@ class OrdersController extends AdminAppController
             throw new RecordNotFoundException('wrong order id set');
         }
 
-        $this->Order->hasMany['OrderDetails']['order'] = array(
+        $this->Order->hasMany['OrderDetails']['order'] = [
             'OrderDetails.product_name' => 'ASC'
-        );
-        $orders = $this->Order->find('all', array(
-            'conditions' => array(
+        ];
+        $orders = $this->Order->find('all', [
+            'conditions' => [
                 'Orders.id_order IN(' . $this->params['named']['orderIds'] . ')'
-            ),
+            ],
             'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy()
-        ));
+        ]);
 
         if (empty($orders)) {
             throw new RecordNotFoundException('no orders found');
@@ -97,20 +97,20 @@ class OrdersController extends AdminAppController
         $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->params->query['url']);
 
         if ($orderId > 0) {
-            $order = $this->Order->find('all', array(
-                'conditions' => array(
+            $order = $this->Order->find('all', [
+                'conditions' => [
                     'Orders.id_order' => $orderId
-                ),
-                'order' => array(
+                ],
+                'order' => [
                     'Orders.date_add' => 'DESC'
-                )
-            ))->first();
+                ]
+            ])->first();
 
             $newDate = Configure::read('AppConfig.timeHelper')->getDateForShopOrder(Configure::read('AppConfig.timeHelper')->getCurrentDay());
-            $order2update = array(
+            $order2update = [
                 'date_add' => $newDate,
                 'current_state' => Configure::read('AppConfigDb.FCS_SHOP_ORDER_DEFAULT_STATE')
-            );
+            ];
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
 
@@ -138,9 +138,9 @@ class OrdersController extends AdminAppController
         foreach ($orderIds as $orderId) {
             // update table order
             $this->Order->id = $orderId;
-            $this->Order->save(array(
+            $this->Order->save([
                 'current_state' => $orderState
-            ));
+            ]);
         }
 
         $message = count($orderIds) . ' Bestellungen wurden erfolgreich abgeschlossen';
@@ -149,10 +149,10 @@ class OrdersController extends AdminAppController
 
         $this->Flash->success($message . '.');
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 
     public function changeOrderState()
@@ -163,17 +163,17 @@ class OrdersController extends AdminAppController
         $orderState = $this->params['data']['orderState'];
 
         foreach ($orderIds as $orderId) {
-            $oldOrder = $this->Order->find('all', array(
-                'conditions' => array(
+            $oldOrder = $this->Order->find('all', [
+                'conditions' => [
                     'Orders.id_order' => $orderId
-                )
-            ))->first();
+                ]
+            ])->first();
 
             // update table order
             $this->Order->id = $orderId;
-            $this->Order->save(array(
+            $this->Order->save([
                 'current_state' => $orderState
-            ));
+            ]);
         }
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
@@ -186,28 +186,28 @@ class OrdersController extends AdminAppController
         // always redirect to orders (and keep some filters)
         $redirectUrl = '';
         $refererParams = explode('/', parse_url($this->referer())['path']);
-        $redirectUrlItems = array(
+        $redirectUrlItems = [
             'admin',
             'orders',
             'index'
-        );
+        ];
         foreach ($refererParams as $param) {
             $p = explode(':', $param);
-            if (in_array($p[0], array(
+            if (in_array($p[0], [
                 'dateFrom',
                 'dateTo',
                 'orderState'
-            ))) {
+            ])) {
                 $redirectUrlItems[] = $param;
             }
         }
         $redirectUrl = '/' . implode('/', $redirectUrlItems);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok',
             'redirectUrl' => $redirectUrl
-        )));
+        ]));
     }
 
     public function index()
@@ -257,13 +257,13 @@ class OrdersController extends AdminAppController
 
         $orderParams = $this->Order->getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $this->AppAuth);
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $orderParams['conditions'],
             'contain' => $orderParams['contain'],
             'order' => $orderParams['order'],
             'fields' => $orderParams['fields'],
             'group' => $orderParams['group']
-        ), $this->Paginator->settings);
+        ], $this->Paginator->settings);
 
         $this->Order->virtualFields = $this->Order->Customer->virtualFields; // to get related virtual field "Customer.name"
 
@@ -293,11 +293,11 @@ class OrdersController extends AdminAppController
         }
 
         $this->Customer = TableRegistry::get('Customers');
-        $shopOrderCustomer = $this->Customer->find('all', array(
-            'conditions' => array(
+        $shopOrderCustomer = $this->Customer->find('all', [
+            'conditions' => [
                 'Customers.id_customer' => $customerId
-            )
-        ))->first();
+            ]
+        ])->first();
         if (! empty($shopOrderCustomer)) {
             $this->request->session()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
@@ -314,15 +314,15 @@ class OrdersController extends AdminAppController
         $orderId = $this->params['data']['orderId'];
         $date = $this->params['data']['date'];
 
-        $oldOrder = $this->Order->find('all', array(
-            'conditions' => array(
+        $oldOrder = $this->Order->find('all', [
+            'conditions' => [
                 'Orders.id_order' => $orderId
-            )
-        ))->first();
+            ]
+        ])->first();
 
-        $order2update = array(
+        $order2update = [
             'date_add' => $date
-        );
+        ];
         $this->Order->id = $orderId;
         $this->Order->save($order2update);
 
@@ -332,9 +332,9 @@ class OrdersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 }

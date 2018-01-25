@@ -14,9 +14,9 @@
  */
 
 if (CakeSession::read('highlightedRowId')) {
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initHighlightedRowId('" . $rowIdPrefix . $this->Session->read('highlightedRowId') . "');
         "
-    ));
+    ]);
     CakeSession::delete('highlightedRowId');
 }

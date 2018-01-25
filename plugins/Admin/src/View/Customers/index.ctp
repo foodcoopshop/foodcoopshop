@@ -15,15 +15,15 @@
 ?>
 <div id="customers-list">
     <?php
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initCustomerChangeActiveState();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" . Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" . Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button', { my: \"right top\", at: \"right bottom\" }, false);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
-    ));
+    ]);
     ?>
     
     <div class="filter-container">
-        <?php echo $this->Form->input('active', array('type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '')); ?>
+        <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
         Anzahl Bestellungen zwischen <input id="validOrdersCountFrom"
             type="text"
             value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
@@ -59,11 +59,11 @@
     
 <?php
 
-echo $this->Form->input('selectGroupId', array(
+echo $this->Form->input('selectGroupId', [
     'type' => 'select',
     'label' => '',
     'options' => $this->Html->getAuthDependentGroups($appAuth->getGroupId())
-));
+]);
 
 echo '<table class="list">';
 echo '<tr class="sort">';
@@ -109,10 +109,10 @@ foreach ($customers as $customer) {
         $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer['order_count'] . 'x bestellt."></i> ' . $customerName;
     }
 
-    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customers']['id_customer'] . '/sort:Order.date_add/direction:desc/', array(
+    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customers']['id_customer'] . '/sort:Order.date_add/direction:desc/', [
         'title' => 'Zu allen Bestellungen von ' . $customer['Customers']['name'],
         'escape' => false
-    )) . '</span>';
+    ]) . '</span>';
 
     $details = $customer['AddressCustomer']['address1'];
     if ($customer['AddressCustomer']['address2'] != '') {
@@ -128,10 +128,10 @@ foreach ($customers as $customer) {
     }
 
     echo '<div class="customer-details-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
         'class' => 'customer-details-read-button',
         'title' => $details
-    ), 'javascript:void(0);');
+    ], 'javascript:void(0);');
     echo '</div>';
 
     echo '</td>';
@@ -140,10 +140,10 @@ foreach ($customers as $customer) {
 
     if ($appAuth->getGroupId() >= $customer['Customers']['id_default_group']) {
         echo '<div class="table-cell-wrapper group">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
             'class' => 'customer-group-edit-button',
             'title' => 'Zum Ändern der Gruppe anklicken'
-        ), 'javascript:void(0);');
+        ], 'javascript:void(0);');
         echo '<span>' . $this->Html->getGroupName($customer['Customers']['id_default_group']) . '</span>';
         echo '</div>';
     } else {
@@ -159,19 +159,19 @@ foreach ($customers as $customer) {
     echo '<td style="text-align:center;padding-left:10px;width:42px;">';
 
     if ($customer['Customers']['active'] == 1) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
             'class' => 'set-state-to-inactive change-active-state',
             'id' => 'change-active-state-' . $customer['Customers']['id_customer'],
             'title' => 'Zum Deaktivieren anklicken'
-        ), 'javascript:void(0);');
+        ], 'javascript:void(0);');
     }
 
     if ($customer['Customers']['active'] == '') {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
             'class' => 'set-state-to-active change-active-state',
             'id' => 'change-active-state-' . $customer['Customers']['id_customer'],
             'title' => 'Zum Aktivieren anklicken'
-        ), 'javascript:void(0);');
+        ], 'javascript:void(0);');
     }
 
     echo '</td>';
@@ -189,10 +189,10 @@ foreach ($customers as $customer) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer['payment_product_delta']);
             echo $this->Html->getJqueryUiIcon(
                 $creditBalanceHtml,
-                array(
+                [
                 'class' => 'icon-with-text',
                 'title' => 'Guthaben anzeigen'
-                ),
+                ],
                 $this->Slug->getCreditBalance($customer['Customers']['id_customer'])
             );
         } else {
@@ -223,11 +223,11 @@ foreach ($customers as $customer) {
     echo '<td style="padding-left: 11px;">';
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
-            array(
+            [
                 'class' => 'customer-comment-edit-button' . ($customer['AddressCustomer']['comment'] == '' ? ' disabled' : ''),
                 'title' => $customer['AddressCustomer']['comment'] != '' ? $customer['AddressCustomer']['comment'] : 'Kommentar hinzufügen',
                 'data-title-for-overlay' => $customer['AddressCustomer']['comment'] != '' ? $customer['AddressCustomer']['comment'] : 'Kommentar hinzufügen'
-            ),
+            ],
             'javascript:void(0);'
         );
     echo '</td>';

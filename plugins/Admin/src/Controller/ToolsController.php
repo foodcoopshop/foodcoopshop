@@ -33,10 +33,10 @@ class ToolsController extends AdminAppController
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
             $message = 'Die hochgeladene Datei muss im Format "jpg" sein.';
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
         $extension = strtolower(pathinfo($this->params['form']['upload']['name'], PATHINFO_EXTENSION));
@@ -49,10 +49,10 @@ class ToolsController extends AdminAppController
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'filename' => $filenameWithPath
-        )));
+        ]));
     }
 
     public function rotateImage()
@@ -73,10 +73,10 @@ class ToolsController extends AdminAppController
         }
         if (is_null($directionInDegrees)) {
             $message = 'direction wrong';
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
         $formatInfo = getimagesize($uploadedFile);
@@ -84,10 +84,10 @@ class ToolsController extends AdminAppController
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
             $message = 'Die hochgeladene Datei muss im Format "jpg" sein.';
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
         Image::make($uploadedFile)
@@ -95,10 +95,10 @@ class ToolsController extends AdminAppController
             ->save($uploadedFile);
 
         $rotatedImageSrc = $this->params['data']['filename'] . '?' . StringComponent::createRandomString(3);
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'rotatedImageSrc' => $rotatedImageSrc
-        )));
+        ]));
     }
 
     public function ajaxCancelFormPage()
@@ -115,17 +115,17 @@ class ToolsController extends AdminAppController
 
         $this->loadModel($objectClass);
 
-        $object = $this->$objectClass->find('all', array(
-            'conditions' => array(
+        $object = $this->$objectClass->find('all', [
+            'conditions' => [
                 $objectClass . '.' . $this->$objectClass->primaryKey => $id
-            )
-        ))->first();
+            ]
+        ])->first();
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok',
             'referer' => $referer
-        )));
+        ]));
     }
 
     /*

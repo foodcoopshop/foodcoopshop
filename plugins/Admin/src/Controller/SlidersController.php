@@ -33,21 +33,21 @@ class SlidersController extends AdminAppController
         $this->setFormReferer();
 
         if ($sliderId > 0) {
-            $unsavedSlider = $this->Slider->find('all', array(
-                'conditions' => array(
+            $unsavedSlider = $this->Slider->find('all', [
+                'conditions' => [
                     'Sliders.id_slider' => $sliderId
-                )
-            ))->first();
+                ]
+            ])->first();
             // default value
             $unsavedSlider['Sliders']['update_modified_field'] = APP_ON;
         } else {
             // default values for new sliders
-            $unsavedSlider = array(
-                'Sliders' => array(
+            $unsavedSlider = [
+                'Sliders' => [
                     'active' => APP_ON,
                     'position' => 10
-                )
-            );
+                ]
+            ];
         }
         $this->set('title_for_layout', 'Slideshow-Bild bearbeiten');
 
@@ -58,7 +58,7 @@ class SlidersController extends AdminAppController
             $this->Slider->id = $sliderId;
             $this->Slider->set($this->request->data['Sliders']);
 
-            $errors = array();
+            $errors = [];
             if (! $this->Slider->validates()) {
                 $errors = array_merge($errors, $this->Slider->validationErrors);
             }
@@ -66,9 +66,9 @@ class SlidersController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Slider->save($this->request->data['Sliders'], array(
+                $this->Slider->save($this->request->data['Sliders'], [
                     'validate' => false
-                ));
+                ]);
                 if (is_null($sliderId)) {
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'slider_added';
@@ -104,15 +104,15 @@ class SlidersController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
         $conditions[] = 'Sliders.active > ' . APP_DEL;
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Sliders.position' => 'ASC'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
         $sliders = $this->Paginator->paginate('Sliders');
         $this->set('sliders', $sliders);
         $this->set('title_for_layout', 'Slideshow');

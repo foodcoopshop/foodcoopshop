@@ -16,75 +16,75 @@
 <div id="products" class="product-list">
      
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initAddProduct('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
-        ));
-        $this->element('highlightRowAfterEdit', array(
+        ]);
+        $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#product-'
-        ));
+        ]);
     ?>
     
     <div class="filter-container">
         <?php
         if ($manufacturerId > 0) {
-            echo $this->Form->input('productId', array(
+            echo $this->Form->input('productId', [
                 'type' => 'select',
                 'label' => '',
                 'empty' => 'alle Produkte',
-                'options' => array()
-            ));
+                'options' => []
+            ]);
         }
         if (! $appAuth->isManufacturer()) {
-            echo $this->Form->input('manufacturerId', array(
+            echo $this->Form->input('manufacturerId', [
                 'type' => 'select',
                 'label' => '',
                 'options' => $manufacturersForDropdown,
                 'empty' => 'Bitte wählen...',
                 'selected' => isset($manufacturerId) ? $manufacturerId : ''
-            ));
+            ]);
         }
-        echo $this->Form->input('active', array(
+        echo $this->Form->input('active', [
             'type' => 'select',
             'label' => '',
             'options' => $this->MyHtml->getActiveStates(),
             'selected' => isset($active) ? $active : ''
-        ));
-        echo $this->Form->input('category', array(
+        ]);
+        echo $this->Form->input('category', [
             'type' => 'select',
             'label' => '',
             'empty' => 'Kategorie auswählen...',
             'options' => $categoriesForSelect,
             'selected' => isset($category) ? $category : ''
-        ));
+        ]);
         ?>
-        Anzahl 0? <?php echo $this->Form->input('isQuantityZero', array('type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero));?>
-        Preis 0? <?php echo $this->Form->input('isPriceZero', array('type'=>'checkbox', 'label' =>'', 'checked' => $isPriceZero));?>
+        Anzahl 0? <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero]);?>
+        Preis 0? <?php echo $this->Form->input('isPriceZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isPriceZero]);?>
         
         <div class="right">
             <?php
             // only show button if no manufacturer filter is applied
             if ($manufacturerId > 0) {
                 echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', array(
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', [
                     'class' => 'btn btn-default',
                     'escape' => false
-                ));
+                ]);
                 echo '</div>';
             }
 
             if (isset($showSyncProductsButton) && $showSyncProductsButton) {
-                $this->element('addScript', array(
+                $this->element('addScript', [
                     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
-                ));
+                ]);
                 echo '<div class="toggle-sync-button-wrapper">';
                     echo $this->Html->link(
                         '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
                         $this->Network->getSyncProductData(),
-                        array(
+                        [
                             'class' => 'btn btn-default',
                             'escape' => false
-                        )
+                        ]
                     );
                 echo '</div>';
             }
@@ -175,57 +175,57 @@
 
         echo '<td style="text-align: center;padding-left:16px;width:50px;">';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), [
                 'class' => 'add-product-attribute-button',
                 'title' => 'Neue Variante für Produkt "' . $product['ProductLangs']['name'] . '" erstellen'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         echo '</td>';
 
         $imageExists = $product['Images']['id_image'] != '';
         echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && !$imageExists ? 'not-available' : '') . '">';
         if ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
                 'class' => 'add-image-button',
                 'title' => 'Neues Bild hochladen bzw. austauschen',
                 'data-object-id' => $product['Products']['id_product']
-            ), 'javascript:void(0);');
-            echo $this->element('imageUploadForm', array(
+            ], 'javascript:void(0);');
+            echo $this->element('imageUploadForm', [
                 'id' => $product['Products']['id_product'],
                 'action' => '/admin/tools/doTmpImageUpload/' . $product['Products']['id_product'],
                 'imageExists' => $imageExists,
                 'existingImageSrc' => $imageExists ? $this->Html->getProductImageSrc($product['Images']['id_image'], 'thickbox') : ''
-            ));
+            ]);
         }
         echo '</td>';
 
         echo '<td>';
 
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-name-edit-button',
                 'title' => 'Name und Beschreibung ändern'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
 
         if (! isset($product['ProductAttributes'])) {
             echo '<span style="float:left;margin-right: 5px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-product-attribute-button',
                 'title' => 'Variante für Produkt "' . $product['ProductLangs']['name'] . '" löschen'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
             echo '</span>';
 
             echo '<span style="float:left;">';
             if ($product['ProductAttributeShops']['default_on'] == 1) {
-                echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), array(
+                echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), [
                     'title' => 'Diese Variante ist die Standardvariante.'
-                ));
+                ]);
             } else {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('bullet_star.png')), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('bullet_star.png')), [
                     'class' => 'set-as-default-attribute-button',
                     'title' => 'Als neue Standard-Variante festlegen'
-                ), 'javascript:void(0);');
+                ], 'javascript:void(0);');
             }
             echo '</span>';
         }
@@ -271,15 +271,15 @@
 
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo $this->Form->hidden('Products.selected_categories', array(
+            echo $this->Form->hidden('Products.selected_categories', [
                 'value' => implode(',', $product['selectedCategories']),
                 'id' => 'selected-categories-' . $product['Products']['id_product']
-            ));
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            ]);
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-categories-edit-button',
                 'title' => 'Kategorien ändern',
                 'data-object-id' => $product['Products']['id_product']
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
             echo '<span class="categories-for-dialog">' . join(', ', $product['Categories']['names']) . '</span>';
             if (! $product['Categories']['allProductsFound']) {
                 echo ' - <b>Kategorie "Alle Produkte" fehlt!</b>';
@@ -290,10 +290,10 @@
         echo '<td class="' . (empty($product['ProductAttributes']) && $product['StockAvailables']['quantity'] == 0 ? 'not-available' : '') . '">';
 
         if (empty($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-quantity-edit-button',
                 'title' => 'Anzahl ändern'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
             echo '<span class="quantity-for-dialog">';
             echo $this->Html->formatAsDecimal($product['StockAvailables']['quantity'], 0);
             echo '</span>';
@@ -309,44 +309,44 @@
             echo '</span>';
         }
         if (empty($product['ProductAttributes'])) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-price-edit-button',
                 'title' => 'Preis ändern'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         echo '</div>';
         echo '</td>';
 
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo $this->Form->hidden('Products.id_tax', array(
+            echo $this->Form->hidden('Products.id_tax', [
                 'id' => 'tax-id-' . $product['Products']['id_product'],
                 'value' => $product['Products']['id_tax']
-            ));
+            ]);
             $taxRate = $product['Taxes']['rate'];
             echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-tax-edit-button',
                 'title' => 'Steuer ändern',
                 'data-object-id' => $product['Products']['id_product']
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         echo '</td>';
 
         echo '<td>';
         if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
             if (! $product['Products']['is_new']) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', [
                     'class' => 'icon-with-text change-new-state change-new-state-active',
                     'id' => 'change-new-state-' . $product['Products']['id_product'],
                     'title' => 'Produkt die nächsten ' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
-                ), 'javascript:void(0);');
+                ], 'javascript:void(0);');
             } else {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', [
                     'class' => 'icon-with-text change-new-state change-new-state-inactive',
                     'id' => 'change-new-state-' . $product['Products']['id_product'],
                     'title' => 'Produkt nicht mehr als "neu" anzeigen?'
-                ), 'javascript:void(0);');
+                ], 'javascript:void(0);');
             }
         }
         echo '</td>';
@@ -355,10 +355,10 @@
         if (empty($product['ProductAttributes'])) {
             echo '<div class="table-cell-wrapper price">';
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('AppConfig.isDepositPaymentCashless')) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                     'class' => 'product-deposit-edit-button',
                     'title' => 'Zum Ändern des Pfands anklicken'
-                ), 'javascript:void(0);');
+                ], 'javascript:void(0);');
             }
             if ($product['Deposit'] > 0) {
                 echo '<span class="deposit-for-dialog">';
@@ -372,29 +372,29 @@
         echo '<td style="text-align: center;padding-left:10px;width:42px;">';
 
         if ($product['Products']['active'] == 1) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
                 'class' => 'set-state-to-inactive change-active-state',
                 'id' => 'change-active-state-' . $product['Products']['id_product'],
                 'title' => 'Zum Deaktivieren anklicken'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
 
         if ($product['Products']['active'] == '') {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'set-state-to-active change-active-state',
                 'id' => 'change-active-state-' . $product['Products']['id_product'],
                 'title' => 'Zum Aktivieren anklicken'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
 
         echo '</td>';
 
         echo '<td>';
         if ($product['Products']['active'] && (! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
                 'title' => 'Produkt-Vorschau',
                 'target' => '_blank'
-            ), $url = $this->Slug->getProductDetail($product['Products']['id_product'], $product['ProductLangs']['name']));
+            ], $url = $this->Slug->getProductDetail($product['Products']['id_product'], $product['ProductLangs']['name']));
         }
         echo '</td>';
 
@@ -420,19 +420,19 @@
 
 <?php
     // dropdowns and checkboxes for overlays are only rendered once (performance)
-    echo $this->Form->input('productAttributeId', array('type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown));
+    echo $this->Form->input('productAttributeId', ['type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown]);
     echo '<div class="categories-checkboxes">';
-        echo $this->Form->input('Products.CategoryProducts', array(
+        echo $this->Form->input('Products.CategoryProducts', [
             'label' => '',
             'multiple' => 'checkbox',
             'options' => $categoriesForSelect
-        ));
+        ]);
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';
-        echo $this->Form->input('Taxes.id_tax', array(
+        echo $this->Form->input('Taxes.id_tax', [
             'type' => 'select',
             'label' => '',
             'options' => $taxesForDropdown,
-        ));
+        ]);
         echo '</div>';
 ?>

@@ -22,11 +22,11 @@ $helpText = '<li><b>Hallo ' . $appAuth->getUserFirstname() . '!</b></li>
             <br />- den Zeitraum, für den die Zahlung gelten soll</li>
     ';
 
-echo $this->element('paymentHeader', array(
+echo $this->element('paymentHeader', [
     'helpText' => $helpText,
     'buttonText' => 'Eingezahlten Mitgliedsbeitrag eintragen',
     'icon' => 'fa-heart'
-));
+]);
 
 if (count($payments) == 0) {
     ?>
@@ -68,10 +68,10 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td style="text-align:center;">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
             'class' => 'delete-payment-button',
             'title' => 'Aufladung löschen?'
-        ), 'javascript:void(0);');
+        ], 'javascript:void(0);');
         echo '</td>';
 
         echo '</tr>';

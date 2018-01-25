@@ -68,22 +68,22 @@ class ManufacturersController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         } else {
-            $manufacturer = $this->Manufacturer->find('all', array(
-                'conditions' => array(
+            $manufacturer = $this->Manufacturer->find('all', [
+                'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
-                )
-            ))->first();
+                ]
+            ])->first();
             $manufacturerId = $manufacturer['Manufacturers']['id_manufacturer'];
         }
 
-        $_SESSION['KCFINDER'] = array(
+        $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
-        );
-        $this->set('data', array(
+        ];
+        $this->set('data', [
             'status' => true,
             'msg' => 'OK'
-        ));
+        ]);
         $this->set('_serialize', 'data');
     }
 
@@ -92,18 +92,18 @@ class ManufacturersController extends AdminAppController
         $this->setFormReferer();
 
         if ($manufacturerId > 0) {
-            $unsavedManufacturer = $this->Manufacturer->find('all', array(
-                'conditions' => array(
+            $unsavedManufacturer = $this->Manufacturer->find('all', [
+                'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
-                )
-            ))->first();
+                ]
+            ])->first();
 
-            $_SESSION['KCFINDER'] = array(
+            $_SESSION['KCFINDER'] = [
                 'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
-            );
+            ];
         } else {
-            $unsavedManufacturer = array();
+            $unsavedManufacturer = [];
         }
 
         $this->set('unsavedManufacturer', $unsavedManufacturer);
@@ -125,10 +125,10 @@ class ManufacturersController extends AdminAppController
 
             // quick and dirty solution for stripping html tags, use html purifier here
             foreach ($this->request->data['Manufacturers'] as $key => &$data) {
-                if (! in_array($key, array(
+                if (! in_array($key, [
                     'description',
                     'short_description'
-                ))) {
+                ])) {
                     $data = strip_tags(trim($data));
                 }
             }
@@ -137,7 +137,7 @@ class ManufacturersController extends AdminAppController
                 $data = strip_tags(trim($data));
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->Manufacturer->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->validationErrors);
             }
@@ -154,12 +154,12 @@ class ManufacturersController extends AdminAppController
                     // default value for new manufacturer
                     $this->request->data['Manufacturers']['active'] = APP_ON;
                 }
-                $this->Manufacturer->save($this->request->data['Manufacturers'], array(
+                $this->Manufacturer->save($this->request->data['Manufacturers'], [
                     'validate' => false
-                ));
+                ]);
 
                 if (is_null($manufacturerId)) {
-                    $customer = array();
+                    $customer = [];
                     $this->request->data['Addresses']['id_manufacturer'] = $this->Manufacturer->id;
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'manufacturer_added';
@@ -178,19 +178,19 @@ class ManufacturersController extends AdminAppController
                 } else {
                     $this->Customer->id = null;
                 }
-                $customerData = array(
+                $customerData = [
                     'id_customer' => $this->Customer->id,
                     'email' => $this->data['Addresses']['email'],
                     'firstname' => $this->data['Addresses']['firstname'],
                     'lastname' => $this->data['Addresses']['lastname'],
                     'active' => APP_ON,
                     'id_lang' => Configure::read('AppConfig.langId')
-                );
+                ];
                 $this->Customer->save($customerData, false);
 
-                $this->Manufacturer->Address->save($this->request->data, array(
+                $this->Manufacturer->Address->save($this->request->data, [
                     'validate' => false
-                ));
+                ]);
 
                 if ($this->request->data['Manufacturers']['tmp_image'] != '') {
                     $this->saveUploadedImage($this->Manufacturer->id, $this->request->data['Manufacturers']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getManufacturerThumbsPath(), Configure::read('AppConfig.manufacturerImageSizes'));
@@ -217,17 +217,17 @@ class ManufacturersController extends AdminAppController
 
     public function changeStatus($manufacturerId, $status)
     {
-        if (! in_array($status, array(
+        if (! in_array($status, [
             APP_OFF,
             APP_ON
-        ))) {
+        ])) {
             throw new RecordNotFoundException('Status muss 0 oder 1 sein!');
         }
 
         $this->Manufacturer->id = $manufacturerId;
-        $this->Manufacturer->save(array(
+        $this->Manufacturer->save([
             'active' => $status
-        ));
+        ]);
 
         $statusText = 'deaktiviert';
         $actionLogType = 'manufacturer_set_inactive';
@@ -236,11 +236,11 @@ class ManufacturersController extends AdminAppController
             $actionLogType = 'manufacturer_set_active';
         }
 
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $message = 'Der Hersteller "' . $manufacturer['Manufacturers']['name'] . '" wurde erfolgreich ' . $statusText;
         $message .= '.';
@@ -273,20 +273,20 @@ class ManufacturersController extends AdminAppController
         }
         $this->set('active', $active);
 
-        $conditions = array();
+        $conditions = [];
         if ($active != 'all') {
-            $conditions = array(
+            $conditions = [
                 'Manufacturers.active' => $active
-            );
+            ];
         }
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Manufacturers.name' => 'ASC'
-            ),
-            'fields' => array('Manufacturers.*', 'Customers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive')
-        ), $this->Paginator->settings);
+            ],
+            'fields' => ['Manufacturers.*', 'Customers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+        ], $this->Paginator->settings);
         $manufacturers = $this->Paginator->paginate('Manufacturers');
 
         $this->Product = TableRegistry::get('Products');
@@ -313,17 +313,17 @@ class ManufacturersController extends AdminAppController
 
     public function sendInvoice($manufacturerId, $from, $to)
     {
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
+        $product_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
-        ), 'F');
+        ], 'F');
 
         $email = new AppEmail();
 
@@ -340,11 +340,11 @@ class ManufacturersController extends AdminAppController
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+            $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
-            ), 'F');
+            ], 'F');
 
             // generate invoice
             $this->render('get_invoice');
@@ -354,12 +354,12 @@ class ManufacturersController extends AdminAppController
             $this->Flash->success('Rechnung für Hersteller "' . $manufacturer['Manufacturers']['name'] . '" erfolgreich versendet an ' . $manufacturer['Addresses']['email'] . '.</a>');
 
             $loggedUser = $this->AppAuth->user();
-            $invoice2Save = array(
+            $invoice2Save = [
                 'id_manufacturer' => $manufacturerId,
                 'send_date' => date('Y-m-d H:i:s'),
                 'invoice_number' => $invoiceNumber,
                 'user_id' => $loggedUser['id_customer']
-            );
+            ];
             $this->Manufacturer->Invoices->id = null;
             $this->Manufacturer->Invoices->save($invoice2Save);
 
@@ -369,17 +369,17 @@ class ManufacturersController extends AdminAppController
             if ($sendEmail) {
                 $email->template('Admin.send_invoice')
                     ->to($manufacturer['Addresses']['email'])
-                    ->attachments(array(
+                    ->attachments([
                     $invoicePdfFile
-                    ))
+                    ])
                     ->emailFormat('html')
                     ->subject('Rechnung Nr. ' . $newInvoiceNumber . ', ' . $invoicePeriodMonthAndYear)
-                    ->viewVars(array(
+                    ->viewVars([
                     'manufacturer' => $manufacturer,
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
                     'appAuth' => $this->AppAuth,
                     'showManufacturerUnsubscribeLink' => true
-                    ));
+                    ]);
 
                 $email->send();
             }
@@ -390,21 +390,21 @@ class ManufacturersController extends AdminAppController
 
     private function getOptionBulkOrdersAllowed($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
         return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
     }
 
     private function getOptionVariableMemberFee($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
         return $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
     }
 
@@ -412,16 +412,16 @@ class ManufacturersController extends AdminAppController
     {
         Configure::read('AppConfig.timeHelper')->recalcDeliveryDayDelta();
 
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
+        $productResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN
-        ), 'F');
+        ], 'F');
 
         $email = new AppEmail();
 
@@ -437,9 +437,9 @@ class ManufacturersController extends AdminAppController
             $productPdfFile = $productPdfUrl;
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+            $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN
-            ), 'F');
+            ], 'F');
             $this->render('get_order_list_by_customer');
             $customerPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Mitglied');
             $customerPdfFile = $customerPdfUrl;
@@ -456,16 +456,16 @@ class ManufacturersController extends AdminAppController
                     ->emailFormat('html')
                     ->cc($ccRecipients)
                     -> // works also with empty array!
-                        attachments(array(
+                        attachments([
                     $productPdfFile,
                     $customerPdfFile
-                        ))
+                        ])
                     ->subject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')))
-                    ->viewVars(array(
+                    ->viewVars([
                     'manufacturer' => $manufacturer,
                     'appAuth' => $this->AppAuth,
                     'showManufacturerUnsubscribeLink' => true
-                    ));
+                    ]);
 
                 $email->send();
             }
@@ -490,11 +490,11 @@ class ManufacturersController extends AdminAppController
 
         $this->setFormReferer();
 
-        $unsavedManufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $unsavedManufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         if (empty($unsavedManufacturer)) {
             throw new RecordNotFoundException('manufacturer does not exist');
@@ -613,15 +613,15 @@ class ManufacturersController extends AdminAppController
                 $this->Manufacturer->validator()['send_order_list_cc'] = $this->Manufacturer->getMultipleEmailValidationRule(true);
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->Manufacturer->validates()) {
                 $errors = array_merge($errors, $this->Manufacturer->validationErrors);
             }
 
             if (empty($errors)) {
-                $this->Manufacturer->save($this->request->data['Manufacturers'], array(
+                $this->Manufacturer->save($this->request->data['Manufacturers'], [
                     'validate' => false
-                ));
+                ]);
 
                 $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturers']['name'] . '</b>';
                 if ($this->request->here == Configure::read('AppConfig.slugHelper')->getManufacturerMyOptions()) {
@@ -691,20 +691,20 @@ class ManufacturersController extends AdminAppController
 
     public function getInvoice($manufacturerId, $from, $to)
     {
-        $results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, array(
+        $results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
-        ));
+        ]);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, array(
+        $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
-        ));
+        ]);
     }
 
     public function getOrderListByProduct($manufacturerId, $from, $to)
@@ -728,11 +728,11 @@ class ManufacturersController extends AdminAppController
      */
     public function getAllowedOrderStates($manufacturerId)
     {
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $this->set('manufacturer', $manufacturer);
 
@@ -740,9 +740,9 @@ class ManufacturersController extends AdminAppController
         if ($bulkOrdersAllowed) {
             $orderStates = Configure::read('AppConfig.htmlHelper')->getOrderStateIds();
         } else {
-            $orderStates = array(
+            $orderStates = [
                 ORDER_STATE_OPEN
-            );
+            ];
         }
 
         return $orderStates;

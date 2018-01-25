@@ -13,13 +13,13 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();
     "
-));
-$this->element('highlightRowAfterEdit', array(
+]);
+$this->element('highlightRowAfterEdit', [
     'rowIdPrefix' => '#slider-'
-));
+]);
 ?>
 
 <div class="filter-container">
@@ -27,10 +27,10 @@ $this->element('highlightRowAfterEdit', array(
     <div class="right">
         <?php
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-        echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Slideshow-Bild erstellen', $this->Slug->getSliderAdd(), array(
+        echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Slideshow-Bild erstellen', $this->Slug->getSliderAdd(), [
             'class' => 'btn btn-default',
             'escape' => false
-        ));
+        ]);
         echo '</div>';
         ?>
     </div>
@@ -58,18 +58,18 @@ echo '</tr>';
 $i = 0;
 foreach ($sliders as $slider) {
     $i ++;
-    $rowClass = array(
+    $rowClass = [
         'data'
-    );
+    ];
     if (! $slider['Sliders']['active']) {
         $rowClass[] = 'deactivated';
     }
     echo '<tr id="slider-' . $slider['Sliders']['id_slider'] . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ), $this->Slug->getSliderEdit($slider['Sliders']['id_slider']));
+    ], $this->Slug->getSliderEdit($slider['Sliders']['id_slider']));
     echo '</td>';
 
     echo '<td class="hide">';

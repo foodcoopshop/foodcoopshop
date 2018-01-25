@@ -16,11 +16,11 @@
 
 
 <?php
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' =>
         Configure::read('AppConfig.jsNamespace') . ".Admin.init();".
         Configure::read('AppConfig.jsNamespace') . ".Admin.initDeletePayment();"
-));
+]);
 ?>
 
 <div class="filter-container">
@@ -62,10 +62,10 @@ foreach ($payments as $payment) {
         echo '</td>';
 
         echo '<td style="text-align:center;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-payment-button',
                 'title' => 'Pfand-Rücknahme löschen?'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         echo '</td>';
 
     echo '</tr>';

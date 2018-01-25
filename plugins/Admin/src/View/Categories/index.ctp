@@ -16,13 +16,13 @@
 <div id="categories">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
         "
-        ));
-        $this->element('highlightRowAfterEdit', array(
+        ]);
+        $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#category-'
-        ));
+        ]);
     ?>
    
     <div class="filter-container">
@@ -30,10 +30,10 @@
         <div class="right">
             <?php
             echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Kategorie erstellen', $this->Slug->getCategoryAdd(), array(
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Kategorie erstellen', $this->Slug->getCategoryAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
-            ));
+            ]);
             echo '</div>';
             ?>
         </div>
@@ -59,10 +59,10 @@ echo '<th>' . $this->Paginator->sort('Categories.active', 'Aktiv') . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
-echo $this->element('categoryTreeRows', array(
+echo $this->element('categoryTreeRows', [
     'categories' => $categories,
     'subRow' => false
-));
+]);
 
 echo '<tr>';
 echo '<td colspan="12"><b>' . $totalCategoriesCount . '</b> Datensätze</td>';

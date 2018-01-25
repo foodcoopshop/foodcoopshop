@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('PageContent');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Pages']['id_page']) ? $this->request->data['Pages']['id_page'] : "") . "', 'Pages');
     "
-));
+]);
 
 ?>
 
@@ -39,72 +39,72 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Pages', array(
+echo $this->Form->create('Pages', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Pages.id_page');
-echo $this->Form->input('Pages.title', array(
+echo $this->Form->input('Pages.title', [
     'label' => 'Seitentitel',
     'required' => true
-));
+]);
 
-echo $this->Form->input('Pages.menu_type', array(
+echo $this->Form->input('Pages.menu_type', [
     'type' => 'select',
     'label' => 'In welchem Menü<br /><span class="small">soll die Seite angezeigt werden?</span>',
     'options' => $this->Html->getMenuTypes()
-));
-echo $this->Form->input('Pages.id_parent', array(
+]);
+echo $this->Form->input('Pages.id_parent', [
     'type' => 'select',
     'label' => 'Übergeordneter Menüpunkt<br /><span class="small">Hauptmenü: Auswahl leer lassen</span>',
     'empty' => 'Übergeordneten Menüpunkt auswählen...',
     'options' => $mainPagesForDropdown
-));
-echo $this->Form->input('Pages.position', array(
-    'div' => array(
+]);
+echo $this->Form->input('Pages.position', [
+    'div' => [
         'class' => 'short text input'
-    ),
+    ],
     'label' => 'Reihenfolge im Menü<br /><span class="small">Zahl von 0 bis 100</span>',
     'type' => 'text',
     'after' => '<span class="after small">"0" zeigt die Seite nicht im Menü an, sie bleibt aber über den Link erreichbar.</span>'
-));
+]);
 
-echo $this->Form->input('Pages.full_width', array(
+echo $this->Form->input('Pages.full_width', [
     'label' => 'Ganze Breite?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Inhalt der Seite wird verbreitert, indem das linke Menü ausgeblendet wird.</span>'
-));
-echo $this->Form->input('Pages.extern_url', array(
+]);
+echo $this->Form->input('Pages.extern_url', [
     'placeholder' => 'z.B. http://www.foodcoopshop.com, kann auch leer bleiben',
     'label' => 'Link auf externe Seite?<br /><span class="small">Menüpunkt führt auf diese Webseite (der Inhalt der Seite wird nicht angezeigt).</span>',
-    'div' => array(
+    'div' => [
         'class' => 'long text input'
-    )
-));
+    ]
+]);
 
 if ($this->request->here != $this->Slug->getPageAdd()) {
-    echo $this->Form->input('Pages.delete_page', array(
+    echo $this->Form->input('Pages.delete_page', [
         'label' => 'Seite löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
-    ));
+    ]);
 }
 
-echo $this->Form->input('Pages.is_private', array(
+echo $this->Form->input('Pages.is_private', [
     'label' => 'Nur für Mitglieder sichtbar?',
     'type' => 'checkbox'
-));
-echo $this->Form->input('Pages.active', array(
+]);
+echo $this->Form->input('Pages.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
-));
+]);
 
-echo $this->Form->input('Pages.content', array(
+echo $this->Form->input('Pages.content', [
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
-));
+]);
 
 ?>
 

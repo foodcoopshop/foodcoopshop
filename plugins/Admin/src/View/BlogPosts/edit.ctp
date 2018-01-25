@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('BlogPostContent');" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['BlogPosts']['id_blog_post']) ? $this->request->data['BlogPosts']['id_blog_post'] : "") . "', 'BlogPosts');
     "
-));
+]);
 
 $idForImageUpload = isset($this->request->data['BlogPosts']['id_blog_post']) ? $this->request->data['BlogPosts']['id_blog_post'] : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getBlogPostImageSrc($idForImageUpload, 'single');
@@ -46,26 +46,26 @@ $imageExists = ! preg_match('/no-single-default/', $imageSrc);
 
 <?php
 
-echo $this->Form->create('BlogPosts', array(
+echo $this->Form->create('BlogPosts', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('BlogPosts.id_blog_post');
-echo $this->Form->input('BlogPosts.title', array(
-    'div' => array(
+echo $this->Form->input('BlogPosts.title', [
+    'div' => [
         'class' => 'long text input'
-    ),
+    ],
     'label' => 'Titel',
     'required' => true
-));
-echo $this->Form->input('BlogPosts.short_description', array(
-    'div' => array(
+]);
+echo $this->Form->input('BlogPosts.short_description', [
+    'div' => [
         'class' => 'long text input'
-    ),
+    ],
     'required' => false,
     'label' => 'Kurze Beschreibung'
-));
+]);
 
 echo '<div class="input">';
 echo '<label>Bild';
@@ -74,65 +74,65 @@ if ($imageExists) {
 }
 echo '</label>';
 echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
+echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
     'title' => 'Neues Bild hochladen bzw. austauschen',
     'data-object-id' => $idForImageUpload
-), 'javascript:void(0);');
+], 'javascript:void(0);');
 echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
 echo '</div>';
-echo $this->Form->input('BlogPosts.delete_image', array(
+echo $this->Form->input('BlogPosts.delete_image', [
     'label' => 'Bild löschen?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
-));
+]);
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    echo $this->Form->input('BlogPosts.id_manufacturer', array(
+    echo $this->Form->input('BlogPosts.id_manufacturer', [
         'type' => 'select',
         'label' => 'Hersteller',
         'empty' => 'Hersteller auswählen',
         'options' => $manufacturersForDropdown
-    ));
+    ]);
     echo '<span class="description small">Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung "nur für Mitglieder").</span>';
 }
 
-echo $this->Form->input('BlogPosts.is_featured', array(
+echo $this->Form->input('BlogPosts.is_featured', [
     'label' => 'Auf der Startseite anzeigen?',
     'type' => 'checkbox'
-));
-echo $this->Form->input('BlogPosts.is_private', array(
+]);
+echo $this->Form->input('BlogPosts.is_private', [
     'label' => 'Nur für Mitglieder sichtbar?',
     'type' => 'checkbox'
-));
-echo $this->Form->input('BlogPosts.active', array(
+]);
+echo $this->Form->input('BlogPosts.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
-));
+]);
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin() && $this->request->here != $this->Slug->getBlogPostAdd()) {
-    echo $this->Form->input('BlogPosts.update_modified_field', array(
+    echo $this->Form->input('BlogPosts.update_modified_field', [
         'label' => 'Nach vorne reihen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Falls angehakt, wird der Blog-Artikel an die erste Stelle der Liste gereiht.</span>'
-    ));
+    ]);
 }
 
 if ($this->request->here != $this->Slug->getBlogPostAdd()) {
-    echo $this->Form->input('BlogPosts.delete_blog_post', array(
+    echo $this->Form->input('BlogPosts.delete_blog_post', [
         'label' => 'Blog-Artikel löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
-    ));
+    ]);
 }
 
-echo $this->Form->input('BlogPosts.content', array(
+echo $this->Form->input('BlogPosts.content', [
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
     'required' => false
-));
+]);
 
 ?>
 
@@ -141,10 +141,10 @@ echo $this->Form->input('BlogPosts.content', array(
 <div class="sc"></div>
 
 <?php
-echo $this->element('imageUploadForm', array(
+echo $this->element('imageUploadForm', [
     'id' => $idForImageUpload,
     'action' => '/admin/tools/doTmpImageUpload/',
     'imageExists' => $imageExists,
     'existingImageSrc' => $imageSrc
-));
+]);
 ?>

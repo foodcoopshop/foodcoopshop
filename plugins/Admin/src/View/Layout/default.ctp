@@ -31,13 +31,13 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
-    $cssConfigs = array('admin');
+    $cssConfigs = ['admin'];
     if ($this->plugin != 'Admin') {
         $cssConfigs[] = $this->plugin.'.all';
     }
-    echo $this->element('renderCss', array('configs' => $cssConfigs));
+    echo $this->element('renderCss', ['configs' => $cssConfigs]);
     if ($isMobile) {
-        echo $this->Html->css(array('/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile'));
+        echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile']);
     }
     ?>
     
@@ -60,17 +60,17 @@
     <div class="sc"></div>
     
 <?php
-$jsConfigs = array('admin');
+$jsConfigs = ['admin'];
 if ($this->plugin != 'Admin') {
     $jsConfigs[] = $this->plugin.'.all';
 }
-echo $this->element('renderJs', array('configs' => $jsConfigs));
+echo $this->element('renderJs', ['configs' => $jsConfigs]);
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(array('/node_modules/slidebars/dist/slidebars'));
+    echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
     // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(Configure::read('AppConfig.jsNamespace').".Mobile.initMenusAdmin();", array('block'));
+    echo $this->MyHtml->scriptBlock(Configure::read('AppConfig.jsNamespace').".Mobile.initMenusAdmin();", ['block']);
 }
 echo $this->element('sql_dump');
 

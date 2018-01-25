@@ -220,9 +220,9 @@ mb_internal_encoding('UTF-8');
 
 TableRegistry::get('Configurations')->loadConfigurations();
 if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-    Plugin::load('Network', array(
+    Plugin::load('Network', [
         'routes' => true
-    ));
+    ]);
 }
 // if (Configure::read('AppConfig.emailErrorLoggingEnabled')) {
 //     Plugin::load('EmailErrorLog', array(

@@ -48,26 +48,26 @@ class CustomersController extends AdminAppController
         if (! in_array($groupId, array_keys(Configure::read('AppConfig.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
             $this->log($message);
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
-        $oldCustomer = $this->Customer->find('all', array(
-            'conditions' => array(
+        $oldCustomer = $this->Customer->find('all', [
+            'conditions' => [
                 'Customers.id_customer' => $customerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
         if ($this->AppAuth->getGroupId() < $oldCustomer['Customers']['id_default_group']) {
             $message = 'logged user has lower groupId than the user he wants to edit: customerId: ' . $oldCustomer['Customers']['id_customer'] . ', groupId: ' . $oldCustomer['Customers']['id_default_group'];
             $this->log($message);
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
         $this->Customer->id = $customerId;
@@ -78,16 +78,16 @@ class CustomersController extends AdminAppController
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1
-        )));
+        ]));
     }
 
     public function changePassword()
     {
-        $this->set(array(
+        $this->set([
             'title_for_layout' => __('Change your password')
-        ));
+        ]);
 
         if (empty($this->request->data)) {
             return;
@@ -144,9 +144,9 @@ class CustomersController extends AdminAppController
             return;
         }
 
-        $customer2save = array(
+        $customer2save = [
             'passwd' => $ph->hash($passwordNew1)
-        );
+        ];
 
         $this->Customer->id = $this->AppAuth->getUserId();
         if ($this->Customer->save($customer2save, false)) {
@@ -174,11 +174,11 @@ class CustomersController extends AdminAppController
     {
         $customerId = $this->AppAuth->getUserId();
 
-        $unsavedCustomer = $this->Customer->find('all', array(
-            'conditions' => array(
+        $unsavedCustomer = $this->Customer->find('all', [
+            'conditions' => [
                 'Customers.id_customer' => $customerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $this->set('title_for_layout', 'Profil ändern');
 
@@ -205,7 +205,7 @@ class CustomersController extends AdminAppController
 
             $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
 
-            $errors = array();
+            $errors = [];
             if (! $this->Customer->validates()) {
                 $errors = array_merge($errors, $this->Customer->validationErrors);
             }
@@ -215,12 +215,12 @@ class CustomersController extends AdminAppController
             }
 
             if (empty($errors)) {
-                $this->Customer->save($this->request->data['Customers'], array(
+                $this->Customer->save($this->request->data['Customers'], [
                     'validate' => false
-                ));
-                $this->Customer->AddressCustomer->save($this->request->data['Customers'], array(
+                ]);
+                $this->Customer->AddressCustomer->save($this->request->data['Customers'], [
                     'validate' => false
-                ));
+                ]);
 
                 $this->renewAuthSession();
 
@@ -249,23 +249,23 @@ class CustomersController extends AdminAppController
 
     public function changeStatus($customerId, $status, $sendEmail)
     {
-        if (! in_array($status, array(
+        if (! in_array($status, [
             APP_OFF,
             APP_ON
-        ))) {
+        ])) {
             throw new RecordNotFoundException('Status muss 0 oder 1 sein!');
         }
 
         $this->Customer->id = $customerId;
-        $this->Customer->save(array(
+        $this->Customer->save([
             'active' => $status
-        ));
+        ]);
 
-        $customer = $this->Customer->find('all', array(
-            'conditions' => array(
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
                 'Customers.id_customer' => $customerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $statusText = 'deaktiviert';
         $actionLogType = 'customer_set_inactive';
@@ -285,13 +285,13 @@ class CustomersController extends AdminAppController
                 ->emailFormat('html')
                 ->to($customer['Customers']['email'])
                 ->subject('Dein Mitgliedskonto wurde aktiviert.')
-                ->viewVars(array(
+                ->viewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
                 'newPassword' => $newPassword
-                ));
+                ]);
 
-            $email->addAttachments(array('Nutzungsbedingungen.pdf' => array('data' => $this->generateTermsOfUsePdf($customer['Customers']), 'mimetype' => 'application/pdf')));
+            $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($customer['Customers']), 'mimetype' => 'application/pdf']]);
             $email->send();
 
             $message .= ' und eine Info-Mail an ' . $customer['Customers']['email'] . ' versendet';
@@ -314,15 +314,15 @@ class CustomersController extends AdminAppController
         $customerId = $this->params['data']['customerId'];
         $customerComment = htmlspecialchars_decode($this->params['data']['customerComment']);
 
-        $oldCustomer = $this->Customer->find('all', array(
-            'conditions' => array(
+        $oldCustomer = $this->Customer->find('all', [
+            'conditions' => [
                 'Customers.id_customer' => $customerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
-        $customerAddress2update = array(
+        $customerAddress2update = [
             'comment' => $customerComment
-        );
+        ];
 
         $this->Customer->AddressCustomer->id = $oldCustomer['AddressCustomer']['id_address'];
         $this->Customer->AddressCustomer->save($customerAddress2update);
@@ -332,10 +332,10 @@ class CustomersController extends AdminAppController
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 
     public function index()
@@ -370,27 +370,27 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $conditions = array();
+        $conditions = [];
         if ($active != 'all') {
-            $conditions = array(
+            $conditions = [
                 'Customers.active' => $active
-            );
+            ];
         }
 
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
         $this->Customer->hasMany['ValidOrder']['limit'] = null; // to get all valid orders
         $this->Customer->dropManufacturersInNextFind();
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Customers.name' => 'ASC'
-            ),
-            'contain' => array(
+            ],
+            'contain' => [
                 'Customers.*',
                 'ValidOrder.*'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
 
         $customers = $this->Paginator->paginate('Customers');
 

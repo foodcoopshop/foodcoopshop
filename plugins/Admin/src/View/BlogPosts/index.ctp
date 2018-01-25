@@ -16,35 +16,35 @@
 <div id="blogPosts">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
         "
-        ));
-        $this->element('highlightRowAfterEdit', array(
+        ]);
+        $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#blogPost-'
-        ));
+        ]);
     ?>
    
     <div class="filter-container">
-        <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+        <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
         <?php
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-            echo $this->Form->input('manufacturerId', array(
+            echo $this->Form->input('manufacturerId', [
                 'type' => 'select',
                 'label' => '',
                 'empty' => 'alle Hersteller',
                 'options' => $manufacturersForDropdown,
                 'selected' => isset($manufacturerId) ? $manufacturerId : ''
-            ));
+            ]);
         }
         ?>
         <div class="right">
             <?php
             echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Blog-Artikel erstellen', $this->Slug->getBlogPostAdd(), array(
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Blog-Artikel erstellen', $this->Slug->getBlogPostAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
-            ));
+            ]);
             echo '</div>';
             ?>
         </div>
@@ -79,9 +79,9 @@ $i = 0;
 
 foreach ($blogPosts as $blogPost) {
     $i ++;
-    $rowClass = array(
+    $rowClass = [
         'data'
-    );
+    ];
     if (! $blogPost['BlogPosts']['active']) {
         $rowClass[] = 'deactivated';
     }
@@ -104,9 +104,9 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ), $this->Slug->getBlogPostEdit($blogPost['BlogPosts']['id_blog_post']));
+    ], $this->Slug->getBlogPostEdit($blogPost['BlogPosts']['id_blog_post']));
     echo '</td>';
 
     echo '<td align="center">';
@@ -155,10 +155,10 @@ foreach ($blogPosts as $blogPost) {
 
     echo '<td>';
     if ($blogPost['BlogPosts']['active']) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
             'title' => 'Blog-Artikel anzeigen',
             'target' => '_blank'
-        ), $this->Slug->getBlogPostDetail($blogPost['BlogPosts']['id_blog_post'], $blogPost['BlogPosts']['title']));
+        ], $this->Slug->getBlogPostDetail($blogPost['BlogPosts']['id_blog_post'], $blogPost['BlogPosts']['title']));
     }
     echo '</td>';
 

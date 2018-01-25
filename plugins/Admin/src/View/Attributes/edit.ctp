@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Attributes']['id_attribute']) ? $this->request->data['Attributes']['id_attribute'] : "") . "', 'Attributes');
     "
-));
+]);
 ?>
 
 <div class="filter-container">
@@ -38,29 +38,29 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Attributes', array(
+echo $this->Form->create('Attributes', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Attributes.id_attribute');
 
-echo $this->Form->input('Attributes.name', array(
-    'div' => array(
+echo $this->Form->input('Attributes.name', [
+    'div' => [
         'class' => 'long text input'
-    ),
+    ],
     'label' => 'Name',
     'required' => true
-));
+]);
 
 if ($this->request->here != $this->Slug->getAttributeAdd()) {
     $hasCombinedProducts = count($unsavedAttribute['CombinationProducts']['online']) > 0 || count($unsavedAttribute['CombinationProducts']['offline']) > 0;
-    echo $this->Form->input('Attributes.delete_attribute', array(
+    echo $this->Form->input('Attributes.delete_attribute', [
         'label' => 'Variante löschen?',
         'disabled' => ($hasCombinedProducts ? 'disabled' : ''),
         'type' => 'checkbox',
         'after' => '<span class="after small">' . ($hasCombinedProducts ? 'Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind.' : 'Anhaken und dann auf <b>Speichern</b> klicken.') . '</span>'
-    ));
+    ]);
 }
 
 ?>

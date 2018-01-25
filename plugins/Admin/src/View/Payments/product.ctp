@@ -29,20 +29,20 @@ if (Configure::read('AppConfig.isDepositPaymentCashless')) {
     $helpText .= '<li><b>Pfand</b> muss weiterhin bar bei Abholung bezahlt werden (und scheint bei den Bestellungen nicht mit auf).</li>';
 }
 
-echo $this->element('paymentHeader', array(
+echo $this->element('paymentHeader', [
     'helpText' => $helpText,
     'buttonText' => 'Eingezahltes Guthaben eintragen',
     'icon' => 'fa-euro'
-));
+]);
 
 if (count($payments) == 0) {
     ?>
 <p>Es wurde noch kein <?php echo $title_for_layout; ?> erfasst.</p>
 <?php
 } else {
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
-    ));
+    ]);
 
     echo '<table class="list">';
     echo '<tr class="sort">';
@@ -62,7 +62,7 @@ if (count($payments) == 0) {
     foreach ($payments as $payment) {
         $i ++;
 
-        $rowClass = array('data', $payment['type']);
+        $rowClass = ['data', $payment['type']];
 
         if (isset($oldYear) && $oldYear != $payment['year']) {
             $rowClass[] = 'last-row-of-year';
@@ -85,9 +85,9 @@ if (count($payments) == 0) {
                 case APP_DEL:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('delete.png'),
-                        array(
+                        [
                             'class' => 'payment-approval'
-                        )
+                        ]
                     );
                     break;
                 case APP_OFF:
@@ -95,9 +95,9 @@ if (count($payments) == 0) {
                 case APP_ON:
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('accept.png'),
-                        array(
+                        [
                             'class' => 'payment-approval'
-                        )
+                        ]
                     );
                     break;
             }
@@ -105,10 +105,10 @@ if (count($payments) == 0) {
                 echo '<span class="payment-approval-comment-wrapper">';
                     echo $this->Html->getJqueryUiIcon(
                         $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
-                        array(
+                        [
                             'class' => 'payment-approval-comment',
                             'title' => $payment['approval_comment']
-                        ),
+                        ],
                         'javascript:void(0);'
                     );
                 echo '</span>';
@@ -125,11 +125,11 @@ if (count($payments) == 0) {
 
 
         $productNumberClass = '';
-        if (in_array($payment['type'], array('payback'))) {
+        if (in_array($payment['type'], ['payback'])) {
             $productNumberClass = ' class="negative"';
         }
         echo '<td style="text-align:right;" ' . $productNumberClass . '>';
-        if (in_array($payment['type'], array('product', 'payback'))) {
+        if (in_array($payment['type'], ['product', 'payback'])) {
             if ($payment['type'] == 'payback') {
                 $payment['amount'] = $payment['amount'] * -1;
             }
@@ -159,15 +159,15 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td style="text-align:center;">';
-        $deletablePaymentTypes = array('product', 'deposit');
+        $deletablePaymentTypes = ['product', 'deposit'];
         if ($appAuth->isSuperadmin()) {
             $deletablePaymentTypes[] = 'payback';
         }
         if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-payment-button',
                 'title' => 'Aufladung löschen?'
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         }
         echo '</td>';
 

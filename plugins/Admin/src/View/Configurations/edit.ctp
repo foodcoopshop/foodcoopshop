@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Configurations']['id_Configuration']) ? $this->request->data['Configurations']['id_Configuration'] : "") . "', 'Configurations');
     "
-));
+]);
 
 ?>
 
@@ -39,9 +39,9 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Configurations', array(
+echo $this->Form->create('Configurations', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Configuration.id_configuration');
@@ -51,45 +51,45 @@ $label = $unsavedConfiguration['Configurations']['text'];
 switch ($unsavedConfiguration['Configurations']['type']) {
     case 'number':
     case 'text':
-        echo $this->Form->input('Configuration.value', array(
+        echo $this->Form->input('Configuration.value', [
             'type' => 'text',
-            'div' => array(
+            'div' => [
                 'class' => 'long text input'
-            ),
+            ],
             'label' => $label,
             'required' => true
-        ));
+        ]);
         break;
     case 'textarea':
-        $this->element('addScript', array(
+        $this->element('addScript', [
             'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('ConfigurationValue');"
-        ));
-        echo $this->Form->input('Configuration.value', array(
+        ]);
+        echo $this->Form->input('Configuration.value', [
             'type' => 'textarea',
             'label' => $label,
             'required' => true,
             'class' => 'ckeditor'
-        ));
+        ]);
         break;
     case 'textarea_big':
-        $this->element('addScript', array(
+        $this->element('addScript', [
             'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('ConfigurationValue');"
-        ));
-        echo $this->Form->input('Configuration.value', array(
+        ]);
+        echo $this->Form->input('Configuration.value', [
             'type' => 'textarea',
             'label' => $label . '<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
             'required' => true,
             'class' => 'ckeditor'
-        ));
+        ]);
         break;
     case 'dropdown':
     case 'boolean':
-        echo $this->Form->input('Configuration.value', array(
+        echo $this->Form->input('Configuration.value', [
             'type' => 'select',
             'label' => $label,
             'options' => $this->Html->getConfigurationDropdownOptions($unsavedConfiguration['Configurations']['name']),
             'required' => true
-        ));
+        ]);
         break;
 }
 

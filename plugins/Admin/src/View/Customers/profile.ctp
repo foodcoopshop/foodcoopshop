@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . $appAuth->getUserId() . "', 'Customers');
     "
-));
+]);
 ?>
 
 <div class="filter-container">
@@ -37,53 +37,53 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Customers', array(
+echo $this->Form->create('Customers', [
     'class' => 'fcs-form'
-));
+]);
 
-echo $this->Form->input('Customers.firstname', array(
+echo $this->Form->input('Customers.firstname', [
     'label' => 'Vorname',
     'required' => true
-));
-echo $this->Form->input('Customers.lastname', array(
+]);
+echo $this->Form->input('Customers.lastname', [
     'label' => 'Nachname',
     'required' => true
-));
-echo $this->Form->input('Customers.email', array(
+]);
+echo $this->Form->input('Customers.email', [
     'label' => 'E-Mail-Adresse',
     'required' => true
-));
+]);
 
-echo $this->Form->input('AddressCustomer.address1', array(
+echo $this->Form->input('AddressCustomer.address1', [
     'label' => 'Straße',
     'required' => true
-));
-echo $this->Form->input('AddressCustomer.address2', array(
+]);
+echo $this->Form->input('AddressCustomer.address2', [
     'label' => 'Adresszusatz'
-));
+]);
 
-echo $this->Form->input('AddressCustomer.postcode', array(
+echo $this->Form->input('AddressCustomer.postcode', [
     'label' => 'PLZ',
     'required' => true
-));
-echo $this->Form->input('AddressCustomer.city', array(
+]);
+echo $this->Form->input('AddressCustomer.city', [
     'label' => 'Ort',
     'required' => true
-));
+]);
 
-echo $this->Form->input('AddressCustomer.phone_mobile', array(
+echo $this->Form->input('AddressCustomer.phone_mobile', [
     'label' => 'Handy',
     'required' => true
-));
-echo $this->Form->input('AddressCustomer.phone', array(
+]);
+echo $this->Form->input('AddressCustomer.phone', [
     'label' => 'Telefon'
-));
+]);
 
 if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
-    echo $this->Form->input('Customers.newsletter', array(
+    echo $this->Form->input('Customers.newsletter', [
         'label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.',
         'type' => 'checkbox'
-    ));
+    ]);
 }
 
 ?>

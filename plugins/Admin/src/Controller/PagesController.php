@@ -52,27 +52,27 @@ class PagesController extends AdminAppController
     {
         $this->setFormReferer();
 
-        $_SESSION['KCFINDER'] = array(
+        $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/pages",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
-        );
+        ];
 
         $this->set('mainPagesForDropdown', $this->Page->getMainPagesForDropdown($pageId));
 
         if ($pageId > 0) {
-            $unsavedPage = $this->Page->find('all', array(
-                'conditions' => array(
+            $unsavedPage = $this->Page->find('all', [
+                'conditions' => [
                     'Pages.id_page' => $pageId
-                )
-            ))->first();
+                ]
+            ])->first();
         } else {
             // default values for new pages
-            $unsavedPage = array(
-                'Pages' => array(
+            $unsavedPage = [
+                'Pages' => [
                     'active' => APP_ON,
                     'position' => 10
-                )
-            );
+                ]
+            ];
         }
         $this->set('title_for_layout', 'Seite bearbeiten');
 
@@ -93,7 +93,7 @@ class PagesController extends AdminAppController
                 }
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->Page->validates()) {
                 $errors = array_merge($errors, $this->Page->validationErrors);
             }
@@ -103,9 +103,9 @@ class PagesController extends AdminAppController
 
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Page->save($this->request->data['Pages'], array(
+                $this->Page->save($this->request->data['Pages'], [
                     'validate' => false
-                ));
+                ]);
                 if (is_null($pageId)) {
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'page_added';
@@ -134,22 +134,22 @@ class PagesController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
 
         $customerId = '';
         if (! empty($this->params['named']['customerId'])) {
             $customerId = $this->params['named']['customerId'];
-            $conditions = array(
+            $conditions = [
                 'Pages.id_customer' => $customerId
-            );
+            ];
         }
         $this->set('customerId', $customerId);
 
         $conditions[] = 'Pages.active > ' . APP_DEL;
 
-        $totalPagesCount = $this->Page->find('count', array(
+        $totalPagesCount = $this->Page->find('count', [
             'conditions' => $conditions
-        ));
+        ]);
         $this->set('totalPagesCount', $totalPagesCount);
 
         $pages = $this->Page->findAllGroupedByMenu($conditions);

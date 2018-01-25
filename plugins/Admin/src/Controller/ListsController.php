@@ -29,9 +29,9 @@ class ListsController extends AdminAppController
 
     public function orderLists()
     {
-        $this->uses = array(
+        $this->uses = [
             'Manufacturers'
-        );
+        ];
 
         $path = realpath(Configure::read('AppConfig.folder.order_lists'));
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
@@ -42,7 +42,7 @@ class ListsController extends AdminAppController
         }
         $this->set('dateFrom', $dateFrom);
 
-        $files = array();
+        $files = [];
 
         foreach ($objects as $name => $object) {
             if (preg_match('/\.pdf$/', $name)) {
@@ -72,25 +72,25 @@ class ListsController extends AdminAppController
                     $message = 'Fehler: ManufacturerId nicht gefunden in ' . $object->getFileName();
                     $this->Flash->error($message);
                     $this->log($message);
-                    $this->set('files', array());
+                    $this->set('files', []);
                     return;
                 }
 
-                $manufacturer = $this->Manufacturer->find('all', array(
-                    'conditions' => array(
+                $manufacturer = $this->Manufacturer->find('all', [
+                    'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId
-                    )
-                ))->first();
+                    ]
+                ])->first();
 
                 $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('AppConfig.folder.order_lists'), '', $name);
                 $customerListLink = str_replace($matches[1], 'Mitglied', $productListLink);
 
-                $files[] = array(
+                $files[] = [
                     'delivery_date' => $deliveryDate,
                     'manufacturer_name' => $manufacturer['Manufacturers']['name'],
                     'product_list_link' => $productListLink,
                     'customer_list_link' => $customerListLink
-                );
+                ];
 
                 $files = Hash::sort($files, '{n}.manufacturer_name', 'asc');
             }

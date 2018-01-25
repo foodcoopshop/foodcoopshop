@@ -33,29 +33,29 @@ class ProductTest extends AppCakeTestCase
 
     public function testGetProductIdAndAttributeId()
     {
-        $tests = array(
-            array(
+        $tests = [
+            [
                 'id' => '5',
-                'result' => array(
+                'result' => [
                     'productId' => 5,
                     'attributeId' => 0
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 'id' => 8,
-                'result' => array(
+                'result' => [
                     'productId' => 8,
                     'attributeId' => 0
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 'id' => '80-9',
-                'result' => array(
+                'result' => [
                     'productId' => 80,
                     'attributeId' => 9
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         foreach ($tests as $test) {
             $result = $this->Product->getProductIdAndAttributeId($test['id']);
@@ -68,9 +68,9 @@ class ProductTest extends AppCakeTestCase
      */
     public function testChangeQuantityWithOneProductAndInvalidStringQuantity()
     {
-        $products = array(
-            array(346 => 'invalid-quantity')
-        );
+        $products = [
+            [346 => 'invalid-quantity']
+        ];
 
         $exceptionThrown = false;
 
@@ -86,9 +86,9 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeQuantityWithOneProductAndInvalidNegativeQuantity()
     {
-        $products = array(
-            array(346 => -50)
-        );
+        $products = [
+            [346 => -50]
+        ];
 
         $exceptionThrown = false;
 
@@ -104,29 +104,29 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeQuantityWithOneProduct()
     {
-        $products = array(
-            array(102 => '5')
-        );
+        $products = [
+            [102 => '5']
+        ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
     }
 
     public function testChangeQuantityWithOneProductAttribute()
     {
-        $products = array(
-            array('60-10' => '38')
-        );
+        $products = [
+            ['60-10' => '38']
+        ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
     }
 
     public function testChangeQuantityWithMultipleProductsAndAttributes()
     {
-        $products = array(
-            array(102 => '5'),
-            array(346 => '1'),
-            array('60-10' => '90')
-        );
+        $products = [
+            [102 => '5'],
+            [346 => '1'],
+            ['60-10' => '90']
+        ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
     }
@@ -136,20 +136,20 @@ class ProductTest extends AppCakeTestCase
 
         // 1) change quantity to same quantityto be able to test if the quantity has not changed
         $sameQuantity = '20';
-        $products = array(
-            array(346 => $sameQuantity),
-            array(102 => $sameQuantity),
-            array(161 => $sameQuantity),
-        );
+        $products = [
+            [346 => $sameQuantity],
+            [102 => $sameQuantity],
+            [161 => $sameQuantity],
+        ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
 
         // try to change prices, but include one invalid quantity
-        $products = array(
-            array(102 => '14'),
-            array(346 => '-1'), // invalid quantity
-            array(161 => '1')
-        );
+        $products = [
+            [102 => '14'],
+            [346 => '-1'], // invalid quantity
+            [161 => '1']
+        ];
 
         $exceptionThrown = false;
 
@@ -169,9 +169,9 @@ class ProductTest extends AppCakeTestCase
     public function testChangePriceWithOneProductAndInvalidNegativePrice()
     {
 
-        $products = array(
-            array(346 => '-1')
-        );
+        $products = [
+            [346 => '-1']
+        ];
 
         $exceptionThrown = false;
 
@@ -187,9 +187,9 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangePriceOneProductAndInvalidStringPrice()
     {
-        $products = array(
-            array(346 => 'invalid-price')
-        );
+        $products = [
+            [346 => 'invalid-price']
+        ];
 
         $exceptionThrown = false;
 
@@ -205,29 +205,29 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangePriceWithOneProduct()
     {
-        $products = array(
-            array(102 => '5,22')
-        );
+        $products = [
+            [102 => '5,22']
+        ];
         $this->Product->changePrice($products);
         $this->assertProductPrice($products);
     }
 
     public function testChangePriceWithOneProductAttribute()
     {
-        $products = array(
-            array('60-10' => '3,22')
-        );
+        $products = [
+            ['60-10' => '3,22']
+        ];
         $this->Product->changePrice($products);
         $this->assertProductPrice($products);
     }
 
     public function testChangePriceWithMultipleProductsAndAttributes()
     {
-        $products = array(
-            array(102 => '5,22'),
-            array(346 => '1,00'),
-            array('60-10' => '2,98')
-        );
+        $products = [
+            [102 => '5,22'],
+            [346 => '1,00'],
+            ['60-10' => '2,98']
+        ];
         $this->Product->changePrice($products);
         $this->assertProductPrice($products);
     }
@@ -237,20 +237,20 @@ class ProductTest extends AppCakeTestCase
 
         // 1) change prices to same price to be able to test if the price has not changed
         $samePrice = '2,55';
-        $products = array(
-            array(346 => $samePrice),
-            array(102 => $samePrice),
-            array(161 => $samePrice),
-        );
+        $products = [
+            [346 => $samePrice],
+            [102 => $samePrice],
+            [161 => $samePrice],
+        ];
         $this->Product->changePrice($products);
         $this->assertProductPrice($products);
 
         // try to change prices, but include one invalid price
-        $products = array(
-            array(102 => '2,58'),
-            array(346 => '-1'), // invalid price
-            array(161 => '1,01')
-        );
+        $products = [
+            [102 => '2,58'],
+            [346 => '-1'], // invalid price
+            [161 => '1,01']
+        ];
 
         $exceptionThrown = false;
 
@@ -270,18 +270,18 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeDepositWithOneProduct()
     {
-        $products = array(
-            array(102 => '1,00')
-        );
+        $products = [
+            [102 => '1,00']
+        ];
         $this->Product->changeDeposit($products);
         $this->assertProductDeposit($products);
     }
 
     public function testChangeDepositWithOneProductAttribute()
     {
-        $products = array(
-            array('60-10' => '1,00')
-        );
+        $products = [
+            ['60-10' => '1,00']
+        ];
         $this->Product->changeDeposit($products);
         $this->assertProductDeposit($products);
     }
@@ -291,20 +291,20 @@ class ProductTest extends AppCakeTestCase
 
         // 1) change deposits to same deposit to be able to test if the price has not changed
         $sameDeposit = '1,00';
-        $products = array(
-            array(346 => $sameDeposit),
-            array(102 => $sameDeposit),
-            array(161 => $sameDeposit),
-        );
+        $products = [
+            [346 => $sameDeposit],
+            [102 => $sameDeposit],
+            [161 => $sameDeposit],
+        ];
         $this->Product->changeDeposit($products);
         $this->assertProductDeposit($products);
 
         // try to change deposits, but include one invalid deposit
-        $products = array(
-            array(102 => '2,00'),
-            array(346 => '-1'), // invalid deposit
-            array(161 => '1,00')
-        );
+        $products = [
+            [102 => '2,00'],
+            [346 => '-1'], // invalid deposit
+            [161 => '1,00']
+        ];
 
         $exceptionThrown = false;
 
@@ -328,9 +328,9 @@ class ProductTest extends AppCakeTestCase
      */
     public function testChangeStatusWithStringStatus()
     {
-        $products = array(
-            array(102 => 'invalid parameter')
-        );
+        $products = [
+            [102 => 'invalid parameter']
+        ];
         $this->Product->changeStatus($products);
     }
 
@@ -340,9 +340,9 @@ class ProductTest extends AppCakeTestCase
      */
     public function testChangeStatusWithInvalidIntegerStatus()
     {
-        $products = array(
-            array(102 => 5) // invalid status
-        );
+        $products = [
+            [102 => 5] // invalid status
+        ];
         $this->Product->changeStatus($products);
     }
 
@@ -352,17 +352,17 @@ class ProductTest extends AppCakeTestCase
      */
     public function testChangeStatusForProductAttribute()
     {
-        $products = array(
-            array('60-10' => 0)
-        );
+        $products = [
+            ['60-10' => 0]
+        ];
         $this->Product->changeStatus($products);
     }
 
     public function testChangeStatusDisableWithOneProduct()
     {
-        $products = array(
-            array(102 => 0)
-        );
+        $products = [
+            [102 => 0]
+        ];
         $response = $this->Product->changeStatus($products);
         $this->assertEquals(true, $response);
         $this->assertProductStatus($products);
@@ -370,9 +370,9 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeStatusEnableWithOneProduct()
     {
-        $products = array(
-            array(102 => 1)
-        );
+        $products = [
+            [102 => 1]
+        ];
         $response = $this->Product->changeStatus($products);
         $this->assertEquals(true, $response);
         $this->assertProductStatus($products);
@@ -380,11 +380,11 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeStatusWithMultipleProductsAndDifferentStati()
     {
-        $products = array(
-            array(102 => 1),
-            array(340 => 1),
-            array(342 => 0)
-        );
+        $products = [
+            [102 => 1],
+            [340 => 1],
+            [342 => 0]
+        ];
         $response = $this->Product->changeStatus($products);
         $this->assertEquals(true, $response);
         $this->assertProductStatus($products);
@@ -392,9 +392,9 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeStatusWithOneProductAndInvalidStatus()
     {
-        $products = array(
-            array(102 => 5) // invalid status
-        );
+        $products = [
+            [102 => 5] // invalid status
+        ];
 
         $exceptionThrown = false;
 
@@ -410,11 +410,11 @@ class ProductTest extends AppCakeTestCase
 
     public function testChangeStatusWithMultipleProductsAndOneWithInvalidStatus()
     {
-        $products = array(
-            array(346 => 0),  // pass correct but different to current status
-            array(102 => -1), // invalid status
-            array(161 => 0)   // pass correct but different to current status
-        );
+        $products = [
+            [346 => 0],  // pass correct but different to current status
+            [102 => -1], // invalid status
+            [161 => 0]   // pass correct but different to current status
+        ];
 
         $exceptionThrown = false;
 
@@ -443,17 +443,17 @@ class ProductTest extends AppCakeTestCase
                 $expectedQuantity = $forceUseThisQuantity;
             }
             if ($productAndAttributeId['attributeId'] == 0) {
-                $contain = array('StockAvailables');
+                $contain = ['StockAvailables'];
             } else {
-                $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
-                $contain = array('ProductAttributes.StockAvailable');
+                $this->Product->hasMany['ProductAttributes']['conditions'] = ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']];
+                $contain = ['ProductAttributes.StockAvailable'];
             }
-            $changedProduct = $this->Product->find('all', array(
-                'conditions' => array(
+            $changedProduct = $this->Product->find('all', [
+                'conditions' => [
                     'Products.id_product' => $productId
-                ),
+                ],
                 'contain' => $contain
-            ))->first();
+            ])->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $result = $changedProduct['StockAvailables']['quantity'];
             } else {
@@ -475,14 +475,14 @@ class ProductTest extends AppCakeTestCase
             }
             $expectedDeposit = str_replace(',', '.', $expectedDeposit);
             if ($productAndAttributeId['attributeId'] > 0) {
-                $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
+                $this->Product->hasMany['ProductAttributes']['conditions'] = ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']];
             }
 
-            $changedProduct = $this->Product->find('all', array(
-                'conditions' => array(
+            $changedProduct = $this->Product->find('all', [
+                'conditions' => [
                     'Products.id_product' => $productId
-                )
-            ))->first();
+                ]
+            ])->first();
 
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct['DepositProduct'];
@@ -505,17 +505,17 @@ class ProductTest extends AppCakeTestCase
             }
             $expectedPrice = str_replace(',', '.', $expectedPrice);
             if ($productAndAttributeId['attributeId'] == 0) {
-                $contain = array('ProductShop');
+                $contain = ['ProductShop'];
             } else {
-                $this->Product->hasMany['ProductAttributes']['conditions'] = array('ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']);
-                $contain = array('ProductAttributes.ProductAttributeShop');
+                $this->Product->hasMany['ProductAttributes']['conditions'] = ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']];
+                $contain = ['ProductAttributes.ProductAttributeShop'];
             }
-            $changedProduct = $this->Product->find('all', array(
-                'conditions' => array(
+            $changedProduct = $this->Product->find('all', [
+                'conditions' => [
                     'Products.id_product' => $productId
-                ),
+                ],
                 'contain' => $contain
-            ))->first();
+            ])->first();
             if ($productAndAttributeId['attributeId'] == 0) {
                 $resultEntity = $changedProduct['ProductShop'];
             } else {
@@ -533,11 +533,11 @@ class ProductTest extends AppCakeTestCase
             if ($forceUseThisStatus) {
                 $expectedStatus = $forceUseThisStatus;
             }
-            $changedProduct = $this->Product->find('all', array(
-                'conditions' => array(
+            $changedProduct = $this->Product->find('all', [
+                'conditions' => [
                     'Products.id_product' => $productId,
-                )
-            ))->first();
+                ]
+            ])->first();
             $this->assertEquals($expectedStatus, $changedProduct['Products']['active'], 'changing the active flag did not work');
         }
     }

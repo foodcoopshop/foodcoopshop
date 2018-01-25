@@ -155,10 +155,10 @@ class PaymentsControllerTest extends AppCakeTestCase
 
         // change approval to APP_ON via sql query
         $query = 'UPDATE ' . $this->Payment->getTable().' SET approval = :approval WHERE id = :paymentId';
-        $params = array(
+        $params = [
             'approval' => APP_ON,
             'paymentId' => $addResponse->paymentId
-        );
+        ];
         $statement = self::$dbConnection->prepare($query);
         $statement->execute($params);
         
@@ -218,12 +218,12 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
     {
-        $lastActionLog = $this->ActionLog->find('all', array(
-            'conditions' => array(
+        $lastActionLog = $this->ActionLog->find('all', [
+            'conditions' => [
                 'ActionLogs.customer_id' => $customerId
-            ),
-            'order' => array('ActionLogs.date' => 'DESC')
-        ));
+            ],
+            'order' => ['ActionLogs.date' => 'DESC']
+        ]);
         $this->assertEquals($expectedType, $lastActionLog[0]['ActionLogs']['type'], 'cake action log type not correct');
         $this->assertEquals($expectedObjectType, $lastActionLog[0]['ActionLogs']['object_type'], 'cake action log object type not correct');
         $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['ActionLogs']['text'], 'cake action log text not correct');
@@ -235,11 +235,11 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function deletePayment($paymentId)
     {
-        $this->browser->ajaxPost('/admin/payments/changeState', array(
-            'data' => array(
+        $this->browser->ajaxPost('/admin/payments/changeState', [
+            'data' => [
                 'paymentId' => $paymentId
-            )
-        ));
+            ]
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 
@@ -253,15 +253,15 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {
-        $this->browser->ajaxPost('/admin/payments/add', array(
-            'data' => array(
+        $this->browser->ajaxPost('/admin/payments/add', [
+            'data' => [
                 'customerId' => $customerId,
                 'amount' => $amount,
                 'type' => $type,
                 'manufacturerId' => $manufacturerId,
                 'text' => $text
-            )
-        ));
+            ]
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 }

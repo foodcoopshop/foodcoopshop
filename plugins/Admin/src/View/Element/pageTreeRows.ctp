@@ -14,9 +14,9 @@
  */
 
 foreach ($pages as $page) {
-    $rowClass = array(
+    $rowClass = [
         'data'
-    );
+    ];
     if ($subRow) {
         $rowClass[] = 'sub-row';
     }
@@ -30,9 +30,9 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ), $this->Slug->getPageEdit($page['Pages']['id_page']));
+    ], $this->Slug->getPageEdit($page['Pages']['id_page']));
     echo '</td>';
 
     echo '<td>';
@@ -66,10 +66,10 @@ foreach ($pages as $page) {
 
     echo '<td align="center">';
     if ($page['Pages']['extern_url'] != '') {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), [
             'target' => '_blank',
             'title' => $page['Pages']['extern_url']
-        ), $page['Pages']['extern_url']);
+        ], $page['Pages']['extern_url']);
     }
     echo '</td>';
 
@@ -91,19 +91,19 @@ foreach ($pages as $page) {
 
     echo '<td>';
     if ($page['Pages']['active']) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
             'title' => 'Seite anzeigen',
             'target' => '_blank'
-        ), $this->Slug->getPageDetail($page['Pages']['id_page'], $page['Pages']['title']));
+        ], $this->Slug->getPageDetail($page['Pages']['id_page'], $page['Pages']['title']));
     }
     echo '</td>';
 
     echo '</tr>';
 
     if (! empty($page['children'])) {
-        echo $this->element('pageTreeRows', array(
+        echo $this->element('pageTreeRows', [
             'pages' => $page['children'],
             'subRow' => true
-        ));
+        ]);
     }
 }

@@ -60,11 +60,11 @@ class OrderDetailsController extends AdminAppController
     private function checkOrderDetailIdAccess($orderDetailId)
     {
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
-            $orderDetail = $this->OrderDetail->find('all', array(
-                'conditions' => array(
+            $orderDetail = $this->OrderDetail->find('all', [
+                'conditions' => [
                     'OrderDetails.id_order_detail' => $orderDetailId
-                )
-            ))->first();
+                ]
+            ])->first();
             if (!empty($orderDetail)) {
                 if ($this->AppAuth->isManufacturer() && $orderDetail['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
                     return true;
@@ -84,13 +84,13 @@ class OrderDetailsController extends AdminAppController
     private function getSortFieldForGroupedOrderDetails($manufacturerNameField)
     {
         $sortField = 'name';
-        $sortMatches = array(
+        $sortMatches = [
             'OrderDetails.product_name' => 'name',
             'Manufacturers.name' => $manufacturerNameField,
             'OrderDetails.total_price_tax_incl' => 'sum_price',
             'OrderDetails.product_quantity' => 'sum_amount',
             'OrderDetails.deposit' => 'sum_deposit'
-        );
+        ];
         if (!empty($this->params['named']['sort']) && isset($sortMatches[$this->params['named']['sort']])) {
             $sortField = $sortMatches[$this->params['named']['sort']];
         }
@@ -103,7 +103,7 @@ class OrderDetailsController extends AdminAppController
     private function getSortDirectionForGroupedOrderDetails()
     {
         $sortDirection = 'ASC';
-        if (!empty($this->params['named']['direction']) && in_array($this->params['named']['direction'], array('asc', 'desc'))) {
+        if (!empty($this->params['named']['direction']) && in_array($this->params['named']['direction'], ['asc', 'desc'])) {
             $sortDirection = $this->params['named']['direction'];
         }
         return $sortDirection;
@@ -186,15 +186,15 @@ class OrderDetailsController extends AdminAppController
 
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
-            'order' => array(
+            'order' => [
                 'Products.id_manufacturer' => 'ASC',
                 'Orders.date_add' => 'DESC',
                 'OrderDetails.product_name' => 'ASC'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
 
         $orderDetails = $this->Paginator->paginate('OrderDetails');
 
@@ -202,7 +202,7 @@ class OrderDetailsController extends AdminAppController
 
         switch ($groupBy) {
             case 'manufacturer':
-                $preparedOrderDetails = array();
+                $preparedOrderDetails = [];
                 foreach ($orderDetails as $orderDetail) {
                     $key = $orderDetail['Products']['id_manufacturer'];
                     @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetails']['total_price_tax_incl'];
@@ -219,7 +219,7 @@ class OrderDetailsController extends AdminAppController
                 $orderDetails = $preparedOrderDetails;
                 break;
             case 'product':
-                $preparedOrderDetails = array();
+                $preparedOrderDetails = [];
                 foreach ($orderDetails as $orderDetail) {
                     $key = $orderDetail['OrderDetails']['product_id'];
                     @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetails']['total_price_tax_incl'];
@@ -241,7 +241,7 @@ class OrderDetailsController extends AdminAppController
                     $this->Manufacturer = TableRegistry::get('Manufacturers');
                     $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
                     $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
-                    $orderDetails[$i]['rowClass'] = array();
+                    $orderDetails[$i]['rowClass'] = [];
                     if ($bulkOrdersAllowed) {
                         $orderDetails[$i]['rowClass'][] = 'deactivated';
                     }
@@ -252,7 +252,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->set('orderDetails', $orderDetails);
 
-        $groupByForDropdown = array('product' => 'Gruppieren nach Produkt');
+        $groupByForDropdown = ['product' => 'Gruppieren nach Produkt'];
         if (!$this->AppAuth->isManufacturer()) {
             $groupByForDropdown['manufacturer'] = 'Gruppieren nach Hersteller';
         }
@@ -278,23 +278,23 @@ class OrderDetailsController extends AdminAppController
         if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 1) {
             $message = 'input format wrong';
             $this->log($message);
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
-        $oldOrderDetail = $this->OrderDetail->find('all', array(
-            'conditions' => array(
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
-            ),
-            'contain' => array(
+            ],
+            'contain' => [
                 'Orders',
                 'Orders.Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.Address'
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $productPrice = $oldOrderDetail['OrderDetails']['total_price_tax_incl'] / $oldOrderDetail['OrderDetails']['product_quantity'] * $productQuantity;
 
@@ -309,12 +309,12 @@ class OrderDetailsController extends AdminAppController
         ->to($oldOrderDetail['Orders']['Customers']['email'])
         ->emailFormat('html')
         ->subject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
-        ->viewVars(array(
+        ->viewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
             'editQuantityReason' => $editQuantityReason
-        ));
+        ]);
 
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Orders']['Customers']['name'] . '</b>';
 
@@ -345,10 +345,10 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success($message);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 
     public function editProductPrice()
@@ -364,25 +364,25 @@ class OrderDetailsController extends AdminAppController
         if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
             $message = 'input format wrong';
             $this->log($message);
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => $message
-            )));
+            ]));
         }
 
         $productPrice = floatval($productPrice);
 
-        $oldOrderDetail = $this->OrderDetail->find('all', array(
-            'conditions' => array(
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
-            ),
-            'contain' => array(
+            ],
+            'contain' => [
                 'Orders',
                 'Orders.Customer',
                 'Products.Manufacturer',
                 'Products.Manufacturer.Address'
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetails']['product_quantity']);
 
@@ -394,12 +394,12 @@ class OrderDetailsController extends AdminAppController
         ->to($oldOrderDetail['Orders']['Customers']['email'])
         ->emailFormat('html')
         ->subject('Preis korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
-        ->viewVars(array(
+        ->viewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
             'editPriceReason' => $editPriceReason
-        ));
+        ]);
 
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail['Orders']['Customers']['name'] . '</b>';
 
@@ -424,10 +424,10 @@ class OrderDetailsController extends AdminAppController
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 
     /**
@@ -441,27 +441,27 @@ class OrderDetailsController extends AdminAppController
         $cancellationReason = strip_tags(html_entity_decode($this->params['data']['cancellationReason']));
 
         if (!(is_array($orderDetailIds))) {
-            die(json_encode(array(
+            die(json_encode([
                 'status' => 0,
                 'msg' => 'param needs to be an array, given: ' . $orderDetailIds
-            )));
+            ]));
         }
 
         $flashMessage = '';
         foreach ($orderDetailIds as $orderDetailId) {
-            $orderDetail = $this->OrderDetail->find('all', array(
-                'conditions' => array(
+            $orderDetail = $this->OrderDetail->find('all', [
+                'conditions' => [
                     'OrderDetails.id_order_detail' => $orderDetailId
-                ),
-                'contain' => array(
+                ],
+                'contain' => [
                     'Orders',
                     'Orders.Customer',
                     'Products.StockAvailable',
                     'Products.Manufacturer',
                     'Products.Manufacturer.Address',
                     'ProductAttributes.StockAvailable'
-                )
-            ))->first();
+                ]
+            ])->first();
 
             $message = 'Produkt "' . $orderDetail['OrderDetails']['product_name'] . '" (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($orderDetail['OrderDetails']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Orders']['id_order'] . ' vom ' . Configure::read('AppConfig.timeHelper')->formatToDateNTimeLong($orderDetail['Orders']['date_add']) . ' wurde erfolgreich storniert';
 
@@ -479,11 +479,11 @@ class OrderDetailsController extends AdminAppController
             ->emailFormat('html')
             ->to($orderDetail['Orders']['Customers']['email'])
             ->subject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetails']['product_name'])
-            ->viewVars(array(
+            ->viewVars([
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
-            ));
+            ]);
 
             $message .= ' und eine E-Mail an <b>' . $orderDetail['Orders']['Customers']['name'] . '</b>';
 
@@ -521,10 +521,10 @@ class OrderDetailsController extends AdminAppController
         }
         $this->Flash->success($flashMessage);
 
-        die(json_encode(array(
+        die(json_encode([
             'status' => 1,
             'msg' => 'ok'
-        )));
+        ]));
     }
 
     private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productQuantity)
@@ -535,7 +535,7 @@ class OrderDetailsController extends AdminAppController
         $totalPriceTaxExcl = $productPrice - $totalTaxAmount;
 
         // update order details
-        $orderDetail2save = array(
+        $orderDetail2save = [
             'total_price_tax_incl' => $productPrice,
             'total_price_tax_excl' => $totalPriceTaxExcl,
             'unit_price_tax_incl' => $productPrice / $productQuantity,
@@ -543,31 +543,31 @@ class OrderDetailsController extends AdminAppController
             'product_price' => $unitPriceExcl,
             'product_quantity' => $productQuantity,
             'deposit' => $oldOrderDetail['OrderDetails']['deposit'] / $oldOrderDetail['OrderDetails']['product_quantity'] * $productQuantity
-        );
+        ];
         $this->OrderDetail->id = $oldOrderDetail['OrderDetails']['id_order_detail'];
         $this->OrderDetail->save($orderDetail2save);
 
         // update order detail tax for invoices
-        $odt2save = array(
+        $odt2save = [
             'unit_amount' => $unitTaxAmount,
             'total_amount' => $totalTaxAmount
-        );
+        ];
         $this->OrderDetail->OrderDetailTax->id = $oldOrderDetail['OrderDetails']['id_order_detail'];
         $this->OrderDetail->OrderDetailTax->save($odt2save);
 
         // update sum in orders
-        $newOrderDetail = $this->OrderDetail->find('all', array(
-            'conditions' => array(
+        $newOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
                 'OrderDetails.id_order_detail' => $oldOrderDetail['OrderDetails']['id_order_detail']
-            ),
-            'contain' => array(
+            ],
+            'contain' => [
                 'Orders',
                 'Orders.Customer',
                 'Products.StockAvailable',
                 'Products.Manufacturer',
                 'ProductAttribute.StockAvailable'
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($newOrderDetail);
 
@@ -592,9 +592,9 @@ class OrderDetailsController extends AdminAppController
             $stockAvailableObject->StockAvailable->primaryKey = 'id_stock_available'; // primary key was already set in model... works :-)
             $stockAvailableObject->StockAvailable->id = $orderDetail[$stockAvailableIndex]['StockAvailables']['id_stock_available'];
             $newQuantity = $orderDetail[$stockAvailableIndex]['StockAvailables']['quantity'] + $orderDetailQuantityBeforeQuantityChange - $orderDetail['OrderDetails']['product_quantity'];
-            $stockAvailableObject->StockAvailable->save(array(
+            $stockAvailableObject->StockAvailable->save([
                 'quantity' => $newQuantity
-            ));
+            ]);
             $stockAvailableObject->StockAvailable->primaryKey = $backedUpPrimaryKey;
         }
 

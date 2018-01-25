@@ -16,16 +16,16 @@
 <div id="lists-list">
      
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();
         "
-        ));
+        ]);
     ?>
     
     <div class="filter-container">
-        Abholtag <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'showDateTo' => false)); ?>
+        Abholtag <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false]); ?>
         <div class="right"></div>
     </div>
 
@@ -62,19 +62,19 @@
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Produkt)', array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Produkt)', [
             'title' => 'Liste anzeigen (gruppiert nach Produkt)',
             'target' => '_blank',
             'class' => 'icon-with-text'
-        ), $file['product_list_link']);
+        ], $file['product_list_link']);
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Mitglied)', array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Mitglied)', [
             'title' => 'Liste anzeigen (gruppiert nach Mitglied)',
             'target' => '_blank',
             'class' => 'icon-with-text'
-        ), $file['customer_list_link']);
+        ], $file['customer_list_link']);
         echo '</td>';
 
         echo '</tr>';

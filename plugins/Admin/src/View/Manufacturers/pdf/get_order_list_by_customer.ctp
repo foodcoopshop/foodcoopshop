@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo $this->element('pdf/order_list', array(
+echo $this->element('pdf/order_list', [
     'groupType' => 'customer',
     'groupType_de' => 'Mitglied',
     'results' => $results_customer,
-    'manufacturer' => isset($manufacturer) ? $manufacturer : array()
-)); // not defined in sendOrderList
+    'manufacturer' => isset($manufacturer) ? $manufacturer : []
+]); // not defined in sendOrderList

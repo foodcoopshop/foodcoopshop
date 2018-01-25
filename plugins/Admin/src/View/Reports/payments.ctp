@@ -13,24 +13,24 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
         datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();".
         Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
         Configure::read('AppConfig.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
-));
+]);
 if ($paymentType == 'product') {
-    $this->element('highlightRowAfterEdit', array(
+    $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#cakePayment-'
-    ));
+    ]);
 }
 ?>
 
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
-    <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
-    <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+    <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+    <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
     <div class="right"></div>
 </div>
 
@@ -52,7 +52,7 @@ if ($paymentType == 'product') {
             $btnClass = 'active';
         }
         // show deposit report also for cash configuration
-        if ($this->Html->paymentIsCashless() || in_array($pt, array('deposit', 'member_fee', 'member_fee_flexible'))) {
+        if ($this->Html->paymentIsCashless() || in_array($pt, ['deposit', 'member_fee', 'member_fee_flexible'])) {
             echo '<li class="' . $btnClass . '"><a href="' . $this->Slug->getReport($pt) . '/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '">' . $paymentText . '</a></li>';
         }
     }
@@ -98,9 +98,9 @@ foreach ($payments as $payment) {
         echo '<td>';
             echo $this->Html->getJqueryUiIcon(
                 $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-                array(
+                [
                 'title' => 'Bearbeiten'
-                ),
+                ],
                 $this->Slug->getPaymentEdit($payment['Payments']['id'])
             );
         echo '</td>';
@@ -109,9 +109,9 @@ foreach ($payments as $payment) {
             case -1:
                 echo $this->Html->image(
                     $this->Html->getFamFamFamPath('delete.png'),
-                    array(
+                    [
                         'class' => 'payment-approval'
-                    )
+                    ]
                 );
                 break;
             case 0:
@@ -119,9 +119,9 @@ foreach ($payments as $payment) {
             case 1:
                 echo $this->Html->image(
                     $this->Html->getFamFamFamPath('accept.png'),
-                    array(
+                    [
                         'class' => 'payment-approval'
-                    )
+                    ]
                 );
                 break;
         }
@@ -129,10 +129,10 @@ foreach ($payments as $payment) {
             echo '<span class="payment-approval-comment-wrapper">';
             echo $this->Html->getJqueryUiIcon(
                 $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
-                array(
+                [
                 'class' => 'payment-approval-comment',
                 'title' => $payment['Payments']['approval_comment']
-                ),
+                ],
                 'javascript:void(0);'
             );
             echo '</span>';

@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Taxes']['id_tax']) ? $this->request->data['Taxes']['id_tax'] : "") . "', 'Taxes');
     "
-));
+]);
 ?>
 
 <div class="filter-container">
@@ -38,9 +38,9 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Taxes', array(
+echo $this->Form->create('Taxes', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Taxes.id_tax');
@@ -48,18 +48,18 @@ echo $this->Form->hidden('Taxes.id_tax');
 if ($this->request->here != $this->Slug->getTaxAdd()) {
     echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($unsavedTax['Taxes']['rate']) . '</p>';
 } else {
-    echo $this->Form->input('Taxes.rate', array(
-        'div' => array(
+    echo $this->Form->input('Taxes.rate', [
+        'div' => [
             'class' => 'long text input'
-        ),
+        ],
         'label' => 'Steuersatz<br /><span class="small">z.B. "10" für 10%<br />Steuersätze sind später nicht änderbar</span>',
         'required' => true
-    ));
+    ]);
 }
 
-echo $this->Form->input('Taxes.active', array(
+echo $this->Form->input('Taxes.active', [
     'label' => 'Steuersatz aktiv?'
-));
+]);
 
 ?>
 

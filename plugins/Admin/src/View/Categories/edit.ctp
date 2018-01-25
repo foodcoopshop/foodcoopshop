@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : "") . "', 'Categories');
     "
-));
+]);
 $idForImageUpload = isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getCategoryImageSrc($idForImageUpload);
 if (isset($this->request->data['Categories']['tmp_image']) && $this->request->data['Categories']['tmp_image'] != '') {
@@ -44,23 +44,23 @@ if (isset($this->request->data['Categories']['tmp_image']) && $this->request->da
 
 <?php
 
-echo $this->Form->create('Categories', array(
+echo $this->Form->create('Categories', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Categories.id_category');
 
-echo $this->Form->input('Categories.name', array(
+echo $this->Form->input('Categories.name', [
     'label' => 'Name',
     'required' => true
-));
-echo $this->Form->input('Categories.id_parent', array(
+]);
+echo $this->Form->input('Categories.id_parent', [
     'type' => 'select',
     'label' => 'Übergeordnete Kategorie',
     'empty' => 'Keine (oberste Ebene)',
     'options' => $categoriesForSelect
-));
+]);
 
 echo '<div class="input">';
 echo '<label>Bild';
@@ -69,39 +69,39 @@ if ($imageSrc) {
 }
 echo '</label>';
 echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
+echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
     'title' => 'Neues Bild hochladen bzw. austauschen',
     'data-object-id' => $idForImageUpload
-), 'javascript:void(0);');
+], 'javascript:void(0);');
 echo '</div>';
 echo $this->Form->hidden('Categories.tmp_image');
 echo '</div>';
 
-echo $this->Form->input('Categories.delete_image', array(
+echo $this->Form->input('Categories.delete_image', [
     'label' => 'Bild löschen?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Speichern nicht vergessen</span>'
-));
+]);
 
 if ($this->request->here != $this->Slug->getCategoryAdd()) {
-    echo $this->Form->input('Categories.delete_category', array(
+    echo $this->Form->input('Categories.delete_category', [
         'label' => 'Kategorie löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
-    ));
+    ]);
 }
 
-echo $this->Form->input('Categories.active', array(
+echo $this->Form->input('Categories.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
-));
+]);
 
-echo $this->Form->input('Categories.description', array(
+echo $this->Form->input('Categories.description', [
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
-));
+]);
 
 ?>
 
@@ -110,10 +110,10 @@ echo $this->Form->input('Categories.description', array(
 <div class="sc"></div>
 
 <?php
-echo $this->element('imageUploadForm', array(
+echo $this->element('imageUploadForm', [
     'id' => $idForImageUpload,
     'action' => '/admin/tools/doTmpImageUpload/',
     'imageExists' => $imageSrc,
     'existingImageSrc' => $imageSrc
-));
+]);
 ?>

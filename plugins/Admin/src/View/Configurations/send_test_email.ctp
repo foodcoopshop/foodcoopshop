@@ -13,8 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.showContent();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initLogoutButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.setMenuFixed();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initMenu();"
-));
+]);
 
 print_r($success);

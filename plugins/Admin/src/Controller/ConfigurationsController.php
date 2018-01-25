@@ -33,12 +33,12 @@ class ConfigurationsController extends AdminAppController
     {
         $this->setFormReferer();
 
-        $unsavedConfiguration = $this->Configuration->find('all', array(
-            'conditions' => array(
+        $unsavedConfiguration = $this->Configuration->find('all', [
+            'conditions' => [
                 'id_configuration' => $configurationId,
                 'active' => APP_ON
-            )
-        ))->first();
+            ]
+        ])->first();
 
         if (empty($unsavedConfiguration)) {
             throw new RecordNotFoundException('configuration not found');
@@ -49,10 +49,10 @@ class ConfigurationsController extends AdminAppController
         $this->set('title_for_layout', 'Einstellung bearbeiten');
 
         if ($unsavedConfiguration['Configurations']['type'] == 'textarea') {
-            $_SESSION['KCFINDER'] = array(
+            $_SESSION['KCFINDER'] = [
                 'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
-            );
+            ];
         }
 
         if (empty($this->request->data)) {
@@ -69,16 +69,16 @@ class ConfigurationsController extends AdminAppController
                 $data = strip_tags($this->request->data['Configurations']['value']);
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->Configuration->validates()) {
                 $errors = array_merge($errors, $this->Configuration->validationErrors);
             }
 
             if (empty($errors)) {
                 $this->Configuration->id = $configurationId;
-                $this->Configuration->save($this->request->data['Configurations'], array(
+                $this->Configuration->save($this->request->data['Configurations'], [
                     'validate' => false
-                ));
+                ]);
 
                 $this->ActionLog = TableRegistry::get('ActionLogs');
                 $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
@@ -97,9 +97,9 @@ class ConfigurationsController extends AdminAppController
         $email = new AppEmail();
         $email
             ->emailFormat('html')
-            ->viewVars(array(
+            ->viewVars([
                 'appAuth' => $this->AppAuth
-            ));
+            ]);
 
         switch ($configurationName) {
             case 'FCS_REGISTRATION_EMAIL_TEXT':
@@ -109,14 +109,14 @@ class ConfigurationsController extends AdminAppController
                     $template = 'customer_registered_inactive';
                 }
                 $email->template($template);
-                $email->viewVars(array(
-                    'data' => array('Customers' => array(
+                $email->viewVars([
+                    'data' => ['Customers' => [
                         'firstname' => 'Vorname',
                         'lastname' => 'Nachname',
                         'email' => 'vorname.nachname@example.com'
-                    )),
+                    ]],
                     'newPassword' => 'DeinNeuesPasswort'
-                ));
+                ]);
                 break;
         }
         $html = $email->_renderTemplates(null)['html'];
@@ -131,11 +131,11 @@ class ConfigurationsController extends AdminAppController
     {
         $this->set('configurations', $this->Configuration->getConfigurations());
         $this->Tax = TableRegistry::get('Taxs');
-        $defaultTax = $this->Tax->find('all', array(
-            'conditions' => array(
+        $defaultTax = $this->Tax->find('all', [
+            'conditions' => [
                 'Taxes.id_tax' => Configure::read('AppConfig.defaultTaxId')
-            )
-        ))->first();
+            ]
+        ])->first();
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
@@ -157,9 +157,9 @@ class ConfigurationsController extends AdminAppController
             ->subject('Test E-Mail')
             ->template('send_test_email_template')
             ->emailFormat('html')
-            ->attachments(array(
+            ->attachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
-            ))
+            ])
             ->send();
         $this->set('success', $success);
     }

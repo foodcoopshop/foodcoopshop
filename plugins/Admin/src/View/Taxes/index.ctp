@@ -16,12 +16,12 @@
 <div id="taxes">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();"
-        ));
-        $this->element('highlightRowAfterEdit', array(
+        ]);
+        $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#tax-'
-        ));
+        ]);
     ?>
    
     <div class="filter-container">
@@ -29,10 +29,10 @@
         <div class="right">
             <?php
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Steuersatz erstellen', $this->Slug->getTaxAdd(), array(
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Steuersatz erstellen', $this->Slug->getTaxAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
-            ));
+            ]);
             echo '</div>';
             ?>
         </div>
@@ -59,9 +59,9 @@ $i = 0;
 
 foreach ($taxes as $tax) {
     $i ++;
-    $rowClass = array(
+    $rowClass = [
         'data'
-    );
+    ];
     if (! $tax['Taxes']['active']) {
         $rowClass[] = 'deactivated';
     }
@@ -72,9 +72,9 @@ foreach ($taxes as $tax) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ), $this->Slug->getTaxEdit($tax['Taxes']['id_tax']));
+    ], $this->Slug->getTaxEdit($tax['Taxes']['id_tax']));
     echo '</td>';
 
     echo '<td>';

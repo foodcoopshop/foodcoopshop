@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : "") . "', 'Sliders');
     "
-));
+]);
 $idForImageUpload = isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : StringComponent::createRandomString(6);
 
 $imageSrc = false;
@@ -47,9 +47,9 @@ if ($this->request->here != $this->Slug->getSliderAdd()) {
 
 <?php
 
-echo $this->Form->create('Sliders', array(
+echo $this->Form->create('Sliders', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Sliders.id_slider');
@@ -62,33 +62,33 @@ if ($imageSrc) {
 }
 echo '</label>';
 echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), array(
+echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
     'title' => 'Neues Bild hochladen bzw. austauschen',
     'data-object-id' => $idForImageUpload
-), 'javascript:void(0);');
+], 'javascript:void(0);');
 echo '</div>';
 echo $this->Form->hidden('Sliders.tmp_image');
 echo '</div>';
 
-echo $this->Form->input('Sliders.position', array(
-    'div' => array(
+echo $this->Form->input('Sliders.position', [
+    'div' => [
         'class' => 'short text input'
-    ),
+    ],
     'label' => 'Reihenfolge',
     'type' => 'text'
-));
-echo $this->Form->input('Sliders.active', array(
+]);
+echo $this->Form->input('Sliders.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
-));
+]);
 
 if ($this->request->here != $this->Slug->getSliderAdd()) {
-    echo $this->Form->input('Sliders.delete_slider', array(
+    echo $this->Form->input('Sliders.delete_slider', [
         'label' => 'Slideshow-Bild löschen?',
         'type' => 'checkbox',
         'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
-    ));
+    ]);
 }
 
 ?>
@@ -98,10 +98,10 @@ if ($this->request->here != $this->Slug->getSliderAdd()) {
 <div class="sc"></div>
 
 <?php
-echo $this->element('imageUploadForm', array(
+echo $this->element('imageUploadForm', [
     'id' => $idForImageUpload,
     'action' => '/admin/tools/doTmpImageUpload/',
     'imageExists' => $imageSrc,
     'existingImageSrc' => $imageSrc
-));
+]);
 ?>

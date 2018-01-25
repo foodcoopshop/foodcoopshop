@@ -32,14 +32,14 @@ class ProductLangTest extends AppCakeTestCase
 
     public function testChangeNameWithOneProductAndInvalidStringName()
     {
-        $products = array(
-            array(346 => array(
+        $products = [
+            [346 => [
                 'name' => 'a', // at least 2 chars needed
                 'unity' => '',
                 'description' => 'Beschreibung',
                 'description_short' => 'Kurze Beschreibung'
-            ))
-        );
+            ]]
+        ];
 
         $exceptionThrown = false;
 
@@ -49,7 +49,7 @@ class ProductLangTest extends AppCakeTestCase
             $exceptionThrown = true;
         }
 
-        $expectedResult = array('name' => 'Artischocke', 'unity' => 'Stück', 'description' => '', 'description_short' => '');
+        $expectedResult = ['name' => 'Artischocke', 'unity' => 'Stück', 'description' => '', 'description_short' => ''];
         $this->assertProductName($products, $expectedResult);
         $this->assertSame(true, $exceptionThrown);
     }
@@ -60,34 +60,34 @@ class ProductLangTest extends AppCakeTestCase
      */
     public function testChangeNameForProductAttribute()
     {
-        $products = array(
-            array('60-10' => 0)
-        );
+        $products = [
+            ['60-10' => 0]
+        ];
         $this->ProductLang->changeName($products);
     }
 
     public function testChangeNameWithMultipleProducts()
     {
 
-        $parameters = array(
+        $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
             'description' => '    <p>test <br /><b>description</b></p>', // b, p and br allowed
             'description_short' => '<p>test description<br /> short</p>    ' // b, p and br allowed
-        );
+        ];
 
-        $products = array(
-            array(102 => $parameters),
-            array(346 => $parameters)
-        );
+        $products = [
+            [102 => $parameters],
+            [346 => $parameters]
+        ];
         $this->ProductLang->changeName($products);
 
-        $expectedResults = array(
+        $expectedResults = [
             'name' => 'test name',
             'unity' => 'test unity',
             'description' => '<p>test <br /><b>description</b></p>',
             'description_short' => '<p>test description<br /> short</p>'
-        );
+        ];
         $this->assertProductName($products, $expectedResults);
     }
 
@@ -95,11 +95,11 @@ class ProductLangTest extends AppCakeTestCase
     {
         foreach ($products as $product) {
             $productId = key($product);
-            $changedProduct = $this->ProductLang->find('all', array(
-                'conditions' => array(
+            $changedProduct = $this->ProductLang->find('all', [
+                'conditions' => [
                     'ProductLangs.id_product' => $productId,
-                )
-            ))->first();
+                ]
+            ])->first();
             $this->assertEquals($expectedResults['name'], $changedProduct['ProductLangs']['name'], 'changing the name did not work');
             $this->assertEquals($expectedResults['unity'], $changedProduct['ProductLangs']['unity'], 'changing the unity did not work');
             $this->assertEquals($expectedResults['description'], $changedProduct['ProductLangs']['description'], 'changing the description did not work');

@@ -32,11 +32,11 @@ class BlogPostsController extends AdminAppController
                 }
                 // manufacturer owner check
                 if ($this->AppAuth->isManufacturer()) {
-                    $blogPost = $this->BlogPost->find('all', array(
-                        'conditions' => array(
+                    $blogPost = $this->BlogPost->find('all', [
+                        'conditions' => [
                             'BlogPosts.id_blog_post' => $this->request->getParam('pass')[0]
-                        )
-                    ))->first();
+                        ]
+                    ])->first();
                     if ($blogPost['BlogPosts']['id_manufacturer'] != $this->AppAuth->getManufacturerId()) {
                         return false;
                     }
@@ -61,28 +61,28 @@ class BlogPostsController extends AdminAppController
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
 
-        $_SESSION['KCFINDER'] = array(
+        $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/blog_posts",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
-        );
+        ];
 
         if ($blogPostId > 0) {
-            $unsavedBlogPost = $this->BlogPost->find('all', array(
-                'conditions' => array(
+            $unsavedBlogPost = $this->BlogPost->find('all', [
+                'conditions' => [
                     'BlogPosts.id_blog_post' => $blogPostId
-                )
-            ))->first();
+                ]
+            ])->first();
             // default value
             $unsavedBlogPost['BlogPosts']['update_modified_field'] = APP_ON;
         } else {
             // default values for new blog posts
-            $unsavedBlogPost = array(
-                'BlogPosts' => array(
+            $unsavedBlogPost = [
+                'BlogPosts' => [
                     'active' => APP_ON,
                     'is_featured' => APP_ON,
                     'update_modified_field' => APP_ON
-                )
-            );
+                ]
+            ];
         }
         $this->set('title_for_layout', 'Blog-Artikel bearbeiten');
 
@@ -100,7 +100,7 @@ class BlogPostsController extends AdminAppController
                 }
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->BlogPost->validates()) {
                 $errors = array_merge($errors, $this->BlogPost->validationErrors);
             }
@@ -119,9 +119,9 @@ class BlogPostsController extends AdminAppController
                     $this->request->data['BlogPosts']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
                 }
 
-                $this->BlogPost->save($this->request->data['BlogPosts'], array(
+                $this->BlogPost->save($this->request->data['BlogPosts'], [
                     'validate' => false
-                ));
+                ]);
                 if (is_null($blogPostId)) {
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'blog_post_added';
@@ -159,14 +159,14 @@ class BlogPostsController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
 
         $customerId = '';
         if (! empty($this->params['named']['customerId'])) {
             $customerId = $this->params['named']['customerId'];
-            $conditions = array(
+            $conditions = [
                 'BlogPosts.id_customer' => $customerId
-            );
+            ];
         }
         $this->set('customerId', $customerId);
 
@@ -180,19 +180,19 @@ class BlogPostsController extends AdminAppController
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
         if ($manufacturerId != '') {
-            $conditions = array(
+            $conditions = [
                 'BlogPosts.id_manufacturer' => $manufacturerId
-            );
+            ];
         }
 
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'BlogPosts.modified' => 'DESC'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
         $blogPosts = $this->Paginator->paginate('BlogPosts');
 
         foreach ($blogPosts as &$blogPost) {

@@ -13,25 +13,25 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
         datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();
     "
-));
+]);
 ?>
 
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
     <?php
     if (!$appAuth->isManufacturer()) {
-        echo $this->Form->input('manufacturerId', array(
+        echo $this->Form->input('manufacturerId', [
         'type' => 'select',
         'label' => '',
         'options' => $manufacturersForDropdown,
         'empty' => 'alle Hersteller',
         'selected' => $manufacturerId != '' ? $manufacturerId : ''
-        ));
+        ]);
     }
     ?>
     <div class="right"></div>
@@ -72,12 +72,12 @@ if ($appAuth->isManufacturer() || $appAuth->isAdmin()) {
 if ($appAuth->isSuperadmin()) {
     $buttonText = 'Pfand-Rücknahme eintragen';
 }
-    echo $this->element('addDepositPaymentOverlay', array(
+    echo $this->element('addDepositPaymentOverlay', [
         'buttonText' => $buttonText,
         'rowId' => $manufacturer['Manufacturers']['id_manufacturer'],
         'userName' => $manufacturer['Manufacturers']['name'],
         'manufacturerId' => $manufacturer['Manufacturers']['id_manufacturer']
-    ));
+    ]);
     echo '</div>';
     echo '<div class="sc"></div>';
 
@@ -103,10 +103,10 @@ if ($appAuth->isSuperadmin()) {
             if (isset($deposit['delivered'])) {
                 echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
-                    array(
+                    [
                     'title' => 'Details anzeigen',
                     'class' => 'icon-with-text',
-                    ),
+                    ],
                     '/admin/order_details/index/manufacturerId:'.$manufacturerId.'/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
                 ).'</span>';
                 echo '<span style="float: right;">';
@@ -119,10 +119,10 @@ if ($appAuth->isSuperadmin()) {
             if (isset($deposit['returned'])) {
                 echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
-                    array(
+                    [
                     'title' => 'Details anzeigen',
                     'class' => 'icon-with-text',
-                    ),
+                    ],
                     $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear)
                 ).'</span>';
                 echo '<span style="float: right;">';
@@ -152,7 +152,7 @@ if ($appAuth->isSuperadmin()) {
         echo '<tr>';
             echo '<td colspan="2" class="right"><b>Dein Pfand-Kontostand</td>';
             $depositCreditBalance = $sumDepositsDelivered + $sumDepositsReturned;
-            $depositCreditBalanceClasses = array('right');
+            $depositCreditBalanceClasses = ['right'];
         if ($depositCreditBalance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
         }

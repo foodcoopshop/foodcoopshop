@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' =>
         Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
         Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('PaymentApprovalComment');" .
@@ -28,7 +28,7 @@ $this->element('addScript', array(
             }
         }).trigger('change');
     "
-));
+]);
 
 ?>
 
@@ -51,9 +51,9 @@ $this->element('addScript', array(
 
 <?php
 
-echo $this->Form->create('Payments', array(
+echo $this->Form->create('Payments', [
     'class' => 'fcs-form'
-));
+]);
 
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Payments.id');
@@ -69,40 +69,40 @@ echo '<p><label>Datum der Aufladung</label>' . $this->Time->formatToDateNTimeLon
 echo '<p><label>Datum der letzten Änderung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payments']['date_changed']).'</p>';
 echo '<p><label>Letzter Bearbeiter</label>' . $this->request->data['ChangedBy']['name'].'</p>';
 
-echo $this->Form->input('Payments.approval', array(
+echo $this->Form->input('Payments.approval', [
     'type' => 'select',
     'label' => 'Status',
     'options' => $this->Html->getApprovalStates()
-));
+]);
 
-echo $this->Form->input('Payments.send_email', array(
+echo $this->Form->input('Payments.send_email', [
     'label' => 'E-Mail versenden?',
     'type' => 'checkbox',
     'after' => '<span class="after small">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).<br /><span style="float: left;">E-Mail-Vorschau:</span>'.
         $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('accept.png')),
-            array(
+            [
                 'class' => 'email-template-info',
                 'target' => '_blank'
-            ),
+            ],
             '/admin/payments/previewEmail/'.$this->request->data['Payments']['id'].'/1'
         ).'&nbsp;'.
         $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
-            array(
+            [
                 'class' => 'email-template-info',
                 'target' => '_blank'
-            ),
+            ],
             '/admin/payments/previewEmail/'.$this->request->data['Payments']['id'].'/-1'
         ).
     '</span>'
-));
+]);
 
-echo $this->Form->input('Payments.approval_comment', array(
+echo $this->Form->input('Payments.approval_comment', [
     'type' => 'textarea',
     'label' => 'Kommentar',
     'class' => 'ckeditor'
-));
+]);
 
 ?>
 

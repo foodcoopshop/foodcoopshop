@@ -16,22 +16,22 @@
 <div id="pages">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();
         "
-        ));
+        ]);
     ?>
    
     <div class="filter-container">
         <h1>Seiten</h1>
-        <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
+        <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
         <div class="right">
             <?php
             echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), array(
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
-            ));
+            ]);
             echo '</div>';
             ?>
         </div>
@@ -63,10 +63,10 @@ echo '<th>' . $this->Paginator->sort('Pages.active', 'Aktiv') . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
-echo $this->element('pageTreeRows', array(
+echo $this->element('pageTreeRows', [
     'pages' => $pages,
     'subRow' => false
-));
+]);
 
 echo '<tr>';
 echo '<td colspan="12"><b>' . $totalPagesCount . '</b> Datensätze</td>';

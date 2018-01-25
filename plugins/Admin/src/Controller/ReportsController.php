@@ -57,9 +57,9 @@ class ReportsController extends AdminAppController
         }
         $this->set('customerId', $customerId);
 
-        $conditions = array(
+        $conditions = [
             'Payments.type' => $paymentType
-        );
+        ];
         $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
@@ -70,12 +70,12 @@ class ReportsController extends AdminAppController
         // exluce "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payment.id_manufacturer > 0 && Payment.text = 'money') || Payment.id_manufacturer = 0)";
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Payments.date_add' => 'DESC'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
 
         $payments = $this->Paginator->paginate('Payments);
         $this->set('payments', $payments);

@@ -16,24 +16,24 @@
 <div id="actionLogs">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");
         "
-        ));
+        ]);
     ?>
 
     <div class="filter-container">
         <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-            <?php echo $this->Form->input('type', array('type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '')); ?>
-            <?php echo $this->Form->input('customerId', array('type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '')); ?>
-            <?php echo $this->Form->input('productId', array('type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => array())); ?>
+            <?php echo $this->Form->input('type', ['type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '']); ?>
+            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+            <?php echo $this->Form->input('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
         <?php } ?>
         <?php if ($appAuth->isCustomer()) { ?>
-            <?php echo $this->Form->input('type', array('class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '')); ?>
+            <?php echo $this->Form->input('type', ['class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '']); ?>
         <?php } ?>
-        <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
+        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
         <div class="right"></div>
     </div>
 
@@ -64,8 +64,8 @@ foreach ($actionLogs as $actionLog) {
     $i ++;
 
     $actionType = $actionLogModel->types[$actionLog['ActionLogs']['type']];
-    $actionClass = empty($actionType['class']) ? array() : $actionType['class'];
-    $actionClass = array_merge(array('data'), $actionClass);
+    $actionClass = empty($actionType['class']) ? [] : $actionType['class'];
+    $actionClass = array_merge(['data'], $actionClass);
 
     echo '<tr class="' . implode(' ', $actionClass) . '">';
 
@@ -119,27 +119,27 @@ foreach ($actionLogs as $actionLog) {
     }
 
     // blog_posts
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'blog_posts' && ! (in_array($actionLog['ActionLogs']['type'], array(
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'blog_posts' && ! (in_array($actionLog['ActionLogs']['type'], [
         'blog_post_deleted'
-    )))) {
+    ]))) {
         $showLink = true;
         $title = 'Blog-Artikel anzeigen';
         $url = $this->Slug->getBlogPostDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // pages
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'pages' && ! (in_array($actionLog['ActionLogs']['type'], array(
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'pages' && ! (in_array($actionLog['ActionLogs']['type'], [
         'page_deleted'
-    )))) {
+    ]))) {
         $showLink = true;
         $title = 'Seite anzeigen';
         $url = $this->Slug->getPageDetail($actionLog['ActionLogs']['object_id'], '');
     }
 
     // categories
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'categories' && ! (in_array($actionLog['ActionLogs']['type'], array(
+    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'categories' && ! (in_array($actionLog['ActionLogs']['type'], [
         'category_deleted'
-    )))) {
+    ]))) {
         $showLink = true;
         $title = 'Kategorie anzeigen';
         $url = $this->Slug->getCategoryDetail($actionLog['ActionLogs']['object_id'], '');
@@ -163,10 +163,10 @@ foreach ($actionLogs as $actionLog) {
     }
 
     if ($showLink) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
             'title' => $title,
             'target' => $targetBlank ? '_blank' : ''
-        ), $url);
+        ], $url);
     }
     echo '</td>';
 

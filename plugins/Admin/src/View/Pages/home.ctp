@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' =>
         Configure::read('AppConfig.jsNamespace') . ".Helper.showContent();" .
         Configure::read('AppConfig.jsNamespace') . ".Helper.initAnystretch();" .
@@ -22,7 +22,7 @@ $this->element('addScript', array(
         Configure::read('AppConfig.jsNamespace') . ".Helper.initScrolltopButton();" .
         Configure::read('AppConfig.jsNamespace') . ".Mobile.autoOpenSidebarLeft();" .
         Configure::read('AppConfig.jsNamespace') . ".Helper.initLogoutButton();"
-));
+]);
 
 echo '<div id="home">';
 echo $this->Session->flash();

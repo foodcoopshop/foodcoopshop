@@ -33,8 +33,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $manufacturerData = array(
-            'Manufacturers' => array(
+        $manufacturerData = [
+            'Manufacturers' => [
                 'name' => 'Test Manufacturer',
                 'bank_name' => 'Test Bank',
                 'iban' => 'Iban',
@@ -52,8 +52,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'kammer' => '',
                 'homepage' => '',
                 'short_description' => 'Test Description'
-            ),
-            'Addresses' => array(
+            ],
+            'Addresses' => [
                 'firstname' => '',
                 'lastname' => '',
                 'email' => 'fcs-demo-gemuese-hersteller@mailinator.com',
@@ -63,9 +63,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'address2' => 'Street 2',
                 'postcode' => '',
                 'city' => 'Test City'
-            ),
+            ],
             'referer' => ''
-        );
+        ];
         $response = $this->add($manufacturerData);
 
         // provoke errors
@@ -89,11 +89,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $response);
 
         // get inserted manufacturer from database and check detail page for patterns
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.name' => $manufacturerData['Manufacturers']['name']
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $response = $this->browser->get($this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']));
         $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer['Manufacturers']['name'], $response);
@@ -115,14 +115,14 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendShopOrderNotification = false;
         $newBulkOrdersAllowed = false;
 
-        $newSendOrderListCc = array('office@rothauer-it.com', 'test@test.com');
+        $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
 
-        $manufacturerOld = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturerOld = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $this->browser->get($this->Slug->getManufacturerEditOptions($manufacturerId));
 
@@ -145,11 +145,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->setFieldById('ManufacturerSendShopOrderNotification', $newSendShopOrderNotification);                                         // do not use 0 here
         $this->browser->setFieldById('ManufacturerBulkOrdersAllowed', $newBulkOrdersAllowed);                                         // do not use 0 here
 
-        $manufacturerNew = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturerNew = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
 
         $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturerNew['Manufacturers']['send_order_list']);
         $this->assertEquals($sendOrderList, $newSendOrderList, 'saving option send_order_list failed');
@@ -199,11 +199,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->submitFormById('ManufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $this->browser->getContent());
 
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
         $this->doTestCustomerRecord($manufacturer);
 
         $this->logout();
@@ -222,11 +222,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->submitFormById('ManufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Der Hersteller wurde erfolgreich gespeichert.', $this->browser->getContent());
 
-        $manufacturer = $this->Manufacturer->find('all', array(
-            'conditions' => array(
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
-            )
-        ))->first();
+            ]
+        ])->first();
         $this->doTestCustomerRecord($manufacturer);
 
         $this->logout();
@@ -258,9 +258,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
      */
     private function add($data)
     {
-        $this->browser->post($this->Slug->getManufacturerAdd(), array(
+        $this->browser->post($this->Slug->getManufacturerAdd(), [
             'data' => $data
-        ));
+        ]);
         return $this->browser->getContent();
     }
 }

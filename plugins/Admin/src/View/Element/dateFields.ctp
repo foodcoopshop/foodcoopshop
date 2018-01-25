@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initNextAndPreviousDayLinks();"
-));
+]);
 ?>
 
 <div class="date-field-wrapper">

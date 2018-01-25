@@ -23,82 +23,82 @@ if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
 $paymentMemberFeeMenuElement = $this->Menu->getPaymentMemberFeeMenuElement();
-$actionLogsMenuElement = array(
+$actionLogsMenuElement = [
     'slug' => '/admin/action_logs',
     'name' => 'Aktivitäten',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-eye'
-    )
-);
-$cancelledArticlesMenuElement = array(
+    ]
+];
+$cancelledArticlesMenuElement = [
     'slug' => '/admin/action_logs/index/type:order_detail_cancelled',
     'name' => 'Stornierte Produkte',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-remove'
-    )
-);
-$ordersMenuElement = array(
+    ]
+];
+$ordersMenuElement = [
     'slug' => '/admin/orders',
     'name' => 'Bestellungen',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
-    )
-);
-$orderDetailsMenuElement = array(
+    ]
+];
+$orderDetailsMenuElement = [
     'slug' => '/admin/order_details',
     'name' => 'Bestellte Produkte',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
-    )
-);
-$customerProfileMenuElement = array(
+    ]
+];
+$customerProfileMenuElement = [
     'slug' => $this->Slug->getCustomerProfile(),
     'name' => 'Meine Daten',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-home'
-    )
-);
-$changePasswordMenuElement = array(
+    ]
+];
+$changePasswordMenuElement = [
     'slug' => $this->Slug->getChangePassword(),
     'name' => 'Passwort ändern',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-key'
-    )
-);
-$blogPostsMenuElement = array(
+    ]
+];
+$blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
     'name' => 'Blog-Artikel',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-file-text'
-    )
-);
-$homepageAdministrationElement = array(
+    ]
+];
+$homepageAdministrationElement = [
     'slug' => $this->Slug->getPagesListAdmin(),
     'name' => 'Homepage-Verwaltung',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-pencil-square-o'
-    )
-);
-$menu = array();
+    ]
+];
+$menu = [];
 $logoHtml = '<img class="logo" src="/files/images/logo.jpg" width="100%" />';
-$menu[] = array(
+$menu[] = [
     'slug' => $this->Slug->getHome(),
     'name' => $logoHtml,
-    'options' => array()
-);
-$menu[] = array(
+    'options' => []
+];
+$menu[] = [
     'slug' => $this->Slug->getHome(),
     'name' => 'Home',
-    'options' => array(
+    'options' => [
         'fa-icon' => 'fa-fw fa-home'
-    )
-);
+    ]
+];
 
 if ($appAuth->isCustomer()) {
-    $ordersMenuElement['children'] = array(
+    $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
         $cancelledArticlesMenuElement
-    );
+    ];
     $menu[] = $ordersMenuElement;
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
@@ -112,52 +112,52 @@ if ($appAuth->isCustomer()) {
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    $ordersMenuElement['children'] = array(
+    $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
         $cancelledArticlesMenuElement,
-        array(
+        [
             'slug' => '/admin/lists/orderLists',
             'name' => 'Bestelllisten',
-            'options' => array(
+            'options' => [
                 'fa-icon' => 'fa-fw fa-book'
-            )
-        )
-    );
+            ]
+        ]
+    ];
     $menu[] = $ordersMenuElement;
-    $manufacturerMenu = array(
+    $manufacturerMenu = [
         'slug' => '/admin/manufacturers',
         'name' => 'Hersteller',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-leaf'
-        )
-    );
-    $manufacturerMenu['children'][] = array(
+        ]
+    ];
+    $manufacturerMenu['children'][] = [
         'slug' => $this->Slug->getProductAdmin(),
         'name' => 'Produkte',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-tags'
-        )
-    );
+        ]
+    ];
 
     if (date('Y-m-d') > Configure::read('AppConfig.depositForManufacturersStartDate')) {
-        $manufacturerMenu['children'][] = array(
+        $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getDepositList(),
             'name' => 'Pfandkonto',
-            'options' => array(
+            'options' => [
                 'fa-icon' => 'fa-fw fa-recycle'
-            )
-        );
+            ]
+        ];
     }
 
     $menu[] = $manufacturerMenu;
 
-    $menu[] = array(
+    $menu[] = [
         'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => 'Mitglieder',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-male'
-        )
-    );
+        ]
+    ];
     $menu[] = $actionLogsMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $customerProfileMenuElement['children'][] = $paymentProductMenuElement;
@@ -169,63 +169,63 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $customerProfileMenuElement;
     $menu[] = $blogPostsMenuElement;
 
-    $homepageAdministrationElement['children'][] = array(
+    $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getPagesListAdmin(),
         'name' => 'Seiten',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-pencil-square-o'
-        )
-    );
+        ]
+    ];
 
-    $homepageAdministrationElement['children'][] = array(
+    $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getCategoriesList(),
         'name' => 'Kategorien',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-list'
-        )
-    );
-    $homepageAdministrationElement['children'][] = array(
+        ]
+    ];
+    $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getAttributesList(),
         'name' => 'Varianten',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-chevron-circle-right'
-        )
-    );
-    $homepageAdministrationElement['children'][] = array(
+        ]
+    ];
+    $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getSlidersList(),
         'name' => 'Slideshow',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-image'
-        )
-    );
+        ]
+    ];
 
     if ($appAuth->isSuperadmin()) {
-        $homepageAdministrationElement['children'][] = array(
+        $homepageAdministrationElement['children'][] = [
             'slug' => $this->Slug->getTaxesList(),
             'name' => 'Steuersätze',
-            'options' => array(
+            'options' => [
                 'fa-icon' => 'fa-fw fa-percent'
-            )
-        );
+            ]
+        ];
         // show deposit report also for cash configuration
         $reportSlug = $this->Slug->getReport('product');
         if (!$this->Html->paymentIsCashless()) {
             $reportSlug = $this->Slug->getReport('deposit');
         }
-        $homepageAdministrationElement['children'][] = array(
+        $homepageAdministrationElement['children'][] = [
             'slug' => $reportSlug,
             'name' => 'Finanzberichte',
-            'options' => array(
+            'options' => [
                 'fa-icon' => 'fa-fw fa-money'
-            )
-        );
-        $homepageAdministrationElement['children'][] = array(
+            ]
+        ];
+        $homepageAdministrationElement['children'][] = [
             'slug' => $this->Slug->getConfigurationsList(),
             'name' => 'Einstellungen',
-            'options' => array(
+            'options' => [
                 'fa-icon' => 'fa-fw fa-cogs'
-            )
-        );
+            ]
+        ];
     }
 
     $menu[] = $homepageAdministrationElement;
@@ -233,39 +233,39 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 
 if ($appAuth->isManufacturer()) {
     $menu[] = $orderDetailsMenuElement;
-    $menu[] = array(
+    $menu[] = [
         'slug' => $this->Slug->getProductAdmin(),
         'name' => 'Meine Produkte',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-tags'
-        )
-    );
+        ]
+    ];
     $menu[] = $cancelledArticlesMenuElement;
-    $profileMenu = array(
+    $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
         'name' => 'Mein Profil',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-home'
-        )
-    );
-    $optionsMenu = array(
+        ]
+    ];
+    $optionsMenu = [
         'slug' => $this->Slug->getManufacturerMyOptions(),
         'name' => 'Einstellungen',
-        'options' => array(
+        'options' => [
             'fa-icon' => 'fa-fw fa-cogs'
-        )
-    );
+        ]
+    ];
     if (date('Y-m-d') > Configure::read('AppConfig.depositForManufacturersStartDate')) {
         $od = TableRegistry::get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {
-            $menu[] = array(
+            $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
                 'name' => 'Pfandkonto',
-                'options' => array(
+                'options' => [
                     'fa-icon' => 'fa-fw fa-recycle'
-                )
-            );
+                ]
+            ];
         }
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
@@ -283,11 +283,11 @@ if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer['Customers']) &&
     $footerHtml = '<b>Ansprechperson</b><br />' . $appAuth->manufacturer['Customers']['firstname'] . ' ' . $appAuth->manufacturer['Customers']['lastname'] . ', ' . $appAuth->manufacturer['Customers']['email']. ', ' . $appAuth->manufacturer['Customers']['AddressCustomer']['phone_mobile'];
 }
 
-echo $this->Menu->render($menu, array(
+echo $this->Menu->render($menu, [
     'id' => 'menu',
     'class' => 'vertical menu',
     'footer' => $footerHtml
-));
+]);
 
 
 

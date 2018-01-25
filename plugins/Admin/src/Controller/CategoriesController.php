@@ -42,17 +42,17 @@ class CategoriesController extends AdminAppController
         $this->set('categoriesForSelect', $categoriesForSelect);
 
         if ($categoryId > 0) {
-            $unsavedCategory = $this->Category->find('all', array(
-                'conditions' => array(
+            $unsavedCategory = $this->Category->find('all', [
+                'conditions' => [
                     'Categories.id_category' => $categoryId
-                )
-            ))->first();
+                ]
+            ])->first();
         } else {
-            $unsavedCategory = array(
-                'Categories' => array(
+            $unsavedCategory = [
+                'Categories' => [
                     'active' => APP_ON
-                )
-            );
+                ]
+            ];
         }
 
         $this->set('unsavedCategory', $unsavedCategory);
@@ -73,7 +73,7 @@ class CategoriesController extends AdminAppController
                 $data = strip_tags(trim($data));
             }
 
-            $errors = array();
+            $errors = [];
             if (! $this->Category->validates()) {
                 $errors = array_merge($errors, $this->Category->validationErrors);
             }
@@ -81,9 +81,9 @@ class CategoriesController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Category->save($this->request->data['Categories'], array(
+                $this->Category->save($this->request->data['Categories'], [
                     'validate' => false
-                ));
+                ]);
                 if (is_null($categoryId)) {
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'category_added';
@@ -121,13 +121,13 @@ class CategoriesController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
         $conditions[] = $this->Category->getExcludeCondition();
         $conditions[] = 'Categories.active > ' . APP_DEL;
 
-        $totalCategoriesCount = $this->Category->find('count', array(
+        $totalCategoriesCount = $this->Category->find('count', [
             'conditions' => $conditions
-        ));
+        ]);
         $this->set('totalCategoriesCount', $totalCategoriesCount);
 
         $categories = $this->Category->getThreaded($conditions);

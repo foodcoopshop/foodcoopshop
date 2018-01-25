@@ -14,9 +14,9 @@
  */
 
 foreach ($categories as $category) {
-    $rowClass = array(
+    $rowClass = [
         'data'
-    );
+    ];
     if ($subRow) {
         $rowClass[] = 'sub-row';
     }
@@ -30,9 +30,9 @@ foreach ($categories as $category) {
     echo '</td>';
 
     echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
             'title' => 'Bearbeiten'
-        ), $this->Slug->getCategoryEdit($category['Categories']['id_category']));
+        ], $this->Slug->getCategoryEdit($category['Categories']['id_category']));
     echo '</td>';
 
     echo '<td>';
@@ -56,19 +56,19 @@ foreach ($categories as $category) {
 
     echo '<td style="width:20px;">';
     if ($category['Categories']['active']) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
         'title' => 'Seite anzeigen',
         'target' => '_blank'
-        ), $this->Slug->getCategoryDetail($category['Categories']['id_category'], $category['Categories']['name']));
+        ], $this->Slug->getCategoryDetail($category['Categories']['id_category'], $category['Categories']['name']));
     }
     echo '</td>';
 
     echo '</tr>';
 
     if (! empty($category['children'])) {
-        echo $this->element('categoryTreeRows', array(
+        echo $this->element('categoryTreeRows', [
             'categories' => $category['children'],
             'subRow' => true
-        ));
+        ]);
     }
 }

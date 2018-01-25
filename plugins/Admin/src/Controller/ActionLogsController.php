@@ -33,7 +33,7 @@ class ActionLogsController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
 
         $dateFrom = date('d.m.Y', strtotime('-6 day'));
         if (! empty($this->params['named']['dateFrom'])) {
@@ -103,12 +103,12 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('type', $type);
 
-        $this->Paginator->settings = array_merge($this->Paginator->settings, array(
+        $this->Paginator->settings = array_merge($this->Paginator->settings, [
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'ActionLogs.date' => 'DESC'
-            )
-        ));
+            ]
+        ]);
         $actionLogs = $this->Paginator->paginate('ActionLogs');
         foreach ($actionLogs as &$actionLog) {
             $manufacturer = $this->Customer->getManufacturerRecord($actionLog);

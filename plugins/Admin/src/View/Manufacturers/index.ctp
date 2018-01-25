@@ -15,28 +15,28 @@
 ?>
 <div id="manufacturers-list">
     <?php
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('AppConfig.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('AppConfig.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('AppConfig.cakeServerName') . "');".Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
-    ));
+    ]);
     if (Configure::read('AppConfig.allowManualOrderListSending')) {
-        $this->element('addScript', array(
+        $this->element('addScript', [
             'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
-        ));
+        ]);
     }
     ?>
 
     <div class="filter-container">
-        <?php echo $this->element('dateFields', array('dateFrom' => $dateFrom, 'dateTo' => $dateTo)); ?>
-        <?php echo $this->Form->input('active', array('type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '')); ?>
+        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+        <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
         <div class="right">
             <?php
             echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), array(
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
-            ));
+            ]);
             echo '</div>';
             ?>
         </div>
@@ -97,9 +97,9 @@ foreach ($manufacturers as $manufacturer) {
     }
     echo '</td>';
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ), $this->Slug->getManufacturerEdit($manufacturer['Manufacturers']['id_manufacturer']));
+    ], $this->Slug->getManufacturerEdit($manufacturer['Manufacturers']['id_manufacturer']));
     echo '</td>';
 
     echo '<td>';
@@ -112,10 +112,10 @@ foreach ($manufacturers as $manufacturer) {
         $details .= '<br />' . $manufacturer['Addresses']['phone'];
     }
         echo '<div class="manufacturer-details-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
                 'class' => 'manufacturer-details-read-button',
                 'title' => $details
-            ), 'javascript:void(0);');
+            ], 'javascript:void(0);');
         echo '</div>';
 
         echo '<b>' . $manufacturer['Manufacturers']['name'] . '</b><br />';
@@ -128,10 +128,10 @@ foreach ($manufacturers as $manufacturer) {
     $productString = $manufacturer['product_count'] == 1 ? 'Produkt' : 'Produkte';
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer['product_count'] . '&nbsp;' . $productString,
-        array(
+        [
         'title' => 'Alle Produkte von ' . $manufacturer['Manufacturers']['name'] . ' anzeigen',
         'class' => 'icon-with-text'
-        ),
+        ],
         $this->Slug->getProductAdmin($manufacturer['Manufacturers']['id_manufacturer'])
     );
     echo '</td>';
@@ -139,7 +139,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td>';
     if ($manufacturer['sum_deposit_delivered'] > 0) {
         $depositSum += $manufacturer['deposit_credit_balance'];
-        $depositSaldoClasses = array();
+        $depositSaldoClasses = [];
         if ($manufacturer['deposit_credit_balance'] < 0) {
             $depositSaldoClasses[] = 'negative';
         }
@@ -152,10 +152,10 @@ foreach ($manufacturers as $manufacturer) {
         }
         echo $this->Html->getJqueryUiIcon(
             'Pfand:&nbsp;' . $depositSaldoHtml,
-            array(
+            [
             'class' => 'icon-with-text',
             'title' => 'Pfandkonto anzeigen'
-            ),
+            ],
             $depositOverviewUrl
         );
     }
@@ -200,9 +200,9 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td>';
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')),
-        array(
+        [
             'title' => 'Hersteller-Einstellungen bearbeiten'
-        ),
+        ],
         $this->Slug->getManufacturerEditOptions($manufacturer['Manufacturers']['id_manufacturer'])
     );
     echo '</td>';
@@ -215,35 +215,35 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     echo 'Bestellliste prüfen<br />';
-    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
             'target' => '_blank'
-        ));
+        ]);
     echo ' / ';
-    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
         'target' => '_blank'
-    ));
+    ]);
     echo '</td>';
     if (Configure::read('AppConfig.allowManualOrderListSending')) {
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), [
             'title' => 'Bestellliste manuell versenden',
             'class' => 'manual-order-list-send-link'
-        ), 'javascript:void(0);');
+        ], 'javascript:void(0);');
         echo '</td>';
     }
 
     echo '<td>';
-    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', array(
+    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
         'target' => '_blank'
-    ));
+    ]);
     echo '</td>';
     echo '<td style="width: 29px;">';
     if ($manufacturer['Manufacturers']['active']) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), array(
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
             'title' => 'Hersteller-Seite',
             'target' => '_blank'
-        ), $manufacturerLink);
+        ], $manufacturerLink);
     }
     echo '</td>';
     echo '</tr>';

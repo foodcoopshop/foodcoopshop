@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();
     "
-));
+]);
 ?>
 <h4>Bitte wähle links oben das Mitglied aus, in dessen Namen du
     bestellen möchtest.</h4>

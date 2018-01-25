@@ -44,7 +44,7 @@ class EmailErrorLog implements CakeLogInterface
      *
      * @var array
      */
-    protected $_options = array();
+    protected $_options = [];
 
     /**
      *
@@ -53,7 +53,7 @@ class EmailErrorLog implements CakeLogInterface
      * @param array $options Options for logger
      * @return void
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         $this->_options = array_merge($this->_options, $options);
     }
@@ -80,12 +80,12 @@ class EmailErrorLog implements CakeLogInterface
             return false;
         }
 
-        $params = array(
+        $params = [
             'type' => ucfirst($type),
             'date' => date('Y-m-d H:i:s'),
             'host' => env('SERVER_NAME'),
             'message' => CakeText::truncate($message, 70)
-        );
+        ];
         $subjectFormat = ':type :host :message';
         $subject = CakeText::insert($subjectFormat, $params);
 
@@ -95,10 +95,10 @@ class EmailErrorLog implements CakeLogInterface
                 ->template('debug')
                 ->emailFormat('html')
                 ->subject($subject)
-                ->viewVars(array(
+                ->viewVars([
                 'message' => $message,
                 'loggedUser' => AppAuthComponent::user()
-                ))
+                ])
                 ->send();
         } catch (SocketException $e) {
             return false;

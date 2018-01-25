@@ -52,20 +52,20 @@ if ($results_product[0]['m']['UID'] != '') {
 $pdf->infoTextForFooter .= ', Rechnung Nr. ' . $newInvoiceNumber;
 
 // Produktauflistung Start
-$widths = array(
+$widths = [
     30,
     335,
     55,
     55,
     55
-);
-$headers = array(
+];
+$headers = [
     'Anzahl',
     'Produkt',
     'Preis exkl.',
     'MWSt.',
     'Preis inkl.'
-);
+];
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
 $pdf->addLastSumRow(
     $headers,
@@ -134,7 +134,7 @@ $html = '<h2>Detailübersicht</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(5);
 
-$widths = array(
+$widths = [
     30,
     181,
     45,
@@ -142,8 +142,8 @@ $widths = array(
     45,
     50,
     134
-);
-$headers = array(
+];
+$headers = [
     'Anzahl',
     'Produkt',
     'Preis exkl.',
@@ -151,7 +151,7 @@ $headers = array(
     'Preis inkl.',
     'Datum',
     'Mitglied'
-);
+];
 $pdf->renderDetailedOrderList($results_customer, $widths, $headers, 'customer');
 $pdf->renderTable();
 // Detailübersicht End

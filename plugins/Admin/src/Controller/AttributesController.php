@@ -39,15 +39,15 @@ class AttributesController extends AdminAppController
         $this->setFormReferer();
 
         if ($attributeId > 0) {
-            $unsavedAttribute = $this->Attribute->find('all', array(
-                'conditions' => array(
+            $unsavedAttribute = $this->Attribute->find('all', [
+                'conditions' => [
                     'Attributes.id_attribute' => $attributeId
-                )
-            ))->first();
+                ]
+            ])->first();
             $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
             $unsavedAttribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         } else {
-            $unsavedAttribute = array();
+            $unsavedAttribute = [];
         }
 
         $this->set('unsavedAttribute', $unsavedAttribute);
@@ -65,7 +65,7 @@ class AttributesController extends AdminAppController
                 $data = strip_tags(trim($data));
             }
 
-            $errors = array();
+            $errors = [];
             $this->Attribute->set($this->request->data['Attributes']);
             if (! $this->Attribute->validates()) {
                 $errors = array_merge($errors, $this->Attribute->validationErrors);
@@ -74,9 +74,9 @@ class AttributesController extends AdminAppController
             if (empty($errors)) {
                 $this->ActionLog = TableRegistry::get('ActionLogs');
 
-                $this->Attribute->save($this->request->data['Attributes'], array(
+                $this->Attribute->save($this->request->data['Attributes'], [
                     'validate' => false
-                ));
+                ]);
                 if (is_null($attributeId)) {
                     $messageSuffix = 'erstellt.';
                     $actionLogType = 'attribute_added';
@@ -106,15 +106,15 @@ class AttributesController extends AdminAppController
 
     public function index()
     {
-        $conditions = array();
+        $conditions = [];
         $conditions[] = 'Attributes.active > ' . APP_DEL;
 
-        $this->Paginator->settings = array_merge(array(
+        $this->Paginator->settings = array_merge([
             'conditions' => $conditions,
-            'order' => array(
+            'order' => [
                 'Attributes.name' => 'ASC'
-            )
-        ), $this->Paginator->settings);
+            ]
+        ], $this->Paginator->settings);
         $attributes = $this->Paginator->paginate('Attributes');
 
         $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');

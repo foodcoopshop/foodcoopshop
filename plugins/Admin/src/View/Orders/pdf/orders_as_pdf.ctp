@@ -34,20 +34,20 @@ foreach ($orders as $order) {
 
     $pdf->Ln(5);
 
-    $widths = array(
+    $widths = [
         45,
         270,
         100,
         45,
         45
-    );
-    $headers = array(
+    ];
+    $headers = [
         'Anzahl',
         'Produkt',
         'Hersteller',
         'Preis',
         'Pfand'
-    );
+    ];
 
     $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 

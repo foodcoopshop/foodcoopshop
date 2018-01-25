@@ -13,17 +13,17 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$this->element('addScript', array(
+$this->element('addScript', [
     'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();"
-));
+]);
 ?>
 <div id="configurations">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => "$('table.list').show();
         "
-        ));
+        ]);
     ?>
 
     <div class="filter-container">
@@ -53,10 +53,10 @@ $this->element('addScript', array(
                 continue;
             }
 
-            if (! Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && in_array($configuration['Configurations']['name'], array(
+            if (! Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && in_array($configuration['Configurations']['name'], [
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE'
-            ))) {
+            ])) {
                 continue;
             }
             if (! Configure::read('AppConfig.memberFeeEnabled') && $configuration['Configurations']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
@@ -71,10 +71,10 @@ $this->element('addScript', array(
 
             echo '<td style="width:30px;">';
 
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'title' => 'Einstellung bearbeiten',
                 'class' => 'edit-configuration-button'
-            ), $this->Slug->getConfigurationEdit($configuration['Configurations']['id_configuration'], $configuration['Configurations']['name']));
+            ], $this->Slug->getConfigurationEdit($configuration['Configurations']['id_configuration'], $configuration['Configurations']['name']));
 
             echo '</td>';
 
@@ -110,10 +110,10 @@ $this->element('addScript', array(
                 <?php if (!Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
-                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), array(
+                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), [
                         'class' => 'btn btn-default',
                         'escape' => false
-                    ));
+                    ]);
                 if (!empty($syncDomains)) {
                     echo '<table class="list">';
                     echo '<tr class="sort">';
@@ -136,9 +136,9 @@ $this->element('addScript', array(
                     echo '<td>';
                     echo $this->Html->getJqueryUiIcon(
                         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-                        array(
+                        [
                         'title' => 'Remote-Foodcoop ' . $syncDomain['SyncDomain']['domain'] . ' ändern',
-                        ),
+                        ],
                         $this->Network->getSyncDomainEdit($syncDomain['SyncDomain']['id'])
                     );
                     echo '</td>';

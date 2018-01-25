@@ -14,22 +14,22 @@
  */
 
 if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
-    $this->element('addScript', array(
+    $this->element('addScript', [
         'script' =>
             Configure::read('AppConfig.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()).");"
-    ));
+    ]);
     echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
-    $options = array(
+    $options = [
         'escape' => false
-    );
+    ];
     $options['class'] = 'btn btn-default';
     echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
-    echo $this->Form->input('shopOrderCustomerId', array(
+    echo $this->Form->input('shopOrderCustomerId', [
         'type' => 'select',
         'label' => '',
         'class' => 'do-not-submit',
         'empty' => 'Mitglied auswählen...',
         'options' => $customers
-    ));
+    ]);
     echo '</div>';
 }

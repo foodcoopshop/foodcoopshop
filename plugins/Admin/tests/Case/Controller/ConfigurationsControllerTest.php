@@ -44,10 +44,10 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     private function getTestUrlsForShowProductForGuests()
     {
-        return array(
+        return [
             $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
             $this->Slug->getProductDetail(339, 'Kartoffel')
-        );
+        ];
     }
 
     private function assertShowProductForGuestsEnabledOrLoggedIn($testUrls, $expectPrice)

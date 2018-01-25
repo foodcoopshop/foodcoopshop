@@ -16,12 +16,12 @@
 <div id="attribues">
 
         <?php
-        $this->element('addScript', array(
+        $this->element('addScript', [
         'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();"
-        ));
-        $this->element('highlightRowAfterEdit', array(
+        ]);
+        $this->element('highlightRowAfterEdit', [
         'rowIdPrefix' => '#attribute-'
-        ));
+        ]);
     ?>
    
     <div class="filter-container">
@@ -29,10 +29,10 @@
         <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Variante erstellen', $this->Slug->getAttributeAdd(), array(
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Variante erstellen', $this->Slug->getAttributeAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
-            ));
+            ]);
             echo '</div>';
             ?>
         </div>
@@ -61,9 +61,9 @@ $i = 0;
 
 foreach ($attributes as $attribute) {
     $i ++;
-    $rowClass = array(
+    $rowClass = [
         'data'
-    );
+    ];
     if (! $attribute['Attributes']['active']) {
         $rowClass[] = 'deactivated';
     }
@@ -74,9 +74,9 @@ foreach ($attributes as $attribute) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), array(
+    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ), $this->Slug->getAttributeEdit($attribute['Attributes']['id_attribute']));
+    ], $this->Slug->getAttributeEdit($attribute['Attributes']['id_attribute']));
     echo '</td>';
 
     echo '<td>';
@@ -85,22 +85,22 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute['CombinationProducts']['online'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['online']) . ')', 'javascript:void(0);', array(
+        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['online']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
-        ));
+        ]);
         echo '<div class="toggle-content">' . join('<br /> ', Set::extract('{n}.link', $attribute['CombinationProducts']['online'])) . '</div>';
     }
     echo '</td>';
 
     echo '<td style="width:300px;">';
     if (! empty($attribute['CombinationProducts']['offline'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['offline']) . ')', 'javascript:void(0);', array(
+        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['offline']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
-        ));
+        ]);
         echo '<div class="toggle-content">' . join('<br /> ', Set::extract('{n}.ProductLang.name', $attribute['CombinationProducts']['offline'])) . '</div>';
     }
     echo '</td>';
