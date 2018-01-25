@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
@@ -59,7 +59,7 @@ class CategoriesController extends FrontendController
         }
 
         if ($keyword == '') {
-            throw new MissingActionException('no keyword');
+            throw new RecordNotFoundException('no keyword');
         }
 
         $this->set('keyword', $keyword);
@@ -90,7 +90,7 @@ class CategoriesController extends FrontendController
         ])->first();
         
         if (empty($category)) {
-            throw new MissingActionException('category not found');
+            throw new RecordNotFoundException('category not found');
         }
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, $category->name);

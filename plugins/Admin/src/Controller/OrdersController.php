@@ -1,7 +1,7 @@
 <?php
 
 use Admin\Controller\AdminAppController;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -72,7 +72,7 @@ class OrdersController extends AdminAppController
     public function ordersAsPdf()
     {
         if (empty($this->params['named']['orderIds'])) {
-            throw new MissingActionException('wrong order id set');
+            throw new RecordNotFoundException('wrong order id set');
         }
 
         $this->Order->hasMany['OrderDetails']['order'] = array(
@@ -86,7 +86,7 @@ class OrdersController extends AdminAppController
         ));
 
         if (empty($orders)) {
-            throw new MissingActionException('no orders found');
+            throw new RecordNotFoundException('no orders found');
         }
 
         $this->set('orders', $orders);
@@ -289,7 +289,7 @@ class OrdersController extends AdminAppController
     public function initShopOrder($customerId)
     {
         if (! $customerId) {
-            throw new MissingActionException('customerId not passed');
+            throw new RecordNotFoundException('customerId not passed');
         }
 
         $this->Customer = TableRegistry::get('Customers');

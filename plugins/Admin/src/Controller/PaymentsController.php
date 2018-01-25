@@ -1,7 +1,7 @@
 <?php
 
 use Admin\Controller\AdminAppController;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -78,11 +78,11 @@ class PaymentsController extends AdminAppController
             )
         ))->first();
         if (empty($payment)) {
-            throw new MissingActionException('payment not found');
+            throw new RecordNotFoundException('payment not found');
         }
 
         if (!in_array($approval, array(1,-1))) {
-            throw new MissingActionException('approval not implemented');
+            throw new RecordNotFoundException('approval not implemented');
         }
 
         $payment['Payments']['approval'] = $approval;
@@ -117,7 +117,7 @@ class PaymentsController extends AdminAppController
         ))->first();
 
         if (empty($unsavedPayment)) {
-            throw new MissingActionException('payment not found');
+            throw new RecordNotFoundException('payment not found');
         }
 
         $this->set('unsavedPayment', $unsavedPayment);

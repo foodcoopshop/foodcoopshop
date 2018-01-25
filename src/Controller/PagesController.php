@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;

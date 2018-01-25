@@ -1,7 +1,7 @@
 <?php
 
 use App\Controller\FrontendController;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
@@ -485,7 +485,7 @@ class CartsController extends FrontendController
             ]
         ])->first();
         if (empty($order)) {
-            throw new MissingActionException('order not found');
+            throw new RecordNotFoundException('order not found');
         }
 
         $this->set('order', $order);

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
@@ -128,7 +128,7 @@ class CustomersController extends FrontendController
         $changePasswordCode = $this->params['changePasswordCode'];
 
         if (!isset($changePasswordCode)) {
-            throw new MissingActionException('change password code not passed');
+            throw new RecordNotFoundException('change password code not passed');
         }
 
         $customer = $this->Customer->find('all', [
@@ -138,7 +138,7 @@ class CustomersController extends FrontendController
         ])->first();
 
         if (empty($customer)) {
-            throw new MissingActionException('change password code not found');
+            throw new RecordNotFoundException('change password code not found');
         }
 
         $newPassword = $this->Customer->setNewPassword($customer['Customers']['id_customer']);

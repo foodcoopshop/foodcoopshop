@@ -2,7 +2,7 @@
 
 use App\Controller\FrontendController;
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
@@ -62,7 +62,7 @@ class BlogPostsController extends FrontendController
         ])->first();
 
         if (empty($blogPost)) {
-            throw new MissingActionException('blogPost not found');
+            throw new RecordNotFoundException('blogPost not found');
         }
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPosts']['title']);
@@ -107,7 +107,7 @@ class BlogPostsController extends FrontendController
                 ]
             ])->first();
             if (empty($manufacturer)) {
-                throw new MissingActionException('manufacturer not found or not active');
+                throw new RecordNotFoundException('manufacturer not found or not active');
             }
             $this->set('manufacturer', $manufacturer);
             $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;

@@ -1,7 +1,7 @@
 <?php
 
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -64,7 +64,7 @@ class ManufacturersController extends FrontendController
         ]);
 
         if (empty($manufacturers)) {
-            throw new MissingActionException('no manufacturers available');
+            throw new RecordNotFoundException('no manufacturers available');
         }
 
         if ($this->AppAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
@@ -92,7 +92,7 @@ class ManufacturersController extends FrontendController
         ])->first();
 
         if (empty($manufacturer)) {
-            throw new MissingActionException('manufacturer not found or not active');
+            throw new RecordNotFoundException('manufacturer not found or not active');
         }
 
         $correctSlug = Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);

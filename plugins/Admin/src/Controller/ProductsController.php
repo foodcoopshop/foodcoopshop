@@ -1,7 +1,7 @@
 <?php
 
 use Admin\Controller\AdminAppController;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -293,7 +293,7 @@ class ProductsController extends AdminAppController
         ))->first();
 
         if (empty($manufacturer)) {
-            throw new MissingActionException('manufacturer not existing');
+            throw new RecordNotFoundException('manufacturer not existing');
         }
 
         $newProduct = $this->Product->add($manufacturer);
@@ -781,7 +781,7 @@ class ProductsController extends AdminAppController
             APP_OFF,
             APP_ON
         ))) {
-            throw new MissingActionException('New-Status muss 0 oder 1 sein!');
+            throw new RecordNotFoundException('New-Status muss 0 oder 1 sein!');
         }
 
         if ($status == 1) {

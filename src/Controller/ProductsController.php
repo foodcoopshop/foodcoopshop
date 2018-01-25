@@ -1,7 +1,7 @@
 <?php
 
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -61,7 +61,7 @@ class ProductsController extends FrontendController
         $product = $this->prepareProductsForFrontend($product);
 
         if (empty($product) || !isset($product[0])) {
-            throw new MissingActionException('product not found');
+            throw new RecordNotFoundException('product not found');
         }
 
         $this->set('product', $product[0]);

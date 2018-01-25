@@ -2,7 +2,7 @@
 
 use Admin\Controller\AdminAppController;
 use App\Controller\Component\StringComponent;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -221,7 +221,7 @@ class ManufacturersController extends AdminAppController
             APP_OFF,
             APP_ON
         ))) {
-            throw new MissingActionException('Status muss 0 oder 1 sein!');
+            throw new RecordNotFoundException('Status muss 0 oder 1 sein!');
         }
 
         $this->Manufacturer->id = $manufacturerId;
@@ -497,7 +497,7 @@ class ManufacturersController extends AdminAppController
         ))->first();
 
         if (empty($unsavedManufacturer)) {
-            throw new MissingActionException('manufacturer does not exist');
+            throw new RecordNotFoundException('manufacturer does not exist');
         }
 
         if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {

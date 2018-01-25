@@ -252,7 +252,7 @@ class CustomersController extends AdminAppController
             APP_OFF,
             APP_ON
         ))) {
-            throw new MissingActionException('Status muss 0 oder 1 sein!');
+            throw new RecordNotFoundException('Status muss 0 oder 1 sein!');
         }
 
         $this->Customer->id = $customerId;

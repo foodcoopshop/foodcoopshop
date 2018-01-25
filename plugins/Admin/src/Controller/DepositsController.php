@@ -1,7 +1,7 @@
 <?php
 
 use Admin\Controller\AdminAppController;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -182,7 +182,7 @@ class DepositsController extends AdminAppController
         $this->set('payments', $payments);
 
         if ($monthAndYear == '') {
-            throw new MissingActionException('monthAndYear missing');
+            throw new RecordNotFoundException('monthAndYear missing');
         }
         $monthAndYearExploded = explode('-', $monthAndYear);
         $year  = $monthAndYearExploded[0];

@@ -1,7 +1,7 @@
 <?php
 
 use Admin\Controller\AdminAppController;
-use Cake\Controller\Exception\MissingActionException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -41,7 +41,7 @@ class ConfigurationsController extends AdminAppController
         ))->first();
 
         if (empty($unsavedConfiguration)) {
-            throw new MissingActionException('configuration not found');
+            throw new RecordNotFoundException('configuration not found');
         }
 
         $this->set('unsavedConfiguration', $unsavedConfiguration);
@@ -124,7 +124,7 @@ class ConfigurationsController extends AdminAppController
             echo $html;
             exit;
         }
-        throw new MissingActionException('no email template defined for configuration: ' . $configurationName);
+        throw new RecordNotFoundException('no email template defined for configuration: ' . $configurationName);
     }
 
     public function index()
