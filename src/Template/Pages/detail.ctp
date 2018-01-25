@@ -13,21 +13,23 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();"
 ]);
 
-if ($page['Pages']['full_width']) {
+if ($page->full_width) {
     echo $this->Html->css('page-full-width');
 }
 
-echo '<h1>'.$page['Pages']['title'].'</h1>';
+echo '<h1>'.$page->title.'</h1>';
 
 if (!empty($page['children'])) {
     foreach ($page['children'] as $childPage) {
         echo '<p>'.$this->Html->link(
-            $childPage['Pages']['title'],
-            $this->Slug->getPageDetail($childPage['Pages']['id_page'], $childPage['Pages']['title']),
+            $childPage->title,
+            $this->Slug->getPageDetail($childPage->id_page, $childPage->title),
             [
                 'class' => 'btn btn-success'
             ]
@@ -41,8 +43,8 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         [
             'title' => 'Bearbeiten'
         ],
-        $this->Slug->getPageEdit($page['Pages']['id_page'])
+        $this->Slug->getPageEdit($page->id_page)
     );
 }
 
-echo $page['Pages']['content'];
+echo $page->content;

@@ -7,6 +7,7 @@ use Cake\Controller\Exception\MissingActionException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * PagesController
@@ -26,7 +27,6 @@ use Cake\ORM\TableRegistry;
 class PagesController extends FrontendController
 {
 
-    /*
     public function beforeFilter(Event $event)
     {
 
@@ -34,19 +34,19 @@ class PagesController extends FrontendController
         switch ($this->request->action) {
             case 'detail':
                 $pageId = (int) $this->request->getParam('pass')[0];
+                $this->Page = TableRegistry::get('Pages');
                 $page = $this->Page->find('all', [
                     'conditions' => [
                         'Pages.id_page' => $pageId,
                         'Pages.active' => APP_ON
                     ]
                 ])->first();
-                if (!empty($page) && !$this->AppAuth->user() && $page['Pages']['is_private']) {
-                    $this->AppAuth->deny($this->action);
+                if (!empty($page) && !$this->AppAuth->user() && $page->is_private) {
+                    $this->AppAuth->deny($this->request->action);
                 }
                 break;
         }
     }
-    */
 
     public function home()
     {
@@ -102,50 +102,45 @@ class PagesController extends FrontendController
             'Pages.active' => APP_ON
         ];
 
+        $this->Page = TableRegistry::get('Pages');
         $page = $this->Page->find('all', [
             'conditions' => $conditions,
             'contain' => [
                 'Customers'
             ]
         ])->first();
-
+        
         if (empty($page)) {
-            throw new MissingActionException('page not found');
+            throw new RecordNotFoundException('page not found');
         }
 
         // redirect direct call of page with link
-        if ($page['Pages']['extern_url'] != '') {
-            $this->redirect($page['Pages']['extern_url']);
+        if ($page->extern_url != '') {
+            $this->redirect($page->extern_url);
         }
 
-        $children = $this->Page->children(
-            $pageId,
-            false,
-            null,
-            [
+        $conditionsForChildren = ['Pages.active' => APP_ON];
+        if (!$this->AppAuth->user()) {
+            $conditionsForChildren = ['Pages.is_private' => APP_OFF];
+        }
+        $page['children'] = $this->Page->find('children', [
+            'for' => $pageId,
+            'parentField' => 'id_parent',
+            'conditions' => $conditionsForChildren,
+            'order' => [
                 'Pages.position' => 'ASC',
                 'Pages.title' => 'ASC'
+                ]
             ]
         );
 
-        $page['children'] = [];
-        foreach ($children as $child) {
-            if ($child['Pages']['active'] < APP_ON) {
-                continue;
-            }
-            if (!$this->AppAuth->user() && $child['Pages']['is_private']) {
-                continue;
-            }
-            $page['children'][] = $child;
-        }
-
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page['Pages']['id_page'], $page['Pages']['title']);
+        $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page->id_page, $page->title);
         if ($correctSlug != Configure::read('AppConfig.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
         $this->set('page', $page);
-        $this->set('title_for_layout', $page['Pages']['title']);
+        $this->set('title_for_layout', $page->title);
     }
 
     public function termsOfUse()

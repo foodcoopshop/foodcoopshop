@@ -3,7 +3,6 @@
 namespace App\Lib\SimpleBrowser;
 
 use App\View\Helper\SlugHelper;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;

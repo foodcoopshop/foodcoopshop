@@ -77,7 +77,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     protected function changeProductStatus($productId, $active)
     {
-        $query = 'UPDATE ' . $this->Product->tablePrefix . $this->Product->useTable.' SET active = :active WHERE id_product = :productId;';
+        $query = 'UPDATE ' . $this->Product->getTable().' SET active = :active WHERE id_product = :productId;';
         $params = [
             'productId' => $productId,
             'active' => $active

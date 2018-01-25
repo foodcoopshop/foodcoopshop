@@ -30,7 +30,7 @@ class BlogPostsController extends FrontendController
 
         parent::beforeFilter($event);
 
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'detail':
                 $blogPostId = (int) $this->request->getParam('pass')[0];
                 $blogPost = $this->BlogPost->find('all', [

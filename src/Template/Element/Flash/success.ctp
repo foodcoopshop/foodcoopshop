@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').'.Helper.appendFlashMessageCloser();'.
     Configure::read('AppConfig.jsNamespace').'.Helper.bindFlashMessageCloser();

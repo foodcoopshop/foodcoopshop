@@ -37,14 +37,14 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
 //             $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
 //             $this->Slug->getBlogList(),
-//             $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
+            $this->Slug->getCategoryDetail(16, 'Fleischprodukte'),
 //             $this->Slug->getProductDetail(339, 'Kartoffel'),
 //             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
 //             $this->Slug->getNewPasswordRequest(),
-//             $this->Slug->getPageDetail(9, 'Impressum'),
-//             $this->Slug->getLogin(),
-//             $this->Slug->getTermsOfUse(),
-//             $this->Slug->getPrivacyPolicy()
+            $this->Slug->getPageDetail(9, 'Impressum'),
+            $this->Slug->getLogin(),
+            $this->Slug->getTermsOfUse(),
+            $this->Slug->getPrivacyPolicy()
         ];
         $this->assertPagesForErrors($testUrls);
     }
@@ -123,7 +123,7 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = [
             '/xxx',
 //             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
-//             $this->Slug->getPageDetail(4234, 'not valid page name'),
+            $this->Slug->getPageDetail(4234, 'not valid page name'),
         ];
         $this->assertPagesFor404($testUrls);
     }
@@ -144,7 +144,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->browser->doFoodCoopShopLogout();
     }
 
-    public function XtestPageDetailOnlinePublicLoggedOut()
+    public function testPageDetailOnlinePublicLoggedOut()
     {
         $this->browser->get($this->Slug->getPageDetail(3, 'Demo Page'));
         $this->assert200OkHeader();
@@ -184,7 +184,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)
     {
-        $query = 'UPDATE ' . $this->Page->tablePrefix . $this->Page->useTable.' SET is_private = :isPrivate, active = :active WHERE id_page = :pageId;';
+        $query = 'UPDATE ' . $this->Page->getTable().' SET is_private = :isPrivate, active = :active WHERE id_page = :pageId;';
         $params = [
             'pageId' => $pageId,
             'isPrivate' => $isPrivate,

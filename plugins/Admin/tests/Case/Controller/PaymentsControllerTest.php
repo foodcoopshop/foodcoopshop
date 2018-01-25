@@ -155,7 +155,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $addResponse = $this->browser->getJsonDecodedContent();
 
         // change approval to APP_ON via sql query
-        $query = 'UPDATE ' . $this->Payment->tablePrefix . $this->Payment->useTable.' SET approval = :approval WHERE id = :paymentId';
+        $query = 'UPDATE ' . $this->Payment->getTable().' SET approval = :approval WHERE id = :paymentId';
         $params = array(
             'approval' => APP_ON,
             'paymentId' => $addResponse->paymentId

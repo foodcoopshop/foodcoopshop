@@ -425,7 +425,7 @@ class ProductsController extends AdminAppController
                 if ($selectedCategory != Configure::read('AppConfig.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory['Categories']['name'];
                 }
-                $sql = 'INSERT INTO ' . $this->CategoryProduct->tablePrefix . $this->CategoryProduct->useTable . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
+                $sql = 'INSERT INTO ' . $this->CategoryProduct->getTable() . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
                 $this->CategoryProduct->query($sql);
             }
         }
@@ -790,7 +790,8 @@ class ProductsController extends AdminAppController
             $newDateAdd = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
         }
 
-        $sql = "UPDATE ".$this->Product->tablePrefix."product p, ".$this->Product->tablePrefix."product_shop ps 
+        $this->ProductShop = TableRegistry::get('ProductShops');
+        $sql = "UPDATE ".$this->Product->getTable()." p, ".$this->ProductShop->getTable()." ps 
                 SET p.date_add  = " . $newDateAdd . ",
                     ps.date_add = " . $newDateAdd . "
                 WHERE p.id_product = ps.id_product

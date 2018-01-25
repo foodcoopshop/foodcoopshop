@@ -33,9 +33,9 @@ class StockAvailablesTable extends AppTable
         }
 
         // TODO use prepared statement
-        $sql = 'UPDATE '.$this->tablePrefix.'stock_available sa1, (
+        $sql = 'UPDATE '.$this->getTable().' sa1, (
                      SELECT SUM(quantity) as quantitySum
-                     FROM '.$this->tablePrefix.'stock_available
+                     FROM '.$this->getTable().'
                      WHERE id_product = ' . $productId . '
                          AND id_product_attribute > 0
                      GROUP BY id_product 

@@ -243,7 +243,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function generatePasswordHashes()
     {
         $ph = new AppPasswordHasher();
-        $query = 'UPDATE '.$this->Customer->tablePrefix.'customer SET passwd = :passwd;';
+        $query = 'UPDATE '.$this->Customer->getTable().' SET passwd = :passwd;';
         $params = [
             'passwd' => $ph->hash(Configure::read('test.loginPassword'))
         ];
@@ -253,7 +253,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function changeReadOnlyConfiguration($configKey, $value)
     {
-        $query = 'UPDATE ' . $this->Configuration->tablePrefix . $this->Configuration->useTable.' SET value = :value WHERE name = :configKey';
+        $query = 'UPDATE ' . $this->Configuration->getTable() . ' SET value = :value WHERE name = :configKey';
         $params = [
             'value' => $value,
             'configKey' => $configKey
@@ -377,7 +377,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function changeManufacturer($manufacturerId, $option, $value)
     {
-        $query = 'UPDATE ' . $this->Manufacturer->tablePrefix . $this->Manufacturer->useTable.' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
+        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
         $params = [
             'value' => $value,
             'manufacturerId' => $manufacturerId
