@@ -16,12 +16,11 @@ namespace App\Model\Table;
  */
 class BlogPostsTable extends AppTable
 {
-
-    public $primaryKey = 'id_blog_post';
     
     public function initialize(array $config)
     {
         parent::initialize($config);
+        $this->setPrimaryKey('id_blog_post');
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);

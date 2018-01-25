@@ -25,9 +25,8 @@ class ConfigurationsTable extends AppTable
     {
         $this->setTable('configuration');
         parent::initialize($config);
+        $this->setPrimaryKey('id_configuration');
     }
-    
-    public $primaryKey = 'id_configuration';
 
     /**
      * @param string $plugin

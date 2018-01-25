@@ -26,14 +26,9 @@ class ManufacturersTable extends AppTable
     {
         $this->setTable('manufacturer');
         parent::initialize($config);
+        $this->setPrimaryKey('id_manufacturer');
     }
     
-    public $primaryKey = 'id_manufacturer';
-
-    public $actsAs = [
-        'Content'
-    ];
-
     public $belongsTo = [
         'Customers' => [
             'foreignKey' => 'id_customer'

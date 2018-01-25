@@ -50,7 +50,6 @@ class AppController extends Controller
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
             'authError' => 'Zugriff verweigert, bitte melde dich an.',
-            'loginError' => 'Zugriff verweigert, bitte melde dich an.',
             'authorize' => [
                 'Controller'
             ],
@@ -68,7 +67,7 @@ class AppController extends Controller
                     'scope' => [
                         'Customers.active' => true
                     ],
-                    'finder' => 'auth' // UsersTable::findAuth
+                    //'finder' => 'auth' // CustomersTable::findAuth
                 ]
             ],
             'storage' => 'Session'

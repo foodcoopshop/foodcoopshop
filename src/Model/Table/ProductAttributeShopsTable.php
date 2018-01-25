@@ -22,7 +22,7 @@ class ProductAttributeShopsTable extends AppTable
     {
         $this->setTable('product_attribute_shop');
         parent::initialize($config);
+        $this->setPrimaryKey('id_product_attribute');
     }
-    
-    public $primaryKey = 'id_product_attribute';
+
 }

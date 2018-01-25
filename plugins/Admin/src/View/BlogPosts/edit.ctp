@@ -111,7 +111,7 @@ echo $this->Form->input('BlogPosts.active', array(
     'type' => 'checkbox'
 ));
 
-if ($appAuth->isSuperadmin() || $appAuth->isAdmin() && $this->here != $this->Slug->getBlogPostAdd()) {
+if ($appAuth->isSuperadmin() || $appAuth->isAdmin() && $this->request->here != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->input('BlogPosts.update_modified_field', array(
         'label' => 'Nach vorne reihen?',
         'type' => 'checkbox',
@@ -119,7 +119,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin() && $this->here != $this->Slu
     ));
 }
 
-if ($this->here != $this->Slug->getBlogPostAdd()) {
+if ($this->request->here != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->input('BlogPosts.delete_blog_post', array(
         'label' => 'Blog-Artikel löschen?',
         'type' => 'checkbox',

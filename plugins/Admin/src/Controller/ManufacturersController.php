@@ -49,7 +49,7 @@ class ManufacturersController extends AdminAppController
     public function profile()
     {
         $this->edit($this->AppAuth->getManufacturerId());
-        $this->set('referer', $this->here);
+        $this->set('referer', $this->request->here);
         $this->set('title_for_layout', 'Profil bearbeiten');
         $this->render('edit');
     }
@@ -204,7 +204,7 @@ class ManufacturersController extends AdminAppController
                 $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
                 $this->Flash->success('Der Hersteller wurde erfolgreich gespeichert.');
 
-                if ($this->here == Configure::read('AppConfig.slugHelper')->getManufacturerProfile()) {
+                if ($this->request->here == Configure::read('AppConfig.slugHelper')->getManufacturerProfile()) {
                     $this->renewAuthSession();
                 }
 
@@ -480,7 +480,7 @@ class ManufacturersController extends AdminAppController
     public function myOptions()
     {
         $this->editOptions($this->AppAuth->getManufacturerId());
-        $this->set('referer', $this->here);
+        $this->set('referer', $this->request->here);
         $this->set('title_for_layout', 'Einstellungen bearbeiten');
         $this->render('editOptions');
     }
@@ -624,7 +624,7 @@ class ManufacturersController extends AdminAppController
                 ));
 
                 $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturers']['name'] . '</b>';
-                if ($this->here == Configure::read('AppConfig.slugHelper')->getManufacturerMyOptions()) {
+                if ($this->request->here == Configure::read('AppConfig.slugHelper')->getManufacturerMyOptions()) {
                     $message = 'Deine Einstellungen';
                     $this->renewAuthSession();
                 }

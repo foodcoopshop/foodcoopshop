@@ -18,24 +18,21 @@ namespace App\Model\Table;
 class CartProductsTable extends AppTable
 {
 
-    public $primaryKey = 'id_cart_product';
-
-    public $actsAs = [
-        'Content'
-    ];
-
-    public $belongsTo = [
-        'Products' => [
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->setPrimaryKey('id_cart_product');
+        $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
-        ],
-        'ProductLangs' => [
-            'foreignKey' => 'id_product'
-        ],
-        'ProductAttributes' => [
+        ]);
+        $this->belongsTo('ProductLangs', [
+            'foreignKey' => ['id_product']
+        ]);
+        $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'id_product_attribute'
-        ]
-    ];
-
+        ]);
+    }
+    
     public function remove($productId, $attributeId, $cartId)
     {
         $cartProduct2remove = [

@@ -18,8 +18,12 @@ namespace App\Model\Table;
 class SlidersTable extends AppTable
 {
 
-    public $primaryKey = 'id_slider';
-
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->setPrimaryKey('id_slider');
+    }
+    
     public $validate = [
         'position' => [
             'number' => [

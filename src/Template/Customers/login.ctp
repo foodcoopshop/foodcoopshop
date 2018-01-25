@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('AppConfig.jsNamespace').".Helper.init();".
     Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
@@ -29,8 +31,8 @@ $this->element('addScript', ['script' =>
   <form action="<?php echo $this->Slug->getLogin(); ?>" id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          echo $this->Form->input('Customers.email', ['label' => 'E-Mail', 'required' => false]);
-          echo $this->Form->input('Customers.passwd', ['label' => 'Passwort']);
+          echo $this->Form->input('email', ['label' => 'E-Mail']);
+          echo $this->Form->input('passwd', ['label' => 'Passwort']);
           echo '<div class="remember-me-wrapper">';
               echo $this->Form->checkbox('remember_me') . '<label for="remember_me">Angemeldet bleiben</label>';
           echo '</div>';
@@ -70,14 +72,14 @@ $this->element('addScript', ['script' =>
                   echo $this->Form->input('Customers.firstname', ['label' => 'Vorname', 'required' => true]);
                   echo $this->Form->input('Customers.lastname', ['label' => 'Nachname', 'required' => true]);
 
-                  echo $this->Form->input('AddressCustomer.address1', ['label' => 'Straße', 'required' => true]);
-                  echo $this->Form->input('AddressCustomer.address2', ['label' => 'Adresszusatz']);
+                  echo $this->Form->input('AddressCustomers.address1', ['label' => 'Straße', 'required' => true]);
+                  echo $this->Form->input('AddressCustomers.address2', ['label' => 'Adresszusatz']);
 
-                  echo $this->Form->input('AddressCustomer.postcode', ['label' => 'PLZ', 'required' => true]);
-                  echo $this->Form->input('AddressCustomer.city', ['label' => 'Ort', 'required' => true]);
+                  echo $this->Form->input('AddressCustomers.postcode', ['label' => 'PLZ', 'required' => true]);
+                  echo $this->Form->input('AddressCustomers.city', ['label' => 'Ort', 'required' => true]);
 
-                  echo $this->Form->input('AddressCustomer.phone_mobile', ['label' => 'Handy', 'required' => true]);
-                  echo $this->Form->input('AddressCustomer.phone', ['label' => 'Telefon']);
+                  echo $this->Form->input('AddressCustomers.phone_mobile', ['label' => 'Handy', 'required' => true]);
+                  echo $this->Form->input('AddressCustomers.phone', ['label' => 'Telefon']);
 
             if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
                 echo $this->Form->input('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
@@ -88,7 +90,8 @@ $this->element('addScript', ['script' =>
                   echo '</div>';
                   echo $this->Form->input('Customers.terms_of_use_accepted_date', [
                       'label' => 'Ich akzeptiere die <a href="#terms-of-use">Nutzungsbedingungen</a>',
-                      'type' => 'checkbox'
+                      'type' => 'checkbox',
+                      'escape' => false
                   ]);
 
                 ?>

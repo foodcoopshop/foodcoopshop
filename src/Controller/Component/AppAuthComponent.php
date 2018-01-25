@@ -182,8 +182,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalance()
     {
-        App::uses('Customers', 'Model');
-        $c = new Customer();
+        $c = TableRegistry::get('Customers');
         return $c->getCreditBalance($this->getUserId());
     }
 
@@ -197,7 +196,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->user()) {
             return null;
         }
-        $cc = TableRegistry::get('Cart');
+        $cc = TableRegistry::get('Carts');
         return $cc->getCart($this->getUserId());
     }
 }

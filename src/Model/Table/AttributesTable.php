@@ -22,10 +22,9 @@ class AttributesTable extends AppTable
     {
         $this->setTable('attribute');
         parent::initialize($config);
+        $this->setPrimaryKey('id_attribute');
     }
     
-    public $primaryKey = 'id_attribute';
-
     public $validate = [
         'name' => [
             'notBlank' => [

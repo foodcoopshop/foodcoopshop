@@ -23,9 +23,9 @@ class TaxesTable extends AppTable
     {
         $this->setTable('tax');
         parent::initialize($config);
+        $this->setPrimaryKey('id_tax');
     }
     
-    public $primaryKey = 'id_tax';
  // sic! for binding from taxroulesgroup
     public $validate = [
         'rate' => [

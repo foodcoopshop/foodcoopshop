@@ -18,13 +18,11 @@ use Cake\Core\Configure;
  */
 class PagesTable extends AppTable
 {
-
-    public $primaryKey = 'id_page';
     
     public function initialize(array $config)
     {
         parent::initialize($config);
-        
+        $this->setPrimaryKey('id_page');
         $this->addBehavior('Tree', [
             'parent' => 'id_parent'
         ]);

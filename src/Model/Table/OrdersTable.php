@@ -19,29 +19,23 @@ use Cake\Core\Configure;
 class OrdersTable extends AppTable
 {
 
-    public $primaryKey = 'id_order';
-
-    public $actsAs = [
-        'Content'
-    ];
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->hasOne('Customers', [
+            'foreignKey' => 'id_customer'
+        ]);
+        $this->hasMany('OrderDetails', [
+            'className' => 'OrderDetail',
+            'foreignKey' => 'id_order'
+        ]);
+        $this->setPrimaryKey('id_order');
+    }
 
     public $states = [
         'actual' => 3,
         'paid' => 2,
         'closed' => 5
-    ];
-
-    public $belongsTo = [
-        'Customers' => [
-            'foreignKey' => 'id_customer'
-        ]
-    ];
-
-    public $hasMany = [
-        'OrderDetails' => [
-            'className' => 'OrderDetails',
-            'foreignKey' => 'id_order'
-        ]
     ];
 
     private function getOrderStateCondition($orderState)
@@ -70,14 +64,14 @@ class OrdersTable extends AppTable
             'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
         ];
 
-        $ordersSum = $this->find('all', [
-            'fields' => [
-                'SUM(total_paid) as SumTotalPaid'
-            ],
+        $query = $this->find('all', [
             'conditions' => $conditions
         ]);
-
-        return $ordersSum[0]['SumTotalPaid'];
+        $query->select(
+            ['SumTotalPaid' => $query->func()->sum('Orders.total_paid')]
+        );
+        
+        return $query->toArray()[0]['SumTotalPaid'];
     }
 
     public function getSumDeposit($customerId)
@@ -85,17 +79,17 @@ class OrdersTable extends AppTable
         $conditions = [
             'Orders.id_customer' => $customerId,
             'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
-            'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.depositPaymentCashlessStartDate') . '\''
+            'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.depositPaymentCashlessStartDate') . '\''
         ];
 
-        $ordersSum = $this->find('all', [
-            'fields' => [
-                'SUM(total_deposit) as SumTotalDeposit'
-            ],
+        $query = $this->find('all', [
             'conditions' => $conditions
         ]);
-
-        return $ordersSum[0]['SumTotalDeposit'];
+        $query->select(
+            ['SumTotalDeposit' => $query->func()->sum('Orders.total_deposit')]
+        );
+        
+        return $query->toArray()[0]['SumTotalDeposit'];
     }
 
     public function getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $appAuth)

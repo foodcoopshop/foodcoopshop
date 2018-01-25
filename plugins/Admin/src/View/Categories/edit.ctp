@@ -84,7 +84,7 @@ echo $this->Form->input('Categories.delete_image', array(
     'after' => '<span class="after small">Speichern nicht vergessen</span>'
 ));
 
-if ($this->here != $this->Slug->getCategoryAdd()) {
+if ($this->request->here != $this->Slug->getCategoryAdd()) {
     echo $this->Form->input('Categories.delete_category', array(
         'label' => 'Kategorie löschen?',
         'type' => 'checkbox',

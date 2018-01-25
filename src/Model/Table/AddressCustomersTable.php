@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Table\AddressTable\AddressTable;
+use App\Model\Table\AddressesTable\AddressTable;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -15,7 +15,7 @@ use App\Model\Table\AddressTable\AddressTable;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AddressCustomer extends AddressTable
+class AddressCustomers extends AddressesTable
 {
 
     public $validate = [

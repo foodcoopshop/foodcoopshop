@@ -78,7 +78,7 @@ foreach ($blogPosts as $blogPost) {
     if (!empty($blogPost['Manufacturers']['id_manufacturer'])) {
         echo '<br />';
         if ($blogPost['Manufacturers']['active']) {
-            if ($this->here == $this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name'])) {
+            if ($this->request->here == $this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name'])) {
                 echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name']).'">Zum Hersteller ' . $blogPost['Manufacturers']['name'].'</a>';
             } else {
                 echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name']).'">Zum Blog von  ' . $blogPost['Manufacturers']['name'].'</a>';

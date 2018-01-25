@@ -45,7 +45,7 @@ echo $this->Form->create('Taxes', array(
 echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
 echo $this->Form->hidden('Taxes.id_tax');
 
-if ($this->here != $this->Slug->getTaxAdd()) {
+if ($this->request->here != $this->Slug->getTaxAdd()) {
     echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($unsavedTax['Taxes']['rate']) . '</p>';
 } else {
     echo $this->Form->input('Taxes.rate', array(

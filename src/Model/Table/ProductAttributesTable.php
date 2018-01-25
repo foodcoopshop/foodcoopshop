@@ -22,7 +22,7 @@ class ProductAttributesTable extends AppTable
     {
         $this->setTable('product_attribute');
         parent::initialize($config);
-        
+        $this->setPrimaryKey('id_product_attribute');
         $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
         ]);
@@ -41,7 +41,5 @@ class ProductAttributesTable extends AppTable
             'foreignKey' => 'id_product_attribute'
         ]);
     }
-    
-    public $primaryKey = 'id_product_attribute';
 
 }

@@ -22,7 +22,7 @@ class OrderDetailTaxesTable extends AppTable
     {
         $this->setTable('order_detail_tax');
         parent::initialize($config);
+        $this->setPrimaryKey('id_order_detail');
     }
-
-    public $primaryKey = 'id_order_detail';
+    
 }

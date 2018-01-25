@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Controller\FrontendController;
 use App\Controller\Component\StringComponent;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Core\Configure;

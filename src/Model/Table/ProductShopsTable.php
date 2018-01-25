@@ -22,7 +22,7 @@ class ProductShopsTable extends AppTable
     {
         $this->setTable('product_shop');
         parent::initialize($config);
+        $this->setPrimaryKey('id_product');
     }
     
-    public $primaryKey = 'id_product';
 }

@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 if (!$appAuth->user() || !Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
     return;
 }

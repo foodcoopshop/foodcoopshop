@@ -1,11 +1,12 @@
 <?php
 
+namespace App\Controller;
+
 use App\Controller\Component\StringComponent;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-
-App::uses('FrontendController', 'Controller');
 
 /**
  * CustomersController
@@ -171,40 +172,43 @@ class CustomersController extends FrontendController
     public function login()
     {
         $this->set('title_for_layout', 'Anmelden');
-
-        if (! $this->request->is('post') && $this->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
+        
+        if (! $this->request->is('post') && $this->request->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
             $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
         }
 
         /**
          * login start
          */
-        if ($this->here == Configure::read('AppConfig.slugHelper')->getLogin()) {
+        if ($this->request->here == Configure::read('AppConfig.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
             }
+            
             if ($this->request->is('post')) {
-                if ($this->AppAuth->login()) {
-                    // was remember me checkbox selected? not set if login happens automatically in AppShell
-                    if (isset($this->request->data['remember_me']) && $this->request->data['remember_me'] == 1) {
-                        unset($this->request->data['remember_me']);
-                        App::uses('AppPasswordHasher', 'Controller/Component/Auth');
-                        $ph = new AppPasswordHasher();
-                        $this->request->data['Customers']['passwd'] = $ph->hash($this->request->data['Customers']['passwd']);
-                        $this->Cookie->write('remember_me_cookie', $this->request->data['Customers'], true, '6 days');
-                    }
-
-                    $this->redirect($this->AppAuth->redirect());
-                } else {
-                    $this->Flash->error('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
+                $user = $this->AppAuth->identify();
+                if ($user) {
+                    $this->AppAuth->setUser($user);
+                    $this->Flash->success('Du hast dich erfolgreich angemeldet.');
                 }
+                // was remember me checkbox selected? not set if login happens automatically in AppShell
+                /*
+                if (isset($this->request->data['remember_me']) && $this->request->data['remember_me'] == 1) {
+                    unset($this->request->data['remember_me']);
+                    $ph = new AppPasswordHasher();
+                    $this->request->data['Customers']['passwd'] = $ph->hash($this->request->data['Customers']['passwd']);
+                    $this->Cookie->write('remember_me_cookie', $this->request->data['Customers'], true, '6 days');
+                }
+                */
+                $this->redirect($this->AppAuth->redirectUrl());
             }
+                
         }
 
         /**
          * registration start
          */
-        if ($this->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
+        if ($this->request->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
                 $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
@@ -334,7 +338,7 @@ class CustomersController extends FrontendController
     public function logout()
     {
         $this->Flash->success('Du hast dich erfolgreich abgemeldet.');
-        $this->Cookie->delete('remember_me_cookie');
+        //$this->Cookie->delete('remember_me_cookie');
         $this->destroyShopOrderCustomer();
         $this->AppAuth->logout();
         $this->redirect('/');

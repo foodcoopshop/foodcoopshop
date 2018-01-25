@@ -22,10 +22,9 @@ class StockAvailablesTable extends AppTable
     {
         $this->setTable('stock_available');
         parent::initialize($config);
+        $this->setPrimaryKey('id_product');
     }
     
-    public $primaryKey = 'id_product';
-
     public function updateQuantityForMainProduct($productId)
     {
         $productId = (int) $productId;

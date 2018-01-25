@@ -21,23 +21,17 @@ use Cake\ORM\TableRegistry;
 class CartsTable extends AppTable
 {
 
-    public $primaryKey = 'id_cart';
-
-    public $actsAs = [
-        'Content'
-    ];
-
-    public $belongsTo = [
-        'Customers' => [
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->setPrimaryKey('id_cart');
+        $this->belongsTo('Customer', [
             'foreignKey' => 'id_customer'
-        ]
-    ];
-
-    public $hasMany = [
-        'CartProducts' => [
+        ]);
+        $this->hasMany('CakeProducts', [
             'foreignKey' => 'id_cart'
-        ]
-    ];
+        ]);
+    }
 
     public function getProductNameWithUnity($productName, $unity)
     {
@@ -52,6 +46,7 @@ class CartsTable extends AppTable
                 'Carts.id_customer' => $customerId
             ]
         ])->first();
+        
         if (empty($cart)) {
             $this->id = null;
             $cart2save = [
@@ -67,8 +62,11 @@ class CartsTable extends AppTable
             ],
             'order' => [
                 'ProductLangs.name' => 'ASC'
+            ],
+            'contain' => [
+                'ProductLangs'
             ]
-        ]);
+        ])->toArray();
 
         $preparedCart = [
             'Cart' => $cart['Cart'],

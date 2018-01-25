@@ -30,10 +30,9 @@ class CategoriesTable extends AppTable
             'level' => 'level_depth'
         ]);
         parent::initialize($config);
+        $this->setPrimaryKey('id_category');
     }
     
-    public $primaryKey = 'id_category';
-
     public $validate = [
         'name' => [
             'notBlank' => [

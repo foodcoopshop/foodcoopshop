@@ -118,12 +118,12 @@ class PagesControllerTest extends AppCakeTestCase
     }
 
 
-    public function Xtest404PagesLoggedOut()
+    public function test404PagesLoggedOut()
     {
         $testUrls = [
             '/xxx',
-            $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
-            $this->Slug->getPageDetail(4234, 'not valid page name'),
+//             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
+//             $this->Slug->getPageDetail(4234, 'not valid page name'),
         ];
         $this->assertPagesFor404($testUrls);
     }
@@ -132,12 +132,12 @@ class PagesControllerTest extends AppCakeTestCase
      * products and categories are not visible for guests in the test settings
      * to test the correct 404 page, a valid login is required
      */
-    public function Xtest404PagesLoggedIn()
+    public function test404PagesLoggedIn()
     {
         $this->loginAsSuperadmin();
 
         $testUrls = [
-            $this->Slug->getProductDetail(4234, 'not valid product name'),
+//             $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         ];
         $this->assertPagesFor404($testUrls);

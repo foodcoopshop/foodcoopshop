@@ -1,6 +1,5 @@
 <?php
 
-namespace App\Model\Table\AddressTable;
 namespace App\Model\Table;
 
 /**
@@ -17,16 +16,15 @@ namespace App\Model\Table;
  * @link          https://www.foodcoopshop.com
  */
 
-abstract class AddressTable extends AppTable
+abstract class AddressesTable extends AppTable
 {
 
     public function initialize(array $config)
     {
         $this->setTable('address');
         parent::initialize($config);
+        $this->setPrimaryKey('id_address');
     }
-    
-    public $primaryKey = 'id_address';
 
     public function __construct($id = false, $table = null, $ds = null)
     {

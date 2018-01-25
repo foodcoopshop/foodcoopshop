@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Model\Table;
-use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,21 +24,12 @@ class CustomersTable extends AppTable
     {
         $this->setTable('customer');
         parent::initialize($config);
-    }
-    
-    public $primaryKey = 'id_customer';
-
-    public $actsAs = [
-        'Content'
-    ];
-
-    // key needs to be called "address customer" for a working validation in customer::profile
-    public $hasOne = [
-        'AddressCustomer' => [
+        $this->hasOne('AddressCustomer', [
             'className' => 'AddressCustomer',
             'foreignKey' => 'id_customer'
-        ]
-    ];
+        ]);
+        $this->setPrimaryKey('id_customer');
+    }
 
     public $validate = [
         'firstname' => [
@@ -76,6 +67,15 @@ class CustomersTable extends AppTable
             ]
         ]
     ];
+    
+    public function findAuth(\Cake\ORM\Query $query, array $options)
+    {
+        pr($query);
+        return $query;
+        return $query->contain([
+            'AddressCustomers'
+        ]);
+    }
 
     public function setNewPassword($customerId)
     {
@@ -224,14 +224,12 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
-        App::uses('Payments', 'Model');
-        $cp = new Payment();
+        $cp = TableRegistry::get('Payments');
         $paymentSumProduct = $cp->getSum($customerId, 'product');
         $paybackSumProduct = $cp->getSum($customerId, 'payback');
         $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
 
-        App::uses('Orders', 'Model');
-        $o = new Order();
+        $o = TableRegistry::get('Orders');
         $productSum = $o->getSumProduct($customerId);
         $depositSum = $o->getSumDeposit($customerId);
 

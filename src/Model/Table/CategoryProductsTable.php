@@ -22,10 +22,9 @@ class CategoryProductsTable extends AppTable
     {
         $this->setTable('category_product');
         parent::initialize($config);
+        $this->setPrimaryKey('id_product');
     }
     
-    public $primaryKey = 'id_product';
-
     public $belongsTo = [
         'Categories' => [
             'foreignKey' => 'id_category'

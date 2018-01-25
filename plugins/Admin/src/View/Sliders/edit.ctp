@@ -20,7 +20,7 @@ $this->element('addScript', array(
 $idForImageUpload = isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : StringComponent::createRandomString(6);
 
 $imageSrc = false;
-if ($this->here != $this->Slug->getSliderAdd()) {
+if ($this->request->here != $this->Slug->getSliderAdd()) {
     $imageSrc = $this->Html->getSliderImageSrc($this->request->data['Sliders']['image']);
     if (isset($this->request->data['Sliders']['tmp_image']) && $this->request->data['Sliders']['tmp_image'] != '') {
         $imageSrc = str_replace('\\', '/', $this->request->data['Sliders']['tmp_image']);
@@ -83,7 +83,7 @@ echo $this->Form->input('Sliders.active', array(
     'type' => 'checkbox'
 ));
 
-if ($this->here != $this->Slug->getSliderAdd()) {
+if ($this->request->here != $this->Slug->getSliderAdd()) {
     echo $this->Form->input('Sliders.delete_slider', array(
         'label' => 'Slideshow-Bild löschen?',
         'type' => 'checkbox',

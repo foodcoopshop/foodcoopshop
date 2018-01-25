@@ -23,9 +23,8 @@ class ProductLangsTable extends AppTable
     {
         $this->setTable('product_lang');
         parent::initialize($config);
+        $this->setPrimaryKey('id_product');
     }
-    
-    public $primaryKey = 'id_product';
 
     public $belongsTo = [
         'Products' => [

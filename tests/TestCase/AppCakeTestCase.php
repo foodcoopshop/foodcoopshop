@@ -173,8 +173,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     {
         foreach ($testPages as $url) {
             $this->browser->get($url);
-            $html = $this->browser->getContent();
-            $this->assertRegExp('/wurde leider nicht gefunden./', $html);
             $headers = $this->browser->getHeaders();
             $this->assertRegExp("/404 Not Found/", $headers);
         }

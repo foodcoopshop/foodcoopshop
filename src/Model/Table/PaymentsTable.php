@@ -126,13 +126,12 @@ class PaymentsTable extends AppTable
 
         $conditions['Payments.type'] = $type;
 
-        $paymentSum = $this->find('all', [
-            'fields' => [
-                'SUM(amount) as SumAmount'
-            ],
+        $query = $this->find('all', [
             'conditions' => $conditions
         ]);
-
-        return $paymentSum[0]['SumAmount'];
+        $query->select(
+            ['SumAmount' => $query->func()->sum('Payments.amount')]
+        );
+        return $query->toArray()[0]['SumAmount'];
     }
 }

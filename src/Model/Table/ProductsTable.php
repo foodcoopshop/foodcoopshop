@@ -25,9 +25,8 @@ class ProductsTable extends AppTable
     {
         $this->setTable('product');
         parent::initialize($config);
+        $this->setPrimaryKey('id_product');
     }
-    
-    public $primaryKey = 'id_product';
 
     public $belongsTo = [
         'Manufacturers' => [

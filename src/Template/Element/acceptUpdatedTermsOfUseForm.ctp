@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+
 ?>
 <?php
 
@@ -38,7 +41,8 @@ $this->element('addScript', ['script' =>
             echo $this->Form->input('Customers.terms_of_use_accepted_date', [
                 'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
                 'type' => 'checkbox',
-                'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString()
+                'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString(),
+                'escape' => false
             ]);
         ?>
         <br />

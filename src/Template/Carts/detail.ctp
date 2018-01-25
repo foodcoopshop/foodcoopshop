@@ -69,14 +69,16 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo '</div>';
             echo $this->Form->input('Orders.general_terms_and_conditions_accepted', [
                 'label' => 'Ich akzeptiere die <a href="#general-terms-and-conditions">AGB</a>.',
-                'type' => 'checkbox'
+                'type' => 'checkbox',
+                'escape' => false
             ]);
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
                 echo $this->element('legal/cancellationTerms');
             echo '</div>';
             echo $this->Form->input('Orders.cancellation_terms_accepted', [
                 'label' => 'Ich nehme das <a href="#cancellation-terms">Rücktrittsrecht</a> zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren.',
-                'type' => 'checkbox'
+                'type' => 'checkbox',
+                'escape' => false
             ]);
         ?>
         <div class="sc"></div>

@@ -53,7 +53,7 @@ echo $this->Form->input('Attributes.name', array(
     'required' => true
 ));
 
-if ($this->here != $this->Slug->getAttributeAdd()) {
+if ($this->request->here != $this->Slug->getAttributeAdd()) {
     $hasCombinedProducts = count($unsavedAttribute['CombinationProducts']['online']) > 0 || count($unsavedAttribute['CombinationProducts']['offline']) > 0;
     echo $this->Form->input('Attributes.delete_attribute', array(
         'label' => 'Variante löschen?',

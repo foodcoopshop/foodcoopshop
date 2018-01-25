@@ -83,7 +83,7 @@ echo $this->Form->input('Pages.extern_url', array(
     )
 ));
 
-if ($this->here != $this->Slug->getPageAdd()) {
+if ($this->request->here != $this->Slug->getPageAdd()) {
     echo $this->Form->input('Pages.delete_page', array(
         'label' => 'Seite löschen?',
         'type' => 'checkbox',

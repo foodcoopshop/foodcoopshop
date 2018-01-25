@@ -128,7 +128,7 @@ if ($product['description'] != '') {
                 if (!empty($attribute->deposit_product_attribute->deposit)) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute->deposit_product_attribute->deposit) . '</b> Pfand</div>';
                 }
-                echo '<div class="tax">'. $this->Html->formatAsEuro($attribute->product_attribute->shop->tax) . '</div>';
+                echo '<div class="tax">'. $this->Html->formatAsEuro($attribute->product_attribute_shop->tax) . '</div>';
                 echo '</div>';
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute->id_product_attribute]);
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute->stock_available->quantity]);
@@ -153,7 +153,7 @@ if ($product['description'] != '') {
         if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo '<div class="line">';
             echo '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
-            if ($product['Deposit']['deposit']) {
+            if ($product['deposit']) {
                 echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
             }
                 echo '</div>';
