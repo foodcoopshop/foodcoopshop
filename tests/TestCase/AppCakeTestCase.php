@@ -1,8 +1,6 @@
 <?php
 namespace App\Test\TestCase;
 
-//require_once('config/test.config.php');
-
 use App\Auth\AppPasswordHasher;
 use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use App\View\Helper\MyHtmlHelper;
@@ -12,6 +10,8 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
+
+require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
 /**
  * AppCakeTestCase

@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 Configure::write('test.loginEmailCustomer', 'fcs-demo-mitglied@mailinator.com');
 Configure::write('test.customerId', 87);
 Configure::write('test.loginEmailAdmin', 'fcs-demo-admin@mailinator.com');
