@@ -7,7 +7,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * PagesController
