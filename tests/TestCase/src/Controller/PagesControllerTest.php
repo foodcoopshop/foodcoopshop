@@ -1,5 +1,5 @@
 <?php
-
+-
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
 
@@ -28,9 +28,10 @@ class PagesControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->Page = TableRegistry::get('Pages');
     }
-
+    
     public function testAllPublicUrls()
     {
+        
         $testUrls = [
             $this->Slug->getHome(),
 //             $this->Slug->getManufacturerList(),
@@ -52,7 +53,7 @@ class PagesControllerTest extends AppCakeTestCase
     /**
      * test urls that are only available for superadmins
      */
-    public function XtestAllSuperadminUrls()
+    public function xtestAllSuperadminUrls()
     {
         $this->loginAsSuperadmin();
 
@@ -101,7 +102,7 @@ class PagesControllerTest extends AppCakeTestCase
     /**
      * test urls that are only available for manufacturers or have different content
      */
-    public function XtestAllManufacturerUrls()
+    public function xtestAllManufacturerUrls()
     {
         $this->loginAsMeatManufacturer();
 
@@ -132,7 +133,7 @@ class PagesControllerTest extends AppCakeTestCase
      * products and categories are not visible for guests in the test settings
      * to test the correct 404 page, a valid login is required
      */
-    public function test404PagesLoggedIn()
+    public function xtest404PagesLoggedIn()
     {
         $this->loginAsSuperadmin();
 
@@ -150,7 +151,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assert200OkHeader();
     }
 
-    public function XtestPageDetailOfflinePublicLoggedOut()
+    public function testPageDetailOfflinePublicLoggedOut()
     {
         $pageId = 3;
         $this->changePage($pageId, 0, 0);
@@ -158,7 +159,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
     }
 
-    public function XtestPageDetailOnlinePrivateLoggedOut()
+    public function xtestPageDetailOnlinePrivateLoggedOut()
     {
         $pageId = 3;
         $this->changePage($pageId, 1);
@@ -166,7 +167,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
-    public function XtestPageDetailOnlinePrivateLoggedIn()
+    public function xtestPageDetailOnlinePrivateLoggedIn()
     {
         $this->loginAsCustomer();
         $pageId = 3;
@@ -175,7 +176,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->assert200OkHeader();
     }
 
-    public function XtestPageDetailNonExistingLoggedOut()
+    public function xtestPageDetailNonExistingLoggedOut()
     {
         $pageId = 30;
         $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));

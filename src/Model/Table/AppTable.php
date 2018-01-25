@@ -25,25 +25,14 @@ class AppTable extends Table
 
     public $tablePrefix = 'fcs_'; // legacy from CakePHP2
     
-    /**
-     * for unit testing, database source needs to be changed to 'test'
-     * @param string $id
-     * @param string $table
-     * @param string $ds
-     */
-    public function __construct(array $config = [])
+    public function initialize(array $config)
     {
+        $this->setTable($this->tablePrefix . $this->getTable());
         // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initSimpleBrowser()
         if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
             || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
             $this->setConnection(ConnectionManager::get('test'));
         }
-        parent::__construct($config);
-    }
-    
-    public function initialize(array $config)
-    {
-        $this->setTable($this->tablePrefix . $this->getTable());
         parent::initialize($config);
     }
 
