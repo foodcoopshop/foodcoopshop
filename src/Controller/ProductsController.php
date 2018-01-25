@@ -37,8 +37,12 @@ class ProductsController extends FrontendController
             'conditions' => [
                 'Products.id_product' => $productId,
                 'Products.active' => APP_ON
+            ],
+            'contain' => [
+                'Manufacturers'
             ]
         ])->first();
+        
         if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->user()
@@ -60,7 +64,7 @@ class ProductsController extends FrontendController
         $this->Category = TableRegistry::get('Categories');
         $product = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
-
+pr($product);
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');
         }

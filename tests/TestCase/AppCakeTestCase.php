@@ -271,11 +271,20 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function changeConfiguration($configKey, $newValue)
     {
+        
+        $query = 'UPDATE fcs_configuration SET value = :newValue WHERE name = :configKey;';
+        $params = [
+            'newValue' => $newValue,
+            'configKey' => $configKey
+        ];
+        $statement = self::$dbConnection->prepare($query);
+        $statement->execute($params);
+        /*
         $this->loginAsSuperadmin();
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
-                'Configuration.active' => APP_ON,
-                'Configuration.name' => $configKey
+                'Configurations.active' => APP_ON,
+                'Configurations.name' => $configKey
             ]
         ])->first();
         $this->browser->post('/admin/configurations/edit/'.$configuration['Configurations']['id_configuration'], [
@@ -285,6 +294,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             'referer' => ''
         ]);
         $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent(), 'configuration edit failed');
+        */
         $this->Configuration->loadConfigurations();
         $this->logout();
     }

@@ -17,6 +17,7 @@
             <file>tests/TestCase/config/GlobalTest.php</file>
             <file>tests/TestCase/src/Controller/Component/StringComponentTest.php</file>
             <file>tests/TestCase/src/Controller/PagesControllerTest.php</file>
+            <file>tests/TestCase/src/Controller/ProductsFrontendControllerTest.php</file>
             <!--<file>tests/TestCase/src/View/Helper/MyTimeHelperTest.php</file>-->
         </testsuite>
     </testsuites>
