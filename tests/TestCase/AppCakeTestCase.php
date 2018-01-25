@@ -1,7 +1,7 @@
 <?php
 namespace App\Test\TestCase;
 
-//require_once('test_files/config/test.config.php');
+//require_once('config/test.config.php');
 
 use App\Auth\AppPasswordHasher;
 use App\Lib\SimpleBrowser\AppSimpleBrowser;
@@ -73,7 +73,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected static function resetTestDatabaseData()
     {
         self::$dbConnection = ConnectionManager::get('test');
-        self::$testDumpDir = ROOT . DS .  'tests' . DS . 'test_files' . DS . 'config' . DS . 'sql' . DS;
+        self::$testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
         self::importDump(self::$testDumpDir . 'test-db-data.sql');
     }
 

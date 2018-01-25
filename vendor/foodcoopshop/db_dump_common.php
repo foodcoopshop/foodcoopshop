@@ -9,12 +9,12 @@ if (!defined('DATASOURCE')) {
 
 $datasource = array(
     'PROD' => array(
-        'structure' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
+        'structure' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
         'data' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data.sql',
     ),
     'TEST' => array(
-        'structure' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
-        'data' => 'Test' . DS . 'test_files' . DS . 'Config' . DS . 'sql' . DS . 'test-db-data.sql',
+        'structure' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
+        'data' => 'tests' . 'config' . DS . 'sql' . DS . 'test-db-data.sql',
     ),
 );
 
@@ -24,7 +24,7 @@ echo 'Loading config...';
 $dir = dirname(dirname(realpath(__DIR__))) . DS;
 
 // include DB config
-include $dir . 'Config' . DS . 'database.php';
+include $dir . 'config' . DS . 'database.php';
 
 $db = new DATABASE_CONFIG();
 
