@@ -9,8 +9,13 @@
             "homepage": "https://github.com/foodcoopshop/foodcoopshop/graphs/contributors"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "7.0"
+        }
+    },
     "require": {
-        "php": ">7.0.0",
+        "php": ">=7.0",
         "cakephp/cakephp": "3.5.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
