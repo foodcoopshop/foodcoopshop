@@ -73,11 +73,6 @@ return [
 //             'from' => array('example@example.com' => 'Example'),
 //             'emailFormat' => 'html'
 //         ],
-        
-        /**
-         * for easy debugging on live systems
-         * just add ?debug=2&pass=<debugPasswordForUrl> to any url and the debug mode is turned on
-         */
-//         'debugPasswordForUrl' => 'my-password'
+
     ]
 ];
