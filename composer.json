@@ -50,7 +50,6 @@
         "post-update-cmd": [
             "bash devtools/composer-post-install.sh"
         ],
-        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
         "check": [
             "@test",
