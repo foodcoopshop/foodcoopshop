@@ -47,21 +47,17 @@ return [
             'prefix' => 'fcs_'
         ]
     ],
+    
+    /**
+     * A random string used in security hashing methods.
+     */
+    'Security.salt' => '',
+    
     'app' => [
         /**
          * please create a unique cookie key and put it here
          */
         'cookieKey' => '',
-        
-        /**
-         * A random string used in security hashing methods.
-         */
-        'Security.salt' => '',
-        
-        /**
-         * A random numeric string (digits only) used to encrypt/decrypt strings.
-         */
-        'Security.cipherSeed' => '',
         
         /**
          * defines how many days after the sendOrderListsWeekday the products are delivered

@@ -7,6 +7,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Security;
 
 /**
  * PagesController
@@ -53,26 +54,14 @@ class PagesController extends FrontendController
         /**
          * START: security keys check
          */
-        $showKeyGeneratorWebsite = 0;
         $securityErrors = 0;
         if (Configure::read('app.cookieKey') == '') {
-            echo '<p>Please copy this <b>app.cookieKey</b> to your config.custom.php: '.StringComponent::createRandomString(58).'</p>';
+            echo '<p>Please copy this <b>app.cookieKey</b> to your custom_custom.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }
-        /*
         if (Configure::read('Security.salt') == '') {
-            echo '<p>Please generate the <b>Security.salt</b> and copy it to your config.custom.php (not to your core.php)</p>';
+            echo '<p>Please copy this <b>Security.salt</b> to your custom_custom.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
-            $showKeyGeneratorWebsite = 1;
-        }
-        if (Configure::read('Security.cipherSeed') == '') {
-            echo '<p>Please generate the <b>Security.cipherSeed</b> and copy it to your config.custom.php (not to your core.php)</p>';
-            $securityErrors++;
-            $showKeyGeneratorWebsite = 1;
-        }
-        */
-        if ($showKeyGeneratorWebsite) {
-            echo '<p>Security.salt and Security.sipherSeed can be generated on this website: <a target="_blank" href="http://cakephp.thomasv.nl/">http://cakephp.thomasv.nl</a></p>';
         }
         if ($securityErrors > 0) {
             die('<p><b>Security errors: '.$securityErrors.'</b></p>');

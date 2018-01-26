@@ -34,21 +34,17 @@ return [
             'database' => 'foodcoopshop_test'
         ]
     ],
+    
+    /**
+     * A random string used in security hashing methods.
+     */
+    'Security.salt' => 'b6OSgpEV0vA36P3PxjWigmbQc6J5CLhs3bSV89KK8m1IKkl8gJfp84Odz3gMdW9K',
+    
     'app' => [
         /**
          * please create a unique cookie key and put it here
          */
         'cookieKey' => '77LIqHJAoVS89iRp3QKcdXaAvZTTqRdiweyZo87CoY9c4fieao5KKPWcdS',
-        
-        /**
-         * A random string used in security hashing methods.
-         */
-        'Security.salt' => 'b6OSgpEV0vA36P3PxjWigmbQc6J5CLhs3bSV89KK8m1IKkl8gJfp84Odz3gMdW9K',
-        
-        /**
-         * A random numeric string (digits only) used to encrypt/decrypt strings.
-         */
-        'Security.cipherSeed' => '0461186178535041377302530808327621688296',
         
         /**
          * defines how many days after the sendOrderListsWeekday the products are delivered
