@@ -55,7 +55,7 @@ class ProductLangsTableTest extends AppCakeTestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage change name is not allowed for product attributes
      */
     public function testChangeNameForProductAttribute()
@@ -100,10 +100,10 @@ class ProductLangsTableTest extends AppCakeTestCase
                     'ProductLangs.id_product' => $productId,
                 ]
             ])->first();
-            $this->assertEquals($expectedResults['name'], $changedProduct['ProductLangs']['name'], 'changing the name did not work');
-            $this->assertEquals($expectedResults['unity'], $changedProduct['ProductLangs']['unity'], 'changing the unity did not work');
-            $this->assertEquals($expectedResults['description'], $changedProduct['ProductLangs']['description'], 'changing the description did not work');
-            $this->assertEquals($expectedResults['description_short'], $changedProduct['ProductLangs']['description_short'], 'changing the description short did not work');
+            $this->assertEquals($expectedResults['name'], $changedProduct->name, 'changing the name did not work');
+            $this->assertEquals($expectedResults['unity'], $changedProduct->unity, 'changing the unity did not work');
+            $this->assertEquals($expectedResults['description'], $changedProduct->description, 'changing the description did not work');
+            $this->assertEquals($expectedResults['description_short'], $changedProduct->description_short, 'changing the description short did not work');
         }
     }
 }

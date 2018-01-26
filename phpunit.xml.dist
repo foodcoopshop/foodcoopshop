@@ -23,6 +23,7 @@
         <testsuite name="Admin Test Suite">
             <file>plugins/Admin/tests/TestCase/src/Controller/ConfigurationsControllerTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductsTableTest.php</file>
+            <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductLangsTableTest.php</file>
         </testsuite>
         
     </testsuites>

@@ -52,12 +52,12 @@ class ProductLangsTable extends AppTable
     public function changeName($products)
     {
 
-        $productsLang2save = [];
+        $productLangs2save = [];
 
         foreach ($products as $product) {
             $productId = key($product);
             $name = $product[$productId];
-            $ids = $this->Product->getProductIdAndAttributeId($productId);
+            $ids = $this->Products->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
                 throw new InvalidParameterException('change name is not allowed for product attributes');
             }
@@ -75,13 +75,15 @@ class ProductLangsTable extends AppTable
                 if (isset($name['is_declaration_ok'])) {
                     $tmpProductLang2Save['is_declaration_ok'] = (bool) $name['is_declaration_ok'];
                 }
-                $productsLang2save[] = $tmpProductLang2Save;
+                $productLangs2save[] = $tmpProductLang2Save;
             }
         }
 
         $success = false;
-        if (!empty($productsLang2save)) {
-            $success = $this->saveAll($productsLang2save);
+        if (!empty($productLangs2save)) {
+            $entities = $this->newEntities($productLangs2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
         }
 
         return $success;
