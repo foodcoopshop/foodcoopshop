@@ -68,7 +68,7 @@ class AppController extends Controller
                     'scope' => [
                         'Customers.active' => true
                     ],
-                    //'finder' => 'auth' // CustomersTable::findAuth
+                    'finder' => 'auth' // CustomersTable::findAuth
                 ]
             ],
             'storage' => 'Session'

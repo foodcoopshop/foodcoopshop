@@ -16,7 +16,7 @@ namespace App\Model\Table;
  * @link          https://www.foodcoopshop.com
  */
 
-abstract class AddressesTable extends AppTable
+class AddressesTable extends AppTable
 {
 
     public function initialize(array $config)
@@ -26,6 +26,7 @@ abstract class AddressesTable extends AppTable
         $this->setPrimaryKey('id_address');
     }
 
+    /*
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
@@ -33,4 +34,5 @@ abstract class AddressesTable extends AppTable
             'name' => "TRIM(CONCAT(`{$this->getAlias()}`.`firstname`,' ',`{$this->getAlias()}`.`lastname`))"
         ];
     }
+    */
 }

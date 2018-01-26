@@ -27,33 +27,16 @@ class ManufacturersTable extends AppTable
         $this->setTable('manufacturer');
         parent::initialize($config);
         $this->setPrimaryKey('id_manufacturer');
-    }
-    
-    public $belongsTo = [
-        'Customers' => [
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
-        ]
-    ];
-
-    public $hasOne = [
-        'Addresses' => [
-            'className' => 'AddressManufacturer',
-            'conditions' => [
-                'Addresses.id_manufacturer > 0'
-            ],
+        ]);
+        $this->hasOne('AddressManufacturers', [
             'foreignKey' => 'id_manufacturer'
-        ]
-    ];
-
-    public $hasMany = [
-        'Invoices' => [
-            'foreignKey' => 'id_manufacturer',
-            'order' => [
-                'Invoices.send_date DESC'
-            ],
-            'limit' => 1
-        ]
-    ];
+        ]);
+        $this->hasMany('Invoices', [
+            'foreignKey' => 'id_manufacturer'
+        ]);
+    }
 
     public $validate = [
         'name' => [

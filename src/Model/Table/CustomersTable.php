@@ -24,10 +24,9 @@ class CustomersTable extends AppTable
     {
         $this->setTable('customer');
         parent::initialize($config);
-        $this->hasOne('AddressCustomer', [
-            'className' => 'AddressCustomer',
-            'foreignKey' => 'id_customer'
-        ]);
+//         $this->hasOne('AddressCustomers', [
+//             'foreignKey' => 'id_customer'
+//         ]);
         $this->setPrimaryKey('id_customer');
     }
 
@@ -70,6 +69,7 @@ class CustomersTable extends AppTable
     
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
+        return $query;
         return $query->contain([
             'AddressCustomers'
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Table\AddressesTable\AddressTable;
+namespace App\Model\Table;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
