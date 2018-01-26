@@ -133,7 +133,7 @@
     <?php
 
     if (!empty($manufacturer)) {
-        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive'], true, $manufacturer['Manufacturers']['name']);
+        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active, true, $manufacturer['Manufacturers']['name']);
         if ($manufacturerHolidayString != '') {
             echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
         }

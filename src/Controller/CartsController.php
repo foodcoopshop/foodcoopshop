@@ -186,7 +186,7 @@ class CartsController extends FrontendController
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
                 ],
-                'fields' => ['Products.*', '!'.$this->Product->getManufacturerHolidayConditions().' as IsHolidayActive']
+                'fields' => ['Products.*', 'is_holiday_active' => '!'.$this->Product->getManufacturerHolidayConditions()]
             ])->first();
             $products[] = $product;
 
@@ -229,7 +229,7 @@ class CartsController extends FrontendController
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
-            if (! $product['Manufacturers']['active'] || $product[0]['IsHolidayActive']) {
+            if (! $product['Manufacturers']['active'] || $product[0]->is_holiday_active]) {
                 $message = 'Der Hersteller des Produktes "' . $product['ProductLangs']['name'] . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }

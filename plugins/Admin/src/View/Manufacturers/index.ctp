@@ -182,7 +182,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-        echo $this->Html->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+        echo $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active);
     echo '</td>';
 
     echo '<td align="center">';

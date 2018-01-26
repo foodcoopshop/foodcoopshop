@@ -285,7 +285,7 @@ class ManufacturersController extends AdminAppController
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ],
-            'fields' => ['Manufacturers.*', 'Customers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+            'fields' => ['Manufacturers.*', 'Customers.*', 'Addresses.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()]
         ], $this->Paginator->settings);
         $manufacturers = $this->Paginator->paginate('Manufacturers');
 

@@ -727,7 +727,7 @@ class ProductsController extends AdminAppController
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ],
-                'fields' => ['Manufacturers.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+                'fields' => ['Manufacturers.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()]
             ])->first();
             $this->set('manufacturer', $manufacturer);
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);

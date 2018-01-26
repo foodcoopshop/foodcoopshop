@@ -39,7 +39,7 @@ class ManufacturersController extends FrontendController
                         'Manufacturers.active' => APP_ON
                     ]
                 ])->first();
-                if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer['Manufacturers']['is_private']) {
+                if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer->is_private) {
                     $this->AppAuth->deny($this->request->action);
                 }
                 break;
@@ -56,12 +56,16 @@ class ManufacturersController extends FrontendController
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturers = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ],
-            'fields' => ['Manufacturers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+            'fields' => ['Manufacturers.*', 'AddressManufacturers.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
+            'contain' => [
+                'AddressManufacturers'
+            ]
         ]);
 
         if (empty($manufacturers)) {
@@ -71,7 +75,7 @@ class ManufacturersController extends FrontendController
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
             foreach ($manufacturers as &$manufacturer) {
-                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer'], true);
+                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer, true);
             }
         }
 
@@ -89,7 +93,7 @@ class ManufacturersController extends FrontendController
         ];
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
-            'fields' => ['Manufacturers.*', 'Addresses.*', '!'.$this->Manufacturer->getManufacturerHolidayConditions().' as IsHolidayActive']
+            'fields' => ['Manufacturers.*', 'Addresses.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()]
         ])->first();
 
         if (empty($manufacturer)) {
