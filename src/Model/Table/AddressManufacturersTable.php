@@ -16,7 +16,7 @@ namespace App\Model\Table;
  * @link          https://www.foodcoopshop.com
  */
 
-class AddressManufacturer extends AddressesTable
+class AddressManufacturersTable extends AddressesTable
 {
 
     public $validate = [

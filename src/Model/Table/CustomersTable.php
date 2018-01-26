@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Model\Table;
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use App\Auth\AppPasswordHasher;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,9 +26,9 @@ class CustomersTable extends AppTable
     {
         $this->setTable('customer');
         parent::initialize($config);
-//         $this->hasOne('AddressCustomers', [
-//             'foreignKey' => 'id_customer'
-//         ]);
+        $this->hasOne('AddressCustomers', [
+            'foreignKey' => 'id_customer'
+        ]);
         $this->setPrimaryKey('id_customer');
     }
 
@@ -69,7 +71,6 @@ class CustomersTable extends AppTable
     
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
-        return $query;
         return $query->contain([
             'AddressCustomers'
         ]);
@@ -77,8 +78,8 @@ class CustomersTable extends AppTable
 
     public function setNewPassword($customerId)
     {
-//         $ph = new AppPasswordHasher();
-//         $newPassword = StringComponent::createRandomString(8);
+        $newPassword = StringComponent::createRandomString(8);
+        $ph = new AppPasswordHasher();
         $customer2save = [
             'passwd' => $ph->hash($newPassword)
         ];

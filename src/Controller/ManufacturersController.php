@@ -62,20 +62,20 @@ class ManufacturersController extends FrontendController
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ],
-            'fields' => ['Manufacturers.*', 'AddressManufacturers.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
+            'fields' => ['is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
             'contain' => [
                 'AddressManufacturers'
             ]
-        ]);
-
+        ])->select($this->Manufacturer); // select all fields from table
+        
         if (empty($manufacturers)) {
             throw new RecordNotFoundException('no manufacturers available');
         }
 
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
-            foreach ($manufacturers as &$manufacturer) {
-                $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer, true);
+            foreach ($manufacturers as $manufacturer) {
+                $manufacturer->product_count = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer, true);
             }
         }
 

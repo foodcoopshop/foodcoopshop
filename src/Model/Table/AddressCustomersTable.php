@@ -15,7 +15,7 @@ namespace App\Model\Table;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AddressCustomers extends AddressesTable
+class AddressCustomersTable extends AddressesTable
 {
 
     public $validate = [
