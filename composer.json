@@ -49,7 +49,6 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "App\\Console\\Installer::postInstall",
             "bash devtools/composer-post-install.sh"
         ],
         "post-update-cmd": [
