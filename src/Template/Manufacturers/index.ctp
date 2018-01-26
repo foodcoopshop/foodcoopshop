@@ -13,14 +13,14 @@
  * @link          https://www.foodcoopshop.com
  */
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.first-column a.lightbox');"
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.first-column a.lightbox');"
 ]);
 ?>
 
 <h1>Hersteller
 <?php
-if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
     echo '<span>'.count($manufacturers) . ' gefunden</span>';
 }
 ?>
@@ -59,7 +59,7 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="third-column">';
             echo $this->Html->link(
-                'Alle Produkte anzeigen' . ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
+                'Alle Produkte anzeigen' . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer['product_count'] .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']),
                 ['class' => 'btn btn-success']
             );

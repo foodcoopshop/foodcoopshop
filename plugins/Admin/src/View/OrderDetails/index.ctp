@@ -17,14 +17,14 @@
     
     <?php
     $this->element('addScript', [
-        'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
             datefieldSelector.datepicker();" .
-            Configure::read('AppConfig.jsNamespace') . ".Admin.init();" .
-            Configure::read('AppConfig.jsNamespace') . ".Admin.initCancelSelectionButton();" .
-            Configure::read('AppConfig.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('AppConfig.cakeServerName') . "');" .
-            Configure::read('AppConfig.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');".
-            Configure::read('AppConfig.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('AppConfig.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initCancelSelectionButton();" .
+            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');".
+            Configure::read('app.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
     ]);
     ?>
@@ -51,7 +51,7 @@
         <div class="right">
         
         <?php
-        if (Configure::read('AppConfig.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
+        if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
             echo '<div class="add-payment-deposit-button-wrapper">';
                 echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
@@ -110,7 +110,7 @@ echo '<tr class="sort">';
 echo '<th style="width:20px;">';
 if (count($orderDetails) > 0 && $groupBy == '') {
     $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initRowMarkerAll();"
+    'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
     ]);
     echo '<input type="checkbox" id="row-marker-all" />';
 }
@@ -135,7 +135,7 @@ echo '</th>';
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', 'Betrag');
 echo '</th>';
-if ($groupBy == 'manufacturer' && Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
@@ -255,7 +255,7 @@ foreach ($orderDetails as $orderDetail) {
     echo '</div>';
     echo '</td>';
 
-    if ($groupBy == 'manufacturer' && Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+    if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
 
         echo '<td>';
@@ -351,7 +351,7 @@ if ($groupBy == 'product') {
     }
 }
 echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
-if ($groupBy == 'manufacturer' && Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
     echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
@@ -380,11 +380,11 @@ if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAu
 
 if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId != '') {
     $this->element('addScript', [
-        'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('AppConfig.additionalOrderStatusChangeInfo') . "');" . Configure::read('AppConfig.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('AppConfig.paymentMethods')) . ");" . Configure::read('AppConfig.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('AppConfig.visibleOrderStates')) . "');"
+        'script' => Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');"
     ]);
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $this->element('addScript', [
-            'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initChangeOrderStateFromOrderDetails();"
+            'script' => Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrderDetails();"
         ]);
         $buttonExists = true;
         $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> Bestellstatus ändern</button>';

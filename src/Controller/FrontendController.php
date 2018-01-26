@@ -99,10 +99,10 @@ class FrontendController extends AppController
         $this->resetOriginalLoggedCustomer();
 
         $categoriesForMenu = [];
-        if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Category = TableRegistry::get('Categories');
-            $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true, '', 0, true);
+            $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', 0, true);
+            $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, [
                 'slug' => '/neue-produkte',
@@ -112,7 +112,7 @@ class FrontendController extends AppController
                 ]
             ]);
             array_unshift($categoriesForMenu, [
-                'slug' => Configure::read('AppConfig.slugHelper')->getAllProducts(),
+                'slug' => Configure::read('app.slugHelper')->getAllProducts(),
                 'name' => 'Alle Produkte <span class="additional-info"> (' . $allProductsCount . ')</span>',
                 'options' => [
                     'fa-icon' => 'fa-tags'
@@ -169,11 +169,11 @@ class FrontendController extends AppController
             $this->AppAuth->login($this->request->session()->read('Auth.shopOrderCustomer')['Customers']);
         }
 
-        if ($this->AppAuth->user() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
+        if ($this->AppAuth->user() && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 
-            $shoppingLimitReached = Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
+            $shoppingLimitReached = Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
         }
 

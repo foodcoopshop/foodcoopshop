@@ -82,7 +82,7 @@ class OrdersController extends AdminAppController
             'conditions' => [
                 'Orders.id_order IN(' . $this->params['named']['orderIds'] . ')'
             ],
-            'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy()
+            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
         ]);
 
         if (empty($orders)) {
@@ -94,7 +94,7 @@ class OrdersController extends AdminAppController
 
     public function correctShopOrder()
     {
-        $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->params->query['url']);
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->params->query['url']);
 
         if ($orderId > 0) {
             $order = $this->Order->find('all', [
@@ -106,15 +106,15 @@ class OrdersController extends AdminAppController
                 ]
             ])->first();
 
-            $newDate = Configure::read('AppConfig.timeHelper')->getDateForShopOrder(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+            $newDate = Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay());
             $order2update = [
                 'date_add' => $newDate,
-                'current_state' => Configure::read('AppConfigDb.FCS_SHOP_ORDER_DEFAULT_STATE')
+                'current_state' => Configure::read('appDb.FCS_SHOP_ORDER_DEFAULT_STATE')
             ];
             $this->Order->id = $orderId;
             $this->Order->save($order2update);
 
-            $message = 'Sofort-Bestellung Nr. (' . $order['Orders']['id_order'] . ') für ' . $order['Customers']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
+            $message = 'Sofort-Bestellung Nr. (' . $order['Orders']['id_order'] . ') für ' . $order['Customers']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('app.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
 
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
@@ -178,7 +178,7 @@ class OrdersController extends AdminAppController
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
 
-        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customers']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('AppConfig.htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
+        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customers']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);
@@ -221,7 +221,7 @@ class OrdersController extends AdminAppController
 
         $dateFrom = '';
         if ($orderId == '') {
-            $dateFrom = Configure::read('AppConfig.timeHelper')->getOrderPeriodFirstDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+            $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
@@ -230,14 +230,14 @@ class OrdersController extends AdminAppController
 
         $dateTo = '';
         if ($orderId == '') {
-            $dateTo = Configure::read('AppConfig.timeHelper')->getOrderPeriodLastDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+            $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
         }
         $this->set('dateTo', $dateTo);
 
-        $orderState = Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv();
+        $orderState = Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv();
         if (! empty($this->params['named']['orderState'])) {
             $orderState = $this->params['named']['orderState'];
         }
@@ -326,7 +326,7 @@ class OrdersController extends AdminAppController
         $this->Order->id = $orderId;
         $this->Order->save($order2update);
 
-        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder['Customers']['name'] . ' wurde vom ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($oldOrder['Orders']['date_add']) . ' auf den ' . Configure::read('AppConfig.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
+        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder['Customers']['name'] . ' wurde vom ' . Configure::read('app.timeHelper')->formatToDateShort($oldOrder['Orders']['date_add']) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 

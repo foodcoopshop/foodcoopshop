@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
+    'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
 ]);
 
 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . $buttonText, [

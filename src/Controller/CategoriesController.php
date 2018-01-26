@@ -29,7 +29,7 @@ class CategoriesController extends FrontendController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        if (! (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
+        if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
             $this->AppAuth->deny($this->request->action);
         } else {
             $this->AppAuth->allow($this->request->action);
@@ -42,7 +42,7 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), true);
+        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
@@ -68,7 +68,7 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, $keyword);
+        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
@@ -93,8 +93,8 @@ class CategoriesController extends FrontendController
             throw new RecordNotFoundException('category not found');
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, $category->name);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        $correctSlug = Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name);
+        if ($correctSlug != Configure::read('app.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

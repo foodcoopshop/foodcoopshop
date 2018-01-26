@@ -16,13 +16,13 @@
 <div id="manufacturers-list">
     <?php
     $this->element('addScript', [
-        'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('AppConfig.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('AppConfig.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('AppConfig.cakeServerName') . "');".Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ]);
-    if (Configure::read('AppConfig.allowManualOrderListSending')) {
+    if (Configure::read('app.allowManualOrderListSending')) {
         $this->element('addScript', [
-            'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
+            'script' => Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" . Configure::read('app.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
         ]);
     }
     ?>
@@ -66,11 +66,11 @@ echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', 'Lieferpause'
 echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', 'Nur für Mitglieder') . '</th>';
 echo '<th title="Summe offener Bestellungen im oben angegebenen Zeitraum">O.B</th>';
 echo '<th>Opt.</th>';
-if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
 }
 echo '<th></th>';
-if (Configure::read('AppConfig.allowManualOrderListSending')) {
+if (Configure::read('app.allowManualOrderListSending')) {
     echo '<th></th>';
 }
 echo '<th></th>';
@@ -207,7 +207,7 @@ foreach ($manufacturers as $manufacturer) {
     );
     echo '</td>';
 
-    if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
             echo $manufacturer['Manufacturers']['variable_member_fee'].'%';
         echo '</td>';
@@ -223,7 +223,7 @@ foreach ($manufacturers as $manufacturer) {
         'target' => '_blank'
     ]);
     echo '</td>';
-    if (Configure::read('AppConfig.allowManualOrderListSending')) {
+    if (Configure::read('app.allowManualOrderListSending')) {
         echo '<td>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), [
             'title' => 'Bestellliste manuell versenden',
@@ -257,10 +257,10 @@ if ($depositSum !== null) {
     $colspan--;
     echo '<td><b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b></td>';
 }
-if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
-if (Configure::read('AppConfig.allowManualOrderListSending')) {
+if (Configure::read('app.allowManualOrderListSending')) {
     $colspan ++;
 }
 echo '<td colspan="' . $colspan . '"></td>';

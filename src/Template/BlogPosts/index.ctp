@@ -13,8 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages();"
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages();"
 ]);
 ?>
 

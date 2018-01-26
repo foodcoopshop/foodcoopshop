@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();"
+    Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 
 if ($page->full_width) {

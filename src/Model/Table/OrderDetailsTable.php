@@ -82,7 +82,7 @@ class OrderDetailsTable extends AppTable
         }
         $params = [
             'manufacturerId' => $manufacturerId,
-            'depositForManufacturersStartDate' => Configure::read('AppConfig.depositForManufacturersStartDate')
+            'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate')
         ];
         
         $statement = $this->getConnection()->prepare($sql);
@@ -112,8 +112,8 @@ class OrderDetailsTable extends AppTable
         $params = [
             'manufacturerId' => $manufacturerId,
             'orderStateOpen' => ORDER_STATE_OPEN,
-            'dateFrom' => Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom),
-            'dateTo' => Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo),
+            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
+            'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo),
         ];
         
         $statement = $this->getConnection()->prepare($sql);
@@ -131,10 +131,10 @@ class OrderDetailsTable extends AppTable
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         if ($orderState != '') {

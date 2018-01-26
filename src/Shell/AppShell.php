@@ -53,14 +53,14 @@ class AppShell extends Shell
     public function getRuntime()
     {
         $time = $this->timeEnd - $this->timeStart;
-        return 'Laufzeit: ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($time) . ' Sekunden';
+        return 'Laufzeit: ' . Configure::read('app.htmlHelper')->formatAsDecimal($time) . ' Sekunden';
     }
 
     public function initSimpleBrowser()
     {
         $this->browser = new AppSimpleBrowser();
-        $this->browser->loginEmail = Configure::read('AppConfig.adminEmail');
-        $this->browser->loginPassword = Configure::read('AppConfig.adminPassword');
+        $this->browser->loginEmail = Configure::read('app.adminEmail');
+        $this->browser->loginPassword = Configure::read('app.adminPassword');
 
         if ($_SERVER['PHP_SELF'] == '/test.php' // unit tests called via web browser
             // unit tests called via console

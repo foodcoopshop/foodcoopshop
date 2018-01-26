@@ -219,12 +219,12 @@ setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
 
 TableRegistry::get('Configurations')->loadConfigurations();
-if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
+if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', [
         'routes' => true
     ]);
 }
-// if (Configure::read('AppConfig.emailErrorLoggingEnabled')) {
+// if (Configure::read('app.emailErrorLoggingEnabled')) {
 //     Plugin::load('EmailErrorLog', array(
 //         'bootstrap' => true
 //     ));

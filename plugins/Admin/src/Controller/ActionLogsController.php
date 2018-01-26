@@ -47,8 +47,8 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         $customerId = '';
         if (! empty($this->params['named']['customerId'])) {
@@ -84,9 +84,9 @@ class ActionLogsController extends AdminAppController
         if ($this->AppAuth->isCustomer()) {
             $tmpCondition  =  '(';
                 $tmpCondition .= 'Customers.id_customer = '.$this->AppAuth->getUserId();
-                // order of first and lastname can be changed Configure::read('AppConfig.customerMainNamePart')
+                // order of first and lastname can be changed Configure::read('app.customerMainNamePart')
                 $customerNameForRegex = $this->AppAuth->user('firstname') . ' ' . $this->AppAuth->user('lastname');
-            if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
+            if (Configure::read('app.customerMainNamePart') == 'lastname') {
                 $customerNameForRegex = $this->AppAuth->user('lastname') . ' ' . $this->AppAuth->user('firstname');
             }
                 $tmpCondition .= ' OR ActionLogs.text REGEXP \'' . $customerNameForRegex . '\'';

@@ -50,7 +50,7 @@ class Application extends BaseApplication
 
             $cookies = new EncryptedCookieMiddleware(
                 ['remember_me_coookie'],
-                Configure::read('AppConfig.cookieKey')
+                Configure::read('app.cookieKey')
             );
             
             $middlewareQueue->add($cookies);

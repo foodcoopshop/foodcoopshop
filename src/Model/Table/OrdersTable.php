@@ -49,7 +49,7 @@ class OrdersTable extends AppTable
         $conditions = [
             $this->name . '.id_customer' => $customerId
         ];
-        $conditions[] = $this->getOrderStateCondition(Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv());
+        $conditions[] = $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv());
         $orderCount = $this->find('count', [
             'conditions' => $conditions
         ]);
@@ -78,7 +78,7 @@ class OrdersTable extends AppTable
         $conditions = [
             'Orders.id_customer' => $customerId,
             'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
-            'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.depositPaymentCashlessStartDate') . '\''
+            'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
         ];
 
         $query = $this->find('all', [
@@ -96,10 +96,10 @@ class OrdersTable extends AppTable
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         $group = [];
@@ -137,7 +137,7 @@ class OrdersTable extends AppTable
 
         $orderParams = [
             'conditions' => $conditions,
-            'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy(),
+            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
             'fields' => $fields,
             'group' => $group,
             'contain' => $contain

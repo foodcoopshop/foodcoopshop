@@ -17,9 +17,9 @@
 
     <?php
     $this->element('addScript', [
-        'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" . Configure::read('AppConfig.jsNamespace') . ".Admin.initDeletePayment();"
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" . Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
     ]);
     ?>
     

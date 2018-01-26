@@ -52,7 +52,7 @@ class BackupDatabaseShell extends AppShell
             }
         }
 
-        $cmdString = Configure::read('AppConfig.mysqlDumpCommand');
+        $cmdString = Configure::read('app.mysqlDumpCommand');
         $cmdString .= " -u " . $dbConfig['username'] . " -p" . $dbConfig['password'] . " --allow-keywords " . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
 
@@ -69,8 +69,8 @@ class BackupDatabaseShell extends AppShell
 
         // email zipped file
         $Email = new Email(Configure::read('debugEmailConfig'));
-        $Email->setTo(Configure::read('AppConfig.hostingEmail'))
-            ->setSubject($message . ': ' . Configure::read('AppConfig.cakeServerName'))
+        $Email->setTo(Configure::read('app.hostingEmail'))
+            ->setSubject($message . ': ' . Configure::read('app.cakeServerName'))
             ->setAttachments([
             $zipFilename
             ])

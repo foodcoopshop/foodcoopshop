@@ -16,9 +16,9 @@
 <div id="customers-list">
     <?php
     $this->element('addScript', [
-        'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initCustomerChangeActiveState();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" . Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" . Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button', { my: \"right top\", at: \"right bottom\" }, false);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
+            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button', { my: \"right top\", at: \"right bottom\" }, false);" . Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
     ]);
     ?>
     
@@ -44,7 +44,7 @@
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
-            <?php if (Configure::read('AppConfig.isDepositPaymentCashless')) { ?>
+            <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
                 <li>Der Betrag unterhalb des Gesamt-Guthabens ist der <b>Saldo
                     des Pfandes</b>. Ist er negativ, liegt "zuviel" Pfand auf dem
                 Guthaben-Konto und sollte - wenn er an einen Hersteller ausbezahlt
@@ -73,10 +73,10 @@ echo '<th>' . $this->Paginator->sort('Customers.id_default_group', 'Gruppe') . '
 echo '<th>' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', 'Status') . '</th>';
 echo '<th>Bestellungen</th>';
-if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
+if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>Guthaben</th>';
 }
-if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
+if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter', 'Email') . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add', 'Registrier-Datum') . '</th>';
@@ -109,7 +109,7 @@ foreach ($customers as $customer) {
         $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer['order_count'] . 'x bestellt."></i> ' . $customerName;
     }
 
-    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customers']['id_customer'] . '/sort:Order.date_add/direction:desc/', [
+    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customers']['id_customer'] . '/sort:Order.date_add/direction:desc/', [
         'title' => 'Zu allen Bestellungen von ' . $customer['Customers']['name'],
         'escape' => false
     ]) . '</span>';
@@ -205,7 +205,7 @@ foreach ($customers as $customer) {
         echo '</td>';
     }
 
-    if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
+    if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
         echo $customer['Customers']['newsletter'];
         $sumEmailReminders += $customer['Customers']['newsletter'];
@@ -242,12 +242,12 @@ if ($this->Html->paymentIsCashless()) {
     $sumPaymentsDepositDelta += $manufacturerDepositMoneySum;
     echo '<td>';
     echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsProductDelta) . '</b>';
-    if (Configure::read('AppConfig.isDepositPaymentCashless')) {
+    if (Configure::read('app.isDepositPaymentCashless')) {
         echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
     }
     echo '</td>';
 }
-if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
+if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td><b>' . $sumEmailReminders . '</b></td>';
 }
 echo '<td colspan="5"></td>';

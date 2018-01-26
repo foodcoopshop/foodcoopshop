@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Configurations']['id_Configuration']) ? $this->request->data['Configurations']['id_Configuration'] : "") . "', 'Configurations');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Configurations']['id_Configuration']) ? $this->request->data['Configurations']['id_Configuration'] : "") . "', 'Configurations');
     "
 ]);
 
@@ -62,7 +62,7 @@ switch ($unsavedConfiguration['Configurations']['type']) {
         break;
     case 'textarea':
         $this->element('addScript', [
-            'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditor('ConfigurationValue');"
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ConfigurationValue');"
         ]);
         echo $this->Form->input('Configuration.value', [
             'type' => 'textarea',
@@ -73,7 +73,7 @@ switch ($unsavedConfiguration['Configurations']['type']) {
         break;
     case 'textarea_big':
         $this->element('addScript', [
-            'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initCkeditorBig('ConfigurationValue');"
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ConfigurationValue');"
         ]);
         echo $this->Form->input('Configuration.value', [
             'type' => 'textarea',

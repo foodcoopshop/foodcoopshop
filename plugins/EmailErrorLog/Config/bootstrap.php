@@ -15,7 +15,7 @@
 
 CakeLog::config('email', [
     'engine' => 'EmailErrorLog.EmailErrorLog',
-    'to' => Configure::read('AppConfig.debugEmail'),
+    'to' => Configure::read('app.debugEmail'),
     'logTypes' => [
         'info',
         'notice',

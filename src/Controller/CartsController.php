@@ -52,7 +52,7 @@ class CartsController extends FrontendController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->user() && Configure::read('AppConfigDb.FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
+        return $this->AppAuth->user() && Configure::read('appDb.FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
     }
 
     public function detail()
@@ -172,7 +172,7 @@ class CartsController extends FrontendController
 
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
             $this->Flash->error('Dein Warenkorb war leer.');
-            $this->redirect(Configure::read('AppConfig.slugHelper')->getCartDetail());
+            $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
         }
 
         $cartErrors = [];
@@ -275,7 +275,7 @@ class CartsController extends FrontendController
             $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
             $formErrors = true;
         }
-        if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $orderComment = strip_tags(trim($this->request->data['Orders']['comment']), '<strong><b>');
             $maxOrderCommentCount = 500;
             if (strlen($orderComment) > $maxOrderCommentCount) {
@@ -303,7 +303,7 @@ class CartsController extends FrontendController
                 'general_terms_and_conditions_accepted' => $this->request->data['Orders']['general_terms_and_conditions_accepted'],
                 'cancellation_terms_accepted' => $this->request->data['Orders']['cancellation_terms_accepted']
             ];
-            if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) {
+            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
                 $order2save['comment'] = $orderComment;
             }
             $order = $this->Order->save($order2save, [
@@ -314,7 +314,7 @@ class CartsController extends FrontendController
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
                 $this->log($message);
-                $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinish());
+                $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
             }
 
             $orderId = $order['Orders']['id_order'];
@@ -338,7 +338,7 @@ class CartsController extends FrontendController
                 $message = 'Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
                 $this->log($message);
-                $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinish());
+                $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
             }
 
             $orderDetailTax2save = [];
@@ -384,7 +384,7 @@ class CartsController extends FrontendController
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->ActionLog = TableRegistry::get('ActionLogs');
-            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
+            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
             // START send confirmation email to customer
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
@@ -416,7 +416,7 @@ class CartsController extends FrontendController
             // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
 
-            $this->redirect(Configure::read('AppConfig.slugHelper')->getCartFinished($orderId));
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($orderId));
         }
 
         $this->request->action = 'detail';

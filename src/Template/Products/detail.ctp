@@ -15,14 +15,14 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
-    Configure::read('AppConfig.jsNamespace').".Helper.bindToggleLinks(true);".
-    Configure::read('AppConfig.jsNamespace').".Helper.selectMainMenuFrontend('Produkte');".
-    Configure::read('AppConfig.jsNamespace').".Helper.initProductAttributesButtons();".
-    Configure::read('AppConfig.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
+    Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".
+    Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('Produkte');".
+    Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
+    Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
 ?>
 

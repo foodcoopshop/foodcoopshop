@@ -55,7 +55,7 @@ class PagesController extends FrontendController
          */
         $showKeyGeneratorWebsite = 0;
         $securityErrors = 0;
-        if (Configure::read('AppConfig.cookieKey') == '') {
+        if (Configure::read('app.cookieKey') == '') {
             echo '<p>Please copy this <b>app.cookieKey</b> to your config.custom.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }
@@ -133,8 +133,8 @@ class PagesController extends FrontendController
             ]
         );
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getPageDetail($page->id_page, $page->title);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        $correctSlug = Configure::read('app.slugHelper')->getPageDetail($page->id_page, $page->title);
+        if ($correctSlug != Configure::read('app.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

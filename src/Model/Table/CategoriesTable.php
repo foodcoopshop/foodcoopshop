@@ -74,7 +74,7 @@ class CategoriesTable extends AppTable
 
     public function getExcludeCondition()
     {
-        return $this->getAlias() . '.id_category NOT IN(1, 2, ' . Configure::read('AppConfig.categoryAllProducts') . ')';
+        return $this->getAlias() . '.id_category NOT IN(1, 2, ' . Configure::read('app.categoryAllProducts') . ')';
     }
 
     public function getThreaded($conditions = [])
@@ -111,8 +111,8 @@ class CategoriesTable extends AppTable
     {
         $params = [
             'active' => APP_ON,
-            'langId' => Configure::read('AppConfig.langId'),
-            'shopId' => Configure::read('AppConfig.shopId')
+            'langId' => Configure::read('app.langId'),
+            'shopId' => Configure::read('app.shopId')
         ];
         if (! $this->user()) {
             $params['isPrivate'] = APP_OFF;
@@ -141,7 +141,7 @@ class CategoriesTable extends AppTable
         }
 
         if ($filterByNewProducts) {
-            $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
+            $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
             $sql .= " AND DATE_FORMAT(ProductShops.date_add, '%Y-%m-%d') > :dateAdd";
         }
 
@@ -188,7 +188,7 @@ class CategoriesTable extends AppTable
 
         $tmpMenuItem = [
             'name' => $item->name . ' <span class="additional-info">(' . $productCount . ')</span>',
-            'slug' => Configure::read('AppConfig.slugHelper')->getCategoryDetail($item->id_category, $item->name),
+            'slug' => Configure::read('app.slugHelper')->getCategoryDetail($item->id_category, $item->name),
             'children' => []
         ];
         if (! empty($item->children)) {

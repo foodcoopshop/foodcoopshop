@@ -25,7 +25,7 @@
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('AppConfigDb.FCS_APP_NAME'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 
     <?php echo $this->element('jsNamespace'); ?>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -70,7 +70,7 @@ if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
     echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
     // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(Configure::read('AppConfig.jsNamespace').".Mobile.initMenusAdmin();", ['block']);
+    echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();", ['block']);
 }
 echo $this->element('sql_dump');
 

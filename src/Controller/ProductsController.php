@@ -43,7 +43,7 @@ class ProductsController extends FrontendController
             ]
         ])->first();
         
-        if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
+        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || (
               !empty($product)
               && !$this->AppAuth->user()
               && (!empty($product->manufacturer) && $product->manufacturer->is_private)
@@ -62,7 +62,7 @@ class ProductsController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->Category = TableRegistry::get('Categories');
-        $product = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', $productId);
+        $product = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
         
         if (empty($product) || !isset($product[0])) {
@@ -71,8 +71,8 @@ class ProductsController extends FrontendController
 
         $this->set('product', $product[0]);
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getProductDetail($productId, $product[0]['name']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        $correctSlug = Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]['name']);
+        if ($correctSlug != Configure::read('app.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

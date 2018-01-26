@@ -195,7 +195,7 @@ class CartsControllerTest extends AppCakeTestCase
         // 3) check the checkboxes and add a valid order comment
         $orderComment = 'this is a valid order comment';
         $this->finishCart(true, true, $orderComment);
-        $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->checkCartStatusAfterFinish();
 
@@ -269,7 +269,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, - 1);
         $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
-        $orderId = Configure::read('AppConfig.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
         $this->assertTrue(is_int($orderId), 'order not finished correctly');
 
         $this->checkCartStatusAfterFinish();

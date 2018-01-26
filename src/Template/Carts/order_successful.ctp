@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();"
+    Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 ?>
 

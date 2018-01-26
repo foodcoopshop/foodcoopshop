@@ -44,7 +44,7 @@ class ToolsController extends AdminAppController
             $extension = 'jpg';
         }
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
-        $filenameWithPath = Configure::read('AppConfig.tmpUploadImagesDir') . DS . $filename;
+        $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         Image::make($this->params['form']['upload']['tmp_name'])
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);

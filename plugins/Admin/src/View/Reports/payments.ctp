@@ -14,11 +14,11 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
+    'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
-        datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();".
-        Configure::read('AppConfig.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
-        Configure::read('AppConfig.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
+        datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();".
+        Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
 ]);
 if ($paymentType == 'product') {
     $this->element('highlightRowAfterEdit', [

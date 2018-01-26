@@ -16,7 +16,7 @@
 if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
     $this->element('addScript', [
         'script' =>
-            Configure::read('AppConfig.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()).");"
+            Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()).");"
     ]);
     echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
     $options = [

@@ -14,11 +14,11 @@
  */
 use Cake\Core\Configure;
 
-if (!Configure::read('AppConfig.jsNamespace')) {
+if (!Configure::read('app.jsNamespace')) {
     return;
 }
 ?>
 
 <script type="text/javascript">
-    if(!window.<?php echo Configure::read('AppConfig.jsNamespace'); ?>) { <?php echo Configure::read('AppConfig.jsNamespace'); ?> = window.<?php echo Configure::read('AppConfig.jsNamespace'); ?> = {}; }
+    if(!window.<?php echo Configure::read('app.jsNamespace'); ?>) { <?php echo Configure::read('app.jsNamespace'); ?> = window.<?php echo Configure::read('app.jsNamespace'); ?> = {}; }
 </script>

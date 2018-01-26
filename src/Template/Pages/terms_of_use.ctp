@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 ?>
 <?php
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();"
+    Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 if ($appAuth->isManufacturer()) {
     echo $this->element('legal/termsOfUseForManufacturers');

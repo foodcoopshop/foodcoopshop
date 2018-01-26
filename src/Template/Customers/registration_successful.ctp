@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();"
+    Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 ?>
 
@@ -23,7 +23,7 @@ $this->element('addScript', ['script' =>
 
     <li>Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet.</li>
 
-    <?php if (!Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
+    <?php if (!Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
     <li><b>Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!</b><br />
         Du wirst per E-Mail benachrichtigt, sobald wir dein Konto aktiviert haben.</li>
     <?php } ?>

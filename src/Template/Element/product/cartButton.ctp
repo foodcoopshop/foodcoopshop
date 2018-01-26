@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (!$appAuth->user() || !Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
+if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED')) {
     return;
 }
 ?>
@@ -24,7 +24,7 @@ if (!$appAuth->user() || !Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
     <?php
     if ($stockAvailable == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
         $this->element('addScript', ['script' =>
-            Configure::read('AppConfig.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
+            Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
         ]);
     }
     ?>

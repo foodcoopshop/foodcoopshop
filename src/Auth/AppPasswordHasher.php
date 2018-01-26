@@ -26,7 +26,7 @@ class AppPasswordHasher extends AbstractPasswordHasher
 
     public function hash($password)
     {
-        return md5(Configure::read('AppConfig.cookieKey') . $password);
+        return md5(Configure::read('app.cookieKey') . $password);
     }
 
     public function check($password, $hashedPassword)

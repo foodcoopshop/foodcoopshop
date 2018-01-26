@@ -15,17 +15,17 @@
 ?>
 <p>
     Zum Bestellen kannst du dich hier einloggen:<br />
-    <a href="<?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getLogin(); ?>"><?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getLogin(); ?></a><br /><br />
+    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?></a><br /><br />
     E-Mail-Adresse: <?php echo $data['Customers']['email']; ?><br />
     Passwort: <?php echo $newPassword; ?>
 </p>
 
 <p>
     Hier kannst du dein Passwort ändern:<br />
-    <a href="<?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getChangePassword(); ?></a>
+    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
 </p>
 
 <p>
     Hier kannst du dein Profil ändern:<br />
-    <a href="<?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
+    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
 </p>

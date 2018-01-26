@@ -45,7 +45,7 @@ class CustomersController extends AdminAppController
         $customerId = (int) $this->params['data']['customerId'];
         $groupId = (int) $this->params['data']['groupId'];
 
-        if (! in_array($groupId, array_keys(Configure::read('AppConfig.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
+        if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
             $this->log($message);
             die(json_encode([
@@ -73,7 +73,7 @@ class CustomersController extends AdminAppController
         $this->Customer->id = $customerId;
         $this->Customer->saveField('id_default_group', $groupId, false);
 
-        $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde von <b>' . Configure::read('AppConfig.htmlHelper')->getGroupName($oldCustomer['Customers']['id_default_group']) . '</b> auf <b>' . Configure::read('AppConfig.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
+        $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde von <b>' . Configure::read('app.htmlHelper')->getGroupName($oldCustomer['Customers']['id_default_group']) . '</b> auf <b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
         $this->Flash->success($messageString);
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
@@ -398,7 +398,7 @@ class CustomersController extends AdminAppController
         $this->Payment = TableRegistry::get('Payments');
         $this->Order = TableRegistry::get('Orders');
         foreach ($customers as $customer) {
-            if (Configure::read('AppConfig.htmlHelper')->paymentIsCashless()) {
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $paymentProductSum = $this->Payment->getSum($customer['Customers']['id_customer'], 'product');
                 $paymentPaybackSum = $this->Payment->getSum($customer['Customers']['id_customer'], 'payback');
                 $paymentDepositSum = $this->Payment->getSum($customer['Customers']['id_customer'], 'deposit');
@@ -407,7 +407,7 @@ class CustomersController extends AdminAppController
                 $sumTotalDeposit = 0;
                 foreach ($customer['PaidCashFreeOrders'] as $paidCashFreeOrder) {
                     $sumTotalProduct += $paidCashFreeOrder['total_paid'];
-                    if (Configure::read('AppConfig.isDepositPaymentCashless') && strtotime($paidCashFreeOrder['date_add']) > strtotime(Configure::read('AppConfig.depositPaymentCashlessStartDate'))) {
+                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
                         $sumTotalDeposit += $paidCashFreeOrder['total_deposit'];
                     }
                 }
@@ -416,7 +416,7 @@ class CustomersController extends AdminAppController
                 $customers[$i]['payment_deposit_delta'] = round($paymentDepositSum - $sumTotalDeposit, 2);
 
                 // combine deposit delta in product delta to show same credit balance in list like in personal payment product page
-                if (Configure::read('AppConfig.isDepositPaymentCashless')) {
+                if (Configure::read('app.isDepositPaymentCashless')) {
                     $customers[$i]['payment_product_delta'] += $customers[$i]['payment_deposit_delta'];
                 }
             }

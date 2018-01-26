@@ -92,16 +92,16 @@ class AppTcpdf extends TCPDF
 
                 if (in_array('Preis exkl.', $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
+                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
                 }
 
                 if (in_array('MWSt.', $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
+                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
                 }
 
                 $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
+                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
 
                 $indexForWidth ++;
                 $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . $result[0]['Bestelldatum'] . '</td>';
@@ -158,7 +158,7 @@ class AppTcpdf extends TCPDF
 
         if (in_array('Preis exkl.', $headers)) {
             $colspan --;
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceExclSum) . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceExclSum) . '</td>';
             $indexForWidth ++;
         }
 
@@ -166,13 +166,13 @@ class AppTcpdf extends TCPDF
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
-                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)';
+                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)';
             }
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;
         }
 
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceInclSum) . '</td>';
         $indexForWidth ++;
 
         if ($colspan > 0) {
@@ -239,8 +239,8 @@ class AppTcpdf extends TCPDF
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
 
-        $this->SetCreator(Configure::read('AppConfigDb.FCS_APP_NAME'));
-        $this->SetAuthor(Configure::read('AppConfigDb.FCS_APP_NAME'));
+        $this->SetCreator(Configure::read('appDb.FCS_APP_NAME'));
+        $this->SetAuthor(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetTopMargin(43);
         $this->SetRightMargin(0);
         $this->SetFontSize(10);
@@ -257,8 +257,8 @@ class AppTcpdf extends TCPDF
         $this->MultiCell(50, 0, '<img src="' . APP . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg' . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
 
-        $convertedHeaderRight = '<br />'.Configure::read('AppConfigDb.FCS_APP_NAME').'<br />'.Configure::read('AppConfigDb.FCS_APP_ADDRESS').'<br />'.Configure::read('AppConfigDb.FCS_APP_EMAIL');
-        $convertedHeaderRight = Configure::read('AppConfig.htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
+        $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');
+        $convertedHeaderRight = Configure::read('app.htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
 
         // add additional line break on top if short address
         $lineCount = substr_count($convertedHeaderRight, "\n");

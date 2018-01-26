@@ -49,7 +49,7 @@ class AppController extends Controller
         
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
-            'loginAction' => Configure::read('AppConfig.slugHelper')->getLogin(),
+            'loginAction' => Configure::read('app.slugHelper')->getLogin(),
             'authError' => 'Zugriff verweigert, bitte melde dich an.',
             'authorize' => [
                 'Controller'

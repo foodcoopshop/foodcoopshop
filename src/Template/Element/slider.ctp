@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 
 if (!empty($sliders)) {
     $this->element('addScript', ['script' =>
-        Configure::read('AppConfig.jsNamespace').".Helper.initSlider();"
+        Configure::read('app.jsNamespace').".Helper.initSlider();"
     ]);
     echo '<div id="slider">';
     foreach ($sliders as $slider) {

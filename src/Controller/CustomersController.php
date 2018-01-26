@@ -108,7 +108,7 @@ class CustomersController extends FrontendController
             $email = new AppEmail();
             $email->template('new_password_request_successful')
                 ->emailFormat('html')
-                ->subject('Anfrage für neues Passwort für ' . Configure::read('AppConfigDb.FCS_APP_NAME'))
+                ->subject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
                 ->to($this->request->data['Customers']['email'])
                 ->viewVars([
                 'changePasswordCode' => $changePasswordCode,
@@ -147,7 +147,7 @@ class CustomersController extends FrontendController
         $email = new AppEmail();
             $email->template('new_password_set_successful')
             ->emailFormat('html')
-            ->subject('Neues Passwort für ' . Configure::read('AppConfigDb.FCS_APP_NAME') . ' generiert')
+            ->subject('Neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME') . ' generiert')
             ->to($customer['Customers']['email'])
             ->viewVars([
                 'password' => $newPassword,
@@ -166,21 +166,21 @@ class CustomersController extends FrontendController
         $this->Customer->id = $customer['Customers']['id_customer'];
         $this->Customer->save($customer2save);
 
-        $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
+        $this->redirect(Configure::read('app.slugHelper')->getLogin());
     }
 
     public function login()
     {
         $this->set('title_for_layout', 'Anmelden');
         
-        if (! $this->request->is('post') && $this->request->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
-            $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
+        if (! $this->request->is('post') && $this->request->here == Configure::read('app.slugHelper')->getRegistration()) {
+            $this->redirect(Configure::read('app.slugHelper')->getLogin());
         }
 
         /**
          * login start
          */
-        if ($this->request->here == Configure::read('AppConfig.slugHelper')->getLogin()) {
+        if ($this->request->here == Configure::read('app.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
             }
@@ -208,17 +208,17 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        if ($this->request->here == Configure::read('AppConfig.slugHelper')->getRegistration()) {
+        if ($this->request->here == Configure::read('app.slugHelper')->getRegistration()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
-                $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
+                $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
 
             // prevent spam
             // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
             if ($this->request->data['antiSpam'] == 'lalala' || $this->request->data['antiSpam'] < 3) {
                 $this->Flash->error('S-p-a-m-!');
-                $this->redirect(Configure::read('AppConfig.slugHelper')->getLogin());
+                $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
 
             if (! empty($this->request->data)) {
@@ -257,8 +257,8 @@ class CustomersController extends FrontendController
                 if (empty($errors) && !$checkboxErrors) {
                     // save customer
                     $this->Customer->id = null;
-                    $this->request->data['Customers']['active'] = Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE');
-                    $this->request->data['Customers']['id_default_group'] = Configure::read('AppConfigDb.FCS_CUSTOMER_GROUP');
+                    $this->request->data['Customers']['active'] = Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE');
+                    $this->request->data['Customers']['id_default_group'] = Configure::read('appDb.FCS_CUSTOMER_GROUP');
                     $this->request->data['Customers']['terms_of_use_accepted_date'] = date('Y-m-d');
 
                     $newCustomer = $this->Customer->save($this->request->data['Customers'], [
@@ -271,7 +271,7 @@ class CustomersController extends FrontendController
 
                     // save address
                     $this->request->data['AddressCustomer']['id_customer'] = $newCustomer['Customers']['id_customer'];
-                    $this->request->data['AddressCustomer']['id_country'] = Configure::read('AppConfig.countryId');
+                    $this->request->data['AddressCustomer']['id_country'] = Configure::read('app.countryId');
                     $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
                     $this->Customer->AddressCustomer->save($this->request->data['Customers'], [
                         'validate' => false
@@ -284,7 +284,7 @@ class CustomersController extends FrontendController
 
                     // START send confirmation email to customer
                     $email = new AppEmail();
-                    if (Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
+                    if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
                         $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer['Customers']), 'mimetype' => 'application/pdf']]);
                     } else {
@@ -303,11 +303,11 @@ class CustomersController extends FrontendController
                     // END send confirmation email to customer
 
                     // START send notification email
-                    if (! empty(Configure::read('AppConfig.registrationNotificationEmails'))) {
+                    if (! empty(Configure::read('app.registrationNotificationEmails'))) {
                         $email = new AppEmail();
                         $email->template('customer_registered_notification')
                             ->emailFormat('html')
-                            ->to(Configure::read('AppConfig.registrationNotificationEmails'))
+                            ->to(Configure::read('app.registrationNotificationEmails'))
                             ->subject('Neue Registrierung: ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'])
                             ->viewVars([
                             'appAuth' => $this->AppAuth,

@@ -47,7 +47,7 @@ return [
             'prefix' => 'fcs_'
         ]
     ],
-    'AppConfig' => [
+    'app' => [
         /**
          * please create a unique cookie key and put it here
          */

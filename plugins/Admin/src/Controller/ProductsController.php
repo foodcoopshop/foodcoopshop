@@ -146,9 +146,9 @@ class ProductsController extends AdminAppController
         ], false);
 
         // delete physical files
-        $imageIdAsPath = Configure::read('AppConfig.htmlHelper')->getProductImageIdAsPath($product['Images']['id_image']);
-        $thumbsPath = Configure::read('AppConfig.htmlHelper')->getProductThumbsPath($imageIdAsPath);
-        foreach (Configure::read('AppConfig.productImageSizes') as $thumbSize => $options) {
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product['Images']['id_image']);
+        $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $product['Images']['id_image'] . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
@@ -187,15 +187,15 @@ class ProductsController extends AdminAppController
         }
 
         // not (yet) implemented for attributes, only for productIds!
-        $imageIdAsPath = Configure::read('AppConfig.htmlHelper')->getProductImageIdAsPath($imageId);
-        $thumbsPath = Configure::read('AppConfig.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($imageId);
+        $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
         // recursively create path
         $dir = new Folder();
         $dir->create($thumbsPath);
         $dir->chmod($thumbsPath, 0755);
 
-        foreach (Configure::read('AppConfig.productImageSizes') as $thumbSize => $options) {
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $image = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
             if ($image->getHeight() > $image->getWidth()) {
@@ -360,13 +360,13 @@ class ProductsController extends AdminAppController
             ])->first();
 
             if (! empty($tax)) {
-                $taxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($tax['Taxes']['rate']);
+                $taxRate = Configure::read('app.htmlHelper')->formatTaxRate($tax['Taxes']['rate']);
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
             if (! empty($oldProduct['Taxes'])) {
-                $oldTaxRate = Configure::read('AppConfig.htmlHelper')->formatTaxRate($oldProduct['Taxes']['rate']);
+                $oldTaxRate = Configure::read('app.htmlHelper')->formatTaxRate($oldProduct['Taxes']['rate']);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
@@ -397,7 +397,7 @@ class ProductsController extends AdminAppController
             $selectedCategories = $this->params['data']['selectedCategories'];
         }
 
-        $selectedCategories[] = Configure::read('AppConfig.categoryAllProducts'); // always add 'alle-produkte'
+        $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle-produkte'
         $selectedCategories = array_unique($selectedCategories);
 
         $oldProduct = $this->Product->find('all', [
@@ -422,7 +422,7 @@ class ProductsController extends AdminAppController
             ])->first();
             if (! empty($oldCategory)) {
                 // do not track "alle-produkte"
-                if ($selectedCategory != Configure::read('AppConfig.categoryAllProducts')) {
+                if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory['Categories']['name'];
                 }
                 $sql = 'INSERT INTO ' . $this->CategoryProduct->getTable() . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
@@ -535,7 +535,7 @@ class ProductsController extends AdminAppController
 
         $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturers']['name'] . '</b> wurde von ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($price) . ' geändert.');
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturers']['name'] . '</b> wurde von ' . Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($price) . ' geändert.');
         $this->request->session()->write('highlightedRowId', $productId);
 
         $this->set('data', [
@@ -588,13 +588,13 @@ class ProductsController extends AdminAppController
 
         $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
         if (isset($depositEntity['deposit'])) {
-            $logString .= Configure::read('AppConfig.htmlHelper')->formatAsEuro($depositEntity['deposit']);
+            $logString .= Configure::read('app.htmlHelper')->formatAsEuro($depositEntity['deposit']);
         } else {
-            $logString .= Configure::read('AppConfig.htmlHelper')->formatAsEuro(0);
+            $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
         }
 
         $deposit = $this->Product->getPriceAsFloat($this->params['data']['deposit']);
-        $logString .= ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
+        $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
@@ -736,7 +736,7 @@ class ProductsController extends AdminAppController
 
         $this->set('title_for_layout', 'Produkte');
 
-        if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
+        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = TableRegistry::get('Network.SyncManufacturers');
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
@@ -807,7 +807,7 @@ class ProductsController extends AdminAppController
         $statusText = 'ab sofort nicht mehr als "neu" angezeigt';
         $actionLogType = 'product_set_to_old';
         if ($status) {
-            $statusText = 'jetzt ' . Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
+            $statusText = 'jetzt ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
             $actionLogType = 'product_set_to_new';
         }
 

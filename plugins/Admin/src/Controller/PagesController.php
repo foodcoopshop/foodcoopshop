@@ -53,7 +53,7 @@ class PagesController extends AdminAppController
         $this->setFormReferer();
 
         $_SESSION['KCFINDER'] = [
-            'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/pages",
+            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/pages",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
         ];
 

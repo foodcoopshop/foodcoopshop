@@ -110,7 +110,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $sendOrderedProductDeletedNotification;
         if ($sendOrderedProductDeletedNotification == '') {
-            $result = Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification');
+            $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
         return (boolean) $result;
     }
@@ -123,7 +123,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $sendOrderedProductPriceChangedNotification;
         if ($sendOrderedProductPriceChangedNotification == '') {
-            $result = Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification');
+            $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
         return (boolean) $result;
     }
@@ -136,7 +136,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $sendOrderedProductQuantityChangedNotification;
         if ($sendOrderedProductQuantityChangedNotification == '') {
-            $result = Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification');
+            $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
         return (boolean) $result;
     }
@@ -149,7 +149,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $sendShopOrderNotification;
         if ($sendShopOrderNotification == '') {
-            $result = Configure::read('AppConfig.defaultSendShopOrderNotification');
+            $result = Configure::read('app.defaultSendShopOrderNotification');
         }
         return (boolean) $result;
     }
@@ -162,7 +162,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $sendInvoice;
         if ($sendInvoice == '') {
-            $result = Configure::read('AppConfig.defaultSendInvoice');
+            $result = Configure::read('app.defaultSendInvoice');
         }
         return (boolean) $result;
     }
@@ -175,7 +175,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $bulkOrdersAllowed;
         if ($bulkOrdersAllowed == '') {
-            $result = Configure::read('AppConfig.defaultBulkOrdersAllowed');
+            $result = Configure::read('app.defaultBulkOrdersAllowed');
         }
         return $result;
     }
@@ -188,7 +188,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $defaultTaxId;
         if ($defaultTaxId == '') {
-            $result = Configure::read('AppConfig.defaultTaxId');
+            $result = Configure::read('app.defaultTaxId');
         }
         return $result;
     }
@@ -201,7 +201,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $variableMemberFee;
         if ($variableMemberFee == '') {
-            $result = Configure::read('AppConfigDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+            $result = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;
     }
@@ -214,7 +214,7 @@ class ManufacturersTable extends AppTable
     {
         $result = $sendOrderList;
         if ($sendOrderList == '') {
-            $result = Configure::read('AppConfig.defaultSendOrderList');
+            $result = Configure::read('app.defaultSendOrderList');
         }
         return (boolean) $result;
     }
@@ -299,7 +299,7 @@ class ManufacturersTable extends AppTable
     {
         return [];
         
-        if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
         }
         $conditions = [
@@ -327,16 +327,16 @@ class ManufacturersTable extends AppTable
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer['Manufacturers']['name'];
             $additionalInfo = '';
-            if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
             }
-            $holidayInfo = Configure::read('AppConfig.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+            $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
             if ($holidayInfo != '') {
                 $holidayInfo = 'Lieferpause ' . $holidayInfo;
                 if ($manufacturer[0]['IsHolidayActive']) {
                     $additionalInfo = $holidayInfo;
                 } else {
-                    if ($appAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                    if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                         $additionalInfo .= ' - ';
                     }
                     $additionalInfo .= $holidayInfo;
@@ -347,7 +347,7 @@ class ManufacturersTable extends AppTable
             }
             $manufacturersForMenu[] = [
                 'name' => $manufacturerName,
-                'slug' => Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name'])
+                'slug' => Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name'])
             ];
         }
         return $manufacturersForMenu;
@@ -430,8 +430,8 @@ class ManufacturersTable extends AppTable
         $params = [
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
-            'langId' => Configure::read('AppConfig.langId'),
-            'shopId' => Configure::read('AppConfig.shopId')
+            'langId' => Configure::read('app.langId'),
+            'shopId' => Configure::read('app.shopId')
         ];
         if (! $this->user()) {
             $params['isPrivate'] = APP_OFF;
@@ -458,14 +458,14 @@ class ManufacturersTable extends AppTable
     {
         switch ($order) {
             case 'product':
-                $orderClause = 'od.product_name ASC, t.rate ASC, ' . Configure::read('AppConfig.htmlHelper')->getCustomerNameForSql() . ' ASC';
+                $orderClause = 'od.product_name ASC, t.rate ASC, ' . Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC';
                 break;
             case 'customer':
-                $orderClause = Configure::read('AppConfig.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
+                $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
 
-        $customerNameAsSql = Configure::read('AppConfig.htmlHelper')->getCustomerNameForSql();
+        $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
 
         $sql = "SELECT
         m.id_manufacturer HerstellerID,
@@ -503,8 +503,8 @@ class ManufacturersTable extends AppTable
 
         $params = [
             'manufacturerId' => $manufacturerId,
-            'dateFrom' => "'" . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($from) . "'",
-            'dateTo' => "'" . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($to) . "'",
+            'dateFrom' => "'" . Configure::read('app.timeHelper')->formatToDbFormatDate($from) . "'",
+            'dateTo' => "'" . Configure::read('app.timeHelper')->formatToDbFormatDate($to) . "'",
             'orderStates' => join(',', $orderState)
         ];
         // strange behavior: if $this->getDataSource()->fetchAll is used, $results is empty

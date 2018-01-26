@@ -106,7 +106,7 @@ class PagesTable extends AppTable
 
         $preparedPages = [];
         foreach ($pages as $page) {
-            $preparedPages[$page->id_page] = $page->title . ' - ' . Configure::read('AppConfig.htmlHelper')->getMenuType($page->menu_type);
+            $preparedPages[$page->id_page] = $page->title . ' - ' . Configure::read('app.htmlHelper')->getMenuType($page->menu_type);
         }
         return $preparedPages;
     }

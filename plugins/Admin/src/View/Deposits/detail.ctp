@@ -18,8 +18,8 @@
 <?php
 $this->element('addScript', [
     'script' =>
-        Configure::read('AppConfig.jsNamespace') . ".Admin.init();".
-        Configure::read('AppConfig.jsNamespace') . ".Admin.initDeletePayment();"
+        Configure::read('app.jsNamespace') . ".Admin.init();".
+        Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
 ]);
 ?>
 
@@ -30,7 +30,7 @@ $this->element('addScript', [
 
 <?php
 
-echo '<br /><p>Für '.Configure::read('AppConfig.timeHelper')->getMonthName($month) . ' ' . $year.'</p>';
+echo '<br /><p>Für '.Configure::read('app.timeHelper')->getMonthName($month) . ' ' . $year.'</p>';
 
 echo '<table class="list no-clone-last-row">';
 echo '<tr class="sort">';

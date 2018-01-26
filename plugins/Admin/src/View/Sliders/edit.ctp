@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();" . Configure::read('AppConfig.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('AppConfig.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : "") . "', 'Sliders');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : "") . "', 'Sliders');
     "
 ]);
 $idForImageUpload = isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : StringComponent::createRandomString(6);

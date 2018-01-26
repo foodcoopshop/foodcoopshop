@@ -28,21 +28,21 @@ class PaymentsController extends AdminAppController
     {
         switch ($this->request->action) {
             case 'overview':
-                return Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
+                return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'myMemberFee':
-                return Configure::read('AppConfig.memberFeeEnabled') && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
+                return Configure::read('app.memberFeeEnabled') && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
             case 'product':
                 // allow redirects for legacy links
                 if (empty($this->params['named']['customerId'])) {
-                    $this->redirect(Configure::read('AppConfig.slugHelper')->getMyCreditBalance());
+                    $this->redirect(Configure::read('app.slugHelper')->getMyCreditBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'memberFee':
                 if (empty($this->params['named']['customerId'])) {
-                    $this->redirect(Configure::read('AppConfig.slugHelper')->getMyMemberFeeBalance());
+                    $this->redirect(Configure::read('app.slugHelper')->getMyMemberFeeBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
@@ -94,7 +94,7 @@ class PaymentsController extends AdminAppController
             ->viewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $payment,
-                'newStatusAsString' => Configure::read('AppConfig.htmlHelper')->getApprovalStates()[$approval],
+                'newStatusAsString' => Configure::read('app.htmlHelper')->getApprovalStates()[$approval],
                 'request' => $payment
             ]);
         $html = $email->_renderTemplates(null)['html'];
@@ -160,7 +160,7 @@ class PaymentsController extends AdminAppController
                         break;
                 }
 
-                $newStatusAsString = Configure::read('AppConfig.htmlHelper')->getApprovalStates()[$this->request->data['Payments']['approval']];
+                $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$this->request->data['Payments']['approval']];
 
                 $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customers']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
                 if ($this->request->data['Payments']['send_email']) {
@@ -222,8 +222,8 @@ class PaymentsController extends AdminAppController
         $amount = preg_replace('/[^0-9,.]/', '', $amount);
         $amount = floatval(str_replace(',', '.', $amount));
 
-        if ($type == 'product' && $amount > Configure::read('AppConfigDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
-            $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('AppConfigDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
+        if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
+            $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
             $this->log($message);
             die(json_encode(['status'=>0,'msg'=>$message]));
         }
@@ -233,7 +233,7 @@ class PaymentsController extends AdminAppController
             $text = strip_tags(html_entity_decode($this->params['data']['text']));
         }
 
-        $message = Configure::read('AppConfig.htmlHelper')->getPaymentText($type);
+        $message = Configure::read('app.htmlHelper')->getPaymentText($type);
         if (in_array($type, ['product', 'payback'])) {
             $customerId = (int) $this->params['data']['customerId'];
         }
@@ -287,7 +287,7 @@ class PaymentsController extends AdminAppController
                     ]));
                 }
 
-                $message = 'Pfand-Rücknahme ('.Configure::read('AppConfig.htmlHelper')->getManufacturerDepositPaymentText($text).')';
+                $message = 'Pfand-Rücknahme ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
                 $message .= ' für ' . $manufacturer['Manufacturers']['name'];
             }
 
@@ -347,10 +347,10 @@ class PaymentsController extends AdminAppController
         ]);
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($amount);
+        $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('app.htmlHelper')->formatAsEuro($amount);
 
         if ($type == 'member_fee') {
-            $message .= ', für ' . Configure::read('AppConfig.htmlHelper')->getMemberFeeTextForFrontend($text);
+            $message .= ', für ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
         }
 
         $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $this->Payment->getLastInsertId(), 'payments', $message);
@@ -424,7 +424,7 @@ class PaymentsController extends AdminAppController
         }
 
 
-        $message = 'Die Zahlung (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($payment['Payments']['amount']). ', '. Configure::read('AppConfig.htmlHelper')->getPaymentText($payment['Payments']['type']) .')';
+        $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsEuro($payment['Payments']['amount']). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment['Payments']['type']) .')';
 
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['Payments']['id_customer']) {
             if (isset($payment['Customers']['name'])) {
@@ -488,7 +488,7 @@ class PaymentsController extends AdminAppController
             'member_fee'
         ];
         $sumMemberFeeFlexbile = 0;
-        if (Configure::read('AppConfig.memberFeeFlexibleEnabled')) {
+        if (Configure::read('app.memberFeeFlexibleEnabled')) {
             $this->allowedPaymentTypes = [
                 'member_fee',
                 'member_fee_flexible'
@@ -517,7 +517,7 @@ class PaymentsController extends AdminAppController
             'payback',
             'deposit'
         ];
-        if (! Configure::read('AppConfig.isDepositPaymentCashless')) {
+        if (! Configure::read('app.isDepositPaymentCashless')) {
             $this->allowedPaymentTypes = [
                 'product',
                 'payback'
@@ -542,16 +542,16 @@ class PaymentsController extends AdminAppController
         $payments = [];
         if (!empty($customer['Payments'])) {
             foreach ($customer['Payments'] as $payment) {
-                $text = Configure::read('AppConfig.htmlHelper')->getPaymentText($payment['type']);
+                $text = Configure::read('app.htmlHelper')->getPaymentText($payment['type']);
                 if ($payment['type'] == 'member_fee') {
-                    $text .= ' für: ' . Configure::read('AppConfig.htmlHelper')->getMemberFeeTextForFrontend($payment['text']);
+                    $text .= ' für: ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($payment['text']);
                 } else {
                     $text .= (! empty($payment['text']) ? ': "' . $payment['text'] . '"' : '');
                 }
 
                 $payments[] = [
                     'date' => $payment['date_add'],
-                    'year' => Configure::read('AppConfig.timeHelper')->getYearFromDbDate($payment['date_add']),
+                    'year' => Configure::read('app.timeHelper')->getYearFromDbDate($payment['date_add']),
                     'amount' => $payment['amount'],
                     'deposit' => 0,
                     'type' => $payment['type'],
@@ -567,11 +567,11 @@ class PaymentsController extends AdminAppController
             foreach ($customer['PaidCashFreeOrders'] as $order) {
                 $payments[] = [
                     'date' => $order['date_add'],
-                    'year' => Configure::read('AppConfig.timeHelper')->getYearFromDbDate($order['date_add']),
+                    'year' => Configure::read('app.timeHelper')->getYearFromDbDate($order['date_add']),
                     'amount' => $order['total_paid'] * - 1,
-                    'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('AppConfig.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
+                    'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('AppConfig.htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('AppConfig.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order_details/index/dateFrom:' . Configure::read('AppConfig.timeHelper')->formatToDateShort($order['date_add']) . '/dateTo:' . Configure::read('AppConfig.timeHelper')->formatToDateShort($order['date_add']) . '/orderId:' . $order['id_order'] . '/customerId:' . $order['id_customer'], [
+                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order_details/index/dateFrom:' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '/dateTo:' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '/orderId:' . $order['id_order'] . '/customerId:' . $order['id_customer'], [
                         'title' => 'Bestellung anzeigen'
                     ]),
                     'payment_id' => null

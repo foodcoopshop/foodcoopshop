@@ -121,11 +121,11 @@ class OrderDetailsController extends AdminAppController
         $dateFrom = '';
         $dateTo = '';
         if ($orderDetailId == '') {
-            $dateFrom = Configure::read('AppConfig.timeHelper')->getOrderPeriodFirstDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+            $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
             if (! empty($this->params['named']['dateFrom'])) {
                 $dateFrom = $this->params['named']['dateFrom'];
             }
-            $dateTo = Configure::read('AppConfig.timeHelper')->getOrderPeriodLastDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+            $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
             if (! empty($this->params['named']['dateTo'])) {
                 $dateTo = $this->params['named']['dateTo'];
             }
@@ -151,7 +151,7 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('deposit', $deposit);
 
-        $orderState = Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv();
+        $orderState = Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv();
         if ($this->AppAuth->isManufacturer()) {
             $orderState = ORDER_STATE_OPEN;
         }
@@ -325,7 +325,7 @@ class OrderDetailsController extends AdminAppController
 
         // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
         $weekday = date('N');
-        if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('AppConfig.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductQuantityChangedNotification) {
+        if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductQuantityChangedNotification) {
             $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail['Products']['Manufacturers']['name'] . '</b>';
             $email->addCC($oldOrderDetail['Products']['Manufacturers']['Addresses']['email']);
         }
@@ -338,7 +338,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editQuantityReason . '"</b>';
         }
 
-        $message .= ' Der Warenbestand wurde auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+        $message .= ' Der Warenbestand wurde auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -386,7 +386,7 @@ class OrderDetailsController extends AdminAppController
 
         $newOrderDetail = $this->changeOrderDetailPrice($oldOrderDetail, $productPrice, $oldOrderDetail['OrderDetails']['product_quantity']);
 
-        $message = 'Der Preis des bestellten Produktes "' . $oldOrderDetail['OrderDetails']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetails']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetails']['total_price_tax_incl']) . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
+        $message = 'Der Preis des bestellten Produktes "' . $oldOrderDetail['OrderDetails']['product_name'] . '" (Anzahl: ' . $oldOrderDetail['OrderDetails']['product_quantity'] . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail['OrderDetails']['total_price_tax_incl']) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
 
         // send email to customer
         $email = new AppEmail();
@@ -463,7 +463,7 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = 'Produkt "' . $orderDetail['OrderDetails']['product_name'] . '" (' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($orderDetail['OrderDetails']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Orders']['id_order'] . ' vom ' . Configure::read('AppConfig.timeHelper')->formatToDateNTimeLong($orderDetail['Orders']['date_add']) . ' wurde erfolgreich storniert';
+            $message = 'Produkt "' . $orderDetail['OrderDetails']['product_name'] . '" (' . Configure::read('app.htmlHelper')->formatAsEuro($orderDetail['OrderDetails']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Orders']['id_order'] . ' vom ' . Configure::read('app.timeHelper')->formatToDateNTimeLong($orderDetail['Orders']['date_add']) . ' wurde erfolgreich storniert';
 
             // delete row
             $this->OrderDetail->deleteOrderDetail($orderDetailId);
@@ -494,7 +494,7 @@ class OrderDetailsController extends AdminAppController
 
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
-            if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('AppConfig.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
+            if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
                 $message .= ' sowie an den Hersteller <b>' . $orderDetail['Products']['Manufacturers']['name'] . '</b>';
                 $email->addCC($orderDetail['Products']['Manufacturers']['Addresses']['email']);
             }
@@ -506,7 +506,7 @@ class OrderDetailsController extends AdminAppController
                 $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetails']['product_quantity'] . ' auf ' . Configure::read('AppConfig.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+            $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetails']['product_quantity'] . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetails']['product_id'], 'products', $message);

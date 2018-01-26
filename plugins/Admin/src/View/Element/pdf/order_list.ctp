@@ -31,10 +31,10 @@ $html = '<h2>' . $title;
  * if order lists are sent on wednesday, thursday or friday, eventually changed deliveryDayDelta
  * important if allowManualOrderListSending = true
  */
-if (! $bulkOrdersAllowed && Configure::read('AppConfigDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
-    $deliveryDate = strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day');
+if (! $bulkOrdersAllowed && Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
+    $deliveryDate = strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day');
     $html .= '<br />Liefertermin: ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date('d.m.Y', $deliveryDate);
-    $html .= Configure::read('AppConfigDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') . '</h2>';
+    $html .= Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') . '</h2>';
 }
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(5);

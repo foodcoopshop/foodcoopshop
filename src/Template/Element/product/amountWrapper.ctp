@@ -20,7 +20,7 @@ use Cake\Core\Configure;
     <span class="left-of-input">Anzahl</span>
     <input name="amount" value="1" type="text">
 
-<?php if ($stockAvailable > 0 && $stockAvailable <= Configure::read('AppConfigDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')) { ?>
+<?php if ($stockAvailable > 0 && $stockAvailable <= Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')) { ?>
         <span class="right-of-input">(<?php echo $stockAvailable; ?> verfügbar)</span>
 <?php } ?>
 

@@ -147,7 +147,7 @@ class CustomersTable extends AppTable
         parent::__construct($id, $table, $ds);
 
         $virtualNameField = "`{$this->getAlias()}`.`firstname`,' ',`{$this->getAlias()}`.`lastname`)";
-        if (Configure::read('AppConfig.customerMainNamePart') == 'lastname') {
+        if (Configure::read('app.customerMainNamePart') == 'lastname') {
             $virtualNameField = "`{$this->getAlias()}`.`lastname`,' ',`{$this->getAlias()}`.`firstname`)";
         }
 
@@ -155,7 +155,7 @@ class CustomersTable extends AppTable
             'name' => "TRIM(CONCAT(" . $virtualNameField . ")"
         ];
         $this->hasMany['ValidOrder']['conditions'] = [
-            'ValidOrder.current_state IN (' . Configure::read('AppConfig.htmlHelper')->getOrderStateIdsAsCsv() . ')'
+            'ValidOrder.current_state IN (' . Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv() . ')'
         ];
         $this->hasMany['ActiveOrders']['conditions'] = [
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
@@ -166,7 +166,7 @@ class CustomersTable extends AppTable
     public function getConditionToExcludeHostingUser()
     {
         return [
-            'Customers.email != \'' . Configure::read('AppConfig.hostingEmail') . '\''
+            'Customers.email != \'' . Configure::read('app.hostingEmail') . '\''
         ];
     }
 
@@ -253,7 +253,7 @@ class CustomersTable extends AppTable
                 'Customers.active',
                 'Customers.email'
             ],
-            'order' => Configure::read('AppConfig.htmlHelper')->getCustomerOrderBy()
+            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
         ]);
 
         $offlineCustomers = [];

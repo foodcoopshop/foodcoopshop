@@ -39,8 +39,8 @@ class SendOrderListsShell extends AppShell
 
         $this->startTimeLogging();
 
-        $dateFrom = Configure::read('AppConfig.timeHelper')->getOrderPeriodFirstDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
-        $dateTo = Configure::read('AppConfig.timeHelper')->getOrderPeriodLastDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+        $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
 
         // $dateFrom = '01.02.2016';
         // $dateTo = '29.02.2016';
@@ -60,8 +60,8 @@ class SendOrderListsShell extends AppShell
         // 2) get all orders in the given date range
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
                 'Orders.current_state' => ORDER_STATE_OPEN
             ]
         ]);
@@ -95,7 +95,7 @@ class SendOrderListsShell extends AppShell
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturers']['send_order_list']);
             if (isset($manufacturer['order_detail_quantity_sum']) && $sendOrderList && !$bulkOrdersAllowed) {
                 $productString = ($manufacturer['order_detail_quantity_sum'] == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer['Manufacturers']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('AppConfig.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
+                $outString .= ' - ' . $manufacturer['Manufacturers']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
                 $i ++;

@@ -13,13 +13,13 @@
  * @link          https://www.foodcoopshop.com
  */
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
-    Configure::read('AppConfig.jsNamespace').".Cart.initCartFinish();"
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
+    Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 if (!$appAuth->termsOfUseAccepted()) {
     $this->element('addScript', ['script' =>
-        Configure::read('AppConfig.jsNamespace') . ".Helper.disableButton($('#OrderDetailForm button.btn-success'));"
+        Configure::read('app.jsNamespace') . ".Helper.disableButton($('#OrderDetailForm button.btn-success'));"
     ]);
 }
 ?>
@@ -39,8 +39,8 @@ if (!$appAuth->termsOfUseAccepted()) {
     
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
         
-        <?php if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('AppConfig.manufacturerComponensationInfoText') != '') { ?>
-            <p><b><?php echo Configure::read('AppConfig.manufacturerComponensationInfoText'); ?></b></p>
+        <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
+            <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
         <?php } ?>
 
         <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
@@ -84,9 +84,9 @@ if (!$appAuth->termsOfUseAccepted()) {
         <div class="sc"></div>
         
         <?php
-        if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED')) {
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', ['script' =>
-            Configure::read('AppConfig.jsNamespace') . ".Helper.bindToggleLinks();"
+            Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
             if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Orders']['comment'] != '') {
                 $this->element('addScript', ['script' =>

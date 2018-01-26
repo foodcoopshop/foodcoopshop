@@ -21,11 +21,11 @@
         <tr>
             <td>
                 
-                <p>Deine Registrierung bei "<?php echo Configure::read('AppConfigDb.FCS_APP_NAME'); ?>" war erfolgreich!</p>
+                <p>Deine Registrierung bei "<?php echo Configure::read('appDb.FCS_APP_NAME'); ?>" war erfolgreich!</p>
                 
                 <?php
-                if (Configure::read('AppConfigDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
-                    echo Configure::read('AppConfigDb.FCS_REGISTRATION_EMAIL_TEXT');
+                if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
+                    echo Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT');
                 }
                 ?>
                 

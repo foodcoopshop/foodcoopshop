@@ -22,7 +22,7 @@
         <td>
 
             <p>
-                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('AppConfig.timeHelper')->formatToDateNTimeShort($request['Payments']['date_add']); ?></b> über <b>€ <?php echo Configure::read('AppConfig.htmlHelper')->formatAsDecimal($request['Payments']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
+                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('app.timeHelper')->formatToDateNTimeShort($request['Payments']['date_add']); ?></b> über <b>€ <?php echo Configure::read('app.htmlHelper')->formatAsDecimal($request['Payments']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
                 
                 <?php if ($request['Payments']['approval'] == -1) { ?>
                     Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto.
@@ -40,7 +40,7 @@
             
             <p>
                 Hier der Link zu deinem Guthaben-System:<br />
-                <a href="<?php echo Configure::read('AppConfig.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('AppConfig.cakeServerName').'/admin/payments/product'; ?></a>
+                <a href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
             </p>
             
         </td>

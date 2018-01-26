@@ -27,7 +27,7 @@
                 </p>
                 
                 <p>Du kannst dich hier anmelden und das Passwort gleich ändern:<br />
-                <a href="<?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('AppConfig.cakeServerName').$this->Slug->getChangePassword(); ?></a>
+                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
                 
             </td>
             

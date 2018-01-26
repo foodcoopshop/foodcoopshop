@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.init();"
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();"
 ]);
 ?>
 <div id="configurations">
@@ -53,13 +53,13 @@ $this->element('addScript', [
                 continue;
             }
 
-            if (! Configure::read('AppConfig.htmlHelper')->paymentIsCashless() && in_array($configuration['Configurations']['name'], [
+            if (! Configure::read('app.htmlHelper')->paymentIsCashless() && in_array($configuration['Configurations']['name'], [
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE'
             ])) {
                 continue;
             }
-            if (! Configure::read('AppConfig.memberFeeEnabled') && $configuration['Configurations']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
+            if (! Configure::read('app.memberFeeEnabled') && $configuration['Configurations']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
                 continue;
             }
 
@@ -101,13 +101,13 @@ $this->element('addScript', [
         }
         ?>
         
-        <?php if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+        <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
             <tr>
                 <td>
                     <b>Remote-Foodcoops</b>
                     <br /><div class="small">Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können.<br /><a target="_blank" href="<?php echo $this->Network->getNetworkPluginDocs(); ?>">Infos zum Netzwerk-Modul</a></div>
                 </td>
-                <?php if (!Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
+                <?php if (!Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
                     echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), [
@@ -194,7 +194,7 @@ $this->element('addScript', [
             <td><?php echo $versionFoodCoopShop; ?></td>
         </tr>
 
-        <?php if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
+        <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
         <tr>
             <td>Version Netzwerk-Modul</td>
             <td><?php echo $versionNetworkPlugin; ?></td>
@@ -204,25 +204,25 @@ $this->element('addScript', [
         <tr>
             <td>app.cakeServerName</td>
             <td><a target="_blank"
-                href="<?php echo Configure::read('AppConfig.cakeServerName'); ?>"><?php echo Configure::read('AppConfig.cakeServerName'); ?></a></td>
+                href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
         </tr>
         
 
         <tr>
             <td>app.emailOrderReminderEnabled</td>
-            <td><?php echo Configure::read('AppConfig.emailOrderReminderEnabled') ? 'ja' : 'nein'; ?></td>
+            <td><?php echo Configure::read('app.emailOrderReminderEnabled') ? 'ja' : 'nein'; ?></td>
         </tr>
 
         <tr>
             <td>app.registrationNotificationEmails</td>
-            <td><?php echo join(', ', Configure::read('AppConfig.registrationNotificationEmails')); ?></td>
+            <td><?php echo join(', ', Configure::read('app.registrationNotificationEmails')); ?></td>
         </tr>
 
 
 
         <tr>
             <td>app.adminEmail / app.adminPassword</td>
-            <td><?php echo Configure::read('AppConfig.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('AppConfig.adminPassword')); ?></td>
+            <td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('app.adminPassword')); ?></td>
         </tr>
 
         <tr>
@@ -243,59 +243,59 @@ $this->element('addScript', [
 
         <tr>
             <td>app.additionalOrderStatusChangeInfo</td>
-            <td><?php echo Configure::read('AppConfig.additionalOrderStatusChangeInfo'); ?></td>
+            <td><?php echo Configure::read('app.additionalOrderStatusChangeInfo'); ?></td>
         </tr>
 
         <tr>
             <td>app.allowManualOrderListSending</td>
-            <td><?php echo Configure::read('AppConfig.allowManualOrderListSending') ? 'ja' : 'nein'; ?></td>
+            <td><?php echo Configure::read('app.allowManualOrderListSending') ? 'ja' : 'nein'; ?></td>
         </tr>
 
         <tr>
             <td>app.sendOrderListsWeekday</td>
-            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('AppConfig.sendOrderListsWeekday')); ?></td>
+            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
         </tr>
 
         <tr>
             <td>Abholtag</td>
-            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('AppConfig.sendOrderListsWeekday') + Configure::read('AppConfig.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
+            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
         </tr>
 
         <tr>
             <td>app.paymentMethods</td>
-            <td><?php echo join(', ', Configure::read('AppConfig.paymentMethods')); ?></td>
+            <td><?php echo join(', ', Configure::read('app.paymentMethods')); ?></td>
         </tr>
 
         <tr>
             <td>app.visibleOrderStates</td>
-            <td><?php echo json_encode(Configure::read('AppConfig.visibleOrderStates')); ?></td>
+            <td><?php echo json_encode(Configure::read('app.visibleOrderStates')); ?></td>
         </tr>
 
         <tr>
             <td>app.memberFeeEnabled</td>
-            <td><?php echo Configure::read('AppConfig.memberFeeEnabled') ? 'ja' : 'nein'; ?></td>
+            <td><?php echo Configure::read('app.memberFeeEnabled') ? 'ja' : 'nein'; ?></td>
         </tr>
 
         <tr>
             <td>app.isDepositPaymentCashless</td>
-            <td><?php echo Configure::read('AppConfig.isDepositPaymentCashless') ? 'ja' : 'nein'; ?></td>
+            <td><?php echo Configure::read('app.isDepositPaymentCashless') ? 'ja' : 'nein'; ?></td>
         </tr>
 
-        <?php if (Configure::read('AppConfig.isDepositPaymentCashless')) { ?>
+        <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
             <tr>
             <td>app.depositPaymentCashlessStartDate</td>
-            <td><?php echo date('d.m.Y', strtotime(Configure::read('AppConfig.depositPaymentCashlessStartDate'))); ?></td>
+            <td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
         </tr>
         <?php } ?>
 
         <tr>
             <td>app.depositForManufacturersStartDate</td>
-            <td><?php echo date('d.m.Y', strtotime(Configure::read('AppConfig.depositForManufacturersStartDate'))); ?></td>
+            <td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
         </tr>
 
         <tr>
             <td>app.customerMainNamePart</td>
-            <td><?php echo Configure::read('AppConfig.customerMainNamePart'); ?></td>
+            <td><?php echo Configure::read('app.customerMainNamePart'); ?></td>
         </tr>
 
         <?php
@@ -312,7 +312,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.emailErrorLoggingEnabled</td>
-            <td><?php echo Configure::read('AppConfig.emailErrorLoggingEnabled') ? 'ja' : 'nein'; ?></td>
+            <td><?php echo Configure::read('app.emailErrorLoggingEnabled') ? 'ja' : 'nein'; ?></td>
         </tr>
 
         <tr>
@@ -321,29 +321,29 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>Logo für Webseite (Breite: 260px)<br /><?php echo Configure::read('AppConfig.cakeServerName'); ?>/files/images/logo.jpg</td>
+            <td>Logo für Webseite (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg</td>
             <td><img
-                src="<?php echo Configure::read('AppConfig.cakeServerName'); ?>/files/images/logo.jpg" /></td>
+                src="<?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg" /></td>
         </tr>
 
         <tr>
-            <td>Logo für Bestelllisten und Rechnungen (Breite: 260px)<br /><?php echo Configure::read('AppConfig.cakeServerName'); ?>/files/images/logo-pdf.jpg</td>
+            <td>Logo für Bestelllisten und Rechnungen (Breite: 260px)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo-pdf.jpg</td>
             <td><img src="/files/images/logo-pdf.jpg" /></td>
         </tr>
 
         <tr>
-            <td>Default-Bild für Produkte (Liste, 150x150)<br /><?php echo Configure::read('AppConfig.cakeServerName'); ?>/files/images/products/de-default-home_default.jpg</td>
+            <td>Default-Bild für Produkte (Liste, 150x150)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/products/de-default-home_default.jpg</td>
             <td><img src="/files/images/products/de-default-home_default.jpg" /></td>
         </tr>
 
         <tr>
-            <td>Default-Bild für Hersteller (Liste: 125x125)<br /><?php echo Configure::read('AppConfig.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
+            <td>Default-Bild für Hersteller (Liste: 125x125)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
             <td><img
                 src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
         </tr>
 
         <tr>
-            <td>Default-Bild für Aktuelles-Beitrag (Home, 150x113)<br /><?php echo Configure::read('AppConfig.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
+            <td>Default-Bild für Aktuelles-Beitrag (Home, 150x113)<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/blog_posts/no-home-default.jpg</td>
             <td><img src="/files/images/blog_posts/no-home-default.jpg" /></td>
         </tr>
 

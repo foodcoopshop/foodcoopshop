@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.showContent();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initLogoutButton();" . Configure::read('AppConfig.jsNamespace') . ".Admin.setMenuFixed();" . Configure::read('AppConfig.jsNamespace') . ".Helper.initMenu();"
+    'script' => Configure::read('app.jsNamespace') . ".Helper.showContent();" . Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();" . Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" . Configure::read('app.jsNamespace') . ".Helper.initMenu();"
 ]);
 
 print_r($success);

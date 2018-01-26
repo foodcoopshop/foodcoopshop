@@ -65,8 +65,8 @@ class BlogPostsController extends FrontendController
             throw new RecordNotFoundException('blogPost not found');
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPosts']['title']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        $correctSlug = Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPosts']['title']);
+        if ($correctSlug != Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

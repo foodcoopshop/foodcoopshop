@@ -53,7 +53,7 @@ class ProductAttributeCombinationsTable extends AppTable
         foreach ($combinations as $combination) {
             $preparedProduct = $combination['ProductAttributes']['Products'];
 
-            $preparedProduct['link'] = Configure::read('AppConfig.htmlHelper')->link($preparedProduct['ProductLangs']['name'] . ' - ' . $preparedProduct['Manufacturers']['name'], Configure::read('AppConfig.slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLangs']['name']));
+            $preparedProduct['link'] = Configure::read('app.htmlHelper')->link($preparedProduct['ProductLangs']['name'] . ' - ' . $preparedProduct['Manufacturers']['name'], Configure::read('app.slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLangs']['name']));
 
             if ($combination['ProductAttributes']['Products']['active'] == 1) {
                 $return['online'][] = $preparedProduct;

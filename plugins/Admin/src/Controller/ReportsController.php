@@ -32,20 +32,20 @@ class ReportsController extends AdminAppController
                     break;
             }
         }
-        return $this->AppAuth->isSuperadmin() && Configure::read('AppConfig.htmlHelper')->paymentIsCashless();
+        return $this->AppAuth->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
     }
 
     public function payments($paymentType)
     {
         $this->Payment = TableRegistry::get('Payments');
 
-        $dateFrom = Configure::read('AppConfig.timeHelper')->getFirstDayOfThisYear();
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('AppConfig.timeHelper')->getLastDayOfThisYear();
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
         }
@@ -60,8 +60,8 @@ class ReportsController extends AdminAppController
         $conditions = [
             'Payments.type' => $paymentType
         ];
-        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('AppConfig.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         if ($customerId != '') {
             $conditions['Payments.id_customer'] = $customerId;
@@ -81,7 +81,7 @@ class ReportsController extends AdminAppController
         $this->set('payments', $payments);
 
         $this->set('customersForDropdown', $this->Payment->Customer->getForDropdown());
-        $this->set('title_for_layout', 'Bericht: ' . Configure::read('AppConfig.htmlHelper')->getPaymentText($paymentType));
+        $this->set('title_for_layout', 'Bericht: ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', in_array($paymentType, array(
             'member_fee',

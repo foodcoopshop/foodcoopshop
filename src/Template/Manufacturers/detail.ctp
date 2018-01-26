@@ -14,20 +14,20 @@
  */
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox, .manufacturer-infos a.lightbox');".
-    Configure::read('AppConfig.jsNamespace').".Helper.initProductAttributesButtons();".
-    Configure::read('AppConfig.jsNamespace').".Helper.bindToggleLinks();".
-    Configure::read('AppConfig.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox, .manufacturer-infos a.lightbox');".
+    Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
+    Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
+    Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
 ?>
 
 <h1><?php echo $manufacturer['Manufacturers']['name']; ?>
 
 <?php
-if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
     echo '<span>'.count($manufacturer['Products']) . ' gefunden</span>';
 }
 ?>

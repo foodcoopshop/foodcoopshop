@@ -39,7 +39,7 @@ if (! isset($newInvoiceNumber)) {
 
 $html .= '<td width="330">';
 $html .= '<h2>Rechnung Nr.: ' . $newInvoiceNumber . '</h2>';
-$html .= '<h3>Bestellungen vom ' . Configure::read('AppConfig.timeHelper')->getLastMonthNameAndYear() . '</h3>';
+$html .= '<h3>Bestellungen vom ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear() . '</h3>';
 $html .= '<h3>Rechnungsdatum: ' . date('d.m.Y') . '</h3>';
 $html .= '</td>';
 $html .= '</tr></table>';
@@ -76,7 +76,7 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 // Produktauflistung End
 
-if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
+if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     // TODO do that in controller where it belongs to :-)
     $m = TableRegistry::get('Manufacturers'):
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);

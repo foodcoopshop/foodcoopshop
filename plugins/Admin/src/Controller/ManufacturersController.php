@@ -77,7 +77,7 @@ class ManufacturersController extends AdminAppController
         }
 
         $_SESSION['KCFINDER'] = [
-            'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
         $this->set('data', [
@@ -99,7 +99,7 @@ class ManufacturersController extends AdminAppController
             ])->first();
 
             $_SESSION['KCFINDER'] = [
-                'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+                'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
             ];
         } else {
@@ -184,7 +184,7 @@ class ManufacturersController extends AdminAppController
                     'firstname' => $this->data['Addresses']['firstname'],
                     'lastname' => $this->data['Addresses']['lastname'],
                     'active' => APP_ON,
-                    'id_lang' => Configure::read('AppConfig.langId')
+                    'id_lang' => Configure::read('app.langId')
                 ];
                 $this->Customer->save($customerData, false);
 
@@ -193,18 +193,18 @@ class ManufacturersController extends AdminAppController
                 ]);
 
                 if ($this->request->data['Manufacturers']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->Manufacturer->id, $this->request->data['Manufacturers']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getManufacturerThumbsPath(), Configure::read('AppConfig.manufacturerImageSizes'));
+                    $this->saveUploadedImage($this->Manufacturer->id, $this->request->data['Manufacturers']['tmp_image'], Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
                 }
 
                 if ($this->request->data['Manufacturers']['delete_image']) {
-                    $this->deleteUploadedImage($this->Manufacturer->id, Configure::read('AppConfig.htmlHelper')->getManufacturerThumbsPath(), Configure::read('AppConfig.manufacturerImageSizes'));
+                    $this->deleteUploadedImage($this->Manufacturer->id, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
                 }
 
                 $message = 'Der Hersteller "' . $this->request->data['Manufacturers']['name'] . '" wurde ' . $messageSuffix;
                 $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
                 $this->Flash->success('Der Hersteller wurde erfolgreich gespeichert.');
 
-                if ($this->request->here == Configure::read('AppConfig.slugHelper')->getManufacturerProfile()) {
+                if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerProfile()) {
                     $this->renewAuthSession();
                 }
 
@@ -255,13 +255,13 @@ class ManufacturersController extends AdminAppController
 
     public function index()
     {
-        $dateFrom = Configure::read('AppConfig.timeHelper')->getOrderPeriodFirstDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+        $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->params['named']['dateFrom'])) {
             $dateFrom = $this->params['named']['dateFrom'];
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('AppConfig.timeHelper')->getOrderPeriodLastDay(Configure::read('AppConfig.timeHelper')->getCurrentDay());
+        $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->params['named']['dateTo'])) {
             $dateTo = $this->params['named']['dateTo'];
         }
@@ -300,7 +300,7 @@ class ManufacturersController extends AdminAppController
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturers']['id_manufacturer'], false);
             $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0]['sumDepositDelivered'];
             $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
-            if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+            if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturers[$i]['Manufacturers']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             }
             $manufacturers[$i]['sum_open_order_detail'] = $this->OrderDetail->getOpenOrderDetailSum($manufacturer['Manufacturers']['id_manufacturer'], $dateFrom, $dateTo);
@@ -348,7 +348,7 @@ class ManufacturersController extends AdminAppController
 
             // generate invoice
             $this->render('get_invoice');
-            $invoicePdfUrl = Configure::read('AppConfig.htmlHelper')->getInvoiceLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
+            $invoicePdfUrl = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
             $invoicePdfFile = $invoicePdfUrl;
 
             $this->Flash->success('Rechnung für Hersteller "' . $manufacturer['Manufacturers']['name'] . '" erfolgreich versendet an ' . $manufacturer['Addresses']['email'] . '.</a>');
@@ -363,7 +363,7 @@ class ManufacturersController extends AdminAppController
             $this->Manufacturer->Invoices->id = null;
             $this->Manufacturer->Invoices->save($invoice2Save);
 
-            $invoicePeriodMonthAndYear = Configure::read('AppConfig.timeHelper')->getLastMonthNameAndYear();
+            $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturers']['send_invoice']);
             if ($sendEmail) {
@@ -410,7 +410,7 @@ class ManufacturersController extends AdminAppController
 
     public function sendOrderList($manufacturerId, $from, $to)
     {
-        Configure::read('AppConfig.timeHelper')->recalcDeliveryDayDelta();
+        Configure::read('app.timeHelper')->recalcDeliveryDayDelta();
 
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -433,7 +433,7 @@ class ManufacturersController extends AdminAppController
 
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Produkt');
+            $productPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
             $productPdfFile = $productPdfUrl;
 
             // generate order list by customer
@@ -441,7 +441,7 @@ class ManufacturersController extends AdminAppController
                 ORDER_STATE_OPEN
             ], 'F');
             $this->render('get_order_list_by_customer');
-            $customerPdfUrl = Configure::read('AppConfig.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')), 'Mitglied');
+            $customerPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
             $customerPdfFile = $customerPdfUrl;
 
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturers']['send_order_list']);
@@ -460,7 +460,7 @@ class ManufacturersController extends AdminAppController
                     $productPdfFile,
                     $customerPdfFile
                         ])
-                    ->subject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')))
+                    ->subject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                     ->viewVars([
                     'manufacturer' => $manufacturer,
                     'appAuth' => $this->AppAuth,
@@ -500,7 +500,7 @@ class ManufacturersController extends AdminAppController
             throw new RecordNotFoundException('manufacturer does not exist');
         }
 
-        if (Configure::read('AppConfigDb.FCS_NETWORK_PLUGIN_ENABLED')) {
+        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->Network.SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
@@ -509,36 +509,36 @@ class ManufacturersController extends AdminAppController
         }
 
         // set default data if manufacturer options are null
-        if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturers']['variable_member_fee'] == '') {
-            $unsavedManufacturer['Manufacturers']['variable_member_fee'] = Configure::read('AppConfigDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+        if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturers']['variable_member_fee'] == '') {
+            $unsavedManufacturer['Manufacturers']['variable_member_fee'] = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         if ($unsavedManufacturer['Manufacturers']['send_order_list'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_order_list'] = Configure::read('AppConfig.defaultSendOrderList');
+            $unsavedManufacturer['Manufacturers']['send_order_list'] = Configure::read('app.defaultSendOrderList');
         }
         if ($unsavedManufacturer['Manufacturers']['send_invoice'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_invoice'] = Configure::read('AppConfig.defaultSendInvoice');
+            $unsavedManufacturer['Manufacturers']['send_invoice'] = Configure::read('app.defaultSendInvoice');
         }
         if ($unsavedManufacturer['Manufacturers']['default_tax_id'] == '') {
-            $unsavedManufacturer['Manufacturers']['default_tax_id'] = Configure::read('AppConfig.defaultTaxId');
+            $unsavedManufacturer['Manufacturers']['default_tax_id'] = Configure::read('app.defaultTaxId');
         }
         if (!$this->AppAuth->isManufacturer() && $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] == '') {
-            $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] = Configure::read('AppConfig.defaultBulkOrdersAllowed');
+            $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] = Configure::read('app.defaultBulkOrdersAllowed');
         }
         if ($unsavedManufacturer['Manufacturers']['send_shop_order_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_shop_order_notification'] = Configure::read('AppConfig.defaultSendShopOrderNotification');
+            $unsavedManufacturer['Manufacturers']['send_shop_order_notification'] = Configure::read('app.defaultSendShopOrderNotification');
         }
         if ($unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] = Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification');
+            $unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
         if ($unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] = Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification');
+            $unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
         if ($unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] = Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification');
+            $unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
 
-        $unsavedManufacturer['Manufacturers']['holiday_from'] = Configure::read('AppConfig.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_from']);
-        $unsavedManufacturer['Manufacturers']['holiday_to'] = Configure::read('AppConfig.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_to']);
+        $unsavedManufacturer['Manufacturers']['holiday_from'] = Configure::read('app.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_from']);
+        $unsavedManufacturer['Manufacturers']['holiday_to'] = Configure::read('app.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_to']);
 
         $this->set('unsavedManufacturer', $unsavedManufacturer);
         $this->set('manufacturerId', $manufacturerId);
@@ -552,38 +552,38 @@ class ManufacturersController extends AdminAppController
                 unset($this->request->data['Manufacturers']['active']);
             }
 
-            $this->request->data['Manufacturers']['holiday_from'] = Configure::read('AppConfig.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_from']);
-            $this->request->data['Manufacturers']['holiday_to'] = Configure::read('AppConfig.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_to']);
+            $this->request->data['Manufacturers']['holiday_from'] = Configure::read('app.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_from']);
+            $this->request->data['Manufacturers']['holiday_to'] = Configure::read('app.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_to']);
 
             // values that are the same as default values => null
             if (!$this->AppAuth->isManufacturer()) {
                 // only admins and superadmins are allowed to change variable_member_fee
-                if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturers']['variable_member_fee'] == Configure::read('AppConfigDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturers']['variable_member_fee'] == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
                     $this->request->data['Manufacturers']['variable_member_fee'] = null;
                 }
             }
-            if ($this->request->data['Manufacturers']['default_tax_id'] == Configure::read('AppConfig.defaultTaxId')) {
+            if ($this->request->data['Manufacturers']['default_tax_id'] == Configure::read('app.defaultTaxId')) {
                 $this->request->data['Manufacturers']['default_tax_id'] = null;
             }
-            if ($this->request->data['Manufacturers']['send_order_list'] == Configure::read('AppConfig.defaultSendOrderList')) {
+            if ($this->request->data['Manufacturers']['send_order_list'] == Configure::read('app.defaultSendOrderList')) {
                 $this->request->data['Manufacturers']['send_order_list'] = null;
             }
-            if ($this->request->data['Manufacturers']['send_invoice'] == Configure::read('AppConfig.defaultSendInvoice')) {
+            if ($this->request->data['Manufacturers']['send_invoice'] == Configure::read('app.defaultSendInvoice')) {
                 $this->request->data['Manufacturers']['send_invoice'] = null;
             }
-            if (!$this->AppAuth->isManufacturer() && $this->request->data['Manufacturers']['bulk_orders_allowed'] == Configure::read('AppConfig.defaultBulkOrdersAllowed')) {
+            if (!$this->AppAuth->isManufacturer() && $this->request->data['Manufacturers']['bulk_orders_allowed'] == Configure::read('app.defaultBulkOrdersAllowed')) {
                 $this->request->data['Manufacturers']['bulk_orders_allowed'] = null;
             }
-            if ($this->request->data['Manufacturers']['send_shop_order_notification'] == Configure::read('AppConfig.defaultSendShopOrderNotification')) {
+            if ($this->request->data['Manufacturers']['send_shop_order_notification'] == Configure::read('app.defaultSendShopOrderNotification')) {
                 $this->request->data['Manufacturers']['send_shop_order_notification'] = null;
             }
-            if ($this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] == Configure::read('AppConfig.defaultSendOrderedProductDeletedNotification')) {
+            if ($this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
                 $this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] = null;
             }
-            if ($this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] == Configure::read('AppConfig.defaultSendOrderedProductPriceChangedNotification')) {
+            if ($this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
                 $this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] = null;
             }
-            if ($this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] == Configure::read('AppConfig.defaultSendOrderedProductQuantityChangedNotification')) {
+            if ($this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
                 $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
             }
 
@@ -606,7 +606,7 @@ class ManufacturersController extends AdminAppController
 
             $this->Manufacturer->validator()['send_order_list'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 2);
 
-            if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+            if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $this->Manufacturer->validator()['variable_member_fee'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
             }
             if (!empty($this->request->data['Manufacturers']['send_order_list_cc'])) {
@@ -624,7 +624,7 @@ class ManufacturersController extends AdminAppController
                 ]);
 
                 $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturers']['name'] . '</b>';
-                if ($this->request->here == Configure::read('AppConfig.slugHelper')->getManufacturerMyOptions()) {
+                if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
                     $message = 'Deine Einstellungen';
                     $this->renewAuthSession();
                 }
@@ -664,7 +664,7 @@ class ManufacturersController extends AdminAppController
         $this->set('to', date('d.m.Y', strtotime(str_replace('/', '-', $to))));
 
         // only needed for order lists: format is english because it is used for filename => sorting!
-        $this->set('deliveryDay', date('Y-m-d', strtotime('+' . Configure::read('AppConfig.deliveryDayDelta') . ' day')));
+        $this->set('deliveryDay', date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')));
 
         // calculate sum of price
         $sumPriceIncl = 0;
@@ -738,7 +738,7 @@ class ManufacturersController extends AdminAppController
 
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
         if ($bulkOrdersAllowed) {
-            $orderStates = Configure::read('AppConfig.htmlHelper')->getOrderStateIds();
+            $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         } else {
             $orderStates = [
                 ORDER_STATE_OPEN

@@ -14,7 +14,7 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Admin.initNextAndPreviousDayLinks();"
+    'script' => Configure::read('app.jsNamespace') . ".Admin.initNextAndPreviousDayLinks();"
 ]);
 ?>
 

@@ -48,7 +48,7 @@ return [
             'headerCharset' => 'utf-8',
         ],
     ],
-    'AppConfig' => [
+    'app' => [
         'jsNamespace' => 'foodcoopshop',
         'visibleOrderStates' => [
             ORDER_STATE_OPEN => 'offen',

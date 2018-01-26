@@ -26,7 +26,7 @@ foreach ($orders as $order) {
     $pdf->writeHTML('<h2>' . $order['Customers']['name'] . '</h2>', true, false, true, false, '');
     $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Orders']['date_add']) . '</h3>', true, false, true, false, '');
 
-    if (Configure::read('AppConfigDb.FCS_ORDER_COMMENT_ENABLED') && $order['Orders']['comment'] != '') {
+    if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && $order['Orders']['comment'] != '') {
         $pdf->SetRightMargin(16);
         $pdf->Ln(2);
         $pdf->writeHTML('<p><b>Kommentar: </b>' . $order['Orders']['comment'] . '</p>', true, false, true, false, '');
@@ -112,8 +112,8 @@ foreach ($orders as $order) {
     $pdf->renderTable();
 
     $pdf->Ln(5);
-    if (Configure::read('AppConfigDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('AppConfig.manufacturerComponensationInfoText') != '') {
-        $html = '<p>'.Configure::read('AppConfig.manufacturerComponensationInfoText').'</p>';
+    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') {
+        $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Ln(2);
     }

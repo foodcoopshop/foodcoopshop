@@ -15,24 +15,24 @@
 
 use Cake\Core\Configure;
 
-if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
+if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('appDb.FCS_CART_ENABLED')) {
     return;
 }
 
 if ($appAuth->Cart->getProducts() !== null) {
     $this->element('addScript', ['script' =>
-        Configure::read('AppConfig.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
+        Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
     ]);
 
     if (!empty($cartErrors)) {
         $this->element('addScript', ['script' =>
-            Configure::read('AppConfig.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
+            Configure::read('app.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
         ]);
     }
     if ($this->name == 'Carts' && $this->request->action == 'detail') {
         $this->element('addScript', ['script' =>
-            Configure::read('AppConfig.jsNamespace').".Cart.initRemoveFromCartLinks();".
-            Configure::read('AppConfig.jsNamespace').".Cart.initChangeAmountLinks();"
+            Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+            Configure::read('app.jsNamespace').".Cart.initChangeAmountLinks();"
         ]);
     }
 }
@@ -47,7 +47,7 @@ if ($appAuth->Cart->getProducts() !== null) {
         if ($appAuth->user() && $this->Html->paymentIsCashless()) {
             if ($this->request->getSession()->read('Auth.shopOrderCustomer')) {
                 $this->element('addScript', ['script' =>
-                    Configure::read('AppConfig.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
+                    Configure::read('app.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
                 ]);
                 echo '<p class="shop-order-customer-info">Diese Bestellung wird für <b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')['Customers']['name'].'</b> getätigt. <b><a class="btn btn-default" href="javascript:void(0);">Sofort-Bestellung abbrechen?</a></b></p>';
             }
@@ -58,7 +58,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             echo '<div class="credit-balance-wrapper">';
               echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">Dein Guthaben</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
             if ($shoppingLimitReached) {
-                echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('AppConfigDb.FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
+                echo '<p><b class="negative">Du hast das Bestelllimit von ' . $this->Html->formatAsEuro(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) . ' erreicht. Bitte lade vor dem Bestellen neues Guthaben auf.</b></p>';
                 echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
                 echo 'Guthaben aufladen';
                 echo '</a></p>';

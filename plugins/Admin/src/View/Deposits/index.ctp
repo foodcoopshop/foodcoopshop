@@ -14,9 +14,9 @@
  */
 
 $this->element('addScript', [
-    'script' => Configure::read('AppConfig.jsNamespace') . ".Helper.initDatepicker();
+    'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
-        datefieldSelector.datepicker();" . Configure::read('AppConfig.jsNamespace') . ".Admin.init();
+        datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();
     "
 ]);
 ?>
@@ -48,7 +48,7 @@ if (empty($manufacturer)) {
     <ul>
         <?php echo $this->element('docs/abholdienst'); ?>
         <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturers']['name']; ?></b> verwaltet.</li>
-        <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('AppConfig.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
+        <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
         <li><b>Produkt mit Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
         <li><b>Leergebinde zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
         <li>Ein Klick auf <b>Details</b> zeigt die genau Zusammensetzung des monatlichen Betrages an.</li>
@@ -82,7 +82,7 @@ if ($appAuth->isSuperadmin()) {
     echo '<div class="sc"></div>';
 
     if (empty($deposits)) {
-        echo '<h2 class="info">Seit dem '.date('d.m.Y', strtotime(Configure::read('AppConfig.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
+        echo '<h2 class="info">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
     } else {
         echo '<table class="list no-clone-last-row">';
 

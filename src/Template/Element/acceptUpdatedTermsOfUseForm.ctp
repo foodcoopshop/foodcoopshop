@@ -23,7 +23,7 @@ if (!$appAuth->user() || $appAuth->termsOfUseAccepted()) {
 }
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-form a.terms-of-use-overlay');"
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-form a.terms-of-use-overlay');"
 ]);
 ?>
 <div class="accept-updated-terms-of-use-form">

@@ -9,7 +9,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * Cronjob works properly if it's called on Configure::read('AppConfig.sendOrderListsWeekDay') -1 or -2
+ * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
  * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
  *
  * @since         FoodCoopShop 1.0.0
@@ -30,7 +30,7 @@ class EmailOrderReminderShell extends AppShell
     {
         parent::main();
 
-        if (! Configure::read('AppConfig.emailOrderReminderEnabled') || ! Configure::read('AppConfigDb.FCS_CART_ENABLED')) {
+        if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('appDb.FCS_CART_ENABLED')) {
             return;
         }
 
@@ -48,8 +48,8 @@ class EmailOrderReminderShell extends AppShell
             'hasMany' => ['PaidCashFreeOrders', 'Payments', 'ValidOrder']
         ]);
 
-        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('AppConfig.timeHelper')->getOrderPeriodFirstDay(Configure::read('AppConfig.timeHelper')->getCurrentDay()). '\'';
-        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('AppConfig.timeHelper')->getOrderPeriodLastDay(Configure::read('AppConfig.timeHelper')->getCurrentDay()). '\'';
+        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'';
+        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'';
 
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
@@ -70,10 +70,10 @@ class EmailOrderReminderShell extends AppShell
             $Email->to($customer['Customers']['email'])
                 ->template('Admin.email_order_reminder')
                 ->emailFormat('html')
-                ->subject('Bestell-Erinnerung ' . Configure::read('AppConfigDb.FCS_APP_NAME'))
+                ->subject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
                 ->viewVars([
                   'customer' => $customer,
-                  'lastOrderDayAsString' => (Configure::read('AppConfig.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
+                  'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
                 ])
                 ->send();
 

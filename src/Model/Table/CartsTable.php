@@ -73,17 +73,17 @@ class CartsTable extends AppTable
             'CartProducts' => []
         ];
         foreach ($cartProducts as &$cartProduct) {
-            $manufacturerLink = Configure::read('AppConfig.htmlHelper')->link($cartProduct['Products']['Manufacturers']['name'], Configure::read('AppConfig.slugHelper')->getManufacturerDetail($cartProduct['Products']['Manufacturers']['id_manufacturer'], $cartProduct['Products']['Manufacturers']['name']));
+            $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct['Products']['Manufacturers']['name'], Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct['Products']['Manufacturers']['id_manufacturer'], $cartProduct['Products']['Manufacturers']['name']));
 
             $imageId = 0;
             if (!empty($cartProduct['Products']['Images'])) {
                 $imageId = $cartProduct['Products']['Images']['id_image'];
             }
 
-            $productImage = Configure::read('AppConfig.htmlHelper')->image(Configure::read('AppConfig.htmlHelper')->getProductImageSrc($imageId, 'home'));
-            $productLink = Configure::read('AppConfig.htmlHelper')->link(
+            $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
+            $productLink = Configure::read('app.htmlHelper')->link(
                 $cartProduct['ProductLangs']['name'],
-                Configure::read('AppConfig.slugHelper')->getProductDetail(
+                Configure::read('app.slugHelper')->getProductDetail(
                     $cartProduct['CartProducts']['id_product'],
                     $cartProduct['ProductLangs']['name']
                 ),

@@ -188,8 +188,8 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
 
         // check customer record
-        $this->assertEquals((bool) Configure::read('AppConfigDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customers']['active'], 'saving field active failed');
-        $this->assertEquals((int) Configure::read('AppConfigDb.FCS_CUSTOMER_GROUP'), $customer['Customers']['id_default_group'], 'saving user group failed');
+        $this->assertEquals((bool) Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'), (bool) $customer['Customers']['active'], 'saving field active failed');
+        $this->assertEquals((int) Configure::read('appDb.FCS_CUSTOMER_GROUP'), $customer['Customers']['id_default_group'], 'saving user group failed');
         $this->assertEquals($customerEmail, $customer['Customers']['email'], 'saving field email failed');
         $this->assertEquals($customerFirstname, $customer['Customers']['firstname'], 'saving field firstname failed');
         $this->assertEquals($customerLastname, $customer['Customers']['lastname'], 'saving field lastname failed');

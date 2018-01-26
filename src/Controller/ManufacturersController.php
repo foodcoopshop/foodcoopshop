@@ -68,7 +68,7 @@ class ManufacturersController extends FrontendController
             throw new RecordNotFoundException('no manufacturers available');
         }
 
-        if ($this->AppAuth->user() || Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+        if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
             foreach ($manufacturers as &$manufacturer) {
                 $manufacturer['product_count'] = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer'], true);
@@ -96,12 +96,12 @@ class ManufacturersController extends FrontendController
             throw new RecordNotFoundException('manufacturer not found or not active');
         }
 
-        $correctSlug = Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
-        if ($correctSlug != Configure::read('AppConfig.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        $correctSlug = Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
+        if ($correctSlug != Configure::read('app.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
-        if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
+        if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $products = $this->Manufacturer->getProductsByManufacturerId($manufacturerId);
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }

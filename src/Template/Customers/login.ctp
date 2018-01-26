@@ -15,9 +15,9 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').".Helper.init();".
-    Configure::read('AppConfig.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
-    Configure::read('AppConfig.jsNamespace').".Helper.initLoginForm();"
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
+    Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ]);
 ?>
 <div id="login-form" class="form">  
@@ -51,7 +51,7 @@ $this->element('addScript', ['script' =>
     <?php if (!$appAuth->user()) { ?>
     <?php
         $this->element('addScript', ['script' =>
-            Configure::read('AppConfig.jsNamespace').".Helper.initRegistrationForm('".$this->request->is('post')."');"
+            Configure::read('app.jsNamespace').".Helper.initRegistrationForm('".$this->request->is('post')."');"
         ]);
     ?>
       <div class="sc"></div>
@@ -63,8 +63,8 @@ $this->element('addScript', ['script' =>
 
               echo '<div class="detail-form">';
 
-            if (Configure::read('AppConfigDb.FCS_AUTHENTICATION_INFO_TEXT') != '') {
-                echo '<p>'.Configure::read('AppConfigDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
+            if (Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT') != '') {
+                echo '<p>'.Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
             }
 
                   echo $this->Form->hidden('antiSpam', ['value' => 'lalala']);
@@ -81,7 +81,7 @@ $this->element('addScript', ['script' =>
                   echo $this->Form->input('AddressCustomers.phone_mobile', ['label' => 'Handy', 'required' => true]);
                   echo $this->Form->input('AddressCustomers.phone', ['label' => 'Telefon']);
 
-            if (Configure::read('AppConfig.emailOrderReminderEnabled')) {
+            if (Configure::read('app.emailOrderReminderEnabled')) {
                 echo $this->Form->input('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
             }
 

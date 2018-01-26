@@ -34,7 +34,7 @@ return [
             'database' => 'foodcoopshop_test'
         ]
     ],
-    'AppConfig' => [
+    'app' => [
         /**
          * please create a unique cookie key and put it here
          */

@@ -56,7 +56,7 @@ class Installer
 
         $rootDir = dirname(dirname(__DIR__));
 
-        static::createAppConfig($rootDir, $io);
+        static::createapp($rootDir, $io);
         static::createWritableDirectories($rootDir, $io);
 
         // ask if the permissions should be changed
@@ -95,7 +95,7 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @return void
      */
-    public static function createAppConfig($dir, $io)
+    public static function createapp($dir, $io)
     {
         $appConfig = $dir . '/config/app.php';
         $defaultConfig = $dir . '/config/app.default.php';

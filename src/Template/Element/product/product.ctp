@@ -122,7 +122,7 @@ if ($product['description'] != '') {
                 $entityClasses[] = 'active';
             }
             echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute->id_product_attribute.'">';
-            if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+            if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo '<div class="line">';
                 echo '<div class="price">' . $this->Html->formatAsEuro($attribute->product_attribute_shop->gross_price). '</div>';
                 if (!empty($attribute->deposit_product_attribute->deposit)) {
@@ -150,7 +150,7 @@ if ($product['description'] != '') {
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
         echo '<div class="entity-wrapper active">';
-        if (! Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo '<div class="line">';
             echo '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
             if ($product['deposit']) {

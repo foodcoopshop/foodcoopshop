@@ -15,8 +15,8 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('AppConfig.jsNamespace').'.Helper.appendFlashMessageCloser();'.
-    Configure::read('AppConfig.jsNamespace').'.Helper.bindFlashMessageCloser();
+    Configure::read('app.jsNamespace').'.Helper.appendFlashMessageCloser();'.
+    Configure::read('app.jsNamespace').'.Helper.bindFlashMessageCloser();
 ']);
 ?>
 <div id="<?php echo h($key) ?>Message" class="success"><?php echo $message; ?></div>

@@ -62,7 +62,7 @@ class BlogPostsController extends AdminAppController
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
 
         $_SESSION['KCFINDER'] = [
-            'uploadURL' => Configure::read('AppConfig.cakeServerName') . "/files/kcfinder/blog_posts",
+            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/blog_posts",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
         ];
 
@@ -131,11 +131,11 @@ class BlogPostsController extends AdminAppController
                 }
 
                 if ($this->request->data['BlogPosts']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->BlogPost->id, $this->request->data['BlogPosts']['tmp_image'], Configure::read('AppConfig.htmlHelper')->getBlogPostThumbsPath(), Configure::read('AppConfig.blogPostImageSizes'));
+                    $this->saveUploadedImage($this->BlogPost->id, $this->request->data['BlogPosts']['tmp_image'], Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
                 }
 
                 if ($this->request->data['BlogPosts']['delete_image']) {
-                    $this->deleteUploadedImage($this->BlogPost->id, Configure::read('AppConfig.htmlHelper')->getBlogPostThumbsPath(), Configure::read('AppConfig.blogPostImageSizes'));
+                    $this->deleteUploadedImage($this->BlogPost->id, Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
                 }
 
                 if (isset($this->request->data['BlogPosts']['delete_blog_post']) && $this->request->data['BlogPosts']['delete_blog_post']) {

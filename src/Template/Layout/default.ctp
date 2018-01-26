@@ -32,7 +32,7 @@ header('Pragma: no-cache');
     <meta name="theme-color" content="#719f41">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('AppConfigDb.FCS_APP_NAME'); ?></title>
+    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -72,7 +72,7 @@ header('Pragma: no-cache');
                     <img class="logo" src="/files/images/logo.jpg" />
                 </a>
             </div>
-            <?php if (Configure::read('AppConfigDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
+            <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
                 <form id="product-search" action="/suche">
                     <input placeholder="Suche" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
@@ -122,7 +122,7 @@ if ($isMobile) {
     
     // add script BEFORE all scripts that are loaded in views (block)
     echo $this->MyHtml->scriptBlock(
-        Configure::read('AppConfig.jsNamespace').".Mobile.initMenusFrontend();",
+        Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();",
         ['inline' => true]
     );
 }
