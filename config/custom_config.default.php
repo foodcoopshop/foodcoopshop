@@ -51,7 +51,9 @@ return [
     /**
      * A random string used in security hashing methods.
      */
-    'Security.salt' => '',
+    'Security' => [
+        'salt' => ''
+    ],
     
     'app' => [
         /**

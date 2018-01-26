@@ -137,7 +137,7 @@ ConnectionManager::setConfig(Configure::consume('Datasources'));
 Email::setConfigTransport(Configure::consume('EmailTransport'));
 Email::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
-Security::setSalt(Configure::consume('Security.salt'));
+Security::setSalt(Configure::read('Security.salt')); // foodcoopshop: changed from consume to read to ensure that the check on PagesController:home works
 
 /*
  * The default crypto extension in 3.0 is OpenSSL.

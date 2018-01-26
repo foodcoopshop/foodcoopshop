@@ -60,7 +60,7 @@ class PagesController extends FrontendController
             $securityErrors++;
         }
         if (Configure::read('Security.salt') == '') {
-            echo '<p>Please copy this <b>Security.salt</b> to your custom_custom.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
+            echo '<p>Please copy this <b>Security => salt</b> to your custom_custom.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
         }
         if ($securityErrors > 0) {
