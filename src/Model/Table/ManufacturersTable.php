@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Table;
+
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -280,7 +281,6 @@ class ManufacturersTable extends AppTable
 
     public function getForMenu($appAuth)
     {
-        return [];
         
         if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
@@ -298,7 +298,7 @@ class ManufacturersTable extends AppTable
                 'Manufacturers.name',
                 'Manufacturers.holiday_from',
                 'Manufacturers.holiday_to',
-                '!'.$this->getManufacturerHolidayConditions().' as IsHolidayActive'
+                'is_holiday_active' => '!' . $this->getManufacturerHolidayConditions()
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -308,15 +308,15 @@ class ManufacturersTable extends AppTable
         
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
-            $manufacturerName = $manufacturer['Manufacturers']['name'];
+            $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
+                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer);
             }
-            $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerHolidayString($manufacturer['Manufacturers']['holiday_from'], $manufacturer['Manufacturers']['holiday_to'], $manufacturer[0]['IsHolidayActive']);
+            $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active);
             if ($holidayInfo != '') {
                 $holidayInfo = 'Lieferpause ' . $holidayInfo;
-                if ($manufacturer[0]['IsHolidayActive']) {
+                if ($manufacturer->iss_holiday_active) {
                     $additionalInfo = $holidayInfo;
                 } else {
                     if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
@@ -330,7 +330,7 @@ class ManufacturersTable extends AppTable
             }
             $manufacturersForMenu[] = [
                 'name' => $manufacturerName,
-                'slug' => Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name'])
+                'slug' => Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name)
             ];
         }
         return $manufacturersForMenu;

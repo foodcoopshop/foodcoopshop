@@ -122,7 +122,6 @@ class FrontendController extends AppController
         $this->set('categoriesForMenu', $categoriesForMenu);
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        
         $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 

@@ -369,14 +369,13 @@ class ProductsTable extends AppTable
      */
     public function getCountByManufacturerId($manufacturerId, $useHolidayMode = false)
     {
-        $productCount = $this->find('count', [
-            'fields' => 'DISTINCT ' . $this->name . '.id_product',
+        $productCount = $this->find('all', [
             'conditions' => [
-                $this->name . '.active' => APP_ON,
+                'Products.active' => APP_ON,
                 $useHolidayMode ? $this->getManufacturerHolidayConditions() : null,
-                $this->name . '.id_manufacturer' => $manufacturerId
+                'Products.id_manufacturer' => $manufacturerId
             ]
-        ]);
+        ])->count();
         return $productCount;
     }
 
