@@ -36,7 +36,7 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = [
             $this->Slug->getHome(),
             $this->Slug->getManufacturerList(),
-//             $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
+            $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
 //             $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
 //             $this->Slug->getBlogList(),
 //             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),

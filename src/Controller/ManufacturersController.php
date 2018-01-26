@@ -33,6 +33,7 @@ class ManufacturersController extends FrontendController
         switch ($this->request->action) {
             case 'detail':
                 $manufacturerId = (int) $this->request->getParam('pass')[0];
+                $this->Manufacturer = TableRegistry::get('Manufacturers');
                 $manufacturer = $this->Manufacturer->find('all', [
                     'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -66,7 +67,7 @@ class ManufacturersController extends FrontendController
             'contain' => [
                 'AddressManufacturers'
             ]
-        ])->select($this->Manufacturer); // select all fields from table
+        ])->select($this->Manufacturer);
         
         if (empty($manufacturers)) {
             throw new RecordNotFoundException('no manufacturers available');
@@ -91,16 +92,24 @@ class ManufacturersController extends FrontendController
             'Manufacturers.id_manufacturer' => $manufacturerId,
             'Manufacturers.active' => APP_ON
         ];
+        
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
-            'fields' => ['Manufacturers.*', 'Addresses.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()]
-        ])->first();
+            'fields' => ['is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
+            'contain' => [
+                'AddressManufacturers'
+            ]
+        ])
+        ->select($this->Manufacturer)
+        ->select($this->Manufacturers->AddressManufacturers)
+        ->first();
 
         if (empty($manufacturer)) {
             throw new RecordNotFoundException('manufacturer not found or not active');
         }
 
-        $correctSlug = Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer['Manufacturers']['id_manufacturer'], $manufacturer['Manufacturers']['name']);
+        $correctSlug = Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
         if ($correctSlug != Configure::read('app.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
@@ -113,8 +122,8 @@ class ManufacturersController extends FrontendController
         $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
         $this->set('blogPosts', $blogPosts);
-
+        
         $this->set('manufacturer', $manufacturer);
-        $this->set('title_for_layout', $manufacturer['Manufacturers']['name']);
+        $this->set('title_for_layout', $manufacturer->name);
     }
 }

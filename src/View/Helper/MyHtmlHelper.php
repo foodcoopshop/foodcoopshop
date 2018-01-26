@@ -5,6 +5,7 @@ namespace App\View\Helper;
 use Cake\Core\Configure;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
+use App\Controller\Component\StringComponent;
 
 /**
  * MyHtmlHelper
@@ -93,50 +94,47 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getManufacturerImprint($manufacturer, $outputType, $addressOnly)
     {
-        if (!isset($manufacturer['Manufacturers'])) {
-            $manufacturer['Manufacturers'] = $manufacturer;
-        }
         $imprintLines = [];
-        $imprintLines[] = '<b>'.$manufacturer['Manufacturers']['name'].'</b>';
-        if ($manufacturer['Manufacturers']['name'] != $manufacturer['Addresses']['firstname'] . ' ' . $manufacturer['Addresses']['lastname']) {
-            $imprintLines[] = $manufacturer['Addresses']['firstname'] . ' ' . $manufacturer['Addresses']['lastname'];
+        $imprintLines[] = '<b>'.$manufacturer->name.'</b>';
+        if ($manufacturer->name != $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname) {
+            $imprintLines[] = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
         }
-        $address = $manufacturer['Addresses']['address1'];
-        if ($manufacturer['Addresses']['address2'] != '') {
-            $address .= ' / ' . $manufacturer['Addresses']['address2'];
+        $address = $manufacturer->address_manufacturer->address1;
+        if ($manufacturer->address_manufacturer->address2 != '') {
+            $address .= ' / ' . $manufacturer->address_manufacturer->address2;
         }
         $imprintLines[] = $address;
-        if (!($manufacturer['Addresses']['postcode'] == '' || $manufacturer['Addresses']['city'] == '')) {
-            $imprintLines[] = @$manufacturer['Addresses']['postcode'] . ' ' . @$manufacturer['Addresses']['city'];
+        if (!($manufacturer->address_manufacturer->postcode == '' || $manufacturer->address_manufacturer->city == '')) {
+            $imprintLines[] = @$manufacturer->address_manufacturer->postcode . ' ' . @$manufacturer->address_manufacturer->city;
         }
-        if ($manufacturer['Addresses']['phone_mobile'] != '') {
-            $imprintLines[] = 'Mobil: ' . $manufacturer['Addresses']['phone_mobile'];
+        if ($manufacturer->address_manufacturer->phone_mobile != '') {
+            $imprintLines[] = 'Mobil: ' . $manufacturer->address_manufacturer->phone_mobile;
         }
-        if ($manufacturer['Addresses']['phone'] != '') {
-            $imprintLines[] = 'Telefon: ' . $manufacturer['Addresses']['phone'];
+        if ($manufacturer->address_manufacturer->phone != '') {
+            $imprintLines[] = 'Telefon: ' . $manufacturer->address_manufacturer->phone;
         }
-        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer['Addresses']['email']) : $manufacturer['Addresses']['email']);
+        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
 
         if (!$addressOnly) {
-            if ($manufacturer['Manufacturers']['homepage'] != '') {
-                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer['Manufacturers']['homepage'], $manufacturer['Manufacturers']['homepage'], ['options' => ['target' => '_blank']]) : $manufacturer['Manufacturers']['homepage']);
+            if ($manufacturer->homepage != '') {
+                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer->homepage, $manufacturer->homepage, ['options' => ['target' => '_blank']]) : $manufacturer->homepage);
             }
             $imprintLines[] = ''; // new line
-            if ($manufacturer['Manufacturers']['uid_number'] != '') {
-                $imprintLines[] = 'UID-Nummer: ' . $manufacturer['Manufacturers']['uid_number'];
+            if ($manufacturer->uid_number != '') {
+                $imprintLines[] = 'UID-Nummer: ' . $manufacturer->uid_number;
             }
 
-            if ($manufacturer['Manufacturers']['firmenbuchnummer'] != '') {
-                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer['Manufacturers']['firmenbuchnummer'];
+            if ($manufacturer->firmenbuchnummer != '') {
+                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer->firmenbuchnummer;
             }
-            if ($manufacturer['Manufacturers']['firmengericht'] != '') {
-                $imprintLines[] = 'Firmengericht: ' . $manufacturer['Manufacturers']['firmengericht'];
+            if ($manufacturer->firmengericht != '') {
+                $imprintLines[] = 'Firmengericht: ' . $manufacturer->firmengericht;
             }
-            if ($manufacturer['Manufacturers']['aufsichtsbehoerde'] != '') {
-                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer['Manufacturers']['aufsichtsbehoerde'];
+            if ($manufacturer->aufsichtsbehoerde != '') {
+                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer->aufsichtsbehoerde;
             }
-            if ($manufacturer['Manufacturers']['kammer'] != '') {
-                $imprintLines[] = 'Kammer: ' . $manufacturer['Manufacturers']['kammer'];
+            if ($manufacturer->kammer != '') {
+                $imprintLines[] = 'Kammer: ' . $manufacturer->kammer;
             }
         }
         return '<p>'.implode('<br />', $imprintLines).'</p>';

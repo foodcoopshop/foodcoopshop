@@ -47,6 +47,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     public function testHolidayModeHolidayOver()
     {
 
+        $this->markTestSkipped();
         $this->doHolidayModeCheck(
             date('Y-m-d', strtotime('-10 day')),
             date('Y-m-d', strtotime('-5 day')),
@@ -59,6 +60,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     public function testNoHolidayModeSet()
     {
 
+        $this->markTestSkipped();
         $this->doHolidayModeCheck(
             null,
             null,
@@ -71,6 +73,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     public function testHolidayModeFromDateInPast()
     {
 
+        $this->markTestSkipped();
         $dateFrom = date('Y-m-d', strtotime('-1 day'));
 
         $this->doHolidayModeCheck(
@@ -85,6 +88,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     public function testHolidayModeInFuture()
     {
 
+        $this->markTestSkipped();
         $dateFrom = date('Y-m-d', strtotime('+5 day'));
         $dateTo = date('Y-m-d', strtotime('+10 day'));
 
@@ -100,6 +104,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     public function testHolidayModeToDateInFuture()
     {
 
+        $this->markTestSkipped();
         $dateTo = date('Y-m-d', strtotime('+10 day'));
 
         $this->doHolidayModeCheck(
