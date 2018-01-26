@@ -15,11 +15,11 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Error\Exception\InvalidParameterException;
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
 
-class ProductLangTest extends AppCakeTestCase
+class ProductLangsTableTest extends AppCakeTestCase
 {
 
     public $ProductLang;

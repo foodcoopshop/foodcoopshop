@@ -31,7 +31,6 @@ class AppPasswordHasher extends AbstractPasswordHasher
 
     public function check($password, $hashedPassword)
     {
-        pr($hashedPassword);
         return $hashedPassword === $this->hash($password);
     }
 }

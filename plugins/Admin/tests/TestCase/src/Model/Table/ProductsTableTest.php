@@ -1,5 +1,6 @@
 <?php
-use App\Error\Exception\InvalidParameterException;
+
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
 
@@ -18,7 +19,7 @@ use Cake\ORM\TableRegistry;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class ProductTest extends AppCakeTestCase
+class ProductsTableTest extends AppCakeTestCase
 {
 
     public $Product;
@@ -27,8 +28,6 @@ class ProductTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->Product = TableRegistry::get('Products');
-        // behavior needs to be attached on the fly in order not to break the app
-        $this->Product->Behaviors->load('Containable');
     }
 
     public function testGetProductIdAndAttributeId()
@@ -323,8 +322,8 @@ class ProductTest extends AppCakeTestCase
      */
 
      /**
-     * @expectedException InvalidParameterException
-     * @expectedExceptionMessage Product.active for product 102 needs to be 0 or 1
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
+     * @expectedExceptionMessage Products.active for product 102 needs to be 0 or 1
      */
     public function testChangeStatusWithStringStatus()
     {
@@ -335,8 +334,8 @@ class ProductTest extends AppCakeTestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
-     * @expectedExceptionMessage Product.active for product 102 needs to be 0 or 1
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
+     * @expectedExceptionMessage Products.active for product 102 needs to be 0 or 1
      */
     public function testChangeStatusWithInvalidIntegerStatus()
     {
@@ -347,7 +346,7 @@ class ProductTest extends AppCakeTestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage change status is not allowed for product attributes
      */
     public function testChangeStatusForProductAttribute()
@@ -445,8 +444,10 @@ class ProductTest extends AppCakeTestCase
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['StockAvailables'];
             } else {
-                $this->Product->hasMany['ProductAttributes']['conditions'] = ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']];
-                $contain = ['ProductAttributes.StockAvailable'];
+                $this->Product->association('ProductAttributes')->conditions(
+                    ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
+                );
+                $contain = ['ProductAttributes.StockAvailables'];
             }
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
@@ -455,9 +456,9 @@ class ProductTest extends AppCakeTestCase
                 'contain' => $contain
             ])->first();
             if ($productAndAttributeId['attributeId'] == 0) {
-                $result = $changedProduct['StockAvailables']['quantity'];
+                $result = $changedProduct->stock_available->quantity;
             } else {
-                $result = $changedProduct['ProductAttributes'][0]['StockAvailables']['quantity'];
+                $result = $changedProduct->product_attributes[0]->stock_available->quantity;
             }
             $this->assertEquals($expectedQuantity, $result, 'changing the quantity flag did not work');
         }
@@ -474,22 +475,28 @@ class ProductTest extends AppCakeTestCase
                 $expectedDeposit = $forceUseThisDeposit;
             }
             $expectedDeposit = str_replace(',', '.', $expectedDeposit);
-            if ($productAndAttributeId['attributeId'] > 0) {
-                $this->Product->hasMany['ProductAttributes']['conditions'] = ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']];
+            if ($productAndAttributeId['attributeId'] == 0) {
+                $contain = ['DepositProducts'];
+            } else {
+                $contain = ['ProductAttributes', 'ProductAttributes.DepositProductAttributes'];
+                $this->Product->association('ProductAttributes')->conditions(
+                    ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
+                );
             }
 
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $productId
-                ]
+                ],
+                'contain' => $contain
             ])->first();
 
             if ($productAndAttributeId['attributeId'] == 0) {
-                $resultEntity = $changedProduct['DepositProduct'];
+                $resultEntity = $changedProduct->deposit_product;;
             } else {
-                $resultEntity = $changedProduct['ProductAttributes'][0]['DepositProductAttribute'];
+                $resultEntity = $changedProduct->product_attributes[0]->deposit_product_attribute;
             }
-            $this->assertEquals($expectedDeposit, $this->Product->getPriceAsFloat($resultEntity['deposit']), 'changing the deposit did not work');
+            $this->assertEquals($expectedDeposit, $this->Product->getPriceAsFloat($resultEntity->deposit), 'changing the deposit did not work');
         }
     }
 
@@ -505,10 +512,12 @@ class ProductTest extends AppCakeTestCase
             }
             $expectedPrice = str_replace(',', '.', $expectedPrice);
             if ($productAndAttributeId['attributeId'] == 0) {
-                $contain = ['ProductShop'];
+                $contain = ['ProductShops'];
             } else {
-                $this->Product->hasMany['ProductAttributes']['conditions'] = ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']];
-                $contain = ['ProductAttributes.ProductAttributeShop'];
+                $this->Product->association('ProductAttributes')->conditions(
+                    ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
+                );
+                $contain = ['ProductAttributes.ProductAttributeShops'];
             }
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
@@ -517,11 +526,11 @@ class ProductTest extends AppCakeTestCase
                 'contain' => $contain
             ])->first();
             if ($productAndAttributeId['attributeId'] == 0) {
-                $resultEntity = $changedProduct['ProductShop'];
+                $resultEntity = $changedProduct->product_shop;
             } else {
-                $resultEntity = $changedProduct['ProductAttributes'][0]['ProductAttributeShops'];
+                $resultEntity = $changedProduct->product_attributes[0]->product_attribute_shop;
             }
-            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $resultEntity['price']), 'changing the price did not work');
+            $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $resultEntity->price), 'changing the price did not work');
         }
     }
 
@@ -538,7 +547,7 @@ class ProductTest extends AppCakeTestCase
                     'Products.id_product' => $productId,
                 ]
             ])->first();
-            $this->assertEquals($expectedStatus, $changedProduct['Products']['active'], 'changing the active flag did not work');
+            $this->assertEquals($expectedStatus, $changedProduct->active, 'changing the active flag did not work');
         }
     }
 }

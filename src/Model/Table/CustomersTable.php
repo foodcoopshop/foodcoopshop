@@ -70,8 +70,6 @@ class CustomersTable extends AppTable
     
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
-        pr($query);
-        return $query;
         return $query->contain([
             'AddressCustomers'
         ]);

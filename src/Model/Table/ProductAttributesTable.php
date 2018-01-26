@@ -32,8 +32,7 @@ class ProductAttributesTable extends AppTable
         $this->hasOne('StockAvailables', [
             'foreignKey' => 'id_product_attribute'
         ]);
-        $this->hasOne('DepositProductAttribute', [
-            'className' => 'Deposit',
+        $this->hasOne('DepositProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
         $this->hasOne('ProductAttributeShops', [

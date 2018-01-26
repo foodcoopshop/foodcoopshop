@@ -1,7 +1,9 @@
 <?php
 
-use App\Controller\Component\StringComponent;
 namespace App\Model\Table;
+
+use App\Controller\Component\StringComponent;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,13 +26,10 @@ class ProductLangsTable extends AppTable
         $this->setTable('product_lang');
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
-    }
-
-    public $belongsTo = [
-        'Products' => [
+        $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
-        ]
-    ];
+        ]);
+    }
 
     /**
      * @param array $products

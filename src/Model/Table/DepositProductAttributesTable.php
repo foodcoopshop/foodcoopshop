@@ -1,6 +1,9 @@
 <?php
+
+namespace App\Model\Table;
+
 /**
- * AllAdminTestsTest
+ * fake model for using associations with foreign keys that are not the id of the model
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -14,18 +17,14 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AllAdminTestsTest extends PHPUnit_Framework_TestSuite
+class DepositProductAttributesTable extends AppTable
 {
 
-    /**
-     * suite method, defines tests for this suite.
-     *
-     * @return void
-     */
-    public static function suite()
+    public function initialize(array $config)
     {
-        $suite = new CakeTestSuite('All Tests');
-        $suite->addTestDirectoryRecursive(CakePlugin::path('Admin') . 'Test' . DS . 'Case');
-        return $suite;
+        $this->setTable('deposits');
+        parent::initialize($config);
+        $this->setPrimaryKey('id_product_attribute');
     }
+    
 }

@@ -604,7 +604,6 @@ class CartsController extends FrontendController
 
         // get product data from database
         $this->Product = TableRegistry::get('Products');
-        $this->Product->Behaviors->load('Containable');
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId

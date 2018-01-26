@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -32,7 +33,7 @@ class ProductsTable extends AppTable
         $this->belongsTo('ProductLangs', [
             'foreignKey' => 'id_product'
         ]);
-        $this->belongsTo('ProductShop', [
+        $this->belongsTo('ProductShops', [
             'foreignKey' => 'id_product'
         ]);
         $this->belongsTo('StockAvailables', [
@@ -44,7 +45,7 @@ class ProductsTable extends AppTable
         $this->belongsTo('CategoryProducts', [
             'foreignKey' => 'id_product'
         ]);
-        $this->hasOne('DepositProduct', [
+        $this->hasOne('DepositProducts', [
             'foreignKey' => 'id_product'
         ]);
         $this->hasOne('Images', [
@@ -142,7 +143,9 @@ class ProductsTable extends AppTable
 
         $success = false;
         if (!empty($products2save)) {
-            $success = $this->saveAll($products2save);
+            $entities = $this->newEntities($products2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
         }
 
         return $success;
@@ -211,34 +214,35 @@ class ProductsTable extends AppTable
             $ids = $this->getProductIdAndAttributeId($productId);
 
             if ($ids['attributeId'] > 0) {
-                $oldDeposit = $this->DepositProduct->find('all', [
+                $oldDeposit = $this->DepositProducts->find('all', [
                     'conditions' => [
-                        'DepositProduct.id_product_attribute' => $ids['attributeId']
+                        'id_product_attribute' => $ids['attributeId']
                     ]
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $this->DepositProduct->id = null; // force new insert
+                    $entity = $this->DepositProducts->newEntity();
                 } else {
-                    $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
+                    $this->DepositProducts->setPrimaryKey('id_product_attribute');
+                    $entity = $this->DepositProducts->get($oldDeposit->id_product_attribute);
                 }
-
+                
                 $deposit2save = [
                     'id_product_attribute' => $ids['attributeId'],
                     'deposit' => $deposit
                 ];
             } else {
                 // deposit is set for productId
-                $oldDeposit = $this->DepositProduct->find('all', [
+                $oldDeposit = $this->DepositProducts->find('all', [
                     'conditions' => [
-                        'DepositProduct.id_product' => $productId
+                        'id_product' => $productId
                     ]
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $this->DepositProduct->id = null; // force new insert
+                    $entity = $this->DepositProducts->newEntity();
                 } else {
-                    $this->DepositProduct->id = $oldDeposit['DepositProduct']['id'];
+                    $entity = $this->DepositProducts->get($oldDeposit->id_product);
                 }
 
                 $deposit2save = [
@@ -247,8 +251,12 @@ class ProductsTable extends AppTable
                 ];
             }
 
-            $this->DepositProduct->primaryKey = 'id';
-            $success |= $this->DepositProduct->save($deposit2save);
+            $this->DepositProducts->setPrimaryKey('id');
+            $result = $this->DepositProducts->save(
+                $this->DepositProducts->patchEntity($entity, $deposit2save)
+            );
+            $this->DepositProducts->setPrimaryKey('id_product');
+            $success |= is_object($result);
         }
 
         return $success;
@@ -287,17 +295,20 @@ class ProductsTable extends AppTable
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $success = $this->ProductAttributes->ProductAttributeShop->updateAll([
-                    'ProductAttributeShop.price' => $netPrice
+                $success = $this->ProductAttributes->ProductAttributeShops->updateAll([
+                    'price' => $netPrice
                 ], [
-                    'ProductAttributeShop.id_product_attribute' => $ids['attributeId']
+                    'id_product_attribute' => $ids['attributeId']
                 ]);
             } else {
                 $product2update = [
                     'price' => $netPrice
                 ];
-                $this->ProductShop->id = $ids['productId'];
-                $success |= $this->ProductShop->save($product2update);
+                $entity = $this->ProductShops->get($ids['productId']);
+                $result = $this->ProductShops->save(
+                    $this->ProductShops->patchEntity($entity, $product2update)
+                );
+                $success |= is_object($result);
             }
         }
 
@@ -334,19 +345,19 @@ class ProductsTable extends AppTable
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->StockAvailable->updateAll([
-                    'StockAvailables.quantity' => $quantity
+                $this->StockAvailables->updateAll([
+                    'quantity' => $quantity
                 ], [
-                    'StockAvailables.id_product_attribute' => $ids['attributeId'],
-                    'StockAvailables.id_product' => $ids['productId']
+                    'id_product_attribute' => $ids['attributeId'],
+                    'id_product' => $ids['productId']
                 ]);
-                $this->StockAvailable->updateQuantityForMainProduct($ids['productId']);
+                $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $product2update = [
                     'quantity' => $quantity
                 ];
-                $this->StockAvailable->id = $ids['productId'];
-                $this->StockAvailable->save($product2update);
+                $entity = $this->StockAvailables->get($ids['productId']);
+                $this->StockAvailables->save($this->StockAvailables->patchEntity($entity, $product2update));
             }
         }
     }
@@ -392,18 +403,6 @@ class ProductsTable extends AppTable
             'fields' => $pParams['fields'],
             'group' => $pParams['group']
         ], $paginator->settings);
-
-        // reduce data
-        $this->Manufacturer->unbindModel([
-            'hasMany' => 'Invoices'
-        ]);
-        $this->ProductLang->unbindModel([
-            'belongsTo' => 'Products'
-        ]);
-        $this->Manufacturer->unbindModel([
-            'belongsTo' => 'Customers',
-            'hasOne' => 'Addresses'
-        ]);
 
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
@@ -560,16 +559,6 @@ class ProductsTable extends AppTable
             $conditions['Manufacturers.id_manufacturer'] = $manufacturerId;
         }
 
-        $this->unbindModel([
-            'hasMany' => [
-                'ProductAttributes',
-                'CategoryProducts'
-            ],
-            'hasOne' => [
-                'DepositProduct',
-                'ImageShop'
-            ]
-        ]);
         // ->find('list') a does not return associated model data
         $products = $this->find('all', [
             'fields' => [

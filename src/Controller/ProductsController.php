@@ -64,7 +64,7 @@ class ProductsController extends FrontendController
         $this->Category = TableRegistry::get('Categories');
         $product = $this->Category->getProductsByCategoryId(Configure::read('AppConfig.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
-pr($product);
+        
         if (empty($product) || !isset($product[0])) {
             throw new RecordNotFoundException('product not found');
         }

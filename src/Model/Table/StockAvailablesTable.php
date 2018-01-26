@@ -32,18 +32,20 @@ class StockAvailablesTable extends AppTable
             return;
         }
 
-        // TODO use prepared statement
-        $sql = 'UPDATE '.$this->getTable().' sa1, (
+        $query = 'UPDATE '.$this->getTable().' sa1, (
                      SELECT SUM(quantity) as quantitySum
                      FROM '.$this->getTable().'
-                     WHERE id_product = ' . $productId . '
+                     WHERE id_product = :productId
                          AND id_product_attribute > 0
                      GROUP BY id_product 
                      ) sa2
                  SET sa1.quantity = sa2.quantitySum
                  WHERE sa1.id_product = ' . $productId . '
                      AND sa1.id_product_attribute = 0';
-
-        $this->query($sql);
+        $params = [
+            'productId' => $productId
+        ];
+        $statement = $this->getConnection()->prepare($query);
+        $statement->execute($params);
     }
 }
