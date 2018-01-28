@@ -5,7 +5,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Dependency Status](https://dependencyci.com/github/foodcoopshop/foodcoopshop/badge)](https://dependencyci.com/github/foodcoopshop/foodcoopshop)
 
-FoodCoopShop is a free open source software for foodcoops.
+FoodCoopShop is an open source software for food-coops. It provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly webshop, a login area for manufacturers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern webbrowser, tablets or smartphones.
 
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
 * Demo version: [https://demo.foodcoopshop.com](https://demo.foodcoopshop.com)
@@ -13,7 +13,10 @@ FoodCoopShop is a free open source software for foodcoops.
 
 ## Roadmap for 2018
 
-In the 4th year of existance, FoodCoopShop continues to grow. Here you can take a look on the planned work for [Q1/2018 - v2.0](https://github.com/foodcoopshop/foodcoopshop/milestone/1) / [Q2/2018 - v2.1](https://github.com/foodcoopshop/foodcoopshop/milestone/2) / [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). You are welcome to comment the issues!
+There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q1/2018 - v2.0](https://github.com/foodcoopshop/foodcoopshop/milestone/1) / [Q2/2018 - v2.1](https://github.com/foodcoopshop/foodcoopshop/milestone/2) / [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). So far, FoodCoopShop only exists in German. But there will be an **English version** available by June 2018! More languages will then be possible if we find translators...
+
+## Who uses FoodCoopShop?
+[https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
 
 ## Legal information
 
