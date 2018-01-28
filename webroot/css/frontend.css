@@ -599,6 +599,7 @@ body.manufacturers.detail .imprint {
     font-size: 14px;
     border-left: 1px solid #777;
     padding-left: 20px;
+    max-width: 500px;
 }
 #footer .second-column p i {
     margin-right: 5px;
@@ -1101,6 +1102,7 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+
 
 
 
