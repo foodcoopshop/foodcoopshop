@@ -60,7 +60,7 @@ class CheckCreditBalanceShell extends AppShell
                 $delta = '€ ' . Configure::read('app.htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
                 $outString .= $customer->name . ': ' . $delta . '<br />';
                 $email = new AppEmail();
-                $email->setTemplate('Admin.check_credit_balance')
+                $email->setTemplate('check_credit_balance')
                     ->setTo($customer->email)
                     ->setSubject('Dein Guthaben ist aufgebraucht')
                     ->setViewVars([

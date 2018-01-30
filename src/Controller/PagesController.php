@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
@@ -50,6 +51,26 @@ class PagesController extends FrontendController
 
     public function home()
     {
+        
+        $this->Customer = TableRegistry::get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => 87
+            ],
+            'contain' => [
+                'AddressCustomers'
+            ]
+        ])->first();
+        $email = new AppEmail();
+        $email
+        ->setTemplate('check_credit_balance')
+        ->setTo('marothauer@gmail.com')
+        ->setSubject('aktiviert')
+        ->setViewVars([
+            'delta' => 1,
+            'data' => $customer
+        ])
+        ->send('test');
         
         /**
          * START: security keys check
