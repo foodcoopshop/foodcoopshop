@@ -18,6 +18,7 @@
 
 return [
     'app' => [
+        
         /**
          * the cronjobs for sending order lists and invoices need the credentials to a valid superadmin account
          */
