@@ -2,6 +2,7 @@
 
 use Admin\Controller\AdminAppController;
 use App\Auth\AppPasswordHasher;
+use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;

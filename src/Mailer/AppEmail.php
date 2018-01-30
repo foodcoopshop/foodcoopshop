@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Lib;
+namespace App\Mailer;
 
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;

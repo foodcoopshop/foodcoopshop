@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Lib\AppEmail;
+use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;

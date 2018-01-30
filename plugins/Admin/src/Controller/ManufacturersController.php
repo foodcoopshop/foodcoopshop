@@ -2,7 +2,7 @@
 
 use Admin\Controller\AdminAppController;
 use App\Controller\Component\StringComponent;
-use App\Lib\AppEmail;
+use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;

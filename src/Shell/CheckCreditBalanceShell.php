@@ -18,7 +18,7 @@
 
 namespace App\Shell;
 
-use App\Lib\AppEmail;
+use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 
 class CheckCreditBalanceShell extends AppShell

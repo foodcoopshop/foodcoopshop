@@ -1,6 +1,7 @@
 <?php
 
 use Admin\Controller\AdminAppController;
+use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;

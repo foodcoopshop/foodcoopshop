@@ -52,13 +52,13 @@ class CartsTable extends AppTable
             $cart2save = [
                 'id_customer' => $customerId
             ];
-            $cart = $this->save($cart2save);
+            $cart = $this->save($this->newEntity($cart2save));
         }
 
         $ccp = TableRegistry::get('CartProducts');
         $cartProducts = $ccp->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart['Cart']['id_cart']
+                'CartProducts.id_cart' => $cart->id_cart
             ],
             'order' => [
                 'ProductLangs.name' => 'ASC'
