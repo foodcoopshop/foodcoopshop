@@ -19,14 +19,10 @@
 namespace App\Shell;
 
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 class CheckCreditBalanceShell extends AppShell
 {
-
-    public $uses = [
-        'Customers',
-        'ActionLogs'
-    ];
 
     public function main()
     {
@@ -44,33 +40,31 @@ class CheckCreditBalanceShell extends AppShell
         $customers = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.active' => 1
-            ],
-            'order' => [
-                'Customers.name' => 'ASC'
             ]
         ]);
+        $customers = (object) Hash::sort($customers->toArray(), '{n}.name', 'ASC');
 
         $i = 0;
         $outString = '';
 
         foreach ($customers as $customer) {
-            $delta = $this->Customer->getCreditBalance($customer['Customers']['id_customer']);
+            $delta = $this->Customer->getCreditBalance($customer->id_customer);
 
             if ($delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
                 $delta = '€ ' . Configure::read('app.htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
-                $outString .= $customer['Customers']['name'] . ': ' . $delta . '<br />';
-                $email = new AppEmail();
-                $email->template('Admin.check_credit_balance')
-                    ->to($customer['Customers']['email'])
-                    ->emailFormat('html')
-                    ->subject('Dein Guthaben ist aufgebraucht')
-                    ->viewVars([
-                    'customer' => $customer,
-                    'delta' => $delta
-                    ])
-                    ->send();
+                $outString .= $customer->name . ': ' . $delta . '<br />';
+//                 $email = new AppEmail();
+//                 $email->template('Admin.check_credit_balance')
+//                     ->to($customer->email)
+//                     ->emailFormat('html')
+//                     ->subject('Dein Guthaben ist aufgebraucht')
+//                     ->viewVars([
+//                     'customer' => $customer,
+//                     'delta' => $delta
+//                     ])
+//                     ->send();
             }
         }
 

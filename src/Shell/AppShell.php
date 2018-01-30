@@ -5,6 +5,7 @@ namespace App\Shell;
 use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * AppShell
@@ -30,13 +31,10 @@ class AppShell extends Shell
 
     public $browser;
 
-    public $uses = [
-        'ActionLogs',
-        'Customers'
-    ];
-
     public function main()
     {
+        $this->Customer = TableRegistry::get('Customers');
+        $this->ActionLog = TableRegistry::get('ActionLogs');
         error_reporting(0); // disable all error messages
     }
 
@@ -62,9 +60,8 @@ class AppShell extends Shell
         $this->browser->loginEmail = Configure::read('app.adminEmail');
         $this->browser->loginPassword = Configure::read('app.adminPassword');
 
-        if ($_SERVER['PHP_SELF'] == '/test.php' // unit tests called via web browser
-            // unit tests called via console
-            || (php_sapi_name() == 'cli' && $_SERVER['argv'][3] && $_SERVER['argv'][3] == 'test')) {
+        if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
+            || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
                 $this->browser->addHeader('x-unit-test-mode: true');
                 $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
                 $this->browser->loginPassword = Configure::read('test.loginPassword');

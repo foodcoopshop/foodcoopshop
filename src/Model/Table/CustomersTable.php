@@ -173,7 +173,7 @@ class CustomersTable extends AppTable
 
     public function dropManufacturersInNextFind()
     {
-        $this->hasOne['AddressCustomer']['type'] = 'INNER';
+        $this->association('AddressCustomers')->setJoinType('INNER');
     }
 
     /**
