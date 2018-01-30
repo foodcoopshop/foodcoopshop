@@ -35,15 +35,27 @@ return [
          * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
          */
         'debugEmailConfig' => [
-            'host' => 'mail.example.com',
-            'port' => 25,
-            'username' => 'example@example.com',
-            'password' => 'my-password',
-            'transport' => 'Smtp',
-            'from' => [
-                'example@example.com' => 'Example'
+            'EmailTransport' => [
+                'default' => [
+                    'emailFormat' => 'html',
+                    'className' => 'Smtp',
+                    'host' => 'mail.example.com',
+                    'port' => 25,
+                    'timeout' => 30,
+                    'username' => 'example@example.com',
+                    'password' => 'my-password',
+                    'client' => null,
+                    'tls' => null,
+                ],
             ],
-            'emailFormat' => 'html'
+            'Email' => [
+                'default' => [
+                    'transport' => 'default',
+                    'from' => ['example@example.com' => 'Example'],
+                    'charset' => 'utf-8',
+                    'headerCharset' => 'utf-8',
+                ],
+            ]
         ],
         
         /**
@@ -66,13 +78,19 @@ return [
          * if you don't want to use the email fallback, leave it commented
          */
 //         'fallbackEmailConfig' => [
-//             'host' => 'mail.example.com',
-//             'port' => 25,
-//             'username' => 'example@example.com',
-//             'password' => 'my-password',
-//             'transport' => 'Smtp',
-//             'from' => array('example@example.com' => 'Example'),
-//             'emailFormat' => 'html'
+//             'EmailTransport' => [
+//                 'default' => [
+//                     'emailFormat' => 'html',
+//                     'className' => 'Smtp',
+//                     'host' => 'mail.example.com',
+//                     'port' => 25,
+//                     'timeout' => 30,
+//                     'username' => 'example@example.com',
+//                     'password' => 'my-password',
+//                     'client' => null,
+//                     'tls' => null,
+//                 ],
+//             ]
 //         ],
 
     ]

@@ -71,27 +71,23 @@ class AppEmail extends Email
             return parent::send($content);
         } catch (Exception $e) {
             
-            //CakeLog::write('error', $e->getMessage());
+//             CakeLog::write('error', $e->getMessage());
 
-            /*
-            if (Configure::check('fallbackEmailConfig')) {
-                $fallbackEmailConfig = Configure::read('fallbackEmailConfig');
-                $originalFrom = $this->from();
+            if (0 && Configure::check('app.fallbackEmailConfig')) {
 
-                // resend the email with the fallbackEmailConfig
-                // avoid endless loops if this email also not works
-                if ($this->from() != $fallbackEmailConfig['from']) {
-                    $this->config($fallbackEmailConfig);
-                    $this->from([
-                        key($this->from()) => Configure::read('appDb.FCS_APP_NAME')
-                    ]);
-                    CakeLog::write('info', 'email was sent with fallback config');
-                    return $this->send($content);
-                }
+                // resend the email with the app.fallbackEmailConfig
+                AppEmail::dropTransport('default');
+                AppEmail::setConfig('default');
+                $this->setConfig(Configure::read('app.fallbackEmailConfig')['EmailTransport']['Email']);
+                $this->setConfigTransport(Configure::read('app.fallbackEmailConfig')['EmailTransport']);
+                $this->setFrom([
+                    key($this->getFrom()) => Configure::read('appDb.FCS_APP_NAME')
+                ]);
+//                 CakeLog::write('info', 'email was sent with fallback config');
+//                 return $this->send($content);
             } else {
                 throw $e;
             }
-            */
         }
     }
 }
