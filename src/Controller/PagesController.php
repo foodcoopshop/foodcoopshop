@@ -52,26 +52,6 @@ class PagesController extends FrontendController
     public function home()
     {
         
-        $this->Customer = TableRegistry::get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => 87
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
-        ])->first();
-        $email = new AppEmail();
-        $email
-        ->setTemplate('check_credit_balance')
-        ->setTo('marothauer@gmail.com')
-        ->setSubject('aktiviert')
-        ->setViewVars([
-            'delta' => 1,
-            'data' => $customer
-        ])
-        ->send('test');
-        
         /**
          * START: security keys check
          */
@@ -80,7 +60,7 @@ class PagesController extends FrontendController
             echo '<p>Please copy this <b>app.cookieKey</b> to your custom_custom.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }
-        if (Configure::read('Security.salt') == '') {
+        if (Security::getSalt() == '') {
             echo '<p>Please copy this <b>Security => salt</b> to your custom_custom.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
         }
