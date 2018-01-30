@@ -206,7 +206,6 @@ if (Configure::read('debug')) {
 }
 
 // foodcoopshop
-Plugin::load('AssetCompress', ['bootstrap' => true]);
 Plugin::load('Admin', [
     'bootstrap' => false,
     'routes' => true,
