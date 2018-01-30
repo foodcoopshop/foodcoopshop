@@ -29,6 +29,35 @@ class CustomersTable extends AppTable
         $this->hasOne('AddressCustomers', [
             'foreignKey' => 'id_customer'
         ]);
+        $this->hasMany('ActiveOrders', [
+            'className' => 'Orders',
+            'foreignKey' => 'id_customer',
+            'order' => [
+                'ActiveOrders.date_add' => 'DESC'
+            ]
+        ]);
+        $this->hasMany('PaidCashFreeOrders', [
+            'className' => 'Orders',
+            'foreignKey' => 'id_customer',
+            'order' => [
+                'PaidCashFreeOrders.date_add' => 'DESC'
+            ]
+        ]);
+        // has many does not produce multiple records - this should be hasOne ideally...
+        $this->hasMany('ValidOrders', [
+            'className' => 'Orders',
+            'foreignKey' => 'id_customer',
+            'limit' => 1
+        ]);
+        $this->hasMany('Payments', [
+            'foreignKey' => 'id_customer',
+            'order' => [
+                'Payments.date_add' => 'desc'
+            ],
+            'conditions' => [
+                'Payments.status' => APP_ON
+            ]
+        ]);
         $this->setPrimaryKey('id_customer');
     }
 
@@ -109,59 +138,19 @@ class CustomersTable extends AppTable
         }
     }
 
-    public $hasMany = [
-        'ActiveOrders' => [
-            'className' => 'Orders',
-            'foreignKey' => 'id_customer',
-            'conditions' => [],
-            'order' => [
-                'ActiveOrders.date_add' => 'DESC'
-            ]
-        ],
-        'PaidCashFreeOrders' => [
-            'className' => 'Orders',
-            'foreignKey' => 'id_customer',
-            'conditions' => [],
-            'order' => [
-                'PaidCashFreeOrders.date_add' => 'DESC'
-            ]
-        ],
-        // has many does not produce multiple records - this should be hasOne ideally...
-        'ValidOrder' => [
-            'className' => 'Orders',
-            'limit' => 1,
-            'foreignKey' => 'id_customer'
-        ],
-        'Payments' => [
-            'foreignKey' => 'id_customer',
-            'order' => [
-                'Payments.date_add' => 'desc'
-            ],
-            'conditions' => [
-                'Payments.status' => APP_ON
-            ]
-        ]
-    ];
-
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
 
-        $virtualNameField = "`{$this->getAlias()}`.`firstname`,' ',`{$this->getAlias()}`.`lastname`)";
-        if (Configure::read('app.customerMainNamePart') == 'lastname') {
-            $virtualNameField = "`{$this->getAlias()}`.`lastname`,' ',`{$this->getAlias()}`.`firstname`)";
-        }
-
-        $this->virtualFields = [
-            'name' => "TRIM(CONCAT(" . $virtualNameField . ")"
-        ];
-        $this->hasMany['ValidOrder']['conditions'] = [
-            'ValidOrder.current_state IN (' . Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv() . ')'
-        ];
-        $this->hasMany['ActiveOrders']['conditions'] = [
+        $this->association('ValidOrders')->setConditions([
+            'ValidOrders.current_state IN (' . Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv() . ')'
+        ]);
+        $this->association('ActiveOrders')->setConditions([
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
-        ];
-        $this->hasMany['PaidCashFreeOrders']['conditions'][] = 'PaidCashFreeOrders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')';
+        ]);
+        $this->association('PaidCashFreeOrders')->setConditions([
+            'PaidCashFreeOrders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
+        ]);
     }
 
     public function getConditionToExcludeHostingUser()
@@ -237,14 +226,11 @@ class CustomersTable extends AppTable
 
     public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true)
     {
+        $contain = [];
         if (! $includeManufacturers) {
             $this->dropManufacturersInNextFind();
+            $contain[] = 'AddressCustomers'; // to make exclude happen using dropManufacturersInNextFind
         }
-
-        // TODO no other solution found to exclude those models (contain did not work)
-        unset($this->hasMany['PaidCashFreeOrders']);
-        unset($this->hasMany['ActiveOrders']);
-        unset($this->hasMany['Payments']);
 
         $customers = $this->find('all', [
             'conditions' => $this->getConditionToExcludeHostingUser(),
@@ -254,7 +240,8 @@ class CustomersTable extends AppTable
                 'Customers.active',
                 'Customers.email'
             ],
-            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
+            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
+            'contain' => $contain
         ]);
 
         $offlineCustomers = [];

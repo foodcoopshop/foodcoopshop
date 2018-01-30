@@ -96,8 +96,7 @@ class ConfigurationsController extends AdminAppController
         $this->Configuration->getConfigurations();
         $email = new AppEmail();
         $email
-            ->emailFormat('html')
-            ->viewVars([
+            ->setViewVars([
                 'appAuth' => $this->AppAuth
             ]);
 
@@ -108,8 +107,8 @@ class ConfigurationsController extends AdminAppController
                 } else {
                     $template = 'customer_registered_inactive';
                 }
-                $email->template($template);
-                $email->viewVars([
+                $email->setTemplate($template);
+                $email->setViewVars([
                     'data' => ['Customers' => [
                         'firstname' => 'Vorname',
                         'lastname' => 'Nachname',
@@ -119,7 +118,7 @@ class ConfigurationsController extends AdminAppController
                 ]);
                 break;
         }
-        $html = $email->_renderTemplates(null)['html'];
+        $html = $email->getHtmlMessage();
         if ($html != '') {
             echo $html;
             exit;
@@ -153,11 +152,10 @@ class ConfigurationsController extends AdminAppController
     public function sendTestEmail()
     {
         $email = new AppEmail();
-        $success = $email->to(Configure::read('app.hostingEmail'))
-            ->subject('Test E-Mail')
-            ->template('send_test_email_template')
-            ->emailFormat('html')
-            ->attachments([
+        $success = $email->setTo(Configure::read('app.hostingEmail'))
+            ->setSubject('Test E-Mail')
+            ->setTemplate('send_test_email_template')
+            ->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
             ])
             ->send();

@@ -91,11 +91,10 @@ class EmailErrorLog implements CakeLogInterface
 
         try {
             $Email = new CakeEmail(Configure::read('debugEmailConfig'));
-            $Email->to($this->_options['to'])
-                ->template('debug')
-                ->emailFormat('html')
-                ->subject($subject)
-                ->viewVars([
+            $Email->setTo($this->_options['to'])
+                ->setTemplate('debug')
+                ->setSubject($subject)
+                ->setViewVars([
                 'message' => $message,
                 'loggedUser' => AppAuthComponent::user()
                 ])

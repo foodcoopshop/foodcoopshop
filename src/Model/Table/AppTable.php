@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Network\AppSession;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validation;
 
 /**
@@ -36,6 +37,11 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
+    public function sortByVirtualField($object, $name)
+    {
+        return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
+    }
+    
     /**
      * logs validation errors
      * @see Model::validates()

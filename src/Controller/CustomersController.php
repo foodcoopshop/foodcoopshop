@@ -106,11 +106,10 @@ class CustomersController extends FrontendController
 
             // send email
             $email = new AppEmail();
-            $email->template('new_password_request_successful')
-                ->emailFormat('html')
-                ->subject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
-                ->to($this->request->data['Customers']['email'])
-                ->viewVars([
+            $email->setTemplate('new_password_request_successful')
+                ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
+                ->setTo($this->request->data['Customers']['email'])
+                ->setViewVars([
                 'changePasswordCode' => $changePasswordCode,
                 'customer' => $customer
                 ]);
@@ -145,11 +144,10 @@ class CustomersController extends FrontendController
 
         // send email
         $email = new AppEmail();
-            $email->template('new_password_set_successful')
-            ->emailFormat('html')
-            ->subject('Neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME') . ' generiert')
-            ->to($customer['Customers']['email'])
-            ->viewVars([
+            $email->setTemplate('new_password_set_successful')
+            ->setSubject('Neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME') . ' generiert')
+            ->setTo($customer['Customers']['email'])
+            ->setViewVars([
                 'password' => $newPassword,
                 'customer' => $customer
             ]);
@@ -290,11 +288,10 @@ class CustomersController extends FrontendController
                     } else {
                         $template = 'customer_registered_inactive';
                     }
-                    $email->template($template)
-                        ->emailFormat('html')
-                        ->to($this->request->data['Customers']['email'])
-                        ->subject('Willkommen')
-                        ->viewVars([
+                    $email->setTemplate($template)
+                        ->setTo($this->request->data['Customers']['email'])
+                        ->setSubject('Willkommen')
+                        ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $this->request->data,
                         'newPassword' => $newPassword
@@ -305,11 +302,10 @@ class CustomersController extends FrontendController
                     // START send notification email
                     if (! empty(Configure::read('app.registrationNotificationEmails'))) {
                         $email = new AppEmail();
-                        $email->template('customer_registered_notification')
-                            ->emailFormat('html')
-                            ->to(Configure::read('app.registrationNotificationEmails'))
-                            ->subject('Neue Registrierung: ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'])
-                            ->viewVars([
+                        $email->setTemplate('customer_registered_notification')
+                            ->setTo(Configure::read('app.registrationNotificationEmails'))
+                            ->setSubject('Neue Registrierung: ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'])
+                            ->setViewVars([
                             'appAuth' => $this->AppAuth,
                             'data' => $this->request->data
                             ])

@@ -281,11 +281,10 @@ class CustomersController extends AdminAppController
             $newPassword = $this->Customer->setNewPassword($customer['Customers']['id_customer']);
 
             $email = new AppEmail();
-            $email->template('customer_activated')
-                ->emailFormat('html')
-                ->to($customer['Customers']['email'])
-                ->subject('Dein Mitgliedskonto wurde aktiviert.')
-                ->viewVars([
+            $email->setTemplate('customer_activated')
+                ->setTo($customer['Customers']['email'])
+                ->setSubject('Dein Mitgliedskonto wurde aktiviert.')
+                ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
                 'newPassword' => $newPassword
@@ -387,6 +386,7 @@ class CustomersController extends AdminAppController
                 'Customers.name' => 'ASC'
             ],
             'contain' => [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
                 'Customers.*',
                 'ValidOrder.*'
             ]

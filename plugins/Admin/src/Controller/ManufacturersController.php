@@ -2,6 +2,7 @@
 
 use Admin\Controller\AdminAppController;
 use App\Controller\Component\StringComponent;
+use App\Lib\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -367,14 +368,13 @@ class ManufacturersController extends AdminAppController
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturers']['send_invoice']);
             if ($sendEmail) {
-                $email->template('Admin.send_invoice')
-                    ->to($manufacturer['Addresses']['email'])
-                    ->attachments([
+                $email->setTemplate('Admin.send_invoice')
+                    ->setTo($manufacturer['Addresses']['email'])
+                    ->setAttachments([
                     $invoicePdfFile
                     ])
-                    ->emailFormat('html')
-                    ->subject('Rechnung Nr. ' . $newInvoiceNumber . ', ' . $invoicePeriodMonthAndYear)
-                    ->viewVars([
+                    ->setSubject('Rechnung Nr. ' . $newInvoiceNumber . ', ' . $invoicePeriodMonthAndYear)
+                    ->setViewVars([
                     'manufacturer' => $manufacturer,
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
                     'appAuth' => $this->AppAuth,
@@ -451,17 +451,15 @@ class ManufacturersController extends AdminAppController
 
             if ($sendEmail) {
                 $flashMessage .= ' und an ' . $manufacturer['Addresses']['email'] . ' versendet';
-                $email->template('Admin.send_order_list')
-                    ->to($manufacturer['Addresses']['email'])
-                    ->emailFormat('html')
-                    ->cc($ccRecipients)
-                    -> // works also with empty array!
-                        attachments([
-                    $productPdfFile,
-                    $customerPdfFile
-                        ])
-                    ->subject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
-                    ->viewVars([
+                $email->setTemplate('Admin.send_order_list')
+                    ->setTo($manufacturer['Addresses']['email'])
+                    ->setCc($ccRecipients)
+                    ->setAttachments([
+                        $productPdfFile,
+                        $customerPdfFile
+                    ])
+                    ->setSubject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
+                    ->setViewVars([
                     'manufacturer' => $manufacturer,
                     'appAuth' => $this->AppAuth,
                     'showManufacturerUnsubscribeLink' => true

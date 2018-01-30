@@ -5,10 +5,9 @@ namespace App\Lib;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Mailer\Email;
+use Cake\ORM\TableRegistry;
 
 /**
- * AppEmail
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -23,24 +22,7 @@ use Cake\Mailer\Email;
  */
 class AppEmail extends Email
 {
-
-    private $_originalSubject = '';
-
-    /**
-     * Get/Set Subject.
-     *
-     * Subject is encode by CakeEmail.
-     * In order to access it in clear text, it's stored in $_originalSubject
-     *
-     * @param string $subject Subject string.
-     * @return string|self
-     */
-    public function subject($subject = null)
-    {
-        $this->_originalSubject = $subject;
-        return parent::subject($subject);
-    }
-
+    
     public function __construct($config = null)
     {
         parent::__construct('default');
@@ -49,15 +31,10 @@ class AppEmail extends Email
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }
-
-    /**
-     * declaring this method public enables rendering an email (for preview)
-     * {@inheritDoc}
-     * @see CakeEmail::_renderTemplates()
-     */
-    public function _renderTemplates($content)
+    
+    public function getHtmlMessage()
     {
-        return parent::_renderTemplates($content);
+        return $this->_htmlMessage;
     }
 
     /**
@@ -68,25 +45,22 @@ class AppEmail extends Email
      */
     public function logEmailInDatabase($content)
     {
-        $emailLogModel = new EmailLog();
+        $emailLogModel = TableRegistry::get('EmailLogs');
         $email2save = [
-            'from_address' => json_encode($this->from()),
-            'to_address' => json_encode($this->to()),
-            'cc_address' => json_encode($this->cc()),
-            'bcc_address' => json_encode($this->bcc()),
-            'subject' => $this->_originalSubject,
+            'from_address' => json_encode($this->getFrom()),
+            'to_address' => json_encode($this->getTo()),
+            'cc_address' => json_encode($this->getCc()),
+            'bcc_address' => json_encode($this->getBcc()),
+            'subject' => $this->getSubject(),
             'headers' => json_encode($this->getHeaders()),
-            'message' => $this->_renderTemplates($content)['html']
+            'message' => $this->getHtmlMessage()
         ];
-        $emailLogModel->id = null;
-        return $emailLogModel->save($email2save);
+        return $emailLogModel->save($emailLogModel->newEntity($email2save));
     }
 
     /**
      * fallback if email config is wrong (e.g.
      * password changed from third party)
-     *
-     * @see CakeEmail::send()
      */
     public function send($content = null)
     {
@@ -97,8 +71,9 @@ class AppEmail extends Email
             return parent::send($content);
         } catch (Exception $e) {
             
-            CakeLog::write('error', $e->getMessage());
+            //CakeLog::write('error', $e->getMessage());
 
+            /*
             if (Configure::check('fallbackEmailConfig')) {
                 $fallbackEmailConfig = Configure::read('fallbackEmailConfig');
                 $originalFrom = $this->from();
@@ -116,6 +91,7 @@ class AppEmail extends Email
             } else {
                 throw $e;
             }
+            */
         }
     }
 }

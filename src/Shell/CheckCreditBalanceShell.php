@@ -18,8 +18,8 @@
 
 namespace App\Shell;
 
+use App\Lib\AppEmail;
 use Cake\Core\Configure;
-use Cake\Utility\Hash;
 
 class CheckCreditBalanceShell extends AppShell
 {
@@ -40,31 +40,34 @@ class CheckCreditBalanceShell extends AppShell
         $customers = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.active' => 1
+            ],
+            'contain' => [
+                'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
-        $customers = (object) Hash::sort($customers->toArray(), '{n}.name', 'ASC');
+        $customers = $this->Customer->sortByVirtualField($customers, 'name');
 
         $i = 0;
+        $deltaSum = 0;
         $outString = '';
 
         foreach ($customers as $customer) {
             $delta = $this->Customer->getCreditBalance($customer->id_customer);
 
-            if ($delta < 0) {
+            if ($customer->email == 'fcs-demo-mitglied@mailinator.com' || $delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
                 $delta = '€ ' . Configure::read('app.htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
                 $outString .= $customer->name . ': ' . $delta . '<br />';
-//                 $email = new AppEmail();
-//                 $email->template('Admin.check_credit_balance')
-//                     ->to($customer->email)
-//                     ->emailFormat('html')
-//                     ->subject('Dein Guthaben ist aufgebraucht')
-//                     ->viewVars([
-//                     'customer' => $customer,
-//                     'delta' => $delta
-//                     ])
-//                     ->send();
+                $email = new AppEmail();
+                $email->setTemplate('Admin.check_credit_balance')
+                    ->setTo($customer->email)
+                    ->setSubject('Dein Guthaben ist aufgebraucht')
+                    ->setViewVars([
+                    'customer' => $customer,
+                    'delta' => $delta
+                    ])
+                    ->send();
             }
         }
 

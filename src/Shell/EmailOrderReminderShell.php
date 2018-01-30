@@ -21,6 +21,7 @@
 
 namespace App\Shell;
 
+use App\Lib\AppEmail;
 use Cake\Core\Configure;
 
 class EmailOrderReminderShell extends AppShell
@@ -44,20 +45,22 @@ class EmailOrderReminderShell extends AppShell
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
-        $this->Customer->unbindModel([
-            'hasMany' => ['PaidCashFreeOrders', 'Payments', 'ValidOrder']
-        ]);
 
-        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'';
-        $this->Customer->hasMany['ActiveOrders']['conditions'][] = 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'';
+        $this->Customer->associations('ActiveOrders')->setConditions(
+            [
+                'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'',
+                'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay()). '\''
+            ]
+        );
 
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
-            'order' => [
-                'Customers.name' => 'ASC'
+            'contain' => [
+                'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
-
+        $customers = $this->Customer->sortByVirtualField($customers, 'name');
+        
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
@@ -66,18 +69,17 @@ class EmailOrderReminderShell extends AppShell
                 continue;
             }
 
-            $Email = new AppEmail();
-            $Email->to($customer['Customers']['email'])
-                ->template('Admin.email_order_reminder')
-                ->emailFormat('html')
-                ->subject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
-                ->viewVars([
+            $email = new AppEmail();
+            $email->setTo($customer->email)
+                ->setTemplate('Admin.email_order_reminder')
+                ->setSubject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
+                ->setViewVars([
                   'customer' => $customer,
                   'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
                 ])
                 ->send();
 
-            $outString .= $customer['Customers']['name'] . '<br />';
+            $outString .= $customer->name . '<br />';
 
             $i ++;
         }

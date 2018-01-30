@@ -88,16 +88,15 @@ class PaymentsController extends AdminAppController
         $payment['Payments']['approval'] = $approval;
         $payment['Payments']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
         $email = new AppEmail();
-        $email->template('Admin.payment_status_changed')
-            ->emailFormat('html')
-            ->to($payment['Customers']['email'])
-            ->viewVars([
+        $email->setTemplate('Admin.payment_status_changed')
+            ->setTo($payment['Customers']['email'])
+            ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $payment,
                 'newStatusAsString' => Configure::read('app.htmlHelper')->getApprovalStates()[$approval],
                 'request' => $payment
             ]);
-        $html = $email->_renderTemplates(null)['html'];
+        $html = $email->getHtmlMessage();
         if ($html != '') {
             echo $html;
             exit;
@@ -165,11 +164,10 @@ class PaymentsController extends AdminAppController
                 $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customers']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
                 if ($this->request->data['Payments']['send_email']) {
                     $email = new AppEmail();
-                    $email->template('Admin.payment_status_changed')
-                        ->emailFormat('html')
-                        ->to($unsavedPayment['Customers']['email'])
-                        ->subject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
-                        ->viewVars([
+                    $email->setTemplate('Admin.payment_status_changed')
+                        ->setTo($unsavedPayment['Customers']['email'])
+                        ->setSubject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
+                        ->setViewVars([
                             'appAuth' => $this->AppAuth,
                             'data' => $unsavedPayment,
                             'newStatusAsString' => $newStatusAsString,

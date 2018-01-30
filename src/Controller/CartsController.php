@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Lib\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
@@ -390,11 +391,10 @@ class CartsController extends FrontendController
             // do not send email to inactive users (superadmins can place shop orders for inactive users!)
             if ($this->AppAuth->user('active')) {
                 $email = new AppEmail();
-                $email->template('customer_order_successful')
-                    ->emailFormat('html')
-                    ->to($this->AppAuth->getEmail())
-                    ->subject('Bestellbestätigung')
-                    ->viewVars([
+                $email->setTemplate('customer_order_successful')
+                    ->setTo($this->AppAuth->getEmail())
+                    ->setSubject('Bestellbestätigung')
+                    ->setViewVars([
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
                         'originalLoggedCustomer' => $this->request->session()->check('Auth.originalLoggedCustomer') ? $this->request->session()->read('Auth.originalLoggedCustomer') : null,
@@ -455,11 +455,10 @@ class CartsController extends FrontendController
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
             if ($sendShopOrderNotification && !$bulkOrdersAllowed) {
                 $email = new AppEmail();
-                $email->template('shop_order_notification')
-                ->emailFormat('html')
-                ->to($manufacturer['Addresses']['email'])
-                ->subject('Benachrichtigung über Sofort-Bestellung Nr. ' . $order['Orders']['id_order'])
-                ->viewVars([
+                $email->setTemplate('shop_order_notification')
+                ->setTo($manufacturer['Addresses']['email'])
+                ->setSubject('Benachrichtigung über Sofort-Bestellung Nr. ' . $order['Orders']['id_order'])
+                ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
                     'cart' => ['CartProducts' => $cartProducts],

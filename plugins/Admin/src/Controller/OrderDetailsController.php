@@ -305,11 +305,10 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer
         $email = new AppEmail();
-        $email->template('Admin.order_detail_quantity_changed')
-        ->to($oldOrderDetail['Orders']['Customers']['email'])
-        ->emailFormat('html')
-        ->subject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
-        ->viewVars([
+        $email->setTemplate('Admin.order_detail_quantity_changed')
+        ->setTo($oldOrderDetail['Orders']['Customers']['email'])
+        ->setSubject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
+        ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
@@ -390,11 +389,10 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer
         $email = new AppEmail();
-        $email->template('Admin.order_detail_price_changed')
-        ->to($oldOrderDetail['Orders']['Customers']['email'])
-        ->emailFormat('html')
-        ->subject('Preis korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
-        ->viewVars([
+        $email->setTemplate('Admin.order_detail_price_changed')
+        ->setTo($oldOrderDetail['Orders']['Customers']['email'])
+        ->setSubject('Preis korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
+        ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
@@ -475,11 +473,10 @@ class OrderDetailsController extends AdminAppController
 
             // send email to customer
             $email = new AppEmail();
-            $email->template('Admin.order_detail_deleted')
-            ->emailFormat('html')
-            ->to($orderDetail['Orders']['Customers']['email'])
-            ->subject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetails']['product_name'])
-            ->viewVars([
+            $email->setTemplate('Admin.order_detail_deleted')
+            ->setTo($orderDetail['Orders']['Customers']['email'])
+            ->setSubject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetails']['product_name'])
+            ->setViewVars([
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
