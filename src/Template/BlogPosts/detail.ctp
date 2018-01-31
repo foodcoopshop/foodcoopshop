@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.blog_posts.detail .img-wrapper a');"
@@ -22,29 +24,29 @@ $this->element('addScript', ['script' =>
 
 <?php
     echo '<div class="img-wrapper">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a href="'.$srcLargeImage.'">';
-    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'single'). '" />';
+    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single'). '" />';
     echo '</a>';
 }
     echo '</div>';
 
-if ($blogPost['BlogPosts']['short_description'] != '') {
-    echo '<p><b>'.$blogPost['BlogPosts']['short_description'].'</b></p>';
+if ($blogPost->short_description != '') {
+    echo '<p><b>'.$blogPost->short_description.'</b></p>';
 }
 
-    echo $blogPost['BlogPosts']['content'];
+    echo $blogPost->content;
 
     echo '<p><i>';
-        echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost['BlogPosts']['modified']);
-if (!empty($blogPost['Manufacturers']['id_manufacturer'])) {
+        echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost->modified);
+if (!empty($blogPost->manufacturer->id_manufacturer)) {
     echo '<br />';
-    if ($blogPost['Manufacturers']['active']) {
-        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name']).'">Zum Blog von  ' . $blogPost['Manufacturers']['name'].'</a>';
+    if ($blogPost->manufacturer->active) {
+        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Blog von  ' . $blogPost->manufacturer->name.'</a>';
     } else {
-        echo 'von ' . $blogPost['Manufacturers']['name'];
+        echo 'von ' . $blogPost->manufacturer->name;
     }
 }
     echo '</i></p>';
@@ -56,7 +58,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         [
         'title' => 'Bearbeiten'
         ],
-        $this->Slug->getBlogPostEdit($blogPost['BlogPosts']['id_blog_post'])
+        $this->Slug->getBlogPostEdit($blogPost->id_blog_post)
     );
 }
 

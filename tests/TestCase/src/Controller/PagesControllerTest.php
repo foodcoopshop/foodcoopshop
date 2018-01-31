@@ -37,9 +37,9 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getHome(),
             $this->Slug->getManufacturerList(),
             $this->Slug->getManufacturerDetail(4, 'Demo Gemüse-Hersteller'),
-//             $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
-//             $this->Slug->getBlogList(),
-//             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
+            $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
+            $this->Slug->getBlogList(),
+            $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
 //             $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(9, 'Impressum'),
             $this->Slug->getLogin(),
@@ -122,10 +122,9 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function test404PagesLoggedOut()
     {
-        $this->markTestIncomplete();
         $testUrls = [
             '/xxx',
-//             $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
+            $this->Slug->getManufacturerDetail(4234, 'not valid manufacturer name'),
             $this->Slug->getPageDetail(4234, 'not valid page name'),
         ];
         $this->assertPagesFor404($testUrls);

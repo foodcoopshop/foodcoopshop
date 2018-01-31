@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;

@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages();"
@@ -19,23 +21,23 @@ $this->element('addScript', ['script' =>
 ?>
 
 <h1><?php echo $title_for_layout; ?>
-<?php if (isset($manufacturer['Manufacturers']['name'])) {
-    echo ' von ' . $manufacturer['Manufacturers']['name'];
+<?php if (isset($manufacturer->name)) {
+    echo ' von ' . $manufacturer->name;
 } ?>
-<span><?php echo count($blogPosts); ?> gefunden</span></h1>
+<span><?php echo $blogPosts->count(); ?> gefunden</span></h1>
 
 <?php
 foreach ($blogPosts as $blogPost) {
     echo '<div class="blog-post-wrapper">';
 
-    $blogDetailLink = $this->Slug->getBlogPostDetail($blogPost['BlogPosts']['id_blog_post'], $blogPost['BlogPosts']['title']);
+    $blogDetailLink = $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title);
     echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
     if (!$largeImageExists) {
         echo '<a data-featherlight="image" href="'.$srcLargeImage.'">';
     }
-        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost['BlogPosts']['id_blog_post'], 'home'). '" />';
+        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'home'). '" />';
     if (!$largeImageExists) {
         echo '</a>';
     }
@@ -43,10 +45,10 @@ foreach ($blogPosts as $blogPost) {
 
         echo '<div class="second-column">';
         echo '<h4>'.$this->Html->link(
-            $blogPost['BlogPosts']['title'],
+            $blogPost->title,
             $blogDetailLink
         ).'</h4>';
-        echo $blogPost['BlogPosts']['short_description'].'<br />';
+        echo $blogPost->short_description.'<br />';
         echo $this->Html->link(
             '<i class="fa fa-plus-circle"></i> Mehr anzeigen',
             $blogDetailLink,
@@ -59,7 +61,7 @@ foreach ($blogPosts as $blogPost) {
             [
             'title' => 'Bearbeiten'
             ],
-            $this->Slug->getBlogPostEdit($blogPost['BlogPosts']['id_blog_post'])
+            $this->Slug->getBlogPostEdit($blogPost->id_blog_post)
         );
     }
 
@@ -74,14 +76,14 @@ foreach ($blogPosts as $blogPost) {
         );
 
         echo '<div class="additional-info">';
-            echo 'Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost['BlogPosts']['modified']);
-    if (!empty($blogPost['Manufacturers']['id_manufacturer'])) {
+            echo 'Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost->modified);
+            if (!empty($blogPost->manufacturer->id_manufacturer)) {
         echo '<br />';
-        if ($blogPost['Manufacturers']['active']) {
-            if ($this->request->here == $this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name'])) {
-                echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name']).'">Zum Hersteller ' . $blogPost['Manufacturers']['name'].'</a>';
+        if ($blogPost->manufacturer->active) {
+            if ($this->request->here == $this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name)) {
+                echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Hersteller ' . $blogPost->manufacturer->name.'</a>';
             } else {
-                echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost['Manufacturers']['id_manufacturer'], $blogPost['Manufacturers']['name']).'">Zum Blog von  ' . $blogPost['Manufacturers']['name'].'</a>';
+                echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Blog von  ' . $blogPost->manufacturer->name.'</a>';
             }
         } else {
             echo 'von ' . $blogPost['Manufacturers']['name'];

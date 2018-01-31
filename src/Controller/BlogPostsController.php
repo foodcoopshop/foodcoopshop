@@ -1,6 +1,7 @@
 <?php
 
-use App\Controller\FrontendController;
+namespace App\Controller;
+
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
@@ -33,14 +34,18 @@ class BlogPostsController extends FrontendController
         switch ($this->request->action) {
             case 'detail':
                 $blogPostId = (int) $this->request->getParam('pass')[0];
+                $this->BlogPost = TableRegistry::get('BlogPosts');
                 $blogPost = $this->BlogPost->find('all', [
                     'conditions' => [
                         'BlogPosts.id_blog_post' => $blogPostId,
                         'BlogPosts.active' => APP_ON
+                    ],
+                    'contain' => [
+                        'Manufacturers'
                     ]
                 ])->first();
                 if (!empty($blogPost) && !$this->AppAuth->user()
-                    && ($blogPost['BlogPosts']['is_private'] || (isset($blogPost['Manufacturers']) && $blogPost['Manufacturers']['is_private']))
+                    && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
                     ) {
                         $this->AppAuth->deny($this->request->action);
                 }
@@ -65,7 +70,7 @@ class BlogPostsController extends FrontendController
             throw new RecordNotFoundException('blogPost not found');
         }
 
-        $correctSlug = Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost['BlogPosts']['title']);
+        $correctSlug = Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title);
         if ($correctSlug != Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
@@ -78,17 +83,18 @@ class BlogPostsController extends FrontendController
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
-        $neighbors = $this->BlogPost->find('neighbors', [
-            'field' => 'BlogPosts.modified',
-            'value' => $blogPost['BlogPosts']['modified'],
-            'conditions' => $conditions,
-            'order' => [
-                'BlogPosts.modified' => 'DESC'
-            ]
-        ]);
+        
+        $options = ['id' => $blogPost->id_blog_post];
+        $tmpNeighbors = $this->BlogPost->find('neighbors', $options);
+        $tmpNeighbors['prev']->contain('Manufacturers')->where($conditions)->first();
+        $tmpNeighbors['next']->contain('Manufacturers')->where($conditions)->first();
+        $neighbors = [
+            'prev' => $tmpNeighbors['prev']->first(),
+            'next' => $tmpNeighbors['next']->first()
+        ];
         $this->set('neighbors', $neighbors);
-
-        $this->set('title_for_layout', $blogPost['BlogPosts']['title']);
+        
+        $this->set('title_for_layout', $blogPost->title);
     }
 
     public function index()
@@ -117,11 +123,15 @@ class BlogPostsController extends FrontendController
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
-
+        
+        $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->find('all', [
             'conditions' => $conditions,
             'order' => [
                 'BlogPosts.modified' => 'DESC'
+            ],
+            'contain' => [
+                'Manufacturers'
             ]
         ]);
 

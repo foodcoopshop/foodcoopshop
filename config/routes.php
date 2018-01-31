@@ -47,32 +47,32 @@ Router::scope('/', function (RouteBuilder $routes) {
     
     $routes->connect('/', ['controller' => 'pages', 'action' => 'home']);
     
-    $routes->connect('/anmelden', ['controller' => 'customers', 'action' => 'login']);
-    $routes->connect('/registrierung', ['controller' => 'customers', 'action' => 'login']);
-    $routes->connect('/registrierung/abgeschlossen', ['controller' => 'customers', 'action' => 'registrationSuccessful']);
-    $routes->connect('/logout', ['controller' => 'customers', 'action' => 'logout']);
-    $routes->connect('/Informationen-ueber-Ruecktrittsrecht', ['controller' => 'carts', 'action' => 'generateCancellationInformationPdf']);
-    $routes->connect('/nutzungsbedingungen', ['controller' => 'pages', 'action' => 'termsOfUse']);
-    $routes->connect('/datenschutzerklaerung', ['controller' => 'pages', 'action' => 'privacyPolicy']);
-    $routes->connect('/nutzungsbedingungen-akzeptieren', ['controller' => 'customers', 'action' => 'acceptUpdatedTermsOfUse']);
+    $routes->connect('/anmelden', ['controller' => 'Customers', 'action' => 'login']);
+    $routes->connect('/registrierung', ['controller' => 'Customers', 'action' => 'login']);
+    $routes->connect('/registrierung/abgeschlossen', ['controller' => 'Customers', 'action' => 'registrationSuccessful']);
+    $routes->connect('/logout', ['controller' => 'Customers', 'action' => 'logout']);
+    $routes->connect('/Informationen-ueber-Ruecktrittsrecht', ['controller' => 'Carts', 'action' => 'generateCancellationInformationPdf']);
+    $routes->connect('/nutzungsbedingungen', ['controller' => 'Pages', 'action' => 'termsOfUse']);
+    $routes->connect('/datenschutzerklaerung', ['controller' => 'Pages', 'action' => 'privacyPolicy']);
+    $routes->connect('/nutzungsbedingungen-akzeptieren', ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);
     
-    $routes->connect('/neue-produkte', ['controller' => 'categories', 'action' => 'newProducts']);
-    $routes->connect('/neues-passwort-anfordern', ['controller' => 'customers', 'action' => 'newPasswordRequest']);
-    $routes->connect('/neues-passwort-generieren/:changePasswordCode', ['controller' => 'customers', 'action' => 'generateNewPassword']);
+    $routes->connect('/neue-produkte', ['controller' => 'Categories', 'action' => 'newProducts']);
+    $routes->connect('/neues-passwort-anfordern', ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
+    $routes->connect('/neues-passwort-generieren/:changePasswordCode', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
     
-    $routes->connect('/aktuelles', ['controller' => 'blog_posts', 'action' => 'index']);
-    $routes->connect('/aktuelles/*', ['controller' => 'blog_posts', 'action' => 'detail']);
-    $routes->connect('/suche/*', ['controller' => 'categories', 'action' => 'search']);
-    $routes->connect('/kategorie/*', ['controller' => 'categories', 'action' => 'detail']);
-    $routes->connect('/produkt/*', ['controller' => 'products', 'action' => 'detail']);
-    $routes->connect('/hersteller', ['controller' => 'manufacturers', 'action' => 'index']);
-    $routes->connect('/hersteller/:manufacturerSlug/aktuelles', ['controller' => 'blog_posts', 'action' => 'index']);
-    $routes->connect('/hersteller/*', ['controller' => 'manufacturers', 'action' => 'detail']);
-    $routes->connect('/content/*', ['controller' => 'pages', 'action' => 'detail']);
-    $routes->connect('/warenkorb/anzeigen', ['controller' => 'carts', 'action' => 'detail']);
-    $routes->connect('/warenkorb/abschliessen', ['controller' => 'carts', 'action' => 'finish']);
-    $routes->connect('/warenkorb/abgeschlossen/*', ['controller' => 'carts', 'action' => 'orderSuccessful']);
-    $routes->connect('/warenkorb/:action', ['controller' => 'carts']);
+    $routes->connect('/aktuelles', ['controller' => 'BlogPosts', 'action' => 'index']);
+    $routes->connect('/aktuelles/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
+    $routes->connect('/suche/*', ['controller' => 'Categories', 'action' => 'search']);
+    $routes->connect('/kategorie/*', ['controller' => 'Categories', 'action' => 'detail']);
+    $routes->connect('/produkt/*', ['controller' => 'Products', 'action' => 'detail']);
+    $routes->connect('/hersteller', ['controller' => 'Manufacturers', 'action' => 'index']);
+    $routes->connect('/hersteller/:manufacturerSlug/aktuelles', ['controller' => 'BlogPosts', 'action' => 'index']);
+    $routes->connect('/hersteller/*', ['controller' => 'Manufacturers', 'action' => 'detail']);
+    $routes->connect('/content/*', ['controller' => 'Pages', 'action' => 'detail']);
+    $routes->connect('/warenkorb/anzeigen', ['controller' => 'Carts', 'action' => 'detail']);
+    $routes->connect('/warenkorb/abschliessen', ['controller' => 'Carts', 'action' => 'finish']);
+    $routes->connect('/warenkorb/abgeschlossen/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
+    $routes->connect('/warenkorb/:action', ['controller' => 'Carts']);
     
     // für normale cake routings (users controller)
     $routes->connect('/:controller/:action');

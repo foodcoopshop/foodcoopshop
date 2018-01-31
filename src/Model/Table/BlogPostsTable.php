@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -27,6 +29,20 @@ class BlogPostsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
+    }
+    
+    /**
+     * Find neighbors method
+     */
+    public function findNeighbors(Query $query, array $options)
+    {
+        $previous = $this->find()
+            ->order(['id_blog_post ' => 'DESC'])
+            ->where('id_blog_post < ' . $options['id']);
+        $next = $this->find()
+            ->order(['id_blog_post ' => 'ASC'])
+            ->where('id_blog_post > ' . $options['id']);
+        return ['prev' => $previous, 'next' => $next];
     }
     
     public $validate = [
