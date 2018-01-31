@@ -70,7 +70,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 </div>
 
 <?php
-if (!empty($blogPosts)) {
+if (!empty($blogPosts->count() > 0)) {
     echo '<h2>Aktuelles von '.$manufacturer->name.'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer->id_manufacturer, $manufacturer->name).'">Zum Blog von '.$manufacturer->name.'</a></h2><div class="sc"></div>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
