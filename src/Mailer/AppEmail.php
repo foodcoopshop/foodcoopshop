@@ -43,7 +43,7 @@ class AppEmail extends Email
      * @param string|array $content
      * @return mixed|boolean|array
      */
-    public function logEmailInDatabase($content)
+    public function logEmailInDatabase($email)
     {
         $emailLogModel = TableRegistry::get('EmailLogs');
         $email2save = [
@@ -53,7 +53,7 @@ class AppEmail extends Email
             'bcc_address' => json_encode($this->getBcc()),
             'subject' => $this->getSubject(),
             'headers' => json_encode($this->getHeaders()),
-            'message' => $this->getHtmlMessage()
+            'message' => $email['message']
         ];
         return $emailLogModel->save($emailLogModel->newEntity($email2save));
     }
@@ -65,10 +65,11 @@ class AppEmail extends Email
     public function send($content = null)
     {
         try {
+            $email = parent::send($content);
             if (Configure::read('appDb.FCS_EMAIL_LOG_ENABLED')) {
-                $this->logEmailInDatabase($content);
+                $this->logEmailInDatabase($email);
             }
-            return parent::send($content);
+            return $email;
         } catch (Exception $e) {
             if (Configure::check('app.EmailTransport.fallback')) {
                 $this->setConfigTransport(Configure::consume('app.EmailTransport'));
