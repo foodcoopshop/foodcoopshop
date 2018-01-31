@@ -87,10 +87,6 @@ class AppController extends Controller
         $this->set('appAuth', $this->AppAuth);
         $loggedUser = $this->AppAuth->user();
         $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
-
-        if ($this->name == 'CakeError') {
-            $this->layout = 'plain';
-        }
     }
 
     public function beforeFilter(Event $event)
