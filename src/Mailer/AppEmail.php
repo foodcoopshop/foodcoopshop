@@ -31,11 +31,6 @@ class AppEmail extends Email
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }
-    
-    public function getHtmlMessage()
-    {
-        return $this->_htmlMessage;
-    }
 
     /**
      * method needs to be called *before* send-method to be able to work with travis-ci
