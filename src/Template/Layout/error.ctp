@@ -13,7 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\Utility\Inflector;
 
 ?>
 <!DOCTYPE html>
@@ -22,42 +21,41 @@ use Cake\Utility\Inflector;
     <meta name="theme-color" content="#719f41">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
+    <title>Error - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     
     <?php echo $this->element('jsNamespace'); ?>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
-    <?php echo $this->element('renderCss', ['configs' => ['plain']]); ?>
+    <?php echo $this->element('renderCss', ['configs' => ['error']]); ?>
     <?php
     if ($isMobile) {
-        echo $this->Html->css(['mobile-plain']);
+        echo $this->Html->css(['mobile-error']);
     }
     ?>
     
-    
 </head>
-<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->action)); ?> <?php echo Configure::read('debug') == 2 ? 'dev' : ''; ?>">
+<body>
     
     <div id="container">
     
             <div id="content">
             <?php echo $this->Flash->render(); ?>
+            
             <div id="inner-content">
-                <?php echo $this->fetch('content'); ?>
                 <?php
-                if ($this->name == 'CakeError' && Configure::read('debug') == 0) {
-                    $referer = '/';
-                    $refererName = 'Startseite';
-                    if (!empty($_SERVER['HTTP_REFERER'])) {
-                        $referer = $_SERVER['HTTP_REFERER'];
-                        $refererName = 'Seite, auf der du gerade warst.';
-                    }
-                    ?>
-                    <br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
-                <?php
+                
+                echo $this->fetch('content');
+                
+                $referer = '/';
+                $refererName = 'Startseite';
+                if (!empty($_SERVER['HTTP_REFERER'])) {
+                    $referer = $_SERVER['HTTP_REFERER'];
+                    $refererName = 'Seite, auf der du gerade warst.';
                 }
+                
                 ?>
+                <br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
                 <div class="sc"></div>
             </div>
         </div>
@@ -70,11 +68,9 @@ use Cake\Utility\Inflector;
 
     echo $this->element('renderJs', ['configs' => ['frontend']]);
 
-if ($this->name != 'CakeError' || Configure::read('debug') == 0) {
     $this->element('addScript', ['script' =>
-    Configure::read('app.jsNamespace').".Helper.initAnystretch();"
+        Configure::read('app.jsNamespace').".Helper.initAnystretch();"
     ]);
-}
 
     echo $this->fetch('script'); // all scripts from layouts
 

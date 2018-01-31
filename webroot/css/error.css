@@ -40,20 +40,15 @@ body {
     display: none;
 }
 
-body.cake_errors {
+body {
     margin-top: 10px;
 }
-body.cake_errors #container {
+#container {
     display: block;
     padding: 10px;
 }
 
-body.cake_errors.dev #content,
-body.cake_errors.dev #inner-content {
-    text-align: left;
-}
-
-body.cake_errors h2 {
+h2 {
     font-size: 18px;
     background: #fff;
     padding: 5px;

@@ -13,7 +13,7 @@
  */
 @media only screen and (max-device-width: 768px) {
 
-  body.cake_errors h2 {
+  h2 {
     width: 100%;
   }
 
