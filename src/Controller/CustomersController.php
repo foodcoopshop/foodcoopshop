@@ -227,23 +227,23 @@ class CustomersController extends FrontendController
                 foreach ($this->request->data['Customers'] as &$data) {
                     $data = strip_tags(trim($data));
                 }
-                foreach ($this->request->data['AddressCustomer'] as &$data) {
+                foreach ($this->request->data['AddressCustomers'] as &$data) {
                     $data = strip_tags(trim($data));
                 }
 
                 // create email, firstname and lastname in adress record
-                $this->request->data['AddressCustomer']['firstname'] = $this->request->data['Customers']['firstname'];
-                $this->request->data['AddressCustomer']['lastname'] = $this->request->data['Customers']['lastname'];
-                $this->request->data['AddressCustomer']['email'] = $this->request->data['Customers']['email'];
-                $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
+                $this->request->data['AddressCustomers']['firstname'] = $this->request->data['Customers']['firstname'];
+                $this->request->data['AddressCustomers']['lastname'] = $this->request->data['Customers']['lastname'];
+                $this->request->data['AddressCustomers']['email'] = $this->request->data['Customers']['email'];
+                $this->Customer->AddressCustomers->set($this->request->data['AddressCustomers']);
 
                 $errors = [];
                 if (! $this->Customer->validates()) {
                     $errors = array_merge($errors, $this->Customer->validationErrors);
                 }
 
-                if (! $this->Customer->AddressCustomer->validates()) {
-                    $errors = array_merge($errors, $this->Customer->AddressCustomer->validationErrors);
+                if (! $this->Customer->AddressCustomers->validates()) {
+                    $errors = array_merge($errors, $this->Customer->AddressCustomers->validationErrors);
                 }
 
                 $checkboxErrors = false;
@@ -268,10 +268,10 @@ class CustomersController extends FrontendController
                     $this->request->data['Customers']['passwd'] = $newPassword;
 
                     // save address
-                    $this->request->data['AddressCustomer']['id_customer'] = $newCustomer['Customers']['id_customer'];
-                    $this->request->data['AddressCustomer']['id_country'] = Configure::read('app.countryId');
-                    $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
-                    $this->Customer->AddressCustomer->save($this->request->data['Customers'], [
+                    $this->request->data['AddressCustomers']['id_customer'] = $newCustomer['Customers']['id_customer'];
+                    $this->request->data['AddressCustomers']['id_country'] = Configure::read('app.countryId');
+                    $this->Customer->AddressCustomers->set($this->request->data['AddressCustomers']);
+                    $this->Customer->AddressCustomers->save($this->request->data['Customers'], [
                         'validate' => false
                     ]);
 

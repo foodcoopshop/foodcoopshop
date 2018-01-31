@@ -73,11 +73,11 @@ if (!empty($manufacturers)) {
             $html = '<p>Name des/der Verbraucher(s): '.$appAuth->getUsername().'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
-            $customerAddress = $appAuth->user('AddressCustomer.address1');
-            if ($appAuth->user('AddressCustomer.address2') != '') {
-                $customerAddress .= ', '.$appAuth->user('AddressCustomer.address2');
+            $customerAddress = $appAuth->user('AddressCustomers.address1');
+            if ($appAuth->user('AddressCustomers.address2') != '') {
+                $customerAddress .= ', '.$appAuth->user('AddressCustomers.address2');
             }
-            $customerAddress .= ', '.$appAuth->user('AddressCustomer.postcode') . ' ' . $appAuth->user('AddressCustomer.city');
+            $customerAddress .= ', '.$appAuth->user('AddressCustomers.postcode') . ' ' . $appAuth->user('AddressCustomers.city');
             $html = '<p>Anschrift des/der Verbraucher(s): '.$customerAddress.'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);

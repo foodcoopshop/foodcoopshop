@@ -23,7 +23,7 @@ use Cake\Core\Configure;
                 
                 <p><b>Lieber Verantwortliche für neue Mitglieder,</b></p>
                 
-                <p>Es gab gerade eine neue Registrierung: <b><?php echo $data['Customers']['firstname']; ?> <?php echo $data['Customers']['lastname']; ?></b> (<?php echo $data['Customers']['email']; ?>) aus <b><?php echo $data['AddressCustomer']['city']; ?></b></p>
+                <p>Es gab gerade eine neue Registrierung: <b><?php echo $data['Customers']['firstname']; ?> <?php echo $data['Customers']['lastname']; ?></b> (<?php echo $data['Customers']['email']; ?>) aus <b><?php echo $data['AddressCustomers']['city']; ?></b></p>
                 
                 <?php $link = Configure::read('app.cakeServerName').'/admin/customers/index/active:'.(Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
                 

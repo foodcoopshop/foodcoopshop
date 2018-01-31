@@ -194,32 +194,32 @@ class CustomersController extends AdminAppController
             foreach ($this->request->data['Customers'] as &$data) {
                 $data = strip_tags(trim($data));
             }
-            foreach ($this->request->data['AddressCustomer'] as &$data) {
+            foreach ($this->request->data['AddressCustomers'] as &$data) {
                 $data = strip_tags(trim($data));
             }
 
-            $this->Customer->AddressCustomer->id = $unsavedCustomer['AddressCustomer']['id_address'];
+            $this->Customer->AddressCustomers->id = $unsavedCustomer['AddressCustomers']['id_address'];
             // also update email, firstname and lastname in adress record
-            $this->request->data['AddressCustomer']['firstname'] = $this->request->data['Customers']['firstname'];
-            $this->request->data['AddressCustomer']['lastname'] = $this->request->data['Customers']['lastname'];
-            $this->request->data['AddressCustomer']['email'] = $this->request->data['Customers']['email'];
+            $this->request->data['AddressCustomers']['firstname'] = $this->request->data['Customers']['firstname'];
+            $this->request->data['AddressCustomers']['lastname'] = $this->request->data['Customers']['lastname'];
+            $this->request->data['AddressCustomers']['email'] = $this->request->data['Customers']['email'];
 
-            $this->Customer->AddressCustomer->set($this->request->data['AddressCustomer']);
+            $this->Customer->AddressCustomers->set($this->request->data['AddressCustomers']);
 
             $errors = [];
             if (! $this->Customer->validates()) {
                 $errors = array_merge($errors, $this->Customer->validationErrors);
             }
 
-            if (! $this->Customer->AddressCustomer->validates()) {
-                $errors = array_merge($errors, $this->Customer->AddressCustomer->validationErrors);
+            if (! $this->Customer->AddressCustomers->validates()) {
+                $errors = array_merge($errors, $this->Customer->AddressCustomers->validationErrors);
             }
 
             if (empty($errors)) {
                 $this->Customer->save($this->request->data['Customers'], [
                     'validate' => false
                 ]);
-                $this->Customer->AddressCustomer->save($this->request->data['Customers'], [
+                $this->Customer->AddressCustomers->save($this->request->data['Customers'], [
                     'validate' => false
                 ]);
 
@@ -324,13 +324,13 @@ class CustomersController extends AdminAppController
             'comment' => $customerComment
         ];
 
-        $this->Customer->AddressCustomer->id = $oldCustomer['AddressCustomer']['id_address'];
-        $this->Customer->AddressCustomer->save($customerAddress2update);
+        $this->Customer->AddressCustomers->id = $oldCustomer['AddressCustomers']['id_address'];
+        $this->Customer->AddressCustomers->save($customerAddress2update);
 
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomer']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
+        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomers']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode([
             'status' => 1,

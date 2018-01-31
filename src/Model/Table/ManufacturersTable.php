@@ -237,11 +237,11 @@ class ManufacturersTable extends AppTable
             ]
         ])->first();
 
-        if (empty($customer['AddressCustomer']['id_address'])) {
+        if (empty($customer['AddressCustomers']['id_address'])) {
             return $customer;
         }
 
-        if (!empty($customer['AddressCustomer'])) {
+        if (!empty($customer['AddressCustomers'])) {
             return [];
         }
 

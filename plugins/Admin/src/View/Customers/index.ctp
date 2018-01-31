@@ -114,17 +114,17 @@ foreach ($customers as $customer) {
         'escape' => false
     ]) . '</span>';
 
-    $details = $customer['AddressCustomer']['address1'];
-    if ($customer['AddressCustomer']['address2'] != '') {
-        $details .= '<br />' . $customer['AddressCustomer']['address2'];
+    $details = $customer['AddressCustomers']['address1'];
+    if ($customer['AddressCustomers']['address2'] != '') {
+        $details .= '<br />' . $customer['AddressCustomers']['address2'];
     }
-    $details .= '<br />' . $customer['AddressCustomer']['postcode'] . ' ' . $customer['AddressCustomer']['city'];
+    $details .= '<br />' . $customer['AddressCustomers']['postcode'] . ' ' . $customer['AddressCustomers']['city'];
 
-    if ($customer['AddressCustomer']['phone_mobile'] != '') {
-        $details .= '<br />Tel.: ' . $customer['AddressCustomer']['phone_mobile'];
+    if ($customer['AddressCustomers']['phone_mobile'] != '') {
+        $details .= '<br />Tel.: ' . $customer['AddressCustomers']['phone_mobile'];
     }
-    if ($customer['AddressCustomer']['phone'] != '') {
-        $details .= '<br />Tel.: ' . $customer['AddressCustomer']['phone'];
+    if ($customer['AddressCustomers']['phone'] != '') {
+        $details .= '<br />Tel.: ' . $customer['AddressCustomers']['phone'];
     }
 
     echo '<div class="customer-details-wrapper">';
@@ -224,9 +224,9 @@ foreach ($customers as $customer) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             [
-                'class' => 'customer-comment-edit-button' . ($customer['AddressCustomer']['comment'] == '' ? ' disabled' : ''),
-                'title' => $customer['AddressCustomer']['comment'] != '' ? $customer['AddressCustomer']['comment'] : 'Kommentar hinzufügen',
-                'data-title-for-overlay' => $customer['AddressCustomer']['comment'] != '' ? $customer['AddressCustomer']['comment'] : 'Kommentar hinzufügen'
+                'class' => 'customer-comment-edit-button' . ($customer['AddressCustomers']['comment'] == '' ? ' disabled' : ''),
+                'title' => $customer['AddressCustomers']['comment'] != '' ? $customer['AddressCustomers']['comment'] : 'Kommentar hinzufügen',
+                'data-title-for-overlay' => $customer['AddressCustomers']['comment'] != '' ? $customer['AddressCustomers']['comment'] : 'Kommentar hinzufügen'
             ],
             'javascript:void(0);'
         );

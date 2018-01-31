@@ -34,7 +34,7 @@ use Cake\Core\Configure;
             </p>
             
             <?php if (!empty($manufacturer['Customers']['name'])) { ?>
-                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customers']['firstname'] . ' ' . $manufacturer['Customers']['lastname'] . ', ' . $manufacturer['Customers']['email'] . ', ' . $manufacturer['Customers']['AddressCustomer']['phone_mobile']; ?></p>
+                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customers']['firstname'] . ' ' . $manufacturer['Customers']['lastname'] . ', ' . $manufacturer['Customers']['email'] . ', ' . $manufacturer['Customers']['AddressCustomers']['phone_mobile']; ?></p>
             <?php } ?>
 
             <ul style="padding-left: 10px;">

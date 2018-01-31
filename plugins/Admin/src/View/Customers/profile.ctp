@@ -54,28 +54,28 @@ echo $this->Form->input('Customers.email', [
     'required' => true
 ]);
 
-echo $this->Form->input('AddressCustomer.address1', [
+echo $this->Form->input('AddressCustomers.address1', [
     'label' => 'Straße',
     'required' => true
 ]);
-echo $this->Form->input('AddressCustomer.address2', [
+echo $this->Form->input('AddressCustomers.address2', [
     'label' => 'Adresszusatz'
 ]);
 
-echo $this->Form->input('AddressCustomer.postcode', [
+echo $this->Form->input('AddressCustomers.postcode', [
     'label' => 'PLZ',
     'required' => true
 ]);
-echo $this->Form->input('AddressCustomer.city', [
+echo $this->Form->input('AddressCustomers.city', [
     'label' => 'Ort',
     'required' => true
 ]);
 
-echo $this->Form->input('AddressCustomer.phone_mobile', [
+echo $this->Form->input('AddressCustomers.phone_mobile', [
     'label' => 'Handy',
     'required' => true
 ]);
-echo $this->Form->input('AddressCustomer.phone', [
+echo $this->Form->input('AddressCustomers.phone', [
     'label' => 'Telefon'
 ]);
 

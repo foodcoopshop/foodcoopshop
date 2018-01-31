@@ -94,7 +94,7 @@ class CustomersControllerTest extends AppCakeTestCase
                 'terms_of_use_accepted_date' => 0
             ],
             'antiSpam' => 0,
-            'AddressCustomer' => [
+            'AddressCustomers' => [
                 'address1' => '',
                 'address2' => '',
                 'postcode' => '',
@@ -123,9 +123,9 @@ class CustomersControllerTest extends AppCakeTestCase
 
         // 3) check for wrong data
         $data['Customers']['email'] = 'fcs-demo-mitglied@mailinator.com';
-        $data['AddressCustomer']['postcode'] = 'ABCDEF';
-        $data['AddressCustomer']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
-        $data['AddressCustomer']['phone'] = '897++asdf+d';
+        $data['AddressCustomers']['postcode'] = 'ABCDEF';
+        $data['AddressCustomers']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
+        $data['AddressCustomers']['phone'] = '897++asdf+d';
         $response = $this->addCustomer($data);
         $this->checkForMainErrorMessage($response);
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);
@@ -170,12 +170,12 @@ class CustomersControllerTest extends AppCakeTestCase
         $data['Customers']['firstname'] = $customerFirstname;
         $data['Customers']['lastname'] = $customerLastname;
         $data['Customers']['terms_of_use_accepted_date'] = 1;
-        $data['AddressCustomer']['city'] = $customerCity;
-        $data['AddressCustomer']['address1'] = $customerAddress1;
-        $data['AddressCustomer']['address2'] = $customerAddress2;
-        $data['AddressCustomer']['postcode'] = $customerPostcode;
-        $data['AddressCustomer']['phone_mobile'] = $customerPhoneMobile;
-        $data['AddressCustomer']['phone'] = $customerPhone;
+        $data['AddressCustomers']['city'] = $customerCity;
+        $data['AddressCustomers']['address1'] = $customerAddress1;
+        $data['AddressCustomers']['address2'] = $customerAddress2;
+        $data['AddressCustomers']['postcode'] = $customerPostcode;
+        $data['AddressCustomers']['phone_mobile'] = $customerPhoneMobile;
+        $data['AddressCustomers']['phone'] = $customerPhone;
 
         $response = $this->addCustomer($data);
         $this->assertRegExpWithUnquotedString('Deine Registrierung war erfolgreich.', $response);
@@ -197,15 +197,15 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals(date('Y-m-d'), $customer['Customers']['terms_of_use_accepted_date'], 'saving field terms_of_use_accepted_date failed');
 
         // check address record
-        $this->assertEquals($customerFirstname, $customer['AddressCustomer']['firstname'], 'saving field firstname failed');
-        $this->assertEquals($customerLastname, $customer['AddressCustomer']['lastname'], 'saving field lastname failed');
-        $this->assertEquals($customerEmail, $customer['AddressCustomer']['email'], 'saving field email failed');
-        $this->assertEquals($customerAddress1, $customer['AddressCustomer']['address1'], 'saving field address1 failed');
-        $this->assertEquals($customerAddress2, $customer['AddressCustomer']['address2'], 'saving field address2 failed');
-        $this->assertEquals($customerCity, $customer['AddressCustomer']['city'], 'saving field city failed');
-        $this->assertEquals($customerPostcode, $customer['AddressCustomer']['postcode'], 'saving field postcode failed');
-        $this->assertEquals($customerPhoneMobile, $customer['AddressCustomer']['phone_mobile'], 'saving field phone_mobile failed');
-        $this->assertEquals($customerPhone, $customer['AddressCustomer']['phone'], 'saving field phone failed');
+        $this->assertEquals($customerFirstname, $customer['AddressCustomers']['firstname'], 'saving field firstname failed');
+        $this->assertEquals($customerLastname, $customer['AddressCustomers']['lastname'], 'saving field lastname failed');
+        $this->assertEquals($customerEmail, $customer['AddressCustomers']['email'], 'saving field email failed');
+        $this->assertEquals($customerAddress1, $customer['AddressCustomers']['address1'], 'saving field address1 failed');
+        $this->assertEquals($customerAddress2, $customer['AddressCustomers']['address2'], 'saving field address2 failed');
+        $this->assertEquals($customerCity, $customer['AddressCustomers']['city'], 'saving field city failed');
+        $this->assertEquals($customerPostcode, $customer['AddressCustomers']['postcode'], 'saving field postcode failed');
+        $this->assertEquals($customerPhoneMobile, $customer['AddressCustomers']['phone_mobile'], 'saving field phone_mobile failed');
+        $this->assertEquals($customerPhone, $customer['AddressCustomers']['phone'], 'saving field phone failed');
     }
 
     private function checkForMainErrorMessage($response)
