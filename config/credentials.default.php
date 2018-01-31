@@ -17,6 +17,7 @@
  */
 
 return [
+    
     'app' => [
         
         /**
@@ -31,34 +32,6 @@ return [
         'emailErrorLoggingEnabled' => false,
         
         /**
-         * FROM address
-         * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
-         */
-        'debugEmailConfig' => [
-            'EmailTransport' => [
-                'default' => [
-                    'emailFormat' => 'html',
-                    'className' => 'Smtp',
-                    'host' => 'mail.example.com',
-                    'port' => 25,
-                    'timeout' => 30,
-                    'username' => 'example@example.com',
-                    'password' => 'my-password',
-                    'client' => null,
-                    'tls' => null,
-                ],
-            ],
-            'Email' => [
-                'default' => [
-                    'transport' => 'default',
-                    'from' => ['example@example.com' => 'Example'],
-                    'charset' => 'utf-8',
-                    'headerCharset' => 'utf-8',
-                ],
-            ]
-        ],
-        
-        /**
          * TO address
          * when exceptions are triggered, emails are sent TO this email address
          */
@@ -71,27 +44,52 @@ return [
          * - receives the database dumps of BackupDatabase Shell
          */
         'hostingEmail' => 'mail@example.com',
-        
+
         /**
-         * when the main email config in email.php is wrong, you can define this fallback email config
+         * FALLBACK email config
+         * when the main email config in custom_config.php is wrong, you can define this fallback email config
          * to send the emails despite a wrong main config
          * if you don't want to use the email fallback, leave it commented
          */
-//         'fallbackEmailConfig' => [
-//             'EmailTransport' => [
-//                 'default' => [
-//                     'emailFormat' => 'html',
-//                     'className' => 'Smtp',
-//                     'host' => 'mail.example.com',
-//                     'port' => 25,
-//                     'timeout' => 30,
-//                     'username' => 'example@example.com',
-//                     'password' => 'my-password',
-//                     'client' => null,
-//                     'tls' => null,
-//                 ],
-//             ]
+//         'EmailTransport' => [
+//             'fallback' => [
+//                 'emailFormat' => 'html',
+//                 'className' => 'Smtp',
+//                 'host' => 'mail.example.com',
+//                 'port' => 25,
+//                 'timeout' => 30,
+//                 'username' => 'example@example.com',
+//                 'password' => 'my-password',
+//                 'client' => null,
+//                 'tls' => null,
+//             ],
 //         ],
 
-    ]
+    ],
+    
+    /**
+     * DEBUG email config
+     * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
+     */
+//     'EmailTransport' => [
+//         'debug' => [
+//             'emailFormat' => 'html',
+//             'className' => 'Smtp',
+//             'host' => 'mail.example.com',
+//             'port' => 25,
+//             'timeout' => 30,
+//             'username' => 'example@example.com',
+//             'password' => 'my-password',
+//             'client' => null,
+//             'tls' => null,
+//         ],
+//     ],
+//     'Email' => [
+//         'debug' => [
+//             'from' => ['example@example.com' => 'Example'],
+//             'charset' => 'utf-8',
+//             'headerCharset' => 'utf-8',
+//         ],
+//     ],
+    
 ];

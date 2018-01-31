@@ -17,6 +17,7 @@
 
 namespace App\Shell;
 
+use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Number;
@@ -68,11 +69,11 @@ class BackupDatabaseShell extends AppShell
         $message = 'Datenbank-Backup erfolgreich ('.Number::toReadableSize(filesize($zipFilename)).').';
 
         // email zipped file
-        $Email = new Email(Configure::read('debugEmailConfig'));
-        $Email->setTo(Configure::read('app.hostingEmail'))
+        $email = new AppEmail('debug');
+        $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject($message . ': ' . Configure::read('app.cakeServerName'))
             ->setAttachments([
-            $zipFilename
+              $zipFilename
             ])
             ->send();
 

@@ -25,7 +25,7 @@ class AppEmail extends Email
     
     public function __construct($config = null)
     {
-        parent::__construct('default');
+        parent::__construct($config);
 
         if (Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
@@ -59,8 +59,8 @@ class AppEmail extends Email
     }
 
     /**
-     * fallback if email config is wrong (e.g.
-     * password changed from third party)
+     * uses fallback transport config if default email transport config is wrong (e.g. password changed party)
+     * @see credentials.php
      */
     public function send($content = null)
     {
@@ -70,21 +70,10 @@ class AppEmail extends Email
             }
             return parent::send($content);
         } catch (Exception $e) {
-            
-//             CakeLog::write('error', $e->getMessage());
-
-            if (0 && Configure::check('app.fallbackEmailConfig')) {
-
-                // resend the email with the app.fallbackEmailConfig
-                AppEmail::dropTransport('default');
-                AppEmail::setConfig('default');
-                $this->setConfig(Configure::read('app.fallbackEmailConfig')['EmailTransport']['Email']);
-                $this->setConfigTransport(Configure::read('app.fallbackEmailConfig')['EmailTransport']);
-                $this->setFrom([
-                    key($this->getFrom()) => Configure::read('appDb.FCS_APP_NAME')
-                ]);
-//                 CakeLog::write('info', 'email was sent with fallback config');
-//                 return $this->send($content);
+            if (Configure::check('app.EmailTransport.fallback')) {
+                $this->setConfigTransport(Configure::consume('app.EmailTransport'));
+                $this->setTransport('fallback');
+                return $this->send($content);
             } else {
                 throw $e;
             }

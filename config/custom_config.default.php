@@ -1,10 +1,8 @@
 <?php
 /**
- * custom.config.default.php
- *
  * - this file contains the specific configuration for your foodcoop
  * - configurations in config.php can be overriden in this file
- * - please rename it to "custom.config.php" to use it
+ * - please rename it to "custom_config.php" to use it
  *
  * FoodCoopShop - The open source software for your foodcoop
  *
