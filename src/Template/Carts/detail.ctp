@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
@@ -86,12 +88,12 @@ if (!$appAuth->termsOfUseAccepted()) {
         <?php
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
+                Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
             if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Orders']['comment'] != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
-                ]);
+            ]);
             }
             echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
             'class' => 'toggle-link',

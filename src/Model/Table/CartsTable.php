@@ -28,7 +28,7 @@ class CartsTable extends AppTable
         $this->belongsTo('Customer', [
             'foreignKey' => 'id_customer'
         ]);
-        $this->hasMany('CakeProducts', [
+        $this->hasMany('CartProducts', [
             'foreignKey' => 'id_cart'
         ]);
     }
@@ -48,7 +48,6 @@ class CartsTable extends AppTable
         ])->first();
         
         if (empty($cart)) {
-            $this->id = null;
             $cart2save = [
                 'id_customer' => $customerId
             ];
@@ -58,23 +57,24 @@ class CartsTable extends AppTable
         $ccp = TableRegistry::get('CartProducts');
         $cartProducts = $ccp->find('all', [
             'conditions' => [
-                'CartProducts.id_cart' => $cart->id_cart
+                'CartProducts.id_cart' => $cart['id_cart']
             ],
             'order' => [
                 'ProductLangs.name' => 'ASC'
             ],
             'contain' => [
-                'ProductLangs'
+                'ProductLangs',
+                'Products.Manufacturers'
             ]
         ])->toArray();
 
         $preparedCart = [
-            'Cart' => $cart['Cart'],
+            'Cart' => $cart,
             'CartProducts' => []
         ];
         foreach ($cartProducts as &$cartProduct) {
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct['Products']['Manufacturers']['name'], Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct['Products']['Manufacturers']['id_manufacturer'], $cartProduct['Products']['Manufacturers']['name']));
-
+            
             $imageId = 0;
             if (!empty($cartProduct['Products']['Images'])) {
                 $imageId = $cartProduct['Products']['Images']['id_image'];
@@ -129,10 +129,10 @@ class CartsTable extends AppTable
                     'manufacturerName' => $cartProduct['Products']['Manufacturers']['name'],
                     'image' => $productImage,
                     'deposit' => isset($cartProduct['Products']['DepositProduct']['deposit']) ? $cartProduct['Products']['DepositProduct']['deposit'] * $cartProduct['CartProducts']['amount'] : 0,
-                    'price' => $ccp->Product->getGrossPrice($cartProduct['Products']['id_product'], $cartProduct['Products']['ProductShop']['price']) * $cartProduct['CartProducts']['amount'],
+                    'price' => $ccp->Products->getGrossPrice($cartProduct['Products']['id_product'], $cartProduct['Products']['ProductShop']['price']) * $cartProduct['CartProducts']['amount'],
                     'priceExcl' => $cartProduct['Products']['ProductShop']['price'] * $cartProduct['CartProducts']['amount'],
-                    'tax' => $ccp->Product->getUnitTax(
-                        $ccp->Product->getGrossPrice(
+                    'tax' => $ccp->Products->getUnitTax(
+                        $ccp->Products->getGrossPrice(
                             $cartProduct['Products']['id_product'],
                             $cartProduct['Products']['ProductShop']['price']
                         ) * $cartProduct['CartProducts']['amount'],

@@ -191,11 +191,11 @@ class CartsController extends FrontendController
             ])->first();
             $products[] = $product;
 
-            $stockAvailableQuantity = $product['StockAvailables']['quantity'];
+            $stockAvailableQuantity = $product->stock_available->quantity;
 
             // stock available check for product (without attributeId)
             if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $ccp['amount']) {
-                $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') des Produktes "' . $product['ProductLangs']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
@@ -204,7 +204,7 @@ class CartsController extends FrontendController
                 foreach ($product['ProductAttributes'] as $attribute) {
                     if ($attribute['id_product_attribute'] == $ids['attributeId']) {
                         $attributeIdFound = true;
-                        $stockAvailableQuantity = $attribute['StockAvailables']['quantity'];
+                        $stockAvailableQuantity = $attribute->stock_available->quantity;
                         // stock available check for attribute
                         if ($stockAvailableQuantity < $ccp['amount']) {
                             $this->Attribute = TableRegistry::get('Attributes');
@@ -213,7 +213,7 @@ class CartsController extends FrontendController
                                     'Attributes.id_attribute' => $attribute['ProductAttributeCombinations']['id_attribute']
                                 ]
                             ])->first();
-                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute['Attributes']['name'] . '" des Produktes "' . $product['ProductLangs']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute['Attributes']['name'] . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                             $cartErrors[$ccp['productId']][] = $message;
                         }
                         break;
@@ -226,12 +226,12 @@ class CartsController extends FrontendController
             }
 
             if (! $product['Products']['active']) {
-                $message = 'Das Produkt "' . $product['ProductLangs']['name'] . '" ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = 'Das Produkt "' . $product->product_lang->name . '" ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
-            if (! $product['Manufacturers']['active'] || $product[0]->is_holiday_active]) {
-                $message = 'Der Hersteller des Produktes "' . $product['ProductLangs']['name'] . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+            if (! $product['Manufacturers']['active'] || $product[0]->is_holiday_active) {
+                $message = 'Der Hersteller des Produktes "' . $product->product_lang->name . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
@@ -578,7 +578,7 @@ class CartsController extends FrontendController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $initialProductId = $this->params['data']['productId'];
+        $initialProductId = $this->request->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
 
@@ -590,7 +590,7 @@ class CartsController extends FrontendController
             $attributeId = (int) $explodedProductId[1];
         }
 
-        $amount = (int) $this->params['data']['amount'];
+        $amount = (int) $this->request->getData('amount');
         // allow -1 and 1 - 99
         if ($amount == 0 || $amount < - 1 || $amount > 99) {
             $message = 'Die gewünschte Anzahl "' . $amount . '" ist nicht gültig.';
@@ -608,7 +608,11 @@ class CartsController extends FrontendController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs', 'StockAvailables', 'ProductAttributes', 'ProductAttributes.StockAvailable', 'ProductAttributes.ProductAttributeCombination.Attribute'
+                'ProductLangs',
+                'StockAvailables',
+                'ProductAttributes',
+                'ProductAttributes.StockAvailables',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
 
@@ -629,8 +633,8 @@ class CartsController extends FrontendController
         }
 
         // stock available check for product
-        if ($attributeId == 0 && $product['StockAvailables']['quantity'] < $combinedAmount && $amount > 0) {
-            $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') des Produktes "' . $product['ProductLangs']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product['StockAvailables']['quantity'];
+        if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
+            $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product->stock_available->quantity;
             die(json_encode([
                 'status' => 0,
                 'msg' => $message,
@@ -641,12 +645,12 @@ class CartsController extends FrontendController
         // check if passed optional product/attribute relation exists
         if ($attributeId > 0) {
             $attributeIdFound = false;
-            foreach ($product['ProductAttributes'] as $attribute) {
-                if ($attribute['id_product_attribute'] == $attributeId) {
+            foreach ($product->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute == $attributeId) {
                     $attributeIdFound = true;
                     // stock available check for attribute
-                    if ($attribute['StockAvailables']['quantity'] < $combinedAmount && $amount > 0) {
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute['ProductAttributeCombinations']['Attributes']['name'] . '" des Produktes "' . $product['ProductLangs']['name'] . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute['StockAvailables']['quantity'];
+                    if ($attribute->stock_available->quantity < $combinedAmount && $amount > 0) {
+                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute->product_attribute_combination->attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute->stock_available->quantity;
                         die(json_encode([
                             'status' => 0,
                             'msg' => $message,
@@ -670,23 +674,25 @@ class CartsController extends FrontendController
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
         $ccp = TableRegistry::get('CartProducts');
-        $ccp->id = null;
-        if ($existingCartProduct) {
-            $ccp->id = $existingCartProduct['cartProductId'];
-        }
-
+        
         $cartProduct2save = [
             'id_product' => $productId,
             'amount' => $combinedAmount,
             'id_product_attribute' => $attributeId,
             'id_cart' => $cart['Cart']['id_cart']
         ];
-        $ccp->save($cartProduct2save);
+        if ($existingCartProduct) {
+            $oldEntity = $ccp->get($existingCartProduct['cartProductId']);
+            $entity = $ccp->patchEntity($oldEntity, $cartProduct2save);
+        } else {
+            $entity = $ccp->newEntity($cartProduct2save);
+        }
+        $ccp->save($entity);
 
         // update cart to update field date_upd
-        $cc = TableRegistry::get('Cart');
-        $cc->id = $cart['Cart']['id_cart'];
-        $cc->updateDateUpd();
+//         $cc = TableRegistry::get('Cart');
+//         $cc->id = $cart['Cart']['id_cart'];
+//         $cc->updateDateUpd();
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();

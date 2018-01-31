@@ -73,7 +73,7 @@ class CartComponent extends Component
 
     public function getCartId()
     {
-        return $this->cart['Cart']['id_cart'];
+        return $this->cart->id_cart;
     }
 
     public function markAsSaved()
