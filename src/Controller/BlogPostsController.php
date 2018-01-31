@@ -103,8 +103,8 @@ class BlogPostsController extends FrontendController
             'BlogPosts.active' => APP_ON
         ];
 
-        if (isset($this->params['manufacturerSlug'])) {
-            $manufacturerId = (int) $this->params['manufacturerSlug'];
+        if (!empty($this->request->getParam('manufacturerSlug'))) {
+            $manufacturerId = (int) $this->request->getParam('manufacturerSlug');
             $this->Manufacturer = TableRegistry::get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
