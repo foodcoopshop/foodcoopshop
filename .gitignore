@@ -24,3 +24,4 @@ Thumbs.db
 /.project
 /.settings
 /webroot/node_modules
+/.buildpath
