@@ -81,7 +81,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testRemoveProduct()
     {
-        $this->markTestSkipped();
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();

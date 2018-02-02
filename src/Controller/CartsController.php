@@ -532,7 +532,7 @@ class CartsController extends FrontendController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $initialProductId = $this->params['data']['productId'];
+        $initialProductId = $this->request->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
 
@@ -559,11 +559,6 @@ class CartsController extends FrontendController
 
         $ccp = TableRegistry::get('CartProducts');
         $ccp->remove($productId, $attributeId, $cart['Cart']['id_cart']);
-
-        // update cart to update field date_upd
-        $cc = TableRegistry::get('Cart');
-        $cc->id = $cart['Cart']['id_cart'];
-        $cc->updateDateUpd();
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -688,11 +683,6 @@ class CartsController extends FrontendController
             $entity = $ccp->newEntity($cartProduct2save);
         }
         $ccp->save($entity);
-
-        // update cart to update field date_upd
-//         $cc = TableRegistry::get('Cart');
-//         $cc->id = $cart['Cart']['id_cart'];
-//         $cc->updateDateUpd();
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
