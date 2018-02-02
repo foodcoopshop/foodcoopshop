@@ -227,14 +227,14 @@ return [
      */
     'Log' => [
         'debug' => [
-            'className' => 'Cake\Log\Engine\FileLog',
+            'className' => 'App\Log\Engine\FileAndEmailLog',
             'path' => LOGS,
             'file' => 'debug',
             'levels' => ['notice', 'info', 'debug'],
             'url' => env('LOG_DEBUG_URL', null),
         ],
         'error' => [
-            'className' => 'Cake\Log\Engine\FileLog',
+            'className' => 'App\Log\Engine\FileAndEmailLog',
             'path' => LOGS,
             'file' => 'error',
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],

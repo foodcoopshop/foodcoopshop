@@ -224,8 +224,3 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
         'routes' => true
     ]);
 }
-// if (Configure::read('app.emailErrorLoggingEnabled')) {
-//     Plugin::load('EmailErrorLog', array(
-//         'bootstrap' => true
-//     ));
-// }
