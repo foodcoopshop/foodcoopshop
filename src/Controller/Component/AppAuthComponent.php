@@ -83,15 +83,16 @@ class AppAuthComponent extends AuthComponent
             return;
         }
 
-        /*
         $mm = TableRegistry::get('Manufacturers');
         $this->manufacturer = $mm->find('all', [
             'conditions' => [
-                'Addresses.email' => $this->user('email'),
-                'Addresses.id_manufacturer > ' . APP_OFF
+                'AddressManufacturers.email' => $this->user('email'),
+                'AddressManufacturers.id_manufacturer > ' . APP_OFF
+            ],
+            'contain' => [
+                'AddressManufacturers'
             ]
         ])->first();
-        */
     }
 
     public function isSuperadmin()
