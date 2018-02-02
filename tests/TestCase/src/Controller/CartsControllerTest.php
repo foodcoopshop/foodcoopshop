@@ -57,7 +57,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongProductId1()
     {
-        $this->markTestSkipped();
         $this->loginAsCustomer();
         $response = $this->addProductToCart(8787, 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 8787 ist nicht vorhanden.', $response->msg);
@@ -66,7 +65,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongProductId2()
     {
-        $this->markTestSkipped();
         $this->loginAsCustomer();
         $response = $this->addProductToCart('test', 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
@@ -75,7 +73,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongAmount()
     {
-        $this->markTestSkipped();
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 100);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist nicht gültig.', $response->msg);
@@ -395,9 +392,7 @@ class CartsControllerTest extends AppCakeTestCase
     private function removeProduct($productId)
     {
         $this->browser->ajaxPost('/warenkorb/ajaxRemove', [
-            'data' => [
-                'productId' => $productId
-            ]
+            'productId' => $productId
         ]);
         return $this->browser->getJsonDecodedContent();
     }
