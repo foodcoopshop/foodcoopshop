@@ -47,26 +47,43 @@ class FrontendController extends AppController
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['date_add']);
+            $product['attributes'] = [];
 
-            $product['attributes'] = $this->ProductAttribute->find('all', [
+            $attributes = $this->ProductAttribute->find('all', [
                 'conditions' => [
                     'ProductAttributes.id_product' => $product['id_product']
                 ],
                 'contain' => [
                     'ProductAttributeShops',
                     'StockAvailables',
-                    'ProductAttributeCombinations.Attributes'
+                    'ProductAttributeCombinations.Attributes',
+                    'DepositProductAttributes'
                 ]
-            ])->toArray();
-            $i = 0;
-            foreach ($product['attributes'] as $attribute) {
-                $grossPrice = $this->Product->getGrossPrice($attribute['ProductAttributeShops']['id_product'], $attribute['ProductAttributeShops']['price']);
-                $product['attributes'][$i]['ProductAttributeShops']['gross_price'] = $grossPrice;
-                $product['attributes'][$i]['ProductAttributeShops']['tax'] = $grossPrice - $attribute['ProductAttributeShops']['price'];
-                $i++;
+            ]);
+            $preparedAttributes = [];
+            foreach ($attributes as $attribute) {
+                $preparedAttributes['ProductAttributes'] = [
+                    'id_product_attribute' => $attribute->id_product_attribute
+                ];
+                $preparedAttributes['ProductAttributeShops'] = [
+                    'gross_price' => $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price),
+                    'tax' => $grossPrice - $attribute->product_attribute_shop->price,
+                    'default_on' => $attribute->product_attribute_shop->default_on
+                ];
+                $preparedAttributes['StockAvailables'] = [
+                    'quantity' => $attribute->stock_available->quantity
+                ];
+                $preparedAttributes['DepositProductAttributes'] = [
+                    'deposit' => $attribute->deposit_product_attribute->deposit
+                ];
+                $preparedAttributes['ProductAttributeCombinations'] = [
+                    'Attributes' => [
+                        'name' => $attribute->product_attribute_combination->attribute->name
+                    ]
+                ];
+                $product['attributes'][] = $preparedAttributes;
             }
         }
-
         return $products;
     }
 

@@ -87,7 +87,7 @@ if ($product['description'] != '') {
         $i = 0;
         $preparedProductAttributes = [];
         foreach ($product['attributes'] as $attribute) {
-            if ($attribute->stock_available->quantity > 0) {
+            if ($attribute['StockAvailables']['quantity'] > 0) {
                 $preparedProductAttributes[] = $attribute;
             }
             $i++;
@@ -97,7 +97,7 @@ if ($product['description'] != '') {
         $i = 0;
         foreach ($preparedProductAttributes as $attribute) {
             $preparedProductAttributes[$i]['checked'] = false;
-            if ($attribute->product_attribute_shop->default_on == 1) {
+            if ($attribute['ProductAttributeShops']['default_on'] == 1) {
                 $preparedProductAttributes[$i]['checked'] = true;
                 $hasCheckedAttribute = true;
             }
@@ -121,19 +121,19 @@ if ($product['description'] != '') {
             if ($attribute['checked']) {
                 $entityClasses[] = 'active';
             }
-            echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute->id_product_attribute.'">';
+            echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo '<div class="line">';
-                echo '<div class="price">' . $this->Html->formatAsEuro($attribute->product_attribute_shop->gross_price). '</div>';
-                if (!empty($attribute->deposit_product_attribute->deposit)) {
-                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute->deposit_product_attribute->deposit) . '</b> Pfand</div>';
+                echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']). '</div>';
+                if (!empty($attribute['DepositProductAttributes']['deposit'])) {
+                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
-                echo '<div class="tax">'. $this->Html->formatAsEuro($attribute->product_attribute_shop->tax) . '</div>';
+                echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
                 echo '</div>';
-                echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute->id_product_attribute]);
-                echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute->stock_available->quantity]);
-                echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute->id_product_attribute, 'stockAvailable' => $attribute->stock_available->quantity]);
-                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute->stock_available->quantity]);
+                echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
+                echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
+                echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailables']['quantity']]);
+                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
             }
             echo '</div>';
         }
@@ -141,9 +141,9 @@ if ($product['description'] != '') {
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
             echo '<div class="radio">
-                           <label class="attribute-button" id="'.'attribute-button-'.$attribute->id_product_attribute.'">
+                           <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
                                <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                           $attribute->product_attribute_combination->attribute->name.'
+                               $attribute['ProductAttributeCombinations']['Attributes']['name'].'
                            </label>
                        </div>';
         }
