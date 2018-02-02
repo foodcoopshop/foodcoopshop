@@ -52,7 +52,7 @@ class FileAndEmailLog extends FileLog
     private function sendEmailWithErrorInformation($message)
     {
         
-        $ignoredExceptionsRegex = '/\[(MissingController|MissingAction|RecordNotFound)Exception\]/';
+        $ignoredExceptionsRegex = '/(MissingController|MissingAction|RecordNotFound)Exception/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
