@@ -42,3 +42,4 @@ nbproject/*
 /config/credentials.php
 /config/custom_config.php
 /webroot/node_modules
+/.buildpath
