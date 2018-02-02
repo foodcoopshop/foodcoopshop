@@ -84,10 +84,8 @@ class AppSimpleBrowser extends SimpleBrowser
     public function doFoodCoopShopLogin()
     {
         $this->post($this->Slug->getLogin(), [
-            'Customers' => [
-                'email' => $this->loginEmail,
-                'passwd' => $this->loginPassword
-            ],
+            'email' => $this->loginEmail,
+            'passwd' => $this->loginPassword,
             'remember_me' => false
         ]);
 
