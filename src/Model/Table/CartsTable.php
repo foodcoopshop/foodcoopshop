@@ -102,7 +102,7 @@ class CartsTable extends AppTable
                     'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
                     'productName' => $cartProduct->product_lang->name,
                     'productLink' => $productLink,
-                    'unity' => $cartProductproduct_attribute->product_attribute_combination->attribute->name,
+                    'unity' => $cartProduct->product_attribute->product_attribute_combination->attribute->name,
                     'amount' => $cartProduct->amount,
                     'manufacturerId' => $cartProduct->product->id_manufacturer,
                     'manufacturerLink' => $manufacturerLink,
