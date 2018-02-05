@@ -177,7 +177,7 @@ return [
              */
             //'port' => 'non_standard_port_number',
             'encoding' => 'utf8',
-            'timezone' => '+2:00',
+            'timezone' => '+1:00',
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
