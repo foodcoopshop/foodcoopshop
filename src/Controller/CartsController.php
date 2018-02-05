@@ -187,10 +187,18 @@ class CartsController extends FrontendController
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
                 ],
-                'fields' => ['Products.*', 'is_holiday_active' => '!'.$this->Product->getManufacturerHolidayConditions()]
-            ])->first();
+                'fields' => ['is_holiday_active' => '!'.$this->Product->getManufacturerHolidayConditions()],
+                'contain' => [
+                    'Manufacturers',
+                    'StockAvailables',
+                    'ProductAttributes.StockAvailables'
+                ]
+            ])
+            ->select($this->Product)
+            ->select($this->Product->StockAvailables)
+            ->select($this->Product->Manufacturers)
+            ->first();
             $products[] = $product;
-
             $stockAvailableQuantity = $product->stock_available->quantity;
 
             // stock available check for product (without attributeId)
@@ -201,8 +209,8 @@ class CartsController extends FrontendController
 
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
-                foreach ($product['ProductAttributes'] as $attribute) {
-                    if ($attribute['id_product_attribute'] == $ids['attributeId']) {
+                foreach ($product->product_attributes as $attribute) {
+                    if ($attribute->id_product_attribute == $ids['attributeId']) {
                         $attributeIdFound = true;
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
                         // stock available check for attribute
@@ -210,10 +218,10 @@ class CartsController extends FrontendController
                             $this->Attribute = TableRegistry::get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
-                                    'Attributes.id_attribute' => $attribute['ProductAttributeCombinations']['id_attribute']
+                                    'Attributes.id_attribute' => $attribute->product_attribute_combinations->id_attribute
                                 ]
                             ])->first();
-                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute['Attributes']['name'] . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                             $cartErrors[$ccp['productId']][] = $message;
                         }
                         break;
@@ -225,12 +233,12 @@ class CartsController extends FrontendController
                 }
             }
 
-            if (! $product['Products']['active']) {
+            if (! $product->active) {
                 $message = 'Das Produkt "' . $product->product_lang->name . '" ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
-            if (! $product['Manufacturers']['active'] || $product[0]->is_holiday_active) {
+            if (! $product->manufacturer->active || $product->is_holiday_active) {
                 $message = 'Der Hersteller des Produktes "' . $product->product_lang->name . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$ccp['productId']][] = $message;
             }
@@ -254,11 +262,11 @@ class CartsController extends FrontendController
                 $newQuantity = 0; // never ever allow negative stock available
             }
             $stockAvailable2saveData[] = [
-                'StockAvailables.quantity' => $newQuantity
+                'quantity' => $newQuantity
             ];
             $stockAvailable2saveConditions[] = [
-                'StockAvailables.id_product' => $ids['productId'],
-                'StockAvailables.id_product_attribute' => $ids['attributeId']
+                'id_product' => $ids['productId'],
+                'id_product_attribute' => $ids['attributeId']
             ];
         }
 
@@ -269,18 +277,19 @@ class CartsController extends FrontendController
         $this->Order = TableRegistry::get('Orders');
         $formErrors = false;
         if (!isset($this->request->data['Orders']['general_terms_and_conditions_accepted']) || $this->request->data['Orders']['general_terms_and_conditions_accepted'] != 1) {
-            $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
-            $formErrors = true;
+            
+//             $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
+//             $formErrors = true;
         }
         if (!isset($this->request->data['Orders']['cancellation_terms_accepted']) || $this->request->data['Orders']['cancellation_terms_accepted'] != 1) {
-            $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
-            $formErrors = true;
+//             $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+//             $formErrors = true;
         }
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $orderComment = strip_tags(trim($this->request->data['Orders']['comment']), '<strong><b>');
             $maxOrderCommentCount = 500;
             if (strlen($orderComment) > $maxOrderCommentCount) {
-                $this->Order->invalidate('comment', 'Bitte gib maximal '.$maxOrderCommentCount.' Zeichen ein.');
+//                 $this->Order->invalidate('comment', 'Bitte gib maximal '.$maxOrderCommentCount.' Zeichen ein.');
                 $formErrors = true;
             }
         }
@@ -291,11 +300,9 @@ class CartsController extends FrontendController
             $this->Flash->error('Es sind Fehler aufgetreten.');
         } else {
             // START save order
-            $this->Order->id = null;
             $order2save = [
                 'id_customer' => $this->AppAuth->getUserId(),
                 'id_cart' => $this->AppAuth->Cart->getCartId(),
-                'id_currency' => 1,
                 'current_state' => ORDER_STATE_OPEN,
                 'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
@@ -307,9 +314,9 @@ class CartsController extends FrontendController
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
                 $order2save['comment'] = $orderComment;
             }
-            $order = $this->Order->save($order2save, [
-                'validate' => false
-            ]);
+            $order = $this->Order->save(
+                $this->Order->newEntity($order2save)
+            );
 
             if (empty($order)) {
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
@@ -318,14 +325,17 @@ class CartsController extends FrontendController
                 $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
             }
 
-            $orderId = $order['Orders']['id_order'];
+            $orderId = $order->id_order;
             // END save order
 
             // START update order_id in orderDetails2save
             foreach ($orderDetails2save as &$orderDetail) {
                 $orderDetail['id_order'] = $orderId;
             }
-            $this->Order->OrderDetails->saveAll($orderDetails2save);
+            
+            $this->Order->OrderDetails->saveMany(
+                $this->Order->OrderDetails->newEntities($orderDetails2save)
+            );
             // END update order_id in orderDetails2save
 
             // START save order_detail_tax
@@ -343,31 +353,33 @@ class CartsController extends FrontendController
             }
 
             $orderDetailTax2save = [];
-            $this->OrderDetailTax = TableRegistry::get('OrderDetailTaxs');
+            $this->OrderDetailTax = TableRegistry::get('OrderDetailTaxes');
             foreach ($orderDetails as $orderDetail) {
                 // should not be necessary but a user somehow managed to set product_quantity as 0
-                $quantity = $orderDetail['OrderDetails']['product_quantity'];
+                $quantity = $orderDetail->product_quantity;
                 if ($quantity == 0) {
                     $this->log('product_quantity was 0, would have resulted in division by zero error');
                     continue;
                 }
 
-                $productId = $orderDetail['OrderDetails']['product_id'];
-                $price = $orderDetail['OrderDetails']['total_price_tax_incl'];
+                $productId = $orderDetail->product_id;
+                $price = $orderDetail->total_price_tax_incl;
 
                 $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $quantity);
                 $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $quantity);
                 $totalTaxAmount = $unitTaxAmount * $quantity;
 
                 $orderDetailTax2save[] = [
-                    'id_order_detail' => $orderDetail['OrderDetails']['id_order_detail'],
+                    'id_order_detail' => $orderDetail->id_order_detail,
                     'id_tax' => 0, // do not use the field id_tax in order_details_tax but id_tax in order_details!
                     'unit_amount' => $unitTaxAmount,
                     'total_amount' => $totalTaxAmount
                 ];
             }
 
-            $this->OrderDetailTax->saveAll($orderDetailTax2save);
+            $this->OrderDetailTax->saveMany(
+                $this->OrderDetailTax->newEntities($orderDetailTax2save)
+            );
             // END save order_detail_tax
 
             $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
@@ -375,8 +387,10 @@ class CartsController extends FrontendController
             // START update stock available
             $i = 0;
             foreach ($stockAvailable2saveData as &$data) {
-                $this->Product->StockAvailable->updateAll($stockAvailable2saveData[$i], $stockAvailable2saveConditions[$i]);
-                $this->Product->StockAvailable->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['StockAvailables.id_product']);
+                $this->Product->StockAvailables->updateAll(
+                    $stockAvailable2saveData[$i], $stockAvailable2saveConditions[$i]
+                );
+                $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
                 $i ++;
             }
             // END update stock available
@@ -405,9 +419,9 @@ class CartsController extends FrontendController
                     ]);
 
 
-                $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
-                $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save), 'mimetype' => 'application/pdf']]);
-                $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions($order), 'mimetype' => 'application/pdf']]);
+//                 $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
+//                 $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save), 'mimetype' => 'application/pdf']]);
+//                 $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions($order), 'mimetype' => 'application/pdf']]);
 
                 $email->send();
             }

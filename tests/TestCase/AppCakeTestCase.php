@@ -341,12 +341,10 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->browser->post(
             $this->Slug->getCartFinish(),
             [
-                'data' => [
-                    'Orders' => [
-                        'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                        'cancellation_terms_accepted' => $cancellation_terms_accepted,
-                        'comment' => $comment
-                    ]
+                'Orders' => [
+                    'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                    'cancellation_terms_accepted' => $cancellation_terms_accepted,
+                    'comment' => $comment
                 ]
             ]
         );

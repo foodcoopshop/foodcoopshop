@@ -73,17 +73,16 @@ class CartComponent extends Component
 
     public function getCartId()
     {
-        return $this->cart->id_cart;
+        return $this->cart['Cart']->id_cart;
     }
 
     public function markAsSaved()
     {
         if ($this->cart !== null) {
-            $cc = TableRegistry::get('Cart');
-            $cc->id = $this->getCartId();
-            $cc->save([
+            $cc = TableRegistry::get('Carts');
+            $cc->save($cc->patchEntity($cc->get($this->getCartId()), [
                 'status' => APP_OFF
-            ]);
+            ]));
         }
     }
 

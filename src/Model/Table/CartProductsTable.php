@@ -40,6 +40,6 @@ class CartProductsTable extends AppTable
             'CartProducts.id_product_attribute' => $attributeId,
             'CartProducts.id_cart' => $cartId
         ];
-        return $this->deleteAll($cartProduct2remove, false);
+        return $this->deleteAll($cartProduct2remove);
     }
 }
