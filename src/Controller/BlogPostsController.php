@@ -63,7 +63,10 @@ class BlogPostsController extends FrontendController
         $conditions['BlogPosts.id_blog_post'] = $blogPostId; // needs to be last element of conditions
 
         $blogPost = $this->BlogPost->find('all', [
-            'conditions' => $conditions
+            'conditions' => $conditions,
+            'contain' => [
+                'Manufacturers'
+            ]
         ])->first();
 
         if (empty($blogPost)) {

@@ -41,7 +41,7 @@ if ($blogPost->short_description != '') {
 
     echo '<p><i>';
         echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost->modified);
-if (!empty($blogPost->manufacturer->id_manufacturer)) {
+if (!empty($blogPost->manufacturer)) {
     echo '<br />';
     if ($blogPost->manufacturer->active) {
         echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Blog von  ' . $blogPost->manufacturer->name.'</a>';
