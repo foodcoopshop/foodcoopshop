@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 
 /**
