@@ -63,6 +63,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             <?php
             echo $this->Form->create('Orders', [
                 'class' => 'fcs-form',
+                'id' => 'CartsDetailForm',
                 'url' => $this->Slug->getCartFinish()
             ]);
 

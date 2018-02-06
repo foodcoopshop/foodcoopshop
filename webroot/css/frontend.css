@@ -782,32 +782,33 @@ body.carts.detail .cart:not(#cart) span.product-name-wrapper a {
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-body.carts.detail #OrderDetailForm {
+body.carts.detail #CartsDetailForm {
     float: left;
     margin-left: 10px;
     margin-top: 20px;
 }
-body.carts.detail #OrderDetailForm .input.checkbox {
+body.carts.detail #CartsDetailForm .input.checkbox {
     clear: both;
     line-height: 26px;
     margin-top: -10px;
 }
-body.carts.detail #OrderDetailForm .input.checkbox label {
+body.carts.detail #CartsDetailForm .input.checkbox label {
     line-height: 20px;
 }
-body.carts.detail #OrderDetailForm  .input.checkbox .error-message {
+body.carts.detail #CartsDetailForm  .input.checkbox .error-message {
     margin-left: -10px ! important;
     width: 100% ! important;
     font-size: 14px;
 }
-body.carts.detail #OrderDetailForm .input.checkbox input[type="checkbox"] {
-    margin-left: -10px;
+body.carts.detail #CartsDetailForm .input.checkbox input[type="checkbox"] {
+    margin-left: -30px;
+    margin-top: 1px;
 }
-body.carts.detail #OrderDetailForm .order-comment textarea {
+body.carts.detail #CartsDetailForm .order-comment textarea {
   width: 100%;
   padding: 5px;
 }
-body.carts.detail #OrderDetailForm .order-comment div.error-message {
+body.carts.detail #CartsDetailForm .order-comment div.error-message {
   margin-left: 0;
   width: 100%;
 }

@@ -455,7 +455,8 @@ pre {
     float: left;
 }
 .accept-updated-terms-of-use-form input[type="checkbox"] {
-    margin-left: 0;
+    margin-left: -25px;
+    margin-top: 1px;
 }
 .accept-updated-terms-of-use-form .input.checkbox label {
     padding-left: 30px;
