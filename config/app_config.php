@@ -151,5 +151,16 @@ return [
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View())
+    ],
+    'DateFormat' => [
+        'Database' => 'yyyy-MM-dd',
+        'de' => [
+            'DateShort' => 'dd.MM.yy',
+            'DateLong' =>  'dd. MMMM y',
+            'DateLong2' => 'dd.MM.yyyy',
+            'DateNTimeShort' => 'dd.MM.y HH:mm',
+            'TimeShort' => 'HH:mm',
+            'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm'
+        ]
     ]
 ];
