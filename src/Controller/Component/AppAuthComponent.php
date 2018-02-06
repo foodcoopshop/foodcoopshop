@@ -44,7 +44,7 @@ class AppAuthComponent extends AuthComponent
      */
     public function termsOfUseAccepted()
     {
-        return $this->user('terms_of_use_accepted_date') >= Configure::read('app.termsOfUseLastUpdate');
+        return $this->user('terms_of_use_accepted_date')->i18nFormat(Configure::read('DateFormat.Database')) >= Configure::read('app.termsOfUseLastUpdate');
     }
 
     public function getUserId()

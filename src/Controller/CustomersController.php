@@ -6,6 +6,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -50,24 +51,32 @@ class CustomersController extends FrontendController
             $this->redirect('/');
         }
 
-        $checkboxErrors = false;
-        if (!isset($this->request->data['Customers']['terms_of_use_accepted_date']) || $this->request->data['Customers']['terms_of_use_accepted_date'] != 1) {
-            $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
-            $checkboxErrors = true;
+        $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
+        
+        $this->Customer = TableRegistry::get('Customers');
+        $patchedEntity = $this->Customer->patchEntity(
+            $this->Customer->get($this->AppAuth->getUserId()),
+            [
+                'Customers' => [
+                    'terms_of_use_accepted_date_checkbox' => $this->request->getData('Customers.terms_of_use_accepted_date_checkbox'),
+                    'terms_of_use_accepted_date' => Date::now()
+                ]
+            ],
+            ['validate' => 'termsOfUse']
+        );
+        
+        $errors = $patchedEntity->getErrors();
+        if (isset($errors['terms_of_use_accepted_date'])) {
+            $this->AppFlash->setFlashError($errors['terms_of_use_accepted_date']['equals']);
         }
-
-        $this->Customer->set($this->request->data['Customers']);
-        if (!$checkboxErrors) {
-            $this->Customer->id = $this->AppAuth->getUserId();
-            $this->request->data['Customers']['terms_of_use_accepted_date'] = date('Y-m-d');
-            $this->Customer->save($this->request->data['Customers'], false);
+        
+        if (empty($errors)) {
+            $this->Customer->save($patchedEntity);
             $this->Flash->success('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
             $this->renewAuthSession();
             $this->redirect($this->referer());
-        } else {
-            $this->Flash->error('Bitte akzeptiere die Nutzungsbedingungen.');
-            $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
         }
+        
     }
 
     public function newPasswordRequest()

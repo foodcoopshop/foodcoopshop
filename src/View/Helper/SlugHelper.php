@@ -26,6 +26,11 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    public function getAcceptTermsOfUse()
+    {
+        return '/nutzungsbedingungen-akzeptieren';
+    }
+    
     public function getManufacturerDetail($manufacturerId, $manufacturerName)
     {
         return '/hersteller/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);

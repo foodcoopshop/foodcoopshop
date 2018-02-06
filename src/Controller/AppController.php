@@ -139,10 +139,13 @@ class AppController extends Controller
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()
+            ],
+            'contain' => [
+                'AddressCustomers'
             ]
         ])->first();
-        if (! empty($customer)) {
-            $this->AppAuth->login($customer['Customers']);
+        if (!empty($customer)) {
+            $this->AppAuth->setUser($customer);
         }
     }
 

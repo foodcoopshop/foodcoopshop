@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 use App\Auth\AppPasswordHasher;
 
 /**
@@ -97,6 +98,12 @@ class CustomersTable extends AppTable
             ]
         ]
     ];
+    
+    public function validationTermsOfUse(Validator $validator)
+    {
+        $validator->equals('terms_of_use_accepted_date_checkbox', 1, 'Bitte akzeptiere die Nutzungsbedingungen.');
+        return $validator;
+    }
     
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {

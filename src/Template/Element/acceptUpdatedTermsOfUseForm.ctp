@@ -29,7 +29,7 @@ $this->element('addScript', ['script' =>
 <div class="accept-updated-terms-of-use-form">
     <h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
     <p>um diese Plattform weiterhin verwenden zu können, <b><a class="terms-of-use-overlay" href="#terms-of-use">lese bitte die geänderten Nutzungsbedingungen</a></b> und akzeptiere sie.</p>
-    <form action="/nutzungsbedingungen-akzeptieren" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
+    <form action="<?php echo $this->Slug->getAcceptTermsOfUse(); ?>" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
         <?php
             echo '<div id="terms-of-use" class="featherlight-overlay">';
         if ($appAuth->isManufacturer()) {
@@ -38,10 +38,10 @@ $this->element('addScript', ['script' =>
             echo $this->element('legal/termsOfUse');
         }
             echo '</div>';
-            echo $this->Form->input('Customers.terms_of_use_accepted_date', [
+            echo $this->Form->input('Customers.terms_of_use_accepted_date_checkbox', [
                 'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
                 'type' => 'checkbox',
-                'id' => 'CustomerTermsOfUseAcceptedDate_'.StringComponent::createRandomString(),
+                'id' => 'CustomerTermsOfUseAcceptedDateCheckbox_'.StringComponent::createRandomString(),
                 'escape' => false
             ]);
         ?>
