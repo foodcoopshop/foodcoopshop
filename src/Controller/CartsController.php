@@ -59,6 +59,10 @@ class CartsController extends FrontendController
     public function detail()
     {
         $this->set('title_for_layout', 'Dein Warenkorb');
+        if (!$this->request->is('post')) {
+            $this->Order = TableRegistry::get('Orders');
+            $this->set('order', $this->Order->newEntity());
+        }
     }
 
     /**
@@ -146,7 +150,7 @@ class CartsController extends FrontendController
         if (!$this->request->is('post')) {
             $this->redirect('/');
         }
-
+        
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCart();
 
@@ -179,6 +183,7 @@ class CartsController extends FrontendController
         $cartErrors = [];
         $orderDetails2save = [];
         $products = [];
+        $stockAvailable2saveData = [];
 
         foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
             $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
@@ -252,7 +257,7 @@ class CartsController extends FrontendController
                 'product_price' => $ccp['priceExcl'],
                 'total_price_tax_excl' => $ccp['priceExcl'],
                 'total_price_tax_incl' => $ccp['price'],
-                'id_tax' => $product['Products']['id_tax'],
+                'id_tax' => $product->id_tax,
                 'deposit' => $ccp['deposit']
             ];
 
@@ -270,33 +275,27 @@ class CartsController extends FrontendController
             ];
         }
 
-
         $this->set('cartErrors', $cartErrors);
 
-
-        $this->Order = TableRegistry::get('Orders');
         $formErrors = false;
-        if (!isset($this->request->data['Orders']['general_terms_and_conditions_accepted']) || $this->request->data['Orders']['general_terms_and_conditions_accepted'] != 1) {
-            
-//             $this->Order->invalidate('general_terms_and_conditions_accepted', 'Bitte akzeptiere die AGB.');
-//             $formErrors = true;
+        $this->Order = TableRegistry::get('Orders');
+        $order = $this->Order->newEntity(
+            [
+                'Orders' => [
+                    'cancellation_terms_accepted' => $this->request->getData('Orders.cancellation_terms_accepted'),
+                    'general_terms_and_conditions_accepted' => $this->request->getData('Orders.general_terms_and_conditions_accepted'),
+                    'comment' => $this->request->getData('Orders.comment')
+                ]
+            ],
+            ['validate' => 'cart']
+        );
+        if (!empty($order->getErrors())) {
+            $formErrors = true;
         }
-        if (!isset($this->request->data['Orders']['cancellation_terms_accepted']) || $this->request->data['Orders']['cancellation_terms_accepted'] != 1) {
-//             $this->Order->invalidate('cancellation_terms_accepted', 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
-//             $formErrors = true;
-        }
-        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-            $orderComment = strip_tags(trim($this->request->data['Orders']['comment']), '<strong><b>');
-            $maxOrderCommentCount = 500;
-            if (strlen($orderComment) > $maxOrderCommentCount) {
-//                 $this->Order->invalidate('comment', 'Bitte gib maximal '.$maxOrderCommentCount.' Zeichen ein.');
-                $formErrors = true;
-            }
-        }
-
+        $this->set('order', $order);
         $this->set('formErrors', $formErrors);
 
-        if (!empty($cartErrors) || $formErrors) {
+        if (!empty($cartErrors) || !empty($formErrors)) {
             $this->Flash->error('Es sind Fehler aufgetreten.');
         } else {
             // START save order
@@ -308,14 +307,9 @@ class CartsController extends FrontendController
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
                 'total_deposit' => $this->AppAuth->Cart->getDepositSum(),
-                'general_terms_and_conditions_accepted' => $this->request->data['Orders']['general_terms_and_conditions_accepted'],
-                'cancellation_terms_accepted' => $this->request->data['Orders']['cancellation_terms_accepted']
             ];
-            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                $order2save['comment'] = $orderComment;
-            }
             $order = $this->Order->save(
-                $this->Order->newEntity($order2save)
+                $this->Order->patchEntity($order, $order2save)
             );
 
             if (empty($order)) {
@@ -433,8 +427,7 @@ class CartsController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getCartFinished($orderId));
         }
 
-        $this->request->action = 'detail';
-        $this->render('detail');
+        $this->setAction('detail');
     }
 
     public function sendShopOrderNotificationToManufacturers($cartProducts, $order)

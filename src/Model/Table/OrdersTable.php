@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 use Cake\Core\Configure;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,6 +30,15 @@ class OrdersTable extends AppTable
             'foreignKey' => 'id_order'
         ]);
         $this->setPrimaryKey('id_order');
+    }
+    
+    public function validationCart(Validator $validator)
+    {
+        $validator->equals('cancellation_terms_accepted', 1, 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
+        $validator->equals('general_terms_and_conditions_accepted', 1, 'Bitte akzeptiere die AGB.');
+        $validator->allowEmpty('comment');
+        $validator->maxLength('comment', 500, 'Bitte gib maximal 500 Zeichen ein.');
+        return $validator;
     }
 
     public $states = [

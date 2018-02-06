@@ -25,25 +25,22 @@ class OrderDetailsTable extends AppTable
         $this->setTable('order_detail');
         parent::initialize($config);
         $this->setPrimaryKey('id_order_detail');
+        
+        $this->belongsTo('Orders', [
+            'foreignKey' => 'id_order'
+        ]);
+        $this->belongsTo('OrderDetailTaxes', [
+            'foreignKey' => 'id_order_detail'
+        ]);
+        $this->belongsTo('Products', [
+            'foreignKey' => 'product_id',
+            'type' => 'INNER'
+        ]);
+        $this->belongsTo('ProductAttributes', [
+            'foreignKey' => 'product_attribute_id'
+        ]);
     }
     
-    public $belongsTo = [
-        'Orders' => [
-            'foreignKey' => 'id_order'
-        ],
-        'OrderDetailTaxes' => [
-            'foreignKey' => 'id_order_detail'
-        ],
-        'Products' => [
-            'foreignKey' => 'product_id', // !sic, id_ vertauscht
-            'type' => 'INNER'
-        ] // for manufacturer name filter
-    ,
-        'ProductAttributes' => [
-            'foreignKey' => 'product_attribute_id'
-        ]
-    ];
-
     public function deleteOrderDetail($orderDetailId)
     {
         $this->delete($orderDetailId, false);

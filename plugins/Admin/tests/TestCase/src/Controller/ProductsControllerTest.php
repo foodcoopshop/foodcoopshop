@@ -28,6 +28,15 @@ class ProductsControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->Product = TableRegistry::get('Products');
     }
+    
+    public function testChangeProductStatus()
+    {
+        $this->markTestIncomplete('was in carts controller - admin was not available then');
+        $productId = 2;
+        $status = APP_OFF;
+        $this->browser->get('/admin/products/changeStatus/' . $productId . '/' . $status);
+        return $this->browser->getJsonDecodedContent();
+    }
 
     public function testEditPriceWithInvalidPriceAsSuperadmin()
     {

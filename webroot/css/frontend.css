@@ -799,6 +799,8 @@ body.carts.detail #CartsDetailForm  .input.checkbox .error-message {
     margin-left: -10px ! important;
     width: 100% ! important;
     font-size: 14px;
+    float: left;
+    margin-bottom: 5px;
 }
 body.carts.detail #CartsDetailForm .input.checkbox input[type="checkbox"] {
     margin-left: -30px;
