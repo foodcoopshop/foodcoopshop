@@ -45,6 +45,8 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     
+    $routes->setExtensions(['pdf']);
+    
     $routes->connect('/', ['controller' => 'pages', 'action' => 'home']);
     
     $routes->connect('/anmelden', ['controller' => 'Customers', 'action' => 'login']);

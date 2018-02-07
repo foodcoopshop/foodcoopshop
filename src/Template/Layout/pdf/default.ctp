@@ -13,4 +13,4 @@
  * @link          https://www.foodcoopshop.com
  */
 header("Content-type: application/pdf");
-echo $content_for_layout;
+echo $this->fetch('content');

@@ -14,6 +14,11 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+namespace App\Lib\Pdf;
+
+use Cake\Core\Configure;
+use TCPDF;
+
 class AppTcpdf extends TCPDF
 {
 
@@ -238,7 +243,8 @@ class AppTcpdf extends TCPDF
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
-
+        mb_internal_encoding('UTF-8');
+        
         $this->SetCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetAuthor(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetTopMargin(43);
@@ -254,7 +260,7 @@ class AppTcpdf extends TCPDF
     {
         $this->SetY(4);
 
-        $this->MultiCell(50, 0, '<img src="' . APP . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg' . '">', 0, 'L', 0, 0, '', '', true, null, true);
+        $this->MultiCell(50, 0, '<img src="' . ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg' . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
 
         $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');
