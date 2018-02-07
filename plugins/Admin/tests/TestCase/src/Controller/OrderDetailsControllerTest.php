@@ -313,19 +313,19 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     private function assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails)
     {
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Produkt kann nicht geliefert werden: Artischocke : Stück', [$this->cancellationReason, '3,64', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
     private function assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails)
     {
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Preis korrigiert: Artischocke', [$this->editPriceReason, $this->newPrice, 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
     private function assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails)
     {
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Bestellte Anzahl korrigiert: Artischocke : Stück', ['Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde korrigiert', $this->editQuantityReason, 'Neue Anzahl: <b>' . $this->newQuantity . '</b>', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 

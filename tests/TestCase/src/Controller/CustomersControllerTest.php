@@ -47,7 +47,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
         $this->assertRegExpWithUnquotedString('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.', $this->browser->getContent());
 
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Anfrage für neues Passwort für FoodCoop Test', ['bitte klicke auf folgenden Link, um dein neues Passwort zu generieren'], [Configure::read('test.loginEmailCustomer')]);
 
         $customer = $this->Customer->find('all', [
@@ -61,7 +61,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Wir haben dir dein neues Passwort zugeschickt.', $this->browser->getContent());
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . $this->Slug->getLogin());
 
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', ['du hast gerade ein neues Passwort generiert, es lautet:'], [Configure::read('test.loginEmailCustomer')]);
 
         preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[1]['EmailLogs']['message'], $matches);
@@ -139,7 +139,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-1@mailinator.com';
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($data, $email);
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Willkommen', ['war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'], [$email]);
 
 
@@ -149,7 +149,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-2@mailinator.com';
         $this->saveAndCheckValidCustomer($data, $email);
 
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Willkommen', ['war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'], [$email]);
     }
 

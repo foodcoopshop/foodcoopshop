@@ -21,7 +21,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function testSendOrderListsIfNoOrdersAvailable()
     {
         $this->SendOrderLists->main();
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
 
@@ -47,7 +47,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         }
 
         $this->SendOrderLists->main();
-        $emailLogs = $this->EmailLog->find('all');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs($emailLogs[1], 'Bestellungen für den', ['im Anhang findest du zwei Bestelllisten'], [Configure::read('test.loginEmailVegetableManufacturer')]);
     }
