@@ -20,6 +20,14 @@
  */
 
 return [
+    'EmailTransport' => [
+        'default' => [
+            'className' => 'Smtp',
+            'host' => '',
+            'username' => '',
+            'password' => ''
+        ]
+    ],
     'Datasources' => [
         'default' => [
             'host' => '127.0.0.1',
