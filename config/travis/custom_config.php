@@ -22,10 +22,8 @@
 return [
     'EmailTransport' => [
         'default' => [
-            'className' => 'Smtp',
-            'host' => '',
-            'username' => '',
-            'password' => ''
+            'className' => 'Mail',
+            'from' => 'you@localhost'
         ]
     ],
     'Datasources' => [
