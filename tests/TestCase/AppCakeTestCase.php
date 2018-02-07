@@ -206,19 +206,18 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = [], $expectedToEmails = [], $expectedCcEmails = [], $expectedBccEmails = [])
     {
-
-        $fromAddress = json_decode($emailLog['EmailLogs']['from_address']);
-        $toAddress = json_decode($emailLog['EmailLogs']['to_address']);
-        $ccAddress = json_decode($emailLog['EmailLogs']['cc_address']);
-        $bccAddress = json_decode($emailLog['EmailLogs']['bcc_address']);
+        $fromAddress = json_decode($emailLog->from_address);
+        $toAddress = json_decode($emailLog->to_address);
+        $ccAddress = json_decode($emailLog->cc_address);
+        $bccAddress = json_decode($emailLog->bcc_address);
 
         $this->assertNotEmpty($fromAddress, 'email from_address must not be empty');
 
         if ($expectedSubjectPattern != '') {
-            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog['EmailLogs']['subject'], 'email subject wrong');
+            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog->subject, 'email subject wrong');
         }
         foreach ($expectedMessagePatterns as $expectedMessagePattern) {
-            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog['EmailLogs']['message'], 'email message wrong');
+            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog->message, 'email message wrong');
         }
 
         $preparedToAddresses = [];

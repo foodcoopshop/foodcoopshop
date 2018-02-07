@@ -243,8 +243,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
         // check email to customer
-//         $emailLogs = $this->EmailLog->find('all');
-//         $this->assertEmailLogs($emailLogs[0], 'Bestellbestätigung', ['Artischocke : Stück', 'Hallo Demo Superadmin,'], [Configure::read('test.loginEmailSuperadmin')]);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs($emailLogs[0], 'Bestellbestätigung', ['Artischocke : Stück', 'Hallo Demo Superadmin,'], [Configure::read('test.loginEmailSuperadmin')]);
 
         $this->browser->doFoodCoopShopLogout();
     }

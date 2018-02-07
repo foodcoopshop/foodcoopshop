@@ -46,7 +46,7 @@ class AppEmail extends Email
             'to_address' => json_encode($this->getTo()),
             'cc_address' => json_encode($this->getCc()),
             'bcc_address' => json_encode($this->getBcc()),
-            'subject' => $this->getSubject(),
+            'subject' => $this->getOriginalSubject(),
             'headers' => json_encode($this->getHeaders()),
             'message' => $email['message']
         ];
