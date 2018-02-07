@@ -55,7 +55,7 @@ before_script:
   #- sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
-  - vendor/bin/phpunit --stderr
+  - vendor/bin/phpunit --filter CartsControllerTest::testCartLoggedIn --stderr
   - sudo cat ./logs/error.log
   
 notifications:
