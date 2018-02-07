@@ -336,7 +336,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
 
-    protected function finishCart($general_terms_and_conditions_accepted = true, $cancellation_terms_accepted = true, $comment = '')
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '')
     {
         $this->browser->post(
             $this->Slug->getCartFinish(),
