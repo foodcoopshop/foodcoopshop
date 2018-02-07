@@ -23,8 +23,13 @@ return [
     'EmailTransport' => [
         'default' => [
             'className' => 'Mail',
-            'from' => 'you@localhost'
         ]
+    ],
+    'Email' => [
+        'default' => [
+            'transport' => 'default',
+            'from' => 'you@localhost'
+        ],
     ],
     'Datasources' => [
         'default' => [
