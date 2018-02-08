@@ -270,7 +270,6 @@ class CartsControllerTest extends AppCakeTestCase
      */
     public function testOrderIfAmountOfOneProductIsNull()
     {
-        $this->markTestSkipped();
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
         $this->addProductToCart($this->productId1, - 1);
@@ -285,12 +284,17 @@ class CartsControllerTest extends AppCakeTestCase
         $orders = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_cart' => 1
+            ],
+            'contain' => [
+                'OrderDetails'
             ]
         ]);
-        $this->assertEquals(1, count($orders), 'more than one order inserted');
-
-        foreach ($orders[0]['OrderDetails'] as $orderDetail) {
-            $this->assertFalse($orderDetail['product_quantity'] == 0, 'product quantity must not be 0!');
+        $this->assertEquals(1, $orders->count(), 'more than one order inserted');
+        
+        foreach ($orders as $order) {
+            foreach($order->order_details as $orderDetail) {
+                $this->assertFalse($orderDetail->product_quantity == 0, 'product quantity must not be 0!');
+            }
         }
     }
 
