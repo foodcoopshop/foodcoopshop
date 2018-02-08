@@ -199,7 +199,7 @@ CREATE TABLE `fcs_email_logs` (
   `bcc_address` text,
   `subject` text,
   `headers` text,
-  `message` text,
+  `message` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

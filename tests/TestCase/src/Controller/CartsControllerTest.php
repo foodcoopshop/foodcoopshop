@@ -244,7 +244,20 @@ class CartsControllerTest extends AppCakeTestCase
 
         // check email to customer
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[0], 'Bestellbestätigung', ['Artischocke : Stück', 'Hallo Demo Superadmin,'], [Configure::read('test.loginEmailSuperadmin')]);
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Bestellbestätigung',
+            [
+                'Artischocke : Stück',
+                'Hallo Demo Superadmin,',
+                'Content-Disposition: attachment; filename="Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf"',
+                'Content-Disposition: attachment; filename="Bestelluebersicht.pdf"',
+                'Content-Disposition: attachment; filename="Allgemeine-Geschaeftsbedingungen.pdf"'
+            ],
+            [
+                Configure::read('test.loginEmailSuperadmin')
+            ]
+        );
 
         $this->browser->doFoodCoopShopLogout();
     }
