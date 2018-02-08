@@ -15,6 +15,7 @@
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Pdf\AppTcpdf;
+use Cake\Core\Configure;
 
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
@@ -66,7 +67,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
 
-            $html = '<p>Bestellt am (*): '.$this->Time->formatToDateNTimeLong($order->date_add).'</p>';
+            $html = '<p>Bestellt am (*): '.$order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong')).'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<p>Erhalten am (*): </p>';

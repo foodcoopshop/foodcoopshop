@@ -301,7 +301,7 @@ class CartsController extends FrontendController
         if (!empty($order->getErrors())) {
             $formErrors = true;
         }
-        $this->set('order', $order);
+        $this->set('order', $order); // to show error messages in form (from validation)
         $this->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || !empty($formErrors)) {
@@ -321,15 +321,20 @@ class CartsController extends FrontendController
             $order = $this->Order->save(
                 $this->Order->patchEntity($order, $order2save)
             );
-
-            if (empty($order)) {
+            if (!$order) {
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
                 $this->log($message);
                 $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
             }
-
             $orderId = $order->id_order;
+            
+            // get order again to have date_add available as a datetime-object
+            $order = $this->Order->find('all', [
+                'conditions' => [
+                    'Orders.id_order' => $orderId
+                ]
+            ])->first();
             // END save order
 
             // START update order_id in orderDetails2save

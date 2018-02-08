@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-                vielen Dank für deine Bestellung Nr. <?php echo $order->id_order; ?> vom <?php /* echo $order->date_add->i18nFormat(Configure::read('DateFormat.DateNTimeLongWithSecs')); */ ?>.
+                vielen Dank für deine Bestellung Nr. <?php echo $order->id_order; ?> vom <?php echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs')); ?>.
             </td>
         </tr>
     </tbody>
