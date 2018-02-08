@@ -216,14 +216,6 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        
-        // prevent spam
-        // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
-        if (!empty($this->request->getData()) && ($this->request->getData('antiSpam') == 'lalala' || $this->request->getData('antiSpam') < 3)) {
-            $this->Flash->error('S-p-a-m-!');
-            $this->redirect(Configure::read('app.slugHelper')->getLogin());
-        }
-        
         $this->Customer = TableRegistry::get('Customers');
         $ph = new AppPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
@@ -239,6 +231,13 @@ class CustomersController extends FrontendController
         );
         
         if ($this->request->here == Configure::read('app.slugHelper')->getRegistration()) {
+            
+            // prevent spam
+            // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
+//             if (!empty($this->request->getData()) && ($this->request->getData('antiSpam') == 'lalala' || $this->request->getData('antiSpam') < 300)) {
+//                 $this->Flash->error('S-p-a-m-!');
+//                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
+//             }
             
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');

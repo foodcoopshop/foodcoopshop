@@ -109,7 +109,8 @@ class CustomersControllerTest extends AppCakeTestCase
 
         // 1) check for spam protection
         $response = $this->addCustomer($data);
-//         $this->assertRegExpWithUnquotedString('S-p-a-m-!', $response);
+//         $this->assertRegExpWithUnquotedString('Beim Speichern sind Fehler aufgetreten!', $response);
+//         $this->markTestIncomplete('should assert S-p-a-m-!');
 
 
         // 2) check for missing required fields
