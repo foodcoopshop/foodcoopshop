@@ -126,6 +126,14 @@ class AppController extends Controller
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
+        
+        // automatically trim all user inputs from forms
+        array_walk_recursive($this->request->data, function(&$item, $key) {
+            if (is_string($item)){
+                $item = trim($item);
+            }
+        });    
+        
         parent::beforeFilter($event);
     }
 
