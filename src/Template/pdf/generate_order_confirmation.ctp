@@ -101,7 +101,6 @@ if (!empty($manufacturers)) {
             $sumOrderDetailTax += $orderDetail->order_detail_tax->total_amount;
 
             $pdf->table .= '</tr>';
-            $this->log('mid: ' . $manufacturerId . 'k: ' . $k . 'count: ' . $details['OrderDetails']->count());
             
             if ($showSum) {
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
