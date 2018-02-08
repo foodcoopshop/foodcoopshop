@@ -54,8 +54,8 @@ class CategoriesController extends FrontendController
     public function search()
     {
         $keyword = '';
-        if (! empty($this->params->query['keyword'])) {
-            $keyword = trim($this->params->query['keyword']);
+        if (! empty($this->request->getQuery('keyword'))) {
+            $keyword = trim($this->request->getQuery('keyword'));
         }
 
         if ($keyword == '') {
@@ -68,6 +68,7 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
+        $this->Category = TableRegistry::get('Categories');
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
