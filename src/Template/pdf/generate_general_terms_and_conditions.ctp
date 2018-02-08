@@ -13,6 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Controller\Component\StringComponent;
+use App\Lib\Pdf\AppTcpdf;
+
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);

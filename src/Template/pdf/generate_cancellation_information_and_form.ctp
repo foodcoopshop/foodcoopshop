@@ -13,6 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Controller\Component\StringComponent;
+use App\Lib\Pdf\AppTcpdf;
+
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
@@ -41,7 +44,7 @@ if (!empty($manufacturers)) {
 
             $pdf->AddPage();
 
-            $pdf->infoTextForFooter = 'Rücktrittsformular ' . $product['Manufacturers']['name'];
+            $pdf->infoTextForFooter = 'Rücktrittsformular ' . $product->manufacturer->name;
 
             $html = '<h1>Rücktrittsformular</h1>';
             $pdf->writeHTML($html, true, false, true, false, '');
@@ -50,8 +53,8 @@ if (!empty($manufacturers)) {
             $html = '<p>Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(8);
-
-            $html = $this->Html->getManufacturerImprint($product['Manufacturers'], 'pdf', true);
+            
+            $html = $this->Html->getManufacturerImprint($product->manufacturer, 'pdf', true);
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(4);
 
@@ -63,7 +66,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
 
-            $html = '<p>Bestellt am (*): '.$this->Time->formatToDateNTimeLong($order['Orders']['date_add']).'</p>';
+            $html = '<p>Bestellt am (*): '.$this->Time->formatToDateNTimeLong($order->date_add).'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<p>Erhalten am (*): </p>';

@@ -6,6 +6,7 @@ use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -76,7 +77,7 @@ class CartsController extends FrontendController
         $this->set('order', $order);
         $manufacturers = [];
         foreach ($products as $product) {
-            $manufacturers[$product['Manufacturers']['id_manufacturer']][] = $product;
+            $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
         }
         $this->set('manufacturers', $manufacturers);
         $this->set('saveParam', 'I');
@@ -89,9 +90,8 @@ class CartsController extends FrontendController
      * @param array $order
      * saves pdf as file
      */
-    private function generateGeneralTermsAndConditions($order)
+    private function generateGeneralTermsAndConditions()
     {
-        $this->set('order', $order);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
         return $this->render('generateGeneralTermsAndConditions');
@@ -104,27 +104,30 @@ class CartsController extends FrontendController
      * @param array $orderDetails
      * @param array $orderDetailsTax
      */
-    private function generateOrderConfirmation($order, $orderDetails, $orderDetailsTax)
+    private function generateOrderConfirmation($order)
     {
 
-        $this->Product = TableRegistry::get('Products');
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        
         $this->set('order', $order);
         $manufacturers = [];
+        $i = 0;
+        
+        $orderDetails = $this->Order->OrderDetails->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order' => $order->id_order
+            ],
+            'contain' => [
+                'OrderDetailTaxes',
+                'Products',
+                'Products.Manufacturers.AddressManufacturers'
+            ]
+        ]);
+        
         foreach ($orderDetails as $orderDetail) {
-            $product = $this->Product->find('all', [
-                'conditions' => [
-                    'Products.id_product' => $orderDetail['OrderDetails']['product_id']
-                ]
-            ])->first();
-            // avoid extra db request and attach taxes manually to order details
-            foreach ($orderDetailsTax as $tax) {
-                if ($tax['id_order_detail'] == $orderDetail['OrderDetails']['id_order_detail']) {
-                    $orderDetail['OrderDetails']['OrderDetailTaxes'] = $tax;
-                }
-            }
-            $manufacturers[$product['Products']['id_manufacturer']][] = [
-                'OrderDetails' => $orderDetail['OrderDetails'],
-                'Manufacturers' => $product['Manufacturers']
+            $manufacturers[$orderDetail->product->id_manufacturer] = [
+                'OrderDetails' => $orderDetails,
+                'Manufacturer' => $orderDetail->product->manufacturer
             ];
         }
 
@@ -194,14 +197,20 @@ class CartsController extends FrontendController
                 ],
                 'fields' => ['is_holiday_active' => '!'.$this->Product->getManufacturerHolidayConditions()],
                 'contain' => [
+                    'ProductLangs',
                     'Manufacturers',
+                    'Manufacturers.AddressManufacturers',
                     'StockAvailables',
-                    'ProductAttributes.StockAvailables'
+                    'ProductAttributes.StockAvailables',
+                    'ProductAttributes.ProductAttributeCombinations',
                 ]
             ])
             ->select($this->Product)
+            ->select($this->Product->ProductLangs)
             ->select($this->Product->StockAvailables)
             ->select($this->Product->Manufacturers)
+            ->select($this->Product->Manufacturers->AddressManufacturers)
+            ->select($this->Product->ProductAttributes->StockAvailables)
             ->first();
             $products[] = $product;
             $stockAvailableQuantity = $product->stock_available->quantity;
@@ -223,7 +232,7 @@ class CartsController extends FrontendController
                             $this->Attribute = TableRegistry::get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
-                                    'Attributes.id_attribute' => $attribute->product_attribute_combinations->id_attribute
+                                    'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
                             $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
@@ -307,6 +316,7 @@ class CartsController extends FrontendController
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
                 'total_deposit' => $this->AppAuth->Cart->getDepositSum(),
+                'date_add' => Time::now()
             ];
             $order = $this->Order->save(
                 $this->Order->patchEntity($order, $order2save)
@@ -336,6 +346,9 @@ class CartsController extends FrontendController
             $orderDetails = $this->Order->OrderDetails->find('all', [
                 'conditions' => [
                     'OrderDetails.id_order' => $orderId
+                ],
+                'contain' => [
+                    'OrderDetailTaxes'
                 ]
             ]);
 
@@ -412,10 +425,9 @@ class CartsController extends FrontendController
                     'productAndDepositSum' => $this->AppAuth->Cart->getProductAndDepositSum()
                     ]);
 
-
-//                 $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
-//                 $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order, $orderDetails, $orderDetailTax2save), 'mimetype' => 'application/pdf']]);
-//                 $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions($order), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
+                $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
 
                 $email->send();
             }
@@ -443,11 +455,13 @@ class CartsController extends FrontendController
         }
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
+                ],
+                'contain' => [
+                    'AddressManufacturers'
                 ]
             ])->first();
 
@@ -458,13 +472,13 @@ class CartsController extends FrontendController
                 $productSum += $cartProduct['price'];
             }
 
-            $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturer['Manufacturers']['send_shop_order_notification']);
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
+            $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturer->send_shop_order_notification);
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
             if ($sendShopOrderNotification && !$bulkOrdersAllowed) {
                 $email = new AppEmail();
                 $email->setTemplate('shop_order_notification')
-                ->setTo($manufacturer['Addresses']['email'])
-                ->setSubject('Benachrichtigung über Sofort-Bestellung Nr. ' . $order['Orders']['id_order'])
+                ->setTo($manufacturer->address_manufacturer->email)
+                ->setSubject('Benachrichtigung über Sofort-Bestellung Nr. ' . $order->id_order)
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
