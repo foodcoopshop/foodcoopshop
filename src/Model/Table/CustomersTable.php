@@ -61,48 +61,23 @@ class CustomersTable extends AppTable
         ]);
         $this->setPrimaryKey('id_customer');
     }
-
-    public $validate = [
-        'firstname' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib deinen Vornamen an.'
-            ]
-        ],
-        'lastname' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib deinen Nachnamen an.'
-            ]
-        ],
-        'email' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib deine E-Mail-Adresse an.'
-            ],
-            'email' => [
-                'rule' => [
-                    'email'
-                ],
-                'message' => 'Diese E-Mail-Adresse ist nicht gültig.'
-            ],
-            'unique' => [
-                'rule' => 'isUnique',
-                'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
-            ]
-        ]
-    ];
+    
+    public function validationRegistration(Validator $validator)
+    {
+        $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
+        $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
+        $validator = $this->getValidationTermsOfUse($validator);
+        return $validator;
+    }
     
     public function validationTermsOfUse(Validator $validator)
     {
-        $validator->equals('terms_of_use_accepted_date_checkbox', 1, 'Bitte akzeptiere die Nutzungsbedingungen.');
-        return $validator;
+        return $this->getValidationTermsOfUse($validator);
+    }
+    
+    private function getValidationTermsOfUse(Validator $validator)
+    {
+        return $validator->equals('terms_of_use_accepted_date_checkbox', 1, 'Bitte akzeptiere die Nutzungsbedingungen.');
     }
     
     public function findAuth(\Cake\ORM\Query $query, array $options)

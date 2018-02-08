@@ -56,10 +56,17 @@ $this->element('addScript', ['script' =>
     ?>
       <div class="sc"></div>
       <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;">Mitgliedskonto erstellen</h1>
-      <form action="/registrierung" id="RegistrationForm" method="post" accept-charset="utf-8" novalidate>
-            <?php
-
-              echo $this->Form->input('Customers.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
+      
+           <?php
+            echo $this->Form->create(
+                $customer, 
+                [
+                    'url' => $this->Slug->getRegistration(),
+                    'id' => 'RegistrationForm',
+                    'novalidate' => 'novalidate'
+                ]
+            );
+              echo $this->Form->input('Customers.address_customer.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
 
               echo '<div class="detail-form">';
 
@@ -67,19 +74,19 @@ $this->element('addScript', ['script' =>
                 echo '<p>'.Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
             }
 
-                  echo $this->Form->hidden('antiSpam', ['value' => 'lalala']);
+                  echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
 
                   echo $this->Form->input('Customers.firstname', ['label' => 'Vorname', 'required' => true]);
                   echo $this->Form->input('Customers.lastname', ['label' => 'Nachname', 'required' => true]);
 
-                  echo $this->Form->input('AddressCustomers.address1', ['label' => 'Straße', 'required' => true]);
-                  echo $this->Form->input('AddressCustomers.address2', ['label' => 'Adresszusatz']);
+                  echo $this->Form->input('Customers.address_customer.address1', ['label' => 'Straße', 'required' => true]);
+                  echo $this->Form->input('Customers.address_customer.address2', ['label' => 'Adresszusatz']);
 
-                  echo $this->Form->input('AddressCustomers.postcode', ['label' => 'PLZ', 'required' => true]);
-                  echo $this->Form->input('AddressCustomers.city', ['label' => 'Ort', 'required' => true]);
+                  echo $this->Form->input('Customers.address_customer.postcode', ['label' => 'PLZ', 'required' => true]);
+                  echo $this->Form->input('Customers.address_customer.city', ['label' => 'Ort', 'required' => true]);
 
-                  echo $this->Form->input('AddressCustomers.phone_mobile', ['label' => 'Handy', 'required' => true]);
-                  echo $this->Form->input('AddressCustomers.phone', ['label' => 'Telefon']);
+                  echo $this->Form->input('Customers.address_customer.phone_mobile', ['label' => 'Handy', 'required' => true]);
+                  echo $this->Form->input('Customers.address_customer.phone', ['label' => 'Telefon']);
 
             if (Configure::read('app.emailOrderReminderEnabled')) {
                 echo $this->Form->input('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
@@ -88,7 +95,7 @@ $this->element('addScript', ['script' =>
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
-                  echo $this->Form->input('Customers.terms_of_use_accepted_date', [
+                  echo $this->Form->input('Customers.terms_of_use_accepted_date_checkbox', [
                       'label' => 'Ich akzeptiere die <a href="#terms-of-use">Nutzungsbedingungen</a>',
                       'type' => 'checkbox',
                       'escape' => false
@@ -101,7 +108,7 @@ $this->element('addScript', ['script' =>
               <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> Mitgliedskonto erstellen</button>
           
           </div>
-      </form>
+      <?php echo $this->Form->end(); ?>
     <?php } ?>
   
 </div>

@@ -275,7 +275,7 @@ body.customers.new_password_request .input {
     }
 }
 #login-form .input.checkbox .error-message {
-    margin-top: 25px;
+    margin-top: 30px;
     width: auto ! important;
     margin-left: 0 ! important;
     clear: both;

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Auth\AppPasswordHasher;
 use App\Controller\Component\StringComponent;
+use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
@@ -85,7 +87,7 @@ class CustomersController extends FrontendController
             'title_for_layout' => 'Neues Passwort anfordern'
         ]);
 
-        if (empty($this->request->data)) {
+        if (empty($this->request->getData())) {
             return;
         }
 
@@ -94,7 +96,7 @@ class CustomersController extends FrontendController
         unset($this->Customer->validate['email']['unique']); // unique not needed here
 
         if ($this->Customer->validates()) {
-            $customer = $this->Customer->findByEmail($this->request->data['Customers']['email']);
+            $customer = $this->Customer->findByEmail($this->request->getData('Customers.email'));
 
             if (empty($customer)) {
                 $this->Customer->invalidate('email', 'Wir haben diese E-Mail-Adresse nicht gefunden.');
@@ -117,7 +119,7 @@ class CustomersController extends FrontendController
             $email = new AppEmail();
             $email->setTemplate('new_password_request_successful')
                 ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
-                ->setTo($this->request->data['Customers']['email'])
+                ->setTo($this->request->getData('Customers.email'))
                 ->setViewVars([
                 'changePasswordCode' => $changePasswordCode,
                 'customer' => $customer
@@ -200,11 +202,10 @@ class CustomersController extends FrontendController
                 }
                 // was remember me checkbox selected? not set if login happens automatically in AppShell
                 /*
-                if (isset($this->request->data['remember_me']) && $this->request->data['remember_me'] == 1) {
-                    unset($this->request->data['remember_me']);
+                if (isset($this->request->getData('remember_me')) && $this->request->getData('remember_me') == 1) {
                     $ph = new AppPasswordHasher();
-                    $this->request->data['Customers']['passwd'] = $ph->hash($this->request->data['Customers']['passwd']);
-                    $this->Cookie->write('remember_me_cookie', $this->request->data['Customers'], true, '6 days');
+                    $this->request->data['passwd'] = $ph->hash($this->request->getData('passwd'));
+                    $this->Cookie->write('remember_me_cookie', $this->request->getData('Customers'), true, '6 days');
                 }
                 */
                 $this->redirect($this->AppAuth->redirectUrl());
@@ -215,94 +216,84 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
+        
+        // prevent spam
+        // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
+        if (!empty($this->request->getData()) && ($this->request->getData('antiSpam') == 'lalala' || $this->request->getData('antiSpam') < 3)) {
+            $this->Flash->error('S-p-a-m-!');
+            $this->redirect(Configure::read('app.slugHelper')->getLogin());
+        }
+        
+        $this->Customer = TableRegistry::get('Customers');
+        $ph = new AppPasswordHasher();
+        $newPassword = StringComponent::createRandomString(12);
+        $customer = $this->Customer->newEntity(
+            [
+                'Customers' => [
+                    'active' => Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'),
+                    'id_default_group' => Configure::read('appDb.FCS_CUSTOMER_GROUP'),
+                    'terms_of_use_accepted_date' => Date::now(),
+                    'passwd' => $ph->hash($newPassword)
+                ]
+            ]
+        );
+        
         if ($this->request->here == Configure::read('app.slugHelper')->getRegistration()) {
+            
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
-
-            // prevent spam
-            // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
-            if ($this->request->data['antiSpam'] == 'lalala' || $this->request->data['antiSpam'] < 3) {
-                $this->Flash->error('S-p-a-m-!');
-                $this->redirect(Configure::read('app.slugHelper')->getLogin());
-            }
-
-            if (! empty($this->request->data)) {
-                // validate data - do not use $this->Customer->saveAll()
-                $this->Customer->set($this->request->data['Customers']);
-
-                // quick and dirty solution for stripping html tags, use html purifier here
-                foreach ($this->request->data['Customers'] as &$data) {
-                    $data = strip_tags(trim($data));
-                }
-                foreach ($this->request->data['AddressCustomers'] as &$data) {
-                    $data = strip_tags(trim($data));
-                }
-
-                // create email, firstname and lastname in adress record
-                $this->request->data['AddressCustomers']['firstname'] = $this->request->data['Customers']['firstname'];
-                $this->request->data['AddressCustomers']['lastname'] = $this->request->data['Customers']['lastname'];
-                $this->request->data['AddressCustomers']['email'] = $this->request->data['Customers']['email'];
-                $this->Customer->AddressCustomers->set($this->request->data['AddressCustomers']);
-
-                $errors = [];
-                if (! $this->Customer->validates()) {
-                    $errors = array_merge($errors, $this->Customer->validationErrors);
-                }
-
-                if (! $this->Customer->AddressCustomers->validates()) {
-                    $errors = array_merge($errors, $this->Customer->AddressCustomers->validationErrors);
-                }
-
-                $checkboxErrors = false;
-                if (!isset($this->request->data['Customers']['terms_of_use_accepted_date']) || $this->request->data['Customers']['terms_of_use_accepted_date'] != 1) {
-                    $this->Customer->invalidate('terms_of_use_accepted_date', 'Bitte akzeptiere die Nutzungsbedingungen.');
-                    $checkboxErrors = true;
-                }
-
-                if (empty($errors) && !$checkboxErrors) {
-                    // save customer
-                    $this->Customer->id = null;
-                    $this->request->data['Customers']['active'] = Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE');
-                    $this->request->data['Customers']['id_default_group'] = Configure::read('appDb.FCS_CUSTOMER_GROUP');
-                    $this->request->data['Customers']['terms_of_use_accepted_date'] = date('Y-m-d');
-
-                    $newCustomer = $this->Customer->save($this->request->data['Customers'], [
-                        'validate' => false
-                    ]);
-
-                    // set new password (after customer save!)
-                    $newPassword = $this->Customer->setNewPassword($newCustomer['Customers']['id_customer']);
-                    $this->request->data['Customers']['passwd'] = $newPassword;
-
-                    // save address
-                    $this->request->data['AddressCustomers']['id_customer'] = $newCustomer['Customers']['id_customer'];
-                    $this->request->data['AddressCustomers']['id_country'] = Configure::read('app.countryId');
-                    $this->Customer->AddressCustomers->set($this->request->data['AddressCustomers']);
-                    $this->Customer->AddressCustomers->save($this->request->data['Customers'], [
-                        'validate' => false
-                    ]);
-
+            
+            if (! empty($this->request->getData())) {
+                
+                $this->request->data['Customers']['email'] = $this->request->getData('Customers.address_customer.email');
+                $this->request->data['Customers']['address_customer']['firstname'] = $this->request->getData('Customers.firstname');
+                $this->request->data['Customers']['address_customer']['lastname'] = $this->request->getData('Customers.lastname');
+                
+                $customer = $this->Customer->patchEntity(
+                    $customer,
+                    $this->request->getData(),
+                    [
+                        'validate' => 'registration',
+                        'associated' => [
+                            'AddressCustomers'
+                        ]
+                    ]
+                );
+                
+                if (!empty($customer->getErrors())) {
+                    $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                } else {
+                    
+                    $newCustomer = $this->Customer->save(
+                        $customer,
+                        [
+                            'associated' => [
+                                'AddressCustomers'
+                            ]
+                        ]
+                    );
+                    
                     // write action log
                     $this->ActionLog = TableRegistry::get('ActionLogs');
-                    $message = 'Das Mitglied ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'] . ' hat ein Mitgliedskonto erstellt.';
-                    $this->ActionLog->customSave('customer_registered', $newCustomer['Customers']['id_customer'], $newCustomer['Customers']['id_customer'], 'customers', $message);
+                    $message = 'Das Mitglied ' . $this->request->getData('Customers.firstname') . ' ' . $this->request->getData('Customers.lastname') . ' hat ein Mitgliedskonto erstellt.';
+                    $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
                     // START send confirmation email to customer
                     $email = new AppEmail();
                     if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
-                        $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer['Customers']), 'mimetype' => 'application/pdf']]);
+                        $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer), 'mimetype' => 'application/pdf']]);
                     } else {
                         $template = 'customer_registered_inactive';
                     }
                     $email->setTemplate($template)
-                        ->setTo($this->request->data['Customers']['email'])
+                        ->setTo($this->request->getData('Customers.address_customer.email'))
                         ->setSubject('Willkommen')
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
-                        'data' => $this->request->data,
+                        'data' => $newCustomer,
                         'newPassword' => $newPassword
                         ]);
                     $email->send();
@@ -313,10 +304,10 @@ class CustomersController extends FrontendController
                         $email = new AppEmail();
                         $email->setTemplate('customer_registered_notification')
                             ->setTo(Configure::read('app.registrationNotificationEmails'))
-                            ->setSubject('Neue Registrierung: ' . $this->request->data['Customers']['firstname'] . ' ' . $this->request->data['Customers']['lastname'])
+                            ->setSubject('Neue Registrierung: ' . $newCustomer->firstname . ' ' . $newCustomer->lastname)
                             ->setViewVars([
                             'appAuth' => $this->AppAuth,
-                            'data' => $this->request->data
+                                'data' => $newCustomer
                             ])
                             ->send();
                     }
@@ -324,11 +315,12 @@ class CustomersController extends FrontendController
 
                     $this->Flash->success('Deine Registrierung war erfolgreich.');
                     $this->redirect('/registrierung/abgeschlossen');
-                } else {
-                    $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                    
                 }
+                
             }
         }
+        $this->set('customer', $customer);
     }
 
     public function registrationSuccessful()
