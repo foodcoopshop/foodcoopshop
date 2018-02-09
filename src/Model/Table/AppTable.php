@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use App\Network\AppSession;
+use App\ORM\AppMarshaller;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -43,23 +44,12 @@ class AppTable extends Table
     }
     
     /**
-     * logs validation errors
-     * @see Model::validates()
+     * {@inheritDoc}
+     * @see \Cake\ORM\Table::marshaller()
      */
-    public function validates($options = [])
+    public function marshaller()
     {
-        $hasErrors = parent::validates($options);
-        if (! empty($this->validationErrors)) {
-            $message = 'Validation-Error: Model: ' . $this->name;
-            foreach ($this->validationErrors as $field => $errors) {
-                $message .= ' Field: ' . $field;
-                foreach ($errors as $error) {
-                    $message .= ' Error: ' . $error;
-                }
-            }
-            $this->log($message);
-        }
-        return $hasErrors;
+        return new AppMarshaller($this);
     }
 
     /**
