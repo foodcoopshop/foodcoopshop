@@ -35,7 +35,6 @@ class AppController extends Controller
             'clear' => true
         ]);
         $this->loadComponent('String');
-        $this->loadComponent('Cookie');
         $this->loadComponent('Cart');
         
         $this->loadComponent('AppAuth', [
@@ -89,19 +88,22 @@ class AppController extends Controller
         }
         $this->set('isMobile', $isMobile);
         
-        // auto login if cookie is set
-        if (! $this->AppAuth->user() && $this->Cookie->read('remember_me_cookie') !== null) {
-            $cookie = $this->Cookie->read('remember_me_cookie');
-            if (isset($cookie['email']) && isset($cookie['passwd'])) { // not set in cronjobs
+        $rememberMeCookie = $this->request->getCookie('remember_me');
+        if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
+            $value = json_decode($rememberMeCookie);
+            if (isset($value->email) && isset($value->passwd)) {
                 $this->Customer = TableRegistry::get('Customers');
                 $customer = $this->Customer->find('all', [
                     'conditions' => [
-                        'Customers.email' => $cookie['email'],
-                        'Customers.passwd' => $cookie['passwd']
+                        'Customers.email' => $value->email,
+                        'Customers.passwd' => $value->passwd
+                    ],
+                    'contain' => [
+                        'AddressCustomers'
                     ]
                 ])->first();
-                if ($customer && ! $this->AppAuth->login($customer['Customers'])) {
-                    $this->redirect($this->AppAuth->logout());
+                if (!empty($customer)) {
+                    $this->AppAuth->setUser($customer);
                 }
             }
         }

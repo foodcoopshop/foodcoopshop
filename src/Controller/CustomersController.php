@@ -8,8 +8,10 @@ use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
+use DateTime;
 
 /**
  * CustomersController
@@ -196,14 +198,11 @@ class CustomersController extends FrontendController
     {
         $this->set('title_for_layout', 'Anmelden');
         
-        if (! $this->request->is('post') && $this->request->here == Configure::read('app.slugHelper')->getRegistration()) {
-            $this->redirect(Configure::read('app.slugHelper')->getLogin());
-        }
-
         /**
          * login start
          */
         if ($this->request->here == Configure::read('app.slugHelper')->getLogin()) {
+            
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
             }
@@ -213,16 +212,23 @@ class CustomersController extends FrontendController
                 if ($user) {
                     $this->AppAuth->setUser($user);
                     $this->Flash->success('Du hast dich erfolgreich angemeldet.');
+                    $this->redirect($this->AppAuth->redirectUrl());
+                } else {
+                    $this->Flash->error('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
                 }
-                // was remember me checkbox selected? not set if login happens automatically in AppShell
-                /*
-                if (isset($this->request->getData('remember_me')) && $this->request->getData('remember_me') == 1) {
+                
+                if (!empty($this->request->getData('remember_me')) && $this->request->getData('remember_me')) {
                     $ph = new AppPasswordHasher();
-                    $this->request->data['passwd'] = $ph->hash($this->request->getData('passwd'));
-                    $this->Cookie->write('remember_me_cookie', $this->request->getData('Customers'), true, '6 days');
+                    $cookie = (new Cookie('remember_me'))
+                    ->withValue(
+                        [
+                            'passwd' => $ph->hash($this->request->getData('passwd')),
+                            'email' => $this->request->getData('email')
+                        ]
+                    )
+                    ->withExpiry(new DateTime('+6 day'));
+                    $this->response = $this->response->withCookie($cookie);
                 }
-                */
-                $this->redirect($this->AppAuth->redirectUrl());
             }
                 
         }
@@ -352,7 +358,7 @@ class CustomersController extends FrontendController
     public function logout()
     {
         $this->Flash->success('Du hast dich erfolgreich abgemeldet.');
-        //$this->Cookie->delete('remember_me_cookie');
+        $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyShopOrderCustomer();
         $this->AppAuth->logout();
         $this->redirect('/');
