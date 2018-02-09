@@ -15,7 +15,6 @@
 
 $menu = [];
 
-$adminSlug = '/admin';
 $adminName = 'Admin-Bereich';
 $profileSlug = $this->Slug->getCustomerProfile();
 $class = ['btn btn-success'];
@@ -27,7 +26,7 @@ if ($appAuth->isManufacturer()) {
 }
 if ($appAuth->user()) {
     if (!$this->request->getSession()->read('Auth.shopOrderCustomer')) {
-        $menu[] = ['slug' => $adminSlug, 'name' => $adminName, 'options' => ['class' => $class]];
+        $menu[] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['class' => $class]];
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName];
     } else {
         $menu[] = ['slug' => 'javascript:alert(\'Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus.\');', 'name' =>  'Eingeloggt: ' . $userName];

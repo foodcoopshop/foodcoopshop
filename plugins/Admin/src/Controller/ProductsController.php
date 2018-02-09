@@ -1,6 +1,6 @@
 <?php
 
-use Admin\Controller\AdminAppController;
+namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;

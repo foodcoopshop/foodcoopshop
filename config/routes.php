@@ -76,7 +76,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/warenkorb/abgeschlossen/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
     $routes->connect('/warenkorb/:action', ['controller' => 'Carts']);
     
-    // für normale cake routings (users controller)
+    $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
+    
     $routes->connect('/:controller/:action');
     
     /**

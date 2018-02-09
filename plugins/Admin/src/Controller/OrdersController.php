@@ -1,6 +1,6 @@
 <?php
 
-use Admin\Controller\AdminAppController;
+namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -255,6 +255,7 @@ class OrdersController extends AdminAppController
         }
         $this->set('groupByCustomer', $groupByCustomer);
 
+        $this->Order = TableRegistry::get('Orders');
         $orderParams = $this->Order->getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $this->AppAuth);
 
         $this->Paginator->settings = array_merge([
@@ -265,7 +266,7 @@ class OrdersController extends AdminAppController
             'group' => $orderParams['group']
         ], $this->Paginator->settings);
 
-        $this->Order->virtualFields = $this->Order->Customer->virtualFields; // to get related virtual field "Customer.name"
+        //$this->Order->virtualFields = $this->Order->Customers->virtualFields; // to get related virtual field "Customer.name"
 
         $orders = $this->Paginator->paginate('Orders');
         foreach ($orders as &$order) {

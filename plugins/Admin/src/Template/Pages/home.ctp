@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Helper.showContent();" .
@@ -25,7 +27,8 @@ $this->element('addScript', [
 ]);
 
 echo '<div id="home">';
-echo $this->Session->flash();
+echo $this->Flash->render();
+echo $this->Flash->render('auth');
 echo '<br /><br />';
 $adminName = 'Admin-Bereich';
 if ($appAuth->isManufacturer()) {

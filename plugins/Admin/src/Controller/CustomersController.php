@@ -1,6 +1,5 @@
 <?php
-
-use Admin\Controller\AdminAppController;
+namespace Admin\Controller;
 use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;

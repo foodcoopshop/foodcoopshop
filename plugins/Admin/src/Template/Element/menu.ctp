@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
     return;
 }

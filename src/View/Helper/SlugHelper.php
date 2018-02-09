@@ -104,6 +104,11 @@ class SlugHelper extends Helper
         return '/warenkorb/abgeschlossen/' . $orderId;
     }
 
+    public function getAdminHome()
+    {
+        return '/admin';
+    }
+    
     public function getHome()
     {
         return '/';

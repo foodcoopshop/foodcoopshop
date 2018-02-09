@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -50,8 +53,11 @@
         <?php echo $this->element('Admin.menu'); ?>
         
         <div id="content">
-            <?php echo $this->Session->flash(); ?>
-            <?php echo $this->fetch('content'); ?>
+        	<?php
+                echo $this->Flash->render();
+                echo $this->Flash->render('auth');
+                echo $this->fetch('content');
+            ?>
         </div>
     </div>
     
@@ -72,7 +78,6 @@ if ($isMobile) {
     // add script BEFORE all scripts that are loaded in views (block)
     echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();", ['block']);
 }
-echo $this->element('sql_dump');
 
 if ($this->plugin == 'Admin') {
     echo $this->Html->script('/node_modules/ckeditor/ckeditor');
