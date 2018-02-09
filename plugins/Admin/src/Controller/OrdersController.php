@@ -256,18 +256,26 @@ class OrdersController extends AdminAppController
         $this->set('groupByCustomer', $groupByCustomer);
 
         $this->Order = TableRegistry::get('Orders');
-        $orderParams = $this->Order->getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $groupByCustomer, $orderId, $this->AppAuth);
+        $orderParams = $this->Order->getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $orderId, $this->AppAuth);
 
         $query = $this->Order->find('all', [
             'conditions' => $orderParams['conditions'],
             'contain' => $orderParams['contain'],
-            'order' => $orderParams['order'],
-            'group' => $orderParams['group']
-        ]);
+            'order' => $orderParams['order']
+        ])
+        ->select($this->Order->Customers);
+        
+        if ($groupByCustomer) {
+            $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
+            $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
+            $query->group(['Orders.id_customer']);
+        } else {
+            $query->select($this->Order);
+        }
 
         $orders = $this->paginate($query)->toArray();
         foreach ($orders as $order) {
-            $order->customer->order_count = $this->Order->getCountByCustomerId($order->id_customer);
+            $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
         }
         $this->set('orders', $orders);
 

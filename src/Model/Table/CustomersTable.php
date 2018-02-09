@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Model\Table;
-use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
-use App\Auth\AppPasswordHasher;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

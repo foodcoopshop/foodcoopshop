@@ -1037,4 +1037,6 @@ body.manufacturers .holiday-wrapper {
 body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
-
+label[for="groupbycustomer"] {
+	padding-left: 0;
+}

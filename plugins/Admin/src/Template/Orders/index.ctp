@@ -123,7 +123,7 @@ use Cake\Core\Configure;
         
         $paidField = $order->total_paid;
         if ($groupByCustomer) {
-            $paidField = $order[0]['Order_total_paid'];
+            $paidField = $order->orders_total_paid;
         }
 
         $sumPrice += $paidField;
@@ -222,7 +222,7 @@ use Cake\Core\Configure;
         if (! $groupByCustomer) {
             echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
         } else {
-            echo $order[0]['Order_count'];
+            echo $order->orders_count;
         }
         echo '</td>';
 

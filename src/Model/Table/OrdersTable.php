@@ -100,7 +100,7 @@ class OrdersTable extends AppTable
         return $query->toArray()[0]['SumTotalDeposit'];
     }
 
-    public function getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $groupByCustomer, $orderId, $appAuth)
+    public function getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $orderId, $appAuth)
     {
         $conditions = [];
 
@@ -130,22 +130,12 @@ class OrdersTable extends AppTable
             $conditions['Orders.id_order'] = $orderId;
         }
 
-        $contain = [
-            'OrderDetails',
-            'Customers'
-        ];
-        if ($groupByCustomer) {
-            $fields[] = 'SUM(Order.total_paid) AS Order_total_paid';
-            $fields[] = 'COUNT(Order.total_paid) AS Order_count';
-            $fields[] = 'SUM(Order.total_deposit) AS Order_total_deposit';
-            $group[] = 'Customers.id_customer';
-        }
-
+        $fields = [];
         $orderParams = [
             'conditions' => $conditions,
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
-            'group' => $group,
-            'contain' => $contain
+            'fields' => $fields,
+            'contain' => ['Customers']
         ];
         return $orderParams;
     }
