@@ -246,6 +246,10 @@ class CustomersController extends FrontendController
             
             if (! empty($this->request->getData())) {
                 
+                $this->loadComponent('Sanitize');
+                $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+                $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+                
                 $this->request->data['Customers']['email'] = $this->request->getData('Customers.address_customer.email');
                 $this->request->data['Customers']['address_customer']['firstname'] = $this->request->getData('Customers.firstname');
                 $this->request->data['Customers']['address_customer']['lastname'] = $this->request->getData('Customers.lastname');

@@ -25,15 +25,6 @@ use Cake\ORM\TableRegistry;
 class AppController extends Controller
 {
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * e.g. `$this->loadComponent('Security');`
-     *
-     * @return void
-     */
     public function initialize()
     {
         
@@ -125,17 +116,12 @@ class AppController extends Controller
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
-
-        
-        // automatically trim all user inputs from forms
-        array_walk_recursive($this->request->data, function(&$item, $key) {
-            if (is_string($item)){
-                $item = trim($item);
-            }
-        });    
         
         parent::beforeFilter($event);
+        
     }
+    
+    
 
     /**
      * keep this method in a controller - does not work with AppAuthComponent::login

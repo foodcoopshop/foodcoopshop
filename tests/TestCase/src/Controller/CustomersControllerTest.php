@@ -161,7 +161,7 @@ class CustomersControllerTest extends AppCakeTestCase
     {
 
         $customerFirstname = '  John  ';
-        $customerLastname = 'Doe';
+        $customerLastname = '<b>Doe</b>';
         $customerCity = 'Scharnstein';
         $customerAddressEmail = $email;
         $customerAddress1 = 'Mainstreet 1';
@@ -199,13 +199,13 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals((int) Configure::read('appDb.FCS_CUSTOMER_GROUP'), $customer->id_default_group, 'saving user group failed');
         $this->assertEquals($customerAddressEmail, $customer->email, 'saving field email failed');
         $this->assertEquals('John', $customer->firstname, 'saving field firstname failed');
-        $this->assertEquals($customerLastname, $customer->lastname, 'saving field lastname failed');
+        $this->assertEquals('Doe', $customer->lastname, 'saving field lastname failed');
         $this->assertEquals(1, $customer->newsletter, 'saving field newsletter failed');
         $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')), 'saving field terms_of_use_accepted_date failed');
 
         // check address record
         $this->assertEquals('John', $customer->address_customer->firstname, 'saving field firstname failed');
-        $this->assertEquals($customerLastname, $customer->address_customer->lastname, 'saving field lastname failed');
+        $this->assertEquals('Doe', $customer->address_customer->lastname, 'saving field lastname failed');
         $this->assertEquals($customerAddressEmail, $customer->address_customer->email, 'saving field email failed');
         $this->assertEquals($customerAddress1, $customer->address_customer->address1, 'saving field address1 failed');
         $this->assertEquals($customerAddress2, $customer->address_customer->address2, 'saving field address2 failed');
