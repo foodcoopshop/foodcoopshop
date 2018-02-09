@@ -258,23 +258,20 @@ class OrdersController extends AdminAppController
         $this->Order = TableRegistry::get('Orders');
         $orderParams = $this->Order->getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $this->AppAuth);
 
-        $this->Paginator->settings = array_merge([
+        $query = $this->Order->find('all', [
             'conditions' => $orderParams['conditions'],
             'contain' => $orderParams['contain'],
             'order' => $orderParams['order'],
-            'fields' => $orderParams['fields'],
             'group' => $orderParams['group']
-        ], $this->Paginator->settings);
+        ]);
 
-        //$this->Order->virtualFields = $this->Order->Customers->virtualFields; // to get related virtual field "Customer.name"
-
-        $orders = $this->Paginator->paginate('Orders');
-        foreach ($orders as &$order) {
-            $order['Customers']['order_count'] = $this->Order->getCountByCustomerId($order['Orders']['id_customer']);
+        $orders = $this->paginate($query)->toArray();
+        foreach ($orders as $order) {
+            $order->customer->order_count = $this->Order->getCountByCustomerId($order->id_customer);
         }
         $this->set('orders', $orders);
 
-        $this->set('customersForDropdown', $this->Order->Customer->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
+        $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
         $this->set('title_for_layout', 'Bestellungen');
     }

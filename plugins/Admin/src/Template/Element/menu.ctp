@@ -18,9 +18,6 @@ use Cake\Core\Configure;
 if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
     return;
 }
-?>
-
-<?php
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
@@ -40,14 +37,14 @@ $cancelledArticlesMenuElement = [
     ]
 ];
 $ordersMenuElement = [
-    'slug' => '/admin/orders',
+    'slug' => $this->Slug->getOrdersList(),
     'name' => 'Bestellungen',
     'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
     ]
 ];
 $orderDetailsMenuElement = [
-    'slug' => '/admin/order_details',
+    'slug' => $this->Slug->getOrderDetailsList(),
     'name' => 'Bestellte Produkte',
     'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'

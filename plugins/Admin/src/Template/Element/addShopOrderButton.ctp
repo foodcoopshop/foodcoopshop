@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
     $this->element('addScript', [
         'script' =>

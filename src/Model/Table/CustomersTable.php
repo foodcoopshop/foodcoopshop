@@ -216,7 +216,7 @@ class CustomersTable extends AppTable
             'conditions' => $this->getConditionToExcludeHostingUser(),
             'fields' => [
                 'Customers.' . $index,
-                'Customers.name',
+                'name' => 'CONCAT("xx")',
                 'Customers.active',
                 'Customers.email'
             ],

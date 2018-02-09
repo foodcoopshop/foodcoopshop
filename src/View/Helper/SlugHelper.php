@@ -26,6 +26,17 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
+    
+    public function getOrderDetailsList()
+    {
+        return $this->getAdminHome().'/order_details';
+    }
+    
+    public function getOrdersList()
+    {
+        return $this->getAdminHome().'/orders';
+    }
+    
     public function getAcceptTermsOfUse()
     {
         return '/nutzungsbedingungen-akzeptieren';

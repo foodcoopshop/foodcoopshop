@@ -13,10 +13,12 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if (CakeSession::read('highlightedRowId')) {
+use Cake\Core\Configure;
+
+if ($this->request->getSession()->read('highlightedRowId')) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.initHighlightedRowId('" . $rowIdPrefix . $this->Session->read('highlightedRowId') . "');
+        'script' => Configure::read('app.jsNamespace') . ".Admin.initHighlightedRowId('" . $rowIdPrefix . $this->request->getSession()->read('highlightedRowId') . "');
         "
     ]);
-    CakeSession::delete('highlightedRowId');
+    $this->request->getSession()->delete('highlightedRowId');
 }

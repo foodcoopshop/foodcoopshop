@@ -271,7 +271,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
         ])->first();
-        $responseHtml = $this->browser->get('/admin/orders/initShopOrder/' . Configure::read('test.customerId'));
+        $responseHtml = $this->browser->get($this->Slug->getOrdersList().'/initShopOrder/' . Configure::read('test.customerId'));
         $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customers']['name'] . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }

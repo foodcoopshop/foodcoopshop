@@ -60,8 +60,8 @@ class ReportsController extends AdminAppController
         $conditions = [
             'Payments.type' => $paymentType
         ];
-        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         if ($customerId != '') {
             $conditions['Payments.id_customer'] = $customerId;
@@ -77,7 +77,7 @@ class ReportsController extends AdminAppController
             ]
         ], $this->Paginator->settings);
 
-        $payments = $this->Paginator->paginate('Payments);
+        $payments = $this->Paginator->paginate('Payments');
         $this->set('payments', $payments);
 
         $this->set('customersForDropdown', $this->Payment->Customer->getForDropdown());

@@ -23,7 +23,7 @@ class OrdersTable extends AppTable
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->hasOne('Customers', [
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
         $this->hasMany('OrderDetails', [
@@ -57,12 +57,12 @@ class OrdersTable extends AppTable
     public function getCountByCustomerId($customerId)
     {
         $conditions = [
-            $this->name . '.id_customer' => $customerId
+            'id_customer' => $customerId
         ];
         $conditions[] = $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv());
-        $orderCount = $this->find('count', [
+        $orderCount = $this->find('all', [
             'conditions' => $conditions
-        ]);
+        ])->count();
         return $orderCount;
     }
 
@@ -106,10 +106,10 @@ class OrdersTable extends AppTable
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         $group = [];
@@ -131,12 +131,9 @@ class OrdersTable extends AppTable
             $conditions['Orders.id_order'] = $orderId;
         }
 
-        $fields = [
-            'Orders.*',
-            'Customers.*'
-        ];
         $contain = [
-            'OrderDetails'
+            'OrderDetails',
+            'Customers'
         ];
         if ($groupByCustomer) {
             $fields[] = 'SUM(Order.total_paid) AS Order_total_paid';
@@ -148,7 +145,6 @@ class OrdersTable extends AppTable
         $orderParams = [
             'conditions' => $conditions,
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
-            'fields' => $fields,
             'group' => $group,
             'contain' => $contain
         ];
