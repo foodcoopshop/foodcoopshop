@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ]);
@@ -19,7 +21,15 @@ $this->element('addScript', ['script' =>
 
 <h1><?php echo $title_for_layout; ?></h1>
 
-<form novalidate="novalidate" action="<?php echo $this->Slug->getNewPasswordRequest();?>" method="post">
+    <?php
+        echo $this->Form->create(
+            $customer,
+            [
+                'url' => $this->Slug->getNewPasswordRequest(),
+                'novalidate' => 'novalidate'
+            ]
+        );
+    ?>
     
     <p>Bitte gib deine E-Mail-Adresse an und klicke dann auf "Senden".</p>
     <p>Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst.</p>
@@ -27,4 +37,4 @@ $this->element('addScript', ['script' =>
     <?php echo $this->Form->input('Customers.email', ['label' => 'E-Mail']); ?>
     <button type="submit" class="btn btn-success">Senden</button>
     
-</form>
+<?php echo $this->Form->end(); ?>

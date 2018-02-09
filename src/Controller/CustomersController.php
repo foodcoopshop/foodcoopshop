@@ -87,77 +87,98 @@ class CustomersController extends FrontendController
             'title_for_layout' => 'Neues Passwort anfordern'
         ]);
 
-        if (empty($this->request->getData())) {
-            return;
+        $this->Customer = TableRegistry::get('Customers');
+        $customer = $this->Customer->newEntity();
+        
+        if (!empty($this->request->getData())) {
+
+            $this->loadComponent('Sanitize');
+            $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+            
+            $customer = $this->Customer->patchEntity(
+                $customer,
+                $this->request->getData(),
+                [
+                    'validate' => 'newPasswordRequest'
+                ]
+            );
+            
+            if (!empty($customer->getErrors())) {
+                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            } else {
+                
+                $changePasswordCode = StringComponent::createRandomString(12);
+                $originalPrimaryKey = $this->Customer->getPrimaryKey();
+                $this->Customer->setPrimaryKey('email');
+                $oldEntity = $this->Customer->get($this->request->getData('Customers.email'));
+                $this->Customer->setPrimaryKey($originalPrimaryKey);
+                $patchedEntity = $this->Customer->patchEntity(
+                    $oldEntity,
+                    [
+                        'change_password_code' => $changePasswordCode
+                    ]
+                );
+                $this->Customer->save($patchedEntity);
+    
+                // send email
+                $email = new AppEmail();
+                $email->setTemplate('new_password_request_successful')
+                    ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
+                    ->setTo($this->request->getData('Customers.email'))
+                    ->setViewVars([
+                    'changePasswordCode' => $changePasswordCode,
+                        'customer' => $oldEntity
+                    ]);
+    
+                if ($email->send()) {
+                    $this->Flash->success('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.');
+                }
+    
+                $this->redirect('/');
+            }
         }
-
-        $this->Customer->set($this->request->data);
-
-        unset($this->Customer->validate['email']['unique']); // unique not needed here
-
-        if ($this->Customer->validates()) {
-            $customer = $this->Customer->findByEmail($this->request->getData('Customers.email'));
-
-            if (empty($customer)) {
-                $this->Customer->invalidate('email', 'Wir haben diese E-Mail-Adresse nicht gefunden.');
-                return false;
-            }
-
-            if ($customer['Customers']['active'] !== true) {
-                $this->Flash->error('Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.');
-                return false;
-            }
-
-            $changePasswordCode = StringComponent::createRandomString(12);
-            $customer2save = [
-                'change_password_code' => $changePasswordCode
-            ];
-            $this->Customer->id = $customer['Customers']['id_customer'];
-            $this->Customer->save($customer2save);
-
-            // send email
-            $email = new AppEmail();
-            $email->setTemplate('new_password_request_successful')
-                ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
-                ->setTo($this->request->getData('Customers.email'))
-                ->setViewVars([
-                'changePasswordCode' => $changePasswordCode,
-                'customer' => $customer
-                ]);
-
-            if ($email->send()) {
-                $this->Flash->success('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.');
-            }
-
-            $this->redirect('/');
-        }
+        
+        $this->set('customer', $customer);
     }
 
     public function generateNewPassword()
     {
-        $changePasswordCode = $this->params['changePasswordCode'];
+        $changePasswordCode = $this->request->getParam('pass')[0];
 
         if (!isset($changePasswordCode)) {
             throw new RecordNotFoundException('change password code not passed');
         }
-
+        
+        $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.change_password_code' => $changePasswordCode
-            ]
+            ],
         ])->first();
 
         if (empty($customer)) {
             throw new RecordNotFoundException('change password code not found');
         }
 
-        $newPassword = $this->Customer->setNewPassword($customer['Customers']['id_customer']);
-
+        $ph = new AppPasswordHasher();
+        $newPassword = StringComponent::createRandomString(12);
+        
+        // reset change password code
+        $patchedEntity = $this->Customer->patchEntity(
+            $this->Customer->get($customer->id_customer),
+            [
+                'passwd' => $ph->hash($newPassword),
+                'change_password_code' => null
+            ]
+        );
+        $this->Customer->save($patchedEntity);
+        
         // send email
         $email = new AppEmail();
             $email->setTemplate('new_password_set_successful')
             ->setSubject('Neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME') . ' generiert')
-            ->setTo($customer['Customers']['email'])
+            ->setTo($customer->email)
             ->setViewVars([
                 'password' => $newPassword,
                 'customer' => $customer
@@ -167,13 +188,6 @@ class CustomersController extends FrontendController
         if ($email->send()) {
             $this->Flash->success('Wir haben dir dein neues Passwort zugeschickt.');
         }
-
-        // reset change password code
-        $customer2save = [
-            'change_password_code' => null
-        ];
-        $this->Customer->id = $customer['Customers']['id_customer'];
-        $this->Customer->save($customer2save);
 
         $this->redirect(Configure::read('app.slugHelper')->getLogin());
     }

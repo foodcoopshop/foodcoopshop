@@ -60,7 +60,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     
     $routes->connect('/neue-produkte', ['controller' => 'Categories', 'action' => 'newProducts']);
     $routes->connect('/neues-passwort-anfordern', ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
-    $routes->connect('/neues-passwort-generieren/:changePasswordCode', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
+    $routes->connect('/neues-passwort-generieren/*', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
     
     $routes->connect('/aktuelles', ['controller' => 'BlogPosts', 'action' => 'index']);
     $routes->connect('/aktuelles/*', ['controller' => 'BlogPosts', 'action' => 'detail']);

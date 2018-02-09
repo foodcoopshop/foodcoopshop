@@ -70,6 +70,37 @@ class CustomersTable extends AppTable
         return $validator;
     }
     
+    public function validationNewPasswordRequest(Validator $validator)
+    {
+        $validator->notEmpty('email', 'Bitte gib deine E-Mail-Adresse an.');
+        $validator->email('email', false, 'Die E-Mail-Adresse ist nicht gültig.');
+        $validator->add('email', 'exists', [
+            'rule' => function ($value, $context) {
+                $ct = TableRegistry::get('Customers');
+                return $ct->exists([
+                    'email' => $value
+                ]);
+            },
+            'message' => 'Wir haben diese E-Mail-Adresse nicht gefunden.'
+        ]);
+        $validator->add('email', 'account_inactive', [
+            'rule' => function ($value, $context) {
+                $ct = TableRegistry::get('Customers');
+                $record  = $ct->find('all', [
+                    'conditions' => [
+                        'email' => $value
+                    ]
+                ])->first();
+                if (!empty($record) && !$record->active) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => 'Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.'
+        ]);
+        return $validator;
+    }
+    
     public function validationTermsOfUse(Validator $validator)
     {
         return $this->getValidationTermsOfUse($validator);
@@ -85,39 +116,6 @@ class CustomersTable extends AppTable
         return $query->contain([
             'AddressCustomers'
         ]);
-    }
-
-    public function setNewPassword($customerId)
-    {
-        $newPassword = StringComponent::createRandomString(8);
-        $ph = new AppPasswordHasher();
-        $customer2save = [
-            'passwd' => $ph->hash($newPassword)
-        ];
-        $this->id = $customerId;
-        $this->save($customer2save, false); // false: keine validation();
-        return $newPassword;
-    }
-
-    /**
-     * check if the given string is the password of the logged in user
-     */
-    public function isCustomerPassword($customerId, $hashedPassword)
-    {
-        $customer = $this->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ],
-            'fields' => [
-                'Customers.passwd'
-            ]
-        ])->first();
-
-        if ($hashedPassword == $customer['Customers']['passwd']) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public function __construct($id = false, $table = null, $ds = null)
