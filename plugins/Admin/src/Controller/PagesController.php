@@ -137,8 +137,8 @@ class PagesController extends AdminAppController
         $conditions = [];
 
         $customerId = '';
-        if (! empty($this->params['named']['customerId'])) {
-            $customerId = $this->params['named']['customerId'];
+        if (! empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
             $conditions = [
                 'Pages.id_customer' => $customerId
             ];

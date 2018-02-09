@@ -47,9 +47,8 @@ class OrdersTable extends AppTable
         'closed' => 5
     ];
 
-    private function getOrderStateCondition($orderState)
+    private function getOrderStateCondition($orderStates)
     {
-        $orderStates = explode(',', $orderState);
         $condition = 'Orders.current_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
@@ -59,7 +58,7 @@ class OrdersTable extends AppTable
         $conditions = [
             'id_customer' => $customerId
         ];
-        $conditions[] = $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv());
+        $conditions[] = $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
         $orderCount = $this->find('all', [
             'conditions' => $conditions
         ])->count();
@@ -101,7 +100,7 @@ class OrdersTable extends AppTable
         return $query->toArray()[0]['SumTotalDeposit'];
     }
 
-    public function getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $appAuth)
+    public function getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $groupByCustomer, $orderId, $appAuth)
     {
         $conditions = [];
 
@@ -114,8 +113,8 @@ class OrdersTable extends AppTable
 
         $group = [];
 
-        if ($orderState != '') {
-            $conditions[] = $this->getOrderStateCondition($orderState);
+        if ($orderStates != '') {
+            $conditions[] = $this->getOrderStateCondition($orderStates);
         }
 
         if ($customerId != '') {

@@ -92,9 +92,9 @@ class OrderDetailsController extends AdminAppController
             'OrderDetails.product_quantity' => 'sum_amount',
             'OrderDetails.deposit' => 'sum_deposit'
         ];
-        if (!empty($this->params['named']['sort']) && isset($sortMatches[$this->params['named']['sort']])) {
-            $sortField = $sortMatches[$this->params['named']['sort']];
-        }
+//         if (!empty($this->request->getQuery('sort') && isset($sortMatches[$this->params['named']['sort')])) {
+//             $sortField = $sortMatches[$this->request->getQuery('sort')];
+//         }
         return $sortField;
     }
 
@@ -104,8 +104,8 @@ class OrderDetailsController extends AdminAppController
     private function getSortDirectionForGroupedOrderDetails()
     {
         $sortDirection = 'ASC';
-        if (!empty($this->params['named']['direction']) && in_array($this->params['named']['direction'], ['asc', 'desc'])) {
-            $sortDirection = $this->params['named']['direction'];
+        if (!empty($this->request->getQuery('direction']) && in_array($this->params['named']['direction'], ['asc', 'desc'))) {
+            $sortDirection = $this->request->getQuery('direction');
         }
         return $sortDirection;
     }
@@ -115,71 +115,71 @@ class OrderDetailsController extends AdminAppController
 
         // for filter from action logs page
         $orderDetailId = '';
-        if (! empty($this->params['named']['orderDetailId'])) {
-            $orderDetailId = $this->params['named']['orderDetailId'];
+        if (! empty($this->request->getQuery('orderDetailId'))) {
+            $orderDetailId = $this->request->getQuery('orderDetailId');
         }
 
         $dateFrom = '';
         $dateTo = '';
         if ($orderDetailId == '') {
             $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->params['named']['dateFrom'])) {
-                $dateFrom = $this->params['named']['dateFrom'];
+            if (! empty($this->request->getQuery('dateFrom'))) {
+                $dateFrom = $this->request->getQuery('dateFrom');
             }
             $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->params['named']['dateTo'])) {
-                $dateTo = $this->params['named']['dateTo'];
+            if (! empty($this->request->getQuery('dateTo'))) {
+                $dateTo = $this->request->getQuery('dateTo');
             }
         }
         $this->set('dateFrom', $dateFrom);
         $this->set('dateTo', $dateTo);
 
         $manufacturerId = '';
-        if (! empty($this->params['named']['manufacturerId'])) {
-            $manufacturerId = $this->params['named']['manufacturerId'];
+        if (! empty($this->request->getQuery('manufacturerId'))) {
+            $manufacturerId = $this->request->getQuery('manufacturerId');
         }
         $this->set('manufacturerId', $manufacturerId);
 
         $orderId = '';
-        if (! empty($this->params['named']['orderId'])) {
-            $orderId = $this->params['named']['orderId'];
+        if (! empty($this->request->getQuery('orderId'))) {
+            $orderId = $this->request->getQuery('orderId');
         }
         $this->set('orderId', $orderId);
 
         $deposit = '';
-        if (! empty($this->params['named']['deposit'])) {
-            $deposit = $this->params['named']['deposit'];
+        if (! empty($this->request->getQuery('deposit'))) {
+            $deposit = $this->request->getQuery('deposit');
         }
         $this->set('deposit', $deposit);
 
-        $orderState = Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv();
+        $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         if ($this->AppAuth->isManufacturer()) {
-            $orderState = ORDER_STATE_OPEN;
+            $orderStates = ORDER_STATE_OPEN;
         }
-        if (! empty($this->params['named']['orderState'])) {
-            $orderState = $this->params['named']['orderState'];
+        if (! empty($this->request->getQuery('orderState'))) {
+            $orderStates = $this->request->getQuery('orderState');
         }
-        $this->set('orderState', $orderState);
+        $this->set('orderState', $orderStates);
 
         $productId = '';
-        if (! empty($this->params['named']['productId'])) {
-            $productId = $this->params['named']['productId'];
+        if (! empty($this->request->getQuery('productId'))) {
+            $productId = $this->request->getQuery('productId');
         }
         $this->set('productId', $productId);
 
         $customerId = '';
-        if (! empty($this->params['named']['customerId'])) {
-            $customerId = $this->params['named']['customerId'];
+        if (! empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 
         $groupBy = '';
-        if (! empty($this->params['named']['groupBy'])) {
-            $groupBy = $this->params['named']['groupBy'];
+        if (! empty($this->request->getQuery('groupBy'))) {
+            $groupBy = $this->request->getQuery('groupBy');
         }
 
         // legacy: still allow old variable "groupByManufacturer"
-        if (! empty($this->params['named']['groupByManufacturer'])) {
+        if (! empty($this->request->getQuery('groupByManufacturer'))) {
             $groupBy = 'manufacturer';
         }
 

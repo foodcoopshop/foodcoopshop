@@ -257,20 +257,20 @@ class ManufacturersController extends AdminAppController
     public function index()
     {
         $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
-        if (! empty($this->params['named']['dateFrom'])) {
-            $dateFrom = $this->params['named']['dateFrom'];
+        if (! empty($this->request->getQuery('dateFrom'))) {
+            $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
-        if (! empty($this->params['named']['dateTo'])) {
-            $dateTo = $this->params['named']['dateTo'];
+        if (! empty($this->request->getQuery('dateTo'))) {
+            $dateTo = $this->request->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
         $active = 1; // default value
-        if (isset($this->params['named']['active'])) { // klappt bei orderState auch mit !empty( - hier nicht... strange
-            $active = $this->params['named']['active'];
+        if (isset($this->request->getQuery('active'))) {
+            $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);
 

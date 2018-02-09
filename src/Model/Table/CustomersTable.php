@@ -123,7 +123,7 @@ class CustomersTable extends AppTable
         parent::__construct($id, $table, $ds);
 
         $this->association('ValidOrders')->setConditions([
-            'ValidOrders.current_state IN (' . Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv() . ')'
+            'ValidOrders.current_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
         ]);
         $this->association('ActiveOrders')->setConditions([
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
@@ -156,7 +156,7 @@ class CustomersTable extends AppTable
         $mm = TableRegistry::get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
-                'Addresses.email' => $customer['Customers']['email']
+                'Addresses.email' => $customer->email
             ]
         ])->first();
 
@@ -184,7 +184,7 @@ class CustomersTable extends AppTable
     {
         $manufacturer = $this->getManufacturerByCustomerId($customerId);
         if (!empty($manufacturer)) {
-            return $manufacturer['Manufacturers']['id_manufacturer'];
+            return $manufacturer->id_manufacturer;
         }
         return 0;
     }
@@ -214,12 +214,6 @@ class CustomersTable extends AppTable
 
         $customers = $this->find('all', [
             'conditions' => $this->getConditionToExcludeHostingUser(),
-            'fields' => [
-                'Customers.' . $index,
-                'name' => 'CONCAT("xx")',
-                'Customers.active',
-                'Customers.email'
-            ],
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
             'contain' => $contain
         ]);
@@ -230,33 +224,33 @@ class CustomersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($customers as $customer) {
-            $userNameForDropdown = $customer['Customers']['name'];
+            $userNameForDropdown = $customer->name;
 
             $manufacturerIncluded = false;
             if ($includeManufacturers) {
                 $manufacturer = $this->getManufacturerRecord($customer);
                 if ($manufacturer) {
-                    if ($manufacturer['Manufacturers']['active']) {
-                        $onlineManufacturers[$customer['Customers'][$index]] = $manufacturer['Manufacturers']['name'];
+                    if ($manufacturer->active) {
+                        $onlineManufacturers[$customer->$index] = $manufacturer->name;
                     } else {
-                        $offlineManufacturers[$customer['Customers'][$index]] = $manufacturer['Manufacturers']['name'];
+                        $offlineManufacturers[$customer->$index] = $manufacturer->name;
                     }
                     $manufacturerIncluded = true;
                 }
             }
 
             if (! $manufacturerIncluded) {
-                if ($customer['Customers']['active'] == 0) {
-                    $offlineCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
+                if ($customer->active == 0) {
+                    $offlineCustomers[$customer->$index] = $userNameForDropdown;
                 } else {
                     if (! $includeManufacturers) {
-                        if (empty($customer['ValidOrder'])) {
-                            $notYetOrderedCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
+                        if (empty($customer->valid_orders)) {
+                            $notYetOrderedCustomers[$customer->$index] = $userNameForDropdown;
                         } else {
-                            $onlineCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
+                            $onlineCustomers[$customer->$index] = $userNameForDropdown;
                         }
                     } else {
-                        $onlineCustomers[$customer['Customers'][$index]] = $userNameForDropdown;
+                        $onlineCustomers[$customer->$index] = $userNameForDropdown;
                     }
                 }
             }

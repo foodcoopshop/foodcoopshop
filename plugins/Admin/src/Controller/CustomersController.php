@@ -340,32 +340,32 @@ class CustomersController extends AdminAppController
     public function index()
     {
         $active = 1; // default value
-        if (isset($this->params['named']['active'])) { // klappt bei orderState auch mit !empty( - hier nicht... strange
-            $active = $this->params['named']['active'];
+        if (isset($this->request->getQuery('active'))) {
+            $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);
 
         $validOrdersCountFrom = ''; // default value
-        if (isset($this->params['named']['validOrdersCountFrom'])) {
-            $validOrdersCountFrom = $this->params['named']['validOrdersCountFrom'];
+        if (isset($this->request->getQuery('validOrdersCountFrom'))) {
+            $validOrdersCountFrom = $this->request->getQuery('validOrdersCountFrom');
         }
         $this->set('validOrdersCountFrom', $validOrdersCountFrom);
 
         $validOrdersCountTo = ''; // default value
-        if (isset($this->params['named']['validOrdersCountTo'])) {
-            $validOrdersCountTo = $this->params['named']['validOrdersCountTo'];
+        if (isset($this->request->getQuery('validOrdersCountTo'))) {
+            $validOrdersCountTo = $this->request->getQuery('validOrdersCountTo');
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
         $dateFrom = '';
-        if (! empty($this->params['named']['dateFrom'])) {
-            $dateFrom = $this->params['named']['dateFrom'];
+        if (! empty($this->request->getQuery('dateFrom'))) {
+            $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = '';
-        if (! empty($this->params['named']['dateTo'])) {
-            $dateTo = $this->params['named']['dateTo'];
+        if (! empty($this->request->getQuery('dateTo'))) {
+            $dateTo = $this->request->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 

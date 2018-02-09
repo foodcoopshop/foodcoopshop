@@ -148,7 +148,7 @@ class BlogPostsController extends AdminAppController
                     $this->Flash->success('Der Blog-Artikel wurde erfolgreich gespeichert.');
                 }
 
-                $this->request->session()->write('highlightedRowId', $this->BlogPost->id);
+                $this->request->getSession()->write('highlightedRowId', $this->BlogPost->id);
                 $this->redirect($this->data['referer']);
             } else {
                 $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -161,8 +161,8 @@ class BlogPostsController extends AdminAppController
         $conditions = [];
 
         $customerId = '';
-        if (! empty($this->params['named']['customerId'])) {
-            $customerId = $this->params['named']['customerId'];
+        if (! empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
             $conditions = [
                 'BlogPosts.id_customer' => $customerId
             ];
@@ -170,8 +170,8 @@ class BlogPostsController extends AdminAppController
         $this->set('customerId', $customerId);
 
         $manufacturerId = '';
-        if (! empty($this->params['named']['manufacturerId'])) {
-            $manufacturerId = $this->params['named']['manufacturerId'];
+        if (! empty($this->request->getQuery('manufacturerId'))) {
+            $manufacturerId = $this->request->getQuery('manufacturerId');
         }
         $this->set('manufacturerId', $manufacturerId);
 

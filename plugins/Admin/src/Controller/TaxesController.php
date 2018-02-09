@@ -103,7 +103,7 @@ class TaxesController extends AdminAppController
                     $this->Flash->success('Der Steuersatz wurde erfolgreich gespeichert.');
                 }
 
-                $this->request->session()->write('highlightedRowId', $this->Tax->id);
+                $this->request->getSession()->write('highlightedRowId', $this->Tax->id);
                 $this->redirect($this->data['referer']);
             } else {
                 $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');

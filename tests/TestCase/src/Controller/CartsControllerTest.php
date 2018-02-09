@@ -264,7 +264,6 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testShopOrder()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $testCustomer = $this->Customer->find('all', [
             'conditions' => [
@@ -272,7 +271,7 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $responseHtml = $this->browser->get($this->Slug->getOrdersList().'/initShopOrder/' . Configure::read('test.customerId'));
-        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer['Customers']['name'] . '\<\/b\> getätigt./', $responseHtml);
+        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer->name . '\<\/b\> getätigt./', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
     }
 

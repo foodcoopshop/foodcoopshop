@@ -122,8 +122,6 @@ class AppController extends Controller
         parent::beforeFilter($event);
         
     }
-    
-    
 
     /**
      * keep this method in a controller - does not work with AppAuthComponent::login

@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\Utility\Inflector;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -555,25 +556,4 @@ class MyHtmlHelper extends HtmlHelper
         return array_keys(self::getVisibleOrderStates());
     }
 
-    public function getOrderStateIdsAsCsv()
-    {
-        return join(',', self::getOrderStateIds());
-    }
-
-    /*
-    public function __construct(View $View, array $config = [])
-    {
-
-        // wrap js block with jquery document ready
-        $this->_tags['javascriptblock'] = "<script%s>
-              //<![CDATA[
-              $(document).ready(function() {
-                  %s
-              });
-              //]]>
-          </script>";
-
-        parent::__construct($View, $config);
-    }
-    */
 }

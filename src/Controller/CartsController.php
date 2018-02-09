@@ -34,7 +34,7 @@ class CartsController extends FrontendController
 
         if ($this->request->is('ajax')) {
             $message = '';
-            if (! $this->AppAuth->user()) {
+            if (empty($this->AppAuth->user())) {
                 $message = 'Du bist nicht angemeldet.';
             }
             if ($this->AppAuth->isManufacturer()) {
@@ -423,7 +423,7 @@ class CartsController extends FrontendController
                     ->setViewVars([
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
-                        'originalLoggedCustomer' => $this->request->session()->check('Auth.originalLoggedCustomer') ? $this->request->session()->read('Auth.originalLoggedCustomer') : null,
+                        'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
                     'order' => $order,
                     'depositSum' => $this->AppAuth->Cart->getDepositSum(),
                     'productSum' => $this->AppAuth->Cart->getProductSum(),
@@ -450,7 +450,7 @@ class CartsController extends FrontendController
     public function sendShopOrderNotificationToManufacturers($cartProducts, $order)
     {
 
-        if (!$this->request->session()->check('Auth.shopOrderCustomer')) {
+        if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {
             return false;
         }
 
@@ -488,7 +488,7 @@ class CartsController extends FrontendController
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->request->session()->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->request->getSession()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,

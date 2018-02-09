@@ -40,20 +40,20 @@ class ReportsController extends AdminAppController
         $this->Payment = TableRegistry::get('Payments');
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
-        if (! empty($this->params['named']['dateFrom'])) {
-            $dateFrom = $this->params['named']['dateFrom'];
+        if (! empty($this->request->getQuery('dateFrom'))) {
+            $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
-        if (! empty($this->params['named']['dateTo'])) {
-            $dateTo = $this->params['named']['dateTo'];
+        if (! empty($this->request->getQuery('dateTo'))) {
+            $dateTo = $this->request->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
         $customerId = '';
-        if (! empty($this->params['named']['customerId'])) {
-            $customerId = $this->params['named']['customerId'];
+        if (! empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 

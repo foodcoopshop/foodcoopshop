@@ -146,7 +146,10 @@ foodcoopshop.Admin = {
     },
 
     afterFilterCallback: function () {
+    	
+    	$('.filter-container form').submit();
 
+		/*
         var url = '';
         var sortParams = '';
         var splittedUrl = document.location.pathname.split('/');
@@ -203,7 +206,7 @@ foodcoopshop.Admin = {
         // sometimes two slashes are in url (browser-dependent), clean it to avoid error and provide valid url
         url = url.replace(/\/\//, '/');
         document.location = url;
-
+		*/
     },
 
     improveTableLayout: function () {

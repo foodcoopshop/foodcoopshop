@@ -43,19 +43,20 @@ use Cake\Core\Configure;
     ?>
     
     <div class="filter-container">
-        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
-        <?php echo $this->Form->input('orderState', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState]); ?>
-        <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-            Gruppieren nach Mitglied: <?php echo $this->Form->input('groupByCustomer', ['type'=>'checkbox', 'label' =>'', 'checked' => $groupByCustomer]);?>
-        <?php } ?>
-        <div class="right">
-            <?php
-            echo $this->element('addShopOrderButton', [
-                'customers' => $customersForDropdown
-            ]);
-            ?>
-        </div>
-
+    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
+            <?php echo $this->Form->input('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
+                Gruppieren nach Mitglied: <?php echo $this->Form->input('groupByCustomer', ['type'=>'checkbox', 'label' =>'', 'checked' => $groupByCustomer]);?>
+            <?php } ?>
+            <div class="right">
+                <?php
+                echo $this->element('addShopOrderButton', [
+                    'customers' => $customersForDropdown
+                ]);
+                ?>
+            </div>
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">
@@ -170,7 +171,7 @@ use Cake\Core\Configure;
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
             'title' => 'Alle bestellten Produkte von ' . $order->name . ' anzeigen',
             'class' => 'icon-with-text'
-        ], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order->id_customer . '/orderState:' . $orderState);
+        ], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/customerId:' . $order->id_customer . '/orderState:' . join(',', $orderStates));
         echo '</td>';
 
         echo '<td class="hide">';

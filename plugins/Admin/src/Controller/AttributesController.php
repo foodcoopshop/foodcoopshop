@@ -95,7 +95,7 @@ class AttributesController extends AdminAppController
                     $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
                 }
 
-                $this->request->session()->write('highlightedRowId', $this->Attribute->id);
+                $this->request->getSession()->write('highlightedRowId', $this->Attribute->id);
                 $this->redirect($this->data['referer']);
             } else {
                 $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');

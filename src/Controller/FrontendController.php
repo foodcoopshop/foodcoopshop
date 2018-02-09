@@ -87,15 +87,15 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->request->session()->read('Auth.originalLoggedCustomer')) {
-            $this->AppAuth->login($this->request->session()->read('Auth.originalLoggedCustomer'));
+        if ($this->request->getSession()->read('Auth.originalLoggedCustomer')) {
+            $this->AppAuth->setUser($this->request->getSession()->read('Auth.originalLoggedCustomer'));
         }
     }
 
     protected function destroyShopOrderCustomer()
     {
-        $this->request->session()->delete('Auth.shopOrderCustomer');
-        $this->request->session()->delete('Auth.originalLoggedCustomer');
+        $this->request->getSession()->delete('Auth.shopOrderCustomer');
+        $this->request->getSession()->delete('Auth.originalLoggedCustomer');
     }
 
     // is not called on ajax actions!
@@ -178,12 +178,11 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
-        if ($this->request->session()->read('Auth.shopOrderCustomer')) {
-            $this->request->session()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->login($this->request->session()->read('Auth.shopOrderCustomer')['Customers']);
+        if ($this->request->getSession()->read('Auth.shopOrderCustomer')) {
+            $this->request->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
+            $this->AppAuth->setUser($this->request->getSession()->read('Auth.shopOrderCustomer'));
         }
-
-        if ($this->AppAuth->user() && Configure::read('app.htmlHelper')->paymentIsCashless()) {
+        if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 

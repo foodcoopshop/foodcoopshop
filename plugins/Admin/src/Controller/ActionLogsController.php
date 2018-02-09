@@ -35,14 +35,14 @@ class ActionLogsController extends AdminAppController
         $conditions = [];
 
         $dateFrom = date('d.m.Y', strtotime('-6 day'));
-        if (! empty($this->params['named']['dateFrom'])) {
-            $dateFrom = $this->params['named']['dateFrom'];
+        if (! empty($this->request->getQuery('dateFrom'))) {
+            $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = date('d.m.Y');
-        if (! empty($this->params['named']['dateTo'])) {
-            $dateTo = $this->params['named']['dateTo'];
+        if (! empty($this->request->getQuery('dateTo'))) {
+            $dateTo = $this->request->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
@@ -50,8 +50,8 @@ class ActionLogsController extends AdminAppController
         $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         $customerId = '';
-        if (! empty($this->params['named']['customerId'])) {
-            $customerId = $this->params['named']['customerId'];
+        if (! empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 
@@ -60,8 +60,8 @@ class ActionLogsController extends AdminAppController
         }
 
         $productId = '';
-        if (! empty($this->params['named']['productId'])) {
-            $productId = $this->params['named']['productId'];
+        if (! empty($this->request->getQuery('productId'))) {
+            $productId = $this->request->getQuery('productId');
         }
         $this->set('productId', $productId);
 
@@ -96,8 +96,8 @@ class ActionLogsController extends AdminAppController
         }
 
         $type = '';
-        if (! empty($this->params['named']['type'])) {
-            $type = $this->params['named']['type'];
+        if (! empty($this->request->getQuery('type'))) {
+            $type = $this->request->getQuery('type');
             $conditions[] = 'ActionLogs.type = \'' . $type . '\'';
         }
         $this->set('type', $type);

@@ -71,7 +71,7 @@ class OrdersController extends AdminAppController
 
     public function ordersAsPdf()
     {
-        if (empty($this->params['named']['orderIds'])) {
+        if (empty($this->request->getQuery('orderIds'))) {
             throw new RecordNotFoundException('wrong order id set');
         }
 
@@ -80,7 +80,7 @@ class OrdersController extends AdminAppController
         ];
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'Orders.id_order IN(' . $this->params['named']['orderIds'] . ')'
+                'Orders.id_order IN(' . $this->request->getQuery('orderIds') . ')'
             ],
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
         ]);
@@ -120,7 +120,7 @@ class OrdersController extends AdminAppController
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
             $this->Flash->success($message);
 
-            $this->request->session()->write('highlightedRowId', $orderId);
+            $this->request->getSession()->write('highlightedRowId', $orderId);
             $this->redirect($this->referer());
         } else {
             die('order id not correct: ' + $orderId);
@@ -215,16 +215,16 @@ class OrdersController extends AdminAppController
 
         // for filter from action logs page
         $orderId = '';
-        if (! empty($this->params['named']['orderId'])) {
-            $orderId = $this->params['named']['orderId'];
+        if (! empty($this->request->getQuery('orderId'))) {
+            $orderId = $this->request->getQuery('orderId');
         }
 
         $dateFrom = '';
         if ($orderId == '') {
             $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
-        if (! empty($this->params['named']['dateFrom'])) {
-            $dateFrom = $this->params['named']['dateFrom'];
+        if (! empty($this->request->getQuery('dateFrom'))) {
+            $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
@@ -232,31 +232,31 @@ class OrdersController extends AdminAppController
         if ($orderId == '') {
             $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
-        if (! empty($this->params['named']['dateTo'])) {
-            $dateTo = $this->params['named']['dateTo'];
+        if (! empty($this->request->getQuery('dateTo'))) {
+            $dateTo = $this->request->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
-        $orderState = Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv();
-        if (! empty($this->params['named']['orderState'])) {
-            $orderState = $this->params['named']['orderState'];
+        $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
+        if (! empty($this->request->getQuery('orderStates'))) {
+            $orderStates = $this->request->getQuery('orderStates');
         }
-        $this->set('orderState', $orderState);
+        $this->set('orderStates', $orderStates);
 
         $customerId = '';
-        if (! empty($this->params['named']['customerId'])) {
-            $customerId = $this->params['named']['customerId'];
+        if (! empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 
         $groupByCustomer = 0;
-        if (! empty($this->params['named']['groupByCustomer'])) {
-            $groupByCustomer = $this->params['named']['groupByCustomer'];
+        if (! empty($this->request->getQuery('groupByCustomer'))) {
+            $groupByCustomer = $this->request->getQuery('groupByCustomer');
         }
         $this->set('groupByCustomer', $groupByCustomer);
 
         $this->Order = TableRegistry::get('Orders');
-        $orderParams = $this->Order->getOrderParams($customerId, $orderState, $dateFrom, $dateTo, $groupByCustomer, $orderId, $this->AppAuth);
+        $orderParams = $this->Order->getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $groupByCustomer, $orderId, $this->AppAuth);
 
         $query = $this->Order->find('all', [
             'conditions' => $orderParams['conditions'],
@@ -294,14 +294,16 @@ class OrdersController extends AdminAppController
         $shopOrderCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
+            ],
+            'contain' => [
+                'AddressCustomers'
             ]
         ])->first();
         if (! empty($shopOrderCustomer)) {
-            $this->request->session()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
+            $this->request->getSession()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
             $this->Flash->error('Es wurde kein Mitglied mit der Id <b>' . $customerId . '</b> gefunden.');
         }
-
         $this->redirect('/');
     }
 

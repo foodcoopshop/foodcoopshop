@@ -37,8 +37,8 @@ class ListsController extends AdminAppController
         $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 
         $dateFrom = date('d.m.Y', Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
-        if (! empty($this->params['named']['dateFrom'])) {
-            $dateFrom = $this->params['named']['dateFrom'];
+        if (! empty($this->request->getQuery('dateFrom'))) {
+            $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 

@@ -95,8 +95,8 @@ class DepositsController extends AdminAppController
         $this->OrderDetail = TableRegistry::get('OrderDetails');
         $this->Payment = TableRegistry::get('Payments');
 
-        $orderState = Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv();
-        $this->set('orderState', $orderState);
+        $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
+        $this->set('orderStates', $orderStates);
 
         $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
         $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);

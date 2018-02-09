@@ -36,13 +36,13 @@ class PaymentsController extends AdminAppController
                 break;
             case 'product':
                 // allow redirects for legacy links
-                if (empty($this->params['named']['customerId'])) {
+                if (empty($this->request->getQuery('customerId'))) {
                     $this->redirect(Configure::read('app.slugHelper')->getMyCreditBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'memberFee':
-                if (empty($this->params['named']['customerId'])) {
+                if (empty($this->request->getQuery('customerId'))) {
                     $this->redirect(Configure::read('app.slugHelper')->getMyMemberFeeBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
@@ -181,7 +181,7 @@ class PaymentsController extends AdminAppController
                 $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Payment->id, 'payments', $message.' (PaymentId: ' . $this->Payment->id.').');
                 $this->Flash->success($message.'.');
 
-                $this->request->session()->write('highlightedRowId', $this->Payment->id);
+                $this->request->getSession()->write('highlightedRowId', $this->Payment->id);
 
                 $this->redirect($this->data['referer']);
             } else {

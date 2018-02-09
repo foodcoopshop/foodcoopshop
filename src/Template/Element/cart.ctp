@@ -49,10 +49,10 @@ if ($appAuth->Cart->getProducts() !== null) {
                 $this->element('addScript', ['script' =>
                     Configure::read('app.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
                 ]);
-                echo '<p class="shop-order-customer-info">Diese Bestellung wird für <b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')['Customers']['name'].'</b> getätigt. <b><a class="btn btn-default" href="javascript:void(0);">Sofort-Bestellung abbrechen?</a></b></p>';
+                echo '<p class="shop-order-customer-info">Diese Bestellung wird für <b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')->name.'</b> getätigt. <b><a class="btn btn-default" href="javascript:void(0);">Sofort-Bestellung abbrechen?</a></b></p>';
             }
             $class = ['payment'];
-            if ($creditBalance < 0) { // set in AppController
+            if ($creditBalance < 0) { // set in FrontendController
                 $class[] = 'negative';
             }
             echo '<div class="credit-balance-wrapper">';
