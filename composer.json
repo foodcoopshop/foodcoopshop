@@ -23,7 +23,7 @@
         "markstory/asset_compress": "3.2.*",
         "intervention/image": "2.*",
         "mrothauer/tcpdf": "6.2.15",
-        "simpletest/simpletest": "1.1.7",
+        "simpletest/simpletest": "1.*",
         "linkorb/jsmin-php": "1.*",
         "natxet/CssMin": "3.*",
         "sunhater/kcfinder": "dev-master#3.12"
@@ -31,9 +31,7 @@
     "require-dev": {
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.2",
-        "cakephp/bake": "~1.1",
         "cakephp/cakephp-codesniffer": "^3.0",
-        "simpletest/simpletest": "1.1.*",
         "phpunit/phpunit": "6.*"
     },
     "autoload": {
