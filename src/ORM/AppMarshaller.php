@@ -26,7 +26,9 @@ class AppMarshaller extends Marshaller
     protected function _validate($data, $options, $isNew)
     {
         $errors = parent::_validate($data, $options, $isNew);
-        Log::write('error', json_encode($errors));
+        if (!empty($errors)) {
+            Log::write('error', json_encode($errors));
+        }
         return $errors;
     }
     
