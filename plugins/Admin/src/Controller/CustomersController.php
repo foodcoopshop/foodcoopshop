@@ -340,19 +340,19 @@ class CustomersController extends AdminAppController
     public function index()
     {
         $active = 1; // default value
-        if (isset($this->request->getQuery('active'))) {
+        if (!empty($this->request->getQuery('active'))) {
             $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);
 
         $validOrdersCountFrom = ''; // default value
-        if (isset($this->request->getQuery('validOrdersCountFrom'))) {
+        if (!empty($this->request->getQuery('validOrdersCountFrom'))) {
             $validOrdersCountFrom = $this->request->getQuery('validOrdersCountFrom');
         }
         $this->set('validOrdersCountFrom', $validOrdersCountFrom);
 
         $validOrdersCountTo = ''; // default value
-        if (isset($this->request->getQuery('validOrdersCountTo'))) {
+        if (!empty($this->request->getQuery('validOrdersCountTo'))) {
             $validOrdersCountTo = $this->request->getQuery('validOrdersCountTo');
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
@@ -376,32 +376,34 @@ class CustomersController extends AdminAppController
             ];
         }
 
+        $this->Customer = TableRegistry::get('Customers');
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
         $this->Customer->hasMany['ValidOrder']['limit'] = null; // to get all valid orders
+//         $this->Customer->association('ValidOrders')->
         $this->Customer->dropManufacturersInNextFind();
-        $this->Paginator->settings = array_merge([
+        $query = $this->Customer->find('all', [
             'conditions' => $conditions,
             'order' => [
                 'Customers.name' => 'ASC'
             ],
             'contain' => [
-                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-                'Customers.*',
-                'ValidOrder.*'
+                'Customers.AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+                'Customers',
+                'ValidOrders'
             ]
-        ], $this->Paginator->settings);
+        ]);
 
-        $customers = $this->Paginator->paginate('Customers');
+        $customers = $this->paginate($query)->toArray();
 
         $i = 0;
         $this->Payment = TableRegistry::get('Payments');
         $this->Order = TableRegistry::get('Orders');
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                $paymentProductSum = $this->Payment->getSum($customer['Customers']['id_customer'], 'product');
-                $paymentPaybackSum = $this->Payment->getSum($customer['Customers']['id_customer'], 'payback');
-                $paymentDepositSum = $this->Payment->getSum($customer['Customers']['id_customer'], 'deposit');
+                $paymentProductSum = $this->Payment->getSum($customer->id_customer, 'product');
+                $paymentPaybackSum = $this->Payment->getSum($customer->id_customer, 'payback');
+                $paymentDepositSum = $this->Payment->getSum($customer->id_customer, 'deposit');
 
                 $sumTotalProduct = 0;
                 $sumTotalDeposit = 0;
