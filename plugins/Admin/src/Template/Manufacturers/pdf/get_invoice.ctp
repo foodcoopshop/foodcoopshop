@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Lib\Pdf\AppTcpdf;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -78,7 +79,7 @@ $pdf->renderTable();
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
     // TODO do that in controller where it belongs to :-)
-    $m = TableRegistry::get('Manufacturers'):
+    $m = TableRegistry::get('Manufacturers');
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
     $firstColumnWidth = 365;

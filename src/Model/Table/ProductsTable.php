@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -447,7 +448,7 @@ class ProductsTable extends AppTable
                     }
                 }
             }
-            $products[$i]['selectedCategories'] = Set::extract('{n}.id_category', $product['CategoryProducts']);
+            $products[$i]['selectedCategories'] = Hash::extract('{n}.id_category', $product['CategoryProducts']);
             $products[$i]['Deposit'] = 0;
 
             $products[$i]['Products']['is_new'] = $this->isNew($product['ProductShop']['date_add']);
@@ -786,7 +787,7 @@ class ProductsTable extends AppTable
                 'ProductAttributes.id_product' => $productId
             ]
         ]);
-        $productAttributeIds = Set::extract('{n}.ProductAttributes.id_product_attribute', $productAttributes);
+        $productAttributeIds = Hash::extract('{n}.ProductAttributes.id_product_attribute', $productAttributes);
 
         // first set all associated attributes to 0
         $this->ProductAttributes->ProductAttributeShop->updateAll([

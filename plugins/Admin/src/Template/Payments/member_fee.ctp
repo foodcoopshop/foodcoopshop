@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $helpText = '<li><b>Hallo ' . $appAuth->getUserFirstname() . '!</b></li>
         <li>Um deinen Mitgliedsbeitrag einzuzahlen, überweise bitte mittels E-Banking oder per Erlagschein den gewünschten Betrag auf folgendes Konto:</li>
         <li><b>' . Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') . '</b></li>

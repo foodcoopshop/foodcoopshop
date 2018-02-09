@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Lib\Pdf\AppTcpdf;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 

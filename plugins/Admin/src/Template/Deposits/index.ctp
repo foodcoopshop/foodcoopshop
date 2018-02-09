@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');

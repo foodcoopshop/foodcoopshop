@@ -13,6 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Controller\Component\StringComponent;
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.sliders .add-image-button', foodcoopshop.Upload.saveSliderTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Sliders']['id_slider']) ? $this->request->data['Sliders']['id_slider'] : "") . "', 'Sliders');
     "

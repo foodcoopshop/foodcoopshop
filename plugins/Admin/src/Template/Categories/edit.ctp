@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : "") . "', 'Categories');
     "

@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Configurations']['id_Configuration']) ? $this->request->data['Configurations']['id_Configuration'] : "") . "', 'Configurations');
     "

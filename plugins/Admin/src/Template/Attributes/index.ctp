@@ -12,6 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
+
 ?>
 <div id="attribues">
 
@@ -90,7 +93,7 @@ foreach ($attributes as $attribute) {
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
         ]);
-        echo '<div class="toggle-content">' . join('<br /> ', Set::extract('{n}.link', $attribute['CombinationProducts']['online'])) . '</div>';
+        echo '<div class="toggle-content">' . join('<br /> ', Hash::extract('{n}.link', $attribute['CombinationProducts']['online'])) . '</div>';
     }
     echo '</td>';
 
@@ -101,7 +104,7 @@ foreach ($attributes as $attribute) {
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
         ]);
-        echo '<div class="toggle-content">' . join('<br /> ', Set::extract('{n}.ProductLang.name', $attribute['CombinationProducts']['offline'])) . '</div>';
+        echo '<div class="toggle-content">' . join('<br /> ', Hash::extract('{n}.ProductLang.name', $attribute['CombinationProducts']['offline'])) . '</div>';
     }
     echo '</td>';
 

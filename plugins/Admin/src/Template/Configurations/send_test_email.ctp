@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.showContent();" . Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();" . Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" . Configure::read('app.jsNamespace') . ".Helper.initMenu();"
 ]);

@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="lists-list">
      
