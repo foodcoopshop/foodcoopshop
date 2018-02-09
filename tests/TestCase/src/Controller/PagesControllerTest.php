@@ -31,8 +31,6 @@ class PagesControllerTest extends AppCakeTestCase
     
     public function testAllPublicUrls()
     {
-        
-        $this->markTestIncomplete();
         $testUrls = [
             $this->Slug->getHome(),
             $this->Slug->getManufacturerList(),
@@ -40,7 +38,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerBlogList(4, 'Demo Gemüse-Hersteller'),
             $this->Slug->getBlogList(),
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
-//             $this->Slug->getNewPasswordRequest(),
+            $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(9, 'Impressum'),
             $this->Slug->getLogin(),
             $this->Slug->getTermsOfUse(),
@@ -50,7 +48,7 @@ class PagesControllerTest extends AppCakeTestCase
     }
 
     /**
-     * test urls that are only available for superadmins
+     * test urls that are only available for superadmins and / users that are logged in
      */
     public function testAllSuperadminUrls()
     {
@@ -136,9 +134,7 @@ class PagesControllerTest extends AppCakeTestCase
      */
     public function test404PagesLoggedIn()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
-
         $testUrls = [
             $this->Slug->getProductDetail(4234, 'not valid product name'),
             $this->Slug->getCategoryDetail(4234, 'not valid category name')

@@ -14,15 +14,18 @@
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
         <testsuite name="App Test Suite">
-            <file>tests/TestCase/config/GlobalTest.php</file>
-            <file>tests/TestCase/src/Controller/Component/StringComponentTest.php</file>
+
             <file>tests/TestCase/src/Controller/BlogPostsControllerTest.php</file>
             <file>tests/TestCase/src/Controller/CustomersControllerTest.php</file>
             <file>tests/TestCase/src/Controller/CartsControllerTest.php</file>
             <file>tests/TestCase/src/Controller/ManufacturersFrontendControllerTest.php</file>
             <file>tests/TestCase/src/Controller/PagesControllerTest.php</file>
             <file>tests/TestCase/src/Controller/ProductsFrontendControllerTest.php</file>
-            <!--<file>tests/TestCase/src/View/Helper/MyTimeHelperTest.php</file>-->
+
+            <file>tests/TestCase/config/GlobalTest.php</file>
+            <file>tests/TestCase/src/Controller/Component/StringComponentTest.php</file>
+            <file>tests/TestCase/src/View/Helper/MyTimeHelperTest.php</file>
+            
         </testsuite>
         <testsuite name="Admin Test Suite">
             <file>plugins/Admin/tests/TestCase/src/Controller/ConfigurationsControllerTest.php</file>
