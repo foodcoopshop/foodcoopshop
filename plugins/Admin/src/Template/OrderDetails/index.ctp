@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="order-details-list">
     
@@ -30,45 +32,47 @@
     ?>
     
     <div class="filter-container">
-        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
-        <?php echo $this->Form->input('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
-        <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-            <?php echo $this->Form->input('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '']); ?>
-        <?php } ?>
-        <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>    
-            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
-        <?php } ?>
-        <?php if ($appAuth->isCustomer()) { ?>
-            <?php // for preselecting customer in shop order dropdown ?>
-            <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
-        <?php } ?>
-        <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-            <input id="orderId" type="text" placeholder="Bestell-Nr."
-            value="<?php echo $orderId; ?>" />
-        <?php } ?>
-        <?php echo $this->Form->input('orderState', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState]); ?>
-        <?php echo $this->Form->input('groupBy', ['type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'selected' => $groupBy]);?>
-        <div class="right">
-        
-        <?php
-        if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
-            echo '<div class="add-payment-deposit-button-wrapper">';
-                echo $this->element('addDepositPaymentOverlay', [
-                    'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
-                    'rowId' => $orderDetails[0]['Orders']['id_order'],
-                    'userName' => $orderDetails[0]['Orders']['Customers']['name'],
-                    'customerId' => $orderDetails[0]['Orders']['Customers']['id_customer'],
-                    'manufacturerId' => null // explicitly unset manufacturerId
+    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+            <?php echo $this->Form->input('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
+                <?php echo $this->Form->input('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '']); ?>
+            <?php } ?>
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>    
+                <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+            <?php } ?>
+            <?php if ($appAuth->isCustomer()) { ?>
+                <?php // for preselecting customer in shop order dropdown ?>
+                <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
+            <?php } ?>
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
+                <input id="orderId" type="text" placeholder="Bestell-Nr."
+                value="<?php echo $orderId; ?>" />
+            <?php } ?>
+            <?php echo $this->Form->input('orderState', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState]); ?>
+            <?php echo $this->Form->input('groupBy', ['type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'selected' => $groupBy]);?>
+            <div class="right">
+            
+            <?php
+            if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
+                echo '<div class="add-payment-deposit-button-wrapper">';
+                    echo $this->element('addDepositPaymentOverlay', [
+                        'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
+                        'rowId' => $orderDetails[0]['Orders']['id_order'],
+                        'userName' => $orderDetails[0]['Orders']['Customers']['name'],
+                        'customerId' => $orderDetails[0]['Orders']['Customers']['id_customer'],
+                        'manufacturerId' => null // explicitly unset manufacturerId
+                    ]);
+                echo '</div>';
+            }
+            if (!$appAuth->isManufacturer()) {
+                echo $this->element('addShopOrderButton', [
+                'customers' => $customersForShopOrderDropdown
                 ]);
-            echo '</div>';
-        }
-        if (!$appAuth->isManufacturer()) {
-            echo $this->element('addShopOrderButton', [
-            'customers' => $customersForShopOrderDropdown
-            ]);
-        }
-        ?>
-        </div>
+            }
+            ?>
+            </div>
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

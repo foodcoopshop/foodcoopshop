@@ -22,19 +22,21 @@ $this->element('addScript', [
 ?>
 
 <div class="filter-container">
-    <h1><?php echo $title_for_layout; ?></h1>
-    <?php
-    if (!$appAuth->isManufacturer()) {
-        echo $this->Form->input('manufacturerId', [
-        'type' => 'select',
-        'label' => '',
-        'options' => $manufacturersForDropdown,
-        'empty' => 'alle Hersteller',
-        'selected' => $manufacturerId != '' ? $manufacturerId : ''
-        ]);
-    }
-    ?>
-    <div class="right"></div>
+	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <h1><?php echo $title_for_layout; ?></h1>
+        <?php
+        if (!$appAuth->isManufacturer()) {
+            echo $this->Form->input('manufacturerId', [
+            'type' => 'select',
+            'label' => '',
+            'options' => $manufacturersForDropdown,
+            'empty' => 'alle Hersteller',
+            'selected' => $manufacturerId != '' ? $manufacturerId : ''
+            ]);
+        }
+        ?>
+	    <div class="right"></div>
+	<?php echo $this->Form->end(); ?>
 </div>
 
 <?php

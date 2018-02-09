@@ -26,29 +26,30 @@
     ?>
    
     <div class="filter-container">
-        <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
-        <?php
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-            echo $this->Form->input('manufacturerId', [
-                'type' => 'select',
-                'label' => '',
-                'empty' => 'alle Hersteller',
-                'options' => $manufacturersForDropdown,
-                'selected' => isset($manufacturerId) ? $manufacturerId : ''
-            ]);
-        }
-        ?>
-        <div class="right">
+    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
             <?php
-            echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Blog-Artikel erstellen', $this->Slug->getBlogPostAdd(), [
-                'class' => 'btn btn-default',
-                'escape' => false
-            ]);
-            echo '</div>';
+            if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+                echo $this->Form->input('manufacturerId', [
+                    'type' => 'select',
+                    'label' => '',
+                    'empty' => 'alle Hersteller',
+                    'options' => $manufacturersForDropdown,
+                    'selected' => isset($manufacturerId) ? $manufacturerId : ''
+                ]);
+            }
             ?>
+            <div class="right">
+                <?php
+                echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Blog-Artikel erstellen', $this->Slug->getBlogPostAdd(), [
+                    'class' => 'btn btn-default',
+                    'escape' => false
+                ]);
+                echo '</div>';
+                ?>
         </div>
-
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

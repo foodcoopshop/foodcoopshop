@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
         var datefieldSelector = $('input.datepicker');
@@ -28,10 +30,12 @@ if ($paymentType == 'product') {
 ?>
 
 <div class="filter-container">
-    <h1><?php echo $title_for_layout; ?></h1>
-    <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
-    <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
-    <div class="right"></div>
+	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <h1><?php echo $title_for_layout; ?></h1>
+        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+        <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+        <div class="right"></div>
+	<?php echo $this->Form->end(); ?>
 </div>
 
 <div id="help-container">

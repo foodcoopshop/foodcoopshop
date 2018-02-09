@@ -23,19 +23,20 @@
     ?>
    
     <div class="filter-container">
-        <h1>Seiten</h1>
-        <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
-        <div class="right">
-            <?php
-            echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), [
-                'class' => 'btn btn-default',
-                'escape' => false
-            ]);
-            echo '</div>';
-            ?>
-        </div>
-
+    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <h1>Seiten</h1>
+            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+            <div class="right">
+                <?php
+                echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), [
+                    'class' => 'btn btn-default',
+                    'escape' => false
+                ]);
+                echo '</div>';
+                ?>
+            </div>
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

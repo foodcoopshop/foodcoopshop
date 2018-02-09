@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="manufacturers-list">
     <?php
@@ -28,18 +30,20 @@
     ?>
 
     <div class="filter-container">
-        <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
-        <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
-        <div class="right">
-            <?php
-            echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), [
-                'class' => 'btn btn-default',
-                'escape' => false
-            ]);
-            echo '</div>';
-            ?>
-        </div>
+		<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+            <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
+            <div class="right">
+                <?php
+                echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), [
+                    'class' => 'btn btn-default',
+                    'escape' => false
+                ]);
+                echo '</div>';
+                ?>
+            </div>
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

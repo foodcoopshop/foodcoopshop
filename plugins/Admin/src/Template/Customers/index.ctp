@@ -23,17 +23,19 @@
     ?>
     
     <div class="filter-container">
-        <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
-        Anzahl Bestellungen zwischen <input id="validOrdersCountFrom"
-            type="text"
-            value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
-        und <input id="validOrdersCountTo" type="text"
-            value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
-        und letztes Bestelldatum von <input id="dateFrom" type="text"
-            class="datepicker" value="<?php echo $dateFrom; ?>" /> bis <input
-            id="dateTo" type="text" class="datepicker"
-            value="<?php echo $dateTo; ?>" />
-        <div class="right"></div>
+    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
+            Anzahl Bestellungen zwischen <input id="validOrdersCountFrom"
+                type="text"
+                value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
+            und <input id="validOrdersCountTo" type="text"
+                value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
+            und letztes Bestelldatum von <input id="dateFrom" type="text"
+                class="datepicker" value="<?php echo $dateFrom; ?>" /> bis <input
+                id="dateTo" type="text" class="datepicker"
+                value="<?php echo $dateTo; ?>" />
+            <div class="right"></div>
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

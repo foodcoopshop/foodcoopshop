@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="products" class="product-list">
      
@@ -26,72 +28,73 @@
     ?>
     
     <div class="filter-container">
-        <?php
-        if ($manufacturerId > 0) {
-            echo $this->Form->input('productId', [
-                'type' => 'select',
-                'label' => '',
-                'empty' => 'alle Produkte',
-                'options' => []
-            ]);
-        }
-        if (! $appAuth->isManufacturer()) {
-            echo $this->Form->input('manufacturerId', [
-                'type' => 'select',
-                'label' => '',
-                'options' => $manufacturersForDropdown,
-                'empty' => 'Bitte wählen...',
-                'selected' => isset($manufacturerId) ? $manufacturerId : ''
-            ]);
-        }
-        echo $this->Form->input('active', [
-            'type' => 'select',
-            'label' => '',
-            'options' => $this->MyHtml->getActiveStates(),
-            'selected' => isset($active) ? $active : ''
-        ]);
-        echo $this->Form->input('category', [
-            'type' => 'select',
-            'label' => '',
-            'empty' => 'Kategorie auswählen...',
-            'options' => $categoriesForSelect,
-            'selected' => isset($category) ? $category : ''
-        ]);
-        ?>
-        Anzahl 0? <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero]);?>
-        Preis 0? <?php echo $this->Form->input('isPriceZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isPriceZero]);?>
-        
-        <div class="right">
+    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
-            // only show button if no manufacturer filter is applied
             if ($manufacturerId > 0) {
-                echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', [
-                    'class' => 'btn btn-default',
-                    'escape' => false
+                echo $this->Form->input('productId', [
+                    'type' => 'select',
+                    'label' => '',
+                    'empty' => 'alle Produkte',
+                    'options' => []
                 ]);
-                echo '</div>';
             }
-
-            if (isset($showSyncProductsButton) && $showSyncProductsButton) {
-                $this->element('addScript', [
-                    'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
+            if (! $appAuth->isManufacturer()) {
+                echo $this->Form->input('manufacturerId', [
+                    'type' => 'select',
+                    'label' => '',
+                    'options' => $manufacturersForDropdown,
+                    'empty' => 'Bitte wählen...',
+                    'selected' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
-                echo '<div class="toggle-sync-button-wrapper">';
-                    echo $this->Html->link(
-                        '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
-                        $this->Network->getSyncProductData(),
-                        [
-                            'class' => 'btn btn-default',
-                            'escape' => false
-                        ]
-                    );
-                echo '</div>';
             }
-
+            echo $this->Form->input('active', [
+                'type' => 'select',
+                'label' => '',
+                'options' => $this->MyHtml->getActiveStates(),
+                'selected' => isset($active) ? $active : ''
+            ]);
+            echo $this->Form->input('category', [
+                'type' => 'select',
+                'label' => '',
+                'empty' => 'Kategorie auswählen...',
+                'options' => $categoriesForSelect,
+                'selected' => isset($category) ? $category : ''
+            ]);
             ?>
-        </div>
-
+            Anzahl 0? <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero]);?>
+            Preis 0? <?php echo $this->Form->input('isPriceZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isPriceZero]);?>
+            
+            <div class="right">
+                <?php
+                // only show button if no manufacturer filter is applied
+                if ($manufacturerId > 0) {
+                    echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
+                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', [
+                        'class' => 'btn btn-default',
+                        'escape' => false
+                    ]);
+                    echo '</div>';
+                }
+    
+                if (isset($showSyncProductsButton) && $showSyncProductsButton) {
+                    $this->element('addScript', [
+                        'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
+                    ]);
+                    echo '<div class="toggle-sync-button-wrapper">';
+                        echo $this->Html->link(
+                            '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
+                            $this->Network->getSyncProductData(),
+                            [
+                                'class' => 'btn btn-default',
+                                'escape' => false
+                            ]
+                        );
+                    echo '</div>';
+                }
+    
+                ?>
+            </div>
+    	<?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

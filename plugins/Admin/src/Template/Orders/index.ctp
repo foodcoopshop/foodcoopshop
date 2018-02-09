@@ -51,9 +51,9 @@ use Cake\Core\Configure;
             <?php } ?>
             <div class="right">
                 <?php
-                echo $this->element('addShopOrderButton', [
-                    'customers' => $customersForDropdown
-                ]);
+                    echo $this->element('addShopOrderButton', [
+                        'customers' => $customersForDropdown
+                    ]);
                 ?>
             </div>
     	<?php echo $this->Form->end(); ?>
