@@ -241,15 +241,21 @@
         float: right;
         margin-right: 10%;
     }
-    #login-form .input input[type="checkbox"] {
-        margin-left: 50% ! important;
-    }
     #login-form .input label,
     body.customers.new_password_request .input label {
         width: 30% ! important;
     }
     #login-form .input.checkbox label {
-        width: 90% ! important;
+        width: 180px ! important;
+        padding-left: 0;
+        margin-left: 220px;
+    }
+    #login-form #LoginForm button {
+        margin-right: 65px;
+    }
+    #login-form .input input[type="checkbox"] {
+       width: 30px ! important;
+       
     }
     form div.error-message {
         margin-left: 30% ! important;
@@ -299,7 +305,13 @@
 }
 
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
-    .ui-dialog {
+    #login-form #LoginForm button {
+        margin-right: 0px;
+    }
+    #login-form .input.checkbox label {
+        margin-left: 95px ! important;
+    }
+	.ui-dialog {
         width: 98% ! important;
         max-width: 450px ! important;
     }

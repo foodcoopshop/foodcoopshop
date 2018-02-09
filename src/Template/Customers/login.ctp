@@ -34,7 +34,11 @@ $this->element('addScript', ['script' =>
           echo $this->Form->input('email', ['label' => 'E-Mail']);
           echo $this->Form->input('passwd', ['label' => 'Passwort']);
           echo '<div class="remember-me-wrapper">';
-              echo $this->Form->checkbox('remember_me') . '<label for="remember_me">Angemeldet bleiben</label>';
+              echo $this->Form->input('remember_me', [
+                  'type' => 'checkbox',
+                  'label' => 'Angemeldet bleiben<br /><small>und Cookie akzeptieren</small>',
+                  'escape' => false
+              ]);
           echo '</div>';
         ?>
         

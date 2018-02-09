@@ -283,16 +283,17 @@ body.customers.new_password_request .input {
 
 #login-form .remember-me-wrapper {
     float: left;
-    margin-left: 73px;
 }
 #login-form .remember-me-wrapper label {
-    float: left;
-    font-weight: normal;
-    margin-top: 4px;
-    margin-left: 5px;
+    float: right;
+    padding-left: 95px;
+    line-height: 14px ! important;
+    margin-top: -5px;
 }
 #login-form .remember-me-wrapper input[type="checkbox"] {
     float: left;
+    margin-left: -35px;
+    margin-right: 10px;
 }
 #login-form #RegistrationForm .detail-form {
     display: none;
@@ -332,7 +333,7 @@ body.customers form .checkbox label {
 #login-form #LoginForm button {
     float: right;
     margin-right: 5px;
-    margin-top: -25px;
+    margin-top: -65px;
 }
 form div.error-message {
     margin-left: 70px;
