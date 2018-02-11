@@ -44,7 +44,6 @@ class AppController extends Controller
             'authorize' => [
                 'Controller'
             ],
-            'unauthorizedRedirect' => false,
             'authenticate' => [
                 'Form' => [
                     'userModel' => 'Customers',

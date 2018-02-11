@@ -28,7 +28,7 @@ $this->element('addScript', ['script' =>
   
   <h1>Anmelden</h1>
   
-  <form action="<?php echo $this->Slug->getLogin(); ?>" id="LoginForm" method="post" accept-charset="utf-8">
+  <form id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
           echo $this->Form->input('email', ['label' => 'E-Mail']);
