@@ -165,8 +165,8 @@ class OrderDetailsController extends AdminAppController
             }
         }
         // legacy cakephp2: param was called "orderState" and contained csv data
-        if (! empty($this->request->getQuery('orderState'))) {
-            $orderStates = $this->request->getQuery('orderState');
+        if (in_array('orderState', array_keys($this->request->getQueryParams()))) {
+            $orderStates = explode(', ', $this->request->getQuery('orderState'));
         }
         $this->set('orderStates', $orderStates);
 
