@@ -211,7 +211,6 @@ class CustomersController extends FrontendController
                 $user = $this->AppAuth->identify();
                 if ($user) {
                     $this->AppAuth->setUser($user);
-                    $this->Flash->success('Du hast dich erfolgreich angemeldet.');
                     $this->redirect($this->AppAuth->redirectUrl());
                 } else {
                     $this->Flash->error('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
