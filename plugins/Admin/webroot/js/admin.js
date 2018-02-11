@@ -105,7 +105,7 @@ foodcoopshop.Admin = {
 
         $('input:text').keyup(function (e) {
             if (e.keyCode == 13) {
-                foodcoopshop.Admin.afterFilterCallback();
+                foodcoopshop.Admin.submitFilterForm();
             }
         });
 
@@ -145,68 +145,8 @@ foodcoopshop.Admin = {
         });
     },
 
-    afterFilterCallback: function () {
-    	
+    submitFilterForm: function () {
     	$('.filter-container form').submit();
-
-		/*
-        var url = '';
-        var sortParams = '';
-        var splittedUrl = document.location.pathname.split('/');
-
-        url = '/' + splittedUrl[1] + '/' + splittedUrl[2] + '/';
-        if (splittedUrl[3] !== undefined) {
-            url += splittedUrl[3];
-        } else {
-            url += 'index';
-        }
-
-        // add additional params only if its no key / value
-        // do not add eg. "dateFrom:01.01.2014" but do add "member_fee" as 4th url part
-        if (splittedUrl[4] !== undefined) {
-            var s = splittedUrl[4].split(':');
-            if (s.length == 1) {
-                url += '/' + splittedUrl[4];
-            }
-        }
-
-        //.input-block-level due to bootstrap select
-        $('.filter-container').find('input:not(.form-control):not(.do-not-submit), select:not(.do-not-submit)').each(function () {
-            switch ($(this).prop('tagName').toLowerCase()) {
-                case 'input':
-                    switch ($(this).attr('type')) {
-                        case 'text':
-                            url += '/' + $(this).attr('id').replace(/\#/) + ':' + $(this).val();
-                            break;
-                        case 'checkbox':
-                            url += '/' + $(this).attr('id').replace(/\#/) + ':';
-                            url += $(this).is(':checked') ? 1 : 0;
-                            break;
-                    }
-                    break;
-                case 'select':
-                    url += '/' + $(this).attr('id').replace(/\#/) + ':' + $(this).val();
-                    break;
-            }
-        });
-
-        //add cake pagination urls if exist
-        for (var i in splittedUrl) {
-            if (splittedUrl[i].match(/sort\:/)) {
-                sortParams += '/' + splittedUrl[i];
-            }
-            if (splittedUrl[i].match(/direction\:/)) {
-                sortParams += '/' + splittedUrl[i];
-            }
-        }
-        if (sortParams != '') {
-            url += sortParams;
-        }
-
-        // sometimes two slashes are in url (browser-dependent), clean it to avoid error and provide valid url
-        url = url.replace(/\/\//, '/');
-        document.location = url;
-		*/
     },
 
     improveTableLayout: function () {
@@ -1522,7 +1462,7 @@ foodcoopshop.Admin = {
         $('#container').append('<i id="filter-loader" class="fa fa-spinner"></i>');
         var marginTop = $('.filter-container').outerHeight();
         $('#filter-loader').css('top', marginTop + 20);
-        foodcoopshop.Admin.afterFilterCallback();
+        foodcoopshop.Admin.submitFilterForm();
     },
 
     initNextAndPreviousDayLinks: function () {
