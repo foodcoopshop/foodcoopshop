@@ -1,3 +1,15 @@
+
+#START CakePHP2 named params redirects
+    RewriteRule ^admin/order_details(.*)? /admin/order-details/$1 [L,R=301]
+    
+    #/admin/controller/index/param1:1/param2:2/param3:3/param4:4/param5:5
+    RewriteRule ^admin/(.*)/index/(.+)\:(.+)/(.+)\:(.+)/(.+)\:(.+)/(.+)\:(.+)/(.+)\:(.+) /admin/$1/index/?$2=$3&$4=$5&$6=$7&$8=$9&$10=$11 [L,R=301]
+    RewriteRule ^admin/(.*)/index/(.+)\:(.+)/(.+)\:(.+)/(.+)\:(.+)/(.+)\:(.+) /admin/$1/index/?$2=$3&$4=$5&$6=$7&$8=$9 [L,R=301]
+    RewriteRule ^admin/(.*)/index/(.+)\:(.+)/(.+)\:(.+)/(.+)\:(.+) /admin/$1/index/?$2=$3&$4=$5&$6=$7 [L,R=301]
+    RewriteRule ^admin/(.*)/index/(.+)\:(.+)/(.+)\:(.+) /admin/$1/index/?$2=$3&$4=$5 [L,R=301]
+    RewriteRule ^admin/(.*)/index/(.+)\:(.+) /admin/$1/index/?$2=$3 [L,R=301]
+#END CakePHP2 named params redirects
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-d
