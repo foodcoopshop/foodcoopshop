@@ -151,7 +151,7 @@ foreach ($actionLogs as $actionLog) {
     if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'order_details') {
         $showLink = true;
         $title = 'Bestelltes Produkt anzeigen';
-        $url = '/admin/order_details/index/orderDetailId:' . $actionLog['ActionLogs']['object_id'];
+        $url = '/admin/order-details/index/orderDetailId:' . $actionLog['ActionLogs']['object_id'];
         $targetBlank = false;
     }
 

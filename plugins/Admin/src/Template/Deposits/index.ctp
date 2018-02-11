@@ -111,7 +111,7 @@ if ($appAuth->isSuperadmin()) {
                     'title' => 'Details anzeigen',
                     'class' => 'icon-with-text',
                     ],
-                    '/admin/order_details/index/manufacturerId:'.$manufacturerId.'/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
+                    '/admin/order-details/index/manufacturerId:'.$manufacturerId.'/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
                 ).'</span>';
                 echo '<span style="float: right;">';
                 echo $this->Html->formatAsEuro($deposit['delivered']);

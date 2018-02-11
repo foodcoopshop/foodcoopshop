@@ -29,7 +29,7 @@ class SlugHelper extends Helper
     
     public function getOrderDetailsList()
     {
-        return $this->getAdminHome().'/order_details';
+        return $this->getAdminHome().'/order-details';
     }
     
     public function getOrdersList()

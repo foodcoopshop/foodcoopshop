@@ -104,7 +104,7 @@ class OrderDetailsController extends AdminAppController
     private function getSortDirectionForGroupedOrderDetails()
     {
         $sortDirection = 'ASC';
-        if (!empty($this->request->getQuery('direction']) && in_array($this->params['named']['direction'], ['asc', 'desc'))) {
+        if (!empty($this->request->getQuery('direction') && in_array($this->params['named']['direction'], ['asc', 'desc']))) {
             $sortDirection = $this->request->getQuery('direction');
         }
         return $sortDirection;
@@ -156,10 +156,19 @@ class OrderDetailsController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $orderStates = ORDER_STATE_OPEN;
         }
+
+        $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
+        if (in_array('orderStates', array_keys($this->request->getQueryParams()))) {
+            $orderStates = $this->request->getQuery('orderStates');
+            if ($orderStates == '') {
+                $orderStates = [];
+            }
+        }
+        // legacy cakephp2: param was called "orderState" and contained csv data
         if (! empty($this->request->getQuery('orderState'))) {
             $orderStates = $this->request->getQuery('orderState');
         }
-        $this->set('orderState', $orderStates);
+        $this->set('orderStates', $orderStates);
 
         $productId = '';
         if (! empty($this->request->getQuery('productId'))) {
@@ -185,9 +194,10 @@ class OrderDetailsController extends AdminAppController
 
         $this->set('groupBy', $groupBy);
 
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
 
-        $this->Paginator->settings = array_merge([
+        $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $odParams['contain'],
             'order' => [
@@ -195,9 +205,9 @@ class OrderDetailsController extends AdminAppController
                 'Orders.date_add' => 'DESC',
                 'OrderDetails.product_name' => 'ASC'
             ]
-        ], $this->Paginator->settings);
+        ]);
 
-        $orderDetails = $this->Paginator->paginate('OrderDetails');
+        $orderDetails = $this->paginate($query)->toArray();
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
 
@@ -240,11 +250,11 @@ class OrderDetailsController extends AdminAppController
                 $i = 0;
                 foreach ($orderDetails as $orderDetail) {
                     $this->Manufacturer = TableRegistry::get('Manufacturers');
-                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
-                    $orderDetails[$i]['bulkOrdersAllowed'] = $bulkOrdersAllowed;
-                    $orderDetails[$i]['rowClass'] = [];
+                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
+                    $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
+                    $orderDetail->rowClass = [];
                     if ($bulkOrdersAllowed) {
-                        $orderDetails[$i]['rowClass'][] = 'deactivated';
+                        $orderDetail->rowClass[] = 'deactivated';
                     }
                     $i ++;
                 }
@@ -258,11 +268,11 @@ class OrderDetailsController extends AdminAppController
             $groupByForDropdown['manufacturer'] = 'Gruppieren nach Hersteller';
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
-        $this->set('customersForDropdown', $this->OrderDetail->Order->Customer->getForDropdown());
-        $this->set('manufacturersForDropdown', $this->OrderDetail->Product->Manufacturer->getForDropdown());
+        $this->set('customersForDropdown', $this->OrderDetail->Orders->Customers->getForDropdown());
+        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
 
         if (!$this->AppAuth->isManufacturer()) {
-            $this->set('customersForShopOrderDropdown', $this->OrderDetail->Order->Customer->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
+            $this->set('customersForShopOrderDropdown', $this->OrderDetail->Orders->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
         }
 
         $this->set('title_for_layout', 'Bestellte Produkte');

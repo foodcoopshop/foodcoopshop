@@ -47,13 +47,6 @@ class OrderDetailsTable extends AppTable
         $this->OrderDetailTax->delete($orderDetailId, false);
     }
 
-    private function getOrderStateCondition($orderState)
-    {
-        $orderStates = explode(',', $orderState);
-        $condition = 'Orders.current_state IN (' . join(', ', $orderStates) . ')';
-        return $condition;
-    }
-
     /**
      * @param int $manufacturerId
      * @param boolean $groupByMonth
@@ -128,14 +121,14 @@ class OrderDetailsTable extends AppTable
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Order.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         if ($orderState != '') {
-            $conditions[] = $this->getOrderStateCondition($orderState);
+            $conditions[] = $this->Orders->getOrderStateCondition($orderState);
         }
 
         if ($productId != '') {
@@ -157,7 +150,7 @@ class OrderDetailsTable extends AppTable
         $contain = [
             'Orders',
             'Orders.Customers',
-            'Products.Manufacturers.Addresses',
+            'Products.Manufacturers.AddressManufacturers',
             'Products.ProductLangs'
         ];
 

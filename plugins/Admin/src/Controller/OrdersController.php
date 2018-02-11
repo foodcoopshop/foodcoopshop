@@ -238,8 +238,15 @@ class OrdersController extends AdminAppController
         $this->set('dateTo', $dateTo);
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
-        if (! empty($this->request->getQuery('orderStates'))) {
+        if (in_array('orderStates', array_keys($this->request->getQueryParams()))) {
             $orderStates = $this->request->getQuery('orderStates');
+            if ($orderStates == '') {
+                $orderStates = [];
+            }
+        }
+        // legacy cakephp2: param was called "orderState" and contained csv data
+        if (! empty($this->request->getQuery('orderState'))) {
+            $orderStates = explode(', ', $this->request->getQuery('orderState'));
         }
         $this->set('orderStates', $orderStates);
 

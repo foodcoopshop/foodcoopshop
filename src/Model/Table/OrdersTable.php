@@ -47,8 +47,14 @@ class OrdersTable extends AppTable
         'closed' => 5
     ];
 
-    private function getOrderStateCondition($orderStates)
+    public function getOrderStateCondition($orderStates)
     {
+        if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
+            return false;
+        }
+        if (!is_array($orderStates)) {
+            $orderStates = [$orderStates];
+        }
         $condition = 'Orders.current_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }

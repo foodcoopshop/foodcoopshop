@@ -33,7 +33,7 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php echo $this->Form->input('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->input('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'selected' => isset($manufacturerId) ? $manufacturerId: '']); ?>
@@ -49,7 +49,7 @@ use Cake\Core\Configure;
                 <input id="orderId" type="text" placeholder="Bestell-Nr."
                 value="<?php echo $orderId; ?>" />
             <?php } ?>
-            <?php echo $this->Form->input('orderState', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => $orderState]); ?>
+            <?php echo $this->Form->input('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php echo $this->Form->input('groupBy', ['type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'selected' => $groupBy]);?>
             <div class="right">
             
@@ -163,13 +163,13 @@ $sumDeposit = 0;
 $sumReducedPrice = 0;
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
-    $editRecordAllowed = $groupBy == '' && ($orderDetail['Orders']['current_state'] == ORDER_STATE_OPEN || $orderDetail['bulkOrdersAllowed']);
+    $editRecordAllowed = $groupBy == '' && ($orderDetail->order->current_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
 
     $i ++;
     if ($groupBy == '') {
-        $sumPrice += $orderDetail['OrderDetails']['total_price_tax_incl'];
-        $sumAmount += $orderDetail['OrderDetails']['product_quantity'];
-        $sumDeposit += $orderDetail['OrderDetails']['deposit'];
+        $sumPrice += $orderDetail->total_price_tax_incl;
+        $sumAmount += $orderDetail->product_quantity;
+        $sumDeposit += $orderDetail->deposit;
     } else {
         $sumPrice += $orderDetail['sum_price'];
         $sumAmount += $orderDetail['sum_amount'];
@@ -180,7 +180,7 @@ foreach ($orderDetails as $orderDetail) {
         $sumDeposit += $orderDetail['sum_deposit'];
     }
 
-    echo '<tr class="data ' . (isset($orderDetail['rowClass']) ? implode(' ', $orderDetail['rowClass']) : '') . '">';
+    echo '<tr class="data ' . (isset($orderDetail->rowClass) ? implode(' ', $orderDetail->rowClass) : '') . '">';
 
     echo '<td style="text-align: center;">';
     if ($editRecordAllowed) {
@@ -190,20 +190,20 @@ foreach ($orderDetails as $orderDetail) {
 
     echo '<td class="hide">';
     if ($groupBy == '') {
-        echo $orderDetail['OrderDetails']['id_order_detail'];
+        echo $orderDetail->id_order_detail;
     }
     echo '</td>';
 
     echo '<td class="right">';
     echo '<div class="table-cell-wrapper quantity">';
     if ($groupBy == '') {
-        if ($orderDetail['OrderDetails']['product_quantity'] > 1 && $editRecordAllowed) {
+        if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'order-detail-product-quantity-edit-button',
                 'title' => 'Zum Ändern der Anzahl anklicken'
             ], 'javascript:void(0);');
         }
-        $quantity = $orderDetail['OrderDetails']['product_quantity'];
+        $quantity = $orderDetail->product_quantity;
         $style = '';
         if ($quantity > 1) {
             $style = 'font-weight:bold;';
@@ -216,13 +216,13 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
 
     if ($groupBy != '') {
-        $groupByObjectLink = $this->MyHtml->link($orderDetail['name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/' . $groupBy.'Id:' . $orderDetail[$groupBy . '_id'] . '/orderState:' . $orderState . '/customerId:' . $customerId);
+        $groupByObjectLink = $this->MyHtml->link($orderDetail['name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId);
     }
 
     if ($groupBy == '' || $groupBy == 'product') {
         echo '<td>';
         if ($groupBy == '') {
-            echo $this->MyHtml->link($orderDetail['OrderDetails']['product_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/productId:' . $orderDetail['Products']['id_product'] . '/orderState:' . $orderState, [
+            echo $this->MyHtml->link($orderDetail->product_name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&productId=' . $orderDetail->product_id . '&orderStates[]=' . join(',', $orderStates), [
                 'class' => 'name-for-dialog'
             ]);
         }
@@ -233,17 +233,17 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
     if ($groupBy == '') {
-        echo $this->MyHtml->link($orderDetail['Products']['Manufacturers']['name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/manufacturerId:' . $orderDetail['Products']['Manufacturers']['id_manufacturer'] . '/orderState:' . $orderState . '/customerId:' . $customerId . '/groupBy:'.$groupBy);
+        echo $this->MyHtml->link($orderDetail['Products']['Manufacturers']['name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
     }
     if ($groupBy == 'manufacturer') {
         echo $groupByObjectLink;
     }
     if ($groupBy == 'product') {
-        echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order_details/index/dateFrom:' . $dateFrom . '/dateTo:' . $dateTo . '/' . 'manufacturerId:' . $orderDetail['manufacturer_id'] . '/orderState:' . $orderState . '/customerId:' . $customerId.'/groupBy:product');
+        echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId.'&groupBy=product');
     }
     echo '</td>';
 
-    echo '<td class="right' . ($groupBy == '' && $orderDetail['OrderDetails']['total_price_tax_incl'] == 0 ? ' not-available' : '') . '">';
+    echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {
         if ($editRecordAllowed) {
@@ -252,7 +252,7 @@ foreach ($orderDetails as $orderDetail) {
                 'title' => 'Zum Ändern des Preises anklicken'
             ], 'javascript:void(0);');
         }
-        echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail['OrderDetails']['total_price_tax_incl']) . '</span>';
+        echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
     } else {
         echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
     }
@@ -279,8 +279,8 @@ foreach ($orderDetails as $orderDetail) {
 
     echo '<td class="right">';
     if ($groupBy == '') {
-        if ($orderDetail['OrderDetails']['deposit'] > 0) {
-            echo $this->Html->formatAsDecimal($orderDetail['OrderDetails']['deposit']);
+        if ($orderDetail->deposit > 0) {
+            echo $this->Html->formatAsDecimal($orderDetail->deposit);
         }
     } else {
         if ($orderDetail['sum_deposit'] > 0) {
@@ -292,25 +292,25 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '') {
         echo '<td>';
         if ($groupBy == '') {
-            echo $this->Time->formatToDateNTimeLong($orderDetail['Orders']['date_add']);
+            echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
         }
         echo '</td>';
 
         echo '<td>';
         if ($groupBy == '') {
-            echo $orderDetail['Orders']['Customers']['name'];
+            echo $orderDetail->order->customer->name;
         }
         echo '</td>';
 
         echo '<td class="hide">';
         if ($groupBy == '') {
-            echo '<span class="email">' . $orderDetail['Orders']['Customers']['email'] . '</span>';
+            echo '<span class="email">' . $orderDetail->order->customer->email . '</span>';
         }
         echo '</td>';
 
         echo '<td>';
         if ($groupBy == '') {
-            echo $this->MyHtml->getOrderStates()[$orderDetail['Orders']['current_state']];
+            echo $this->MyHtml->getOrderStates()[$orderDetail->order->current_state];
         }
         echo '</td>';
 
@@ -318,7 +318,7 @@ foreach ($orderDetails as $orderDetail) {
         if ($editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-order-detail',
-                'id' => 'delete-order-detail-' . $orderDetail['OrderDetails']['id_order_detail'],
+                'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
                 'title' => 'Produkt stornieren?'
             ], 'javascript:void(0);');
         }
@@ -326,7 +326,7 @@ foreach ($orderDetails as $orderDetail) {
 
         echo '<td class="hide orderId">';
         if ($groupBy == '') {
-            echo $orderDetail['OrderDetails']['id_order'];
+            echo $orderDetail->id_order;
         }
         echo '</td>';
     }
@@ -365,11 +365,7 @@ if ($sumDeposit > 0) {
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 if ($groupBy == '') {
-    if ($orderState == 3) {
-        echo '<td colspan="4"></td>';
-    } else {
-        echo '<td colspan="3"></td>';
-    }
+    echo '<td colspan="4"></td>';
 }
 echo '</tr>';
 echo '</table>';

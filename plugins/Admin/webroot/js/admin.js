@@ -984,7 +984,7 @@ foodcoopshop.Admin = {
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
                     foodcoopshop.Helper.ajaxCall(
-                        '/admin/order_details/delete',
+                        '/admin/order-details/delete',
                         {
                             orderDetailIds: orderDetailIds,
                             cancellationReason: ckeditorData
@@ -1536,7 +1536,7 @@ foodcoopshop.Admin = {
                     $('.ui-dialog button').attr('disabled', 'disabled');
 
                     foodcoopshop.Helper.ajaxCall(
-                        '/admin/order_details/editProductPrice/',
+                        '/admin/order-details/editProductPrice/',
                         {
                             orderDetailId: $('#dialogOrderDetailProductPriceOrderDetailId').val(),
                             productPrice: $('#dialogOrderDetailProductPricePrice').val(),
@@ -1639,7 +1639,7 @@ foodcoopshop.Admin = {
                     $('.ui-dialog button').attr('disabled', 'disabled');
 
                     foodcoopshop.Helper.ajaxCall(
-                        '/admin/order_details/editProductQuantity/',
+                        '/admin/order-details/editProductQuantity/',
                         {
                             orderDetailId: $('#dialogOrderDetailProductQuantityOrderDetailId').val(),
                             productQuantity: $('#dialogOrderDetailProductQuantityQuantity').val(),
