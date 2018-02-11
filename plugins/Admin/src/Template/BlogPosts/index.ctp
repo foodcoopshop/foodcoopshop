@@ -29,7 +29,7 @@ use Cake\Core\Configure;
    
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <?php
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 echo $this->Form->input('manufacturerId', [
@@ -37,7 +37,7 @@ use Cake\Core\Configure;
                     'label' => '',
                     'empty' => 'alle Hersteller',
                     'options' => $manufacturersForDropdown,
-                    'selected' => isset($manufacturerId) ? $manufacturerId : ''
+                    'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
             }
             ?>

@@ -25,7 +25,7 @@
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <h1>Seiten</h1>
-            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+            <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <div class="right">
                 <?php
                 echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';

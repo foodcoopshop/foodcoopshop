@@ -44,21 +44,21 @@ use Cake\Core\Configure;
                     'label' => '',
                     'options' => $manufacturersForDropdown,
                     'empty' => 'Bitte wählen...',
-                    'selected' => isset($manufacturerId) ? $manufacturerId : ''
+                    'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
             }
             echo $this->Form->input('active', [
                 'type' => 'select',
                 'label' => '',
                 'options' => $this->MyHtml->getActiveStates(),
-                'selected' => isset($active) ? $active : ''
+                'default' => isset($active) ? $active : ''
             ]);
             echo $this->Form->input('category', [
                 'type' => 'select',
                 'label' => '',
                 'empty' => 'Kategorie auswählen...',
                 'options' => $categoriesForSelect,
-                'selected' => isset($category) ? $category : ''
+                'default' => isset($category) ? $category : ''
             ]);
             ?>
             Anzahl 0? <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero]);?>

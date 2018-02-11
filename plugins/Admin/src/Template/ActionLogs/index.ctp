@@ -27,8 +27,8 @@
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->input('type', ['type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'selected' => isset($type) ? $type : '']); ?>
-                <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'selected' => isset($customerId) ? $customerId: '']); ?>
+                <?php echo $this->Form->input('type', ['type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'default' => isset($type) ? $type : '']); ?>
+                <?php echo $this->Form->input('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
                 <?php echo $this->Form->input('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
             <?php } ?>
             <?php if ($appAuth->isCustomer()) { ?>

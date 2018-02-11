@@ -33,7 +33,7 @@ $this->element('addScript', [
             'label' => '',
             'options' => $manufacturersForDropdown,
             'empty' => 'alle Hersteller',
-            'selected' => $manufacturerId != '' ? $manufacturerId : ''
+            'default' => $manufacturerId != '' ? $manufacturerId : ''
             ]);
         }
         ?>

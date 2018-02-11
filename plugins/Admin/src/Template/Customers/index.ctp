@@ -24,7 +24,7 @@
     
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'selected' => isset($active) ? $active : '']); ?>
+            <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             Anzahl Bestellungen zwischen <input id="validOrdersCountFrom"
                 type="text"
                 value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
