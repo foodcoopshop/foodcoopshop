@@ -130,11 +130,7 @@ if ($groupBy == '' || $groupBy == 'product') {
 }
 
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
-if ($groupBy != '') {
     echo $this->Paginator->sort('Manufacturers.name', 'Hersteller');
-} else {
-    echo 'Hersteller';
-}
 echo '</th>';
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', 'Betrag');
@@ -233,7 +229,7 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
     if ($groupBy == '') {
-        echo $this->MyHtml->link($orderDetail['Products']['Manufacturers']['name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
+        echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
     }
     if ($groupBy == 'manufacturer') {
         echo $groupByObjectLink;
