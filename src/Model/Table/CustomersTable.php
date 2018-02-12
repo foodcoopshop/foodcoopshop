@@ -207,6 +207,7 @@ class CustomersTable extends AppTable
         $contain = [];
         if (! $includeManufacturers) {
             $this->dropManufacturersInNextFind();
+            $contain[] = 'ValidOrders';
             $contain[] = 'AddressCustomers'; // to make exclude happen using dropManufacturersInNextFind
         }
 
@@ -222,6 +223,7 @@ class CustomersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($customers as $customer) {
+            
             $userNameForDropdown = $customer->name;
 
             $manufacturerIncluded = false;
