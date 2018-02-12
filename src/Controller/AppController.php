@@ -64,8 +64,8 @@ class AppController extends Controller
         ]);
         
         $this->paginate = [
-            'limit' => 100000,
-            'maxLimit' => 100000
+            'limit' => 300000,
+            'maxLimit' => 300000
         ];
         
     }
