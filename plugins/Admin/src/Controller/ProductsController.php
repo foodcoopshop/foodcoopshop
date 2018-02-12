@@ -431,7 +431,7 @@ class ProductsController extends AdminAppController
                     $selectedCategoryNames[] = $oldCategory['Categories']['name'];
                 }
                 $sql = 'INSERT INTO ' . $this->CategoryProduct->getTable() . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
-                $this->CategoryProduct->query($sql);
+                $this->CategoryProduct->getConnection()->query($sql);
             }
         }
 
@@ -801,7 +801,7 @@ class ProductsController extends AdminAppController
                     ps.date_add = " . $newDateAdd . "
                 WHERE p.id_product = ps.id_product
                 AND p.id_product = " . $productId . ";";
-        $result = $this->Product->query($sql);
+        $result = $this->Product->getConnection()->query($sql);
 
         $product = $this->Product->find('all', [
             'conditions' => [

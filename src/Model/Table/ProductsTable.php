@@ -852,7 +852,7 @@ class ProductsTable extends AppTable
         $productAttributeId = $this->ProductAttributes->getLastInsertID();
 
         // INSERT in ProductAttributeCombination tricky because of set primary_key
-        $this->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
+        $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
 
         $this->ProductAttributes->ProductAttributeShop->save([
             'id_product_attribute' => $productAttributeId,
@@ -869,7 +869,7 @@ class ProductsTable extends AppTable
 
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
         // with custom sql
-        $this->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
+        $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
 
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }

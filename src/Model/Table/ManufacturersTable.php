@@ -489,7 +489,7 @@ class ManufacturersTable extends AppTable
         // problem seems to be caused by date fields
         // with interpolateQuery and normal fire of sql statemt, result is not empty and works...
         $replacedQuery = $this->interpolateQuery($sql, $params);
-        $results = $this->query($replacedQuery);
+        $results = $this->getConnection()->query($replacedQuery);
         return $results;
     }
 }

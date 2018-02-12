@@ -6,7 +6,10 @@
  * - consider weekday of calling the test - virutal host needs preset date
  */
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use App\Shell\EmailOrderReminderShell;
+use Cake\Console\ConsoleIo;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
@@ -17,7 +20,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::get('EmailLogs');
-        $this->EmailOrderReminder = $this->createMockShell('EmailOrderReminderShell');
+        $this->EmailOrderReminder = new EmailOrderReminderShell(new ConsoleIo());
     }
 
     public function testNoActiveOrder()
@@ -31,8 +34,8 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
 
     public function testIfServiceNotSubscribed()
     {
-        $sql = 'UPDATE '.$this->Customer->getTable().' SET newsletter = 0;';
-        $this->Customer->query($sql);
+        $query = 'UPDATE '.$this->Customer->getTable().' SET newsletter = 0;';
+        self::$dbConnection->query($query);
         $this->EmailOrderReminder->main();
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');

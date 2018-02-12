@@ -25,8 +25,7 @@ class SendOrderListsShell extends AppShell
         'Manufacturers',
         'Orders',
         'Customers',
-        'ActionLogs',
-        'Configurations' // for unit test mock object
+        'ActionLogs'
     ];
 
     /**

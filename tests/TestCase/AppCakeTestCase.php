@@ -303,23 +303,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param String $cakeShell
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createMockShell($cakeShell)
-    {
-
-        $out = $this->createMock('ConsoleOutput', [], [], '', false);
-        $in = $this->createMock('ConsoleInput', [], [], '', false);
-
-        return $this->createMock(
-            $cakeShell,
-            ['in', 'err', 'createFile', '_stop', 'clear'],
-            [$out, $out, $in]
-        );
-    }
-
-    /**
      *
      * @param int $productId
      * @param int $amount

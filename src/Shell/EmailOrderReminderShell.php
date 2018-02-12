@@ -29,12 +29,13 @@ class EmailOrderReminderShell extends AppShell
 
     public function main()
     {
-        parent::main();
-
+        
         if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('appDb.FCS_CART_ENABLED')) {
             return;
         }
 
+        parent::main();
+        
         $this->initSimpleBrowser(); // for loggedUserId
 
         $this->startTimeLogging();
@@ -46,7 +47,7 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $this->Customer->associations('ActiveOrders')->setConditions(
+        $this->Customer->association('ActiveOrders')->setConditions(
             [
                 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'',
                 'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay()). '\''
@@ -56,22 +57,23 @@ class EmailOrderReminderShell extends AppShell
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
+                'ActiveOrders',
                 'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
-        
+
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
             // customer has open orders, do not send email
-            if (count($customer['ActiveOrders']) > 0) {
+            if (count($customer->active_orders) > 0) {
                 continue;
             }
 
             $email = new AppEmail();
             $email->setTo($customer->email)
-                ->setTemplate('email_order_reminder')
+                ->setTemplate('Admin.email_order_reminder')
                 ->setSubject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
                 ->setViewVars([
                   'customer' => $customer,

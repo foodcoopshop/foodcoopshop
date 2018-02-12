@@ -1,8 +1,10 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use App\Shell\SendOrderListsShell;
 
 class SendOrderListsShellTest extends AppCakeTestCase
 {
@@ -15,7 +17,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         parent::setUp();
         $this->EmailLog = TableRegistry::get('EmailLogs');
         $this->Order = TableRegistry::get('Orders');
-        $this->SendOrderLists = $this->createMockShell('SendOrderListsShell');
+        $this->SendOrderLists = new SendOrderListsShell(new ConsoleIo());
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
