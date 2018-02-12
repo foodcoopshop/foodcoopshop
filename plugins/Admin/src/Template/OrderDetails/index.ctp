@@ -206,7 +206,7 @@ foreach ($orderDetails as $orderDetail) {
         }
         echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
     } else {
-        echo $orderDetail['sum_amount'] . 'x';
+        echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
     }
     echo '</div>';
     echo '</td>';
@@ -331,8 +331,8 @@ foreach ($orderDetails as $orderDetail) {
 }
 
 echo '<tr>';
-echo '<td colspan="1"><b>' . $i . '</b></td>';
-echo '<td class="right"><b>' . $sumAmount . 'x</b></td>';
+echo '<td colspan="1"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b></td>';
+echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumAmount, 0) . 'x</b></td>';
 if ($groupBy == '') {
     if ($appAuth->isManufacturer()) {
         echo '<td></td>';

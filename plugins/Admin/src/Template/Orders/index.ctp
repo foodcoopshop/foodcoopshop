@@ -264,7 +264,7 @@ use Cake\Core\Configure;
     }
 
     echo '<tr>';
-    echo '<td colspan="2"><b>' . $i . '</b> Datensätze</td>';
+    echo '<td colspan="2"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> Datensätze</td>';
     echo '<td class="right"><b>' . $this->Html->formatAsEuro($sumPrice) . '</b></td>';
     echo '<td colspan="5"></td>';
     echo '</tr>';
