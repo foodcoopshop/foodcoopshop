@@ -369,11 +369,6 @@ class ManufacturersTable extends AppTable
     public function getForDropdown()
     {
         $manufacturers = $this->find('all', [
-            'fields' => [
-                'Manufacturers.id_manufacturer',
-                'Manufacturers.name',
-                'Manufacturers.active'
-            ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ]
@@ -382,11 +377,11 @@ class ManufacturersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
-            $manufacturerNameForDropdown = $manufacturer['Manufacturers']['name'];
-            if ($manufacturer['Manufacturers']['active'] == 0) {
-                $offlineManufacturers[$manufacturer['Manufacturers']['id_manufacturer']] = $manufacturerNameForDropdown;
+            $manufacturerNameForDropdown = $manufacturer->name;
+            if ($manufacturer->active == 0) {
+                $offlineManufacturers[$manufacturer->id_manufacturer] = $manufacturerNameForDropdown;
             } else {
-                $onlineManufacturers[$manufacturer['Manufacturers']['id_manufacturer']] = $manufacturerNameForDropdown;
+                $onlineManufacturers[$manufacturer->id_manufacturer] = $manufacturerNameForDropdown;
             }
         }
         $manufacturersForDropdown = [];
