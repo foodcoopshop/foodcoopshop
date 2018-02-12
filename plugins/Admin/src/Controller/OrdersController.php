@@ -75,12 +75,17 @@ class OrdersController extends AdminAppController
             throw new RecordNotFoundException('wrong order id set');
         }
 
-        $this->Order->hasMany['OrderDetails']['order'] = [
-            'OrderDetails.product_name' => 'ASC'
-        ];
+        $this->Order = TableRegistry::get('Orders');
         $orders = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order IN(' . $this->request->getQuery('orderIds') . ')'
+            ],
+            'contain' => [
+                'Customers',
+                'OrderDetails' => [
+                    'sort' => ['OrderDetails.product_name' => 'ASC']
+                ],
+                'OrderDetails.Products.Manufacturers'
             ],
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
         ]);

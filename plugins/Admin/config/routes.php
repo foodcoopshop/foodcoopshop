@@ -7,6 +7,7 @@ Router::plugin(
     'Admin',
     ['path' => '/admin'],
     function (RouteBuilder $routes) {
+        $routes->setExtensions(['pdf']);
         $routes->fallbacks(DashedRoute::class);
     }
 );

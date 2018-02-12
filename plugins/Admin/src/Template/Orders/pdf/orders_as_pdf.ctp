@@ -24,13 +24,13 @@ $pdf->infoTextForFooter = 'Bestellungen';
 $j = 1;
 foreach ($orders as $order) {
     $pdf->Ln(5);
-    $pdf->writeHTML('<h2>' . $order['Customers']['name'] . '</h2>', true, false, true, false, '');
-    $pdf->writeHTML('<h3>Bestellung vom ' . $this->Time->formatToDateNTimeLong($order['Orders']['date_add']) . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h2>' . $order->customer->name . '</h2>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>Bestellung vom ' . $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong')) . '</h3>', true, false, true, false, '');
 
-    if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && $order['Orders']['comment'] != '') {
+    if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && $order->comment != '') {
         $pdf->SetRightMargin(16);
         $pdf->Ln(2);
-        $pdf->writeHTML('<p><b>Kommentar: </b>' . $order['Orders']['comment'] . '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p><b>Kommentar: </b>' . $order->comment. '</p>', true, false, true, false, '');
     }
 
     $pdf->Ln(5);
@@ -62,19 +62,19 @@ foreach ($orders as $order) {
     $sumDeposit = 0;
     $sumQuantity = 0;
     $i = 1;
-    foreach ($order['OrderDetails'] as $orderDetail) {
+    foreach ($order->order_details as $orderDetail) {
         $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
         $quantityStyle = '';
         if ($orderDetail['product_quantity'] > 1) {
             $quantityStyle = ' background-color:#cecece;';
         }
-        $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail['product_quantity'] . 'x</td>';
-        $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail['product_name'] . '</td>';
-        $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail['Products']['Manufacturers']['name'] . '</td>';
-        $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">' . $this->Html->formatAsEuro($orderDetail['total_price_tax_incl']) . '</td>';
+        $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_quantity . 'x</td>';
+        $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
+        $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail->product->manufacturer->name . '</td>';
+        $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">' . $this->Html->formatAsEuro($orderDetail->total_price_tax_incl) . '</td>';
 
-        $deposit = $orderDetail['deposit'];
+        $deposit = $orderDetail->deposit;
         if ($deposit > 0) {
             $sumDeposit += $deposit;
             $deposit = $this->Html->formatAsEuro($deposit);
@@ -88,7 +88,7 @@ foreach ($orders as $order) {
 
         $pdf->table .= '</tr>';
 
-        if ($i == count($order['OrderDetails'])) {
+        if ($i == count($order->order_details)) {
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[1] . '"></td>';
@@ -121,7 +121,7 @@ foreach ($orders as $order) {
     $html = '<p>Vielen Dank, dass du bei uns bestellst!</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
 
-    if ($j < count($orders)) {
+    if ($j < $orders->count()) {
         $pdf->AddPage();
     }
 

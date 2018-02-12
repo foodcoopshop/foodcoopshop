@@ -2146,11 +2146,7 @@ foodcoopshop.Admin = {
                                             'disabled',
                                             'disabled'
                                         );
-                                    window
-                                        .open('/admin/orders/ordersAsPdf/orderIds:' +
-                                            orderIds
-                                            .join(',') +
-                                            '.pdf');
+                                    window.open('/admin/orders/ordersAsPdf.pdf?orderIds=' + orderIds.join(','));
                                     $(this).dialog('close');
                                 }
 
