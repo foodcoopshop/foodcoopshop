@@ -267,8 +267,7 @@ class OrdersController extends AdminAppController
 
         $query = $this->Order->find('all', [
             'conditions' => $orderParams['conditions'],
-            'contain' => $orderParams['contain'],
-            'order' => $orderParams['order']
+            'contain' => $orderParams['contain']
         ])
         ->select($this->Order->Customers);
         
@@ -280,7 +279,12 @@ class OrdersController extends AdminAppController
             $query->select($this->Order);
         }
 
-        $orders = $this->paginate($query)->toArray();
+        $orders = $this->paginate($query, [
+            'sortWhitelist' => [
+                'Orders.total_paid', 'Orders.date_add', 'Orders.current_state', 'Customers.' . Configure::read('app.customerMainNamePart')
+            ],
+            'order' => $orderParams['order']
+        ])->toArray();
         foreach ($orders as $order) {
             $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
         }

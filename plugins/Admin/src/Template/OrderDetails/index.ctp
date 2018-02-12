@@ -150,7 +150,7 @@ if ($groupBy == '') {
     echo '<th>';
         $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
     echo '</th>';
-    echo '<th>Mitglied</th>';
+    echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Mitglied').'</th>';
     echo '<th>'.$this->Paginator->sort('Orders.current_state', 'Status').'</th>';
     echo '<th style="width:25px;"></th>';
     echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.order_id', 'OrderID') . '</th>';

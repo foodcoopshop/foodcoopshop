@@ -199,15 +199,19 @@ class OrderDetailsController extends AdminAppController
 
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
-            'contain' => $odParams['contain'],
+            'contain' => $odParams['contain']
+        ]);
+
+        $orderDetails = $this->paginate($query, [
+            'sortWhitelist' => [
+                'OrderDetails.product_quantity', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'Customers.' . Configure::read('app.customerMainNamePart')
+            ],
             'order' => [
                 'Products.id_manufacturer' => 'ASC',
                 'Orders.date_add' => 'DESC',
                 'OrderDetails.product_name' => 'ASC'
             ]
-        ]);
-
-        $orderDetails = $this->paginate($query)->toArray();
+        ])->toArray();
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
 

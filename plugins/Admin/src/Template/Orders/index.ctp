@@ -93,7 +93,7 @@ use Cake\Core\Configure;
 
     echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('Orders.id_order', 'ID') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Customers.name', 'Mitglied') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Mitglied') . '</th>';
     echo '<th></th>';
     echo '<th class="hide">' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
     if (! $groupByCustomer) {
