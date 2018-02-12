@@ -60,11 +60,26 @@ class AppShell extends Shell
         $this->browser->loginEmail = Configure::read('app.adminEmail');
         $this->browser->loginPassword = Configure::read('app.adminPassword');
 
-        if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
-            || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
-                $this->browser->addHeader('x-unit-test-mode: true');
-                $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
-                $this->browser->loginPassword = Configure::read('test.loginPassword');
+        if ($this->isCalledFromUnitTest()) {
+            $this->browser->addHeader('x-unit-test-mode: true');
+            $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
+            $this->browser->loginPassword = Configure::read('test.loginPassword');
         }
     }
+    
+    public function out($message = null, $newlines = 1, $level = Shell::NORMAL)
+    {
+        if ($this->isCalledFromUnitTest()) {
+            return;
+        } else {
+            return parent::out($message, $newlines, $level);
+        }
+    }
+    
+    private function isCalledFromUnitTest()
+    {
+        return isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
+            || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]));
+    }
+    
 }
