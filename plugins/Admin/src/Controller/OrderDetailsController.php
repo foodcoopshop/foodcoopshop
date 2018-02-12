@@ -92,9 +92,9 @@ class OrderDetailsController extends AdminAppController
             'OrderDetails.product_quantity' => 'sum_amount',
             'OrderDetails.deposit' => 'sum_deposit'
         ];
-//         if (!empty($this->request->getQuery('sort') && isset($sortMatches[$this->params['named']['sort')])) {
-//             $sortField = $sortMatches[$this->request->getQuery('sort')];
-//         }
+        if (!empty($this->request->getQuery('sort')) && isset($sortMatches[$this->request->getQuery('sort')])) {
+            $sortField = $sortMatches[$this->request->getQuery('sort')];
+        }
         return $sortField;
     }
 
@@ -104,7 +104,7 @@ class OrderDetailsController extends AdminAppController
     private function getSortDirectionForGroupedOrderDetails()
     {
         $sortDirection = 'ASC';
-        if (!empty($this->request->getQuery('direction') && in_array($this->params['named']['direction'], ['asc', 'desc']))) {
+        if (!empty($this->request->getQuery('direction') && in_array($this->request->getQuery('direction'), ['asc', 'desc']))) {
             $sortDirection = $this->request->getQuery('direction');
         }
         return $sortDirection;
@@ -219,14 +219,14 @@ class OrderDetailsController extends AdminAppController
             case 'manufacturer':
                 $preparedOrderDetails = [];
                 foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail['Products']['id_manufacturer'];
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetails']['total_price_tax_incl'];
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetails']['product_quantity'];
-                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail['Products']['Manufacturers']['variable_member_fee']);
+                    $key = $orderDetail->product->id_manufacturer;
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_quantity;
+                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
                     $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetails']['deposit'];
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
                     $preparedOrderDetails[$key]['manufacturer_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail['Products']['Manufacturers']['name'];
+                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
@@ -236,14 +236,14 @@ class OrderDetailsController extends AdminAppController
             case 'product':
                 $preparedOrderDetails = [];
                 foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail['OrderDetails']['product_id'];
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail['OrderDetails']['total_price_tax_incl'];
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail['OrderDetails']['product_quantity'];
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail['OrderDetails']['deposit'];
+                    $key = $orderDetail->product_id;
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_quantity;
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
                     $preparedOrderDetails[$key]['product_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail['Products']['ProductLangs']['name'];
-                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail['Products']['Manufacturers']['id_manufacturer'];
-                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail['Products']['Manufacturers']['name'];
+                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->product_lang->name;
+                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
+                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
