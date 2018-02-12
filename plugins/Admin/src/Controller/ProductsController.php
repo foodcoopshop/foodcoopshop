@@ -1,7 +1,10 @@
 <?php
 
 namespace Admin\Controller;
+
+use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\Event;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -97,6 +100,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
+        $this->Product = TableRegistry::get('Products');
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
         $productsForDropdown = [];
         foreach ($products as $key => $ps) {
@@ -110,6 +114,7 @@ class ProductsController extends AdminAppController
             }
             $productsForDropdown[] = '</optgroup>';
         }
+        
         die(json_encode([
             'status' => 1,
             'products' => join('', $productsForDropdown)
@@ -680,7 +685,7 @@ class ProductsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         $active = 'all'; // default value
-        if (isset($this->request->getQuery('active'))) {
+        if (!empty($this->request->getQuery('active'))) {
             $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);

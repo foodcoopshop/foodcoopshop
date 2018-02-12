@@ -2368,7 +2368,7 @@ foodcoopshop.Admin = {
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
         var manufacturerId = manufacturerId || 0;
-        var productDropdown = $('select#productId').closest('.bootstrap-select').find('.dropdown-toggle');
+        var productDropdown = $('select#productid').closest('.bootstrap-select').find('.dropdown-toggle');
 
         // one removes itself after one execution
         productDropdown.one('click', function () {
@@ -2379,7 +2379,7 @@ foodcoopshop.Admin = {
                 .ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +
                     selectedProductId + '/' + manufacturerId, {}, {
                         onOk: function (data) {
-                            var select = $('select#productId');
+                            var select = $('select#productid');
                             select.append(data.products);
                             select.attr('disabled', false);
                             select.selectpicker('refresh');

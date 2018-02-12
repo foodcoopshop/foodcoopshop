@@ -564,13 +564,11 @@ class ProductsTable extends AppTable
 
         // ->find('list') a does not return associated model data
         $products = $this->find('all', [
-            'fields' => [
-                'Products.id_product',
-                'ProductLangs.name',
-                'Manufacturers.name',
-                'Products.active'
-            ],
             'conditions' => $conditions,
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers',
+            ],
             'order' => [
                 'Products.active' => 'DESC',
                 'ProductLangs.name' => 'ASC'
@@ -580,11 +578,11 @@ class ProductsTable extends AppTable
         $offlineProducts = [];
         $onlineProducts = [];
         foreach ($products as $product) {
-            $productNameForDropdown = $product['ProductLangs']['name'] . ' - ' . $product['Manufacturers']['name'];
-            if ($product['Products']['active'] == 0) {
-                $offlineProducts[$product['Products']['id_product']] = $productNameForDropdown;
+            $productNameForDropdown = $product->product_lang->name . (!empty($product->manufacturer) ? ' - ' . $product->manufacturer->name : '');
+            if ($product->active == 0) {
+                $offlineProducts[$product->id_product] = $productNameForDropdown;
             } else {
-                $onlineProducts[$product['Products']['id_product']] = $productNameForDropdown;
+                $onlineProducts[$product->id_product] = $productNameForDropdown;
             }
         }
 
