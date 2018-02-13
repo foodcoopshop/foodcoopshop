@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -269,7 +270,7 @@ class ManufacturersController extends AdminAppController
         $this->set('dateTo', $dateTo);
 
         $active = 1; // default value
-        if (isset($this->request->getQuery('active'))) {
+        if (! empty($this->request->getQuery('active'))) {
             $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);
@@ -281,31 +282,44 @@ class ManufacturersController extends AdminAppController
             ];
         }
 
-        $this->Paginator->settings = array_merge([
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $query = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
+            'fields' => [
+                'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()
+            ],
+            'contain' => [
+                'AddressManufacturers',
+                'Customers'
+            ]
+        ])
+        ->select($this->Manufacturer)
+        ->select($this->Manufacturer->Customers)
+        ->select($this->Manufacturer->AddressManufacturers);
+        
+        $manufacturers = $this->paginate($query, [
+            'sortWhitelist' => [
+                'Manufacturers.name', 'Manufacturers.ibal', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart')
+            ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
-            ],
-            'fields' => ['Manufacturers.*', 'Customers.*', 'Addresses.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()]
-        ], $this->Paginator->settings);
-        $manufacturers = $this->Paginator->paginate('Manufacturers');
+            ]
+        ])->toArray();
 
         $this->Product = TableRegistry::get('Products');
         $this->Payment = TableRegistry::get('Payments');
         $this->OrderDetail = TableRegistry::get('OrderDetails');
 
-        $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            $manufacturers[$i]['product_count'] = $this->Product->getCountByManufacturerId($manufacturer['Manufacturers']['id_manufacturer']);
-            $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer['Manufacturers']['id_manufacturer'], false);
-            $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer['Manufacturers']['id_manufacturer'], false);
-            $manufacturers[$i]['sum_deposit_delivered'] = $sumDepositDelivered[0]['sumDepositDelivered'];
-            $manufacturers[$i]['deposit_credit_balance'] = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
+            $manufacturer->product_count = $this->Product->getCountByManufacturerId($manufacturer->id_manufacturer);
+            $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
+            $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
+            $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
+            $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-                $manufacturers[$i]['Manufacturers']['variable_member_fee'] = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
+                $manufacturers->manufacturer->variable_member_fee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             }
-            $manufacturers[$i]['sum_open_order_detail'] = $this->OrderDetail->getOpenOrderDetailSum($manufacturer['Manufacturers']['id_manufacturer'], $dateFrom, $dateTo);
-            $i++;
+            $manufacturer->sum_open_order_detail = $this->OrderDetail->getOpenOrderDetailSum($manufacturer->id_manufacturer, $dateFrom, $dateTo);
         }
         $this->set('manufacturers', $manufacturers);
 
@@ -499,7 +513,7 @@ class ManufacturersController extends AdminAppController
         }
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->Network.SyncDomain = TableRegistry::get('Network.SyncDomains');
+            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);

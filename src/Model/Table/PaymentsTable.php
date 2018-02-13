@@ -95,20 +95,22 @@ class PaymentsTable extends AppTable
 
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
 
-        $fields = [
-            'SUM(amount) as sumDepositReturned'
-        ];
-        if ($groupByMonth) {
-            $fields[] = 'DATE_FORMAT(Payment.date_add, \'%Y-%c\') as monthAndYear';
-        }
-        $paymentSum = $this->find('all', [
-            'fields' => $fields,
+        $query = $this->find('all', [
             'conditions' => $conditions,
             'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payments.date_add' => 'DESC'],
             'group' => $groupByMonth ? 'monthAndYear' : null
         ]);
-
-        return $paymentSum;
+        
+        $query->select(
+            ['sumDepositReturned' => $query->func()->sum('Payments.amount')]
+        );
+        if ($groupByMonth) {
+            $query->select(
+                ['monthAndYear' => 'DATE_FORMAT(Payments.date_add, \'%Y-%c\')']
+            );
+        }
+        
+        return $query->toArray();
     }
 
     /**

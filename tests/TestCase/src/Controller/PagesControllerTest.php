@@ -75,6 +75,7 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getBlogPostListAdmin(),
 //             $this->Slug->getBlogPostAdd(),
 //             $this->Slug->getBlogPostEdit(2),
+               $this->Slug->getManufacturerAdmin(),
 //             $this->Slug->getManufacturerList(),
 //             $this->Slug->getManufacturerAdd(),
 //             $this->Slug->getManufacturerEdit(5),
