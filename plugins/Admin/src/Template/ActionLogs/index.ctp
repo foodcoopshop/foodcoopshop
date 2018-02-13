@@ -34,7 +34,7 @@
             <?php if ($appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->input('type', ['class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '']); ?>
             <?php } ?>
-            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo]); ?>
+            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right"></div>
        	<?php echo $this->Form->end(); ?>
     </div>
