@@ -299,7 +299,7 @@ class ManufacturersController extends AdminAppController
         
         $manufacturers = $this->paginate($query, [
             'sortWhitelist' => [
-                'Manufacturers.name', 'Manufacturers.ibal', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart')
+                'Manufacturers.name', 'Manufacturers.iban', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart')
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'

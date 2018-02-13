@@ -67,6 +67,7 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getDepositDetail(4, '2016-11'),
 //             $this->Slug->getCreditBalance(88),
 //             $this->Slug->getChangePassword(),
+               $this->Slug->getCustomerListAdmin(),
 //             $this->Slug->getCustomerProfile(),
 //             $this->Slug->getProductAdmin(),
 //             $this->Slug->getProductAdmin('all'),

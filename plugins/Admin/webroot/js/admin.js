@@ -1745,7 +1745,7 @@ foodcoopshop.Admin = {
             var selectedGroupId = $(this).closest('tr').find('td:nth-child(3) span.group-for-dialog').html();
             var select = $('#' + dialogId + ' #dialogCustomerGroupEditGroup');
             select.find('option').remove();
-            select.append($('#selectGroupId').html());
+            select.append($('#selectgroupid').html());
             select.val(selectedGroupId);
             $('#' + dialogId + ' #dialogCustomerGroupEditText').html('Gruppe ändern für ' + $(this).closest('tr').find('td:nth-child(2) a').text() + '<p style="font-weight: normal;"><br />Er/Sie muss sich nach der Änderung neu einloggen.</p>');
             $('#' + dialogId + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());

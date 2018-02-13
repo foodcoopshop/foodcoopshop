@@ -379,22 +379,24 @@ class CustomersController extends AdminAppController
         $this->Customer = TableRegistry::get('Customers');
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
-        $this->Customer->hasMany['ValidOrder']['limit'] = null; // to get all valid orders
-//         $this->Customer->association('ValidOrders')->
         $this->Customer->dropManufacturersInNextFind();
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
-            'order' => [
-                'Customers.name' => 'ASC'
-            ],
             'contain' => [
-                'Customers.AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-                'Customers',
-                'ValidOrders'
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+                'ValidOrders',
+                'PaidCashFreeOrders'
             ]
         ]);
 
-        $customers = $this->paginate($query)->toArray();
+        $customers = $this->paginate($query, [
+            'sortWhitelist' => [
+                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_default_group', 'Customers.email', 'Customers.active', 'Customers.newsletter', 'Customers.date_add'
+            ],
+            'order' => [
+                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
+            ]
+        ])->toArray();
 
         $i = 0;
         $this->Payment = TableRegistry::get('Payments');
@@ -407,28 +409,28 @@ class CustomersController extends AdminAppController
 
                 $sumTotalProduct = 0;
                 $sumTotalDeposit = 0;
-                foreach ($customer['PaidCashFreeOrders'] as $paidCashFreeOrder) {
-                    $sumTotalProduct += $paidCashFreeOrder['total_paid'];
-                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
+                foreach ($customer->paid_cash_free_orders as $paidCashFreeOrder) {
+                    $sumTotalProduct += $paidCashFreeOrder->total_paid;
+                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder->date_add) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
                         $sumTotalDeposit += $paidCashFreeOrder['total_deposit'];
                     }
                 }
                 // sometimes strange values like 2.8421709430404E-14 appear
-                $customers[$i]['payment_product_delta'] = round($paymentProductSum - $paymentPaybackSum - $sumTotalProduct, 2);
-                $customers[$i]['payment_deposit_delta'] = round($paymentDepositSum - $sumTotalDeposit, 2);
+                $customer->payment_product_delta = round($paymentProductSum - $paymentPaybackSum - $sumTotalProduct, 2);
+                $customer->payment_deposit_delta = round($paymentDepositSum - $sumTotalDeposit, 2);
 
                 // combine deposit delta in product delta to show same credit balance in list like in personal payment product page
                 if (Configure::read('app.isDepositPaymentCashless')) {
-                    $customers[$i]['payment_product_delta'] += $customers[$i]['payment_deposit_delta'];
+                    $customer->payment_product_delta += $customer->payment_deposit_delta;
                 }
             }
 
-            $customers[$i]['order_count'] = $this->Order->getCountByCustomerId($customer['Customers']['id_customer']);
+            $customer->order_count = $this->Order->getCountByCustomerId($customer->id_customer);
 
-            $voc = count($customer['ValidOrder']);
-            $customers[$i]['valid_orders_count'] = $voc;
+            $voc = count($customer->valid_orders);
+            $customer->valid_orders_count = $voc;
 
-            $customers[$i]['last_valid_order_date'] = '';
+            $customer->last_valid_order_date = '';
 
             $validOrdersCountCondition = true;
             if ($validOrdersCountFrom != '') {
@@ -446,9 +448,8 @@ class CustomersController extends AdminAppController
                 continue;
             }
 
-            if (isset($customer['ValidOrder'][$voc - 1])) {
-                $lastOrderDate = $customer['ValidOrder'][$voc - 1]['date_add'];
-                $lastOrderDate = substr($lastOrderDate, 0, 10); // russian style... do not use time!
+            if (isset($customer->valid_orders[$voc - 1])) {
+                $lastOrderDate = $customer->valid_orders[$voc - 1]->date_add->i18nFormat(Configure::read('DateFormat.Database'));
 
                 $lastOrderDateCondition = true;
                 if ($dateFrom != '') {
@@ -460,10 +461,10 @@ class CustomersController extends AdminAppController
                     }
                 }
 
-                $customers[$i]['last_valid_order_date'] = $lastOrderDate;
+                $customer->last_valid_order_date = $lastOrderDate;
 
                 if (! $lastOrderDateCondition) {
-                    unset($customers[$i]);
+                    unset($customer);
                 }
             }
 

@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="customers-list">
     <?php
@@ -69,7 +71,7 @@ echo $this->Form->input('selectGroupId', [
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
+echo '<th class="hide">ID</th>';
 echo '<th>' . $this->Paginator->sort('Customers.name', 'Name') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', 'Gruppe') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
@@ -95,38 +97,38 @@ foreach ($customers as $customer) {
     $i ++;
 
     if ($this->Html->paymentIsCashless()) {
-        $sumPaymentsDepositDelta += $customer['payment_deposit_delta'];
+        $sumPaymentsDepositDelta += $customer->payment_deposit_delta;
     }
 
     echo '<tr class="data">';
 
     echo '<td class="hide">';
-    echo $customer['Customers']['id_customer'];
+    echo $customer->id_customer;
     echo '</td>';
 
     echo '<td>';
 
-    $customerName = $customer['Customers']['name'];
-    if ($customer['order_count'] <= 3) {
-        $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer['order_count'] . 'x bestellt."></i> ' . $customerName;
+    $customerName = $customer->name;
+    if ($customer->order_count <= 3) {
+        $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
     }
 
-    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/orderState:' . Configure::read('app.htmlHelper')->getOrderStateIdsAsCsv() . '/dateFrom:01.01.2014/dateTo:' . date('d.m.Y') . '/customerId:' . $customer['Customers']['id_customer'] . '/sort:Order.date_add/direction:desc/', [
-        'title' => 'Zu allen Bestellungen von ' . $customer['Customers']['name'],
+    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStates()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
+        'title' => 'Zu allen Bestellungen von ' . $customer->name,
         'escape' => false
     ]) . '</span>';
 
-    $details = $customer['AddressCustomers']['address1'];
-    if ($customer['AddressCustomers']['address2'] != '') {
-        $details .= '<br />' . $customer['AddressCustomers']['address2'];
+    $details = $customer->address_customer->address1;
+    if ($customer->address_customer->address2 != '') {
+        $details .= '<br />' . $customer->address_customer->address2;
     }
-    $details .= '<br />' . $customer['AddressCustomers']['postcode'] . ' ' . $customer['AddressCustomers']['city'];
+    $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
 
-    if ($customer['AddressCustomers']['phone_mobile'] != '') {
-        $details .= '<br />Tel.: ' . $customer['AddressCustomers']['phone_mobile'];
+    if ($customer->address_customer->phone_mobile != '') {
+        $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
     }
-    if ($customer['AddressCustomers']['phone'] != '') {
-        $details .= '<br />Tel.: ' . $customer['AddressCustomers']['phone'];
+    if ($customer->address_customer->phone != '') {
+        $details .= '<br />Tel.: ' . $customer->address_customer->phone;
     }
 
     echo '<div class="customer-details-wrapper">';
@@ -140,38 +142,38 @@ foreach ($customers as $customer) {
 
     echo '<td>';
 
-    if ($appAuth->getGroupId() >= $customer['Customers']['id_default_group']) {
+    if ($appAuth->getGroupId() >= $customer->id_default_group) {
         echo '<div class="table-cell-wrapper group">';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
             'class' => 'customer-group-edit-button',
             'title' => 'Zum Ändern der Gruppe anklicken'
         ], 'javascript:void(0);');
-        echo '<span>' . $this->Html->getGroupName($customer['Customers']['id_default_group']) . '</span>';
+        echo '<span>' . $this->Html->getGroupName($customer->id_default_group) . '</span>';
         echo '</div>';
     } else {
-        echo $this->Html->getGroupName($customer['Customers']['id_default_group']);
+        echo $this->Html->getGroupName($customer->id_default_group);
     }
-    echo '<span class="group-for-dialog">' . $customer['Customers']['id_default_group'] . '</span>';
+    echo '<span class="group-for-dialog">' . $customer->id_default_group . '</span>';
     echo '</td>';
 
     echo '<td>';
-    echo '<span class="email">' . $customer['Customers']['email'] . '</span>';
+    echo '<span class="email">' . $customer->email . '</span>';
     echo '</td>';
 
     echo '<td style="text-align:center;padding-left:10px;width:42px;">';
 
-    if ($customer['Customers']['active'] == 1) {
+    if ($customer->active == 1) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
             'class' => 'set-state-to-inactive change-active-state',
-            'id' => 'change-active-state-' . $customer['Customers']['id_customer'],
+            'id' => 'change-active-state-' . $customer->id_customer,
             'title' => 'Zum Deaktivieren anklicken'
         ], 'javascript:void(0);');
     }
 
-    if ($customer['Customers']['active'] == '') {
+    if ($customer->active == '') {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
             'class' => 'set-state-to-active change-active-state',
-            'id' => 'change-active-state-' . $customer['Customers']['id_customer'],
+            'id' => 'change-active-state-' . $customer->id_customer,
             'title' => 'Zum Aktivieren anklicken'
         ], 'javascript:void(0);');
     }
@@ -179,56 +181,56 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td>';
-    echo $customer['valid_orders_count'];
-    $sumOrdersCount += $customer['valid_orders_count'];
+    echo $customer->valid_orders_count;
+    $sumOrdersCount += $customer->valid_orders_count;
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
-        $negativeClass = $customer['payment_product_delta'] < 0 ? 'negative' : '';
+        $negativeClass = $customer->payment_product_delta < 0 ? 'negative' : '';
         echo '<td align="center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
-            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer['payment_product_delta']);
+            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer->payment_product_delta);
             echo $this->Html->getJqueryUiIcon(
                 $creditBalanceHtml,
                 [
                 'class' => 'icon-with-text',
                 'title' => 'Guthaben anzeigen'
                 ],
-                $this->Slug->getCreditBalance($customer['Customers']['id_customer'])
+                $this->Slug->getCreditBalance($customer->id_customer)
             );
         } else {
-            if ($customer['payment_product_delta'] != 0) {
-                echo $this->Html->formatAsEuro($customer['payment_product_delta']);
+            if ($customer->payment_product_delta != 0) {
+                echo $this->Html->formatAsEuro($customer->payment_product_delta);
             }
         }
 
-        $sumPaymentsProductDelta += $customer['payment_product_delta'];
+        $sumPaymentsProductDelta += $customer->payment_product_delta;
         echo '</td>';
     }
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
-        echo $customer['Customers']['newsletter'];
-        $sumEmailReminders += $customer['Customers']['newsletter'];
+        echo $customer->newsletter;
+        $sumEmailReminders += $customer->newsletter;
         echo '</td>';
     }
 
     echo '<td>';
-    echo $this->Time->formatToDateShort($customer['Customers']['date_add']);
+    echo $customer->date_add->i18nFormat(Configure::read('DateFormat.de.DateShort'));
     echo '</td>';
 
     echo '<td>';
-    echo $this->Time->formatToDateShort($customer['last_valid_order_date']);
+    echo $this->Time->formatToDateShort($customer->last_valid_order_date);
     echo '</td>';
 
     echo '<td style="padding-left: 11px;">';
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             [
-                'class' => 'customer-comment-edit-button' . ($customer['AddressCustomers']['comment'] == '' ? ' disabled' : ''),
-                'title' => $customer['AddressCustomers']['comment'] != '' ? $customer['AddressCustomers']['comment'] : 'Kommentar hinzufügen',
-                'data-title-for-overlay' => $customer['AddressCustomers']['comment'] != '' ? $customer['AddressCustomers']['comment'] : 'Kommentar hinzufügen'
+                'class' => 'customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' disabled' : ''),
+                'title' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen',
+                'data-title-for-overlay' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen'
             ],
             'javascript:void(0);'
         );

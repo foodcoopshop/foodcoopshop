@@ -76,13 +76,17 @@ class PaymentsTable extends AppTable
         $conditions = $this->getManufacturerDepositConditions();
         $conditions['Payments.text'] = 'money';
 
-        $paymentSum = $this->find('all', [
-            'fields' => 'SUM(amount) as sumManufacturerMoneyDeposit',
+        $query = $this->find('all', [
             'conditions' => $conditions,
             'order' => ['Payments.date_add' => 'DESC'],
         ]);
-
-        return $paymentSum[0]['sumManufacturerMoneyDeposit'];
+        
+        $query->select(
+            ['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]
+        );
+        
+        
+        return $query->toArray()[0]['sumManufacturerMoneyDeposit'];
     }
 
     /**
