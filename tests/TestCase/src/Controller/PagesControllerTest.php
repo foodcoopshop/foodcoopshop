@@ -60,6 +60,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCartDetail(),
             $this->Slug->getOrderList(),
             $this->Slug->getOrderDetailList(),
+            $this->Slug->getActionLogsList(),
 //             $this->Slug->getPagesListAdmin(),
 //             $this->Slug->getPageAdd(),
 //             $this->Slug->getPageEdit(3),

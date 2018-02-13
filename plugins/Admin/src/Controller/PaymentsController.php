@@ -570,7 +570,7 @@ class PaymentsController extends AdminAppController
                     'amount' => $order['total_paid'] * - 1,
                     'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order_details/index/dateFrom:' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '/dateTo:' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '/orderId:' . $order['id_order'] . '/customerId:' . $order['id_customer'], [
+                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/index&?dateFrom=' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '&dateTo=' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '&orderId=' . $order['id_order'] . '&customerId=' . $order['id_customer'], [
                         'title' => 'Bestellung anzeigen'
                     ]),
                     'payment_id' => null

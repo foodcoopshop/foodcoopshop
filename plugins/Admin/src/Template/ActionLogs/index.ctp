@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="actionLogs">
 
@@ -65,39 +67,39 @@ $i = 0;
 foreach ($actionLogs as $actionLog) {
     $i ++;
 
-    $actionType = $actionLogModel->types[$actionLog['ActionLogs']['type']];
+    $actionType = $actionLogModel->types[$actionLog->type];
     $actionClass = empty($actionType['class']) ? [] : $actionType['class'];
     $actionClass = array_merge(['data'], $actionClass);
 
     echo '<tr class="' . implode(' ', $actionClass) . '">';
 
     echo '<td class="hide">';
-    echo $actionLog['ActionLogs']['id'];
+    echo $actionLog->id;
     echo '</td>';
 
     echo '<td>';
     echo $this->Html->link(
         $actionType['de'],
-        '/admin/action_logs/index/type:'.$actionLog['ActionLogs']['type'].'/productId:'.$productId.'/customerId:'.$customerId.'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
+        '/admin/action-logs/index/?type='.$actionLog->type.'&productId='.$productId.'&customerId='.$customerId.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';
 
     echo '<td>';
-    echo $this->Time->formatToDateNTimeLongWithSecs($actionLog['ActionLogs']['date']);
+    echo $actionLog->date->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td>';
-    echo $actionLog['ActionLogs']['text'];
+    echo $actionLog->text;
     echo '</td>';
 
     echo '<td>';
-    $name = $actionLog['Customers']['name'];
-    if (isset($actionLog['Customers']['Manufacturers'])) {
-        $name = $actionLog['Customers']['Manufacturers']['name'];
+    $name = $actionLog->customer->name;
+    if ($actionLog->customer->manufacturer) {
+        $name = $actionLog->customer->manufacturer->name;
     }
     echo $this->Html->link(
         $name,
-        '/admin/action_logs/index/type:'.$type.'/productId:'.$productId.'/customerId:'.$actionLog['Customers']['id_customer'].'/dateFrom:'.$dateFrom.'/dateTo:'.$dateTo.(!empty($this->params['named']['sort']) ? '/sort:'.$this->params['named']['sort'] : '').(!empty($this->params['named']['direction']) ? '/direction:'.$this->params['named']['direction'] : '')
+        '/admin/action-logs/index/?type='.$type.'&productId='.$productId.'&customerId='.$actionLog->customer->id_customer.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';
 
@@ -107,60 +109,60 @@ foreach ($actionLogs as $actionLog) {
     $targetBlank = true;
 
     // products
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'products' && ! ($actionLog['ActionLogs']['type'] == 'product_set_inactive')) {
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'products' && ! ($actionLog->type == 'product_set_inactive')) {
         $showLink = true;
         $title = 'Produkt anzeigen';
-        $url = $this->Slug->getProductDetail($actionLog['ActionLogs']['object_id'], '');
+        $url = $this->Slug->getProductDetail($actionLog->object_id, '');
     }
 
     // manufacturers
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'manufacturers') {
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'manufacturers') {
         $showLink = true;
         $title = 'Hersteller anzeigen';
-        $url = $this->Slug->getManufacturerDetail($actionLog['ActionLogs']['object_id'], '');
+        $url = $this->Slug->getManufacturerDetail($actionLog->object_id, '');
     }
 
     // blog_posts
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'blog_posts' && ! (in_array($actionLog['ActionLogs']['type'], [
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'blog_posts' && ! (in_array($actionLog->type, [
         'blog_post_deleted'
     ]))) {
         $showLink = true;
         $title = 'Blog-Artikel anzeigen';
-        $url = $this->Slug->getBlogPostDetail($actionLog['ActionLogs']['object_id'], '');
+        $url = $this->Slug->getBlogPostDetail($actionLog->object_id, '');
     }
 
     // pages
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'pages' && ! (in_array($actionLog['ActionLogs']['type'], [
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'pages' && ! (in_array($actionLog->type, [
         'page_deleted'
     ]))) {
         $showLink = true;
         $title = 'Seite anzeigen';
-        $url = $this->Slug->getPageDetail($actionLog['ActionLogs']['object_id'], '');
+        $url = $this->Slug->getPageDetail($actionLog->object_id, '');
     }
 
     // categories
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'categories' && ! (in_array($actionLog['ActionLogs']['type'], [
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'categories' && ! (in_array($actionLog->type, [
         'category_deleted'
     ]))) {
         $showLink = true;
         $title = 'Kategorie anzeigen';
-        $url = $this->Slug->getCategoryDetail($actionLog['ActionLogs']['object_id'], '');
+        $url = $this->Slug->getCategoryDetail($actionLog->object_id, '');
     }
 
     // order details
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'order_details') {
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'order_details') {
         $showLink = true;
         $title = 'Bestelltes Produkt anzeigen';
-        $url = '/admin/order-details/index/orderDetailId:' . $actionLog['ActionLogs']['object_id'];
+        $url = '/admin/order-details/index/?orderDetailId=' . $actionLog->object_id;
         $targetBlank = false;
     }
 
     // orders
-    if ($actionLog['ActionLogs']['object_id'] > 0 && $actionLog['ActionLogs']['object_type'] == 'orders') {
+    if ($actionLog->object_id > 0 && $actionLog->object_type == 'orders') {
         $showLink = true;
         $title = 'Bestellung anzeigen';
         // manually add ORDER_STATE_CANCELLED to orderState to show cancelled orders
-        $url = '/admin/orders/index/orderId:' . $actionLog['ActionLogs']['object_id'] . '/orderState:' . join(',', array_keys($this->Html->getOrderStates()));
+        $url = '/admin/orders/index/?orderId=' . $actionLog->object_id . '&orderStates[]=' . join(',', array_keys($this->Html->getOrderStates()));
         $targetBlank = false;
     }
 
@@ -176,7 +178,7 @@ foreach ($actionLogs as $actionLog) {
 }
 
 echo '<tr>';
-echo '<td colspan="10"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="10"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> Datensätze</td>';
 echo '</tr>';
 
 echo '</table>';

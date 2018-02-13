@@ -154,10 +154,12 @@ class CustomersTable extends AppTable
         $mm = TableRegistry::get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
-                'Addresses.email' => $customer->email
+                'AddressManufacturers.email' => $customer->email
+            ],
+            'contain' => [
+                'AddressManufacturers'
             ]
         ])->first();
-
         return $manufacturer;
     }
 

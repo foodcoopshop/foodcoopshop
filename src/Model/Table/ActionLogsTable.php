@@ -421,39 +421,40 @@ class ActionLogsTable extends AppTable
         'configuration_changed' => [
             'de' => 'Einstellung geändert'
         ]
-    ]
-    ;
-
-    public $belongsTo = [
-        'Customers' => [
+    ];
+    
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->belongsTo('Customers', [
             'foreignKey' => 'customer_id'
-        ],
-        'Products' => [
+        ]);
+        $this->belongsTo('Products', [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'products'
             ]
-        ],
-        'Manufacturers' => [
+        ]);
+        $this->belongsTo('Manufacturers', [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'manufacturers'
             ]
-        ],
-        'BlogPosts' => [
+        ]);
+        $this->belongsTo('BlogPosts', [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'blog_posts'
             ]
-        ],
-        'Payments' => [
+        ]);
+        $this->belongsTo('Payments', [
             'foreignKey' => 'object_id',
             'conditions' => [
                 'object_type' => 'payments'
             ]
-        ]
-    ];
-
+        ]);
+    }
+    
     public function customSave($type, $customerId, $objectId, $objectType, $text)
     {
         $data2save = [

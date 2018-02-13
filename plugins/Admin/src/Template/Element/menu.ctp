@@ -23,14 +23,14 @@ if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
 $paymentMemberFeeMenuElement = $this->Menu->getPaymentMemberFeeMenuElement();
 $actionLogsMenuElement = [
-    'slug' => '/admin/action_logs',
+    'slug' => $this->Slug->getActionLogsList(),
     'name' => 'Aktivitäten',
     'options' => [
         'fa-icon' => 'fa-fw fa-eye'
     ]
 ];
 $cancelledArticlesMenuElement = [
-    'slug' => '/admin/action_logs/index/type:order_detail_cancelled',
+    'slug' => $this->Slug->getActionLogsList().'/index/?type=order_detail_cancelled',
     'name' => 'Stornierte Produkte',
     'options' => [
         'fa-icon' => 'fa-fw fa-remove'

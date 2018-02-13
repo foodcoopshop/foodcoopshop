@@ -46,8 +46,8 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        $conditions[] = 'DATE_FORMAT(ActionLog.date, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        $conditions[] = 'DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        $conditions[] = 'DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         $customerId = '';
         if (! empty($this->request->getQuery('customerId'))) {
@@ -102,17 +102,28 @@ class ActionLogsController extends AdminAppController
         }
         $this->set('type', $type);
 
-        $this->Paginator->settings = array_merge($this->Paginator->settings, [
+        $query = $this->ActionLog->find('all', [
             'conditions' => $conditions,
+            'contain' => [
+                'Customers',
+                'Products',
+                'Manufacturers',
+                'BlogPosts',
+                'Payments'
+            ]
+        ]); 
+        $actionLogs = $this->paginate($query, [
+            'sortWhitelist' => [
+                'ActionLogs.type', 'ActionLogs.date', 'ActionLogs.text', 'Customers.' . Configure::read('app.customerMainNamePart')
+            ],
             'order' => [
                 'ActionLogs.date' => 'DESC'
             ]
-        ]);
-        $actionLogs = $this->Paginator->paginate('ActionLogs');
-        foreach ($actionLogs as &$actionLog) {
-            $manufacturer = $this->Customer->getManufacturerRecord($actionLog);
+        ])->toArray();
+        foreach ($actionLogs as $actionLog) {
+            $manufacturer = $this->Customer->getManufacturerRecord($actionLog->customer);
             if ($manufacturer) {
-                $actionLog['Customers']['Manufacturers'] = $manufacturer['Manufacturers'];
+                $actionLog->customer->manufacturer = $manufacturer;
             }
         }
         $this->set('actionLogs', $actionLogs);
