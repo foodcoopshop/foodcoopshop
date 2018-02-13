@@ -320,7 +320,7 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer
         $email = new AppEmail();
-        $email->setTemplate('order_detail_quantity_changed')
+        $email->setTemplate('Admin.order_detail_quantity_changed')
         ->setTo($oldOrderDetail['Orders']['Customers']['email'])
         ->setSubject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
         ->setViewVars([
@@ -404,7 +404,7 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer
         $email = new AppEmail();
-        $email->setTemplate('order_detail_price_changed')
+        $email->setTemplate('Admin.order_detail_price_changed')
         ->setTo($oldOrderDetail['Orders']['Customers']['email'])
         ->setSubject('Preis korrigiert: ' . $oldOrderDetail['OrderDetails']['product_name'])
         ->setViewVars([
@@ -488,7 +488,7 @@ class OrderDetailsController extends AdminAppController
 
             // send email to customer
             $email = new AppEmail();
-            $email->setTemplate('order_detail_deleted')
+            $email->setTemplate('Admin.order_detail_deleted')
             ->setTo($orderDetail['Orders']['Customers']['email'])
             ->setSubject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetails']['product_name'])
             ->setViewVars([

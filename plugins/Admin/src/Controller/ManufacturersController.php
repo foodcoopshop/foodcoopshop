@@ -368,7 +368,7 @@ class ManufacturersController extends AdminAppController
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturers']['send_invoice']);
             if ($sendEmail) {
-                $email->setTemplate('send_invoice')
+                $email->setTemplate('Admin.send_invoice')
                     ->setTo($manufacturer['Addresses']['email'])
                     ->setAttachments([
                     $invoicePdfFile
@@ -451,7 +451,7 @@ class ManufacturersController extends AdminAppController
 
             if ($sendEmail) {
                 $flashMessage .= ' und an ' . $manufacturer['Addresses']['email'] . ' versendet';
-                $email->setTemplate('send_order_list')
+                $email->setTemplate('Admin.send_order_list')
                     ->setTo($manufacturer['Addresses']['email'])
                     ->setCc($ccRecipients)
                     ->setAttachments([

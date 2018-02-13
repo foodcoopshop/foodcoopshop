@@ -89,7 +89,7 @@ class PaymentsController extends AdminAppController
         $payment['Payments']['approval'] = $approval;
         $payment['Payments']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
         $email = new AppEmail();
-        $email->setTemplate('payment_status_changed')
+        $email->setTemplate('Admin.payment_status_changed')
             ->setTo($payment['Customers']['email'])
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
@@ -165,7 +165,7 @@ class PaymentsController extends AdminAppController
                 $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customers']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
                 if ($this->request->data['Payments']['send_email']) {
                     $email = new AppEmail();
-                    $email->setTemplate('payment_status_changed')
+                    $email->setTemplate('Admin.payment_status_changed')
                         ->setTo($unsavedPayment['Customers']['email'])
                         ->setSubject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
                         ->setViewVars([
