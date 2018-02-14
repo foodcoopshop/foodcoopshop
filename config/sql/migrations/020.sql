@@ -1,1 +1,0 @@
-ALTER TABLE `fcs_images` CHANGE `id_image` `id_image` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
