@@ -10,11 +10,11 @@ if (!defined('DATASOURCE')) {
 $datasource = array(
     'PROD' => array(
         'structure' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
-        'data' => 'Config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data.sql',
+        'data' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data.sql',
     ),
     'TEST' => array(
         'structure' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
-        'data' => 'tests' . 'config' . DS . 'sql' . DS . 'test-db-data.sql',
+        'data' => 'tests' . DS . 'config' . DS . 'sql' . DS . 'test-db-data.sql',
     ),
 );
 
@@ -24,42 +24,25 @@ echo 'Loading config...';
 $dir = dirname(dirname(realpath(__DIR__))) . DS;
 
 // include DB config
-include $dir . 'config' . DS . 'database.php';
-
-$db = new DATABASE_CONFIG();
+$config = @include $dir . 'config' . DS . 'custom_config.php';
+$dbConfig = $config['Datasources'];
 
 if (DATASOURCE == 'PROD') {
-    if (!isset($db->default)) {
-        exit(PHP_EOL . 'Cannot read Config' . DS . 'database.php.' . PHP_EOL);
+    if (empty($dbConfig['default'])) {
+        exit(PHP_EOL . 'Cannot read config' . DS . 'custom_config.php.' . PHP_EOL);
     }
-    $db_conf = $db->default;  // use production DB
+    $db_conf = $dbConfig['default'];  // use production DB
 }
 
 if (DATASOURCE == 'TEST') {
-    if (!isset($db->test)) {
-        exit(PHP_EOL . 'Cannot read Config' . DS . 'database.php.' . PHP_EOL);
+    if (empty($dbConfig['test'])) {
+        exit(PHP_EOL . 'Cannot read config' . DS . 'custom_config.php.' . PHP_EOL);
     }
-    $db_conf = $db->test;  // use test DB
+    $db_conf = $dbConfig['test'];  // use test DB
 }
 
 if (empty($db_conf)) {
     exit(PHP_EOL . 'Unknown datasource.' . PHP_EOL);
-}
-
-if (!isset($db_conf['datasource'])
-    || $db_conf['datasource'] != 'Database/Mysql'
-    || !isset($db_conf['persistent'])
-    || $db_conf['persistent'] !== false
-    || !isset($db_conf['encoding'])
-    || $db_conf['encoding'] != 'utf8'
-) {
-    exit(PHP_EOL . 'Cannot use config in Config' . DS . 'database.php.' . PHP_EOL);
-}
-
-if (!isset($db_conf['prefix'])
-    || $db_conf['prefix'] != 'fcs_'
-) {
-    exit(PHP_EOL . 'Cannot use prefix from Config' . DS . 'database.php. Must use default fcs_' . PHP_EOL);
 }
 
 echo 'done' . PHP_EOL;
@@ -67,31 +50,31 @@ echo 'Reading dump command...';
 
 $dump_cmd = '';
 
-$lines = file($dir . 'Config' . DS . 'app.config.php');
+$lines = @file($dir . 'config' . DS . 'app_config.php');
 if (!is_array($lines)
     || empty($lines)
 ) {
-    exit(PHP_EOL . 'Cannot load Config' . DS . 'app.config.php.' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot load config' . DS . 'app_config.php.' . PHP_EOL);
 }
 
 foreach ($lines as $line) {
-    if (($pos = strpos($line, '\'app.mysqlDumpCommand\',')) !== false) {
-        $line = substr($line, $pos + strlen('\'app.mysqlDumpCommand\','));
+    if (($pos = strpos($line, '\'mysqlDumpCommand\'')) !== false) {
+        $line = substr($line, $pos + strlen('\'mysqlDumpCommand\','));
         $line = explode('\'', $line, 3);
         $dump_cmd = $line[1];
     }
 }
 
 if (empty($dump_cmd)) {
-    exit(PHP_EOL . 'Cannot read app.mysqlDumpCommand from Config' . DS . 'app.config.php.' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot read mysqlDumpCommand from Config' . DS . 'app_config.php.' . PHP_EOL);
 }
 
 if (strpos($dump_cmd, 'mysqldump') === false) {
-    exit(PHP_EOL . 'Cannot use app.mysqlDumpCommand from Config' . DS . 'app.config.php. Must use mysqldump' . PHP_EOL);
+    exit(PHP_EOL . 'Cannot use mysqlDumpCommand from Config' . DS . 'app_config.php. Must use mysqldump' . PHP_EOL);
 }
 
-if (file_exists($dir . 'Config' . DS . 'custom.config.php')) {
-    $lines = file($dir . 'Config' . DS . 'custom.config.php');
+if (file_exists($dir . 'config' . DS . 'custom_config.php')) {
+    $lines = @file($dir . 'config' . DS . 'custom_config.php');
     if (!is_array($lines)
         || empty($lines)
     ) {
@@ -99,19 +82,19 @@ if (file_exists($dir . 'Config' . DS . 'custom.config.php')) {
     }
 
     foreach ($lines as $line) {
-        if (($pos = strpos($line, '\'app.mysqlDumpCommand\',')) !== false) {
-            $line = substr($line, $pos + strlen('\'app.mysqlDumpCommand\','));
+        if (($pos = strpos($line, '\'mysqlDumpCommand\'')) !== false) {
+            $line = substr($line, $pos + strlen('\'mysqlDumpCommand\','));
             $line = explode('\'', $line, 3);
             $dump_cmd = $line[1];
         }
     }
 
     if (empty($dump_cmd)) {
-        exit(PHP_EOL . 'Cannot read app.mysqlDumpCommand from Config' . DS . 'custom.config.php.' . PHP_EOL);
+        exit(PHP_EOL . 'Cannot read app.mysqlDumpCommand from config' . DS . 'custom_config.php.' . PHP_EOL);
     }
 
     if (strpos($dump_cmd, 'mysqldump') === false) {
-        exit(PHP_EOL . 'Cannot use app.mysqlDumpCommand from Config' . DS . 'custom.config.php. Must use mysqldump' . PHP_EOL);
+        exit(PHP_EOL . 'Cannot use app.mysqlDumpCommand from config' . DS . 'custom_config.php. Must use mysqldump' . PHP_EOL);
     }
 }
 
@@ -119,7 +102,7 @@ echo 'done' . PHP_EOL;
 echo 'Dumping structure...';
 
 $result = array();
-$cmd = sprintf('%1$s --host="%2$s" --user="%3$s" --password="%4$s" --no-create-db --no-data --events --routines --skip-opt --create-options --add-drop-table --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $dump_cmd, $db_conf['host'], $db_conf['login'], $db_conf['password'], $dir . $datasource[DATASOURCE]['structure'] . '.tmp', $db_conf['database']);
+$cmd = sprintf('%1$s --host="%2$s" --user="%3$s" --password="%4$s" --no-create-db --no-data --events --routines --skip-opt --create-options --add-drop-table --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $dump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['structure'] . '.tmp', $db_conf['database']);
 exec($cmd, $result);
 
 foreach ($result as $line) {
@@ -143,7 +126,7 @@ echo 'done' . PHP_EOL;
 echo 'Dumping data...';
 
 $result = array();
-$cmd = sprintf('%1$s --host="%2$s" --user="%3$s" --password="%4$s" --no-create-info --skip-opt --create-options --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $dump_cmd, $db_conf['host'], $db_conf['login'], $db_conf['password'], $dir . $datasource[DATASOURCE]['data'] . '.tmp', $db_conf['database']);
+$cmd = sprintf('%1$s --host="%2$s" --user="%3$s" --password="%4$s" --no-create-info --skip-opt --create-options --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $dump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['data'] . '.tmp', $db_conf['database']);
 exec($cmd, $result);
 
 foreach ($result as $line) {
