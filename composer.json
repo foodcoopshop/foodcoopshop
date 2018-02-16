@@ -19,7 +19,6 @@
         "cakephp/cakephp": "3.5.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "@stable",
-        "cakephp/bake": "@stable",
         "cakephp/plugin-installer": "~1.0",
         "markstory/asset_compress": "3.2.*",
         "intervention/image": "2.*",
@@ -31,6 +30,7 @@
     },
     "require-dev": {
         "psy/psysh": "@stable",
+        "cakephp/bake": "@stable",
         "cakephp/debug_kit": "~3.2",
         "cakephp/cakephp-codesniffer": "^3.0",
         "phpunit/phpunit": "6.*"
