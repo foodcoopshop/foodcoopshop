@@ -222,15 +222,15 @@ class SlugHelper extends Helper
 
     public function getBlogPostListAdmin()
     {
-        return '/admin/blog_posts';
+        return '/admin/blog-posts';
     }
     public function getBlogPostEdit($blogPostId)
     {
-        return '/admin/blog_posts/edit/'.$blogPostId;
+        return '/admin/blog-posts/edit/'.$blogPostId;
     }
     public function getBlogPostAdd()
     {
-        return '/admin/blog_posts/add';
+        return '/admin/blog-posts/add';
     }
 
     public function getPagesListAdmin()
