@@ -55,9 +55,9 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('Categories.id_category', 'ID') . '</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Categories.name', 'Name') . '</th>';
-echo '<th>' . $this->Paginator->sort('Categories.modified', 'geändert am') . '</th>';
-echo '<th>' . $this->Paginator->sort('Categories.active', 'Aktiv') . '</th>';
+echo '<th>Name</th>';
+echo '<th>geändert am</th>';
+echo '<th>Aktiv</th>';
 echo '<th></th>';
 echo '</tr>';
 

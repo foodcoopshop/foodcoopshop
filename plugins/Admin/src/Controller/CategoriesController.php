@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * CategoriesController
@@ -121,12 +122,13 @@ class CategoriesController extends AdminAppController
     public function index()
     {
         $conditions = [];
+        $this->Category = TableRegistry::get('Categories');
         $conditions[] = $this->Category->getExcludeCondition();
         $conditions[] = 'Categories.active > ' . APP_DEL;
 
-        $totalCategoriesCount = $this->Category->find('count', [
+        $totalCategoriesCount = $this->Category->find('all', [
             'conditions' => $conditions
-        ]);
+        ])->count();
         $this->set('totalCategoriesCount', $totalCategoriesCount);
 
         $categories = $this->Category->getThreaded($conditions);

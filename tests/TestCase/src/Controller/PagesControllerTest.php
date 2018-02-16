@@ -52,14 +52,13 @@ class PagesControllerTest extends AppCakeTestCase
      */
     public function testAllSuperadminUrls()
     {
-        $this->markTestIncomplete();
         $this->loginAsSuperadmin();
 
         $testUrls = [
             $this->Slug->getAdminHome(),
             $this->Slug->getCartDetail(),
-            $this->Slug->getOrderList(),
-            $this->Slug->getOrderDetailList(),
+            $this->Slug->getOrdersList(),
+            $this->Slug->getOrderDetailsList(),
             $this->Slug->getActionLogsList(),
             $this->Slug->getPagesListAdmin(),
 //             $this->Slug->getPageAdd(),
@@ -85,7 +84,7 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getAttributesList(),
 //             $this->Slug->getAttributeAdd(),
 //             $this->Slug->getAttributeEdit(32),
-//             $this->Slug->getCategoriesList(),
+            $this->Slug->getCategoriesList(),
 //             $this->Slug->getCategoryAdd(),
 //             $this->Slug->getCategoryEdit(17),
 //             $this->Slug->getTaxesList(),
