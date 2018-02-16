@@ -120,7 +120,7 @@ class SlidersController extends AdminAppController
             'order' => [
                 'Sliders.position' => 'ASC'
             ]
-        ])->toArray();
+        ]);
         
         $this->set('sliders', $sliders);
         $this->set('title_for_layout', 'Slideshow');

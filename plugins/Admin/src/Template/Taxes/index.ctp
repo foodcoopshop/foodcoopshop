@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="taxes">
 
@@ -49,7 +51,7 @@
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Taxes.id_tax', 'ID') . '</th>';
+echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Taxes.rate', 'Steuersatz') . '</th>';
 echo '<th>' . $this->Paginator->sort('Taxes.active', 'Aktiv') . '</th>';
@@ -62,27 +64,27 @@ foreach ($taxes as $tax) {
     $rowClass = [
         'data'
     ];
-    if (! $tax['Taxes']['active']) {
+    if (! $tax->active) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr id="tax-' . $tax['Taxes']['id_tax'] . '" class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="tax-' . $tax->id_tax . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
-    echo $tax['Taxes']['id_tax'];
+    echo $tax->id_tax;
     echo '</td>';
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ], $this->Slug->getTaxEdit($tax['Taxes']['id_tax']));
+    ], $this->Slug->getTaxEdit($tax->id_tax));
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->formatAsPercent($tax['Taxes']['rate']);
+    echo $this->Html->formatAsPercent($tax->rate);
     echo '</td>';
 
     echo '<td align="center">';
-    if ($tax['Taxes']['active'] == 1) {
+    if ($tax->active == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));

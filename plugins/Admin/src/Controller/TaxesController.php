@@ -113,16 +113,23 @@ class TaxesController extends AdminAppController
 
     public function index()
     {
-        $conditions = [];
-        $conditions[] = 'Taxes.active > ' . APP_DEL;
+        $conditions = [
+            'Taxes.active > ' . APP_DEL
+        ];
 
-        $this->Paginator->settings = array_merge([
-            'conditions' => $conditions,
+        $this->Tax = TableRegistry::get('Taxes');
+        $query = $this->Tax->find('all', [
+            'conditions' => $conditions
+        ]);
+        $taxes = $this->paginate($query, [
+            'sortWhitelist' => [
+                'Taxes.rate', 'Taxes.position'
+            ],
             'order' => [
                 'Taxes.rate' => 'ASC'
             ]
-        ], $this->Paginator->settings);
-        $taxes = $this->Paginator->paginate('Taxes');
+        ]);
+        
         $this->set('taxes', $taxes);
 
         $this->set('title_for_layout', 'Steuersätze');
