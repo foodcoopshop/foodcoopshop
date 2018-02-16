@@ -448,7 +448,7 @@ class ProductsTable extends AppTable
                     }
                 }
             }
-            $products[$i]['selectedCategories'] = Hash::extract('{n}.id_category', $product['CategoryProducts']);
+            $products[$i]['selectedCategories'] = Hash::extract($product['CategoryProducts'], '{n}.id_category');
             $products[$i]['Deposit'] = 0;
 
             $products[$i]['Products']['is_new'] = $this->isNew($product['ProductShop']['date_add']);

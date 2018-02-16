@@ -105,22 +105,27 @@ class AttributesController extends AdminAppController
 
     public function index()
     {
-        $conditions = [];
-        $conditions[] = 'Attributes.active > ' . APP_DEL;
+        $conditions = [
+            'Attributes.active > ' . APP_DEL
+        ];
 
-        $this->Paginator->settings = array_merge([
-            'conditions' => $conditions,
+        $this->Attribute = TableRegistry::get('Attributes');
+        $query = $this->Attribute->find('all', [
+            'conditions' => $conditions
+        ]);
+        $attributes = $this->paginate($query, [
+            'sortWhitelist' => [
+                'Attributes.name', 'Attributes.modified'
+            ],
             'order' => [
                 'Attributes.name' => 'ASC'
             ]
-        ], $this->Paginator->settings);
-        $attributes = $this->Paginator->paginate('Attributes');
+        ])->toArray();
 
         $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
-        foreach ($attributes as &$attribute) {
-            $attribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attribute['Attributes']['id_attribute']);
+        foreach ($attributes as $attribute) {
+            $attribute->combination_product = $this->ProductAttributeCombination->getCombinationCounts($attribute->id_attribute);
         }
-
         $this->set('attributes', $attributes);
 
         $this->set('title_for_layout', 'Varianten');

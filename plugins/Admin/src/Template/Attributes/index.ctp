@@ -52,7 +52,7 @@ use Cake\Utility\Hash;
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Attributes.id_attribute', 'ID') . '</th>';
+echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Attributes.name', 'Name') . '</th>';
 echo '<th>Aktivierten Produkten zugewiesen?</th>';
@@ -67,50 +67,50 @@ foreach ($attributes as $attribute) {
     $rowClass = [
         'data'
     ];
-    if (! $attribute['Attributes']['active']) {
+    if (! $attribute->active) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr id="attribute-' . $attribute['Attributes']['id_attribute'] . '" class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="attribute-' . $attribute->id_attribute . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
-    echo $attribute['Attributes']['id_attribute'];
+    echo $attribute->id_attribute;
     echo '</td>';
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ], $this->Slug->getAttributeEdit($attribute['Attributes']['id_attribute']));
+    ], $this->Slug->getAttributeEdit($attribute->id_attribute));
     echo '</td>';
 
     echo '<td>';
-    echo $attribute['Attributes']['name'];
+    echo $attribute->name;
     echo '</td>';
 
     echo '<td style="width:300px;">';
-    if (! empty($attribute['CombinationProducts']['online'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['online']) . ')', 'javascript:void(0);', [
+    if (! empty($attribute->combination_product['online'])) {
+        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
         ]);
-        echo '<div class="toggle-content">' . join('<br /> ', Hash::extract('{n}.link', $attribute['CombinationProducts']['online'])) . '</div>';
+        echo '<div class="toggle-content">' . join('<br /> ', Hash::extract($attribute->combination_product['online'], '{n}.link')) . '</div>';
     }
     echo '</td>';
 
     echo '<td style="width:300px;">';
-    if (! empty($attribute['CombinationProducts']['offline'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute['CombinationProducts']['offline']) . ')', 'javascript:void(0);', [
+    if (! empty($attribute->combination_product['offline'])) {
+        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
         ]);
-        echo '<div class="toggle-content">' . join('<br /> ', Hash::extract('{n}.ProductLang.name', $attribute['CombinationProducts']['offline'])) . '</div>';
+        echo '<div class="toggle-content">' . join('<br /> ', Hash::extract($attribute->combination_product['offline'], '{n}.name')) . '</div>';
     }
     echo '</td>';
 
     echo '<td>';
-    if ($attribute['Attributes']['modified'] != '') {
-        echo $this->Time->formatToDateNTimeLongWithSecs($attribute['Attributes']['modified']);
+    if ($attribute->modified != '') {
+        echo $attribute->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));;
     }
     echo '</td>';
 

@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -41,32 +42,36 @@ class ProductAttributeCombinationsTable extends AppTable
             'contain' => [
                 'Attributes',
                 'ProductAttributes.Products.ProductLangs',
-                'ProductAttributes.Products.ProductShops',
                 'ProductAttributes.Products.Manufacturers'
             ]
         ]);
 
-        $return = [
+        $result = [
             'online' => [],
             'offline' => []
         ];
+        
         foreach ($combinations as $combination) {
-            $preparedProduct = $combination['ProductAttributes']['Products'];
+            
+            $preparedProduct = $combination->product_attribute->product;
 
-            $preparedProduct['link'] = Configure::read('app.htmlHelper')->link($preparedProduct['ProductLangs']['name'] . ' - ' . $preparedProduct['Manufacturers']['name'], Configure::read('app.slugHelper')->getProductDetail($preparedProduct['id_product'], $preparedProduct['ProductLangs']['name']));
-
-            if ($combination['ProductAttributes']['Products']['active'] == 1) {
-                $return['online'][] = $preparedProduct;
+            $tmpProduct = [];
+            $tmpProduct['link'] = Configure::read('app.htmlHelper')->link($preparedProduct->product_lang->name . ' - ' . $preparedProduct->manufacturer->name, Configure::read('app.slugHelper')->getProductDetail($preparedProduct->id_product, $preparedProduct->product_lang->name));
+            $tmpProduct['name']= $preparedProduct->product_lang->name;
+            $tmpProduct['manufacturer_name'] = $preparedProduct->manufacturer->name;
+                
+            if ($preparedProduct->active == 1) {
+                $result['online'][] = $tmpProduct;
             }
 
-            if ($combination['ProductAttributes']['Products']['active'] == 0) {
-                $return['offline'][] = $preparedProduct;
+            if ($preparedProduct->active == 0) {
+                $result['offline'][] = $tmpProduct;
             }
         }
-
-        $return['online'] = Set::sort($return['online'], '{n}.ProductLang.name', 'asc');
-        $return['offline'] = Set::sort($return['offline'], '{n}.ProductLang.name', 'asc');
-
-        return $return;
+        
+        $result['online'] = Hash::sort($result['online'], '{n}.name', 'asc');
+        $result['offline'] = Hash::sort($result['offline'], '{n}.name', 'asc');
+        
+        return $result;
     }
 }

@@ -81,7 +81,7 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getManufacturerAdd(),
 //             $this->Slug->getManufacturerEdit(5),
 //             $this->Slug->getManufacturerEditOptions(5),
-//             $this->Slug->getAttributesList(),
+            $this->Slug->getAttributesList(),
 //             $this->Slug->getAttributeAdd(),
 //             $this->Slug->getAttributeEdit(32),
             $this->Slug->getCategoriesList(),
