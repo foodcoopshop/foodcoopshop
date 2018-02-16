@@ -147,12 +147,14 @@ class PagesController extends AdminAppController
 
         $conditions[] = 'Pages.active > ' . APP_DEL;
 
-        $totalPagesCount = $this->Page->find('count', [
+        $this->Page = TableRegistry::get('Pages');
+        $totalPagesCount = $this->Page->find('all', [
             'conditions' => $conditions
-        ]);
+        ])->count();
         $this->set('totalPagesCount', $totalPagesCount);
 
-        $pages = $this->Page->findAllGroupedByMenu($conditions);
+        $query = $this->Page->findAllGroupedByMenu($conditions);
+        $pages = $this->paginate($query);
         $this->set('pages', $pages);
 
         $this->set('title_for_layout', 'Seiten');

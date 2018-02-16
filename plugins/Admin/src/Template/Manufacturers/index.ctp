@@ -63,7 +63,7 @@ echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Manufacturers.name', 'Name') . '</th>';
 echo '<th style="width:83px;">Produkte</th>';
 echo '<th>Pfand</th>';
-echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Ansprechperson').'</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Ansprechperson').'</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturers.iban', 'IBAN') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturers.active', 'Aktiv') . '</th>';
 echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', 'Lieferpause') . '</th>';

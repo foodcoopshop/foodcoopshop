@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <div id="pages">
 
@@ -52,15 +54,15 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('Pages.id_page', 'ID') . '</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Pages.title', 'Titel') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.menu_type', 'Menü') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.position', 'Reihenfolge im Menü') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.is_private', 'Nur für Mitglieder') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.full_width', 'Ganze Breite') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.extern_url', 'Link') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.name', 'geändert von') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.modified', 'geändert am') . '</th>';
-echo '<th>' . $this->Paginator->sort('Pages.active', 'Aktiv') . '</th>';
+echo '<th>Titel</th>';
+echo '<th>Menü</th>';
+echo '<th>Reihenfolge im Menü</th>';
+echo '<th>Nur für Mitglieder</th>';
+echo '<th>Ganze Breite</th>';
+echo '<th>Link</th>';
+echo '<th>geändert von</th>';
+echo '<th>geändert am</th>';
+echo '<th>Aktiv</th>';
 echo '<th></th>';
 echo '</tr>';
 
