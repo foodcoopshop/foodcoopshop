@@ -136,7 +136,7 @@ use Cake\Core\Configure;
     <?php
 
     if (!empty($manufacturer)) {
-        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active, true, $manufacturer['Manufacturers']['name']);
+        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active, true, $manufacturer->name);
         if ($manufacturerHolidayString != '') {
             echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
         }
@@ -170,57 +170,57 @@ use Cake\Core\Configure;
     foreach ($products as $product) {
         $i ++;
 
-        echo '<tr id="product-' . $product['Products']['id_product'] . '" class="data ' . $product['Products']['rowClass'] . '" data-manufacturer-id="'.(isset($product['Products']['id_manufacturer']) ? $product['Products']['id_manufacturer'] : '').'">';
+        echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->rowClass . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
 
         echo '<td class="hide">';
-        echo $product['Products']['id_product'];
+        echo $product->id_product;
         echo '</td>';
 
         echo '<td style="text-align: center;padding-left:16px;width:50px;">';
-        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), [
                 'class' => 'add-product-attribute-button',
-                'title' => 'Neue Variante für Produkt "' . $product['ProductLangs']['name'] . '" erstellen'
+                'title' => 'Neue Variante für Produkt "' . $product->product_lang->name . '" erstellen'
             ], 'javascript:void(0);');
         }
         echo '</td>';
 
-        $imageExists = $product['Images']['id_image'] != '';
-        echo '<td width="29px;" class="' . ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) && !$imageExists ? 'not-available' : '') . '">';
-        if ((! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
+        $imageExists = !empty($product->image);
+        echo '<td width="29px;" class="' . ((! empty($product->product_attributes) || isset($product->product_attributes)) && !$imageExists ? 'not-available' : '') . '">';
+        if ((! empty($product->product_attributes) || isset($product->product_attributes))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
                 'class' => 'add-image-button',
                 'title' => 'Neues Bild hochladen bzw. austauschen',
-                'data-object-id' => $product['Products']['id_product']
+                'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
             echo $this->element('imageUploadForm', [
-                'id' => $product['Products']['id_product'],
-                'action' => '/admin/tools/doTmpImageUpload/' . $product['Products']['id_product'],
+                'id' => $product->id_product,
+                'action' => '/admin/tools/doTmpImageUpload/' . $product->id_product,
                 'imageExists' => $imageExists,
-                'existingImageSrc' => $imageExists ? $this->Html->getProductImageSrc($product['Images']['id_image'], 'thickbox') : ''
+                'existingImageSrc' => $imageExists ? $this->Html->getProductImageSrc($product->image->id_image, 'thickbox') : ''
             ]);
         }
         echo '</td>';
 
         echo '<td>';
 
-        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-name-edit-button',
                 'title' => 'Name und Beschreibung ändern'
             ], 'javascript:void(0);');
         }
 
-        if (! isset($product['ProductAttributes'])) {
+        if (! isset($product->product_attributes)) {
             echo '<span style="float:left;margin-right: 5px;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-product-attribute-button',
-                'title' => 'Variante für Produkt "' . $product['ProductLangs']['name'] . '" löschen'
+                'title' => 'Variante für Produkt "' . $product->product_lang->name . '" löschen'
             ], 'javascript:void(0);');
             echo '</span>';
 
             echo '<span style="float:left;">';
-            if ($product['ProductAttributeShops']['default_on'] == 1) {
+            if ($product->product_attribute_shop->default_on == 1) {
                 echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), [
                     'title' => 'Diese Variante ist die Standardvariante.'
                 ]);
@@ -234,84 +234,87 @@ use Cake\Core\Configure;
         }
 
         echo '<span class="name-for-dialog">';
-            echo $product['ProductLangs']['name'];
+            echo $product->product_lang->name;
         echo '</span>';
 
-        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            echo '<span data-is-declaration-ok="'.$product['ProductLangs']['is_declaration_ok'].'" class="is-declaration-ok-wrapper">' . ($product['ProductLangs']['is_declaration_ok'] ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
+            echo '<span data-is-declaration-ok="'.$product->product_lang->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->product_lang->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
         }
 
         // show unity only if product has no attributes and field "unity" is not empty
-        if (empty($product['ProductAttributes'])) {
-            if (isset($product['ProductLangs']) && $product['ProductLangs']['unity'] != '') {
+        if (empty($product->product_attributes)) {
+            if (!empty($product->product_lang) && $product->product_lang->unity != '') {
                 echo ': ';
                 echo '<span class="unity-for-dialog">';
-                echo $product['ProductLangs']['unity'];
+                echo $product->product_lang->unity;
                 echo '</span>';
             }
         }
 
         echo '<span class="description-short-for-dialog">';
-        echo $product['ProductLangs']['description_short'];
+        echo $product->product_lang->description_short;
         echo '</span>';
 
         echo '<span class="description-for-dialog">';
-        echo $product['ProductLangs']['description'];
+        echo $product->product_lang->description;
         echo '</span>';
 
         echo '</td>';
 
         if ($manufacturerId == 'all') {
             echo '<td>';
-            if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+            if (! empty($product->product_attributes) || isset($product->product_attributes)) {
                 echo $this->Html->link(
-                    $product['Manufacturers']['name'],
-                    $this->Slug->getProductAdmin($product['Products']['id_manufacturer'])
+                    $product->manufacturer->name,
+                    $this->Slug->getProductAdmin($product->id_manufacturer)
                 );
             }
             echo '</td>';
         }
 
         echo '<td>';
-        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Form->hidden('Products.selected_categories', [
-                'value' => implode(',', $product['selectedCategories']),
-                'id' => 'selected-categories-' . $product['Products']['id_product']
+                'value' => implode(',', $product->selectedCategories),
+                'id' => 'selected-categories-' . $product->id_product
             ]);
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-categories-edit-button',
                 'title' => 'Kategorien ändern',
-                'data-object-id' => $product['Products']['id_product']
+                'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
-            echo '<span class="categories-for-dialog">' . join(', ', $product['Categories']['names']) . '</span>';
-            if (! $product['Categories']['allProductsFound']) {
+            if (!isset($product->category)) {
+                pr($product);
+            }
+            echo '<span class="categories-for-dialog">' . join(', ', $product->category->names) . '</span>';
+            if (! $product->category->allProductsFound) {
                 echo ' - <b>Kategorie "Alle Produkte" fehlt!</b>';
             }
         }
         echo '</td>';
 
-        echo '<td class="' . (empty($product['ProductAttributes']) && $product['StockAvailables']['quantity'] == 0 ? 'not-available' : '') . '">';
+        echo '<td class="' . (empty($product->product_attributes) && $product->stock_available->quantity == 0 ? 'not-available' : '') . '">';
 
-        if (empty($product['ProductAttributes'])) {
+        if (empty($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-quantity-edit-button',
                 'title' => 'Anzahl ändern'
             ], 'javascript:void(0);');
             echo '<span class="quantity-for-dialog">';
-            echo $this->Html->formatAsDecimal($product['StockAvailables']['quantity'], 0);
+            echo $this->Html->formatAsDecimal($product->stock_available->quantity, 0);
             echo '</span>';
         }
 
         echo '</td>';
 
-        echo '<td class="' . (empty($product['ProductAttributes']) && $product['Products']['gross_price'] == 0 ? 'not-available' : '') . '">';
+        echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
-        if (empty($product['ProductAttributes'])) {
+        if (empty($product->product_attributes)) {
             echo '<span class="price-for-dialog">';
-            echo $this->Html->formatAsDecimal($product['Products']['gross_price']);
+            echo $this->Html->formatAsDecimal($product->gross_price);
             echo '</span>';
         }
-        if (empty($product['ProductAttributes'])) {
+        if (empty($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-price-edit-button',
                 'title' => 'Preis ändern'
@@ -321,33 +324,33 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td>';
-        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Form->hidden('Products.id_tax', [
-                'id' => 'tax-id-' . $product['Products']['id_product'],
-                'value' => $product['Products']['id_tax']
+                'id' => 'tax-id-' . $product->id_product,
+                'value' => $product->id_tax
             ]);
-            $taxRate = $product['Taxes']['rate'];
+            $taxRate = $product->tax->rate;
             echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-tax-edit-button',
                 'title' => 'Steuer ändern',
-                'data-object-id' => $product['Products']['id_product']
+                'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
         }
         echo '</td>';
 
         echo '<td>';
-        if (! empty($product['ProductAttributes']) || isset($product['ProductAttributes'])) {
-            if (! $product['Products']['is_new']) {
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
+            if (! $product->is_new) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', [
                     'class' => 'icon-with-text change-new-state change-new-state-active',
-                    'id' => 'change-new-state-' . $product['Products']['id_product'],
+                    'id' => 'change-new-state-' . $product->id_product,
                     'title' => 'Produkt die nächsten ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
                 ], 'javascript:void(0);');
             } else {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', [
                     'class' => 'icon-with-text change-new-state change-new-state-inactive',
-                    'id' => 'change-new-state-' . $product['Products']['id_product'],
+                    'id' => 'change-new-state-' . $product->id_product,
                     'title' => 'Produkt nicht mehr als "neu" anzeigen?'
                 ], 'javascript:void(0);');
             }
@@ -355,7 +358,7 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td>';
-        if (empty($product['ProductAttributes'])) {
+        if (empty($product->product_attributes)) {
             echo '<div class="table-cell-wrapper price">';
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -363,9 +366,9 @@ use Cake\Core\Configure;
                     'title' => 'Zum Ändern des Pfands anklicken'
                 ], 'javascript:void(0);');
             }
-            if ($product['Deposit'] > 0) {
+            if ($product->deposit > 0) {
                 echo '<span class="deposit-for-dialog">';
-                echo $this->Html->formatAsDecimal($product['Deposit']);
+                echo $this->Html->formatAsDecimal($product->Deposit);
                 echo '</span>';
             }
             echo '</div>';
@@ -374,18 +377,18 @@ use Cake\Core\Configure;
 
         echo '<td style="text-align: center;padding-left:10px;width:42px;">';
 
-        if ($product['Products']['active'] == 1) {
+        if ($product->active == 1) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
                 'class' => 'set-state-to-inactive change-active-state',
-                'id' => 'change-active-state-' . $product['Products']['id_product'],
+                'id' => 'change-active-state-' . $product->id_product,
                 'title' => 'Zum Deaktivieren anklicken'
             ], 'javascript:void(0);');
         }
 
-        if ($product['Products']['active'] == '') {
+        if ($product->active == '') {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'set-state-to-active change-active-state',
-                'id' => 'change-active-state-' . $product['Products']['id_product'],
+                'id' => 'change-active-state-' . $product->id_product,
                 'title' => 'Zum Aktivieren anklicken'
             ], 'javascript:void(0);');
         }
@@ -393,11 +396,11 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td>';
-        if ($product['Products']['active'] && (! empty($product['ProductAttributes']) || isset($product['ProductAttributes']))) {
+        if ($product->active && (! empty($product->product_attributes) || isset($product->product_attributes))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
                 'title' => 'Produkt-Vorschau',
                 'target' => '_blank'
-            ], $url = $this->Slug->getProductDetail($product['Products']['id_product'], $product['ProductLangs']['name']));
+            ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->name));
         }
         echo '</td>';
 

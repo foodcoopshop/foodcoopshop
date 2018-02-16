@@ -653,7 +653,7 @@ class ManufacturersController extends AdminAppController
             }
         }
 
-        $this->Tax = TableRegistry::get('Taxs');
+        $this->Tax = TableRegistry::get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (!$this->AppAuth->isManufacturer()) {

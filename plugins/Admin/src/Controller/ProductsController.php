@@ -357,7 +357,7 @@ class ProductsController extends AdminAppController
                 $this->Product->ProductShop->save($product2update);
             }
 
-            $this->Tax = TableRegistry::get('Taxs');
+            $this->Tax = TableRegistry::get('Taxes');
             $tax = $this->Tax->find('all', [
                 'conditions' => [
                     'Taxes.id_tax' => $taxId
@@ -708,9 +708,10 @@ class ProductsController extends AdminAppController
         }
         $this->set('isPriceZero', $isPriceZero);
 
+        $this->Product = TableRegistry::get('Products');
         if ($manufacturerId != '') {
             $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active, $category, $isQuantityZero, $isPriceZero);
-            $preparedProducts = $this->Product->prepareProductsForBackend($this->Paginator, $pParams);
+            $preparedProducts = $this->Product->prepareProductsForBackend($pParams);
         } else {
             $preparedProducts = [];
         }
@@ -721,10 +722,10 @@ class ProductsController extends AdminAppController
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
         $this->Category = TableRegistry::get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
-        $manufacturersForDropdown = $this->Product->Manufacturer->getForDropdown();
+        $manufacturersForDropdown = $this->Product->Manufacturers->getForDropdown();
         array_unshift($manufacturersForDropdown, ['all' => 'Alle Hersteller']);
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        $this->Tax = TableRegistry::get('Taxs');
+        $this->Tax = TableRegistry::get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if ($manufacturerId > 0) {
@@ -732,10 +733,14 @@ class ProductsController extends AdminAppController
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ],
-                'fields' => ['Manufacturers.*', 'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()]
-            ])->first();
+                'fields' => [
+                    'is_holiday_active' => '!'.$this->Product->Manufacturers->getManufacturerHolidayConditions()
+                ]
+            ])
+            ->select($this->Product->Manufacturers)
+            ->first();
             $this->set('manufacturer', $manufacturer);
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFee', $variableMemberFee);
         }
 
