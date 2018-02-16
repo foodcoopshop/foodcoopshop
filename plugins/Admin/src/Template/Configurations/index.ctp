@@ -51,24 +51,24 @@ $this->element('addScript', [
 
         <?php
         foreach ($configurations as $configuration) {
-            if ($configuration['Configurations']['type'] == 'readonly') {
+            if ($configuration->type == 'readonly') {
                 continue;
             }
 
-            if (! Configure::read('app.htmlHelper')->paymentIsCashless() && in_array($configuration['Configurations']['name'], [
+            if (! Configure::read('app.htmlHelper')->paymentIsCashless() && in_array($configuration->name, [
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE'
             ])) {
                 continue;
             }
-            if (! Configure::read('app.memberFeeEnabled') && $configuration['Configurations']['name'] == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
+            if (! Configure::read('app.memberFeeEnabled') && $configuration->name == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
                 continue;
             }
 
             echo '<tr>';
 
             echo '<td class="first">';
-            echo $configuration['Configurations']['text'];
+            echo $configuration->text;
             echo '</td>';
 
             echo '<td style="width:30px;">';
@@ -76,24 +76,24 @@ $this->element('addScript', [
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'title' => 'Einstellung bearbeiten',
                 'class' => 'edit-configuration-button'
-            ], $this->Slug->getConfigurationEdit($configuration['Configurations']['id_configuration'], $configuration['Configurations']['name']));
+            ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
 
             echo '</td>';
 
             echo '<td>';
 
-            switch ($configuration['Configurations']['type']) {
+            switch ($configuration->type) {
                 case 'number':
                 case 'text':
                 case 'textarea':
                 case 'textarea_big':
-                    echo $configuration['Configurations']['value'];
+                    echo $configuration->value;
                     break;
                 case 'dropdown':
-                    echo $this->Html->getConfigurationDropdownOption($configuration['Configurations']['name'], $configuration['Configurations']['value']);
+                    echo $this->Html->getConfigurationDropdownOption($configuration->name, $configuration->value);
                     break;
                 case 'boolean':
-                    echo (boolean) $configuration['Configurations']['value'] ? 'ja' : 'nein';
+                    echo (boolean) $configuration->value ? 'ja' : 'nein';
                     break;
             }
 
@@ -127,9 +127,9 @@ $this->element('addScript', [
 
                 foreach ($syncDomains as $syncDomain) {
                     echo '<tr>';
-                    echo '<td>'.$syncDomain['SyncDomain']['domain'].'</td>';
+                    echo '<td>'.$syncDomain->domain.'</td>';
                     echo '<td align="center">';
-                    if ($syncDomain['SyncDomain']['active'] == 1) {
+                    if ($syncDomain->active == 1) {
                         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
                     } else {
                         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
@@ -139,9 +139,9 @@ $this->element('addScript', [
                     echo $this->Html->getJqueryUiIcon(
                         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
                         [
-                        'title' => 'Remote-Foodcoop ' . $syncDomain['SyncDomain']['domain'] . ' ändern',
+                        'title' => 'Remote-Foodcoop ' . $syncDomain->domain . ' ändern',
                         ],
-                        $this->Network->getSyncDomainEdit($syncDomain['SyncDomain']['id'])
+                        $this->Network->getSyncDomainEdit($syncDomain->id)
                     );
                     echo '</td>';
                     echo '<tr>';
@@ -173,18 +173,18 @@ $this->element('addScript', [
 
         <?php
         foreach ($configurations as $configuration) {
-            if ($configuration['Configurations']['type'] != 'readonly') {
+            if ($configuration->type != 'readonly') {
                 continue;
             }
 
             echo '<tr>';
 
             echo '<td class="first">';
-            echo $configuration['Configurations']['text'];
+            echo $configuration->text;
             echo '</td>';
 
             echo '<td>';
-            echo $configuration['Configurations']['value'];
+            echo $configuration->value;
             echo '</td>';
 
             echo '</tr>';
@@ -195,6 +195,13 @@ $this->element('addScript', [
             <td>Version FoodCoopShop</td>
             <td><?php echo $versionFoodCoopShop; ?></td>
         </tr>
+
+        <?php if (!empty($lastMigration)) { ?>
+        <tr>
+            <td>Zuletzt ausgeführte Migration</td>
+            <td><?php echo $lastMigration['migration_name'] . ' ' . $lastMigration['version']; ?></td>
+        </tr>
+        <?php } ?>
 
         <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
         <tr>
@@ -220,27 +227,9 @@ $this->element('addScript', [
             <td><?php echo join(', ', Configure::read('app.registrationNotificationEmails')); ?></td>
         </tr>
 
-
-
         <tr>
             <td>app.adminEmail / app.adminPassword</td>
             <td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('app.adminPassword')); ?></td>
-        </tr>
-
-        <tr>
-            <td>app/Config/email.php</td>
-            <?php
-            require_once(APP . 'Config' . DS . 'email.php');
-            $email = new EmailConfig();
-            ?>
-            <td>
-            <?php if (isset($email->default['host'])) { ?>
-                <b>Host:</b> <?php echo $email->default['host']; ?><br />
-            <?php } ?>
-            <?php if (isset($email->default['username'])) { ?>
-                <b>Username:</b> <?php echo $email->default['username']; ?><br />
-            <?php } ?>
-            <b>Log:</b> <?php echo (isset($email->default['log']) && $email->default['log']) ? 'on' : 'off'; ?></td>
         </tr>
 
         <tr>
@@ -319,7 +308,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.defaultTax</td>
-            <td><?php echo $this->Html->formatAsPercent($defaultTax['Taxes']['rate']); ?> - <?php echo $defaultTax['Taxes']['active'] ? 'aktiviert' : 'deaktiviert'; ?></td>
+            <td><?php echo $this->Html->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? 'aktiviert' : 'deaktiviert'; ?></td>
         </tr>
 
         <tr>

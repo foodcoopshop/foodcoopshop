@@ -127,8 +127,9 @@ class ConfigurationsController extends AdminAppController
 
     public function index()
     {
+        $this->Configuration = TableRegistry::get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations());
-        $this->Tax = TableRegistry::get('Taxs');
+        $this->Tax = TableRegistry::get('Taxes');
         $defaultTax = $this->Tax->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => Configure::read('app.defaultTaxId')
@@ -145,6 +146,14 @@ class ConfigurationsController extends AdminAppController
         }
         $this->set('versionFoodCoopShop', $this->Configuration->getVersion());
 
+        try {
+            $query = 'SELECT * FROM phinxlog ORDER by version DESC LIMIT 1;';
+            $lastMigration = $this->Configuration->getConnection()->query($query)->fetch('assoc');
+            $this->set('lastMigration', $lastMigration);
+        } catch(\PDOException  $e) {
+            
+        }
+        
         $this->set('title_for_layout', 'Einstellungen');
     }
 

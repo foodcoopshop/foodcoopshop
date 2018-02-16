@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-namespace App\Error\Exception;
+namespace App\Lib\Error\Exception;
 
 use Cake\Core\Exception\Exception;
 

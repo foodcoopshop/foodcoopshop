@@ -77,8 +77,8 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getBlogPostListAdmin(),
 //             $this->Slug->getBlogPostAdd(),
 //             $this->Slug->getBlogPostEdit(2),
-               $this->Slug->getManufacturerAdmin(),
-//             $this->Slug->getManufacturerList(),
+            $this->Slug->getManufacturerAdmin(),
+            $this->Slug->getManufacturerList(),
 //             $this->Slug->getManufacturerAdd(),
 //             $this->Slug->getManufacturerEdit(5),
 //             $this->Slug->getManufacturerEditOptions(5),
@@ -94,7 +94,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSlidersList(),
 //             $this->Slug->getSliderAdd(),
 //             $this->Slug->getSliderEdit(6),
-//             $this->Slug->getConfigurationsList(),
+            $this->Slug->getConfigurationsList(),
 //             $this->Slug->getConfigurationEdit(544)
         ];
 

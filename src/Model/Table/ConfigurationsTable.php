@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Model\Table;
+
 use Cake\Core\Configure;
+use App\Lib\Error\Exception\ConfigFileMissingException;
+use Cake\Filesystem\File;
 
 /**
  * Configuration
@@ -37,9 +40,9 @@ class ConfigurationsTable extends AppTable
     {
         $versionFile = 'VERSION.txt';
         if ($plugin) {
-            $versionFileWithPath = APP . 'Plugin' . DS . $plugin . DS . $versionFile;
+            $versionFileWithPath = ROOT . DS . 'plugins' . DS . $plugin . DS . $versionFile;
         } else {
-            $versionFileWithPath = APP . $versionFile;
+            $versionFileWithPath = ROOT . DS . $versionFile;
         }
 
         if (!file_exists($versionFileWithPath)) {
