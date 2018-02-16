@@ -18,23 +18,25 @@ namespace App\Model\Table;
 class PaymentsTable extends AppTable
 {
 
-    public $belongsTo = [
-        'Customers' => [
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
-        ],
-        'Manufacturers' => [
+        ]);
+        $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
-        ],
-        'CreatedBy' => [
+        ]);
+        $this->belongsTo('CreatedByCustomer', [
             'className' => 'Customers',
             'foreignKey' => 'created_by'
-        ],
-        'ChangedBy' => [
+        ]);
+        $this->belongsTo('ChangedByCustomer', [
             'className' => 'Customers',
             'foreignKey' => 'changed_by'
-        ],
-    ];
-
+        ]);
+    }
+    
     private function getManufacturerDepositConditions($manufacturerId = null)
     {
         $conditions = [

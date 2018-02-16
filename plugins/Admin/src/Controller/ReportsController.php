@@ -68,19 +68,26 @@ class ReportsController extends AdminAppController
         }
 
         // exluce "empty_glasses" deposit payments for manufacturers
-        $conditions[] = "((Payment.id_manufacturer > 0 && Payment.text = 'money') || Payment.id_manufacturer = 0)";
+        $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
-        $this->Paginator->settings = array_merge([
+        $query = $this->Payment->find('all', [
             'conditions' => $conditions,
+            'contain' => [
+                'Customers',
+                'Manufacturers',
+                'CreatedByCustomer',
+                'ChangedByCustomer'
+            ]
+        ]);
+
+        $payments = $this->paginate($query, [
             'order' => [
                 'Payments.date_add' => 'DESC'
             ]
-        ], $this->Paginator->settings);
-
-        $payments = $this->Paginator->paginate('Payments');
+        ]);
         $this->set('payments', $payments);
 
-        $this->set('customersForDropdown', $this->Payment->Customer->getForDropdown());
+        $this->set('customersForDropdown', $this->Payment->Customers->getForDropdown());
         $this->set('title_for_layout', 'Bericht: ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', in_array($paymentType, array(
