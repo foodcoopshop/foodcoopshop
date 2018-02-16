@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * SlidersController
@@ -104,16 +105,23 @@ class SlidersController extends AdminAppController
 
     public function index()
     {
-        $conditions = [];
-        $conditions[] = 'Sliders.active > ' . APP_DEL;
+        $conditions = [
+            'Sliders.active > ' . APP_DEL
+        ];
 
-        $this->Paginator->settings = array_merge([
-            'conditions' => $conditions,
+        $this->Slider = TableRegistry::get('Sliders');
+        $query = $this->Slider->find('all', [
+            'conditions' => $conditions
+        ]);
+        $sliders = $this->paginate($query, [
+            'sortWhitelist' => [
+                'Sliders.position', 'Sliders.active'
+            ],
             'order' => [
                 'Sliders.position' => 'ASC'
             ]
-        ], $this->Paginator->settings);
-        $sliders = $this->Paginator->paginate('Sliders');
+        ])->toArray();
+        
         $this->set('sliders', $sliders);
         $this->set('title_for_layout', 'Slideshow');
     }

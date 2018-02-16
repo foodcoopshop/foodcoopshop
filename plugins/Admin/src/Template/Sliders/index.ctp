@@ -50,7 +50,7 @@ $this->element('highlightRowAfterEdit', [
 echo '<table class="list">';
 
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Sliders.id_slider', 'ID') . '</th>';
+echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>Bild</th>';
 echo '<th>' . $this->Paginator->sort('Sliders.position', 'Reihenfolge') . '</th>';
@@ -63,31 +63,31 @@ foreach ($sliders as $slider) {
     $rowClass = [
         'data'
     ];
-    if (! $slider['Sliders']['active']) {
+    if (! $slider->active) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr id="slider-' . $slider['Sliders']['id_slider'] . '" class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="slider-' . $slider->id_slider . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
         'title' => 'Bearbeiten'
-    ], $this->Slug->getSliderEdit($slider['Sliders']['id_slider']));
+    ], $this->Slug->getSliderEdit($slider->id_slider));
     echo '</td>';
 
     echo '<td class="hide">';
-    echo $slider['Sliders']['id_slider'];
+    echo $slider->id_slider;
     echo '</td>';
 
     echo '<td align="center" style="background-color: #fff;">';
-    echo '<img width="500" src="' . $this->Html->getSliderImageSrc($slider['Sliders']['image']) . '" />';
+    echo '<img width="500" src="' . $this->Html->getSliderImageSrc($slider->image) . '" />';
     echo '</td>';
 
     echo '<td align="center">';
-    echo $slider['Sliders']['position'];
+    echo $slider->position;
     echo '</td>';
 
     echo '<td align="center">';
-    if ($slider['Sliders']['active'] == 1) {
+    if ($slider->active == 1) {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
     } else {
         echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));

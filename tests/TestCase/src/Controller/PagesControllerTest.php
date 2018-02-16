@@ -90,7 +90,7 @@ class PagesControllerTest extends AppCakeTestCase
 //             $this->Slug->getTaxesList(),
 //             $this->Slug->getTaxAdd(),
 //             $this->Slug->getTaxEdit(2),
-//             $this->Slug->getSlidersList(),
+            $this->Slug->getSlidersList(),
 //             $this->Slug->getSliderAdd(),
 //             $this->Slug->getSliderEdit(6),
 //             $this->Slug->getConfigurationsList(),
