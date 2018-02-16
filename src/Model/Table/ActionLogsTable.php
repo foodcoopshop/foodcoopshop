@@ -148,7 +148,7 @@ class ActionLogsTable extends AppTable
         ],
 
         'product_remotely_changed' => [
-            'de' => 'Synchronisation: Artikel geändert',
+            'de' => 'Netzwerk-Modul: Produkte synchronisiert',
             'access' => [
                 'manufacturer'
             ]
