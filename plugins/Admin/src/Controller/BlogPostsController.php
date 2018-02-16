@@ -185,18 +185,29 @@ class BlogPostsController extends AdminAppController
         }
 
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
-
-        $this->Paginator->settings = array_merge([
+        
+        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $query = $this->BlogPost->find('all', [
             'conditions' => $conditions,
+            'contain' => [
+                'Customers',
+                'Manufacturers'
+            ]
+        ]);
+        $blogPosts = $this->paginate($query, [
+            'sortWhitelist' => [
+                'BlogPosts.is_featured', 'BlogPosts.is_private', 'BlogPosts.title', 'BlogPosts.short_description', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.name', 'BlogPosts.modified', 'BlogPosts.active'
+            ],
             'order' => [
                 'BlogPosts.modified' => 'DESC'
             ]
-        ], $this->Paginator->settings);
-        $blogPosts = $this->Paginator->paginate('BlogPosts');
+        ])->toArray();
 
-        foreach ($blogPosts as &$blogPost) {
-            $manufacturerRecord = $this->BlogPost->Customer->getManufacturerRecord($blogPost);
-            $blogPost['Customers']['Manufacturers'] = @$manufacturerRecord['Manufacturers'];
+        foreach ($blogPosts as $blogPost) {
+            $manufacturerRecord = $this->BlogPost->Customers->getManufacturerRecord($blogPost->customer);
+            if (!empty($manufacturerRecord->manufacturer)) {
+                $blogPost->customer->manufacturer = $manufacturerRecord->manufacturer;
+            }
         }
 
         $this->set('blogPosts', $blogPosts);

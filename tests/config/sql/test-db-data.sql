@@ -119,7 +119,7 @@ INSERT INTO `fcs_attribute` VALUES
 
 /*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
 INSERT INTO `fcs_blog_posts` VALUES
-(2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',0,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',1);
+(2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>',88,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',1);
 /*!40000 ALTER TABLE `fcs_blog_posts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
