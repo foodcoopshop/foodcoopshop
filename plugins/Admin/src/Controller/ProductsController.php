@@ -690,11 +690,11 @@ class ProductsController extends AdminAppController
         }
         $this->set('active', $active);
 
-        $category = ''; // default value
-        if (!empty($this->request->getQuery('category'))) {
-            $category = $this->request->getQuery('category');
+        $categoryId = ''; // default value
+        if (!empty($this->request->getQuery('categoryId'))) {
+            $categoryId = $this->request->getQuery('categoryId');
         }
-        $this->set('category', $category);
+        $this->set('categoryId', $categoryId);
 
         $isQuantityZero = 0; // default value
         if (!empty($this->request->getQuery('isQuantityZero'))) {
@@ -710,8 +710,7 @@ class ProductsController extends AdminAppController
 
         $this->Product = TableRegistry::get('Products');
         if ($manufacturerId != '') {
-            $pParams = $this->Product->getProductParams($this->AppAuth, $productId, $manufacturerId, $active, $category, $isQuantityZero, $isPriceZero);
-            $preparedProducts = $this->Product->prepareProductsForBackend($pParams);
+            $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityZero, $isPriceZero);
         } else {
             $preparedProducts = [];
         }
@@ -722,8 +721,8 @@ class ProductsController extends AdminAppController
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
         $this->Category = TableRegistry::get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
-        $manufacturersForDropdown = $this->Product->Manufacturers->getForDropdown();
-        array_unshift($manufacturersForDropdown, ['all' => 'Alle Hersteller']);
+        $manufacturersForDropdown = ['all' => 'Alle Hersteller'];
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->Tax = TableRegistry::get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());

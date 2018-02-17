@@ -62,8 +62,6 @@ TRUNCATE TABLE `fcs_tax`;
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
 INSERT INTO `fcs_category` VALUES
-(1,0,'Root','',0,1,30,1,'2016-10-19 21:05:00','2016-10-19 21:05:00'),
-(2,1,'Produkte','',1,2,29,1,'2016-10-19 21:05:00','2016-10-19 21:05:00'),
 (20,2,'Alle Produkte','',2,3,4,1,'2016-10-19 21:05:00','2016-10-19 21:05:00');
 /*!40000 ALTER TABLE `fcs_category` ENABLE KEYS */;
 

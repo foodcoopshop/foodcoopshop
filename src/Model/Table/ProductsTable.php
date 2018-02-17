@@ -43,9 +43,6 @@ class ProductsTable extends AppTable
         $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
         ]);
-        $this->belongsTo('CategoryProducts', [
-            'foreignKey' => 'id_product'
-        ]);
         $this->hasOne('DepositProducts', [
             'foreignKey' => 'id_product'
         ]);
@@ -396,12 +393,37 @@ class ProductsTable extends AppTable
      * @param array $products
      * @return array $preparedProducts
      */
-    public function prepareProductsForBackend($pParams, $addProductNameToAttributes = false)
+    public function getProductsForBackend($appAuth, $productId, $manufacturerId, $active, $categoryId = '', $isQuantityZero = 0, $isPriceZero = 0, $addProductNameToAttributes = false)
     {
 
+        $conditions = [];
+        
+        if ($manufacturerId != 'all') {
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
+        } else {
+            // do not show any non-associated products that might be found in database
+            $conditions[] = 'Products.id_manufacturer > 0';
+        }
+        
+        if ($productId != '') {
+            $conditions['Products.id_product'] = $productId;
+        }
+        
+        if ($active != 'all') {
+            $conditions['Products.active'] = $active;
+        }
+        
+        if ($isQuantityZero != '') {
+            $conditions[] = $this->getIsQuantityZeroCondition();
+        }
+        
+        if ($isPriceZero != '') {
+            $conditions[] = $this->getIsPriceZeroCondition();
+        }
+                
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
-        foreach ($pParams['conditions'] as $condition) {
+        foreach ($conditions as $condition) {
             if (preg_match('/'.$this->getIsQuantityZeroCondition().'/', $condition)) {
                 $this->association('ProductAttributes')->setConditions(
                     [
@@ -411,16 +433,50 @@ class ProductsTable extends AppTable
                 $quantityIsZeroFilterOn = true;
             }
             if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->association('ProductAttributeShops')->setConditions(
+                $this->ProductAttributes->association('ProductAttributeShops')->setConditions(
                     [
-                        'ProductAttributeShop.price' => 0
+                        'ProductAttributeShops.price' => 0
                     ]
                 );
                 $priceIsZeroFilterOn = true;
             }
         }
-
-        $products = $this->find('all', $pParams)->toArray();
+        
+        $contain = [
+            'CategoryProducts',
+            'CategoryProducts.Categories',
+            'ProductShops',
+            'ProductLangs',
+            'DepositProducts',
+            'Images',
+            'Taxes',
+            'Manufacturers',
+            'StockAvailables',
+            'ProductAttributes',
+            'ProductAttributes.StockAvailables',
+            'ProductAttributes.ProductAttributeShops',
+            'ProductAttributes.DepositProductAttributes',
+            'ProductAttributes.ProductAttributeCombinations.Attributes'
+        ];
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions,
+            'contain' => $contain,
+            'order' => [
+                'Products.active' => 'DESC',
+                'ProductLangs.name' => 'ASC'
+            ]
+        ]);
+        
+        if ($categoryId != '') {
+            $query->matching('CategoryProducts', function ($q) use ($categoryId) {
+                return $q->where(['id_category IN' => $categoryId]);
+            });
+        }
+        
+        $products = $query
+        ->distinct('Products.id_product')
+        ->toArray();
 
         $i = 0;
         $preparedProducts = [];
@@ -430,23 +486,19 @@ class ProductsTable extends AppTable
                 'allProductsFound' => false
             ];
             foreach ($product->category_products as $category) {
-                if ($category->id_category == 2) {
-                    continue; // do not consider category "produkte" - why was it needed???
-                }
 
                 // assignment to "all products" has to be checked... otherwise show error message
                 if ($category->id_category == Configure::read('app.categoryAllProducts')) {
                     $product->category->allProductsFound = true;
                 } else {
-                    // check if category was assigned to product but deleted afterwards
-                    if (!empty($category->name)) {
-                        $product->category->name[] = $category->name;
+                    // sometimes associated category does not exist any more...
+                    if (!empty($category->category)) {
+                        $product->category->names[] = $category->category->name;
                     }
                 }
             }
             $product->selectedCategories = Hash::extract($product->category_products, '{n}.id_category');
-            $product->deposit = 0;
-
+            
             $product->is_new = $this->isNew($product->product_shop->date_add);
             
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->product_shop->price);
@@ -456,11 +508,18 @@ class ProductsTable extends AppTable
                 $rowClass[] = 'deactivated';
             }
 
-            @$products->deposit = $product->deposit_product->deposit;
-            if (!empty($product->tax)) {
-                $product->tax->rate = 0;
+            if (!empty($product->deposit_product)) {
+                $product->deposit = $product->deposit_product->deposit;
+            } else {
+                $product->deposit = 0;
             }
-
+            
+            if (empty($product->tax)) {
+                $product->tax = (object) [
+                    'rate' => 0
+                ];
+            }
+            
             $rowClass[] = 'main-product';
             $rowIsOdd = false;
             if ($i % 2 == 0) {
@@ -469,7 +528,7 @@ class ProductsTable extends AppTable
             }
             $product->rowClass = join(' ', $rowClass);
 
-            $preparedProducts[] = $products[$i];
+            $preparedProducts[] = $product;
             $i ++;
 
             if (! empty($product->product_attributes)) {
@@ -477,14 +536,14 @@ class ProductsTable extends AppTable
                 $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] = 0;
 
                 foreach ($product->product_attributes as $attribute) {
-                    if (($quantityIsZeroFilterOn && empty($attribute->stock_available)) || ($priceIsZeroFilterOn && empty($attribute->product_attribute_shops))) {
+                    if (($quantityIsZeroFilterOn && empty($attribute->stock_available)) || ($priceIsZeroFilterOn && empty($attribute->product_attribute_shop))) {
                         $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] ++;
                         continue;
                     }
 
                     $grossPrice = 0;
-                    if (! empty($attribute->product_attribute_shops->price)) {
-                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->product_attribute_shops->price);
+                    if (! empty($attribute->product_attribute_shop->price)) {
+                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->product_attribute_shop->price);
                     }
 
                     $rowClass = [
@@ -510,7 +569,7 @@ class ProductsTable extends AppTable
                             'unity' => ''
                         ],
                         'manufacturer' => [
-                            'name' => $product->manufacturer->name
+                            'name' => (!empty($product->manufacturer) ? $product->manufacturer->name : '')
                         ],
                         'product_attribute_shop' => [
                             'default_on' => $attribute->product_attribute_shop->default_on
@@ -518,15 +577,13 @@ class ProductsTable extends AppTable
                         'stock_available' => [
                             'quantity' => $attribute->stock_available->quantity
                         ],
-                        'deposit' => !empty($attribute->deposit_product_attributes) ? $attribute->deposit_product_attributes->deposit : 0,
+                        'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                         'category' => [
                             'names' => [],
                             'allProductsFound' => true
                         ],
                         'image' => null
                     ];
-                    
-                    $preparedProduct = json_decode(json_encode($preparedProduct), FALSE); // convert array recursively into object
                     
                     $preparedProducts[] = $preparedProduct;
                 }
@@ -538,11 +595,14 @@ class ProductsTable extends AppTable
         // this is not the case for quantity zero filter, because the main product's quantity is the sum of the associated attribute quantities
         if ($priceIsZeroFilterOn) {
             foreach ($preparedProducts as $key => $preparedProduct) {
-                if (isset($preparedProducts[$key]['AttributesRemoved']) && $preparedProducts[$key]['AttributesRemoved'] == count($preparedProducts[$key]['ProductAttributes'])) {
+                if (isset($preparedProducts[$key]['AttributesRemoved']) && $preparedProducts[$key]['AttributesRemoved'] == count($preparedProducts[$key]->product_attributes)) {
                     unset($preparedProducts[$key]);
                 }
             }
         }
+        
+        $preparedProducts = json_decode(json_encode($preparedProducts), FALSE); // convert array recursively into object
+        
         return $preparedProducts;
     }
 
@@ -711,71 +771,6 @@ class ProductsTable extends AppTable
     private function getIsPriceZeroCondition()
     {
         return 'ProductShops.price = 0';
-    }
-
-    public function getProductParams($appAuth, $productId, $manufacturerId, $active, $category = '', $isQuantityZero = 0, $isPriceZero = 0)
-    {
-        $conditions = [];
-        $group = [];
-
-        if ($manufacturerId != 'all') {
-            $conditions['Products.id_manufacturer'] = $manufacturerId;
-        } else {
-            // do not show any non-associated products that might be found in database
-            $conditions[] = 'Products.id_manufacturer > 0';
-        }
-
-        if ($productId != '') {
-            $conditions['Products.id_product'] = $productId;
-        }
-
-        if ($active != 'all') {
-            $conditions['Products.active'] = $active;
-        }
-
-        if ($category != '') {
-            $conditions['CategoryProducts.id_category'] = (int) $category;
-        }
-
-        if ($isQuantityZero != '') {
-            $conditions[] = $this->getIsQuantityZeroCondition();
-        }
-
-        if ($isPriceZero != '') {
-            $conditions[] = $this->getIsPriceZeroCondition();
-        }
-
-        $contain = [
-            'CategoryProducts',
-            'ProductShops',
-            'ProductLangs',
-            'DepositProducts',
-            'Images',
-            'Taxes',
-            'Manufacturers',
-            'StockAvailables',
-            'ProductAttributes',
-            'ProductAttributes.StockAvailables',
-            'ProductAttributes.ProductAttributeShops',
-            'ProductAttributes.DepositProductAttributes',
-            'ProductAttributes.ProductAttributeCombinations.Attributes'
-        ];
-
-        if ($manufacturerId == '') {
-            $contain[] = 'Manufacturers';
-        }
-
-        $pParams = [
-            'conditions' => $conditions,
-            'order' => [
-                'Products.active' => 'DESC',
-                'ProductLangs.name' => 'ASC'
-            ],
-            'contain' => $contain,
-            'group' => $group
-        ];
-
-        return $pParams;
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)

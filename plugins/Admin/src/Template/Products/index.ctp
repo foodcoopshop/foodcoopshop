@@ -53,12 +53,13 @@ use Cake\Core\Configure;
                 'options' => $this->MyHtml->getActiveStates(),
                 'default' => isset($active) ? $active : ''
             ]);
-            echo $this->Form->input('category', [
+            echo $this->Form->input('categoryId', [
                 'type' => 'select',
                 'label' => '',
+                'multiple' => true,
                 'empty' => 'Kategorie auswählen...',
                 'options' => $categoriesForSelect,
-                'default' => isset($category) ? $category : ''
+                'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
             Anzahl 0? <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero]);?>
@@ -368,7 +369,7 @@ use Cake\Core\Configure;
             }
             if ($product->deposit > 0) {
                 echo '<span class="deposit-for-dialog">';
-                echo $this->Html->formatAsDecimal($product->Deposit);
+                echo $this->Html->formatAsDecimal($product->deposit);
                 echo '</span>';
             }
             echo '</div>';

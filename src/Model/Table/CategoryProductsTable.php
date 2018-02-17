@@ -23,11 +23,9 @@ class CategoryProductsTable extends AppTable
         $this->setTable('category_product');
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'id_category'
+        ]);
     }
     
-    public $belongsTo = [
-        'Categories' => [
-            'foreignKey' => 'id_category'
-        ]
-    ];
 }

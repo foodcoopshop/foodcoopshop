@@ -50,12 +50,12 @@ class CategoriesTable extends AppTable
     {
         foreach ($array as $item) {
             $statusString = '';
-            if (! $item['Categories']['active']) {
+            if (! $item->active) {
                 $statusString = ' (offline)';
             }
-            $this->flattenedArray[$item['Categories']['id_category']] = $separator . $item['Categories']['name'] . $statusString;
+            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item['children'], str_repeat('-', $item['Categories']['level_depth'] - 1) . ' ');
+                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $item->level_depth - 1) . ' ');
             }
         }
 
