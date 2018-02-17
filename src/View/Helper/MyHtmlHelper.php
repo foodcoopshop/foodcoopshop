@@ -503,14 +503,14 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
     {
-        $url = Configure::read('app.folder.order_lists_with_current_year_and_month') . DS;
+        $url = Configure::read('app.folder_order_lists_with_current_year_and_month') . DS;
         $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
-        $url = Configure::read('app.folder.invoices_with_current_year_and_month') . DS;
+        $url = Configure::read('app.folder_invoices_with_current_year_and_month') . DS;
         $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }

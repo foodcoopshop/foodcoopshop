@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
+use Cake\ORM\TableRegistry;
 
 /**
  * ListsController
@@ -29,13 +30,11 @@ class ListsController extends AdminAppController
 
     public function orderLists()
     {
-        $this->uses = [
-            'Manufacturers'
-        ];
-
-        $path = realpath(Configure::read('app.folder.order_lists'));
-        $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
-
+        
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $path = realpath(Configure::read('app.folder_order_lists'));
+        $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
+        
         $dateFrom = date('d.m.Y', Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
         if (! empty($this->request->getQuery('dateFrom'))) {
             $dateFrom = $this->request->getQuery('dateFrom');
@@ -82,7 +81,7 @@ class ListsController extends AdminAppController
                     ]
                 ])->first();
 
-                $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder.order_lists'), '', $name);
+                $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder_order_lists'), '', $name);
                 $customerListLink = str_replace($matches[1], 'Mitglied', $productListLink);
 
                 $files[] = [
@@ -107,7 +106,7 @@ class ListsController extends AdminAppController
     {
         $this->autoRender = false;
 
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder.order_lists')) . DS . $this->params->query['file'];
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->request->getQuery('file');
         $explodedString = explode('\\', $filenameWithPath);
 
         header('Content-Type: application/pdf');

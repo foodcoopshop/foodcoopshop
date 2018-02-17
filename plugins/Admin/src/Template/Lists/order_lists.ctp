@@ -28,7 +28,7 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
 		<?php echo $this->Form->create(null, ['type' => 'get']); ?>
-    	    Abholtag <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false]); ?>
+    	    Abholtag <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
         	<div class="right"></div>
     	<?php echo $this->Form->end(); ?>
     </div>
