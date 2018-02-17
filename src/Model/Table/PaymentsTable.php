@@ -58,12 +58,14 @@ class PaymentsTable extends AppTable
     public function getManufacturerDepositsByMonth($manufacturerId, $monthAndYear)
     {
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
-        $conditions['DATE_FORMAT(Payment.date_add, \'%Y-%c\')'] = $monthAndYear;
-
+//         $conditions['DATE_FORMAT(Payments.date_add, \'%Y-%c\')'] = $monthAndYear;
+        $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%c\') = \'' . $monthAndYear . '\'';
+        
         $paymentSum = $this->find('all', [
-            'fields' => 'Payments.*',
             'conditions' => $conditions,
-            'order' => ['Payments.date_add' => 'DESC'],
+            'order' => [
+                'Payments.date_add' => 'DESC'
+            ]
         ]);
 
         return $paymentSum;

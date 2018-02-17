@@ -12,13 +12,12 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-?>
+use Cake\Core\Configure;
 
-
-<?php
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Hersteller', 'Pfandkonto');".
         Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
 ]);
 ?>
@@ -42,23 +41,23 @@ echo '</tr>';
 
 $sum = 0;
 foreach ($payments as $payment) {
-    $sum += $payment['Payments']['amount'];
-    echo '<tr class="data ' . $payment['Payments']['type'] . '">';
+    $sum += $payment->amount;
+    echo '<tr class="data ' . $payment->type . '">';
 
         echo '<td class="hide">';
-            echo $payment['Payments']['id'];
+            echo $payment->id;
         echo '</td>';
 
         echo '<td>';
-            echo $this->Time->formatToDateNTimeLong($payment['Payments']['date_add']);
+            echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong'));
         echo '</td>';
 
         echo '<td>';
-            echo $this->Html->getManufacturerDepositPaymentText($payment['Payments']['text']);
+            echo $this->Html->getManufacturerDepositPaymentText($payment->text);
         echo '</td>';
 
         echo '<td style="text-align:right;" class="negative">';
-            echo $this->Html->formatAsEuro($payment['Payments']['amount'] * -1);
+            echo $this->Html->formatAsEuro($payment->amount * -1);
         echo '</td>';
 
         echo '<td style="text-align:center;">';

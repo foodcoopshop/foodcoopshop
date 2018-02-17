@@ -51,7 +51,7 @@ if (empty($manufacturer)) {
 <div id="help-container">
     <ul>
         <?php echo $this->element('docs/abholdienst'); ?>
-        <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer['Manufacturers']['name']; ?></b> verwaltet.</li>
+        <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer->name; ?></b> verwaltet.</li>
         <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
         <li><b>Produkt mit Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
         <li><b>Leergebinde zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
@@ -78,9 +78,9 @@ if ($appAuth->isSuperadmin()) {
 }
     echo $this->element('addDepositPaymentOverlay', [
         'buttonText' => $buttonText,
-        'rowId' => $manufacturer['Manufacturers']['id_manufacturer'],
-        'userName' => $manufacturer['Manufacturers']['name'],
-        'manufacturerId' => $manufacturer['Manufacturers']['id_manufacturer']
+        'rowId' => $manufacturer->id_manufacturer,
+        'userName' => $manufacturer->name,
+        'manufacturerId' => $manufacturer->id_manufacturer
     ]);
     echo '</div>';
     echo '<div class="sc"></div>';
@@ -111,7 +111,7 @@ if ($appAuth->isSuperadmin()) {
                     'title' => 'Details anzeigen',
                     'class' => 'icon-with-text',
                     ],
-                    '/admin/order-details/index/manufacturerId:'.$manufacturerId.'/dateFrom:'.$deposit['dateFrom'].'/dateTo:'.$deposit['dateTo'].'/deposit:1/orderState:'.$orderState
+                    '/admin/order-details/?manufacturerId='.$manufacturerId.'&dateFrom='.$deposit['dateFrom'].'&dateTo='.$deposit['dateTo'].'&deposit=1&orderStates[]='.join(',', $orderStates)
                 ).'</span>';
                 echo '<span style="float: right;">';
                 echo $this->Html->formatAsEuro($deposit['delivered']);

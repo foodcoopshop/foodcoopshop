@@ -100,7 +100,7 @@ class SlugHelper extends Helper
     {
         $url = '/admin/deposits/detail/'.$monthAndYear;
         if ($manufacturerId != '') {
-            $url .= '/manufacturerId:'.$manufacturerId;
+            $url .= '/?manufacturerId='.$manufacturerId;
         }
         return $url;
     }

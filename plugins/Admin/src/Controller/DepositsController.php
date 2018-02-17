@@ -50,8 +50,8 @@ class DepositsController extends AdminAppController
     private function getManufacturerId()
     {
         $manufacturerId = '';
-        if (isset($this->request->named['manufacturerId'])) {
-            $manufacturerId = $this->request->named['manufacturerId'];
+        if (!empty($this->request->getQuery('manufacturerId'))) {
+            $manufacturerId = $this->request->getQuery('manufacturerId');
         } if ($this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
         }
@@ -114,8 +114,8 @@ class DepositsController extends AdminAppController
         foreach ($monthsAndYear as $monthAndYear => $monthAndYearAsString) {
             $recordFound = false;
             foreach ($depositsDelivered as $depositDelivered) {
-                if ($depositDelivered[0]['monthAndYear'] == $monthAndYear) {
-                    $deliveredValue = $depositDelivered[0]['sumDepositDelivered'];
+                if ($depositDelivered['monthAndYear'] == $monthAndYear) {
+                    $deliveredValue = $depositDelivered['sumDepositDelivered'];
                     if ($deliveredValue > 0) {
                         $deposits[$monthAndYear]['delivered'] = $deliveredValue;
                         $sumDepositsDelivered += $deliveredValue;
@@ -125,8 +125,8 @@ class DepositsController extends AdminAppController
                 }
             }
             foreach ($depositsReturned as $depositReturned) {
-                if ($depositReturned[0]['monthAndYear'] == $monthAndYear) {
-                    $returnValue = $depositReturned[0]['sumDepositReturned'] * -1;
+                if ($depositReturned['monthAndYear'] == $monthAndYear) {
+                    $returnValue = $depositReturned['sumDepositReturned'] * -1;
                     $deposits[$monthAndYear]['returned'] = $returnValue;
                     $sumDepositsReturned += $returnValue;
                     $recordFound = true;
@@ -153,7 +153,7 @@ class DepositsController extends AdminAppController
 
         $title = 'Pfandkonto für ';
         if ($this->AppAuth->isManufacturer()) {
-            $title .= $manufacturer['Manufacturers']['name'];
+            $title .= $manufacturer->name;
         }
         $this->set('title_for_layout', $title);
     }
@@ -189,6 +189,6 @@ class DepositsController extends AdminAppController
         $month = $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
-        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer['Manufacturers']['name']);
+        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer->name);
     }
 }
