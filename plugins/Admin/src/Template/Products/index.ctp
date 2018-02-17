@@ -62,8 +62,8 @@ use Cake\Core\Configure;
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
-            Anzahl 0? <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isQuantityZero]);?>
-            Preis 0? <?php echo $this->Form->input('isPriceZero', ['type'=>'checkbox', 'label' =>'', 'checked' => $isPriceZero]);?>
+            <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'Anzahl 0?', 'checked' => $isQuantityZero]);?>
+            <?php echo $this->Form->input('isPriceZero', ['type'=>'checkbox', 'label' =>'Preis 0?', 'checked' => $isPriceZero]);?>
             
             <div class="right">
                 <?php

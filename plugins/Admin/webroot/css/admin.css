@@ -103,11 +103,14 @@ body.pages.display #menu a.help {
 }
 .checkbox input[type="checkbox"] {
     margin-left: 0; /* bootstrap overwrite */
+    position: inherit;
+    margin-right: 5px;
     float: left;
     margin-top: 1px;
 }
-.filter-container .checkbox input[type="checkbox"] {
-  margin-top: 6px;
+.checkbox label {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover {

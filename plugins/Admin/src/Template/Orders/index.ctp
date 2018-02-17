@@ -47,7 +47,7 @@ use Cake\Core\Configure;
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php echo $this->Form->input('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                Gruppieren nach Mitglied: <?php echo $this->Form->input('groupByCustomer', ['type'=>'checkbox', 'label' =>'', 'checked' => $groupByCustomer]);?>
+                <?php echo $this->Form->input('groupByCustomer', ['type'=>'checkbox', 'label' =>'Gruppieren nach Mitglied', 'checked' => $groupByCustomer]);?>
             <?php } ?>
             <div class="right">
                 <?php
