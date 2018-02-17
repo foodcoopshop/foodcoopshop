@@ -685,7 +685,7 @@ class ProductsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         $active = 'all'; // default value
-        if (!empty($this->request->getQuery('active'))) {
+        if (in_array('active', array_keys($this->request->getQueryParams()))) {
             $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);

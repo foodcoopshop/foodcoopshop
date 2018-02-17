@@ -270,7 +270,7 @@ class ManufacturersController extends AdminAppController
         $this->set('dateTo', $dateTo);
 
         $active = 1; // default value
-        if (! empty($this->request->getQuery('active'))) {
+        if (in_array('active', array_keys($this->request->getQueryParams()))) {
             $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);

@@ -340,7 +340,7 @@ class CustomersController extends AdminAppController
     public function index()
     {
         $active = 1; // default value
-        if (!empty($this->request->getQuery('active'))) {
+        if (in_array('active', array_keys($this->request->getQueryParams()))) {
             $active = $this->request->getQuery('active');
         }
         $this->set('active', $active);
