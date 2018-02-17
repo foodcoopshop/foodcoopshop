@@ -905,8 +905,6 @@ class ProductsTable extends AppTable
         $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer['Manufacturers']['name']);
         $this->ProductLang->save([
             'id_product' => $newProductId,
-            'id_lang' => 1,
-            'id_shop' => 1,
             'name' => $name,
             'description' => '',
             'description_short' => '',

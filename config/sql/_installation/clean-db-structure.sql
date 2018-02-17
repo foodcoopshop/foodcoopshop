@@ -423,17 +423,13 @@ DROP TABLE IF EXISTS `fcs_product_lang`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_product_lang` (
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
-  `id_shop` int(11) unsigned NOT NULL DEFAULT '1',
-  `id_lang` int(10) unsigned NOT NULL DEFAULT '0',
   `description` text,
   `description_short` text,
   `unity` varchar(255) DEFAULT NULL,
   `name` varchar(128) NOT NULL DEFAULT '',
   `is_declaration_ok` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_product`,`id_shop`,`id_lang`),
-  KEY `id_lang` (`id_lang`),
-  KEY `name` (`name`),
-  KEY `id_shop` (`id_shop`)
+  PRIMARY KEY (`id_product`),
+  KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product_shop`;
