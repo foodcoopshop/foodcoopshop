@@ -408,7 +408,6 @@ class ManufacturersTable extends AppTable
         $params = [
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
-            'langId' => Configure::read('app.langId'),
             'shopId' => Configure::read('app.shopId')
         ];
         if (! $this->user()) {

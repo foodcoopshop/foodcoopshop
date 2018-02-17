@@ -111,7 +111,6 @@ class CategoriesTable extends AppTable
     {
         $params = [
             'active' => APP_ON,
-            'langId' => Configure::read('app.langId'),
             'shopId' => Configure::read('app.shopId')
         ];
         if (! $this->user()) {

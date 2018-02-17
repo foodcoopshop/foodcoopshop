@@ -150,7 +150,6 @@ class AppTable extends Table
     {
         $conditions = "WHERE 1
                     AND StockAvailables.id_product_attribute = 0
-                    AND ProductLangs.id_lang = :langId
                     AND Products.active = :active
                     AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturers.active = :active ";
