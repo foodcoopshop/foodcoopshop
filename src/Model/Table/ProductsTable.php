@@ -475,7 +475,15 @@ class ProductsTable extends AppTable
         }
         
         $products = $query
-        ->distinct('Products.id_product')
+        ->select('Products.id_product')->distinct()
+        ->select($this) // Products
+        ->select($this->ProductShops)
+        ->select($this->ProductLangs)
+        ->select($this->DepositProducts)
+        ->select('Images.id_image')
+        ->select($this->Taxes)
+        ->select($this->Manufacturers)
+        ->select($this->StockAvailables)
         ->toArray();
 
         $i = 0;
