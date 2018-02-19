@@ -850,12 +850,13 @@ form.fcs-form .input.textarea label {
 }
 form.fcs-form .input.checkbox label {
     padding-left: 0;
+    width: 230px;
+}
+form.fcs-form .input.checkbox input {
+	float: right;
 }
 form.fcs-form input[type="checkbox"] {
     left: 200px;
-}
-form.fcs-form .input.checkbox span.after {
-    margin-left: 25px;
 }
 body.configurations.index td.first {
     vertical-align: top;
@@ -896,7 +897,7 @@ form.fcs-form .small {
     float: left;
 }
 form.fcs-form .checkbox .small {
-    line-height: 21px;
+    line-height: 28px;
     float: left;
 }
 form.fcs-form .input.text .after.small,

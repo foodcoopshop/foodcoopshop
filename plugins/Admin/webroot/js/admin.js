@@ -1295,44 +1295,35 @@ foodcoopshop.Admin = {
         });
 
         $('.filter-container .right a.cancel').on('click', function () {
-
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-remove');
-
-            foodcoopshop.Helper.ajaxCall(
-                '/admin/tools/ajaxCancelFormPage/',
-                {
-                    id: id,
-                    objectClass: objectClass,
-                    referer: $('#referer').val()
-                },
-                {
-                    onOk: function (data) {
-                        document.location.href = data.referer
-                    },
-                    onError: function (data) {
-                        alert(data.message);
-                    }
-                }
-            );
+            var referer = $('input[name=referer').val();
+            if (referer == '') {
+            	referer = '/';
+            }
+            document.location.href = referer;
         });
 
         // copy save and cancel button below form
-        $('form.fcs-form').after('<div class="form-buttons"></div>');
+        var form = $('form.fcs-form'); 
+        form.after('<div class="form-buttons"></div>');
         $('#content .form-buttons').append($('.filter-container .right > a').clone(true)); // true clones events
 
         // submit form on enter in text fields
-        $('form.fcs-form input[type=text], form.fcs-form input[type=number], form.fcs-form input[type=password], form.fcs-form input[type="tel"]').keypress(function (e) {
+        form.find('input[type=text], input[type=number], input[type=password], input[type="tel"]').keypress(function (e) {
             if (e.which == 13) {
                 $(this).blur();
                 $('.filter-container .right a.submit').trigger('click');
             }
         });
 
-        $('form.fcs-form select').selectpicker({
+        form.find('select').selectpicker({
             liveSearch: true,
             showIcon: true
         });
+        
+        var afterLabelElement = form.find('label span.after');
+        afterLabelElement.appendTo(afterLabelElement.closest('.input'));
 
     },
 

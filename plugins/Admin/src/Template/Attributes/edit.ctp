@@ -13,8 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Attributes']['id_attribute']) ? $this->request->data['Attributes']['id_attribute'] : "") . "', 'Attributes');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (!empty($this->request->getData('Attributes.id_attribute')) ? $this->request->getData('Attributes.id_attribute') : "") . "', 'Attributes');
     "
 ]);
 ?>
@@ -38,31 +40,30 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->Form->create('Attributes', [
-    'class' => 'fcs-form'
+echo $this->Form->create($attribute, [
+    'class' => 'fcs-form',
+    'novalidate' => 'novalidate',
+    'url' => $isEditMode ? $this->Slug->getAttributeEdit($attribute->id_attribute) : $this->Slug->getAttributeAdd(),
+    'id' => 'attributeEditForm'
 ]);
 
-echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Attributes.id_attribute');
+echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo $this->Form->input('Attributes.name', [
+echo $this->Form->control('Attributes.name', [
     'div' => [
         'class' => 'long text input'
     ],
-    'label' => 'Name',
-    'required' => true
+    'label' => 'Name'
 ]);
 
 if ($this->request->here != $this->Slug->getAttributeAdd()) {
-    $hasCombinedProducts = count($unsavedAttribute['CombinationProducts']['online']) > 0 || count($unsavedAttribute['CombinationProducts']['offline']) > 0;
     echo $this->Form->input('Attributes.delete_attribute', [
-        'label' => 'Variante löschen?',
-        'disabled' => ($hasCombinedProducts ? 'disabled' : ''),
-        'type' => 'checkbox',
-        'after' => '<span class="after small">' . ($hasCombinedProducts ? 'Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind.' : 'Anhaken und dann auf <b>Speichern</b> klicken.') . '</span>'
+        'label' => 'Variante löschen? <span class="after small">' . ($attribute->has_combined_products ? 'Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind.' : 'Anhaken und dann auf <b>Speichern</b> klicken.') . '</span>',
+        'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),
+        'escape' => false,
+        'type' => 'checkbox'
     ]);
 }
 
+echo $this->Form->end();
 ?>
-
-</form>

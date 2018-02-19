@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -28,79 +29,92 @@ class AttributesController extends AdminAppController
 
     public function add()
     {
-        $this->edit();
+        $this->Attribute = TableRegistry::get('Attributes');
+        $attribute = $this->Attribute->newEntity(
+            [],
+            ['validate' => false]
+        );
         $this->set('title_for_layout', 'Variante erstellen');
-        $this->render('edit');
+        $this->_edit($attribute, false);
+        
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
+    }
+    
+    public function edit($attributeId)
+    {
+        if ($attributeId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Attribute = TableRegistry::get('Attributes');
+        $attribute = $this->Attribute->find('all', [
+            'conditions' => [
+                'Attributes.id_attribute' => $attributeId
+            ]
+        ])->first();
+        
+        $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
+        $combinationCounts = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
+        $attribute->has_combined_products = count($combinationCounts['online']) + count($combinationCounts['offline']) > 0;
+        
+        if (empty($attribute)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Variante bearbeite');
+        $this->_edit($attribute, true);
     }
 
-    public function edit($attributeId = null)
+    public function _edit($attribute, $isEditMode)
     {
         $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
 
-        if ($attributeId > 0) {
-            $unsavedAttribute = $this->Attribute->find('all', [
-                'conditions' => [
-                    'Attributes.id_attribute' => $attributeId
-                ]
-            ])->first();
-            $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
-            $unsavedAttribute['CombinationProducts'] = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
-        } else {
-            $unsavedAttribute = [];
+        if (empty($this->request->getData())) {
+            $this->set('attribute', $attribute);
+            return;
         }
-
-        $this->set('unsavedAttribute', $unsavedAttribute);
-        $this->set('title_for_layout', 'Variante bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedAttribute;
+            
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        
+        $attribute = $this->Attribute->patchEntity($attribute, $this->request->getData());
+        if (!empty($attribute->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('attribute', $attribute);
+            $this->render('edit');
         } else {
-            // validate data - do not use $this->Attribute->saveAll()
-            $this->Attribute->id = $attributeId;
-            $this->Attribute->set($this->request->data['Attributes']);
-
-            // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Attributes'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-
-            $errors = [];
-            $this->Attribute->set($this->request->data['Attributes']);
-            if (! $this->Attribute->validates()) {
-                $errors = array_merge($errors, $this->Attribute->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                $this->Attribute->save($this->request->data['Attributes'], [
-                    'validate' => false
-                ]);
-                if (is_null($attributeId)) {
-                    $messageSuffix = 'erstellt.';
-                    $actionLogType = 'attribute_added';
-                } else {
-                    $messageSuffix = 'geändert.';
-                    $actionLogType = 'attribute_changed';
-                }
-
-                if (isset($this->request->data['Attributes']['delete_attribute']) && $this->request->data['Attributes']['delete_attribute']) {
-                    $this->Attribute->delete($this->Attribute->id); // cascade does not work here
-                    $message = 'Die Variante "' . $this->request->data['Attributes']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->ActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
-                    $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
-                } else {
-                    $message = 'Die Variante "' . $this->request->data['Attributes']['name'] . '" wurde ' . $messageSuffix;
-                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Attribute->id, 'attributes', $message);
-                    $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
-                }
-
-                $this->request->getSession()->write('highlightedRowId', $this->Attribute->id);
-                $this->redirect($this->data['referer']);
+            $attribute = $this->Attribute->save($attribute);
+            
+            if (!$isEditMode) {
+                $messageSuffix = 'erstellt.';
+                $actionLogType = 'attribute_added';
             } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                $messageSuffix = 'geändert.';
+                $actionLogType = 'attribute_changed';
             }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            if (!empty($this->request->getData('Attributes.delete_attribute'))) {
+                $this->Attribute->delete($attribute);
+                $message = 'Die Variante <b>' . $attribute->name . '</b> wurde erfolgreich gelöscht.';
+                $this->ActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
+                $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
+            } else {
+                $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix;
+                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
+                $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
+            }
+            
+            $this->request->getSession()->write('highlightedRowId', $attribute->id_attribute);
+            $this->redirect($this->request->getData('referer'));
+            
         }
+        
+        $this->set('attribute', $attribute);
+        
     }
 
     public function index()

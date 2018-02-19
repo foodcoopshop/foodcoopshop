@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * ToolsController
@@ -98,33 +99,6 @@ class ToolsController extends AdminAppController
         die(json_encode([
             'status' => 1,
             'rotatedImageSrc' => $rotatedImageSrc
-        ]));
-    }
-
-    public function ajaxCancelFormPage()
-    {
-        $this->RequestHandler->renderAs($this, 'ajax');
-
-        $referer = $this->params['data']['referer'];
-        if ($referer == '') {
-            $referer = '/';
-        }
-
-        $objectClass = $this->params['data']['objectClass'];
-        $id = $this->params['data']['id'];
-
-        $this->loadModel($objectClass);
-
-        $object = $this->$objectClass->find('all', [
-            'conditions' => [
-                $objectClass . '.' . $this->$objectClass->primaryKey => $id
-            ]
-        ])->first();
-
-        die(json_encode([
-            'status' => 1,
-            'msg' => 'ok',
-            'referer' => $referer
         ]));
     }
 

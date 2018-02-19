@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,23 +25,20 @@ class AttributesTable extends AppTable
         $this->setTable('attribute');
         parent::initialize($config);
         $this->setPrimaryKey('id_attribute');
+        $this->addBehavior('Timestamp');
     }
     
-    public $validate = [
-        'name' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib einen Namen an.'
-            ],
-            'unique' => [
-                'rule' => 'isUnique',
-                'message' => 'Eine Variante mit dem Namen existiert bereits.'
-            ]
-        ]
-    ];
-
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
+        $validator->add('name', 'unique', [
+            'rule' => 'validateUnique',
+            'provider' => 'table',
+            'message' => 'Eine Variante mit dem Namen existiert bereits.'
+        ]);
+        return $validator;
+    }
+    
     public function getForDropdown()
     {
         $attributes = $this->find('all', [

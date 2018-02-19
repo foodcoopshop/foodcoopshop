@@ -31,12 +31,11 @@ class AdminAppController extends AppController
         return $this->AppAuth->user();
     }
 
-    public function beforeFilter(Event $event)
+    public function setReferer()
     {
-        parent::beforeFilter($event);
-        $this->loadModel(Inflector::singularize($this->name)); // force cake to load corresponding model in main app folder
+        $this->set('referer', ! empty($this->request->getData('referer')) ? $this->request->getData('referer') : $this->referer());
     }
-
+    
     /**
      * deletes physical files (thumbs)
      */
