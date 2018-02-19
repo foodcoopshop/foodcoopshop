@@ -13,8 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('PageContent');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Pages']['id_page']) ? $this->request->data['Pages']['id_page'] : "") . "', 'Pages');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('pages-content');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Pages']['id_page']) ? $this->request->data['Pages']['id_page'] : "") . "', 'Pages');
     "
 ]);
 

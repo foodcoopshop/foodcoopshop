@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('PaymentApprovalComment');" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('payments-approval-comment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['Payments']['id'] . "', 'Payments);
         $('#PaymentApproval').on('change', function() {

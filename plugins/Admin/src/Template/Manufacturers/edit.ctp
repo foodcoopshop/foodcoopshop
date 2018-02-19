@@ -17,8 +17,8 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('ManufacturerDescription');" .
-        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('ManufacturerShortDescription');" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('manufacturers-description');" .
+        Configure::read('app.jsNamespace') . ".Helper.initCkeditor('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Manufacturers']['id_manufacturer']) ? $this->request->data['Manufacturers']['id_manufacturer'] : "") . "', 'Manufacturers');"
 ]);
