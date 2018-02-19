@@ -31,6 +31,7 @@ class CartProductsTable extends AppTable
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
+        $this->addBehavior('Timestamp');
     }
     
     public function remove($productId, $attributeId, $cartId)

@@ -138,7 +138,7 @@ class CategoriesTable extends AppTable
 
         if ($filterByNewProducts) {
             $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
-            $sql .= " AND DATE_FORMAT(ProductShops.date_add, '%Y-%m-%d') > :dateAdd";
+            $sql .= " AND DATE_FORMAT(ProductShops.created, '%Y-%m-%d') > :dateAdd";
         }
 
         if ($keyword != '') {

@@ -794,15 +794,15 @@ class ProductsController extends AdminAppController
         }
 
         if ($status == 1) {
-            $newDateAdd = 'NOW()';
+            $newCreated = 'NOW()';
         } else {
-            $newDateAdd = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
+            $newCreated = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
         }
 
         $this->ProductShop = TableRegistry::get('ProductShops');
         $sql = "UPDATE ".$this->Product->getTable()." p, ".$this->ProductShop->getTable()." ps 
-                SET p.date_add  = " . $newDateAdd . ",
-                    ps.date_add = " . $newDateAdd . "
+                SET p.created  = " . $newCreated . ",
+                    ps.created = " . $newCreated . "
                 WHERE p.id_product = ps.id_product
                 AND p.id_product = " . $productId . ";";
         $result = $this->Product->getConnection()->query($sql);

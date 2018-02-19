@@ -161,7 +161,7 @@ use Cake\Core\Configure;
     echo '<th>Anzahl</th>';
     echo '<th>Preis</th>';
     echo '<th>' . $this->Paginator->sort('Taxes.rate', 'Steuersatz') . '</th>';
-    echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('ProductShops.date_add', 'Neu?') . '</th>';
+    echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('ProductShops.created', 'Neu?') . '</th>';
     echo '<th>Pfand</th>';
     echo '<th>' . $this->Paginator->sort('Products.active', 'Status') . '</th>';
     echo '<th style="width:29px;"></th>';

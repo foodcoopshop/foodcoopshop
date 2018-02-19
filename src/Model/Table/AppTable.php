@@ -123,7 +123,7 @@ class AppTable extends Table
     {
         return "Products.id_product,
                 ProductLangs.name, ProductLangs.description_short, ProductLangs.description, ProductLangs.unity,
-                ProductShops.price, ProductShops.date_add,
+                ProductShops.price, ProductShops.created,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,

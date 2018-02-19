@@ -31,6 +31,7 @@ class CartsTable extends AppTable
         $this->hasMany('CartProducts', [
             'foreignKey' => 'id_cart'
         ]);
+        $this->addBehavior('Timestamp');
     }
 
     public function getProductNameWithUnity($productName, $unity)

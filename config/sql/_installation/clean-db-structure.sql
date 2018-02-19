@@ -86,8 +86,8 @@ CREATE TABLE `fcs_cart_products` (
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
   `id_product_attribute` int(10) unsigned NOT NULL DEFAULT '0',
   `amount` int(10) unsigned NOT NULL DEFAULT '0',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cart_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -98,8 +98,8 @@ CREATE TABLE `fcs_carts` (
   `id_cart` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cart`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -373,12 +373,12 @@ CREATE TABLE `fcs_product` (
   `quantity` int(10) NOT NULL DEFAULT '0',
   `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   KEY `id_category_default` (`id_category_default`),
-  KEY `date_add` (`date_add`),
-  KEY `product_manufacturer` (`id_manufacturer`,`id_product`)
+  KEY `product_manufacturer` (`id_manufacturer`,`id_product`),
+  KEY `created` (`created`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product_attribute`;
@@ -439,11 +439,11 @@ CREATE TABLE `fcs_product_shop` (
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
   `id_category_default` int(10) unsigned DEFAULT NULL,
   `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),
   KEY `id_category_default` (`id_category_default`),
-  KEY `date_add` (`date_add`),
+  KEY `date_add` (`created`),
   KEY `indexed` (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

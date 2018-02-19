@@ -44,7 +44,7 @@ class FrontendController extends AppController
             $grossPrice = $this->Product->getGrossPrice($product['id_product'], $product['price']);
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
-            $product['is_new'] = $this->Product->isNew($product['date_add']);
+            $product['is_new'] = $this->Product->isNew($product['created']);
             $product['attributes'] = [];
 
             $attributes = $this->ProductAttribute->find('all', [

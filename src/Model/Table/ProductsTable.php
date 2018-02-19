@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -507,7 +508,7 @@ class ProductsTable extends AppTable
             }
             $product->selectedCategories = Hash::extract($product->category_products, '{n}.id_category');
             
-            $product->is_new = $this->isNew($product->product_shop->date_add);
+            $product->is_new = $this->isNew($product->product_shop->created);
             
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->product_shop->price);
 
@@ -888,9 +889,7 @@ class ProductsTable extends AppTable
             'id_manufacturer' => $manufacturer['Manufacturers']['id_manufacturer'],
             'id_category_default' => Configure::read('app.categoryAllProducts'),
             'id_tax' => $defaultTaxId,
-            'unity' => '',
-            'date_add' => date('Y-m-d H:i:s'),
-            'date_upd' => date('Y-m-d H:i:s')
+            'unity' => ''
         ]);
         $newProductId = $this->getLastInsertID();
 
@@ -898,9 +897,7 @@ class ProductsTable extends AppTable
         $this->ProductShop->save([
             'id_product' => $newProductId,
             'id_shop' => 1,
-            'id_category_default' => Configure::read('app.categoryAllProducts'),
-            'date_add' => date('Y-m-d H:i:s'),
-            'date_upd' => date('Y-m-d H:i:s')
+            'id_category_default' => Configure::read('app.categoryAllProducts')
         ]);
 
         // INSERT CATEGORY_PRODUCTS

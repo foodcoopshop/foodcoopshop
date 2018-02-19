@@ -315,8 +315,7 @@ class CartsController extends FrontendController
                 'total_paid' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
-                'total_deposit' => $this->AppAuth->Cart->getDepositSum(),
-                'date_add' => Time::now()
+                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
             ];
             $order = $this->Order->save(
                 $this->Order->patchEntity($order, $order2save)
@@ -329,7 +328,7 @@ class CartsController extends FrontendController
             }
             $orderId = $order->id_order;
             
-            // get order again to have date_add available as a datetime-object
+            // get order again to have field created available as a datetime-object
             $order = $this->Order->find('all', [
                 'conditions' => [
                     'Orders.id_order' => $orderId
