@@ -53,6 +53,14 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
     {
+        
+        if (!is_null($dateFrom)) {
+            $dateFrom = $dateFrom->i18nFormat(Configure::read('DateFormat.Database'));
+        }
+        if (!is_null($dateTo)) {
+            $dateTo = $dateTo->i18nFormat(Configure::read('DateFormat.Database'));
+        }
+        
         $result = '';
 
         // both from and to date not set
