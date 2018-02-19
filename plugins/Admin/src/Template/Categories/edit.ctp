@@ -13,16 +13,17 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('CategoryDescription');" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : "") . "', 'Categories');
     "
 ]);
-$idForImageUpload = isset($this->request->data['Categories']['id_category']) ? $this->request->data['Categories']['id_category'] : StringComponent::createRandomString(6);
+$idForImageUpload = !empty($category->id_category) ? $category->id_category : StringComponent::createRandomString(6);
 $imageSrc = $this->Html->getCategoryImageSrc($idForImageUpload);
-if (isset($this->request->data['Categories']['tmp_image']) && $this->request->data['Categories']['tmp_image'] != '') {
-    $imageSrc = str_replace('\\', '/', $this->request->data['Categories']['tmp_image']);
+if (!empty($category->tmp_image != '')) {
+    $imageSrc = str_replace('\\', '/', $category->tmp_image);
 }
 
 ?>
@@ -46,18 +47,20 @@ if (isset($this->request->data['Categories']['tmp_image']) && $this->request->da
 
 <?php
 
-echo $this->Form->create('Categories', [
-    'class' => 'fcs-form'
+echo $this->Form->create($category, [
+    'class' => 'fcs-form',
+    'novalidate' => 'novalidate',
+    'url' => $isEditMode ? $this->Slug->getCategoryEdit($category->id_category) : $this->Slug->getCategoryAdd(),
+    'id' => 'categoryEditForm'
 ]);
 
-echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Categories.id_category');
+echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo $this->Form->input('Categories.name', [
+echo $this->Form->control('Categories.name', [
     'label' => 'Name',
     'required' => true
 ]);
-echo $this->Form->input('Categories.id_parent', [
+echo $this->Form->control('Categories.id_parent', [
     'type' => 'select',
     'label' => 'Übergeordnete Kategorie',
     'empty' => 'Keine (oberste Ebene)',
@@ -81,16 +84,16 @@ echo $this->Form->hidden('Categories.tmp_image');
 echo '</div>';
 
 echo $this->Form->input('Categories.delete_image', [
-    'label' => 'Bild löschen?',
+    'label' => 'Bild löschen? <span class="after small">Speichern nicht vergessen</span>',
     'type' => 'checkbox',
-    'after' => '<span class="after small">Speichern nicht vergessen</span>'
+    'escape' => false
 ]);
 
 if ($this->request->here != $this->Slug->getCategoryAdd()) {
     echo $this->Form->input('Categories.delete_category', [
-        'label' => 'Kategorie löschen?',
+        'label' => 'Kategorie löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',
-        'after' => '<span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>'
+        'escape' => false
     ]);
 }
 
@@ -102,12 +105,12 @@ echo $this->Form->input('Categories.active', [
 echo $this->Form->input('Categories.description', [
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>'
+    'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
+    'escape' => false
 ]);
 
+echo $this->Form->end();
 ?>
-
-</form>
 
 <div class="sc"></div>
 

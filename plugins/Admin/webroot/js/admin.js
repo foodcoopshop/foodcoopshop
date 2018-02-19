@@ -1323,7 +1323,9 @@ foodcoopshop.Admin = {
         });
         
         var afterLabelElement = form.find('label span.after');
-        afterLabelElement.appendTo(afterLabelElement.closest('.input'));
+        afterLabelElement.each(function() {
+            $(this).appendTo($(this).closest('.input'));
+        });
 
     },
 

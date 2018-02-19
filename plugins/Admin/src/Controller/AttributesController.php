@@ -31,7 +31,7 @@ class AttributesController extends AdminAppController
     {
         $this->Attribute = TableRegistry::get('Attributes');
         $attribute = $this->Attribute->newEntity(
-            [],
+            ['active' => APP_ON],
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Variante erstellen');

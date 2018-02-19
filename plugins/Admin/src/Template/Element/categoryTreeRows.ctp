@@ -45,7 +45,7 @@ foreach ($categories as $category) {
     echo '</td>';
 
     echo '<td>';
-        echo $category->date_upd->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+        echo $category->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td align="center">';

@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,19 +32,15 @@ class CategoriesTable extends AppTable
         ]);
         parent::initialize($config);
         $this->setPrimaryKey('id_category');
+        $this->addBehavior('Timestamp');
     }
     
-    public $validate = [
-        'name' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib einen Namen an.'
-            ]
-        ]
-    ];
-
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
+        return $validator;
+    }
+    
     private $flattenedArray = [];
 
     private function flattenNestedArrayWithChildren($array, $separator = '')

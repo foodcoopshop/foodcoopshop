@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Cake\Core\Configure;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -29,94 +30,93 @@ class CategoriesController extends AdminAppController
 
     public function add()
     {
-        $this->edit();
+        $this->Category = TableRegistry::get('Categories');
+        $category = $this->Category->newEntity(
+            ['active' => APP_ON],
+            ['validate' => false]
+        );
         $this->set('title_for_layout', 'Kategorie erstellen');
-        $this->render('edit');
+        $this->_processForm($category, false);
+        
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
     }
-
-    public function edit($categoryId = null)
+    
+    public function edit($categoryId)
+    {
+        if ($categoryId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Category = TableRegistry::get('Categories');
+        $category = $this->Category->find('all', [
+            'conditions' => [
+                'Categories.id_category' => $categoryId
+            ]
+        ])->first();
+        
+        if (empty($category)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Kategorie bearbeite');
+        $this->_processForm($category, true);
+    }
+    
+    public function _processForm($category, $isEditMode)
     {
         $this->setFormReferer();
-
-        $categoriesForSelect = $this->Category->getForSelect($categoryId);
+        $this->set('isEditMode', $isEditMode);
+        $categoriesForSelect = $this->Category->getForSelect($category->id);
         $this->set('categoriesForSelect', $categoriesForSelect);
-
-        if ($categoryId > 0) {
-            $unsavedCategory = $this->Category->find('all', [
-                'conditions' => [
-                    'Categories.id_category' => $categoryId
-                ]
-            ])->first();
-        } else {
-            $unsavedCategory = [
-                'Categories' => [
-                    'active' => APP_ON
-                ]
-            ];
+        
+        if (empty($this->request->getData())) {
+            $this->set('category', $category);
+            return;
         }
-
-        $this->set('unsavedCategory', $unsavedCategory);
-        $this->set('title_for_layout', 'Kategorie bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedCategory;
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        
+        $category = $this->Category->patchEntity($category, $this->request->getData());
+        if (!empty($category->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('category', $category);
+            $this->render('edit');
         } else {
-            // validate data - do not use $this->Category->saveAll()
-            $this->Category->id = $categoryId;
-            $this->Category->set($this->request->data['Categories']);
-
-            if ($this->request->data['Categories']['id_parent'] == 0) {
-                $this->request->data['Categories']['id_parent'] = 2;
-            }
-
-            foreach ($this->request->data['Categories'] as $key => &$data) {
-                $data = strip_tags(trim($data));
-            }
-
-            $errors = [];
-            if (! $this->Category->validates()) {
-                $errors = array_merge($errors, $this->Category->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                $this->Category->save($this->request->data['Categories'], [
-                    'validate' => false
-                ]);
-                if (is_null($categoryId)) {
-                    $messageSuffix = 'erstellt.';
-                    $actionLogType = 'category_added';
-                } else {
-                    $messageSuffix = 'geändert.';
-                    $actionLogType = 'category_changed';
-                }
-
-                if ($this->request->data['Categories']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->Category->id, $this->request->data['Categories']['tmp_image'], Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
-                }
-
-                if ($this->request->data['Categories']['delete_image']) {
-                    $this->deleteUploadedImage($this->Category->id, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
-                }
-
-                if (isset($this->request->data['Categories']['delete_category']) && $this->request->data['Categories']['delete_category']) {
-                    $this->Category->delete($this->Category->id); // cascade does not work here
-                    $message = 'Die Kategorie "' . $this->request->data['Categories']['name'] . '" wurde erfolgreich gelöscht.';
-                    $this->ActionLog->customSave('category_deleted', $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
-                    $this->Flash->success('Die Kategorie wurde erfolgreich gelöscht.');
-                } else {
-                    $message = 'Die Kategorie "' . $this->request->data['Categories']['name'] . '" wurde ' . $messageSuffix;
-                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Category->id, 'categories', $message);
-                    $this->Flash->success('Die Kategorie wurde erfolgreich gespeichert.');
-                }
-
-                $this->request->getSession()->write('highlightedRowId', $this->Category->id);
-                $this->redirect($this->data['referer']);
+            $category = $this->Category->save($category);
+            
+            if (!$isEditMode) {
+                $messageSuffix = 'erstellt.';
+                $actionLogType = 'category_added';
             } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                $messageSuffix = 'geändert.';
+                $actionLogType = 'category_changed';
             }
+
+            if (!empty($this->request->getData('Categories.delete_image'))) {
+                $this->deleteUploadedImage($categoryId, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
+            }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            if (!empty($this->request->getData('Categories.delete_category'))) {
+                $this->Category->delete($category);
+                $message = 'Die Kategorie <b>' . $category->name . '</b> wurde erfolgreich gelöscht.';
+                $actionLogType = 'category_deleted';
+            } else {
+                $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix;
+            }
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'Categories', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $category->id_category);
+            $this->redirect($this->request->getData('referer'));
+            
         }
+        
+        $this->set('category', $category);
+        
     }
 
     public function index()
