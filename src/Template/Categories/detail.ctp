@@ -40,15 +40,15 @@ if (!empty($blogPosts)) {
 <?php
 
 if (!empty($category)) {
-    $categoryImgSrc = $this->Html->getCategoryImageSrc($category['Categories']['id_category'], 'default');
+    $categoryImgSrc = $this->Html->getCategoryImageSrc($category->id_category, 'default');
     if ($categoryImgSrc !== false) {
         echo '<div class="img-wrapper">';
             echo '<img src="' . $categoryImgSrc. '" />';
         echo '</div>';
     }
-    if ($category['Categories']['description'] != '') {
+    if ($category->description != '') {
         echo '<div class="description-wrapper">';
-            echo $category['Categories']['description'];
+            echo $category->description;
         echo '</div>';
     }
 }

@@ -95,8 +95,12 @@ class CategoriesController extends AdminAppController
                 $actionLogType = 'category_changed';
             }
 
+            if (!empty($this->request->getData('Categories.tmp_image'))) {
+                $this->saveUploadedImage($category->id_category, $this->request->getData('Categories.tmp_image'), Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
+            }
+            
             if (!empty($this->request->getData('Categories.delete_image'))) {
-                $this->deleteUploadedImage($categoryId, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
+                $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
             }
             
             $this->ActionLog = TableRegistry::get('ActionLogs');

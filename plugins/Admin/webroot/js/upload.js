@@ -29,7 +29,7 @@ foodcoopshop.Upload = {
 
     saveCategoryTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.categories #CategoryTmpImage').val(filename);
+        $('body.categories input[name="Categories[tmp_image]"').val(filename);
         $('body.categories a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
