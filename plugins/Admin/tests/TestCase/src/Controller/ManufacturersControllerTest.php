@@ -31,6 +31,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testAdd()
     {
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
 
         $manufacturerData = [
@@ -105,6 +106,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testEditOptions()
     {
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
@@ -177,6 +179,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testEdit()
     {
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
@@ -211,7 +214,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testAutomaticAddingOfCustomerRecord()
     {
-
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
 
         // manufacturer 16 does not yet have a related customer record (foreign_key: email)
