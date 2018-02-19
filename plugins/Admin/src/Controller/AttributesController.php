@@ -35,7 +35,7 @@ class AttributesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Variante erstellen');
-        $this->_edit($attribute, false);
+        $this->_processForm($attribute, false);
         
         if (empty($this->request->getData())) {
             $this->render('edit');
@@ -63,10 +63,10 @@ class AttributesController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Variante bearbeite');
-        $this->_edit($attribute, true);
+        $this->_processForm($attribute, true);
     }
 
-    public function _edit($attribute, $isEditMode)
+    public function _processForm($attribute, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -100,13 +100,12 @@ class AttributesController extends AdminAppController
             if (!empty($this->request->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
                 $message = 'Die Variante <b>' . $attribute->name . '</b> wurde erfolgreich gelöscht.';
-                $this->ActionLog->customSave('attribute_deleted', $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
-                $this->Flash->success('Die Variante wurde erfolgreich gelöscht.');
+                $actionLogType = 'attribute_deleted';
             } else {
                 $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix;
-                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
-                $this->Flash->success('Die Variante wurde erfolgreich gespeichert.');
             }
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
+            $this->Flash->success($message);
             
             $this->request->getSession()->write('highlightedRowId', $attribute->id_attribute);
             $this->redirect($this->request->getData('referer'));
