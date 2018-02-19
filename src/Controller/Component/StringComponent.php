@@ -30,7 +30,7 @@ class StringComponent extends Component
         if ($url == '') {
             return $url;
         }
-        if (!preg_match('/^http\:\/\//', $url)) {
+        if (!preg_match('/^http(s)?\:\/\//', $url)) {
             $url = 'http://'.$url;
         }
         return $url;

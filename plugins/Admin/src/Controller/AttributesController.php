@@ -62,7 +62,7 @@ class AttributesController extends AdminAppController
         if (empty($attribute)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Variante bearbeite');
+        $this->set('title_for_layout', 'Variante bearbeiten');
         $this->_processForm($attribute, true);
     }
 

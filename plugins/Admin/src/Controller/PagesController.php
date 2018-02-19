@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -43,95 +44,100 @@ class PagesController extends AdminAppController
 
     public function add()
     {
-        $this->edit();
+        $this->Page = TableRegistry::get('Pages');
+        $page = $this->Page->newEntity(
+            [
+                'active' => APP_ON,
+                'position' => 10
+            ],
+            ['validate' => false]
+        );
         $this->set('title_for_layout', 'Seite erstellen');
-        $this->render('edit');
+        $this->_processForm($page, false);
+        
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
     }
 
-    public function edit($pageId = null)
+    public function edit($pageId)
     {
-        $this->setFormReferer();
-
+        if ($pageId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Page = TableRegistry::get('Pages');
+        $page = $this->Page->find('all', [
+            'conditions' => [
+                'Pages.id_page' => $pageId
+            ]
+        ])->first();
+        
+        if (empty($page)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Seite bearbeiten');
+        $this->_processForm($page, true);
+    }
+    
+    public function _processForm($page, $isEditMode)
+    {
         $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/pages",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
         ];
-
-        $this->set('mainPagesForDropdown', $this->Page->getMainPagesForDropdown($pageId));
-
-        if ($pageId > 0) {
-            $unsavedPage = $this->Page->find('all', [
-                'conditions' => [
-                    'Pages.id_page' => $pageId
-                ]
-            ])->first();
-        } else {
-            // default values for new pages
-            $unsavedPage = [
-                'Pages' => [
-                    'active' => APP_ON,
-                    'position' => 10
-                ]
-            ];
+        $this->set('mainPagesForDropdown', $this->Page->getMainPagesForDropdown($page->id_page));
+        $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
+        
+        if (empty($this->request->getData())) {
+            $this->set('page', $page);
+            return;
         }
-        $this->set('title_for_layout', 'Seite bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedPage;
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        
+        $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->getData('Pages.extern_url'));
+        $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
+        
+        $page = $this->Page->patchEntity($page, $this->request->getData());
+        if (!empty($page->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('page', $page);
+            $this->render('edit');
         } else {
-            // validate data - do not use $this->Page->saveAll()
-            $this->Page->id = $pageId;
-
-            $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->data['Pages']['extern_url']);
-
-            $this->Page->set($this->request->data['Pages']);
-
-            // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Pages'] as $key => &$data) {
-                if ($key != 'content') {
-                    $data = strip_tags(trim($data));
-                }
-            }
-
-            $errors = [];
-            if (! $this->Page->validates()) {
-                $errors = array_merge($errors, $this->Page->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
-
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                $this->Page->save($this->request->data['Pages'], [
-                    'validate' => false
-                ]);
-                if (is_null($pageId)) {
-                    $messageSuffix = 'erstellt.';
-                    $actionLogType = 'page_added';
-                } else {
-                    $messageSuffix = 'geändert.';
-                    $actionLogType = 'page_changed';
-                }
-
-                if (isset($this->request->data['Pages']['delete_page']) && $this->request->data['Pages']['delete_page']) {
-                    $this->Page->saveField('active', APP_DEL, false);
-                    $message = 'Die Seite "' . $this->request->data['Pages']['title'] . '" wurde erfolgreich gelöscht.';
-                    $this->ActionLog->customSave('page_deleted', $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
-                    $this->Flash->success('Die Seite wurde erfolgreich gelöscht.');
-                } else {
-                    $message = 'Die Seite "' . $this->request->data['Pages']['title'] . '" wurde ' . $messageSuffix;
-                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Page->id, 'pages', $message);
-                    $this->Flash->success('Die Seite wurde erfolgreich gespeichert.');
-                }
-
-                $this->redirect($this->data['referer']);
+            $page = $this->Page->save($page);
+            
+            if (!$isEditMode) {
+                $messageSuffix = 'erstellt.';
+                $actionLogType = 'page_added';
             } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                $messageSuffix = 'geändert.';
+                $actionLogType = 'page_changed';
             }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            if (!empty($this->request->getData('Pages.delete_page'))) {
+                $this->Page->delete($page);
+                $message = 'Die Seite <b>' . $page->name . '</b> wurde erfolgreich gelöscht.';
+                $actionLogType = 'page_deleted';
+            } else {
+                $message = 'Die Seite <b>' . $page->name . '</b> wurde ' . $messageSuffix;
+            }
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'Pages', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $page->id_page);
+            $this->redirect($this->request->getData('referer'));
+            
         }
+        
+        $this->set('page', $page);
+        
     }
-
+    
     public function index()
     {
         $conditions = [];

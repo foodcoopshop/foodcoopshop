@@ -888,7 +888,7 @@ form.fcs-form .input.password input {
 form.fcs-form .long.input input {
     width: 562px;
 }
-form.fcs-form .input.short input {
+form.fcs-form .input input.short {
     width: 30px;
     text-align: center;
 }

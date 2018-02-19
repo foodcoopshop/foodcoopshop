@@ -1286,7 +1286,7 @@ foodcoopshop.Admin = {
         });
     },
 
-    initForm: function (id, objectClass) {
+    initForm: function () {
 
         $('.filter-container .right a.submit').on('click', function () {
             foodcoopshop.Helper.disableButton($(this));

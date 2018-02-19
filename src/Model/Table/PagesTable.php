@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 use Cake\Core\Configure;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,47 +31,19 @@ class PagesTable extends AppTable
             'foreignKey' => 'id_customer'
         ]);
     }
-
-    public $validate = [
-        'position' => [
-            'number' => [
-                'allowEmpty' => true,
-                'rule' => [
-                    'range',
-                    - 1,
-                    1001
-                ],
-                'message' => 'Bitte gibt eine Zahl von 0 bis 1000 an'
-            ]
-        ],
-        'extern_url' => [
-            'allowEmpty' => true,
-            'rule' => [
-                'url',
-                true
-            ],
-            'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
-        ],
-        'title' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib einen Titel an.'
-            ],
-            'minLength' => [
-                'rule' => [
-                    'minLength',
-                    3
-                ],
-                'message' => 'Bitte gib mindestens 3 Zeichen ein.'
-            ]
-        ]
-    ];
+    
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('title', 'Bitte gib einen Titel an.');
+        $validator->minLength('title', 2, 'Bitte gib mindestens 3 Zeichen ein.');
+        $validator->range('position', [-1, 1001], 'Bitte gibt eine Zahl von 0 bis 1000 an.');
+        $validator->urlWithProtocol('extern_url', 'Bitte gibt eine gültige Internet-Adresse an.');
+        $validator->allowEmpty('extern_url');
+        return $validator;
+    }
 
     public function findAllGroupedByMenu($conditions)
     {
-
         $pages = $this->find('threaded', [
             'parentField' => 'id_parent',
             'conditions' => $conditions,

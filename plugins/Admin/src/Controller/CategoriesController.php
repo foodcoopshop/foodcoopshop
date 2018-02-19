@@ -59,7 +59,7 @@ class CategoriesController extends AdminAppController
         if (empty($category)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Kategorie bearbeite');
+        $this->set('title_for_layout', 'Kategorie bearbeiten');
         $this->_processForm($category, true);
     }
     
