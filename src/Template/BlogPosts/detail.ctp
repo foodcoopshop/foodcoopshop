@@ -40,7 +40,7 @@ if ($blogPost->short_description != '') {
     echo $blogPost->content;
 
     echo '<p><i>';
-        echo '<br />Geändert am ' . $this->Time->formatToDateNTimeShort($blogPost->modified);
+        echo '<br />Geändert am ' . $blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
 if (!empty($blogPost->manufacturer)) {
     echo '<br />';
     if ($blogPost->manufacturer->active) {

@@ -146,11 +146,10 @@ class BlogPostsController extends AdminAppController
             if (!empty($this->request->getData('BlogPosts.delete_blog_post'))) {
                 $blogPost = $this->BlogPost->patchEntity($blogPost, ['active' => APP_DEL]);
                 $this->BlogPost->save($blogPost);
-                $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde erfolgreich gelöscht.';
+                $messageSuffix = 'gelöscht';
                 $actionLogType = 'blog_post_deleted';
-            } else {
-                $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde ' . $messageSuffix;
             }
+            $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde ' . $messageSuffix;
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
             

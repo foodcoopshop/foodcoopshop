@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -24,27 +26,14 @@ class SlidersTable extends AppTable
         $this->setPrimaryKey('id_slider');
     }
     
-    public $validate = [
-        'position' => [
-            'number' => [
-                'rule' => [
-                    'range',
-                    - 1,
-                    101
-                ],
-                'message' => 'Bitte gibt eine Zahl von 0 bis 100 an'
-            ]
-        ],
-        'image' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte lade ein Bild hoch.'
-            ]
-        ]
-    ];
-
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('image', 'Bitte lade ein Bild hoch.');
+        $validator->notEmpty('position', 'Bitte gib eine Zahl von 0 bis 100 an.');
+        $validator->range('position', [-1, 101], 'Bitte gibt eine Zahl von 0 bis 100 an.');
+        return $validator;
+    }
+    
     public function getForHome()
     {
         $slides = $this->find('all', [

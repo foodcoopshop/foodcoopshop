@@ -106,11 +106,10 @@ class CategoriesController extends AdminAppController
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Categories.delete_category'))) {
                 $this->Category->delete($category);
-                $message = 'Die Kategorie <b>' . $category->name . '</b> wurde erfolgreich gelöscht.';
                 $actionLogType = 'category_deleted';
-            } else {
-                $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix;
+                $messageSuffix = 'gelöscht';
             }
+            $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix;
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'Categories', $message);
             $this->Flash->success($message);
             

@@ -127,7 +127,7 @@ return [
         'categoryImageSizes' => [
             '717' => ['suffix' => '-category_default'] // detail AND lightbox
         ],
-        'sliderImageSizes', [
+        'sliderImageSizes' => [
             '905' => ['suffix' => '-slider'] // detail AND lightbox
         ],
         'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',

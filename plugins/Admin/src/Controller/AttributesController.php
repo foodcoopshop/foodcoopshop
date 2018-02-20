@@ -99,11 +99,10 @@ class AttributesController extends AdminAppController
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
-                $message = 'Die Variante <b>' . $attribute->name . '</b> wurde erfolgreich gelöscht.';
+                $messageSuffix = 'gelöscht';
                 $actionLogType = 'attribute_deleted';
-            } else {
-                $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix;
             }
+            $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix;
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
             

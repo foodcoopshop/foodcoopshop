@@ -120,12 +120,12 @@ class PagesController extends AdminAppController
             
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Pages.delete_page'))) {
-                $this->Page->delete($page);
-                $message = 'Die Seite <b>' . $page->title . '</b> wurde erfolgreich gelöscht.';
+                $page = $this->Page->patchEntity($page, ['active' => APP_DEL]);
+                $this->Page->save($page);
+                $messageSuffix = 'gelöscht';
                 $actionLogType = 'page_deleted';
-            } else {
-                $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix;
             }
+            $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix;
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'Pages', $message);
             $this->Flash->success($message);
             

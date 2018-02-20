@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 use Cake\Core\Configure;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -24,83 +25,102 @@ class SlidersController extends AdminAppController
 
     public function add()
     {
-        $this->edit();
+        $this->Slider = TableRegistry::get('Sliders');
+        $slider = $this->Slider->newEntity(
+            [
+                'active' => APP_ON,
+                'position' => 10
+            ],
+            ['validate' => false]
+            );
         $this->set('title_for_layout', 'Slideshow-Bild erstellen');
-        $this->render('edit');
+        $this->_processForm($slider, false);
+        
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
     }
-
-    public function edit($sliderId = null)
+    
+    public function edit($sliderId)
     {
-        $this->setFormReferer();
-
-        if ($sliderId > 0) {
-            $unsavedSlider = $this->Slider->find('all', [
-                'conditions' => [
-                    'Sliders.id_slider' => $sliderId
-                ]
-            ])->first();
-            // default value
-            $unsavedSlider['Sliders']['update_modified_field'] = APP_ON;
-        } else {
-            // default values for new sliders
-            $unsavedSlider = [
-                'Sliders' => [
-                    'active' => APP_ON,
-                    'position' => 10
-                ]
-            ];
+        if ($sliderId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Slider = TableRegistry::get('Sliders');
+        $slider = $this->Slider->find('all', [
+            'conditions' => [
+                'Sliders.id_slider' => $sliderId
+            ]
+        ])->first();
+        
+        if (empty($slider)) {
+            throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Slideshow-Bild bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedSlider;
-        } else {
-            // validate data - do not use $this->Slider->saveAll()
-            $this->Slider->id = $sliderId;
-            $this->Slider->set($this->request->data['Sliders']);
-
-            $errors = [];
-            if (! $this->Slider->validates()) {
-                $errors = array_merge($errors, $this->Slider->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                $this->Slider->save($this->request->data['Sliders'], [
-                    'validate' => false
-                ]);
-                if (is_null($sliderId)) {
-                    $messageSuffix = 'erstellt.';
-                    $actionLogType = 'slider_added';
-                } else {
-                    $messageSuffix = 'geändert.';
-                    $actionLogType = 'slider_changed';
-                }
-
-                if ($this->request->data['Sliders']['tmp_image'] != '') {
-                    $filename = $this->saveUploadedImage($this->Slider->id, $this->request->data['Sliders']['tmp_image'], Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-                    $this->Slider->saveField('image', $filename, false);
-                }
-
-                if (isset($this->request->data['Slider']['delete_slider']) && $this->request->data['Slider']['delete_slider']) {
-                    $this->Slider->saveField('active', APP_DEL, false);
-                    $this->deleteUploadedImage($this->Slider->id, Configure::read('htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
-                    $message = 'Das Slideshow-Bild ' . $this->Slider->id . ' wurde erfolgreich gelöscht.';
-                    $this->ActionLog->customSave('slider_deleted', $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
-                    $this->Flash->success('Das Slideshow-Bild wurde erfolgreich gelöscht.');
-                } else {
-                    $message = 'Das Slideshow-Bild ' . $this->Slider->id . ' wurde ' . $messageSuffix;
-                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Slider->id, 'slides', $message);
-                    $this->Flash->success('Das Slideshow-Bild wurde erfolgreich gespeichert.');
-                }
-                
-                $this->request->getSession()->write('highlightedRowId', $this->Slider->id);
-                $this->redirect($this->data['referer']);
-            } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
-            }
+        $this->_processForm($slider, true);
+    }
+    
+    public function _processForm($slider, $isEditMode)
+    {
+        
+        $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
+        
+        if (empty($this->request->getData())) {
+            $this->set('slider', $slider);
+            return;
         }
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        
+        $slider = $this->Slider->patchEntity($slider, $this->request->getData());
+        if (!empty($slider->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('slider', $slider);
+            $this->render('edit');
+        } else {
+            $slider = $this->Slider->save($slider);
+            
+            if (!$isEditMode) {
+                $messageSuffix = 'erstellt.';
+                $actionLogType = 'slider_added';
+            } else {
+                $messageSuffix = 'geändert.';
+                $actionLogType = 'slider_changed';
+            }
+            
+            if (!empty($this->request->getData('Sliders.tmp_image'))) {
+                $filename = $this->saveUploadedImage($slider->id_slider, $this->request->getData('Sliders.tmp_image'), Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
+                $slider = $this->Slider->patchEntity($slider, ['image' => $filename]);
+                $this->Slider->save($slider);
+            }
+            
+            if (!empty($this->request->getData('Sliders.delete_image'))) {
+                $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
+            }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            if (!empty($this->request->getData('Sliders.delete_slider'))) {
+                $this->Slider->delete($slider);
+                $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
+                $this->Slider->save($slider);
+                $messageSuffix = 'gelöscht';
+                $actionLogType = 'slider_deleted';
+            }
+            $message = 'Das Slideshow-Bild <b>' . $slider->id_slider . '</b> wurde ' . $messageSuffix;
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'Sliders', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $slider->id_slider);
+            $this->redirect($this->request->getData('referer'));
+            
+        }
+        
+        $this->set('slider', $slider);
+        
     }
 
     public function index()

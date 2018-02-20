@@ -37,7 +37,6 @@ foodcoopshop.Upload = {
     saveSliderTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.sliders input[name="Sliders[tmp_image]"').val(filename);
-        $('body.sliders input[name="Sliders[image]"').val(filename);
         $('body.sliders a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
