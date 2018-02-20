@@ -254,11 +254,11 @@
     #LoginForm button {
         margin-right: 65px;
     }
-    #LoginForm .input input[type="checkbox"] {
+    #login-form .input input[type="checkbox"] {
        width: 30px ! important;
     }
     #RegistrationForm .input.checkbox input[type="checkbox"] {
-        margin-left: -220px;
+        margin-left: -35px;
         margin-top: 0px;
     }
     form div.error-message {
@@ -315,7 +315,6 @@
         margin-left: 95px ! important;
     }
     #RegistrationForm .input.checkbox input[type="checkbox"] {
-        margin-left: -126px;
         margin-top: 8px;
     }
 	.ui-dialog {
