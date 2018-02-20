@@ -86,7 +86,7 @@ return [
         'allowManualOrderListSending' => false,
         /**
          * weekday on which the weekly cronjob "SendOrderList" is called
-         * the available options (in combination with deliveryDayDelta) can be found in Test/Case/View/Helper/MyTimeHelperTest.php
+         * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php
          */
         'sendOrderListsWeekday' => 3,
         
