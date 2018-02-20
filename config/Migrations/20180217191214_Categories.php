@@ -25,6 +25,7 @@ class Categories extends AbstractMigration
             ALTER TABLE fcs_manufacturer CHANGE date_add created DATETIME NULL DEFAULT NULL;
             ALTER TABLE fcs_manufacturer CHANGE date_upd modified DATETIME NULL DEFAULT NULL;
             DELETE from fcs_address WHERE email = \'\';
+            ALTER TABLE fcs_manufacturer CHANGE description description TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE short_description short_description TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
         ');
     }
 }
