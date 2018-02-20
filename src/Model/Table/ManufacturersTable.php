@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 /**
  *
@@ -37,54 +38,27 @@ class ManufacturersTable extends AppTable
         $this->hasMany('Invoices', [
             'foreignKey' => 'id_manufacturer'
         ]);
+        $this->addBehavior('Timestamp');
     }
-
-    public $validate = [
-        'name' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib einen Namen an.'
-            ],
-            'minLength' => [
-                'rule' => [
-                    'between',
-                    3,
-                    64
-                ], // 64 is set in db
-                'message' => 'Bitte gib zwischen 3 und 64 Zeichen ein.'
-            ]
-        ],
-        'iban' => [
-            'regex' => [
-                'rule' => [
-                    'phone',
-                    IBAN_REGEX
-                ], // phone takes regex
-                'allowEmpty' => true,
-                'message' => 'Bitte gib einen gültigen IBAN ein.'
-            ]
-        ],
-        'bic' => [
-            'regex' => [
-                'rule' => [
-                    'phone',
-                    BIC_REGEX
-                ], // phone takes regex
-                'allowEmpty' => true,
-                'message' => 'Bitte gib einen gültigen BIC ein.'
-            ]
-        ],
-        'homepage' => [
-            'allowEmpty' => true,
-            'rule' => [
-                'url',
-                true
-            ],
-            'message' => 'Bitte gibt eine gültige Internet-Adresse an.'
-        ]
-    ];
+    
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
+        $validator->lengthBetween('name', [3, 64], 'Bitte gib zwischen 3 und 64 Zeichen ein.');
+        $validator->allowEmpty('iban');
+        $validator->add('iban', 'validFormat', [
+            'rule' => array('custom', IBAN_REGEX),
+            'message' => 'Bitte gib einen gültigen IBAN ein.'
+        ]);
+        $validator->allowEmpty('bic');
+        $validator->add('bic', 'validFormat', [
+            'rule' => array('custom', BIC_REGEX),
+            'message' => 'Bitte gib einen gültigen BIC ein.'
+        ]);
+        $validator->allowEmpty('homepage');
+        $validator->urlWithProtocol('homepage', 'Bitte gibt eine gültige Internet-Adresse an.');
+        return $validator;
+    }
 
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
@@ -231,17 +205,21 @@ class ManufacturersTable extends AppTable
     {
         $cm = TableRegistry::get('Customers');
 
+        if (empty($manufacturer->address_manufacturer)) {
+            return [];
+        }
+        
         $customer = $cm->find('all', [
             'conditions' => [
-                'Customers.email' => $manufacturer['Addresses']['email']
+                'Customers.email' => $manufacturer->address_manufacturer->email
             ]
         ])->first();
-
-        if (empty($customer['AddressCustomers']['id_address'])) {
+        
+        if (empty($customer->address_customer->id_address)) {
             return $customer;
         }
 
-        if (!empty($customer['AddressCustomers'])) {
+        if (!empty($customer->address_customer)) {
             return [];
         }
 

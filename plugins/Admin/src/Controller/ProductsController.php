@@ -32,15 +32,15 @@ class ProductsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->action) {
+        switch ($this->request->action) {
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
                 return $this->AppAuth->user();
                 break;
             default:
-                if (!empty($this->params['data']['productId'])) {
-                    $ids = $this->Product->getProductIdAndAttributeId($this->params['data']['productId']);
+                if (!empty($this->request->getData('productId'))) {
+                    $ids = $this->Product->getProductIdAndAttributeId($this->request->getData('productId'));
                     $productId = $ids['productId'];
                     $product = $this->Product->find('all', [
                         'conditions' => [
@@ -60,13 +60,13 @@ class ProductsController extends AdminAppController
                  */
                 if ($this->AppAuth->isManufacturer()) {
                     // param productId is passed via ajaxCall
-                    if (!empty($this->params['data']['productId'])) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->params['data']['productId']);
+                    if (!empty($this->request->getData('productId'))) {
+                        $ids = $this->Product->getProductIdAndAttributeId($this->request->getData('productId'));
                         $productId = $ids['productId'];
                     }
                     // param objectId is passed via ajaxCall
-                    if (!empty($this->params['data']['objectId'])) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->params['data']['objectId']);
+                    if (!empty($this->request->getData('objectId'))) {
+                        $ids = $this->Product->getProductIdAndAttributeId($this->request->getData('objectId'));
                         $productId = $ids['productId'];
                     }
                     // param productId is passed as first argument of url

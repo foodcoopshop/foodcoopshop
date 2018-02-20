@@ -111,10 +111,10 @@ class PagesController extends AdminAppController
             $page = $this->Page->save($page);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt.';
+                $messageSuffix = 'erstellt';
                 $actionLogType = 'page_added';
             } else {
-                $messageSuffix = 'geändert.';
+                $messageSuffix = 'geändert';
                 $actionLogType = 'page_changed';
             }
             
@@ -125,7 +125,7 @@ class PagesController extends AdminAppController
                 $messageSuffix = 'gelöscht';
                 $actionLogType = 'page_deleted';
             }
-            $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix;
+            $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'Pages', $message);
             $this->Flash->success($message);
             

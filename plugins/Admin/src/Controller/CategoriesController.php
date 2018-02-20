@@ -88,10 +88,10 @@ class CategoriesController extends AdminAppController
             $category = $this->Category->save($category);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt.';
+                $messageSuffix = 'erstellt';
                 $actionLogType = 'category_added';
             } else {
-                $messageSuffix = 'geändert.';
+                $messageSuffix = 'geändert';
                 $actionLogType = 'category_changed';
             }
 
@@ -109,7 +109,7 @@ class CategoriesController extends AdminAppController
                 $actionLogType = 'category_deleted';
                 $messageSuffix = 'gelöscht';
             }
-            $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix;
+            $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'Categories', $message);
             $this->Flash->success($message);
             

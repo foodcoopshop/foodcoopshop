@@ -6,6 +6,7 @@ use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -53,14 +54,138 @@ class ManufacturersController extends AdminAppController
         $this->edit($this->AppAuth->getManufacturerId());
         $this->set('referer', $this->request->here);
         $this->set('title_for_layout', 'Profil bearbeiten');
-        $this->render('edit');
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
     }
 
     public function add()
     {
-        $this->edit();
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $manufacturer = $this->Manufacturer->newEntity(
+            ['active' => APP_ON],
+            ['validate' => false]
+        );
         $this->set('title_for_layout', 'Hersteller erstellen');
-        $this->render('edit');
+        $this->_processForm($manufacturer, false);
+        
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
+    }
+    
+    public function edit($manufacturerId)
+    {
+        if ($manufacturerId === null) {
+            throw new NotFoundException;
+        }
+        
+        $_SESSION['KCFINDER'] = [
+            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
+        ];
+        
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ],
+            'contain' => [
+                'AddressManufacturers'
+            ]
+        ])->first();
+        
+        if (empty($manufacturer)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Hersteller bearbeiten');
+        $this->_processForm($manufacturer, true);
+    }
+    
+    public function _processForm($manufacturer, $isEditMode)
+    {
+        $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
+        
+        if (empty($this->request->getData())) {
+            $this->set('manufacturer', $manufacturer);
+            return;
+        }
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        
+        $this->request->data['Manufacturers']['iban'] = str_replace(' ', '', $this->request->getData('Manufacturers.iban'));
+        $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->getData('Manufacturers.bic'));
+        $this->request->data['Manufacturers']['homepage'] = StringComponent::addHttpToUrl($this->request->getData('Manufacturers.homepage'));
+        
+        
+        $manufacturer = $this->Manufacturer->patchEntity(
+            $manufacturer,
+            $this->request->getData(),
+            [
+                'associated' => [
+                    'AddressManufacturers'
+                ]
+            ]
+        );
+        if (!empty($manufacturer->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('manufacturer', $manufacturer);
+            $this->render('edit');
+        } else {
+            $manufacturer = $this->Manufacturer->save($manufacturer);
+            
+            if (!$isEditMode) {
+                $customer = [];
+                $messageSuffix = 'erstellt';
+                $actionLogType = 'manufacturer_added';
+            } else {
+                $customer = $this->Manufacturer->getCustomerRecord($manufacturer);
+                $messageSuffix = 'geändert';
+                $actionLogType = 'manufacturer_changed';
+            }
+            
+            $this->Customer = TableRegistry::get('Customers');
+            $customerData = [
+                'email' => $this->request->getData('Manufacturers.address_manufacturer.email'),
+                'firstname' => $this->request->getData('Manufacturers.address_manufacturer.firstname'),
+                'lastname' => $this->request->getData('Manufacturers.address_manufacturer.lastname'),
+                'active' => APP_ON
+            ];
+            if (empty($customer)) {
+                $customerEntity = $this->Customer->newEntity($customerData);
+            } else {
+                $customerEntity = $this->Customer->patchEntity($customer, $customerData);
+            }
+            $this->Customer->save($customerEntity);
+            
+            if (!empty($this->request->getData('Manufacturers.tmp_image'))) {
+                $this->saveUploadedImage($manufacturer->id_manufacturer, $this->request->getData('Manufacturers.tmp_image'), Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
+            }
+            
+            if (!empty($this->request->getData('Manufacturers.delete_image'))) {
+                $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
+            }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $message = 'Der Hersteller <b>' . $manufacturer->name . '</b> wurde ' . $messageSuffix . '.';
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'Manufacturers', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
+            
+            if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerProfile()) {
+                $this->renewAuthSession();
+            }
+            
+            $this->redirect($this->request->getData('referer'));
+            
+        }
+        
+        $this->set('manufacturer', $manufacturer);
+        
     }
 
     public function setKcFinderUploadPath($manufacturerId)
@@ -87,134 +212,6 @@ class ManufacturersController extends AdminAppController
             'msg' => 'OK'
         ]);
         $this->set('_serialize', 'data');
-    }
-
-    public function edit($manufacturerId = null)
-    {
-        $this->setFormReferer();
-
-        if ($manufacturerId > 0) {
-            $unsavedManufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
-                ]
-            ])->first();
-
-            $_SESSION['KCFINDER'] = [
-                'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
-                'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
-            ];
-        } else {
-            $unsavedManufacturer = [];
-        }
-
-        $this->set('unsavedManufacturer', $unsavedManufacturer);
-        $this->set('manufacturerId', $manufacturerId);
-        $this->set('title_for_layout', 'Hersteller bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedManufacturer;
-        } else {
-            // validate data - do not use $this->Manufacturer->saveAll()
-            $this->Manufacturer->id = $manufacturerId;
-
-            // for making regex work, remove whitespace
-            $this->request->data['Manufacturers']['iban'] = str_replace(' ', '', $this->request->data['Manufacturers']['iban']);
-            $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->data['Manufacturers']['bic']);
-            $this->request->data['Manufacturers']['homepage'] = StringComponent::addHttpToUrl($this->request->data['Manufacturers']['homepage']);
-
-            $this->Manufacturer->set($this->request->data['Manufacturers']);
-
-            // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Manufacturers'] as $key => &$data) {
-                if (! in_array($key, [
-                    'description',
-                    'short_description'
-                ])) {
-                    $data = strip_tags(trim($data));
-                }
-            }
-
-            foreach ($this->request->data['Addresses'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-
-            $errors = [];
-            if (! $this->Manufacturer->validates()) {
-                $errors = array_merge($errors, $this->Manufacturer->validationErrors);
-            }
-            $this->Manufacturer->Address->set($this->request->data['Addresses']);
-
-            if (! $this->Manufacturer->Address->validates()) {
-                $errors = array_merge($errors, $this->Manufacturer->Address->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                if (is_null($manufacturerId)) {
-                    // default value for new manufacturer
-                    $this->request->data['Manufacturers']['active'] = APP_ON;
-                }
-                $this->Manufacturer->save($this->request->data['Manufacturers'], [
-                    'validate' => false
-                ]);
-
-                if (is_null($manufacturerId)) {
-                    $customer = [];
-                    $this->request->data['Addresses']['id_manufacturer'] = $this->Manufacturer->id;
-                    $messageSuffix = 'erstellt.';
-                    $actionLogType = 'manufacturer_added';
-                } else {
-                    $customer = $this->Manufacturer->getCustomerRecord($unsavedManufacturer);
-                    $this->Manufacturer->Address->id = $unsavedManufacturer['Addresses']['id_address'];
-                    $messageSuffix = 'geändert.';
-                    $actionLogType = 'manufacturer_changed';
-                }
-
-                // update or create customer record (for login)
-                // customer might also be missing for existing manufacturers
-                $this->Customer = TableRegistry::get('Customers');
-                if (! empty($customer)) {
-                    $this->Customer->id = $customer['Customers']['id_customer'];
-                } else {
-                    $this->Customer->id = null;
-                }
-                $customerData = [
-                    'id_customer' => $this->Customer->id,
-                    'email' => $this->data['Addresses']['email'],
-                    'firstname' => $this->data['Addresses']['firstname'],
-                    'lastname' => $this->data['Addresses']['lastname'],
-                    'active' => APP_ON,
-                    'id_lang' => Configure::read('app.langId')
-                ];
-                $this->Customer->save($customerData, false);
-
-                $this->Manufacturer->Address->save($this->request->data, [
-                    'validate' => false
-                ]);
-
-                if ($this->request->data['Manufacturers']['tmp_image'] != '') {
-                    $this->saveUploadedImage($this->Manufacturer->id, $this->request->data['Manufacturers']['tmp_image'], Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
-                }
-
-                if ($this->request->data['Manufacturers']['delete_image']) {
-                    $this->deleteUploadedImage($this->Manufacturer->id, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
-                }
-
-                $message = 'Der Hersteller "' . $this->request->data['Manufacturers']['name'] . '" wurde ' . $messageSuffix;
-                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Manufacturer->id, 'manufacturers', $message);
-                $this->Flash->success('Der Hersteller wurde erfolgreich gespeichert.');
-
-                if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerProfile()) {
-                    $this->renewAuthSession();
-                }
-
-                $this->redirect($this->data['referer']);
-            } else {
-                $this->Flash->error('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
-            }
-        }
     }
 
     public function changeStatus($manufacturerId, $status)

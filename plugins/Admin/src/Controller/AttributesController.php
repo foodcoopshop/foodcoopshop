@@ -89,10 +89,10 @@ class AttributesController extends AdminAppController
             $attribute = $this->Attribute->save($attribute);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt.';
+                $messageSuffix = 'erstellt';
                 $actionLogType = 'attribute_added';
             } else {
-                $messageSuffix = 'geändert.';
+                $messageSuffix = 'geändert';
                 $actionLogType = 'attribute_changed';
             }
             
@@ -102,7 +102,7 @@ class AttributesController extends AdminAppController
                 $messageSuffix = 'gelöscht';
                 $actionLogType = 'attribute_deleted';
             }
-            $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix;
+            $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
             

@@ -128,7 +128,7 @@ class AppAuthComponent extends AuthComponent
         }
 
         if (! empty($this->manufacturer)) {
-            return $this->manufacturer['Manufacturers']['id_manufacturer'];
+            return $this->manufacturer->id_manufacturer;
         }
 
         return 0;
@@ -141,7 +141,7 @@ class AppAuthComponent extends AuthComponent
         }
 
         if (! empty($this->manufacturer)) {
-            return $this->manufacturer['Manufacturers']['name'];
+            return $this->manufacturer->name;
         }
 
         return '';

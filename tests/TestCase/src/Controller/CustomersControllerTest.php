@@ -218,9 +218,7 @@ class CustomersControllerTest extends AppCakeTestCase
      */
     private function addCustomer($data)
     {
-        $this->browser->post($this->Slug->getRegistration(), 
-            $data
-        );
+        $this->browser->post($this->Slug->getRegistration(), $data);
         return $this->browser->getContent();
     }
 }

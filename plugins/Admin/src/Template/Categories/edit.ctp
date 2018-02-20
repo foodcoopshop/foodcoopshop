@@ -57,8 +57,7 @@ echo $this->Form->create($category, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Categories.name', [
-    'label' => 'Name',
-    'required' => true
+    'label' => 'Name'
 ]);
 echo $this->Form->control('Categories.id_parent', [
     'type' => 'select',

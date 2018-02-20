@@ -53,6 +53,10 @@ class StringComponentTest extends AppCakeTestCase
     {
         $tests = [
             [
+                'value' => '',
+                'expected' => ''
+            ],
+            [
                 'value' => 'http://www.orf.at',
                 'expected' => 'http://www.orf.at'
             ],

@@ -80,10 +80,10 @@ class TaxesController extends AdminAppController
                     'validate' => false
                 ]);
                 if (is_null($taxId)) {
-                    $messageSuffix = 'erstellt.';
+                    $messageSuffix = 'erstellt';
                     $actionLogType = 'tax_added';
                 } else {
-                    $messageSuffix = 'geändert.';
+                    $messageSuffix = 'geändert';
                     $actionLogType = 'tax_changed';
                 }
 
@@ -98,7 +98,7 @@ class TaxesController extends AdminAppController
                     } else {
                         $taxRate = $this->request->data['Taxes']['rate'];
                     }
-                    $message = 'Der Steuersatz "' . Configure::read('app.htmlHelper')->formatAsPercent($taxRate) . '" wurde ' . $messageSuffix;
+                    $message = 'Der Steuersatz "' . Configure::read('app.htmlHelper')->formatAsPercent($taxRate) . '" wurde ' . $messageSuffix . '.';
                     $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
                     $this->Flash->success('Der Steuersatz wurde erfolgreich gespeichert.');
                 }

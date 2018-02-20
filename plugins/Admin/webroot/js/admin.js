@@ -1324,7 +1324,13 @@ foodcoopshop.Admin = {
         
         var afterLabelElement = form.find('label span.after');
         afterLabelElement.each(function() {
-            $(this).appendTo($(this).closest('.input'));
+        	var parentWrapper = $(this).closest('.input');
+        	var errorWrapper = parentWrapper.find('.error-message'); 
+        	if (errorWrapper.length > 0) {
+        		errorWrapper.before($(this));
+        	} else {
+                $(this).appendTo(parentWrapper);
+        	}
         });
 
     },

@@ -31,10 +31,10 @@ $this->element('addScript', ['script' =>
   <form id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          echo $this->Form->input('email', ['label' => 'E-Mail']);
-          echo $this->Form->input('passwd', ['label' => 'Passwort']);
+          echo $this->Form->control('email', ['label' => 'E-Mail']);
+          echo $this->Form->control('passwd', ['label' => 'Passwort']);
           echo '<div class="remember-me-wrapper">';
-              echo $this->Form->input('remember_me', [
+              echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
                   'label' => 'Angemeldet bleiben<br /><small>und Cookie akzeptieren</small>',
                   'escape' => false
@@ -70,7 +70,7 @@ $this->element('addScript', ['script' =>
                     'novalidate' => 'novalidate'
                 ]
             );
-              echo $this->Form->input('Customers.address_customer.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
+              echo $this->Form->control('Customers.address_customer.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
 
               echo '<div class="detail-form">';
 
@@ -80,26 +80,26 @@ $this->element('addScript', ['script' =>
 
                   echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
 
-                  echo $this->Form->input('Customers.firstname', ['label' => 'Vorname', 'required' => true]);
-                  echo $this->Form->input('Customers.lastname', ['label' => 'Nachname', 'required' => true]);
+                  echo $this->Form->control('Customers.firstname', ['label' => 'Vorname', 'required' => true]); // required should not be necessary here
+                  echo $this->Form->control('Customers.lastname', ['label' => 'Nachname', 'required' => true]); // required should not be necessary here
 
-                  echo $this->Form->input('Customers.address_customer.address1', ['label' => 'Straße', 'required' => true]);
-                  echo $this->Form->input('Customers.address_customer.address2', ['label' => 'Adresszusatz']);
+                  echo $this->Form->control('Customers.address_customer.address1', ['label' => 'Straße']);
+                  echo $this->Form->control('Customers.address_customer.address2', ['label' => 'Adresszusatz']);
 
-                  echo $this->Form->input('Customers.address_customer.postcode', ['label' => 'PLZ', 'required' => true]);
-                  echo $this->Form->input('Customers.address_customer.city', ['label' => 'Ort', 'required' => true]);
+                  echo $this->Form->control('Customers.address_customer.postcode', ['label' => 'PLZ']);
+                  echo $this->Form->control('Customers.address_customer.city', ['label' => 'Ort']);
 
-                  echo $this->Form->input('Customers.address_customer.phone_mobile', ['label' => 'Handy', 'required' => true]);
-                  echo $this->Form->input('Customers.address_customer.phone', ['label' => 'Telefon']);
+                  echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => 'Handy']);
+                  echo $this->Form->control('Customers.address_customer.phone', ['label' => 'Telefon']);
 
             if (Configure::read('app.emailOrderReminderEnabled')) {
-                echo $this->Form->input('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
+                echo $this->Form->control('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
             }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
-                  echo $this->Form->input('Customers.terms_of_use_accepted_date_checkbox', [
+                  echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
                       'label' => 'Ich akzeptiere die <a href="#terms-of-use">Nutzungsbedingungen</a>',
                       'type' => 'checkbox',
                       'escape' => false

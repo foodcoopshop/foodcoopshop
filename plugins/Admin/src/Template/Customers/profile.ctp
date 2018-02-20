@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . $appAuth->getUserId() . "', 'Customers');
     "
@@ -42,38 +44,31 @@ echo $this->Form->create('Customers', [
 ]);
 
 echo $this->Form->input('Customers.firstname', [
-    'label' => 'Vorname',
-    'required' => true
+    'label' => 'Vorname'
 ]);
 echo $this->Form->input('Customers.lastname', [
-    'label' => 'Nachname',
-    'required' => true
+    'label' => 'Nachname'
 ]);
 echo $this->Form->input('Customers.email', [
-    'label' => 'E-Mail-Adresse',
-    'required' => true
+    'label' => 'E-Mail-Adresse'
 ]);
 
 echo $this->Form->input('AddressCustomers.address1', [
-    'label' => 'Straße',
-    'required' => true
+    'label' => 'Straße'
 ]);
 echo $this->Form->input('AddressCustomers.address2', [
     'label' => 'Adresszusatz'
 ]);
 
 echo $this->Form->input('AddressCustomers.postcode', [
-    'label' => 'PLZ',
-    'required' => true
+    'label' => 'PLZ'
 ]);
 echo $this->Form->input('AddressCustomers.city', [
-    'label' => 'Ort',
-    'required' => true
+    'label' => 'Ort'
 ]);
 
 echo $this->Form->input('AddressCustomers.phone_mobile', [
-    'label' => 'Handy',
-    'required' => true
+    'label' => 'Handy'
 ]);
 echo $this->Form->input('AddressCustomers.phone', [
     'label' => 'Telefon'

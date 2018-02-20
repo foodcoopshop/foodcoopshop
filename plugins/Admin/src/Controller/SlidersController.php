@@ -85,10 +85,10 @@ class SlidersController extends AdminAppController
             $slider = $this->Slider->save($slider);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt.';
+                $messageSuffix = 'erstellt';
                 $actionLogType = 'slider_added';
             } else {
-                $messageSuffix = 'geändert.';
+                $messageSuffix = 'geändert';
                 $actionLogType = 'slider_changed';
             }
             
@@ -110,7 +110,7 @@ class SlidersController extends AdminAppController
                 $messageSuffix = 'gelöscht';
                 $actionLogType = 'slider_deleted';
             }
-            $message = 'Das Slideshow-Bild <b>' . $slider->id_slider . '</b> wurde ' . $messageSuffix;
+            $message = 'Das Slideshow-Bild <b>' . $slider->id_slider . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'Sliders', $message);
             $this->Flash->success($message);
             

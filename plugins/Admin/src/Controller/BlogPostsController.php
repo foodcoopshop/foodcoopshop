@@ -127,10 +127,10 @@ class BlogPostsController extends AdminAppController
             $blogPost = $this->BlogPost->save($blogPost);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt.';
+                $messageSuffix = 'erstellt';
                 $actionLogType = 'blog_post_added';
             } else {
-                $messageSuffix = 'geändert.';
+                $messageSuffix = 'geändert';
                 $actionLogType = 'blog_post_changed';
             }
             
@@ -149,7 +149,7 @@ class BlogPostsController extends AdminAppController
                 $messageSuffix = 'gelöscht';
                 $actionLogType = 'blog_post_deleted';
             }
-            $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde ' . $messageSuffix;
+            $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
             

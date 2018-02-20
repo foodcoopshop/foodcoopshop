@@ -59,12 +59,10 @@ echo $this->Form->create($blogPost, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 echo $this->Form->input('BlogPosts.title', [
     'class' => 'long',
-    'label' => 'Titel',
-    'required' => true
+    'label' => 'Titel'
 ]);
 echo $this->Form->input('BlogPosts.short_description', [
     'class' => 'long',
-    'required' => false,
     'label' => 'Kurze Beschreibung'
 ]);
 

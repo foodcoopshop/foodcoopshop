@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
     return;
@@ -257,7 +258,7 @@ if ($appAuth->isManufacturer()) {
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $od = TableRegistry::get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
-        if ($sumDepositDelivered[0][0]['sumDepositDelivered'] > 0) {
+        if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
                 'name' => 'Pfandkonto',

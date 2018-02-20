@@ -58,8 +58,7 @@ switch ($unsavedConfiguration['Configurations']['type']) {
             'div' => [
                 'class' => 'long text input'
             ],
-            'label' => $label,
-            'required' => true
+            'label' => $label
         ]);
         break;
     case 'textarea':
@@ -69,7 +68,6 @@ switch ($unsavedConfiguration['Configurations']['type']) {
         echo $this->Form->input('Configuration.value', [
             'type' => 'textarea',
             'label' => $label,
-            'required' => true,
             'class' => 'ckeditor'
         ]);
         break;
@@ -80,7 +78,6 @@ switch ($unsavedConfiguration['Configurations']['type']) {
         echo $this->Form->input('Configuration.value', [
             'type' => 'textarea',
             'label' => $label . '<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
-            'required' => true,
             'class' => 'ckeditor'
         ]);
         break;
@@ -89,8 +86,7 @@ switch ($unsavedConfiguration['Configurations']['type']) {
         echo $this->Form->input('Configuration.value', [
             'type' => 'select',
             'label' => $label,
-            'options' => $this->Html->getConfigurationDropdownOptions($unsavedConfiguration['Configurations']['name']),
-            'required' => true
+            'options' => $this->Html->getConfigurationDropdownOptions($unsavedConfiguration['Configurations']['name'])
         ]);
         break;
 }

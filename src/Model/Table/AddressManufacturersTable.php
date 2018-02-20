@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,74 +21,34 @@ namespace App\Model\Table;
 class AddressManufacturersTable extends AddressesTable
 {
 
-    public $validate = [
-        'firstname' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib den Vornamen des Rechnungsempfängers an.'
-            ]
-        ],
-        'lastname' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib den Nachnamen des Rechnungsempfängers an.'
-            ]
-        ],
-        'email' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib eine E-Mail-Adresse an.'
-            ],
-            'uniqueEmailWithFlagCheck' => [
-                'rule' => [
-                    'uniqueEmailWithFlagCheck'
-                ],
-                'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
-            ],
-            'email' => [
-                'rule' => [
-                    'email'
-                ],
-                'message' => 'Diese E-Mail-Adresse ist nicht gültig.'
-            ]
-        ],
-        'postcode' => [
-            'regex' => [
-                'rule' => [
-                    'phone',
-                    ZIP_REGEX
-                ], // phone takes regex
-                'message' => 'Die PLZ ist nicht gültig.',
-                'allowEmpty' => true
-            ]
-        ],
-        'phone_mobile' => [
-            'phone' => [
-                'rule' => [
-                    'phone',
-                    PHONE_REGEX
-                ],
-                'message' => 'Die Handynummer ist nicht gültig.',
-                'allowEmpty' => true
-            ]
-        ],
-        'phone' => [
-            'phone' => [
-                'rule' => [
-                    'phone',
-                    PHONE_REGEX
-                ],
-                'allowEmpty' => true,
-                'message' => 'Die Telefonnummer ist nicht gültig.'
-            ]
-        ]
-    ];
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('firstname', 'Bitte gib den Vornamen des Rechnungsempfängers an.');
+        $validator->notEmpty('lastname', 'Bitte gib den Nachnamen des Rechnungsempfängers an.');
+        $validator->notEmpty('email', 'Bitte gib eine E-Mail-Adresse an.');
+        $validator->email('email', false, 'Die E-Mail-Adresse ist nicht gültig.');
+        $validator->add('email', 'unique', [
+            'rule' => 'validateUnique',
+            'provider' => 'table',
+            'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
+        ]);
+        $validator->allowEmpty('postcode');
+        $validator->add('postcode', 'validFormat', [
+            'rule' => array('custom', ZIP_REGEX),
+            'message' => 'Die PLZ ist nicht gültig.'
+        ]);
+        $validator->allowEmpty('phone_mobile');
+        $validator->add('phone_mobile', 'validFormat', [
+            'rule' => array('custom', PHONE_REGEX),
+            'message' => 'Die Handynummer ist nicht gültig.'
+        ]);
+        $validator->allowEmpty('phone');
+        $validator->add('phone', 'validFormat', [
+            'rule' => array('custom', PHONE_REGEX),
+            'message' => 'Die Telefonnummer ist nicht gültig.'
+        ]);
+        return $validator;
+    }
 
     /**
      * for addresses only
