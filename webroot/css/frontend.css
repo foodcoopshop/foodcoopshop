@@ -258,6 +258,7 @@ body.customers.new_password_request #inner-content form {
 }
 body.customers.new_password_request .input label {
     width: 70px;
+    margin-bottom: 0;
 }
 #login-form .input,
 body.customers.new_password_request .input {
@@ -302,9 +303,11 @@ body.customers.new_password_request .input input {
     padding: 3px;
     border: 1px solid #ccc;
 }
+body.customers.new_password_request .input {
+    margin-right: 10px;
+}
 body.customers.new_password_request .input input {
     width: 250px;
-    margin-right: 10px;
     margin-top: -2px;
 }
 #login-form div.error-message {

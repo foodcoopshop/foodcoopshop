@@ -2,6 +2,7 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +30,20 @@ class BlogPostsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
+        $this->addBehavior('Timestamp');
     }
+    
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('title', 'Bitte gib einen Titel an.');
+        $validator->minLength('title', 3, 'Bitte gib mindestens 3 Zeichen ein.');
+        $validator->allowEmpty('content');
+        $validator->minLength('content', 3, 'Bitte gib mindestens 3 Zeichen ein.');
+        $validator->allowEmpty('short_description');
+        $validator->maxLength('short_description', 100, 'Bitte gib maximal 100 Zeichen ein.');
+        return $validator;
+    }
+    
     
     /**
      * Find neighbors method
@@ -44,43 +58,6 @@ class BlogPostsTable extends AppTable
             ->where('id_blog_post > ' . $options['id']);
         return ['prev' => $previous, 'next' => $next];
     }
-    
-    public $validate = [
-        'title' => [
-            'notBlank' => [
-                'rule' => [
-                    'notBlank'
-                ],
-                'message' => 'Bitte gib einen Titel an.'
-            ],
-            'minLength' => [
-                'rule' => [
-                    'minLength',
-                    3
-                ],
-                'message' => 'Bitte gib mindestens 3 Zeichen ein.'
-            ]
-        ],
-        'short_description' => [
-            'maxLength' => [
-                'rule' => [
-                    'maxLength',
-                    100
-                ],
-                'message' => 'Bitte gib maximal 100 Zeichen ein.'
-            ]
-        ],
-        'content' => [
-            'minLength' => [
-                'rule' => [
-                    'minLength',
-                    3
-                ],
-                'message' => 'Bitte gib mindestens 3 Zeichen ein.',
-                'allowEmpty' => true
-            ]
-        ]
-    ];
 
     public function findFeatured($appAuth)
     {

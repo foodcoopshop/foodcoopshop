@@ -15,14 +15,14 @@ foodcoopshop.Upload = {
 
     saveBlogPostTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.blog_posts #BlogPostTmpImage').val(filename);
+        $('body.blog_posts input[name="BlogPosts[tmp_image]"').val(filename);
         $('body.blog_posts a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
     saveManufacturerTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.manufacturers #ManufacturerTmpImage').val(filename);
+        $('body.manufacturers input[name="Manufacturers[tmp_image]"').val(filename);
         $('body.manufacturers a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
@@ -36,8 +36,8 @@ foodcoopshop.Upload = {
 
     saveSliderTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.sliders #SliderTmpImage').val(filename);
-        $('body.sliders #SliderImage').val(filename);
+        $('body.sliders input[name="Sliders[tmp_image]"').val(filename);
+        $('body.sliders input[name="Sliders[image]"').val(filename);
         $('body.sliders a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },

@@ -885,7 +885,7 @@ form.fcs-form .input.tel input,
 form.fcs-form .input.password input {
     width: 250px;
 }
-form.fcs-form .long.input input {
+form.fcs-form .input input.long {
     width: 562px;
 }
 form.fcs-form .input input.short {
