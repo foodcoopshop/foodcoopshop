@@ -80,7 +80,7 @@ class PagesController extends AdminAppController
         $this->_processForm($page, true);
     }
     
-    public function _processForm($page, $isEditMode)
+    private function _processForm($page, $isEditMode)
     {
         $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/pages",

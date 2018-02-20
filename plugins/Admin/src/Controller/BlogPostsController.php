@@ -93,7 +93,7 @@ class BlogPostsController extends AdminAppController
         $this->_processForm($blogPost, true);
     }
     
-    public function _processForm($blogPost, $isEditMode)
+    private function _processForm($blogPost, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

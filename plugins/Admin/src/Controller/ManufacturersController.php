@@ -102,7 +102,7 @@ class ManufacturersController extends AdminAppController
         $this->_processForm($manufacturer, true);
     }
     
-    public function _processForm($manufacturer, $isEditMode)
+    private function _processForm($manufacturer, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
@@ -491,24 +491,74 @@ class ManufacturersController extends AdminAppController
         $this->editOptions($this->AppAuth->getManufacturerId());
         $this->set('referer', $this->request->here);
         $this->set('title_for_layout', 'Einstellungen bearbeiten');
-        $this->render('editOptions');
+        if (empty($this->request->getData())) {
+            $this->render('editOptions');
+        }
     }
-
-    public function editOptions($manufacturerId = null)
+    
+    public function editOptions($manufacturerId)
     {
-
-        $this->setFormReferer();
-
-        $unsavedManufacturer = $this->Manufacturer->find('all', [
+        if ($manufacturerId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
         ])->first();
-
-        if (empty($unsavedManufacturer)) {
-            throw new RecordNotFoundException('manufacturer does not exist');
+        
+        if (empty($manufacturer)) {
+            throw new NotFoundException;
         }
-
+        $this->set('title_for_layout', $manufacturer->name . ': Einstellungen bearbeiten');
+        
+        $this->Tax = TableRegistry::get('Taxes');
+        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+        
+        
+        // set default data if manufacturer options are null
+        if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && is_null($manufacturer->variable_member_fee)) {
+            $manufacturer->variable_member_fee = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+        }
+        if (is_null($manufacturer->send_order_list)) {
+            $manufacturer->send_order_list = Configure::read('app.defaultSendOrderList');
+        }
+        if (is_null($manufacturer->send_invoice)) {
+            $manufacturer->send_invoice = Configure::read('app.defaultSendInvoice');
+        }
+        if (is_null($manufacturer->default_tax_id)) {
+            $manufacturer->default_tax_id = Configure::read('app.defaultTaxId');
+        }
+        if (!$this->AppAuth->isManufacturer() && is_null($manufacturer->bulk_orders_allowed)) {
+            $manufacturer->bulk_orders_allowed = Configure::read('app.defaultBulkOrdersAllowed');
+        }
+        if (is_null($manufacturer->send_shop_order_notification)) {
+            $manufacturer->send_shop_order_notification = Configure::read('app.defaultSendShopOrderNotification');
+        }
+        if (is_null($manufacturer->send_ordered_product_deleted_notification)) {
+            $manufacturer->send_ordered_product_deleted_notification = Configure::read('app.defaultSendOrderedProductDeletedNotification');
+        }
+        if (is_null($manufacturer->send_ordered_product_price_changed_notification)) {
+            $manufacturer->send_ordered_product_price_changed_notification = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
+        }
+        if (is_null($manufacturer->send_ordered_product_quantity_changed_notification)) {
+            $manufacturer->send_ordered_product_quantity_changed_notification = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+        }
+        
+        if (!$this->AppAuth->isManufacturer()) {
+            $this->Customer = TableRegistry::get('Customers');
+            $this->set('customersForDropdown', $this->Customer->getForDropdown());
+        }
+        
+        $this->setFormReferer();
+        
+        if (empty($this->request->getData())) {
+            $this->set('manufacturer', $manufacturer);
+            return;
+        }
+        
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
@@ -516,147 +566,98 @@ class ManufacturersController extends AdminAppController
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
-
-        // set default data if manufacturer options are null
-        if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $unsavedManufacturer['Manufacturers']['variable_member_fee'] == '') {
-            $unsavedManufacturer['Manufacturers']['variable_member_fee'] = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        
+        // values that are the same as default values => null
+        if (!$this->AppAuth->isManufacturer()) {
+            // only admins and superadmins are allowed to change variable_member_fee
+            if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->getData('Manufacturers.variable_member_fee') == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                $this->request->data['Manufacturers']['variable_member_fee'] = null;
+            }
         }
-        if ($unsavedManufacturer['Manufacturers']['send_order_list'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_order_list'] = Configure::read('app.defaultSendOrderList');
+        if ($this->request->getData('Manufacturers.default_tax_id') == Configure::read('app.defaultTaxId')) {
+            $this->request->data['Manufacturers']['default_tax_id'] = null;
         }
-        if ($unsavedManufacturer['Manufacturers']['send_invoice'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_invoice'] = Configure::read('app.defaultSendInvoice');
+        if ($this->request->getData('Manufacturers.send_order_list') == Configure::read('app.defaultSendOrderList')) {
+            $this->request->data['Manufacturers']['send_order_list'] = null;
         }
-        if ($unsavedManufacturer['Manufacturers']['default_tax_id'] == '') {
-            $unsavedManufacturer['Manufacturers']['default_tax_id'] = Configure::read('app.defaultTaxId');
+        if ($this->request->getData('Manufacturers.send_invoice') == Configure::read('app.defaultSendInvoice')) {
+            $this->request->data['Manufacturers']['send_invoice'] = null;
         }
-        if (!$this->AppAuth->isManufacturer() && $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] == '') {
-            $unsavedManufacturer['Manufacturers']['bulk_orders_allowed'] = Configure::read('app.defaultBulkOrdersAllowed');
+        if (!$this->AppAuth->isManufacturer() && $this->request->getData('Manufacturers.bulk_orders_allowed') == Configure::read('app.defaultBulkOrdersAllowed')) {
+            $this->request->data['Manufacturers']['bulk_orders_allowed'] = null;
         }
-        if ($unsavedManufacturer['Manufacturers']['send_shop_order_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_shop_order_notification'] = Configure::read('app.defaultSendShopOrderNotification');
+        if ($this->request->getData('Manufacturers.send_shop_order_notification') == Configure::read('app.defaultSendShopOrderNotification')) {
+            $this->request->data['Manufacturers']['send_shop_order_notification'] = null;
         }
-        if ($unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_ordered_product_deleted_notification'] = Configure::read('app.defaultSendOrderedProductDeletedNotification');
+        if ($this->request->getData('Manufacturers.send_ordered_product_deleted_notification') == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
+            $this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] = null;
         }
-        if ($unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_ordered_product_price_changed_notification'] = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
+        if ($this->request->getData('Manufacturers.send_ordered_product_price_changed_notification') == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
+            $this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] = null;
         }
-        if ($unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] == '') {
-            $unsavedManufacturer['Manufacturers']['send_ordered_product_quantity_changed_notification'] = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+        if ($this->request->getData('Manufacturers.send_ordered_product_quantity_changed_notification') == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
+            $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
         }
-
-        $unsavedManufacturer['Manufacturers']['holiday_from'] = Configure::read('app.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_from']);
-        $unsavedManufacturer['Manufacturers']['holiday_to'] = Configure::read('app.timeHelper')->prepareDbDateForDatepicker($unsavedManufacturer['Manufacturers']['holiday_to']);
-
-        $this->set('unsavedManufacturer', $unsavedManufacturer);
-        $this->set('manufacturerId', $manufacturerId);
-        $this->set('title_for_layout', $unsavedManufacturer['Manufacturers']['name'].': Einstellungen bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedManufacturer;
+        
+        if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
+            if ($this->request->getData('Manufacturers.enabled_sync_domains')) {
+                $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->getData('Manufacturers.enabled_sync_domains'));
+            }
+        }
+        
+        // remove post data that could be set by hacking attempt
+        if ($this->AppAuth->isManufacturer()) {
+            unset($this->request->data['Manufacturers']['bulk_orders_allowed']);
+            unset($this->request->data['Manufacturers']['variable_member_fee']);
+            unset($this->request->data['Manufacturers']['id_customer']);
+        }
+        
+        $manufacturer = $this->Manufacturer->patchEntity(
+            $manufacturer,
+            $this->request->getData()
+        );
+        
+        if (!empty($manufacturer->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('manufacturer', $manufacturer);
+            $this->render('edit');
         } else {
+            
             // html could be manipulated and checkbox disabled attribute removed
             if ($this->AppAuth->isManufacturer()) {
                 unset($this->request->data['Manufacturers']['active']);
             }
-
-            $this->request->data['Manufacturers']['holiday_from'] = Configure::read('app.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_from']);
-            $this->request->data['Manufacturers']['holiday_to'] = Configure::read('app.timeHelper')->formatForSavingAsDate($this->request->data['Manufacturers']['holiday_to']);
-
-            // values that are the same as default values => null
-            if (!$this->AppAuth->isManufacturer()) {
-                // only admins and superadmins are allowed to change variable_member_fee
-                if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->data['Manufacturers']['variable_member_fee'] == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                    $this->request->data['Manufacturers']['variable_member_fee'] = null;
-                }
+            
+            $manufacturer = $this->Manufacturer->save($manufacturer);
+            
+            $this->request->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
+            
+            if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerProfile()) {
+                $this->renewAuthSession();
             }
-            if ($this->request->data['Manufacturers']['default_tax_id'] == Configure::read('app.defaultTaxId')) {
-                $this->request->data['Manufacturers']['default_tax_id'] = null;
+            
+            $message = 'Die Einstellungen des Herstellers <b>' . $manufacturer->name . '</b>';
+            if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
+                $message = 'Deine Einstellungen';
+                $this->renewAuthSession();
             }
-            if ($this->request->data['Manufacturers']['send_order_list'] == Configure::read('app.defaultSendOrderList')) {
-                $this->request->data['Manufacturers']['send_order_list'] = null;
-            }
-            if ($this->request->data['Manufacturers']['send_invoice'] == Configure::read('app.defaultSendInvoice')) {
-                $this->request->data['Manufacturers']['send_invoice'] = null;
-            }
-            if (!$this->AppAuth->isManufacturer() && $this->request->data['Manufacturers']['bulk_orders_allowed'] == Configure::read('app.defaultBulkOrdersAllowed')) {
-                $this->request->data['Manufacturers']['bulk_orders_allowed'] = null;
-            }
-            if ($this->request->data['Manufacturers']['send_shop_order_notification'] == Configure::read('app.defaultSendShopOrderNotification')) {
-                $this->request->data['Manufacturers']['send_shop_order_notification'] = null;
-            }
-            if ($this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
-                $this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] = null;
-            }
-            if ($this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
-                $this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] = null;
-            }
-            if ($this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
-                $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
-            }
-
-            if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
-                if ($this->request->data['Manufacturers']['enabled_sync_domains']) {
-                    $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->data['Manufacturers']['enabled_sync_domains']);
-                }
-            }
-
-            // remove post data that could be set by hacking attempt
-            if ($this->AppAuth->isManufacturer()) {
-                unset($this->request->data['Manufacturers']['bulk_orders_allowed']);
-                unset($this->request->data['Manufacturers']['variable_member_fee']);
-                unset($this->request->data['Manufacturers']['id_customer']);
-            }
-
-            // validate data - do not use $this->Manufacturer->saveAll()
-            $this->Manufacturer->id = $manufacturerId;
-            $this->Manufacturer->set($this->request->data['Manufacturers']);
-
-            $this->Manufacturer->validator()['send_order_list'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 2);
-
-            if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-                $this->Manufacturer->validator()['variable_member_fee'] = $this->Manufacturer->getNumberRangeConfigurationRule(0, 100);
-            }
-            if (!empty($this->request->data['Manufacturers']['send_order_list_cc'])) {
-                $this->Manufacturer->validator()['send_order_list_cc'] = $this->Manufacturer->getMultipleEmailValidationRule(true);
-            }
-
-            $errors = [];
-            if (! $this->Manufacturer->validates()) {
-                $errors = array_merge($errors, $this->Manufacturer->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->Manufacturer->save($this->request->data['Manufacturers'], [
-                    'validate' => false
-                ]);
-
-                $message = 'Die Einstellungen des Herstellers <b>' . $unsavedManufacturer['Manufacturers']['name'] . '</b>';
-                if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
-                    $message = 'Deine Einstellungen';
-                    $this->renewAuthSession();
-                }
-                $message .= ' wurden erfolgreich gespeichert.';
-
-                $this->Flash->success($message);
-
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-                $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturerId, 'manufacturers', $message);
-
-                $this->redirect($this->data['referer']);
-            } else {
-                $this->Flash->error('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
-            }
+            $message .= ' wurden erfolgreich gespeichert.';
+            
+            $this->Flash->success($message);
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
+            
+            $this->redirect($this->request->getData('referer'));
+            
         }
-
-        $this->Tax = TableRegistry::get('Taxes');
-        $this->set('taxesForDropdown', $this->Tax->getForDropdown());
-
-        if (!$this->AppAuth->isManufacturer()) {
-            $this->Customer = TableRegistry::get('Customers');
-            $this->set('customersForDropdown', $this->Customer->getForDropdown());
-        }
+        
+        $this->set('manufacturer', $manufacturer);
+        
     }
 
     private function prepareInvoiceAndOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')

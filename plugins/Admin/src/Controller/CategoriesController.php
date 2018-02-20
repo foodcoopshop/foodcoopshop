@@ -63,7 +63,7 @@ class CategoriesController extends AdminAppController
         $this->_processForm($category, true);
     }
     
-    public function _processForm($category, $isEditMode)
+    private function _processForm($category, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);

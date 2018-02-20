@@ -103,13 +103,14 @@ foodcoopshop.Admin = {
 
     initFilter: function (callback) {
 
-        $('input:text').keyup(function (e) {
+        var filterContainer = $('.filter-container');
+
+        filterContainer.find('input:text').keyup(function (e) {
             if (e.keyCode == 13) {
                 foodcoopshop.Admin.submitFilterForm();
             }
         });
 
-        var filterContainer = $('.filter-container');
         filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
             foodcoopshop.Admin.triggerFilter();
         });
@@ -1470,14 +1471,18 @@ foodcoopshop.Admin = {
             var date = datepicker.datepicker('getDate');
             date.setDate(date.getDate() - 1)
             datepicker.datepicker('setDate', date);
-            foodcoopshop.Admin.triggerFilter();
+            if ($(this).closest('.filter-container').length > 0) {
+            	foodcoopshop.Admin.triggerFilter();
+            }
         });
         $('.btn-next-day').on('click', function () {
             var datepicker = $(this).prev();
             var date = datepicker.datepicker('getDate');
             date.setDate(date.getDate() + 1)
             datepicker.datepicker('setDate', date);
-            foodcoopshop.Admin.triggerFilter();
+            if ($(this).closest('.filter-container').length > 0) {
+            	foodcoopshop.Admin.triggerFilter();
+            }
         });
     },
 

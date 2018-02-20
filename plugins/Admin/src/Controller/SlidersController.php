@@ -61,7 +61,7 @@ class SlidersController extends AdminAppController
         $this->_processForm($slider, true);
     }
     
-    public function _processForm($slider, $isEditMode)
+    private function _processForm($slider, $isEditMode)
     {
         
         $this->setFormReferer();

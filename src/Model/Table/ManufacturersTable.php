@@ -67,7 +67,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification)
     {
         $result = $sendOrderedProductDeletedNotification;
-        if ($sendOrderedProductDeletedNotification == '') {
+        if ($sendOrderedProductDeletedNotification === false) {
             $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
         return (boolean) $result;
@@ -80,7 +80,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification)
     {
         $result = $sendOrderedProductPriceChangedNotification;
-        if ($sendOrderedProductPriceChangedNotification == '') {
+        if ($sendOrderedProductPriceChangedNotification === false) {
             $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
         return (boolean) $result;
@@ -93,7 +93,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderedProductQuantityChangedNotification($sendOrderedProductQuantityChangedNotification)
     {
         $result = $sendOrderedProductQuantityChangedNotification;
-        if ($sendOrderedProductQuantityChangedNotification == '') {
+        if ($sendOrderedProductQuantityChangedNotification === false) {
             $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
         return (boolean) $result;
@@ -106,7 +106,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendShopOrderNotification($sendShopOrderNotification)
     {
         $result = $sendShopOrderNotification;
-        if ($sendShopOrderNotification == '') {
+        if ($sendShopOrderNotification === false) {
             $result = Configure::read('app.defaultSendShopOrderNotification');
         }
         return (boolean) $result;
@@ -119,7 +119,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendInvoice($sendInvoice)
     {
         $result = $sendInvoice;
-        if ($sendInvoice == '') {
+        if ($sendInvoice === false) {
             $result = Configure::read('app.defaultSendInvoice');
         }
         return (boolean) $result;
@@ -132,7 +132,7 @@ class ManufacturersTable extends AppTable
     public function getOptionBulkOrdersAllowed($bulkOrdersAllowed)
     {
         $result = $bulkOrdersAllowed;
-        if ($bulkOrdersAllowed == '') {
+        if ($bulkOrdersAllowed === false) {
             $result = Configure::read('app.defaultBulkOrdersAllowed');
         }
         return $result;
@@ -145,7 +145,7 @@ class ManufacturersTable extends AppTable
     public function getOptionDefaultTaxId($defaultTaxId)
     {
         $result = $defaultTaxId;
-        if ($defaultTaxId == '') {
+        if ($defaultTaxId === false) {
             $result = Configure::read('app.defaultTaxId');
         }
         return $result;
@@ -158,7 +158,7 @@ class ManufacturersTable extends AppTable
     public function getOptionVariableMemberFee($variableMemberFee)
     {
         $result = $variableMemberFee;
-        if ($variableMemberFee == '') {
+        if ($variableMemberFee === false) {
             $result = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;
@@ -171,10 +171,10 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderList($sendOrderList)
     {
         $result = $sendOrderList;
-        if ($sendOrderList == '') {
+        if (is_null($sendOrderList)) {
             $result = Configure::read('app.defaultSendOrderList');
         }
-        return (boolean) $result;
+        return $result;
     }
 
     /**
@@ -184,7 +184,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderListCc($sendOrderListCc)
     {
         $ccRecipients = [];
-        if ($sendOrderListCc == '') {
+        if (is_null($sendOrderListCc)) {
             return $ccRecipients;
         }
 

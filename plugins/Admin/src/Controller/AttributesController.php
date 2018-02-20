@@ -66,7 +66,7 @@ class AttributesController extends AdminAppController
         $this->_processForm($attribute, true);
     }
 
-    public function _processForm($attribute, $isEditMode)
+    private function _processForm($attribute, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
