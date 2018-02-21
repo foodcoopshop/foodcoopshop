@@ -117,7 +117,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendOrderedProductQuantityChangedNotification = false;
         $newSendShopOrderNotification = false;
         $newBulkOrdersAllowed = false;
-
+        $newDefaultTaxId = 3;
+        
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
 
@@ -135,13 +136,15 @@ class ManufacturersControllerTest extends AppCakeTestCase
 //         $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
 
         $this->browser->setFieldById('manufacturers-send-order-list-cc', implode(',', $newSendOrderListCc)); // correct
-        $this->browser->submitFormById('manufacturersEditOptionsForm');
 
         $this->browser->setFieldById('manufacturers-send-ordered-product-price-changed-notification', $newSendOrderedProductPriceChangedNotification);// do not use 0 here
         $this->browser->setFieldById('manufacturers-send-ordered-product-quantity-changed-notification', $newSendOrderedProductQuantityChangedNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-send-shop-order-motification', $newSendShopOrderNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-bulk-orders-allowed', $newBulkOrdersAllowed); // do not use 0 here
-
+        $this->browser->setFieldById('manufacturers-default-tax-id', $newDefaultTaxId); // do not use 0 here
+        
+        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        
         $manufacturerNew = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -169,6 +172,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew->bulk_orders_allowed);
         $this->assertEquals($bulkOrdersAllowed, $newBulkOrdersAllowed, 'saving option bulk_orders_allowed failed');
 
+        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
+        $this->assertEquals($defaultTaxId, $newDefaultTaxId, 'saving option default_tax_id failed');
+        
         $this->logout();
     }
 
