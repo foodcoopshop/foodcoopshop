@@ -76,9 +76,9 @@ echo '<div class="holiday-wrapper">';
     echo '</div>';
     echo $this->element('dateFields', [
         'dateFrom' => !empty($manufacturer->holiday_from) ? $manufacturer->holiday_from->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : '',
-        'nameFrom' => 'data[Manufacturer][holiday_from]',
+        'nameFrom' => 'Manufacturers[holiday_from]',
         'dateTo' => !empty($manufacturer->holiday_to) ? $manufacturer->holiday_to->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : '',
-        'nameTo' => 'data[Manufacturer][holiday_to]'
+        'nameTo' => 'Manufacturers[holiday_to]'
     ]);
     echo '<span class="description small"><a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Wie verwende ich die Funktion "Lieferpause"?</a>';
     echo '</span>';

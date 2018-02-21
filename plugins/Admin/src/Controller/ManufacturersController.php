@@ -6,6 +6,7 @@ use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
@@ -607,6 +608,13 @@ class ManufacturersController extends AdminAppController
             if ($this->request->getData('Manufacturers.enabled_sync_domains')) {
                 $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->getData('Manufacturers.enabled_sync_domains'));
             }
+        }
+        
+        if (!empty($this->request->getData('Manufacturers.holiday_from'))) {
+            $this->request->data['Manufacturers']['holiday_from'] = new Time($this->request->getData('Manufacturers.holiday_from'));
+        }
+        if (!empty($this->request->getData('Manufacturers.holiday_to'))) {
+            $this->request->data['Manufacturers']['holiday_to'] = new Time($this->request->getData('Manufacturers.holiday_to'));
         }
         
         // remove post data that could be set by hacking attempt
