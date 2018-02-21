@@ -31,6 +31,16 @@ class AppEmail extends Email
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }
+    
+    /**
+     * declaring this method public enables rendering an email (for preview)
+     * {@inheritDoc}
+     * @see Email::_renderTemplates()
+     */
+    public function _renderTemplates($content)
+    {
+        return parent::_renderTemplates($content);
+    }
 
     /**
      * method needs to be called *before* send-method to be able to work with travis-ci

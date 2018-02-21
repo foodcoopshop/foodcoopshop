@@ -108,6 +108,7 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
+        $this->Configuration = TableRegistry::get('Configurations');
         $this->Configuration->getConfigurations();
         $email = new AppEmail();
         $email
@@ -124,16 +125,16 @@ class ConfigurationsController extends AdminAppController
                 }
                 $email->setTemplate($template);
                 $email->setViewVars([
-                    'data' => ['Customers' => [
+                    'data' => (object) [
                         'firstname' => 'Vorname',
                         'lastname' => 'Nachname',
                         'email' => 'vorname.nachname@example.com'
-                    ]],
+                    ],
                     'newPassword' => 'DeinNeuesPasswort'
                 ]);
                 break;
         }
-        $html = $email->getHtmlMessage();
+        $html = $email->_renderTemplates(null)['html'];
         if ($html != '') {
             echo $html;
             exit;
