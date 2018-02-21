@@ -108,7 +108,6 @@ class PagesControllerTest extends AppCakeTestCase
      */
     public function testAllManufacturerUrls()
     {
-        $this->markTestSkipped();
         $this->loginAsMeatManufacturer();
 
         $testUrls = [
