@@ -95,7 +95,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSliderAdd(),
             $this->Slug->getSliderEdit(6),
             $this->Slug->getConfigurationsList(),
-//             $this->Slug->getConfigurationEdit(544)
+            $this->Slug->getConfigurationEdit(544)
         ];
 
         $this->assertPagesForErrors($testUrls);

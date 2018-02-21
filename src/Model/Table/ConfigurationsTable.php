@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use Cake\Core\Configure;
 use App\Lib\Error\Exception\ConfigFileMissingException;
 use Cake\Filesystem\File;
+use Cake\Validation\Validator;
 
 /**
  * Configuration
@@ -53,119 +54,120 @@ class ConfigurationsTable extends AppTable
 
         return $version;
     }
-
-    public function enableValidations($name)
+    
+    public function validationFcsFacebookUrl(Validator $validator)
     {
-        $validationRules = [];
-
-        switch ($name) {
-            // booleans
-            case 'FCS_CART_ENABLED':
-            case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
-            case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
-            case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
-            case 'FCS_ORDER_COMMENT_ENABLED':
-                $validationRules = $this->getNumberRangeConfigurationRule(0, 1);
-                break;
-            case 'FCS_PRODUCT_AVAILABILITY_LOW':
-                $validationRules = $this->getNumberRangeConfigurationRule(1, 10);
-                break;
-            case 'FCS_DAYS_SHOW_PRODUCT_AS_NEW':
-                $validationRules = $this->getNumberRangeConfigurationRule(1, 14);
-                break;
-            case 'FCS_PAYMENT_PRODUCT_MAXIMUM':
-                $validationRules = $this->getNumberRangeConfigurationRule(50, 1000);
-                break;
-            case 'FCS_SHOP_ORDER_DEFAULT_STATE':
-                $validationRules = $this->getEqualsToMultipleValuesRule(Configure::read('app.htmlHelper')->getVisibleOrderStates());
-                break;
-            case 'FCS_CUSTOMER_GROUP':
-                $validationRules = $this->getNumberRangeConfigurationRule(CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
-                break;
-            case 'FCS_FACEBOOK_URL':
-                $validationRules = $this->getUrlValidationRule(true);
-                break;
-            case 'FCS_APP_NAME':
-                $validationRules = $this->getCharactersRangeRule(5, 255);
-                break;
-            case 'FCS_ACCOUNTING_EMAIL':
-            case 'FCS_APP_EMAIL':
-                $validationRules = $this->getEmailValidationRule();
-                break;
-            case 'FCS_BACKUP_EMAIL_ADDRESS_BCC':
-                $validationRules = $this->getEmailValidationRule(true);
-                break;
-            case 'FCS_MINIMAL_CREDIT_BALANCE':
-                $validationRules = $this->getNumberRangeConfigurationRule(0, 500);
-                break;
-        }
-
-        $this->validator()['value'] = $validationRules;
+        $validator->allowEmpty('value');
+        $validator->urlWithProtocol('value', 'Bitte gibt eine gültige Internet-Adresse an.');
+        return $validator;
     }
-
-    private function getEqualsToMultipleValuesRule($values)
+    
+    public function validationFcsAppEmail(Validator $validator)
     {
-        $validationRules = [];
-        $validationRules[] = [
-            'rule' => [
-                'inList',
-                array_keys($values)
-            ],
-            'message' => 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values))
-        ];
-
-        return $validationRules;
+        $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
+        $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
+        return $validator;
     }
-
-    private function getEmailValidationRule($allowEmpty = false)
+    
+    public function validationFcsAccountingEmail(Validator $validator)
     {
-        $validationRules = [];
-        $validationRules[] = [
-            'rule' => [
-                'email',
-                true
-            ],
-            'message' => 'Bitte gibt eine gültige E-Mail-Adresse an.',
-            'allowEmpty' => $allowEmpty
-        ];
-        return $validationRules;
+        $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
+        $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
+        return $validator;
     }
-
-    private function getUrlValidationRule($allowEmpty = false)
+    
+    public function validationFcsBackupEmailAddress(Validator $validator)
     {
-        $validationRules = [];
-        $validationRules[] = [
-            'rule' => [
-                'url',
-                true
-            ],
-            'message' => 'Bitte gibt eine gültige Url an.',
-            'allowEmpty' => $allowEmpty
-        ];
-        return $validationRules;
+        $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
+        $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
+        return $validator;
     }
-
-    private function getCharactersRangeRule($min, $max)
+    
+    public function validationFcsMinimalCreditBalance(Validator $validator)
     {
-        $validationRules = [];
+        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 500);
+        return $validator;
+    }
+    
+    public function validationFcsCartEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+    
+    public function validationFcsShowProductsForGuests(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+    
+    public function validationFcsDefaultNewMemberActive(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+    
+    public function validationFcsShowFoodcoopshopBacklink(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+    
+    public function validationFcsOrderCommentEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+    
+    public function validationFcsProductAvailabilityLow(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 10);
+    }
+    
+    public function validationFcsDaysShopProductAsNew(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 14);
+    }
+    
+    public function validationFcsPaymentProductMaximum(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 'value', 50, 1000);
+    }
+    
+    public function validationFcsCustomerGroup(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
+    }
+    
+    public function validationFcsShopOrderDefaultState(Validator $validator)
+    {
+        return $this->getRuleEqualsToMultipleValuesValidator($validator, 'value', Configure::read('app.htmlHelper')->getVisibleOrderStates());
+    }
+    
+    public function validationFcsAppName(Validator $validator)
+    {
+        $validator->notEmpty('value', 'Bitte gib den Namen der Foodcoop an.');
+        $validator = $this->getLengthBetweenValidator($validator, 'value', 5, 255);
+        return $validator;
+    }
+    
+    private function getNumberRangeValidator(Validator $validator, $field, $min, $max)
+    {
+        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $validator->lessThanOrEqual($field, $max, $message);
+        $validator->greaterThanOrEqual($field, $min, $message);
+        $validator->notEmpty($field, $message);
+        return $validator;
+    }
+    
+    private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
+    {
+        $validator->inList($field, array_keys($values), 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values)));
+        return $validator;
+    }
+    
+    private function getLengthBetweenValidator($validator, $field, $min, $max)
+    {
         $message = 'Die Anzahl der Zeichen muss zwischen ' . $min . ' und ' . $max . ' liegen.';
-        $validationRules[] = [
-            'rule' => [
-                'minLength',
-                $min
-            ],
-            'message' => $message
-        ];
-        $validationRules[] = [
-            'rule' => [
-                'maxLength',
-                $max
-            ],
-            'message' => $message
-        ];
-        return $validationRules;
+        $validator->lengthBetween($field, [$min, $max], $message);
+        return $validator;
     }
-
+    
     public function getConfigurations()
     {
         $configurations = $this->find('all', [

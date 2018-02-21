@@ -1,9 +1,12 @@
 <?php
 namespace Admin\Controller;
+use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 
 /**
  * ConfigurationsController
@@ -31,64 +34,76 @@ class ConfigurationsController extends AdminAppController
 
     public function edit($configurationId)
     {
-        $this->setFormReferer();
 
-        $unsavedConfiguration = $this->Configuration->find('all', [
+        $this->helpers[] = 'Configuration';
+        
+        if ($configurationId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Configuration = TableRegistry::get('Configurations');
+        $configuration = $this->Configuration->find('all', [
             'conditions' => [
-                'id_configuration' => $configurationId,
-                'active' => APP_ON
+                'Configurations.id_configuration' => $configurationId
             ]
         ])->first();
-
-        if (empty($unsavedConfiguration)) {
-            throw new RecordNotFoundException('configuration not found');
+        
+        if (empty($configuration)) {
+            throw new NotFoundException;
         }
-
-        $this->set('unsavedConfiguration', $unsavedConfiguration);
-        $this->set('configurationId', $configurationId);
         $this->set('title_for_layout', 'Einstellung bearbeiten');
-
-        if ($unsavedConfiguration['Configurations']['type'] == 'textarea') {
+        
+        if ($configuration->type == 'textarea') {
             $_SESSION['KCFINDER'] = [
                 'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             ];
         }
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedConfiguration;
-        } else {
-            // validate data - do not use $this->Configuration->saveAll()
-            $this->Configuration->id = $configurationId;
-            $this->Configuration->set($this->request->data['Configurations']);
-
-            $this->Configuration->enableValidations($unsavedConfiguration['Configurations']['name']);
-
-            // quick and dirty solution for stripping html tags, use html purifier here
-            if ($unsavedConfiguration['Configurations']['type'] != 'textarea') {
-                $data = strip_tags($this->request->data['Configurations']['value']);
-            }
-
-            $errors = [];
-            if (! $this->Configuration->validates()) {
-                $errors = array_merge($errors, $this->Configuration->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->Configuration->id = $configurationId;
-                $this->Configuration->save($this->request->data['Configurations'], [
-                    'validate' => false
-                ]);
-
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-                $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
-                $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configurationId, 'configurations', 'Die Einstellung "' . $unsavedConfiguration['Configurations']['name'] . '" wurde geändert in <i>"' . $this->request->data['Configurations']['value'] . '"</i>');
-
-                $this->redirect($this->data['referer']);
-            } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
-            }
+        
+        $this->setFormReferer();
+        
+        if (empty($this->request->getData())) {
+            $this->set('configuration', $configuration);
+            return;
         }
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        
+        if ($configuration->type != 'textarea') {
+            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        }
+        if ($configuration->name == 'FCS_FACEBOOK_URL') {
+            $this->request->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->request->getData('Configurations.value'));
+        }
+        
+        $validationName = Inflector::camelize(strtolower($configuration->name));
+        $validatorExists = false;
+        if (method_exists($this->Configuration, 'validation'.$validationName)) {
+            $validatorExists = true;
+        }
+        
+        $configuration = $this->Configuration->patchEntity(
+            $configuration,
+            $this->request->getData(),
+            [
+                'validate' => $validatorExists ? $validationName : false
+            ]
+        );
+        
+        if (!empty($configuration->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('configuration', $configuration);
+        } else {
+            $configuration = $this->Configuration->save($configuration);
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
+            $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', 'Die Einstellung "' . $configuration->name . '" wurde geändert in <i>"' . $configuration->value . '"</i>');
+            $this->redirect($this->request->getData('referer'));
+        }
+        
+        $this->set('configuration', $configuration);
+
     }
 
     public function previewEmail($configurationName)
@@ -128,6 +143,7 @@ class ConfigurationsController extends AdminAppController
 
     public function index()
     {
+        $this->helpers[] = 'Configuration';
         $this->Configuration = TableRegistry::get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations());
         $this->Tax = TableRegistry::get('Taxes');
@@ -160,6 +176,7 @@ class ConfigurationsController extends AdminAppController
 
     public function sendTestEmail()
     {
+        $this->set('title_for_layout', 'Test E-Mail versenden');
         $email = new AppEmail();
         $success = $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject('Test E-Mail')

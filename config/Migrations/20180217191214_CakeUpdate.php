@@ -29,6 +29,7 @@ class CakeUpdate extends AbstractMigration
             ALTER TABLE fcs_manufacturer CHANGE date_upd modified DATETIME NULL DEFAULT NULL;
             DELETE from fcs_address WHERE email = "";
             ALTER TABLE fcs_manufacturer CHANGE description description TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE short_description short_description TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+            UPDATE fcs_configuration SET text = replace(text, "/js/vendor/", "/node_modules/");
         ');
     }
 }

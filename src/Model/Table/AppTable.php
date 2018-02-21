@@ -66,29 +66,6 @@ class AppTable extends Table
         }
         return true;
     }
-    
-    public function getNumberRangeConfigurationRule($min, $max)
-    {
-        $validationRules = [];
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
-        $validationRules[] = [
-            'rule' => [
-                'comparison',
-                '>=',
-                $min
-            ],
-            'message' => $message
-        ];
-        $validationRules[] = [
-            'rule' => [
-                'comparison',
-                '<=',
-                $max
-            ],
-            'message' => $message
-        ];
-        return $validationRules;
-    }
 
     /**
      * @return boolean

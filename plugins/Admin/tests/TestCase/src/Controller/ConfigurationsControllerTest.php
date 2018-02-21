@@ -27,11 +27,8 @@ class ConfigurationsControllerTest extends AppCakeTestCase
      * @param string $configKey
      * @param string $newValue
      */
-    protected function changeConfigurationEditForm()
+    protected function changeConfigurationEditForm($configKey, $newValue)
     {
-        $this->markTestSkipped('when admin is ready, assert the changed configuration after ->loadConfigurations()');
-        $configKey = FCS_SHOW_PRODUCTS_FOR_GUESTS;
-        $newValue = APP_OFF;
         $this->loginAsSuperadmin();
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
@@ -45,7 +42,42 @@ class ConfigurationsControllerTest extends AppCakeTestCase
            ],
            'referer' => ''
         ]);
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent(), 'configuration edit failed');
+    }
+    
+    public function testConfigurationEditFormFcsCustomerGroupOk()
+    {
+        $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', CUSTOMER_GROUP_ADMIN); 
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
+    }
+    
+    public function testConfigurationEditFormFcsCustomerGroupInvalidId()
+    {
+        $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', 44);
+        $this->assertRegExpWithUnquotedString('Die Eingabe muss eine Zahl zwischen 3 und 4 sein.', $this->browser->getContent());
+    }
+    
+    public function testConfigurationEditFormFcsAppNameEmpty()
+    {
+        $this->changeConfigurationEditForm('FCS_APP_NAME', '');
+        $this->assertRegExpWithUnquotedString('Bitte gib den Namen der Foodcoop an.', $this->browser->getContent());
+    }
+    
+    public function testConfigurationEditFormFcsAppNameNotEnoughChars()
+    {
+        $this->changeConfigurationEditForm('FCS_APP_NAME', 'Bla');
+        $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->browser->getContent());
+    }
+    
+    public function testConfigurationEditFormFcsAppNameStripTags()
+    {
+        $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
+        $configuration = $this->Configuration->find('all', [
+            'conditions' => [
+                'Configurations.name' => 'FCS_APP_NAME'
+            ]
+        ])->first();
+        $this->assertEquals($configuration->value, 'HalloHallo', 'html tags not stripped');
     }
     
     public function testShowProductsForGuestsEnabledAndLoggedOut()
@@ -56,7 +88,6 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     public function testShowProductsForGuestsDisabledAndLoggedIn()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), true);
     }

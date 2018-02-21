@@ -190,33 +190,6 @@ class MyHtmlHelper extends HtmlHelper
         return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n", "", str_replace("\r", "", htmlspecialchars_decode($input))));
     }
 
-    public function getConfigurationDropdownOptions($name)
-    {
-        switch ($name) {
-            case 'FCS_CART_ENABLED':
-            case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
-            case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
-            case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
-            case 'FCS_ORDER_COMMENT_ENABLED':
-                return [
-                    APP_ON => 'ja',
-                    APP_OFF => 'nein'
-                ];
-                break;
-            case 'FCS_SHOP_ORDER_DEFAULT_STATE':
-                return self::getVisibleOrderStates();
-                break;
-            case 'FCS_CUSTOMER_GROUP':
-                return array_slice($this->getGroups(), 0, 2, true); // true: preserveKeys
-                break;
-        }
-    }
-
-    public function getConfigurationDropdownOption($name, $value)
-    {
-        return self::getConfigurationDropdownOptions($name)[$value];
-    }
-
     public function getMenuType($menuTypeId)
     {
         return $this->getMenuTypes()[$menuTypeId];

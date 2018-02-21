@@ -90,7 +90,7 @@ $this->element('addScript', [
                     echo $configuration->value;
                     break;
                 case 'dropdown':
-                    echo $this->Html->getConfigurationDropdownOption($configuration->name, $configuration->value);
+                    echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value);
                     break;
                 case 'boolean':
                     echo (boolean) $configuration->value ? 'ja' : 'nein';
