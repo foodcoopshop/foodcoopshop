@@ -320,7 +320,7 @@ form div.error-message {
     margin-bottom: 5px;
     width: 250px;
 }
-form div.long div.error-message {
+form div.error-message.long {
     width: 562px;
 }
 form div.error-message ul {

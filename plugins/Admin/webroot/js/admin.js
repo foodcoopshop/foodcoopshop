@@ -1333,6 +1333,13 @@ foodcoopshop.Admin = {
                 $(this).appendTo(parentWrapper);
         	}
         });
+        
+        var errorWrapper = form.find('.error-message');
+        errorWrapper.each(function() {
+            if ($(this).prev().hasClass('long')) {
+            	$(this).addClass('long');
+            }
+        });
 
     },
 
