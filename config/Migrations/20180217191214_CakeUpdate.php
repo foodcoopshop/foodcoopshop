@@ -1,11 +1,14 @@
 <?php
 use Migrations\AbstractMigration;
 
-class Categories extends AbstractMigration
+class CakeUpdate extends AbstractMigration
 {
     public function change()
     {
         $this->execute('
+            ALTER TABLE `fcs_email_logs` CHANGE `message` `message` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+            DELETE FROM `fcs_configuration` WHERE `fcs_configuration`.`name` = "FCS_DB_VERSION";
+            DELETE FROM `fcs_configuration` WHERE `fcs_configuration`.`name` = "FCS_DB_UPDATE";
             DELETE FROM fcs_category WHERE id_category = 1;
             DELETE FROM fcs_category WHERE id_category = 2;
             DELETE FROM fcs_category_product WHERE id_category = 2;
@@ -24,7 +27,7 @@ class Categories extends AbstractMigration
             ALTER TABLE fcs_product_shop CHANGE date_upd modified DATETIME NULL DEFAULT NULL;
             ALTER TABLE fcs_manufacturer CHANGE date_add created DATETIME NULL DEFAULT NULL;
             ALTER TABLE fcs_manufacturer CHANGE date_upd modified DATETIME NULL DEFAULT NULL;
-            DELETE from fcs_address WHERE email = \'\';
+            DELETE from fcs_address WHERE email = "";
             ALTER TABLE fcs_manufacturer CHANGE description description TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE short_description short_description TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
         ');
     }
