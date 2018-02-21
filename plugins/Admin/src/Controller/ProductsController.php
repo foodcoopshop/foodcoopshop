@@ -7,7 +7,9 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
+use Cake\Network\Exception\ForbiddenException;
 use Cake\ORM\TableRegistry;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * ProductsController
@@ -24,9 +26,6 @@ use Cake\ORM\TableRegistry;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-use Intervention\Image\ImageManagerStatic as Image;
-
 class ProductsController extends AdminAppController
 {
 
@@ -48,6 +47,8 @@ class ProductsController extends AdminAppController
                         ]
                     ])->first();
                     if (empty($product)) {
+                        new 
+                        $this->sendAjaxError(new ForbiddenExcepton(ACCESS_DENIED_MESSAGE));
                         return false;
                     }
                 }
@@ -81,10 +82,11 @@ class ProductsController extends AdminAppController
                             'Products.id_product' => $productId
                         ]
                     ])->first();
-                    if (!empty($product) && $product['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
+                    if (!empty($product) && $product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
                         return true;
                     }
                 }
+                $this->sendAjaxError(new ForbiddenExcepton(ACCESS_DENIED_MESSAGE));
                 return false;
                 break;
         }
@@ -92,9 +94,9 @@ class ProductsController extends AdminAppController
 
     public function beforeFilter(Event $event)
     {
+        parent::beforeFilter($event);
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->Product = TableRegistry::get('Products');
-        parent::beforeFilter($event);
     }
 
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
@@ -502,7 +504,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $originalProductId = $this->params['data']['productId'];
+        $originalProductId = $this->request->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -510,37 +512,41 @@ class ProductsController extends AdminAppController
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'ProductShops',
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.ProductAttributeShops',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
 
         if ($ids['attributeId'] > 0) {
             // override values for messages
-            foreach ($oldProduct['ProductAttributes'] as $attribute) {
-                if ($attribute['id_product_attribute'] != $ids['attributeId']) {
+            foreach ($oldProduct->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute != $ids['attributeId']) {
                     continue;
                 }
-                $oldProduct['ProductLangs'] = [
-                    'name' => $oldProduct['ProductLangs']['name'] . ' : ' . $attribute['ProductAttributeCombinations']['Attributes']['name']
-                ];
-                $oldProduct['ProductShop'] = [
-                    'price' => $attribute['ProductAttributeShops']['price']
-                ];
+                $oldProduct->product_lang->name = $oldProduct->product_lang->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldProduct->product_shop->price = $attribute->product_attribute_shop->price;
             }
         }
 
         try {
             $this->Product->changePrice(
                 [
-                    [$originalProductId => $this->params['data']['price']]
+                    [$originalProductId => $this->request->getData('price')]
                 ]
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
 
-        $price = $this->Product->getPriceAsFloat($this->params['data']['price']);
-        $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturers']['name'] . '</b> wurde von ' . Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct['ProductShop']['price'])) . ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($price) . ' geändert.');
+        $price = $this->Product->getPriceAsFloat($this->request->getData('price'));
+        $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name. '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price)) . ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($price) . ' geändert.');
         $this->request->getSession()->write('highlightedRowId', $productId);
 
         $this->set('data', [
@@ -555,7 +561,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $originalProductId = $this->params['data']['productId'];
+        $originalProductId = $this->request->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -569,7 +575,7 @@ class ProductsController extends AdminAppController
         try {
             $this->Product->changeDeposit(
                 [
-                    [$originalProductId => $this->params['data']['deposit']]
+                    [$originalProductId => $this->request->getData('deposit')]
                 ]
             );
         } catch (InvalidParameterException $e) {
@@ -598,7 +604,7 @@ class ProductsController extends AdminAppController
             $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
         }
 
-        $deposit = $this->Product->getPriceAsFloat($this->params['data']['deposit']);
+        $deposit = $this->Product->getPriceAsFloat($this->request->getData('deposit'));
         $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);

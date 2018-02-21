@@ -39,6 +39,8 @@ define('HTTPS_REGEX', '/^https\:\/\//');
 // copied from Cake/Utility/Validation.php with additional $ at the end
 define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
 
+define('ACCESS_DENIED_MESSAGE', 'Zugriff verweigert, bitte melde dich an.');
+
 return [
     'Email' => [
         'default' => [

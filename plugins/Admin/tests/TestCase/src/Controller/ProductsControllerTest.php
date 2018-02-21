@@ -40,7 +40,6 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testEditPriceWithInvalidPriceAsSuperadmin()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
         $this->changeProductPrice(346, $price);
@@ -51,7 +50,6 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testEditPriceOfNonExistingProductAsSuperadmin()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $productId = 1000;
         $this->changeProductPrice($productId, '0,15');
@@ -61,7 +59,6 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
     {
-        $this->markTestSkipped();
         $this->loginAsVegetableManufacturer();
         $productId = 102;
         $this->changeProductPrice($productId, '0,15');
@@ -71,21 +68,18 @@ class ProductsControllerTest extends AppCakeTestCase
 
     public function testEditPriceOfProductAsSuperadmin()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->assertPriceChange(346, '2,20', '2,00');
     }
 
     public function testEditPriceOfAttributeAsSuperadmin()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->assertPriceChange('60-10', '1,25', '1,106195');
     }
 
     public function testEditPriceWith0PercentTax()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->assertPriceChange('163', '1,60', '1,60');
     }

@@ -40,7 +40,7 @@ class AppController extends Controller
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
             'loginAction' => Configure::read('app.slugHelper')->getLogin(),
-            'authError' => 'Zugriff verweigert, bitte melde dich an.',
+            'authError' => ACCESS_DENIED_MESSAGE,
             'authorize' => [
                 'Controller'
             ],
@@ -166,7 +166,7 @@ class AppController extends Controller
                 'msg' => $error->getMessage()
             ];
             $this->set(compact('response'));
-            $this->render('/Errors/errorjson');
+            $this->render('/Error/errorjson');
         }
     }
 

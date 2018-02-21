@@ -341,10 +341,8 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function changeProductPrice($productId, $price)
     {
         $this->browser->ajaxPost('/admin/products/editPrice', [
-            'data' => [
-                'productId' => $productId,
-                'price' => $price
-            ]
+            'productId' => $productId,
+            'price' => $price
         ]);
         return $this->browser->getJsonDecodedContent();
     }
