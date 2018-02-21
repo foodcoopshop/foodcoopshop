@@ -68,6 +68,20 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->browser->getContent());
     }
     
+    public function testConfigurationEditFormFcsRegistrationEmailTextStripTags()
+    {
+        $configurationName = 'FCS_REGISTRATION_EMAIL_TEXT';
+        $newValue = '<b>HalloHallo</b>';
+        $this->changeConfigurationEditForm($configurationName, $newValue);
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
+        $configuration = $this->Configuration->find('all', [
+            'conditions' => [
+                'Configurations.name' => $configurationName
+            ]
+        ])->first();
+        $this->assertEquals($configuration->value, $newValue, 'html tags stripped');
+    }
+    
     public function testConfigurationEditFormFcsAppNameStripTags()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');

@@ -53,7 +53,7 @@ class ConfigurationsController extends AdminAppController
         }
         $this->set('title_for_layout', 'Einstellung bearbeiten');
         
-        if ($configuration->type == 'textarea') {
+        if (in_array($configuration->type, ['textarea_big'])) {
             $_SESSION['KCFINDER'] = [
                 'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
@@ -70,7 +70,7 @@ class ConfigurationsController extends AdminAppController
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
         
-        if ($configuration->type != 'textarea') {
+        if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
             $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
