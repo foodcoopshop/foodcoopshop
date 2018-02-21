@@ -76,9 +76,9 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
     
-    public function validationFcsBackupEmailAddress(Validator $validator)
+    public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
+        $validator->allowEmpty('value');
         $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
         return $validator;
     }
