@@ -644,6 +644,12 @@ foodcoopshop.Admin = {
         return dialog;
 
     },
+    
+    decodeEntities : function(encodedString) {
+        var textArea = document.createElement('textarea');
+        textArea.innerHTML = encodedString;
+        return textArea.value;
+    },
 
     initProductNameEditDialog: function (container) {
 
@@ -659,9 +665,9 @@ foodcoopshop.Admin = {
             foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
             var row = $(this).closest('tr');
             var nameCell = row.find('td:nth-child(4)');
-            $('#' + dialogId + ' #dialogName').val(nameCell.find('span.name-for-dialog').html());
+            $('#' + dialogId + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog').html()));
             $('#' + dialogId + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
-            $('#' + dialogId + ' #dialogUnity').val(nameCell.find('span.unity-for-dialog').html());
+            $('#' + dialogId + ' #dialogUnity').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.unity-for-dialog').html()));
             CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
             $('#' + dialogId + ' #dialogProductId').val(row.find('td:nth-child(1)').html());
 

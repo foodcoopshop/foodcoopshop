@@ -93,14 +93,14 @@ class ProductsController extends AdminAppController
     public function beforeFilter(Event $event)
     {
         $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->Product = TableRegistry::get('Products');
         parent::beforeFilter($event);
     }
 
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-
-        $this->Product = TableRegistry::get('Products');
+        
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
         $productsForDropdown = [];
         foreach ($products as $key => $ps) {
@@ -618,23 +618,27 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = $this->params['data']['productId'];
+        $productId = $this->request->getData('productId');
 
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers'
             ]
         ])->first();
 
         try {
-            $this->Product->ProductLang->changeName(
+            $this->Product->ProductLangs->changeName(
                 [
                     [$productId => [
-                        'name' => $this->params['data']['name'],
-                        'description' => $this->params['data']['description'],
-                        'description_short' => $this->params['data']['descriptionShort'],
-                        'unity' => $this->params['data']['unity'],
-                        'is_declaration_ok' => $this->params['data']['isDeclarationOk']
+                        'name' => $this->request->getData('name'),
+                        'description' => $this->request->getData('description'),
+                        'description_short' => $this->request->getData('descriptionShort'),
+                        'unity' => $this->request->getData('unity'),
+                        'is_declaration_ok' => $this->request->getData('isDeclarationOk')
                     ]]
                 ]
             );
@@ -643,18 +647,18 @@ class ProductsController extends AdminAppController
         }
 
         $this->Flash->success('Das Produkt wurde erfolgreich geändert.');
-
-        if ($this->params['data']['name'] != $oldProduct['ProductLangs']['name']) {
-            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde umbenannt in <i>"' . $this->params['data']['name'] . '"</i>.');
+        
+        if ($this->request->getData('name') != $oldProduct->product_lang->name) {
+            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde umbenannt in <i>"' . $this->request->getData('name') . '"</i>.');
         }
-        if ($this->params['data']['unity'] != $oldProduct['ProductLangs']['unity']) {
-            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde geändert in <i>"' . $this->params['data']['unity'] . '"</i>.');
+        if ($this->request->getData('unity') != $oldProduct->product_lang->unity) {
+            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert in <i>"' . $this->request->getData('unity') . '"</i>.');
         }
-        if ($this->params['data']['description'] != $oldProduct['ProductLangs']['description']) {
-            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLangs']['description'] . '</div>neu: <div class="changed">' . $this->params['data']['description'] . ' </div>');
+        if ($this->request->getData('description') != $oldProduct->product_lang->description) {
+            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert: <div class="changed">' . $this->request->getData('description') . ' </div>');
         }
-        if ($this->params['data']['descriptionShort'] != $oldProduct['ProductLangs']['description_short']) {
-            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde geändert. <br /><br /> alt: <div class="changed">' . $oldProduct['ProductLangs']['description_short'] . '</div> neu: <div class="changed">' . $this->params['data']['descriptionShort'] . '</div>');
+        if ($this->request->getData('descriptionShort') != $oldProduct->product_lang->description_short) {
+            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert. <div class="changed">' . $this->request->getData('descriptionShort') . '</div>');
         }
 
         $this->request->getSession()->write('highlightedRowId', $productId);
@@ -708,7 +712,6 @@ class ProductsController extends AdminAppController
         }
         $this->set('isPriceZero', $isPriceZero);
 
-        $this->Product = TableRegistry::get('Products');
         if ($manufacturerId != '') {
             $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityZero, $isPriceZero);
         } else {

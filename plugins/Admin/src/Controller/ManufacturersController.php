@@ -196,12 +196,13 @@ class ManufacturersController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         } else {
+            $this->Manufacturer = TableRegistry::get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
                 ]
             ])->first();
-            $manufacturerId = $manufacturer['Manufacturers']['id_manufacturer'];
+            $manufacturerId = $manufacturer->id_manufacturer;
         }
 
         $_SESSION['KCFINDER'] = [
