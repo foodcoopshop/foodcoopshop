@@ -52,26 +52,12 @@ class AppTable extends Table
         return new AppMarshaller($this);
     }
 
-    /**
-     * uses cake's email validation rule for comma separated email addresses
-     * @param boolean $allowEmpty
-     * @return ValidationRule
-     */
-    public function getMultipleEmailValidationRule($allowEmpty = false)
+    public function ruleMultipleEmails($check)
     {
-        $validationRules = [
-          'rule' => [
-              'multipleEmails'
-          ],
-          'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).',
-          'allowEmpty' => $allowEmpty
-        ];
-        return $validationRules;
-    }
-
-    public function multipleEmails($check)
-    {
-        $emails = explode(',', reset($check));
+        $emails = explode(',', $check);
+        if (!is_array($emails)) {
+            $emails = [$emails];
+        }
         foreach ($emails as $email) {
             $validates = Validation::email($email);
             if (!$validates) {
@@ -80,7 +66,7 @@ class AppTable extends Table
         }
         return true;
     }
-
+    
     public function getNumberRangeConfigurationRule($min, $max)
     {
         $validationRules = [];

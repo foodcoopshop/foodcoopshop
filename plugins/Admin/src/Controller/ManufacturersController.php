@@ -560,6 +560,13 @@ class ManufacturersController extends AdminAppController
             return;
         }
         
+        if (!empty($this->request->getData('Manufacturers.holiday_from'))) {
+            $this->request->data['Manufacturers']['holiday_from'] = new Time($this->request->getData('Manufacturers.holiday_from'));
+        }
+        if (!empty($this->request->getData('Manufacturers.holiday_to'))) {
+            $this->request->data['Manufacturers']['holiday_to'] = new Time($this->request->getData('Manufacturers.holiday_to'));
+        }
+        
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
@@ -572,74 +579,76 @@ class ManufacturersController extends AdminAppController
         $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
         
-        // values that are the same as default values => null
-        if (!$this->AppAuth->isManufacturer()) {
-            // only admins and superadmins are allowed to change variable_member_fee
-            if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->getData('Manufacturers.variable_member_fee') == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
-                $this->request->data['Manufacturers']['variable_member_fee'] = null;
-            }
-        }
-        if ($this->request->getData('Manufacturers.default_tax_id') == Configure::read('app.defaultTaxId')) {
-            $this->request->data['Manufacturers']['default_tax_id'] = null;
-        }
-        if ($this->request->getData('Manufacturers.send_order_list') == Configure::read('app.defaultSendOrderList')) {
-            $this->request->data['Manufacturers']['send_order_list'] = null;
-        }
-        if ($this->request->getData('Manufacturers.send_invoice') == Configure::read('app.defaultSendInvoice')) {
-            $this->request->data['Manufacturers']['send_invoice'] = null;
-        }
-        if (!$this->AppAuth->isManufacturer() && $this->request->getData('Manufacturers.bulk_orders_allowed') == Configure::read('app.defaultBulkOrdersAllowed')) {
-            $this->request->data['Manufacturers']['bulk_orders_allowed'] = null;
-        }
-        if ($this->request->getData('Manufacturers.send_shop_order_notification') == Configure::read('app.defaultSendShopOrderNotification')) {
-            $this->request->data['Manufacturers']['send_shop_order_notification'] = null;
-        }
-        if ($this->request->getData('Manufacturers.send_ordered_product_deleted_notification') == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
-            $this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] = null;
-        }
-        if ($this->request->getData('Manufacturers.send_ordered_product_price_changed_notification') == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
-            $this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] = null;
-        }
-        if ($this->request->getData('Manufacturers.send_ordered_product_quantity_changed_notification') == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
-            $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
-        }
-        
-        if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
-            if ($this->request->getData('Manufacturers.enabled_sync_domains')) {
-                $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->getData('Manufacturers.enabled_sync_domains'));
-            }
-        }
-        
-        if (!empty($this->request->getData('Manufacturers.holiday_from'))) {
-            $this->request->data['Manufacturers']['holiday_from'] = new Time($this->request->getData('Manufacturers.holiday_from'));
-        }
-        if (!empty($this->request->getData('Manufacturers.holiday_to'))) {
-            $this->request->data['Manufacturers']['holiday_to'] = new Time($this->request->getData('Manufacturers.holiday_to'));
-        }
-        
-        // remove post data that could be set by hacking attempt
-        if ($this->AppAuth->isManufacturer()) {
-            unset($this->request->data['Manufacturers']['bulk_orders_allowed']);
-            unset($this->request->data['Manufacturers']['variable_member_fee']);
-            unset($this->request->data['Manufacturers']['id_customer']);
-        }
-        
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
-            $this->request->getData()
+            $this->request->getData(),
+            [
+                'validate' => 'editOptions'
+            ]
         );
         
         if (!empty($manufacturer->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('manufacturer', $manufacturer);
-            $this->render('edit');
+            $this->render('edit_options');
         } else {
+            
+            
+            // values that are the same as default values => null
+            if (!$this->AppAuth->isManufacturer()) {
+                // only admins and superadmins are allowed to change variable_member_fee
+                if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $this->request->getData('Manufacturers.variable_member_fee') == Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE')) {
+                    $this->request->data['Manufacturers']['variable_member_fee'] = null;
+                }
+            }
+            if ($this->request->getData('Manufacturers.default_tax_id') == Configure::read('app.defaultTaxId')) {
+                $this->request->data['Manufacturers']['default_tax_id'] = null;
+            }
+            if ($this->request->getData('Manufacturers.send_order_list') == Configure::read('app.defaultSendOrderList')) {
+                $this->request->data['Manufacturers']['send_order_list'] = null;
+            }
+            if ($this->request->getData('Manufacturers.send_invoice') == Configure::read('app.defaultSendInvoice')) {
+                $this->request->data['Manufacturers']['send_invoice'] = null;
+            }
+            if (!$this->AppAuth->isManufacturer() && $this->request->getData('Manufacturers.bulk_orders_allowed') == Configure::read('app.defaultBulkOrdersAllowed')) {
+                $this->request->data['Manufacturers']['bulk_orders_allowed'] = null;
+            }
+            if ($this->request->getData('Manufacturers.send_shop_order_notification') == Configure::read('app.defaultSendShopOrderNotification')) {
+                $this->request->data['Manufacturers']['send_shop_order_notification'] = null;
+            }
+            if ($this->request->getData('Manufacturers.send_ordered_product_deleted_notification') == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
+                $this->request->data['Manufacturers']['send_ordered_product_deleted_notification'] = null;
+            }
+            if ($this->request->getData('Manufacturers.send_ordered_product_price_changed_notification') == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
+                $this->request->data['Manufacturers']['send_ordered_product_price_changed_notification'] = null;
+            }
+            if ($this->request->getData('Manufacturers.send_ordered_product_quantity_changed_notification') == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
+                $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
+            }
+            
+            if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
+                if ($this->request->getData('Manufacturers.enabled_sync_domains')) {
+                    $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->getData('Manufacturers.enabled_sync_domains'));
+                }
+            }
+            
+            // remove post data that could be set by hacking attempt
+            if ($this->AppAuth->isManufacturer()) {
+                unset($this->request->data['Manufacturers']['bulk_orders_allowed']);
+                unset($this->request->data['Manufacturers']['variable_member_fee']);
+                unset($this->request->data['Manufacturers']['id_customer']);
+            }
             
             // html could be manipulated and checkbox disabled attribute removed
             if ($this->AppAuth->isManufacturer()) {
                 unset($this->request->data['Manufacturers']['active']);
             }
             
+            // sic! patch again!
+            $manufacturer = $this->Manufacturer->patchEntity(
+                $manufacturer,
+                $this->request->getData()
+            );
             $manufacturer = $this->Manufacturer->save($manufacturer);
             
             $this->request->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);

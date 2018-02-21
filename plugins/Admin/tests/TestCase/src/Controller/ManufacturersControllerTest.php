@@ -127,13 +127,13 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->setFieldById('manufacturers-send-order-list', $newSendOrderList); // do not use 0 here
         $this->browser->setFieldById('manufacturers-send-invoice', $newSendInvoice);     // do not use 0 here
 
-//         $this->browser->setFieldById('manufacturers-send-order-list-cc', 'office@rothauer-it.com;test@test.com');// wrong: comma expected as separator
-//         $this->browser->submitFormById('manufacturersEditOptionsForm');
-//         $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
+        $this->browser->setFieldById('manufacturers-send-order-list-cc', 'office@rothauer-it.com;test@test.com');// wrong: comma expected as separator
+        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
 
-//         $this->browser->setFieldById('manufacturers-send-order-list-cc', 'office@rothauer-it.com,test@testcom'); // wrong: no dot in domain
-//         $this->browser->submitFormById('manufacturersEditOptionsForm');
-//         $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
+        $this->browser->setFieldById('manufacturers-send-order-list-cc', 'office@rothauer-it.com,test@testcom'); // wrong: no dot in domain
+        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
 
         $this->browser->setFieldById('manufacturers-send-order-list-cc', implode(',', $newSendOrderListCc)); // correct
 

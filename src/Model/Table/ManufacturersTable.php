@@ -59,7 +59,17 @@ class ManufacturersTable extends AppTable
         $validator->urlWithProtocol('homepage', 'Bitte gibt eine gültige Internet-Adresse an.');
         return $validator;
     }
-
+    
+    public function validationEditOptions(Validator $validator)
+    {
+        $validator->add('send_order_list_cc', 'multipleEmails', [
+            'rule' => 'ruleMultipleEmails',
+            'provider' => 'table',
+            'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).'
+        ]);
+        return $validator;
+    }
+    
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
      * @return boolean
