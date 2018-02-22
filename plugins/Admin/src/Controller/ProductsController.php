@@ -633,7 +633,7 @@ class ProductsController extends AdminAppController
         $deposit = $this->Product->getPriceAsFloat($this->request->getData('deposit'));
         $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
-        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logSting);
+        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
         $this->Flash->success('Der Pfand des Produktes "' . $productName . '" wurde erfolgreich geändert.');
         $this->request->getSession()->write('highlightedRowId', $productId);
