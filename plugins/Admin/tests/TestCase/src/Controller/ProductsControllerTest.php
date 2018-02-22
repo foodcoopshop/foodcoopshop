@@ -31,11 +31,16 @@ class ProductsControllerTest extends AppCakeTestCase
     
     public function testChangeProductStatus()
     {
-        $this->markTestSkipped();
-        $productId = 2;
+        $this->loginAsSuperadmin();
+        $productId = 60;
         $status = APP_OFF;
         $this->browser->get('/admin/products/changeStatus/' . $productId . '/' . $status);
-        return $this->browser->getJsonDecodedContent();
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ]
+        ])->first();
+        $this->assertEquals($product->active, $status, 'changing product status did not work');
     }
 
     public function testEditPriceWithInvalidPriceAsSuperadmin()

@@ -851,6 +851,10 @@ class ProductsController extends AdminAppController
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers'
             ]
         ])->first();
 
@@ -861,9 +865,9 @@ class ProductsController extends AdminAppController
             $actionLogType = 'product_set_active';
         }
 
-        $this->Flash->success('Das Produkt "' . $product['ProductLangs']['name'] . '" wurde erfolgreich ' . $statusText . '.');
+        $this->Flash->success('Das Produkt "' . $product->product_lang->name . '" wurde erfolgreich ' . $statusText . '.');
 
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wurde ' . $statusText . '.');
+        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller "' . $product->manufacturer->name . '" wurde ' . $statusText . '.');
 
         $this->request->getSession()->write('highlightedRowId', $productId);
 
