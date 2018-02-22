@@ -809,74 +809,89 @@ class ProductsTable extends AppTable
         ]);
     }
 
-    public function deleteProductAttribute($productId, $attributeId, $oldProduct)
+    public function deleteProductAttribute($productId, $attributeId)
     {
 
-        $pac = $this->ProductAttributes->ProductAttributeCombination->find('all', [
+        $pac = $this->ProductAttributes->ProductAttributeCombinations->find('all', [
             'conditions' => [
-                'ProductAttributeCombination.id_product_attribute' => $attributeId
+                'ProductAttributeCombinations.id_product_attribute' => $attributeId
             ]
         ])->first();
-        $productAttributeId = $pac['ProductAttributeCombinations']['id_product_attribute'];
+        $productAttributeId = $pac->id_product_attribute;
 
         $this->ProductAttributes->deleteAll([
             'ProductAttributes.id_product_attribute' => $productAttributeId
-        ], false);
+        ]);
 
-        $this->ProductAttributes->ProductAttributeCombination->deleteAll([
-            'ProductAttributeCombination.id_product_attribute' => $productAttributeId
-        ], false);
+        $this->ProductAttributes->ProductAttributeCombinations->deleteAll([
+            'ProductAttributeCombinations.id_product_attribute' => $productAttributeId
+        ]);
 
-        $this->ProductAttributes->ProductAttributeShop->deleteAll([
-            'ProductAttributeShop.id_product_attribute' => $productAttributeId
-        ], false);
+        $this->ProductAttributes->ProductAttributeShops->deleteAll([
+            'ProductAttributeShops.id_product_attribute' => $productAttributeId
+        ]);
 
         // deleteAll can only get primary key as condition
-        $this->StockAvailable->primaryKey = 'id_product_attribute';
-        $this->StockAvailable->deleteAll([
+        $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
+        $this->StockAvailables->setPrimaryKey('id_product_attribute');
+        $this->StockAvailables->deleteAll([
             'StockAvailables.id_product_attribute' => $attributeId
-        ], false);
-
-        $this->StockAvailable->updateQuantityForMainProduct($productId);
+        ]);
+        $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
+        
+        $this->StockAvailables->updateQuantityForMainProduct($productId);
     }
 
     public function addProductAttribute($productId, $attributeId)
     {
         $defaultQuantity = 999;
 
-        $productAttributesCount = $this->ProductAttributes->find('count', [
+        $productAttributesCount = $this->ProductAttributes->find('all', [
             'conditions' => [
                 'ProductAttributes.id_product' => $productId
             ]
-        ]);
+        ])->count();
 
-        $this->ProductAttributes->save([
-            'id_product' => $productId,
-            'default_on' => $productAttributesCount == 0 ? 1 : 0
-        ]);
-        $productAttributeId = $this->ProductAttributes->getLastInsertID();
+        $newAttribute = $this->ProductAttributes->save(
+            $this->ProductAttributes->newEntity(
+                [
+                    'id_product' => $productId,
+                    'default_on' => $productAttributesCount == 0 ? 1 : 0
+                ]
+            )
+        );
+        $productAttributeId = $newAttribute->id_product_attribute;
 
         // INSERT in ProductAttributeCombination tricky because of set primary_key
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
 
-        $this->ProductAttributes->ProductAttributeShop->save([
-            'id_product_attribute' => $productAttributeId,
-            'default_on' => $productAttributesCount == 0 ? 1 : 0,
-            'id_shop' => 1,
-            'id_product' => $productId
-        ]);
+        $this->ProductAttributes->ProductAttributeShops->save(
+            $this->ProductAttributes->ProductAttributeShops->newEntity(
+                [
+                    'id_product_attribute' => $productAttributeId,
+                    'default_on' => $productAttributesCount == 0 ? 1 : 0,
+                    'id_shop' => 1,
+                    'id_product' => $productId
+                ]
+            )
+        );
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $this->ProductShop->id = $productId;
-        $this->ProductShop->save([
-            'price' => 0
-        ]);
+        $this->ProductShops->id = $productId;
+        $this->ProductShops->save(
+            $this->ProductShops->patchEntity(
+                $this->ProductShops->get($productId),
+                [
+                    'price' => 0
+                ]
+            )
+        );
 
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
         // with custom sql
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
 
-        $this->StockAvailable->updateQuantityForMainProduct($productId);
+        $this->StockAvailables->updateQuantityForMainProduct($productId);
     }
 
     public function add($manufacturer)

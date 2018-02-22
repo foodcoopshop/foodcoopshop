@@ -1123,7 +1123,13 @@ foodcoopshop.Admin = {
 
             var dataRow = $(this).parent().parent().parent().parent();
             var htmlCode = '<p>Bitte wähle die neue Variante für das Produkt <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> aus.</p>';
-            var productAttributesDropdown = $('#productAttributeId').clone(true);
+            var productAttributesDropdown = $('#productattributeid').clone(true);
+            
+            if (productAttributesDropdown.find('option').length == 0) {
+            	alert('Diese Funktion kann erst verwendet werden, sobald Varianten angelegt sind.');
+            	return;
+            }
+            
             productAttributesDropdown.show();
             productAttributesDropdown.removeClass('hide');
             htmlCode += '<select class="product-attributes-dropdown">' + productAttributesDropdown.html() + '</select>';

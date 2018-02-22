@@ -150,7 +150,7 @@ class ProductsController extends AdminAppController
         // delete db entries
         $this->Product->Image->deleteAll([
             'Images.id_image' => $product['Images']['id_image']
-        ], false);
+        ]);
 
         // delete physical files
         $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product['Images']['id_image']);
@@ -232,20 +232,28 @@ class ProductsController extends AdminAppController
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
 
-        foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
-            if ($productAttribute['ProductAttributeCombinations']['id_product_attribute'] == $productAttributeId) {
-                $attribute = $productAttribute['ProductAttributeCombinations']['Attributes']['name'];
+        $attributeName = '';
+        foreach ($oldProduct->product_attributes as $attribute) {
+            if ($attribute->product_attribute_combination->id_product_attribute == $productAttributeId) {
+                $attributeName = $attribute->product_attribute_combination->attribute->name;
+                break;
             }
         }
 
-        $this->Product->deleteProductAttribute($productId, $productAttributeId, $oldProduct);
+        $this->Product->deleteProductAttribute($productId, $productAttributeId);
 
-        $messageString = 'Die Variante "' . $attribute . '" des Produktes "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde erfolgreich gelöscht.';
+        $messageString = 'Die Variante <b>' . $attributeName . '</b> des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller </b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich gelöscht.';
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct['Products']['id_product'], 'products', $messageString);
+        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $messageString);
 
         $this->redirect($this->referer());
     }
@@ -255,6 +263,10 @@ class ProductsController extends AdminAppController
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers'
             ]
         ])->first();
 
@@ -264,19 +276,23 @@ class ProductsController extends AdminAppController
         $newProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
-        foreach ($newProduct['ProductAttributes'] as $productAttribute) {
-            if ($productAttribute['ProductAttributeCombinations']['id_attribute'] == $productAttributeId) {
-                $productAttributeIdForHighlighting = $productAttribute['ProductAttributeCombinations']['id_product_attribute'];
-                $attribute = $productAttribute['ProductAttributeCombinations']['Attributes']['name'];
+        foreach ($newProduct->product_attributes as $attribute) {
+            if ($attribute->product_attribute_combination->id_attribute == $productAttributeId) {
+                $productAttributeIdForHighlighting = $attribute->product_attribute_combination->id_product_attribute;
+                $attribute = $attribute->product_attribute_combination->attribute->name;
             }
         }
         $this->request->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
-        $messageString = 'Die Variante "' . $attribute . '" für das Produkt "' . $oldProduct['ProductLangs']['name'] . '" vom Hersteller "' . $oldProduct['Manufacturers']['name'] . '" wurde erfolgreich erstellt.';
+        $messageString = 'Die Variante "' . $attribute . '" für das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct['Products']['id_product'], 'products', $messageString);
+        $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $messageString);
 
         $this->request->getSession()->write('highlightedRowId', $productId);
 

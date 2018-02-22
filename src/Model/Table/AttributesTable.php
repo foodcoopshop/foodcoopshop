@@ -49,7 +49,7 @@ class AttributesTable extends AppTable
 
         $attributesForDropdown = [];
         foreach ($attributes as $attribute) {
-            $attributesForDropdown[$attribute['Attributes']['id_attribute']] = $attribute['Attributes']['name'];
+            $attributesForDropdown[$attribute->id_attribute] = $attribute->name;
         }
 
         return $attributesForDropdown;
