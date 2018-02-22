@@ -453,7 +453,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $originalProductId = $this->params['data']['productId'];
+        $originalProductId = $this->request->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -461,37 +461,41 @@ class ProductsController extends AdminAppController
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'StockAvailables',
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.StockAvailables',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
 
         if ($ids['attributeId'] > 0) {
             // override values for messages
-            foreach ($oldProduct['ProductAttributes'] as $attribute) {
-                if ($attribute['id_product_attribute'] != $ids['attributeId']) {
+            foreach ($oldProduct->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute != $ids['attributeId']) {
                     continue;
                 }
-                $oldProduct['ProductLangs'] = [
-                    'name' => $oldProduct['ProductLangs']['name'] . ' : ' . $attribute['ProductAttributeCombinations']['Attributes']['name']
-                ];
-                $oldProduct['StockAvailables'] = [
-                    'quantity' => $attribute['StockAvailables']['quantity']
-                ];
+                $oldProduct->product_lang->name = $oldProduct->product_lang->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldProduct->stock_available->quantity = $attribute->stock_available->quantity;
             }
         }
 
         try {
             $this->Product->changeQuantity(
                 [
-                    [$originalProductId => $this->params['data']['quantity']]
+                    [$originalProductId => $this->request->getData('quantity')]
                 ]
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
 
-        $quantity = $this->Product->getQuantityAsInteger($this->params['data']['quantity']);
-        $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> vom Hersteller <b>' . $oldProduct['Manufacturers']['name'] . '</b> wurde von ' . $oldProduct['StockAvailables']['quantity'] . ' auf ' . $quantity . ' geändert.');
+        $quantity = $this->Product->getQuantityAsInteger($this->request->getData('quantity'));
+        $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
+        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . $oldProduct->stock_available->quantity . ' auf ' . $quantity . ' geändert.');
         $this->request->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
