@@ -635,7 +635,7 @@ class ProductsController extends AdminAppController
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
-        $this->Flash->success('Der Pfand des Produktes "' . $productName . '" wurde erfolgreich geändert.');
+        $this->Flash->success('Der Pfand des Produktes <b>' . $productName . '</b> wurde erfolgreich geändert.');
         $this->request->getSession()->write('highlightedRowId', $productId);
 
         $this->set('data', [
