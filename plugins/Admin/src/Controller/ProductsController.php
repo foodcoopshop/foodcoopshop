@@ -305,11 +305,11 @@ class ProductsController extends AdminAppController
 
         $newProduct = $this->Product->add($manufacturer);
 
-        $messageString = 'Ein neues Produkt für "' . $manufacturer['Manufacturers']['name'] . '" wurde erfolgreich erstellt.';
+        $messageString = 'Ein neues Produkt für "' . $manufacturer->name . '" wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct['Products']['id_product'], 'products', $messageString);
+        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct->id_product, 'products', $messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $newProduct['Products']['id_product']);
+        $this->request->getSession()->write('highlightedRowId', $newProduct->id_product);
         $this->redirect($this->referer());
     }
 
@@ -617,7 +617,7 @@ class ProductsController extends AdminAppController
         $deposit = $this->Product->getPriceAsFloat($this->request->getData('deposit'));
         $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
-        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
+        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logSting);
 
         $this->Flash->success('Der Pfand des Produktes "' . $productName . '" wurde erfolgreich geändert.');
         $this->request->getSession()->write('highlightedRowId', $productId);

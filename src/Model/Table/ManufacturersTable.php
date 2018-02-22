@@ -155,7 +155,7 @@ class ManufacturersTable extends AppTable
     public function getOptionDefaultTaxId($defaultTaxId)
     {
         $result = $defaultTaxId;
-        if ($defaultTaxId === false) {
+        if (is_null($defaultTaxId)) { // !sic
             $result = Configure::read('app.defaultTaxId');
         }
         return $result;

@@ -1213,7 +1213,7 @@ foodcoopshop.Admin = {
                         'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/admin/products/add/' + $(container).find('#manufacturerId').val();
+                            document.location.href = '/admin/products/add/' + $(container).find('#manufacturerid').val();
                         }
                     },
                     close: function (event, ui) {

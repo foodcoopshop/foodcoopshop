@@ -59,6 +59,7 @@ class ProductsTable extends AppTable
         $this->hasMany('CategoryProducts', [
             'foreignKey' => 'id_product'
         ]);
+        $this->addBehavior('Timestamp');
         
     }
 
@@ -882,52 +883,75 @@ class ProductsTable extends AppTable
     {
         $defaultQuantity = 999;
 
-        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer['Manufacturers']['default_tax_id']);
-
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id);
+        
         // INSERT PRODUCT
-        $this->save([
-            'id_manufacturer' => $manufacturer['Manufacturers']['id_manufacturer'],
-            'id_category_default' => Configure::read('app.categoryAllProducts'),
-            'id_tax' => $defaultTaxId,
-            'unity' => ''
-        ]);
-        $newProductId = $this->getLastInsertID();
+        $newProduct = $this->save(
+            $this->newEntity(
+                [
+                    'id_manufacturer' => $manufacturer->id_manufacturer,
+                    'id_category_default' => Configure::read('app.categoryAllProducts'),
+                    'id_tax' => $defaultTaxId,
+                    'unity' => ''
+                ]
+            )
+        );
+        $newProductId = $newProduct->id_product;
 
         // INSERT PRODUCT_SHOP
-        $this->ProductShop->save([
-            'id_product' => $newProductId,
-            'id_shop' => 1,
-            'id_category_default' => Configure::read('app.categoryAllProducts')
-        ]);
+        $this->ProductShops->save(
+            $this->ProductShops->newEntity(
+                [
+                    'id_product' => $newProductId,
+                    'id_shop' => 1,
+                    'id_category_default' => Configure::read('app.categoryAllProducts')
+                ]
+            )
+        );
 
         // INSERT CATEGORY_PRODUCTS
-        $this->CategoryProducts->save([
-            'id_category' => Configure::read('app.categoryAllProducts'),
-            'id_product' => $newProductId
-        ]);
+        $this->CategoryProducts->save(
+            $this->CategoryProducts->newEntity(
+                [
+                    'id_category' => Configure::read('app.categoryAllProducts'),
+                    'id_product' => $newProductId
+                ]
+            )
+        );
 
         // INSERT PRODUCT_LANG
-        $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer['Manufacturers']['name']);
-        $this->ProductLang->save([
-            'id_product' => $newProductId,
-            'name' => $name,
-            'description' => '',
-            'description_short' => '',
-            'unity' => ''
-        ]);
+        $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer->name);
+        $this->ProductLangs->save(
+            $this->ProductLangs->newEntity(
+                [
+                    'id_product' => $newProductId,
+                    'name' => $name,
+                    'description' => '',
+                    'description_short' => '',
+                    'unity' => ''
+                ]
+            )
+        );
 
         // INSERT STOCK AVAILABLE
-        $this->StockAvailable->save([
-            'id_product' => $newProductId,
-            'id_shop' => 1,
-            'quantity' => $defaultQuantity
-        ]);
+        $this->StockAvailables->save(
+            $this->StockAvailables->newEntity(
+                [
+                    'id_product' => $newProductId,
+                    'id_shop' => 1,
+                    'quantity' => $defaultQuantity
+                ]
+            )
+        );
 
         $newProduct = $this->find('all', [
             'conditions' => [
                 'Products.id_product' => $newProductId
             ]
         ])->first();
+            
         return $newProduct;
+        
     }
 }
