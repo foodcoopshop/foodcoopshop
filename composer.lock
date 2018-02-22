@@ -4019,16 +4019,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4842476c434e375f9d3182ff7b89059583aa8b27",
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27",
                 "shasum": ""
             },
             "require": {
@@ -4038,7 +4038,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "bin": [
                 "bin/phpcs",
@@ -4066,7 +4066,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-12-19T21:44:46+00:00"
+            "time": "2018-02-20T21:35:23+00:00"
         },
         {
             "name": "symfony/finder",
@@ -4432,16 +4432,16 @@
         },
         {
             "name": "wyrihaximus/twig-view",
-            "version": "4.3.1",
+            "version": "4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WyriHaximus/TwigView.git",
-                "reference": "0bdce795bbf7f667209a9ed4a2d4b4db485e110c"
+                "reference": "63a5bc4307a5d47b24290013c3c0433903c5757a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WyriHaximus/TwigView/zipball/0bdce795bbf7f667209a9ed4a2d4b4db485e110c",
-                "reference": "0bdce795bbf7f667209a9ed4a2d4b4db485e110c",
+                "url": "https://api.github.com/repos/WyriHaximus/TwigView/zipball/63a5bc4307a5d47b24290013c3c0433903c5757a",
+                "reference": "63a5bc4307a5d47b24290013c3c0433903c5757a",
                 "shasum": ""
             },
             "require": {
@@ -4451,7 +4451,7 @@
                 "cakephp/cakephp": "^3.5",
                 "jasny/twig-extensions": "^1.0",
                 "php": "^5.6 || ^7.0",
-                "twig/twig": "^1.18",
+                "twig/twig": "^1.27",
                 "umpirsky/twig-php-function": "0.1"
             },
             "require-dev": {
@@ -4486,7 +4486,7 @@
                 "twig",
                 "view"
             ],
-            "time": "2018-01-28T22:18:29+00:00"
+            "time": "2018-02-21T06:55:17+00:00"
         }
     ],
     "aliases": [],
