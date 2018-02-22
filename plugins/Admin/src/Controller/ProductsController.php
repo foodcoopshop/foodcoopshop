@@ -573,6 +573,12 @@ class ProductsController extends AdminAppController
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'DepositProducts',
+                'ProductAttributes.DepositProductAttributes',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
 
@@ -586,15 +592,15 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-        $depositEntity = $oldProduct['DepositProduct'];
-        $productName = $oldProduct['ProductLangs']['name'];
+        $depositEntity = $oldProduct->deposit_product;
+        $productName = $oldProduct->product_lang->name;
 
         if ($ids['attributeId'] > 0) {
             $attributeName = '';
-            foreach ($oldProduct['ProductAttributes'] as $productAttribute) {
-                if ($productAttribute['id_product_attribute'] == $ids['attributeId']) {
-                    $attributeName = $productAttribute['ProductAttributeCombinations']['Attributes']['name'];
-                    $depositEntity = $productAttribute['DepositProductAttribute'];
+            foreach ($oldProduct->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute == $ids['attributeId']) {
+                    $attributeName = $attribute->product_attribute_combination->attribute->name;
+                    $depositEntity = $attribute->deposit_product_attribute;
                     break;
                 }
             }
@@ -602,8 +608,8 @@ class ProductsController extends AdminAppController
         }
 
         $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
-        if (isset($depositEntity['deposit'])) {
-            $logString .= Configure::read('app.htmlHelper')->formatAsEuro($depositEntity['deposit']);
+        if (!empty($depositEntity->deposit)) {
+            $logString .= Configure::read('app.htmlHelper')->formatAsEuro($depositEntity->deposit);
         } else {
             $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
         }
