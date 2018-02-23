@@ -47,8 +47,7 @@ class ProductsController extends AdminAppController
                         ]
                     ])->first();
                     if (empty($product)) {
-                        new 
-                        $this->sendAjaxError(new ForbiddenExcepton(ACCESS_DENIED_MESSAGE));
+                        $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                         return false;
                     }
                 }
@@ -844,7 +843,7 @@ class ProductsController extends AdminAppController
             APP_OFF,
             APP_ON
         ])) {
-            throw new RecordNotFoundException('New-Status muss 0 oder 1 sein!');
+            throw new InvalidParameterException('New-Status muss 0 oder 1 sein!');
         }
 
         if ($status == 1) {

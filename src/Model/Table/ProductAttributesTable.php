@@ -30,10 +30,7 @@ class ProductAttributesTable extends AppTable
             'foreignKey' => 'id_product_attribute'
         ]);
         $this->hasOne('StockAvailables', [
-            'foreignKey' => 'id_product_attribute',
-            'conditions' => [
-                'StockAvailables.id_product_attribute > 0'
-            ]
+            'foreignKey' => 'id_product_attribute'
         ]);
         $this->hasOne('DepositProductAttributes', [
             'foreignKey' => 'id_product_attribute'

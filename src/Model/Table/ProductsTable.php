@@ -39,10 +39,7 @@ class ProductsTable extends AppTable
             'foreignKey' => 'id_product'
         ]);
         $this->belongsTo('StockAvailables', [
-            'foreignKey' => 'id_product',
-            'conditions' => [
-                'StockAvailables.id_product_attribute' => 0
-            ]
+            'foreignKey' => 'id_product'
         ]);
         $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
@@ -348,7 +345,7 @@ class ProductsTable extends AppTable
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->StockAvailables->updateAll([
+                $this->ProductAttributes->StockAvailables->updateAll([
                     'quantity' => $quantity
                 ], [
                     'id_product_attribute' => $ids['attributeId'],
@@ -456,9 +453,17 @@ class ProductsTable extends AppTable
             'Images',
             'Taxes',
             'Manufacturers',
-            'StockAvailables',
+            'StockAvailables' => [
+                'conditions' => [
+                    'StockAvailables.id_product_attribute' => 0
+                ]
+            ],
             'ProductAttributes',
-            'ProductAttributes.StockAvailables',
+            'ProductAttributes.StockAvailables' => [
+                'conditions' => [
+                    'StockAvailables.id_product_attribute > 0'
+                ]
+            ],
             'ProductAttributes.ProductAttributeShops',
             'ProductAttributes.DepositProductAttributes',
             'ProductAttributes.ProductAttributeCombinations.Attributes'

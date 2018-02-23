@@ -32,7 +32,7 @@ class StockAvailablesTable extends AppTable
             return;
         }
 
-        $query = 'UPDATE '.$this->getTable().' sa1, (
+        $query = 'UPDATE '.$this->getTable().' AS sa1, (
                      SELECT SUM(quantity) as quantitySum
                      FROM '.$this->getTable().'
                      WHERE id_product = :productId
