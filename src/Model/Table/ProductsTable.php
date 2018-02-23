@@ -384,6 +384,7 @@ class ProductsTable extends AppTable
 
     public function isNew($date)
     {
+        
         $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
         if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
             return true;
@@ -517,7 +518,7 @@ class ProductsTable extends AppTable
             }
             $product->selectedCategories = Hash::extract($product->category_products, '{n}.id_category');
             
-            $product->is_new = $this->isNew($product->product_shop->created);
+            $product->is_new = $this->isNew($product->product_shop->created->i18nFormat(Configure::read('DateFormat.Database')));
             
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->product_shop->price);
 

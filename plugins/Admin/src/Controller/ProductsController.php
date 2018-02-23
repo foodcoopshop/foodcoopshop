@@ -863,6 +863,10 @@ class ProductsController extends AdminAppController
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers'
             ]
         ])->first();
 
@@ -873,7 +877,7 @@ class ProductsController extends AdminAppController
             $actionLogType = 'product_set_to_new';
         }
 
-        $message = 'Das Produkt "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wird ' . $statusText . '.';
+        $message = 'Das Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wird ' . $statusText . '.';
         $this->Flash->success($message);
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
