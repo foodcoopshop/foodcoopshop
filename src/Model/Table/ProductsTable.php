@@ -518,7 +518,7 @@ class ProductsTable extends AppTable
             }
             $product->selectedCategories = Hash::extract($product->category_products, '{n}.id_category');
             
-            $product->is_new = false;
+            $product->is_new = true;
             if ($product->product_shop->created) {
                 $product->is_new = $this->isNew($product->product_shop->created->i18nFormat(Configure::read('DateFormat.Database')));
             }
