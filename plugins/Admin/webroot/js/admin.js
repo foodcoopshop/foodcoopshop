@@ -1359,7 +1359,7 @@ foodcoopshop.Admin = {
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
         $('.featherlight-content label').html('Steuersatz ändern: ' + productName);
         var selectedTaxId = $('#tax-id-' + productId).val();
-        $('.featherlight-content #TaxIdTax').val(selectedTaxId);
+        $('.featherlight-content #taxes-id-tax').val(selectedTaxId);
     },
 
     initProductTaxEditDialog: function (container) {
@@ -1390,7 +1390,7 @@ foodcoopshop.Admin = {
             '/admin/products/editTax/',
             {
                 productId: productId,
-                taxId: $('.featherlight-content #TaxIdTax').val()
+                taxId: $('.featherlight-content #taxes-id-tax').val()
             },
             {
                 onOk: function (data) {

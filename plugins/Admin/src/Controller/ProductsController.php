@@ -333,46 +333,61 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = (int) $this->params['data']['productId'];
-        $taxId = (int) $this->params['data']['taxId'];
+        $productId = (int) $this->request->getData('productId');
+        $taxId = (int) $this->request->getData('taxId');
 
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'Taxes',
+                'ProductLangs',
+                'ProductShops',
+                'ProductAttributes',
+                'ProductAttributes.ProductAttributeShops',
+                'Manufacturers'
             ]
         ])->first();
+        
+        if (empty($oldProduct->tax)) {
+            $oldProduct->tax = (object) [
+                'rate' => 0
+            ];
+        }
 
-        if ($taxId != $oldProduct['Products']['id_tax']) {
+        if ($taxId != $oldProduct->id_tax) {
             $product2update = [
                 'id_tax' => $taxId
             ];
 
-            // as often data is saved twice (Product, ProductShop)
-            $this->Product->id = $productId;
-            $this->Product->save($product2update);
+            $this->Product->save(
+                $this->Product->patchEntity($oldProduct, $product2update)
+            );
+            $this->Product->ProductShops->save(
+                $this->Product->ProductShops->patchEntity($oldProduct->product_shop, $product2update)
+            );
 
-            $this->Product->ProductShop->id = $productId;
-            $this->Product->ProductShop->save($product2update);
-
-            if (! empty($oldProduct['ProductAttributes'])) {
+            if (! empty($oldProduct->product_attributes)) {
                 // update net price of all attributes
-                foreach ($oldProduct['ProductAttributes'] as $attribute) {
+                foreach ($oldProduct->product_attributes as $attribute) {
                     // netPrice needs to be calculated new - product tax has been saved above...
-                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute['ProductAttributeShops']['price'], $oldProduct['Taxes']['rate']);
-                    $this->Product->ProductAttributes->ProductAttributeShop->updateAll([
-                        'ProductAttributeShop.price' => $newNetPrice
+                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute->product_attribute_shop->price, $oldProduct->tax->rate);
+                    $this->Product->ProductAttributes->ProductAttributeShops->updateAll([
+                        'price' => $newNetPrice
                     ], [
-                        'ProductAttributeShop.id_product_attribute' => $attribute['id_product_attribute']
+                        'id_product_attribute' => $attribute->id_product_attribute
                     ]);
                 }
             } else {
                 // update price of product without attributes
-                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct['ProductShop']['price'], $oldProduct['Taxes']['rate']);
+                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct->product_shop->price, $oldProduct->tax->rate);
                 $product2update = [
                     'price' => $newNetPrice
                 ];
-                $this->Product->ProductShop->id = $productId;
-                $this->Product->ProductShop->save($product2update);
+                $this->Product->ProductShops->save(
+                    $this->Product->ProductShops->patchEntity($oldProduct->product_shop, $product2update)
+                );
             }
 
             $this->Tax = TableRegistry::get('Taxes');
@@ -383,18 +398,18 @@ class ProductsController extends AdminAppController
             ])->first();
 
             if (! empty($tax)) {
-                $taxRate = Configure::read('app.htmlHelper')->formatTaxRate($tax['Taxes']['rate']);
+                $taxRate = Configure::read('app.htmlHelper')->formatTaxRate($tax->rate);
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
-            if (! empty($oldProduct['Taxes'])) {
-                $oldTaxRate = Configure::read('app.htmlHelper')->formatTaxRate($oldProduct['Taxes']['rate']);
+            if (! empty($oldProduct->tax)) {
+                $oldTaxRate = Configure::read('app.htmlHelper')->formatTaxRate($oldProduct->rate);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
 
-            $messageString = 'Der Steuersatz des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurde erfolgreich von  ' . $oldTaxRate . '% auf ' . $taxRate . '% geändert.';
+            $messageString = 'Der Steuersatz des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich von  ' . $oldTaxRate . '% auf ' . $taxRate . '% geändert.';
             $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
         } else {
             $messageString = 'Es wurden keine Änderungen gespeichert.';
