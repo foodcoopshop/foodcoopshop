@@ -335,6 +335,7 @@ class ManufacturersController extends AdminAppController
 
         // generate and save PDF - should be done here because count of results will be checked
         $product_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+            ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ], 'F');
