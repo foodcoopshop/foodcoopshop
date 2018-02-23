@@ -819,16 +819,23 @@ class ProductsController extends AdminAppController
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers',
             ]
         ])->first();
 
         $productAttribute = $this->Product->ProductAttributes->find('all', [
             'conditions' => [
                 'ProductAttributes.id_product_attribute' => $productAttributeId
+            ],
+            'contain' => [
+                'ProductAttributeCombinations.Attributes'
             ]
         ])->first();
 
-        $message = 'Die Standard-Variante des Produktes "' . $product['ProductLangs']['name'] . '" vom Hersteller "' . $product['Manufacturers']['name'] . '" wurde auf "' . $productAttribute['ProductAttributeCombinations']['Attributes']['name'] . '" geändert.';
+        $message = 'Die Standard-Variante des Produktes <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wurde auf "' . $productAttribute->product_attribute_combination->attribute->name . '" geändert.';
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
 

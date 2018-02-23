@@ -798,23 +798,27 @@ class ProductsTable extends AppTable
             'conditions' => [
                 'ProductAttributes.id_product' => $productId
             ]
-        ]);
-        $productAttributeIds = Hash::extract('{n}.ProductAttributes.id_product_attribute', $productAttributes);
+        ])->toArray();
+            
+        $productAttributeIds = [];
+        foreach($productAttributes as $attribute) {
+            $productAttributeIds[] = $attribute->id_product_attribute;
+        }
 
         // first set all associated attributes to 0
-        $this->ProductAttributes->ProductAttributeShop->updateAll([
-            'ProductAttributeShop.default_on' => 0
+        $this->ProductAttributes->ProductAttributeShops->updateAll([
+            'default_on' => 0
         ], [
             'id_product_attribute IN (' . join(', ', $productAttributeIds) . ')',
             'id_shop' => 1
         ]);
 
         // then set the new one
-        $this->ProductAttributes->ProductAttributeShop->updateAll([
-            'ProductAttributeShop.default_on' => 1
+        $this->ProductAttributes->ProductAttributeShops->updateAll([
+            'default_on' => 1
         ], [
-            'ProductAttributeShop.id_product_attribute' => $productAttributeId,
-            'ProductAttributeShop.id_shop' => 1
+            'id_product_attribute' => $productAttributeId,
+            'id_shop' => 1
         ]);
     }
 
