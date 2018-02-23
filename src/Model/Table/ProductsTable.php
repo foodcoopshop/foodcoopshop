@@ -39,7 +39,10 @@ class ProductsTable extends AppTable
             'foreignKey' => 'id_product'
         ]);
         $this->belongsTo('StockAvailables', [
-            'foreignKey' => 'id_product'
+            'foreignKey' => 'id_product',
+            'conditions' => [
+                'StockAvailables.id_product_attribute' => 0
+            ]
         ]);
         $this->belongsTo('Taxes', [
             'foreignKey' => 'id_tax'
