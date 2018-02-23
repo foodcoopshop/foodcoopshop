@@ -1434,7 +1434,7 @@ foodcoopshop.Admin = {
     editCategoriesFormAfterLoad : function (productId) {
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
-        $('.featherlight-content label[for="ProductCategoryProducts"]').html('Kategorien ändern: ' + productName);
+        $('.featherlight-content label[for="products-categoryproducts"]').html('Kategorien ändern: ' + productName);
 
         var selectedCategories = $('#selected-categories-' + productId).val().split(',');
         $('.categories-checkboxes input[type="checkbox"]').each(function () {
@@ -1464,12 +1464,6 @@ foodcoopshop.Admin = {
                     objectId
                 )
             );
-
-            // fix for strange behavior: click on label resets form
-            $(container).find('label').on('click', function (e) {
-                e.preventDefault();
-                $(this).closest('.checkbox').find('input').trigger('click');
-            });
 
         });
 

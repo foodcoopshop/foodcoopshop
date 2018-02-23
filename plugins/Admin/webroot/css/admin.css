@@ -513,9 +513,6 @@ form div.error-message {
 .tax-dropdown-wrapper.featherlight-inner .input.select {
     margin-bottom: 10px;
 }
-.categories-checkboxes.featherlight-inner .input.select .checkbox label {
-    padding-left: 30px;
-}
 .featherlight-inner div.form-buttons {
     margin-top: 10px;
 }

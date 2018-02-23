@@ -414,10 +414,10 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = (int) $this->params['data']['productId'];
+        $productId = (int) $this->request->getData('productId');
         $selectedCategories = [];
-        if (isset($this->params['data']['selectedCategories'])) {
-            $selectedCategories = $this->params['data']['selectedCategories'];
+        if (!empty($this->request->getData('selectedCategories'))) {
+            $selectedCategories = $this->request->getData('selectedCategories');
         }
 
         $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle-produkte'
@@ -426,8 +426,12 @@ class ProductsController extends AdminAppController
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'ProductLangs',
+                'Manufacturers'
             ]
-        ]);
+        ])->first();
 
         $this->CategoryProduct = TableRegistry::get('CategoryProducts');
         $this->CategoryProduct->deleteAll([
@@ -446,14 +450,14 @@ class ProductsController extends AdminAppController
             if (! empty($oldCategory)) {
                 // do not track "alle-produkte"
                 if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
-                    $selectedCategoryNames[] = $oldCategory['Categories']['name'];
+                    $selectedCategoryNames[] = $oldCategory->name;
                 }
                 $sql = 'INSERT INTO ' . $this->CategoryProduct->getTable() . ' (`id_product`, `id_category`) VALUES(' . $productId . ', ' . $selectedCategory . ');';
                 $this->CategoryProduct->getConnection()->query($sql);
             }
         }
 
-        $messageString = 'Die Kategorien des Produktes <b>' . $oldProduct['ProductLangs']['name'] . '</b> wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
+        $messageString = 'Die Kategorien des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
