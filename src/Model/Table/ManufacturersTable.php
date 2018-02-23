@@ -62,6 +62,7 @@ class ManufacturersTable extends AppTable
     
     public function validationEditOptions(Validator $validator)
     {
+        $validator->allowEmpty('send_order_list_cc');
         $validator->add('send_order_list_cc', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
