@@ -518,7 +518,10 @@ class ProductsTable extends AppTable
             }
             $product->selectedCategories = Hash::extract($product->category_products, '{n}.id_category');
             
-            $product->is_new = $this->isNew($product->product_shop->created->i18nFormat(Configure::read('DateFormat.Database')));
+            $product->is_new = false;
+            if ($product->product_shop->created) {
+                $product->is_new = $this->isNew($product->product_shop->created->i18nFormat(Configure::read('DateFormat.Database')));
+            }
             
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->product_shop->price);
 
