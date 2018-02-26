@@ -12,23 +12,25 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail['Orders']]); ?>
+        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
         
         <tr>
         <td>
 
             <p>
-                Der Preis des Produktes <b><?php echo $oldOrderDetail['OrderDetails']['product_name']; ?></b> wurde korrigiert. Du hast <?php echo $oldOrderDetail['OrderDetails']['product_quantity']; ?> Stück davon am <?php echo $this->MyTime->formatToDateNTimeShort($oldOrderDetail['Orders']['date_add']); ?> beim Hersteller <b><?php echo $oldOrderDetail['Products']['Manufacturers']['name']; ?></b>
+                Der Preis des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde korrigiert. Du hast <?php echo $oldOrderDetail->product_quantity; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
                 bestellt.
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail['OrderDetails']['total_price_tax_incl']); ?></b></li>
-                <li>Neuer Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($newOrderDetail['OrderDetails']['total_price_tax_incl']); ?></b></li>
+                <li>Alter Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?></b></li>
+                <li>Neuer Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?></b></li>
             </ul>
 
             <p>

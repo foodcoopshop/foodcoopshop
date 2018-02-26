@@ -78,7 +78,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderedProductDeletedNotification($sendOrderedProductDeletedNotification)
     {
         $result = $sendOrderedProductDeletedNotification;
-        if ($sendOrderedProductDeletedNotification === false) {
+        if (is_null($sendOrderedProductDeletedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductDeletedNotification');
         }
         return (boolean) $result;
@@ -91,7 +91,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderedProductPriceChangedNotification($sendOrderedProductPriceChangedNotification)
     {
         $result = $sendOrderedProductPriceChangedNotification;
-        if ($sendOrderedProductPriceChangedNotification === false) {
+        if (is_null($sendOrderedProductPriceChangedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
         return (boolean) $result;
@@ -104,7 +104,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderedProductQuantityChangedNotification($sendOrderedProductQuantityChangedNotification)
     {
         $result = $sendOrderedProductQuantityChangedNotification;
-        if ($sendOrderedProductQuantityChangedNotification === false) {
+        if (is_null($sendOrderedProductQuantityChangedNotification)) {
             $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
         return (boolean) $result;
@@ -117,7 +117,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendShopOrderNotification($sendShopOrderNotification)
     {
         $result = $sendShopOrderNotification;
-        if ($sendShopOrderNotification === false) {
+        if (is_null($sendShopOrderNotification)) {
             $result = Configure::read('app.defaultSendShopOrderNotification');
         }
         return (boolean) $result;
@@ -130,7 +130,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendInvoice($sendInvoice)
     {
         $result = $sendInvoice;
-        if ($sendInvoice === false) {
+        if (is_null($sendInvoice)) {
             $result = Configure::read('app.defaultSendInvoice');
         }
         return (boolean) $result;
@@ -143,7 +143,7 @@ class ManufacturersTable extends AppTable
     public function getOptionBulkOrdersAllowed($bulkOrdersAllowed)
     {
         $result = $bulkOrdersAllowed;
-        if ($bulkOrdersAllowed === false) {
+        if (is_null($bulkOrdersAllowed)) {
             $result = Configure::read('app.defaultBulkOrdersAllowed');
         }
         return $result;
@@ -169,7 +169,7 @@ class ManufacturersTable extends AppTable
     public function getOptionVariableMemberFee($variableMemberFee)
     {
         $result = $variableMemberFee;
-        if ($variableMemberFee === false) {
+        if (is_null($variableMemberFee)) {
             $result = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
         }
         return $result;

@@ -12,23 +12,25 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail['Orders']]); ?>
+        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
         
         <tr>
         <td>
 
             <p>
-                Die Anzahl des Produktes <b><?php echo $oldOrderDetail['OrderDetails']['product_name']; ?></b> wurde korrigiert. Du hast am <?php echo $this->MyTime->formatToDateNTimeShort($oldOrderDetail['Orders']['date_add']); ?> beim Hersteller <b><?php echo $oldOrderDetail['Products']['Manufacturers']['name']; ?></b>
+                Die Anzahl des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde korrigiert. Du hast am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
                 bestellt.
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alte Anzahl: <b><?php echo $oldOrderDetail['OrderDetails']['product_quantity']; ?></b></li>
-                <li>Neue Anzahl: <b><?php echo $newOrderDetail['OrderDetails']['product_quantity']; ?></b></li>
+                <li>Alte Anzahl: <b><?php echo $oldOrderDetail->product_quantity; ?></b></li>
+                <li>Neue Anzahl: <b><?php echo $newOrderDetail->product_quantity; ?></b></li>
             </ul>
 
             <p>

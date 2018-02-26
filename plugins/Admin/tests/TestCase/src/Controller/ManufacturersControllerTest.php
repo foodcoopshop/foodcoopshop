@@ -139,7 +139,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->browser->setFieldById('manufacturers-send-ordered-product-price-changed-notification', $newSendOrderedProductPriceChangedNotification);// do not use 0 here
         $this->browser->setFieldById('manufacturers-send-ordered-product-quantity-changed-notification', $newSendOrderedProductQuantityChangedNotification); // do not use 0 here
-        $this->browser->setFieldById('manufacturers-send-shop-order-motification', $newSendShopOrderNotification); // do not use 0 here
+        $this->browser->setFieldById('manufacturers-send-shop-order-notification', $newSendShopOrderNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-bulk-orders-allowed', $newBulkOrdersAllowed); // do not use 0 here
         $this->browser->setFieldById('manufacturers-default-tax-id', $newDefaultTaxId); // do not use 0 here
         
