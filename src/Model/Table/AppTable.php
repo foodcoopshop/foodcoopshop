@@ -139,5 +139,13 @@ class AppTable extends Table
         $condition .=   ')';
         return $condition;
     }
-
+    
+    /**
+     * @return string
+     */
+    protected function getOrdersForProductListQuery()
+    {
+        return " ORDER BY ProductLangs.name ASC, Images.id_image DESC;";
+    }
+    
 }
