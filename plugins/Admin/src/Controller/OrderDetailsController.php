@@ -604,7 +604,6 @@ class OrderDetailsController extends AdminAppController
             $stockAvailableObject = $orderDetail->product->stock_available;
         }
         
-        $stockAvailableId = $stockAvailableObject->id_stock_available;
         $quantity = $stockAvailableObject->quantity;
         
         // do the acutal updates for increasing quantity

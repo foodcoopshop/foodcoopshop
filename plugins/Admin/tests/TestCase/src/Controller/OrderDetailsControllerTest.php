@@ -60,7 +60,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
-        $this->assertChangedOrder($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedStockAvailable($this->productId1, 98);
     }
 
     public function testCancellationAsSuperadminWithEnabledNotification()
@@ -77,7 +78,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         }
 
         $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
-        $this->assertChangedOrder($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedStockAvailable($this->productId1, 98);
     }
 
     public function testCancellationAsSuperadminWithDisabledNotification()
@@ -92,7 +94,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
-        $this->assertChangedOrder($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedStockAvailable($this->productId1, 98);
     }
 
     public function testCancellationAsSuperadminWithEnabledBulkOrders()
@@ -107,9 +110,19 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
-        $this->assertChangedOrder($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
+        $this->assertChangedStockAvailable($this->productId1, 98);
     }
-
+    
+    public function testCancellationProductAttributeStockAvailableAsSuperadmin()
+    {
+        $this->loginAsSuperadmin();
+        $this->productId1 = '60-10';
+        $this->mockOrder = $this->getOrder();
+        $this->assertRemoveFromDatabase([$this->mockOrder->order_details[1]->id_order_detail], $this->mockOrder->id_order, 1);
+        $this->assertChangedStockAvailable($this->productId1, 20);
+    }
+    
     public function testEditOrderDetailPriceAsManufacturer()
     {
         $this->markTestSkipped();
@@ -298,7 +311,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
                 'OrderDetails'
             ]
         ])->first();
-
+        
         $this->assertEquals($expectedOrderDetailCount, count($order->order_details), 'order detail was not deleted properly');
     }
 
@@ -308,8 +321,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     private function getOrder()
     {
 
-        //TODO calling the method addProductToCart only once for the first product leads to order error - needs debugging
-        $this->addProductToCart($this->productId1, 1);
+        //TODO calling the method addProductToCart only once leads to order error - needs debugging
         $this->addProductToCart($this->productId1, 1);
         $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
@@ -330,7 +342,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     private function assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Produkt kann nicht geliefert werden: Artischocke : Stück', [$this->cancellationReason, '3,64', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
+        $this->assertEmailLogs($emailLogs[1], 'Produkt kann nicht geliefert werden: Artischocke : Stück', [$this->cancellationReason, '1,82', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
     private function assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails)
@@ -345,16 +357,33 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEmailLogs($emailLogs[1], 'Bestellte Anzahl korrigiert: Artischocke : Stück', ['Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde korrigiert', $this->editQuantityReason, 'Neue Anzahl: <b>' . $this->newQuantity . '</b>', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
-    private function assertChangedOrder($orderId, $expectedTotalPaidTaxIncl)
+    private function assertChangedOrderPrice($orderId, $expectedTotalPaidTaxIncl)
     {
         $changedOrder = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
-            ]
+            ],
         ])->first();
         $this->assertEquals($expectedTotalPaidTaxIncl, $changedOrder->total_paid_tax_incl, 'recalculated sum in order failed');
-        
     }
+    
+    private function assertChangedStockAvailable($productIds, $expectedQuantity)
+    {
+        
+        $this->Product = TableRegistry::get('Products');
+        $ids = $this->Product->getProductIdAndAttributeId($productIds);
+        
+        $this->StockAvailable = TableRegistry::get('StockAvailables');
+        $changedStockAvailable = $this->StockAvailable->find('all', [
+            'conditions' => [
+                'StockAvailables.id_product' => $ids['productId'],
+                'StockAvailables.id_product_attribute' => $ids['attributeId'],
+            ]
+        ])->first();
+        $quantity = $changedStockAvailable->quantity;
+        $this->assertEquals($expectedQuantity, $quantity, 'amount was not corrected properly');
+    }
+    
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
     {
         $this->browser->post(
