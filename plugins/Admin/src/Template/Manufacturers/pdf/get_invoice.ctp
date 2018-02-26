@@ -26,10 +26,10 @@ $pdf->SetTitle('Rechnung für den Bestell-Zeitraum ' . $from . ' - ' . $to);
 $html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td width="200">';
 $html .= '<p><b>vermittelt für</b></p>';
-$manufacturerAddress = '<p>' . $results_product[0]['m']['Hersteller'] . '<br />';
-$manufacturerAddress .= $results_product[0]['ma']['firstname'] . ' ' . $results_product[0]['ma']['lastname'] . '<br />';
-$manufacturerAddress .= $results_product[0]['ma']['address1'] . '<br />';
-$manufacturerAddress .= $results_product[0]['ma']['postcode'] . ' ' . $results_product[0]['ma']['city'];
+$manufacturerAddress = '<p>' . $results_product[0]['ManufacturerName'] . '<br />';
+$manufacturerAddress .= $results_product[0]['ManufacturerFirstname'] . ' ' . $results_product[0]['ManufacturerLastname'] . '<br />';
+$manufacturerAddress .= $results_product[0]['ManufacturerAddress1'] . '<br />';
+$manufacturerAddress .= $results_product[0]['ManufacturerPostcode'] . ' ' . $results_product[0]['ManufacturerCity'];
 $html .= $manufacturerAddress . '</p>';
 $html .= '</td>';
 
@@ -46,9 +46,9 @@ $html .= '</td>';
 $html .= '</tr></table>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$pdf->infoTextForFooter = $results_product[0]['m']['Hersteller'];
-if ($results_product[0]['m']['UID'] != '') {
-    $pdf->infoTextForFooter .= ', UID-Nummer: ' . $results_product[0]['m']['UID'];
+$pdf->infoTextForFooter = $results_product[0]['ManufacturerName'];
+if ($results_product[0]['ManufacturerUidNumber'] != '') {
+    $pdf->infoTextForFooter .= ', UID-Nummer: ' . $results_product[0]['ManufacturerUidNumber'];
 }
 $pdf->infoTextForFooter .= ', Rechnung Nr. ' . $newInvoiceNumber;
 
@@ -64,7 +64,7 @@ $headers = [
     'Anzahl',
     'Produkt',
     'Preis exkl.',
-    'MWSt.',
+    'USt.',
     'Preis inkl.'
 ];
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
@@ -119,8 +119,8 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
-if ($results_product[0]['m']['Zusatztext'] != '') {
-    $html = '<p>' . nl2br($results_product[0]['m']['Zusatztext']) . '</p>';
+if ($results_product[0]['ManufacturerAdditionalTextForInvoice'] != '') {
+    $html = '<p>' . nl2br($results_product[0]['ManufacturerAdditionalTextForInvoice']) . '</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 }
@@ -148,7 +148,7 @@ $headers = [
     'Anzahl',
     'Produkt',
     'Preis exkl.',
-    'MWSt.',
+    'USt.',
     'Preis inkl.',
     'Datum',
     'Mitglied'
@@ -159,7 +159,7 @@ $pdf->renderTable();
 
 $pdf->lastPage();
 
-$filename = $this->MyHtml->getInvoiceLink($results_product[0]['m']['Hersteller'], $results_product[0]['m']['HerstellerID'], date('Y-m-d'), $newInvoiceNumber);
+$filename = $this->MyHtml->getInvoiceLink($results_product[0]['ManufacturerName'], $results_product[0]['ManufacturerId'], date('Y-m-d'), $newInvoiceNumber);
 
 if ($saveParam == 'F') {
     // pdf saved on server
@@ -177,7 +177,7 @@ if ($saveParam == 'F') {
     $filename = explode(DS, $filename);
     $filename = end($filename);
     $filename = substr($filename, 11);
-    $filename = $this->params['pass'][1] . '-' . $this->params['pass'][2] . '-' . $filename;
+    $filename = $this->request->getParam('pass')[1] . '-' . $this->request->getParam('pass')[2] . '-' . $filename;
 }
 
 echo $pdf->Output($filename, $saveParam);

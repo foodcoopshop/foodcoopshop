@@ -45,11 +45,6 @@ class SendOrderListsShell extends AppShell
         // $dateTo = '29.02.2016';
 
         // 1) get all manufacturers (not only active ones)
-        $this->Manufacturer->unbindModel([
-            'hasMany' => [
-                'Invoices'
-            ]
-        ]);
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
                 'Manufacturers.name' => 'ASC'

@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Cake\Network\Exception\NotFoundException;
@@ -50,6 +51,12 @@ class ManufacturersController extends AdminAppController
         }
     }
 
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+    }
+    
     public function profile()
     {
         $this->edit($this->AppAuth->getManufacturerId());
@@ -62,7 +69,6 @@ class ManufacturersController extends AdminAppController
 
     public function add()
     {
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
@@ -86,7 +92,6 @@ class ManufacturersController extends AdminAppController
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
         
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -196,7 +201,6 @@ class ManufacturersController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $manufacturerId = $this->AppAuth->getManufacturerId();
         } else {
-            $this->Manufacturer = TableRegistry::get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
@@ -281,7 +285,6 @@ class ManufacturersController extends AdminAppController
             ];
         }
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $query = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'fields' => [
@@ -505,7 +508,6 @@ class ManufacturersController extends AdminAppController
             throw new NotFoundException;
         }
         
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -701,10 +703,10 @@ class ManufacturersController extends AdminAppController
         $sumTax = 0;
         $sumAmount = 0;
         foreach ($results as $result) {
-            $sumPriceIncl += $result['od']['PreisIncl'];
-            $sumPriceExcl += $result['od']['PreisExcl'];
-            $sumTax += $result['odt']['MWSt'];
-            $sumAmount += $result['od']['Menge'];
+            $sumPriceIncl += $result['OrderDetailPriceIncl'];
+            $sumPriceExcl += $result['OrderDetailPriceExcl'];
+            $sumTax += $result['OrderDetailTaxAmount'];
+            $sumAmount += $result['OrderDetailQuantity'];
         }
         $this->set('sumPriceExcl', $sumPriceExcl);
         $this->set('sumTax', $sumTax);

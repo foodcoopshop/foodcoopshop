@@ -21,7 +21,7 @@ $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 
-$title = $results[0]['m']['Hersteller'] . ': Bestellliste sortiert nach ' . $groupType_de;
+$title = $results[0]['ManufacturerName'] . ': Bestellliste sortiert nach ' . $groupType_de;
 
 $pdf->infoTextForFooter = $title;
 $pdf->SetTitle($title);
@@ -70,7 +70,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();
 
-$filename = $this->MyHtml->getOrderListLink($results[0]['m']['Hersteller'], $results[0]['m']['HerstellerID'], $deliveryDay, $groupType_de);
+$filename = $this->MyHtml->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $deliveryDay, $groupType_de);
 
 if ($saveParam == 'F') {
     // pdf saved on server
@@ -88,7 +88,7 @@ if ($saveParam == 'F') {
     $filename = explode(DS, $filename);
     $filename = end($filename);
     $filename = substr($filename, 11);
-    $filename = $this->params['pass'][1] . '-' . $this->params['pass'][2] . '-' . $filename;
+    $filename = $this->request->getParam('pass')[1] . '-' . $this->request->getParam('pass')[2] . '-' . $filename;
 }
 
 echo $pdf->Output($filename, $saveParam);

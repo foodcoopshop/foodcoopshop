@@ -434,21 +434,21 @@ class ManufacturersTable extends AppTable
         $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
 
         $sql = "SELECT
-        m.id_manufacturer HerstellerID,
-        m.name AS Hersteller,
-        m.uid_number as UID, m.additional_text_for_invoice as Zusatztext,
-        ma.*,
-        t.rate as Steuersatz,
-        odt.total_amount AS MWSt,
-        od.product_id AS ProduktID,
-        od.product_name AS ProduktName,
-        od.product_quantity AS Menge,
-        od.total_price_tax_incl AS PreisIncl,
-        od.total_price_tax_excl as PreisExcl,
-        DATE_FORMAT (o.date_add, '%d.%m.%Y') as Bestelldatum,
-        pl.description_short as Produktbeschreibung,
-        c.id_customer AS Kundennummer,
-        {$customerNameAsSql} AS Kunde
+        m.id_manufacturer ManufacturerId,
+        m.name AS ManufacturerName,
+        m.uid_number as ManufacturerUidNumber,
+        m.additional_text_for_invoice as ManufacturerAdditionalTextForInvoice,
+        ma.firstname as ManufacturerFirstname, ma.lastname as ManufacturerLastname, ma.address1 as ManufacturerAddress1, ma.postcode as ManufacturerPostcode, ma.city as ManufacturerCity,
+        t.rate as TaxRate,
+        odt.total_amount AS OrderDetailTaxAmount,
+        od.product_id AS ProductId,
+        od.product_name AS ProductName,
+        od.product_quantity AS OrderDetailQuantity,
+        od.total_price_tax_incl AS OrderDetailPriceIncl,
+        od.total_price_tax_excl as OrderDetailPriceExcl,
+        DATE_FORMAT (o.date_add, '%d.%m.%Y') as OrderDateAdd,
+        c.id_customer AS CustomerId,
+        {$customerNameAsSql} AS CustomerName
         FROM ".$this->tablePrefix."order_detail od
                 LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
                 LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
@@ -469,15 +469,13 @@ class ManufacturersTable extends AppTable
 
         $params = [
             'manufacturerId' => $manufacturerId,
-            'dateFrom' => "'" . Configure::read('app.timeHelper')->formatToDbFormatDate($from) . "'",
-            'dateTo' => "'" . Configure::read('app.timeHelper')->formatToDbFormatDate($to) . "'",
+            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($from),
+            'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($to),
             'orderStates' => join(',', $orderState)
         ];
-        // strange behavior: if $this->getDataSource()->fetchAll is used, $results is empty
-        // problem seems to be caused by date fields
-        // with interpolateQuery and normal fire of sql statemt, result is not empty and works...
-        $replacedQuery = $this->interpolateQuery($sql, $params);
-        $results = $this->getConnection()->query($replacedQuery);
-        return $results;
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute($params);
+        $result = $statement->fetchAll('assoc');
+        return $result;
     }
 }

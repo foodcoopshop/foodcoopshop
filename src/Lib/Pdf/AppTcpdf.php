@@ -30,7 +30,7 @@ class AppTcpdf extends TCPDF
     {
         $this->table .= '</table>';
 
-        // echo $this->table;
+//         echo $this->table;
 
         $this->writeHTML($this->table, true, false, true, false, '');
 
@@ -57,13 +57,13 @@ class AppTcpdf extends TCPDF
         $i = 0;
 
         foreach ($results as $result) {
-            $amount = $result['od']['Menge'];
-            $priceIncl = $result['od']['PreisIncl'];
-            $priceExcl = $result['od']['PreisExcl'];
-            $tax = $result['odt']['MWSt'];
-            $productName = $result['od']['ProduktName'];
-            $customerName = $result[0]['Kunde'];
-            $taxRate = $result['t']['Steuersatz'];
+            $amount = $result['OrderDetailQuantity'];
+            $priceIncl = $result['OrderDetailPriceIncl'];
+            $priceExcl = $result['OrderDetailPriceExcl'];
+            $tax = $result['OrderDetailTaxAmount'];
+            $productName = $result['ProductName'];
+            $customerName = $result['CustomerName'];
+            $taxRate = $result['TaxRate'];
 
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
                 $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate);
@@ -100,7 +100,7 @@ class AppTcpdf extends TCPDF
                     $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
                 }
 
-                if (in_array('MWSt.', $headers)) {
+                if (in_array('USt.', $headers)) {
                     $indexForWidth ++;
                     $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
                 }
@@ -109,10 +109,10 @@ class AppTcpdf extends TCPDF
                 $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
 
                 $indexForWidth ++;
-                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . $result[0]['Bestelldatum'] . '</td>';
+                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . $result['OrderDateAdd'] . '</td>';
 
                 $indexForWidth ++;
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $result[0]['Kunde'] . '</td>';
+                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $result['CustomerName'] . '</td>';
 
                 $this->table .= '</tr>';
             }
@@ -167,7 +167,7 @@ class AppTcpdf extends TCPDF
             $indexForWidth ++;
         }
 
-        if (in_array('MWSt.', $headers)) {
+        if (in_array('USt.', $headers)) {
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
@@ -226,7 +226,7 @@ class AppTcpdf extends TCPDF
             $this->table .= '<td align="right">' . $sumPriceExcl . '</td>';
         }
 
-        if (in_array('MWSt.', $headers)) {
+        if (in_array('USt.', $headers)) {
             $colspan --;
             $this->table .= '<td align="right">' . $sumTax . '</td>';
         }
