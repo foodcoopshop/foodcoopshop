@@ -623,7 +623,6 @@ INSERT INTO `fcs_product_attribute_shop` VALUES
 
 /*!40000 ALTER TABLE `fcs_product_lang` DISABLE KEYS */;
 INSERT INTO `fcs_product_lang` VALUES
-(0,'','',NULL,'Test-Artikel',0),
 (47,'Lange <strong>Beschreibung</strong>','200ml<br />\nnoch ein text','','Joghurt',0),
 (49,'','<p>250g</p>','','Topfen',0),
 (60,'','1 Liter','','Milch',0),

@@ -150,17 +150,16 @@ class OrdersTable extends AppTable
     {
         $orderId = $order->id_order;
 
-        // get new sums
-        $orderDetails = $this->OrderDetails->find('all', [
-            'fields' => [
-                'sumPriceExcl' => 'SUM(OrderDetails.total_price_tax_excl)',
-                'sumPriceIncl' => 'SUM(OrderDetails.total_price_tax_incl)',
-                'sumDeposit' => 'SUM(OrderDetails.deposit)'
-            ]
-        ])
-        ->group('OrderDetails.id_order')
-        ->having('OrderDetails.id_order = ' . $orderId)
-        ->first();
+        
+        $query = $this->OrderDetails->find('all');
+        $query->select(['sumPriceExcl' => $query->func()->sum('OrderDetails.total_price_tax_excl')]);
+        $query->select(['sumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl')]);
+        $query->select(['sumDeposit' => $query->func()->sum('OrderDetails.deposit')]);
+        
+        $query->group('OrderDetails.id_order');
+        $query->having(['OrderDetails.id_order' => $orderId]);
+        
+        $orderDetails = $query->first();
 
         // if last order_detail was deleted, $orderDetails is empty => avoid notices
         if (empty($orderDetails)) {
@@ -168,9 +167,9 @@ class OrdersTable extends AppTable
             $sumPriceExcl = 0;
             $sumDeposit = 0;
         } else {
-            $sumPriceIncl = $orderDetails[0]['sumPriceIncl'];
-            $sumPriceExcl = $orderDetails[0]['sumPriceExcl'];
-            $sumDeposit = $orderDetails[0]['sumDeposit'];
+            $sumPriceIncl = $orderDetails['sumPriceIncl'];
+            $sumPriceExcl = $orderDetails['sumPriceExcl'];
+            $sumDeposit = $orderDetails['sumDeposit'];
         }
 
         $order2update = [
