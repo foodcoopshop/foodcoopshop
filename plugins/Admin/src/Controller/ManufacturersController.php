@@ -333,6 +333,10 @@ class ManufacturersController extends AdminAppController
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
+            ],
+            'contain' => [
+                'Invoices',
+                'AddressManufacturers'
             ]
         ])->first();
 
@@ -351,8 +355,8 @@ class ManufacturersController extends AdminAppController
         } else {
             // generate and save invoice number
             $invoiceNumber = 1; // default
-            if (! empty($manufacturer['Invoices'])) {
-                $invoiceNumber = $manufacturer['Invoices'][0]['invoice_number'] + 1;
+            if (! empty($manufacturer->invoices)) {
+                $invoiceNumber = $manufacturer->invoices[0]->invoice_number + 1;
             }
             $newInvoiceNumber = $this->Manufacturer->formatInvoiceNumber($invoiceNumber);
             $this->set('newInvoiceNumber', $newInvoiceNumber);
@@ -366,27 +370,27 @@ class ManufacturersController extends AdminAppController
 
             // generate invoice
             $this->render('get_invoice');
-            $invoicePdfUrl = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
+            $invoicePdfUrl = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
             $invoicePdfFile = $invoicePdfUrl;
 
-            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer['Manufacturers']['name'] . '" erfolgreich versendet an ' . $manufacturer['Addresses']['email'] . '.</a>');
+            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer->name . '" erfolgreich versendet an ' . $manufacturer->address_manufacturer->email . '.</a>');
 
-            $loggedUser = $this->AppAuth->user();
-            $invoice2Save = [
+            $invoice2save = [
                 'id_manufacturer' => $manufacturerId,
                 'send_date' => date('Y-m-d H:i:s'),
                 'invoice_number' => $invoiceNumber,
-                'user_id' => $loggedUser['id_customer']
+                'user_id' => $this->AppAuth->getUserId()
             ];
-            $this->Manufacturer->Invoices->id = null;
-            $this->Manufacturer->Invoices->save($invoice2Save);
+            $this->Manufacturer->Invoices->save(
+                $this->Manufacturer->Invoices->newEntity($invoice2save)
+            );
 
             $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
-            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer['Manufacturers']['send_invoice']);
+            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
                 $email->setTemplate('Admin.send_invoice')
-                    ->setTo($manufacturer['Addresses']['email'])
+                    ->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
                     $invoicePdfFile
                     ])
@@ -412,7 +416,7 @@ class ManufacturersController extends AdminAppController
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
         ])->first();
-        return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
+        return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
     }
 
     private function getOptionVariableMemberFee($manufacturerId)
@@ -422,7 +426,7 @@ class ManufacturersController extends AdminAppController
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
         ])->first();
-        return $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
+        return $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
     }
 
     public function sendOrderList($manufacturerId, $from, $to)
@@ -432,6 +436,9 @@ class ManufacturersController extends AdminAppController
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
+            ],
+            'contain' => [
+                'AddressManufacturers'
             ]
         ])->first();
 
@@ -447,45 +454,47 @@ class ManufacturersController extends AdminAppController
             // orders exist => send pdf and email
         } else {
             $this->RequestHandler->renderAs($this, 'pdf');
-
+            
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
+            $productPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
             $productPdfFile = $productPdfUrl;
-
+            
             // generate order list by customer
             $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN
             ], 'F');
             $this->render('get_order_list_by_customer');
-            $customerPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer['Manufacturers']['name'], $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
+            $customerPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
             $customerPdfFile = $customerPdfUrl;
 
-            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturers']['send_order_list']);
-            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer['Manufacturers']['send_order_list_cc']);
+            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
+            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
-            $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer['Manufacturers']['name'] . '" erfolgreich generiert';
+            $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer->name . '" erfolgreich generiert';
 
             if ($sendEmail) {
-                $flashMessage .= ' und an ' . $manufacturer['Addresses']['email'] . ' versendet';
+                $flashMessage .= ' und an ' . $manufacturer->address_manufacturer->email . ' versendet';
                 $email->setTemplate('Admin.send_order_list')
-                    ->setTo($manufacturer['Addresses']['email'])
-                    ->setCc($ccRecipients)
-                    ->setAttachments([
-                        $productPdfFile,
-                        $customerPdfFile
-                    ])
-                    ->setSubject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
-                    ->setViewVars([
-                    'manufacturer' => $manufacturer,
-                    'appAuth' => $this->AppAuth,
-                    'showManufacturerUnsubscribeLink' => true
-                    ]);
+                ->setTo($manufacturer->address_manufacturer->email)
+                ->setAttachments([
+                    $productPdfFile,
+                    $customerPdfFile
+                ])
+                ->setSubject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
+                ->setViewVars([
+                'manufacturer' => $manufacturer,
+                'appAuth' => $this->AppAuth,
+                'showManufacturerUnsubscribeLink' => true
+                ]);
+                if (!empty($ccRecipients)) {
+                    $email->setCc($ccRecipients);
+                }
 
                 $email->send();
             }
         }
-
+        
         $flashMessage .= '.';
         $this->Flash->success($flashMessage);
         $this->redirect($this->referer());

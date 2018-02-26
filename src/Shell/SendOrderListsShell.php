@@ -17,17 +17,10 @@
 namespace App\Shell;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class SendOrderListsShell extends AppShell
 {
-
-    public $uses = [
-        'Manufacturers',
-        'Orders',
-        'Customers',
-        'ActionLogs'
-    ];
-
     /**
      * sends order lists to manufacturers who have current orders
      * does not check the field Manufacturers.active! (can be theoretically offline when this cronjob runs)
@@ -35,7 +28,11 @@ class SendOrderListsShell extends AppShell
     public function main()
     {
         parent::main();
-
+        
+        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->Order = TableRegistry::get('Orders');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        
         $this->startTimeLogging();
 
         $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
@@ -49,7 +46,7 @@ class SendOrderListsShell extends AppShell
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ]
-        ]);
+        ])->toArray();
 
         // 2) get all orders in the given date range
         $orders = $this->Order->find('all', [
@@ -57,26 +54,29 @@ class SendOrderListsShell extends AppShell
                 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
                 'Orders.current_state' => ORDER_STATE_OPEN
+            ],
+            'contain' => [
+                'OrderDetails.Products'
             ]
         ]);
 
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
         foreach ($orders as $order) {
-            foreach ($order['OrderDetails'] as $orderDetail) {
-                @$manufacturerOrders[$orderDetail['Products']['id_manufacturer']]['order_detail_quantity_sum'] += $orderDetail['product_quantity'];
-                @$manufacturerOrders[$orderDetail['Products']['id_manufacturer']]['order_detail_price_sum'] += $orderDetail['total_price_tax_incl'];
+            foreach ($order->order_details as $orderDetail) {
+                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_quantity_sum'] += $orderDetail->product_quantity;
+                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
             }
         }
-
+        
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            @$manufacturers[$i]['order_detail_quantity_sum'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']]['order_detail_quantity_sum'];
-            @$manufacturers[$i]['order_detail_price_sum'] = $manufacturerOrders[$manufacturer['Manufacturers']['id_manufacturer']]['order_detail_price_sum'];
-            $i ++;
+            $manufacturer->order_detail_quantity_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_quantity_sum'];
+            $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
+            $i++;
         }
-
+        
         // 5) check if manufacturers have open order details and send email
         $i = 0;
         $outString = 'Bestellzeitraum: ' . $dateFrom . ' bis ' . $dateTo . '<br />';
@@ -85,12 +85,12 @@ class SendOrderListsShell extends AppShell
         $this->browser->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
-            $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer['Manufacturers']['send_order_list']);
-            if (isset($manufacturer['order_detail_quantity_sum']) && $sendOrderList && !$bulkOrdersAllowed) {
-                $productString = ($manufacturer['order_detail_quantity_sum'] == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer['Manufacturers']['name'] . ': ' . $manufacturer['order_detail_quantity_sum'] . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer['order_detail_price_sum']) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer['Manufacturers']['id_manufacturer'] . '/' . $dateFrom . '/' . $dateTo;
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
+            $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
+            if (!empty($manufacturer->order_detail_quantity_sum) && $sendOrderList && !$bulkOrdersAllowed) {
+                $productString = ($manufacturer->order_detail_quantity_sum == 1 ? 'Produkt' : 'Produkte');
+                $outString .= ' - ' . $manufacturer->name . ': ' . $manufacturer->order_detail_quantity_sum . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
+                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }

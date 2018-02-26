@@ -22,7 +22,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
-        $this->markTestSkipped();
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
@@ -30,7 +29,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
     public function testSendOrderListsIfOneOrderAvailable()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
 
@@ -43,11 +41,14 @@ class SendOrderListsShellTest extends AppCakeTestCase
         // reset date if needed
         $currentWeekday = Configure::read('app.timeHelper')->getCurrentWeekday();
         if (in_array($currentWeekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
-            $order2update = [
-                'date_add' => Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay()),
-            ];
-            $this->Order->id = $orderId;
-            $this->Order->save($order2update);
+            $this->Order->save(
+                $this->patchEntity(
+                    $this->Order->get($orderId),
+                    [
+                        'date_add' => Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay()),
+                    ]
+                )
+            );
         }
 
         $this->SendOrderLists->main();

@@ -36,7 +36,10 @@ class ManufacturersTable extends AppTable
             'foreignKey' => 'id_manufacturer'
         ]);
         $this->hasMany('Invoices', [
-            'foreignKey' => 'id_manufacturer'
+            'foreignKey' => 'id_manufacturer',
+            'sort' => [
+                'send_date' => 'DESC'
+            ]
         ]);
         $this->addBehavior('Timestamp');
     }
@@ -195,7 +198,7 @@ class ManufacturersTable extends AppTable
     public function getOptionSendOrderListCc($sendOrderListCc)
     {
         $ccRecipients = [];
-        if (is_null($sendOrderListCc)) {
+        if (is_null($sendOrderListCc) || $sendOrderListCc == '') {
             return $ccRecipients;
         }
 
@@ -450,22 +453,21 @@ class ManufacturersTable extends AppTable
         c.id_customer AS CustomerId,
         {$customerNameAsSql} AS CustomerName
         FROM ".$this->tablePrefix."order_detail od
-                LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
-                LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
-                LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
-                LEFT JOIN ".$this->tablePrefix."product_lang pl ON p.id_product = pl.id_product
-                LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
-                LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
-                LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer
-                LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
-                WHERE 1
-                AND m.id_manufacturer = :manufacturerId
-                AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
-                AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
-                AND pl.id_lang = 1
-                AND ma.id_manufacturer > 0
-                AND o.current_state IN(:orderStates)
-                ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
+            LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
+            LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
+            LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
+            LEFT JOIN ".$this->tablePrefix."product_lang pl ON p.id_product = pl.id_product
+            LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
+            LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
+            LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer
+            LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
+            WHERE 1
+            AND m.id_manufacturer = :manufacturerId
+            AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
+            AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
+            AND ma.id_manufacturer > 0
+            AND o.current_state IN(:orderStates)
+            ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
 
         $params = [
             'manufacturerId' => $manufacturerId,
