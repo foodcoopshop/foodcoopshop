@@ -495,10 +495,6 @@ class PaymentsController extends AdminAppController
             $sumMemberFeeFlexbile = $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee_flexible');
             $this->set('sumMemberFeeFlexible', $sumMemberFeeFlexbile);
         }
-
-        $this->Customer->unbindModel([
-            'hasMany' => 'PaidCashFreeOrders'
-        ]);
         $this->preparePayments();
 
         $sumMemberFee = $sumMemberFeeFlexbile + $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee');
