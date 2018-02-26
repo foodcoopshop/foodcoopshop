@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -76,6 +77,9 @@ class PaymentsController extends AdminAppController
             'conditions' => [
                 'Payments.id' => $paymentId,
                 'Payments.type' => 'product'
+            ],
+            'contain' => [
+                'Customers'
             ]
         ])->first();
         if (empty($payment)) {
@@ -86,11 +90,11 @@ class PaymentsController extends AdminAppController
             throw new RecordNotFoundException('approval not implemented');
         }
 
-        $payment['Payments']['approval'] = $approval;
-        $payment['Payments']['approval_comment'] = 'Hier wird dein Kommentar angezeigt.';
+        $payment->approval = $approval;
+        $payment->approval_comment = 'Hier wird dein Kommentar angezeigt.';
         $email = new AppEmail();
         $email->setTemplate('Admin.payment_status_changed')
-            ->setTo($payment['Customers']['email'])
+            ->setTo($payment->customer->email)
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $payment,
@@ -129,7 +133,7 @@ class PaymentsController extends AdminAppController
         } else {
             // validate data - do not use $this->Payment->saveAll()
             $this->Payment->id = $paymentId;
-            $this->Payment->set($this->request->data['Payments']);
+            $this->Payment->set($this->request->getData('Payments'));
 
             $errors = [];
             $this->Payment->validator()['approval'] = $this->Payment->getNumberRangeConfigurationRule(-1, 1);
@@ -166,7 +170,7 @@ class PaymentsController extends AdminAppController
                 if ($this->request->data['Payments']['send_email']) {
                     $email = new AppEmail();
                     $email->setTemplate('Admin.payment_status_changed')
-                        ->setTo($unsavedPayment['Customers']['email'])
+                        ->setTo($unsavedPayment->customer->email)
                         ->setSubject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
                         ->setViewVars([
                             'appAuth' => $this->AppAuth,
@@ -194,7 +198,7 @@ class PaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $type = trim($this->params['data']['type']);
+        $type = trim($this->request->getData('type'));
         if (! in_array($type, [
             'product',
             'deposit',
@@ -210,7 +214,7 @@ class PaymentsController extends AdminAppController
             ]));
         }
 
-        $amount = $this->params['data']['amount'];
+        $amount = $this->request->getData('amount');
 
         if (preg_match('/^\-/', $amount)) {
             $message = 'Ein negativer Betrag ist nicht erlaubt: ' . $amount;
@@ -228,17 +232,17 @@ class PaymentsController extends AdminAppController
         }
 
         $text = '';
-        if (isset($this->params['data']['text'])) {
-            $text = strip_tags(html_entity_decode($this->params['data']['text']));
+        if (!empty($this->request->getData('text'))) {
+            $text = strip_tags(html_entity_decode($this->request->getData('text')));
         }
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
         if (in_array($type, ['product', 'payback'])) {
-            $customerId = (int) $this->params['data']['customerId'];
+            $customerId = (int) $this->request->getData('customerId');
         }
         if ($type == 'member_fee') {
-            $customerId = (int) $this->params['data']['customerId'];
-            $text = implode(',', $this->params['data']['months_range']);
+            $customerId = (int) $this->request->getData('customerId');
+            $text = implode(',', $this->request->getData('months_range'));
         }
 
         $actionLogType = $type;
@@ -248,7 +252,7 @@ class PaymentsController extends AdminAppController
             'member_fee_flexible'
         ])) {
             // payments to deposits can be added to customers or manufacturers
-            $customerId = (int) $this->params['data']['customerId'];
+            $customerId = (int) $this->request->getData('customerId');
             if ($customerId > 0) {
                 $userType = 'customer';
                 $customer = $this->Customer->find('all', [
@@ -264,10 +268,10 @@ class PaymentsController extends AdminAppController
                         'msg' => $msg
                     ]));
                 }
-                $message .= ' für ' . $customer['Customers']['name'];
+                $message .= ' für ' . $customer->name;
             }
 
-            $manufacturerId = (int) $this->params['data']['manufacturerId'];
+            $manufacturerId = (int) $this->request->getData('manufacturerId');
 
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
@@ -287,7 +291,7 @@ class PaymentsController extends AdminAppController
                 }
 
                 $message = 'Pfand-Rücknahme ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
-                $message .= ' für ' . $manufacturer['Manufacturers']['name'];
+                $message .= ' für ' . $manufacturer->name;
             }
 
 
@@ -309,7 +313,7 @@ class PaymentsController extends AdminAppController
                 ]
             ])->first();
             if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
-                $message .= ' für ' . $customer['Customers']['name'];
+                $message .= ' für ' . $customer->name;
             }
             // security check
             if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
@@ -331,19 +335,22 @@ class PaymentsController extends AdminAppController
         }
 
         // add entry in table payments
-        $this->Payment->id = null; // force insert
-        $this->Payment->save([
-            'status' => APP_ON,
-            'type' => $type,
-            'id_customer' => $customerId,
-            'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
-            'date_add' => date('Y-m-d H:i:s'),
-            'date_changed' => date('Y-m-d H:i:s'),
-            'amount' => $amount,
-            'text' => $text,
-            'created_by' => $this->AppAuth->getUserId(),
-            'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
-        ]);
+        $newPayment = $this->Payment->save(
+            $this->Payment->newEntity(
+                [
+                    'status' => APP_ON,
+                    'type' => $type,
+                    'id_customer' => $customerId,
+                    'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
+                    'date_add' => date('Y-m-d H:i:s'),
+                    'date_changed' => date('Y-m-d H:i:s'),
+                    'amount' => $amount,
+                    'text' => $text,
+                    'created_by' => $this->AppAuth->getUserId(),
+                    'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
+                ]
+            )
+        );
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('app.htmlHelper')->formatAsEuro($amount);
@@ -352,19 +359,19 @@ class PaymentsController extends AdminAppController
             $message .= ', für ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
         }
 
-        $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $this->Payment->getLastInsertId(), 'payments', $message);
+        $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $newPayment->id, 'payments', $message);
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'])) {
             $message .= ' Der Betrag ist ';
             switch ($actionLogType) {
                 case 'deposit_customer':
-                    $message .= 'im Guthaben-System von ' . $customer['Customers']['name'];
+                    $message .= 'im Guthaben-System von ' . $customer->name;
                     break;
                 case 'deposit_manufacturer':
-                    $message .= 'im Pfandkonto von ' . $manufacturer['Manufacturers']['name'];
+                    $message .= 'im Pfandkonto von ' . $manufacturer->name;
                     break;
                 case 'member_fee_flexible':
-                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer['Customers']['name'];
+                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer->name;
                     break;
             }
             $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
@@ -376,7 +383,7 @@ class PaymentsController extends AdminAppController
             'status' => 1,
             'msg' => 'ok',
             'amount' => $amount,
-            'paymentId' => $this->Payment->getLastInsertId()
+            'paymentId' => $newPayment->id
         ]));
     }
 
@@ -384,7 +391,7 @@ class PaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $paymentId = $this->params['data']['paymentId'];
+        $paymentId = $this->request->getData('paymentId');
 
         $payment = $this->Payment->find('all', [
             'conditions' => [

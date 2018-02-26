@@ -115,7 +115,6 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddDepositPaymentToCustomer()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
@@ -134,7 +133,6 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddDepositToManufacturerEmptyGlasses()
     {
-        $this->markTestSkipped();
         $this->addDepositToManufacturer(
             'empty_glasses',
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
@@ -143,7 +141,6 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddDepositToManufacturerMoney()
     {
-        $this->markTestSkipped();
         $this->addDepositToManufacturer(
             'money',
             'Pfand-Rücknahme (Ausgleichszahlung) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
@@ -234,10 +231,10 @@ class PaymentsControllerTest extends AppCakeTestCase
                 'ActionLogs.customer_id' => $customerId
             ],
             'order' => ['ActionLogs.date' => 'DESC']
-        ]);
-        $this->assertEquals($expectedType, $lastActionLog[0]['ActionLogs']['type'], 'cake action log type not correct');
-        $this->assertEquals($expectedObjectType, $lastActionLog[0]['ActionLogs']['object_type'], 'cake action log object type not correct');
-        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]['ActionLogs']['text'], 'cake action log text not correct');
+        ])->toArray();
+        $this->assertEquals($expectedType, $lastActionLog[0]->type, 'cake action log type not correct');
+        $this->assertEquals($expectedObjectType, $lastActionLog[0]->object_type, 'cake action log object type not correct');
+        $this->assertRegExpWithUnquotedString($expectedText, $lastActionLog[0]->text, 'cake action log text not correct');
     }
 
     /**
@@ -247,9 +244,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     private function deletePayment($paymentId)
     {
         $this->browser->ajaxPost('/admin/payments/changeState', [
-            'data' => [
-                'paymentId' => $paymentId
-            ]
+            'paymentId' => $paymentId
         ]);
         return $this->browser->getJsonDecodedContent();
     }
@@ -265,13 +260,11 @@ class PaymentsControllerTest extends AppCakeTestCase
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {
         $this->browser->ajaxPost('/admin/payments/add', [
-            'data' => [
-                'customerId' => $customerId,
-                'amount' => $amount,
-                'type' => $type,
-                'manufacturerId' => $manufacturerId,
-                'text' => $text
-            ]
+            'customerId' => $customerId,
+            'amount' => $amount,
+            'type' => $type,
+            'manufacturerId' => $manufacturerId,
+            'text' => $text
         ]);
         return $this->browser->getJsonDecodedContent();
     }
