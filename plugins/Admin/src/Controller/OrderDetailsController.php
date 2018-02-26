@@ -37,15 +37,15 @@ class OrderDetailsController extends AdminAppController
                  * START customer/manufacturer OWNER check
                  * param orderDetailId / orderDetailIds is passed via ajaxCall
                  */
-                if (!empty($this->params['data']['orderDetailIds'])) {
+                if (!empty($this->request->getData('orderDetailIds'))) {
                     $accessAllowed = false;
-                    foreach ($this->params['data']['orderDetailIds'] as $orderDetailId) {
+                    foreach ($this->request->getData('orderDetailIds') as $orderDetailId) {
                         $accessAllowed |= $this->checkOrderDetailIdAccess($orderDetailId);
                     }
                     return $accessAllowed;
                 }
-                if (!empty($this->params['data']['orderDetailId'])) {
-                    return $this->checkOrderDetailIdAccess($this->params['data']['orderDetailId']);
+                if (!empty($this->request->getData('orderDetailIds'))) {
+                    return $this->checkOrderDetailIdAccess($this->request->getData('orderDetailIds'));
                 }
                 return false;
             default:
@@ -61,16 +61,22 @@ class OrderDetailsController extends AdminAppController
     private function checkOrderDetailIdAccess($orderDetailId)
     {
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
+            $this->OrderDetail = TableRegistry::get('OrderDetails');
             $orderDetail = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.id_order_detail' => $orderDetailId
+                ],
+                'contain' => [
+                    'Products',
+                    'Orders'
+                    
                 ]
             ])->first();
             if (!empty($orderDetail)) {
-                if ($this->AppAuth->isManufacturer() && $orderDetail['Products']['id_manufacturer'] == $this->AppAuth->getManufacturerId()) {
+                if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && $orderDetail['Orders']['id_customer'] == $this->AppAuth->getUserId()) {
+                if ($this->AppAuth->isCustomer() && $orderDetail->order->id_customer == $this->AppAuth->getUserId()) {
                     return true;
                 }
             }
@@ -450,8 +456,8 @@ class OrderDetailsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderDetailIds = $this->params['data']['orderDetailIds'];
-        $cancellationReason = strip_tags(html_entity_decode($this->params['data']['cancellationReason']));
+        $orderDetailIds = $this->request->getData('orderDetailIds');
+        $cancellationReason = strip_tags(html_entity_decode($this->request->getData('cancellationReason')));
 
         if (!(is_array($orderDetailIds))) {
             die(json_encode([
@@ -460,6 +466,7 @@ class OrderDetailsController extends AdminAppController
             ]));
         }
 
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
         $flashMessage = '';
         foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('all', [
@@ -468,47 +475,48 @@ class OrderDetailsController extends AdminAppController
                 ],
                 'contain' => [
                     'Orders',
-                    'Orders.Customer',
-                    'Products.StockAvailable',
-                    'Products.Manufacturer',
-                    'Products.Manufacturer.Address',
-                    'ProductAttributes.StockAvailable'
+                    'Orders.Customers',
+                    'Products.StockAvailables',
+                    'Products.Manufacturers',
+                    'Products.Manufacturers.AddressManufacturers',
+                    'ProductAttributes.StockAvailables',
+                    'OrderDetailTaxes'
                 ]
             ])->first();
 
-            $message = 'Produkt "' . $orderDetail['OrderDetails']['product_name'] . '" (' . Configure::read('app.htmlHelper')->formatAsEuro($orderDetail['OrderDetails']['total_price_tax_incl']) . ' aus Bestellung Nr. ' . $orderDetail['Orders']['id_order'] . ' vom ' . Configure::read('app.timeHelper')->formatToDateNTimeLong($orderDetail['Orders']['date_add']) . ' wurde erfolgreich storniert';
+            $message = 'Produkt "' . $orderDetail->product_name . '" (' . Configure::read('app.htmlHelper')->formatAsEuro($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' wurde erfolgreich storniert';
 
             // delete row
-            $this->OrderDetail->deleteOrderDetail($orderDetailId);
+            $this->OrderDetail->deleteOrderDetail($orderDetail);
 
             // update sum in table orders
-            $this->OrderDetail->Order->recalculateOrderDetailPricesInOrder($orderDetail);
+            $this->OrderDetail->Orders->recalculateOrderDetailPricesInOrder($orderDetail->order);
 
-            $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail['OrderDetails']['product_quantity'] * 2);
+            $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_quantity * 2);
 
             // send email to customer
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_deleted')
-            ->setTo($orderDetail['Orders']['Customers']['email'])
-            ->setSubject('Produkt kann nicht geliefert werden: ' . $orderDetail['OrderDetails']['product_name'])
+            ->setTo($orderDetail->order->customer->email)
+            ->setSubject('Produkt kann nicht geliefert werden: ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ]);
 
-            $message .= ' und eine E-Mail an <b>' . $orderDetail['Orders']['Customers']['name'] . '</b>';
+            $message .= ' und eine E-Mail an <b>' . $orderDetail->order->customer->name . '</b>';
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::get('Manufacturers');
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail['Products']['Manufacturers']['bulk_orders_allowed']);
-            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail['Products']['Manufacturers']['send_ordered_product_deleted_notification']);
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
+            $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
             if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
-                $message .= ' sowie an den Hersteller <b>' . $orderDetail['Products']['Manufacturers']['name'] . '</b>';
-                $email->addCC($orderDetail['Products']['Manufacturers']['Addresses']['email']);
+                $message .= ' sowie an den Hersteller <b>' . $orderDetail->product->manfacturer->name . '</b>';
+                $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
             $email->send();
@@ -518,10 +526,10 @@ class OrderDetailsController extends AdminAppController
                 $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' Der Warenbestand wurde um ' . $orderDetail['OrderDetails']['product_quantity'] . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+            $message .= ' Der Warenbestand wurde um ' . $orderDetail->product_quantity . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
             $this->ActionLog = TableRegistry::get('ActionLogs');
-            $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail['OrderDetails']['product_id'], 'products', $message);
+            $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);
         }
 
 
@@ -588,27 +596,29 @@ class OrderDetailsController extends AdminAppController
 
     private function increaseQuantityForProduct($orderDetail, $orderDetailQuantityBeforeQuantityChange)
     {
-
-        $stockAvailableObject = $this->OrderDetail->Product;
-        $stockAvailableIndex = 'Products';
-
-        // if attribute, the following index exists:
-        if (! empty($orderDetail['ProductAttributes']['StockAvailables'])) {
-            $stockAvailableObject = $this->OrderDetail->ProductAttribute;
-            $stockAvailableIndex = 'ProductAttributes';
+        
+        // order detail references a product attribute
+        if (!empty($orderDetail->product_attribute->stock_available)) {
+            $stockAvailableObject = $orderDetail->product_attribute->stock_available;
+        } else {
+            $stockAvailableObject = $orderDetail->product->stock_available;
         }
-
+        
+        $stockAvailableId = $stockAvailableObject->id_stock_available;
+        $quantity = $stockAvailableObject->quantity;
+        
         // do the acutal updates for increasing quantity
-        if (isset($stockAvailableObject) && isset($stockAvailableIndex)) {
-            $backedUpPrimaryKey = $stockAvailableObject->StockAvailable->primaryKey;
-            $stockAvailableObject->StockAvailable->primaryKey = 'id_stock_available'; // primary key was already set in model... works :-)
-            $stockAvailableObject->StockAvailable->id = $orderDetail[$stockAvailableIndex]['StockAvailables']['id_stock_available'];
-            $newQuantity = $orderDetail[$stockAvailableIndex]['StockAvailables']['quantity'] + $orderDetailQuantityBeforeQuantityChange - $orderDetail['OrderDetails']['product_quantity'];
-            $stockAvailableObject->StockAvailable->save([
+        $this->StockAvailable = TableRegistry::get('StockAvailables');
+        $originalPrimaryKey = $this->StockAvailable->getPrimaryKey();
+        $this->StockAvailable->setPrimaryKey('id_stock_available');
+        $newQuantity = $quantity + $orderDetailQuantityBeforeQuantityChange - $orderDetail->product_quantity;
+        $patchedEntity = $this->StockAvailable->patchEntity($stockAvailableObject,
+            [
                 'quantity' => $newQuantity
-            ]);
-            $stockAvailableObject->StockAvailable->primaryKey = $backedUpPrimaryKey;
-        }
+            ]
+        );
+        $this->StockAvailable->save($patchedEntity);
+        $this->StockAvailable->setPrimaryKey($originalPrimaryKey);
 
         return $newQuantity;
     }

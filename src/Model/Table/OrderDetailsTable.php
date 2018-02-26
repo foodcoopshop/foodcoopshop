@@ -41,10 +41,13 @@ class OrderDetailsTable extends AppTable
         ]);
     }
     
-    public function deleteOrderDetail($orderDetailId)
+    public function deleteOrderDetail($orderDetail)
     {
-        $this->delete($orderDetailId, false);
-        $this->OrderDetailTax->delete($orderDetailId, false);
+        $this->delete($orderDetail);
+        
+        if (!empty($orderDetail->order_detail_tax)) {
+            $this->OrderDetailTaxes->delete($orderDetail->order_detail_tax);
+        }
     }
 
     /**

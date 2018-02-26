@@ -12,25 +12,27 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $orderDetail['Orders']]); ?>
+        <?php echo $this->element('email/greeting', ['data' => $orderDetail->order->customer]); ?>
                 
         <tr>
         <td>
 
             <p>
-                <b><?php echo $orderDetail['OrderDetails']['product_name']; ?></b>
+                <b><?php echo $orderDetail->product_name; ?></b>
                 kann leider nicht geliefert werden.
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail['OrderDetails']['total_price_tax_incl']); ?></b></li>
-                <li>Anzahl: <b><?php echo $orderDetail['OrderDetails']['product_quantity']; ?></b></li>
-                <li>Hersteller: <b><?php echo $orderDetail['Products']['Manufacturers']['name']; ?></b></li>
-                <li>Bestelldatum: <b><?php echo $this->MyTime->formatToDateNTimeShort($orderDetail['Orders']['date_add']); ?></b></li>
+                <li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail->total_price_tax_incl); ?></b></li>
+                <li>Anzahl: <b><?php echo $orderDetail->product_quantity; ?></b></li>
+                <li>Hersteller: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
+                <li>Bestelldatum: <b><?php echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b></li>
             </ul>
 
             <p>

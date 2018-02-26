@@ -148,17 +148,19 @@ class OrdersTable extends AppTable
 
     public function recalculateOrderDetailPricesInOrder($order)
     {
-        $orderId = $order['OrderDetails']['id_order'];
+        $orderId = $order->id_order;
 
         // get new sums
         $orderDetails = $this->OrderDetails->find('all', [
             'fields' => [
-                'SUM(OrderDetails.total_price_tax_excl) AS sumPriceExcl',
-                'SUM(OrderDetails.total_price_tax_incl) AS sumPriceIncl',
-                'SUM(OrderDetails.deposit) AS sumDeposit'
-            ],
-            'group' => 'OrderDetails.id_order HAVING OrderDetails.id_order = ' . $orderId
-        ])->first();
+                'sumPriceExcl' => 'SUM(OrderDetails.total_price_tax_excl)',
+                'sumPriceIncl' => 'SUM(OrderDetails.total_price_tax_incl)',
+                'sumDeposit' => 'SUM(OrderDetails.deposit)'
+            ]
+        ])
+        ->group('OrderDetails.id_order')
+        ->having('OrderDetails.id_order = ' . $orderId)
+        ->first();
 
         // if last order_detail was deleted, $orderDetails is empty => avoid notices
         if (empty($orderDetails)) {
@@ -179,7 +181,8 @@ class OrdersTable extends AppTable
         ];
 
         // update table orders
-        $this->id = $orderId;
-        $this->save($order2update);
+        $this->save(
+            $this->patchEntity($order, $order2update)
+        );
     }
 }
