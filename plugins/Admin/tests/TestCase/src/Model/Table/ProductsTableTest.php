@@ -2,6 +2,7 @@
 
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -60,6 +61,36 @@ class ProductsTableTest extends AppCakeTestCase
             $result = $this->Product->getProductIdAndAttributeId($test['id']);
             $this->assertEquals($test['result'], $result);
         }
+    }
+    
+    public function testAddProduct()
+    {
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ]
+        ])->first();
+        $newProduct = $this->Product->add($manufacturer);
+        
+        $productFromDatabase = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $newProduct->id_product
+            ],
+            'contain' => [
+                'CategoryProducts',
+                'ProductLangs',
+                'StockAvailables'
+            ]
+        ])->first();
+            
+        $this->assertEquals($productFromDatabase->id_product, $newProduct->id_product);
+        $this->assertEquals($productFromDatabase->id_manufacturer, $manufacturerId);
+        $this->assertEquals($productFromDatabase->active, APP_OFF);
+        $this->assertEquals($productFromDatabase->category_products[0]->id_category, Configure::read('app.categoryAllProducts'));
+        $this->assertEquals($productFromDatabase->product_lang->name, 'Neues Produkt von ' . $manufacturer->name);
+        $this->assertEquals($productFromDatabase->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
+        $this->assertEquals($productFromDatabase->stock_available->quantity, 999);
     }
 
     /**
