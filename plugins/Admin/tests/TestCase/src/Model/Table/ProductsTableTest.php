@@ -73,7 +73,7 @@ class ProductsTableTest extends AppCakeTestCase
         ])->first();
         $newProduct = $this->Product->add($manufacturer);
         
-        $productFromDatabase = $this->Product->find('all', [
+        $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $newProduct->id_product
             ],
@@ -84,13 +84,13 @@ class ProductsTableTest extends AppCakeTestCase
             ]
         ])->first();
             
-        $this->assertEquals($productFromDatabase->id_product, $newProduct->id_product);
-        $this->assertEquals($productFromDatabase->id_manufacturer, $manufacturerId);
-        $this->assertEquals($productFromDatabase->active, APP_OFF);
-        $this->assertEquals($productFromDatabase->category_products[0]->id_category, Configure::read('app.categoryAllProducts'));
-        $this->assertEquals($productFromDatabase->product_lang->name, 'Neues Produkt von ' . $manufacturer->name);
-        $this->assertEquals($productFromDatabase->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
-        $this->assertEquals($productFromDatabase->stock_available->quantity, 999);
+        $this->assertEquals($product->id_product, $newProduct->id_product);
+        $this->assertEquals($product->id_manufacturer, $manufacturerId);
+        $this->assertEquals($product->active, APP_OFF);
+        $this->assertEquals($product->category_products[0]->id_category, Configure::read('app.categoryAllProducts'));
+        $this->assertEquals($product->product_lang->name, 'Neues Produkt von ' . $manufacturer->name);
+        $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
+        $this->assertEquals($product->stock_available->quantity, 999);
     }
 
     /**

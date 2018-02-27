@@ -269,7 +269,7 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $this->Product->addProductAttribute($productId, $productAttributeId);
+        $this->Product->ProductAttributes->add($productId, $productAttributeId);
 
         // get new data
         $newProduct = $this->Product->find('all', [

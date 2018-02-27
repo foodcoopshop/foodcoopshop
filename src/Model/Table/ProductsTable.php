@@ -858,58 +858,6 @@ class ProductsTable extends AppTable
         $this->StockAvailables->updateQuantityForMainProduct($productId);
     }
 
-    public function addProductAttribute($productId, $attributeId)
-    {
-        $defaultQuantity = 999;
-
-        $productAttributesCount = $this->ProductAttributes->find('all', [
-            'conditions' => [
-                'ProductAttributes.id_product' => $productId
-            ]
-        ])->count();
-
-        $newAttribute = $this->ProductAttributes->save(
-            $this->ProductAttributes->newEntity(
-                [
-                    'id_product' => $productId,
-                    'default_on' => $productAttributesCount == 0 ? 1 : 0
-                ]
-            )
-        );
-        $productAttributeId = $newAttribute->id_product_attribute;
-
-        // INSERT in ProductAttributeCombination tricky because of set primary_key
-        $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
-
-        $this->ProductAttributes->ProductAttributeShops->save(
-            $this->ProductAttributes->ProductAttributeShops->newEntity(
-                [
-                    'id_product_attribute' => $productAttributeId,
-                    'default_on' => $productAttributesCount == 0 ? 1 : 0,
-                    'id_shop' => 1,
-                    'id_product' => $productId
-                ]
-            )
-        );
-
-        // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $this->ProductShops->id = $productId;
-        $this->ProductShops->save(
-            $this->ProductShops->patchEntity(
-                $this->ProductShops->get($productId),
-                [
-                    'price' => 0
-                ]
-            )
-        );
-
-        // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
-        // with custom sql
-        $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
-
-        $this->StockAvailables->updateQuantityForMainProduct($productId);
-    }
-
     public function add($manufacturer)
     {
         $defaultQuantity = 999;
