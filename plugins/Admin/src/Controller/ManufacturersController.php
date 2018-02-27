@@ -347,8 +347,6 @@ class ManufacturersController extends AdminAppController
             ORDER_STATE_CASH_FREE
         ], 'F');
 
-        $email = new AppEmail();
-
         // no orders in current period => do not send pdf but send information email
         if (count($product_results) == 0) {
             // orders exist => send pdf and email
@@ -389,6 +387,7 @@ class ManufacturersController extends AdminAppController
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
+                $email = new AppEmail();
                 $email->setTemplate('Admin.send_invoice')
                     ->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
@@ -447,8 +446,6 @@ class ManufacturersController extends AdminAppController
             ORDER_STATE_OPEN
         ], 'F');
 
-        $email = new AppEmail();
-
         // no orders in current period => do not send pdf but send information email
         if (count($productResults) == 0) {
             // orders exist => send pdf and email
@@ -475,6 +472,7 @@ class ManufacturersController extends AdminAppController
 
             if ($sendEmail) {
                 $flashMessage .= ' und an ' . $manufacturer->address_manufacturer->email . ' versendet';
+                $email = new AppEmail();
                 $email->setTemplate('Admin.send_order_list')
                 ->setTo($manufacturer->address_manufacturer->email)
                 ->setAttachments([
@@ -490,7 +488,6 @@ class ManufacturersController extends AdminAppController
                 if (!empty($ccRecipients)) {
                     $email->setCc($ccRecipients);
                 }
-
                 $email->send();
             }
         }
