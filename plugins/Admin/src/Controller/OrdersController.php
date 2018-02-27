@@ -28,40 +28,36 @@ class OrdersController extends AdminAppController
         return ! $this->AppAuth->isManufacturer();
     }
 
-    public function recalculateOrderDetailPricesInOrder($orderId)
-    {
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ]
-        ])->first();
-        $order['OrderDetails']['id_order'] = $orderId;
-        $this->Order->recalculateOrderDetailPricesInOrder($order);
-    }
-
     public function editComment()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderId = $this->params['data']['orderId'];
-        $orderComment = htmlspecialchars_decode(strip_tags(trim($this->params['data']['orderComment']), '<strong><b>'));
-
+        $orderId = $this->request->getData('orderId');
+        $orderComment = htmlspecialchars_decode(strip_tags(trim($this->request->getData('orderComment')), '<strong><b>'));
+        
+        $this->Order = TableRegistry::get('Orders');
         $oldOrder = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
+            ],
+            'contain' => [
+                'Customers'
             ]
         ])->first();
 
-        $order2update = [
-            'comment' => $orderComment
-        ];
-        $this->Order->id = $oldOrder['Orders']['id_order'];
-        $this->Order->save($order2update);
-
+        $this->Order->save(
+            $this->Order->patchEntity(
+                $oldOrder,
+                [
+                    'comment' => $orderComment
+                ]
+            )
+        );
+        
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder['Orders']['id_order'] . ' von '.$oldOrder['Customers']['firstname'] . ' ' . $oldOrder['Customers']['lastname'].' wurde geändert: <br /><br /> alt: <div class="changed">' . $oldOrder['Orders']['comment'] . '</div>neu: <div class="changed">' . $orderComment . ' </div>');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder->id_order . ' von '.$oldOrder->customer->name.' wurde geändert: <div class="changed">' . $orderComment . ' </div>');
 
         die(json_encode([
             'status' => 1,
@@ -78,7 +74,7 @@ class OrdersController extends AdminAppController
         $this->Order = TableRegistry::get('Orders');
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'Orders.id_order IN(' . $this->request->getQuery('orderIds') . ')'
+                'Orders.id_order IN' => $this->request->getQuery('orderIds')
             ],
             'contain' => [
                 'Customers',
@@ -99,8 +95,10 @@ class OrdersController extends AdminAppController
 
     public function correctShopOrder()
     {
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->params->query['url']);
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->request->getQuery('url'));
 
+        $this->Order = TableRegistry::get('Orders');
+        
         if ($orderId > 0) {
             $order = $this->Order->find('all', [
                 'conditions' => [
@@ -108,18 +106,25 @@ class OrdersController extends AdminAppController
                 ],
                 'order' => [
                     'Orders.date_add' => 'DESC'
+                ],
+                'contain' => [
+                    'Customers'
                 ]
             ])->first();
 
             $newDate = Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay());
-            $order2update = [
-                'date_add' => $newDate,
-                'current_state' => Configure::read('appDb.FCS_SHOP_ORDER_DEFAULT_STATE')
-            ];
-            $this->Order->id = $orderId;
-            $this->Order->save($order2update);
+            
+            $this->Order->save(
+                $this->Order->patchEntity(
+                    $order,
+                    [
+                        'date_add' => $newDate,
+                        'current_state' => Configure::read('appDb.FCS_SHOP_ORDER_DEFAULT_STATE')
+                    ]
+                )
+            );
 
-            $message = 'Sofort-Bestellung Nr. (' . $order['Orders']['id_order'] . ') für ' . $order['Customers']['name'] . ' erfolgreich erstellt und rückdatiert auf den ' . Configure::read('app.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
+            $message = 'Sofort-Bestellung Nr. (' . $order->id_order . ') für <b>' . $order->customer->name . '</b> erfolgreich erstellt und rückdatiert auf den ' . Configure::read('app.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
 
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);

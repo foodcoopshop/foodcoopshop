@@ -63,7 +63,7 @@ use Cake\Core\Configure;
                             } else {
                                 if (isset($originalLoggedCustomer) && !is_null($originalLoggedCustomer)) {
                                     // for shop orders
-                                    echo $originalLoggedCustomer->name;
+                                    echo $originalLoggedCustomer['name'];
                                 } else {
                                     echo $appAuth->getUsername();
                                 }

@@ -149,7 +149,6 @@ class OrdersTable extends AppTable
     public function recalculateOrderDetailPricesInOrder($order)
     {
         $orderId = $order->id_order;
-
         
         $query = $this->OrderDetails->find('all');
         $query->select(['sumPriceExcl' => $query->func()->sum('OrderDetails.total_price_tax_excl')]);

@@ -422,7 +422,7 @@ class CartsController extends FrontendController
                     ->setViewVars([
                     'cart' => $cart,
                     'appAuth' => $this->AppAuth,
-                        'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
+                    'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
                     'order' => $order,
                     'depositSum' => $this->AppAuth->Cart->getDepositSum(),
                     'productSum' => $this->AppAuth->Cart->getProductSum(),
@@ -494,7 +494,7 @@ class CartsController extends FrontendController
                     'productAndDepositSum' => $depositSum + $productSum,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
-                $email->send();
+//                 $email->send();
             }
         }
     }
