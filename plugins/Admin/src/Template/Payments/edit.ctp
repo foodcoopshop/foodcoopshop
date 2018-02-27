@@ -20,9 +20,9 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('payments-approval-comment');" .
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
-        Configure::read('app.jsNamespace') . ".Admin.initForm('" .$this->request->data['Payments']['id'] . "', 'Payments);
-        $('#PaymentApproval').on('change', function() {
-            var emailCheckbox = $('#PaymentSendEmail');
+        Configure::read('app.jsNamespace') . ".Admin.initForm();
+        $('#payments-approval').on('change', function() {
+            var emailCheckbox = $('#payments-send-email');
             if ($(this).val() == -1) {
                 emailCheckbox.prop('checked', true);
             } else {
@@ -53,51 +53,46 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->Form->create('Payments', [
-    'class' => 'fcs-form'
+echo $this->Form->create($payment, [
+    'class' => 'fcs-form',
+    'novalidate' => 'novalidate'
 ]);
+echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Payments.id');
-echo $this->Form->hidden('Customers.name');
-echo $this->Form->hidden('ChangedBy.name');
-echo $this->Form->hidden('Payments.amount');
-echo $this->Form->hidden('Payments.date_add');
-echo $this->Form->hidden('Payments.date_changed');
-
-echo '<p><label>Mitglied</label>' . $this->request->data['Customers']['name'].'</p>';
-echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($this->request->data['Payments']['amount']).'</p>';
-echo '<p><label>Datum der Aufladung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payments']['date_add']).'</p>';
-echo '<p><label>Datum der letzten Änderung</label>' . $this->Time->formatToDateNTimeLong($this->request->data['Payments']['date_changed']).'</p>';
-echo '<p><label>Letzter Bearbeiter</label>' . $this->request->data['ChangedBy']['name'].'</p>';
-
+echo '<p><label>Mitglied</label>' . $payment->customer->name.'</p>';
+echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($payment->amount).'</p>';
+echo '<p><label>Datum der Aufladung</label>' . $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) .'</p>';
+echo '<p><label>Datum der letzten Änderung</label>' . $payment->date_changed->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')).'</p>';
+echo '<p><label>Letzter Bearbeiter</label>' . (empty($payment->changed_by_customer) ? 'Diese Zahlung wurde noch nicht bearbeitet' : $payment->changed_by_customer->name).'</p>';
 echo $this->Form->input('Payments.approval', [
     'type' => 'select',
     'label' => 'Status',
     'options' => $this->Html->getApprovalStates()
 ]);
 
-echo $this->Form->input('Payments.send_email', [
-    'label' => 'E-Mail versenden?',
-    'type' => 'checkbox',
-    'after' => '<span class="after small">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).<br /><span style="float: left;">E-Mail-Vorschau:</span>'.
-        $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('accept.png')),
-            [
-                'class' => 'email-template-info',
-                'target' => '_blank'
-            ],
-            '/admin/payments/previewEmail/'.$this->request->data['Payments']['id'].'/1'
+$checkboxLabel = 'E-Mail versenden? <span class="after small multiple-lines">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).<br /><span style="float: left;">E-Mail-Vorschau:</span>'.
+    $this->Html->getJqueryUiIcon(
+        $this->Html->image($this->Html->getFamFamFamPath('accept.png')),
+        [
+            'class' => 'email-template-info',
+            'target' => '_blank'
+        ],
+        '/admin/payments/previewEmail/'.$payment->id.'/1'
         ).'&nbsp;'.
-        $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
-            [
-                'class' => 'email-template-info',
-                'target' => '_blank'
-            ],
-            '/admin/payments/previewEmail/'.$this->request->data['Payments']['id'].'/-1'
+    $this->Html->getJqueryUiIcon(
+        $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
+        [
+            'class' => 'email-template-info',
+            'target' => '_blank'
+        ],
+        '/admin/payments/previewEmail/'.$payment->id.'/-1'
         ).
-    '</span>'
+    '</span>';
+
+echo $this->Form->input('Payments.send_email', [
+    'label' => $checkboxLabel,
+    'type' => 'checkbox',
+    'escape' => false
 ]);
 
 echo $this->Form->input('Payments.approval_comment', [
@@ -106,6 +101,7 @@ echo $this->Form->input('Payments.approval_comment', [
     'class' => 'ckeditor'
 ]);
 
+echo $this->Form->end();
+
 ?>
 
-</form>

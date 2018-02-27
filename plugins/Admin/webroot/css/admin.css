@@ -897,6 +897,9 @@ form.fcs-form .checkbox .small {
     line-height: 28px;
     float: left;
 }
+form.fcs-form .checkbox .small.multiple-lines {
+	line-height: 21px;
+}
 form.fcs-form .input.text .after.small,
 form.fcs-form .input.number .after.small,
 form.fcs-form .input.tel .after.small,

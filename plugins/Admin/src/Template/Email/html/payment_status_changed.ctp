@@ -24,18 +24,18 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Der Status deiner Guthaben-Aufladung vom <b><?php echo Configure::read('app.timeHelper')->formatToDateNTimeShort($request['Payments']['date_add']); ?></b> über <b>€ <?php echo Configure::read('app.htmlHelper')->formatAsDecimal($request['Payments']['amount']); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
+                Der Status deiner Guthaben-Aufladung vom <b><?php echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b> über <b>€ <?php echo Configure::read('app.htmlHelper')->formatAsDecimal($payment->amount); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
                 
-                <?php if ($request['Payments']['approval'] == -1) { ?>
+                <?php if ($payment->approval == -1) { ?>
                     Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto.
                 <?php } ?>
                 
             </p>
             
             <?php
-            if ($request['Payments']['approval_comment'] != '') {
+            if ($payment->approval_comment != '') {
                 echo '<p>Kommentar:<br />';
-                echo '<b>"'.$request['Payments']['approval_comment'] . '</b>"';
+                echo '<b>"'.$payment->approval_comment . '</b>"';
                 echo '</p>';
             }
             ?>

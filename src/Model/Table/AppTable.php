@@ -8,6 +8,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validation;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,6 +39,15 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
+    protected function getNumberRangeValidator(Validator $validator, $field, $min, $max)
+    {
+        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $validator->lessThanOrEqual($field, $max, $message);
+        $validator->greaterThanOrEqual($field, $min, $message);
+        $validator->notEmpty($field, $message);
+        return $validator;
+    }
+    
     public function sortByVirtualField($object, $name)
     {
         return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');

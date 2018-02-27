@@ -98,11 +98,11 @@ class PaymentsController extends AdminAppController
             ->setTo($payment->customer->email)
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
-                'data' => $payment,
+                'data' => $payment->customer,
                 'newStatusAsString' => Configure::read('app.htmlHelper')->getApprovalStates()[$approval],
-                'request' => $payment
+                'payment' => $payment
             ]);
-        $html = $email->getHtmlMessage();
+        $html = $email->_renderTemplates(null)['html'];
         if ($html != '') {
             echo $html;
             exit;
@@ -112,87 +112,93 @@ class PaymentsController extends AdminAppController
     public function edit($paymentId)
     {
 
+        $this->set('title_for_layout', 'Guthaben-Aufladung überprüfen');
+        
         $this->setFormReferer();
 
-        $unsavedPayment = $this->Payment->find('all', [
+        $payment = $this->Payment->find('all', [
             'conditions' => [
                 'Payments.id' => $paymentId,
                 'Payments.type' => 'product'
+            ],
+            'contain' => [
+                'Customers',
+                'ChangedByCustomers'
             ]
         ])->first();
 
-        if (empty($unsavedPayment)) {
+        if (empty($payment)) {
             throw new RecordNotFoundException('payment not found');
         }
 
-        $this->set('unsavedPayment', $unsavedPayment);
-        $this->set('paymentId', $paymentId);
-        $this->set('title_for_layout', 'Guthaben-Aufladung überprüfen');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedPayment;
-        } else {
-            // validate data - do not use $this->Payment->saveAll()
-            $this->Payment->id = $paymentId;
-            $this->Payment->set($this->request->getData('Payments'));
-
-            $errors = [];
-            $this->Payment->validator()['approval'] = $this->Payment->getNumberRangeConfigurationRule(-1, 1);
-
-            if (! $this->Payment->validates()) {
-                $errors = array_merge($errors, $this->Payment->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                $this->request->data['Payments']['date_changed'] = date('Y-m-d H:i:s');
-                $this->request->data['Payments']['changed_by'] = $this->AppAuth->getUserId();
-
-                $this->Payment->save($this->request->data['Payments'], [
-                    'validate' => false
-                ]);
-
-                switch ($this->request->data['Payments']['approval']) {
-                    case -1:
-                        $actionLogType = 'payment_product_approval_not_ok';
-                        break;
-                    case 0:
-                        $actionLogType = 'payment_product_approval_open';
-                        break;
-                    case 1:
-                        $actionLogType = 'payment_product_approval_ok';
-                        break;
-                }
-
-                $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$this->request->data['Payments']['approval']];
-
-                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->getData('Customers.name').' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
-                if ($this->request->data['Payments']['send_email']) {
-                    $email = new AppEmail();
-                    $email->setTemplate('Admin.payment_status_changed')
-                        ->setTo($unsavedPayment->customer->email)
-                        ->setSubject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
-                        ->setViewVars([
-                            'appAuth' => $this->AppAuth,
-                            'data' => $unsavedPayment,
-                            'newStatusAsString' => $newStatusAsString,
-                            'request' => $this->request->data
-                        ]);
-                    $email->send();
-                    $message .= ' und eine E-Mail an das Mitglied verschickt';
-                }
-
-                $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Payment->id, 'payments', $message.' (PaymentId: ' . $this->Payment->id.').');
-                $this->Flash->success($message.'.');
-
-                $this->request->getSession()->write('highlightedRowId', $this->Payment->id);
-
-                $this->redirect($this->data['referer']);
-            } else {
-                $this->Flash->error('Beim Speichern sind ' . count($errors) . ' Fehler aufgetreten!');
-            }
+        if (empty($this->request->getData())) {
+            $this->set('payment', $payment);
+            return;
         }
+
+        $payment = $this->Payment->patchEntity(
+            $payment, $this->request->getData(),
+            [
+                'validate' => 'edit'
+            ]
+        );
+        
+        if (!empty($payment->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('payment', $payment);
+        } else {
+            
+            $payment = $this->Payment->patchEntity(
+                $payment,
+                [
+                    'date_changed' => Time::now(),
+                    'changed_by' => $this->AppAuth->getUserId()
+                ]
+            );
+            $payment = $this->Payment->save($payment);
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            switch ($payment->approval) {
+                case -1:
+                    $actionLogType = 'payment_product_approval_not_ok';
+                    break;
+                case 0:
+                    $actionLogType = 'payment_product_approval_open';
+                    break;
+                case 1:
+                    $actionLogType = 'payment_product_approval_ok';
+                    break;
+            }
+
+            $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
+
+            $message = 'Der Status der Guthaben-Aufladung für <b>'.$payment->customer->name.'</b> wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
+            
+            if ($payment->send_email) {
+                $email = new AppEmail();
+                $email->setTemplate('Admin.payment_status_changed')
+                    ->setTo($payment->customer->email)
+                    ->setSubject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
+                    ->setViewVars([
+                        'appAuth' => $this->AppAuth,
+                        'data' => $payment->customer,
+                        'newStatusAsString' => $newStatusAsString,
+                        'payment' => $payment
+                    ]);
+                $email->send();
+                $message .= ' und eine E-Mail an das Mitglied verschickt';
+            }
+
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message.' (PaymentId: ' . $payment->id.').');
+            $this->Flash->success($message.'.');
+
+            $this->request->getSession()->write('highlightedRowId', $payment->id);
+
+            $this->redirect($this->request->getData('referer'));
+        }
+        
+        $this->set('payment', $payment);
+        
     }
 
     public function add()

@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -27,15 +29,21 @@ class PaymentsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
-        $this->belongsTo('CreatedByCustomer', [
+        $this->belongsTo('CreatedByCustomers', [
             'className' => 'Customers',
             'foreignKey' => 'created_by'
         ]);
-        $this->belongsTo('ChangedByCustomer', [
+        $this->belongsTo('ChangedByCustomers', [
             'className' => 'Customers',
             'foreignKey' => 'changed_by'
         ]);
     }
+    
+    public function validationEdit(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'approval', -1, 1);
+    }
+    
     
     private function getManufacturerDepositConditions($manufacturerId = null)
     {

@@ -146,15 +146,6 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
     
-    private function getNumberRangeValidator(Validator $validator, $field, $min, $max)
-    {
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
-        $validator->lessThanOrEqual($field, $max, $message);
-        $validator->greaterThanOrEqual($field, $min, $message);
-        $validator->notEmpty($field, $message);
-        return $validator;
-    }
-    
     private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
     {
         $validator->inList($field, array_keys($values), 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values)));

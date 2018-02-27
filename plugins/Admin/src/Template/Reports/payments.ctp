@@ -134,8 +134,8 @@ foreach ($payments as $payment) {
             echo $this->Html->getJqueryUiIcon(
                 $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
                 [
-                'class' => 'payment-approval-comment',
-                'title' => $payment->approval_comment
+                    'class' => 'payment-approval-comment',
+                    'title' => $payment->approval_comment
                 ],
                 'javascript:void(0);'
             );

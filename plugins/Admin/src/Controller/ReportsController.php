@@ -75,8 +75,8 @@ class ReportsController extends AdminAppController
             'contain' => [
                 'Customers',
                 'Manufacturers',
-                'CreatedByCustomer',
-                'ChangedByCustomer'
+                'CreatedByCustomers',
+                'ChangedByCustomers'
             ]
         ]);
 
