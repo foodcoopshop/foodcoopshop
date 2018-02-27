@@ -486,7 +486,7 @@ class ManufacturersController extends AdminAppController
                 'showManufacturerUnsubscribeLink' => true
                 ]);
                 if (!empty($ccRecipients)) {
-                    $email->setCc($ccRecipients);
+                    $email->addCc($ccRecipients);
                 }
                 $email->send();
             }
