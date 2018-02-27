@@ -344,22 +344,31 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderId = $this->params['data']['orderId'];
-        $date = $this->params['data']['date'];
+        $orderId = $this->request->getData('orderId');
+        $date = $this->request->getData('date');
 
+        $this->Order = TableRegistry::get('Orders');
         $oldOrder = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
+            ],
+            'contain' => [
+                'Customers'
             ]
         ])->first();
-
-        $order2update = [
-            'date_add' => $date
-        ];
-        $this->Order->id = $orderId;
-        $this->Order->save($order2update);
-
-        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder['Customers']['name'] . ' wurde vom ' . Configure::read('app.timeHelper')->formatToDateShort($oldOrder['Orders']['date_add']) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
+        
+        $oldDate = $oldOrder->date_add;
+        
+        $this->Order->save(
+            $this->Order->patchEntity(
+                $oldOrder,
+                [
+                    'date_add' => $date
+                ]
+            )
+        );
+        
+        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder->customer->name . ' wurde vom ' . $oldDate->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 

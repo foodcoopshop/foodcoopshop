@@ -248,7 +248,7 @@ use Cake\Core\Configure;
             echo $this->Form->input('date_add_' . $order->id_order, [
                 'type' => 'select',
                 'label' => '',
-                'options' => $this->MyTime->getLastNDays(5, $order->date_add)
+                'options' => $this->MyTime->getLastNDays(5, $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')))
             ]);
             echo '</div>';
             if (! $groupByCustomer) {
