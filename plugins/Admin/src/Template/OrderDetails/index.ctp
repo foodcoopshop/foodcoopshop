@@ -58,9 +58,9 @@ use Cake\Core\Configure;
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
-                        'rowId' => $orderDetails[0]['Orders']['id_order'],
-                        'userName' => $orderDetails[0]['Orders']['Customers']['name'],
-                        'customerId' => $orderDetails[0]['Orders']['Customers']['id_customer'],
+                        'rowId' => $orderDetails[0]->order->id_order,
+                        'userName' => $orderDetails[0]->order->customer->name,
+                        'customerId' => $orderDetails[0]->order->id_customer,
                         'manufacturerId' => null // explicitly unset manufacturerId
                     ]);
                 echo '</div>';

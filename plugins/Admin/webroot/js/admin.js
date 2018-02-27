@@ -2213,20 +2213,20 @@ foodcoopshop.Admin = {
 
     addPaymentFormSave: function () {
 
-        var amount = $('.featherlight-content #PaymentAmount').val();
+        var amount = $('.featherlight-content #payments-amount').val();
         if (isNaN(parseFloat(amount.replace(/,/, '.')))) {
             alert('Bitte gib eine Zahl ein.');
             foodcoopshop.AppFeatherlight.enableSaveButton();
             return;
         }
 
-        var type = $('.featherlight-content #PaymentType').val();
-        var customerIdDomElement = $('.featherlight-content #PaymentCustomerId');
-        var manufacturerIdDomElement = $('.featherlight-content #PaymentManufacturerId');
+        var type = $('.featherlight-content input[name="Payments[type]"]').val();
+        var customerIdDomElement = $('.featherlight-content input[name="Payments[customerId]"]');
+        var manufacturerIdDomElement = $('.featherlight-content input[name="Payments[manufacturerId]"]');
 
         var text = '';
-        if ($('.featherlight-content #PaymentText').length > 0) {
-            text = $('.featherlight-content #PaymentText').val().trim();
+        if ($('.featherlight-content input[type="payment_text"]').length > 0) {
+            text = $('.featherlight-content input[type="payment_text"]').val().trim();
         }
 
         // radio buttons only if deposit is added to manufacurers
@@ -2291,90 +2291,65 @@ foodcoopshop.Admin = {
 
     initDeletePayment: function () {
 
-        $('.delete-payment-button')
-            .on(
-                'click',
-                function () {
+        $('.delete-payment-button').on('click',function () {
 
-                    var dataRow = $(this).parent().parent().parent()
-                        .parent();
+            var dataRow = $(this).parent().parent().parent().parent();
 
-                    var dialogHtml = '<p>Willst du deine Zahlung wirklich löschen?<br />';
-                    dialogHtml += 'Datum: <b>' +
-                        dataRow.find('td:nth-child(2)').html() +
-                        '</b> <br />';
-                    dialogHtml += 'Betrag: <b>' +
-                        dataRow.find('td:nth-child(4)').html()
-                    if (dataRow.find('td:nth-child(6)').length > 0) {
-                        dialogHtml += dataRow.find('td:nth-child(6)')
-                            .html();
-                    }
-                    dialogHtml += '</b>';
-                    dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+            var dialogHtml = '<p>Willst du deine Zahlung wirklich löschen?<br />';
+            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
+            dialogHtml += 'Betrag: <b>' + dataRow.find('td:nth-child(4)').html()
+            if (dataRow.find('td:nth-child(6)').length > 0) {
+                dialogHtml += dataRow.find('td:nth-child(6)').html();
+            }
+            dialogHtml += '</b>';
+            dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
-                    $('<div></div>')
-                        .appendTo('body')
-                        .html(dialogHtml)
-                        .dialog({
-                            modal: true,
-                            title: 'Zahlung löschen?',
-                            autoOpen: true,
-                            width: 400,
-                            resizable: false,
-                            buttons: {
+            $('<div></div>')
+                .appendTo('body')
+                .html(dialogHtml)
+                .dialog({
+                    modal: true,
+                    title: 'Zahlung löschen?',
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: {
 
-                                'Abbrechen': function () {
-                                    $(this).dialog('close');
+                        'Abbrechen': function () {
+                            $(this).dialog('close');
+                        },
+
+                        'Ja': function () {
+
+                            $('.ui-dialog .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+
+                            var paymentId = dataRow.find('td:nth-child(1)').html();
+
+                            foodcoopshop.Helper.ajaxCall(
+                                '/admin/payments/changeState/',
+                                {
+                                    paymentId: paymentId
                                 },
-
-                                'Ja': function () {
-
-                                    $('.ui-dialog .ajax-loader')
-                                        .show();
-                                    $('.ui-dialog button')
-                                        .attr(
-                                            'disabled',
-                                            'disabled'
-                                        );
-
-                                    var paymentId = dataRow
-                                        .find(
-                                            'td:nth-child(1)'
-                                        )
-                                        .html();
-
-                                    foodcoopshop.Helper
-                                        .ajaxCall(
-                                            '/admin/payments/changeState/',
-                                            {
-                                                paymentId: paymentId
-                                            },
-                                            {
-                                                onOk: function (
-                                                    data
-                                                ) {
-                                                    document.location
-                                                        .reload();
-                                                },
-                                                onError: function (
-                                                    data
-                                                ) {
-                                                    alert(data.msg);
-                                            //                                                    document.location
-                                            //                                                        .reload();
-                                                }
-                                            }
-                                        );
-
+                                {
+                                    onOk: function (data) {
+                                        document.location.reload();
+                                    },
+                                    onError: function (data) {
+                                        alert(data.msg);
+                                    }
                                 }
+                            );
 
-                            },
-                            close: function (event, ui) {
-                                $(this).remove();
-                            }
-                        });
-                }
-            );
+                        }
+
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+        	}
+        );
 
     },
 

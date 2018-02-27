@@ -31,14 +31,14 @@ class CustomersTable extends AppTable
         $this->hasMany('ActiveOrders', [
             'className' => 'Orders',
             'foreignKey' => 'id_customer',
-            'order' => [
+            'sort' => [
                 'ActiveOrders.date_add' => 'DESC'
             ]
         ]);
         $this->hasMany('PaidCashFreeOrders', [
             'className' => 'Orders',
             'foreignKey' => 'id_customer',
-            'order' => [
+            'sort' => [
                 'PaidCashFreeOrders.date_add' => 'DESC'
             ]
         ]);
@@ -50,7 +50,7 @@ class CustomersTable extends AppTable
         ]);
         $this->hasMany('Payments', [
             'foreignKey' => 'id_customer',
-            'order' => [
+            'sort' => [
                 'Payments.date_add' => 'desc'
             ],
             'conditions' => [

@@ -167,7 +167,7 @@ class PaymentsController extends AdminAppController
 
                 $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$this->request->data['Payments']['approval']];
 
-                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->data['Customers']['name'].' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
+                $message = 'Der Status der Guthaben-Aufladung für '.$this->request->getData('Customers.name').' wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
                 if ($this->request->data['Payments']['send_email']) {
                     $email = new AppEmail();
                     $email->setTemplate('Admin.payment_status_changed')
@@ -354,7 +354,7 @@ class PaymentsController extends AdminAppController
         );
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $message .= ' wurde erfolgreich eingetragen: ' . Configure::read('app.htmlHelper')->formatAsEuro($amount);
+        $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.htmlHelper')->formatAsEuro($amount).'</b>';
 
         if ($type == 'member_fee') {
             $message .= ', für ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
@@ -363,16 +363,16 @@ class PaymentsController extends AdminAppController
         $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $newPayment->id, 'payments', $message);
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'])) {
-            $message .= ' Der Betrag ist ';
+            $message .= '. Der Betrag ist ';
             switch ($actionLogType) {
                 case 'deposit_customer':
-                    $message .= 'im Guthaben-System von ' . $customer->name;
+                    $message .= 'im Guthaben-System von <b>' . $customer->name . '</b>';
                     break;
                 case 'deposit_manufacturer':
-                    $message .= 'im Pfandkonto von ' . $manufacturer->name;
+                    $message .= 'im Pfandkonto von <b>' . $manufacturer->name . '</b>';
                     break;
                 case 'member_fee_flexible':
-                    $message .= 'im Mitgliedsbeitrags-System von ' . $customer->name;
+                    $message .= 'im Mitgliedsbeitrags-System von <b>' . $customer->name . '</b>';
                     break;
             }
             $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
@@ -415,7 +415,6 @@ class PaymentsController extends AdminAppController
         }
 
         // TODO add payment owner check (also for manufacturers!)
-
         $this->Payment->save(
             $this->Payment->patchEntity($payment,
                 [
@@ -467,8 +466,8 @@ class PaymentsController extends AdminAppController
     private function getCustomerId()
     {
         $customerId = '';
-        if (isset($this->request->named['customerId'])) {
-            $customerId = $this->request->named['customerId'];
+        if (!empty($this->request->getQuery('customerId'))) {
+            $customerId = $this->request->getQuery('customerId');
         } if ($this->customerId > 0) {
             $customerId = $this->customerId;
         }
@@ -540,54 +539,66 @@ class PaymentsController extends AdminAppController
 
     private function preparePayments()
     {
-        $this->Customer->hasMany['Payments']['conditions'][] = 'Payments.type IN ("' . join('", "', $this->allowedPaymentTypes) . '")';
+        $paymentsAssociation = $this->Customer->association('Payments');
+        $paymentsAssociation->setConditions(
+            array_merge(
+                $paymentsAssociation->getConditions(),
+                ['type IN' => $this->allowedPaymentTypes]
+            )
+        );
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->getCustomerId()
+            ],
+            'contain' => [
+                'Payments',
+                'PaidCashFreeOrders'
             ]
         ])->first();
 
         $payments = [];
-        if (!empty($customer['Payments'])) {
-            foreach ($customer['Payments'] as $payment) {
-                $text = Configure::read('app.htmlHelper')->getPaymentText($payment['type']);
-                if ($payment['type'] == 'member_fee') {
-                    $text .= ' für: ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($payment['text']);
+        if (!empty($customer->payments)) {
+            foreach ($customer->payments as $payment) {
+                $text = Configure::read('app.htmlHelper')->getPaymentText($payment->type);
+                if ($payment->type == 'member_fee') {
+                    $text .= ' für: ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($payment->text);
                 } else {
-                    $text .= (! empty($payment['text']) ? ': "' . $payment['text'] . '"' : '');
+                    $text .= (! empty($payment->text) ? ': "' . $payment->text . '"' : '');
                 }
 
                 $payments[] = [
-                    'date' => $payment['date_add'],
-                    'year' => Configure::read('app.timeHelper')->getYearFromDbDate($payment['date_add']),
-                    'amount' => $payment['amount'],
+                    'dateRaw' => $payment->date_add,
+                    'date' => $payment->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                    'year' => $payment->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                    'amount' => $payment->amount,
                     'deposit' => 0,
-                    'type' => $payment['type'],
+                    'type' => $payment->type,
                     'text' => $text,
-                    'payment_id' => $payment['id'],
-                    'approval' => $payment['approval'],
-                    'approval_comment' => $payment['approval_comment']
+                    'payment_id' => $payment->id,
+                    'approval' => $payment->approval,
+                    'approval_comment' => $payment->approval_comment
                 ];
             }
         }
 
-        if (! empty($customer['PaidCashFreeOrders'])) {
-            foreach ($customer['PaidCashFreeOrders'] as $order) {
+        if (! empty($customer->paid_cash_free_orders)) {
+            foreach ($customer->paid_cash_free_orders as $order) {
                 $payments[] = [
-                    'date' => $order['date_add'],
-                    'year' => Configure::read('app.timeHelper')->getYearFromDbDate($order['date_add']),
-                    'amount' => $order['total_paid'] * - 1,
-                    'deposit' => strtotime($order['date_add']) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order['total_deposit'] * - 1 : 0,
+                    'dateRaw' => $order->date_add,
+                    'date' => $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                    'year' => $order->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                    'amount' => $order->total_paid * - 1,
+                    'deposit' => strtotime($order->date_add) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order->total_deposit * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order['id_order'] . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/index&?dateFrom=' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '&dateTo=' . Configure::read('app.timeHelper')->formatToDateShort($order['date_add']) . '&orderId=' . $order['id_order'] . '&customerId=' . $order['id_customer'], [
+                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
                         'title' => 'Bestellung anzeigen'
                     ]),
                     'payment_id' => null
                 ];
             }
         }
-
+        
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         $this->set('customerId', $this->getCustomerId());
@@ -596,7 +607,7 @@ class PaymentsController extends AdminAppController
 
         $title = $this->viewVars['title_for_layout'];
         if (in_array($this->request->action, ['product', 'member_fee'])) {
-            $title .= ' von ' . $customer['Customers']['name'];
+            $title .= ' von ' . $customer->name;
         }
         $this->set('title_for_layout', $title);
 

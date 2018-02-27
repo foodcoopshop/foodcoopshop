@@ -167,7 +167,7 @@ class SlugHelper extends Helper
 
     public function getCreditBalance($customerId)
     {
-        return '/admin/payments/product/customerId:'.$customerId;
+        return '/admin/payments/product/?customerId='.$customerId;
     }
 
     public function getChangePassword()

@@ -187,7 +187,7 @@ use Cake\Core\Configure;
                 echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
                     'rowId' => $order->id_order,
-                    'userName' => $order->name,
+                    'userName' => $order->customer->name,
                     'customerId' => $order->id_customer
                 ]);
             echo '</td>';

@@ -77,7 +77,7 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td>';
-        echo $this->Time->formatToDateNTimeLong($payment['date']);
+        echo $payment['dateRaw']->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
         echo '</td>';
 
         echo '<td>';

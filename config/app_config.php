@@ -155,6 +155,7 @@ return [
     ],
     'DateFormat' => [
         'Database' => 'yyyy-MM-dd',
+        'DatabaseWithTime' => 'yyyy-MM-dd HH:mm:ss',
         'de' => [
             'DateShort' => 'dd.MM.yy',
             'DateLong' =>  'dd. MMMM y',
@@ -162,7 +163,8 @@ return [
             'DateNTimeShort' => 'dd.MM.y HH:mm',
             'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
             'TimeShort' => 'HH:mm',
-            'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm'
+            'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm',
+            'Year' => 'Y'
         ]
     ]
 ];
