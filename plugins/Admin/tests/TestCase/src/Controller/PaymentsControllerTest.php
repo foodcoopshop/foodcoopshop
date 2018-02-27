@@ -84,7 +84,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.customerId'),
             'payment_product_added',
             'payments',
-            'Guthaben-Aufladung wurde erfolgreich eingetragen: €&nbsp;10,50'
+            'Guthaben-Aufladung wurde erfolgreich eingetragen: <b>€&nbsp;10,50'
         );
     }
 
@@ -102,7 +102,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.superadminId'),
             'payment_product_added',
             'payments',
-            'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;20,50'
+            'Guthaben-Aufladung für Demo Mitglied wurde erfolgreich eingetragen: <b>€&nbsp;20,50'
         );
     }
 
@@ -120,7 +120,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.superadminId'),
             'payment_deposit_customer_added',
             'payments',
-            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: €&nbsp;10,00'
+            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: <b>€&nbsp;10,00'
         );
     }
 
@@ -128,7 +128,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->addDepositToManufacturer(
             'empty_glasses',
-            'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
+            'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>€&nbsp;10,00'
         );
     }
 
@@ -136,7 +136,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $this->addDepositToManufacturer(
             'money',
-            'Pfand-Rücknahme (Ausgleichszahlung) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: €&nbsp;10,00'
+            'Pfand-Rücknahme (Ausgleichszahlung) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>€&nbsp;10,00'
         );
     }
 
