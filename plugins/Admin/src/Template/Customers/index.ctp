@@ -109,11 +109,19 @@ foreach ($customers as $customer) {
     echo '<td>';
 
     $customerName = $customer->name;
+    
+    if ($appAuth->isSuperadmin()) {
+        echo '<span class="edit-wrapper">';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                'title' => 'Bearbeiten'
+            ], $this->Slug->getCustomerEdit($customer->id_customer));
+        echo '</span>';
+    }
     if ($customer->order_count <= 3) {
         $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
     }
 
-    echo '<span clas="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStates()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
+    echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStates()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
         'title' => 'Zu allen Bestellungen von ' . $customer->name,
         'escape' => false
     ]) . '</span>';

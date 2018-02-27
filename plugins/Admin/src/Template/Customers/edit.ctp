@@ -16,16 +16,17 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . $appAuth->getUserId() . "', 'Customers');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
 ?>
 
 <div class="filter-container">
-    <h1>Meine Daten ändern</h1>
+    <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a>
+            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
     </div>
 </div>
 
@@ -39,38 +40,44 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->Form->create('Customers', [
-    'class' => 'fcs-form'
+echo $this->Form->create($customer, [
+    'class' => 'fcs-form',
+    'novalidate' => 'novalidate',
+    'url' => $isOwnProfile ? $this->Slug->getCustomerProfile() : $this->Slug->getCustomerEdit($customer->id_customer)
 ]);
 
+echo $this->Form->hidden('referer', ['value' => $referer]);
+
 echo $this->Form->input('Customers.firstname', [
-    'label' => 'Vorname'
+    'label' => 'Vorname',
+    'required' => true
 ]);
 echo $this->Form->input('Customers.lastname', [
-    'label' => 'Nachname'
+    'label' => 'Nachname',
+    'required' => true
 ]);
-echo $this->Form->input('Customers.email', [
+echo $this->Form->input('Customers.address_customer.email', [
     'label' => 'E-Mail-Adresse'
 ]);
 
-echo $this->Form->input('AddressCustomers.address1', [
+echo $this->Form->input('Customers.address_customer.address1', [
     'label' => 'Straße'
 ]);
-echo $this->Form->input('AddressCustomers.address2', [
+echo $this->Form->input('Customers.address_customer.address2', [
     'label' => 'Adresszusatz'
 ]);
 
-echo $this->Form->input('AddressCustomers.postcode', [
+echo $this->Form->input('Customers.address_customer.postcode', [
     'label' => 'PLZ'
 ]);
-echo $this->Form->input('AddressCustomers.city', [
+echo $this->Form->input('Customers.address_customer.city', [
     'label' => 'Ort'
 ]);
 
-echo $this->Form->input('AddressCustomers.phone_mobile', [
+echo $this->Form->input('Customers.address_customer.phone_mobile', [
     'label' => 'Handy'
 ]);
-echo $this->Form->input('AddressCustomers.phone', [
+echo $this->Form->input('Customers.address_customer.phone', [
     'label' => 'Telefon'
 ]);
 
@@ -81,10 +88,6 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
     ]);
 }
 
-?>
-
-<div class="sc"></div>
-
-</form>
+echo $this->Form->end(); ?>
 
 <div class="sc"></div>

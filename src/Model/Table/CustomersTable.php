@@ -60,6 +60,13 @@ class CustomersTable extends AppTable
         $this->setPrimaryKey('id_customer');
     }
     
+    public function validationEdit(Validator $validator)
+    {
+        $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
+        $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
+        return $validator;
+    }
+    
     public function validationRegistration(Validator $validator)
     {
         $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');

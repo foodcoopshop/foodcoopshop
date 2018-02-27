@@ -180,6 +180,11 @@ class SlugHelper extends Helper
         return '/admin/customers/profile';
     }
 
+    public function getCustomerEdit($customerId)
+    {
+        return '/admin/customers/edit/' . $customerId;
+    }
+    
     public function getCustomerListAdmin()
     {
         return '/admin/customers';

@@ -4,6 +4,7 @@ use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -28,6 +29,9 @@ class CustomersController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->request->action) {
+            case 'edit':
+                return $this->AppAuth->isSuperadmin();
+                break;
             case 'profile':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
                 break;
@@ -54,6 +58,7 @@ class CustomersController extends AdminAppController
             ]));
         }
 
+        $this->Customer = TableRegistry::get('Customers');
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -169,71 +174,106 @@ class CustomersController extends AdminAppController
             $this->redirect($this->referer());
         }
     }
-
+    
     public function profile()
     {
-        $customerId = $this->AppAuth->getUserId();
-
-        $unsavedCustomer = $this->Customer->find('all', [
+        $this->set('title_for_layout', 'Mein Profil bearbeiten');
+        $this->_processForm($this->AppAuth->getUserId());
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
+    }
+    
+    public function edit($customerId)
+    {
+        if ($customerId === null) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Profil bearbeiten');
+        $this->_processForm($customerId);
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
+    }
+    
+    private function _processForm($customerId)
+    {
+        
+        $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
+        $this->set('isOwnProfile', $isOwnProfile);
+        
+        $this->Customer = TableRegistry::get('Customers');
+        $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
+            ],
+            'contain' => [
+                'AddressCustomers'
             ]
         ])->first();
 
-        $this->set('title_for_layout', 'Profil ändern');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedCustomer;
-        } else {
-            // validate data - do not use $this->Customer->saveAll()
-            $this->Customer->id = $customerId;
-            $this->Customer->set($this->request->data['Customers']);
-
-            // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Customers'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-            foreach ($this->request->data['AddressCustomers'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-
-            $this->Customer->AddressCustomers->id = $unsavedCustomer['AddressCustomers']['id_address'];
-            // also update email, firstname and lastname in adress record
-            $this->request->data['AddressCustomers']['firstname'] = $this->request->data['Customers']['firstname'];
-            $this->request->data['AddressCustomers']['lastname'] = $this->request->data['Customers']['lastname'];
-            $this->request->data['AddressCustomers']['email'] = $this->request->data['Customers']['email'];
-
-            $this->Customer->AddressCustomers->set($this->request->data['AddressCustomers']);
-
-            $errors = [];
-            if (! $this->Customer->validates()) {
-                $errors = array_merge($errors, $this->Customer->validationErrors);
-            }
-
-            if (! $this->Customer->AddressCustomers->validates()) {
-                $errors = array_merge($errors, $this->Customer->AddressCustomers->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->Customer->save($this->request->data['Customers'], [
-                    'validate' => false
-                ]);
-                $this->Customer->AddressCustomers->save($this->request->data['Customers'], [
-                    'validate' => false
-                ]);
-
-                $this->renewAuthSession();
-
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-                $message = 'Das Mitglied ' . $unsavedCustomer['Customers']['name'] . ' hat sein Profil geändert.';
-                $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $message);
-
-                $this->Flash->success('Deine Änderungen wurden erfolgreich gepeichert.');
-                $this->redirect($this->referer());
-            } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
-            }
+        $this->setFormReferer();
+        
+        if (empty($this->request->getData())) {
+            $this->set('customer', $customer);
+            return;
         }
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        
+        $this->request->data['Customers']['email'] = $this->request->getData('Customers.address_customer.email');
+        $this->request->data['Customers']['address_customer']['firstname'] = $this->request->getData('Customers.firstname');
+        $this->request->data['Customers']['address_customer']['lastname'] = $this->request->getData('Customers.lastname');
+        
+        $customer = $this->Customer->patchEntity(
+            $customer,
+            $this->request->getData(),
+            [
+                'validate' => 'edit',
+                'associated' => [
+                    'AddressCustomers'
+                ]
+            ]
+        );
+        
+        if (!empty($customer->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('customer', $customer);
+            $this->render('edit');
+        } else {
+            
+            $this->Customer->save(
+                $customer,
+                [
+                    'associated' => [
+                        'AddressCustomers'
+                    ]
+                ]
+            );
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            if ($isOwnProfile) {
+                $message = 'Dein Profil wurde geändert.';
+            } else {
+                $message = 'Das Profil von <b>' . $customer->name . '</b> wurde geändert.';
+            }
+            $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $customer->id_customer);
+            
+            if ($this->request->here == Configure::read('app.slugHelper')->getCustomerProfile()) {
+                $this->renewAuthSession();
+            }
+            
+            $this->redirect($this->request->getData('referer'));
+            
+        }
+        
+        $this->set('customer', $customer);
+        
     }
 
     /**

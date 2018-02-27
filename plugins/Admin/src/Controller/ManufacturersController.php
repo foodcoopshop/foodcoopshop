@@ -126,7 +126,6 @@ class ManufacturersController extends AdminAppController
         $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->getData('Manufacturers.bic'));
         $this->request->data['Manufacturers']['homepage'] = StringComponent::addHttpToUrl($this->request->getData('Manufacturers.homepage'));
         
-        
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
             $this->request->getData(),
