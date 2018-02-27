@@ -475,10 +475,10 @@ class ManufacturersController extends AdminAppController
                 $email = new AppEmail();
                 $email->setTemplate('Admin.send_order_list')
                 ->setTo($manufacturer->address_manufacturer->email)
-//                 ->setAttachments([
-//                     $productPdfFile,
-//                     $customerPdfFile
-//                 ])
+                ->setAttachments([
+                    $productPdfFile,
+                    $customerPdfFile
+                ])
                 ->setSubject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                 ->setViewVars([
                 'manufacturer' => $manufacturer,
