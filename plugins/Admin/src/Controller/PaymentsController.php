@@ -398,6 +398,10 @@ class PaymentsController extends AdminAppController
             'conditions' => [
                 'Payments.id' => $paymentId,
                 'Payments.approval <> ' . APP_ON
+            ],
+            'contain' => [
+                'Customers',
+                'Manufacturers'
             ]
         ])->first();
 
@@ -412,32 +416,34 @@ class PaymentsController extends AdminAppController
 
         // TODO add payment owner check (also for manufacturers!)
 
-        // update table payments
-        $this->Payment->id = $paymentId;
-        $this->Payment->save([
-            'status' => APP_DEL,
-            'date_changed' => date('Y-m-d H:i:s')
-        ]);
+        $this->Payment->save(
+            $this->Payment->patchEntity($payment,
+                [
+                    'status' => APP_DEL,
+                    'date_changed' => Time::now()
+                ]
+            )
+        );
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
 
-        $actionLogType = $payment['Payments']['type'];
-        if ($payment['Payments']['type'] == 'deposit') {
+        $actionLogType = $payment->type;
+        if ($payment->type == 'deposit') {
             $userType = 'customer';
-            if ($payment['Payments']['id_manufacturer'] > 0) {
+            if ($payment->id_manufacturer > 0) {
                 $userType = 'manufacturer';
             }
             $actionLogType .= '_'.$userType;
         }
 
 
-        $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsEuro($payment['Payments']['amount']). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment['Payments']['type']) .')';
+        $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsEuro($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
 
-        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment['Payments']['id_customer']) {
-            if (isset($payment['Customers']['name'])) {
-                $username = $payment['Customers']['name'];
+        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
+            if (isset($payment->customer->name)) {
+                $username = $payment->customer->name;
             } else {
-                $username = $payment['Manufacturers']['name'];
+                $username = $payment->manufacturer->name;
             }
             $message .= ' von ' . $username;
         }
