@@ -85,7 +85,7 @@ class ProductsController extends AdminAppController
                         return true;
                     }
                 }
-                $this->sendAjaxError(new ForbiddenExcepton(ACCESS_DENIED_MESSAGE));
+                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
                 return false;
                 break;
         }
