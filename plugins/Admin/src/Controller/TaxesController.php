@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 use Cake\Core\Configure;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -29,29 +30,90 @@ class TaxesController extends AdminAppController
 
     public function add()
     {
-        $this->edit();
+        $this->Tax = TableRegistry::get('Taxes');
+        $tax = $this->Tax->newEntity(
+            [
+                'rate' => 0,
+                'active' => APP_ON,
+            ],
+            ['validate' => false]
+        );
         $this->set('title_for_layout', 'Steuersatz erstellen');
-        $this->render('edit');
+        $this->_processForm($tax, false);
+        
+        if (empty($this->request->getData())) {
+            $this->render('edit');
+        }
+    }
+    
+    public function edit($taxId)
+    {
+        if ($taxId === null) {
+            throw new NotFoundException;
+        }
+        
+        $this->Tax = TableRegistry::get('Taxes');
+        $tax = $this->Tax->find('all', [
+            'conditions' => [
+                'Taxes.id_tax' => $taxId
+            ]
+        ])->first();
+        
+        if (empty($tax)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Steuersatz bearbeiten');
+        $this->_processForm($tax, true);
+    }
+    
+    private function _processForm($tax, $isEditMode)
+    {
+        
+        $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
+        
+        if (empty($this->request->getData())) {
+            $this->set('tax', $tax);
+            return;
+        }
+        
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        
+        $tax = $this->Tax->patchEntity($tax, $this->request->getData());
+        if (!empty($tax->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('tax', $tax);
+            $this->render('edit');
+        } else {
+            $tax = $this->Tax->save($tax);
+            
+            if (!$isEditMode) {
+                $messageSuffix = 'erstellt';
+                $actionLogType = 'tax_added';
+            } else {
+                $messageSuffix = 'geändert';
+                $actionLogType = 'tax_changed';
+            }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $message = 'Der Steuersatz <b>' . Configure::read('app.htmlHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $tax->id_tax);
+            $this->redirect($this->request->getData('referer'));
+            
+        }
+        
+        $this->set('tax', $tax);
+        
     }
 
-    public function edit($taxId = null)
+    public function editOld($taxId = null)
     {
-        $this->setFormReferer();
-
-        if ($taxId > 0) {
-            $unsavedTax = $this->Tax->find('all', [
-                'conditions' => [
-                    'Taxes.id_tax' => $taxId
-                ]
-            ])->first();
-        } else {
-            // default value
-            $unsavedTax = [
-                'Taxes' => [
-                    'active' => true
-                ]
-            ];
-        }
+        
 
         $this->set('unsavedTax', $unsavedTax);
         $this->set('title_for_layout', 'Steuersatz bearbeiten');

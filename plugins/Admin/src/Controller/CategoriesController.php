@@ -76,8 +76,8 @@ class CategoriesController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $category = $this->Category->patchEntity($category, $this->request->getData());
         if (!empty($category->getErrors())) {
@@ -110,7 +110,7 @@ class CategoriesController extends AdminAppController
                 $messageSuffix = 'gelöscht';
             }
             $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix . '.';
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'Categories', $message);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'categories', $message);
             $this->Flash->success($message);
             
             $this->request->getSession()->write('highlightedRowId', $category->id_category);

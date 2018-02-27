@@ -119,8 +119,8 @@ class ManufacturersController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $this->request->data['Manufacturers']['iban'] = str_replace(' ', '', $this->request->getData('Manufacturers.iban'));
         $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->getData('Manufacturers.bic'));
@@ -177,7 +177,7 @@ class ManufacturersController extends AdminAppController
             
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $message = 'Der Hersteller <b>' . $manufacturer->name . '</b> wurde ' . $messageSuffix . '.';
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'Manufacturers', $message);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
             
             $this->request->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
@@ -584,8 +584,8 @@ class ManufacturersController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,

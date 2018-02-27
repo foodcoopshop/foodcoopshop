@@ -32,7 +32,7 @@ class SlidersController extends AdminAppController
                 'position' => 10
             ],
             ['validate' => false]
-            );
+        );
         $this->set('title_for_layout', 'Slideshow-Bild erstellen');
         $this->_processForm($slider, false);
         
@@ -73,8 +73,8 @@ class SlidersController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $slider = $this->Slider->patchEntity($slider, $this->request->getData());
         if (!empty($slider->getErrors())) {
@@ -104,14 +104,13 @@ class SlidersController extends AdminAppController
             
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Sliders.delete_slider'))) {
-                $this->Slider->delete($slider);
                 $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
                 $this->Slider->save($slider);
                 $messageSuffix = 'gelöscht';
                 $actionLogType = 'slider_deleted';
             }
             $message = 'Das Slideshow-Bild <b>' . $slider->id_slider . '</b> wurde ' . $messageSuffix . '.';
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'Sliders', $message);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
             
             $this->request->getSession()->write('highlightedRowId', $slider->id_slider);

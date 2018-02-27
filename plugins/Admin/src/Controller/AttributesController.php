@@ -77,8 +77,8 @@ class AttributesController extends AdminAppController
         }
             
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $attribute = $this->Attribute->patchEntity($attribute, $this->request->getData());
         if (!empty($attribute->getErrors())) {

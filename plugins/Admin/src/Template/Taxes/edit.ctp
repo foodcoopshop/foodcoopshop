@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm('" . (isset($this->request->data['Taxes']['id_tax']) ? $this->request->data['Taxes']['id_tax'] : "") . "', 'Taxes');
+    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
 ?>
@@ -40,22 +40,22 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->Form->create('Taxes', [
-    'class' => 'fcs-form'
+echo $this->Form->create($tax, [
+    'class' => 'fcs-form',
+    'novalidate' => 'novalidate',
+    'url' => $isEditMode ? $this->Slug->getTaxEdit($tax->id_tax) : $this->Slug->getTaxAdd(),
+    'id' => 'taxEditForm'
 ]);
 
-echo '<input type="hidden" name="data[referer]" value="' . $referer . '" id="referer">';
-echo $this->Form->hidden('Taxes.id_tax');
+echo $this->Form->hidden('referer', ['value' => $referer]);
 
 if ($this->request->here != $this->Slug->getTaxAdd()) {
-    echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($unsavedTax['Taxes']['rate']) . '</p>';
+    echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($tax->rate) . '</p>';
 } else {
     echo $this->Form->input('Taxes.rate', [
-        'div' => [
-            'class' => 'long text input'
-        ],
+        'class' => 'long',
         'label' => 'Steuersatz<br /><span class="small">z.B. "10" für 10%<br />Steuersätze sind später nicht änderbar</span>',
-        'required' => true
+        'escape' => false
     ]);
 }
 
@@ -63,6 +63,6 @@ echo $this->Form->input('Taxes.active', [
     'label' => 'Steuersatz aktiv?'
 ]);
 
-?>
+echo $this->Form->end();
 
-</form>
+?>

@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 use Cake\Core\Configure;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,23 +27,17 @@ class TaxesTable extends AppTable
         $this->setPrimaryKey('id_tax');
     }
     
- // sic! for binding from taxroulesgroup
-    public $validate = [
-        'rate' => [
-            'range' => [
-                'rule' => [
-                    'range',
-                    0,
-                    100
-                ],
-                'message' => 'Bitte gibt eine Zahl von 0,01 bis 99,99 an'
-            ],
-            'unique' => [
-                'rule' => 'isUnique',
-                'message' => 'Dieser Steuersatz wird bereits verwendet.'
-            ]
-        ]
-    ];
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('rate', 'Bitte gib einen Steuersatz an.');
+        $validator->range('rate', [0, 100], 'Bitte gibt eine Zahl von 0,01 bis 99,99 an.');
+        $validator->add('rate', 'unique', [
+            'rule' => 'validateUnique',
+            'provider' => 'table',
+            'message' => 'Dieser Steuersatz wird bereits verwendet.'
+        ]);
+        return $validator;
+    }
 
     public function getForDropdown()
     {

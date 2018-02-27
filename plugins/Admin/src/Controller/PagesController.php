@@ -96,8 +96,8 @@ class PagesController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->getData('Pages.extern_url'));
         $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
@@ -126,7 +126,7 @@ class PagesController extends AdminAppController
                 $actionLogType = 'page_deleted';
             }
             $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix . '.';
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'Pages', $message);
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'pages', $message);
             $this->Flash->success($message);
             
             $this->request->getSession()->write('highlightedRowId', $page->id_page);

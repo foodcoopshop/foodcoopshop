@@ -68,10 +68,10 @@ class ConfigurationsController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->data);
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
-            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->data);
+            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
             $this->request->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->request->getData('Configurations.value'));
