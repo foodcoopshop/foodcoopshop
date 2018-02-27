@@ -483,7 +483,6 @@ class ManufacturersController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'showManufacturerUnsubscribeLink' => true
                 ]);
-                $ccRecipients = ['marothauer@gmail.com'];
                 if (!empty($ccRecipients)) {
                     $email->setCc($ccRecipients);
                 }
