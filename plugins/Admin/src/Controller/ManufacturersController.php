@@ -454,16 +454,14 @@ class ManufacturersController extends AdminAppController
             
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
-            $productPdfFile = $productPdfUrl;
+            $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
             
             // generate order list by customer
             $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN
             ], 'F');
             $this->render('get_order_list_by_customer');
-            $customerPdfUrl = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
-            $customerPdfFile = $customerPdfUrl;
+            $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
 
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
@@ -485,9 +483,10 @@ class ManufacturersController extends AdminAppController
                 'appAuth' => $this->AppAuth,
                 'showManufacturerUnsubscribeLink' => true
                 ]);
-//                 if (!empty($ccRecipients)) {
-//                     $email->setCc($ccRecipients);
-//                 }
+                $ccRecipients = ['marothauer@gmail.com'];
+                if (!empty($ccRecipients)) {
+                    $email->setCc($ccRecipients);
+                }
                 $email->send();
             }
         }
