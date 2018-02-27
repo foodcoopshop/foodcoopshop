@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\I18n\Time;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -463,7 +465,7 @@ class ActionLogsTable extends AppTable
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
-            'date' => date('Y-m-d H:i:s')
+            'date' => Time::now()
         ];
         $this->save($this->newEntity($data2save));
     }

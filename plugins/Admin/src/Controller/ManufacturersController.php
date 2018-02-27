@@ -377,7 +377,7 @@ class ManufacturersController extends AdminAppController
 
             $invoice2save = [
                 'id_manufacturer' => $manufacturerId,
-                'send_date' => date('Y-m-d H:i:s'),
+                'send_date' => Time::now(),
                 'invoice_number' => $invoiceNumber,
                 'user_id' => $this->AppAuth->getUserId()
             ];

@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -342,8 +343,8 @@ class PaymentsController extends AdminAppController
                     'type' => $type,
                     'id_customer' => $customerId,
                     'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
-                    'date_add' => date('Y-m-d H:i:s'),
-                    'date_changed' => date('Y-m-d H:i:s'),
+                    'date_add' => Time::now(),
+                    'date_changed' => Time::now(),
                     'amount' => $amount,
                     'text' => $text,
                     'created_by' => $this->AppAuth->getUserId(),
