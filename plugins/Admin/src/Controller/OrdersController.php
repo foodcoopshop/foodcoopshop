@@ -136,16 +136,20 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderIds = $this->params['data']['orderIds'];
+        $orderIds = $this->request->getData('orderIds');
         $orderIds = array_unique($orderIds);
-        $orderState = $this->params['data']['orderState'];
+        $orderState = $this->request->getData('orderState');
 
+        $this->Order = TableRegistry::get('Orders');
         foreach ($orderIds as $orderId) {
-            // update table order
-            $this->Order->id = $orderId;
-            $this->Order->save([
-                'current_state' => $orderState
-            ]);
+            $this->Order->save(
+                $this->Order->patchEntity(
+                    $this->Order->get($orderId),
+                    [
+                        'current_state' => $orderState
+                    ]
+                )
+            );
         }
 
         $message = count($orderIds) . ' Bestellungen wurden erfolgreich abgeschlossen';
@@ -164,9 +168,10 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderIds = $this->params['data']['orderIds'];
-        $orderState = $this->params['data']['orderState'];
+        $orderIds = $this->request->getData('orderIds');
+        $orderState = $this->request->getData('orderState');
 
+        $this->Order = TableRegistry::get('Orders');
         foreach ($orderIds as $orderId) {
             $oldOrder = $this->Order->find('all', [
                 'conditions' => [
@@ -174,39 +179,43 @@ class OrdersController extends AdminAppController
                 ]
             ])->first();
 
-            // update table order
-            $this->Order->id = $orderId;
-            $this->Order->save([
-                'current_state' => $orderState
-            ]);
+            $this->Order->save(
+                $this->Order->patchEntity(
+                    $oldOrder,
+                    [
+                        'current_state' => $orderState
+                    ]
+                )
+            );
         }
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
 
-        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customers']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf "' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '" geändert.';
+        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customers']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf <b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b> geändert.';
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);
 
         // always redirect to orders (and keep some filters)
-        $redirectUrl = '';
-        $refererParams = explode('/', parse_url($this->referer())['path']);
-        $redirectUrlItems = [
-            'admin',
-            'orders',
-            'index'
-        ];
-        foreach ($refererParams as $param) {
-            $p = explode(':', $param);
-            if (in_array($p[0], [
+        $redirectUrlParams = [];
+        $parsedReferer = parse_url($this->referer());
+        
+        parse_str($parsedReferer['query'], $refererQueryParams);
+        
+        foreach ($refererQueryParams as $param => $value) {
+            if (in_array($param, [
                 'dateFrom',
                 'dateTo',
-                'orderState'
+                'orderStates'
             ])) {
-                $redirectUrlItems[] = $param;
+                $redirectUrlParams[$param] = $value;
             }
         }
-        $redirectUrl = '/' . implode('/', $redirectUrlItems);
+        $queryString = '';
+        if (!empty($redirectUrlParams)) {
+            $queryString = '?' . http_build_query($redirectUrlParams);
+        }
+        $redirectUrl = Configure::read('app.slugHelper')->getOrdersList() . $queryString;
 
         die(json_encode([
             'status' => 1,
