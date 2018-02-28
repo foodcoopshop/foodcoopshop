@@ -300,19 +300,24 @@ class CustomersController extends AdminAppController
             APP_OFF,
             APP_ON
         ])) {
-            throw new RecordNotFoundException('Status muss 0 oder 1 sein!');
+            throw new RecordNotFoundException('status needs to be 0 or 1');
         }
 
-        $this->Customer->id = $customerId;
-        $this->Customer->save([
-            'active' => $status
-        ]);
-
+        $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ]
         ])->first();
+        
+        $this->Customer->save(
+            $this->Customer->patchEntity(
+                $customer,
+                [
+                    'active' => $status
+                ]
+            )
+        );
 
         $statusText = 'deaktiviert';
         $actionLogType = 'customer_set_inactive';
@@ -321,15 +326,15 @@ class CustomersController extends AdminAppController
             $actionLogType = 'customer_set_active';
         }
 
-        $message = 'Das Mitglied "' . $customer['Customers']['name'] . '" wurde erfolgreich ' . $statusText;
+        $message = 'Das Mitglied <b>' . $customer->name . '</b> wurde erfolgreich ' . $statusText;
 
         if ($sendEmail) {
-            // set new password
-            $newPassword = $this->Customer->setNewPassword($customer['Customers']['id_customer']);
+            
+            $newPassword = $this->Customer->setNewPassword($customer->id_customer);
 
             $email = new AppEmail();
             $email->setTemplate('customer_activated')
-                ->setTo($customer['Customers']['email'])
+                ->setTo($customer->email)
                 ->setSubject('Dein Mitgliedskonto wurde aktiviert.')
                 ->setViewVars([
                 'appAuth' => $this->AppAuth,
@@ -337,10 +342,10 @@ class CustomersController extends AdminAppController
                 'newPassword' => $newPassword
                 ]);
 
-            $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($customer['Customers']), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             $email->send();
 
-            $message .= ' und eine Info-Mail an ' . $customer['Customers']['email'] . ' versendet';
+            $message .= ' und eine Info-Mail an ' . $customer->email . ' versendet';
         }
 
         $message .= '.';

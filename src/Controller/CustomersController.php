@@ -129,7 +129,7 @@ class CustomersController extends FrontendController
                     ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
                     ->setTo($this->request->getData('Customers.email'))
                     ->setViewVars([
-                    'changePasswordCode' => $changePasswordCode,
+                        'changePasswordCode' => $changePasswordCode,
                         'customer' => $oldEntity
                     ]);
     
@@ -163,18 +163,7 @@ class CustomersController extends FrontendController
             throw new RecordNotFoundException('change password code not found');
         }
 
-        $ph = new AppPasswordHasher();
-        $newPassword = StringComponent::createRandomString(12);
-        
-        // reset change password code
-        $patchedEntity = $this->Customer->patchEntity(
-            $this->Customer->get($customer->id_customer),
-            [
-                'passwd' => $ph->hash($newPassword),
-                'change_password_code' => null
-            ]
-        );
-        $this->Customer->save($patchedEntity);
+        $newPassword = $this->Customer->setNewPassword($customer->id_customer);
         
         // send email
         $email = new AppEmail();

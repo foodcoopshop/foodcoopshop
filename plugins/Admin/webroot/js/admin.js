@@ -1925,11 +1925,7 @@ foodcoopshop.Admin = {
                             'disabled',
                             'disabled'
                         );
-                        document.location.href = '/admin/customers/changeStatus/' +
-                            customerId +
-                            '/' +
-                            newState +
-                            '/1';
+                        document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/1';
                     }
                 };
             } else {
@@ -1941,11 +1937,7 @@ foodcoopshop.Admin = {
                             'disabled',
                             'disabled'
                         );
-                        document.location.href = '/admin/customers/changeStatus/' +
-                            customerId +
-                            '/' +
-                            newState +
-                            '/0';
+                        document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/0';
                     }
                 };
             }
@@ -1956,7 +1948,7 @@ foodcoopshop.Admin = {
                     '<p>Möchtest du das Mitglied <b>' +
                     dataRow
                     .find(
-                        'td:nth-child(2) a'
+                        'td:nth-child(2) span.name a'
                     )
                     .html() +
                     '</b> wirklich ' +

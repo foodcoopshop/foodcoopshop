@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Model\Table;
+use App\Auth\AppPasswordHasher;
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
@@ -168,6 +170,27 @@ class CustomersTable extends AppTable
             ]
         ])->first();
         return $manufacturer;
+    }
+    
+    /**
+     * @param int $customerId
+     * @return string
+     */
+    public function setNewPassword($customerId)
+    {
+        $ph = new AppPasswordHasher();
+        $newPassword = StringComponent::createRandomString(12);
+        
+        // reset change password code
+        $patchedEntity = $this->patchEntity(
+            $this->get($customerId),
+            [
+                'passwd' => $ph->hash($newPassword),
+                'change_password_code' => null
+            ]
+        );
+        $this->save($patchedEntity);
+        return $newPassword;
     }
 
     /**
