@@ -212,6 +212,7 @@ mb_internal_encoding('UTF-8');
 TableRegistry::get('Configurations')->loadConfigurations();
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', [
-        'routes' => true
+        'routes' => true,
+        'autoload' => true
     ]);
 }

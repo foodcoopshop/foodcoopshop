@@ -49,30 +49,5 @@ class AddressManufacturersTable extends AddressesTable
         ]);
         return $validator;
     }
-
-    /**
-     * for addresses only
-     *
-     * @param array $check
-     * @return boolean
-     */
-    public function uniqueEmailWithFlagCheck($check)
-    {
-        $conditions = [
-            $this->getAlias() . '.email' => $check['email']
-        ];
-
-        // if manufacturer address already exists
-        if ($this->id > 0) {
-            $conditions[] = $this->getAlias() . '.id_address <> ' . $this->id;
-        }
-
-        $found = $this->find('count', [
-            'conditions' => $conditions
-        ]);
-        if ($found == 0) {
-            return true;
-        }
-        return false;
-    }
+    
 }

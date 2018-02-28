@@ -77,12 +77,12 @@ class ProductsTable extends AppTable
     public function isOwner($productId, $manufacturerId)
     {
 
-        $found = $this->find('count', [
+        $found = $this->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId,
                 'Products.id_manufacturer' => $manufacturerId
             ]
-        ]);
+        ])->count();
         return (boolean) $found;
     }
 
@@ -502,13 +502,13 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $product->category = (object) [
                 'names' => [],
-                'allProductsFound' => false
+                'all_products_found' => false
             ];
             foreach ($product->category_products as $category) {
 
                 // assignment to "all products" has to be checked... otherwise show error message
                 if ($category->id_category == Configure::read('app.categoryAllProducts')) {
-                    $product->category->allProductsFound = true;
+                    $product->category->all_products_found = true;
                 } else {
                     // sometimes associated category does not exist any more...
                     if (!empty($category->category)) {
@@ -516,7 +516,7 @@ class ProductsTable extends AppTable
                     }
                 }
             }
-            $product->selectedCategories = Hash::extract($product->category_products, '{n}.id_category');
+            $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
             
             $product->is_new = true;
             if ($product->product_shop->created) {
@@ -548,7 +548,7 @@ class ProductsTable extends AppTable
                 $rowIsOdd = true;
                 $rowClass[] = 'custom-odd';
             }
-            $product->rowClass = join(' ', $rowClass);
+            $product->row_class = join(' ', $rowClass);
 
             $preparedProducts[] = $product;
             $i ++;
@@ -583,7 +583,7 @@ class ProductsTable extends AppTable
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
                         'active' => - 1,
-                        'rowClass' => join(' ', $rowClass),
+                        'row_class' => join(' ', $rowClass),
                         'product_lang' => [
                             'name' => ($addProductNameToAttributes ? $product->product_lang->name . ' : ' : '') . $attribute->product_attribute_combination->attribute->name,
                             'description_short' => '',
@@ -602,7 +602,7 @@ class ProductsTable extends AppTable
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                         'category' => [
                             'names' => [],
-                            'allProductsFound' => true
+                            'all_products_found' => true
                         ],
                         'image' => null
                     ];

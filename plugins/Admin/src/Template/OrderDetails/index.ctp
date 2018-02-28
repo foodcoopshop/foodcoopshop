@@ -176,7 +176,7 @@ foreach ($orderDetails as $orderDetail) {
         $sumDeposit += $orderDetail['sum_deposit'];
     }
 
-    echo '<tr class="data ' . (isset($orderDetail->rowClass) ? implode(' ', $orderDetail->rowClass) : '') . '">';
+    echo '<tr class="data ' . (isset($orderDetail->row_class) ? implode(' ', $orderDetail->row_class) : '') . '">';
 
     echo '<td style="text-align: center;">';
     if ($editRecordAllowed) {

@@ -262,9 +262,9 @@ class OrderDetailsController extends AdminAppController
                     $this->Manufacturer = TableRegistry::get('Manufacturers');
                     $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
                     $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
-                    $orderDetail->rowClass = [];
+                    $orderDetail->row_class = [];
                     if ($bulkOrdersAllowed) {
-                        $orderDetail->rowClass[] = 'deactivated';
+                        $orderDetail->row_class[] = 'deactivated';
                     }
                     $i ++;
                 }

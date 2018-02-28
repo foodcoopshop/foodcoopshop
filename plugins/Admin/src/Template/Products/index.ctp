@@ -174,7 +174,7 @@ use Cake\Core\Configure;
     foreach ($products as $product) {
         $i ++;
 
-        echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->rowClass . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
+        echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->row_class . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
 
         echo '<td class="hide">';
         echo $product->id_product;
@@ -279,7 +279,7 @@ use Cake\Core\Configure;
         echo '<td>';
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Form->hidden('Products.selected_categories', [
-                'value' => implode(',', $product->selectedCategories),
+                'value' => implode(',', $product->selected_categories),
                 'id' => 'selected-categories-' . $product->id_product
             ]);
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -291,7 +291,7 @@ use Cake\Core\Configure;
                 pr($product);
             }
             echo '<span class="categories-for-dialog">' . join(', ', $product->category->names) . '</span>';
-            if (! $product->category->allProductsFound) {
+            if (! $product->category->all_products_found) {
                 echo ' - <b>Kategorie "Alle Produkte" fehlt!</b>';
             }
         }
