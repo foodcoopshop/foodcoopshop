@@ -146,9 +146,7 @@ echo '<div class="holiday-wrapper">';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.variable_member_fee', [
         'label' => 'Variabler Mitgliedsbeitrag in % <span class="after small">Die Rechnung für den Hersteller wird um den angegebenen Prozentwert reduziert (nur ganze Zahlen erlaubt).</span>',
-        'div' => [
-            'class' => 'short text input'
-        ],
+        'class' => 'short',
         'type' => 'text',
         'escape' => false
         ]);
