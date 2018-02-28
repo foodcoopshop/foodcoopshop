@@ -28,7 +28,7 @@ $this->element('addScript', [
         <h1><?php echo $title_for_layout; ?></h1>
         <?php
         if (!$appAuth->isManufacturer()) {
-            echo $this->Form->input('manufacturerId', [
+            echo $this->Form->control('manufacturerId', [
             'type' => 'select',
             'label' => '',
             'options' => $manufacturersForDropdown,

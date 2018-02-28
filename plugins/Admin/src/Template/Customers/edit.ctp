@@ -48,41 +48,41 @@ echo $this->Form->create($customer, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo $this->Form->input('Customers.firstname', [
+echo $this->Form->control('Customers.firstname', [
     'label' => 'Vorname',
     'required' => true
 ]);
-echo $this->Form->input('Customers.lastname', [
+echo $this->Form->control('Customers.lastname', [
     'label' => 'Nachname',
     'required' => true
 ]);
-echo $this->Form->input('Customers.address_customer.email', [
+echo $this->Form->control('Customers.address_customer.email', [
     'label' => 'E-Mail-Adresse'
 ]);
 
-echo $this->Form->input('Customers.address_customer.address1', [
+echo $this->Form->control('Customers.address_customer.address1', [
     'label' => 'Straße'
 ]);
-echo $this->Form->input('Customers.address_customer.address2', [
+echo $this->Form->control('Customers.address_customer.address2', [
     'label' => 'Adresszusatz'
 ]);
 
-echo $this->Form->input('Customers.address_customer.postcode', [
+echo $this->Form->control('Customers.address_customer.postcode', [
     'label' => 'PLZ'
 ]);
-echo $this->Form->input('Customers.address_customer.city', [
+echo $this->Form->control('Customers.address_customer.city', [
     'label' => 'Ort'
 ]);
 
-echo $this->Form->input('Customers.address_customer.phone_mobile', [
+echo $this->Form->control('Customers.address_customer.phone_mobile', [
     'label' => 'Handy'
 ]);
-echo $this->Form->input('Customers.address_customer.phone', [
+echo $this->Form->control('Customers.address_customer.phone', [
     'label' => 'Telefon'
 ]);
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo $this->Form->input('Customers.newsletter', [
+    echo $this->Form->control('Customers.newsletter', [
         'label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.',
         'type' => 'checkbox'
     ]);

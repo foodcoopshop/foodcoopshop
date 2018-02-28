@@ -31,7 +31,7 @@ use Cake\Core\Configure;
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
             if ($manufacturerId > 0) {
-                echo $this->Form->input('productId', [
+                echo $this->Form->control('productId', [
                     'type' => 'select',
                     'label' => '',
                     'empty' => 'alle Produkte',
@@ -39,7 +39,7 @@ use Cake\Core\Configure;
                 ]);
             }
             if (! $appAuth->isManufacturer()) {
-                echo $this->Form->input('manufacturerId', [
+                echo $this->Form->control('manufacturerId', [
                     'type' => 'select',
                     'label' => '',
                     'options' => $manufacturersForDropdown,
@@ -47,13 +47,13 @@ use Cake\Core\Configure;
                     'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
             }
-            echo $this->Form->input('active', [
+            echo $this->Form->control('active', [
                 'type' => 'select',
                 'label' => '',
                 'options' => $this->MyHtml->getActiveStates(),
                 'default' => isset($active) ? $active : ''
             ]);
-            echo $this->Form->input('categoryId', [
+            echo $this->Form->control('categoryId', [
                 'type' => 'select',
                 'label' => '',
                 'multiple' => true,
@@ -62,8 +62,8 @@ use Cake\Core\Configure;
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
-            <?php echo $this->Form->input('isQuantityZero', ['type'=>'checkbox', 'label' =>'Anzahl 0?', 'checked' => $isQuantityZero]);?>
-            <?php echo $this->Form->input('isPriceZero', ['type'=>'checkbox', 'label' =>'Preis 0?', 'checked' => $isPriceZero]);?>
+            <?php echo $this->Form->control('isQuantityZero', ['type'=>'checkbox', 'label' =>'Anzahl 0?', 'checked' => $isQuantityZero]);?>
+            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' =>'Preis 0?', 'checked' => $isPriceZero]);?>
             
             <div class="right">
                 <?php
@@ -430,16 +430,16 @@ use Cake\Core\Configure;
 
 <?php
     // dropdowns and checkboxes for overlays are only rendered once (performance)
-    echo $this->Form->input('productAttributeId', ['type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown]);
+    echo $this->Form->control('productAttributeId', ['type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown]);
     echo '<div class="categories-checkboxes">';
-        echo $this->Form->input('Products.CategoryProducts', [
+        echo $this->Form->control('Products.CategoryProducts', [
             'label' => '',
             'multiple' => 'checkbox',
             'options' => $categoriesForSelect
         ]);
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';
-        echo $this->Form->input('Taxes.id_tax', [
+        echo $this->Form->control('Taxes.id_tax', [
             'type' => 'select',
             'label' => '',
             'options' => $taxesForDropdown,

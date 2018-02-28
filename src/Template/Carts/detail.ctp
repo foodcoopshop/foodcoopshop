@@ -70,7 +70,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/generalTermsAndConditions');
             echo '</div>';
-            echo $this->Form->input('Orders.general_terms_and_conditions_accepted', [
+            echo $this->Form->control('Orders.general_terms_and_conditions_accepted', [
                 'label' => 'Ich akzeptiere die <a href="#general-terms-and-conditions">AGB</a>.',
                 'type' => 'checkbox',
                 'escape' => false
@@ -78,7 +78,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
                 echo $this->element('legal/cancellationTerms');
             echo '</div>';
-            echo $this->Form->input('Orders.cancellation_terms_accepted', [
+            echo $this->Form->control('Orders.cancellation_terms_accepted', [
                 'label' => 'Ich nehme das <a href="#cancellation-terms">Rücktrittsrecht</a> zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren.',
                 'type' => 'checkbox',
                 'escape' => false
@@ -102,7 +102,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             'escape' => false
             ]);
             echo '<div class="toggle-content order-comment">';
-            echo $this->Form->input('Orders.comment', [
+            echo $this->Form->control('Orders.comment', [
                 'type' => 'textarea',
                 'placeholder' => 'Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht.',
                 'label' => ''

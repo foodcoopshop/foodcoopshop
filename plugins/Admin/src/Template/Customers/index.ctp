@@ -26,7 +26,7 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->Form->input('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
+            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             Anzahl Bestellungen zwischen <input id="validOrdersCountFrom"
                 type="text"
                 value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
@@ -63,7 +63,7 @@ use Cake\Core\Configure;
     
 <?php
 
-echo $this->Form->input('selectGroupId', [
+echo $this->Form->control('selectGroupId', [
     'type' => 'select',
     'label' => '',
     'options' => $this->Html->getAuthDependentGroups($appAuth->getGroupId())

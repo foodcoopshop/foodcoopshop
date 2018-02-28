@@ -80,7 +80,7 @@ echo $this->Form->control('Pages.full_width', [
     'type' => 'checkbox',
     'escape' => false
 ]);
-echo $this->Form->input('Pages.extern_url', [
+echo $this->Form->control('Pages.extern_url', [
     'placeholder' => 'z.B. https://www.foodcoopshop.com',
     'label' => 'Link auf externe Seite?<br /><span class="small">Menüpunkt führt auf diese Webseite (der Inhalt der Seite wird nicht angezeigt).</span>',
     'div' => [

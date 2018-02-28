@@ -47,7 +47,7 @@ echo $this->Html->link('<i class="fa ' . $icon . ' fa-lg"></i> ' . $buttonText, 
 echo '<div id="add-payment-form" class="add-payment-form">';
 echo '<h3>Neue Zahlung eintragen</h3>';
 echo '<p>Bitte tippe hier den Betrag ein, den du <br />soeben auf unser Konto überwiesen hast.</p>';
-echo $this->Form->input('Payments.amount', [
+echo $this->Form->control('Payments.amount', [
     'label' => 'Betrag in €',
     'type' => 'string'
 ]);
@@ -84,7 +84,7 @@ if ($paymentType == 'member_fee') {
     echo '<div style="width: 160px;float: left;opacity: 0.7">';
     $lastYear = $currentYear - 1;
     $monthsRange = $this->Time->getAllMonthsForYear($lastYear);
-    echo $this->Form->input('Payments.months_range_' . $lastYear, [
+    echo $this->Form->control('Payments.months_range_' . $lastYear, [
         'label' => '',
         'options' => $monthsRange,
         'multiple' => 'checkbox',
@@ -94,7 +94,7 @@ if ($paymentType == 'member_fee') {
 
     echo '<div style="width: 160px;float: left;">';
     $monthsRange = $this->Time->getAllMonthsForYear($currentYear);
-    echo $this->Form->input('Payments.months_range_' . $currentYear, [
+    echo $this->Form->control('Payments.months_range_' . $currentYear, [
         'label' => '',
         'options' => $monthsRange,
         'multiple' => 'checkbox',
@@ -105,7 +105,7 @@ if ($paymentType == 'member_fee') {
     echo '<div style="width: 160px;float: left;opacity: 0.7">';
     $nextYear = $currentYear + 1;
     $monthsRange = $this->Time->getAllMonthsForYear($nextYear);
-    echo $this->Form->input('Payments.months_range_' . $nextYear, [
+    echo $this->Form->control('Payments.months_range_' . $nextYear, [
         'label' => '',
         'options' => $monthsRange,
         'multiple' => 'checkbox',

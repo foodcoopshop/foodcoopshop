@@ -52,14 +52,14 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 if ($this->request->here != $this->Slug->getTaxAdd()) {
     echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($tax->rate) . '</p>';
 } else {
-    echo $this->Form->input('Taxes.rate', [
+    echo $this->Form->control('Taxes.rate', [
         'class' => 'long',
         'label' => 'Steuersatz<br /><span class="small">z.B. "10" für 10%<br />Steuersätze sind später nicht änderbar</span>',
         'escape' => false
     ]);
 }
 
-echo $this->Form->input('Taxes.active', [
+echo $this->Form->control('Taxes.active', [
     'label' => 'Steuersatz aktiv?'
 ]);
 

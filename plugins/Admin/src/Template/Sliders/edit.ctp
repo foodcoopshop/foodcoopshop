@@ -75,18 +75,18 @@ echo '</div>';
 echo $this->Form->hidden('Sliders.tmp_image');
 echo '</div>';
 
-echo $this->Form->input('Sliders.position', [
+echo $this->Form->control('Sliders.position', [
     'class' => 'short',
     'label' => 'Reihenfolge',
     'type' => 'text'
 ]);
-echo $this->Form->input('Sliders.active', [
+echo $this->Form->control('Sliders.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
 ]);
 
 if ($this->request->here != $this->Slug->getSliderAdd()) {
-    echo $this->Form->input('Sliders.delete_slider', [
+    echo $this->Form->control('Sliders.delete_slider', [
         'label' => 'Slideshow-Bild löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',
         'escape' => false

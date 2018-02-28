@@ -54,7 +54,7 @@ $label = $configuration->text;
 switch ($configuration->type) {
     case 'number':
     case 'text':
-        echo $this->Form->input('Configurations.value', [
+        echo $this->Form->control('Configurations.value', [
             'type' => 'text',
             'class' => 'long',
             'label' => $label,
@@ -65,7 +65,7 @@ switch ($configuration->type) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('configurations-value');"
         ]);
-        echo $this->Form->input('Configurations.value', [
+        echo $this->Form->control('Configurations.value', [
             'type' => 'textarea',
             'label' => $label,
             'class' => 'ckeditor',
@@ -76,7 +76,7 @@ switch ($configuration->type) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('configurations-value');"
         ]);
-        echo $this->Form->input('Configurations.value', [
+        echo $this->Form->control('Configurations.value', [
             'type' => 'textarea',
             'label' => $label . '<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
             'class' => 'ckeditor',
@@ -85,7 +85,7 @@ switch ($configuration->type) {
         break;
     case 'dropdown':
     case 'boolean':
-        echo $this->Form->input('Configurations.value', [
+        echo $this->Form->control('Configurations.value', [
             'type' => 'select',
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),

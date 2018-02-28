@@ -26,7 +26,7 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
     ];
     $options['class'] = 'btn btn-default';
     echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
-    echo $this->Form->input(null, [
+    echo $this->Form->control(null, [
         'type' => 'select',
         'label' => '',
         'id' => 'shopOrderCustomerId', //null as first param and id removes attribute name => field is not submitted

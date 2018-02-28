@@ -82,26 +82,26 @@ echo '</div>';
 echo $this->Form->hidden('Categories.tmp_image');
 echo '</div>';
 
-echo $this->Form->input('Categories.delete_image', [
+echo $this->Form->control('Categories.delete_image', [
     'label' => 'Bild löschen? <span class="after small">Speichern nicht vergessen</span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
 
 if ($this->request->here != $this->Slug->getCategoryAdd()) {
-    echo $this->Form->input('Categories.delete_category', [
+    echo $this->Form->control('Categories.delete_category', [
         'label' => 'Kategorie löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
 }
 
-echo $this->Form->input('Categories.active', [
+echo $this->Form->control('Categories.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
 ]);
 
-echo $this->Form->input('Categories.description', [
+echo $this->Form->control('Categories.description', [
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',

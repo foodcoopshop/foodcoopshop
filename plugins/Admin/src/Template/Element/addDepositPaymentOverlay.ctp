@@ -47,7 +47,7 @@ if (isset($manufacturerId)) {
     }
 }
 
-echo $this->Form->input('Payments.amount', [
+echo $this->Form->control('Payments.amount', [
     'label' => 'Betrag in €',
     'type' => 'string'
 ]);

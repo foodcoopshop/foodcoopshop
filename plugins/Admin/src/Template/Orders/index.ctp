@@ -45,9 +45,9 @@ use Cake\Core\Configure;
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
-            <?php echo $this->Form->input('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
+            <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->input('groupByCustomer', ['type'=>'checkbox', 'label' =>'Gruppieren nach Mitglied', 'checked' => $groupByCustomer]);?>
+                <?php echo $this->Form->control('groupByCustomer', ['type'=>'checkbox', 'label' =>'Gruppieren nach Mitglied', 'checked' => $groupByCustomer]);?>
             <?php } ?>
             <div class="right">
                 <?php
@@ -203,7 +203,7 @@ use Cake\Core\Configure;
             echo '<div id="add-payment-member-fee-flexible-form-' . $order->id_order . '" class="add-payment-form add-payment-member-fee-flexible-form">';
             echo '<h3>Flexiblen Mitgliedsbeitrag eintragen</h3>';
             echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order->name . '</b> eintragen:</p>';
-            echo $this->Form->input('Payments.amount', [
+            echo $this->Form->control('Payments.amount', [
                 'label' => 'Betrag in €',
                 'type' => 'string'
             ]);
@@ -245,7 +245,7 @@ use Cake\Core\Configure;
         echo '<td class="date-icon icon">';
         if ($order->current_state == 3) {
             echo '<div class="last-n-days-dropdown">';
-            echo $this->Form->input('date_add_' . $order->id_order, [
+            echo $this->Form->control('date_add_' . $order->id_order, [
                 'type' => 'select',
                 'label' => '',
                 'options' => $this->MyTime->getLastNDays(5, $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')))

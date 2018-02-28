@@ -64,7 +64,7 @@ echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($payment->amount).'<
 echo '<p><label>Datum der Aufladung</label>' . $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) .'</p>';
 echo '<p><label>Datum der letzten Änderung</label>' . $payment->date_changed->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')).'</p>';
 echo '<p><label>Letzter Bearbeiter</label>' . (empty($payment->changed_by_customer) ? 'Diese Zahlung wurde noch nicht bearbeitet' : $payment->changed_by_customer->name).'</p>';
-echo $this->Form->input('Payments.approval', [
+echo $this->Form->control('Payments.approval', [
     'type' => 'select',
     'label' => 'Status',
     'options' => $this->Html->getApprovalStates()
@@ -89,13 +89,13 @@ $checkboxLabel = 'E-Mail versenden? <span class="after small multiple-lines">Wen
         ).
     '</span>';
 
-echo $this->Form->input('Payments.send_email', [
+echo $this->Form->control('Payments.send_email', [
     'label' => $checkboxLabel,
     'type' => 'checkbox',
     'escape' => false
 ]);
 
-echo $this->Form->input('Payments.approval_comment', [
+echo $this->Form->control('Payments.approval_comment', [
     'type' => 'textarea',
     'label' => 'Kommentar',
     'class' => 'ckeditor'

@@ -57,11 +57,11 @@ echo $this->Form->create($blogPost, [
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
-echo $this->Form->input('BlogPosts.title', [
+echo $this->Form->control('BlogPosts.title', [
     'class' => 'long',
     'label' => 'Titel'
 ]);
-echo $this->Form->input('BlogPosts.short_description', [
+echo $this->Form->control('BlogPosts.short_description', [
     'class' => 'long',
     'label' => 'Kurze Beschreibung'
 ]);
@@ -81,14 +81,14 @@ echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) :
 echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
 echo '</div>';
-echo $this->Form->input('BlogPosts.delete_image', [
+echo $this->Form->control('BlogPosts.delete_image', [
     'label' => 'Bild löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    echo $this->Form->input('BlogPosts.id_manufacturer', [
+    echo $this->Form->control('BlogPosts.id_manufacturer', [
         'type' => 'select',
         'label' => 'Hersteller',
         'empty' => 'Hersteller auswählen',
@@ -97,21 +97,21 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo '<span class="description small">Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung "nur für Mitglieder").</span>';
 }
 
-echo $this->Form->input('BlogPosts.is_featured', [
+echo $this->Form->control('BlogPosts.is_featured', [
     'label' => 'Auf der Startseite anzeigen?',
     'type' => 'checkbox'
 ]);
-echo $this->Form->input('BlogPosts.is_private', [
+echo $this->Form->control('BlogPosts.is_private', [
     'label' => 'Nur für Mitglieder sichtbar?',
     'type' => 'checkbox'
 ]);
-echo $this->Form->input('BlogPosts.active', [
+echo $this->Form->control('BlogPosts.active', [
     'label' => 'Aktiv?',
     'type' => 'checkbox'
 ]);
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin() && $this->request->here != $this->Slug->getBlogPostAdd()) {
-    echo $this->Form->input('BlogPosts.update_modified_field', [
+    echo $this->Form->control('BlogPosts.update_modified_field', [
         'label' => 'Nach vorne reihen? <span class="after small">Falls angehakt, wird der Blog-Artikel an die erste Stelle der Liste gereiht.</span>',
         'type' => 'checkbox',
         'escape' => false
@@ -119,14 +119,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin() && $this->request->here != $
 }
 
 if ($this->request->here != $this->Slug->getBlogPostAdd()) {
-    echo $this->Form->input('BlogPosts.delete_blog_post', [
+    echo $this->Form->control('BlogPosts.delete_blog_post', [
         'label' => 'Blog-Artikel löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
 }
 
-echo $this->Form->input('BlogPosts.content', [
+echo $this->Form->control('BlogPosts.content', [
     'class' => 'ckeditor',
     'type' => 'textarea',
     'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
