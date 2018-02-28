@@ -205,7 +205,10 @@ class OrdersController extends AdminAppController
         $redirectUrlParams = [];
         $parsedReferer = parse_url($this->referer());
         
-        parse_str($parsedReferer['query'], $refererQueryParams);
+        $refererQueryParams = [];
+        if (isset($parsedReferer['query'])) {
+            parse_str($parsedReferer['query'], $refererQueryParams);
+        }
         
         foreach ($refererQueryParams as $param => $value) {
             if (in_array($param, [
