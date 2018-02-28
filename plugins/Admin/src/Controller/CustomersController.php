@@ -46,8 +46,8 @@ class CustomersController extends AdminAppController
 
     public function ajaxEditGroup()
     {
-        $customerId = (int) $this->params['data']['customerId'];
-        $groupId = (int) $this->params['data']['groupId'];
+        $customerId = (int) $this->request->getData('customerId');
+        $groupId = (int) $this->request->getData('groupId');
 
         if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
@@ -64,10 +64,11 @@ class CustomersController extends AdminAppController
                 'Customers.id_customer' => $customerId
             ]
         ])->first();
+        $oldGroup = $oldCustomer->id_default_group;
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
-        if ($this->AppAuth->getGroupId() < $oldCustomer['Customers']['id_default_group']) {
-            $message = 'logged user has lower groupId than the user he wants to edit: customerId: ' . $oldCustomer['Customers']['id_customer'] . ', groupId: ' . $oldCustomer['Customers']['id_default_group'];
+        if ($this->AppAuth->getGroupId() < $oldCustomer->id_default_group) {
+            $message = 'logged user has lower groupId than the user he wants to edit: customerId: ' . $oldCustomer->id_customer . ', groupId: ' . $oldCustomer->id_default_group;
             $this->log($message);
             die(json_encode([
                 'status' => 0,
@@ -75,10 +76,16 @@ class CustomersController extends AdminAppController
             ]));
         }
 
-        $this->Customer->id = $customerId;
-        $this->Customer->saveField('id_default_group', $groupId, false);
+        $this->Customer->save(
+            $this->Customer->patchEntity(
+                $oldCustomer,
+                [
+                    'id_default_group' => $groupId
+                ]
+            )
+        );
 
-        $messageString = 'Die Gruppe des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde von <b>' . Configure::read('app.htmlHelper')->getGroupName($oldCustomer['Customers']['id_default_group']) . '</b> auf <b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
+        $messageString = 'Die Gruppe des Mitglieds <b>' . $oldCustomer->name . '</b> wurde von <b>' . Configure::read('app.htmlHelper')->getGroupName($oldGroup) . '</b> auf <b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
         $this->Flash->success($messageString);
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
@@ -350,8 +357,8 @@ class CustomersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $customerId = $this->params['data']['customerId'];
-        $customerComment = htmlspecialchars_decode($this->params['data']['customerComment']);
+        $customerId = $this->request->getData('customerId');
+        $customerComment = htmlspecialchars_decode($this->request->getData('customerComment'));
 
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
