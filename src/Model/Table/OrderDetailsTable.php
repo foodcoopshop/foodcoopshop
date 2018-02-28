@@ -110,7 +110,8 @@ class OrderDetailsTable extends AppTable
         ];
         
         $statement = $this->getConnection()->prepare($sql);
-        $orderDetails = $statement->execute($params);
+        $statement->execute($params);
+        $orderDetails = $statement->fetchAll('assoc');
         
         if (isset($orderDetails[0])) {
             return $orderDetails[0]['sumOrderDetail'];
