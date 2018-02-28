@@ -365,23 +365,29 @@ class CustomersController extends AdminAppController
         $customerId = $this->request->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->request->getData('customerComment'));
 
+        $this->Customer = TableRegistry::get('Customers');
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
+            ],
+            'contain' => [
+                'AddressCustomers'
             ]
         ])->first();
 
-        $customerAddress2update = [
-            'comment' => $customerComment
-        ];
-
-        $this->Customer->AddressCustomers->id = $oldCustomer['AddressCustomers']['id_address'];
-        $this->Customer->AddressCustomers->save($customerAddress2update);
-
+        $this->Customer->AddressCustomers->save(
+            $this->Customer->AddressCustomers->patchEntity(
+                $oldCustomer->address_customer,
+                [
+                    'comment' => $customerComment
+                ]
+            )
+        );
+        
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds "' . $oldCustomer['Customers']['name'] . '" wurde geändert: <br /><br /> alt: <div class="changed">' . $oldCustomer['AddressCustomers']['comment'] . '</div>neu: <div class="changed">' . $customerComment . ' </div>');
+        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds <b>' . $oldCustomer->name . '</b> wurde geändert: <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode([
             'status' => 1,
