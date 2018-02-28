@@ -86,7 +86,7 @@ class ListsController extends AdminAppController
 
                 $files[] = [
                     'delivery_date' => $deliveryDate,
-                    'manufacturer_name' => $manufacturer['Manufacturers']['name'],
+                    'manufacturer_name' => $manufacturer->name,
                     'product_list_link' => $productListLink,
                     'customer_list_link' => $customerListLink
                 ];
@@ -104,14 +104,12 @@ class ListsController extends AdminAppController
      */
     public function getFile()
     {
-        $this->autoRender = false;
-
         $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->request->getQuery('file');
         $explodedString = explode('\\', $filenameWithPath);
-
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="' . $explodedString[count($explodedString) - 1] . '"');
-
-        readfile(ROOT . DS . $filenameWithPath);
+        readfile(ROOT . $filenameWithPath);
+        exit; // $this->autoRender = false; is not enough!
     }
+    
 }
