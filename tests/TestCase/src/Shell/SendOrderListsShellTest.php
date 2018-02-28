@@ -42,7 +42,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $currentWeekday = Configure::read('app.timeHelper')->getCurrentWeekday();
         if (in_array($currentWeekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
             $this->Order->save(
-                $this->patchEntity(
+                $this->Order->patchEntity(
                     $this->Order->get($orderId),
                     [
                         'date_add' => Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay()),
