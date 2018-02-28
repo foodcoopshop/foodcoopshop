@@ -77,6 +77,60 @@ class CustomersTable extends AppTable
         return $validator;
     }
     
+    public function validationChangePassword($validator)
+    {
+        $validator
+        ->notEmpty('passwd_old', 'Bitte gib dein altes Passwort ein.')
+        ->add('passwd_old', 'custom', [
+            'rule'=>  function($value, $context) {
+                $user = $this->get($context['data']['id_customer']);
+                if ($user) {
+                    if ((new AppPasswordHasher())->check($value, $user->passwd)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            'message' => 'Dein altes Passwort ist leider falsch.',
+        ])
+        ->notEmpty('passwd_old');
+            
+        $validator
+        ->notEmpty('passwd_1', 'Bitte gib ein neues Passwort ein.')
+        ->add('passwd_1', [
+            'length' => [
+                'rule' => ['minLength', 8],
+                'message' => 'Das Passwort muss aus mindestens 8 Zeichen bestehen.',
+            ]
+        ])
+        ->add('passwd_1', [
+            'match' => [
+                'rule' => ['compareWith', 'passwd_2'],
+                'message' => 'Die Passwörter stimmen nicht überein.',
+            ]
+        ])
+        ->notEmpty('passwd_1');
+        
+        $validator
+        ->notEmpty('passwd_2', 'Bitte gib ein neues Passwort ein.')
+        ->add('passwd_2', [
+            'length' => [
+                'rule' => ['minLength', 8],
+                'message' => 'Das Passwort muss aus mindestens 8 Zeichen bestehen.',
+            ]
+        ])
+        ->add('passwd_2', [
+            'match' => [
+                'rule' => ['compareWith', 'passwd_1'],
+                'message' => 'Die Passwörter stimmen nicht überein.',
+            ]
+        ])
+        ->notEmpty('passwd_2');
+        
+        return $validator;
+    }
+    
+    
     public function validationNewPasswordRequest(Validator $validator)
     {
         $validator->notEmpty('email', 'Bitte gib deine E-Mail-Adresse an.');

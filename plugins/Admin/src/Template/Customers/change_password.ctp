@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
@@ -37,26 +39,29 @@ $this->element('addScript', [
 
 <?php
 
-echo $this->Form->create('Customers', [
+echo $this->Form->create($customer, [
     'class' => 'fcs-form'
 ]);
 
-echo $this->Form->input('Customers.passwd', [
-    'label' => __('Password : Old Password *')
+echo $this->Form->control('Customers.passwd_old', [
+    'label' => 'Altes Passwort',
+    'type' => 'password',
+    'required' => true
 ]);
-echo $this->Form->input('Customers.passwd_new_1', [
-    'label' => __('Password : New Password *'),
-    'type' => 'password'
+echo $this->Form->control('Customers.passwd_1', [
+    'label' => 'Neues Passwort',
+    'type' => 'password',
+    'required' => true
 ]);
-echo $this->Form->input('Customers.passwd_new_2', [
-    'label' => __('Password : New Password Repeat *'),
-    'type' => 'password'
+echo $this->Form->control('Customers.passwd_2', [
+    'label' => 'Neues Passwort (nochmal)',
+    'type' => 'password',
+    'required' => true
 ]);
+
+echo $this->Form->end();
 
 ?>
 
 <div class="sc"></div>
 
-</form>
-
-<div class="sc"></div>

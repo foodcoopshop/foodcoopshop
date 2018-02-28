@@ -94,92 +94,70 @@ class CustomersController extends AdminAppController
             'status' => 1
         ]));
     }
-
+    
     public function changePassword()
     {
-        $this->set([
-            'title_for_layout' => __('Change your password')
-        ]);
-
-        if (empty($this->request->data)) {
+        $this->set('title_for_layout', 'Passwort ändern');
+        
+        $this->Customer = TableRegistry::get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $this->AppAuth->getUserId()
+            ]
+        ])->first();
+        
+        if (empty($this->request->getData())) {
+            $this->set('customer', $customer);
             return;
         }
-
-        $password = $this->request->data['Customers']['passwd'];
-        $passwordNew1 = $this->request->data['Customers']['passwd_new_1'];
-        $passwordNew2 = $this->request->data['Customers']['passwd_new_2'];
-
-        $error = 0;
-
-        $ph = new AppPasswordHasher();
-
-        if (! $this->Customer->isCustomerPassword($this->AppAuth->getUserId(), $ph->hash($password))) {
-            $this->Customer->invalidate('passwd', __('Your old Password was wrong'));
-            $error ++;
-        }
-
-        if ($password == $ph->hash('')) {
-            $this->Customer->invalidate('passwd', __('Insert your new Password'));
-            $error ++;
-        }
-
-        if (! preg_match(PASSWORD_REGEX, $passwordNew1)) {
-            $errorMessage = __('The length of the password should be from 6 - 32 Chars');
-            $this->Customer->invalidate('passwd_new_1', $errorMessage);
-            $this->Customer->invalidate('passwd_new_2', $errorMessage);
-            $error ++;
-        }
-
-        if ($passwordNew1 != $passwordNew2) {
-            $errorMessage = __('the new passwords are not the same');
-            $this->Customer->invalidate('passwd_new_1', $errorMessage);
-            $this->Customer->invalidate('passwd_new_2', $errorMessage);
-            $error ++;
-        }
-
-        if ($password == $ph->hash($passwordNew1)) {
-            $errorMessage = __('your new and your old Password dont differ, please change');
-            $this->Customer->invalidate('passwd_new_1', $errorMessage);
-            $this->Customer->invalidate('passwd_new_2', $errorMessage);
-            $error ++;
-        }
-
-        if ($passwordNew1 == '') {
-            $errorMessage = __('Please set your password');
-            $this->Customer->invalidate('passwd_new_1', $errorMessage);
-            $this->Customer->invalidate('passwd_new_2', $errorMessage);
-            $error ++;
-        }
-
-        if ($error > 0) {
-            $this->Flash->error(__('An error occurred, please check your form.'));
-            return;
-        }
-
-        $customer2save = [
-            'passwd' => $ph->hash($passwordNew1)
-        ];
-
-        $this->Customer->id = $this->AppAuth->getUserId();
-        if ($this->Customer->save($customer2save, false)) {
+        
+        $customer = $this->Customer->patchEntity(
+            $customer,
+            $this->request->getData(),
+            [
+                'validate' => 'changePassword'
+            ]
+        );
+        
+        if (!empty($customer->getErrors())) {
+            
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('customer', $customer);
+            
+        } else {
+            
+            $ph = new AppPasswordHasher();
+            $this->Customer->save(
+                $this->Customer->patchEntity(
+                    $customer,
+                    [
+                        'passwd' => $ph->hash($this->request->getData('Customers.passwd_1'))
+                    ]
+                )
+            );
+            
             if ($this->AppAuth->isManufacturer()) {
-                $message = 'Der Hersteller ' . $this->AppAuth->getManufacturerName();
+                $message = 'Der Hersteller <b>' . $this->AppAuth->getManufacturerName();
                 $actionLogType = 'manufacturer_password_changed';
                 $actionLogId = $this->AppAuth->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = 'Das Mitglied ' . $this->AppAuth->getUsername();
+                $message = 'Das Mitglied <b>' . $this->AppAuth->getUsername();
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->AppAuth->getUserId();
                 $actionLogModel = 'customers';
             }
-            $message .= ' hat sein Passwort geändert.';
-
+            $message .= '</b> hat sein Passwort geändert.';
+            
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
-            $this->Flash->success(__('your new password successfully set'));
+            $this->Flash->success('Dein neues Passwort wurde erfolgreich gespeichert.');
             $this->redirect($this->referer());
+            
         }
+        
+        $this->set('customer', $customer);
+        
     }
     
     public function profile()
