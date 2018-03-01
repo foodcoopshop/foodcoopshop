@@ -467,7 +467,9 @@ class ManufacturersController extends AdminAppController
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer->name . '" erfolgreich generiert';
-
+            $this->log($productPdfFile);
+            $this->log($customerPdfFile);
+            $this->log(file_get_contents($productPdfFile));
             if ($sendEmail) {
                 $flashMessage .= ' und an ' . $manufacturer->address_manufacturer->email . ' versendet';
                 $email = new AppEmail();
