@@ -51,7 +51,7 @@ before_script:
   - sudo chown -R travis:travis $TRAVIS_BUILD_DIR
   - sudo chmod o+rx /home/travis
   - sudo service apache2 restart
-  #- sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
+  - sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
   - vendor/bin/phpunit --stderr
