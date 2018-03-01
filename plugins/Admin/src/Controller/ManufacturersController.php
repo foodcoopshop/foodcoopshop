@@ -436,7 +436,8 @@ class ManufacturersController extends AdminAppController
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
             'contain' => [
-                'AddressManufacturers'
+                'AddressManufacturers',
+                'Customers.AddressCustomers'
             ]
         ])->first();
 

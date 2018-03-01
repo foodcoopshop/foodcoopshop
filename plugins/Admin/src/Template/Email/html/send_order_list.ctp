@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                Hallo <?php echo $manufacturer['Addresses']['firstname']; ?>,
+                Hallo <?php echo $manufacturer->address_manufacturer->firstname; ?>,
             </td>
     </tr>
 
@@ -33,8 +33,8 @@ use Cake\Core\Configure;
                 <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
             </p>
             
-            <?php if (!empty($manufacturer['Customers']['name'])) { ?>
-                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer['Customers']['firstname'] . ' ' . $manufacturer['Customers']['lastname'] . ', ' . $manufacturer['Customers']['email'] . ', ' . $manufacturer['Customers']['AddressCustomers']['phone_mobile']; ?></p>
+            <?php if (!empty($manufacturer->customer)) { ?>
+                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer->customer->name . ', ' . $manufacturer->customer->email . ', ' . $manufacturer->customer->address_customer->phone_mobile; ?></p>
             <?php } ?>
 
             <ul style="padding-left: 10px;">
