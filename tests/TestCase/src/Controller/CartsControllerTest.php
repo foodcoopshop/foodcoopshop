@@ -112,7 +112,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
 
         // try to add an amount that is not available any more
-        $this->addTooManyProducts($this->productId1, 99, $amount1, 'Die gewünschte Anzahl (101) des Produktes "Artischocke" ist leider nicht mehr verfügbar. Verfügbare Menge: 98', 0);
+        $this->addTooManyProducts($this->productId1, 99, $amount1, 'Die gewünschte Anzahl (101) des Produktes "Artischocke" ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
 
         /**
          * START add product with attribute
@@ -140,7 +140,7 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
         $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
 
-        $this->assertEquals($cart['Cart']['id_cart'], 1, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
 
         /**
          * START finish cart
@@ -215,7 +215,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertNotEquals([], $order, 'order not correct');
         $this->assertEquals($order->id_order, $orderId, 'order id not correct');
         $this->assertEquals($order->id_customer, $this->browser->getLoggedUserId(), 'order customer_id not correct');
-        $this->assertEquals($order->id_cart, 1, 'order cart_id not correct');
+        $this->assertEquals($order->id_cart, 2, 'order cart_id not correct');
         $this->assertEquals($order->current_state, 3, 'order current_state not correct');
         $this->assertEquals($order->total_deposit, 2.5, 'order total_deposit not correct');
         $this->assertEquals($order->total_paid_tax_excl, 5.578515, 'order total_paid_tax_excl not correct');
@@ -239,7 +239,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         // check new (empty) cart
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
-        $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
+        $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
         // check email to customer

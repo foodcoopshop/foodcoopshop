@@ -40,6 +40,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public $editQuantityReason = 'One product was not delivered.';
 
     public $mockOrder;
+    public $mockOrderId = 1;
 
     public function setUp()
     {
@@ -52,14 +53,14 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationAsManufacturer()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $this->logout();
         $this->loginAsVegetableManufacturer();
 
         $this->assertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
         $this->assertChangedStockAvailable($this->productId1, 98);
     }
@@ -67,7 +68,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationAsSuperadminWithEnabledNotification()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $this->assertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
@@ -77,7 +78,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
             $expectedCcEmails[] = Configure::read('test.loginEmailVegetableManufacturer');
         }
 
-        $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
         $this->assertChangedStockAvailable($this->productId1, 98);
     }
@@ -85,7 +86,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_deleted_notification', 0);
 
@@ -93,7 +94,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
         $this->assertChangedStockAvailable($this->productId1, 98);
     }
@@ -101,7 +102,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationAsSuperadminWithEnabledBulkOrders()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
@@ -109,7 +110,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 4.545455);
         $this->assertChangedStockAvailable($this->productId1, 98);
     }
@@ -118,7 +119,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->productId1 = '60-10';
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $this->assertRemoveFromDatabase([$this->mockOrder->order_details[1]->id_order_detail], $this->mockOrder->id_order, 1);
         $this->assertChangedStockAvailable($this->productId1, 20);
     }
@@ -126,7 +127,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testEditOrderDetailPriceAsManufacturer()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $this->logout();
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
@@ -136,7 +137,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
         
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 8.075455);
     }
@@ -144,7 +145,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
 
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
@@ -154,7 +155,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
 
-        $this->assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 8.075455);
     }
 
@@ -162,8 +163,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->changeProductPrice($this->productId1, 0);
-        $this->mockOrder = $this->getOrder();
-
+        $this->mockOrder = $this->generateAndGetOrder();
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
@@ -171,14 +171,14 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(1, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 8.075455);
     }
 
     public function testEditOrderDetailPriceAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_price_changed_notification', 0);
 
@@ -189,14 +189,14 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 8.075455);
     }
 
     public function testEditOrderDetailPriceAsSuperadminWithEnabledBulkOrders()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder();
+        $this->mockOrder = $this->getMockOrder();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
@@ -207,14 +207,14 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 8.075455);
     }
 
     public function testEditOrderDetailQuantityAsManufacturer()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder(1, 2);
+        $this->mockOrder = $this->generateAndGetOrder(1, 2);
         $this->logout();
         $this->loginAsVegetableManufacturer();
 
@@ -225,16 +225,16 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductQuantityChangedEmails(1, $expectedToEmails, $expectedCcEmails);
         
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 10.91091);
-        $this->assertChangedStockAvailable($this->productId1, 97);
+        $this->assertChangedStockAvailable($this->productId1, 96);
     }
 
     public function testEditOrderDetailQuantityAsSuperadminWithEnabledNotification()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder(1, 2);
+        $this->mockOrder = $this->generateAndGetOrder(1, 2);
 
         $this->editOrderDetailQuantity($this->mockOrder->order_details[0]->id_order_detail, $this->newQuantity, $this->editQuantityReason);
 
@@ -247,16 +247,16 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         if (in_array($weekday, [3,4,5])) {
             $expectedCcEmails[] = Configure::read('test.loginEmailVegetableManufacturer');
         }
-        $this->assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductQuantityChangedEmails(1, $expectedToEmails, $expectedCcEmails);
         
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 10.91091);
-        $this->assertChangedStockAvailable($this->productId1, 97);
+        $this->assertChangedStockAvailable($this->productId1, 96);
     }
 
     public function testEditOrderDetailQuantityAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder(1, 2);
+        $this->mockOrder = $this->generateAndGetOrder(1, 2);
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_quantity_changed_notification', 0);
 
@@ -267,16 +267,16 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductQuantityChangedEmails(1, $expectedToEmails, $expectedCcEmails);
         
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 10.91091);
-        $this->assertChangedStockAvailable($this->productId1, 97);
+        $this->assertChangedStockAvailable($this->productId1, 96);
     }
 
     public function testEditOrderDetailQuantityAsSuperadminWithEnabledBulkOrders()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->getOrder(1, 2);
+        $this->mockOrder = $this->generateAndGetOrder(1, 2);
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
@@ -287,10 +287,10 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $this->assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails);
+        $this->assertOrderDetailProductQuantityChangedEmails(1, $expectedToEmails, $expectedCcEmails);
         
         $this->assertChangedOrderPrice($this->mockOrder->id_order, 10.91091);
-        $this->assertChangedStockAvailable($this->productId1, 97);
+        $this->assertChangedStockAvailable($this->productId1, 96);
     }
 
     private function getChangedMockOrderFromDatabase()
@@ -323,11 +323,24 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEquals($expectedOrderDetailCount, count($order->order_details), 'order detail was not deleted properly');
     }
-
+    
+    private function getMockOrder()
+    {
+        $order = $this->Order->find('all', [
+            'conditions' => [
+                'Orders.id_order' => $this->mockOrderId
+            ],
+            'contain' => [
+                'OrderDetails'
+            ]
+        ])->first();
+        return $order;
+    }
+    
     /**
      * @return array $order
      */
-    private function getOrder($product1Quantity=1, $product2Quantity=1)
+    private function generateAndGetOrder($product1Quantity=1, $product2Quantity=1)
     {
 
         //TODO calling the method addProductToCart only once leads to order error - needs debugging
@@ -348,22 +361,22 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         return $order;
     }
 
-    private function assertOrderDetailDeletedEmails($expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailDeletedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Produkt wurde storniert: Artischocke : Stück', [$this->cancellationReason, '1,82', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
+        $this->assertEmailLogs($emailLogs[$emailLogIndex], 'Produkt wurde storniert: Artischocke : Stück', [$this->cancellationReason, '1,82', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
-    private function assertOrderDetailProductPriceChangedEmails($expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailProductPriceChangedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Preis korrigiert: Artischocke', [$this->editPriceReason, $this->newPrice, 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
+        $this->assertEmailLogs($emailLogs[$emailLogIndex], 'Preis korrigiert: Artischocke', [$this->editPriceReason, $this->newPrice, 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
-    private function assertOrderDetailProductQuantityChangedEmails($expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailProductQuantityChangedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Bestellte Anzahl korrigiert: Artischocke : Stück', ['Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde korrigiert', $this->editQuantityReason, 'Neue Anzahl: <b>' . $this->newQuantity . '</b>', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
+        $this->assertEmailLogs($emailLogs[$emailLogIndex], 'Bestellte Anzahl korrigiert: Artischocke : Stück', ['Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde korrigiert', $this->editQuantityReason, 'Neue Anzahl: <b>' . $this->newQuantity . '</b>', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
     }
 
     private function assertChangedOrderPrice($orderId, $expectedTotalPaidTaxIncl)

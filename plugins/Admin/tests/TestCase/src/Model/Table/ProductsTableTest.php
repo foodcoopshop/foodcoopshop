@@ -110,7 +110,7 @@ class ProductsTableTest extends AppCakeTestCase
             $exceptionThrown = true;
         }
 
-        $this->assertProductQuantity($products, '98');
+        $this->assertProductQuantity($products, '97');
         $this->assertSame(true, $exceptionThrown);
     }
 
@@ -128,7 +128,7 @@ class ProductsTableTest extends AppCakeTestCase
             $exceptionThrown = true;
         }
 
-        $this->assertProductQuantity($products, '98');
+        $this->assertProductQuantity($products, '97');
         $this->assertSame(true, $exceptionThrown);
     }
 

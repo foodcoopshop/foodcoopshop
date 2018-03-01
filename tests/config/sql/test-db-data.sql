@@ -123,9 +123,14 @@ INSERT INTO `fcs_blog_posts` VALUES
 /*!40000 ALTER TABLE `fcs_blog_posts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
+INSERT INTO `fcs_cart_products` VALUES
+(1,1,346,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14'),
+(2,1,340,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14');
 /*!40000 ALTER TABLE `fcs_cart_products` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_carts` DISABLE KEYS */;
+INSERT INTO `fcs_carts` VALUES
+(1,92,0,'2018-03-01 10:17:14','2018-03-01 10:17:14');
 /*!40000 ALTER TABLE `fcs_carts` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
@@ -520,12 +525,20 @@ INSERT INTO `fcs_manufacturer` VALUES
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
+INSERT INTO `fcs_order_detail` VALUES
+(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,0.000000,0.000000,2,0.50),
+(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0.000000,0.000000,0,0.00);
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
+INSERT INTO `fcs_order_detail_tax` VALUES
+(1,0.170000,0.170000),
+(2,0.000000,0.000000);
 /*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
+INSERT INTO `fcs_orders` VALUES
+(1,92,1,3,6.365455,6.365455,6.198348,'2018-03-01 09:17:14','2018-03-01 09:17:14',0.50,1,1,'');
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
@@ -783,11 +796,11 @@ INSERT INTO `fcs_stock_available` VALUES
 (675,339,1,964),
 (676,339,2,995),
 (677,339,3,1000),
-(678,340,0,991),
+(678,340,0,990),
 (679,343,0,15),
 (680,344,0,78),
 (682,0,0,20),
-(686,346,0,98),
+(686,346,0,97),
 (687,347,0,998),
 (691,350,0,999),
 (692,60,9,996),
