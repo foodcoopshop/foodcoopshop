@@ -22,19 +22,13 @@
 return [
     'EmailTransport' => [
         'default' => [
-            'className' => 'Smtp',
-            'port' => 2525,
-            'host' => 'smtp.mailtrap.io',
-            'username' => '4474197bc4047b',
-            'password' => 'b23d5bb273cd5a'
-        ],
+            'className' => 'Mail',
+        ]
     ],
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => ['foodcoopshop@mailtrap.io' => 'foodcoopshop@mailtrap.io'],
-            'charset' => 'utf-8',
-            'headerCharset' => 'utf-8',
+            'from' => 'you@localhost'
         ],
     ],
     'Datasources' => [
