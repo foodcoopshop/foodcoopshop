@@ -523,9 +523,6 @@ INSERT INTO `fcs_manufacturer` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
-INSERT INTO `fcs_order_detail_tax` VALUES
-(1,0.170000,0.340000),
-(2,0.070000,0.210000);
 /*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
