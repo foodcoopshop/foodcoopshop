@@ -164,7 +164,7 @@ echo '<div class="holiday-wrapper">';
         'type' => 'checkbox',
         'escape' => false
         ]);
-            echo '<div class="sc"></div>';
+        echo '<div class="sc"></div>';
     }
 
     if (!$appAuth->isManufacturer()) {
@@ -175,21 +175,23 @@ echo '<div class="holiday-wrapper">';
         'options' => $customersForDropdown
         ]);
     }
-
+    echo '<div class="sc"></div>';
+    
     if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
         $this->element('addScript', [
             'script' =>
-                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#ManufacturerEnabledSyncDomains');
+                Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-enabled-sync-domains');
             "
         ]);
         echo $this->Form->control('Manufacturers.enabled_sync_domains', [
             'type' => 'select',
             'multiple' => true,
             'data-val' => $manufacturer->enabled_sync_domains,
-            'label' => 'Remote-Foodcoops <span class="after small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></div>',
+            'label' => 'Remote-Foodcoops <span class="small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></div>',
             'options' => $syncDomainsForDropdown,
             'escape' => false
         ]);
+        echo '<div class="sc"></div>';
     }
     
     echo $this->Form->end();

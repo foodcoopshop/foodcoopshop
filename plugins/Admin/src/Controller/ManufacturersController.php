@@ -562,6 +562,14 @@ class ManufacturersController extends AdminAppController
         
         $this->setFormReferer();
         
+        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
+            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
+            $this->helpers[] = 'Network.Network';
+            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
+            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
+            $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
+        }
+        
         if (empty($this->request->getData())) {
             $this->set('manufacturer', $manufacturer);
             return;
@@ -572,14 +580,6 @@ class ManufacturersController extends AdminAppController
         }
         if (!empty($this->request->getData('Manufacturers.holiday_to'))) {
             $this->request->data['Manufacturers']['holiday_to'] = new Time($this->request->getData('Manufacturers.holiday_to'));
-        }
-        
-        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
-            $this->helpers[] = 'Network.Network';
-            $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
-            $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
-            $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
         
         $this->loadComponent('Sanitize');
