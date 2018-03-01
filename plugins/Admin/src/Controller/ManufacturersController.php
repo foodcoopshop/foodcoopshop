@@ -493,7 +493,6 @@ class ManufacturersController extends AdminAppController
         $flashMessage .= '.';
         $this->Flash->success($flashMessage);
         $this->redirect($this->referer());
-        exit(); // important, on dev it happend that the url was called twice (browser-call)
     }
 
     public function myOptions()
