@@ -520,7 +520,7 @@ class OrderDetailsController extends AdminAppController
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
             if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
-                $message .= ' sowie an den Hersteller <b>' . $orderDetail->product->manfacturer->name . '</b>';
+                $message .= ' sowie an den Hersteller <b>' . $orderDetail->product->manufacturer->name . '</b>';
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
