@@ -99,10 +99,12 @@ foreach ($actionLogs as $actionLog) {
             $name = $actionLog->customer->manufacturer->name;
         }
     }
-    echo $this->Html->link(
-        $name,
-        '/admin/action-logs/index/?type='.$type.'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
-    );
+    if (isset($name)) {
+        echo $this->Html->link(
+            $name,
+            '/admin/action-logs/index/?type='.$type.'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
+        );
+    }
     echo '</td>';
 
     echo '<td class="center">';

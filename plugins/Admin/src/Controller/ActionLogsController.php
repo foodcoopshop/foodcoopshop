@@ -124,7 +124,7 @@ class ActionLogsController extends AdminAppController
             if ($actionLog->customer) {
                 $manufacturer = $this->Customer->getManufacturerRecord($actionLog->customer);
             }
-            if ($manufacturer) {
+            if (!empty($manufacturer)) {
                 $actionLog->customer->manufacturer = $manufacturer;
             }
         }
