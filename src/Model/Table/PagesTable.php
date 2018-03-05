@@ -80,7 +80,6 @@ class PagesTable extends AppTable
     {
         $conditions = [];
         if ($excludePageId) {
-            $conditions[] = 'Pages.id_page != ' . $excludePageId;
             $conditions[] = 'Pages.active > ' . APP_DEL;
         }
         $pages = $this->getThreaded($conditions);
