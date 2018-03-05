@@ -14,7 +14,7 @@
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
         
-        <testsuite name="App Test Suite">
+        <testsuite name="App">
 
             <file>tests/TestCase/config/GlobalTest.php</file>
 
@@ -34,7 +34,7 @@
             
         </testsuite>
         
-        <testsuite name="Admin Test Suite">
+        <testsuite name="Admin">
             
             <file>plugins/Admin/tests/TestCase/src/Controller/ConfigurationsControllerTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Controller/ManufacturersControllerTest.php</file>
@@ -47,6 +47,12 @@
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductLangsTableTest.php</file>
             
         </testsuite>
+        
+        <testsuite name="Network">
+            <file>plugins/Network/tests/TestCase/src/Controller/ApiControllerTest.php</file>
+            <file>plugins/Network/tests/TestCase/src/Controller/SyncDomainsControllerTest.php</file>
+            <file>plugins/Network/tests/TestCase/src/Controller/SyncsControllerTest.php</file>
+       </testsuite>
         
     </testsuites>
 
