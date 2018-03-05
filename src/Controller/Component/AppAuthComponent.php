@@ -44,6 +44,10 @@ class AppAuthComponent extends AuthComponent
      */
     public function termsOfUseAccepted()
     {
+        // force logout for users that were logged in in cakephp2 FCS was updated to v2.0 (cakephp3)  
+        if (!is_object($this->user('terms_of_use_accepted_date'))) {
+            $this->logout();
+        }
         return $this->user('terms_of_use_accepted_date')->i18nFormat(Configure::read('DateFormat.Database')) >= Configure::read('app.termsOfUseLastUpdate');
     }
 
