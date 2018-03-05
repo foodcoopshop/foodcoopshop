@@ -93,13 +93,15 @@ foreach ($actionLogs as $actionLog) {
     echo '</td>';
 
     echo '<td>';
-    $name = $actionLog->customer->name;
-    if ($actionLog->customer->manufacturer) {
-        $name = $actionLog->customer->manufacturer->name;
+    if ($actionLog->customer) {
+        $name = $actionLog->customer->name;
+        if ($actionLog->customer->manufacturer) {
+            $name = $actionLog->customer->manufacturer->name;
+        }
     }
     echo $this->Html->link(
         $name,
-        '/admin/action-logs/index/?type='.$type.'&productId='.$productId.'&customerId='.$actionLog->customer->id_customer.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
+        '/admin/action-logs/index/?type='.$type.'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';
 
