@@ -319,6 +319,7 @@ class OrdersController extends AdminAppController
 
     public function iframeStartPage()
     {
+        $this->set('title_for_layout', 'Sofort-Bestellung');
     }
 
     /**
