@@ -65,7 +65,7 @@ echo $this->Form->control('Pages.id_parent', [
     'type' => 'select',
     'label' => 'Übergeordneter Menüpunkt<br /><span class="small">Hauptmenü: Auswahl leer lassen</span>',
     'empty' => 'Übergeordneten Menüpunkt auswählen...',
-    'options' => $mainPagesForDropdown,
+    'options' => $pagesForSelect,
     'escape' => false
 ]);
 echo $this->Form->control('Pages.position', [

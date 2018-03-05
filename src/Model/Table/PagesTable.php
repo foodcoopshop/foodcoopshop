@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Model\Table;
-use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
 /**
@@ -41,8 +40,26 @@ class PagesTable extends AppTable
         $validator->allowEmpty('extern_url');
         return $validator;
     }
-
-    public function findAllGroupedByMenu($conditions)
+    
+    private $flattenedArray = [];
+    
+    private function flattenNestedArrayWithChildren($array, $separator = '')
+    {
+        foreach ($array as $item) {
+            $statusString = '';
+            if (! $item->active) {
+                $statusString = ' (offline)';
+            }
+            $this->flattenedArray[$item->id_page] = $separator . $item->title . $statusString;
+            if (! empty($item['children'])) {
+                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
+            }
+        }
+        
+        return $this->flattenedArray;
+    }
+    
+    public function getThreaded($conditions = [])
     {
         $pages = $this->find('threaded', [
             'parentField' => 'id_parent',
@@ -58,29 +75,17 @@ class PagesTable extends AppTable
         ]);
         return $pages;
     }
-
-    public function getMainPagesForDropdown($pageIdToExcluce = null)
+    
+    public function getForSelect($excludePageId = null)
     {
-        $conditions = [
-            'Pages.id_parent IS NULL',
-            'Pages.active > ' . APP_DEL
-        ];
-        if ($pageIdToExcluce > 0) {
-            $conditions[] = 'Pages.id_page != ' . $pageIdToExcluce;
+        $conditions = [];
+        if ($excludePageId) {
+            $conditions[] = 'Pages.id_page != ' . $excludePageId;
+            $conditions[] = 'Pages.active > ' . APP_DEL;
         }
-        $pages = $this->find('all', [
-            'conditions' => $conditions,
-            'order' => [
-                'Pages.menu_type' => 'DESC',
-                'Pages.position' => 'ASC',
-                'Pages.title' => 'ASC'
-            ]
-        ]);
-
-        $preparedPages = [];
-        foreach ($pages as $page) {
-            $preparedPages[$page->id_page] = $page->title . ' - ' . Configure::read('app.htmlHelper')->getMenuType($page->menu_type);
-        }
-        return $preparedPages;
+        $pages = $this->getThreaded($conditions);
+        $flattenedPages = $this->flattenNestedArrayWithChildren($pages);
+        return $flattenedPages;
     }
+
 }

@@ -14,12 +14,18 @@
  */
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
+$pageTable = TableRegistry::get('Pages');
 
 foreach ($pages as $page) {
+    
+    $level = $pageTable->getLevel($page);
+    
     $rowClass = [
         'data'
     ];
-    if ($subRow) {
+    if ($page->level > 0) {
         $rowClass[] = 'sub-row';
     }
     if (! $page->active) {
@@ -38,8 +44,8 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td>';
-    if ($subRow) {
-        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right: 5px;"></i>';
+    if ($level > 0) {
+        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
     }
     echo $page->title;
     echo '</td>';
@@ -104,8 +110,7 @@ foreach ($pages as $page) {
 
     if (! empty($page->children)) {
         echo $this->element('pageTreeRows', [
-            'pages' => $page->children,
-            'subRow' => true
+            'pages' => $page->children
         ]);
     }
 }

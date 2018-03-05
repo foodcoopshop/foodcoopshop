@@ -67,8 +67,7 @@ echo '<th></th>';
 echo '</tr>';
 
 echo $this->element('pageTreeRows', [
-    'pages' => $pages,
-    'subRow' => false
+    'pages' => $pages
 ]);
 
 echo '<tr>';

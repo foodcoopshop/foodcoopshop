@@ -86,7 +86,7 @@ class PagesController extends AdminAppController
             'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/pages",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/pages"
         ];
-        $this->set('mainPagesForDropdown', $this->Page->getMainPagesForDropdown($page->id_page));
+        $this->set('pagesForSelect', $this->Page->getForSelect($page->id_page));
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
         
@@ -159,8 +159,7 @@ class PagesController extends AdminAppController
         ])->count();
         $this->set('totalPagesCount', $totalPagesCount);
 
-        $query = $this->Page->findAllGroupedByMenu($conditions);
-        $pages = $this->paginate($query);
+        $pages = $this->Page->getThreaded($conditions);
         $this->set('pages', $pages);
 
         $this->set('title_for_layout', 'Seiten');
