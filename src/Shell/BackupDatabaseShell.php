@@ -70,6 +70,7 @@ class BackupDatabaseShell extends AppShell
         // email zipped file
         $email = new AppEmail();
         $email->setProfile('debug');
+        $email->setTransport('debug');
         $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject($message . ': ' . Configure::read('app.cakeServerName'))
             ->setAttachments([
