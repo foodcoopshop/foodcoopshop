@@ -148,7 +148,7 @@ class FrontendController extends AppController
             $conditions['Pages.is_private'] = APP_OFF;
         }
 
-        $pages = $this->Page->findAllGroupedByMenu($conditions);
+        $pages = $this->Page->getThreaded($conditions);
         $pagesForHeader = [];
         $pagesForFooter = [];
         foreach ($pages as $page) {
