@@ -210,7 +210,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
-                'OrderDetails.product_quantity', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart')
+                'OrderDetails.product_quantity', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'Orders.date_add', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart')
             ],
             'order' => [
                 'Products.id_manufacturer' => 'ASC',

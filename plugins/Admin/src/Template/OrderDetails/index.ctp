@@ -144,7 +144,7 @@ echo '<th class="right">';
 echo '</th>';
 if ($groupBy == '') {
     echo '<th>';
-        $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
+        echo $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
     echo '</th>';
     echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Mitglied').'</th>';
     echo '<th>'.$this->Paginator->sort('Orders.current_state', 'Status').'</th>';
