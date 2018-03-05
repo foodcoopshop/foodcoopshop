@@ -121,7 +121,9 @@ class ActionLogsController extends AdminAppController
             ]
         ])->toArray();
         foreach ($actionLogs as $actionLog) {
-            $manufacturer = $this->Customer->getManufacturerRecord($actionLog->customer);
+            if ($actionLog->customer) {
+                $manufacturer = $this->Customer->getManufacturerRecord($actionLog->customer);
+            }
             if ($manufacturer) {
                 $actionLog->customer->manufacturer = $manufacturer;
             }
