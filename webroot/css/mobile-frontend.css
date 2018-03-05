@@ -247,9 +247,9 @@
         width: 30% ! important;
     }
     #LoginForm .input.checkbox label {
-        width: 180px ! important;
+        width: 135px ! important;
         padding-left: 0;
-        margin-left: 220px;
+        margin-left: 170px;
     }
     #LoginForm button {
         margin-right: 65px;
