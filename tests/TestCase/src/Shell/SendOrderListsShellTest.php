@@ -22,6 +22,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
+        $this->Order->deleteAll([]);
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
