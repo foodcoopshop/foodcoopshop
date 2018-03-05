@@ -25,7 +25,7 @@ foreach ($pages as $page) {
     $rowClass = [
         'data'
     ];
-    if ($page->level > 0) {
+    if ($level > 0) {
         $rowClass[] = 'sub-row';
     }
     if (! $page->active) {
