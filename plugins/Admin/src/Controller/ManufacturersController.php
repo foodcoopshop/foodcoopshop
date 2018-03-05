@@ -219,44 +219,6 @@ class ManufacturersController extends AdminAppController
         $this->set('_serialize', 'data');
     }
 
-    public function changeStatus($manufacturerId, $status)
-    {
-        if (! in_array($status, [
-            APP_OFF,
-            APP_ON
-        ])) {
-            throw new RecordNotFoundException('Status muss 0 oder 1 sein!');
-        }
-
-        $this->Manufacturer->id = $manufacturerId;
-        $this->Manufacturer->save([
-            'active' => $status
-        ]);
-
-        $statusText = 'deaktiviert';
-        $actionLogType = 'manufacturer_set_inactive';
-        if ($status) {
-            $statusText = 'aktiviert';
-            $actionLogType = 'manufacturer_set_active';
-        }
-
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
-        ])->first();
-
-        $message = 'Der Hersteller "' . $manufacturer['Manufacturers']['name'] . '" wurde erfolgreich ' . $statusText;
-        $message .= '.';
-
-        $this->Flash->success($message);
-
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturerId, 'manufacturer', $message);
-
-        $this->redirect($this->referer());
-    }
-
     public function index()
     {
         $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
@@ -770,7 +732,7 @@ class ManufacturersController extends AdminAppController
 
         $this->set('manufacturer', $manufacturer);
 
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer['Manufacturers']['bulk_orders_allowed']);
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
         if ($bulkOrdersAllowed) {
             $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         } else {
