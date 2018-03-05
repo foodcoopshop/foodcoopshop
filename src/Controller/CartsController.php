@@ -494,7 +494,7 @@ class CartsController extends FrontendController
                     'productAndDepositSum' => $depositSum + $productSum,
                     'showManufacturerUnsubscribeLink' => true
                 ]);
-//                 $email->send();
+                $email->send();
             }
         }
     }
