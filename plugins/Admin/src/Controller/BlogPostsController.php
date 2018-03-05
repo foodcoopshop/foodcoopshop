@@ -113,7 +113,6 @@ class BlogPostsController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
         $this->request->data['BlogPosts']['id_customer'] = $this->AppAuth->getUserId();
         
