@@ -114,8 +114,13 @@ class AppController extends Controller
                     'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
                 ]
             ])->first();
-            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer['Manufacturers']['variable_member_fee']);
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
+        }
+        
+        // should be removed in v2.1 - fixes different logged user format of cakephp 2 and 3
+        if (!is_object($this->AppAuth->user('terms_of_use_accepted_date'))) {
+            $this->renewAuthSession();
         }
         
         parent::beforeFilter($event);
