@@ -763,7 +763,7 @@ class ProductsController extends AdminAppController
         $this->set('isPriceZero', $isPriceZero);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityZero, $isPriceZero);
+            $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityZero, $isPriceZero, false, $this);
         } else {
             $preparedProducts = [];
         }

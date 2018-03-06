@@ -396,7 +396,7 @@ class ProductsTable extends AppTable
      * @param array $products
      * @return array $preparedProducts
      */
-    public function getProductsForBackend($appAuth, $productId, $manufacturerId, $active, $categoryId = '', $isQuantityZero = 0, $isPriceZero = 0, $addProductNameToAttributes = false)
+    public function getProductsForBackend($appAuth, $productId, $manufacturerId, $active, $categoryId = '', $isQuantityZero = 0, $isPriceZero = 0, $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
@@ -470,13 +470,16 @@ class ProductsTable extends AppTable
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
         
+        
+        $order = [
+            'Products.active' => 'DESC',
+            'ProductLangs.name' => 'ASC'
+        ];
+        
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => $contain,
-            'order' => [
-                'Products.active' => 'DESC',
-                'ProductLangs.name' => 'ASC'
-            ]
+            'order' => ($controller === null ? $order : null)
         ]);
         
         if ($categoryId != '') {
@@ -485,7 +488,7 @@ class ProductsTable extends AppTable
             });
         }
         
-        $products = $query
+        $query
         ->select('Products.id_product')->distinct()
         ->select($this) // Products
         ->select($this->ProductShops)
@@ -494,12 +497,20 @@ class ProductsTable extends AppTable
         ->select('Images.id_image')
         ->select($this->Taxes)
         ->select($this->Manufacturers)
-        ->select($this->StockAvailables)
-        ->toArray();
-
+        ->select($this->StockAvailables);
+        
+        if ($controller) {
+            $query = $controller->paginate($query, [
+                'sortWhitelist' => [
+                    'Images.id_image', 'ProductLangs.name', 'ProductLangs.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name'
+                ],
+                'order' => $order
+            ]);
+        }
+        
         $i = 0;
         $preparedProducts = [];
-        foreach ($products as $product) {
+        foreach ($query as $product) {
             $product->category = (object) [
                 'names' => [],
                 'all_products_found' => false

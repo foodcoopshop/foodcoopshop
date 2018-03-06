@@ -155,10 +155,10 @@ use Cake\Core\Configure;
     echo '<tr class="sort">';
     echo '<th class="hide">ID</th>';
     echo '<th>Variante</th>';
-    echo '<th>' . $this->Paginator->sort('Products.image', 'Bild') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Images.id_image', 'Bild') . '</th>';
     echo '<th>' . $this->Paginator->sort('ProductLangs.name', 'Name') . '<span class="product-declaration-header">' . $this->Paginator->sort('ProductLangs.is_declaration_ok', 'Produktdeklaration') . '</span></th>';
     if ($manufacturerId == 'all') {
-        echo '<th>' . $this->Paginator->sort('Products.id_manufacturer', 'Hersteller') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Manufacturers.name', 'Hersteller') . '</th>';
     }
     echo '<th>Kategorien</th>';
     echo '<th>Anzahl</th>';
