@@ -213,8 +213,9 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.product_quantity', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'Orders.date_add', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart')
             ],
             'order' => [
-                'Products.id_manufacturer' => 'ASC',
+                // first param needs to be included in sortWhitelist!
                 'Orders.date_add' => 'DESC',
+                'Products.id_manufacturer' => 'ASC',
                 'OrderDetails.product_name' => 'ASC'
             ]
         ])->toArray();
