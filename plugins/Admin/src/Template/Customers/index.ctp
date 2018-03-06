@@ -27,15 +27,12 @@ use Cake\Core\Configure;
     <div class="filter-container">
     	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
-            Anzahl Bestellungen zwischen <input id="validOrdersCountFrom"
+            Anzahl Bestellungen zwischen <input id="validOrdersCountFrom" name="validOrdersCountFrom"
                 type="text"
                 value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
-            und <input id="validOrdersCountTo" type="text"
+            und <input id="validOrdersCountTo" name="validOrdersCountTo" type="text"
                 value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
-            und letztes Bestelldatum von <input id="dateFrom" type="text"
-                class="datepicker" value="<?php echo $dateFrom; ?>" /> bis <input
-                id="dateTo" type="text" class="datepicker"
-                value="<?php echo $dateTo; ?>" />
+            und letztes Bestelldatum von <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right"></div>
     	<?php echo $this->Form->end(); ?>
     </div>

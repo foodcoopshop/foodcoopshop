@@ -393,13 +393,13 @@ class CustomersController extends AdminAppController
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
-        $dateFrom = '';
+        $dateFrom = '01.01.2014';
         if (! empty($this->request->getQuery('dateFrom'))) {
             $dateFrom = $this->request->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = '';
+        $dateTo = date('d.m.Y');
         if (! empty($this->request->getQuery('dateTo'))) {
             $dateTo = $this->request->getQuery('dateTo');
         }
