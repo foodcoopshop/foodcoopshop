@@ -91,7 +91,7 @@ class SlugHelper extends Helper
     {
         $url = '/admin/deposits/index';
         if ($manufacturerId != '') {
-            $url .= '/manufacturerId:'.$manufacturerId;
+            $url .= '?manufacturerId='.$manufacturerId;
         }
         return $url;
     }
@@ -100,7 +100,7 @@ class SlugHelper extends Helper
     {
         $url = '/admin/deposits/detail/'.$monthAndYear;
         if ($manufacturerId != '') {
-            $url .= '/?manufacturerId='.$manufacturerId;
+            $url .= '?manufacturerId='.$manufacturerId;
         }
         return $url;
     }
@@ -330,14 +330,15 @@ class SlugHelper extends Helper
     public function getProductAdmin($manufacturerId = null, $productId = null)
     {
         $url = '/admin/products';
-        if (!empty($manufacturerId) || !empty($productId)) {
-            $url .= '/index';
-        }
+        
         if (!empty($manufacturerId)) {
-            $url .= '/manufacturerId:'.$manufacturerId;
+            $urlParams['manufacturerId'] = $manufacturerId;
         }
         if (!empty($productId)) {
-            $url .= '/productId:'.$productId;
+            $urlParams['productId'] = $productId;
+        }
+        if (!empty($urlParams)) {
+            $url .= '?' . http_build_query($urlParams);
         }
         return $url;
     }
