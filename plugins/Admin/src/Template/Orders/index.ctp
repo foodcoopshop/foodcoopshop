@@ -218,7 +218,7 @@ use Cake\Core\Configure;
             echo '</td>';
         }
 
-        echo '<td style="width: 100px;">';
+        echo '<td style="width: 115px;">';
         if (! $groupByCustomer) {
             echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
         } else {
