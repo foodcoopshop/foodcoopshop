@@ -26,7 +26,16 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
-
+    disableSelectpickerItems : function(selector, ids) {
+    	$(selector).find('option').each(function() {
+    		var currentId = parseInt($(this).val());
+            if ($.inArray(currentId, ids) !== -1) {
+    			$(this).attr('disabled', 'disabled');
+    		}
+    	});
+    	$(selector).selectpicker('render');
+    },
+    
     addLoaderToSyncProductDataButton : function (button) {
         button.on('click', function () {
              foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-arrow-circle-left');

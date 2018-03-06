@@ -77,6 +77,20 @@ class PagesController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Seite bearbeiten');
+        
+        $pageChildren = $this->Page->find('all', [
+            'conditions' => [
+                'Pages.active > ' . APP_DEL
+            ]
+        ])
+        ->find('children', ['for' => $pageId]);
+        
+        $disabledSelectPageIds = [(int) $pageId];
+        foreach ($pageChildren as $pageChild) {
+            $disabledSelectPageIds[] = $pageChild->id_page;
+        }
+        $this->set('disabledSelectPageIds', $disabledSelectPageIds);
+        
         $this->_processForm($page, true);
     }
     
