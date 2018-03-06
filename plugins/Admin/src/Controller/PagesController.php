@@ -53,6 +53,9 @@ class PagesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Seite erstellen');
+        
+        $this->set('disabledSelectPageIds', []);
+        
         $this->_processForm($page, false);
         
         if (empty($this->request->getData())) {
