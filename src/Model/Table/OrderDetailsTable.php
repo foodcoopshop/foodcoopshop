@@ -100,7 +100,7 @@ class OrderDetailsTable extends AppTable
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
         $sql .= 'AND o.current_state = :orderStateOpen ';
         $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :dateFrom ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%d.%m.%Y\') <= :dateTo ';
+        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') <= :dateTo ';
         $sql .= 'GROUP BY p.id_manufacturer ';
         $params = [
             'manufacturerId' => $manufacturerId,
