@@ -18,6 +18,7 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
 {
