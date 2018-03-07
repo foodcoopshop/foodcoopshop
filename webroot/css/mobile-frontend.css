@@ -249,7 +249,6 @@
     #LoginForm .input.checkbox label {
         width: 135px ! important;
         padding-left: 0;
-        margin-left: 170px;
     }
     #LoginForm button {
         margin-right: 65px;
@@ -310,9 +309,6 @@
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
     #LoginForm button {
         margin-right: 0px;
-    }
-    #LoginForm .input.checkbox label {
-        margin-left: 40px ! important;
     }
     #RegistrationForm .input.checkbox input[type="checkbox"] {
         margin-top: 8px;

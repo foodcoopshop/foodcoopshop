@@ -276,7 +276,7 @@ body.customers.new_password_request .input {
     clear: both;
 }
 #LoginForm  .remember-me-wrapper {
-    float: left;
+    width: 180px;
 }
 #LoginForm .remember-me-wrapper label {
     float: right;

@@ -33,8 +33,6 @@ $this->element('addScript', ['script' =>
         <?php
           echo $this->Form->control('email', ['label' => 'E-Mail']);
           echo $this->Form->control('passwd', ['label' => 'Passwort']);
-
-          echo '<div class="sc"></div>';
           
           echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
