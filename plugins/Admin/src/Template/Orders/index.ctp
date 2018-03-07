@@ -171,7 +171,7 @@ use Cake\Core\Configure;
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
             'title' => 'Alle bestellten Produkte von ' . $order->name . ' anzeigen',
             'class' => 'icon-with-text'
-        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo?' . $dateTo . '&customerId=' . $order->id_customer . '&orderStates[]=' . join(',', $orderStates));
+        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->id_customer . '&orderStates[]=' . join(',', $orderStates));
         echo '</td>';
 
         echo '<td class="hide">';
