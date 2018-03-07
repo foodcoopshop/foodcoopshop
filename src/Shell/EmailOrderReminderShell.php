@@ -26,34 +26,42 @@ use Cake\Core\Configure;
 
 class EmailOrderReminderShell extends AppShell
 {
-
+    
     public function main()
     {
         
         if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('appDb.FCS_CART_ENABLED')) {
             return;
         }
-
+        
         parent::main();
         
         $this->initSimpleBrowser(); // for loggedUserId
-
+        
         $this->startTimeLogging();
-
+        
         $conditions = [
             'Customers.newsletter' => 1,
             'Customers.active' => 1
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
-
+        
         $this->Customer->association('ActiveOrders')->setConditions(
             [
-                'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') >= \'' . Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay()). '\'',
-                'DATE_FORMAT(ActiveOrders.date_add, \'%d.%m.%Y\') <= \'' . Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay()). '\''
+                'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+                    Configure::read('app.timeHelper')->getOrderPeriodFirstDay(
+                        Configure::read('app.timeHelper')->getCurrentDay()
+                        )
+                    ). '\'',
+                'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+                    Configure::read('app.timeHelper')->getOrderPeriodLastDay(
+                        Configure::read('app.timeHelper')->getCurrentDay()
+                        )
+                    ). '\'',
             ]
-        );
-
+            );
+        
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -62,36 +70,37 @@ class EmailOrderReminderShell extends AppShell
             ]
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
-
+        
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
+            
             // customer has open orders, do not send email
             if (count($customer->active_orders) > 0) {
                 continue;
             }
-
+            
             $email = new AppEmail();
             $email->setTo($customer->email)
-                ->setTemplate('Admin.email_order_reminder')
-                ->setSubject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
-                ->setViewVars([
-                  'customer' => $customer,
-                  'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
-                ])
-                ->send();
-
+            ->setTemplate('Admin.email_order_reminder')
+            ->setSubject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
+            ->setViewVars([
+                'customer' => $customer,
+                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
+            ])
+            ->send();
+            
             $outString .= $customer->name . '<br />';
-
+            
             $i ++;
         }
-
+        
         $outString .= 'Verschickte E-Mails: ' . $i;
-
+        
         $this->stopTimeLogging();
-
+        
         $this->ActionLog->customSave('cronjob_email_order_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
-
+        
         $this->out($outString);
         $this->out($this->getRuntime());
     }
