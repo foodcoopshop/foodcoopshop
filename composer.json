@@ -22,7 +22,7 @@
         "cakephp/plugin-installer": "~1.0",
         "markstory/asset_compress": "3.2.*",
         "intervention/image": "2.*",
-        "mrothauer/tcpdf": "6.2.15",
+        "tecnickcom/tcpdf": "6.2.*",
         "simpletest/simpletest": "1.*",
         "linkorb/jsmin-php": "1.*",
         "natxet/CssMin": "3.*",
