@@ -77,7 +77,7 @@ class CategoriesController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['description']);
         
         $category = $this->Category->patchEntity($category, $this->request->getData());
         if (!empty($category->getErrors())) {

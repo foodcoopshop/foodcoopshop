@@ -23,10 +23,10 @@ class SanitizeComponent extends Component
      * @param array $array
      * @return array
      */
-    public function trimRecursive($data)
+    public function trimRecursive($data, $excludedFields = [])
     {
-        array_walk_recursive($data, function(&$item, $key) {
-            if (is_string($item)){
+        array_walk_recursive($data, function(&$item, $key) use ($excludedFields) {
+            if (is_string($item) && !in_array($key, $excludedFields)) {
                 $item = trim($item);
             }
         });
@@ -37,10 +37,10 @@ class SanitizeComponent extends Component
      * @param array $array
      * @return array
      */
-    public function stripTagsRecursive($data)
+    public function stripTagsRecursive($data, $excludedFields = [])
     {
-        array_walk_recursive($data, function(&$item, $key) {
-            if (is_string($item)){
+        array_walk_recursive($data, function(&$item, $key) use ($excludedFields) {
+            if (is_string($item) && !in_array($key, $excludedFields)) {
                 $item = strip_tags($item);
             }
         });

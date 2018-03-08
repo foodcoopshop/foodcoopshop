@@ -46,12 +46,13 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'uid_number' => '',
                 'tmp_image' => '',
                 'delete_image' => '',
-                'firmenbuchnummer' => '',
+                'firmenbuchnummer' => '<b>number</b>',
                 'firmengericht' => '',
                 'aufsichtsbehoerde' => '',
                 'kammer' => '',
                 'homepage' => '',
-                'short_description' => 'Test Description',
+                'short_description' => '<i>Test Description</i>',
+                'description' => '<b>Text</b>',
                 'address_manufacturer' => [
                     'firstname' => '',
                     'lastname' => '',
@@ -102,7 +103,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response);
 
         $this->doTestCustomerRecord($manufacturer);
-
+        
+        $this->assertEquals($manufacturer->description, '<b>Text</b>', 'tags must not be stripped');
+        $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>', 'tags must not be stripped');
+        $this->assertEquals($manufacturer->firmenbuchnummer, 'number', 'tags must be stripped');
+        
         $this->logout();
     }
 

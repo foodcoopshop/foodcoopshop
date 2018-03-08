@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
@@ -120,6 +119,7 @@ class ManufacturersController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['description', 'short_description']);
         
         $this->request->data['Manufacturers']['iban'] = str_replace(' ', '', $this->request->getData('Manufacturers.iban'));
         $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->getData('Manufacturers.bic'));

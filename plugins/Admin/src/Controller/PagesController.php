@@ -114,6 +114,7 @@ class PagesController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['content']);
         
         $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->getData('Pages.extern_url'));
         $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
