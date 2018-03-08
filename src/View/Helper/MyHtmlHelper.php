@@ -326,9 +326,6 @@ class MyHtmlHelper extends HtmlHelper
         if (Configure::read('app.memberFeeEnabled')) {
             $paymentTexts['member_fee'] = 'Mitgliedsbeitrag';
         }
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
-            $paymentTexts['member_fee_flexible'] = 'Flexibler Mitgliedsbeitrag';
-        }
         return $paymentTexts;
     }
 

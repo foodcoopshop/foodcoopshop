@@ -106,11 +106,6 @@ return [
         'categoryAllProducts' => 20,
         
         /**
-         * @deprecated - do not use this option any more, will be removed in next version
-         */
-        'memberFeeFlexibleEnabled' => false,
-        
-        /**
          * image upload sizes and suffixes
          */
         'productImageSizes' => [

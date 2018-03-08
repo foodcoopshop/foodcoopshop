@@ -505,18 +505,8 @@ class PaymentsController extends AdminAppController
         $this->allowedPaymentTypes = [
             'member_fee'
         ];
-        $sumMemberFeeFlexbile = 0;
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
-            $this->allowedPaymentTypes = [
-                'member_fee',
-                'member_fee_flexible'
-            ];
-            $sumMemberFeeFlexbile = $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee_flexible');
-            $this->set('sumMemberFeeFlexible', $sumMemberFeeFlexbile);
-        }
         $this->preparePayments();
-
-        $sumMemberFee = $sumMemberFeeFlexbile + $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee');
+        $sumMemberFee = $this->Payment->getSum($this->AppAuth->getUserId(), 'member_fee');
         $this->set('sumMemberFee', $sumMemberFee);
     }
 

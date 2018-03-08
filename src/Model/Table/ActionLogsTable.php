@@ -236,10 +236,10 @@ class ActionLogsTable extends AppTable
             'de' => 'Mitglied: Mitgliedsbeitrag gelöscht'
         ],
         'payment_member_fee_flexible_added' => [
-            'de' => 'Mitglied: Flexibler Mitgliedsbeitrag eingetragen'
+            'de' => 'Mitglied: Flexibler Mitgliedsbeitrag eingetragen (Funktion nicht mehr vorhanden)'
         ],
         'payment_member_fee_flexible_deleted' => [
-            'de' => 'Mitglied: Flexibler Mitgliedsbeitrag gelöscht'
+            'de' => 'Mitglied: Flexibler Mitgliedsbeitrag gelöscht (Funktion nicht mehr vorhanden)'
         ],
 
         'blog_post_added' => [

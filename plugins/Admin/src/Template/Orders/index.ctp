@@ -25,11 +25,6 @@ use Cake\Core\Configure;
         "
         ]);
 
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
-            $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-member-fee-flexible-button');"
-            ]);
-        }
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', [
                 'script' =>
@@ -103,9 +98,6 @@ use Cake\Core\Configure;
     }
     if (Configure::read('app.isDepositPaymentCashless')) {
         echo '<th>Pfand</th>';
-    }
-    if (Configure::read('app.memberFeeFlexibleEnabled')) {
-        echo '<th>Flexi</th>';
     }
     if (! $groupByCustomer) {
         echo '<th>' . $this->Paginator->sort('Orders.date_add', 'Bestelldatum') . '</th>';
@@ -190,31 +182,6 @@ use Cake\Core\Configure;
                     'userName' => $order->customer->name,
                     'customerId' => $order->customer->id_customer
                 ]);
-            echo '</td>';
-        }
-
-        if (Configure::read('app.memberFeeFlexibleEnabled')) {
-            echo '<td style="width:72px;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('heart.png')) . ' Flexi', [
-                'title' => 'Flexiblen Mitgliedsbeitrag eintragen',
-                'class' => 'add-payment-member-fee-flexible-button icon-with-text',
-                'data-object-id' => $order->id_order
-            ], 'javascript:void(0);');
-            echo '<div id="add-payment-member-fee-flexible-form-' . $order->id_order . '" class="add-payment-form add-payment-member-fee-flexible-form">';
-            echo '<h3>Flexiblen Mitgliedsbeitrag eintragen</h3>';
-            echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order->customer->name . '</b> eintragen:</p>';
-            echo $this->Form->control('Payments.amount', [
-                'label' => 'Betrag in €',
-                'type' => 'string'
-            ]);
-            echo $this->Form->hidden('Payments.type', [
-                'value' => 'member_fee_flexible'
-            ]);
-            echo $this->Form->hidden('Payments.customerId', [
-                'value' => $order->customer->id_customer
-            ]);
-            echo '</div>';
-            echo '<div class="sc"></div>';
             echo '</td>';
         }
 
