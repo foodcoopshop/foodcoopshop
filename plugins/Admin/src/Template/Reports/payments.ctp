@@ -153,7 +153,7 @@ foreach ($payments as $payment) {
         echo $additionalText;
     echo '</td>';
 
-    echo '<td style="text-align:right;width:110px;">';
+    echo '<td style="text-align:right;width:135px;">';
         echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
     echo '</td>';
 
