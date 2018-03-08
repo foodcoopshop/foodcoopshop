@@ -51,11 +51,11 @@ class BlogPostsTable extends AppTable
     public function findNeighbors(Query $query, array $options)
     {
         $previous = $this->find()
-            ->order(['id_blog_post ' => 'DESC'])
-            ->where('id_blog_post < ' . $options['id']);
+            ->orderAsc($this->getAlias().'.modified')
+            ->where($this->getAlias() . '.modified > \'' . $options['modified'] . '\'');
         $next = $this->find()
-            ->order(['id_blog_post ' => 'ASC'])
-            ->where('id_blog_post > ' . $options['id']);
+            ->orderDesc($this->getAlias().'.modified')
+            ->where($this->getAlias() . '.modified < \'' . $options['modified'] . '\'');
         return ['prev' => $previous, 'next' => $next];
     }
 

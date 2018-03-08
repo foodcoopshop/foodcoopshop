@@ -87,7 +87,7 @@ class BlogPostsController extends FrontendController
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
         
-        $options = ['id' => $blogPost->id_blog_post];
+        $options = ['modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))];
         $tmpNeighbors = $this->BlogPost->find('neighbors', $options);
         $tmpNeighbors['prev']->contain('Manufacturers')->where($conditions)->first();
         $tmpNeighbors['next']->contain('Manufacturers')->where($conditions)->first();

@@ -68,18 +68,18 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 if (!empty($neighbors['prev']) || !empty($neighbors['next'])) {
     echo '<h2>Weitere Beiträge</h2>';
 }
-if (!empty($neighbors['next'])) {
-    echo $this->element('blogPosts', [
-    'blogPosts' => [$neighbors['next']],
-    'useCarousel' => false,
-    'style' => 'float: left;'
-    ]);
-}
 if (!empty($neighbors['prev'])) {
     echo $this->element('blogPosts', [
     'blogPosts' => [$neighbors['prev']],
     'useCarousel' => false,
-    'style' => 'float: right;'
+    'style' => 'float: left;'
+    ]);
+}
+if (!empty($neighbors['next'])) {
+    echo $this->element('blogPosts', [
+        'blogPosts' => [$neighbors['next']],
+        'useCarousel' => false,
+        'style' => 'float: right;'
     ]);
 }
 ?>
