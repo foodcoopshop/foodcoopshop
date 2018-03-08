@@ -542,15 +542,17 @@ class PaymentsController extends AdminAppController
                 ['type IN' => $this->allowedPaymentTypes]
             )
         );
+        
+        $contain = ['Payments'];
+        if (in_array('product', $this->allowedPaymentTypes)) {
+            $contain [] = 'PaidCashFreeOrders';
+        }
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->getCustomerId()
             ],
-            'contain' => [
-                'Payments',
-                'PaidCashFreeOrders'
-            ]
+            'contain' => $contain
         ])->first();
 
         $payments = [];
