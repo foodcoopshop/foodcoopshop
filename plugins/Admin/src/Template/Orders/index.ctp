@@ -139,7 +139,7 @@ use Cake\Core\Configure;
             $rowClass[] = 'selected';
         }
 
-        echo '<tr id="order-' . $order->id_order . '" class="' . join(' ', $rowClass) . '">';
+        echo '<tr id="order-' . ($groupByCustomer ? $order->customer->id_customer : $order->id_order) . '" class="' . join(' ', $rowClass) . '">';
 
         echo '<td class="hide order-id">';
         if (! $groupByCustomer) {
@@ -169,9 +169,9 @@ use Cake\Core\Configure;
 
         echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
-            'title' => 'Alle bestellten Produkte von ' . $order->name . ' anzeigen',
+            'title' => 'Alle bestellten Produkte von ' . $order->customer->name . ' anzeigen',
             'class' => 'icon-with-text'
-        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->id_customer . '&orderStates[]=' . join(',', $orderStates));
+        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->customer->id_customer . '&orderStates[]=' . join(',', $orderStates));
         echo '</td>';
 
         echo '<td class="hide">';
@@ -186,9 +186,9 @@ use Cake\Core\Configure;
             echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
                 echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
-                    'rowId' => $order->id_order,
+                    'rowId' => $groupByCustomer ? $order->customer->id_customer : $order->id_order,
                     'userName' => $order->customer->name,
-                    'customerId' => $order->id_customer
+                    'customerId' => $order->customer->id_customer
                 ]);
             echo '</td>';
         }
@@ -202,7 +202,7 @@ use Cake\Core\Configure;
             ], 'javascript:void(0);');
             echo '<div id="add-payment-member-fee-flexible-form-' . $order->id_order . '" class="add-payment-form add-payment-member-fee-flexible-form">';
             echo '<h3>Flexiblen Mitgliedsbeitrag eintragen</h3>';
-            echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order->name . '</b> eintragen:</p>';
+            echo '<p>Flexiblen Mitgliedsbeitrag für <b>' . $order->customer->name . '</b> eintragen:</p>';
             echo $this->Form->control('Payments.amount', [
                 'label' => 'Betrag in €',
                 'type' => 'string'
@@ -211,7 +211,7 @@ use Cake\Core\Configure;
                 'value' => 'member_fee_flexible'
             ]);
             echo $this->Form->hidden('Payments.customerId', [
-                'value' => $order->id_customer
+                'value' => $order->customer->id_customer
             ]);
             echo '</div>';
             echo '<div class="sc"></div>';
