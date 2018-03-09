@@ -662,10 +662,3 @@ foodcoopshop.Helper = {
     }
 
 }
-
-
-
-
-
-
-

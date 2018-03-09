@@ -116,7 +116,6 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte gib deinen Ort an.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib deine Handynummer an.', $response);
 
-
         // 3) check for wrong data
         $data['Customers']['address_customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
         $data['Customers']['address_customer']['postcode'] = 'ABCDEF';
@@ -130,14 +129,12 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die Telefonnummer ist nicht gültig.', $response);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Nutzungsbedingungen.', $response);
 
-
         // 4) save user and check record
         $email = 'new-foodcoopshop-member-1@mailinator.com';
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($data, $email);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Willkommen', ['war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'], [$email]);
-
 
         // 5) register again with changed configuration
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
