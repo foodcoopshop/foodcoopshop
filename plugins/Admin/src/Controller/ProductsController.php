@@ -143,23 +143,28 @@ class ProductsController extends AdminAppController
 		$product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
-            ]
+            ],
+		    'contain' => [
+		        'Images',
+		        'ProductLangs',
+		        'Manufacturers'
+		    ]
 		])->first();
 
         // delete db entries
-        $this->Product->Image->deleteAll([
-            'Images.id_image' => $product['Images']['id_image']
+        $this->Product->Images->deleteAll([
+            'Images.id_image' => $product->image->id_image
         ]);
 
         // delete physical files
-        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product['Images']['id_image']);
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product->image->id_image);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $thumbsFileName = $thumbsPath . DS . $product['Images']['id_image'] . $options['suffix'] . '.jpg';
+            $thumbsFileName = $thumbsPath . DS . $product->image->id_image . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
 
-        $messageString = 'Bild (Id: ' . $product['Images']['id_image'] . ') wurde erfolgreich gelöscht. Produkt: "' . $product['ProductLangs']['name'] . '", Hersteller: "' . $product['Manufacturers']['name'] . '"';
+        $messageString = 'Bild (ID: ' . $product->image->id_image . ') wurde erfolgreich gelöscht. Produkt: <b>' . $product->product_lang->name . '</b>, Hersteller: <b>' . $product->manufacturer->name . '</b>';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -172,28 +177,34 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = $this->params['data']['objectId'];
-        $filename = $this->params['data']['filename'];
+        $productId = $this->request->getData('objectId');
+        $filename = $this->request->getData('filename');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'Images',
+                'ProductLangs',
+                'Manufacturers'
             ]
         ])->first();
 
-        if ($product['Images']['id_image'] == '') {
+        if (empty($product->image)) {
             // product does not yet have image => create the necessary record
-            $this->Product->Image->save([
-                'id_product' => $productId
-            ]);
-            $imageId = $this->Product->Image->getLastInsertID();
+            $image = $this->Product->Images->save(
+                $this->Product->Images->newEntity(
+                    ['id_product' => $productId]
+                )
+            );
         } else {
-            $imageId = $product['Images']['id_image'];
+            $image = $product->image;
         }
 
         // not (yet) implemented for attributes, only for productIds!
-        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($imageId);
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
 
         // recursively create path
@@ -202,17 +213,17 @@ class ProductsController extends AdminAppController
         $dir->chmod($thumbsPath, 0755);
 
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $image = Image::make(WWW_ROOT . $filename);
+            $physicalImage = Image::make(WWW_ROOT . $filename);
             // make portrait images smaller
-            if ($image->getHeight() > $image->getWidth()) {
-                $thumbSize = round($thumbSize * ($image->getWidth() / $image->getHeight()), 0);
+            if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
+                $thumbSize = round($thumbSize * ($physicalImage->getWidth() / $physicalImage->getHeight()), 0);
             }
-            $image->widen($thumbSize);
-            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image->save($thumbsFileName);
+            $physicalImage->widen($thumbSize);
+            $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
+            $physicalImage->save($thumbsFileName);
         }
 
-        $messageString = 'Ein neues Bild zum Produkt: "' . $product['ProductLangs']['name'] . '" (Hersteller: "' . $product['Manufacturers']['name'] . '") wurde hochgeladen.';
+        $messageString = 'Ein neues Bild zum Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wurde hochgeladen.';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
