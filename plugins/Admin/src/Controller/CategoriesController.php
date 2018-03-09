@@ -21,8 +21,9 @@ use Cake\ORM\TableRegistry;
  * @link          https://www.foodcoopshop.com
  */
 
-class CategoriesController extends AdminAppController         {
-
+class CategoriesController extends AdminAppController
+{
+            
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
