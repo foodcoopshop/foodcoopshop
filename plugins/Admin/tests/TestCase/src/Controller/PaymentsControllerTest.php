@@ -160,7 +160,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         ];
         $statement = self::$dbConnection->prepare($query);
         $statement->execute($params);
-        
+
         $this->deletePayment($addResponse->paymentId);
         $deleteResponse = $this->browser->getJsonDecodedContent();
         $this->assertEquals(0, $deleteResponse->status);

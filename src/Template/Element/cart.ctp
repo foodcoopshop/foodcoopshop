@@ -68,7 +68,6 @@ if ($appAuth->Cart->getProducts() !== null) {
         ?>
         
         <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in appcontroller ?>
-        
             <p class="no-products">Dein Warenkorb ist leer.</p>
             <p class="products"></p>
             <p class="sum-wrapper"><b>Summe</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>

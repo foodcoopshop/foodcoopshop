@@ -19,7 +19,7 @@ use Cake\Validation\Validator;
  */
 class BlogPostsTable extends AppTable
 {
-    
+
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -32,7 +32,7 @@ class BlogPostsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('title', 'Bitte gib einen Titel an.');
@@ -43,8 +43,8 @@ class BlogPostsTable extends AppTable
         $validator->maxLength('short_description', 100, 'Bitte gib maximal 100 Zeichen ein.');
         return $validator;
     }
-    
-    
+
+
     /**
      * Find neighbors method
      */

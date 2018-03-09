@@ -17,22 +17,22 @@ use Cake\ORM\Entity;
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class Customer extends Entity {
-    
+class Customer extends Entity
+{
+
     protected $_virtual = ['name'];
-    
-    protected function _getName() {
-        
+
+    protected function _getName()
+    {
+
         if (!isset($this->_properties['firstname']) || !isset($this->_properties['lastname'])) {
             return '';
         }
-        
+
         $virtualNameFields = $this->_properties['firstname'] . ' ' . $this->_properties['lastname'];
         if (Configure::read('app.customerMainNamePart') == 'lastname') {
             $virtualNameFields = $this->_properties['lastname'] . ' ' . $this->_properties['firstname'];
         }
         return $virtualNameFields;
     }
-        
 }
-?>

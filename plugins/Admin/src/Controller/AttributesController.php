@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
@@ -36,29 +37,29 @@ class AttributesController extends AdminAppController
         );
         $this->set('title_for_layout', 'Variante erstellen');
         $this->_processForm($attribute, false);
-        
+
         if (empty($this->request->getData())) {
             $this->render('edit');
         }
     }
-    
+
     public function edit($attributeId)
     {
         if ($attributeId === null) {
             throw new NotFoundException;
         }
-        
+
         $this->Attribute = TableRegistry::get('Attributes');
         $attribute = $this->Attribute->find('all', [
             'conditions' => [
                 'Attributes.id_attribute' => $attributeId
             ]
         ])->first();
-        
+
         $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
         $combinationCounts = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         $attribute->has_combined_products = count($combinationCounts['online']) + count($combinationCounts['offline']) > 0;
-        
+
         if (empty($attribute)) {
             throw new NotFoundException;
         }
@@ -75,11 +76,11 @@ class AttributesController extends AdminAppController
             $this->set('attribute', $attribute);
             return;
         }
-            
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
-        
+
         $attribute = $this->Attribute->patchEntity($attribute, $this->request->getData());
         if (!empty($attribute->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -87,7 +88,7 @@ class AttributesController extends AdminAppController
             $this->render('edit');
         } else {
             $attribute = $this->Attribute->save($attribute);
-            
+
             if (!$isEditMode) {
                 $messageSuffix = 'erstellt';
                 $actionLogType = 'attribute_added';
@@ -95,7 +96,7 @@ class AttributesController extends AdminAppController
                 $messageSuffix = 'geändert';
                 $actionLogType = 'attribute_changed';
             }
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
@@ -105,14 +106,12 @@ class AttributesController extends AdminAppController
             $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $attribute->id_attribute);
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('attribute', $attribute);
-        
     }
 
     public function index()

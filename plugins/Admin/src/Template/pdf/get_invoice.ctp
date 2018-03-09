@@ -1,1 +1,1 @@
-<?php echo $this->element('pdf/invoice'); ?>
+<?php echo $this->element('pdf/invoice');

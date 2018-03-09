@@ -17,26 +17,26 @@
  */
 
 return [
-    
+
     'app' => [
-        
+
         /**
          * the cronjobs for sending order lists and invoices need the credentials to a valid superadmin account
          */
         'adminEmail' => 'mail@example.com',
         'adminPassword' => 'my-password',
-        
+
         /**
          * set to true if you want to receive debug emails when exceptions are triggered
          */
         'emailErrorLoggingEnabled' => false,
-        
+
         /**
          * TO address
          * when exceptions are triggered, emails are sent TO this email address
          */
         'debugEmail' => 'mail@example.com',
-        
+
         /**
          * this email address
          * - receives the test email of url: /email /admin/configurations/sendTestEmail
@@ -66,7 +66,7 @@ return [
 //         ],
 
     ],
-    
+
     /**
      * DEBUG email config
      * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
@@ -91,5 +91,5 @@ return [
 //             'headerCharset' => 'utf-8',
 //         ],
 //     ],
-    
+
 ];

@@ -48,7 +48,7 @@ class StringComponentTest extends AppCakeTestCase
             $this->assertEquals($test['slug'], $result);
         }
     }
-    
+
     public function testAddHttpToUrl()
     {
         $tests = [
@@ -69,12 +69,11 @@ class StringComponentTest extends AppCakeTestCase
                 'expected' => 'https://www.orf.at'
             ]
         ];
-        
+
         foreach ($tests as $test) {
             $result = StringComponent::addHttpToUrl($test['value']);
             $this->assertEquals($test['expected'], $result);
         }
-        
     }
 
     public function testRemoveIdFromSlug()

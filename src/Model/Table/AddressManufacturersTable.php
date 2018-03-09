@@ -49,5 +49,4 @@ class AddressManufacturersTable extends AddressesTable
         ]);
         return $validator;
     }
-    
 }

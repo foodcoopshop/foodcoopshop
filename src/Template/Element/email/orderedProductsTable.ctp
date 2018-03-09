@@ -26,7 +26,6 @@
         </tr>
         
         <?php foreach ($cartProducts as $product) { ?>
-
             <?php
             if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
                 continue;

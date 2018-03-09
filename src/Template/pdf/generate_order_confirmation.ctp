@@ -22,11 +22,10 @@ $pdf->SetLeftMargin(16);
 
 if (!empty($manufacturers)) {
     $i = 0;
-    
+
     foreach ($manufacturers as $manufacturerId => $details) {
-        
         $pdf->AddPage();
-        
+
         $pdf->infoTextForFooter = 'Bestellübersicht ' . $details['Manufacturer']->name;
 
         $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong')).'</h3>', true, false, true, false, '');
@@ -60,22 +59,21 @@ if (!empty($manufacturers)) {
         $sumDeposit = 0;
         $sumQuantity = 0;
         $sumOrderDetailTax = 0;
-        
+
         $manufacturerOrderDetails = [];
-        foreach($details['OrderDetails'] as $orderDetail) {
+        foreach ($details['OrderDetails'] as $orderDetail) {
             if ($orderDetail->product->id_manufacturer != $manufacturerId) {
                 continue;
             }
             $manufacturerOrderDetails[] = $orderDetail;
         }
-        
+
         $k = 0;
-        
-        foreach($manufacturerOrderDetails as $orderDetail) {
-            
+
+        foreach ($manufacturerOrderDetails as $orderDetail) {
             $k++;
             $showSum = $k == count($manufacturerOrderDetails);
-            
+
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
             $quantityStyle = '';
@@ -97,11 +95,11 @@ if (!empty($manufacturers)) {
 
             $sumPrice += $orderDetail->total_price_tax_incl;
             $sumQuantity += $orderDetail->product_quantity;
-                
+
             $sumOrderDetailTax += $orderDetail->order_detail_tax->total_amount;
 
             $pdf->table .= '</tr>';
-            
+
             if ($showSum) {
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                     $pdf->table .= '<td width="' . $widths[0] . '"></td>';
@@ -119,15 +117,13 @@ if (!empty($manufacturers)) {
                     $pdf->table .= '<td colspan="2" style="text-align:center"; width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->Html->formatAsEuro($sumPrice + $sumDeposit) . '</h3></td>';
                 $pdf->table .= '</tr>';
             }
-    
         }
-        
+
         $pdf->renderTable();
-        
+
         $pdf->writeHTML('<p>Die Preise verstehen sich inklusive Umsatzsteuer.</p>', true, false, true, false, '');
         $pdf->Ln(3);
         $pdf->writeHTML('<p>Enthaltene Umsatzsteuer: ' . $this->Html->formatAsEuro($sumOrderDetailTax) . '</p>', true, false, true, false, '');
-        
     }
 }
 

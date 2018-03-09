@@ -24,5 +24,4 @@ class OrderDetailTaxesTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_order_detail');
     }
-    
 }

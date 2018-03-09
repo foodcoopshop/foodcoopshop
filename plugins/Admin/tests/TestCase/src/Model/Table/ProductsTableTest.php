@@ -62,7 +62,7 @@ class ProductsTableTest extends AppCakeTestCase
             $this->assertEquals($test['result'], $result);
         }
     }
-    
+
     public function testAddProduct()
     {
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
@@ -72,7 +72,7 @@ class ProductsTableTest extends AppCakeTestCase
             ]
         ])->first();
         $newProduct = $this->Product->add($manufacturer);
-        
+
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $newProduct->id_product
@@ -83,7 +83,7 @@ class ProductsTableTest extends AppCakeTestCase
                 'StockAvailables'
             ]
         ])->first();
-            
+
         $this->assertEquals($product->id_product, $newProduct->id_product);
         $this->assertEquals($product->id_manufacturer, $manufacturerId);
         $this->assertEquals($product->active, APP_OFF);
@@ -523,7 +523,8 @@ class ProductsTableTest extends AppCakeTestCase
             ])->first();
 
             if ($productAndAttributeId['attributeId'] == 0) {
-                $resultEntity = $changedProduct->deposit_product;;
+                $resultEntity = $changedProduct->deposit_product;
+                ;
             } else {
                 $resultEntity = $changedProduct->product_attributes[0]->deposit_product_attribute;
             }

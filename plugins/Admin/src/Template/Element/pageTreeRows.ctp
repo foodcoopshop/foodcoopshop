@@ -19,9 +19,8 @@ use Cake\ORM\TableRegistry;
 $pageTable = TableRegistry::get('Pages');
 
 foreach ($pages as $page) {
-    
     $level = $pageTable->getLevel($page);
-    
+
     $rowClass = [
         'data'
     ];

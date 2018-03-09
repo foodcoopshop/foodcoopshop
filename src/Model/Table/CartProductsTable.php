@@ -33,7 +33,7 @@ class CartProductsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function remove($productId, $attributeId, $cartId)
     {
         $cartProduct2remove = [

@@ -95,7 +95,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testCartLoggedIn()
     {
-        
+
         // manufacturer status needs to be changed as well, therefore use a superadmin account for both shopping and changing manufacturer data
         $this->loginAsSuperadmin();
 
@@ -211,7 +211,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'OrderDetails.OrderDetailTaxes'
             ]
         ])->first();
-        
+
         $this->assertNotEquals([], $order, 'order not correct');
         $this->assertEquals($order->id_order, $orderId, 'order id not correct');
         $this->assertEquals($order->id_customer, $this->browser->getLoggedUserId(), 'order customer_id not correct');
@@ -302,9 +302,9 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ]);
         $this->assertEquals(1, $orders->count(), 'more than one order inserted');
-        
+
         foreach ($orders as $order) {
-            foreach($order->order_details as $orderDetail) {
+            foreach ($order->order_details as $orderDetail) {
                 $this->assertFalse($orderDetail->product_quantity == 0, 'product quantity must not be 0!');
             }
         }
@@ -378,7 +378,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->order_detail_tax->unit_amount, $taxUnitAmount, 'order_detail tax unit amount not correct');
         $this->assertEquals($orderDetail->order_detail_tax->total_amount, $taxTotalAmount, 'order_detail tax total amount not correct');
     }
-    
+
 
     /**
      * @param int $productId

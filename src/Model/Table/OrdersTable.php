@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Table;
+
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -31,7 +32,7 @@ class OrdersTable extends AppTable
         ]);
         $this->setPrimaryKey('id_order');
     }
-    
+
     public function validationCart(Validator $validator)
     {
         $validator->equals('cancellation_terms_accepted', 1, 'Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
@@ -84,7 +85,7 @@ class OrdersTable extends AppTable
         $query->select(
             ['SumTotalPaid' => $query->func()->sum('Orders.total_paid')]
         );
-        
+
         return $query->toArray()[0]['SumTotalPaid'];
     }
 
@@ -102,7 +103,7 @@ class OrdersTable extends AppTable
         $query->select(
             ['SumTotalDeposit' => $query->func()->sum('Orders.total_deposit')]
         );
-        
+
         return $query->toArray()[0]['SumTotalDeposit'];
     }
 
@@ -149,15 +150,15 @@ class OrdersTable extends AppTable
     public function recalculateOrderDetailPricesInOrder($order)
     {
         $orderId = $order->id_order;
-        
+
         $query = $this->OrderDetails->find('all');
         $query->select(['sumPriceExcl' => $query->func()->sum('OrderDetails.total_price_tax_excl')]);
         $query->select(['sumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl')]);
         $query->select(['sumDeposit' => $query->func()->sum('OrderDetails.deposit')]);
-        
+
         $query->group('OrderDetails.id_order');
         $query->having(['OrderDetails.id_order' => $orderId]);
-        
+
         $orderDetails = $query->first();
 
         // if last order_detail was deleted, $orderDetails is empty => avoid notices

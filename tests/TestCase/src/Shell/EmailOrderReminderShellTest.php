@@ -53,7 +53,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'superadmin has open order and got reminder email');
     }
-    
+
     public function testIfServiceNotSubscribed()
     {
         $query = 'UPDATE '.$this->Customer->getTable().' SET newsletter = 0;';

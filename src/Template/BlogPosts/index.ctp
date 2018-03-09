@@ -77,7 +77,7 @@ foreach ($blogPosts as $blogPost) {
 
         echo '<div class="additional-info">';
             echo 'Geändert am ' .$blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
-            if (!empty($blogPost->manufacturer->id_manufacturer)) {
+    if (!empty($blogPost->manufacturer->id_manufacturer)) {
         echo '<br />';
         if ($blogPost->manufacturer->active) {
             if ($this->request->here == $this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name)) {

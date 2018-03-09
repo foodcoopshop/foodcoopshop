@@ -551,8 +551,8 @@ body.customers.index td .customer-comment-edit-button.disabled img {
   opacity: 0.2;
 }
 body.customers.index span.edit-wrapper {
-	float: left;
-	margin-right: 3px;
+    float: left;
+    margin-right: 3px;
 }
 body.orders.index td span.order-comment-wrapper,
 body.orders.index td span.customer-is-new {
@@ -854,7 +854,7 @@ form.fcs-form .input.checkbox label {
     width: 230px;
 }
 form.fcs-form .input.checkbox input {
-	float: right;
+    float: right;
 }
 form.fcs-form input[type="checkbox"] {
     left: 200px;
@@ -902,7 +902,7 @@ form.fcs-form .checkbox .small {
     float: left;
 }
 form.fcs-form .checkbox .small.multiple-lines {
-	line-height: 21px;
+    line-height: 21px;
 }
 form.fcs-form .input.text .after.small,
 form.fcs-form .input.number .after.small,
@@ -1046,5 +1046,5 @@ body.manufacturers .holiday-wrapper div.date-field-wrapper {
   float: left;
 }
 label[for="groupbycustomer"] {
-	padding-left: 0;
+    padding-left: 0;
 }

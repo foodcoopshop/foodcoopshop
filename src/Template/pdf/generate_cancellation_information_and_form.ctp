@@ -54,7 +54,7 @@ if (!empty($manufacturers)) {
             $html = '<p>Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(8);
-            
+
             $html = $this->Html->getManufacturerImprint($product->manufacturer, 'pdf', true);
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(4);

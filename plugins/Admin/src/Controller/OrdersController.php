@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -34,7 +35,7 @@ class OrdersController extends AdminAppController
 
         $orderId = $this->request->getData('orderId');
         $orderComment = htmlspecialchars_decode(strip_tags(trim($this->request->getData('orderComment')), '<strong><b>'));
-        
+
         $this->Order = TableRegistry::get('Orders');
         $oldOrder = $this->Order->find('all', [
             'conditions' => [
@@ -53,7 +54,7 @@ class OrdersController extends AdminAppController
                 ]
             )
         );
-        
+
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
@@ -98,7 +99,7 @@ class OrdersController extends AdminAppController
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->request->getQuery('url'));
 
         $this->Order = TableRegistry::get('Orders');
-        
+
         if ($orderId > 0) {
             $order = $this->Order->find('all', [
                 'conditions' => [
@@ -113,7 +114,7 @@ class OrdersController extends AdminAppController
             ])->first();
 
             $newDate = Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay());
-            
+
             $this->Order->save(
                 $this->Order->patchEntity(
                     $order,
@@ -204,12 +205,12 @@ class OrdersController extends AdminAppController
         // always redirect to orders (and keep some filters)
         $redirectUrlParams = [];
         $parsedReferer = parse_url($this->referer());
-        
+
         $refererQueryParams = [];
         if (isset($parsedReferer['query'])) {
             parse_str($parsedReferer['query'], $refererQueryParams);
         }
-        
+
         foreach ($refererQueryParams as $param => $value) {
             if (in_array($param, [
                 'dateFrom',
@@ -292,7 +293,7 @@ class OrdersController extends AdminAppController
             'contain' => $orderParams['contain']
         ])
         ->select($this->Order->Customers);
-        
+
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
@@ -365,9 +366,9 @@ class OrdersController extends AdminAppController
                 'Customers'
             ]
         ])->first();
-        
+
         $oldDate = $oldOrder->date_add;
-        
+
         $this->Order->save(
             $this->Order->patchEntity(
                 $oldOrder,
@@ -376,7 +377,7 @@ class OrdersController extends AdminAppController
                 ]
             )
         );
-        
+
         $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder->customer->name . ' wurde vom ' . $oldDate->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);

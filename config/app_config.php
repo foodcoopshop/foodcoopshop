@@ -63,7 +63,7 @@ return [
         'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
         'folder_invoices_with_current_year_and_month' => ROOT . DS . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
         'folder_order_lists_with_current_year_and_month' => ROOT . DS . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
-        
+
         'manufacturerComponensationInfoText' => 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.',
         /**
          * all the default values in this block can be overwritten in the manufacturer settings
@@ -79,7 +79,7 @@ return [
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
-                
+
         /**
          * adds a link to the manufacturer admin to generate and send the order list on click
          * can be useful, if e.g. a member forgot to order and the order lists are already sent
@@ -91,7 +91,7 @@ return [
          * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php
          */
         'sendOrderListsWeekday' => 3,
-        
+
         /**
          * should names of members be shown as "John Doe" or "Doe John"
          * options:
@@ -99,12 +99,12 @@ return [
          * - lastname
          */
         'customerMainNamePart' => 'firstname',
-        
+
         /**
          * id of the category "all products"
          */
         'categoryAllProducts' => 20,
-        
+
         /**
          * image upload sizes and suffixes
          */
@@ -128,22 +128,22 @@ return [
             '905' => ['suffix' => '-slider'] // detail AND lightbox
         ],
         'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',
-        
+
         'langId' => 1,
         'shopId' => 1,
         'countryId' => 2, // austria: 2, germany: 1
-        
+
         /**
          * if you work on windows, change to e.g
          * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
          */
         'mysqlDumpCommand' => 'mysqldump',
-        
+
         /**
          * date of the last update of terms of use
          */
         'termsOfUseLastUpdate' => '2016-11-28',
-        
+
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View())

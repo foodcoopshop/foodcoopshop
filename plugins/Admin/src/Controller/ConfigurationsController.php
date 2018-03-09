@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
@@ -36,53 +37,53 @@ class ConfigurationsController extends AdminAppController
     {
 
         $this->helpers[] = 'Configuration';
-        
+
         if ($configurationId === null) {
             throw new NotFoundException;
         }
-        
+
         $this->Configuration = TableRegistry::get('Configurations');
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.id_configuration' => $configurationId
             ]
         ])->first();
-        
+
         if (empty($configuration)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Einstellung bearbeiten');
-        
+
         if (in_array($configuration->type, ['textarea_big'])) {
             $_SESSION['KCFINDER'] = [
                 'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
                 'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             ];
         }
-        
+
         $this->setFormReferer();
-        
+
         if (empty($this->request->getData())) {
             $this->set('configuration', $configuration);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        
+
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
             $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
             $this->request->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->request->getData('Configurations.value'));
         }
-        
+
         $validationName = Inflector::camelize(strtolower($configuration->name));
         $validatorExists = false;
         if (method_exists($this->Configuration, 'validation'.$validationName)) {
             $validatorExists = true;
         }
-        
+
         $configuration = $this->Configuration->patchEntity(
             $configuration,
             $this->request->getData(),
@@ -90,7 +91,7 @@ class ConfigurationsController extends AdminAppController
                 'validate' => $validatorExists ? $validationName : false
             ]
         );
-        
+
         if (!empty($configuration->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('configuration', $configuration);
@@ -101,9 +102,8 @@ class ConfigurationsController extends AdminAppController
             $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', 'Die Einstellung "' . $configuration->name . '" wurde geändert in <i>"' . $configuration->value . '"</i>');
             $this->redirect($this->request->getData('referer'));
         }
-        
-        $this->set('configuration', $configuration);
 
+        $this->set('configuration', $configuration);
     }
 
     public function previewEmail($configurationName)
@@ -168,10 +168,9 @@ class ConfigurationsController extends AdminAppController
             $query = 'SELECT * FROM phinxlog ORDER by version DESC LIMIT 1;';
             $lastMigration = $this->Configuration->getConnection()->query($query)->fetch('assoc');
             $this->set('lastMigration', $lastMigration);
-        } catch(\PDOException  $e) {
-            
+        } catch (\PDOException  $e) {
         }
-        
+
         $this->set('title_for_layout', 'Einstellungen');
     }
 

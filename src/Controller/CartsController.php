@@ -108,11 +108,11 @@ class CartsController extends FrontendController
     {
 
         $this->OrderDetail = TableRegistry::get('OrderDetails');
-        
+
         $this->set('order', $order);
         $manufacturers = [];
         $i = 0;
-        
+
         $orderDetails = $this->Order->OrderDetails->find('all', [
             'conditions' => [
                 'OrderDetails.id_order' => $order->id_order
@@ -123,7 +123,7 @@ class CartsController extends FrontendController
                 'Products.Manufacturers.AddressManufacturers'
             ]
         ]);
-        
+
         foreach ($orderDetails as $orderDetail) {
             $manufacturers[$orderDetail->product->id_manufacturer] = [
                 'OrderDetails' => $orderDetails,
@@ -153,7 +153,7 @@ class CartsController extends FrontendController
         if (!$this->request->is('post')) {
             $this->redirect('/');
         }
-        
+
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCart();
 
@@ -327,7 +327,7 @@ class CartsController extends FrontendController
                 $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
             }
             $orderId = $order->id_order;
-            
+
             // get order again to have field created available as a datetime-object
             $order = $this->Order->find('all', [
                 'conditions' => [
@@ -340,7 +340,7 @@ class CartsController extends FrontendController
             foreach ($orderDetails2save as &$orderDetail) {
                 $orderDetail['id_order'] = $orderId;
             }
-            
+
             $this->Order->OrderDetails->saveMany(
                 $this->Order->OrderDetails->newEntities($orderDetails2save)
             );
@@ -399,7 +399,8 @@ class CartsController extends FrontendController
             $i = 0;
             foreach ($stockAvailable2saveData as &$data) {
                 $this->Product->StockAvailables->updateAll(
-                    $stockAvailable2saveData[$i], $stockAvailable2saveConditions[$i]
+                    $stockAvailable2saveData[$i],
+                    $stockAvailable2saveConditions[$i]
                 );
                 $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
                 $i ++;
@@ -694,7 +695,7 @@ class CartsController extends FrontendController
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
         $ccp = TableRegistry::get('CartProducts');
-        
+
         $cartProduct2save = [
             'id_product' => $productId,
             'amount' => $combinedAmount,

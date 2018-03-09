@@ -27,7 +27,7 @@ class AppTable extends Table
 {
 
     public $tablePrefix = 'fcs_'; // legacy from CakePHP2
-    
+
     public function initialize(array $config)
     {
         $this->setTable($this->tablePrefix . $this->getTable());
@@ -47,12 +47,12 @@ class AppTable extends Table
         $validator->notEmpty($field, $message);
         return $validator;
     }
-    
+
     public function sortByVirtualField($object, $name)
     {
         return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Cake\ORM\Table::marshaller()
@@ -149,7 +149,7 @@ class AppTable extends Table
         $condition .=   ')';
         return $condition;
     }
-    
+
     /**
      * @return string
      */
@@ -157,5 +157,4 @@ class AppTable extends Table
     {
         return " ORDER BY ProductLangs.name ASC, Images.id_image DESC;";
     }
-    
 }

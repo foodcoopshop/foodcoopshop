@@ -32,7 +32,7 @@ use Cake\Core\Configure;
     ?>
     
     <div class="filter-container">
-    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
@@ -72,7 +72,7 @@ use Cake\Core\Configure;
             }
             ?>
             </div>
-    	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

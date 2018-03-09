@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
@@ -48,7 +49,7 @@ class BlogPostsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
         }
     }
-    
+
     public function add()
     {
         $this->BlogPost = TableRegistry::get('BlogPosts');
@@ -62,62 +63,61 @@ class BlogPostsController extends AdminAppController
         );
         $this->set('title_for_layout', 'Blog-Artikel erstellen');
         $this->_processForm($blogPost, false);
-        
+
         if (empty($this->request->getData())) {
             $this->render('edit');
         }
     }
-    
+
     public function edit($blogPostId)
     {
         if ($blogPostId === null) {
             throw new NotFoundException;
         }
-        
+
         $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPost = $this->BlogPost->find('all', [
             'conditions' => [
                 'BlogPosts.id_blog_post' => $blogPostId
             ]
         ])->first();
-            
+
         // defaults for edit
         $blogPost = $this->BlogPost->patchEntity($blogPost, [
             'update_modified_field' => true
         ]);
-        
+
         if (empty($blogPost)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Blog-Artikel bearbeiten');
         $this->_processForm($blogPost, true);
     }
-    
+
     private function _processForm($blogPost, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
-        
+
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
-        
+
         $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/blog_posts",
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
         ];
-        
+
         if (empty($this->request->getData())) {
             $this->set('blogPost', $blogPost);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['content']);
-        
+
         $this->request->data['BlogPosts']['id_customer'] = $this->AppAuth->getUserId();
-        
-        
+
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->request->getData());
         if (!empty($blogPost->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -125,7 +125,7 @@ class BlogPostsController extends AdminAppController
             $this->render('edit');
         } else {
             $blogPost = $this->BlogPost->save($blogPost);
-            
+
             if (!$isEditMode) {
                 $messageSuffix = 'erstellt';
                 $actionLogType = 'blog_post_added';
@@ -133,15 +133,15 @@ class BlogPostsController extends AdminAppController
                 $messageSuffix = 'geändert';
                 $actionLogType = 'blog_post_changed';
             }
-            
+
             if (!empty($this->request->getData('BlogPosts.tmp_image'))) {
                 $this->saveUploadedImage($blogPost->id_blog_post, $this->request->getData('BlogPosts.tmp_image'), Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
             }
-            
+
             if (!empty($this->request->getData('BlogPosts.delete_image'))) {
                 $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
             }
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('BlogPosts.delete_blog_post'))) {
                 $blogPost = $this->BlogPost->patchEntity($blogPost, ['active' => APP_DEL]);
@@ -152,14 +152,12 @@ class BlogPostsController extends AdminAppController
             $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $blogPost->id_blog_post);
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('blogPost', $blogPost);
-        
     }
 
     public function index()
@@ -191,7 +189,7 @@ class BlogPostsController extends AdminAppController
         }
 
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
-        
+
         $this->BlogPost = TableRegistry::get('BlogPosts');
         $query = $this->BlogPost->find('all', [
             'conditions' => $conditions,

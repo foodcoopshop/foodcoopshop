@@ -785,15 +785,15 @@ body.carts.detail .cart:not(#cart) a.btn {
     margin-top: -5px;
 }
 #RegistrationForm .input.checkbox {
-	margin-top: 0;
+    margin-top: 0;
 }
 #CartsDetailForm .input.checkbox label,
 #RegistrationForm .input.checkbox label {
     line-height: 16px;
 }
 #RegistrationForm .input.checkbox label {
-	padding-left: 90px;
-	width: 350px;
+    padding-left: 90px;
+    width: 350px;
 }
 #CartsDetailForm  .input.checkbox .error-message {
     margin-left: -10px ! important;
@@ -1106,8 +1106,3 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
-
-
-
-
-

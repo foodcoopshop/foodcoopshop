@@ -43,31 +43,31 @@ class ConfigurationsControllerTest extends AppCakeTestCase
            'referer' => ''
         ]);
     }
-    
+
     public function testConfigurationEditFormFcsCustomerGroupOk()
     {
-        $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', CUSTOMER_GROUP_ADMIN); 
+        $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', CUSTOMER_GROUP_ADMIN);
         $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
     }
-    
+
     public function testConfigurationEditFormFcsCustomerGroupInvalidId()
     {
         $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', 44);
         $this->assertRegExpWithUnquotedString('Die Eingabe muss eine Zahl zwischen 3 und 4 sein.', $this->browser->getContent());
     }
-    
+
     public function testConfigurationEditFormFcsAppNameEmpty()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '');
         $this->assertRegExpWithUnquotedString('Bitte gib den Namen der Foodcoop an.', $this->browser->getContent());
     }
-    
+
     public function testConfigurationEditFormFcsAppNameNotEnoughChars()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', 'Bla');
         $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->browser->getContent());
     }
-    
+
     public function testConfigurationEditFormFcsRegistrationEmailTextStripTags()
     {
         $configurationName = 'FCS_REGISTRATION_EMAIL_TEXT';
@@ -81,7 +81,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEquals($configuration->value, $newValue, 'html tags stripped');
     }
-    
+
     public function testConfigurationEditFormFcsAppNameStripTags()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
@@ -93,7 +93,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEquals($configuration->value, 'HalloHallo', 'html tags not stripped');
     }
-    
+
     public function testShowProductsForGuestsEnabledAndLoggedOut()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 1);

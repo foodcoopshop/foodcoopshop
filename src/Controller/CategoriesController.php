@@ -90,7 +90,7 @@ class CategoriesController extends FrontendController
                 'Categories.active' => APP_ON,
             ]
         ])->first();
-        
+
         if (empty($category)) {
             throw new RecordNotFoundException('category not found');
         }

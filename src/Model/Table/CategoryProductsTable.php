@@ -27,5 +27,4 @@ class CategoryProductsTable extends AppTable
             'foreignKey' => 'id_category'
         ]);
     }
-    
 }

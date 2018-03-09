@@ -78,7 +78,7 @@ $checkboxLabel = 'E-Mail versenden? <span class="after small multiple-lines">Wen
             'target' => '_blank'
         ],
         '/admin/payments/previewEmail/'.$payment->id.'/1'
-        ).'&nbsp;'.
+    ).'&nbsp;'.
     $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
         [
@@ -86,7 +86,7 @@ $checkboxLabel = 'E-Mail versenden? <span class="after small multiple-lines">Wen
             'target' => '_blank'
         ],
         '/admin/payments/previewEmail/'.$payment->id.'/-1'
-        ).
+    ).
     '</span>';
 
 echo $this->Form->control('Payments.send_email', [
@@ -104,4 +104,3 @@ echo $this->Form->control('Payments.approval_comment', [
 echo $this->Form->end();
 
 ?>
-

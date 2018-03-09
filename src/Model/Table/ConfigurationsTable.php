@@ -54,111 +54,111 @@ class ConfigurationsTable extends AppTable
 
         return $version;
     }
-    
+
     public function validationFcsFacebookUrl(Validator $validator)
     {
         $validator->allowEmpty('value');
         $validator->urlWithProtocol('value', 'Bitte gibt eine gültige Internet-Adresse an.');
         return $validator;
     }
-    
+
     public function validationFcsAppEmail(Validator $validator)
     {
         $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
         $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
         return $validator;
     }
-    
+
     public function validationFcsAccountingEmail(Validator $validator)
     {
         $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
         $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
         return $validator;
     }
-    
+
     public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
         $validator->allowEmpty('value');
         $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
         return $validator;
     }
-    
+
     public function validationFcsMinimalCreditBalance(Validator $validator)
     {
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 500);
         return $validator;
     }
-    
+
     public function validationFcsCartEnabled(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsShowProductsForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsDefaultNewMemberActive(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsShowFoodcoopshopBacklink(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsOrderCommentEnabled(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsProductAvailabilityLow(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 10);
     }
-    
+
     public function validationFcsDaysShopProductAsNew(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
-    
+
     public function validationFcsPaymentProductMaximum(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 'value', 50, 1000);
     }
-    
+
     public function validationFcsCustomerGroup(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
     }
-    
+
     public function validationFcsShopOrderDefaultState(Validator $validator)
     {
         return $this->getRuleEqualsToMultipleValuesValidator($validator, 'value', Configure::read('app.htmlHelper')->getVisibleOrderStates());
     }
-    
+
     public function validationFcsAppName(Validator $validator)
     {
         $validator->notEmpty('value', 'Bitte gib den Namen der Foodcoop an.');
         $validator = $this->getLengthBetweenValidator($validator, 'value', 5, 255);
         return $validator;
     }
-    
+
     private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
     {
         $validator->inList($field, array_keys($values), 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values)));
         return $validator;
     }
-    
+
     private function getLengthBetweenValidator($validator, $field, $min, $max)
     {
         $message = 'Die Anzahl der Zeichen muss zwischen ' . $min . ' und ' . $max . ' liegen.';
         $validator->lengthBetween($field, [$min, $max], $message);
         return $validator;
     }
-    
+
     public function getConfigurations()
     {
         $configurations = $this->find('all', [

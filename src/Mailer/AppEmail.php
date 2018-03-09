@@ -22,7 +22,7 @@ use Cake\ORM\TableRegistry;
  */
 class AppEmail extends Email
 {
-    
+
     public function __construct($config = null)
     {
         parent::__construct($config);
@@ -31,7 +31,7 @@ class AppEmail extends Email
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }
-    
+
     /**
      * declaring this method public enables rendering an email (for preview)
      * {@inheritDoc}

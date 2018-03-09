@@ -424,7 +424,7 @@ class ActionLogsTable extends AppTable
             'de' => 'Einstellung geändert'
         ]
     ];
-    
+
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -456,7 +456,7 @@ class ActionLogsTable extends AppTable
             ]
         ]);
     }
-    
+
     public function customSave($type, $customerId, $objectId, $objectType, $text)
     {
         $data2save = [

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Table;
+
 use App\Auth\AppPasswordHasher;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
@@ -61,14 +62,14 @@ class CustomersTable extends AppTable
         ]);
         $this->setPrimaryKey('id_customer');
     }
-    
+
     public function validationEdit(Validator $validator)
     {
         $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
         $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
         return $validator;
     }
-    
+
     public function validationRegistration(Validator $validator)
     {
         $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
@@ -76,13 +77,13 @@ class CustomersTable extends AppTable
         $validator = $this->getValidationTermsOfUse($validator);
         return $validator;
     }
-    
+
     public function validationChangePassword($validator)
     {
         $validator
         ->notEmpty('passwd_old', 'Bitte gib dein altes Passwort ein.')
         ->add('passwd_old', 'custom', [
-            'rule'=>  function($value, $context) {
+            'rule'=>  function ($value, $context) {
                 $user = $this->get($context['data']['id_customer']);
                 if ($user) {
                     if ((new AppPasswordHasher())->check($value, $user->passwd)) {
@@ -94,7 +95,7 @@ class CustomersTable extends AppTable
             'message' => 'Dein altes Passwort ist leider falsch.',
         ])
         ->notEmpty('passwd_old');
-            
+
         $validator
         ->notEmpty('passwd_1', 'Bitte gib ein neues Passwort ein.')
         ->add('passwd_1', [
@@ -110,7 +111,7 @@ class CustomersTable extends AppTable
             ]
         ])
         ->notEmpty('passwd_1');
-        
+
         $validator
         ->notEmpty('passwd_2', 'Bitte gib ein neues Passwort ein.')
         ->add('passwd_2', [
@@ -126,11 +127,11 @@ class CustomersTable extends AppTable
             ]
         ])
         ->notEmpty('passwd_2');
-        
+
         return $validator;
     }
-    
-    
+
+
     public function validationNewPasswordRequest(Validator $validator)
     {
         $validator->notEmpty('email', 'Bitte gib deine E-Mail-Adresse an.');
@@ -161,17 +162,17 @@ class CustomersTable extends AppTable
         ]);
         return $validator;
     }
-    
+
     public function validationTermsOfUse(Validator $validator)
     {
         return $this->getValidationTermsOfUse($validator);
     }
-    
+
     private function getValidationTermsOfUse(Validator $validator)
     {
         return $validator->equals('terms_of_use_accepted_date_checkbox', 1, 'Bitte akzeptiere die Nutzungsbedingungen.');
     }
-    
+
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
         return $query->contain([
@@ -225,7 +226,7 @@ class CustomersTable extends AppTable
         ])->first();
         return $manufacturer;
     }
-    
+
     /**
      * @param int $customerId
      * @return string
@@ -234,7 +235,7 @@ class CustomersTable extends AppTable
     {
         $ph = new AppPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
-        
+
         // reset change password code
         $patchedEntity = $this->patchEntity(
             $this->get($customerId),
@@ -309,7 +310,6 @@ class CustomersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($customers as $customer) {
-            
             $userNameForDropdown = $customer->name;
 
             $manufacturerIncluded = false;

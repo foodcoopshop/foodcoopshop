@@ -35,7 +35,7 @@ class AdminAppController extends AppController
     {
         $this->set('referer', ! empty($this->request->getData('referer')) ? $this->request->getData('referer') : $this->referer());
     }
-    
+
     /**
      * deletes physical files (thumbs)
      */

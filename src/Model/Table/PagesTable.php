@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Table;
+
 use Cake\Validation\Validator;
 
 /**
@@ -18,7 +19,7 @@ use Cake\Validation\Validator;
  */
 class PagesTable extends AppTable
 {
-    
+
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -30,7 +31,7 @@ class PagesTable extends AppTable
             'foreignKey' => 'id_customer'
         ]);
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('title', 'Bitte gib einen Titel an.');
@@ -40,9 +41,9 @@ class PagesTable extends AppTable
         $validator->allowEmpty('extern_url');
         return $validator;
     }
-    
+
     private $flattenedArray = [];
-    
+
     private function flattenNestedArrayWithChildren($array, $separator = '')
     {
         foreach ($array as $item) {
@@ -55,10 +56,10 @@ class PagesTable extends AppTable
                 $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }
         }
-        
+
         return $this->flattenedArray;
     }
-    
+
     public function getThreaded($conditions = [])
     {
         $pages = $this->find('threaded', [
@@ -75,7 +76,7 @@ class PagesTable extends AppTable
         ]);
         return $pages;
     }
-    
+
     public function getForSelect($excludePageId = null)
     {
         $conditions = [];
@@ -86,5 +87,4 @@ class PagesTable extends AppTable
         $flattenedPages = $this->flattenNestedArrayWithChildren($pages);
         return $flattenedPages;
     }
-
 }

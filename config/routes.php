@@ -44,11 +44,11 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    
+
     $routes->setExtensions(['pdf']);
-    
+
     $routes->connect('/', ['controller' => 'pages', 'action' => 'home']);
-    
+
     $routes->connect('/anmelden', ['controller' => 'Customers', 'action' => 'login']);
     $routes->connect('/registrierung', ['controller' => 'Customers', 'action' => 'login']);
     $routes->connect('/registrierung/abgeschlossen', ['controller' => 'Customers', 'action' => 'registrationSuccessful']);
@@ -57,11 +57,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/nutzungsbedingungen', ['controller' => 'Pages', 'action' => 'termsOfUse']);
     $routes->connect('/datenschutzerklaerung', ['controller' => 'Pages', 'action' => 'privacyPolicy']);
     $routes->connect('/nutzungsbedingungen-akzeptieren', ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);
-    
+
     $routes->connect('/neue-produkte', ['controller' => 'Categories', 'action' => 'newProducts']);
     $routes->connect('/neues-passwort-anfordern', ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
     $routes->connect('/neues-passwort-generieren/*', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
-    
+
     $routes->connect('/aktuelles', ['controller' => 'BlogPosts', 'action' => 'index']);
     $routes->connect('/aktuelles/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
     $routes->connect('/suche/*', ['controller' => 'Categories', 'action' => 'search']);
@@ -75,9 +75,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/warenkorb/abschliessen', ['controller' => 'Carts', 'action' => 'finish']);
     $routes->connect('/warenkorb/abgeschlossen/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
     $routes->connect('/warenkorb/:action', ['controller' => 'Carts']);
-    
+
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
-    
+
     /**
      * Connect catchall routes for all controllers.
      *
@@ -96,7 +96,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->fallbacks(DashedRoute::class);
 });
-    
+
 /**
  * Load all plugin routes. See the Plugin documentation on
  * how to customize the loading of plugin routes.

@@ -23,5 +23,4 @@ class ImagesTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_image');
     }
-    
 }

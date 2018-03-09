@@ -43,10 +43,9 @@ class ConfigurationHelper extends Helper
                 break;
         }
     }
-    
+
     public function getConfigurationDropdownOption($name, $value)
     {
         return self::getConfigurationDropdownOptions($name)[$value];
     }
-    
 }

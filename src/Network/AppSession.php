@@ -15,16 +15,15 @@ class AppSession extends Session
      */
     public function read($name = null)
     {
-        
+
         if (!isset($_SESSION)) {
             return null;
         }
-        
+
         if ($name === null) {
             return isset($_SESSION) ? $_SESSION : [];
         }
-        
+
         return Hash::get($_SESSION, $name);
     }
-    
 }

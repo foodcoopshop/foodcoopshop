@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
@@ -113,7 +114,7 @@ class PaymentsController extends AdminAppController
     {
 
         $this->set('title_for_layout', 'Guthaben-Aufladung überprüfen');
-        
+
         $this->setFormReferer();
 
         $payment = $this->Payment->find('all', [
@@ -137,17 +138,17 @@ class PaymentsController extends AdminAppController
         }
 
         $payment = $this->Payment->patchEntity(
-            $payment, $this->request->getData(),
+            $payment,
+            $this->request->getData(),
             [
                 'validate' => 'edit'
             ]
         );
-        
+
         if (!empty($payment->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('payment', $payment);
         } else {
-            
             $payment = $this->Payment->patchEntity(
                 $payment,
                 [
@@ -156,7 +157,7 @@ class PaymentsController extends AdminAppController
                 ]
             );
             $payment = $this->Payment->save($payment);
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             switch ($payment->approval) {
                 case -1:
@@ -173,7 +174,7 @@ class PaymentsController extends AdminAppController
             $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
 
             $message = 'Der Status der Guthaben-Aufladung für <b>'.$payment->customer->name.'</b> wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
-            
+
             if ($payment->send_email) {
                 $email = new AppEmail();
                 $email->setTemplate('Admin.payment_status_changed')
@@ -196,9 +197,8 @@ class PaymentsController extends AdminAppController
 
             $this->redirect($this->request->getData('referer'));
         }
-        
+
         $this->set('payment', $payment);
-        
     }
 
     public function add()
@@ -301,12 +301,10 @@ class PaymentsController extends AdminAppController
                 $message .= ' für ' . $manufacturer->name;
             }
 
-
             if ($type == 'deposit') {
                 $actionLogType .= '_'.$userType;
             }
         }
-
 
         // payments paybacks, product and member_fee can also be placed for other users
         if (in_array($type, [
@@ -422,7 +420,8 @@ class PaymentsController extends AdminAppController
 
         // TODO add payment owner check (also for manufacturers!)
         $this->Payment->save(
-            $this->Payment->patchEntity($payment,
+            $this->Payment->patchEntity(
+                $payment,
                 [
                     'status' => APP_DEL,
                     'date_changed' => Time::now()
@@ -440,7 +439,6 @@ class PaymentsController extends AdminAppController
             }
             $actionLogType .= '_'.$userType;
         }
-
 
         $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsEuro($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
 
@@ -542,7 +540,7 @@ class PaymentsController extends AdminAppController
                 ['type IN' => $this->allowedPaymentTypes]
             )
         );
-        
+
         $contain = ['Payments'];
         if (in_array('product', $this->allowedPaymentTypes)) {
             $contain [] = 'PaidCashFreeOrders';
@@ -596,7 +594,7 @@ class PaymentsController extends AdminAppController
                 ];
             }
         }
-        
+
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         $this->set('customerId', $this->getCustomerId());

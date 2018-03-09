@@ -60,7 +60,6 @@ class ProductsTable extends AppTable
             'foreignKey' => 'id_product'
         ]);
         $this->addBehavior('Timestamp');
-        
     }
 
     public function __construct($id = false, $table = null, $ds = null)
@@ -226,7 +225,7 @@ class ProductsTable extends AppTable
                     $this->DepositProducts->setPrimaryKey('id_product_attribute');
                     $entity = $this->DepositProducts->get($oldDeposit->id_product_attribute);
                 }
-                
+
                 $deposit2save = [
                     'id_product_attribute' => $ids['attributeId'],
                     'deposit' => $deposit
@@ -384,7 +383,7 @@ class ProductsTable extends AppTable
 
     public function isNew($date)
     {
-        
+
         $showAsNewExpirationDate = date('Y-m-d', strtotime($date . ' + ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' days'));
         if (strtotime($showAsNewExpirationDate) > strtotime(date('Y-m-d'))) {
             return true;
@@ -400,30 +399,30 @@ class ProductsTable extends AppTable
     {
 
         $conditions = [];
-        
+
         if ($manufacturerId != 'all') {
             $conditions['Products.id_manufacturer'] = $manufacturerId;
         } else {
             // do not show any non-associated products that might be found in database
             $conditions[] = 'Products.id_manufacturer > 0';
         }
-        
+
         if ($productId != '') {
             $conditions['Products.id_product'] = $productId;
         }
-        
+
         if ($active != 'all') {
             $conditions['Products.active'] = $active;
         }
-        
+
         if ($isQuantityZero != '') {
             $conditions[] = $this->getIsQuantityZeroCondition();
         }
-        
+
         if ($isPriceZero != '') {
             $conditions[] = $this->getIsPriceZeroCondition();
         }
-                
+
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
@@ -444,7 +443,7 @@ class ProductsTable extends AppTable
                 $priceIsZeroFilterOn = true;
             }
         }
-        
+
         $contain = [
             'CategoryProducts',
             'CategoryProducts.Categories',
@@ -469,25 +468,24 @@ class ProductsTable extends AppTable
             'ProductAttributes.DepositProductAttributes',
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
-        
-        
+
         $order = [
             'Products.active' => 'DESC',
             'ProductLangs.name' => 'ASC'
         ];
-        
+
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => $contain,
             'order' => ($controller === null ? $order : null)
         ]);
-        
+
         if ($categoryId != '') {
             $query->matching('CategoryProducts', function ($q) use ($categoryId) {
                 return $q->where(['id_category IN' => $categoryId]);
             });
         }
-        
+
         $query
         ->select('Products.id_product')->distinct()
         ->select($this) // Products
@@ -498,7 +496,7 @@ class ProductsTable extends AppTable
         ->select($this->Taxes)
         ->select($this->Manufacturers)
         ->select($this->StockAvailables);
-        
+
         if ($controller) {
             $query = $controller->paginate($query, [
                 'sortWhitelist' => [
@@ -507,7 +505,7 @@ class ProductsTable extends AppTable
                 'order' => $order
             ]);
         }
-        
+
         $i = 0;
         $preparedProducts = [];
         foreach ($query as $product) {
@@ -516,7 +514,6 @@ class ProductsTable extends AppTable
                 'all_products_found' => false
             ];
             foreach ($product->category_products as $category) {
-
                 // assignment to "all products" has to be checked... otherwise show error message
                 if ($category->id_category == Configure::read('app.categoryAllProducts')) {
                     $product->category->all_products_found = true;
@@ -528,12 +525,12 @@ class ProductsTable extends AppTable
                 }
             }
             $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
-            
+
             $product->is_new = true;
             if ($product->product_shop->created) {
                 $product->is_new = $this->isNew($product->product_shop->created->i18nFormat(Configure::read('DateFormat.Database')));
             }
-            
+
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->product_shop->price);
 
             $rowClass = [];
@@ -546,13 +543,13 @@ class ProductsTable extends AppTable
             } else {
                 $product->deposit = 0;
             }
-            
+
             if (empty($product->tax)) {
                 $product->tax = (object) [
                     'rate' => 0
                 ];
             }
-            
+
             $rowClass[] = 'main-product';
             $rowIsOdd = false;
             if ($i % 2 == 0) {
@@ -617,7 +614,7 @@ class ProductsTable extends AppTable
                         ],
                         'image' => null
                     ];
-                    
+
                     $preparedProducts[] = $preparedProduct;
                 }
             }
@@ -633,9 +630,9 @@ class ProductsTable extends AppTable
                 }
             }
         }
-        
-        $preparedProducts = json_decode(json_encode($preparedProducts), FALSE); // convert array recursively into object
-        
+
+        $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
+
         return $preparedProducts;
     }
 
@@ -734,7 +731,7 @@ class ProductsTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $rate = $statement->fetchAll('assoc');
-        
+
         // if tax == 0 %, tax is empty
         if (empty($rate)) {
             $newNetPrice = $oldNetPrice * (1 + $oldTaxRate / 100);
@@ -785,7 +782,7 @@ class ProductsTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $rate = $statement->fetchAll('assoc');
-        
+
         // if tax == 0% rate is empty...
         if (empty($rate)) {
             $netPrice = $grossPrice;
@@ -813,9 +810,9 @@ class ProductsTable extends AppTable
                 'ProductAttributes.id_product' => $productId
             ]
         ])->toArray();
-            
+
         $productAttributeIds = [];
-        foreach($productAttributes as $attribute) {
+        foreach ($productAttributes as $attribute) {
             $productAttributeIds[] = $attribute->id_product_attribute;
         }
 
@@ -865,7 +862,7 @@ class ProductsTable extends AppTable
             'StockAvailables.id_product_attribute' => $attributeId
         ]);
         $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
-        
+
         $this->StockAvailables->updateQuantityForMainProduct($productId);
     }
 
@@ -875,7 +872,7 @@ class ProductsTable extends AppTable
 
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id);
-        
+
         // INSERT PRODUCT
         $newProduct = $this->save(
             $this->newEntity(
@@ -940,8 +937,7 @@ class ProductsTable extends AppTable
                 'Products.id_product' => $newProductId
             ]
         ])->first();
-            
+
         return $newProduct;
-        
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -28,7 +29,7 @@ class ToolsController extends AdminAppController
     public function doTmpImageUpload()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         // check if uploaded file is image file
         $formatInfo = getimagesize($this->request->getData('upload.tmp_name'));
         // non-image files will return false

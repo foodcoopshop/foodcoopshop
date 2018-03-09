@@ -18,11 +18,11 @@ use Cake\Error\Debugger;
 
 // START debug error page
 if (Configure::read('debug')) :
-$this->layout = 'dev_error';
-$this->assign('title', $message);
-$this->assign('templateName', 'error400.ctp');
+    $this->layout = 'dev_error';
+    $this->assign('title', $message);
+    $this->assign('templateName', 'error400.ctp');
 
-$this->start('file');
+    $this->start('file');
 ?>
 <?php if (!empty($error->queryString)) : ?>
     <p class="notice">

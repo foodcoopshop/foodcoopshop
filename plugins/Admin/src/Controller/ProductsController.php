@@ -101,7 +101,7 @@ class ProductsController extends AdminAppController
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
     {
         $this->RequestHandler->renderAs($this, 'ajax');
-        
+
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
         $productsForDropdown = [];
         foreach ($products as $key => $ps) {
@@ -115,7 +115,7 @@ class ProductsController extends AdminAppController
             }
             $productsForDropdown[] = '</optgroup>';
         }
-        
+
         die(json_encode([
             'status' => 1,
             'products' => join('', $productsForDropdown)
@@ -140,16 +140,16 @@ class ProductsController extends AdminAppController
             ]));
         }
 
-		$product = $this->Product->find('all', [
+        $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
             ],
-		    'contain' => [
-		        'Images',
-		        'ProductLangs',
-		        'Manufacturers'
-		    ]
-		])->first();
+            'contain' => [
+                'Images',
+                'ProductLangs',
+                'Manufacturers'
+            ]
+        ])->first();
 
         // delete db entries
         $this->Product->Images->deleteAll([
@@ -359,7 +359,7 @@ class ProductsController extends AdminAppController
                 'Manufacturers'
             ]
         ])->first();
-        
+
         if (empty($oldProduct->tax)) {
             $oldProduct->tax = (object) [
                 'rate' => 0
@@ -708,7 +708,7 @@ class ProductsController extends AdminAppController
         }
 
         $this->Flash->success('Das Produkt wurde erfolgreich geändert.');
-        
+
         if ($this->request->getData('name') != $oldProduct->product_lang->name) {
             $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde umbenannt in <i>"' . $this->request->getData('name') . '"</i>.');
         }

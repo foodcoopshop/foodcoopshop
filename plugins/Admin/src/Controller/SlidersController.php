@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
@@ -35,47 +36,47 @@ class SlidersController extends AdminAppController
         );
         $this->set('title_for_layout', 'Slideshow-Bild erstellen');
         $this->_processForm($slider, false);
-        
+
         if (empty($this->request->getData())) {
             $this->render('edit');
         }
     }
-    
+
     public function edit($sliderId)
     {
         if ($sliderId === null) {
             throw new NotFoundException;
         }
-        
+
         $this->Slider = TableRegistry::get('Sliders');
         $slider = $this->Slider->find('all', [
             'conditions' => [
                 'Sliders.id_slider' => $sliderId
             ]
         ])->first();
-        
+
         if (empty($slider)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Slideshow-Bild bearbeiten');
         $this->_processForm($slider, true);
     }
-    
+
     private function _processForm($slider, $isEditMode)
     {
-        
+
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
-        
+
         if (empty($this->request->getData())) {
             $this->set('slider', $slider);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
-        
+
         $slider = $this->Slider->patchEntity($slider, $this->request->getData());
         if (!empty($slider->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -83,7 +84,7 @@ class SlidersController extends AdminAppController
             $this->render('edit');
         } else {
             $slider = $this->Slider->save($slider);
-            
+
             if (!$isEditMode) {
                 $messageSuffix = 'erstellt';
                 $actionLogType = 'slider_added';
@@ -91,17 +92,17 @@ class SlidersController extends AdminAppController
                 $messageSuffix = 'geändert';
                 $actionLogType = 'slider_changed';
             }
-            
+
             if (!empty($this->request->getData('Sliders.tmp_image'))) {
                 $filename = $this->saveUploadedImage($slider->id_slider, $this->request->getData('Sliders.tmp_image'), Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
                 $slider = $this->Slider->patchEntity($slider, ['image' => $filename]);
                 $this->Slider->save($slider);
             }
-            
+
             if (!empty($this->request->getData('Sliders.delete_image'))) {
                 $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
             }
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Sliders.delete_slider'))) {
                 $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
@@ -112,14 +113,12 @@ class SlidersController extends AdminAppController
             $message = 'Das Slideshow-Bild <b>' . $slider->id_slider . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $slider->id_slider);
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('slider', $slider);
-        
     }
 
     public function index()
@@ -140,7 +139,7 @@ class SlidersController extends AdminAppController
                 'Sliders.position' => 'ASC'
             ]
         ]);
-        
+
         $this->set('sliders', $sliders);
         $this->set('title_for_layout', 'Slideshow');
     }

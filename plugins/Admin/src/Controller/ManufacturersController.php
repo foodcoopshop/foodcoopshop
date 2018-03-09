@@ -55,7 +55,7 @@ class ManufacturersController extends AdminAppController
         parent::beforeFilter($event);
         $this->Manufacturer = TableRegistry::get('Manufacturers');
     }
-    
+
     public function profile()
     {
         $this->edit($this->AppAuth->getManufacturerId());
@@ -74,23 +74,23 @@ class ManufacturersController extends AdminAppController
         );
         $this->set('title_for_layout', 'Hersteller erstellen');
         $this->_processForm($manufacturer, false);
-        
+
         if (empty($this->request->getData())) {
             $this->render('edit');
         }
     }
-    
+
     public function edit($manufacturerId)
     {
         if ($manufacturerId === null) {
             throw new NotFoundException;
         }
-        
+
         $_SESSION['KCFINDER'] = [
             'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
-        
+
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -99,32 +99,32 @@ class ManufacturersController extends AdminAppController
                 'AddressManufacturers'
             ]
         ])->first();
-        
+
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Hersteller bearbeiten');
         $this->_processForm($manufacturer, true);
     }
-    
+
     private function _processForm($manufacturer, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
-        
+
         if (empty($this->request->getData())) {
             $this->set('manufacturer', $manufacturer);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['description', 'short_description']);
-        
+
         $this->request->data['Manufacturers']['iban'] = str_replace(' ', '', $this->request->getData('Manufacturers.iban'));
         $this->request->data['Manufacturers']['bic'] = str_replace(' ', '', $this->request->getData('Manufacturers.bic'));
         $this->request->data['Manufacturers']['homepage'] = StringComponent::addHttpToUrl($this->request->getData('Manufacturers.homepage'));
-        
+
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
             $this->request->getData(),
@@ -140,7 +140,7 @@ class ManufacturersController extends AdminAppController
             $this->render('edit');
         } else {
             $manufacturer = $this->Manufacturer->save($manufacturer);
-            
+
             if (!$isEditMode) {
                 $customer = [];
                 $messageSuffix = 'erstellt';
@@ -150,7 +150,7 @@ class ManufacturersController extends AdminAppController
                 $messageSuffix = 'geändert';
                 $actionLogType = 'manufacturer_changed';
             }
-            
+
             $this->Customer = TableRegistry::get('Customers');
             $customerData = [
                 'email' => $this->request->getData('Manufacturers.address_manufacturer.email'),
@@ -164,32 +164,30 @@ class ManufacturersController extends AdminAppController
                 $customerEntity = $this->Customer->patchEntity($customer, $customerData);
             }
             $this->Customer->save($customerEntity);
-            
+
             if (!empty($this->request->getData('Manufacturers.tmp_image'))) {
                 $this->saveUploadedImage($manufacturer->id_manufacturer, $this->request->getData('Manufacturers.tmp_image'), Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
             }
-            
+
             if (!empty($this->request->getData('Manufacturers.delete_image'))) {
                 $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
             }
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $message = 'Der Hersteller <b>' . $manufacturer->name . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
-            
+
             if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerProfile()) {
                 $this->renewAuthSession();
             }
-            
+
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('manufacturer', $manufacturer);
-        
     }
 
     public function setKcFinderUploadPath($manufacturerId)
@@ -258,7 +256,7 @@ class ManufacturersController extends AdminAppController
         ->select($this->Manufacturer)
         ->select($this->Manufacturer->Customers)
         ->select($this->Manufacturer->AddressManufacturers);
-        
+
         $manufacturers = $this->paginate($query, [
             'sortWhitelist' => [
                 'Manufacturers.name', 'Manufacturers.iban', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart')
@@ -412,11 +410,11 @@ class ManufacturersController extends AdminAppController
             // orders exist => send pdf and email
         } else {
             $this->RequestHandler->renderAs($this, 'pdf');
-            
+
             // generate order list by procuct
             $this->render('get_order_list_by_product');
             $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
-            
+
             // generate order list by customer
             $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN
@@ -428,7 +426,7 @@ class ManufacturersController extends AdminAppController
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer->name . '" erfolgreich generiert';
-            
+
             if ($sendEmail) {
                 $flashMessage .= ' und an ' . $manufacturer->address_manufacturer->email . ' versendet';
                 $email = new AppEmail();
@@ -450,7 +448,7 @@ class ManufacturersController extends AdminAppController
                 $email->send();
             }
         }
-        
+
         $flashMessage .= '.';
         $this->Flash->success($flashMessage);
         $this->redirect($this->referer());
@@ -465,28 +463,27 @@ class ManufacturersController extends AdminAppController
             $this->render('editOptions');
         }
     }
-    
+
     public function editOptions($manufacturerId)
     {
         if ($manufacturerId === null) {
             throw new NotFoundException;
         }
-        
+
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
         ])->first();
-        
+
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', $manufacturer->name . ': Einstellungen bearbeiten');
-        
+
         $this->Tax = TableRegistry::get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
-        
-        
+
         // set default data if manufacturer options are null
         if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && is_null($manufacturer->variable_member_fee)) {
             $manufacturer->variable_member_fee = Configure::read('appDb.FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE');
@@ -515,14 +512,14 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->send_ordered_product_quantity_changed_notification)) {
             $manufacturer->send_ordered_product_quantity_changed_notification = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
-        
+
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = TableRegistry::get('Customers');
             $this->set('customersForDropdown', $this->Customer->getForDropdown());
         }
-        
+
         $this->setFormReferer();
-        
+
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
@@ -530,23 +527,23 @@ class ManufacturersController extends AdminAppController
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
-        
+
         if (empty($this->request->getData())) {
             $this->set('manufacturer', $manufacturer);
             return;
         }
-        
+
         if (!empty($this->request->getData('Manufacturers.holiday_from'))) {
             $this->request->data['Manufacturers']['holiday_from'] = new Time($this->request->getData('Manufacturers.holiday_from'));
         }
         if (!empty($this->request->getData('Manufacturers.holiday_to'))) {
             $this->request->data['Manufacturers']['holiday_to'] = new Time($this->request->getData('Manufacturers.holiday_to'));
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
-        
+
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
             $this->request->getData(),
@@ -554,14 +551,12 @@ class ManufacturersController extends AdminAppController
                 'validate' => 'editOptions'
             ]
         );
-        
+
         if (!empty($manufacturer->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('manufacturer', $manufacturer);
             $this->render('edit_options');
         } else {
-            
-            
             // values that are the same as default values => null
             if (!$this->AppAuth->isManufacturer()) {
                 // only admins and superadmins are allowed to change variable_member_fee
@@ -593,56 +588,54 @@ class ManufacturersController extends AdminAppController
             if ($this->request->getData('Manufacturers.send_ordered_product_quantity_changed_notification') == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
                 $this->request->data['Manufacturers']['send_ordered_product_quantity_changed_notification'] = null;
             }
-            
+
             if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
                 if ($this->request->getData('Manufacturers.enabled_sync_domains')) {
                     $this->request->data['Manufacturers']['enabled_sync_domains'] = implode(',', $this->request->getData('Manufacturers.enabled_sync_domains'));
                 }
             }
-            
+
             // remove post data that could be set by hacking attempt
             if ($this->AppAuth->isManufacturer()) {
                 unset($this->request->data['Manufacturers']['bulk_orders_allowed']);
                 unset($this->request->data['Manufacturers']['variable_member_fee']);
                 unset($this->request->data['Manufacturers']['id_customer']);
             }
-            
+
             // html could be manipulated and checkbox disabled attribute removed
             if ($this->AppAuth->isManufacturer()) {
                 unset($this->request->data['Manufacturers']['active']);
             }
-            
+
             // sic! patch again!
             $manufacturer = $this->Manufacturer->patchEntity(
                 $manufacturer,
                 $this->request->getData()
             );
             $manufacturer = $this->Manufacturer->save($manufacturer);
-            
+
             $this->request->getSession()->write('highlightedRowId', $manufacturer->id_manufacturer);
-            
+
             if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerProfile()) {
                 $this->renewAuthSession();
             }
-            
+
             $message = 'Die Einstellungen des Herstellers <b>' . $manufacturer->name . '</b>';
             if ($this->request->here == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
                 $message = 'Deine Einstellungen';
                 $this->renewAuthSession();
             }
             $message .= ' wurden erfolgreich gespeichert.';
-            
+
             $this->Flash->success($message);
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
-            
+
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('manufacturer', $manufacturer);
-        
     }
 
     private function prepareInvoiceAndOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Table;
+
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -26,7 +27,7 @@ class TaxesTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_tax');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('rate', 'Bitte gib einen Steuersatz an.');

@@ -24,5 +24,4 @@ class ProductAttributeShopsTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_product_attribute');
     }
-
 }

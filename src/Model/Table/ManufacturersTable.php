@@ -43,7 +43,7 @@ class ManufacturersTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('name', 'Bitte gib einen Namen an.');
@@ -62,7 +62,7 @@ class ManufacturersTable extends AppTable
         $validator->urlWithProtocol('homepage', 'Bitte gibt eine gültige Internet-Adresse an.');
         return $validator;
     }
-    
+
     public function validationEditOptions(Validator $validator)
     {
         $validator->allowEmpty('send_order_list_cc');
@@ -73,7 +73,7 @@ class ManufacturersTable extends AppTable
         ]);
         return $validator;
     }
-    
+
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
      * @return boolean
@@ -222,13 +222,13 @@ class ManufacturersTable extends AppTable
         if (empty($manufacturer->address_manufacturer)) {
             return [];
         }
-        
+
         $customer = $cm->find('all', [
             'conditions' => [
                 'Customers.email' => $manufacturer->address_manufacturer->email
             ]
         ])->first();
-        
+
         if (empty($customer->address_customer->id_address)) {
             return $customer;
         }
@@ -273,7 +273,7 @@ class ManufacturersTable extends AppTable
 
     public function getForMenu($appAuth)
     {
-        
+
         if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
         }
@@ -297,7 +297,7 @@ class ManufacturersTable extends AppTable
             ],
             'conditions' => $conditions
         ]);
-        
+
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer->name;
@@ -409,7 +409,7 @@ class ManufacturersTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        
+
         return $products;
     }
 

@@ -38,13 +38,13 @@ class PaymentsTable extends AppTable
             'foreignKey' => 'changed_by'
         ]);
     }
-    
+
     public function validationEdit(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'approval', -1, 1);
     }
-    
-    
+
+
     private function getManufacturerDepositConditions($manufacturerId = null)
     {
         $conditions = [
@@ -67,7 +67,7 @@ class PaymentsTable extends AppTable
     {
         $conditions = $this->getManufacturerDepositConditions($manufacturerId);
         $conditions[] = 'DATE_FORMAT(Payments.date_add, \'%Y-%c\') = \'' . $monthAndYear . '\'';
-        
+
         $paymentSum = $this->find('all', [
             'conditions' => $conditions,
             'order' => [
@@ -91,12 +91,11 @@ class PaymentsTable extends AppTable
             'conditions' => $conditions,
             'order' => ['Payments.date_add' => 'DESC'],
         ]);
-        
+
         $query->select(
             ['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]
         );
-        
-        
+
         return $query->toArray()[0]['sumManufacturerMoneyDeposit'];
     }
 
@@ -115,7 +114,7 @@ class PaymentsTable extends AppTable
             'order' => $groupByMonth ? ['monthAndYear' => 'DESC'] : ['Payments.date_add' => 'DESC'],
             'group' => $groupByMonth ? 'monthAndYear' : null
         ]);
-        
+
         $query->select(
             ['sumDepositReturned' => $query->func()->sum('Payments.amount')]
         );
@@ -124,7 +123,7 @@ class PaymentsTable extends AppTable
                 ['monthAndYear' => 'DATE_FORMAT(Payments.date_add, \'%Y-%c\')']
             );
         }
-        
+
         return $query->toArray();
     }
 

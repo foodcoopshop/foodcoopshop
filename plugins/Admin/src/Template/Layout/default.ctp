@@ -53,7 +53,7 @@ use Cake\Utility\Inflector;
         <?php echo $this->element('Admin.menu'); ?>
         
         <div id="content">
-        	<?php
+            <?php
                 echo $this->Flash->render();
                 echo $this->Flash->render('auth');
                 echo $this->fetch('content');

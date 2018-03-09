@@ -66,7 +66,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 ]
             ]
         ];
-        
+
         $response = $this->add($manufacturerData);
 
         // provoke errors
@@ -88,7 +88,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $response = $this->add($manufacturerData);
 
         $this->assertRegExpWithUnquotedString('Der Hersteller <b>Test Manufacturer</b> wurde erstellt.', $response);
-        
+
         // get inserted manufacturer from database and check detail page for patterns
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -103,11 +103,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response);
 
         $this->doTestCustomerRecord($manufacturer);
-        
+
         $this->assertEquals($manufacturer->description, '<b>Text</b>', 'tags must not be stripped');
         $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>', 'tags must not be stripped');
         $this->assertEquals($manufacturer->firmenbuchnummer, 'number', 'tags must be stripped');
-        
+
         $this->logout();
     }
 
@@ -123,7 +123,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendShopOrderNotification = false;
         $newBulkOrdersAllowed = false;
         $newDefaultTaxId = 3;
-        
+
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
 
@@ -147,9 +147,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->setFieldById('manufacturers-send-shop-order-notification', $newSendShopOrderNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-bulk-orders-allowed', $newBulkOrdersAllowed); // do not use 0 here
         $this->browser->setFieldById('manufacturers-default-tax-id', $newDefaultTaxId); // do not use 0 here
-        
+
         $this->browser->submitFormById('manufacturersEditOptionsForm');
-        
+
         $manufacturerNew = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -179,7 +179,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
         $this->assertEquals($defaultTaxId, $newDefaultTaxId, 'saving option default_tax_id failed');
-        
+
         $this->logout();
     }
 

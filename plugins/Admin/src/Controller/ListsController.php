@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
@@ -30,11 +31,11 @@ class ListsController extends AdminAppController
 
     public function orderLists()
     {
-        
+
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $path = realpath(Configure::read('app.folder_order_lists'));
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
-        
+
         $dateFrom = date('d.m.Y', Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
         if (! empty($this->request->getQuery('dateFrom'))) {
             $dateFrom = $this->request->getQuery('dateFrom');
@@ -111,5 +112,4 @@ class ListsController extends AdminAppController
         readfile(ROOT . $filenameWithPath);
         exit; // $this->autoRender = false; is not enough!
     }
-    
 }

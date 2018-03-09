@@ -285,5 +285,5 @@ return [
         'defaults' => 'php',
         'timeout' => 60*60*24
     ]
-    
+
 ];

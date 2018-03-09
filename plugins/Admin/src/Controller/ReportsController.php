@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 

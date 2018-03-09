@@ -78,10 +78,10 @@ if ($product['description'] != '') {
     echo '</div>';
 
     echo '<div class="third-column">';
-    
+
     if (!empty($product['attributes'])) {
         // PRODUCT WITH ATTRIBUTES
-        
+
         // 1) kick attributes if quantity = 0
         $hasCheckedAttribute = false;
         $i = 0;

@@ -24,7 +24,7 @@ $this->element('addScript', [
 ?>
 
 <div class="filter-container">
-	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+    <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php
         if (!$appAuth->isManufacturer()) {
@@ -37,8 +37,8 @@ $this->element('addScript', [
             ]);
         }
         ?>
-	    <div class="right"></div>
-	<?php echo $this->Form->end(); ?>
+        <div class="right"></div>
+    <?php echo $this->Form->end(); ?>
 </div>
 
 <?php

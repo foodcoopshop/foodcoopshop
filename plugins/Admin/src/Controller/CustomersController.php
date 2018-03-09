@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+
 use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
@@ -94,23 +95,23 @@ class CustomersController extends AdminAppController
             'status' => 1
         ]));
     }
-    
+
     public function changePassword()
     {
         $this->set('title_for_layout', 'Passwort ändern');
-        
+
         $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()
             ]
         ])->first();
-        
+
         if (empty($this->request->getData())) {
             $this->set('customer', $customer);
             return;
         }
-        
+
         $customer = $this->Customer->patchEntity(
             $customer,
             $this->request->getData(),
@@ -118,14 +119,11 @@ class CustomersController extends AdminAppController
                 'validate' => 'changePassword'
             ]
         );
-        
+
         if (!empty($customer->getErrors())) {
-            
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('customer', $customer);
-            
         } else {
-            
             $ph = new AppPasswordHasher();
             $this->Customer->save(
                 $this->Customer->patchEntity(
@@ -135,7 +133,7 @@ class CustomersController extends AdminAppController
                     ]
                 )
             );
-            
+
             if ($this->AppAuth->isManufacturer()) {
                 $message = 'Der Hersteller <b>' . $this->AppAuth->getManufacturerName();
                 $actionLogType = 'manufacturer_password_changed';
@@ -148,18 +146,16 @@ class CustomersController extends AdminAppController
                 $actionLogModel = 'customers';
             }
             $message .= '</b> hat sein Passwort geändert.';
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success('Dein neues Passwort wurde erfolgreich gespeichert.');
             $this->redirect($this->referer());
-            
         }
-        
+
         $this->set('customer', $customer);
-        
     }
-    
+
     public function profile()
     {
         $this->set('title_for_layout', 'Mein Profil bearbeiten');
@@ -168,7 +164,7 @@ class CustomersController extends AdminAppController
             $this->render('edit');
         }
     }
-    
+
     public function edit($customerId)
     {
         if ($customerId === null) {
@@ -180,13 +176,13 @@ class CustomersController extends AdminAppController
             $this->render('edit');
         }
     }
-    
+
     private function _processForm($customerId)
     {
-        
+
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
-        
+
         $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -198,20 +194,20 @@ class CustomersController extends AdminAppController
         ])->first();
 
         $this->setFormReferer();
-        
+
         if (empty($this->request->getData())) {
             $this->set('customer', $customer);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
-        
+
         $this->request->data['Customers']['email'] = $this->request->getData('Customers.address_customer.email');
         $this->request->data['Customers']['address_customer']['firstname'] = $this->request->getData('Customers.firstname');
         $this->request->data['Customers']['address_customer']['lastname'] = $this->request->getData('Customers.lastname');
-        
+
         $customer = $this->Customer->patchEntity(
             $customer,
             $this->request->getData(),
@@ -222,13 +218,12 @@ class CustomersController extends AdminAppController
                 ]
             ]
         );
-        
+
         if (!empty($customer->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('customer', $customer);
             $this->render('edit');
         } else {
-            
             $this->Customer->save(
                 $customer,
                 [
@@ -237,7 +232,7 @@ class CustomersController extends AdminAppController
                     ]
                 ]
             );
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if ($isOwnProfile) {
                 $message = 'Dein Profil wurde geändert.';
@@ -246,19 +241,17 @@ class CustomersController extends AdminAppController
             }
             $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $customer->id_customer);
-            
+
             if ($this->request->here == Configure::read('app.slugHelper')->getCustomerProfile()) {
                 $this->renewAuthSession();
             }
-            
+
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('customer', $customer);
-        
     }
 
     /**
@@ -287,7 +280,7 @@ class CustomersController extends AdminAppController
                 'Customers.id_customer' => $customerId
             ]
         ])->first();
-        
+
         $this->Customer->save(
             $this->Customer->patchEntity(
                 $customer,
@@ -307,7 +300,6 @@ class CustomersController extends AdminAppController
         $message = 'Das Mitglied <b>' . $customer->name . '</b> wurde erfolgreich ' . $statusText;
 
         if ($sendEmail) {
-            
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
 
             $email = new AppEmail();
@@ -361,7 +353,7 @@ class CustomersController extends AdminAppController
                 ]
             )
         );
-        
+
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');

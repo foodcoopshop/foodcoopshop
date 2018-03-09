@@ -55,24 +55,24 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 
 <?php
 
-    if ($appAuth->isManufacturer()) {
-        $url = $this->Slug->getManufacturerProfile();
+if ($appAuth->isManufacturer()) {
+    $url = $this->Slug->getManufacturerProfile();
+} else {
+    if ($isEditMode) {
+        $url = $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer);
     } else {
-        if ($isEditMode) {
-            $url = $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer);
-        } else {
-            $url = $this->Slug->getManufacturerAdd();
-        }
+        $url = $this->Slug->getManufacturerAdd();
     }
+}
     echo $this->Form->create($manufacturer, [
         'class' => 'fcs-form',
         'novalidate' => 'novalidate',
         'url' => $url,
         'id' => 'manufacturerEditForm'
     ]);
-    
+
     echo $this->Form->hidden('referer', ['value' => $referer]);
-    
+
     echo '<h2>Allgemein</h2>';
 
     $imprintString = $appAuth->isManufacturer() ? 'in deinem Impressum' : 'im Impressum des Herstellers';
@@ -236,8 +236,8 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     'cols' => 81,
     'escape' => false
     ]);
-    
-echo $this->Form->end();
+
+    echo $this->Form->end();
 
 ?>
 

@@ -31,7 +31,4 @@ class AppMarshaller extends Marshaller
         }
         return $errors;
     }
-    
 }
-
-?>

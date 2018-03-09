@@ -50,7 +50,7 @@ class PagesController extends FrontendController
 
     public function home()
     {
-        
+
         /**
          * START: security keys check
          */
@@ -97,7 +97,7 @@ class PagesController extends FrontendController
                 'Customers'
             ]
         ])->first();
-        
+
         if (empty($page)) {
             throw new RecordNotFoundException('page not found');
         }
@@ -119,8 +119,7 @@ class PagesController extends FrontendController
                 'Pages.position' => 'ASC',
                 'Pages.title' => 'ASC'
                 ]
-            ]
-        );
+            ]);
 
         $correctSlug = Configure::read('app.slugHelper')->getPageDetail($page->id_page, $page->title);
         if ($correctSlug != Configure::read('app.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {

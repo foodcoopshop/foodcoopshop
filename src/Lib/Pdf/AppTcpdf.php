@@ -244,7 +244,7 @@ class AppTcpdf extends TCPDF
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
         mb_internal_encoding('UTF-8');
-        
+
         $this->SetCreator(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetAuthor(Configure::read('appDb.FCS_APP_NAME'));
         $this->SetTopMargin(43);

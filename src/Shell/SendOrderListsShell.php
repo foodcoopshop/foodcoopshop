@@ -28,11 +28,11 @@ class SendOrderListsShell extends AppShell
     public function main()
     {
         parent::main();
-        
+
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->Order = TableRegistry::get('Orders');
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        
+
         $this->startTimeLogging();
 
         $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
@@ -68,7 +68,7 @@ class SendOrderListsShell extends AppShell
                 @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
             }
         }
-        
+
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
@@ -76,7 +76,7 @@ class SendOrderListsShell extends AppShell
             $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
             $i++;
         }
-        
+
         // 5) check if manufacturers have open order details and send email
         $i = 0;
         $outString = 'Bestellzeitraum: ' . $dateFrom . ' bis ' . $dateTo . '<br />';

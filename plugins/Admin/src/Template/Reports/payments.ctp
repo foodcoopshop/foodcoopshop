@@ -30,12 +30,12 @@ if ($paymentType == 'product') {
 ?>
 
 <div class="filter-container">
-	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+    <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
         <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
         <div class="right"></div>
-	<?php echo $this->Form->end(); ?>
+    <?php echo $this->Form->end(); ?>
 </div>
 
 <div id="help-container">
@@ -145,11 +145,11 @@ foreach ($payments as $payment) {
     }
 
     echo '<td>';
-        if (!empty($payment->manufacturer)) {
-            echo $payment->manufacturer->name;
-        } else {
-            echo $payment->customer->name;
-        }
+    if (!empty($payment->manufacturer)) {
+        echo $payment->manufacturer->name;
+    } else {
+        echo $payment->customer->name;
+    }
         echo $additionalText;
     echo '</td>';
 
@@ -158,9 +158,9 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     echo '<td>';
-        if (!empty($payment->created_by_customer)) {
-            echo $payment->created_by_customer->name;
-        }
+    if (!empty($payment->created_by_customer)) {
+        echo $payment->created_by_customer->name;
+    }
     echo '</td>';
 
     echo '<td style="text-align:right;">';

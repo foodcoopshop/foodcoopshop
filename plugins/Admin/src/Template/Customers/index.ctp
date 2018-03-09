@@ -25,7 +25,7 @@ use Cake\Core\Configure;
     ?>
     
     <div class="filter-container">
-    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             Anzahl Bestellungen zwischen <input id="validOrdersCountFrom" name="validOrdersCountFrom"
                 type="text"
@@ -34,7 +34,7 @@ use Cake\Core\Configure;
                 value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
             und letztes Bestelldatum von <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right"></div>
-    	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">
@@ -106,7 +106,7 @@ foreach ($customers as $customer) {
     echo '<td>';
 
     $customerName = $customer->name;
-    
+
     if ($appAuth->isSuperadmin()) {
         echo '<span class="edit-wrapper">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [

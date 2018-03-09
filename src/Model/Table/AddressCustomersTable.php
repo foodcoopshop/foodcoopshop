@@ -48,5 +48,4 @@ class AddressCustomersTable extends AddressesTable
         ]);
         return $validator;
     }
-
 }

@@ -32,7 +32,7 @@ class SendInvoicesShell extends AppShell
         $this->ActionLog = TableRegistry::get('ActionLogs');
         $this->Order = TableRegistry::get('Orders');
         $this->Manufacturer = TableRegistry::get('Manufacturers');
-        
+
         $this->startTimeLogging();
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth();

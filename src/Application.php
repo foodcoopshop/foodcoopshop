@@ -45,7 +45,7 @@ class Application extends BaseApplication
 
             // Add routing middleware.
             ->add(new RoutingMiddleware($this));
-            
+
         return $middlewareQueue;
     }
 }

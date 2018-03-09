@@ -288,6 +288,3 @@ echo $this->Menu->render($menu, [
     'class' => 'vertical menu',
     'footer' => $footerHtml
 ]);
-
-
-

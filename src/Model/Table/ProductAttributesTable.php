@@ -42,17 +42,17 @@ class ProductAttributesTable extends AppTable
             'foreignKey' => 'id_product_attribute'
         ]);
     }
-    
+
     public function add($productId, $attributeId)
     {
         $defaultQuantity = 999;
-        
+
         $productAttributesCount = $this->find('all', [
             'conditions' => [
                 'ProductAttributes.id_product' => $productId
             ]
         ])->count();
-        
+
         $newAttribute = $this->save(
             $this->newEntity(
                 [
@@ -62,10 +62,10 @@ class ProductAttributesTable extends AppTable
             )
         );
         $productAttributeId = $newAttribute->id_product_attribute;
-        
+
         // INSERT in ProductAttributeCombination tricky because of set primary_key
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
-        
+
         $this->ProductAttributeShops->save(
             $this->ProductAttributeShops->newEntity(
                 [
@@ -76,7 +76,7 @@ class ProductAttributesTable extends AppTable
                 ]
             )
         );
-        
+
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
         $this->ProductShop = TableRegistry::get('ProductShops');
         $this->ProductShop->id = $productId;
@@ -88,13 +88,12 @@ class ProductAttributesTable extends AppTable
                 ]
             )
         );
-        
+
         // avoid Integrity constraint violation: 1062 Duplicate entry '64-232-1-0' for key 'product_sqlstock'
         // with custom sql
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
-        
+
         $this->StockAvailable = TableRegistry::get('StockAvailables');
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }
-
 }

@@ -44,16 +44,16 @@ use Cake\Core\Configure;
             
             <div id="inner-content">
                 <?php
-                
+
                 echo $this->fetch('content');
-                
+
                 $referer = '/';
                 $refererName = 'Startseite';
                 if (!empty($_SERVER['HTTP_REFERER'])) {
                     $referer = $_SERVER['HTTP_REFERER'];
                     $refererName = 'Seite, auf der du gerade warst.';
                 }
-                
+
                 ?>
                 <br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
                 <div class="sc"></div>

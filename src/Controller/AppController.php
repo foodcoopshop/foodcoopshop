@@ -27,16 +27,16 @@ class AppController extends Controller
 
     public function initialize()
     {
-        
+
         parent::initialize();
-        
+
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash', [
             'clear' => true
         ]);
         $this->loadComponent('String');
         $this->loadComponent('Cart');
-        
+
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
             'loginAction' => Configure::read('app.slugHelper')->getLogin(),
@@ -62,12 +62,11 @@ class AppController extends Controller
             ],
             'storage' => 'Session'
         ]);
-        
+
         $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
         ];
-        
     }
 
     public function beforeRender(Event $event)
@@ -86,7 +85,7 @@ class AppController extends Controller
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
-        
+
         $rememberMeCookie = $this->request->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);
@@ -117,14 +116,13 @@ class AppController extends Controller
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
-        
+
         // should be removed in v2.1 - fixes different logged user format of cakephp 2 and 3
         if (!is_object($this->AppAuth->user('terms_of_use_accepted_date'))) {
             $this->renewAuthSession();
         }
-        
+
         parent::beforeFilter($event);
-        
     }
 
     /**

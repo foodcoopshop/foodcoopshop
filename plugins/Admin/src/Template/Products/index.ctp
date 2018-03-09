@@ -28,7 +28,7 @@ use Cake\Core\Configure;
     ?>
     
     <div class="filter-container">
-    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
             if ($manufacturerId > 0) {
                 echo $this->Form->control('productId', [
@@ -79,7 +79,7 @@ use Cake\Core\Configure;
                     ]);
                     echo '</div>';
                 }
-    
+
                 if (isset($showSyncProductsButton) && $showSyncProductsButton) {
                     $this->element('addScript', [
                         'script' => Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.toggle-sync-button-wrapper a'));"
@@ -95,10 +95,10 @@ use Cake\Core\Configure;
                         );
                     echo '</div>';
                 }
-    
+
                 ?>
             </div>
-    	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

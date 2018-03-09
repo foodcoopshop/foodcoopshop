@@ -86,7 +86,7 @@ class BlogPostsController extends FrontendController
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
-        
+
         $options = ['modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))];
         $tmpNeighbors = $this->BlogPost->find('neighbors', $options);
         $tmpNeighbors['prev']->contain('Manufacturers')->where($conditions)->first();
@@ -96,7 +96,7 @@ class BlogPostsController extends FrontendController
             'next' => $tmpNeighbors['next']->first()
         ];
         $this->set('neighbors', $neighbors);
-        
+
         $this->set('title_for_layout', $blogPost->title);
     }
 
@@ -126,7 +126,7 @@ class BlogPostsController extends FrontendController
             $conditions['BlogPosts.is_private'] = APP_OFF;
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
-        
+
         $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->find('all', [
             'conditions' => $conditions,

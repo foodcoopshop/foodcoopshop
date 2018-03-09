@@ -21,23 +21,23 @@ use Cake\ORM\TableRegistry;
  */
 class ProductAttributesTableTest extends AppCakeTestCase
 {
-    
+
     public $ProductAttribute;
-    
+
     public function setUp()
     {
         parent::setUp();
         $this->Product = TableRegistry::get('Products');
         $this->ProductAttribute = TableRegistry::get('ProductAttributes');
     }
-    
+
     public function testAddProductAttribute()
     {
         $productId = 346;
         $attributeId = 29;
-        
+
         $this->ProductAttribute->add($productId, $attributeId);
-        
+
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -49,12 +49,10 @@ class ProductAttributesTableTest extends AppCakeTestCase
                 'ProductAttributes.ProductAttributeShops',
             ]
         ])->first();
-        
+
         $this->assertEquals($product->product_attributes[0]->product_attribute_shop->default_on, 1);
         $this->assertEquals($product->product_attributes[0]->product_attribute_shop->price, 0);
         $this->assertEquals($product->product_attributes[0]->stock_available->quantity, 999);
         $this->assertEquals($product->product_shop->price, 0);
-        
     }
-    
 }

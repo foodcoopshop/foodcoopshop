@@ -118,7 +118,7 @@ echo '<div class="holiday-wrapper">';
         'escape' => false
     ]);
     echo '<div class="sc"></div>';
-    
+
     echo $this->Form->control('Manufacturers.send_ordered_product_price_changed_notification', [
         'label' => 'Preis-Änderungen von bestellten Produkten <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail erhalten.</span>',
         'type' => 'checkbox',
@@ -176,7 +176,7 @@ echo '<div class="holiday-wrapper">';
         ]);
     }
     echo '<div class="sc"></div>';
-    
+
     if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
         $this->element('addScript', [
             'script' =>
@@ -193,7 +193,7 @@ echo '<div class="holiday-wrapper">';
         ]);
         echo '<div class="sc"></div>';
     }
-    
+
     echo $this->Form->end();
 
 ?>

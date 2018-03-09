@@ -34,7 +34,7 @@ class BackupDatabaseShell extends AppShell
         ini_set('memory_limit', '256M');
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        
+
         $this->startTimeLogging();
 
         $this->initSimpleBrowser(); // for loggedUserId

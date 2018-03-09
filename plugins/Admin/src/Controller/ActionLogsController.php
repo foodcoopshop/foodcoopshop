@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
@@ -111,7 +112,7 @@ class ActionLogsController extends AdminAppController
                 'BlogPosts',
                 'Payments'
             ]
-        ]); 
+        ]);
         $actionLogs = $this->paginate($query, [
             'sortWhitelist' => [
                 'ActionLogs.type', 'ActionLogs.date', 'ActionLogs.text', 'Customers.' . Configure::read('app.customerMainNamePart')

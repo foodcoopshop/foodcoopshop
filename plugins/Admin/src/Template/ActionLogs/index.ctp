@@ -27,7 +27,7 @@ use Cake\Core\Configure;
     ?>
 
     <div class="filter-container">
-    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
                 <?php echo $this->Form->control('type', ['type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'default' => isset($type) ? $type : '']); ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
@@ -38,7 +38,7 @@ use Cake\Core\Configure;
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right"></div>
-       	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

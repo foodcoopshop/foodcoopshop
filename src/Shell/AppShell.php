@@ -66,7 +66,7 @@ class AppShell extends Shell
             $this->browser->loginPassword = Configure::read('test.loginPassword');
         }
     }
-    
+
     public function out($message = null, $newlines = 1, $level = Shell::NORMAL)
     {
         if ($this->isCalledFromUnitTest()) {
@@ -75,11 +75,10 @@ class AppShell extends Shell
             return parent::out($message, $newlines, $level);
         }
     }
-    
+
     private function isCalledFromUnitTest()
     {
         return isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
             || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]));
     }
-    
 }

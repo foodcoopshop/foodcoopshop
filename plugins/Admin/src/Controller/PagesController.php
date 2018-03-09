@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
@@ -53,11 +54,11 @@ class PagesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Seite erstellen');
-        
+
         $this->set('disabledSelectPageIds', []);
-        
+
         $this->_processForm($page, false);
-        
+
         if (empty($this->request->getData())) {
             $this->render('edit');
         }
@@ -68,35 +69,35 @@ class PagesController extends AdminAppController
         if ($pageId === null) {
             throw new NotFoundException;
         }
-        
+
         $this->Page = TableRegistry::get('Pages');
         $page = $this->Page->find('all', [
             'conditions' => [
                 'Pages.id_page' => $pageId
             ]
         ])->first();
-        
+
         if (empty($page)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Seite bearbeiten');
-        
+
         $pageChildren = $this->Page->find('all', [
             'conditions' => [
                 'Pages.active > ' . APP_DEL
             ]
         ])
         ->find('children', ['for' => $pageId]);
-        
+
         $disabledSelectPageIds = [(int) $pageId];
         foreach ($pageChildren as $pageChild) {
             $disabledSelectPageIds[] = $pageChild->id_page;
         }
         $this->set('disabledSelectPageIds', $disabledSelectPageIds);
-        
+
         $this->_processForm($page, true);
     }
-    
+
     private function _processForm($page, $isEditMode)
     {
         $_SESSION['KCFINDER'] = [
@@ -106,19 +107,19 @@ class PagesController extends AdminAppController
         $this->set('pagesForSelect', $this->Page->getForSelect($page->id_page));
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
-        
+
         if (empty($this->request->getData())) {
             $this->set('page', $page);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['content']);
-        
+
         $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->getData('Pages.extern_url'));
         $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
-        
+
         $page = $this->Page->patchEntity($page, $this->request->getData());
         if (!empty($page->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -126,7 +127,7 @@ class PagesController extends AdminAppController
             $this->render('edit');
         } else {
             $page = $this->Page->save($page);
-            
+
             if (!$isEditMode) {
                 $messageSuffix = 'erstellt';
                 $actionLogType = 'page_added';
@@ -134,7 +135,7 @@ class PagesController extends AdminAppController
                 $messageSuffix = 'geändert';
                 $actionLogType = 'page_changed';
             }
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Pages.delete_page'))) {
                 $page = $this->Page->patchEntity($page, ['active' => APP_DEL]);
@@ -145,16 +146,14 @@ class PagesController extends AdminAppController
             $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'pages', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $page->id_page);
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('page', $page);
-        
     }
-    
+
     public function index()
     {
         $conditions = [];

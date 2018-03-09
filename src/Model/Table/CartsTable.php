@@ -47,7 +47,7 @@ class CartsTable extends AppTable
                 'Carts.id_customer' => $customerId
             ]
         ])->first();
-        
+
         if (empty($cart)) {
             $cart2save = [
                 'id_customer' => $customerId
@@ -80,7 +80,7 @@ class CartsTable extends AppTable
         ];
         foreach ($cartProducts as &$cartProduct) {
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
-            
+
             $imageId = 0;
             if (!empty($cartProduct['Products']['Images'])) {
                 $imageId = $cartProduct['Products']['Images']['id_image'];

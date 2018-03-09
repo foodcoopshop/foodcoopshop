@@ -28,7 +28,7 @@ class ProductsControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->Product = TableRegistry::get('Products');
     }
-    
+
     public function testChangeProductStatus()
     {
         $this->loginAsSuperadmin();

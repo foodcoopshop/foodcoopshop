@@ -38,7 +38,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     width: 150px ! important;
 }
 .fcs-form .error-message {
-	margin-left: 120px;
+    margin-left: 120px;
 }
 #filter-loader {
   left: 36vw;
@@ -158,10 +158,3 @@ form.fcs-form input[type="checkbox"] {
 form.fcs-form .description {
   margin-left: 120px;
 }
-
-
-
-
-
-
-

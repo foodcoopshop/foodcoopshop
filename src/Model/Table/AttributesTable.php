@@ -27,7 +27,7 @@ class AttributesTable extends AppTable
         $this->setPrimaryKey('id_attribute');
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('name', 'Bitte gib einen Namen an.');
@@ -38,7 +38,7 @@ class AttributesTable extends AppTable
         ]);
         return $validator;
     }
-    
+
     public function getForDropdown()
     {
         $attributes = $this->find('all', [

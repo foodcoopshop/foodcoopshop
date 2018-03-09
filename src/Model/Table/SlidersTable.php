@@ -25,7 +25,7 @@ class SlidersTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_slider');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('image', 'Bitte lade ein Bild hoch.');
@@ -33,7 +33,7 @@ class SlidersTable extends AppTable
         $validator->range('position', [-1, 101], 'Bitte gibt eine Zahl von 0 bis 100 an.');
         return $validator;
     }
-    
+
     public function getForHome()
     {
         $slides = $this->find('all', [

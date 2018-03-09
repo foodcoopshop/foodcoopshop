@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Controller;
+
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
@@ -37,48 +38,48 @@ class CategoriesController extends AdminAppController
         );
         $this->set('title_for_layout', 'Kategorie erstellen');
         $this->_processForm($category, false);
-        
+
         if (empty($this->request->getData())) {
             $this->render('edit');
         }
     }
-    
+
     public function edit($categoryId)
     {
         if ($categoryId === null) {
             throw new NotFoundException;
         }
-        
+
         $this->Category = TableRegistry::get('Categories');
         $category = $this->Category->find('all', [
             'conditions' => [
                 'Categories.id_category' => $categoryId
             ]
         ])->first();
-        
+
         if (empty($category)) {
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Kategorie bearbeiten');
         $this->_processForm($category, true);
     }
-    
+
     private function _processForm($category, $isEditMode)
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
         $categoriesForSelect = $this->Category->getForSelect($category->id);
         $this->set('categoriesForSelect', $categoriesForSelect);
-        
+
         if (empty($this->request->getData())) {
             $this->set('category', $category);
             return;
         }
-        
+
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['description']);
-        
+
         $category = $this->Category->patchEntity($category, $this->request->getData());
         if (!empty($category->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -86,7 +87,7 @@ class CategoriesController extends AdminAppController
             $this->render('edit');
         } else {
             $category = $this->Category->save($category);
-            
+
             if (!$isEditMode) {
                 $messageSuffix = 'erstellt';
                 $actionLogType = 'category_added';
@@ -98,11 +99,11 @@ class CategoriesController extends AdminAppController
             if (!empty($this->request->getData('Categories.tmp_image'))) {
                 $this->saveUploadedImage($category->id_category, $this->request->getData('Categories.tmp_image'), Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
             }
-            
+
             if (!empty($this->request->getData('Categories.delete_image'))) {
                 $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
             }
-            
+
             $this->ActionLog = TableRegistry::get('ActionLogs');
             if (!empty($this->request->getData('Categories.delete_category'))) {
                 $this->Category->delete($category);
@@ -112,14 +113,12 @@ class CategoriesController extends AdminAppController
             $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'categories', $message);
             $this->Flash->success($message);
-            
+
             $this->request->getSession()->write('highlightedRowId', $category->id_category);
             $this->redirect($this->request->getData('referer'));
-            
         }
-        
+
         $this->set('category', $category);
-        
     }
 
     public function index()

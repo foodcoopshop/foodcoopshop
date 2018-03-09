@@ -23,7 +23,7 @@ return [
          */
         'adminEmail' => 'fcs-demo-superadmin@mailinator.com',
         'adminPassword' => 'foodcoopshop',
-        
+
         /**
          * set to true if you want to receive debug emails when exceptions are triggered
          */

@@ -16,7 +16,7 @@
 # - allow commit
 
 # CodeSniffer and CodeBeautifierFixer commands
-PHPCBF="vendor/bin/phpcbf --no-patch --standard=devtools/fcs-rules.xml"
+PHPCBF="vendor/bin/phpcbf --standard=devtools/fcs-rules.xml"
 PHPCS="vendor/bin/phpcs --standard=devtools/fcs-rules.xml"
 
 # note the current directory

@@ -26,5 +26,4 @@ class DepositProductsTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
     }
-    
 }

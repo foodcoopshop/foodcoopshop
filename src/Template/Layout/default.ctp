@@ -119,7 +119,7 @@ header('Pragma: no-cache');
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
     echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
-    
+
     // add script BEFORE all scripts that are loaded in views (block)
     echo $this->MyHtml->scriptBlock(
         Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();",

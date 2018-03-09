@@ -45,51 +45,51 @@ return [
             'prefix' => 'fcs_'
         ]
     ],
-    
+
     /**
      * A random string used in security hashing methods.
      */
     'Security' => [
         'salt' => ''
     ],
-    
+
     'app' => [
         /**
          * please create a unique cookie key and put it here
          */
         'cookieKey' => '',
-        
+
         /**
          * defines how many days after the sendOrderListsWeekday the products are delivered
          * sendOrderListsWeekday is defined in config.php and preset to 3, i.e. "wednesday"
          */
         'deliveryDayDelta' => 2,
-        
+
         /**
          * optional: message that is displayed in the dialog where order status can be changed (/admin/orders)
          */
         'additionalOrderStatusChangeInfo' => '',
-        
+
         /**
          * your host's name, eg. http://www.yourfoodcoop.com
          */
         'cakeServerName' => '',
-        
+
         /**
          * array of email adresses that receive notifications after new member registrations
          */
         'registrationNotificationEmails' => [],
-        
+
         /**
          * whether to apply a member fee to the members account balance
          */
         'memberFeeEnabled' => false,
-        
+
         /**
          * cronjob needs to be activated too
          */
         'emailOrderReminderEnabled' => true,
-        
+
         /**
          * valid options of array: 'cashless' or 'cash' (or both but this is not recommended)
          */

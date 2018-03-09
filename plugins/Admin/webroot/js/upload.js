@@ -139,7 +139,6 @@ foodcoopshop.Upload = {
                 $(this).parent().find('input').click();
             });
 
-
             // Initialize the jQuery File Upload plugin
             imageUploadForm.fileupload({
 
@@ -269,6 +268,3 @@ foodcoopshop.Upload = {
     }
 
 }
-
-
-

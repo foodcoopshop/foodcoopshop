@@ -34,13 +34,13 @@ class CategoriesTable extends AppTable
         $this->setPrimaryKey('id_category');
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('name', 'Bitte gib einen Namen an.');
         return $validator;
     }
-    
+
     private $flattenedArray = [];
 
     private function flattenNestedArrayWithChildren($array, $separator = '')
@@ -155,7 +155,7 @@ class CategoriesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        
+
         if (! $countMode) {
             return $products;
         } else {

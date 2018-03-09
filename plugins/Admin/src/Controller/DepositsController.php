@@ -1,6 +1,8 @@
 <?php
 namespace Admin\Controller;
+
 namespace Admin\Controller;
+
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;

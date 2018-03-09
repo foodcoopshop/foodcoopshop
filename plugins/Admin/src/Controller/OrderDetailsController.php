@@ -1,6 +1,7 @@
 <?php
 
 namespace Admin\Controller;
+
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -69,7 +70,7 @@ class OrderDetailsController extends AdminAppController
                 'contain' => [
                     'Products',
                     'Orders'
-                    
+
                 ]
             ])->first();
             if (!empty($orderDetail)) {
@@ -326,7 +327,7 @@ class OrderDetailsController extends AdminAppController
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $object->product_quantity);
 
         $message = 'Die Anzahl des bestellten Produktes <b>' . $oldOrderDetail->product_name . '" </b> wurde erfolgreich von ' . $oldOrderDetail->product_quantity . ' auf ' . $productQuantity . ' geändert';
-        
+
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_quantity_changed')
@@ -538,7 +539,6 @@ class OrderDetailsController extends AdminAppController
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);
         }
 
-
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
         $productString = $orderDetailsCount == 1 ? 'Produkt wurde' : 'Produkte wurden';
@@ -555,9 +555,9 @@ class OrderDetailsController extends AdminAppController
 
     private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productQuantity)
     {
-        
+
         $this->OrderDetail = TableRegistry::get('OrderDetails');
-        
+
         $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($oldOrderDetail->product_id, $productPrice / $productQuantity);
         $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPrice, $unitPriceExcl, $productQuantity);
         $totalTaxAmount = $unitTaxAmount * $productQuantity;
@@ -573,7 +573,7 @@ class OrderDetailsController extends AdminAppController
             'product_quantity' => $productQuantity,
             'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_quantity * $productQuantity
         ];
-        
+
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
         );
@@ -589,7 +589,7 @@ class OrderDetailsController extends AdminAppController
                 $this->OrderDetail->OrderDetailTaxes->patchEntity($oldOrderDetail->order_detail_tax, $orderDetailTax2save)
             );
         }
-        
+
         // update sum in orders
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
@@ -611,22 +611,23 @@ class OrderDetailsController extends AdminAppController
 
     private function increaseQuantityForProduct($orderDetail, $orderDetailQuantityBeforeQuantityChange)
     {
-        
+
         // order detail references a product attribute
         if (!empty($orderDetail->product_attribute->stock_available)) {
             $stockAvailableObject = $orderDetail->product_attribute->stock_available;
         } else {
             $stockAvailableObject = $orderDetail->product->stock_available;
         }
-        
+
         $quantity = $stockAvailableObject->quantity;
-        
+
         // do the acutal updates for increasing quantity
         $this->StockAvailable = TableRegistry::get('StockAvailables');
         $originalPrimaryKey = $this->StockAvailable->getPrimaryKey();
         $this->StockAvailable->setPrimaryKey('id_stock_available');
         $newQuantity = $quantity + $orderDetailQuantityBeforeQuantityChange - $orderDetail->product_quantity;
-        $patchedEntity = $this->StockAvailable->patchEntity($stockAvailableObject,
+        $patchedEntity = $this->StockAvailable->patchEntity(
+            $stockAvailableObject,
             [
                 'quantity' => $newQuantity
             ]

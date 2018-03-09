@@ -26,27 +26,27 @@ use Cake\View\Helper;
 class SlugHelper extends Helper
 {
 
-    
+
     public function getActionLogsList()
     {
         return $this->getAdminHome().'/action-logs';
     }
-    
+
     public function getOrderDetailsList()
     {
         return $this->getAdminHome().'/order-details';
     }
-    
+
     public function getOrdersList()
     {
         return $this->getAdminHome().'/orders';
     }
-    
+
     public function getAcceptTermsOfUse()
     {
         return '/nutzungsbedingungen-akzeptieren';
     }
-    
+
     public function getManufacturerDetail($manufacturerId, $manufacturerName)
     {
         return '/hersteller/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
@@ -124,7 +124,7 @@ class SlugHelper extends Helper
     {
         return '/admin';
     }
-    
+
     public function getHome()
     {
         return '/';
@@ -184,7 +184,7 @@ class SlugHelper extends Helper
     {
         return '/admin/customers/edit/' . $customerId;
     }
-    
+
     public function getCustomerListAdmin()
     {
         return '/admin/customers';
@@ -330,7 +330,7 @@ class SlugHelper extends Helper
     public function getProductAdmin($manufacturerId = null, $productId = null)
     {
         $url = '/admin/products';
-        
+
         if (!empty($manufacturerId)) {
             $urlParams['manufacturerId'] = $manufacturerId;
         }

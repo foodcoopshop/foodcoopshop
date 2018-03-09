@@ -39,7 +39,7 @@ class MyHtmlHelper extends HtmlHelper
         </script>";
         parent::__construct($View, $config);
     }
-    
+
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number
@@ -53,14 +53,14 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
     {
-        
+
         if (!is_null($dateFrom)) {
             $dateFrom = $dateFrom->i18nFormat(Configure::read('DateFormat.Database'));
         }
         if (!is_null($dateTo)) {
             $dateTo = $dateTo->i18nFormat(Configure::read('DateFormat.Database'));
         }
-        
+
         $result = '';
 
         // both from and to date not set
@@ -533,5 +533,4 @@ class MyHtmlHelper extends HtmlHelper
     {
         return array_keys(self::getVisibleOrderStates());
     }
-
 }

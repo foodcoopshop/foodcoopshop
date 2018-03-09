@@ -33,14 +33,14 @@ $this->element('addScript', ['script' =>
         <?php
           echo $this->Form->control('email', ['label' => 'E-Mail']);
           echo $this->Form->control('passwd', ['label' => 'Passwort']);
-          
+
           echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
                   'label' => 'Angemeldet bleiben<br /><small>und Cookie akzeptieren</small>',
                   'escape' => false
               ]);
-          echo '</div>';
+              echo '</div>';
         ?>
         
         <div class="sc"></div>
@@ -62,9 +62,9 @@ $this->element('addScript', ['script' =>
       <div class="sc"></div>
       <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;">Mitgliedskonto erstellen</h1>
       
-           <?php
+            <?php
             echo $this->Form->create(
-                $customer, 
+                $customer,
                 [
                     'url' => $this->Slug->getRegistration(),
                     'id' => 'RegistrationForm',
@@ -113,7 +113,7 @@ $this->element('addScript', ['script' =>
               <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> Mitgliedskonto erstellen</button>
           
           </div>
-      <?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     <?php } ?>
   
 </div>

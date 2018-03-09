@@ -25,7 +25,7 @@ class OrderDetailsTable extends AppTable
         $this->setTable('order_detail');
         parent::initialize($config);
         $this->setPrimaryKey('id_order_detail');
-        
+
         $this->belongsTo('Orders', [
             'foreignKey' => 'id_order'
         ]);
@@ -40,11 +40,11 @@ class OrderDetailsTable extends AppTable
             'foreignKey' => 'product_attribute_id'
         ]);
     }
-    
+
     public function deleteOrderDetail($orderDetail)
     {
         $this->delete($orderDetail);
-        
+
         if (!empty($orderDetail->order_detail_tax)) {
             $this->OrderDetailTaxes->delete($orderDetail->order_detail_tax);
         }
@@ -77,11 +77,11 @@ class OrderDetailsTable extends AppTable
             'manufacturerId' => $manufacturerId,
             'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate')
         ];
-        
+
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $orderDetails = $statement->fetchAll('assoc');
-        
+
         return $orderDetails;
     }
 
@@ -108,11 +108,11 @@ class OrderDetailsTable extends AppTable
             'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
             'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo),
         ];
-        
+
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $orderDetails = $statement->fetchAll('assoc');
-        
+
         if (isset($orderDetails[0])) {
             return $orderDetails[0]['sumOrderDetail'];
         } else {

@@ -313,7 +313,7 @@
     #RegistrationForm .input.checkbox input[type="checkbox"] {
         margin-top: 8px;
     }
-	.ui-dialog {
+    .ui-dialog {
         width: 98% ! important;
         max-width: 450px ! important;
     }
@@ -376,6 +376,4 @@
         font-size: 13px;
     }
  }
-
-
-
+ 

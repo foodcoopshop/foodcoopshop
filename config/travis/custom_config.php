@@ -45,49 +45,49 @@ return [
             'database' => 'foodcoopshop_test'
         ]
     ],
-    
+
     /**
      * A random string used in security hashing methods.
      */
     'Security.salt' => 'b6OSgpEV0vA36P3PxjWigmbQc6J5CLhs3bSV89KK8m1IKkl8gJfp84Odz3gMdW9K',
-    
+
     'app' => [
         /**
          * please create a unique cookie key and put it here
          */
         'cookieKey' => '77LIqHJAoVS89iRp3QKcdXaAvZTTqRdiweyZo87CoY9c4fieao5KKPWcdS',
-        
+
         /**
          * defines how many days after the sendOrderListsWeekday the products are delivered
          * sendOrderListsWeekday is defined in config.php and preset to 3, i.e. "wednesday"
          */
         'deliveryDayDelta' => 2,
-        
+
         /**
          * optional: message that is displayed in the dialog where order status can be changed (/admin/orders)
          */
         'additionalOrderStatusChangeInfo' => '',
-        
+
         /**
          * your host's name, eg. http://www.yourfoodcoop.com
          */
         'cakeServerName' => 'http://www.foodcoopshop.test',
-        
+
         /**
          * array of email adresses that receive notifications after new member registrations
          */
         'registrationNotificationEmails' => [],
-        
+
         /**
          * whether to apply a member fee to the members account balance
          */
         'memberFeeEnabled' => true,
-        
+
         /**
          * cronjob needs to be activated too
          */
         'emailOrderReminderEnabled' => true,
-        
+
         /**
          * valid options of array: 'cashless' or 'cash' (or both but this is not recommended)
          */

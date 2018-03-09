@@ -30,7 +30,7 @@ use Cake\Core\Configure;
     ?>
 
     <div class="filter-container">
-		<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             <div class="right">
@@ -43,7 +43,7 @@ use Cake\Core\Configure;
                 echo '</div>';
                 ?>
             </div>
-    	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Table;
+
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 
@@ -50,16 +51,15 @@ class ProductAttributeCombinationsTable extends AppTable
             'online' => [],
             'offline' => []
         ];
-        
+
         foreach ($combinations as $combination) {
-            
             $preparedProduct = $combination->product_attribute->product;
 
             $tmpProduct = [];
             $tmpProduct['link'] = Configure::read('app.htmlHelper')->link($preparedProduct->product_lang->name . ' - ' . $preparedProduct->manufacturer->name, Configure::read('app.slugHelper')->getProductDetail($preparedProduct->id_product, $preparedProduct->product_lang->name));
             $tmpProduct['name']= $preparedProduct->product_lang->name;
             $tmpProduct['manufacturer_name'] = $preparedProduct->manufacturer->name;
-                
+
             if ($preparedProduct->active == 1) {
                 $result['online'][] = $tmpProduct;
             }
@@ -68,10 +68,10 @@ class ProductAttributeCombinationsTable extends AppTable
                 $result['offline'][] = $tmpProduct;
             }
         }
-        
+
         $result['online'] = Hash::sort($result['online'], '{n}.name', 'asc');
         $result['offline'] = Hash::sort($result['offline'], '{n}.name', 'asc');
-        
+
         return $result;
     }
 }

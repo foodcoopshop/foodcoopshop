@@ -27,30 +27,30 @@ class FileAndEmailLog extends FileLog
 
     public function log($level, $message, array $context = [])
     {
-        
+
         $result = parent::log($level, $message, $context);
-        
+
         if (Configure::read('app.emailErrorLoggingEnabled')) {
             $this->sendEmailWithErrorInformation($message);
         }
-        
+
         return $result;
     }
-    
+
     private function sendEmailWithErrorInformation($message)
     {
-        
+
         $ignoredExceptionsRegex = '/(MissingController|MissingAction|RecordNotFound)Exception/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
-        
+
         $session = new AppSession();
         $loggedUser = [];
         if ($session->read('Auth.User.id_customer') !== null) {
             $loggedUser = $session->read('Auth');
         }
-        
+
         $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date('Y-m-d H:i:s');
         try {
             $email = new AppEmail();
@@ -67,7 +67,5 @@ class FileAndEmailLog extends FileLog
         } catch (SocketException $e) {
             return false;
         }
-        
     }
-
 }

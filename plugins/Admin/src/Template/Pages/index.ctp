@@ -25,7 +25,7 @@ use Cake\Core\Configure;
     ?>
    
     <div class="filter-container">
-    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <h1>Seiten</h1>
             <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <div class="right">
@@ -38,7 +38,7 @@ use Cake\Core\Configure;
                 echo '</div>';
                 ?>
             </div>
-    	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">

@@ -68,7 +68,7 @@ class ManufacturersController extends FrontendController
                 'AddressManufacturers'
             ]
         ])->select($this->Manufacturer);
-        
+
         if (empty($manufacturers)) {
             throw new RecordNotFoundException('no manufacturers available');
         }
@@ -92,7 +92,7 @@ class ManufacturersController extends FrontendController
             'Manufacturers.id_manufacturer' => $manufacturerId,
             'Manufacturers.active' => APP_ON
         ];
-        
+
         $this->Manufacturer = TableRegistry::get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
@@ -122,7 +122,7 @@ class ManufacturersController extends FrontendController
         $this->BlogPost = TableRegistry::get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
         $this->set('blogPosts', $blogPosts);
-        
+
         $this->set('manufacturer', $manufacturer);
         $this->set('title_for_layout', $manufacturer->name);
     }

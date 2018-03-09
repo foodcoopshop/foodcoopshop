@@ -38,7 +38,7 @@ use Cake\Core\Configure;
     ?>
     
     <div class="filter-container">
-    	<?php echo $this->Form->create(null, ['type' => 'get']); ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
@@ -51,7 +51,7 @@ use Cake\Core\Configure;
                     ]);
                 ?>
             </div>
-    	<?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->end(); ?>
     </div>
 
     <div id="help-container">
@@ -112,7 +112,6 @@ use Cake\Core\Configure;
     $i = 0;
 
     foreach ($orders as $order) {
-        
         $paidField = $order->total_paid;
         if ($groupByCustomer) {
             $paidField = $order->orders_total_paid;

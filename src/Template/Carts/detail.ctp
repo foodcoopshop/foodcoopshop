@@ -38,7 +38,6 @@ if (!$appAuth->termsOfUseAccepted()) {
     <?php } ?>
     
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
-    
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
         
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
@@ -94,7 +93,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Orders']['comment'] != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
-            ]);
+                ]);
             }
             echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
             'class' => 'toggle-link',
