@@ -1848,7 +1848,7 @@ foodcoopshop.Admin = {
                             customersDropdown.appendTo('.message-container span.start');
 
                             // always preselect user if there is a dropdown called #customerId (for call from order detail)
-                            var customerId = $('#customerId').val();
+                            var customerId = $('#customerid').val();
                             if (customerId > 0) {
                                 customersDropdown.val(customerId);
                                 customersDropdown.trigger('change');
