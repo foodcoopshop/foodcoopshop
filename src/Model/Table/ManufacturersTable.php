@@ -466,14 +466,14 @@ class ManufacturersTable extends AppTable
             AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
             AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
             AND ma.id_manufacturer > 0
-            AND o.current_state IN(:orderStates)
+            AND o.current_state IN (" . join(',', $orderState) . ")
             ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
 
+        // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
         $params = [
             'manufacturerId' => $manufacturerId,
             'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($from),
             'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($to),
-            'orderStates' => join(',', $orderState)
         ];
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
