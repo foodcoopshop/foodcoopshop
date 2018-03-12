@@ -276,15 +276,15 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
-        $cp = TableRegistry::get('Payments');
-        $paymentSumProduct = $cp->getSum($customerId, 'product');
-        $paybackSumProduct = $cp->getSum($customerId, 'payback');
-        $paymentSumDeposit = $cp->getSum($customerId, 'deposit');
-
-        $o = TableRegistry::get('Orders');
-        $productSum = $o->getSumProduct($customerId);
-        $depositSum = $o->getSumDeposit($customerId);
-
+        $payment = TableRegistry::get('Payments');
+        $paymentSumProduct = $payment->getSum($customerId, 'product');
+        $paybackSumProduct = $payment->getSum($customerId, 'payback');
+        $paymentSumDeposit = $payment->getSum($customerId, 'deposit');
+        
+        $order = TableRegistry::get('Orders');
+        $productSum = $order->getSumProduct($customerId);
+        $depositSum = $order->getSumDeposit($customerId);
+        
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
         return round($paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum, 2);
     }

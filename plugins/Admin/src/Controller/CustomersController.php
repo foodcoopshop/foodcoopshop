@@ -439,7 +439,7 @@ class CustomersController extends AdminAppController
                 $sumTotalDeposit = 0;
                 foreach ($customer->paid_cash_free_orders as $paidCashFreeOrder) {
                     $sumTotalProduct += $paidCashFreeOrder->total_paid;
-                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder->date_add) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
+                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
                         $sumTotalDeposit += $paidCashFreeOrder['total_deposit'];
                     }
                 }
