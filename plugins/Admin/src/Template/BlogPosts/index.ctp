@@ -136,7 +136,9 @@ foreach ($blogPosts as $blogPost) {
     if (! empty($blogPost->customer->manufacturer)) {
         echo $blogPost->customer->manufacturer->name;
     } else {
-        echo $blogPost->customer->name;
+        if (!empty($blogPost->customer)) {
+            echo $blogPost->customer->name;
+        }
     }
     echo '</td>';
 
