@@ -258,6 +258,7 @@ body.customers.new_password_request #inner-content form {
 }
 body.customers.new_password_request .input label {
     width: 70px;
+    margin-bottom: 0;
 }
 #login-form .input,
 body.customers.new_password_request .input {
@@ -265,36 +266,31 @@ body.customers.new_password_request .input {
     margin-bottom: 4px;
     padding: 3px;
 }
-#login-form .input input[type="checkbox"] {
+#LoginForm .input input[type="checkbox"] {
     margin-left: 330px;
 }
-/* Nur Firefox */
-@-moz-document url-prefix() {
-    #login-form .input input[type="checkbox"] {
-        margin-left: -20px;
-    }
-}
 #login-form .input.checkbox .error-message {
-    margin-top: 25px;
+    margin-top: 35px;
     width: auto ! important;
     margin-left: 0 ! important;
     clear: both;
 }
-
-#login-form .remember-me-wrapper {
-    float: left;
-    margin-left: 73px;
+#LoginForm  .remember-me-wrapper {
+    width: 180px;
 }
-#login-form .remember-me-wrapper label {
-    float: left;
-    font-weight: normal;
-    margin-top: 4px;
-    margin-left: 5px;
+#LoginForm .remember-me-wrapper label {
+    float: right;
+    padding-left: 95px;
+    line-height: 14px ! important;
+    margin-top: -5px;
+    width: 350px;
 }
-#login-form .remember-me-wrapper input[type="checkbox"] {
+#LoginForm .remember-me-wrapper input[type="checkbox"] {
     float: left;
+    margin-left: -35px;
+    margin-right: 10px;
 }
-#login-form #RegistrationForm .detail-form {
+#RegistrationForm .detail-form {
     display: none;
     float: left;
 }
@@ -307,17 +303,12 @@ body.customers.new_password_request .input input {
     padding: 3px;
     border: 1px solid #ccc;
 }
+body.customers.new_password_request .input {
+    margin-right: 10px;
+}
 body.customers.new_password_request .input input {
     width: 250px;
-    margin-right: 10px;
     margin-top: -2px;
-}
-body.customers form .checkbox label {
-    padding-left: 0;
-    width: 350px ! important;
-    clear: both;
-    line-height: 18px ! important;
-    margin-top: 4px;
 }
 #login-form div.error-message {
     margin-left: 95px;
@@ -332,7 +323,7 @@ body.customers form .checkbox label {
 #login-form #LoginForm button {
     float: right;
     margin-right: 5px;
-    margin-top: -25px;
+    margin-top: -65px;
 }
 form div.error-message {
     margin-left: 70px;
@@ -782,32 +773,45 @@ body.carts.detail .cart:not(#cart) span.product-name-wrapper a {
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-body.carts.detail #OrderDetailForm {
+#CartsDetailForm {
     float: left;
     margin-left: 10px;
     margin-top: 20px;
 }
-body.carts.detail #OrderDetailForm .input.checkbox {
+#CartsDetailForm .input.checkbox,
+#RegistrationForm .input.checkbox {
     clear: both;
     line-height: 26px;
-    margin-top: -10px;
+    margin-top: -5px;
 }
-body.carts.detail #OrderDetailForm .input.checkbox label {
-    line-height: 20px;
+#RegistrationForm .input.checkbox {
+    margin-top: 0;
 }
-body.carts.detail #OrderDetailForm  .input.checkbox .error-message {
+#CartsDetailForm .input.checkbox label,
+#RegistrationForm .input.checkbox label {
+    line-height: 16px;
+}
+#RegistrationForm .input.checkbox label {
+    padding-left: 90px;
+    width: 350px;
+}
+#CartsDetailForm  .input.checkbox .error-message {
     margin-left: -10px ! important;
     width: 100% ! important;
     font-size: 14px;
+    float: left;
+    margin-bottom: 5px;
 }
-body.carts.detail #OrderDetailForm .input.checkbox input[type="checkbox"] {
-    margin-left: -10px;
+#CartsDetailForm .input.checkbox input[type="checkbox"],
+#RegistrationForm .input.checkbox input[type="checkbox"] {
+    margin-left: -30px;
+    margin-top: 1px;
 }
-body.carts.detail #OrderDetailForm .order-comment textarea {
+#CartsDetailForm .order-comment textarea {
   width: 100%;
   padding: 5px;
 }
-body.carts.detail #OrderDetailForm .order-comment div.error-message {
+#CartsDetailForm .order-comment div.error-message {
   margin-left: 0;
   width: 100%;
 }
@@ -1102,8 +1106,3 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
-
-
-
-
-

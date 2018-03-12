@@ -23,9 +23,12 @@
     #login-form form,
     #login-form .input,
     body.customers.new_password_request form,
-    #login-form .input, body.customers.new_password_request .input,
+    #login-form .input,
+    body.customers.new_password_request .input,
     .blog-wrapper.owl-carousel,
     a.blog-post-wrapper img,
+    #RegistrationForm .detail-form,
+    #RegistrationForm .input.checkbox label,
     #inner-content iframe {
         width: 100% ! important;
     }
@@ -209,7 +212,6 @@
         margin-top: 15px ! important;
         margin-bottom: 10px ! important;
     }
-
     /**
      * sidebar-left: menu starts here
      */
@@ -241,22 +243,28 @@
         float: right;
         margin-right: 10%;
     }
-    #login-form .input input[type="checkbox"] {
-        margin-left: 50% ! important;
-    }
-    #login-form .input label,
     body.customers.new_password_request .input label {
         width: 30% ! important;
     }
-    #login-form .input.checkbox label {
-        width: 90% ! important;
+    #LoginForm .input.checkbox label {
+        width: 135px ! important;
+        padding-left: 0;
+    }
+    #LoginForm button {
+        margin-right: 65px;
+    }
+    #login-form .input input[type="checkbox"] {
+       width: 30px ! important;
+    }
+    #RegistrationForm .input.checkbox input[type="checkbox"] {
+        margin-left: -35px;
+        margin-top: 0px;
     }
     form div.error-message {
-        margin-left: 30% ! important;
         width: 60% ! important;
         font-size: 11px;
     }
-    #login-form .input.checkbox .error-message {
+    #LoginForm .input.checkbox .error-message {
         width: 80% ! important;
     }
 
@@ -299,6 +307,12 @@
 }
 
 @media only screen and (max-device-width: 768px) and (orientation : portrait) {
+    #LoginForm button {
+        margin-right: 0px;
+    }
+    #RegistrationForm .input.checkbox input[type="checkbox"] {
+        margin-top: 8px;
+    }
     .ui-dialog {
         width: 98% ! important;
         max-width: 450px ! important;
@@ -362,6 +376,3 @@
         font-size: 13px;
     }
  }
-
-
-

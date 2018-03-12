@@ -1,0 +1,160 @@
+/* START fix for boostrap select z-index problem */
+[canvas] {
+-webkit-transform: none;
+    -ms-transform: none;
+        transform: none;
+}
+/* END fix for bootstrap select z-index-problem */
+#menu {
+    display: none ! important;
+}
+#content {
+    margin-left: 0px ! important;
+    border-left: 0px ! important;
+    font-size: 9pt;
+    width: 100%;
+    min-height: 75vh;
+    border-radius: 0;
+}
+.filter-container {
+    left: 0;
+    width: 100vw;
+    max-width: none;
+    padding: 3px;
+}
+.filter-container h1 {
+  font-size: 20px;
+  float: none;
+  letter-spacing: 0;
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+form h2 {
+  letter-spacing: 0;
+  font-size: 16px;
+}
+form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within fcs-forms */
+.bootstrap-select {
+    width: 150px ! important;
+}
+.fcs-form .error-message {
+    margin-left: 120px;
+}
+#filter-loader {
+  left: 36vw;
+  margin-left: 0;
+}
+.sb-toggle-left {
+    float: left;
+    margin: 3px 5px 0 3px;
+    border-radius: 3px;
+    padding: 2px 3px 0px 3px;
+    background: #fff;
+}
+.sb-left a i {
+    padding-left: 0;
+}
+.sb-left a, .sb-left li.header,
+.sb-left a, .sb-left li.footer {
+    color: #000 ! important;
+}
+.sb-slidebar {
+    background-color: #fff;
+}
+.sb-left li.header, .sb-left a:hover, .sb-left a.active {
+    background-color: #719F42;
+    color: #fff ! important;
+}
+.sb-left img.logo {
+    width: 80%;
+}
+#container {
+    float: left;
+    min-width: 100%;
+}
+body.pages.home.slidebar-left-visible .sb-toggle-left {
+    margin: 0;
+}
+body.pages.home.slidebar-left-visible #content {
+    min-width: 100%;
+    width: 100%;
+}
+body.pages.home.slidebar-left-visible #installation-logo,
+body.pages.home.slidebar-left-visible h1 {
+    width: 100% ! important;
+    font-size: 21px;
+}
+body.pages.home.slidebar-left-visible #container {
+    min-width: 55%;
+    width: 55%;
+    padding: 2%;
+}
+body.pages.home.slidebar-left-visible .filter-container {
+    padding: 4%;
+}
+body.pages.home #container,
+body.pages.home #content,
+body.pages.home .filter-container {
+    min-width: 100%;
+    width: 100%;
+}
+body.pages.home .filter-container {
+    display: block;
+    border-bottom: none;
+}
+body.pages.home .filter-container,
+body.pages.home #content {
+    background: transparent;
+}
+.ui-dialog,
+.featherlight-content .add-payment-form,
+.featherlight-content .mini-upload-form,
+.categories-checkboxes.featherlight-inner,
+.tax-dropdown-wrapper.featherlight-inner,
+.add-payment-form.featherlight-inner,
+.featherlight iframe {
+    min-width: 200px ! important;
+    width: 98% ! important;
+    max-width: 450px ! important;
+}
+.featherlight-content .message-container {
+    line-height: 25px;
+}
+.featherlight-content .mini-upload-form {
+    padding-left: 0 ! important;
+    padding-right: 0 ! important;
+}
+.product-attributes-dropdown {
+    width: 100%;
+}
+table.list th, table.list td {
+    padding: 2px ! important;
+}
+.input.select, .input.checkbox, .input.text, div.date-field-wrapper {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.product-description-rename-info {
+    position: static ! important;
+}
+#flashMessage {
+    left: 5px;
+    width: 97vw;
+}
+.sb-slidebar {
+   width: 45% ! important;
+}
+body.manufacturers .holiday-wrapper .description {
+  margin-left: 0px;
+  margin-top: 5px;
+}
+form.fcs-form label,
+form.fcs-form .input.checkbox label {
+  width: 120px;
+}
+form.fcs-form input[type="checkbox"] {
+  left: 120px;
+}
+form.fcs-form .description {
+  margin-left: 120px;
+}

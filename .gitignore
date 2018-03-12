@@ -1,13 +1,6 @@
-# User specific & automatically generated files #
-#################################################
-/Config/database.php
-/Config/email.php
-/Config/credentials.php
-/Config/custom.config.php
-/lib/Cake/Console/Templates/skel/tmp/
-/build
-/dist
-/tags
+# CakePHP specific files #
+##########################
+/config/.env
 
 # OS generated files #
 ######################
@@ -19,9 +12,34 @@
 Icon?
 ehthumbs.db
 Thumbs.db
-*~
 
+# Tool specific files #
+#######################
+# vim
+*~
+*.swp
+*.swo
+# sublime text & textmate
+*.sublime-*
+*.stTheme.cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+# Eclipse
+.settings
 /.project
-/.settings
+.buildpath
+# JetBrains, aka PHPStorm, IntelliJ IDEA
+.idea/*
+# NetBeans
+nbproject/*
+# Visual Studio Code
+.vscode
+# Sass preprocessor
+.sass-cache/
+
+# FoodCoopShop specific files #
+###############################
+/config/credentials.php
+/config/custom_config.php
 /webroot/node_modules
 /.buildpath

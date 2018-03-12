@@ -1,1 +1,0 @@
-UPDATE fcs_configuration SET type = 'textarea_big' WHERE name IN ('FCS_FOOTER_CMS_TEXT', 'FCS_REGISTRATION_EMAIL_TEXT', 'FCS_RIGHT_INFO_BOX_HTML');

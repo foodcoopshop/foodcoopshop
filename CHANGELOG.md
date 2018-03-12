@@ -2,7 +2,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...HEAD)
+## v2.0.0 2017-30-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [EvaSee](https://github.com/EvaSee)
@@ -10,7 +10,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [SaibotP](https://github.com/SaibotP)
 
 ### Neue Funktionen
+- Superadmins können ab sofort das Profil von anderen Mitgliedern bearbeiten. / [PR#208](https://github.com/foodcoopshop/foodcoopshop/pull/208) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Produkte, deren Preis € 0,00 beträgt, werden jetzt unter *Bestellte Produkte* rot hinterlegt angezeigt. Somit soll nicht mehr aufs Ändern des Preises vergessen werden. / [PR#201](https://github.com/foodcoopshop/foodcoopshop/pull/201) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Das Hauptmenü kann jetzt mit drei Hierarchie-Ebenen umgehen. / [PR#208](https://github.com/foodcoopshop/foodcoopshop/pull/208) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei den Produkten kann über eine neue Checkbox angegeben werden, ob das Produkt korrekt deklariert wurde (Lebensmittelkennzeichnung). / [PR#197](https://github.com/foodcoopshop/foodcoopshop/pull/197) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#196](https://github.com/foodcoopshop/foodcoopshop/issues/196) / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
 - Mehr Filter bei den Produkten im Admin-Bereich: *Kategorie*, *Anzahl 0?* und *Preis 0?* / [PR#185](https://github.com/foodcoopshop/foodcoopshop/pull/185) / [PR#192](https://github.com/foodcoopshop/foodcoopshop/pull/190) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#166](https://github.com/foodcoopshop/foodcoopshop/issues/166) / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
 - In der Hersteller-Liste im Admin-Bereich wird jetzt auch die Summe der offenen Bestellungen angezeigt. / [PR#193](https://github.com/foodcoopshop/foodcoopshop/pull/193) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#187](https://github.com/foodcoopshop/foodcoopshop/issues/187) / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
@@ -18,9 +20,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - **Gruppierung nach Produkt** ist jetzt für bestellte Produkte möglich. Hersteller und Mitglieder können so ihre Bestellungen noch übersichtlicher anzeigen bzw. auswerten. Hersteller können ab sofort auch auch das **Datum ihrer Bestellungen** frei wählen und so alte Bestellungen anzeigen. / [PR#179](https://github.com/foodcoopshop/foodcoopshop/pull/179) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#175](https://github.com/foodcoopshop/foodcoopshop/issues/175) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
 
 ### Bugfixes
+- Beim Hersteller kann jetzt die Homepage auch gespeichert werden, wenn sie mit https beginnt.  / [PR#208](https://github.com/foodcoopshop/foodcoopshop/pull/208) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der variable Mitgliedsbeitrag wurde bei Rechnungen über 1.000 € falsch berechnet. / [PR#195](https://github.com/foodcoopshop/foodcoopshop/pull/195) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- Major-Release-Update von CakePHP, ab jetzt wird die Version 3 verwendet. / [PR#208](https://github.com/foodcoopshop/foodcoopshop/pull/208) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Npm wird jetzt anstatt Bower als Dependency Manager verwendet. / [PR#199](https://github.com/foodcoopshop/foodcoopshop/pull/199) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Viele nicht benutzte Datenbank-Felder wurden entfernt und die Anzahl der Tabellen von 40 auf 31 reduziert. / [PR#189](https://github.com/foodcoopshop/foodcoopshop/pull/189) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
