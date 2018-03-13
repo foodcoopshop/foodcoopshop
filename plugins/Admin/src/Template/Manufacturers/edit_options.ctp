@@ -194,11 +194,6 @@ echo '<div class="holiday-wrapper">';
     }
 
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        $this->element('addScript', [
-            'script' =>
-            Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-enabled-sync-domains');
-            "
-        ]);
         echo '<h2>Zeitwährung</h2>';
         echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
             'label' => 'Zeitwährungs-Modul aktiv? <span class="after small">Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/zeitwaehrungs-modul" target="_blank">in der Online-Doku</a>.</span>',

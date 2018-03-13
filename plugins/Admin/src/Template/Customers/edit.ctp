@@ -83,8 +83,17 @@ echo $this->Form->control('Customers.address_customer.phone', [
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo $this->Form->control('Customers.newsletter', [
-        'label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.',
-        'type' => 'checkbox'
+        'label' => 'Bestellerinnerung<span class="after small">Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.</span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+}
+
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    echo $this->Form->control('Customers.timebased_currency_enabled', [
+        'label' => 'Zeitwährungs-Modul aktiv? <span class="after small">Ich möchte meine Produkte (auch) in Zeit bezahlen. Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/zeitwaehrungs-modul" target="_blank">in der Online-Doku</a>.</span>',
+        'type' => 'checkbox',
+        'escape' => false
     ]);
 }
 
