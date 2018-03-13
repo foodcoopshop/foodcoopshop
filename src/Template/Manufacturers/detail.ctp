@@ -24,6 +24,12 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
+
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-product-info div');"
+    ]);
+}
 ?>
 
 <h1><?php echo $manufacturer->name; ?>

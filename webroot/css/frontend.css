@@ -483,7 +483,11 @@ body.superadmin .product-wrapper .heading h4 {
     margin-left: 10px;
     line-height: 20px;
 }
-
+.product-wrapper .timebased-currency-product-info {
+	float: left;
+	margin-top: -5px;
+	margin-bottom: 5px;
+}
 .product-wrapper .amount-wrapper {
     line-height: 28px;
     margin-bottom: 10px;

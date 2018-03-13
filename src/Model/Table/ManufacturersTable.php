@@ -77,7 +77,17 @@ class ManufacturersTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
+    
+    public function getTimebasedCurrencyPartMoney($price, $percentage)
+    {
+        return $price * $percentage / 100;
+    }
 
+    public function getTimebasedCurrencyPartTime($price, $percentage)
+    {
+        return $price * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100;
+    }
+    
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
      * @return boolean
@@ -160,10 +170,22 @@ class ManufacturersTable extends AppTable
      * @param int $defaultTaxId
      * @return int
      */
+    public function getOptionTimebasedCurrencyEnabled($timebasedCurrencyEnabled)
+    {
+        $result = false;
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $timebasedCurrencyEnabled) {
+            $result = true;
+        }
+        return $result;
+    }
+    /**
+     * @param int $defaultTaxId
+     * @return int
+     */
     public function getOptionDefaultTaxId($defaultTaxId)
     {
         $result = $defaultTaxId;
-        if (is_null($defaultTaxId)) { // !sic
+        if (is_null($defaultTaxId)) {
             $result = Configure::read('app.defaultTaxId');
         }
         return $result;

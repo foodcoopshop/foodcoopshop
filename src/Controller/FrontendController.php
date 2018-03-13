@@ -38,6 +38,7 @@ class FrontendController extends AppController
     protected function prepareProductsForFrontend($products)
     {
         $this->Product = TableRegistry::get('Products');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->ProductAttribute = TableRegistry::get('ProductAttributes');
 
         foreach ($products as &$product) {
@@ -46,7 +47,14 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             $product['attributes'] = [];
-
+            
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+                if ($this->Manufacturers->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                    $product['timebased_currency_part_money'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_part_time'] = $this->Manufacturer->getTimebasedCurrencyPartTime($product['gross_price'], $product['timebased_currency_max_percentage']);
+                }
+            }
+            
             $attributes = $this->ProductAttribute->find('all', [
                 'conditions' => [
                     'ProductAttributes.id_product' => $product['id_product']

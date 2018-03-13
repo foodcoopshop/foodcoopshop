@@ -153,10 +153,19 @@ if ($product['description'] != '') {
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo '<div class="line">';
             echo '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
-            if ($product['deposit']) {
-                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
-            }
+                if ($product['deposit']) {
+                    echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
+                }
                 echo '</div>';
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($product['timebased_currency_part_money'])) {
+                    echo '<div class="timebased-currency-product-info">';
+                        $titleForOverlay =
+                            '<span>Anteil in €: ' . $this->Html->formatAsDecimal($product['timebased_currency_part_money']).'</span><br />' . 
+                            '<span>Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': ' . $this->Html->formatAsDecimal($product['timebased_currency_part_time']) . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE').'</span>'
+                        ;
+                        echo '<div title="'.$titleForOverlay.'">davon ' . $product['timebased_currency_max_percentage'] . '% in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</div>';
+                    echo '</div>';
+                }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);
