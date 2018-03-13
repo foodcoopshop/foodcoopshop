@@ -71,6 +71,10 @@ class ManufacturersTable extends AppTable
             'provider' => 'table',
             'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).'
         ]);
+        $validator->numeric('timebased_currency_max_percentage', 'Kommastellen sind nicht zulässig.');
+        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
+        $validator->numeric('timebased_currency_max_credit_balance', 'Kommastellen sind nicht zulässig.');
+        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
 

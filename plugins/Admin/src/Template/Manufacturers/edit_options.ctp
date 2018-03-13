@@ -142,7 +142,6 @@ echo '<div class="holiday-wrapper">';
 
     echo '<h2>Sonstige Einstellungen</h2>';
 
-
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.variable_member_fee', [
         'label' => 'Variabler Mitgliedsbeitrag in % <span class="after small">Die Rechnung für den Hersteller wird um den angegebenen Prozentwert reduziert (nur ganze Zahlen erlaubt).</span>',
@@ -187,13 +186,41 @@ echo '<div class="holiday-wrapper">';
             'type' => 'select',
             'multiple' => true,
             'data-val' => $manufacturer->enabled_sync_domains,
-            'label' => 'Remote-Foodcoops <span class="small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></div>',
+            'label' => 'Remote-Foodcoops <span class="small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></span>',
             'options' => $syncDomainsForDropdown,
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
     }
 
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        $this->element('addScript', [
+            'script' =>
+            Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-enabled-sync-domains');
+            "
+        ]);
+        echo '<h2>Zeitwährung</h2>';
+        echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
+            'label' => 'Zeitwährungs-Modul aktiv? <span class="after small">Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/zeitwaehrungs-modul" target="_blank">in der Online-Doku</a>.</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        if ($manufacturer->timebased_currency_enabled) {
+            echo $this->Form->control('Manufacturers.timebased_currency_max_percentage', [
+                'label' => 'Maximaler Anteil der Zeitwährung in Prozent <span class="after small">gültig für alle Produkte - bei 0 ist die Zeitwährungsfunktion im Shop deaktiviert</span>',
+                'type' => 'text',
+                'class' => 'short',
+                'escape' => false
+            ]);
+            echo $this->Form->control('Manufacturers.timebased_currency_max_credit_balance', [
+                'label' => 'Maximaler Kontostand in Stunden <span class="after small">bis zu dem in der Zeitwährung bezahlt werden kann</span>',
+                'type' => 'text',
+                'class' => 'short',
+                'escape' => false
+            ]);
+        }
+    }
+    
     echo $this->Form->end();
 
 ?>
