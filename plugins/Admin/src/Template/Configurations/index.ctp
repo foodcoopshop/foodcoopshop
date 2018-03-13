@@ -64,7 +64,10 @@ $this->element('addScript', [
             if (! Configure::read('app.memberFeeEnabled') && $configuration->name == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
                 continue;
             }
-
+            if (! Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED' && substr($configuration->name, 0, 23) == 'FCS_TIMEBASED_CURRENCY_') {
+                continue;
+            }
+            
             echo '<tr>';
 
             echo '<td class="first">';
