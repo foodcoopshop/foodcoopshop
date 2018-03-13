@@ -13,6 +13,11 @@ class TimebasedCurrency extends AbstractMigration
             INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', 'Zeitwährung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>', '10,00', 'number', '230', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
             INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_CUSTOMER', 'Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>', '0', 'number', '240', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
             INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_MANUFACTURER', 'Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Minus gehen?</div>', '0', 'number', '250', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+            ALTER TABLE `fcs_manufacturer`
+                ADD `timebased_currency_enabled` TINYINT UNSIGNED NOT NULL DEFAULT '0' AFTER `enabled_sync_domains`,
+                ADD `timebased_currency_max_percentage` TINYINT UNSIGNED NOT NULL DEFAULT '30' AFTER `timebased_currency_enabled`,
+                ADD `timebased_currency_max_credit_balance` TINYINT UNSIGNED NULL DEFAULT '100' AFTER `timebased_currency_max_percentage`;
+            ALTER TABLE `fcs_customer` ADD `timebased_currency_enabled` TINYINT UNSIGNED NOT NULL DEFAULT '0' AFTER `date_upd`;
         ");
     }
 }
