@@ -208,7 +208,9 @@ class BlogPostsController extends AdminAppController
         ])->toArray();
 
         foreach ($blogPosts as $blogPost) {
-            $manufacturerRecord = $this->BlogPost->Customers->getManufacturerRecord($blogPost->customer);
+            if (!empty($blogPost->customer)) {
+                $manufacturerRecord = $this->BlogPost->Customers->getManufacturerRecord($blogPost->customer);
+            }
             if (!empty($manufacturerRecord->manufacturer)) {
                 $blogPost->customer->manufacturer = $manufacturerRecord->manufacturer;
             }
