@@ -177,7 +177,7 @@ class ConfigurationsController extends AdminAppController
     public function sendTestEmail()
     {
         $this->set('title_for_layout', 'Test E-Mail versenden');
-        $email = new AppEmail();
+        $email = new AppEmail(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
             ->setSubject('Test E-Mail')
             ->setTemplate('send_test_email_template')

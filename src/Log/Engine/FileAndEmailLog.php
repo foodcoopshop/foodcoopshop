@@ -53,7 +53,7 @@ class FileAndEmailLog extends FileLog
 
         $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date('Y-m-d H:i:s');
         try {
-            $email = new AppEmail();
+            $email = new AppEmail(false);
             $email->setProfile('debug');
             $email->setTransport('debug');
             $email->setTo(Configure::read('app.debugEmail'))
