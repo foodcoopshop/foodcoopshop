@@ -117,16 +117,19 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsProductAvailabilityLow(Validator $validator)
     {
+        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
         return $this->getNumberRangeValidator($validator, 'value', 0, 10);
     }
-
-    public function validationFcsDaysShopProductAsNew(Validator $validator)
+    
+    public function validationFcsDaysShowProductAsNew(Validator $validator)
     {
+        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
-
+    
     public function validationFcsPaymentProductMaximum(Validator $validator)
     {
+        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
         return $this->getNumberRangeValidator($validator, 'value', 'value', 50, 1000);
     }
 
