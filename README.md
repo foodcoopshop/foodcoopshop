@@ -1,6 +1,5 @@
 <h1 align="center">
-  <br>
-  <a href="https://www.foodcoopshop.com"><img src="https://raw.githubusercontent.com/foodcoopshop/foodcoopshop/develop/webroot/files/images/logo.jpg" alt="FoodCoopShop" width="200"></a>
+  <a href="https://www.foodcoopshop.com"><img src="https://raw.githubusercontent.com/foodcoopshop/foodcoopshop/develop/webroot/files/images/logo.jpg" alt="FoodCoopShop"></a>
 </h1>
 
 <h4 align="center">An easy-to-use open source software for food-coops.</h4>
@@ -20,7 +19,7 @@
   </a>
 </p>
 
-<hr />
+<h1></h1>
 
 **FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone.
 
