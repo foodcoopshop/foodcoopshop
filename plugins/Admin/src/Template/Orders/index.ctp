@@ -145,8 +145,7 @@ use Cake\Core\Configure;
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
                     [
                     'class' => 'order-comment-edit-button' . ($order->comment == '' ? ' disabled' : ''),
-                    'title' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen',
-                    'data-title-for-overlay' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen'
+                    'title' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen'
                     ],
                     'javascript:void(0);'
                 );

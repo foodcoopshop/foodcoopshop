@@ -234,8 +234,7 @@ foreach ($customers as $customer) {
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             [
                 'class' => 'customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' disabled' : ''),
-                'title' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen',
-                'data-title-for-overlay' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen'
+                'title' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen'
             ],
             'javascript:void(0);'
         );
