@@ -509,6 +509,9 @@ class CartsController extends FrontendController
             'conditions' => [
                 'Orders.id_order' => $orderId,
                 'Orders.id_customer' => $this->AppAuth->getUserId()
+            ],
+            'contain' => [
+                'Customers'
             ]
         ])->first();
         if (empty($order)) {

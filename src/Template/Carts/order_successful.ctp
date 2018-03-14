@@ -26,7 +26,7 @@ $this->element('addScript', ['script' =>
 
 <ul>
 
-    <li>Die Bestellbestätigung wurde per E-Mail an <b><?php echo $order['Customers']['email']; ?></b> versendet.</li>
+    <li>Die Bestellbestätigung wurde per E-Mail an <b><?php echo $order->customer->email; ?></b> versendet.</li>
     <li>Bitte hole die bestellten Waren verlässlich am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> in unserem Abhollager ab.</li>
 
     <?php if ($this->Html->paymentIsCashless()) { ?>
