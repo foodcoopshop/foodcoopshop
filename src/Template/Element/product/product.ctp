@@ -128,6 +128,13 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($attribute['timebased_currency_part_money'])) {
+                    echo $this->element('timebasedCurrency/addProductInfo', [
+                        'money' => $attribute['timebased_currency_part_money'],
+                        'time' => $attribute['timebased_currency_part_time'],
+                        'maxPercentage' => $product['timebased_currency_max_percentage']
+                    ]);
+                }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
                 echo '</div>';
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
@@ -158,13 +165,11 @@ if ($product['description'] != '') {
                 }
                 echo '</div>';
                 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($product['timebased_currency_part_money'])) {
-                    echo '<div class="timebased-currency-product-info">';
-                        $titleForOverlay =
-                            '<span>Anteil in €: ' . $this->Html->formatAsDecimal($product['timebased_currency_part_money']).'</span><br />' . 
-                            '<span>Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': ' . $this->Html->formatAsDecimal($product['timebased_currency_part_time']) . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE').'</span>'
-                        ;
-                        echo '<div title="'.$titleForOverlay.'">davon ' . $product['timebased_currency_max_percentage'] . '% in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</div>';
-                    echo '</div>';
+                    echo $this->element('timebasedCurrency/addProductInfo', [
+                        'money' => $product['timebased_currency_part_money'],
+                        'time' => $product['timebased_currency_part_time'],
+                        'maxPercentage' => $product['timebased_currency_max_percentage']
+                    ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);

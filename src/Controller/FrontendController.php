@@ -71,8 +71,9 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
+                $grossPrice = $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price);
                 $preparedAttributes['ProductAttributeShops'] = [
-                    'gross_price' => $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price),
+                    'gross_price' => $grossPrice,
                     'tax' => $grossPrice - $attribute->product_attribute_shop->price,
                     'default_on' => $attribute->product_attribute_shop->default_on
                 ];
@@ -87,6 +88,14 @@ class FrontendController extends AppController
                         'name' => $attribute->product_attribute_combination->attribute->name
                     ]
                 ];
+                
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+                    if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                        $preparedAttributes['timebased_currency_part_money'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($grossPrice, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_part_time'] = $this->Manufacturer->getTimebasedCurrencyPartTime($grossPrice, $product['timebased_currency_max_percentage']);
+                    }
+                }
+                
                 $product['attributes'][] = $preparedAttributes;
             }
         }
