@@ -130,9 +130,11 @@ if ($product['description'] != '') {
                 }
                 if (!empty($attribute['timebased_currency_part_money'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
+                        'wrapperTag' => 'div',
+                        'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_part_money'],
                         'time' => $attribute['timebased_currency_part_time'],
-                        'maxPercentage' => $product['timebased_currency_max_percentage']
+                        'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
@@ -166,9 +168,11 @@ if ($product['description'] != '') {
                 echo '</div>';
                 if (!empty($product['timebased_currency_part_money'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
+                        'wrapperTag' => 'div',
+                        'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_part_money'],
                         'time' => $product['timebased_currency_part_time'],
-                        'maxPercentage' => $product['timebased_currency_max_percentage']
+                        'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';

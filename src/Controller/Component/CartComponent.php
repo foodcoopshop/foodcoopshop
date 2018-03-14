@@ -39,6 +39,22 @@ class CartComponent extends Component
         return $this->getProductSum() + $this->getDepositSum();
     }
 
+    public function getTimebasedCurrencyPartMoney()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTimebasedCurrencyPartMoneySum'];
+        }
+        return 0;
+    }
+    
+    public function getTimebasedCurrencyPartTime()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTimebasedCurrencyPartTimeSum'];
+        }
+        return 0;
+    }
+    
     public function getTaxSum()
     {
         if ($this->cart !== null) {

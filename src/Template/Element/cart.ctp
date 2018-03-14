@@ -67,12 +67,24 @@ if ($appAuth->Cart->getProducts() !== null) {
         }
         ?>
         
-        <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in appcontroller ?>
+        <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in AppController ?>
             <p class="no-products">Dein Warenkorb ist leer.</p>
             <p class="products"></p>
             <p class="sum-wrapper"><b>Summe</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             <p class="deposit-sum-wrapper"><b>Pfand</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             <p class="tax-sum-wrapper"><b>Umsatzsteuer</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+            
+            <?php
+                echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-sum-wrapper']);
+                echo $this->element('timebasedCurrency/addProductInfo', [
+                    'wrapperTag' => 'p',
+                    'class' => 'timebased-currency-sum-wrapper',
+                    'money' => $appAuth->Cart->getTimebasedCurrencyPartMoney(),
+                    'time' => $appAuth->Cart->getTimebasedCurrencyPartTime(),
+                    'labelPrefix' => 'Summe'
+                ]);
+            ?>
+            
             <p class="tmp-wrapper"></p>
             
             <div class="sc"></div>

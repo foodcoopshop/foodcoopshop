@@ -96,10 +96,14 @@ class CartsTable extends AppTable
                 ),
                 ['class' => 'product-name']
             );
-
+            
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
+                
+                $grossPrice = $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price) * $cartProduct->amount;
+                $tax = $ccp->Products->getUnitTax($grossPrice, $cartProduct->product_attribute->product_attribute_shop->price, $cartProduct->amount) * $cartProduct->amount;
+                
                 // attribute
-                $preparedCart['CartProducts'][] = [
+                $productData = [
                     'cartProductId' => $cartProduct->id_cart_product,
                     'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
                     'productName' => $cartProduct->product_lang->name,
@@ -111,20 +115,18 @@ class CartsTable extends AppTable
                     'manufacturerName' => $cartProduct->product->manufacturer->name,
                     'image' => $productImage,
                     'deposit' => !empty($cartProduct->product_attribute->deposit_product_attribute->deposit) ? $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount : 0, // * 1 to convert to float
-                    'price' => $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price) * $cartProduct->amount,
+                    'price' => $grossPrice,
                     'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
-                    'tax' => $ccp->Products->getUnitTax(
-                        $ccp->Products->getGrossPrice(
-                            $cartProduct->id_product,
-                            $cartProduct->product_attribute->product_attribute_shop->price
-                        ) * $cartProduct->amount,
-                        $cartProduct->product_attribute->product_attribute_shop->price,
-                        $cartProduct->amount
-                    ) * $cartProduct->amount
+                    'tax' => $tax
                 ];
+                
             } else {
                 // no attribute
-                $preparedCart['CartProducts'][] = [
+                
+                $grossPrice = $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price) * $cartProduct->amount;
+                $tax = $ccp->Products->getUnitTax($grossPrice, $cartProduct->product->product_shop->price, $cartProduct->amount) * $cartProduct->amount;
+                
+                $productData = [
                     'cartProductId' => $cartProduct->id_cart_product,
                     'productId' => $cartProduct->id_product,
                     'productName' => $cartProduct->product_lang->name,
@@ -136,18 +138,22 @@ class CartsTable extends AppTable
                     'manufacturerName' => $cartProduct->product->manufacturer->name,
                     'image' => $productImage,
                     'deposit' => !empty($cartProduct->product->deposit_product->deposit) ? $cartProduct->product->deposit_product->deposit * $cartProduct->amount : 0,
-                    'price' => $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price) * $cartProduct->amount,
+                    'price' => $grossPrice,
                     'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
-                    'tax' => $ccp->Products->getUnitTax(
-                        $ccp->Products->getGrossPrice(
-                            $cartProduct->id_product,
-                            $cartProduct->product->product_shop->price
-                        ) * $cartProduct->amount,
-                        $cartProduct->product->product_shop->price,
-                        $cartProduct->amount
-                    ) * $cartProduct->amount
+                    'tax' => $tax
                 ];
+                
             }
+            
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()->timebased_currency_enabled) {
+                if ($ccp->Products->Manufacturers->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
+                    $productData['timebasedCurrencyPartMoney'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartMoney($grossPrice, $cartProduct->product->manufacturer->timebased_currency_max_percentage);
+                    $productData['timebasedCurrencyPartTime'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartTime($grossPrice, $cartProduct->product->manufacturer->timebased_currency_max_percentage);
+                }
+            }
+            
+            $preparedCart['CartProducts'][] = $productData;
+            
         }
 
         // sum up deposits and products
@@ -155,11 +161,19 @@ class CartsTable extends AppTable
         $preparedCart['CartProductSum'] = 0;
         $preparedCart['CartProductSumExcl'] = 0;
         $preparedCart['CartTaxSum'] = 0;
+        $preparedCart['CartTimebasedCurrencyPartMoneySum'] = 0;
+        $preparedCart['CartTimebasedCurrencyPartTimeSum'] = 0;
         foreach ($preparedCart['CartProducts'] as $p) {
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
             $preparedCart['CartTaxSum'] += $p['tax'];
             $preparedCart['CartProductSumExcl'] += $p['priceExcl'];
+            if (!empty($p['timebasedCurrencyPartMoney'])) {
+                $preparedCart['CartTimebasedCurrencyPartMoneySum'] += $p['timebasedCurrencyPartMoney'];
+            }
+            if (!empty($p['timebasedCurrencyPartTime'])) {
+                $preparedCart['CartTimebasedCurrencyPartTimeSum'] += $p['timebasedCurrencyPartTime'];
+            }
         }
         return $preparedCart;
     }

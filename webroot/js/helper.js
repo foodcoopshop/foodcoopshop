@@ -277,11 +277,19 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsEuro: function (float) {
-        return '€&nbsp;' + float.toFixed(2).replace(/\./, ',');
+        return '€&nbsp;' + this.formatFloatAsString(float);
     },
 
     getEuroAsFloat: function (string) {
-        return parseFloat(string.replace(/€&nbsp;/, '').replace(/,/, '.'));
+        return this.getStringAsFloat(string.replace(/€&nbsp;/, ''));
+    },
+    
+    formatFloatAsString: function(float) {
+    	return float.toFixed(2).replace(/\./, ',');
+    },
+    
+    getStringAsFloat: function (string) {
+    	return parseFloat(string.replace(/,/, '.'));
     },
 
     bindToggleLinks: function (autoOpen) {

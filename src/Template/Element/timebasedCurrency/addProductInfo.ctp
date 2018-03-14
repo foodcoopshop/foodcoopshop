@@ -15,13 +15,13 @@
 use Cake\Core\Configure;
 
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
-    echo '<div class="timebased-currency-product-info">';
+    echo '<'.$wrapperTag.' class="'.$class.'">';
         $titleForOverlay =
-            'Anteil in €: ' . $this->Html->formatAsDecimal($money).'<br />' .
-            'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': ' . $this->Html->formatAsDecimal($time) . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')
+            'Anteil in €: <span class="money">' . $this->Html->formatAsDecimal($money).'</span><br />' .
+            'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': <span class="time">' . $this->Html->formatAsDecimal($time) . '</span>' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')
         ;
-        echo '<div title="'.$titleForOverlay.'">davon ' . $maxPercentage . '% in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</div>';
-    echo '</div>';
+        echo '<span title="'.h($titleForOverlay).'">' . $labelPrefix . ' in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</span>';
+    echo '</'.$wrapperTag.'>';
 }
 
 ?>

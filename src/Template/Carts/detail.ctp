@@ -39,6 +39,17 @@ if (!$appAuth->termsOfUseAccepted()) {
     
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+
+        <?php
+            echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-sum-wrapper']);
+            echo $this->element('timebasedCurrency/addProductInfo', [
+                'wrapperTag' => 'p',
+                'class' => 'timebased-currency-sum-wrapper',
+                'money' => $appAuth->Cart->getTimebasedCurrencyPartMoney(),
+                'time' => $appAuth->Cart->getTimebasedCurrencyPartTime(),
+                'labelPrefix' => 'Summe'
+            ]);
+        ?>
         
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>

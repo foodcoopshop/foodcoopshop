@@ -723,7 +723,9 @@ body.manufacturers.detail .imprint {
 .cart span.deposit,
 .cart p.deposit-sum-wrapper,
 .cart p.tax-sum-wrapper,
-.cart span.tax {
+.cart span.tax,
+.cart span.timebasedCurrencyPartMoney,
+.cart span.timebasedCurrencyPartTime {
     float: left;
     display: none;
 }
@@ -857,7 +859,7 @@ body.carts.detail .cart:not(#cart) span.manufacturer-link {
 body.carts.detail .cart:not(#cart) span.deposit {
     display: inline;
     clear: both;
-    margin-right: 25px;
+    margin-right: 22px;
 }
 body.carts.detail .cart:not(#cart) .image {
     display: inline;

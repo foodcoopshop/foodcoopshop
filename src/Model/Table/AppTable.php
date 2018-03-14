@@ -79,13 +79,13 @@ class AppTable extends Table
     }
 
     /**
-     * @return boolean
+     * @return boolean | array
      */
-    protected function user()
+    protected function getLoggedUser()
     {
         $session = new AppSession();
         if ($session->read('Auth.User.id_customer') !== null) {
-            return $session->read('Auth.User.id_customer');
+            return $session->read('Auth.User');
         }
         return false;
     }
@@ -135,7 +135,7 @@ class AppTable extends Table
                     AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturers.active = :active ";
 
-        if (! $this->user()) {
+        if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
         return $conditions;
