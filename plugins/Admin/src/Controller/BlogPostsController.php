@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * BlogPostsController
@@ -39,7 +40,10 @@ class BlogPostsController extends AdminAppController
                             'BlogPosts.id_blog_post' => $this->request->getParam('pass')[0]
                         ]
                     ])->first();
-                    if ($blogPost['BlogPosts']['id_manufacturer'] != $this->AppAuth->getManufacturerId()) {
+                    if (empty($blogPost)) {
+                        throw new RecordNotFoundException();
+                    }
+                    if ($blogPost->id_manufacturer != $this->AppAuth->getManufacturerId()) {
                         return false;
                     }
                     return true;
