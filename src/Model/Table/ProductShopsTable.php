@@ -23,5 +23,6 @@ class ProductShopsTable extends AppTable
         $this->setTable('product_shop');
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
+        $this->addBehavior('Timestamp');
     }
 }
