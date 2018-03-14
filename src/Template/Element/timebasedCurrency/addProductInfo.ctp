@@ -14,11 +14,14 @@
  */
 use Cake\Core\Configure;
 
-echo '<div class="timebased-currency-product-info">';
-    $titleForOverlay =
-        '<span>Anteil in €: ' . $this->Html->formatAsDecimal($money).'</span><br />' .
-        '<span>Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': ' . $this->Html->formatAsDecimal($time) . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE').'</span>'
-    ;
-    echo '<div title="'.$titleForOverlay.'">davon ' . $maxPercentage . '% in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</div>';
-echo '</div>';
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
+    echo '<div class="timebased-currency-product-info">';
+        $titleForOverlay =
+            'Anteil in €: ' . $this->Html->formatAsDecimal($money).'<br />' .
+            'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': ' . $this->Html->formatAsDecimal($time) . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')
+        ;
+        echo '<div title="'.$titleForOverlay.'">davon ' . $maxPercentage . '% in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</div>';
+    echo '</div>';
+}
+
 ?>

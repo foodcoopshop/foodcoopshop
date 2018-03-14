@@ -128,7 +128,7 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
-                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($attribute['timebased_currency_part_money'])) {
+                if (!empty($attribute['timebased_currency_part_money'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'money' => $attribute['timebased_currency_part_money'],
                         'time' => $attribute['timebased_currency_part_time'],
@@ -164,7 +164,7 @@ if ($product['description'] != '') {
                     echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
                 }
                 echo '</div>';
-                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($product['timebased_currency_part_money'])) {
+                if (!empty($product['timebased_currency_part_money'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'money' => $product['timebased_currency_part_money'],
                         'time' => $product['timebased_currency_part_time'],
