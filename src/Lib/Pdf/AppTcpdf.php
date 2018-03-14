@@ -25,6 +25,8 @@ class AppTcpdf extends TCPDF
     public $headerRight;
 
     public $table = '';
+    
+    public $infoTextForFooter = '';
 
     public function renderTable()
     {

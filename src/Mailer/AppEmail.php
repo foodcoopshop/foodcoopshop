@@ -27,7 +27,7 @@ class AppEmail extends Email
     {
         parent::__construct(null);
 
-        if (Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
+        if ($addBccBackupAddress && Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }

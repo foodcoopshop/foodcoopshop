@@ -26,13 +26,13 @@ $this->element('addScript', ['script' =>
 
 <ul>
 
-    <li>Die Bestellbestätigung wurde per E-Mail an <b><?php echo $order['Customers']['email']; ?></b> versendet.</li>
+    <li>Die Bestellbestätigung wurde per E-Mail an <b><?php echo $order->customer->email; ?></b> versendet.</li>
     <li>Bitte hole die bestellten Waren verlässlich am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> in unserem Abhollager ab.</li>
 
     <?php if ($this->Html->paymentIsCashless()) { ?>
-        <li>Der Warenwert von <b><?php echo $this->Html->formatAsEuro($order['Orders']['total_paid']); ?></b>
-            <?php if ($order['Orders']['total_deposit'] > 0) { ?>
-                 (zuzüglich <b><?php echo $this->Html->formatAsEuro($order['Orders']['total_deposit']); ?></b> Pfand)
+        <li>Der Warenwert von <b><?php echo $this->Html->formatAsEuro($order->total_paid); ?></b>
+            <?php if ($order->total_deposit > 0) { ?>
+                 (zuzüglich <b><?php echo $this->Html->formatAsEuro($order->total_deposit); ?></b> Pfand)
             <?php } ?>
             wurde automatisch von deinem Guthaben abgezogen.</li>
         <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>">Guthaben aufladen</a></li>

@@ -70,7 +70,8 @@ class CartsTable extends AppTable
                 'Products.DepositProducts',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.ProductAttributeShops',
-                'ProductAttributes.DepositProductAttributes'
+                'ProductAttributes.DepositProductAttributes',
+                'Products.Images'
             ]
         ])->toArray();
 
@@ -82,8 +83,8 @@ class CartsTable extends AppTable
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
 
             $imageId = 0;
-            if (!empty($cartProduct['Products']['Images'])) {
-                $imageId = $cartProduct['Products']['Images']['id_image'];
+            if (!empty($cartProduct->product->image)) {
+                $imageId = $cartProduct->product->image->id_image;
             }
 
             $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
