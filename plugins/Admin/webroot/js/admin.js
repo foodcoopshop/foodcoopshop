@@ -676,7 +676,12 @@ foodcoopshop.Admin = {
             var nameCell = row.find('td:nth-child(4)');
             $('#' + dialogId + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog').html()));
             $('#' + dialogId + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
-            $('#' + dialogId + ' #dialogUnity').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.unity-for-dialog').html()));
+            var unityElement = nameCell.find('span.unity-for-dialog');
+            unity = '';
+            if (unityElement.length > 0) {
+            	unity = foodcoopshop.Admin.decodeEntities(unityElement.html());
+            }
+            $('#' + dialogId + ' #dialogUnity').val(unity);
             CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
             $('#' + dialogId + ' #dialogProductId').val(row.find('td:nth-child(1)').html());
 
