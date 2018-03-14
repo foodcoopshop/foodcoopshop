@@ -49,7 +49,7 @@ class FrontendController extends AppController
             $product['attributes'] = [];
             
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                if ($this->Manufacturers->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
                     $product['timebased_currency_part_money'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
                     $product['timebased_currency_part_time'] = $this->Manufacturer->getTimebasedCurrencyPartTime($product['gross_price'], $product['timebased_currency_max_percentage']);
                 }

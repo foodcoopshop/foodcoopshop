@@ -24,6 +24,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
+echo $this->element('timebasedCurrency/addProductTooltip');
 ?>
 
 <?php
