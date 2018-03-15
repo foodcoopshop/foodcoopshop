@@ -37,6 +37,9 @@ class CategoriesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Kategorie erstellen');
+        
+        $this->set('disabledSelectCategoryIds', []);
+        
         $this->_processForm($category, false);
 
         if (empty($this->request->getData())) {
