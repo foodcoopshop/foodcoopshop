@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Der Status deiner Guthaben-Aufladung vom <b><?php echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b> über <b>€ <?php echo Configure::read('app.htmlHelper')->formatAsDecimal($payment->amount); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
+                Der Status deiner Guthaben-Aufladung vom <b><?php echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b> über <b><?php echo Configure::read('app.htmlHelper')->formatAsDecimal($payment->amount); ?> €</b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
                 
                 <?php if ($payment->approval == -1) { ?>
                     Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto.

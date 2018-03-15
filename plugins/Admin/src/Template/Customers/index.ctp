@@ -249,9 +249,9 @@ echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     $sumPaymentsDepositDelta += $manufacturerDepositMoneySum;
     echo '<td>';
-    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsProductDelta) . '</b>';
+    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsProductDelta) . '</b>';
     if (Configure::read('app.isDepositPaymentCashless')) {
-        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
+        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
     }
     echo '</td>';
 }

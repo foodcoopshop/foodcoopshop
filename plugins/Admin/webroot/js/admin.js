@@ -882,7 +882,7 @@ foodcoopshop.Admin = {
                 $('.ui-dialog .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
 
-                if (totalSum != '€&nbsp;0,00') {
+                if (totalSum != '0,00&nbsp;€') {
                     $('.ui-dialog .ajax-loader').hide();
                     alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
                     $('.ui-dialog button').attr('disabled', false);

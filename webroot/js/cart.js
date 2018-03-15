@@ -313,8 +313,12 @@ foodcoopshop.Cart = {
                 '<span class="delete"><a class="btn" title="Aus dem Warenkorb löschen?" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsEuro(price) + '</span>' +
                 (deposit > 0 ? '<span class="deposit">Pfand + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
-                (timebasedCurrencyPartMoney ? '<span class="timebasedCurrencyPartMoney">' + foodcoopshop.Helper.formatFloatAsString(timebasedCurrencyPartMoney) + '</span>' : '') +
-                (timebasedCurrencyPartTime ? '<span class="timebasedCurrencyPartTime">' + foodcoopshop.Helper.formatFloatAsString(timebasedCurrencyPartTime) + '</span>'  : '') +
+                (timebasedCurrencyPartMoney ? 
+            		'<span class="timebasedCurrencyWrapper">' + 
+                		'<span class="timebasedCurrencyPartMoney">' + foodcoopshop.Helper.formatFloatAsEuro(timebasedCurrencyPartMoney) + '</span>' + 
+                		'<span class="timebasedCurrencyPartTime">' + foodcoopshop.Helper.formatFloatAsString(timebasedCurrencyPartTime) + '&nbsp;h</span>' + 
+            		'</span>' 
+        		: '') + 
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsEuro(tax) + '</span>' +
             '</span>' +
         '</span>';

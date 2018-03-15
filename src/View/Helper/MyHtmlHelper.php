@@ -231,7 +231,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function formatAsEuro($amount)
     {
-        return '€&nbsp;' . self::formatAsDecimal($amount);
+        return self::formatAsDecimal($amount) . '&nbsp;€';
     }
 
     public function formatAsPercent($amount)

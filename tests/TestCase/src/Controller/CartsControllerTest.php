@@ -22,9 +22,9 @@ use Cake\ORM\TableRegistry;
 class CartsControllerTest extends AppCakeTestCase
 {
 
-    // artischocke, 0,5 € deposit
+    // artischocke, 0,5 deposit
     public $productId1 = '346';
-    // milk with attribute 0,5, 0,5 € deposit
+    // milk with attribute 0,5, 0,5 deposit
     public $productId2 = '60-10';
     // knoblauch, 0% tax
     public $productId3 = '344';

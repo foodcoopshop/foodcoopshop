@@ -277,11 +277,11 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsEuro: function (float) {
-        return '€&nbsp;' + this.formatFloatAsString(float);
+        return this.formatFloatAsString(float) + '&nbsp;€';
     },
 
     getEuroAsFloat: function (string) {
-        return this.getStringAsFloat(string.replace(/€&nbsp;/, ''));
+        return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
     },
     
     formatFloatAsString: function(float) {
