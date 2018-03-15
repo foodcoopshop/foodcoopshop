@@ -231,7 +231,17 @@ class MyHtmlHelper extends HtmlHelper
 
     public function formatAsEuro($amount)
     {
-        return self::formatAsDecimal($amount) . '&nbsp;€';
+        return self::formatAsUnit($amount, '€');
+    }
+    
+    public function formatAsTimebasedCurrency($amount)
+    {
+        return self::formatAsUnit($amount, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
+    }
+    
+    public function formatAsUnit($amount, $shortcode)
+    {
+        return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
     }
 
     public function formatAsPercent($amount)

@@ -491,6 +491,7 @@ body.superadmin .product-wrapper .heading h4 {
 .ui-tooltip-content span.money,
 .ui-tooltip-content span.time {
 	float: right;
+	margin-left: 5px;
 }
 .product-wrapper .amount-wrapper {
     line-height: 28px;
