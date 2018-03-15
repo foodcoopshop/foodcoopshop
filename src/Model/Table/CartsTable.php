@@ -145,7 +145,7 @@ class CartsTable extends AppTable
                 
             }
             
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()->timebased_currency_enabled) {
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
                 if ($ccp->Products->Manufacturers->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
                     $productData['timebasedCurrencyPartMoney'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartMoney($grossPrice, $cartProduct->product->manufacturer->timebased_currency_max_percentage);
                     $productData['timebasedCurrencyPartTime'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartTime($grossPrice, $cartProduct->product->manufacturer->timebased_currency_max_percentage);
