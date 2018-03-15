@@ -488,6 +488,10 @@ body.superadmin .product-wrapper .heading h4 {
 	margin-top: -5px;
 	margin-bottom: 5px;
 }
+.ui-tooltip-content span.money,
+.ui-tooltip-content span.time {
+	float: right;
+}
 .product-wrapper .amount-wrapper {
     line-height: 28px;
     margin-bottom: 10px;
