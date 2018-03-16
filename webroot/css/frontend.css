@@ -729,7 +729,8 @@ body.manufacturers.detail .imprint {
 .cart p.deposit-sum-wrapper,
 .cart p.tax-sum-wrapper,
 .cart span.tax,
-.cart span.timebasedCurrencyWrapper {
+.cart span.timebasedCurrencyPartMoney,
+.cart span.timebasedCurrencyPartTime {
     float: left;
     display: none;
 }
@@ -842,7 +843,8 @@ body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     font-size: 13px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
-body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
+body.carts.detail .cart:not(#cart) p.tax-sum-wrapper,
+body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
     display: block;
     float: left;
     width: 100%;
@@ -865,11 +867,12 @@ body.carts.detail .cart:not(#cart) span.deposit {
     clear: both;
     margin-right: 22px;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencyWrapper {
+body.carts.detail .cart:not(#cart) span.timebasedCurrencyPartTime {
 	display: inline;
+    clear: both;
 	margin-right: 20px;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencyWrapper span {
+body.carts.detail .cart:not(#cart) span.timebasedCurrencyPartTime span {
 	float: right;
 	clear: both;
 }

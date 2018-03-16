@@ -279,6 +279,10 @@ foodcoopshop.Helper = {
     formatFloatAsEuro: function (float) {
         return this.formatFloatAsString(float) + '&nbsp;€';
     },
+    
+    formatFloatAsTimebasedCurrency : function(float) {
+        return this.formatFloatAsString(float) + '&nbsp;h';
+    },
 
     getEuroAsFloat: function (string) {
         return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
