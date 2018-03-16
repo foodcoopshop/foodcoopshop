@@ -28,7 +28,7 @@
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 <p align="center">
-    <img src="https://foodcoopshop.github.io/assets/img/fcs-v2.0-screener.gif" width="800" />
+    <img src="https://foodcoopshop.github.io/assets/img/fcs-v2.0-screener.gif" />
 </p>
 
 ## Roadmap for 2018
