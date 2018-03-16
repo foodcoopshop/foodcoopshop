@@ -69,13 +69,17 @@ class OrdersController extends AdminAppController
     public function ordersAsPdf()
     {
         if (empty($this->request->getQuery('orderIds'))) {
-            throw new RecordNotFoundException('wrong order id set');
+            throw new RecordNotFoundException('wrong orderIds');
         }
-
+        
+        $orderIds = explode(',', $this->request->getQuery('orderIds'));
+        if (empty($orderIds)) {
+            throw new RecordNotFoundException('wrong orderIds');
+        }
         $this->Order = TableRegistry::get('Orders');
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'Orders.id_order IN' => $this->request->getQuery('orderIds')
+                'Orders.id_order IN' => $orderIds
             ],
             'contain' => [
                 'Customers',
