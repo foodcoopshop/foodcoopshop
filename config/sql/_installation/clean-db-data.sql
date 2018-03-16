@@ -99,12 +99,12 @@ INSERT INTO `fcs_configuration` VALUES
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00'),
-(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Zeitwährungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/zeitwaehrungs-modul\" target=\"_blank\">Infos zum Zeitwährungs-Modul</a></div>','0','boolean',200,'2018-03-13 10:57:20','2018-03-13 10:57:20'),
-(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Zeitwährung: Name<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',210,'2018-03-13 10:57:20','2018-03-13 10:57:20'),
-(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Zeitwährung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-13 10:57:20','2018-03-13 10:57:20'),
-(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Zeitwährung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-13 10:57:20','2018-03-13 10:57:20'),
-(572,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_CUSTOMER','Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-13 10:57:20','2018-03-13 10:57:20'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_MANUFACTURER','Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Minus gehen?</div>','0','number',250,'2018-03-13 10:57:20','2018-03-13 10:57:20');
+(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Zeitwährungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/zeitwaehrungs-modul\" target=\"_blank\">Infos zum Zeitwährungs-Modul</a></div>','0','boolean',200,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Zeitwährung: Name<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',210,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Zeitwährung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Zeitwährung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(572,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_CUSTOMER','Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(573,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_MANUFACTURER','Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Minus gehen?</div>','0','number',250,'2018-03-16 15:23:34','2018-03-16 15:23:34');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;

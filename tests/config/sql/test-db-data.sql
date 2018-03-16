@@ -483,12 +483,12 @@ INSERT INTO `fcs_configuration` VALUES
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00'),
-(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Zeitwährungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/zeitwaehrungs-modul\" target=\"_blank\">Infos zum Zeitwährungs-Modul</a></div>','0','boolean',200,'2018-03-13 10:57:42','2018-03-13 10:57:42'),
-(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Zeitwährung: Name<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',210,'2018-03-13 10:57:42','2018-03-13 10:57:42'),
-(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Zeitwährung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-13 10:57:42','2018-03-13 10:57:42'),
-(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Zeitwährung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-13 10:57:42','2018-03-13 10:57:42'),
-(572,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_CUSTOMER','Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-13 10:57:42','2018-03-13 10:57:42'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_MANUFACTURER','Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Minus gehen?</div>','0','number',250,'2018-03-13 10:57:42','2018-03-13 10:57:42');
+(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Zeitwährungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/zeitwaehrungs-modul\" target=\"_blank\">Infos zum Zeitwährungs-Modul</a></div>','0','boolean',200,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
+(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Zeitwährung: Name<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',210,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
+(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Zeitwährung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
+(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Zeitwährung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
+(572,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_CUSTOMER','Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
+(573,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_MANUFACTURER','Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Minus gehen?</div>','0','number',250,'2018-03-16 15:23:31','2018-03-16 15:23:31');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -532,8 +532,8 @@ INSERT INTO `fcs_manufacturer` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
-(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,0.000000,0.000000,2,0.50),
-(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0.000000,0.000000,0,0.00);
+(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,0.000000,0.000000,2,0.50,NULL,NULL),
+(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0.000000,0.000000,0,0.00,NULL,NULL);
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
@@ -544,7 +544,7 @@ INSERT INTO `fcs_order_detail_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 INSERT INTO `fcs_orders` VALUES
-(1,92,1,3,6.365455,6.365455,6.198348,'2018-02-01 09:17:14','2018-02-01 09:17:14',0.50,1,1,'');
+(1,92,1,3,6.365455,6.365455,6.198348,'2018-02-01 09:17:14','2018-02-01 09:17:14',0.50,1,1,'',NULL,NULL);
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
