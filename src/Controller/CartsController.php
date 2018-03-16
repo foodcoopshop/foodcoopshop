@@ -257,7 +257,6 @@ class CartsController extends FrontendController
                 $cartErrors[$ccp['productId']][] = $message;
             }
 
-            // build orderDetails2save
             $orderDetails2save[] = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
@@ -267,14 +266,11 @@ class CartsController extends FrontendController
                 'total_price_tax_excl' => $ccp['priceExcl'],
                 'total_price_tax_incl' => $ccp['price'],
                 'id_tax' => $product->id_tax,
-                'deposit' => $ccp['deposit']
+                'deposit' => $ccp['deposit'],
+                'product' => $product, // will be removed!
+                'ccp' => $ccp // will be removed!
             ];
             
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
-                $orderDetail2save['timebased_currency_money'] = $ccp['timebasedCurrencyPartMoney'];
-                $orderDetail2save['timebased_currency_time'] = $ccp['timebasedCurrencyPartTime'];
-            }
-
             $newQuantity = $stockAvailableQuantity - $ccp['amount'];
             if ($newQuantity < 0) {
                 $message = 'attention, this should never happen! stock available would have been negative: productId: ' . $ids['productId'] . ', attributeId: ' . $ids['attributeId'] . '; changed it manually to 0 to avoid negative stock available value.';
@@ -356,6 +352,20 @@ class CartsController extends FrontendController
             // START update order_id in orderDetails2save
             foreach ($orderDetails2save as &$orderDetail) {
                 $orderDetail['id_order'] = $orderId;
+                
+                // recalculate prices
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+                    $orderDetail['timebased_currency_money'] = $orderDetail['ccp']['timebasedCurrencyPartMoney'];
+                    $orderDetail['timebased_currency_time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
+                    $timebasedCurrencyPartMoneyExcl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($ccp['priceExcl'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
+                    $orderDetail['product_price'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
+                    $orderDetail['total_price_tax_excl'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
+                    $orderDetail['total_price_tax_incl'] = $orderDetail['ccp']['price'] - $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($orderDetail['ccp']['price'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
+                }
+                
+                unset($orderDetail['product']);
+                unset($orderDetail['ccp']);
+                
             }
 
             $this->Order->OrderDetails->saveMany(
