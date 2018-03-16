@@ -27,10 +27,6 @@
 * Demo version: [https://demo.foodcoopshop.com](https://demo.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
-<p align="center">
-    <img src="https://www.foodcoopshop.com/wp-content/uploads/fcs-v2.0-screener-01.gif" />
-</p>
-
 ## Roadmap for 2018
 
 There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q2/2018 - v2.1](https://github.com/foodcoopshop/foodcoopshop/milestone/2) / [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). So far, FoodCoopShop only exists in German. But there will be an **English version** available by June 2018! More languages will then be possible if we find translators...
