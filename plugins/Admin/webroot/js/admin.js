@@ -2230,8 +2230,8 @@ foodcoopshop.Admin = {
         var manufacturerIdDomElement = $('.featherlight-content input[name="Payments[manufacturerId]"]');
 
         var text = '';
-        if ($('.featherlight-content input[type="payment_text"]').length > 0) {
-            text = $('.featherlight-content input[type="payment_text"]').val().trim();
+        if ($('.featherlight-content input[name="Payments[text]"]').length > 0) {
+            text = $('.featherlight-content input[name="Payments[text]"]').val().trim();
         }
 
         // radio buttons only if deposit is added to manufacurers
