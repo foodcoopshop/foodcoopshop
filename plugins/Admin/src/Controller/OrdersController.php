@@ -186,6 +186,9 @@ class OrdersController extends AdminAppController
             $oldOrder = $this->Order->find('all', [
                 'conditions' => [
                     'Orders.id_order' => $orderId
+                ],
+                'contain' => [
+                    'Customers'
                 ]
             ])->first();
 
@@ -201,7 +204,7 @@ class OrdersController extends AdminAppController
 
         $this->ActionLog = TableRegistry::get('ActionLogs');
 
-        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder['Customers']['name'] . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf <b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b> geändert.';
+        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder->customer->name . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf <b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b> geändert.';
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);
