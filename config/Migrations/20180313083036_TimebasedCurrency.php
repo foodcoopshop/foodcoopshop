@@ -18,6 +18,10 @@ class TimebasedCurrency extends AbstractMigration
                 ADD `timebased_currency_max_percentage` TINYINT UNSIGNED NOT NULL DEFAULT '30' AFTER `timebased_currency_enabled`,
                 ADD `timebased_currency_max_credit_balance` TINYINT UNSIGNED NULL DEFAULT '100' AFTER `timebased_currency_max_percentage`;
             ALTER TABLE `fcs_customer` ADD `timebased_currency_enabled` TINYINT UNSIGNED NOT NULL DEFAULT '0' AFTER `date_upd`;
+            ALTER TABLE `fcs_orders` ADD `timebased_currency_money_sum` DECIMAL (6,2) UNSIGNED NULL AFTER `comment`;
+            ALTER TABLE `fcs_orders` ADD `timebased_currency_time_sum` DECIMAL (6,2) UNSIGNED NULL AFTER `timebased_currency_money_sum`;
+            ALTER TABLE `fcs_order_detail` ADD `timebased_currency_money` DECIMAL (6,2) UNSIGNED NULL AFTER `deposit`;
+            ALTER TABLE `fcs_order_detail` ADD `timebased_currency_time` DECIMAL (6,2) UNSIGNED NULL AFTER `timebased_currency_money`;
         ");
     }
 }

@@ -786,14 +786,22 @@ body.carts.detail .cart:not(#cart) a.btn {
 }
 #CartsDetailForm {
     float: left;
-    margin-left: 10px;
-    margin-top: 20px;
 }
 #CartsDetailForm .input.checkbox,
 #RegistrationForm .input.checkbox {
     clear: both;
     line-height: 26px;
     margin-top: -5px;
+}
+#CartsDetailForm .input.checkbox {
+    margin-left: 10px;
+}
+#CartsDetailForm input#orders-timebased-currency-time-sum {
+    width: 55px;
+    text-align: center;
+}
+#CartsDetailForm label[for="orders-timebased-currency-time-sum"] {
+	margin-right: 10px;
 }
 #RegistrationForm .input.checkbox {
     margin-top: 0;
@@ -806,12 +814,16 @@ body.carts.detail .cart:not(#cart) a.btn {
     padding-left: 90px;
     width: 350px;
 }
-#CartsDetailForm  .input.checkbox .error-message {
+#CartsDetailForm .error-message {
     margin-left: -10px ! important;
     width: 100% ! important;
     font-size: 14px;
     float: left;
     margin-bottom: 5px;
+}
+#CartsDetailForm .input.text .error-message {
+	margin-left: 311px ! important;
+	width: 406px ! important;
 }
 #CartsDetailForm .input.checkbox input[type="checkbox"],
 #RegistrationForm .input.checkbox input[type="checkbox"] {

@@ -40,7 +40,7 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
-    protected function getNumberRangeValidator(Validator $validator, $field, $min, $max)
+    public function getNumberRangeValidator(Validator $validator, $field, $min, $max)
     {
         $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
         $validator->lessThanOrEqual($field, $max, $message);

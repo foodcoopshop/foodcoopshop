@@ -41,6 +41,12 @@ if (!$appAuth->termsOfUseAccepted()) {
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
 
         <?php
+            echo $this->Form->create($order, [
+                'class' => 'fcs-form',
+                'id' => 'CartsDetailForm',
+                'url' => $this->Slug->getCartFinish()
+            ]);
+
             echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-sum-wrapper']);
             echo $this->element('timebasedCurrency/addProductInfo', [
                 'wrapperTag' => 'p',
@@ -49,34 +55,34 @@ if (!$appAuth->termsOfUseAccepted()) {
                 'time' => $appAuth->Cart->getTimebasedCurrencyPartTime(),
                 'labelPrefix' => 'Summe'
             ]);
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
+                echo $this->Form->control('Orders.timebased_currency_time_sum', [
+                    'label' => 'Wie viele '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' will ich davon zahlen?',
+                    'type' => 'text',
+                    'class' => 'short'
+                ]);
+            }
         ?>
         
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
         <?php } ?>
 
-        <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
+        <p style="margin-top: 20px;">Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
         
         <?php
-
-        if ($this->Html->paymentIsCashless()) {
-            echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
-        } else {
-            echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
-        }
-            ?>
+            if ($this->Html->paymentIsCashless()) {
+                echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
+            } else {
+                echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
+            }
+        ?>
          
         <p>
             Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
         </p>
     
-            <?php
-            echo $this->Form->create($order, [
-                'class' => 'fcs-form',
-                'id' => 'CartsDetailForm',
-                'url' => $this->Slug->getCartFinish()
-            ]);
-
+    	<?php
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/generalTermsAndConditions');
             echo '</div>';

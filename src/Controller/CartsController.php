@@ -269,6 +269,11 @@ class CartsController extends FrontendController
                 'id_tax' => $product->id_tax,
                 'deposit' => $ccp['deposit']
             ];
+            
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+                $orderDetail2save['timebased_currency_money'] = $ccp['timebasedCurrencyPartMoney'];
+                $orderDetail2save['timebased_currency_time'] = $ccp['timebasedCurrencyPartTime'];
+            }
 
             $newQuantity = $stockAvailableQuantity - $ccp['amount'];
             if ($newQuantity < 0) {
@@ -288,13 +293,22 @@ class CartsController extends FrontendController
 
         $formErrors = false;
         $this->Order = TableRegistry::get('Orders');
+        $newOrderData = [
+            'cancellation_terms_accepted' => $this->request->getData('Orders.cancellation_terms_accepted'),
+            'general_terms_and_conditions_accepted' => $this->request->getData('Orders.general_terms_and_conditions_accepted'),
+            'comment' => $this->request->getData('Orders.comment')
+        ];
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+            $newOrderData['timebased_currency_time_sum'] = $this->request->getData('Orders.timebased_currency_time_sum');
+            $validator = $this->Order->validator('cart');
+            $validator->notEmpty('timebased_currency_time_sum', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
+            $validator->numeric('timebased_currency_time_sum', 'Bitte trage eine Zahl ein.');
+            $validator = $this->Order->getNumberRangeValidator($validator, 'timebased_currency_time_sum', 0, $this->AppAuth->Cart->getTimebasedCurrencyPartTime());
+        }
         $order = $this->Order->newEntity(
             [
-                'Orders' => [
-                    'cancellation_terms_accepted' => $this->request->getData('Orders.cancellation_terms_accepted'),
-                    'general_terms_and_conditions_accepted' => $this->request->getData('Orders.general_terms_and_conditions_accepted'),
-                    'comment' => $this->request->getData('Orders.comment')
-                ]
+                'Orders' => $newOrderData
             ],
             ['validate' => 'cart']
         );
@@ -317,6 +331,9 @@ class CartsController extends FrontendController
                 'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
                 'total_deposit' => $this->AppAuth->Cart->getDepositSum()
             ];
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+                $order2save['timebased_currency_money_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
+            }
             $order = $this->Order->save(
                 $this->Order->patchEntity($order, $order2save)
             );
