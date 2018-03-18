@@ -73,7 +73,7 @@ class ProductLangsTable extends AppTable
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 ];
                 if (isset($name['is_declaration_ok'])) {
-                    $tmpProductLang2Save['is_declaration_ok'] = (bool) $name['is_declaration_ok'];
+                    $tmpProductLang2Save['is_declaration_ok'] = $name['is_declaration_ok'];
                 }
                 $productLangs2save[] = $tmpProductLang2Save;
             }
