@@ -302,6 +302,7 @@ class CartsController extends FrontendController
         if (!empty($order->getErrors())) {
             $formErrors = true;
         }
+        
         $this->set('order', $order); // to show error messages in form (from validation)
         $this->set('formErrors', $formErrors);
 

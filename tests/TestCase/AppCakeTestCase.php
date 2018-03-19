@@ -318,7 +318,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTime = '')
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
     {
         $data = [
             'Orders' => [
@@ -331,8 +331,8 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             $data['Orders']['comment'] = $comment;
         }
         
-        if ($timebaseCurrencyTime != '') {
-            $data['timebased_currency_order']['time'] = $timebaseCurrencyTime;
+        if ($timebaseCurrencyTimeSum !== null) {
+            $data['timebased_currency_order']['time_sum'] = $timebaseCurrencyTimeSum;
         }
         
         $this->browser->post(

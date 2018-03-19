@@ -107,7 +107,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Orders']['comment'] != '') {
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && isset($this->request->data['Orders']['comment']) && $this->request->data['Orders']['comment'] != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
                 ]);
