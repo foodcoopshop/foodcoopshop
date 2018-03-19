@@ -284,8 +284,6 @@ CREATE TABLE `fcs_order_detail` (
   `unit_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `id_tax` int(11) unsigned DEFAULT '0',
   `deposit` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `timebased_currency_money` decimal(6,2) unsigned DEFAULT NULL,
-  `timebased_currency_time` decimal(6,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_order_detail`),
   KEY `order_detail_order` (`id_order`),
   KEY `product_id` (`product_id`),
@@ -320,8 +318,6 @@ CREATE TABLE `fcs_orders` (
   `general_terms_and_conditions_accepted` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `cancellation_terms_accepted` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `comment` text,
-  `timebased_currency_money_sum` decimal(6,2) unsigned DEFAULT NULL,
-  `timebased_currency_time_sum` decimal(6,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_order`),
   KEY `id_customer` (`id_customer`),
   KEY `date_add` (`date_add`),
@@ -513,6 +509,24 @@ CREATE TABLE `fcs_tax` (
   `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_tax`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_timebased_currency_order_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_timebased_currency_order_detail` (
+  `id_order_detail` int(11) NOT NULL DEFAULT '0',
+  `money` decimal(6,2) unsigned DEFAULT NULL,
+  `time` decimal(6,2) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_timebased_currency_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_timebased_currency_orders` (
+  `id_order` int(11) NOT NULL DEFAULT '0',
+  `money_sum` decimal(6,2) unsigned DEFAULT NULL,
+  `time_sum` decimal(6,2) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

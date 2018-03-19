@@ -41,6 +41,8 @@ TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
+TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
+TRUNCATE TABLE `fcs_timebased_currency_orders`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -532,8 +534,8 @@ INSERT INTO `fcs_manufacturer` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
-(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,0.000000,0.000000,2,0.50,NULL,NULL),
-(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0.000000,0.000000,0,0.00,NULL,NULL);
+(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,0.000000,0.000000,2,0.50),
+(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0.000000,0.000000,0,0.00);
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
@@ -544,7 +546,7 @@ INSERT INTO `fcs_order_detail_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 INSERT INTO `fcs_orders` VALUES
-(1,92,1,3,6.365455,6.365455,6.198348,'2018-02-01 09:17:14','2018-02-01 09:17:14',0.50,1,1,'',NULL,NULL);
+(1,92,1,3,6.365455,6.365455,6.198348,'2018-02-01 09:17:14','2018-02-01 09:17:14',0.50,1,1,'');
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
@@ -839,6 +841,12 @@ INSERT INTO `fcs_tax` VALUES
 (2,10.000,1,0),
 (3,13.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_timebased_currency_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_timebased_currency_orders` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

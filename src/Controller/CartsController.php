@@ -6,7 +6,6 @@ use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -289,24 +288,16 @@ class CartsController extends FrontendController
 
         $formErrors = false;
         $this->Order = TableRegistry::get('Orders');
-        $newOrderData = [
-            'cancellation_terms_accepted' => $this->request->getData('Orders.cancellation_terms_accepted'),
-            'general_terms_and_conditions_accepted' => $this->request->getData('Orders.general_terms_and_conditions_accepted'),
-            'comment' => $this->request->getData('Orders.comment')
-        ];
         
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
-            $newOrderData['timebased_currency_time_sum'] = $this->request->getData('Orders.timebased_currency_time_sum');
-            $validator = $this->Order->validator('cart');
-            $validator->notEmpty('timebased_currency_time_sum', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
-            $validator->numeric('timebased_currency_time_sum', 'Bitte trage eine Zahl ein.');
-            $validator = $this->Order->getNumberRangeValidator($validator, 'timebased_currency_time_sum', 0, $this->AppAuth->Cart->getTimebasedCurrencyPartTime());
+            $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
+            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'time_sum', 0, $this->AppAuth->Cart->getTimebasedCurrencyPartTime());
         }
         $order = $this->Order->newEntity(
+            $this->request->getData(),
             [
-                'Orders' => $newOrderData
-            ],
-            ['validate' => 'cart']
+                'validate' => 'cart'
+            ]
         );
         if (!empty($order->getErrors())) {
             $formErrors = true;
@@ -319,20 +310,24 @@ class CartsController extends FrontendController
         } else {
             // START save order
             $order2save = [
-                'id_customer' => $this->AppAuth->getUserId(),
-                'id_cart' => $this->AppAuth->Cart->getCartId(),
-                'current_state' => ORDER_STATE_OPEN,
-                'total_paid' => $this->AppAuth->Cart->getProductSum(),
-                'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
-                'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
-                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
+                 'Orders' => [
+                    'id_customer' => $this->AppAuth->getUserId(),
+                    'id_cart' => $this->AppAuth->Cart->getCartId(),
+                    'current_state' => ORDER_STATE_OPEN,
+                    'total_paid' => $this->AppAuth->Cart->getProductSum(),
+                    'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
+                    'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
+                    'total_deposit' => $this->AppAuth->Cart->getDepositSum()
+                 ]
             ];
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
-                $order2save['timebased_currency_money_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
+                $order2save['timebased_currency_order']['money_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
             }
-            $order = $this->Order->save(
-                $this->Order->patchEntity($order, $order2save)
+            $patchedOrder = $this->Order->patchEntity(
+                $order,
+                $order2save
             );
+            $order = $this->Order->save($patchedOrder);
             if (!$order) {
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
                 $this->Flash->error($message);
@@ -341,7 +336,7 @@ class CartsController extends FrontendController
             }
             $orderId = $order->id_order;
 
-            // get order again to have field created available as a datetime-object
+            // get order again to have field date_add available as a datetime-object
             $order = $this->Order->find('all', [
                 'conditions' => [
                     'Orders.id_order' => $orderId
@@ -355,8 +350,8 @@ class CartsController extends FrontendController
                 
                 // recalculate prices
                 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
-                    $orderDetail['timebased_currency_money'] = $orderDetail['ccp']['timebasedCurrencyPartMoney'];
-                    $orderDetail['timebased_currency_time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
+                    $orderDetail['timebased_currency_order_detail']['money'] = $orderDetail['ccp']['timebasedCurrencyPartMoney'];
+                    $orderDetail['timebased_currency_order_detail']['time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
                     $timebasedCurrencyPartMoneyExcl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($ccp['priceExcl'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
                     $orderDetail['product_price'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
                     $orderDetail['total_price_tax_excl'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;

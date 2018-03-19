@@ -30,6 +30,9 @@ class OrdersTable extends AppTable
         $this->hasMany('OrderDetails', [
             'foreignKey' => 'id_order'
         ]);
+        $this->hasOne('TimebasedCurrencyOrders', [
+            'foreignKey' => 'id_order'
+        ]);
         $this->setPrimaryKey('id_order');
     }
 

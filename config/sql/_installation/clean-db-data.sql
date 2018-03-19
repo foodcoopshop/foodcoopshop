@@ -41,6 +41,8 @@ TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
+TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
+TRUNCATE TABLE `fcs_timebased_currency_orders`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -178,6 +180,12 @@ INSERT INTO `fcs_tax` VALUES
 (2,10.000,1,0),
 (3,13.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_timebased_currency_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_timebased_currency_orders` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

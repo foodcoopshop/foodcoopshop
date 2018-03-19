@@ -39,6 +39,9 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'product_attribute_id'
         ]);
+        $this->hasOne('TimebasedCurrencyOrderDetails', [
+            'foreignKey' => 'id_order_detail'
+        ]);
     }
 
     public function deleteOrderDetail($orderDetail)
