@@ -318,17 +318,25 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '')
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTime = '')
     {
-        $this->browser->post(
-            $this->Slug->getCartFinish(),
-            [
-                'Orders' => [
-                    'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                    'cancellation_terms_accepted' => $cancellation_terms_accepted,
-                    'comment' => $comment
-                ]
+        $data = [
+            'Orders' => [
+                'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                'cancellation_terms_accepted' => $cancellation_terms_accepted
             ]
+        ];
+        
+        if ($comment != '') {
+            $data['Orders']['comment'] = $comment;
+        }
+        
+        if ($timebaseCurrencyTime != '') {
+            $data['timebased_currency_order']['time'] = $timebaseCurrencyTime;
+        }
+        
+        $this->browser->post(
+            $this->Slug->getCartFinish(), $data
         );
     }
 
@@ -347,9 +355,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         return $this->browser->getJsonDecodedContent();
     }
 
-    protected function changeManufacturer($manufacturerId, $option, $value)
+    protected function changeManufacturer($manufacturerId, $field, $value)
     {
-        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
+        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$field.' = :value WHERE id_manufacturer = :manufacturerId';
         $params = [
             'value' => $value,
             'manufacturerId' => $manufacturerId
@@ -357,7 +365,18 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $statement = self::$dbConnection->prepare($query);
         return $statement->execute($params);
     }
-
+    
+    protected function changeCustomer($customerId, $field, $value)
+    {
+        $query = 'UPDATE ' . $this->Customer->getTable().' SET '.$field.' = :value WHERE id_customer = :customerId';
+        $params = [
+            'value' => $value,
+            'customerId' => $customerId
+        ];
+        $statement = self::$dbConnection->prepare($query);
+        return $statement->execute($params);
+    }
+    
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();

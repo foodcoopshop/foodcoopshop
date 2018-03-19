@@ -224,7 +224,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->browser->getContent(), 'order comment validation did not work');
     }
     
-    public function testFinishCart()
+    public function testFinishOrderWithComment()
     {
 
         $this->loginAsSuperadmin();
@@ -237,9 +237,6 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->checkCartStatusAfterFinish();
 
-        /**
-         * START check order
-         */
         $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
@@ -248,18 +245,8 @@ class CartsControllerTest extends AppCakeTestCase
                 'OrderDetails.OrderDetailTaxes'
             ]
         ])->first();
-
-        $this->assertNotEquals([], $order, 'order not correct');
-        $this->assertEquals($order->id_order, $orderId, 'order id not correct');
-        $this->assertEquals($order->id_customer, $this->browser->getLoggedUserId(), 'order customer_id not correct');
-        $this->assertEquals($order->id_cart, 2, 'order cart_id not correct');
-        $this->assertEquals($order->current_state, 3, 'order current_state not correct');
-        $this->assertEquals($order->total_deposit, 2.5, 'order total_deposit not correct');
-        $this->assertEquals($order->total_paid_tax_excl, 5.578515, 'order total_paid_tax_excl not correct');
-        $this->assertEquals($order->total_paid_tax_incl, 6.136364, 'order total_paid_tax_incl not correct');
-        $this->assertEquals($order->general_terms_and_conditions_accepted, 1, 'order general_terms_and_conditions_accepted not correct');
-        $this->assertEquals($order->cancellation_terms_accepted, 1, 'order cancellation_terms_accepted not correct');
-        $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
+        
+        $this->checkOrder($order, $orderId, $orderComment);
 
         // check order_details for product1
         $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.305786, 3.64, 0.17, 0.34, 2);
@@ -298,7 +285,49 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->browser->doFoodCoopShopLogout();
     }
+    
+    public function testFinishOrderTimebasedCurrencyEnabled()
+    {
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
+        $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
+        
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+        
+        $this->finishCart(1, 1, '', 0.2);
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        
+        $this->checkCartStatusAfterFinish();
+        
+        $order = $this->Order->find('all', [
+            'conditions' => [
+                'Orders.id_order' => $orderId
+            ],
+            'contain' => [
+                'TimebasedCurrencyOrders',
+                'OrderDetails.TimebasedCurrencyOrderDetails',
+                'OrderDetails.OrderDetailTaxes'
+            ]
+        ])->first();
+        
+//         $this->assertEquals($orderDetail[0]->product_price, 10.44, 'order_detail product_price was not correct');
+//         $this->assertEquals($orderDetail[0]->total_price_tax_excl, 10.45, 'order_detail total_price_tax_excl not correct');
+//         $this->assertEquals($orderDetail[0]->total_price_tax_incl, 10.66, 'order_detail total_price_tax_incl not correct');
 
+        // check timebased_currency_order
+        $this->assertEquals($order->timebased_currency_order->money_sum, 1.28, 'timebased_currency_order->money_sum not correct');
+        $this->assertEquals($order->timebased_currency_order->time_sum, 0.13, 'timebased_currency_order->time_sum not correct');
+        
+        // check timebased_currency_order_details
+        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money, 1.09, 'order_detail timebased_currency_order_detail->money not correct');
+        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->time, 0.11, 'order_detail timebased_currency_order_detail->time not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money, 0.19, 'order_detail timebased_currency_order_detail->money not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->time, 0.02, 'order_detail timebased_currency_order_detail->time not correct');
+        $this->assertEmpty($order->order_details[2]->timebased_currency_order_detail);
+        
+    }
     public function testShopOrder()
     {
         $this->loginAsSuperadmin();
@@ -415,6 +444,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');
     }
 
+    private function checkOrder($order, $orderId, $orderComment)
+    {
+        $this->assertNotEquals([], $order, 'order not correct');
+        $this->assertEquals($order->id_order, $orderId, 'order id not correct');
+        $this->assertEquals($order->id_customer, $this->browser->getLoggedUserId(), 'order customer_id not correct');
+        $this->assertEquals($order->id_cart, 2, 'order cart_id not correct');
+        $this->assertEquals($order->current_state, 3, 'order current_state not correct');
+        $this->assertEquals($order->total_deposit, 2.5, 'order total_deposit not correct');
+        $this->assertEquals($order->total_paid_tax_excl, 5.578515, 'order total_paid_tax_excl not correct');
+        $this->assertEquals($order->total_paid_tax_incl, 6.136364, 'order total_paid_tax_incl not correct');
+        $this->assertEquals($order->general_terms_and_conditions_accepted, 1, 'order general_terms_and_conditions_accepted not correct');
+        $this->assertEquals($order->cancellation_terms_accepted, 1, 'order cancellation_terms_accepted not correct');
+        $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
+    }
+    
     private function checkOrderDetails($orderDetail, $name, $quantity, $productAttributeId, $deposit, $productPrice, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
     {
 

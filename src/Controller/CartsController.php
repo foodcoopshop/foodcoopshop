@@ -322,11 +322,9 @@ class CartsController extends FrontendController
             ];
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
                 $order2save['timebased_currency_order']['money_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
+                $order2save['timebased_currency_order']['time_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartTime();
             }
-            $patchedOrder = $this->Order->patchEntity(
-                $order,
-                $order2save
-            );
+            $patchedOrder = $this->Order->patchEntity($order, $order2save);
             $order = $this->Order->save($patchedOrder);
             if (!$order) {
                 $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
@@ -350,8 +348,12 @@ class CartsController extends FrontendController
                 
                 // recalculate prices
                 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
-                    $orderDetail['timebased_currency_order_detail']['money'] = $orderDetail['ccp']['timebasedCurrencyPartMoney'];
-                    $orderDetail['timebased_currency_order_detail']['time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
+                    if (isset($orderDetail['ccp']['timebasedCurrencyPartMoney'])) {
+                        $orderDetail['timebased_currency_order_detail']['money'] = $orderDetail['ccp']['timebasedCurrencyPartMoney'];
+                    }
+                    if (isset($orderDetail['ccp']['timebasedCurrencyPartTime'])) {
+                        $orderDetail['timebased_currency_order_detail']['time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
+                    }
                     $timebasedCurrencyPartMoneyExcl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($ccp['priceExcl'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
                     $orderDetail['product_price'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
                     $orderDetail['total_price_tax_excl'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
