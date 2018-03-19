@@ -50,7 +50,8 @@ class FrontendController extends AppController
             
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
                 if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
-                    $product['timebased_currency_part_money'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_part_money_incl'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_part_money_excl'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['price'], $product['timebased_currency_max_percentage']);
                     $product['timebased_currency_part_time'] = $this->Manufacturer->getTimebasedCurrencyPartTime($product['gross_price'], $product['timebased_currency_max_percentage']);
                 }
             }
@@ -206,7 +207,6 @@ class FrontendController extends AppController
             $shoppingLimitReached = Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
         }
-
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
 }

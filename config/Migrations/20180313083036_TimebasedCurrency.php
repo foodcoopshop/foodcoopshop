@@ -24,14 +24,18 @@ class TimebasedCurrency extends AbstractMigration
 
             CREATE TABLE `fcs_timebased_currency_orders` (
               `id_order` int(11) NOT NULL DEFAULT '0',
-              `money_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
-              `time_sum` decimal(6,2) UNSIGNED DEFAULT NULL
+              `money_excl_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `money_incl_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `time_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
+              UNIQUE KEY `id_order` (`id_order`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
             CREATE TABLE `fcs_timebased_currency_order_detail` (
               `id_order_detail` int(11) NOT NULL DEFAULT '0',
-              `money` decimal(6,2) UNSIGNED DEFAULT NULL,
-              `time` decimal(6,2) UNSIGNED DEFAULT NULL
+              `money_excl` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `money_incl` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `time` decimal(6,2) UNSIGNED DEFAULT NULL,
+              UNIQUE KEY `id_order_detail` (`id_order_detail`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
         ");

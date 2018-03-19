@@ -79,8 +79,8 @@ if ($appAuth->Cart->getProducts() !== null) {
                 echo $this->element('timebasedCurrency/addProductInfo', [
                     'wrapperTag' => 'p',
                     'class' => 'timebased-currency-sum-wrapper',
-                    'money' => $appAuth->Cart->getTimebasedCurrencyPartMoney(),
-                    'time' => $appAuth->Cart->getTimebasedCurrencyPartTime(),
+                    'money' => $appAuth->Cart->getTimebasedCurrencyPartMoneyInclSum(),
+                    'time' => $appAuth->Cart->getTimebasedCurrencyPartTimeSum(),
                     'labelPrefix' => 'Summe'
                 ]);
             ?>

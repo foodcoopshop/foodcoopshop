@@ -515,8 +515,10 @@ DROP TABLE IF EXISTS `fcs_timebased_currency_order_detail`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_timebased_currency_order_detail` (
   `id_order_detail` int(11) NOT NULL DEFAULT '0',
-  `money` decimal(6,2) unsigned DEFAULT NULL,
-  `time` decimal(6,2) unsigned DEFAULT NULL
+  `money_excl` decimal(6,2) unsigned DEFAULT NULL,
+  `money_incl` decimal(6,2) unsigned DEFAULT NULL,
+  `time` decimal(6,2) unsigned DEFAULT NULL,
+  UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_timebased_currency_orders`;
@@ -524,8 +526,10 @@ DROP TABLE IF EXISTS `fcs_timebased_currency_orders`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_timebased_currency_orders` (
   `id_order` int(11) NOT NULL DEFAULT '0',
-  `money_sum` decimal(6,2) unsigned DEFAULT NULL,
-  `time_sum` decimal(6,2) unsigned DEFAULT NULL
+  `money_excl_sum` decimal(6,2) unsigned DEFAULT NULL,
+  `money_incl_sum` decimal(6,2) unsigned DEFAULT NULL,
+  `time_sum` decimal(6,2) unsigned DEFAULT NULL,
+  UNIQUE KEY `id_order` (`id_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

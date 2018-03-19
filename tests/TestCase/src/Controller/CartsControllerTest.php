@@ -320,18 +320,21 @@ class CartsControllerTest extends AppCakeTestCase
         
         $this->assertEquals($order->total_paid, 4.856364, 'order->total_paid not correct');
         $this->assertEquals($order->total_paid_tax_incl, 4.856364, 'order->total_paid_tax_incl not correct');
-        $this->assertEquals($order->total_paid_tax_excl, 4.298515, 'order->total_paid_tax_excl not correct');
+        $this->assertEquals($order->total_paid_tax_excl, 4.398515, 'order->total_paid_tax_excl not correct');
         
         // TODO check money fields of order_details
         
         // check timebased_currency_order
-        $this->assertEquals($order->timebased_currency_order->money_sum, 1.28, 'timebased_currency_order->money_sum not correct');
+        $this->assertEquals($order->timebased_currency_order->money_excl_sum, 1.18, 'timebased_currency_order->money_excl_sum not correct');
+        $this->assertEquals($order->timebased_currency_order->money_incl_sum, 1.28, 'timebased_currency_order->money_incl_sum not correct');
         $this->assertEquals($order->timebased_currency_order->time_sum, 0.13, 'timebased_currency_order->time_sum not correct');
         
         // check timebased_currency_order_details
-        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money, 1.09, 'order_detail timebased_currency_order_detail->money not correct');
+        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_excl, 0.99, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_incl, 1.09, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->time, 0.11, 'order_detail timebased_currency_order_detail->time not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money, 0.19, 'order_detail timebased_currency_order_detail->money not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_excl, 0.19, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_incl, 0.19, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->time, 0.02, 'order_detail timebased_currency_order_detail->time not correct');
         $this->assertEmpty($order->order_details[2]->timebased_currency_order_detail);
         

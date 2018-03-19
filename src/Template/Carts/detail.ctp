@@ -51,8 +51,8 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo $this->element('timebasedCurrency/addProductInfo', [
                 'wrapperTag' => 'p',
                 'class' => 'timebased-currency-sum-wrapper',
-                'money' => $appAuth->Cart->getTimebasedCurrencyPartMoney(),
-                'time' => $appAuth->Cart->getTimebasedCurrencyPartTime(),
+                'money' => $appAuth->Cart->getTimebasedCurrencyPartMoneyInclSum(),
+                'time' => $appAuth->Cart->getTimebasedCurrencyPartTimeSum(),
                 'labelPrefix' => 'Summe'
             ]);
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
