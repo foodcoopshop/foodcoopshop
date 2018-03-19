@@ -318,10 +318,12 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         
-//         $this->assertEquals($orderDetail[0]->product_price, 10.44, 'order_detail product_price was not correct');
-//         $this->assertEquals($orderDetail[0]->total_price_tax_excl, 10.45, 'order_detail total_price_tax_excl not correct');
-//         $this->assertEquals($orderDetail[0]->total_price_tax_incl, 10.66, 'order_detail total_price_tax_incl not correct');
-
+        $this->assertEquals($order->total_paid, 4.856364, 'order->total_paid not correct');
+        $this->assertEquals($order->total_paid_tax_incl, 4.856364, 'order->total_paid_tax_incl not correct');
+        $this->assertEquals($order->total_paid_tax_excl, 4.298515, 'order->total_paid_tax_excl not correct');
+        
+        // TODO check money fields of order_details
+        
         // check timebased_currency_order
         $this->assertEquals($order->timebased_currency_order->money_sum, 1.28, 'timebased_currency_order->money_sum not correct');
         $this->assertEquals($order->timebased_currency_order->time_sum, 0.13, 'timebased_currency_order->time_sum not correct');

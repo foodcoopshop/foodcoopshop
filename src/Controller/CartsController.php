@@ -324,6 +324,9 @@ class CartsController extends FrontendController
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
                 $order2save['timebased_currency_order']['money_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
                 $order2save['timebased_currency_order']['time_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartTime();
+                $order2save['Orders']['total_paid'] = $this->AppAuth->Cart->getProductSum() - $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
+                $order2save['Orders']['total_paid_tax_incl'] = $this->AppAuth->Cart->getProductSum() - $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
+                $order2save['Orders']['total_paid_tax_excl'] = $this->AppAuth->Cart->getProductSumExcl() - $this->AppAuth->Cart->getTimebasedCurrencyPartMoney();
             }
             $patchedOrder = $this->Order->patchEntity($order, $order2save);
             $order = $this->Order->save($patchedOrder);
