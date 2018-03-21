@@ -230,7 +230,7 @@ class PaymentsController extends AdminAppController
         }
 
         $amount = preg_replace('/[^0-9,.]/', '', $amount);
-        $amount = floatval(str_replace(',', '.', $amount));
+        $amount = floatval(Configure::read('app.numberHelper')->replaceCommaWithDot($amount));
 
         if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
             $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');

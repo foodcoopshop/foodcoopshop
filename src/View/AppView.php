@@ -43,6 +43,9 @@ class AppView extends View
         $this->loadHelper('Time', [
             'className' => 'MyTime'
         ]);
+        $this->loadHelper('Number', [
+            'className' => 'MyNumber'
+        ]);
         $this->loadHelper('Form');
         $this->loadHelper('Menu');
         $this->loadHelper('Slug');

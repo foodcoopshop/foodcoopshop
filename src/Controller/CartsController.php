@@ -352,16 +352,12 @@ class CartsController extends FrontendController
                 $orderDetail['id_order'] = $orderId;
                 
                 // recalculate prices
-                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
-                    if (isset($orderDetail['ccp']['timebasedCurrencyPartMoneyExcl'])) {
-                        $orderDetail['timebased_currency_order_detail']['money_excl'] = $orderDetail['ccp']['timebasedCurrencyPartMoneyExcl'];
-                    }
-                    if (isset($orderDetail['ccp']['timebasedCurrencyPartMoneyIncl'])) {
-                        $orderDetail['timebased_currency_order_detail']['money_incl'] = $orderDetail['ccp']['timebasedCurrencyPartMoneyIncl'];
-                    }
-                    if (isset($orderDetail['ccp']['timebasedCurrencyPartTime'])) {
-                        $orderDetail['timebased_currency_order_detail']['time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
-                    }
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled') && $orderDetail['product']->manufacturer->timebased_currency_enabled) {
+                    $orderDetail['timebased_currency_order_detail']['money_excl'] = $orderDetail['ccp']['timebasedCurrencyPartMoneyExcl'];
+                    $orderDetail['timebased_currency_order_detail']['money_incl'] = $orderDetail['ccp']['timebasedCurrencyPartMoneyIncl'];
+                    $orderDetail['timebased_currency_order_detail']['time'] = $orderDetail['ccp']['timebasedCurrencyPartTime'];
+                    $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
+                    $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
                     $timebasedCurrencyPartMoneyExcl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($ccp['priceExcl'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
                     $timebasedCurrencyPartMoneyIncl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($ccp['price'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
                     $orderDetail['product_price'] = $orderDetail['ccp']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;

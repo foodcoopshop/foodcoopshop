@@ -383,7 +383,7 @@ class OrderDetailsController extends AdminAppController
         $editPriceReason = strip_tags(html_entity_decode($this->request->getData('editPriceReason')));
 
         $productPrice = trim($this->request->getData('productPrice'));
-        $productPrice = str_replace(',', '.', $productPrice);
+        $productPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($productPrice);
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
             $message = 'input format wrong';

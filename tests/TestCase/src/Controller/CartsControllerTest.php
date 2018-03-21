@@ -22,12 +22,13 @@ use Cake\ORM\TableRegistry;
 class CartsControllerTest extends AppCakeTestCase
 {
 
-    // artischocke, 0,5 deposit
+    // artischocke, 0,5 deposit, manufacturerId 5
     public $productId1 = '346';
-    // milk with attribute 0,5, 0,5 deposit
+    // milk with attribute 0,5 l, 0,5 deposit, manufacturerId 15
     public $productId2 = '60-10';
-    // knoblauch, 0% tax
+    // knoblauch, 0% tax, , manufacturerId 5
     public $productId3 = '344';
+    
     public $Cart;
 
     public $Product;
@@ -289,18 +290,26 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderTimebasedCurrencyEnabled()
     {
         $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', '10,50');
         $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
         $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
+        $reducedMaxPercentage = 15;
+        $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
+        $defaultMaxPercentage = 30;
         
         $this->loginAsSuperadmin();
         $this->fillCart();
+        
+        $this->addProductToCart(103, 1); // bratwürstel, manufacturerId 4
+        
         $this->checkCartStatus();
         
         $this->finishCart(1, 1, '', 1);
-        $this->assertRegExp('/Die Eingabe muss eine Zahl zwischen 0 und 0.13 sein./', $this->browser->getContent());
+        $this->assertRegExp('/Die Eingabe muss eine Zahl zwischen 0 und 0.18 sein./', $this->browser->getContent());
 
         $this->finishCart(1, 1, '', '');
-        $this->assertRegExp('/Die Eingabe muss eine Zahl zwischen 0 und 0.13 sein./', $this->browser->getContent());
+        $this->assertRegExp('/Die Eingabe muss eine Zahl zwischen 0 und 0.18 sein./', $this->browser->getContent());
         
         $this->finishCart(1, 1, '', '0.1');
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
@@ -318,25 +327,37 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         
-        $this->assertEquals($order->total_paid, 4.856364, 'order->total_paid not correct');
-        $this->assertEquals($order->total_paid_tax_incl, 4.856364, 'order->total_paid_tax_incl not correct');
-        $this->assertEquals($order->total_paid_tax_excl, 4.398515, 'order->total_paid_tax_excl not correct');
+        $this->assertEquals($order->total_paid, 7.826364, 'order->total_paid not correct');
+        $this->assertEquals($order->total_paid_tax_incl, 7.826364, 'order->total_paid_tax_incl not correct');
+        $this->assertEquals($order->total_paid_tax_excl, 7.100334, 'order->total_paid_tax_excl not correct');
         
         // TODO check money fields of order_details
         
         // check timebased_currency_order
-        $this->assertEquals($order->timebased_currency_order->money_excl_sum, 1.18, 'timebased_currency_order->money_excl_sum not correct');
-        $this->assertEquals($order->timebased_currency_order->money_incl_sum, 1.28, 'timebased_currency_order->money_incl_sum not correct');
-        $this->assertEquals($order->timebased_currency_order->time_sum, 0.13, 'timebased_currency_order->time_sum not correct');
+        $this->assertEquals($order->timebased_currency_order->money_excl_sum, 1.66, 'timebased_currency_order->money_excl_sum not correct');
+        $this->assertEquals($order->timebased_currency_order->money_incl_sum, 1.81, 'timebased_currency_order->money_incl_sum not correct');
+        $this->assertEquals($order->timebased_currency_order->time_sum, 0.18, 'timebased_currency_order->time_sum not correct');
         
         // check timebased_currency_order_details
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_excl, 0.99, 'order_detail timebased_currency_order_detail->money_excl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_incl, 1.09, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->time, 0.11, 'order_detail timebased_currency_order_detail->time not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_excl, 0.19, 'order_detail timebased_currency_order_detail->money_excl not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_incl, 0.19, 'order_detail timebased_currency_order_detail->money_incl not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->time, 0.02, 'order_detail timebased_currency_order_detail->time not correct');
-        $this->assertEmpty($order->order_details[2]->timebased_currency_order_detail);
+        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
+        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
+        
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_excl, 0.48, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_incl, 0.53, 'order_detail timebased_currency_order_detail->money_incl not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->time, 0.05, 'order_detail timebased_currency_order_detail->time not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->max_percentage, $reducedMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
+        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
+        
+        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->money_excl, 0.19, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->money_incl, 0.19, 'order_detail timebased_currency_order_detail->money_incl not correct');
+        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->time, 0.02, 'order_detail timebased_currency_order_detail->time not correct');
+        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
+        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
+
+        $this->assertEmpty($order->order_details[3]->timebased_currency_order_detail);
         
     }
     public function testShopOrder()
