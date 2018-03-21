@@ -40,6 +40,8 @@ class TimebasedCurrency extends AbstractMigration
               UNIQUE KEY `id_order_detail` (`id_order_detail`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+            ALTER TABLE `fcs_order_detail` DROP `unit_price_tax_incl`, DROP `unit_price_tax_excl`;
+
         ");
     }
 }

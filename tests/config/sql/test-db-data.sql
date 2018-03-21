@@ -534,8 +534,8 @@ INSERT INTO `fcs_manufacturer` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
-(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,0.000000,0.000000,2,0.50),
-(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0.000000,0.000000,0,0.00);
+(1,1,346,0,'Artischocke : Stück',1,1.652893,1.820000,1.652893,2,0.50),
+(2,1,340,0,'Beuschl',1,4.545455,4.545455,4.545455,0,0.00);
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
