@@ -121,7 +121,11 @@ class BlogPostsController extends AdminAppController
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['content']);
 
         $this->request->data['BlogPosts']['id_customer'] = $this->AppAuth->getUserId();
-
+        
+        if (!$this->request->getData('BlogPosts.update_modified_field')) {
+            $this->BlogPost->removeBehavior('Timestamp');
+        }
+        
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->request->getData());
         if (!empty($blogPost->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
