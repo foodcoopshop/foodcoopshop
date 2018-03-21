@@ -160,6 +160,10 @@ class OrderDetailsTable extends AppTable
             'Products.Manufacturers.AddressManufacturers',
             'Products.ProductLangs'
         ];
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $contain[] = 'TimebasedCurrencyOrderDetails';
+        }
 
         if ($customerId != '') {
             $conditions['Orders.id_customer'] = $customerId;

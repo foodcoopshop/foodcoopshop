@@ -29,6 +29,12 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
     ]);
+    
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
+        ]);
+    }
     ?>
     
     <div class="filter-container">
@@ -249,6 +255,9 @@ foreach ($orderDetails as $orderDetail) {
             ], 'javascript:void(0);');
         }
         echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
+        if (!empty($orderDetail->timebased_currency_order_detail)) {
+            echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->Html->formatAsTimebasedCurrency($orderDetail->timebased_currency_order_detail->time).'">&nbsp;*</b>';
+        }
     } else {
         echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
     }
