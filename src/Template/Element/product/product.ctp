@@ -128,11 +128,11 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
-                if (!empty($attribute['timebased_currency_part_money'])) {
+                if (!empty($attribute['timebased_currency_part_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'wrapperTag' => 'div',
                         'class' => 'timebased-currency-product-info',
-                        'money' => $attribute['timebased_currency_part_money'],
+                        'money' => $attribute['timebased_currency_part_money_incl'],
                         'time' => $attribute['timebased_currency_part_time'],
                         'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
                     ]);
@@ -166,11 +166,11 @@ if ($product['description'] != '') {
                     echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
                 }
                 echo '</div>';
-                if (!empty($product['timebased_currency_part_money'])) {
+                if (!empty($product['timebased_currency_part_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'wrapperTag' => 'div',
                         'class' => 'timebased-currency-product-info',
-                        'money' => $product['timebased_currency_part_money'],
+                        'money' => $product['timebased_currency_part_money_incl'],
                         'time' => $product['timebased_currency_part_time'],
                         'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
                     ]);
