@@ -149,7 +149,6 @@ class CartsTable extends AppTable
                 if ($ccp->Products->Manufacturers->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
                     $productData['timebasedCurrencyPartMoneyExcl'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartMoney($productData['priceExcl'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
                     $productData['timebasedCurrencyPartMoneyIncl'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartMoney($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
-                    // TODO: save time here and not price!
                     $productData['timebasedCurrencyPartTime'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartTime($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
                 }
             }
