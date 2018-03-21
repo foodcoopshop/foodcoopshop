@@ -32,6 +32,13 @@ use Cake\Core\Configure;
                     Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ]);
         }
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
+            ]);
+        }
+        
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#order-'
         ]);
@@ -169,7 +176,10 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td class="right">';
-        echo $this->Html->formatAsEuro($paidField);
+            echo $this->Html->formatAsEuro($paidField);
+            if (!empty($order->timebased_currency_order)) {
+                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->Html->formatAsTimebasedCurrency($order->timebased_currency_order->time_sum).'">&nbsp;*</b>';
+            }
         echo '</td>';
 
         if (Configure::read('app.isDepositPaymentCashless')) {
@@ -230,7 +240,9 @@ use Cake\Core\Configure;
 
     echo '<tr>';
     echo '<td colspan="2"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> Datensätze</td>';
-    echo '<td class="right"><b>' . $this->Html->formatAsEuro($sumPrice) . '</b></td>';
+    echo '<td class="right">';
+        echo '<b>' . $this->Html->formatAsEuro($sumPrice) . '</b>';
+    echo '</td>';
     echo '<td colspan="5"></td>';
     echo '</tr>';
 

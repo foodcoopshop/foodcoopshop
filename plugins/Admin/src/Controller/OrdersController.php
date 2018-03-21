@@ -300,7 +300,11 @@ class OrdersController extends AdminAppController
             'contain' => $orderParams['contain']
         ])
         ->select($this->Order->Customers);
-
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $query->select($this->Order->TimebasedCurrencyOrders);
+        }
+        
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
