@@ -518,6 +518,8 @@ CREATE TABLE `fcs_timebased_currency_order_detail` (
   `money_excl` decimal(6,2) unsigned DEFAULT NULL,
   `money_incl` decimal(6,2) unsigned DEFAULT NULL,
   `time` decimal(6,2) unsigned DEFAULT NULL,
+  `max_percentage` int(11) UNSIGNED DEFAULT NULL,
+  `exchange_rate` decimal(6,2) UNSIGNED DEFAULT NULL,
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -35,6 +35,8 @@ class TimebasedCurrency extends AbstractMigration
               `money_excl` decimal(6,2) UNSIGNED DEFAULT NULL,
               `money_incl` decimal(6,2) UNSIGNED DEFAULT NULL,
               `time` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `max_percentage` int(11) UNSIGNED DEFAULT NULL,
+              `exchange_rate` decimal(6,2) UNSIGNED DEFAULT NULL,
               UNIQUE KEY `id_order_detail` (`id_order_detail`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
