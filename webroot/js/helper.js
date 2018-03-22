@@ -400,14 +400,13 @@ foodcoopshop.Helper = {
         });
     },
 
-    initTooltip: function (container, position, hover) {
-        var hover = hover || true;
-        $(container).tooltip({
-            content: function () {
-                return $(this).attr('title');
-            },
-            tooltipHover: hover,
-            position: position
+    initTooltip: function (container, interactive) {
+        var interactive = interactive || true;
+        $(container).tooltipster({
+        	contentAsHTML: true,
+        	interactive: interactive,
+        	maxWidth: 400,
+        	theme: ['tooltipster-light']
         });
     },
 

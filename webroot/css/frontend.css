@@ -483,7 +483,16 @@ body.superadmin .product-wrapper .heading h4 {
     margin-left: 10px;
     line-height: 20px;
 }
-
+.product-wrapper .timebased-currency-product-info {
+	float: left;
+	margin-top: -5px;
+	margin-bottom: 5px;
+}
+.tooltipster-content span.money,
+.tooltipster-content span.time {
+	float: right;
+	margin-left: 5px;
+}
 .product-wrapper .amount-wrapper {
     line-height: 28px;
     margin-bottom: 10px;
@@ -508,18 +517,6 @@ body.superadmin .product-wrapper .heading h4 {
     display: block;
     margin-top: 10px;
 }
-div.ui-tooltip {
-    max-width: 330px;
-    border-width: 1px;
-    font-family: 'Open Sans';
-    z-index: 1100;
-}
-div.ui-tooltip-content {
-    font-size: 13px;
-    line-height: 17px;
-    color: #333;
-}
-
 body.manufacturers.detail .manufacturer-infos {
     width: 100%;
     min-height: 160px;

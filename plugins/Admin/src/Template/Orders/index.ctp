@@ -28,7 +28,7 @@ use Cake\Core\Configure;
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', [
                 'script' =>
-                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
+                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', false);".
                     Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ]);
         }
