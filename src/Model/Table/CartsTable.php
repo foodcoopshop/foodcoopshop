@@ -55,8 +55,11 @@ class CartsTable extends AppTable
             $cart = $this->save($this->newEntity($cart2save));
         }
 
-        $ccp = TableRegistry::get('CartProducts');
-        $cartProducts = $ccp->find('all', [
+        $cartProductsTable = TableRegistry::get('CartProducts');
+        $productsTable = TableRegistry::get('Products');
+        $manufacturersTable = TableRegistry::get('Manufacturers');
+        
+        $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['id_cart']
             ],
@@ -99,8 +102,8 @@ class CartsTable extends AppTable
             
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
                 
-                $grossPrice = $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price) * $cartProduct->amount;
-                $tax = $ccp->Products->getUnitTax($grossPrice, $cartProduct->product_attribute->product_attribute_shop->price, $cartProduct->amount) * $cartProduct->amount;
+                $grossPrice = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price) * $cartProduct->amount;
+                $tax = $productsTable->getUnitTax($grossPrice, $cartProduct->product_attribute->product_attribute_shop->price, $cartProduct->amount) * $cartProduct->amount;
                 
                 // attribute
                 $productData = [
@@ -123,8 +126,8 @@ class CartsTable extends AppTable
             } else {
                 // no attribute
                 
-                $grossPrice = $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price) * $cartProduct->amount;
-                $tax = $ccp->Products->getUnitTax($grossPrice, $cartProduct->product->product_shop->price, $cartProduct->amount) * $cartProduct->amount;
+                $grossPrice = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price) * $cartProduct->amount;
+                $tax = $productsTable->getUnitTax($grossPrice, $cartProduct->product->product_shop->price, $cartProduct->amount) * $cartProduct->amount;
                 
                 $productData = [
                     'cartProductId' => $cartProduct->id_cart_product,
@@ -146,10 +149,10 @@ class CartsTable extends AppTable
             }
             
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
-                if ($ccp->Products->Manufacturers->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
-                    $productData['timebasedCurrencyPartMoneyExcl'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartMoney($productData['priceExcl'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
-                    $productData['timebasedCurrencyPartMoneyIncl'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartMoney($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
-                    $productData['timebasedCurrencyPartTime'] = $ccp->Products->Manufacturers->getTimebasedCurrencyPartTime($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
+                if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
+                    $productData['timebasedCurrencyPartMoneyExcl'] = $manufacturersTable->getTimebasedCurrencyPartMoney($productData['priceExcl'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
+                    $productData['timebasedCurrencyPartMoneyIncl'] = $manufacturersTable->getTimebasedCurrencyPartMoney($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
+                    $productData['timebasedCurrencyPartTime'] = $manufacturersTable->getTimebasedCurrencyPartTime($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
                 }
             }
             
