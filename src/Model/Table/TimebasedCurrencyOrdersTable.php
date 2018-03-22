@@ -31,8 +31,8 @@ class TimebasedCurrencyOrdersTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('time_sum', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
-        $validator->numeric('time_sum', 'Bitte trage eine Zahl ein.');
+        $validator->notEmpty('time_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
+        $validator->numeric('time_sum_tmp', 'Bitte trage eine Zahl ein.');
         return $validator;
     }
 

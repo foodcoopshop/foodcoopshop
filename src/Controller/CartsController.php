@@ -291,7 +291,7 @@ class CartsController extends FrontendController
         
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
             $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
-            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'time_sum', 0, $this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum());
+            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'time_sum_tmp', 0, $this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum());
         }
         $order = $this->Order->newEntity(
             $this->request->getData(),
@@ -322,22 +322,31 @@ class CartsController extends FrontendController
                  ]
             ];
             
+            $selectedTimebasedCurrencyTime = 0;
+            if (!empty($this->request->getData('timebased_currency_order.time_sum_tmp'))) {
+                $selectedTimebasedCurrencyTime = $this->request->getData('timebased_currency_order.time_sum_tmp');
+            }
             // timebased_currency: ORDERS
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled') && $selectedTimebasedCurrencyTime > 0) {
                 
-                $chosenTimeSum = $this->request->getData('timebased_currency_order.time_sum');
-                $chosenTimeAdaptionFactor = $chosenTimeSum / $this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum();
-                $adaptedTimebasedCurrencyMoneyExclSum = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyExclSum() * $chosenTimeAdaptionFactor;
-                $adaptedTimebasedCurrencyMoneyInclSum = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyInclSum() * $chosenTimeAdaptionFactor;
+                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencyTime / $this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum();
+                $adaptedTimebasedCurrencyMoneyExclSum = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyExclSum() * $selectedTimeAdaptionFactor;
+                $adaptedTimebasedCurrencyMoneyInclSum = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyInclSum() * $selectedTimeAdaptionFactor;
                 
                 $order2save['timebased_currency_order']['money_excl_sum'] = $adaptedTimebasedCurrencyMoneyExclSum;
                 $order2save['timebased_currency_order']['money_incl_sum'] = $adaptedTimebasedCurrencyMoneyInclSum;
-                $order2save['timebased_currency_order']['time_sum'] = $chosenTimeSum;
+                $order2save['timebased_currency_order']['time_sum'] = $selectedTimebasedCurrencyTime;
                 $order2save['Orders']['total_paid_tax_excl'] = $this->AppAuth->Cart->getProductSumExcl() - $adaptedTimebasedCurrencyMoneyExclSum;
                 $order2save['Orders']['total_paid'] = $this->AppAuth->Cart->getProductSum() - $adaptedTimebasedCurrencyMoneyInclSum;
                 $order2save['Orders']['total_paid_tax_incl'] = $this->AppAuth->Cart->getProductSum() - $adaptedTimebasedCurrencyMoneyInclSum;
                 
             }
+            
+            // avoid saving empty recored for timebased_currency_order
+            if (!isset($order2save['timebased_currency_order']['time_sum'])) {
+                unset($order->timebased_currency_order);
+            }
+
             $patchedOrder = $this->Order->patchEntity($order, $order2save);
             $order = $this->Order->save($patchedOrder);
             if (!$order) {
@@ -361,15 +370,18 @@ class CartsController extends FrontendController
                 $orderDetail['id_order'] = $orderId;
                 
                 // timebased_currency: ORDER_DETAILS
-                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled') && $orderDetail['product']->manufacturer->timebased_currency_enabled) {
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')
+                    && $this->AppAuth->user('timebased_currency_enabled')
+                    && $orderDetail['product']->manufacturer->timebased_currency_enabled
+                    && $selectedTimebasedCurrencyTime > 0) {
                     
-                    $chosenTime = $orderDetail['ccp']['timebasedCurrencyPartTime'] * $chosenTimeAdaptionFactor;
-                    $adaptedTimebasedCurrencyMoneyExcl = $orderDetail['ccp']['timebasedCurrencyPartMoneyExcl'] * $chosenTimeAdaptionFactor;
-                    $adaptedTimebasedCurrencyMoneyIncl = $orderDetail['ccp']['timebasedCurrencyPartMoneyIncl'] * $chosenTimeAdaptionFactor;
+                    $selectedTime = $orderDetail['ccp']['timebasedCurrencyPartTime'] * $selectedTimeAdaptionFactor;
+                    $adaptedTimebasedCurrencyMoneyExcl = $orderDetail['ccp']['timebasedCurrencyPartMoneyExcl'] * $selectedTimeAdaptionFactor;
+                    $adaptedTimebasedCurrencyMoneyIncl = $orderDetail['ccp']['timebasedCurrencyPartMoneyIncl'] * $selectedTimeAdaptionFactor;
                     
                     $orderDetail['timebased_currency_order_detail']['money_excl'] = $adaptedTimebasedCurrencyMoneyExcl;
                     $orderDetail['timebased_currency_order_detail']['money_incl'] = $adaptedTimebasedCurrencyMoneyIncl;
-                    $orderDetail['timebased_currency_order_detail']['time'] = $chosenTime;
+                    $orderDetail['timebased_currency_order_detail']['time'] = $selectedTime;
                     $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
                     $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
                     $timebasedCurrencyPartMoneyExcl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($ccp['priceExcl'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
