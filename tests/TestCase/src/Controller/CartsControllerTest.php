@@ -327,18 +327,34 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         ])->first();
         
+        // check table order
         $this->assertEquals($order->total_paid, 19.726364, 'order->total_paid not correct');
         $this->assertEquals($order->total_paid_tax_incl, 19.726364, 'order->total_paid_tax_incl not correct');
         $this->assertEquals($order->total_paid_tax_excl, 17.917610, 'order->total_paid_tax_excl not correct');
+
+        // check table order_detail
+        $this->assertEquals($order->order_details[0]->product_price, 2.814877, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[0]->total_price_tax_incl, 3.082000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[0]->total_price_tax_excl, 2.814877, 'order_detail->total_price_tax_excl not correct');
         
-        // TODO check money fields of order_details
+        $this->assertEquals($order->order_details[1]->product_price, 15.663640, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[1]->total_price_tax_incl, 17.221000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[1]->total_price_tax_excl, 15.663640, 'order_detail->total_price_tax_excl not correct');
+
+        $this->assertEquals($order->order_details[2]->product_price, 0.145455, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[2]->total_price_tax_incl, 0.078364, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[2]->total_price_tax_excl, 0.145455, 'order_detail->total_price_tax_excl not correct');
         
-        // check timebased_currency_order
+        $this->assertEquals($order->order_details[3]->product_price, 1.636365, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[3]->total_price_tax_incl, 1.860000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[3]->total_price_tax_excl, 1.636365, 'order_detail->total_price_tax_excl not correct');
+        
+        // check table timebased_currency_order
         $this->assertEquals($order->timebased_currency_order->money_excl_sum, 3.57, 'timebased_currency_order->money_excl_sum not correct');
         $this->assertEquals($order->timebased_currency_order->money_incl_sum, 3.91, 'timebased_currency_order->money_incl_sum not correct');
         $this->assertEquals($order->timebased_currency_order->time_sum, 0.39, 'timebased_currency_order->time_sum not correct');
         
-        // check timebased_currency_order_details
+        // check table timebased_currency_order_details
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_excl, 0.99, 'order_detail timebased_currency_order_detail->money_excl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_incl, 1.09, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->time, 0.11, 'order_detail timebased_currency_order_detail->time not correct');
