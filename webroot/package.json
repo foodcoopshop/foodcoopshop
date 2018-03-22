@@ -24,11 +24,12 @@
     "font-awesome": "^4.7",
     "jquery": "~1.12.4",
     "jquery-backstretch": "^2.1.16",
+    "jquery-knob": "~1.2.11",
     "jquery.cycle2": "^2.1.6",
     "jquery.cycle2.swipe": "1.0.0",
-    "jquery-knob": "~1.2.11",
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.2.0",
-    "slidebars": "^2.0.2"
+    "slidebars": "^2.0.2",
+    "tooltipster": "^4.2.6"
   }
 }
