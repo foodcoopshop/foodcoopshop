@@ -164,10 +164,7 @@ class CartsController extends FrontendController
                 'cart' => $cart,
                 'appAuth' => $this->AppAuth,
                 'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
-                'order' => $order,
-                'depositSum' => $this->AppAuth->Cart->getDepositSum(),
-                'productSum' => $this->AppAuth->Cart->getProductSum(),
-                'productAndDepositSum' => $this->AppAuth->Cart->getProductAndDepositSum()
+                'order' => $order
             ]);
             
             $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
@@ -512,9 +509,15 @@ class CartsController extends FrontendController
             $order = $this->saveOrder($order, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
             $this->saveOrderDetails($orderDetails2save, $order, $cartProduct, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
             $this->saveOrderDetailTax($order->id_order);
-            $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
-
+            
+            if ($selectedTimebasedCurrencyTime > 0 && $selectedTimeAdaptionFactor > 0) {
+                $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
+                $this->AppAuth->setCart($cart);
+            }
+            
+            $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
+            
             $this->AppAuth->Cart->markAsSaved();
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');

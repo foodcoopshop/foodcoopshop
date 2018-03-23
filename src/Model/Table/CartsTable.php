@@ -38,6 +38,24 @@ class CartsTable extends AppTable
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
+    
+    public function adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor)
+    {
+        
+        $cart['CartProductSum'] -= $cart['CartTimebasedCurrencyPartMoneyInclSum'];
+        $cart['CartProductSumExcl'] -= $cart['CartTimebasedCurrencyPartMoneyExclSum'];
+        
+        foreach($cart['CartProducts'] as &$cartProduct) {
+            if (isset($cartProduct['timebasedCurrencyPartMoneyIncl'])) {
+                $cartProduct['price'] -= $cartProduct['timebasedCurrencyPartMoneyIncl'];
+            }
+            if (isset($cartProduct['timebasedCurrencyPartMoneyExcl'])) {
+                $cartProduct['priceExcl'] -=  $cartProduct['timebasedCurrencyPartMoneyExcl'];
+            }
+        }
+
+        return $cart;
+    }
 
     public function getCart($customerId)
     {
