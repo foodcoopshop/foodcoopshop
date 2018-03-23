@@ -178,4 +178,4 @@ foodcoopshop.AppFeatherlight = {
         }
     }
 
-}
+};
