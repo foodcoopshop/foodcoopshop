@@ -39,7 +39,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getBlogList(),
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
-            $this->Slug->getPageDetail(9, 'Impressum'),
+            $this->Slug->getPageDetail(8, 'Links'),
             $this->Slug->getLogin(),
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy()
