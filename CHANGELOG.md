@@ -2,6 +2,15 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## Unveröffentlicht / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.0...HEAD)
+
+### Herzlichen Dank an alle beteiligten Personen
+* [mrothauer](https://github.com/mrothauer)
+
+### Für Entwickler
+- JQuery UI Tooltip wurde durch Tooltipster ersetzt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/ed331eae8fbb8959bb7e3981a1c8895199a3075c) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- JsMin wurde durch JShrink ersetzt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/5013ee524d594a5ca4850dbf2e745c1d573e3b76) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ## v2.0.0 2017-30-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen

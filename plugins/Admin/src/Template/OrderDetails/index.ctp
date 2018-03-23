@@ -52,8 +52,7 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-                <input id="orderId" type="text" placeholder="Bestell-Nr."
-                value="<?php echo $orderId; ?>" />
+                <input id="orderId" type="text" placeholder="Bestell-Nr." name="orderId" value="<?php echo $orderId; ?>" />
             <?php } ?>
             <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
