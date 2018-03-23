@@ -333,17 +333,17 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order->total_paid_tax_excl, 17.917610, 'order->total_paid_tax_excl not correct');
 
         // check table order_detail
-        $this->assertEquals($order->order_details[0]->product_price, 2.814877, 'order_detail->product_price not correct');
-        $this->assertEquals($order->order_details[0]->total_price_tax_incl, 3.082000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[0]->total_price_tax_excl, 2.814877, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($order->order_details[0]->product_price,  2.31405, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[0]->total_price_tax_incl, 2.548, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[0]->total_price_tax_excl,  2.31405, 'order_detail->total_price_tax_excl not correct');
         
-        $this->assertEquals($order->order_details[1]->product_price, 15.663640, 'order_detail->product_price not correct');
-        $this->assertEquals($order->order_details[1]->total_price_tax_incl, 17.221000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[1]->total_price_tax_excl, 15.663640, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($order->order_details[1]->product_price, 13.522731, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[1]->total_price_tax_incl, 14.875, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[1]->total_price_tax_excl, 13.522731, 'order_detail->total_price_tax_excl not correct');
 
-        $this->assertEquals($order->order_details[2]->product_price, 0.145455, 'order_detail->product_price not correct');
-        $this->assertEquals($order->order_details[2]->total_price_tax_incl, 0.078364, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[2]->total_price_tax_excl, 0.145455, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($order->order_details[2]->product_price, 0.445455, 'order_detail->product_price not correct');
+        $this->assertEquals($order->order_details[2]->total_price_tax_incl, 0.445455, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($order->order_details[2]->total_price_tax_excl, 0.445455, 'order_detail->total_price_tax_excl not correct');
         
         $this->assertEquals($order->order_details[3]->product_price, 1.636365, 'order_detail->product_price not correct');
         $this->assertEquals($order->order_details[3]->total_price_tax_incl, 1.860000, 'order_detail->total_price_tax_incl not correct');

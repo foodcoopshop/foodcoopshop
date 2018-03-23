@@ -42,15 +42,20 @@ class CartsTable extends AppTable
     public function adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor)
     {
         
-        $cart['CartProductSum'] -= $cart['CartTimebasedCurrencyPartMoneyInclSum'];
-        $cart['CartProductSumExcl'] -= $cart['CartTimebasedCurrencyPartMoneyExclSum'];
+        $cart['CartTimebasedCurrencyPartTimeSum'] = $selectedTimebasedCurrencyTime;
+        
+        $cart['CartProductSum'] -= $cart['CartTimebasedCurrencyPartMoneyInclSum'] * $selectedTimeAdaptionFactor;
+        $cart['CartProductSumExcl'] -= $cart['CartTimebasedCurrencyPartMoneyExclSum'] * $selectedTimeAdaptionFactor;
         
         foreach($cart['CartProducts'] as &$cartProduct) {
+            if (isset($cartProduct['timebasedCurrencyPartTime'])) {
+                $cartProduct['timebasedCurrencyPartTime'] *= $selectedTimeAdaptionFactor;
+            }
             if (isset($cartProduct['timebasedCurrencyPartMoneyIncl'])) {
-                $cartProduct['price'] -= $cartProduct['timebasedCurrencyPartMoneyIncl'];
+                $cartProduct['price'] -= $cartProduct['timebasedCurrencyPartMoneyIncl'] * $selectedTimeAdaptionFactor;
             }
             if (isset($cartProduct['timebasedCurrencyPartMoneyExcl'])) {
-                $cartProduct['priceExcl'] -=  $cartProduct['timebasedCurrencyPartMoneyExcl'];
+                $cartProduct['priceExcl'] -=  $cartProduct['timebasedCurrencyPartMoneyExcl'] * $selectedTimeAdaptionFactor;
             }
         }
 

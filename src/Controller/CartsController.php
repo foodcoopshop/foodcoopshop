@@ -209,11 +209,10 @@ class CartsController extends FrontendController
                     $orderDetail['timebased_currency_order_detail']['time'] = $selectedTime;
                     $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
                     $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
-                    $timebasedCurrencyPartMoneyExcl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($cartProduct['priceExcl'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
-                    $timebasedCurrencyPartMoneyIncl = $this->Product->Manufacturers->getTimebasedCurrencyPartMoney($cartProduct['price'], $orderDetail['product']->manufacturer->timebased_currency_max_percentage);
-                    $orderDetail['product_price'] = $orderDetail['cartProduct']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
-                    $orderDetail['total_price_tax_excl'] = $orderDetail['cartProduct']['priceExcl'] - $timebasedCurrencyPartMoneyExcl;
-                    $orderDetail['total_price_tax_incl'] = $orderDetail['cartProduct']['price'] - $timebasedCurrencyPartMoneyIncl;
+
+                    $orderDetail['product_price'] = $orderDetail['cartProduct']['priceExcl'] - $adaptedTimebasedCurrencyMoneyExcl;
+                    $orderDetail['total_price_tax_excl'] = $orderDetail['cartProduct']['priceExcl'] - $adaptedTimebasedCurrencyMoneyExcl;
+                    $orderDetail['total_price_tax_incl'] = $orderDetail['cartProduct']['price'] - $adaptedTimebasedCurrencyMoneyIncl;
                 }
                 
         }
