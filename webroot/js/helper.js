@@ -672,4 +672,4 @@ foodcoopshop.Helper = {
         });
     }
 
-}
+};

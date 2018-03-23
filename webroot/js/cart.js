@@ -431,4 +431,4 @@ foodcoopshop.Cart = {
 
     }
 
-}
+};
