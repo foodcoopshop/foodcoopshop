@@ -402,7 +402,7 @@ foodcoopshop.Helper = {
 
     initTooltip: function (container, interactive) {
         var interactive = interactive || true;
-        $(container).tooltipster({
+        $(container).not('.tooltipstered').tooltipster({
         	contentAsHTML: true,
         	interactive: interactive,
         	maxWidth: 400,
