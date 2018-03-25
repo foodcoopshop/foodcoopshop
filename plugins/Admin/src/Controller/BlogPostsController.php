@@ -122,7 +122,11 @@ class BlogPostsController extends AdminAppController
 
         $this->request->data['BlogPosts']['id_customer'] = $this->AppAuth->getUserId();
         
-        if (!$this->request->getData('BlogPosts.update_modified_field')) {
+        if ($this->AppAuth->isManufacturer()) {
+            $this->request->data['BlogPosts']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
+        }
+        
+        if (!$this->request->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer()) {
             $this->BlogPost->removeBehavior('Timestamp');
         }
         
