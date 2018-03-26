@@ -47,6 +47,11 @@ class CartComponent extends Component
         return 0;
     }
     
+    public function isTimebasedCurrencyUsed()
+    {
+        return isset($this->cart['CartTimebasedCurrencyUsed']) && $this->cart['CartTimebasedCurrencyUsed'];
+    }
+    
     public function getTimebasedCurrencyPartMoneyExclSum()
     {
         if ($this->cart !== null) {

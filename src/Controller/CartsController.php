@@ -192,33 +192,37 @@ class CartsController extends FrontendController
         }
     }
     
-    private function saveOrderDetails($orderDetails2save, $order, $cartProduct, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor)
+    private function saveOrderDetails($orderDetails2save, $order)
     {
         foreach ($orderDetails2save as &$orderDetail) {
             
             $orderDetail['id_order'] = $order->id_order;
             
             // timebased_currency: ORDER_DETAILS
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')
-                && $this->AppAuth->user('timebased_currency_enabled')
-                && $orderDetail['product']->manufacturer->timebased_currency_enabled
-                && $selectedTimebasedCurrencyTime > 0) {
-                    
-                    $selectedTime = $orderDetail['cartProduct']['timebasedCurrencyPartTime'] * $selectedTimeAdaptionFactor;
-                    $adaptedTimebasedCurrencyMoneyExcl = $orderDetail['cartProduct']['timebasedCurrencyPartMoneyExcl'] * $selectedTimeAdaptionFactor;
-                    $adaptedTimebasedCurrencyMoneyIncl = $orderDetail['cartProduct']['timebasedCurrencyPartMoneyIncl'] * $selectedTimeAdaptionFactor;
-                    
-                    $orderDetail['timebased_currency_order_detail']['money_excl'] = $adaptedTimebasedCurrencyMoneyExcl;
-                    $orderDetail['timebased_currency_order_detail']['money_incl'] = $adaptedTimebasedCurrencyMoneyIncl;
-                    $orderDetail['timebased_currency_order_detail']['time'] = $selectedTime;
-                    $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
-                    $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
-
-                    $orderDetail['product_price'] = $orderDetail['cartProduct']['priceExcl'] - $adaptedTimebasedCurrencyMoneyExcl;
-                    $orderDetail['total_price_tax_excl'] = $orderDetail['cartProduct']['priceExcl'] - $adaptedTimebasedCurrencyMoneyExcl;
-                    $orderDetail['total_price_tax_incl'] = $orderDetail['cartProduct']['price'] - $adaptedTimebasedCurrencyMoneyIncl;
+            if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
+                
+                foreach($this->AppAuth->Cart->getProducts() as $cartProduct) {
+                    if ($cartProduct['cartProductId'] == $orderDetail['cartProductId']) {
+                        
+                        if (isset($cartProduct['isTimebasedCurrencyUsed'])) {
+                        
+                            $orderDetail['timebased_currency_order_detail']['money_excl'] = $cartProduct['timebasedCurrencyPartMoneyExcl'];
+                            $orderDetail['timebased_currency_order_detail']['money_incl'] = $cartProduct['timebasedCurrencyPartMoneyIncl'];
+                            $orderDetail['timebased_currency_order_detail']['time'] = $cartProduct['timebasedCurrencyPartTime'];
+                            $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
+                            $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
+                            
+                            // override prices from timebased_currency adapted cart
+                            $orderDetail['product_price'] = $cartProduct['priceExcl'];
+                            $orderDetail['total_price_tax_excl'] = $cartProduct['priceExcl'];
+                            $orderDetail['total_price_tax_incl'] = $cartProduct['price'];
+                        }
+                        
+                        continue;
+                    }
                 }
                 
+            }
         }
         
         $this->Order->OrderDetails->saveMany(
@@ -230,7 +234,7 @@ class CartsController extends FrontendController
      * @param array $order
      * @return OrdersTable $order
      */
-    private function saveOrder($orderEntity, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor)
+    private function saveOrder($orderEntity)
     {
         $order2save = [
             'Orders' => [
@@ -245,22 +249,14 @@ class CartsController extends FrontendController
         ];
         
         // timebased_currency: ORDERS
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled') && $selectedTimebasedCurrencyTime > 0) {
-            
-            $adaptedTimebasedCurrencyMoneyExclSum = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyExclSum() * $selectedTimeAdaptionFactor;
-            $adaptedTimebasedCurrencyMoneyInclSum = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyInclSum() * $selectedTimeAdaptionFactor;
-            
-            $order2save['timebased_currency_order']['money_excl_sum'] = $adaptedTimebasedCurrencyMoneyExclSum;
-            $order2save['timebased_currency_order']['money_incl_sum'] = $adaptedTimebasedCurrencyMoneyInclSum;
-            $order2save['timebased_currency_order']['time_sum'] = $selectedTimebasedCurrencyTime;
-            $order2save['Orders']['total_paid_tax_excl'] = $this->AppAuth->Cart->getProductSumExcl() - $adaptedTimebasedCurrencyMoneyExclSum;
-            $order2save['Orders']['total_paid'] = $this->AppAuth->Cart->getProductSum() - $adaptedTimebasedCurrencyMoneyInclSum;
-            $order2save['Orders']['total_paid_tax_incl'] = $this->AppAuth->Cart->getProductSum() - $adaptedTimebasedCurrencyMoneyInclSum;
-            
+        if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
+            $order2save['timebased_currency_order']['money_excl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyExclSum();
+            $order2save['timebased_currency_order']['money_incl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartMoneyInclSum();
+            $order2save['timebased_currency_order']['time_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum();
         }
         
         // avoid saving empty recored for timebased_currency_order
-        if ($this->timebasedCurrencyUsed($order2save)) {
+        if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
             unset($orderEntity->timebased_currency_order);
         }
         
@@ -333,11 +329,6 @@ class CartsController extends FrontendController
         
     }
     
-    private function timebasedCurrencyUsed($order)
-    {
-        return isset($order['timebased_currency_order']['time_sum']);
-    }
-
     public function finish()
     {
 
@@ -458,8 +449,8 @@ class CartsController extends FrontendController
                 'total_price_tax_incl' => $cartProduct['price'],
                 'id_tax' => $product->id_tax,
                 'deposit' => $cartProduct['deposit'],
-                'product' => $product, // will be removed!
-                'cartProduct' => $cartProduct // will be removed!
+                'product' => $product,
+                'cartProductId' => $cartProduct['cartProductId']
             ];
             
             $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
@@ -509,15 +500,16 @@ class CartsController extends FrontendController
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencyTime / $this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum();
             }
             
-            $order = $this->saveOrder($order, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
-            $this->saveOrderDetails($orderDetails2save, $order, $cartProduct, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
-            $this->saveOrderDetailTax($order->id_order);
-            $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
-            
             if ($selectedTimebasedCurrencyTime > 0 && $selectedTimeAdaptionFactor > 0) {
                 $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
                 $this->AppAuth->setCart($cart);
             }
+            
+            $order = $this->saveOrder($order);
+            
+            $this->saveOrderDetails($orderDetails2save, $order);
+            $this->saveOrderDetailTax($order->id_order);
+            $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
             
             $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
             
