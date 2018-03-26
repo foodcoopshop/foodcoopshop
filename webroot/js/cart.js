@@ -106,12 +106,13 @@ foodcoopshop.Cart = {
         
         // update timebasedCurrencyPartTime
         var oldTimebasedCurrencyPartTime = productContainer.find('.timebasedCurrencyPartTime');
-        var newTimebasedCurrencyPartTime =  (
-        		foodcoopshop.Helper.getTimebasedCurrencyAsFloat(oldTimebasedCurrencyPartTime.html()) +
-        		(timebasedCurrencyPartTime * amount)
-        );
-        oldTimebasedCurrencyPartTime.html(foodcoopshop.Helper.formatFloatAsTimebasedCurrency(newTimebasedCurrencyPartTime));
-
+        if (oldTimebasedCurrencyPartTime.length > 0) {
+	        var newTimebasedCurrencyPartTime =  (
+	        		foodcoopshop.Helper.getTimebasedCurrencyAsFloat(oldTimebasedCurrencyPartTime.html()) +
+	        		(timebasedCurrencyPartTime * amount)
+	        );
+	        oldTimebasedCurrencyPartTime.html(foodcoopshop.Helper.formatFloatAsTimebasedCurrency(newTimebasedCurrencyPartTime));
+        }
     },
 
     initAddToCartButton: function () {
@@ -144,8 +145,6 @@ foodcoopshop.Cart = {
             }
             
             var timebasedCurrencyPartTime = foodcoopshop.Helper.getTimebasedCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .timebasedCurrencyPartTime').html());
-//            console.log(productWrapper.find('.entity-wrapper.active .timebasedCurrencyPartTime').html());
-//            console.log('timebasedCurrencyPartTime: ' + timebasedCurrencyPartTime);
             
             var productContainer = $('#cart p.products .product.' + productId);
 
@@ -248,8 +247,13 @@ foodcoopshop.Cart = {
             var oldAmount = parseInt(productContainer.find('.amount span.value').html());
             var newPrice = price / oldAmount;
             var newTax = tax / oldAmount;
-            var timebasedCurrencyPartTime = foodcoopshop.Helper.getTimebasedCurrencyAsFloat(productContainer.find('.timebasedCurrencyPartTime').html())
-            var newTimebasedCurrencyPartTime = timebasedCurrencyPartTime / oldAmount;
+            
+            var timebasedCurrencyPartTimeContainer = productContainer.find('.timebasedCurrencyPartTime');
+        	var newTimebasedCurrencyPartTime = 0;
+            if (timebasedCurrencyPartTimeContainer.length > 0) {
+            	var timebasedCurrencyPartTime = foodcoopshop.Helper.getTimebasedCurrencyAsFloat(timebasedCurrencyPartTimeContainer.html())
+            	newTimebasedCurrencyPartTime = timebasedCurrencyPartTime / oldAmount;
+            }
             
             var depositContainer = productContainer.find('.deposit span');
             var newDeposit = 0;
@@ -398,9 +402,12 @@ foodcoopshop.Cart = {
                         foodcoopshop.Cart.updateCartTaxSum(
                             foodcoopshop.Helper.getEuroAsFloat(p.find('span.tax').html()) * -1
                         );
-                        foodcoopshop.Cart.updateCartTimebasedCurrencySum(
-                            foodcoopshop.Helper.getTimebasedCurrencyAsFloat(p.find('span.timebasedCurrencyPartTime').html()) * -1
-                        );
+                        var timebasedCurrencyPartTime = p.find('.timebasedCurrencyPartTime');
+                        if (timebasedCurrencyPartTime.length > 0) {
+	                        foodcoopshop.Cart.updateCartTimebasedCurrencySum(
+	                            foodcoopshop.Helper.getTimebasedCurrencyAsFloat(timebasedCurrencyPartTime.html()) * -1
+	                        );
+                        }
                     }
                     p.slideUp('slow', function () {
                         p.remove();
