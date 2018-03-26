@@ -58,8 +58,8 @@ if (!$appAuth->termsOfUseAccepted()) {
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
                 echo $this->Form->control('timebased_currency_order.time_sum_tmp', [
                     'label' => 'Wie viele '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' will ich davon zahlen?',
-                    'type' => 'text',
-                    'class' => 'short'
+                    'type' => 'select',
+                    'options' => $timebasedCurrencyHoursAndMinutesDropdown
                 ]);
             }
         ?>

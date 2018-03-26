@@ -784,10 +784,6 @@ body.carts.detail .cart:not(#cart) a.btn {
 #CartsDetailForm .input.checkbox {
     margin-left: 10px;
 }
-#CartsDetailForm input#timebased-currency-order-time-sum-tmp {
-    width: 55px;
-    text-align: center;
-}
 #CartsDetailForm label[for="timebased-currency-order-time-sum-tmp"] {
 	margin-right: 10px;
 }

@@ -64,6 +64,10 @@ class CartsController extends FrontendController
             $this->Order = TableRegistry::get('Orders');
             $this->set('order', $this->Order->newEntity());
         }
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+            $timebasedCurrencyHoursAndMinutesDropdown = Configure::read('app.timeHelper')->getTimebasedCurrencyHoursAndMinutesDropdown($this->AppAuth->Cart->getTimebasedCurrencyPartTimeSum());
+            $this->set('timebasedCurrencyHoursAndMinutesDropdown', $timebasedCurrencyHoursAndMinutesDropdown);
+        }
     }
 
     /**

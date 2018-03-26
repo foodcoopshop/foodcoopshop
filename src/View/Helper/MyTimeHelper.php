@@ -23,6 +23,38 @@ use Cake\View\Helper\TimeHelper;
 class MyTimeHelper extends TimeHelper
 {
 
+    public function formatDecimalToHoursAndMinutes($decimal)
+    {
+        return sprintf('%01dh %02dmin', (int) $decimal, $this->getDecimalToMinutes($decimal));
+    }
+    
+    public function getDecimalToMinutes($decimal)
+    {
+        return fmod($decimal, 1) * 60;
+    }
+    
+    public function getTimebasedCurrencyHoursAndMinutesDropdown($maxHoursAsDecimal)
+    {
+        $dropdown = [];
+        $usedValues = [];
+        for($i = 0; $i <= $maxHoursAsDecimal * 100; $i++) {
+            $timeAsDecimal = $i / 100;
+            $stringValue = (string) $timeAsDecimal;
+            $minutes = $this->getDecimalToMinutes($timeAsDecimal);
+            $value = $this->formatDecimalToHoursAndMinutes($timeAsDecimal);
+            if (abs($minutes) % 5 == 0 && !isset($usedValues[$value])) {
+                $dropdown[$stringValue] = $value;
+                $usedValues[$value] = true;
+            }
+        }
+        $maxHoursValue = $this->formatDecimalToHoursAndMinutes($maxHoursAsDecimal);
+        if (!isset($usedValues[$maxHoursValue])) {
+            $dropdown[(string) $maxHoursAsDecimal] = $maxHoursValue;
+        }
+        $dropdown = array_reverse($dropdown);
+        return $dropdown;
+    }
+    
     public function getLastDayOfGivenMonth($monthAndYear)
     {
         return date('t', strtotime($monthAndYear));
