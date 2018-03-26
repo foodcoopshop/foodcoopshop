@@ -43,6 +43,8 @@ foodcoopshop.Cart = {
         this.updateCartSum(sum);
         this.updateCartDepositSum(depositSum);
         this.updateCartTaxSum(taxSum);
+        
+        
         this.updateCartTimebasedCurrencySum(timebasedCurrencyTimeSum);
 
         foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
@@ -368,11 +370,13 @@ foodcoopshop.Cart = {
 
     updateCartTimebasedCurrencySum: function (amount) {
         var cartTimebasedCurrencySum = $('.cart p.timebased-currency-sum-wrapper span.sum');
-        cartTimebasedCurrencySum.html(
-            foodcoopshop.Helper.formatFloatAsTimebasedCurrency(
-                foodcoopshop.Helper.getTimebasedCurrencyAsFloat(cartTimebasedCurrencySum.html()) + amount
-            )
-        );
+        if (cartTimebasedCurrencySum.length > 0) {
+	        cartTimebasedCurrencySum.html(
+	            foodcoopshop.Helper.formatFloatAsTimebasedCurrency(
+	                foodcoopshop.Helper.getTimebasedCurrencyAsFloat(cartTimebasedCurrencySum.html()) + amount
+	            )
+	        );
+        }
     },
 
     /**
