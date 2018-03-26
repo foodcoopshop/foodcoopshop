@@ -2,12 +2,9 @@
 
 namespace App\View\Helper;
 
-use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
- * MyTimeHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

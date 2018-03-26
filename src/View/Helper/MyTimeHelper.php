@@ -6,8 +6,6 @@ use Cake\Core\Configure;
 use Cake\View\Helper\TimeHelper;
 
 /**
- * MyTimeHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

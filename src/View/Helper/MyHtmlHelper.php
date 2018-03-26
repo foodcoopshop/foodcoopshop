@@ -9,8 +9,6 @@ use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
 
 /**
- * MyHtmlHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
