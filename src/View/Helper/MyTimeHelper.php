@@ -60,7 +60,7 @@ class MyTimeHelper extends TimeHelper
         if (!isset($usedValues[$maxHoursValue])) {
             $dropdown[(string) $maxHoursAsDecimal] = $maxHoursValue;
         }
-        $dropdown = array_reverse($dropdown);
+        $dropdown = array_reverse($dropdown, true);
         return $dropdown;
     }
     
