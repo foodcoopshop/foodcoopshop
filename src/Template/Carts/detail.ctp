@@ -51,7 +51,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 echo $this->Form->control('timebased_currency_order.time_sum_tmp', [
                     'label' => 'Wie viel will ich davon in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' bezahlen?',
                     'type' => 'select',
-                    'options' => $timebasedCurrencyHoursAndMinutesDropdown
+                    'options' => $this->TimebasedCurrency->getTimebasedCurrencyHoursAndMinutesDropdown($appAuth->Cart->getTimebasedCurrencyPartTimeSum(), Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'))
                 ]);
             }
         ?>

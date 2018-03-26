@@ -39,39 +39,6 @@ class MyTimeHelper extends TimeHelper
         return fmod($decimal, 1) * 60;
     }
     
-    public function getTimebasedCurrencyHoursAndMinutesDropdown($maxHoursAsDecimal)
-    {
-        $stepsInMinutes = 5;
-        $dropdown = [];
-        $usedValues = [];
-        for($i = 0; $i <= $maxHoursAsDecimal * 100; $i++) {
-            $timeAsDecimal = $i / 100;
-            $stringValue = (string) $timeAsDecimal;
-            $minutes = $this->getDecimalToMinutes($timeAsDecimal);
-            $value = $this->formatDecimalToHoursAndMinutes($timeAsDecimal);
-            $valueWithEuro = $value . ' (' . $this->getTimebasedCurrencyTimeAsEuroForDropdown($timeAsDecimal) . ')';
-            if (abs($minutes) % $stepsInMinutes == 0 && !isset($usedValues[$value])) {
-                $dropdown[$stringValue] = $valueWithEuro;
-                $usedValues[$value] = true;
-            }
-        }
-        $maxHoursValue = $this->formatDecimalToHoursAndMinutes($maxHoursAsDecimal);
-        $maxHoursValue .= ' (' . $this->getTimebasedCurrencyTimeAsEuroForDropdown($maxHoursAsDecimal) . ')';
-        if (!isset($usedValues[$maxHoursValue])) {
-            $dropdown[(string) $maxHoursAsDecimal] = $maxHoursValue;
-        }
-        $dropdown = array_reverse($dropdown, true);
-        return $dropdown;
-    }
-    
-    public function getTimebasedCurrencyTimeAsEuroForDropdown($decimal)
-    {
-        return str_replace('&nbsp;', ' ', Configure::read('app.htmlHelper')->formatAsEuro(
-            $decimal *
-            Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'))
-        ));
-    }
-    
     public function getLastDayOfGivenMonth($monthAndYear)
     {
         return date('t', strtotime($monthAndYear));

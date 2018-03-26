@@ -13,6 +13,7 @@
  */
 namespace App\View;
 
+use Cake\Core\Configure;
 use Cake\View\View;
 
 /**
@@ -51,5 +52,10 @@ class AppView extends View
         $this->loadHelper('Slug');
         $this->loadHelper('Text');
         $this->loadHelper('AssetCompress.AssetCompress');
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->loadHelper('TimebasedCurrency');
+        }
+        
     }
 }
