@@ -47,17 +47,9 @@ if (!$appAuth->termsOfUseAccepted()) {
                 'url' => $this->Slug->getCartFinish()
             ]);
 
-            echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-sum-wrapper']);
-            echo $this->element('timebasedCurrency/addProductInfo', [
-                'wrapperTag' => 'p',
-                'class' => 'timebased-currency-sum-wrapper',
-                'money' => $appAuth->Cart->getTimebasedCurrencyPartMoneyInclSum(),
-                'time' => $appAuth->Cart->getTimebasedCurrencyPartTimeSum(),
-                'labelPrefix' => 'Summe'
-            ]);
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
                 echo $this->Form->control('timebased_currency_order.time_sum_tmp', [
-                    'label' => 'Wie viele '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' will ich davon zahlen?',
+                    'label' => 'Wie viel will ich davon in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' bezahlen?',
                     'type' => 'select',
                     'options' => $timebasedCurrencyHoursAndMinutesDropdown
                 ]);
@@ -65,7 +57,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         ?>
         
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
-            <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
+            <p style="margin-top: 20px;"><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
         <?php } ?>
 
         <p style="margin-top: 20px;">Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
