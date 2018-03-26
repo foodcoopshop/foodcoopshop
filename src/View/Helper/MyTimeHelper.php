@@ -25,7 +25,13 @@ class MyTimeHelper extends TimeHelper
 
     public function formatDecimalToHoursAndMinutes($decimal)
     {
-        return sprintf('%01dh %02dmin', (int) $decimal, $this->getDecimalToMinutes($decimal));
+        $formattedMinutes = sprintf('%02dmin', $this->getDecimalToMinutes($decimal));
+        $formattedHours = '';
+        $hours = (int) $decimal;
+        if ($hours > 0) {
+            $formattedHours = sprintf('%01dh', $hours) . ' ';
+        }
+        return $formattedHours . $formattedMinutes;
     }
     
     public function getDecimalToMinutes($decimal)
@@ -42,6 +48,9 @@ class MyTimeHelper extends TimeHelper
             $stringValue = (string) $timeAsDecimal;
             $minutes = $this->getDecimalToMinutes($timeAsDecimal);
             $value = $this->formatDecimalToHoursAndMinutes($timeAsDecimal);
+            if ($i < 100) {
+                $value = '' . $value;
+            }
             if (abs($minutes) % 5 == 0 && !isset($usedValues[$value])) {
                 $dropdown[$stringValue] = $value;
                 $usedValues[$value] = true;

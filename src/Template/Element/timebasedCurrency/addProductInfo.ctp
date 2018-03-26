@@ -19,7 +19,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('t
         $titleForOverlay =
             '<span style="padding:2px;float:left;">'.
                 'Anteil in Euro: <span class="money">' . $this->Html->formatAsEuro($money).'</span><br />' .
-                'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':<span class="time">' . $this->Html->formatAsTimebasedCurrency($time) . '</span>'.
+                'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':<span class="time">' . $this->Time->formatDecimalToHoursAndMinutes($time) . '</span>'.
             '</span>';
         ;
         echo '<span title="'.h($titleForOverlay).'">' . $labelPrefix . ' in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</span>';
