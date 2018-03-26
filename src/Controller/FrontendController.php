@@ -92,9 +92,9 @@ class FrontendController extends AppController
                 
                 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
                     if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
-                        $preparedAttributes['timebased_currency_part_money_incl'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
-                        $preparedAttributes['timebased_currency_part_money_excl'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($product['price'], $product['timebased_currency_max_percentage']);
-                        $preparedAttributes['timebased_currency_part_time'] = $this->Manufacturer->getTimebasedCurrencyPartTime($product['gross_price'], $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_part_money_incl'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($grossPrice, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_part_money_excl'] = $this->Manufacturer->getTimebasedCurrencyPartMoney($attribute->product_attribute_shop->price, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_part_time'] = $this->Manufacturer->getTimebasedCurrencyPartTime($grossPrice, $product['timebased_currency_max_percentage']);
                     }
                 }
                 
