@@ -37,6 +37,10 @@ if (!$appAuth->termsOfUseAccepted()) {
         <p class="deposit-sum-wrapper"><b>+ Pfand gesamt</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php } ?>
     
+    <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
+    	<p class="timebased-currency-sum-wrapper"><b>Davon in <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->Time->formatDecimalToHoursAndMinutes($appAuth->Cart->getTimebasedCurrencyPartTimeSum()); ?></span></p>
+    <?php } ?>
+
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
 

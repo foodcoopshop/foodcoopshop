@@ -74,16 +74,9 @@ if ($appAuth->Cart->getProducts() !== null) {
             <p class="deposit-sum-wrapper"><b>Pfand</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             <p class="tax-sum-wrapper"><b>Umsatzsteuer</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             
-            <?php
-                echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-sum-wrapper']);
-                echo $this->element('timebasedCurrency/addProductInfo', [
-                    'wrapperTag' => 'p',
-                    'class' => 'timebased-currency-sum-wrapper',
-                    'money' => $appAuth->Cart->getTimebasedCurrencyPartMoneyInclSum(),
-                    'time' => $appAuth->Cart->getTimebasedCurrencyPartTimeSum(),
-                    'labelPrefix' => 'Summe'
-                ]);
-            ?>
+            <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
+            	<p class="timebased-currency-sum-wrapper"><b>Davon in <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->Time->formatDecimalToHoursAndMinutes($appAuth->Cart->getTimebasedCurrencyPartTimeSum()); ?></span></p>
+            <?php } ?>
             
             <p class="tmp-wrapper"></p>
             

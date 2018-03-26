@@ -281,7 +281,23 @@ foodcoopshop.Helper = {
     },
     
     formatFloatAsTimebasedCurrency : function(float) {
-        return this.formatFloatAsString(float) + '&nbsp;h';
+	  var hrs = parseInt(Number(float));
+	  var min = Math.round((Number(float) - hrs) * 60);
+	  var formattedHours = '';
+	  if (hrs > 0) {
+		  formattedHours = hrs + 'h ';
+	  }
+	  return formattedHours + min + 'min';
+    },
+    
+    getTimebasedCurrencyAsFloat(timebasedCurrency) {
+        var arr = timebasedCurrency.split(' ');
+        if (arr.length == 1) {
+        	arr.splice(0, 0, '0h');
+        }
+        var result = parseInt(arr[0]) + parseInt(arr[1]) / 60;
+    	result = parseFloat(result);
+        return result;
     },
 
     getEuroAsFloat: function (string) {
