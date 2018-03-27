@@ -24,17 +24,17 @@ class TimebasedCurrency extends AbstractMigration
 
             CREATE TABLE `fcs_timebased_currency_orders` (
               `id_order` int(11) NOT NULL DEFAULT '0',
-              `money_excl_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
-              `money_incl_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
-              `time_sum` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `money_excl_sum` decimal(10,6) UNSIGNED DEFAULT NULL,
+              `money_incl_sum` decimal(10,6) UNSIGNED DEFAULT NULL,
+              `time_sum` decimal(10,6) UNSIGNED DEFAULT NULL,
               UNIQUE KEY `id_order` (`id_order`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
             CREATE TABLE `fcs_timebased_currency_order_detail` (
               `id_order_detail` int(11) NOT NULL DEFAULT '0',
-              `money_excl` decimal(6,2) UNSIGNED DEFAULT NULL,
-              `money_incl` decimal(6,2) UNSIGNED DEFAULT NULL,
-              `time` decimal(6,2) UNSIGNED DEFAULT NULL,
+              `money_excl` decimal(10,6) UNSIGNED DEFAULT NULL,
+              `money_incl` decimal(10,6) UNSIGNED DEFAULT NULL,
+              `time` decimal(10,6) UNSIGNED DEFAULT NULL,
               `max_percentage` int(11) UNSIGNED DEFAULT NULL,
               `exchange_rate` decimal(6,2) UNSIGNED DEFAULT NULL,
               UNIQUE KEY `id_order_detail` (`id_order_detail`)
@@ -49,7 +49,7 @@ class TimebasedCurrency extends AbstractMigration
               `id` int(10) NOT NULL AUTO_INCREMENT,
               `id_customer` int(10) UNSIGNED DEFAULT NULL,
               `id_manufacturer` int(11) UNSIGNED DEFAULT NULL,
-              `time` decimal(10,2) NOT NULL DEFAULT '0.00',
+              `time` decimal(10,6) NOT NULL DEFAULT '0.00',
               `text` varchar(255) NOT NULL DEFAULT '',
               `created` datetime DEFAULT NULL,
               `modified` datetime NOT NULL,

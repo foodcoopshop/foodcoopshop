@@ -511,9 +511,9 @@ DROP TABLE IF EXISTS `fcs_timebased_currency_order_detail`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_timebased_currency_order_detail` (
   `id_order_detail` int(11) NOT NULL DEFAULT '0',
-  `money_excl` decimal(6,2) unsigned DEFAULT NULL,
-  `money_incl` decimal(6,2) unsigned DEFAULT NULL,
-  `time` decimal(6,2) unsigned DEFAULT NULL,
+  `money_excl` decimal(10,6) unsigned DEFAULT NULL,
+  `money_incl` decimal(10,6) unsigned DEFAULT NULL,
+  `time` decimal(10,6) unsigned DEFAULT NULL,
   `max_percentage` int(11) unsigned DEFAULT NULL,
   `exchange_rate` decimal(6,2) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
@@ -524,9 +524,9 @@ DROP TABLE IF EXISTS `fcs_timebased_currency_orders`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_timebased_currency_orders` (
   `id_order` int(11) NOT NULL DEFAULT '0',
-  `money_excl_sum` decimal(6,2) unsigned DEFAULT NULL,
-  `money_incl_sum` decimal(6,2) unsigned DEFAULT NULL,
-  `time_sum` decimal(6,2) unsigned DEFAULT NULL,
+  `money_excl_sum` decimal(10,6) unsigned DEFAULT NULL,
+  `money_incl_sum` decimal(10,6) unsigned DEFAULT NULL,
+  `time_sum` decimal(10,6) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order` (`id_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -537,7 +537,7 @@ CREATE TABLE `fcs_timebased_currency_payments` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_customer` int(10) unsigned DEFAULT NULL,
   `id_manufacturer` int(11) unsigned DEFAULT NULL,
-  `time` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `time` decimal(10,6) NOT NULL DEFAULT '0.000000',
   `text` varchar(255) NOT NULL DEFAULT '',
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,

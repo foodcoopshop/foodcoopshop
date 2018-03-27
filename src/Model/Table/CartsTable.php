@@ -209,9 +209,9 @@ class CartsTable extends AppTable
                 $preparedCart['CartTimebasedCurrencyTimeSum'] += $p['timebasedCurrencyTime'];
             }
         }
-        $preparedCart['CartTimebasedCurrencyMoneyExclSum'] = round($preparedCart['CartTimebasedCurrencyMoneyExclSum'], 2);
-        $preparedCart['CartTimebasedCurrencyMoneyInclSum'] = round($preparedCart['CartTimebasedCurrencyMoneyInclSum'], 2);
-        $preparedCart['CartTimebasedCurrencyTimeSum'] = round($preparedCart['CartTimebasedCurrencyTimeSum'], 2);
+        $preparedCart['CartTimebasedCurrencyMoneyExclSum'] = round($preparedCart['CartTimebasedCurrencyMoneyExclSum'], 6);
+        $preparedCart['CartTimebasedCurrencyMoneyInclSum'] = round($preparedCart['CartTimebasedCurrencyMoneyInclSum'], 6);
+        $preparedCart['CartTimebasedCurrencyTimeSum'] = round($preparedCart['CartTimebasedCurrencyTimeSum'], 6);
         return $preparedCart;
     }
 }
