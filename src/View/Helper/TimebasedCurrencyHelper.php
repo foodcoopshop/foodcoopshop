@@ -29,7 +29,7 @@ class TimebasedCurrencyHelper extends Helper
         $usedValues = [];
         for($i = 0; $i <= $maxHoursAsDecimal * 100; $i++) {
             $timeAsDecimal = $i / 100;
-            $stringValue = (string) $timeAsDecimal;
+            $stringValue = $this->MyNumber->replaceCommaWithDot((string) $timeAsDecimal);
             $minutes = $this->MyTime->getDecimalToMinutes($timeAsDecimal);
             $value = $this->MyTime->formatDecimalToHoursAndMinutes($timeAsDecimal);
             $valueWithEuro = $value . ' (' . $this->getTimebasedCurrencyTimeAsEuroForDropdown($timeAsDecimal, $exchangeRate) . ')';
@@ -41,7 +41,7 @@ class TimebasedCurrencyHelper extends Helper
         $maxHoursValue = $this->MyTime->formatDecimalToHoursAndMinutes($maxHoursAsDecimal);
         $maxHoursValue .= ' (' . $this->getTimebasedCurrencyTimeAsEuroForDropdown($maxHoursAsDecimal, $exchangeRate) . ')';
         if (!isset($usedValues[$maxHoursValue])) {
-            $dropdown[(string) $maxHoursAsDecimal] = $maxHoursValue;
+            $dropdown[$this->MyNumber->replaceCommaWithDot((string) $maxHoursAsDecimal)] = $maxHoursValue;
         }
         $dropdown = array_reverse($dropdown, true);
         return $dropdown;
