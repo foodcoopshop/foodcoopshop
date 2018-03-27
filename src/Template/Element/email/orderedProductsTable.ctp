@@ -73,8 +73,8 @@ use Cake\Core\Configure;
                 <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
                     <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                         <?php
-                            if (isset($product['timebasedCurrencyPartTime'])) {
-                                echo $this->MyTime->formatDecimalToHoursAndMinutes($product['timebasedCurrencyPartTime']);
+                            if (isset($product['timebasedCurrencyTime'])) {
+                                echo $this->MyTime->formatDecimalToHoursAndMinutes($product['timebasedCurrencyTime']);
                             }
                         ?>
                     </td>
@@ -99,7 +99,7 @@ use Cake\Core\Configure;
             <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
                 <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                     <?php
-                        echo $this->MyTime->formatDecimalToHoursAndMinutes($appAuth->Cart->getTimebasedCurrencyPartTimeSum());
+                        echo $this->MyTime->formatDecimalToHoursAndMinutes($appAuth->Cart->getTimebasedCurrencyTimeSum());
                     ?>
                 </td>
             <?php } ?>

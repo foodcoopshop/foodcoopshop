@@ -78,14 +78,14 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
     
-    public function getTimebasedCurrencyPartMoney($price, $percentage)
+    public function getTimebasedCurrencyMoney($price, $percentage)
     {
         return $price * $percentage / 100;
     }
 
-    public function getTimebasedCurrencyPartTime($price, $percentage)
+    public function getTimebasedCurrencyTime($price, $percentage)
     {
-        return $this->getTimebasedCurrencyPartMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100;
+        return $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100;
     }
     
     /**

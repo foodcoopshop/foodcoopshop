@@ -15,7 +15,7 @@
 use Cake\Core\Configure;
 
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
-    echo '<span class="timebasedCurrencyPartTime">' . $this->Time->formatDecimalToHoursAndMinutes($time) . '</span>';
+    echo '<span class="timebasedCurrencyTime">' . $this->Time->formatDecimalToHoursAndMinutes($time) . '</span>';
     echo '<'.$wrapperTag.' class="'.$class.'">';
         $titleForOverlay =
             '<span style="padding:2px;float:left;">'.
