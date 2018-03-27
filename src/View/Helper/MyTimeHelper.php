@@ -20,16 +20,21 @@ use Cake\View\Helper\TimeHelper;
  */
 class MyTimeHelper extends TimeHelper
 {
-
+    
     public function formatDecimalToHoursAndMinutes($decimal)
     {
+        $isNegative = $decimal < 0;
         $formattedMinutes = sprintf('%02dmin', $this->getDecimalToMinutes($decimal));
         $formattedHours = '';
         $hours = (int) $decimal;
-        if ($hours > 0) {
+        if (abs($hours) >= 1) {
             $formattedHours = sprintf('%01dh', $hours) . ' ';
         }
-        return $formattedHours . $formattedMinutes;
+        $result = $formattedHours . $formattedMinutes;
+        if ($isNegative) {
+            $result = str_replace('h -', 'h ', $result);
+        }
+        return $result;
     }
     
     public function getDecimalToMinutes($decimal)

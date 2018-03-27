@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
 /**
@@ -34,6 +35,29 @@ class TimebasedCurrencyOrdersTable extends AppTable
         $validator->notEmpty('time_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
         $validator->numeric('time_sum_tmp', 'Bitte trage eine Zahl ein.');
         return $validator;
+    }
+    
+    /**
+     * @param int $customerId
+     * @return float
+     */
+    public function getSum($customerId)
+    {
+        $conditions = [
+            'Orders.id_customer' => $customerId,
+        ];
+        $conditions[] = $this->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions,
+            'contain' => [
+                'Orders'
+            ]
+        ]);
+        $query->select(
+            ['SumAmount' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
+        );
+        return $query->toArray()[0]['SumAmount'];
     }
 
 }

@@ -42,6 +42,24 @@ class TimebasedCurrency extends AbstractMigration
 
             ALTER TABLE `fcs_order_detail` DROP `unit_price_tax_incl`, DROP `unit_price_tax_excl`;
 
+            ALTER TABLE `fcs_product` DROP INDEX `created`;
+            ALTER TABLE `fcs_product` DROP INDEX `id_category_default`;
+
+            CREATE TABLE `fcs_timebased_currency_payments` (
+              `id` int(10) NOT NULL AUTO_INCREMENT,
+              `id_customer` int(10) UNSIGNED NOT NULL DEFAULT '0',
+              `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+              `text` varchar(255) NOT NULL DEFAULT '',
+              `created` datetime DEFAULT NULL,
+              `modified` datetime NOT NULL,
+              `status` tinyint(4) NOT NULL DEFAULT '1',
+              `approval` tinyint(4) NOT NULL DEFAULT '0',
+              `approval_comment` text NOT NULL,
+              `changed_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+              `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
         ");
     }
 }

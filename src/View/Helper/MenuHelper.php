@@ -171,4 +171,13 @@ class MenuHelper extends Helper
         }
         return [];
     }
+    
+    public function getTimebasedCurrencyPaymentMenuElement($appAuth)
+    {
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalance(), 'name' => Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto', 'options' => ['fa-icon' => 'fa-fw fa-handshake-o']];
+        }
+        return [];
+    }
+
 }

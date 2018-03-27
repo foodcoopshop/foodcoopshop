@@ -23,6 +23,8 @@ if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
 $paymentMemberFeeMenuElement = $this->Menu->getPaymentMemberFeeMenuElement();
+$timebasedCurrencyPaymentMenuElement = $this->Menu->getTimebasedCurrencyPaymentMenuElement($appAuth);
+
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
     'name' => 'Aktivitäten',
@@ -107,6 +109,9 @@ if ($appAuth->isCustomer()) {
     if (! empty($paymentMemberFeeMenuElement)) {
         $menu[]= $paymentMemberFeeMenuElement;
     }
+    if (! empty($timebasedCurrencyPaymentMenuElement)) {
+        $menu[]= $timebasedCurrencyPaymentMenuElement;
+    }
     $menu[] = $changePasswordMenuElement;
     $menu[] = $actionLogsMenuElement;
 }
@@ -164,6 +169,8 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     }
     if (! empty($paymentMemberFeeMenuElement)) {
         $customerProfileMenuElement['children'][] = $paymentMemberFeeMenuElement;
+    }    if (! empty($timebasedCurrencyPaymentMenuElement)) {
+        $customerProfileMenuElement['children'][] = $timebasedCurrencyPaymentMenuElement;
     }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
     $menu[] = $customerProfileMenuElement;

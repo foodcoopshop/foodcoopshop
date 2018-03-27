@@ -378,9 +378,7 @@ CREATE TABLE `fcs_product` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),
-  KEY `id_category_default` (`id_category_default`),
-  KEY `product_manufacturer` (`id_manufacturer`,`id_product`),
-  KEY `created` (`created`)
+  KEY `product_manufacturer` (`id_manufacturer`,`id_product`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product_attribute`;
@@ -530,6 +528,24 @@ CREATE TABLE `fcs_timebased_currency_orders` (
   `money_incl_sum` decimal(6,2) unsigned DEFAULT NULL,
   `time_sum` decimal(6,2) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order` (`id_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_timebased_currency_payments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_timebased_currency_payments` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `text` varchar(255) NOT NULL DEFAULT '',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `approval` tinyint(4) NOT NULL DEFAULT '0',
+  `approval_comment` text NOT NULL,
+  `changed_by` int(10) unsigned NOT NULL DEFAULT '0',
+  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

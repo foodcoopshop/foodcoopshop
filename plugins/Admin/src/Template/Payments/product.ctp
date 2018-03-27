@@ -48,12 +48,12 @@ if (count($payments) == 0) {
 
     echo '<table class="list">';
     echo '<tr class="sort">';
-    echo '<th>Datum</th>';
-    echo '<th>Text</th>';
-    echo '<th style="text-align:right;">' . $column_title . '</th>';
-    echo '<th style="text-align:right;">Bestellwert</th>';
-    echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</th>';
-    echo '<th style="width:25px;"></th>';
+        echo '<th>Datum</th>';
+        echo '<th>Text</th>';
+        echo '<th style="text-align:right;">' . $column_title . '</th>';
+        echo '<th style="text-align:right;">Bestellwert</th>';
+        echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</th>';
+        echo '<th style="width:25px;"></th>';
     echo '</tr>';
 
     $i = 0;

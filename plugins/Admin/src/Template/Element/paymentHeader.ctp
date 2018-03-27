@@ -31,7 +31,6 @@ use Cake\Core\Configure;
         </ul>
     </div>    
     
-    <?php /* filter container rendered to show print and help icons */ ?>
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right"></div>

@@ -791,6 +791,7 @@ body.payments.product table.list,
 body.payments.overview table.list,
 body.payments.member_fee table.list,
 body.payments.my_member_fee table.list,
+body.timebased_currency_payments table.list,
 body.payments .bottom-button-container {
     width: 650px;
 }

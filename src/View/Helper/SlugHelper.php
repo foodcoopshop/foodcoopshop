@@ -151,11 +151,21 @@ class SlugHelper extends Helper
         return '/registrierung';
     }
 
+    public function getMyTimebasedCurrencyBalance()
+    {
+        return '/admin/timebased-currency-payments/my-payments';
+    }
+    
+    public function getTimebasedCurrencyBalance($customerId)
+    {
+        return '/admin/timebased-currency-payments/payments/'.$customerId;
+    }
+    
     public function getMyMemberFeeBalance()
     {
         return '/admin/payments/myMemberFee';
     }
-
+    
     public function getMyCreditBalance()
     {
         return '/admin/payments/overview';
