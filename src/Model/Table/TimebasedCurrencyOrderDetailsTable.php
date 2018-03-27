@@ -27,5 +27,23 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         $this->setPrimaryKey('id_order_detail');
     }
-
+    
+    public function getManufacturersForDropdown($customerId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'Orders.id_customer' => $customerId
+            ],
+            'contain' => [
+                'OrderDetails.Orders',
+                'OrderDetails.Products.Manufacturers'
+            ]
+        ]);
+        
+        $manufacturers = [];
+        foreach($query as $orderDetail) {
+            $manufacturers[$orderDetail->order_detail->product->manufacturer->id_manufacturer] = $orderDetail->order_detail->product->manufacturer->name;
+        }
+        return $manufacturers;
+    }
 }

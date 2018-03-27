@@ -535,16 +535,17 @@ DROP TABLE IF EXISTS `fcs_timebased_currency_payments`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_timebased_currency_payments` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
-  `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `id_customer` int(10) unsigned DEFAULT NULL,
+  `id_manufacturer` int(11) unsigned DEFAULT NULL,
+  `time` decimal(10,2) NOT NULL DEFAULT '0.00',
   `text` varchar(255) NOT NULL DEFAULT '',
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `approval` tinyint(4) NOT NULL DEFAULT '0',
   `approval_comment` text NOT NULL,
-  `changed_by` int(10) unsigned NOT NULL DEFAULT '0',
-  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned DEFAULT NULL,
+  `created_by` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -26,6 +26,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         switch ($this->request->action) {
             case 'myPayments':
+            case 'add':
                 return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled');
                 break;
             default:
@@ -38,7 +39,45 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         $this->TimebasedCurrencyPayment = TableRegistry::get('TimebasedCurrencyPayments');
         $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
         parent::beforeFilter($event);
+    }
+    
+    public function add()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $time = $this->request->getData('time');
+        $customerId = $this->request->getData('customerId');
+        $manufacturerId = $this->request->getData('manufacturerId');
+        
+        $newPaymentEntity = $this->TimebasedCurrencyPayment->newEntity(
+            [
+                'status' => APP_ON,
+                'id_customer' => $customerId,
+                'id_manufacturer' => $manufacturerId,
+                'time' => $time,
+                'created_by' => $this->AppAuth->getUserId()
+            ]
+        );
+        
+        if (!empty($newPaymentEntity->getErrors())) {
+            $status = 0;
+            $message = 'Fehler!';
+        } else {
+            $newPayment = $this->TimebasedCurrencyPayment->save($newPaymentEntity);
+            $message = 'hurra';
+        }
+        
+        $this->set('data', [
+            'status' => 1,
+            'msg' => $message,
+            'time' => $time,
+            'paymentId' => $newPayment->id
+        ]);
+        
+        $this->set('_serialize', 'data');
+        
     }
     
     public function myPayments()
@@ -81,6 +120,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         $creditBalance = $sumPayments - $sumOrders;
         $this->set('creditBalance', $creditBalance);
+        
+        $manufacturersForDropdown = $this->TimebasedCurrencyOrderDetail->getManufacturersForDropdown($this->AppAuth->getUserId());
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         
     }
 

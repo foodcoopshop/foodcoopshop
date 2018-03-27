@@ -527,7 +527,8 @@ form div.error-message {
     top: 70px;
     width: 300px;
 }
-#add-payment-button-wrapper {
+#add-payment-button-wrapper,
+#add-timebased-currency-payment-button-wrapper {
     margin-bottom: 10px;
     clear: both;
 }
@@ -577,10 +578,28 @@ body.orders.index td span.customer-is-new {
     margin-left: 5px;
 }
 .featherlight-content .add-payment-form {
-    min-width:370px ! important;
+    min-width: 370px ! important;
+}
+.featherlight-content #add-timebased-currency-payment-form {
+    max-width: 430px ! important;
+    min-height: 250px;
+}
+.featherlight-inner#add-timebased-currency-payment-form div.form-buttons {
+	margin-top: 55px;
+}
+.featherlight-content #timebasedcurrencypayments-time {
+	width: 192px;
+	margin-bottom: 10px;
+}
+
+.featherlight-content #add-timebased-currency-payment-form select {
+    width: 300px;
 }
 .featherlight-content .add-payment-form label {
     width: 100%;
+}
+.featherlight-content #add-timebased-currency-payment-form label {
+	width: 110px;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
     width: 185px;
@@ -602,6 +621,7 @@ body.orders.index td span.customer-is-new {
 }
 body.deposits #help-container,
 body.payments.overview #help-container,
+body.timebased_currency_payments #help-container,
 body.payments.my_member_fee #help-container {
     display: block;
 }

@@ -16,9 +16,17 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
-    Configure::read('app.jsNamespace').".Admin.init();"
+    Configure::read('app.jsNamespace').".Admin.init();".
+    Configure::read('app.jsNamespace').".Admin.initForm();".
+    Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');"
 ]);
 ?>
+
+<div id="help-container">
+    <ul>
+        Hier kannst du die geleisteten <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?> eintragen.
+    </ul>
+</div>    
 
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
@@ -26,6 +34,30 @@ $this->element('addScript', ['script' =>
 </div>
 
 <?php
+    echo $this->Form->create(null, [
+        'class' => 'fcs-form'
+    ]);
+        echo '<div id="add-timebased-currency-payment-button-wrapper">';
+        echo $this->Html->link('<i class="fa fa-handshake-o fa-lg"></i> Geleistete ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' eintragen', 'javascript:void(0);', [
+                'class' => 'btn btn-success',
+                'escape' => false
+            ]);
+            echo '<div id="add-timebased-currency-payment-form" class="add-payment-form">';
+                echo '<h3>Geleistete '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' eintragen</h3>';
+                echo '<p>Bitte trage hier ein, bei welchem Hersteller du wie viele ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' geleistet hast.</p>';
+                echo $this->Form->control('TimebasedCurrencyPayments.time', [
+                    'label' => Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'),
+                    'type' => 'string'
+                ]);
+                echo $this->Form->control('TimebasedCurrencyPayments.manufacturerId', [
+                    'type' => 'select',
+                    'options' => $manufacturersForDropdown,
+                    'label' => 'Hersteller'
+                ]);
+                echo $this->Form->hidden('TimebasedCurrencyPayments.customerId', ['value' => $appAuth->getUserId()]);
+            echo '</div>';
+        echo '</div>';
+    echo $this->Form->end();
 
 $tableColumnHead  = '<th>Datum</th>';
 $tableColumnHead .= '<th>Text</th>';

@@ -47,16 +47,17 @@ class TimebasedCurrency extends AbstractMigration
 
             CREATE TABLE `fcs_timebased_currency_payments` (
               `id` int(10) NOT NULL AUTO_INCREMENT,
-              `id_customer` int(10) UNSIGNED NOT NULL DEFAULT '0',
-              `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
+              `id_customer` int(10) UNSIGNED DEFAULT NULL,
+              `id_manufacturer` int(11) UNSIGNED DEFAULT NULL,
+              `time` decimal(10,2) NOT NULL DEFAULT '0.00',
               `text` varchar(255) NOT NULL DEFAULT '',
               `created` datetime DEFAULT NULL,
               `modified` datetime NOT NULL,
               `status` tinyint(4) NOT NULL DEFAULT '1',
               `approval` tinyint(4) NOT NULL DEFAULT '0',
               `approval_comment` text NOT NULL,
-              `changed_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
-              `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+              `modified_by` int(10) UNSIGNED DEFAULT NULL,
+              `created_by` int(10) UNSIGNED DEFAULT NULL,
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
