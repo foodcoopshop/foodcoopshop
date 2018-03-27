@@ -496,12 +496,12 @@ INSERT INTO `fcs_configuration` VALUES
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,3,NULL,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','bcee5b8b98c17603db37bfbd131a5074',NULL,1,'1000-01-01',1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0),
-(88,4,NULL,'Demo','Admin','fcs-demo-admin@mailinator.com','bcee5b8b98c17603db37bfbd131a5074',NULL,1,'1000-01-01',1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0),
-(89,4,NULL,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','bcee5b8b98c17603db37bfbd131a5074',NULL,0,'1000-01-01',1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0),
-(90,4,NULL,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','bcee5b8b98c17603db37bfbd131a5074',NULL,0,'1000-01-01',1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0),
-(91,4,NULL,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','bcee5b8b98c17603db37bfbd131a5074',NULL,0,'1000-01-01',1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0),
-(92,5,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','bcee5b8b98c17603db37bfbd131a5074',NULL,1,'1000-01-01',1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0);
+(87,3,NULL,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0),
+(88,4,NULL,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0),
+(89,4,NULL,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0),
+(90,4,NULL,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0),
+(91,4,NULL,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0),
+(92,5,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,1,'1000-01-01',1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
@@ -645,7 +645,7 @@ INSERT INTO `fcs_product_lang` VALUES
 (47,'Lange <strong>Beschreibung</strong>','200ml<br />\nnoch ein text','','Joghurt',0),
 (49,'','<p>250g</p>','','Topfen',0),
 (60,'','1 Liter','','Milch',0),
-(102,'<p>test <br /><b>description</b></p>','<p>test description<br /> short</p>','test unity','test name',0),
+(102,'','<p>2 Paar</p>','','Frankfurter',0),
 (103,'','2 Paar','','Bratwürstel',0),
 (161,'','St&uuml;ck, wei&szlig; oder lila (nur au&szlig;en und schmeckt genauso wie der wei&szlig;e)','Stück','Kohlrabi',0),
 (163,'','0,25kg','','Mangold',0),
@@ -657,7 +657,7 @@ INSERT INTO `fcs_product_lang` VALUES
 (340,'','','','Beuschl',0),
 (343,'','','1 kg','Rote Rüben',0),
 (344,'','','100 g','Knoblauch',0),
-(346,'<p>test <br /><b>description</b></p>','<p>test description<br /> short</p>','test unity','test name',0),
+(346,'','','Stück','Artischocke',0),
 (347,'','','','Essigwurst',0),
 (350,'','','','Neuer Artikel von Demo Milch-Hersteller',0),
 (352,'','','100 g','Vogerlsalat',0),
