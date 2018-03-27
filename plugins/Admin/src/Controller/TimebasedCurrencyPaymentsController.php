@@ -46,7 +46,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     
     public function add()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
         
         $time = $this->request->getData('time');
         $customerId = $this->request->getData('customerId');

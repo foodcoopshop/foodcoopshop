@@ -50,11 +50,11 @@ foodcoopshop.TimebasedCurrency = {
             manufacturerId: manufacturerId,
         }, {
             onOk: function (data) {
-//                document.location.reload();
+                document.location.reload();
             },
             onError: function (data) {
-//                alert(data.msg);
-//                document.location.reload();
+                alert(data.msg);
+                document.location.reload();
             }
         });
 
