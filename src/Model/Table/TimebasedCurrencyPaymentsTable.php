@@ -23,12 +23,35 @@ class TimebasedCurrencyPaymentsTable extends AppTable
     public function initialize(array $config)
     {
         parent::initialize($config);
+        $this->belongsTo('Manufacturers', [
+            'foreignKey' => 'id_manufacturer'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
     public function validationDefault(Validator $validator)
     {
         return $validator;
+    }
+    
+    /**
+     * @param int $customerId
+     * @return float
+     */
+    public function getSum($customerId)
+    {
+        $conditions = [
+            'TimebasedCurrencyPayments.id_customer' => $customerId,
+            'TimebasedCurrencyPayments.status' => APP_ON
+        ];
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        $query->select(
+            ['SumTime' => $query->func()->sum('TimebasedCurrencyPayments.time')]
+        );
+        return $query->toArray()[0]['SumTime'];
     }
 
 }

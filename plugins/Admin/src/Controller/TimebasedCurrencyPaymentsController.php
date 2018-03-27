@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -99,20 +100,45 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'dateRaw' => $timebasedCurrencyOrder->order->date_add,
                 'date' => $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                 'year' => $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
-                'time' => $timebasedCurrencyOrder->time_sum * - 1,
+                'timeOpen' => $timebasedCurrencyOrder->time_sum * - 1,
+                'timeDone' => null,
                 'type' => 'order',
                 'approval' => APP_OFF,
                 'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $timebasedCurrencyOrder->order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder->order->current_state] . ')', '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $timebasedCurrencyOrder->order->id_order . '&customerId=' . $timebasedCurrencyOrder->order->id_customer, [
                     'title' => 'Bestellung anzeigen'
                 ]),
+                'manufacturerName' => '',
                 'payment_id' => null
             ];
         }
         
+        $timebasedCurrencyPayments = $this->TimebasedCurrencyPayment->find('all', [
+            'conditions' => [
+                'TimebasedCurrencyPayments.id_customer' => $this->AppAuth->getUserId()
+            ],
+            'contain' => [
+                'Manufacturers'
+            ]
+        ]);
+        foreach($timebasedCurrencyPayments as $timebasedCurrencyPayment) {
+            $payments[] = [
+                'dateRaw' => $timebasedCurrencyPayment->created,
+                'date' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                'year' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.de.Year')),
+                'timeOpen' => null,
+                'timeDone' => $timebasedCurrencyPayment->time,
+                'type' => 'payment',
+                'approval' => $timebasedCurrencyPayment->approval,
+                'text' => '',
+                'manufacturerName' => $timebasedCurrencyPayment->manufacturer->name,
+                'payment_id' => $timebasedCurrencyPayment->id_payment
+            ];
+        }
+        
+        $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         
-//         $sumPayments = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getUserId());
-        $sumPayments = 0;
+        $sumPayments = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getUserId());
         $this->set('sumPayments', $sumPayments);
         
         $sumOrders = $this->TimebasedCurrencyOrder->getSum($this->AppAuth->getUserId());

@@ -55,9 +55,9 @@ class TimebasedCurrencyOrdersTable extends AppTable
             ]
         ]);
         $query->select(
-            ['SumAmount' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
+            ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
         );
-        return $query->toArray()[0]['SumAmount'];
+        return $query->toArray()[0]['SumTime'];
     }
 
 }

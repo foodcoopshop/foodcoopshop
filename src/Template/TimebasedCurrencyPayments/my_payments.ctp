@@ -61,6 +61,7 @@ $this->element('addScript', ['script' =>
 
 $tableColumnHead  = '<th>Datum</th>';
 $tableColumnHead .= '<th>Text</th>';
+$tableColumnHead .= '<th>Hersteller</th>';
 $tableColumnHead .='<th style="text-align:right;">Geleistet</th>';
 $tableColumnHead .='<th style="text-align:right;">Offen</th>';
 $tableColumnHead .='<th style="width:25px;"></th>';
@@ -83,11 +84,19 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td>';
-                echo '';
+                echo $payment['manufacturerName'];
+            echo '</td>';
+            
+            echo '<td align="right">';
+                if ($payment['timeDone']) {
+                    echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeDone']);
+                }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
-                echo $this->Time->formatDecimalToHoursAndMinutes($payment['time']);
+                if ($payment['timeOpen']) {
+                    echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeOpen']);
+                }
             echo '</td>';
         
             echo '<td style="text-align:center;">';
@@ -109,7 +118,7 @@ echo '<table class="list">';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td colspan="2"></td>';
+        echo '<td colspan="3"></td>';
         echo '<td align="right"><b>' . $this->Time->formatDecimalToHoursAndMinutes($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->Time->formatDecimalToHoursAndMinutes($sumOrders) . '</b></td>';
         echo '<td></td>';
@@ -121,7 +130,7 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatDecimalToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatDecimalToHoursAndMinutes($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';
