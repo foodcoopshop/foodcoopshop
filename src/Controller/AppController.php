@@ -148,7 +148,7 @@ class AppController extends Controller
 
     public function setFormReferer()
     {
-        $this->set('referer', isset($this->request->data['referer']) ? $this->request->data['referer'] : $this->referer());
+        $this->set('referer', !empty($this->request->getData('referer')) ? $this->request->getData('referer') : $this->referer());
     }
 
     /**
