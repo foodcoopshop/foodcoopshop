@@ -35,23 +35,49 @@ class TimebasedCurrencyPaymentsTable extends AppTable
     }
     
     /**
+     * @param int $manufacturerId
+     * @return float
+     */
+    public function getSumManufacturer($manufacturerId, $customerId = null)
+    {
+        $query = $this->getSumQuery();
+        $query->where(
+            ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
+        );
+        return $query->toArray()[0]['SumTime'];
+    }
+    
+    /**
      * @param int $customerId
      * @return float
      */
-    public function getSum($customerId)
+    public function getSumCustomer($customerId, $manufacturerId = null)
+    {
+        $query = $this->getSumQuery();
+        $query->where(
+            ['TimebasedCurrencyPayments.id_customer' => $customerId]
+        );
+        if ($manufacturerId) {
+            $query->where(
+                ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
+            );
+        }
+        return $query->toArray()[0]['SumTime'];
+    }
+    
+    private function getSumQuery()
     {
         $conditions = [
-            'TimebasedCurrencyPayments.id_customer' => $customerId,
             'TimebasedCurrencyPayments.status' => APP_ON
         ];
-        
         $query = $this->find('all', [
             'conditions' => $conditions
         ]);
         $query->select(
             ['SumTime' => $query->func()->sum('TimebasedCurrencyPayments.time')]
         );
-        return $query->toArray()[0]['SumTime'];
+        return $query;
+        
     }
 
 }

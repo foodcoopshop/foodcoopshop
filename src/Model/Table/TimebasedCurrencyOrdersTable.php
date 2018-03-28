@@ -41,11 +41,42 @@ class TimebasedCurrencyOrdersTable extends AppTable
      * @param int $customerId
      * @return float
      */
-    public function getSum($customerId)
+    public function getSumManufacturer($manufacturerId, $customerId = null)
+    {
+        $this->association('Orders')->association('OrderDetails')->setConditions([
+            'Products.id_manufacturer' => $manufacturerId
+        ]);
+        
+        $conditions[] = $this->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
+        
+        if ($customerId) {
+            $conditions['Orders.id_customer'] = $customerId;
+        }
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions,
+            'contain' => [
+                'Orders.OrderDetails.Products'
+            ]
+        ]);
+        
+        $query->select(
+            ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
+        );
+        
+        return $query->toArray()[0]['SumTime'];
+    }
+    
+    /**
+     * @param int $customerId
+     * @return float
+     */
+    public function getSumCustomer($customerId)
     {
         $conditions = [
             'Orders.id_customer' => $customerId,
         ];
+        
         $conditions[] = $this->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
         
         $query = $this->find('all', [
@@ -54,9 +85,11 @@ class TimebasedCurrencyOrdersTable extends AppTable
                 'Orders'
             ]
         ]);
+        
         $query->select(
             ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
         );
+        
         return $query->toArray()[0]['SumTime'];
     }
 
