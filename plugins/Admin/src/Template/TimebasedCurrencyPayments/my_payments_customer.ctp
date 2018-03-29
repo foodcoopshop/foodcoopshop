@@ -38,7 +38,7 @@ $this->element('addScript', ['script' =>
         'class' => 'fcs-form'
     ]);
         echo '<div id="add-timebased-currency-payment-button-wrapper">';
-        echo $this->Html->link('<i class="fa fa-handshake-o fa-lg"></i> Geleistete ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' eintragen', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' eintragen', 'javascript:void(0);', [
                 'class' => 'btn btn-success',
                 'escape' => false
             ]);
