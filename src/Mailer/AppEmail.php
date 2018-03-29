@@ -23,11 +23,11 @@ use Cake\ORM\TableRegistry;
 class AppEmail extends Email
 {
 
-    public function __construct($config = null)
+    public function __construct($addBccBackupAddress = true)
     {
-        parent::__construct($config);
+        parent::__construct(null);
 
-        if (Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
+        if ($addBccBackupAddress && Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
             $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
         }
     }

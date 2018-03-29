@@ -68,7 +68,7 @@ class BackupDatabaseShell extends AppShell
         $message = 'Datenbank-Backup erfolgreich ('.Number::toReadableSize(filesize($zipFilename)).').';
 
         // email zipped file
-        $email = new AppEmail();
+        $email = new AppEmail(false);
         $email->setProfile('debug');
         $email->setTransport('debug');
         $email->setTo(Configure::read('app.hostingEmail'))

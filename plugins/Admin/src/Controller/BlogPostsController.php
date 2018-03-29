@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * BlogPostsController
@@ -39,7 +40,10 @@ class BlogPostsController extends AdminAppController
                             'BlogPosts.id_blog_post' => $this->request->getParam('pass')[0]
                         ]
                     ])->first();
-                    if ($blogPost['BlogPosts']['id_manufacturer'] != $this->AppAuth->getManufacturerId()) {
+                    if (empty($blogPost)) {
+                        throw new RecordNotFoundException();
+                    }
+                    if ($blogPost->id_manufacturer != $this->AppAuth->getManufacturerId()) {
                         return false;
                     }
                     return true;
@@ -117,7 +121,15 @@ class BlogPostsController extends AdminAppController
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['content']);
 
         $this->request->data['BlogPosts']['id_customer'] = $this->AppAuth->getUserId();
-
+        
+        if ($this->AppAuth->isManufacturer()) {
+            $this->request->data['BlogPosts']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
+        }
+        
+        if (!$this->request->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer()) {
+            $this->BlogPost->removeBehavior('Timestamp');
+        }
+        
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->request->getData());
         if (!empty($blogPost->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -208,7 +220,9 @@ class BlogPostsController extends AdminAppController
         ])->toArray();
 
         foreach ($blogPosts as $blogPost) {
-            $manufacturerRecord = $this->BlogPost->Customers->getManufacturerRecord($blogPost->customer);
+            if (!empty($blogPost->customer)) {
+                $manufacturerRecord = $this->BlogPost->Customers->getManufacturerRecord($blogPost->customer);
+            }
             if (!empty($manufacturerRecord->manufacturer)) {
                 $blogPost->customer->manufacturer = $manufacturerRecord->manufacturer;
             }

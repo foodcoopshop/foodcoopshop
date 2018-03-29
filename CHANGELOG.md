@@ -2,7 +2,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## v2.0.0 2017-30-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
+## v2.0.0 2017-03-29 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [EvaSee](https://github.com/EvaSee)

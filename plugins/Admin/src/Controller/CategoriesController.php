@@ -37,6 +37,9 @@ class CategoriesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Kategorie erstellen');
+        
+        $this->set('disabledSelectCategoryIds', []);
+        
         $this->_processForm($category, false);
 
         if (empty($this->request->getData())) {
@@ -61,6 +64,15 @@ class CategoriesController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', 'Kategorie bearbeiten');
+        
+        $categoryChildren = $this->Category->find('all')->find('children', ['for' => $categoryId]);
+        
+        $disabledSelectCategoryIds = [(int) $categoryId];
+        foreach ($categoryChildren as $categoryChild) {
+            $disabledSelectCategoryIds[] = $categoryChild->id_category;
+        }
+        $this->set('disabledSelectCategoryIds', $disabledSelectCategoryIds);
+        
         $this->_processForm($category, true);
     }
 

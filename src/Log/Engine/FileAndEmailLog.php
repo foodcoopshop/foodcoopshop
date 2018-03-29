@@ -40,7 +40,7 @@ class FileAndEmailLog extends FileLog
     private function sendEmailWithErrorInformation($message)
     {
 
-        $ignoredExceptionsRegex = '/(MissingController|MissingAction|RecordNotFound)Exception/';
+        $ignoredExceptionsRegex = '/(MissingController|MissingAction|RecordNotFound|MissingRoute)Exception|cancellation_terms_accepted|general_terms_and_conditions_accepted/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
@@ -53,7 +53,7 @@ class FileAndEmailLog extends FileLog
 
         $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date('Y-m-d H:i:s');
         try {
-            $email = new AppEmail();
+            $email = new AppEmail(false);
             $email->setProfile('debug');
             $email->setTransport('debug');
             $email->setTo(Configure::read('app.debugEmail'))

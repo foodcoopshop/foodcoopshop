@@ -1,11 +1,27 @@
-# FoodCoopShop
+<h1 align="center">
+  <a href="https://www.foodcoopshop.com"><img src="https://raw.githubusercontent.com/foodcoopshop/foodcoopshop/develop/webroot/files/images/logo.jpg" alt="FoodCoopShop"></a>
+</h1>
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable)](https://www.foodcoopshop.com/download)
-[![Build Status](https://travis-ci.org/foodcoopshop/foodcoopshop.svg)](https://travis-ci.org/foodcoopshop/foodcoopshop)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Dependency Status](https://dependencyci.com/github/foodcoopshop/foodcoopshop/badge)](https://dependencyci.com/github/foodcoopshop/foodcoopshop)
+<h4 align="center">An easy-to-use open source software for food-coops.</h4>
 
-FoodCoopShop is an open source software for food-coops. It provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly webshop, a login area for manufacturers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern webbrowser, tablets or smartphones.
+<p align="center">
+  <a href="https://www.foodcoopshop.com/download">
+    <img src="https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable"
+         alt="Latest stable version">
+  </a>
+  <a href="https://travis-ci.org/foodcoopshop/foodcoopshop">
+    <img src="https://travis-ci.org/foodcoopshop/foodcoopshop.svg"
+         alt="Build status">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"
+         alt="Software license">
+  </a>
+</p>
+
+<h1></h1>
+
+**FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone.
 
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
 * Demo version: [https://demo.foodcoopshop.com](https://demo.foodcoopshop.com)
@@ -13,7 +29,7 @@ FoodCoopShop is an open source software for food-coops. It provides plenty of us
 
 ## Roadmap for 2018
 
-There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q1/2018 - v2.0](https://github.com/foodcoopshop/foodcoopshop/milestone/1) / [Q2/2018 - v2.1](https://github.com/foodcoopshop/foodcoopshop/milestone/2) / [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). So far, FoodCoopShop only exists in German. But there will be an **English version** available by June 2018! More languages will then be possible if we find translators...
+There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q2/2018 - v2.1](https://github.com/foodcoopshop/foodcoopshop/milestone/2) / [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). So far, FoodCoopShop only exists in German. But there will be an **English version** available by June 2018! More languages will then be possible if we find translators...
 
 ## Who uses FoodCoopShop?
 [https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
@@ -60,7 +76,7 @@ $ chmod a+w -R ./webroot/tmp
 
 ## Unit Testing
 * Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](https://book.cakephp.org/3.0/en/development/testing.html)
-* Import [this dump](Config/sql/_installation/clean-db-structure.sql) into your test database
+* Import [this dump](config/sql/_installation/clean-db-structure.sql) into your test database
 ```
 $ vendor/bin/phpunit --testsuite App,Admin
 ```

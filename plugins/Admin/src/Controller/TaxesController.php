@@ -110,67 +110,6 @@ class TaxesController extends AdminAppController
         $this->set('tax', $tax);
     }
 
-    public function editOld($taxId = null)
-    {
-
-        $this->set('unsavedTax', $unsavedTax);
-        $this->set('title_for_layout', 'Steuersatz bearbeiten');
-
-        if (empty($this->request->data)) {
-            $this->request->data = $unsavedTax;
-        } else {
-            // validate data - do not use $this->Tax->saveAll()
-            $this->Tax->id = $taxId;
-            $this->Tax->set($this->request->data['Taxes']);
-
-            // quick and dirty solution for stripping html tags, use html purifier here
-            foreach ($this->request->data['Taxes'] as &$data) {
-                $data = strip_tags(trim($data));
-            }
-
-            $errors = [];
-            if (! $this->Tax->validates()) {
-                $errors = array_merge($errors, $this->Tax->validationErrors);
-            }
-
-            if (empty($errors)) {
-                $this->ActionLog = TableRegistry::get('ActionLogs');
-
-                $this->Tax->save($this->request->data['Taxes'], [
-                    'validate' => false
-                ]);
-                if (is_null($taxId)) {
-                    $messageSuffix = 'erstellt';
-                    $actionLogType = 'tax_added';
-                } else {
-                    $messageSuffix = 'geändert';
-                    $actionLogType = 'tax_changed';
-                }
-
-                if (isset($this->request->data['Taxes']['delete_tax']) && $this->request->data['Taxes']['delete_tax']) {
-                    $this->Tax->delete($this->Tax->id); // cascade does not work here
-                    $message = 'Der Steuersatz "' . Configure::read('app.htmlHelper')->formatAsPercent($this->request->data['Taxes']['rate']) . '" wurde erfolgreich gelöscht.';
-                    $this->ActionLog->customSave('tax_deleted', $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
-                    $this->Flash->success('Der Steuersatz wurde erfolgreich gelöscht.');
-                } else {
-                    if ($taxId > 0) {
-                        $taxRate = $unsavedTax['Taxes']['rate'];
-                    } else {
-                        $taxRate = $this->request->data['Taxes']['rate'];
-                    }
-                    $message = 'Der Steuersatz "' . Configure::read('app.htmlHelper')->formatAsPercent($taxRate) . '" wurde ' . $messageSuffix . '.';
-                    $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $this->Tax->id, 'taxes', $message);
-                    $this->Flash->success('Der Steuersatz wurde erfolgreich gespeichert.');
-                }
-
-                $this->request->getSession()->write('highlightedRowId', $this->Tax->id);
-                $this->redirect($this->data['referer']);
-            } else {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
-            }
-        }
-    }
-
     public function index()
     {
         $conditions = [
