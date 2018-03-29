@@ -76,7 +76,7 @@ echo '<table class="list">';
     
     
     echo '<tr class="fake-th">';
-        echo $tableColumnHead;
+        echo str_replace('th', 'td', $tableColumnHead);
     echo '</tr>';
     
     echo '<tr>';
