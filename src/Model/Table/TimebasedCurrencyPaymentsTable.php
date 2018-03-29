@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Validation\Validator;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,49 +36,41 @@ class TimebasedCurrencyPaymentsTable extends AppTable
     }
     
     /**
-     * @param int $manufacturerId
-     * @return float
-     */
-    public function getSumManufacturer($manufacturerId, $customerId = null)
-    {
-        $query = $this->getSumQuery();
-        $query->where(
-            ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
-        );
-        return $query->toArray()[0]['SumTime'];
-    }
-    
-    /**
      * @param int $customerId
+     * @param int $manufacturerId
+     * @throws InvalidParameterException
      * @return float
      */
-    public function getSumCustomer($customerId, $manufacturerId = null)
+    public function getSum($manufacturerId = null, $customerId = null)
     {
-        $query = $this->getSumQuery();
-        $query->where(
-            ['TimebasedCurrencyPayments.id_customer' => $customerId]
+        if (!$manufacturerId && !$customerId) {
+            throw new InvalidParameterException('either manufactureId or customerId needs to be set');
+        }
+        
+        $query = $this->find('all');
+        
+        $query->select(
+            ['SumTime' => $query->func()->sum('TimebasedCurrencyPayments.time')]
         );
+        $query->where(
+            ['TimebasedCurrencyPayments.status' => APP_ON]
+        );
+        if ($customerId) {
+            $query->where(
+                ['TimebasedCurrencyPayments.id_customer' => $customerId]
+            );
+        }
         if ($manufacturerId) {
             $query->where(
                 ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
             );
         }
-        return $query->toArray()[0]['SumTime'];
-    }
-    
-    private function getSumQuery()
-    {
-        $conditions = [
-            'TimebasedCurrencyPayments.status' => APP_ON
-        ];
-        $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
-        $query->select(
-            ['SumTime' => $query->func()->sum('TimebasedCurrencyPayments.time')]
-        );
-        return $query;
+        $sumTime = $query->toArray()[0]['SumTime'];
+        if ($sumTime == '') {
+            $sumTime = 0;
+        }
         
+        return $sumTime;
     }
 
 }

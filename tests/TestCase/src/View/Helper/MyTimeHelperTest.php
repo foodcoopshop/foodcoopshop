@@ -29,6 +29,10 @@ class MyTimeHelperTest extends AppCakeTestCase
     {
         $tests = [
             [
+                'decimal' => 0,
+                'expected' => '00min'
+            ],
+            [
                 'decimal' => -1,
                 'expected' => '-1h 00min'
             ],

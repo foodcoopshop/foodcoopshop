@@ -59,13 +59,13 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td align="right">';
-                if ($payment['timeDone']) {
+                if (isset($payment['timeDone'])) {
                     echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeDone']);
                 }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
-                if ($payment['timeOpen']) {
+                if (isset($payment['timeOpen'])) {
                     echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeOpen']);
                 }
             echo '</td>';

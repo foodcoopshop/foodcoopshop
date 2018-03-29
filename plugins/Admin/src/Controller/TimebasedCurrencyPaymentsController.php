@@ -108,13 +108,13 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         foreach($payments as &$payment) {
             $payment['text'] = '';
-            $payment['timeDone'] = $this->TimebasedCurrencyPayment->getSumManufacturer($this->AppAuth->getManufacturerId(), $payment['customerId']);
+            $payment['timeDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']);
             $payment['timeOpen'] = $this->TimebasedCurrencyOrder->getSumCustomer($payment['customerId'], $this->AppAuth->getManufacturerId()) * -1;
         }
         
         $this->set('payments', $payments);
         
-        $sumPayments = $this->TimebasedCurrencyPayment->getSumManufacturer($this->AppAuth->getManufacturerId());
+        $sumPayments = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId());
         $this->set('sumPayments', $sumPayments);
         
         $sumOrders = $this->TimebasedCurrencyOrder->getSumManufacturer($this->AppAuth->getManufacturerId());
@@ -183,7 +183,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         
-        $sumPayments = $this->TimebasedCurrencyPayment->getSumCustomer($this->AppAuth->getUserId());
+        $sumPayments = $this->TimebasedCurrencyPayment->getSum(null, $this->AppAuth->getUserId());
         $this->set('sumPayments', $sumPayments);
         
         $sumOrders = $this->TimebasedCurrencyOrder->getSumCustomer($this->AppAuth->getUserId());
