@@ -51,7 +51,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
         
-        $time = $this->request->getData('time');
+        $seconds = $this->request->getData('seconds');
         $customerId = $this->request->getData('customerId');
         $manufacturerId = $this->request->getData('manufacturerId');
         
@@ -60,7 +60,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'status' => APP_ON,
                 'id_customer' => $customerId,
                 'id_manufacturer' => $manufacturerId,
-                'time' => $time,
+                'seconds' => $seconds,
                 'created_by' => $this->AppAuth->getUserId()
             ]
         );
@@ -76,7 +76,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('data', [
             'status' => 1,
             'msg' => $message,
-            'time' => $time,
+            'seconds' => $seconds,
             'paymentId' => $newPayment->id
         ]);
         
@@ -108,8 +108,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         foreach($payments as &$payment) {
             $payment['text'] = '';
-            $payment['timeDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']);
-            $payment['timeOpen'] = $this->TimebasedCurrencyOrder->getSumCustomer($payment['customerId'], $this->AppAuth->getManufacturerId()) * -1;
+            $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']);
+            $payment['secondsOpen'] = $this->TimebasedCurrencyOrder->getSumCustomer($payment['customerId'], $this->AppAuth->getManufacturerId()) * -1;
         }
         
         $this->set('payments', $payments);
@@ -145,8 +145,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'dateRaw' => $timebasedCurrencyOrder->order->date_add,
                 'date' => $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                 'year' => $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
-                'timeOpen' => $timebasedCurrencyOrder->time_sum * - 1,
-                'timeDone' => null,
+                'secondsOpen' => $timebasedCurrencyOrder->seconds_sum * - 1,
+                'secondsDone' => null,
                 'type' => 'order',
                 'approval' => APP_OFF,
                 'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $timebasedCurrencyOrder->order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder->order->current_state] . ')', '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $timebasedCurrencyOrder->order->id_order . '&customerId=' . $timebasedCurrencyOrder->order->id_customer, [
@@ -170,8 +170,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'dateRaw' => $timebasedCurrencyPayment->created,
                 'date' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                 'year' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.de.Year')),
-                'timeOpen' => null,
-                'timeDone' => $timebasedCurrencyPayment->time,
+                'secondsOpen' => null,
+                'secondsDone' => $timebasedCurrencyPayment->seconds,
                 'type' => 'payment',
                 'approval' => $timebasedCurrencyPayment->approval,
                 'text' => '',

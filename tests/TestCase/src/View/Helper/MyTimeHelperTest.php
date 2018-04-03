@@ -25,37 +25,46 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
     
-    public function testFormatDecimalToHoursAndMinutes()
+    public function testFormatSecondsToHoursAndMinutes()
     {
+        
         $tests = [
             [
-                'decimal' => 0,
-                'expected' => '00min'
+                'seconds' => 0,
+                'expected' => '00:00:00'
             ],
             [
-                'decimal' => -1,
-                'expected' => '-1h 00min'
+                'seconds' => -3600,
+                'expected' => '-01:00:00'
             ],
             [
-                'decimal' => 1,
-                'expected' => '1h 00min'
+                'seconds' => 3600,
+                'expected' => '01:00:00'
             ],
             [
-                'decimal' => 0.5,
-                'expected' => '30min'
+                'seconds' => 1800,
+                'expected' => '00:30:00'
             ],
             [
-                'decimal' => -0.5,
-                'expected' => '-30min'
+                'seconds' => -1800,
+                'expected' => '-00:30:00'
             ],
             [
-                'decimal' => 3.34,
-                'expected' => '3h 20min'
+                'seconds' => 1800,
+                'expected' => '00:30:00'
+            ],
+            [
+                'seconds' => 12024,
+                'expected' => '03:20:24'
+            ],
+            [
+                'seconds' => 12048,
+                'expected' => '03:20:48'
             ]
         ];
         
         foreach ($tests as $test) {
-            $result = $this->MyTimeHelper->formatDecimalToHoursAndMinutes($test['decimal']);
+            $result = $this->MyTimeHelper->formatSecondsToHoursAndMinutes($test['seconds']);
             $this->assertEquals($test['expected'], $result);
         }
     }

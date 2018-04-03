@@ -133,7 +133,7 @@ if ($product['description'] != '') {
                         'wrapperTag' => 'div',
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
-                        'time' => $attribute['timebased_currency_time'],
+                        'seconds' => $attribute['timebased_currency_seconds'],
                         'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
                     ]);
                 }
@@ -171,7 +171,7 @@ if ($product['description'] != '') {
                         'wrapperTag' => 'div',
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],
-                        'time' => $product['timebased_currency_time'],
+                        'seconds' => $product['timebased_currency_seconds'],
                         'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
                     ]);
                 }

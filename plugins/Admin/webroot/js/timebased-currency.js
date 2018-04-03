@@ -28,8 +28,8 @@ foodcoopshop.TimebasedCurrency = {
 
     addPaymentFormSave: function () {
 
-        var time = $('.featherlight-content #timebasedcurrencypayments-time').val();
-        if (isNaN(parseFloat(time.replace(/,/, '.')))) {
+        var seconds = $('.featherlight-content #timebasedcurrencypayments-seconds').val();
+        if (isNaN(parseFloat(seconds.replace(/,/, '.')))) {
             alert('Bitte gib eine gültige Zeit ein.');
             foodcoopshop.AppFeatherlight.enableSaveButton();
             return;
@@ -44,7 +44,7 @@ foodcoopshop.TimebasedCurrency = {
         }
 
         foodcoopshop.Helper.ajaxCall('/admin/timebased-currency-payments/add/', {
-            time: time,
+            seconds: seconds,
             text: text,
             customerId: customerId,
             manufacturerId: manufacturerId,

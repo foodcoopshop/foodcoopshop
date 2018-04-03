@@ -20,26 +20,40 @@ use Cake\View\Helper\TimeHelper;
  */
 class MyTimeHelper extends TimeHelper
 {
-    
-    public function formatDecimalToHoursAndMinutes($decimal)
+
+    public function convertTimeIntoSeconds($time)
     {
-        $isNegative = $decimal < 0;
-        $formattedMinutes = sprintf('%02dmin', $this->getDecimalToMinutes($decimal));
-        $formattedHours = '';
-        $hours = (int) $decimal;
-        if (abs($hours) >= 1) {
-            $formattedHours = sprintf('%01dh', $hours) . ' ';
-        }
-        $result = $formattedHours . $formattedMinutes;
-        if ($isNegative) {
-            $result = str_replace('h -', 'h ', $result);
-        }
-        return $result;
+        $time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $time);
+        sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+        $seconds = $hours * 3600 + $minutes * 60 + $seconds;
+        return $seconds;
     }
     
-    public function getDecimalToMinutes($decimal)
-    {
-        return fmod($decimal, 1) * 60;
+    public function formatSecondsToHoursAndMinutes($seconds) {
+        
+        $isNegative = $seconds < 0;
+        
+        $seconds = abs($seconds);
+        
+        $hours = floor($seconds / 3600);
+        $remainder = ($seconds % 3600);
+        $minutes = floor($remainder / 60);
+        $seconds = ($remainder % 60);
+        
+        if(strlen($hours) == 1) {
+            $hours = "0".$hours;
+        }
+        
+        if(strlen($minutes) == 1) {
+            $minutes = "0".$minutes;
+        }
+        
+        if(strlen($seconds) == 1) {
+            $seconds = "0".$seconds;
+        }
+        
+        return ($isNegative ? '-' : '') . $hours.":".$minutes.":".$seconds;
+        
     }
     
     public function getLastDayOfGivenMonth($monthAndYear)

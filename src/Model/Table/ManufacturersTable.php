@@ -83,9 +83,11 @@ class ManufacturersTable extends AppTable
         return $price * $percentage / 100;
     }
 
-    public function getTimebasedCurrencyTime($price, $percentage)
+    public function getCartTimebasedCurrencySeconds($price, $percentage)
     {
-        return $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100;
+        $result = $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100 * 3600;
+        $result = round($result, 0);
+        return $result;
     }
     
     /**

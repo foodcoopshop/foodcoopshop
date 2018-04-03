@@ -21,7 +21,7 @@ CREATE TABLE `fcs_action_logs` (
   `text` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -202,7 +202,7 @@ CREATE TABLE `fcs_email_logs` (
   `headers` text,
   `message` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -513,7 +513,7 @@ CREATE TABLE `fcs_timebased_currency_order_detail` (
   `id_order_detail` int(11) NOT NULL DEFAULT '0',
   `money_excl` decimal(10,6) unsigned DEFAULT NULL,
   `money_incl` decimal(10,6) unsigned DEFAULT NULL,
-  `time` decimal(10,6) unsigned DEFAULT NULL,
+  `seconds` int(7) unsigned DEFAULT NULL,
   `max_percentage` int(11) unsigned DEFAULT NULL,
   `exchange_rate` decimal(6,2) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
@@ -526,7 +526,7 @@ CREATE TABLE `fcs_timebased_currency_orders` (
   `id_order` int(11) NOT NULL DEFAULT '0',
   `money_excl_sum` decimal(10,6) unsigned DEFAULT NULL,
   `money_incl_sum` decimal(10,6) unsigned DEFAULT NULL,
-  `time_sum` decimal(10,6) unsigned DEFAULT NULL,
+  `seconds_sum` int(7) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order` (`id_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -537,7 +537,7 @@ CREATE TABLE `fcs_timebased_currency_payments` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_customer` int(10) unsigned DEFAULT NULL,
   `id_manufacturer` int(11) unsigned DEFAULT NULL,
-  `time` decimal(10,6) NOT NULL DEFAULT '0.000000',
+  `seconds` int(7) NOT NULL DEFAULT '0',
   `text` varchar(255) NOT NULL DEFAULT '',
   `created` datetime DEFAULT NULL,
   `modified` datetime NOT NULL,

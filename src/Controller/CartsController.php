@@ -204,7 +204,7 @@ class CartsController extends FrontendController
                         
                             $orderDetail['timebased_currency_order_detail']['money_excl'] = $cartProduct['timebasedCurrencyMoneyExcl'];
                             $orderDetail['timebased_currency_order_detail']['money_incl'] = $cartProduct['timebasedCurrencyMoneyIncl'];
-                            $orderDetail['timebased_currency_order_detail']['time'] = $cartProduct['timebasedCurrencyTime'];
+                            $orderDetail['timebased_currency_order_detail']['seconds'] = $cartProduct['timebasedCurrencySeconds'];
                             $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
                             $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
                             
@@ -248,7 +248,7 @@ class CartsController extends FrontendController
         if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
             $order2save['timebased_currency_order']['money_excl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyMoneyExclSum();
             $order2save['timebased_currency_order']['money_incl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyMoneyInclSum();
-            $order2save['timebased_currency_order']['time_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyTimeSum();
+            $order2save['timebased_currency_order']['seconds_sum'] = $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
         }
         
         // avoid saving empty recored for timebased_currency_order
@@ -470,7 +470,7 @@ class CartsController extends FrontendController
         
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
             $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
-            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'time_sum_tmp', 0, $this->AppAuth->Cart->getTimebasedCurrencyTimeSum());
+            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $this->AppAuth->Cart->getTimebasedCurrencySecondsSum());
         }
         $order = $this->Order->newEntity(
             $this->request->getData(),
@@ -491,9 +491,9 @@ class CartsController extends FrontendController
             
             $selectedTimebasedCurrencyTime = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->request->getData('timebased_currency_order.time_sum_tmp') && $this->request->getData('timebased_currency_order.time_sum_tmp') > 0)) {
-                $selectedTimebasedCurrencyTime = $this->request->getData('timebased_currency_order.time_sum_tmp');
-                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencyTime / $this->AppAuth->Cart->getTimebasedCurrencyTimeSum();
+            if (!empty($this->request->getData('timebased_currency_order.seconds_sum_tmp') && $this->request->getData('timebased_currency_order.seconds_sum_tmp') > 0)) {
+                $selectedTimebasedCurrencyTime = $this->request->getData('timebased_currency_order.seconds_sum_tmp');
+                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencyTime / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
             }
             
             if ($selectedTimebasedCurrencyTime > 0 && $selectedTimeAdaptionFactor > 0) {

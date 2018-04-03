@@ -32,8 +32,8 @@ class TimebasedCurrencyOrdersTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('time_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
-        $validator->numeric('time_sum_tmp', 'Bitte trage eine Zahl ein.');
+        $validator->notEmpty('seconds_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
+        $validator->numeric('seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
         return $validator;
     }
     
@@ -61,7 +61,7 @@ class TimebasedCurrencyOrdersTable extends AppTable
         ]);
         
         $query->select(
-            ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
+            ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.seconds_sum')]
         );
         
         return $query->toArray()[0]['SumTime'];
@@ -87,10 +87,10 @@ class TimebasedCurrencyOrdersTable extends AppTable
         ]);
         
         $query->select(
-            ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.time_sum')]
+            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrders.seconds_sum')]
         );
         
-        return $query->toArray()[0]['SumTime'];
+        return $query->toArray()[0]['SumSeconds'];
     }
 
 }

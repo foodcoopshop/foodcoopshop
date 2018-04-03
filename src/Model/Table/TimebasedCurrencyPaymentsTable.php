@@ -50,7 +50,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         $query = $this->find('all');
         
         $query->select(
-            ['SumTime' => $query->func()->sum('TimebasedCurrencyPayments.time')]
+            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyPayments.seconds')]
         );
         $query->where(
             ['TimebasedCurrencyPayments.status' => APP_ON]
@@ -65,12 +65,12 @@ class TimebasedCurrencyPaymentsTable extends AppTable
                 ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
             );
         }
-        $sumTime = $query->toArray()[0]['SumTime'];
-        if ($sumTime == '') {
-            $sumTime = 0;
+        $sumSeconds = $query->toArray()[0]['SumSeconds'];
+        if ($sumSeconds == '') {
+            $sumSeconds = 0;
         }
         
-        return $sumTime;
+        return $sumSeconds;
     }
 
 }

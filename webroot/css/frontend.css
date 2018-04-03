@@ -489,7 +489,7 @@ body.superadmin .product-wrapper .heading h4 {
 	margin-bottom: 5px;
 }
 .tooltipster-content span.money,
-.tooltipster-content span.time {
+.tooltipster-content span.seconds {
 	float: right;
 	margin-left: 5px;
 }
@@ -718,7 +718,7 @@ body.manufacturers.detail .imprint {
 .cart p.tax-sum-wrapper,
 .cart span.tax,
 .cart span.timebasedCurrencyMoney,
-.cart span.timebasedCurrencyTime {
+.cart span.timebasedCurrencySeconds {
     float: left;
     display: none;
 }
@@ -784,10 +784,10 @@ body.carts.detail .cart:not(#cart) a.btn {
 #CartsDetailForm .input.checkbox {
     margin-left: 10px;
 }
-#CartsDetailForm #timebased-currency-order-time-sum-tmp {
+#CartsDetailForm #timebased-currency-order-seconds-sum-tmp {
 	width: 170px;
 }
-#CartsDetailForm label[for="timebased-currency-order-time-sum-tmp"] {
+#CartsDetailForm label[for="timebased-currency-order-seconds-sum-tmp"] {
 	margin-right: 10px;
 }
 #RegistrationForm .input.checkbox {
@@ -869,14 +869,14 @@ body.carts.detail .cart:not(#cart) span.deposit {
     clear: both;
     margin-right: 22px;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencyTime {
+body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds {
 	display: inline;
     clear: both;
 	text-align: right;
 	padding-right: 25px;
 	width: 100%;
 }
-body.carts.detail .cart:not(#cart) span.timebasedCurrencyTime span {
+body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds span {
 	float: right;
 	clear: both;
 }
@@ -1595,7 +1595,7 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .entity-wrapper:not(.active),
 .product-wrapper .entity-wrapper div.tax,
-.product-wrapper .entity-wrapper .timebasedCurrencyTime {
+.product-wrapper .entity-wrapper .timebasedCurrencySeconds {
     display: none;
 }
 .product-wrapper .line {

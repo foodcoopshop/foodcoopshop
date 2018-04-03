@@ -60,10 +60,10 @@ class CartComponent extends Component
         return 0;
     }
     
-    public function getTimebasedCurrencyTimeSum()
+    public function getTimebasedCurrencySecondsSum()
     {
         if ($this->cart !== null) {
-            return $this->cart['CartTimebasedCurrencyTimeSum'];
+            return $this->cart['CartTimebasedCurrencySecondsSum'];
         }
         return 0;
     }

@@ -42,26 +42,33 @@ class CartsTable extends AppTable
     public function adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor)
     {
         
-        $cart['CartTimebasedCurrencyUsed'] = true;
-        $cart['CartTimebasedCurrencyTimeSum'] = $selectedTimebasedCurrencyTime;
-        $cart['CartProductSum'] -= $cart['CartTimebasedCurrencyMoneyInclSum'] * $selectedTimeAdaptionFactor;
-        $cart['CartProductSumExcl'] -= $cart['CartTimebasedCurrencyMoneyExclSum'] * $selectedTimeAdaptionFactor;
-        
+        $cartProductSum = 0;
+        $cartProductSumExcl = 0;
+        $cartProductSecondsSum = 0;
         foreach($cart['CartProducts'] as &$cartProduct) {
-            if (isset($cartProduct['timebasedCurrencyTime'])) {
-                $cartProduct['timebasedCurrencyTime'] *= $selectedTimeAdaptionFactor;
+            if (isset($cartProduct['timebasedCurrencySeconds'])) {
+                $calculatedSeconds = round($cartProduct['timebasedCurrencySeconds'] * $selectedTimeAdaptionFactor, 0);
+                $cartProduct['timebasedCurrencySeconds'] = $calculatedSeconds;
+                $cartProductSecondsSum += $cartProduct['timebasedCurrencySeconds'];
                 $cartProduct['isTimebasedCurrencyUsed'] = true;
             }
             if (isset($cartProduct['timebasedCurrencyMoneyIncl'])) {
-                $cartProduct['timebasedCurrencyMoneyIncl'] *= $selectedTimeAdaptionFactor;
+                $cartProduct['timebasedCurrencyMoneyIncl'] = round($cartProduct['timebasedCurrencyMoneyIncl'] * $selectedTimeAdaptionFactor, 2);
                 $cartProduct['price'] -= $cartProduct['timebasedCurrencyMoneyIncl'];
+                $cartProductSum += $cartProduct['price'];
             }
             if (isset($cartProduct['timebasedCurrencyMoneyExcl'])) {
-                $cartProduct['timebasedCurrencyMoneyExcl'] *= $selectedTimeAdaptionFactor;
+                $cartProduct['timebasedCurrencyMoneyExcl'] = round($cartProduct['timebasedCurrencyMoneyExcl'] *  $selectedTimeAdaptionFactor, 2);
                 $cartProduct['priceExcl'] -=  $cartProduct['timebasedCurrencyMoneyExcl'];
+                $cartProductSumExcl += $cartProduct['priceExcl'];
             }
         }
         
+        $cart['CartTimebasedCurrencyUsed'] = true;
+        $cart['CartTimebasedCurrencySecondsSum'] = $cartProductSecondsSum;
+        $cart['CartProductSum'] = $cartProductSum;
+        $cart['CartProductSumExcl'] = $cartProductSumExcl;
+                
         return $cart;
     }
 
@@ -128,7 +135,8 @@ class CartsTable extends AppTable
             
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
                 
-                $grossPrice = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price) * $cartProduct->amount;
+                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price);
+                $grossPrice = $grossPricePerPiece * $cartProduct->amount;
                 $tax = $productsTable->getUnitTax($grossPrice, $cartProduct->product_attribute->product_attribute_shop->price, $cartProduct->amount) * $cartProduct->amount;
                 
                 // attribute
@@ -152,7 +160,8 @@ class CartsTable extends AppTable
             } else {
                 // no attribute
                 
-                $grossPrice = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price) * $cartProduct->amount;
+                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price);
+                $grossPrice = $grossPricePerPiece * $cartProduct->amount;
                 $tax = $productsTable->getUnitTax($grossPrice, $cartProduct->product->product_shop->price, $cartProduct->amount) * $cartProduct->amount;
                 
                 $productData = [
@@ -176,9 +185,9 @@ class CartsTable extends AppTable
             
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
                 if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
-                    $productData['timebasedCurrencyMoneyExcl'] = $manufacturersTable->getTimebasedCurrencyMoney($productData['priceExcl'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
-                    $productData['timebasedCurrencyMoneyIncl'] = $manufacturersTable->getTimebasedCurrencyMoney($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
-                    $productData['timebasedCurrencyTime'] = $manufacturersTable->getTimebasedCurrencyTime($productData['price'], $cartProduct->product->manufacturer->timebased_currency_max_percentage);
+                    $productData['timebasedCurrencyMoneyIncl'] = round($manufacturersTable->getTimebasedCurrencyMoney($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                    $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($cartProduct->product->product_shop->price, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                    $productData['timebasedCurrencySeconds'] = $manufacturersTable->getCartTimebasedCurrencySeconds($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage) * $cartProduct->amount;
                 }
             }
             
@@ -193,7 +202,7 @@ class CartsTable extends AppTable
         $preparedCart['CartTaxSum'] = 0;
         $preparedCart['CartTimebasedCurrencyMoneyExclSum'] = 0;
         $preparedCart['CartTimebasedCurrencyMoneyInclSum'] = 0;
-        $preparedCart['CartTimebasedCurrencyTimeSum'] = 0;
+        $preparedCart['CartTimebasedCurrencySecondsSum'] = 0;
         foreach ($preparedCart['CartProducts'] as $p) {
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
@@ -205,13 +214,10 @@ class CartsTable extends AppTable
             if (!empty($p['timebasedCurrencyMoneyIncl'])) {
                 $preparedCart['CartTimebasedCurrencyMoneyInclSum'] += $p['timebasedCurrencyMoneyIncl'];
             }
-            if (!empty($p['timebasedCurrencyTime'])) {
-                $preparedCart['CartTimebasedCurrencyTimeSum'] += $p['timebasedCurrencyTime'];
+            if (!empty($p['timebasedCurrencySeconds'])) {
+                $preparedCart['CartTimebasedCurrencySecondsSum'] += $p['timebasedCurrencySeconds'];
             }
         }
-        $preparedCart['CartTimebasedCurrencyMoneyExclSum'] = round($preparedCart['CartTimebasedCurrencyMoneyExclSum'], 6);
-        $preparedCart['CartTimebasedCurrencyMoneyInclSum'] = round($preparedCart['CartTimebasedCurrencyMoneyInclSum'], 6);
-        $preparedCart['CartTimebasedCurrencyTimeSum'] = round($preparedCart['CartTimebasedCurrencyTimeSum'], 6);
         return $preparedCart;
     }
 }

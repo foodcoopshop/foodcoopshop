@@ -60,13 +60,13 @@ echo '<table class="list">';
             
             echo '<td align="right">';
                 if (isset($payment['timeDone'])) {
-                    echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeDone']);
+                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['timeDone']);
                 }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
                 if (isset($payment['timeOpen'])) {
-                    echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeOpen']);
+                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['timeOpen']);
                 }
             echo '</td>';
             
@@ -81,8 +81,8 @@ echo '<table class="list">';
     
     echo '<tr>';
         echo '<td colspan="2"></td>';
-        echo '<td align="right"><b>' . $this->Time->formatDecimalToHoursAndMinutes($sumPayments) . '</b></td>';
-        echo '<td align="right" class="negative"><b>' . $this->Time->formatDecimalToHoursAndMinutes($sumOrders) . '</b></td>';
+        echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
+        echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
     echo '</tr>';
     
     echo '<tr>';
@@ -91,7 +91,7 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatDecimalToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
         echo '<td></td>';
     echo '</tr>';
     

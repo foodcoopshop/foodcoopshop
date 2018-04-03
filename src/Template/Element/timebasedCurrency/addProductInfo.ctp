@@ -15,12 +15,12 @@
 use Cake\Core\Configure;
 
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
-    echo '<span class="timebasedCurrencyTime">' . $this->Time->formatDecimalToHoursAndMinutes($time) . '</span>';
+    echo '<span class="timebasedCurrencySeconds">' . $this->Time->formatSecondsToHoursAndMinutes($seconds) . '</span>';
     echo '<'.$wrapperTag.' class="'.$class.'">';
         $titleForOverlay =
             '<span style="padding:2px;float:left;">'.
                 'Anteil in Euro: <span class="money">' . $this->Html->formatAsEuro($money).'</span><br />' .
-                'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':<span class="time">' . $this->Time->formatDecimalToHoursAndMinutes($time) . '</span>'.
+                'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':<span class="seconds">' . $this->Time->formatSecondsToHoursAndMinutes($seconds) . '</span>'.
             '</span>';
         ;
         echo '<span title="'.h($titleForOverlay).'">' . $labelPrefix . ' in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</span>';

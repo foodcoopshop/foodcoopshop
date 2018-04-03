@@ -332,7 +332,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         }
         
         if ($timebaseCurrencyTimeSum !== null) {
-            $data['timebased_currency_order']['time_sum_tmp'] = $timebaseCurrencyTimeSum;
+            $data['timebased_currency_order']['seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
         }
         
         $this->browser->post(

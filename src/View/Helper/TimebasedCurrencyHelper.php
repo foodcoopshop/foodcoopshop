@@ -22,35 +22,31 @@ class TimebasedCurrencyHelper extends Helper
     
     public $helpers = ['MyTime', 'MyHtml', 'MyNumber'];
     
-    public function getTimebasedCurrencyHoursAndMinutesDropdown($maxHoursAsDecimal, $exchangeRate)
+    public function getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, $exchangeRate)
     {
-        $stepsInMinutes = 5;
+        $stepsInSeconds = 5 * 60;
         $dropdown = [];
         $usedValues = [];
-        for($i = 0; $i <= $maxHoursAsDecimal * 100; $i++) {
-            $timeAsDecimal = $i / 100;
-            $stringValue = $this->MyNumber->replaceCommaWithDot((string) $timeAsDecimal);
-            $minutes = $this->MyTime->getDecimalToMinutes($timeAsDecimal);
-            $value = $this->MyTime->formatDecimalToHoursAndMinutes($timeAsDecimal);
-            $valueWithEuro = $value . ' (' . $this->getTimebasedCurrencyTimeAsEuroForDropdown($timeAsDecimal, $exchangeRate) . ')';
-            if (abs($minutes) % $stepsInMinutes == 0 && !isset($usedValues[$value])) {
-                $dropdown[$stringValue] = $valueWithEuro;
-                $usedValues[$value] = true;
+        for($second = 0; $second <= $maxSeconds; $second++) {
+            $valueWithEuro = $this->MyTime->formatSecondsToHoursAndMinutes($second) . ' (' . $this->getCartTimebasedCurrencySecondsAsEuroForDropdown($second, $exchangeRate) . ')';
+            if ($second % $stepsInSeconds == 0 && !isset($usedValues[$second])) {
+                $dropdown[$second] = $valueWithEuro;
+                $usedValues[$second] = true;
             }
         }
-        $maxHoursValue = $this->MyTime->formatDecimalToHoursAndMinutes($maxHoursAsDecimal);
-        $maxHoursValue .= ' (' . $this->getTimebasedCurrencyTimeAsEuroForDropdown($maxHoursAsDecimal, $exchangeRate) . ')';
+        $maxHoursValue = $this->MyTime->formatSecondsToHoursAndMinutes($maxSeconds);
+        $maxHoursValue .= ' (' . $this->getCartTimebasedCurrencySecondsAsEuroForDropdown($maxSeconds, $exchangeRate) . ')';
         if (!isset($usedValues[$maxHoursValue])) {
-            $dropdown[$this->MyNumber->replaceCommaWithDot((string) $maxHoursAsDecimal)] = $maxHoursValue;
+            $dropdown[$this->MyNumber->replaceCommaWithDot((string) $maxSeconds)] = $maxHoursValue;
         }
         $dropdown = array_reverse($dropdown, true);
         return $dropdown;
     }
     
-    public function getTimebasedCurrencyTimeAsEuroForDropdown($decimal, $exchangeRate)
+    public function getCartTimebasedCurrencySecondsAsEuroForDropdown($seconds, $exchangeRate)
     {
         return str_replace('&nbsp;', ' ', $this->MyHtml->formatAsEuro(
-            $decimal *
+            $seconds / 3600 *
             $this->MyNumber->replaceCommaWithDot($exchangeRate)
         ));
     }

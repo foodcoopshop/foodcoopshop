@@ -45,7 +45,7 @@ $this->element('addScript', ['script' =>
             echo '<div id="add-timebased-currency-payment-form" class="add-payment-form">';
                 echo '<h3>Geleistete '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' eintragen</h3>';
                 echo '<p>Bitte trage hier ein, bei welchem Hersteller du wie viele ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' geleistet hast.</p>';
-                echo $this->Form->control('TimebasedCurrencyPayments.time', [
+                echo $this->Form->control('TimebasedCurrencyPayments.seconds', [
                     'label' => Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'),
                     'type' => 'string'
                 ]);
@@ -88,14 +88,14 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td align="right">';
-                if ($payment['timeDone']) {
-                    echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeDone']);
+                if ($payment['secondsDone']) {
+                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsDone']);
                 }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
-                if ($payment['timeOpen']) {
-                    echo $this->Time->formatDecimalToHoursAndMinutes($payment['timeOpen']);
+                if ($payment['secondsOpen']) {
+                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsOpen']);
                 }
             echo '</td>';
         
@@ -119,8 +119,8 @@ echo '<table class="list">';
     
     echo '<tr>';
         echo '<td colspan="3"></td>';
-        echo '<td align="right"><b>' . $this->Time->formatDecimalToHoursAndMinutes($sumPayments) . '</b></td>';
-        echo '<td align="right" class="negative"><b>' . $this->Time->formatDecimalToHoursAndMinutes($sumOrders) . '</b></td>';
+        echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
+        echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
         echo '<td></td>';
     echo '</tr>';
     
@@ -130,7 +130,7 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatDecimalToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';
