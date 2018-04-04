@@ -201,4 +201,15 @@ class AppAuthComponent extends AuthComponent
         $cart = TableRegistry::get('Carts');
         return $cart->getCart($this->getUserId());
     }
+    
+    public function isTimebasedCurrencyEnabledForManufacturer()
+    {
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
+    }
+    
+    public function isTimebasedCurrencyEnabledForCustomer()
+    {
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->user('timebased_currency_enabled');
+    }
+    
 }

@@ -468,7 +468,7 @@ class CartsController extends FrontendController
         $formErrors = false;
         $this->Order = TableRegistry::get('Orders');
         
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled')) {
+        if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
             $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $this->AppAuth->Cart->getTimebasedCurrencySecondsSum());
         }

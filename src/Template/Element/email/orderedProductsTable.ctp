@@ -21,7 +21,7 @@ use Cake\Core\Configure;
         <tr>
             <?php
             $columns = ['Anzahl', 'Produkte', 'Hersteller', 'Preis', 'Pfand'];
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
+            if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
                 $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
             }
             foreach ($columns as $column) {
@@ -70,7 +70,7 @@ use Cake\Core\Configure;
                     ?>
                 </td>
                 
-                <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
+                <?php if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                     <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                         <?php
                             if (isset($product['timebasedCurrencySeconds'])) {
@@ -96,7 +96,7 @@ use Cake\Core\Configure;
                 ?>
             </td>
             
-            <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
+            <?php if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                     <?php
                         echo $this->MyTime->formatSecondsToHoursAndMinutes($appAuth->Cart->getTimebasedCurrencySecondsSum());
@@ -114,7 +114,7 @@ use Cake\Core\Configure;
                     echo $this->MyHtml->formatAsEuro($productAndDepositSum);
                 ?>
             </td>
-            <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
+            <?php if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
             <?php } ?>
         </tr>

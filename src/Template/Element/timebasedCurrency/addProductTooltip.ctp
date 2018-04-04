@@ -14,7 +14,7 @@
  */
 use Cake\Core\Configure;
 
-if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) {
+if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('." . $selectorClass . " span');"
     ]);

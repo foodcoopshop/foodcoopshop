@@ -74,7 +74,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             <p class="deposit-sum-wrapper"><b>Pfand</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             <p class="tax-sum-wrapper"><b>Umsatzsteuer</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             
-            <?php if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $appAuth->user('timebased_currency_enabled')) { ?>
+            <?php if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             	<p class="timebased-currency-sum-wrapper"><b>Davon in <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->Time->formatSecondsToHoursAndMinutes($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
             <?php } ?>
             

@@ -28,10 +28,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         switch ($this->request->action) {
             case 'myPaymentsCustomer':
             case 'add':
-                return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->user('timebased_currency_enabled');
+                return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
                 break;
             case 'myPaymentsManufacturer':
-                return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->AppAuth->isManufacturer() && $this->AppAuth->manufacturer->timebased_currency_enabled;
+                return $this->AppAuth->isTimebasedCurrencyEnabledForManufacturer();
                 break;
             default:
                 return parent::isAuthorized($user);
