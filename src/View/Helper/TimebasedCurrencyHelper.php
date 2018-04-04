@@ -2,6 +2,7 @@
 
 namespace App\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
@@ -21,6 +22,11 @@ class TimebasedCurrencyHelper extends Helper
 {
     
     public $helpers = ['MyTime', 'MyHtml', 'MyNumber'];
+    
+    public function getName()
+    {
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto';
+    }
     
     public function getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, $exchangeRate)
     {

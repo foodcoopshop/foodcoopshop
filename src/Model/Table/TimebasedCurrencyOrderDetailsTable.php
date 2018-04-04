@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -42,8 +44,63 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         
         $manufacturers = [];
         foreach($query as $orderDetail) {
-            $manufacturers[$orderDetail->order_detail->product->manufacturer->id_manufacturer] = $orderDetail->order_detail->product->manufacturer->name;
+            $manufacturers[$orderDetail->order_detail->product->id_manufacturer] = $orderDetail->order_detail->product->manufacturer->name;
         }
         return $manufacturers;
     }
+    
+    private function getFilteredQuery($manufacturerId, $customerId)
+    {
+        if ($manufacturerId) {
+            $productsAssociation = $this->association('OrderDetails')->association('Products');
+            $productsAssociation->setJoinType('INNER'); // necessary to apply condition
+            $productsAssociation->setConditions([
+                'Products.id_manufacturer' => $manufacturerId
+            ]);
+        }
+        
+        $conditions = [];
+        $conditions[] = $this->OrderDetails->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
+        
+        if ($customerId) {
+            $conditions['Orders.id_customer'] = $customerId;
+        }
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions,
+            'contain' => [
+                'OrderDetails.Orders',
+                'OrderDetails.Products'
+            ]
+        ]);
+        return $query;
+    }
+    
+    public function getOrders($manufacturerId = null, $customerId = null)
+    {
+        $query = $this->getFilteredQuery($manufacturerId, $customerId);
+        $orders = [];
+        // having is not attachable to associations, so sum up and prepare result manually
+        foreach($query as $orderDetail) {
+            @$orders[$orderDetail->order_detail->id_order]['SumSeconds'] += $orderDetail->seconds;
+            @$orders[$orderDetail->order_detail->id_order]['order'] = $orderDetail->order_detail->order;
+        }
+        return $orders;
+    }
+    
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @return int
+     */
+    public function getSum($manufacturerId = null, $customerId = null)
+    {
+        $query = $this->getFilteredQuery($manufacturerId, $customerId);
+        $query->select(
+            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')]
+        );
+        
+        return $query->toArray()[0]['SumSeconds'];
+    }
+    
 }

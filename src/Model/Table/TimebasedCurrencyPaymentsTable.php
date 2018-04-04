@@ -36,15 +36,15 @@ class TimebasedCurrencyPaymentsTable extends AppTable
     }
     
     /**
-     * @param int $customerId
      * @param int $manufacturerId
+     * @param int $customerId
      * @throws InvalidParameterException
-     * @return float
+     * @return int
      */
     public function getSum($manufacturerId = null, $customerId = null)
     {
         if (!$manufacturerId && !$customerId) {
-            throw new InvalidParameterException('either manufactureId or customerId needs to be set');
+            throw new InvalidParameterException('either manufacturerId or customerId needs to be set');
         }
         
         $query = $this->find('all');

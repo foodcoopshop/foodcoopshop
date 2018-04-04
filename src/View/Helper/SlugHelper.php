@@ -161,15 +161,17 @@ class SlugHelper extends Helper
         return '/admin/timebased-currency-payments/my-payments-customer';
     }
     
-    public function getTimebasedCurrencyBalanceForManufacturers($manufacturerId)
+    public function getTimebasedCurrencyPaymentDetailsForManufacturers($customerId)
     {
-        return '/admin/timebased-currency-payments/payments-manufacturer/'.$manufacturerId;
+        return '/admin/timebased-currency-payments/my-payment-details-manufacturer/'.$customerId;
     }
     
-    public function getTimebasedCurrencyBalanceForCustomers($customerId)
+    /*
+    public function getTimebasedCurrencyBalanceForCustomers($manufacturerId)
     {
-        return '/admin/timebased-currency-payments/payments-customer/'.$customerId;
+        return '/admin/timebased-currency-payments/payments-customer/'.$manufacturerId;
     }
+    */
     
     public function getMyMemberFeeBalance()
     {

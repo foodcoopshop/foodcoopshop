@@ -2,7 +2,6 @@
 
 namespace App\Model\Table;
 
-use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
 /**
@@ -35,62 +34,6 @@ class TimebasedCurrencyOrdersTable extends AppTable
         $validator->notEmpty('seconds_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
         $validator->numeric('seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
         return $validator;
-    }
-    
-    /**
-     * @param int $customerId
-     * @return float
-     */
-    public function getSumManufacturer($manufacturerId, $customerId = null)
-    {
-        $this->association('Orders')->association('OrderDetails')->setConditions([
-            'Products.id_manufacturer' => $manufacturerId
-        ]);
-        
-        $conditions[] = $this->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
-        
-        if ($customerId) {
-            $conditions['Orders.id_customer'] = $customerId;
-        }
-        
-        $query = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Orders.OrderDetails.Products'
-            ]
-        ]);
-        
-        $query->select(
-            ['SumTime' => $query->func()->sum('TimebasedCurrencyOrders.seconds_sum')]
-        );
-        
-        return $query->toArray()[0]['SumTime'];
-    }
-    
-    /**
-     * @param int $customerId
-     * @return float
-     */
-    public function getSumCustomer($customerId)
-    {
-        $conditions = [
-            'Orders.id_customer' => $customerId,
-        ];
-        
-        $conditions[] = $this->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
-        
-        $query = $this->find('all', [
-            'conditions' => $conditions,
-            'contain' => [
-                'Orders'
-            ]
-        ]);
-        
-        $query->select(
-            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrders.seconds_sum')]
-        );
-        
-        return $query->toArray()[0]['SumSeconds'];
     }
 
 }

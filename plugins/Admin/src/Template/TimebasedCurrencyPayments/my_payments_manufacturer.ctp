@@ -39,6 +39,7 @@ $tableColumnHead  = '<th>Mitglied</th>';
 $tableColumnHead .= '<th>Text</th>';
 $tableColumnHead .='<th style="text-align:right;">Geleistet</th>';
 $tableColumnHead .='<th style="text-align:right;">Offen</th>';
+$tableColumnHead .='<th style="text-align:right;">Saldo</th>';
 
 echo '<table class="list">';
 
@@ -56,6 +57,16 @@ echo '<table class="list">';
             
             echo '<td>';
                 echo $payment['customerName'];
+                
+                echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
+                    [
+                        'title' => 'Details anzeigen',
+                        'class' => 'icon-with-text',
+                    ],
+                    $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customerId'])
+                ).'</span>';
+                    
             echo '</td>';
             
             echo '<td align="right">';
@@ -68,6 +79,14 @@ echo '<table class="list">';
                 if (isset($payment['secondsOpen'])) {
                     echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsOpen']);
                 }
+            echo '</td>';
+            
+            $creditBalanceClass = '';
+            if ($payment['creditBalance'] < 0) {
+                $creditBalanceClass = 'negative';
+            }
+            echo '<td class="'.$creditBalanceClass.'" align="right">';
+                echo $this->Time->formatSecondsToHoursAndMinutes($payment['creditBalance']);
             echo '</td>';
             
         echo '</tr>';
@@ -83,6 +102,7 @@ echo '<table class="list">';
         echo '<td colspan="2"></td>';
         echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
+        echo '<td></td>';
     echo '</tr>';
     
     echo '<tr>';
@@ -92,6 +112,7 @@ echo '<table class="list">';
             $sumNumberClass = ' class="negative"';
         }
         echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td></td>';
         echo '<td></td>';
     echo '</tr>';
     

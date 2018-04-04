@@ -17,7 +17,8 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Admin.init();".
-    Configure::read('app.jsNamespace').".Admin.initForm();".
+    Configure::read('app.jsNamespace').".Admin.initForm('".$this->TimebasedCurrency->getName()."');".
+    Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('Stundenkonto');".
     Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');".
     Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
 ]);
@@ -145,7 +146,7 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';

@@ -31,6 +31,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
                 break;
             case 'myPaymentsManufacturer':
+            case 'myPaymentDetailsManufacturer':
                 return $this->AppAuth->isTimebasedCurrencyEnabledForManufacturer();
                 break;
             default:
@@ -117,7 +118,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         foreach($payments as &$payment) {
             $payment['text'] = '';
             $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']);
-            $payment['secondsOpen'] = $this->TimebasedCurrencyOrder->getSumCustomer($payment['customerId'], $this->AppAuth->getManufacturerId()) * -1;
+            $payment['secondsOpen'] = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']) * -1;
+            $payment['creditBalance'] = $payment['secondsOpen'] + $payment['secondsDone'];
         }
         
         $this->set('payments', $payments);
@@ -125,39 +127,61 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $sumPayments = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId());
         $this->set('sumPayments', $sumPayments);
         
-        $sumOrders = $this->TimebasedCurrencyOrder->getSumManufacturer($this->AppAuth->getManufacturerId());
+        $sumOrders = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId());
         $this->set('sumOrders', $sumOrders * -1);
         
         $creditBalance = $sumPayments - $sumOrders;
         $this->set('creditBalance', $creditBalance);
-        
         
     }
     
     public function myPaymentsCustomer()
     {
         $this->set('title_for_layout', 'Mein ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto');
-        
-        $timebasedCurrencyOrders = $this->TimebasedCurrencyOrder->find('all', [
+        $this->paymentListCustomer(null, $this->AppAuth->getUserId());
+        $this->set('paymentBalanceTitle', 'Mein Kontostand');
+        $this->render('paymentsCustomer');
+    }
+    
+    public function myPaymentDetailsManufacturer($customerId)
+    {
+        $this->Customer = TableRegistry::get('Customers');
+        $customer = $this->Customer->find('all', [
             'conditions' => [
-                'Orders.id_customer' => $this->AppAuth->getUserId()
+                'Customers.id_customer' => $customerId
             ],
-            'contain' => [
-                'Orders'
-            ]
-        ]);
+        ])->first();
+        
+        $this->set('title_for_layout', 'Detail-Ansicht ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name);
+        $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
+        $this->paymentListCustomer($this->AppAuth->getManufacturerId(), $customerId);
+        $this->render('paymentsCustomer');
+    }
+    
+    private function paymentListCustomer($manufacturerId = null, $customerId)
+    {
+     
+        $manufacturersForDropdown = $this->TimebasedCurrencyOrderDetail->getManufacturersForDropdown($customerId);
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
+        
+        $timebasedCurrencyOrders = $this->TimebasedCurrencyOrderDetail->getOrders($manufacturerId, $customerId);
         
         $payments = [];
-        foreach($timebasedCurrencyOrders as $timebasedCurrencyOrder) {
+        foreach($timebasedCurrencyOrders as $orderId => $timebasedCurrencyOrder) {
             $payments[] = [
-                'dateRaw' => $timebasedCurrencyOrder->order->date_add,
-                'date' => $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                'year' => $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
-                'secondsOpen' => $timebasedCurrencyOrder->seconds_sum * - 1,
+                'dateRaw' => $timebasedCurrencyOrder['order']->date_add,
+                'date' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                'year' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                'secondsOpen' => $timebasedCurrencyOrder['SumSeconds'] * - 1,
                 'secondsDone' => null,
                 'type' => 'order',
                 'approval' => APP_OFF,
-                'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $timebasedCurrencyOrder->order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder->order->current_state] . ')', '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $timebasedCurrencyOrder->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $timebasedCurrencyOrder->order->id_order . '&customerId=' . $timebasedCurrencyOrder->order->id_customer, [
+                'text' => Configure::read('app.htmlHelper')->link(
+                    'Bestellung Nr. ' . $orderId . ' (' . 
+                        Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder['order']->current_state] . ')',
+                        '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . 
+                        '&dateTo=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) .
+                        '&orderId=' . $orderId . '&customerId=' . $timebasedCurrencyOrder['order']->id_customer, [
                     'title' => 'Bestellung anzeigen'
                 ]),
                 'manufacturerName' => '',
@@ -165,10 +189,14 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             ];
         }
         
+        $conditions = [
+            'TimebasedCurrencyPayments.id_customer' => $customerId
+        ];
+        if ($manufacturerId) {
+            $conditions['TimebasedCurrencyPayments.id_manufacturer'] = $manufacturerId;
+        }
         $timebasedCurrencyPayments = $this->TimebasedCurrencyPayment->find('all', [
-            'conditions' => [
-                'TimebasedCurrencyPayments.id_customer' => $this->AppAuth->getUserId()
-            ],
+            'conditions' => $conditions,
             'contain' => [
                 'Manufacturers'
             ]
@@ -191,19 +219,15 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         
-        $sumPayments = $this->TimebasedCurrencyPayment->getSum(null, $this->AppAuth->getUserId());
+        $sumPayments = $this->TimebasedCurrencyPayment->getSum(null, $customerId);
         $this->set('sumPayments', $sumPayments);
         
-        $sumOrders = $this->TimebasedCurrencyOrder->getSumCustomer($this->AppAuth->getUserId());
+        $sumOrders = $this->TimebasedCurrencyOrderDetail->getSum(null, $customerId);
         $this->set('sumOrders', $sumOrders * -1);
         
         $creditBalance = $sumPayments - $sumOrders;
         $this->set('creditBalance', $creditBalance);
         
-        $manufacturersForDropdown = $this->TimebasedCurrencyOrderDetail->getManufacturersForDropdown($this->AppAuth->getUserId());
-        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        
     }
-
     
 }
