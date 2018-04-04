@@ -28,9 +28,11 @@ foodcoopshop.TimebasedCurrency = {
 
     addPaymentFormSave: function () {
 
-        var seconds = $('.featherlight-content #timebasedcurrencypayments-seconds').val();
-        if (isNaN(parseFloat(seconds.replace(/,/, '.')))) {
-            alert('Bitte gib eine gültige Zeit ein.');
+        var hours = $('.featherlight-content #timebasedcurrencypayments-hours').val();
+        var minutes = $('.featherlight-content #timebasedcurrencypayments-minutes').val();
+        
+        if (hours == 0 && minutes == 0) {
+            alert('Bitte wähle deine geleistete Zeit aus.');
             foodcoopshop.AppFeatherlight.enableSaveButton();
             return;
         }
@@ -39,12 +41,14 @@ foodcoopshop.TimebasedCurrency = {
         var manufacturerId = $('.featherlight-content #timebasedcurrencypayments-manufacturerid').val();
 
         var text = '';
-        if ($('.featherlight-content input[name="TimebasedCurrencyPayments[text]"]').length > 0) {
-            text = $('.featherlight-content input[name="TimebasedCurrencyPayments[text]"]').val().trim();
+        var textField = $('.featherlight-content #timebasedcurrencypayments-text');
+        if (textField.length > 0) {
+            text = textField.val().trim();
         }
 
         foodcoopshop.Helper.ajaxCall('/admin/timebased-currency-payments/add/', {
-            seconds: seconds,
+            hours: hours,
+            minutes: minutes,
             text: text,
             customerId: customerId,
             manufacturerId: manufacturerId,
@@ -59,5 +63,65 @@ foodcoopshop.TimebasedCurrency = {
         });
 
     },
+    
+    initDeletePayment: function () {
+
+        $('.delete-payment-button').on('click',function () {
+
+            var dataRow = $(this).closest('tr');
+
+            var dialogHtml = '<p>Willst du deine Eintragung wirklich löschen?<br />';
+            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(1)').html() + '</b> <br />';
+            dialogHtml += 'Stunden: <b>' + dataRow.find('td:nth-child(4)').html()
+            dialogHtml += '</b>';
+            dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+
+            $('<div></div>')
+                .appendTo('body')
+                .html(dialogHtml)
+                .dialog({
+                    modal: true,
+                    title: 'Zahlung löschen?',
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: {
+
+                        'Abbrechen': function () {
+                            $(this).dialog('close');
+                        },
+
+                        'Ja': function () {
+
+                            $('.ui-dialog .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+
+                            var paymentId = dataRow.find('td:nth-child(1)').html();
+
+                            foodcoopshop.Helper.ajaxCall(
+                                '/admin/timebased-currency-payments/changeState/',
+                                {
+                                    paymentId: paymentId
+                                },
+                                {
+                                    onOk: function (data) {
+                                        document.location.reload();
+                                    },
+                                    onError: function (data) {
+                                        alert(data.msg);
+                                    }
+                                }
+                            );
+
+                        }
+
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+        });
+
+    }    
 
 }

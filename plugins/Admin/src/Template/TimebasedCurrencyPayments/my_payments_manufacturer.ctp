@@ -59,14 +59,14 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td align="right">';
-                if (isset($payment['timeDone'])) {
-                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['timeDone']);
+                if (isset($payment['secondsDone'])) {
+                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsDone']);
                 }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
-                if (isset($payment['timeOpen'])) {
-                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['timeOpen']);
+                if (isset($payment['secondsOpen'])) {
+                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsOpen']);
                 }
             echo '</td>';
             

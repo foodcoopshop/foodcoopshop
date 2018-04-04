@@ -584,15 +584,18 @@ body.orders.index td span.customer-is-new {
     max-width: 430px ! important;
     min-height: 250px;
 }
-.featherlight-inner#add-timebased-currency-payment-form div.form-buttons {
-	margin-top: 55px;
-}
 .featherlight-content #timebasedcurrencypayments-time {
 	width: 192px;
 	margin-bottom: 10px;
 }
-
-.featherlight-content #add-timebased-currency-payment-form select {
+.featherlight-content #add-timebased-currency-payment-form h3 {
+	margin-bottom: 20px;
+}
+.featherlight-content #add-timebased-currency-payment-form .textarea label {
+	vertical-align: top;
+}
+.featherlight-content #add-timebased-currency-payment-form select,
+.featherlight-content #add-timebased-currency-payment-form textarea {
     width: 300px;
 }
 .featherlight-content .add-payment-form label {

@@ -1344,7 +1344,7 @@ foodcoopshop.Admin = {
             }
         });
 
-        form.find('select').selectpicker({
+        form.find('select').not('.selectpicker-disabled').selectpicker({
             liveSearch: true,
             showIcon: true
         });
@@ -2298,7 +2298,7 @@ foodcoopshop.Admin = {
 
         $('.delete-payment-button').on('click',function () {
 
-            var dataRow = $(this).parent().parent().parent().parent();
+            var dataRow = $(this).closest('tr');
 
             var dialogHtml = '<p>Willst du deine Zahlung wirklich löschen?<br />';
             dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';

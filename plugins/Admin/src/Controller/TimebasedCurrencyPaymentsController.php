@@ -51,13 +51,21 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
         
-        $seconds = $this->request->getData('seconds');
-        $customerId = $this->request->getData('customerId');
-        $manufacturerId = $this->request->getData('manufacturerId');
+        $this->loadComponent('Sanitize');
+        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
+        $hours = (int) $this->request->getData('hours');
+        $minutes = (int) $this->request->getData('minutes');
+        $customerId = (int) $this->request->getData('customerId');
+        $manufacturerId = (int) $this->request->getData('manufacturerId');
+        $text = $this->request->getData('text');
+        
+        $seconds = $hours * 3600 + $minutes * 60;
         $newPaymentEntity = $this->TimebasedCurrencyPayment->newEntity(
             [
                 'status' => APP_ON,
+                'text' => $text,
                 'id_customer' => $customerId,
                 'id_manufacturer' => $manufacturerId,
                 'seconds' => $seconds,
@@ -70,7 +78,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $message = 'Fehler!';
         } else {
             $newPayment = $this->TimebasedCurrencyPayment->save($newPaymentEntity);
-            $message = 'hurra';
+            $message = 'timebased currendy payment saved correctly';
         }
         
         $this->set('data', [
@@ -174,7 +182,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'secondsDone' => $timebasedCurrencyPayment->seconds,
                 'type' => 'payment',
                 'approval' => $timebasedCurrencyPayment->approval,
-                'text' => '',
+                'text' => $timebasedCurrencyPayment->text,
                 'manufacturerName' => $timebasedCurrencyPayment->manufacturer->name,
                 'payment_id' => $timebasedCurrencyPayment->id_payment
             ];

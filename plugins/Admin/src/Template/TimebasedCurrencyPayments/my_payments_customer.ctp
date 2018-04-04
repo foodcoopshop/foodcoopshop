@@ -18,7 +18,8 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Admin.init();".
     Configure::read('app.jsNamespace').".Admin.initForm();".
-    Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');"
+    Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');".
+    Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
 ]);
 ?>
 
@@ -44,15 +45,29 @@ $this->element('addScript', ['script' =>
             ]);
             echo '<div id="add-timebased-currency-payment-form" class="add-payment-form">';
                 echo '<h3>Geleistete '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' eintragen</h3>';
-                echo '<p>Bitte trage hier ein, bei welchem Hersteller du wie viele ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' geleistet hast.</p>';
-                echo $this->Form->control('TimebasedCurrencyPayments.seconds', [
-                    'label' => Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'),
-                    'type' => 'string'
+                echo $this->Form->control('TimebasedCurrencyPayments.hours', [
+                    'label' => 'Stunden',
+                    'type' => 'select',
+                    'value' => 0,
+                    'options' => [0,1,2,3,4,5,6,7,8,9,10,11,12],
+                    'class' => 'selectpicker-disabled time'
+                ]);
+                echo $this->Form->control('TimebasedCurrencyPayments.minutes', [
+                    'label' => 'Minuten',
+                    'type' => 'select',
+                    'options' => [0 => '00', 15 => '15', 30 => '30', 45 => '45'],
+                    'class' => 'selectpicker-disabled time'
                 ]);
                 echo $this->Form->control('TimebasedCurrencyPayments.manufacturerId', [
                     'type' => 'select',
                     'options' => $manufacturersForDropdown,
-                    'label' => 'Hersteller'
+                    'label' => 'Hersteller',
+                    'class' => 'selectpicker-disabled'
+                ]);
+                echo $this->Form->control('TimebasedCurrencyPayments.text', [
+                    'label' => 'Anmerkungen',
+                    'type' => 'textarea',
+                    'placeholder' => 'Hier ist Platz für Anmerkungen, die der Hersteller lesen kann.'
                 ]);
                 echo $this->Form->hidden('TimebasedCurrencyPayments.customerId', ['value' => $appAuth->getUserId()]);
             echo '</div>';
