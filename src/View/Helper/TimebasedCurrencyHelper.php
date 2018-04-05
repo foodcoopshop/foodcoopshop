@@ -30,7 +30,7 @@ class TimebasedCurrencyHelper extends Helper
     
     public function getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, $exchangeRate)
     {
-        $stepsInSeconds = 5 * 60;
+        $stepsInSeconds = 10 * 60;
         $dropdown = [];
         $usedValues = [];
         for($second = 0; $second <= $maxSeconds; $second++) {
