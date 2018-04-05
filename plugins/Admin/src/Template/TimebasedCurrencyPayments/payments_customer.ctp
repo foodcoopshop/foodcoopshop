@@ -20,13 +20,14 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Admin.initForm('".$this->TimebasedCurrency->getName()."');".
     Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('Stundenkonto');".
     Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');".
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.payment-text');".
     Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
 ]);
 ?>
 
 <div id="help-container">
     <ul>
-        Hier kannst du die geleisteten <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?> eintragen.
+        <?php echo $helpText; ?>
     </ul>
 </div>    
 
@@ -40,12 +41,12 @@ $this->element('addScript', ['script' =>
         'class' => 'fcs-form'
     ]);
         echo '<div id="add-timebased-currency-payment-button-wrapper">';
-        echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' eintragen', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete Zeit eintragen', 'javascript:void(0);', [
                 'class' => 'btn btn-success',
                 'escape' => false
             ]);
             echo '<div id="add-timebased-currency-payment-form" class="add-payment-form">';
-                echo '<h3>Geleistete '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' eintragen</h3>';
+                echo '<h3>Geleistete Zeit eintragen</h3>';
                 echo $this->Form->control('TimebasedCurrencyPayments.hours', [
                     'label' => 'Stunden',
                     'type' => 'select',
@@ -75,12 +76,13 @@ $this->element('addScript', ['script' =>
         echo '</div>';
     echo $this->Form->end();
 
-$tableColumnHead  = '<th>Datum</th>';
-$tableColumnHead .= '<th>Text</th>';
+$tableColumnHead  = '<th>Status</th>';
+$tableColumnHead .= '<th>Datum</th>';
 $tableColumnHead .= '<th>Hersteller</th>';
-$tableColumnHead .='<th style="text-align:right;">Geleistet</th>';
-$tableColumnHead .='<th style="text-align:right;">Offen</th>';
-$tableColumnHead .='<th style="width:25px;"></th>';
+$tableColumnHead .= '<th>Text</th>';
+$tableColumnHead .= '<th style="text-align:right;">Geleistet</th>';
+$tableColumnHead .= '<th style="text-align:right;">Offen</th>';
+$tableColumnHead .= '<th style="width:25px;"></th>';
 
 echo '<table class="list">';
 
@@ -90,17 +92,51 @@ echo '<table class="list">';
 
     foreach($payments as $payment) {
         
-        echo '<tr>';
+        echo '<tr data-payment-id="'.$payment['payment_id'].'">';
+            
+            echo '<td style="text-align:center;">';
+                switch ($payment['approval']) {
+                    case -1:
+                        echo $this->Html->image(
+                            $this->Html->getFamFamFamPath('delete.png'),
+                            [
+                                'class' => 'payment-approval'
+                            ]
+                        );
+                        break;
+                    case 0:
+                        break;
+                    case 1:
+                        echo $this->Html->image(
+                            $this->Html->getFamFamFamPath('accept.png'),
+                            [
+                                'class' => 'payment-approval'
+                            ]
+                        );
+                        break;
+                }
+            echo '</td>';
+            
             echo '<td>';
                 echo $payment['dateRaw']->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
             echo '</td>';
             
             echo '<td>';
-                echo $payment['text'];
+                echo $payment['manufacturerName'];
             echo '</td>';
             
             echo '<td>';
-                echo $payment['manufacturerName'];
+                if ($payment['payment_id'] && $payment['text'] != '') {
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('comment.png'),
+                        [
+                            'class' => 'payment-text',
+                            'title' => $payment['text']
+                        ]
+                    );
+                } else {
+                    echo $payment['text'];
+                }
             echo '</td>';
             
             echo '<td align="right">';
@@ -114,9 +150,9 @@ echo '<table class="list">';
                     echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsOpen']);
                 }
             echo '</td>';
-        
+                   
             echo '<td style="text-align:center;">';
-                if ($payment['approval'] != APP_ON) {
+                if ($payment['isDeleteAllowed']) {
                     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                         'class' => 'delete-payment-button',
                         'title' => 'Aufladung löschen?'
@@ -134,7 +170,7 @@ echo '<table class="list">';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td colspan="3"></td>';
+        echo '<td colspan="4"></td>';
         echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
         echo '<td></td>';
@@ -146,7 +182,7 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td colspan="3" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';

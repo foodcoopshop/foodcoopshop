@@ -24,7 +24,7 @@ $this->element('addScript', ['script' =>
 
 <div id="help-container">
     <ul>
-        Hier kannst du die geleisteten <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?> eintragen bzw. bestätigen.
+        Hier kannst du die Zeit-Eintragungen erstellen, löschen und bestätigen.
     </ul>
 </div>    
 
@@ -36,7 +36,6 @@ $this->element('addScript', ['script' =>
 <?php
 
 $tableColumnHead  = '<th>Mitglied</th>';
-$tableColumnHead .= '<th>Text</th>';
 $tableColumnHead .='<th style="text-align:right;">Geleistet</th>';
 $tableColumnHead .='<th style="text-align:right;">Offen</th>';
 $tableColumnHead .='<th style="text-align:right;">Saldo</th>';
@@ -52,12 +51,7 @@ echo '<table class="list">';
         echo '<tr>';
             
             echo '<td>';
-                echo $payment['text'];
-            echo '</td>';
-            
-            echo '<td>';
                 echo $payment['customerName'];
-                
                 echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                     [
@@ -99,14 +93,13 @@ echo '<table class="list">';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td colspan="2"></td>';
+        echo '<td></td>';
         echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
         echo '<td></td>';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td></td>';
         $sumNumberClass = '';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';

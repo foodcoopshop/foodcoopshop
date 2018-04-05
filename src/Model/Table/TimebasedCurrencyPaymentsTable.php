@@ -27,6 +27,9 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
+        $this->belongsTo('Customers', [
+            'foreignKey' => 'id_customer'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
