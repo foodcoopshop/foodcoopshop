@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -86,6 +87,13 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             @$orders[$orderDetail->order_detail->id_order]['order'] = $orderDetail->order_detail->order;
         }
         return $orders;
+    }
+    
+    public function getCreditBalance($manufacturerId = null, $customerId = null)
+    {
+        $timebasedCurrencyPayment = TableRegistry::get('TimebasedCurrencyPayments');
+        $creditBalance = $this->getSum($manufacturerId, $customerId) - $timebasedCurrencyPayment->getSum($manufacturerId, $customerId);
+        return $creditBalance;
     }
     
     /**

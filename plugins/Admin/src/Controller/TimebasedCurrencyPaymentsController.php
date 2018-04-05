@@ -205,7 +205,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $sumOrders = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId());
         $this->set('sumOrders', $sumOrders * -1);
         
-        $creditBalance = $sumPayments - $sumOrders;
+        $creditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance($this->AppAuth->getManufacturerId());
         $this->set('creditBalance', $creditBalance);
         
     }
