@@ -28,20 +28,29 @@ class TimebasedCurrencyHelper extends Helper
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto';
     }
     
+    public function formatSecondsToTimebasedCurrency($seconds)
+    {
+        $hours = round($seconds / 3600, 2);
+        return $this->MyHtml->formatAsUnit($hours, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
+    }
+    
     public function getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, $exchangeRate)
     {
-        $stepsInSeconds = 10 * 60;
+        $stepsInSeconds = 15 * 60;
         $dropdown = [];
         $usedValues = [];
         for($second = 0; $second <= $maxSeconds; $second++) {
-            $valueWithEuro = $this->MyTime->formatSecondsToHoursAndMinutes($second) . ' (' . $this->getCartTimebasedCurrencySecondsAsEuroForDropdown($second, $exchangeRate) . ')';
+            $valueWithEuro = $this->formatSecondsToTimebasedCurrency($second) . ' (' . $this->getCartTimebasedCurrencySecondsAsEuroForDropdown($second, $exchangeRate) . ')';
+            $valueWithEuro = str_replace('&nbsp;', ' ', $valueWithEuro);
             if ($second % $stepsInSeconds == 0 && !isset($usedValues[$second])) {
                 $dropdown[$second] = $valueWithEuro;
                 $usedValues[$second] = true;
             }
         }
-        $maxHoursValue = $this->MyTime->formatSecondsToHoursAndMinutes($maxSeconds);
+        $maxHoursValue = $this->formatSecondsToTimebasedCurrency($maxSeconds);
         $maxHoursValue .= ' (' . $this->getCartTimebasedCurrencySecondsAsEuroForDropdown($maxSeconds, $exchangeRate) . ')';
+        $maxHoursValue = str_replace('&nbsp;', ' ', $maxHoursValue);
+        
         if (!isset($usedValues[$maxHoursValue])) {
             $dropdown[$this->MyNumber->replaceCommaWithDot((string) $maxSeconds)] = $maxHoursValue;
         }

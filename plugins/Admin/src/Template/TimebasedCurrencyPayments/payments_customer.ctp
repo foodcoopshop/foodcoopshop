@@ -147,13 +147,13 @@ echo '<table class="list">';
             
             echo '<td align="right">';
                 if ($payment['secondsDone']) {
-                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsDone']);
+                    echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsDone']);
                 }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
                 if ($payment['secondsOpen']) {
-                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsOpen']);
+                    echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsOpen']);
                 }
             echo '</td>';
                    
@@ -177,8 +177,8 @@ echo '<table class="list">';
     
     echo '<tr>';
         echo '<td colspan="4"></td>';
-        echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
-        echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
+        echo '<td align="right"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumPayments) . '</b></td>';
+        echo '<td align="right" class="negative"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumOrders) . '</b></td>';
         echo '<td></td>';
     echo '</tr>';
     
@@ -188,7 +188,7 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td colspan="3" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td colspan="3" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';

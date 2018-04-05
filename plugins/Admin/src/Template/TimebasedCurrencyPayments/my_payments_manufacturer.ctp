@@ -72,13 +72,13 @@ echo '<table class="list">';
             
             echo '<td align="right">';
                 if (isset($payment['secondsDone'])) {
-                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsDone']);
+                    echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsDone']);
                 }
             echo '</td>';
             
             echo '<td class="negative" align="right">';
                 if (isset($payment['secondsOpen'])) {
-                    echo $this->Time->formatSecondsToHoursAndMinutes($payment['secondsOpen']);
+                    echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsOpen']);
                 }
             echo '</td>';
             
@@ -87,7 +87,7 @@ echo '<table class="list">';
                 $creditBalanceClass = 'negative';
             }
             echo '<td class="'.$creditBalanceClass.'" align="right">';
-                echo $this->Time->formatSecondsToHoursAndMinutes($payment['creditBalance']);
+                echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['creditBalance']);
             echo '</td>';
             
         echo '</tr>';
@@ -106,13 +106,13 @@ echo '<table class="list">';
     echo '<tr>';
         echo '<td></td>';
         echo '<td align="right"><b>' . $sumUnapprovedPaymentsCount . '</b></td>';
-        echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
-        echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
-        echo '<td align="right" ' . $sumNumberClass . '><b>' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td align="right"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumPayments) . '</b></td>';
+        echo '<td align="right" class="negative"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumOrders) . '</b></td>';
+        echo '<td align="right" ' . $sumNumberClass . '><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td align="right" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td align="right" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';

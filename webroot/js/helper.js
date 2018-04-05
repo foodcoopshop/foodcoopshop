@@ -279,21 +279,7 @@ foodcoopshop.Helper = {
     formatFloatAsEuro: function (float) {
         return this.formatFloatAsString(float) + '&nbsp;€';
     },
-    
-    /**
-     * https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript#comment57297644_25279340
-     */
-    formatSecondsAsTimebasedCurrency : function(seconds) {
-    	return new Date(seconds * 1000).toISOString().substr(11, 8);
-    },
-    
-    getTimebasedCurrencyAsSeconds(timebasedCurrency) {
-    	var a = timebasedCurrency.split(':'); // split it at the colons
-    	var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-    	seconds = Math.round(seconds, 0);
-		return seconds;
-	},
-
+      
     getEuroAsFloat: function (string) {
         return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
     },

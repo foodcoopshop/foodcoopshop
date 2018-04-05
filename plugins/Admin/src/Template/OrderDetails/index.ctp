@@ -255,7 +255,7 @@ foreach ($orderDetails as $orderDetail) {
         }
         echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
         if (!empty($orderDetail->timebased_currency_order_detail)) {
-            echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->Time->formatSecondsToHoursAndMinutes($orderDetail->timebased_currency_order_detail->seconds).'">&nbsp;*</b>';
+            echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds).'">&nbsp;*</b>';
         }
     } else {
         echo $this->Html->formatAsDecimal($orderDetail['sum_price']);

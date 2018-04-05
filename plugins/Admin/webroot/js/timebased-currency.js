@@ -13,14 +13,23 @@
  */
 foodcoopshop.TimebasedCurrency = {
 
-	updateSecondsSumDropdown : function(maxSeconds) {
+	formatFloatAsTimebasedCurrency : function(float) {
+        return foodcoopshop.Helper.formatFloatAsString(float) + '&nbsp;h';
+	},
+	
+	getTimebasedCurrencyAsFloat(timebasedCurrency) {
+		var result = foodcoopshop.Helper.getStringAsFloat(timebasedCurrency.replace(/&nbsp;h/, ''));
+		return result;
+	},
 		
+	updateHoursSumDropdown : function(maxSeconds) {
+		
+		maxSeconds = maxSeconds * 3600;
 		var dropdown = $('#timebased-currency-order-seconds-sum-tmp');
 		var selectedIndex = dropdown.find(':selected').val();
 		if (selectedIndex === undefined) {
 			selectedIndex = maxSeconds;
 		}
-		
 		foodcoopshop.Helper.disableButton(dropdown);
 		
 		foodcoopshop.Helper.ajaxCall('/warenkorb/ajaxGetTimebasedCurrencyHoursAndMinutesDropdown/' + maxSeconds, {

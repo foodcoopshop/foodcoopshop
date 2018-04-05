@@ -29,24 +29,22 @@ foodcoopshop.Cart = {
         var sum = 0;
         var depositSum = 0;
         var taxSum = 0;
-        var timebasedCurrencySecondsSum = 0;
+        var timebasedCurrencyHoursSum = 0;
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
+            var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
             $('.cart p.products').append(
-                this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, cp.timebasedCurrencySeconds)
+                this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours)
             );
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
-            
         }
         this.updateCartSum(sum);
         this.updateCartDepositSum(depositSum);
         this.updateCartTaxSum(taxSum);
+        this.updateCartTimebasedCurrencySum(timebasedCurrencyHoursSum);
         
-        
-        this.updateCartTimebasedCurrencySum(timebasedCurrencySecondsSum);
-
         foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
         $('.cart p.products').show();
 
@@ -71,7 +69,7 @@ foodcoopshop.Cart = {
         }
     },
 
-    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencySeconds) {
+    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours) {
     	
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
@@ -106,14 +104,14 @@ foodcoopshop.Cart = {
         );
         oldTax.html(foodcoopshop.Helper.formatFloatAsEuro(newTax));
         
-        // update timebasedCurrencySeconds
-        var oldTimebasedCurrencySeconds = productContainer.find('.timebasedCurrencySeconds');
-        if (oldTimebasedCurrencySeconds.length > 0) {
-	        var newTimebasedCurrencySeconds =  (
-	        		foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(oldTimebasedCurrencySeconds.html()) +
-	        		(timebasedCurrencySeconds * amount)
+        // update timebasedCurrencyHours
+        var oldTimebasedCurrencyHours = productContainer.find('.timebasedCurrencySeconds');
+        if (oldTimebasedCurrencyHours.length > 0) {
+	        var newTimebasedCurrencyHours =  (
+	        		foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(oldTimebasedCurrencyHours.html()) +
+	        		(timebasedCurrencyHours * amount)
 	        );
-	        oldTimebasedCurrencySeconds.html(foodcoopshop.Helper.formatSecondsAsTimebasedCurrency(newTimebasedCurrencySeconds));
+	        oldTimebasedCurrencyHours.html(foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(newTimebasedCurrencyHours));
         }
     },
 
@@ -147,9 +145,11 @@ foodcoopshop.Cart = {
             }
             
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
-            var timebasedCurrencySeconds = 0;
+            var timebasedCurrencyHours = 0;
             if (timebasedCurrencyElement.length > 0) {
-            	timebasedCurrencySeconds = foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(timebasedCurrencyElement.html());
+            	timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(
+        			timebasedCurrencyElement.html()
+    			);
             }
             
             var productContainer = $('#cart p.products .product.' + productId);
@@ -164,11 +164,11 @@ foodcoopshop.Cart = {
 
             if (productContainer.length > 0) {
                 // product already in cart
-                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencySeconds);
+                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours);
             } else {
                 // product not yet in cart
                 $('#cart p.products').append(
-                    foodcoopshop.Cart.getCartProductHtml(productId, amount, amount * price, productLink, unity, '', image, deposit, tax, timebasedCurrencySeconds)
+                    foodcoopshop.Cart.getCartProductHtml(productId, amount, amount * price, productLink, unity, '', image, deposit, tax, timebasedCurrencyHours)
                 );
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function () {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
@@ -179,7 +179,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.updateCartSum(price * amount);
             foodcoopshop.Cart.updateCartDepositSum(deposit * amount);
             foodcoopshop.Cart.updateCartTaxSum(tax * amount);
-            foodcoopshop.Cart.updateCartTimebasedCurrencySum(timebasedCurrencySeconds * amount);
+            foodcoopshop.Cart.updateCartTimebasedCurrencySum(timebasedCurrencyHours * amount);
             var button = productWrapper.find('.entity-wrapper.active .btn-success');
 
             foodcoopshop.Helper.ajaxCall(
@@ -254,11 +254,11 @@ foodcoopshop.Cart = {
             var newPrice = price / oldAmount;
             var newTax = tax / oldAmount;
             
-            var timebasedCurrencySecondsContainer = productContainer.find('.timebasedCurrencySeconds');
-        	var newTimebasedCurrencySeconds = 0;
-            if (timebasedCurrencySecondsContainer.length > 0) {
-            	var timebasedCurrencySeconds = foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(timebasedCurrencySecondsContainer.html())
-            	newTimebasedCurrencySeconds = timebasedCurrencySeconds / oldAmount;
+            var timebasedCurrencyHoursContainer = productContainer.find('.timebasedCurrencySeconds');
+        	var newTimebasedCurrencyHours = 0;
+            if (timebasedCurrencyHoursContainer.length > 0) {
+            	var timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHoursContainer.html())
+            	newTimebasedCurrencyHours = timebasedCurrencyHours / oldAmount;
             }
             
             var depositContainer = productContainer.find('.deposit span');
@@ -290,10 +290,10 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.removeSpinnerFromButton(button, elementClass.replace(/fa /, ''));
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                        foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax, newTimebasedCurrencySeconds);
+                        foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax, newTimebasedCurrencyHours);
                         foodcoopshop.Cart.updateCartSum(newPrice * amount);
                         foodcoopshop.Cart.updateCartTaxSum(newTax * amount);
-                        foodcoopshop.Cart.updateCartTimebasedCurrencySum(newTimebasedCurrencySeconds * amount);
+                        foodcoopshop.Cart.updateCartTimebasedCurrencySum(newTimebasedCurrencyHours * amount);
                         if (depositContainer.length > 0) {
                             foodcoopshop.Cart.updateCartDepositSum(newDeposit * amount);
                         }
@@ -316,8 +316,7 @@ foodcoopshop.Cart = {
         });
     },
 
-    getCartProductHtml: function (productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencySeconds) {
-
+    getCartProductHtml: function (productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours) {
         var imgHtml = '<span class="image">' + image + '</span>';
         if (!$(image).attr('src').match(/de\-default\-home/)) {
             imgHtml = '<a href="'  + $(image).attr('src').replace(/\-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
@@ -334,7 +333,7 @@ foodcoopshop.Cart = {
                 '<span class="delete"><a class="btn" title="Aus dem Warenkorb löschen?" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsEuro(price) + '</span>' +
                 (deposit > 0 ? '<span class="deposit">Pfand + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
-                (timebasedCurrencySeconds ? '<span class="timebasedCurrencySeconds">' + foodcoopshop.Helper.formatSecondsAsTimebasedCurrency(timebasedCurrencySeconds) + '</span>'  : '') +
+                (timebasedCurrencyHours ? '<span class="timebasedCurrencySeconds">' + foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(timebasedCurrencyHours) + '</span>'  : '') +
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsEuro(tax) + '</span>' +
             '</span>' +
         '</span>';
@@ -375,13 +374,14 @@ foodcoopshop.Cart = {
     updateCartTimebasedCurrencySum: function (amount) {
         var cartTimebasedCurrencySum = $('.cart p.timebased-currency-sum-wrapper span.sum');
         if (cartTimebasedCurrencySum.length > 0) {
-        	var newSeconds = foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(cartTimebasedCurrencySum.html()) + amount;
+        	var newHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(cartTimebasedCurrencySum.html()) + amount;
 	        cartTimebasedCurrencySum.html(
-	            foodcoopshop.Helper.formatSecondsAsTimebasedCurrency(
-	                newSeconds
+	            foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(
+	                newHours
 	            )
 	        );
-	        foodcoopshop.TimebasedCurrency.updateSecondsSumDropdown(newSeconds);
+	        console.log(newHours);
+	        foodcoopshop.TimebasedCurrency.updateHoursSumDropdown(newHours);
         }
     },
 
@@ -412,10 +412,10 @@ foodcoopshop.Cart = {
                         foodcoopshop.Cart.updateCartTaxSum(
                             foodcoopshop.Helper.getEuroAsFloat(p.find('span.tax').html()) * -1
                         );
-                        var timebasedCurrencySeconds = p.find('.timebasedCurrencySeconds');
-                        if (timebasedCurrencySeconds.length > 0) {
+                        var timebasedCurrencyHours = p.find('.timebasedCurrencySeconds');
+                        if (timebasedCurrencyHours.length > 0) {
 	                        foodcoopshop.Cart.updateCartTimebasedCurrencySum(
-	                            foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(timebasedCurrencySeconds.html()) * -1
+	                            foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHours.html()) * -1
 	                        );
                         }
                     }

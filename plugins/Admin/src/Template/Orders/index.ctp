@@ -178,7 +178,7 @@ use Cake\Core\Configure;
         echo '<td class="right">';
             echo $this->Html->formatAsEuro($paidField);
             if (!empty($order->timebased_currency_order)) {
-                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->Time->formatSecondsToHoursAndMinutes($order->timebased_currency_order->seconds_sum).'">&nbsp;*</b>';
+                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($order->timebased_currency_order->seconds_sum).'">&nbsp;*</b>';
             }
         echo '</td>';
 
