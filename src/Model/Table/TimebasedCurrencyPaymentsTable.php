@@ -38,13 +38,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         return $validator;
     }
     
-    /**
-     * @param int $manufacturerId
-     * @param int $customerId
-     * @throws InvalidParameterException
-     * @return int
-     */
-    public function getSum($manufacturerId = null, $customerId = null)
+    private function getPayments($manufacturerId, $customerId)
     {
         if (!$manufacturerId && !$customerId) {
             throw new InvalidParameterException('either manufacturerId or customerId needs to be set');
@@ -52,9 +46,6 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         
         $query = $this->find('all');
         
-        $query->select(
-            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyPayments.seconds')]
-        );
         $query->where(
             ['TimebasedCurrencyPayments.status' => APP_ON]
         );
@@ -68,11 +59,44 @@ class TimebasedCurrencyPaymentsTable extends AppTable
                 ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
             );
         }
+        
+        return $query;
+        
+    }
+    
+    public function getUnapprovedCount($manufacturerId = null, $customerId = null)
+    {
+        $query = $this->getPayments($manufacturerId, $customerId);
+        $query->where(
+            ['TimebasedCurrencyPayments.approval' => APP_OFF]
+        );
+        $query->select(
+            ['UnapprovedCount' => $query->func()->count('TimebasedCurrencyPayments.approval')]
+        );
+        $unapprovedCount = $query->toArray()[0]['UnapprovedCount'];
+        if ($unapprovedCount == '') {
+            $unapprovedCount = 0;
+        }
+        return $unapprovedCount;
+    }
+    
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @throws InvalidParameterException
+     * @return int
+     */
+    public function getSum($manufacturerId = null, $customerId = null)
+    {
+        $query = $this->getPayments($manufacturerId, $customerId);
+        $query->select(
+            ['SumSeconds' => $query->func()->sum('TimebasedCurrencyPayments.seconds')]
+        );
+        
         $sumSeconds = $query->toArray()[0]['SumSeconds'];
         if ($sumSeconds == '') {
             $sumSeconds = 0;
         }
-        
         return $sumSeconds;
     }
 

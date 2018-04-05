@@ -24,7 +24,7 @@ $this->element('addScript', ['script' =>
 
 <div id="help-container">
     <ul>
-        Hier kannst du die Zeit-Eintragungen erstellen, löschen und bestätigen.
+        Übersicht über dein <?php echo $this->TimebasedCurrency->getName(); ?>.
     </ul>
 </div>    
 
@@ -35,7 +35,8 @@ $this->element('addScript', ['script' =>
 
 <?php
 
-$tableColumnHead  = '<th>Mitglied</th>';
+$tableColumnHead  = '<th></th>';
+$tableColumnHead .='<th style="text-align:right;">Unbestätigt</th>';
 $tableColumnHead .='<th style="text-align:right;">Geleistet</th>';
 $tableColumnHead .='<th style="text-align:right;">Offen</th>';
 $tableColumnHead .='<th style="text-align:right;">Saldo</th>';
@@ -61,6 +62,12 @@ echo '<table class="list">';
                     $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customerId'])
                 ).'</span>';
                     
+            echo '</td>';
+            
+            echo '<td align="right">';
+                if ($payment['unapprovedCount'] > 0) {
+                    echo '<b>'.$payment['unapprovedCount'].'</b>';
+                }
             echo '</td>';
             
             echo '<td align="right">';
@@ -92,19 +99,22 @@ echo '<table class="list">';
         echo str_replace('th', 'td', $tableColumnHead);
     echo '</tr>';
     
+    $sumNumberClass = '';
+    if ($creditBalance < 0) {
+        $sumNumberClass = ' class="negative"';
+    }
     echo '<tr>';
         echo '<td></td>';
+        echo '<td align="right"><b>' . $sumUnapprovedPaymentsCount . '</b></td>';
         echo '<td align="right"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->Time->formatSecondsToHoursAndMinutes($sumOrders) . '</b></td>';
-        echo '<td></td>';
+        echo '<td align="right" ' . $sumNumberClass . '><b>' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
     echo '</tr>';
     
     echo '<tr>';
-        $sumNumberClass = '';
-        if ($creditBalance < 0) {
-            $sumNumberClass = ' class="negative"';
-        }
-        echo '<td colspan="2" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td align="right" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Time->formatSecondsToHoursAndMinutes($creditBalance) . '</b></td>';
+        echo '<td></td>';
+        echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';
     echo '</tr>';

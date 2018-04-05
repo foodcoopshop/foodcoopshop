@@ -188,12 +188,16 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         foreach($payments as &$payment) {
             $payment['text'] = '';
+            $payment['unapprovedCount'] = $this->TimebasedCurrencyPayment->getUnapprovedCount($this->AppAuth->getManufacturerId(), $payment['customerId']);
             $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']);
             $payment['secondsOpen'] = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']) * -1;
             $payment['creditBalance'] = $payment['secondsOpen'] + $payment['secondsDone'];
         }
         
         $this->set('payments', $payments);
+        
+        $sumUnapprovedPaymentsCount = $this->TimebasedCurrencyPayment->getUnapprovedCount($this->AppAuth->getManufacturerId());
+        $this->set('sumUnapprovedPaymentsCount', $sumUnapprovedPaymentsCount);
         
         $sumPayments = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId());
         $this->set('sumPayments', $sumPayments);
