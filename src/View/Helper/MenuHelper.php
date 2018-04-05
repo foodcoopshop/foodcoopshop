@@ -175,7 +175,7 @@ class MenuHelper extends Helper
     public function getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForCustomers(), 'name' => Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto', 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForCustomers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
         }
         return [];
     }
@@ -183,7 +183,7 @@ class MenuHelper extends Helper
     public function getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForManufacturer()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForManufacturers(), 'name' => Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto', 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForManufacturers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
         }
         return [];
     }

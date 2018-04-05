@@ -23,7 +23,7 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
-
+    
     initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');

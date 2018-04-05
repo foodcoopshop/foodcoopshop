@@ -95,7 +95,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     
     public function myPaymentsManufacturer()
     {
-        $this->set('title_for_layout', 'Mein ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto');
+        $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
         
         $timebasedCurrencyOrderDetails = $this->TimebasedCurrencyOrderDetail->find('all', [
             'conditions' => [
@@ -137,7 +137,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     
     public function myPaymentsCustomer()
     {
-        $this->set('title_for_layout', 'Mein ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto');
+        $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
         $this->paymentListCustomer(null, $this->AppAuth->getUserId());
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
         $this->render('paymentsCustomer');

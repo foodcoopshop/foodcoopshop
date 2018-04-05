@@ -74,8 +74,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/warenkorb/anzeigen', ['controller' => 'Carts', 'action' => 'detail']);
     $routes->connect('/warenkorb/abschliessen', ['controller' => 'Carts', 'action' => 'finish']);
     $routes->connect('/warenkorb/abgeschlossen/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
-    $routes->connect('/warenkorb/:action', ['controller' => 'Carts']);
-
+    $routes->connect('/warenkorb/:action/*', ['controller' => 'Carts']);
+    
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
 
     /**

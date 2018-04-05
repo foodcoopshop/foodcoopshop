@@ -341,10 +341,6 @@ a.button {
 a.button:hover {
     opacity: 0.7;
 }
-button[disabled],
-a[disabled] {
-    opacity: 0.5;
-}
 
 body.blog_posts.index .blog-post-wrapper,
 .product-wrapper,
@@ -1475,6 +1471,7 @@ a.button {
 a.button:hover {
     opacity: 0.7;
 }
+select[disabled],
 button[disabled],
 a[disabled] {
     opacity: 0.5;

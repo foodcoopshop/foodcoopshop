@@ -302,7 +302,7 @@ foodcoopshop.Cart = {
                             foodcoopshop.Helper.disableButton(minusButton);
                         } else {
                             foodcoopshop.Helper.enableButton(minusButton);
-                        }
+                        }                       
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
@@ -375,11 +375,13 @@ foodcoopshop.Cart = {
     updateCartTimebasedCurrencySum: function (amount) {
         var cartTimebasedCurrencySum = $('.cart p.timebased-currency-sum-wrapper span.sum');
         if (cartTimebasedCurrencySum.length > 0) {
+        	var newSeconds = foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(cartTimebasedCurrencySum.html()) + amount;
 	        cartTimebasedCurrencySum.html(
 	            foodcoopshop.Helper.formatSecondsAsTimebasedCurrency(
-	                foodcoopshop.Helper.getTimebasedCurrencyAsSeconds(cartTimebasedCurrencySum.html()) + amount
+	                newSeconds
 	            )
 	        );
+	        foodcoopshop.TimebasedCurrency.updateSecondsSumDropdown(newSeconds);
         }
     },
 
