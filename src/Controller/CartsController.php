@@ -60,13 +60,13 @@ class CartsController extends FrontendController
     public function ajaxGetTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds)
     {
         $this->RequestHandler->renderAs($this, 'json');
+        $maxSeconds = (int) $maxSeconds;
         $options = Configure::read('app.timebasedCurrencyHelper')->getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
         $this->set('data', [
             'options' => $options,
             'status' => !empty($options)
         ]);
         $this->set('_serialize', 'data');
-        
     }
 
     public function detail()
