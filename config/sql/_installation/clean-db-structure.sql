@@ -263,7 +263,7 @@ CREATE TABLE `fcs_manufacturer` (
   `enabled_sync_domains` varchar(50) DEFAULT NULL,
   `timebased_currency_enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `timebased_currency_max_percentage` tinyint(3) unsigned NOT NULL DEFAULT '30',
-  `timebased_currency_max_credit_balance` tinyint(3) unsigned DEFAULT '100',
+  `timebased_currency_max_credit_balance` int(7) unsigned DEFAULT '360000',
   PRIMARY KEY (`id_manufacturer`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -512,7 +512,9 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->send_ordered_product_quantity_changed_notification)) {
             $manufacturer->send_ordered_product_quantity_changed_notification = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
-
+        
+        $manufacturer->timebased_currency_max_credit_balance /= 3600;
+        
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = TableRegistry::get('Customers');
             $this->set('customersForDropdown', $this->Customer->getForDropdown());
@@ -551,9 +553,15 @@ class ManufacturersController extends AdminAppController
                 'validate' => 'editOptions'
             ]
         );
-
+        if (!empty($this->request->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
+            $this->request->data['Manufacturers']['timebased_currency_max_credit_balance'] *= 3600;
+        }
+        
         if (!empty($manufacturer->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            if (!empty($this->request->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
+                $this->request->data['Manufacturers']['timebased_currency_max_credit_balance'] /= 3600;
+            }
             $this->set('manufacturer', $manufacturer);
             $this->render('edit_options');
         } else {
