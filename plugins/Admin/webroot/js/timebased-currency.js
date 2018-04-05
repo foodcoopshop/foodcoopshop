@@ -24,7 +24,7 @@ foodcoopshop.TimebasedCurrency = {
 		
 	updateHoursSumDropdown : function(maxSeconds) {
 		
-		maxSeconds = maxSeconds * 3600;
+		maxSeconds = Math.floor(parseFloat(maxSeconds) * 3600);
 		var dropdown = $('#timebased-currency-order-seconds-sum-tmp');
 		var selectedIndex = dropdown.find(':selected').val();
 		if (selectedIndex === undefined) {

@@ -483,7 +483,8 @@ class CartsController extends FrontendController
         
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
-            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $this->AppAuth->Cart->getTimebasedCurrencySecondsSum());
+            $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSum() * 1.1; // avoid problems with rounding
+            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
         }
         $order = $this->Order->newEntity(
             $this->request->getData(),
