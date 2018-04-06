@@ -19,9 +19,17 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Admin.init();".
     Configure::read('app.jsNamespace').".Admin.initForm('".$this->TimebasedCurrency->getName()."');".
     Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('Stundenkonto');".
-    Configure::read('app.jsNamespace').".Helper.initTooltip('.payment-text');".
-    Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.payment-text');"
 ]);
+
+$colspan = 4;
+if ($isDeleteAllowedGlobally) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
+    ]);
+} else {
+    $colspan--;
+}
 ?>
 
 <div id="help-container">
@@ -88,7 +96,9 @@ $tableColumnHead .= '<th>Hersteller</th>';
 $tableColumnHead .= '<th>Text</th>';
 $tableColumnHead .= '<th style="text-align:right;">Geleistet</th>';
 $tableColumnHead .= '<th style="text-align:right;">Offen</th>';
-$tableColumnHead .= '<th style="width:25px;"></th>';
+if ($isDeleteAllowedGlobally) {
+    $tableColumnHead .= '<th style="width:25px;"></th>';
+}
 
 echo '<table class="list">';
 
@@ -156,15 +166,17 @@ echo '<table class="list">';
                     echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsOpen']);
                 }
             echo '</td>';
-                   
-            echo '<td style="text-align:center;">';
-                if ($payment['isDeleteAllowed']) {
-                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                        'class' => 'delete-payment-button',
-                        'title' => 'Zeit-Eintragung löschen?'
-                    ], 'javascript:void(0);');
-                }
-            echo '</td>';
+            
+            if ($isDeleteAllowedGlobally) {
+                echo '<td style="text-align:center;">';
+                    if ($payment['isDeleteAllowed']) {
+                        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
+                            'class' => 'delete-payment-button',
+                            'title' => 'Zeit-Eintragung löschen?'
+                        ], 'javascript:void(0);');
+                    }
+                echo '</td>';
+            }
             
         echo '</tr>';
         
@@ -176,7 +188,7 @@ echo '<table class="list">';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td colspan="4"></td>';
+        echo '<td colspan="'.$colspan.'"></td>';
         echo '<td align="right"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumOrders) . '</b></td>';
         echo '<td></td>';
@@ -188,7 +200,8 @@ echo '<table class="list">';
         if ($creditBalance < 0) {
             $sumNumberClass = ' class="negative"';
         }
-        echo '<td colspan="3" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
+        $reducedColspan = $colspan - 1;
+        echo '<td colspan="'.$reducedColspan.'" ' . $sumNumberClass . '><b style="font-size: 16px;">' . $paymentBalanceTitle . ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';

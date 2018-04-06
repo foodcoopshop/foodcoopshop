@@ -31,7 +31,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
                 break;
             case 'delete':
-                return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer() || $this->AppAuth->isTimebasedCurrencyEnabledForManufacturer();
+                return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
                 break;
             case 'myPaymentsManufacturer':
             case 'myPaymentDetailsManufacturer':
@@ -213,6 +213,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     public function myPaymentsCustomer()
     {
         $this->set('showAddForm', true);
+        $this->set('isDeleteAllowedGlobally', true);
         $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
         $this->paymentListCustomer(null, $this->AppAuth->getUserId());
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
@@ -232,6 +233,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         ])->first();
         
         $this->set('showAddForm', false);
+        $this->set('isDeleteAllowedGlobally', false);
         $this->set('title_for_layout', 'Detail-Ansicht ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name);
         $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
         $this->set('helpText', 'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und bearbeiten.');
