@@ -542,8 +542,12 @@ class PaymentsController extends AdminAppController
 
         $contain = ['Payments'];
         if (in_array('product', $this->allowedPaymentTypes)) {
-            $contain [] = 'PaidCashFreeOrders';
+            $contain[] = 'PaidCashFreeOrders';
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+                $contain[] = 'PaidCashFreeOrders.TimebasedCurrencyOrders';
+            }
         }
+        
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -589,10 +593,22 @@ class PaymentsController extends AdminAppController
                     'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
                         'title' => 'Bestellung anzeigen'
                     ]),
-                    'payment_id' => null
+                    'payment_id' => null,
+                    'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null
                 ];
             }
         }
+        
+        $timebasedCurrencyOrderInList = false;
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            foreach($customer->paid_cash_free_orders as $order) {
+                if (!empty($order->timebased_currency_order)) {
+                    $timebasedCurrencyOrderInList = true;
+                    break;
+                }
+            }
+        }
+        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
 
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);

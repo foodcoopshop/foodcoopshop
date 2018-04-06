@@ -46,6 +46,12 @@ if (count($payments) == 0) {
         'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');"
     ]);
 
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
+        ]);
+    }
+    
     echo '<table class="list">';
     echo '<tr class="sort">';
         echo '<th>Datum</th>';
@@ -144,6 +150,9 @@ if (count($payments) == 0) {
         if ($payment['type'] == 'order') {
             $sumOrders += $payment['amount'];
             echo $this->Html->formatAsEuro($payment['amount']);
+            if (!empty($payment['timebased_currency_order'])) {
+                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['timebased_currency_order']->seconds_sum).'">&nbsp;*</b>';
+            }
         }
         echo '</td>';
 
@@ -226,7 +235,12 @@ if ($this->request->action == 'product') {
         echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
     echo '</div>';
 }
+
+echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+
 ?>
+
+
 <div class="sc"></div>
 
 </div>
