@@ -268,8 +268,10 @@ use Cake\Core\Configure;
             echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Bestellungen abschließen</button>';
         }
     }
-
     echo '</div>';
+    
+    echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+    
     echo '<div class="sc"></div>';
 
     ?>

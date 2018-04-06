@@ -415,6 +415,8 @@ if ($buttonExists) {
     echo '<div class="sc"></div>';
 }
 
+echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+
 ?>
     <div class="sc"></div>
 

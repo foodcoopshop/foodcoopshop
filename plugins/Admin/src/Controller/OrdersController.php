@@ -323,7 +323,18 @@ class OrdersController extends AdminAppController
             $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
         }
         $this->set('orders', $orders);
-
+        
+        $timebasedCurrencyOrderInList = false;
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            foreach($orders as $order) {
+                if (!empty($order->timebased_currency_order)) {
+                    $timebasedCurrencyOrderInList = true;
+                    break;
+                }
+            }
+        }
+        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
+        
         $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
         $this->set('title_for_layout', 'Bestellungen');

@@ -23,6 +23,15 @@ class TimebasedCurrencyHelper extends Helper
     
     public $helpers = ['MyTime', 'MyHtml', 'MyNumber'];
     
+    public function getOrderInformationText($showText)
+    {
+        $text = '';
+        if ($showText) {
+            $text = '<p style="clear:both;">* Mouseover zeigt den bezahlten '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').'-Betrag an.</p>';
+        }
+        return $text;
+    }
+    
     public function getName()
     {
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto';
