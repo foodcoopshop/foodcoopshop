@@ -57,11 +57,11 @@ class CartsController extends FrontendController
         return $this->AppAuth->user() && Configure::read('appDb.FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
     }
     
-    public function ajaxGetTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds)
+    public function ajaxGetTimebasedCurrencyHoursDropdown($maxSeconds)
     {
         $this->RequestHandler->renderAs($this, 'json');
         $maxSeconds = (int) $maxSeconds;
-        $options = Configure::read('app.timebasedCurrencyHelper')->getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
+        $options = Configure::read('app.timebasedCurrencyHelper')->getTimebasedCurrencyHoursDropdown($maxSeconds, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
         $this->set('data', [
             'options' => $options,
             'status' => !empty($options)

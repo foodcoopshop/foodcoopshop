@@ -32,7 +32,7 @@ foodcoopshop.TimebasedCurrency = {
 		}
 		foodcoopshop.Helper.disableButton(dropdown);
 		
-		foodcoopshop.Helper.ajaxCall('/warenkorb/ajaxGetTimebasedCurrencyHoursAndMinutesDropdown/' + maxSeconds, {
+		foodcoopshop.Helper.ajaxCall('/warenkorb/ajaxGetTimebasedCurrencyHoursDropdown/' + maxSeconds, {
         }, {
             onOk: function (data) {
         		dropdown.empty();

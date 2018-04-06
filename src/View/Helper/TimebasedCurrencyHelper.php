@@ -34,7 +34,7 @@ class TimebasedCurrencyHelper extends Helper
         return $this->MyHtml->formatAsUnit($hours, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
     }
     
-    public function getTimebasedCurrencyHoursAndMinutesDropdown($maxSeconds, $exchangeRate)
+    public function getTimebasedCurrencyHoursDropdown($maxSeconds, $exchangeRate)
     {
         $stepsInSeconds = 15 * 60;
         $dropdown = [];
