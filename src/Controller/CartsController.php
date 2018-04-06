@@ -6,7 +6,6 @@ use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -152,7 +151,7 @@ class CartsController extends FrontendController
 
         if (!$this->request->is('post')) {
             $this->redirect('/');
-            exit(0);
+            return;
         }
 
         $this->set('title_for_layout', 'Warenkorb abschließen');
