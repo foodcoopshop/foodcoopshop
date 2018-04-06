@@ -116,16 +116,24 @@ header('Pragma: no-cache');
     
 <?php
     echo $this->element('renderJs', ['configs' => ['frontend']]);
-if ($isMobile) {
-    echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
-
-    // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(
-        Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();",
-        ['inline' => true]
-    );
-}
+    
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        echo $this->MyHtml->scriptBlock(
+            Configure::read('app.jsNamespace').".TimebasedCurrency.setShortcode('".Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')."');",
+            ['inline' => true]
+        );
+    }
+    
+    if ($isMobile) {
+        echo '<div class="is-mobile-detector"></div>';
+        echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
+    
+        // add script BEFORE all scripts that are loaded in views (block)
+        echo $this->MyHtml->scriptBlock(
+            Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();",
+            ['inline' => true]
+        );
+    }
     echo $this->fetch('script'); // all scripts from layouts
 ?>
 

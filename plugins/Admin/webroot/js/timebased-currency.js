@@ -13,12 +13,20 @@
  */
 foodcoopshop.TimebasedCurrency = {
 
-	formatFloatAsTimebasedCurrency : function(float) {
-        return foodcoopshop.Helper.formatFloatAsString(float) + '&nbsp;h';
+	shortcode: '',
+		
+    setShortcode: function (shortcode) {
+        this.shortcode = shortcode;
+    },
+
+    formatFloatAsTimebasedCurrency : function(float) {
+        return foodcoopshop.Helper.formatFloatAsString(float) + '&nbsp;' + this.shortcode;
 	},
 	
 	getTimebasedCurrencyAsFloat(timebasedCurrency) {
-		var result = foodcoopshop.Helper.getStringAsFloat(timebasedCurrency.replace(/&nbsp;h/, ''));
+		var regexAsString = '&nbsp;' + this.shortcode;
+		var regex = new RegExp(regexAsString, 'g');
+		var result = foodcoopshop.Helper.getStringAsFloat(timebasedCurrency.replace(regex, ''));
 		return result;
 	},
 		
