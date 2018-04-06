@@ -342,7 +342,7 @@ class CartsController extends FrontendController
 
         if (!$this->request->is('post')) {
             $this->redirect('/');
-            exit(0);
+            return;
         }
 
         $this->set('title_for_layout', 'Warenkorb abschließen');
