@@ -22,12 +22,12 @@ foodcoopshop.TimebasedCurrency = {
 		return result;
 	},
 		
-	updateHoursSumDropdown : function(maxSeconds) {
+	updateHoursSumDropdown : function(maxSeconds, selectedIndex) {
 		
 		maxSeconds = Math.floor(parseFloat(maxSeconds) * 3600);
 		var dropdown = $('#timebased-currency-order-seconds-sum-tmp');
-		var selectedIndex = dropdown.find(':selected').val();
-		if (selectedIndex === undefined) {
+		
+		if (selectedIndex === undefined || selectedIndex > maxSeconds) {
 			selectedIndex = maxSeconds;
 		}
 		foodcoopshop.Helper.disableButton(dropdown);

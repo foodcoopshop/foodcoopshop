@@ -380,7 +380,7 @@ foodcoopshop.Cart = {
 	                newHours
 	            )
 	        );
-	        foodcoopshop.TimebasedCurrency.updateHoursSumDropdown(newHours);
+	        foodcoopshop.TimebasedCurrency.updateHoursSumDropdown(newHours, $('#timebased-currency-order-seconds-sum-tmp').find(':selected').val());
         }
     },
 

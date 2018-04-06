@@ -344,7 +344,7 @@ class CartsController extends FrontendController
             $this->redirect('/');
             return;
         }
-
+        
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCart();
 
@@ -483,7 +483,7 @@ class CartsController extends FrontendController
         
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
-            $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSum() * 1.1; // avoid problems with rounding
+            $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
             $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
         }
         $order = $this->Order->newEntity(

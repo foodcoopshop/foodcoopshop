@@ -60,6 +60,15 @@ class CartComponent extends Component
         return 0;
     }
     
+    /**
+     * avoids rounding errors
+     * @return number
+     */
+    public function getTimebasedCurrencySecondsSumRoundedUp()
+    {
+        return $this->getTimebasedCurrencySecondsSum() * 1.1;
+    }
+    
     public function getTimebasedCurrencySecondsSum()
     {
         if ($this->cart !== null) {
