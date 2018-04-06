@@ -22,13 +22,11 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initTooltip('.payment-text');"
 ]);
 
-$colspan = 4;
+$colspan = 5;
 if ($isDeleteAllowedGlobally) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
     ]);
-} else {
-    $colspan--;
 }
 ?>
 
@@ -45,60 +43,24 @@ if ($isDeleteAllowedGlobally) {
 
 <?php
     if ($showAddForm) {
-        
-        $this->element('addScript', ['script' => 
-            Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');"
-        ]);
-        
-        echo $this->Form->create(null, [
-            'class' => 'fcs-form'
-        ]);
-            echo '<div id="add-timebased-currency-payment-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete Zeit eintragen', 'javascript:void(0);', [
-                    'class' => 'btn btn-success',
-                    'escape' => false
-                ]);
-                echo '<div id="add-timebased-currency-payment-form" class="add-payment-form">';
-                    echo '<h3>Geleistete Zeit eintragen</h3>';
-                    echo $this->Form->control('TimebasedCurrencyPayments.hours', [
-                        'label' => 'Stunden',
-                        'type' => 'select',
-                        'value' => 0,
-                        'options' => [0,1,2,3,4,5,6,7,8,9,10,11,12],
-                        'class' => 'selectpicker-disabled time'
-                    ]);
-                    echo $this->Form->control('TimebasedCurrencyPayments.minutes', [
-                        'label' => 'Minuten',
-                        'type' => 'select',
-                        'options' => [0 => '00', 15 => '15', 30 => '30', 45 => '45'],
-                        'class' => 'selectpicker-disabled time'
-                    ]);
-                    echo $this->Form->control('TimebasedCurrencyPayments.manufacturerId', [
-                        'type' => 'select',
-                        'options' => $manufacturersForDropdown,
-                        'label' => 'Hersteller',
-                        'class' => 'selectpicker-disabled'
-                    ]);
-                    echo $this->Form->control('TimebasedCurrencyPayments.text', [
-                        'label' => 'Anmerkungen',
-                        'type' => 'textarea',
-                        'placeholder' => 'Hier ist Platz für Anmerkungen, die der Hersteller lesen kann.'
-                    ]);
-                    echo $this->Form->hidden('TimebasedCurrencyPayments.customerId', ['value' => $appAuth->getUserId()]);
-                echo '</div>';
-            echo '</div>';
-        echo $this->Form->end();
+        echo '<div id="add-timebased-currency-payment-button-wrapper">';
+        echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete Zeit eintragen',
+            $this->Slug->getTimebasedCurrencyPaymentAdd(),
+            [
+                'class' => 'btn btn-success',
+                'escape' => false
+            ]);
+        echo '</div>';
     }
     
 $tableColumnHead  = '<th>Status</th>';
-$tableColumnHead .= '<th>Datum</th>';
+$tableColumnHead .= '<th>Datum Eintragung / Bestellung</th>';
+$tableColumnHead .= '<th>Arbeitstag</th>';
 $tableColumnHead .= '<th>Hersteller</th>';
 $tableColumnHead .= '<th>Text</th>';
 $tableColumnHead .= '<th style="text-align:right;">Geleistet</th>';
 $tableColumnHead .= '<th style="text-align:right;">Offen</th>';
-if ($isDeleteAllowedGlobally) {
-    $tableColumnHead .= '<th style="width:25px;"></th>';
-}
+$tableColumnHead .= '<th style="width:25px;"></th>';
 
 echo '<table class="list">';
 
@@ -138,10 +100,16 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td>';
+                if (!empty($payment['workingDay'])) {
+                    echo $payment['workingDay']->i18nFormat(Configure::read('DateFormat.de.DateLong2'));
+                }
+            echo '</td>';
+            
+            echo '<td style="width: 180px;">';
                 echo $payment['manufacturerName'];
             echo '</td>';
             
-            echo '<td>';
+            echo '<td style="width: 180px;">';
                 if ($payment['payment_id'] && $payment['text'] != '') {
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('comment.png'),
@@ -167,16 +135,27 @@ echo '<table class="list">';
                 }
             echo '</td>';
             
-            if ($isDeleteAllowedGlobally) {
-                echo '<td style="text-align:center;">';
+            echo '<td style="text-align:center;">';
+                if ($isDeleteAllowedGlobally) {
                     if ($payment['isDeleteAllowed']) {
                         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                             'class' => 'delete-payment-button',
                             'title' => 'Zeit-Eintragung löschen?'
                         ], 'javascript:void(0);');
                     }
-                echo '</td>';
-            }
+                } else {
+                    if ($payment['payment_id']) {
+                        echo $this->Html->getJqueryUiIcon(
+                            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                            [
+                                'title' => 'Bearbeiten'
+                            ],
+                            $this->Slug->getTimebasedCurrencyPaymentEdit($payment['payment_id'])
+                        );
+                    }
+                }
+            echo '</td>';
+                
             
         echo '</tr>';
         

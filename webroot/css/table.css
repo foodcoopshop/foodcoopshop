@@ -85,6 +85,9 @@ table.list tr.fake-th td {
 table.list th {
   background-color: #ebebeb;
   border-top: 1px solid #dfdfdf;
+}
+table.list th,
+table.list tr.fake-th {
   line-height: 14px;
 }
 table.list tr.fake-th td {

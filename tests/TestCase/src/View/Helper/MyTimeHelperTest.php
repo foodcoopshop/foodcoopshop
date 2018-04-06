@@ -24,50 +24,6 @@ class MyTimeHelperTest extends AppCakeTestCase
     {
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
-    
-    public function testFormatSecondsToHoursAndMinutes()
-    {
-        
-        $tests = [
-            [
-                'seconds' => 0,
-                'expected' => '00:00:00'
-            ],
-            [
-                'seconds' => -3600,
-                'expected' => '-01:00:00'
-            ],
-            [
-                'seconds' => 3600,
-                'expected' => '01:00:00'
-            ],
-            [
-                'seconds' => 1800,
-                'expected' => '00:30:00'
-            ],
-            [
-                'seconds' => -1800,
-                'expected' => '-00:30:00'
-            ],
-            [
-                'seconds' => 1800,
-                'expected' => '00:30:00'
-            ],
-            [
-                'seconds' => 12024,
-                'expected' => '03:20:24'
-            ],
-            [
-                'seconds' => 12048,
-                'expected' => '03:20:48'
-            ]
-        ];
-        
-        foreach ($tests as $test) {
-            $result = $this->MyTimeHelper->formatSecondsToHoursAndMinutes($test['seconds']);
-            $this->assertEquals($test['expected'], $result);
-        }
-    }
 
     private function prepareWednesdayFridayConfig()
     {

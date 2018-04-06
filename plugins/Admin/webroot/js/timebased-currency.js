@@ -64,57 +64,6 @@ foodcoopshop.TimebasedCurrency = {
 		
 	},
 		
-    initPaymentAdd: function (button) {
-
-        $(button).featherlight(
-            foodcoopshop.AppFeatherlight.initLightboxForForms(
-                foodcoopshop.TimebasedCurrency.addPaymentFormSave,
-                null,
-                foodcoopshop.AppFeatherlight.closeLightbox,
-                $('.add-payment-form')
-            )
-        );
-
-    },
-
-    addPaymentFormSave: function () {
-
-        var hours = $('.featherlight-content #timebasedcurrencypayments-hours').val();
-        var minutes = $('.featherlight-content #timebasedcurrencypayments-minutes').val();
-        
-        if (hours == 0 && minutes == 0) {
-            alert('Bitte wähle deine geleistete Zeit aus.');
-            foodcoopshop.AppFeatherlight.enableSaveButton();
-            return;
-        }
-
-        var customerId = $('.featherlight-content input[name="TimebasedCurrencyPayments[customerId]"]').val();
-        var manufacturerId = $('.featherlight-content #timebasedcurrencypayments-manufacturerid').val();
-
-        var text = '';
-        var textField = $('.featherlight-content #timebasedcurrencypayments-text');
-        if (textField.length > 0) {
-            text = textField.val().trim();
-        }
-
-        foodcoopshop.Helper.ajaxCall('/admin/timebased-currency-payments/add/', {
-            hours: hours,
-            minutes: minutes,
-            text: text,
-            customerId: customerId,
-            manufacturerId: manufacturerId,
-        }, {
-            onOk: function (data) {
-                document.location.reload();
-            },
-            onError: function (data) {
-                alert(data.msg);
-                document.location.reload();
-            }
-        });
-
-    },
-    
     initDeletePayment: function () {
 
         $('.delete-payment-button').on('click',function () {
@@ -122,8 +71,8 @@ foodcoopshop.TimebasedCurrency = {
             var dataRow = $(this).closest('tr');
 
             var dialogHtml = '<p>Willst du deine Eintragung wirklich löschen?<br />';
-            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
-            dialogHtml += 'Stunden: <b>' + dataRow.find('td:nth-child(5)').html()
+            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(3)').html() + '</b> <br />';
+            dialogHtml += 'Stunden: <b>' + dataRow.find('td:nth-child(6)').html()
             dialogHtml += '</b>';
             dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 

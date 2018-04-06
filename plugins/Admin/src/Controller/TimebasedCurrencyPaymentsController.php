@@ -3,7 +3,10 @@
 namespace Admin\Controller;
 
 use Cake\Event\Event;
+use Cake\I18n\Date;
+use Cake\I18n\Time;
 use Cake\Core\Configure;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
@@ -28,13 +31,12 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         switch ($this->request->action) {
             case 'myPaymentsCustomer':
             case 'add':
-                return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
-                break;
             case 'delete':
                 return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
                 break;
             case 'myPaymentsManufacturer':
             case 'myPaymentDetailsManufacturer':
+            case 'edit':
                 return $this->AppAuth->isTimebasedCurrencyEnabledForManufacturer();
                 break;
             default:
@@ -86,7 +88,11 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         );
         
         $this->ActionLog = TableRegistry::get('ActionLogs');
-        $message = 'Die Zeit-Eintragung (' . Configure::read('app.timeHelper')->formatSecondsToHoursAndMinutes($payment->seconds). ') ';
+        $message = 'Die Zeit-Eintragung';
+        if ($payment->working_day) {
+            $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
+        }
+        $message .= ' (' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ') ';
         
         if ($this->AppAuth->getUserId() != $payment->id_customer) {
             $message .= ' von ' . $payment->customer->name;
@@ -102,66 +108,115 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         ]));
     }
     
-    public function add()
+    public function _processForm($payment, $isEditMode)
     {
-        $this->RequestHandler->renderAs($this, 'json');
+        
+        $this->setFormReferer();
+        $this->set('isEditMode', $isEditMode);
+        
+        if (empty($this->request->getData())) {
+            $this->set('payment', $payment);
+            return;
+        }
         
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
         $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
         
-        $hours = (int) $this->request->getData('hours');
-        $minutes = (int) $this->request->getData('minutes');
-        $customerId = (int) $this->request->getData('customerId');
-        $manufacturerId = (int) $this->request->getData('manufacturerId');
-        $text = $this->request->getData('text');
         
-        $seconds = $hours * 3600 + $minutes * 60;
-        $newPaymentEntity = $this->TimebasedCurrencyPayment->newEntity(
-            [
-                'status' => APP_ON,
-                'text' => $text,
-                'id_customer' => $customerId,
-                'id_manufacturer' => $manufacturerId,
-                'seconds' => $seconds,
-                'created_by' => $this->AppAuth->getUserId()
-            ]
-        );
+        if (!empty($this->request->getData('TimebasedCurrencyPayments.working_day'))) {
+            $this->request->data['TimebasedCurrencyPayments']['working_day'] = new Time($this->request->getData('TimebasedCurrencyPayments.working_day'));
+        }
         
-        if (!empty($newPaymentEntity->getErrors())) {
-            $status = 0;
-            $message = 'Fehler!';
+        $this->request->data['TimebasedCurrencyPayments']['seconds'] = $this->request->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->request->getData('TimebasedCurrencyPayments.minutes') * 60;
+        $this->request->data['TimebasedCurrencyPayments']['modified_by'] = $this->AppAuth->getUserId();
+        
+        $payment = $this->TimebasedCurrencyPayment->patchEntity($payment, $this->request->getData());
+        if (!empty($payment->getErrors())) {
+            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->set('payment', $payment);
+            $this->render('edit');
         } else {
-            $newPayment = $this->TimebasedCurrencyPayment->save($newPaymentEntity);
-            $message = 'timebased currendy payment saved correctly';
+            $payment = $this->TimebasedCurrencyPayment->save($payment);
+            
+            if (!$isEditMode) {
+                $messageSuffix = 'erstellt';
+                $actionLogType = 'timebased_currency_payment_added';
+            } else {
+                $messageSuffix = 'geändert';
+                $actionLogType = 'timebased_currency_payment_changed';
+            }
+            
+            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $message = 'Die Zeiteintragung ';
+            if ($payment->working_day) {
+                $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
+            }
+            $message .= '<b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds) . ')</b>';
+            
+            if ($this->AppAuth->getUserId() != $payment->id_customer) {
+                $this->Customer = TableRegistry::get('Customers');
+                $customer = $this->Customer->find('all', [
+                    'conditions' => [
+                        'Customers.id_customer' => $payment->id_customer
+                    ],
+                ])->first();
+                $message .= ' von ' . $customer->name;
+            }
+            
+            $message .= ' wurde ' . $messageSuffix . '.';
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message);
+            $this->Flash->success($message);
+            
+            $this->request->getSession()->write('highlightedRowId', $payment->id);
+            $this->redirect($this->request->getData('referer'));
         }
         
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $message = 'Die Zeit-Eintragung (' . Configure::read('app.timeHelper')->formatSecondsToHoursAndMinutes($seconds). ') ';
+        $this->set('payment', $payment);
+    }
+    
+    public function add()
+    {
+        $payment = $this->TimebasedCurrencyPayment->newEntity(
+            [
+                'active' => APP_ON,
+                'id_customer' => $this->AppAuth->getUserId(),
+                'created_by' => $this->AppAuth->getUserId(),
+                'working_day' => Configure::read('app.timeHelper')->getCurrentDay()
+            ],
+            ['validate' => false]
+        );
+        $this->set('title_for_layout', 'Zeit-Eintragung erstellen');
+        $manufacturersForDropdown = $this->TimebasedCurrencyOrderDetail->getManufacturersForDropdown($this->AppAuth->getUserId());
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
+        $this->_processForm($payment, false);
         
-        if ($this->AppAuth->getUserId() != $customerId) {
-            $this->Customer = TableRegistry::get('Customers');
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $customerId
-                ],
-            ])->first();
-            $message .= ' für ' . $customer->name;
+        if (empty($this->request->getData())) {
+            $this->render('edit');
         }
-        $message .= ' wurde erfolgreich erstellt.';
         
-        $this->ActionLog->customSave('timebased_currency_payment_added', $this->AppAuth->getUserId(), $newPayment->id, 'timebased_currency_payments', $message);
-        $this->Flash->success($message);
+    }
+    
+    public function edit($paymentId)
+    {
+        if ($paymentId === null) {
+            throw new NotFoundException;
+        }
         
-        $this->set('data', [
-            'status' => 1,
-            'msg' => $message,
-            'seconds' => $seconds,
-            'paymentId' => $newPayment->id
-        ]);
+        $payment = $this->TimebasedCurrencyPayment->find('all', [
+            'conditions' => [
+                'TimebasedCurrencyPayments.id' => $paymentId
+            ]
+        ])->first();
         
-        $this->set('_serialize', 'data');
+        $payment->hours = (int) ($payment->seconds / 3600);
+        $payment->minutes = (int) ($payment->seconds % 3600 / 60);
         
+        if (empty($payment)) {
+            throw new NotFoundException;
+        }
+        $this->set('title_for_layout', 'Zeit-Eintragung bearbeiten');
+        $this->_processForm($payment, true);
     }
     
     public function myPaymentsManufacturer()
@@ -218,8 +273,6 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->paymentListCustomer(null, $this->AppAuth->getUserId());
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
         $this->set('helpText', 'Hier kannst du die Zeit-Eintragungen erstellen und löschen.');
-        $manufacturersForDropdown = $this->TimebasedCurrencyOrderDetail->getManufacturersForDropdown($this->AppAuth->getUserId());
-        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->render('paymentsCustomer');
     }
     
@@ -288,6 +341,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'dateRaw' => $timebasedCurrencyPayment->created,
                 'date' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                 'year' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.de.Year')),
+                'workingDay' => $timebasedCurrencyPayment->working_day,
                 'secondsOpen' => null,
                 'secondsDone' => $timebasedCurrencyPayment->seconds,
                 'type' => 'payment',

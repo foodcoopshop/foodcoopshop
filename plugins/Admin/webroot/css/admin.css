@@ -577,31 +577,31 @@ body.orders.index td span.customer-is-new {
 .add-payment-form .checkbox label {
     margin-left: 5px;
 }
-.featherlight-content .add-payment-form {
-    min-width: 370px ! important;
-}
-.featherlight-content #add-timebased-currency-payment-form {
+#timebasedCurrencyPaymentEditForm {
     max-width: 430px ! important;
     min-height: 250px;
+}
+#timebasedCurrencyPaymentEditForm a.btn-arrow {
+	top: 5px;
 }
 .featherlight-content #timebasedcurrencypayments-time {
 	width: 192px;
 	margin-bottom: 10px;
 }
-.featherlight-content #add-timebased-currency-payment-form h3 {
+#timebasedCurrencyPaymentEditForm h3 {
 	margin-bottom: 20px;
 }
-.featherlight-content #add-timebased-currency-payment-form .textarea label {
+#timebasedCurrencyPaymentEditForm .textarea label {
 	vertical-align: top;
 }
-.featherlight-content #add-timebased-currency-payment-form select,
-.featherlight-content #add-timebased-currency-payment-form textarea {
-    width: 300px;
+#timebasedCurrencyPaymentEditForm select,
+#timebasedCurrencyPaymentEditForm textarea {
+    width: 250px;
 }
 .featherlight-content .add-payment-form label {
     width: 100%;
 }
-.featherlight-content #add-timebased-currency-payment-form label {
+#timebasedCurrencyPaymentEditForm label {
 	width: 110px;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
@@ -624,7 +624,8 @@ body.orders.index td span.customer-is-new {
 }
 body.deposits #help-container,
 body.payments.overview #help-container,
-body.timebased_currency_payments #help-container,
+body.timebased_currency_payments.my_payments_customer #help-container,
+body.timebased_currency_payments.my_payment_details_manufacturer #help-container,
 body.payments.my_member_fee #help-container {
     display: block;
 }
