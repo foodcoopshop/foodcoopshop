@@ -301,9 +301,7 @@ class OrdersController extends AdminAppController
         ])
         ->select($this->Order->Customers);
         
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $query->select($this->Order->TimebasedCurrencyOrders);
-        }
+        $query->select($this->Order->TimebasedCurrencyOrders);
         
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
@@ -325,12 +323,10 @@ class OrdersController extends AdminAppController
         $this->set('orders', $orders);
         
         $timebasedCurrencyOrderInList = false;
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            foreach($orders as $order) {
-                if (!empty($order->timebased_currency_order)) {
-                    $timebasedCurrencyOrderInList = true;
-                    break;
-                }
+        foreach($orders as $order) {
+            if (!empty($order->timebased_currency_order)) {
+                $timebasedCurrencyOrderInList = true;
+                break;
             }
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);

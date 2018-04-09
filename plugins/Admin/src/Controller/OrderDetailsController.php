@@ -276,12 +276,10 @@ class OrderDetailsController extends AdminAppController
         $this->set('orderDetails', $orderDetails);
         
         $timebasedCurrencyOrderInList = false;
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            foreach($orderDetails as $orderDetail) {
-                if (!empty($orderDetail->timebased_currency_order_detail)) {
-                    $timebasedCurrencyOrderInList = true;
-                    break;
-                }
+        foreach($orderDetails as $orderDetail) {
+            if (!empty($orderDetail->timebased_currency_order_detail)) {
+                $timebasedCurrencyOrderInList = true;
+                break;
             }
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);

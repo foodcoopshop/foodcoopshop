@@ -140,10 +140,7 @@ class OrdersTable extends AppTable
             $conditions['Orders.id_order'] = $orderId;
         }
 
-        $contain = ['Customers'];
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $contain[] = 'TimebasedCurrencyOrders';
-        }
+        $contain = ['Customers', 'TimebasedCurrencyOrders'];
         
         $fields = [];
         $orderParams = [

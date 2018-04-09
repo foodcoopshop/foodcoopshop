@@ -27,7 +27,7 @@ class TimebasedCurrencyHelper extends Helper
     {
         $text = '';
         if ($showText) {
-            $text = '<p style="clear:both;">* Mouseover zeigt den bezahlten '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').'-Betrag an.</p>';
+            $text = '<p style="clear:both;">* Mouseover zeigt den bezahlten Betrag in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' an.</p>';
         }
         return $text;
     }
