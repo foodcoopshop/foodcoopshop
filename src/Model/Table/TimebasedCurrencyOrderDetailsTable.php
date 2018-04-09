@@ -31,6 +31,10 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $this->setPrimaryKey('id_order_detail');
     }
     
+    /**
+     * @param int $customerId
+     * @return array manufacturers where $customerId has ordered with timebased currency
+     */
     public function getManufacturersForDropdown($customerId)
     {
         $query = $this->find('all', [

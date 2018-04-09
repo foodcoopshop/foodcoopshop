@@ -120,8 +120,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
-        
+        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['approval_comment', 'text']);
         
         if (!empty($this->request->getData('TimebasedCurrencyPayments.working_day'))) {
             $this->request->data['TimebasedCurrencyPayments']['working_day'] = new Time($this->request->getData('TimebasedCurrencyPayments.working_day'));
@@ -186,7 +185,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Zeit-Eintragung erstellen');
-        $manufacturersForDropdown = $this->TimebasedCurrencyOrderDetail->getManufacturersForDropdown($this->AppAuth->getUserId());
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $manufacturersForDropdown = $this->Manufacturer->getTimebasedCurrencyManufacturersForDropdown();
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->_processForm($payment, false);
         

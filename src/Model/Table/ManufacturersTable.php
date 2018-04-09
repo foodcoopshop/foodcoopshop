@@ -386,6 +386,23 @@ class ManufacturersTable extends AppTable
         return round($price * $variableMemberFee / 100, 2);
     }
 
+    public function getTimebasedCurrencyManufacturersForDropdown()
+    {
+        $manufacturers = $this->find('all', [
+            'order' => [
+                'Manufacturers.name' => 'ASC'
+            ],
+            'conditions' => [
+                'Manufacturers.timebased_currency_enabled' => true
+            ]
+        ]);
+        $result = [];
+        foreach ($manufacturers as $manufacturer) {
+            $result[$manufacturer->id_manufacturer] = $manufacturer->name;
+        }
+        return $result;
+    }
+    
     public function getForDropdown()
     {
         $manufacturers = $this->find('all', [
