@@ -654,8 +654,9 @@ class ManufacturersController extends AdminAppController
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
         
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $results = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($results);
         
-
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
         $this->set('from', date('d.m.Y', strtotime(str_replace('/', '-', $from))));

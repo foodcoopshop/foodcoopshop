@@ -489,6 +489,7 @@ class ManufacturersTable extends AppTable
         ma.firstname as ManufacturerFirstname, ma.lastname as ManufacturerLastname, ma.address1 as ManufacturerAddress1, ma.postcode as ManufacturerPostcode, ma.city as ManufacturerCity,
         t.rate as TaxRate,
         odt.total_amount AS OrderDetailTaxAmount,
+        od.id_order_detail AS OrderDetailId,
         od.product_id AS ProductId,
         od.product_name AS ProductName,
         od.product_quantity AS OrderDetailQuantity,

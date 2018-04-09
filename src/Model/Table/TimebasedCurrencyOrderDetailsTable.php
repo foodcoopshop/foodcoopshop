@@ -31,6 +31,28 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $this->setPrimaryKey('id_order_detail');
     }
     
+    public function addTimebasedCurrencyDataToInvoiceData($results)
+    {
+        $timebasedCurrencyAwareResults = [];
+        foreach($results as $result) {
+            $timebasedCurrencyAwareResult = $result;
+            $timebasedCurrencyOrderDetail = $this->find('all', [
+                'conditions' => [
+                    'TimebasedCurrencyOrderDetails.id_order_detail' => $result['OrderDetailId']
+                ]
+            ])->first();
+            if (!empty($timebasedCurrencyOrderDetail)) {
+                $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] = $result['OrderDetailPriceExcl'] + $timebasedCurrencyOrderDetail->money_excl;
+                $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] = $result['OrderDetailPriceIncl'] + $timebasedCurrencyOrderDetail->money_incl;
+                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] - $timebasedCurrencyAwareResult['OrderDetailPriceExcl'];
+                $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = true;
+            }
+            $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = false;
+            $timebasedCurrencyAwareResults[] = $timebasedCurrencyAwareResult;
+        }
+        return $timebasedCurrencyAwareResults;
+    }
+    
     /**
      * @param int $customerId
      * @return array manufacturers where $customerId has ordered with timebased currency
