@@ -39,7 +39,7 @@ class CartsTable extends AppTable
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
     
-    public function adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor)
+    public function adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor)
     {
         
         $cartProductSum = 0;
