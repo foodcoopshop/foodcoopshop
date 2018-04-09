@@ -263,8 +263,8 @@ class CartsController extends FrontendController
             $order2save['timebased_currency_order']['seconds_sum'] = $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
         }
         
-        // avoid saving empty recored for timebased_currency_order
-        if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
+        // avoid saving empty record for timebased_currency_order
+        if (!$this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
             unset($orderEntity->timebased_currency_order);
         }
         
@@ -503,15 +503,15 @@ class CartsController extends FrontendController
             $this->Flash->error('Es sind Fehler aufgetreten.');
         } else {
             
-            $selectedTimebasedCurrencyTime = 0;
+            $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->request->getData('timebased_currency_order.seconds_sum_tmp') && $this->request->getData('timebased_currency_order.seconds_sum_tmp') > 0)) {
-                $selectedTimebasedCurrencyTime = $this->request->getData('timebased_currency_order.seconds_sum_tmp');
-                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencyTime / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
+            if (!empty($this->request->getData('timebased_currency_order.seconds_sum_tmp')) && $this->request->getData('timebased_currency_order.seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->request->getData('timebased_currency_order.seconds_sum_tmp');
+                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
             }
             
-            if ($selectedTimebasedCurrencyTime > 0 && $selectedTimeAdaptionFactor > 0) {
-                $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimebasedCurrencyTime, $selectedTimeAdaptionFactor);
+            if ($selectedTimeAdaptionFactor > 0) {
+                $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor);
                 $this->AppAuth->setCart($cart);
             }
             
