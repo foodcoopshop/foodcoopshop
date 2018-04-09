@@ -490,8 +490,8 @@ INSERT INTO `fcs_configuration` VALUES
 (569,1,'FCS_TIMEBASED_CURRENCY_NAME','Zeitwährung: Name<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',210,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
 (570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Zeitwährung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
 (571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Zeitwährung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(572,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_CUSTOMER','Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_OVERDRAFT_MANUFACTURER','Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Minus gehen?</div>','0','number',250,'2018-03-16 15:23:31','2018-03-16 15:23:31');
+(572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Zeitwährung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:31','2018-03-16 15:23:31'),
+(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Zeitwährung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','0','number',250,'2018-03-16 15:23:31','2018-03-16 15:23:31');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;

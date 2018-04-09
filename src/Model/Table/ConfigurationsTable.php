@@ -176,7 +176,7 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
     
-    public function validationFcsTimebasedCurrencyMaxOverdraftCustomer(Validator $validator)
+    public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
     {
         $validator->notEmpty('value', 'Bitte gib einen Wert an.');
         $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
@@ -184,7 +184,7 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
     
-    public function validationFcsTimebasedCurrencyMaxOverdraftManufacturer(Validator $validator)
+    public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
     {
         $validator->notEmpty('value', 'Bitte gib einen Wert an.');
         $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
