@@ -93,7 +93,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
             'escape' => false
         ]);
         echo $this->Form->control('TimebasedCurrencyPayments.approval_comment', [
-            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen, die das Mitglied lesen kann.</div>',
+            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen für das Mitglied.</div>',
             'type' => 'textarea',
             'class' => 'ckeditor',
             'escape' => false
@@ -103,7 +103,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
             'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('timebasedcurrencypayments-text');"
         ]);
         echo $this->Form->control('TimebasedCurrencyPayments.text', [
-            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen, die der Hersteller lesen kann.</div>',
+            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen für den Hersteller.</div>',
             'type' => 'textarea',
             'class' => 'ckeditor',
             'escape' => false
