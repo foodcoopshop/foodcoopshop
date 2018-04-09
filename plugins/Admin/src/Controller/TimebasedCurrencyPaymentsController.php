@@ -3,7 +3,6 @@
 namespace Admin\Controller;
 
 use Cake\Event\Event;
-use Cake\I18n\Date;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
@@ -92,7 +91,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         if ($payment->working_day) {
             $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
         }
-        $message .= ' (' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ') ';
+        $message .= ' <b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ')</b> ';
         
         if ($this->AppAuth->getUserId() != $payment->id_customer) {
             $message .= ' von ' . $payment->customer->name;
@@ -272,7 +271,11 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
         $this->paymentListCustomer(null, $this->AppAuth->getUserId());
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
-        $this->set('helpText', 'Hier kannst du die Zeit-Eintragungen erstellen und löschen.');
+        $this->set('helpText', [
+            'Hier kannst du deine Zeit-Eintragungen erstellen und löschen.',
+            'Du siehst auch, wenn der Hersteller Korrekturen vorgenommen bzw. Kommentare zu deinen Zeit-Eintragungen erstellt hat.',
+            '<span style="text-decoration:line-through;opacity:0.6;">Durchgestrichene Zeit-Eintragungen</span> wurden vom Hersteller gesperrt und zählen nicht zur Summe. Du kannst sie korrigieren, indem du sie löschst und anschließend neu erstellst.'
+        ]);
         $this->render('paymentsCustomer');
     }
     
@@ -289,7 +292,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('isDeleteAllowedGlobally', false);
         $this->set('title_for_layout', 'Detail-Ansicht ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name);
         $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
-        $this->set('helpText', 'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und bearbeiten.');
+        $this->set('helpText', [
+            'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und gegebenfalls bearbeiten.',
+            'Durchgestrichene Zeit-Eintragungen wurden vom Mitglied gelöscht und zählen nicht zur Summe.'
+        ]);
         $this->paymentListCustomer($this->AppAuth->getManufacturerId(), $customerId);
         $this->render('paymentsCustomer');
     }
@@ -309,7 +315,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'secondsDone' => null,
                 'type' => 'order',
                 'approval' => '',
-                'isDeleteAllowed' => false,
+                'approvalComment' => null,
+                'isDeleteAllowed' => null,
+                'isEditAllowed' => null,
+                'showDeletedRecords' => null,
                 'text' => Configure::read('app.htmlHelper')->link(
                     'Bestellung Nr. ' . $orderId . ' (' . 
                         Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder['order']->current_state] . ')',
@@ -319,16 +328,20 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                     'title' => 'Bestellung anzeigen'
                 ]),
                 'manufacturerName' => '',
-                'payment_id' => null
+                'status' => null,
+                'paymentId' => null
             ];
         }
         
         $conditions = [
-            'TimebasedCurrencyPayments.id_customer' => $customerId,
-            'TimebasedCurrencyPayments.status' => APP_ON
+            'TimebasedCurrencyPayments.id_customer' => $customerId
         ];
         if ($manufacturerId) {
             $conditions['TimebasedCurrencyPayments.id_manufacturer'] = $manufacturerId;
+        }
+        $showDeletedRecords = $this->AppAuth->isManufacturer() ? true : false;
+        if (!$showDeletedRecords) {
+            $conditions['TimebasedCurrencyPayments.status'] = APP_ON;
         }
         $timebasedCurrencyPayments = $this->TimebasedCurrencyPayment->find('all', [
             'conditions' => $conditions,
@@ -346,10 +359,14 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'secondsDone' => $timebasedCurrencyPayment->seconds,
                 'type' => 'payment',
                 'approval' => $timebasedCurrencyPayment->approval,
-                'isDeleteAllowed' => $timebasedCurrencyPayment->approval == APP_OFF,
-                'text' => $timebasedCurrencyPayment->text,
+                'approvalComment' => $timebasedCurrencyPayment->approval_comment,
+                'isDeleteAllowed' => $timebasedCurrencyPayment->approval <= APP_OFF,
+                'isEditAllowed' => $timebasedCurrencyPayment->status > APP_DEL,
+                'showDeletedRecords' => $showDeletedRecords,
+                'text' => $timebasedCurrencyPayment->text . ($timebasedCurrencyPayment->status == APP_DEL ? 'Dieser Datensatz wurde gelöscht, die Anzahl der eintragenen Stunden zählen nicht zur Summe.' : ''),
                 'manufacturerName' => $timebasedCurrencyPayment->manufacturer->name,
-                'payment_id' => $timebasedCurrencyPayment->id
+                'status' => $timebasedCurrencyPayment->status,
+                'paymentId' => $timebasedCurrencyPayment->id
             ];
         }
         

@@ -17,6 +17,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".$this->TimebasedCurrency->getName()."');" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();".
     Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
     $('input.datepicker').datepicker();"
@@ -75,21 +76,30 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
         ]);
     }
     if ($isEditMode) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('timebasedcurrencypayments-approval-comment');"
+        ]);
         echo $this->Form->control('TimebasedCurrencyPayments.approval', [
+            'type' => 'select',
             'label' => 'Bestätigt? <span class="after small">Ist die Eintragung vom Mitglied in Ordnung?</span>',
-            'type' => 'checkbox',
+            'options' => $this->Html->getApprovalStates(),
             'escape' => false
         ]);
         echo $this->Form->control('TimebasedCurrencyPayments.approval_comment', [
-            'label' => 'Anmerkungen',
+            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen, die das Mitglied lesen kann.</div>',
             'type' => 'textarea',
-            'placeholder' => 'Hier ist Platz für Anmerkungen, die das Mitglied lesen kann.'
-        ]);
+            'class' => 'ckeditor',
+            'escape' => false
+     ]);
     } else {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('timebasedcurrencypayments-text');"
+        ]);
         echo $this->Form->control('TimebasedCurrencyPayments.text', [
-            'label' => 'Anmerkungen',
+            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen, die der Hersteller lesen kann.</div>',
             'type' => 'textarea',
-            'placeholder' => 'Hier ist Platz für Anmerkungen, die der Hersteller lesen kann.'
+            'class' => 'ckeditor',
+            'escape' => false
         ]);
     }
     

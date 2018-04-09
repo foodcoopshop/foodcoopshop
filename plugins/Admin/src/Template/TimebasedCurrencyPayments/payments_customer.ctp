@@ -19,7 +19,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Admin.init();".
     Configure::read('app.jsNamespace').".Admin.initForm('".$this->TimebasedCurrency->getName()."');".
     Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('Stundenkonto');".
-    Configure::read('app.jsNamespace').".Helper.initTooltip('.payment-text');"
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.comment');"
 ]);
 
 $colspan = 5;
@@ -32,7 +32,7 @@ if ($isDeleteAllowedGlobally) {
 
 <div id="help-container">
     <ul>
-        <?php echo $helpText; ?>
+        <?php echo '<li>' . join('</li><li>', $helpText) . '</li>'; ?>
     </ul>
 </div>    
 
@@ -70,29 +70,46 @@ echo '<table class="list">';
 
     foreach($payments as $payment) {
         
-        echo '<tr data-payment-id="'.$payment['payment_id'].'">';
+        $rowClass = [];
+        if ($payment['status'] == APP_DEL || $payment['approval'] == APP_DEL) {
+            $rowClass = ['deactivated', 'line-through'];
+        }
+        
+        echo '<tr data-payment-id="'.$payment['paymentId'].'" class="' . join(' ', $rowClass) . '">';
             
-            echo '<td style="text-align:center;">';
-                switch ($payment['approval']) {
-                    case -1:
-                        echo $this->Html->image(
-                            $this->Html->getFamFamFamPath('delete.png'),
-                            [
-                                'class' => 'payment-approval'
-                            ]
-                        );
-                        break;
-                    case 0:
-                        break;
-                    case 1:
-                        echo $this->Html->image(
-                            $this->Html->getFamFamFamPath('accept.png'),
-                            [
-                                'class' => 'payment-approval'
-                            ]
-                        );
-                        break;
+            echo '<td style="text-align:center;width:50px;">';
+                if ($payment['status'] > APP_DEL) {
+                    switch ($payment['approval']) {
+                        case -1:
+                            echo $this->Html->image(
+                                $this->Html->getFamFamFamPath('delete.png'),
+                                [
+                                    'class' => 'payment-approval'
+                                ]
+                            );
+                            break;
+                        case 0:
+                            break;
+                        case 1:
+                            echo $this->Html->image(
+                                $this->Html->getFamFamFamPath('accept.png'),
+                                [
+                                    'class' => 'payment-approval'
+                                ]
+                            );
+                            break;
+                    }
                 }
+                if ($payment['approvalComment'] != '') {
+                    echo $this->Html->image(
+                        $this->Html->getFamFamFamPath('comment.png'),
+                        [
+                            'class' => 'comment',
+                            'title' => $payment['approvalComment']
+                        ]
+                        );
+                }
+                
             echo '</td>';
             
             echo '<td>';
@@ -110,11 +127,11 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td style="width: 180px;">';
-                if ($payment['payment_id'] && $payment['text'] != '') {
+                if ($payment['paymentId'] && $payment['text'] != '') {
                     echo $this->Html->image(
                         $this->Html->getFamFamFamPath('comment.png'),
                         [
-                            'class' => 'payment-text',
+                            'class' => 'comment',
                             'title' => $payment['text']
                         ]
                     );
@@ -144,13 +161,13 @@ echo '<table class="list">';
                         ], 'javascript:void(0);');
                     }
                 } else {
-                    if ($payment['payment_id']) {
+                    if ($payment['paymentId'] && $payment['isEditAllowed']) {
                         echo $this->Html->getJqueryUiIcon(
                             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
                             [
                                 'title' => 'Bearbeiten'
                             ],
-                            $this->Slug->getTimebasedCurrencyPaymentEdit($payment['payment_id'])
+                            $this->Slug->getTimebasedCurrencyPaymentEdit($payment['paymentId'])
                         );
                     }
                 }

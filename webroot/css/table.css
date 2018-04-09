@@ -57,6 +57,9 @@ div:not(.product-list) > table.list tr:nth-child(odd) {
 table.list tr.deactivated {
     opacity: 0.6;
 }
+table.list tr.line-through {
+	text-decoration: line-through;
+}
 table.list tr.sub-row td {
     font-size: 11px;
     font-style: italic;

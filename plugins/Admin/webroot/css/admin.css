@@ -577,16 +577,8 @@ body.orders.index td span.customer-is-new {
 .add-payment-form .checkbox label {
     margin-left: 5px;
 }
-#timebasedCurrencyPaymentEditForm {
-    max-width: 430px ! important;
-    min-height: 250px;
-}
 #timebasedCurrencyPaymentEditForm a.btn-arrow {
 	top: 5px;
-}
-.featherlight-content #timebasedcurrencypayments-time {
-	width: 192px;
-	margin-bottom: 10px;
 }
 #timebasedCurrencyPaymentEditForm h3 {
 	margin-bottom: 20px;
@@ -597,12 +589,6 @@ body.orders.index td span.customer-is-new {
 #timebasedCurrencyPaymentEditForm select,
 #timebasedCurrencyPaymentEditForm textarea {
     width: 250px;
-}
-.featherlight-content .add-payment-form label {
-    width: 100%;
-}
-#timebasedCurrencyPaymentEditForm label {
-	width: 110px;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
     width: 185px;

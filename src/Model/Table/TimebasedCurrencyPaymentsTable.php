@@ -46,9 +46,10 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         
         $query = $this->find('all');
         
-        $query->where(
-            ['TimebasedCurrencyPayments.status' => APP_ON]
-        );
+        $query->where([
+            'TimebasedCurrencyPayments.status' => APP_ON,
+            'TimebasedCurrencyPayments.approval > ' . APP_DEL
+        ]);
         if ($customerId) {
             $query->where(
                 ['TimebasedCurrencyPayments.id_customer' => $customerId]

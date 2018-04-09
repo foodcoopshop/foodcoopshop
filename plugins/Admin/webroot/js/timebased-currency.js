@@ -71,7 +71,12 @@ foodcoopshop.TimebasedCurrency = {
             var dataRow = $(this).closest('tr');
 
             var dialogHtml = '<p>Willst du deine Eintragung wirklich löschen?<br />';
-            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(3)').html() + '</b> <br />';
+            var dateElement = dataRow.find('td:nth-child(3)');
+        	var dateHtml = 'Kein Datum eingetragen';
+            if (dateElement.html() != '') {
+            	dateHtml = dateElement.html();
+            }
+            dialogHtml += 'Arbeitstag: <b>' + dateHtml + '</b> <br />';
             dialogHtml += 'Stunden: <b>' + dataRow.find('td:nth-child(6)').html()
             dialogHtml += '</b>';
             dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';

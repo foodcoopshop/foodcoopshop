@@ -89,7 +89,7 @@ foreach ($payments as $payment) {
     $rowClass = '';
     $additionalText = '';
     if ($payment->status == APP_DEL) {
-        $rowClass = 'deactivated';
+        $rowClass = 'deactivated line-through';
         $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $payment->date_changed->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' - scheint in der Summe nicht auf)';
     } else {
         $i ++;
