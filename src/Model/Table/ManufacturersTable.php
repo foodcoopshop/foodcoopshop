@@ -468,7 +468,7 @@ class ManufacturersTable extends AppTable
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }
 
-    public function getOrderList($manufacturerId, $order, $from, $to, $orderState)
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $from, $to, $orderState)
     {
         switch ($order) {
             case 'product':

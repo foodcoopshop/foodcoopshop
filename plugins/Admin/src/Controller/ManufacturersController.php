@@ -299,7 +299,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -318,7 +318,7 @@ class ManufacturersController extends AdminAppController
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
+            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
@@ -401,7 +401,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN
         ], 'F');
 
@@ -416,7 +416,7 @@ class ManufacturersController extends AdminAppController
             $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN
             ], 'F');
             $this->render('get_order_list_by_customer');
@@ -646,13 +646,15 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    private function prepareInvoiceAndOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
+    private function prepareInvoiceOrOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
     {
-        $results = $this->Manufacturer->getOrderList($manufacturerId, $groupType, $from, $to, $orderState);
+        $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $from, $to, $orderState);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
+        
+        
 
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
@@ -687,7 +689,7 @@ class ManufacturersController extends AdminAppController
 
     public function getInvoice($manufacturerId, $from, $to)
     {
-        $results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
+        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -696,7 +698,7 @@ class ManufacturersController extends AdminAppController
             // do not throw exception because no debug mails wanted
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -706,13 +708,13 @@ class ManufacturersController extends AdminAppController
     public function getOrderListByProduct($manufacturerId, $from, $to)
     {
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, $orderStates);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, $orderStates);
     }
 
     public function getOrderListByCustomer($manufacturerId, $from, $to)
     {
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, $orderStates);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, $orderStates);
     }
 
     /**
