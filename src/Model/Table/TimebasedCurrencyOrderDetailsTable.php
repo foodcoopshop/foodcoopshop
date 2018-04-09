@@ -34,6 +34,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     public function addTimebasedCurrencyDataToInvoiceData($results)
     {
         $timebasedCurrencyAwareResults = [];
+        
         foreach($results as $result) {
             $timebasedCurrencyAwareResult = $result;
             $timebasedCurrencyOrderDetail = $this->find('all', [
@@ -44,7 +45,8 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             if (!empty($timebasedCurrencyOrderDetail)) {
                 $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] = $result['OrderDetailPriceExcl'] + $timebasedCurrencyOrderDetail->money_excl;
                 $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] = $result['OrderDetailPriceIncl'] + $timebasedCurrencyOrderDetail->money_incl;
-                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] - $timebasedCurrencyAwareResult['OrderDetailPriceExcl'];
+                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] + ($timebasedCurrencyOrderDetail->money_incl - $timebasedCurrencyOrderDetail->money_excl);
+                $timebasedCurrencyAwareResult['OrderDetailTimebasedCurrencyPriceInclAmount'] = $timebasedCurrencyOrderDetail->money_incl;
                 $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = true;
             }
             $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = false;

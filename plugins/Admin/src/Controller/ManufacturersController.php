@@ -670,17 +670,22 @@ class ManufacturersController extends AdminAppController
         $sumPriceExcl = 0;
         $sumTax = 0;
         $sumAmount = 0;
+        $sumTimebasedCurrencyPriceIncl = 0;
         foreach ($results as $result) {
             $sumPriceIncl += $result['OrderDetailPriceIncl'];
             $sumPriceExcl += $result['OrderDetailPriceExcl'];
             $sumTax += $result['OrderDetailTaxAmount'];
             $sumAmount += $result['OrderDetailQuantity'];
+            if (isset($result['OrderDetailTimebasedCurrencyPriceInclAmount'])) {
+                $sumTimebasedCurrencyPriceIncl += $result['OrderDetailTimebasedCurrencyPriceInclAmount'];
+            }
         }
         $this->set('sumPriceExcl', $sumPriceExcl);
         $this->set('sumTax', $sumTax);
         $this->set('sumPriceIncl', $sumPriceIncl);
         $this->set('sumAmount', $sumAmount);
-
+        $this->set('sumTimebasedCurrencyPriceIncl', $sumTimebasedCurrencyPriceIncl);
+        
         $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
         $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
