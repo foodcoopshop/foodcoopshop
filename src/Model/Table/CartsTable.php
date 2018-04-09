@@ -59,7 +59,7 @@ class CartsTable extends AppTable
             }
             if (isset($cartProduct['timebasedCurrencyMoneyExcl'])) {
                 $cartProduct['timebasedCurrencyMoneyExcl'] = round($cartProduct['timebasedCurrencyMoneyExcl'] *  $selectedTimeAdaptionFactor, 2);
-                $cartProduct['priceExcl'] -=  $cartProduct['timebasedCurrencyMoneyExcl'];
+                $cartProduct['priceExcl'] -= $cartProduct['timebasedCurrencyMoneyExcl'];
                 $cartProductSumExcl += $cartProduct['priceExcl'];
             }
         }
@@ -135,9 +135,10 @@ class CartsTable extends AppTable
             
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
                 
-                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price);
+                $netPricePerPiece = $cartProduct->product_attribute->product_attribute_shop->price;
+                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
                 $grossPrice = $grossPricePerPiece * $cartProduct->amount;
-                $tax = $productsTable->getUnitTax($grossPrice, $cartProduct->product_attribute->product_attribute_shop->price, $cartProduct->amount) * $cartProduct->amount;
+                $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
                 
                 // attribute
                 $productData = [
@@ -160,9 +161,10 @@ class CartsTable extends AppTable
             } else {
                 // no attribute
                 
-                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price);
+                $netPricePerPiece = $cartProduct->product->product_shop->price;
+                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
                 $grossPrice = $grossPricePerPiece * $cartProduct->amount;
-                $tax = $productsTable->getUnitTax($grossPrice, $cartProduct->product->product_shop->price, $cartProduct->amount) * $cartProduct->amount;
+                $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
                 
                 $productData = [
                     'cartProductId' => $cartProduct->id_cart_product,
@@ -186,7 +188,7 @@ class CartsTable extends AppTable
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
                 if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
                     $productData['timebasedCurrencyMoneyIncl'] = round($manufacturersTable->getTimebasedCurrencyMoney($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
-                    $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($cartProduct->product->product_shop->price, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                    $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($netPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
                     $productData['timebasedCurrencySeconds'] = $manufacturersTable->getCartTimebasedCurrencySeconds($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage) * $cartProduct->amount;
                 }
             }
