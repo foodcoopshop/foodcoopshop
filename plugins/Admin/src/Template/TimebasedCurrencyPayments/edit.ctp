@@ -17,11 +17,18 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();" .
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".$this->TimebasedCurrency->getName()."');" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();".
     Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
     $('input.datepicker').datepicker();"
 ]);
+
+if ($isEditMode) {
+    $script = Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".$this->TimebasedCurrency->getName()."');";
+} else {
+    $script = Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Meine Daten', '".$this->TimebasedCurrency->getName()."');";
+}
+$this->element('addScript', ['script' => $script]);
+
 ?>
 
 <div class="filter-container">
