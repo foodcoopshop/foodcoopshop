@@ -35,6 +35,14 @@ class TimebasedCurrencyPaymentsTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
+        $validator->add('hours', 'greaterThan', [
+            'rule' => ['equalTo', [0]],
+            'message' => 'Bitte gib die geleisteten Stunden an.',
+            'on' => function ($context) {
+                return $context['data']['seconds'] == 0;
+            }
+        ]);
+        $validator = $this->getNumberRangeValidator($validator, 'approval', -1, 1);
         return $validator;
     }
     
