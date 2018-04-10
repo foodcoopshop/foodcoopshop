@@ -408,13 +408,13 @@ foodcoopshop.Helper = {
         });
     },
 
-    initTooltip: function (container, interactive) {
-        var interactive = interactive || true;
+    initTooltip: function (container, trigger) {
+        var trigger = trigger || 'hover';
         $(container).not('.tooltipstered').tooltipster({
         	contentAsHTML: true,
-        	interactive: interactive,
+        	interactive: true,
         	maxWidth: 400,
-        	trigger: 'click',
+        	trigger: trigger,
         	theme: ['tooltipster-light']
         });
     },

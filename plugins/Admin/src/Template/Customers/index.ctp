@@ -25,7 +25,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" .
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button', false);" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button');" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
     ]);
     ?>
