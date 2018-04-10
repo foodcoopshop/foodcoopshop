@@ -51,7 +51,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 'url' => $this->Slug->getCartFinish()
             ]);
 
-            if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+            if ($appAuth->isTimebasedCurrencyEnabledForCustomer() && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
                 echo $this->Form->control('timebased_currency_order.seconds_sum_tmp', [
                     'label' => 'Wie viel davon will ich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' bezahlen?',
                     'type' => 'select',
