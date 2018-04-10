@@ -265,7 +265,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('helpText', [
             'Hier kannst du deine Zeit-Eintragungen erstellen und löschen.',
             'Du siehst auch, wenn der Hersteller Korrekturen vorgenommen bzw. Kommentare zu deinen Zeit-Eintragungen erstellt hat.',
-            '<span style="text-decoration:line-through;opacity:0.6;">Durchgestrichene Zeit-Eintragungen</span> wurden vom Hersteller gesperrt und zählen nicht zur Summe. Du kannst sie korrigieren, indem du sie löschst und anschließend neu erstellst.'
+            'Durchgestrichene Zeit-Eintragungen wurden vom Hersteller gesperrt und zählen nicht zur Summe. Du kannst sie korrigieren, indem du sie löschst und anschließend neu erstellst.'
         ]);
         $this->render('paymentsCustomer');
     }
