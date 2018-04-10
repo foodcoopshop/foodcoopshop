@@ -45,7 +45,7 @@ if ($isDeleteAllowedGlobally) {
     if ($showAddForm) {
         echo '<div id="add-timebased-currency-payment-button-wrapper">';
         echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete Zeit eintragen',
-            $this->Slug->getTimebasedCurrencyPaymentAdd(),
+            $this->Slug->getTimebasedCurrencyPaymentAdd($customerId),
             [
                 'class' => 'btn btn-success',
                 'escape' => false
@@ -152,27 +152,25 @@ echo '<table class="list">';
                 }
             echo '</td>';
             
-            echo '<td style="text-align:center;">';
+            echo '<td style="text-align:center;width:'.($appAuth->isSuperadmin() ? 50 : 25).'px;">';
+                if ($payment['paymentId'] && $payment['isEditAllowed']) {
+                    echo $this->Html->getJqueryUiIcon(
+                        $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                        [
+                            'title' => 'bearbeiten?'
+                        ],
+                        $this->Slug->getTimebasedCurrencyPaymentEdit($payment['paymentId'])
+                    );
+                }
                 if ($isDeleteAllowedGlobally) {
                     if ($payment['isDeleteAllowed']) {
                         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                             'class' => 'delete-payment-button',
-                            'title' => 'Zeit-Eintragung löschen?'
+                            'title' => 'löschen?'
                         ], 'javascript:void(0);');
-                    }
-                } else {
-                    if ($payment['paymentId'] && $payment['isEditAllowed']) {
-                        echo $this->Html->getJqueryUiIcon(
-                            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
-                            [
-                                'title' => 'Bearbeiten'
-                            ],
-                            $this->Slug->getTimebasedCurrencyPaymentEdit($payment['paymentId'])
-                        );
                     }
                 }
             echo '</td>';
-                
             
         echo '</tr>';
         

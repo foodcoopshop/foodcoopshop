@@ -53,7 +53,7 @@ $this->element('addScript', ['script' => $script]);
 echo $this->Form->create($payment, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
-    'url' => $isEditMode ? $this->Slug->getTimebasedCurrencyPaymentEdit($payment->id) : $this->Slug->getTimebasedCurrencyPaymentAdd(),
+    'url' => $isEditMode ? $this->Slug->getTimebasedCurrencyPaymentEdit($payment->id) : $this->Slug->getTimebasedCurrencyPaymentAdd($payment->id_customer),
     'id' => 'timebasedCurrencyPaymentEditForm'
 ]);
 

@@ -379,6 +379,9 @@ class ActionLogsTable extends AppTable
         'timebased_currency_payment_added' => [
             'de' => 'Zeitwährung: Zeit-Eintragung erstellt'
         ],
+        'timebased_currency_payment_changed' => [
+            'de' => 'Zeitwährung: Zeit-Eintragung geändert'
+        ],
         'timebased_currency_payment_deleted' => [
             'de' => 'Zeitwährung: Zeit-Eintragung gelöscht'
         ],

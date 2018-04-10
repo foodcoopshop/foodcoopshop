@@ -615,6 +615,7 @@ body.deposits #help-container,
 body.payments.overview #help-container,
 body.timebased_currency_payments.my_payments_customer #help-container,
 body.timebased_currency_payments.my_payment_details_manufacturer #help-container,
+body.timebased_currency_payments.payment_details_superadmin #help-container,
 body.payments.my_member_fee #help-container {
     display: block;
 }

@@ -65,13 +65,18 @@ echo '<table class="list">';
                 
                 echo '<span style="float: left;">' . $payment['customer']->name.'</span>';
                 
+                if ($appAuth->isManufacturer()) {
+                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customer']->id_customer);
+                } else {
+                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($payment['customer']->id_customer, $payment['manufacturerId']);
+                }
                 echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                     [
                         'title' => 'Details anzeigen',
                         'class' => 'icon-with-text',
                     ],
-                    $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customer']->id_customer)
+                    $detailLink
                 ).'</span>';
                     
             echo '</td>';
@@ -120,7 +125,7 @@ echo '<table class="list">';
     echo '</tr>';
     
     echo '<tr>';
-        echo '<td align="right" ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
+        echo '<td align="right" ' . $sumNumberClass . '><b style="font-size: 16px;">' .$paymentBalanceTitle . ': ' .  $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
         echo '<td></td>';
         echo '<td></td>';
         echo '<td></td>';
