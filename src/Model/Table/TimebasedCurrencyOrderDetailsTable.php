@@ -35,6 +35,8 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     {
         $timebasedCurrencyAwareResults = [];
         
+        $this->Product = TableRegistry::get('Products');
+        
         foreach($results as $result) {
             $timebasedCurrencyAwareResult = $result;
             $timebasedCurrencyOrderDetail = $this->find('all', [
@@ -45,7 +47,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             if (!empty($timebasedCurrencyOrderDetail)) {
                 $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] = $result['OrderDetailPriceExcl'] + $timebasedCurrencyOrderDetail->money_excl;
                 $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] = $result['OrderDetailPriceIncl'] + $timebasedCurrencyOrderDetail->money_incl;
-                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] + ($timebasedCurrencyOrderDetail->money_incl - $timebasedCurrencyOrderDetail->money_excl);
+                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $this->Product->getUnitTax($timebasedCurrencyAwareResult['OrderDetailPriceIncl'], $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] / $result['OrderDetailQuantity'], $result['OrderDetailQuantity']) * $result['OrderDetailQuantity']; 
                 $timebasedCurrencyAwareResult['OrderDetailTimebasedCurrencyPriceInclAmount'] = $timebasedCurrencyOrderDetail->money_incl;
                 $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = true;
             }
