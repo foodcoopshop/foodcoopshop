@@ -59,7 +59,7 @@ echo '<table class="list">';
                         'title' => 'Details anzeigen',
                         'class' => 'icon-with-text',
                     ],
-                    $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customer']->id)
+                    $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customer']->id_customer)
                 ).'</span>';
                     
             echo '</td>';
