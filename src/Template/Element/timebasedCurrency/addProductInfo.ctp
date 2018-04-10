@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     echo '<span class="timebasedCurrencySeconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>';
-    echo '<'.$wrapperTag.' class="'.$class.'">';
+    echo '<div class="'.$class.'">';
         $titleForOverlay =
             '<span style="padding:2px;float:left;">'.
                 'Anteil in Euro: <span class="money">' . $this->Html->formatAsEuro($money).'</span><br />' .
@@ -24,7 +24,7 @@ if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
             '</span>';
         ;
         echo '<span title="'.h($titleForOverlay).'">' . $labelPrefix . ' in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</span>';
-    echo '</'.$wrapperTag.'>';
+    echo '</div>';
 }
 
 ?>

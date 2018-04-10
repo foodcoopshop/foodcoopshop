@@ -130,7 +130,6 @@ if ($product['description'] != '') {
                 }
                 if (!empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
-                        'wrapperTag' => 'div',
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
                         'seconds' => $attribute['timebased_currency_seconds'],
@@ -168,7 +167,6 @@ if ($product['description'] != '') {
                 echo '</div>';
                 if (!empty($product['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
-                        'wrapperTag' => 'div',
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],
                         'seconds' => $product['timebased_currency_seconds'],
