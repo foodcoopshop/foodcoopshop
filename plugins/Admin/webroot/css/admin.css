@@ -590,6 +590,9 @@ body.orders.index td span.customer-is-new {
 #timebasedCurrencyPaymentEditForm textarea {
     width: 250px;
 }
+.featherlight-content .add-payment-form label {
+    width: 100%;
+}
 .featherlight-content .add-payment-form .radio-wrapper {
     width: 185px;
     float: left;
