@@ -414,6 +414,7 @@ foodcoopshop.Helper = {
         	contentAsHTML: true,
         	interactive: interactive,
         	maxWidth: 400,
+        	trigger: 'click',
         	theme: ['tooltipster-light']
         });
     },
