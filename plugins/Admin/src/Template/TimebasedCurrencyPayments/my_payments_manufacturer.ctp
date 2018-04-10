@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Admin.init();".
     Configure::read('app.jsNamespace').".Admin.initForm();".
-    Configure::read('app.jsNamespace').".TimebasedCurrency.initPaymentAdd('#add-timebased-currency-payment-button-wrapper .btn-success');"
+    Configure::read('app.jsNamespace').".Helper.initTooltip('.customer-detail');"
 ]);
 ?>
 
@@ -52,7 +52,19 @@ echo '<table class="list">';
         echo '<tr>';
             
             echo '<td>';
-                echo $payment['customer']->name;
+                
+                $details = $this->Html->getCustomerAddress($payment['customer']);
+                $details .= '<br />' . $payment['customer']->email;
+                
+                echo '<span style="float: left;margin-right: 5px;">';
+                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
+                        'class' => 'customer-detail',
+                        'title' => $details
+                    ], 'javascript:void(0);');
+                echo '</span>';
+                
+                echo '<span style="float: left;">' . $payment['customer']->name.'</span>';
+                
                 echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                     [

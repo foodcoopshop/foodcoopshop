@@ -40,7 +40,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
                 'TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId
             ],
             'contain' => [
-                'Customers'
+                'Customers.AddressCustomers'
             ]
         ]);
         $result = [];

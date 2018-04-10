@@ -39,7 +39,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             ],
             'contain' => [
                 'OrderDetails.Products',
-                'OrderDetails.Orders.Customers'
+                'OrderDetails.Orders.Customers.AddressCustomers'
             ]
         ]);
         $result = [];

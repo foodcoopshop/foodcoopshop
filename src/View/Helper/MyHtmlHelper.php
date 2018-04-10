@@ -93,6 +93,23 @@ class MyHtmlHelper extends HtmlHelper
 
         return $result;
     }
+    
+    public function getCustomerAddress($customer)
+    {
+        $details = $customer->address_customer->address1;
+        if ($customer->address_customer->address2 != '') {
+            $details .= '<br />' . $customer->address_customer->address2;
+        }
+        $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
+        
+        if ($customer->address_customer->phone_mobile != '') {
+            $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
+        }
+        if ($customer->address_customer->phone != '') {
+            $details .= '<br />Tel.: ' . $customer->address_customer->phone;
+        }
+        return $details;
+    }
 
     /**
      * @param array $manufacturer
