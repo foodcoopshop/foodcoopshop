@@ -490,24 +490,27 @@ class OrderDetailsController extends AdminAppController
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
                 'contain' => [
-                    'Orders',
                     'Orders.Customers',
                     'Products.StockAvailables',
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
-                    'OrderDetailTaxes'
+                    'OrderDetailTaxes',
+                    'TimebasedCurrencyOrderDetails',
+                    'Orders.TimebasedCurrencyOrders'
                 ]
             ])->first();
 
             $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.htmlHelper')->formatAsEuro($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' wurde erfolgreich storniert';
 
-            // delete row
             $this->OrderDetail->deleteOrderDetail($orderDetail);
-
-            // update sum in table orders
-            $this->OrderDetail->Orders->recalculateOrderDetailPricesInOrder($orderDetail->order);
-
+            $this->OrderDetail->Orders->updateSums($orderDetail->order);
+            
+            if (!empty($orderDetail->timebased_currency_order_detail)) {
+                $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
+                $this->TimebasedCurrencyOrder->updateSums($orderDetail->order);
+            }
+            
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_quantity * 2);
 
             // send email to customer
@@ -611,7 +614,7 @@ class OrderDetailsController extends AdminAppController
             ]
         ])->first();
 
-        $this->OrderDetail->Orders->recalculateOrderDetailPricesInOrder($newOrderDetail);
+        $this->OrderDetail->Orders->updateSums($newOrderDetail);
 
         return $newOrderDetail;
     }

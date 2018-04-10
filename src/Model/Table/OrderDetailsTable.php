@@ -51,6 +51,11 @@ class OrderDetailsTable extends AppTable
         if (!empty($orderDetail->order_detail_tax)) {
             $this->OrderDetailTaxes->delete($orderDetail->order_detail_tax);
         }
+        
+        if (!empty($orderDetail->timebased_currency_order_detail)) {
+            $this->TimebasedCurrencyOrderDetails->delete($orderDetail->timebased_currency_order_detail);
+        }
+        
     }
 
     /**

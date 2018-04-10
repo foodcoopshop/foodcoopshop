@@ -411,4 +411,15 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->browser->doFoodCoopShopLogin();
     }
+    
+    protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
+    {
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', '10,50');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
+    }
+    
 }

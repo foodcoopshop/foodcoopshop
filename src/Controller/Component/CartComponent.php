@@ -66,7 +66,7 @@ class CartComponent extends Component
      */
     public function getTimebasedCurrencySecondsSumRoundedUp()
     {
-        return $this->getTimebasedCurrencySecondsSum() * 1.1;
+        return round($this->getTimebasedCurrencySecondsSum() * 1.05, 0);
     }
     
     public function getTimebasedCurrencySecondsSum()

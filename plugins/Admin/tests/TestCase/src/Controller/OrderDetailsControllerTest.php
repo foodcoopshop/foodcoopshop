@@ -57,7 +57,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->logout();
         $this->loginAsVegetableManufacturer();
 
-        $this->assertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
+        $this->deleteAndAssertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
@@ -69,7 +69,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->mockOrder = $this->getMockOrder();
-        $this->assertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
+        $this->deleteAndAssertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -90,7 +90,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_deleted_notification', 0);
 
-        $this->assertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
+        $this->deleteAndAssertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -106,7 +106,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
-        $this->assertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
+        $this->deleteAndAssertRemoveFromDatabase([$this->mockOrder->order_details[0]->id_order_detail], $this->mockOrder->id_order, 1);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -120,8 +120,56 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->productId1 = '60-10';
         $this->mockOrder = $this->getMockOrder();
-        $this->assertRemoveFromDatabase([$this->mockOrder->order_details[1]->id_order_detail], $this->mockOrder->id_order, 1);
+        $this->deleteAndAssertRemoveFromDatabase([$this->mockOrder->order_details[1]->id_order_detail], $this->mockOrder->id_order, 1);
         $this->assertChangedStockAvailable($this->productId1, 20);
+    }
+    
+    public function testCancellationWithTimebasedCurrency()
+    {
+        $reducedMaxPercentage = 15;
+        $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
+        $this->loginAsSuperadmin();
+        
+        $this->addProductToCart(344, 1); // addProductToCart needs to be called twice!
+        $this->addProductToCart(346, 2);
+        $this->finishCart(1, 1, '', '352');
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        
+        $order = $this->getOrderWithTimebasedCurrencyAssociations($orderId);
+        $orderDetailId = $order->order_details[1]->id_order_detail;
+        $this->deleteAndAssertRemoveFromDatabase([$orderDetailId], $orderId, 1);
+        $this->assertChangedOrderPrice($orderId, 2.8);
+        
+        $updatedOrder = $this->getOrderWithTimebasedCurrencyAssociations($orderId);
+       
+        // assert if record TimebasedCurrencyOrderDetail was removed
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $timebasedCurrencyOrderDetail = $this->TimebasedCurrencyOrderDetail->find('all', [
+            'conditions' => [
+                'TimebasedCurrencyOrderDetails.id_order_detail' => $orderDetailId
+            ]
+        ]);
+        $this->assertEquals(0, $timebasedCurrencyOrderDetail->count());
+        
+        // assert update sums in TimebasedCurrencyOrder
+        $this->assertEquals($updatedOrder->timebased_currency_order->money_excl_sum, 0.76);
+        $this->assertEquals($updatedOrder->timebased_currency_order->money_incl_sum, 0.84);
+        $this->assertEquals($updatedOrder->timebased_currency_order->seconds_sum, 300);
+    }
+    
+    private function getOrderWithTimebasedCurrencyAssociations($orderId)
+    {
+        $order = $this->Order->find('all', [
+            'conditions' => [
+                'Orders.id_order' => $orderId
+            ],
+            'contain' => [
+                'TimebasedCurrencyOrders',
+                'OrderDetails.TimebasedCurrencyOrderDetails',
+                'OrderDetails.OrderDetailTaxes'
+            ]
+        ])->first();
+        return $order;
     }
 
     public function testEditOrderDetailPriceAsManufacturer()
@@ -310,7 +358,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         return $order;
     }
 
-    private function assertRemoveFromDatabase($orderDetailIds, $orderId, $expectedOrderDetailCount)
+    private function deleteAndAssertRemoveFromDatabase($orderDetailIds, $orderId, $expectedOrderDetailCount)
     {
         $this->deleteOrderDetail($orderDetailIds, $this->cancellationReason);
         $order = $this->Order->find('all', [
