@@ -31,6 +31,25 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $this->setPrimaryKey('id_order_detail');
     }
     
+    public function getUniqueCustomers($manufacturerId)
+    {
+        $customersFromOrderDetails = $this->find('all', [
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId
+            ],
+            'contain' => [
+                'OrderDetails.Products',
+                'OrderDetails.Orders.Customers'
+            ]
+        ]);
+        $result = [];
+        foreach($customersFromOrderDetails as $customersFromOrderDetail) {
+            $result[] = $customersFromOrderDetail->order_detail->order->customer;
+        }
+        $result = array_unique($result);
+        return $result;
+    }
+    
     public function addTimebasedCurrencyDataToInvoiceData($results)
     {
         $timebasedCurrencyAwareResults = [];

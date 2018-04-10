@@ -222,30 +222,21 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
         
-        $timebasedCurrencyOrderDetails = $this->TimebasedCurrencyOrderDetail->find('all', [
-            'conditions' => [
-                'Products.id_manufacturer' => $this->AppAuth->getManufacturerId()
-            ],
-            'contain' => [
-                'OrderDetails.Products',
-                'OrderDetails.Orders.Customers'
-            ]
-        ]);
+        $customersFromOrderDetails = $this->TimebasedCurrencyOrderDetail->getUniqueCustomers($this->AppAuth->getManufacturerId());
+        $customersFromPayments = $this->TimebasedCurrencyPayment->getUniqueCustomers($this->AppAuth->getManufacturerId());
+        
+        $customers = array_merge($customersFromOrderDetails, $customersFromPayments);
+        $customers = array_unique($customers);
         
         $payments = [];
-        foreach($timebasedCurrencyOrderDetails as $timebasedCurrencyOrderDetail) {
-            $payments[$timebasedCurrencyOrderDetail->order_detail->order->id_customer] = [
-                'customerId' => $timebasedCurrencyOrderDetail->order_detail->order->customer->id_customer,
-                'customerName' => $timebasedCurrencyOrderDetail->order_detail->order->customer->name
-            ];
-        }
-        
-        foreach($payments as &$payment) {
-            $payment['text'] = '';
-            $payment['unapprovedCount'] = $this->TimebasedCurrencyPayment->getUnapprovedCount($this->AppAuth->getManufacturerId(), $payment['customerId']);
-            $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']);
-            $payment['secondsOpen'] = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId(), $payment['customerId']) * -1;
+        foreach($customers as $customer) {
+            $payment = [];
+            $payment['customer'] = $customer;
+            $payment['unapprovedCount'] = $this->TimebasedCurrencyPayment->getUnapprovedCount($this->AppAuth->getManufacturerId(), $customer->id_customer);
+            $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId(), $customer->id_customer) * -1;
+            $payment['secondsOpen'] = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId(), $customer->id_customer);
             $payment['creditBalance'] = $payment['secondsOpen'] + $payment['secondsDone'];
+            $payments[] = $payment;
         }
         
         $this->set('payments', $payments);
@@ -254,10 +245,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('sumUnapprovedPaymentsCount', $sumUnapprovedPaymentsCount);
         
         $sumPayments = $this->TimebasedCurrencyPayment->getSum($this->AppAuth->getManufacturerId());
-        $this->set('sumPayments', $sumPayments);
+        $this->set('sumPayments', $sumPayments * -1);
         
         $sumOrders = $this->TimebasedCurrencyOrderDetail->getSum($this->AppAuth->getManufacturerId());
-        $this->set('sumOrders', $sumOrders * -1);
+        $this->set('sumOrders', $sumOrders);
         
         $creditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance($this->AppAuth->getManufacturerId());
         $this->set('creditBalance', $creditBalance);

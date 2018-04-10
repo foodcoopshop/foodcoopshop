@@ -32,6 +32,24 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
+    
+    public function getUniqueCustomers($manufacturerId)
+    {
+        $timebasedCurrencyPayments = $this->find('all', [
+            'conditions' => [
+                'TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId
+            ],
+            'contain' => [
+                'Customers'
+            ]
+        ]);
+        $result = [];
+        foreach($timebasedCurrencyPayments as $timebasedCurrencyPayment) {
+            $result[] = $timebasedCurrencyPayment->customer;
+        }
+        $result = array_unique($result);
+        return $result;
+    }
 
     public function validationDefault(Validator $validator)
     {
