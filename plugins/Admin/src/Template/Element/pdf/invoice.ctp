@@ -78,8 +78,8 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 // Produktauflistung End
 
-if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-    // TODO put that in controller where it belongs to :-)
+if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0 && $sumTimebasedCurrencyPriceIncl == 0) {
+    
     $m = TableRegistry::get('Manufacturers');
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
@@ -127,8 +127,20 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         $sumPriceForTimebasedCurrency = $newSumPriceIncl;
     }
     $sumPriceForTimebasedCurrency -= $sumTimebasedCurrencyPriceIncl;
-    $html = '<p>Davon bezahlt in Euro: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrency). '</b>';
-    $html .= '<br />Davon bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': <b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b></p>';
+    
+    $html = '<p>Von den Mitgliedern bezahlt in Euro: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrency). '</b>';
+    $html .= '<br />Von den Mitgliedern bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': <b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
+    
+    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
+        $m = TableRegistry::get('Manufacturers');
+        $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
+        $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
+        $html .= '<br />Betrag, der überwiesen wird: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee). '</b>';
+        $html .= '<br />Als variabler Mitgliedsbeitrag einbehalten: <b>'.$this->Html->formatAsEuro($compensatedPrice).'</b></p>';
+    } else {
+        $html .= '</p>';
+    }
+    
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 }
