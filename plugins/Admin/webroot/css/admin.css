@@ -916,9 +916,10 @@ form.fcs-form .small {
     float: left;
 }
 form.fcs-form .checkbox .small {
-    line-height: 28px;
+    line-height: 16px;
     float: left;
     max-width: 600px;
+    margin-top: 7px;
 }
 form.fcs-form .checkbox .small.multiple-lines {
     line-height: 21px;
