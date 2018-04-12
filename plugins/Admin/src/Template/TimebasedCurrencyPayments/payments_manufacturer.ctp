@@ -68,7 +68,7 @@ echo '<table class="list">';
                 if ($appAuth->isManufacturer()) {
                     $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customer']->id_customer);
                 } else {
-                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($payment['customer']->id_customer, $payment['manufacturerId']);
+                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($payment['manufacturerId'], $payment['customer']->id_customer);
                 }
                 echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',

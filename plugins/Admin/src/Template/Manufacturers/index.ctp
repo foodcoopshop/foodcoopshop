@@ -83,9 +83,9 @@ echo '<tr class="sort">';
     echo '<th></th>';
 echo '</tr>';
 $i = 0;
-$productCountSum = 0;
-$depositSum = 0;
-$timebasedCurrencySum = null;
+$sumProductCount = 0;
+$sumDeposit = 0;
+$sumTimebasedCurrency = null;
 foreach ($manufacturers as $manufacturer) {
     $i ++;
     echo '<tr id="manufacturer-' . $manufacturer->id_manufacturer . '" class="data">';
@@ -136,7 +136,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td style="width:140px;">';
-    $productCountSum += $manufacturer->product_count;
+    $sumProductCount += $manufacturer->product_count;
     $productString = $manufacturer->product_count == 1 ? 'Produkt' : 'Produkte';
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer->product_count . '&nbsp;' . $productString,
@@ -150,7 +150,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td>';
     if ($manufacturer->sum_deposit_delivered > 0) {
-        $depositSum += $manufacturer->deposit_credit_balance;
+        $sumDeposit += $manufacturer->deposit_credit_balance;
         $depositCreditBalanceClasses = [];
         if ($manufacturer->deposit_credit_balance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
@@ -171,7 +171,7 @@ foreach ($manufacturers as $manufacturer) {
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<td>';
             if ($manufacturer->timebased_currency_enabled) {
-                $timebasedCurrencySum += $manufacturer->timebased_currency_credit_balance;
+                $sumTimebasedCurrency += $manufacturer->timebased_currency_credit_balance;
                 
                 $timebasedCurrencyCreditBalanceClasses = [];
                 if ($manufacturer->timebased_currency_credit_balance < 0) {
@@ -279,11 +279,11 @@ foreach ($manufacturers as $manufacturer) {
 
 echo '<tr>';
 echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
-echo '<td><b>' . $productCountSum . '</b></td>';
+echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 10;
 echo '<td>';
-    if ($depositSum > 0) {
-        echo '<b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b>';
+    if ($sumDeposit > 0) {
+        echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($sumDeposit) . '</b>';
     }
 echo '</td>';
 
@@ -294,7 +294,7 @@ if (Configure::read('app.allowManualOrderListSending')) {
     $colspan ++;
 }
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    echo '<td><b class="' . ($timebasedCurrencySum < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencySum) . '</b></td>';
+    echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
 echo '<td colspan="' . $colspan . '"></td>';
 echo '</tr>';

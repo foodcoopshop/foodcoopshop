@@ -425,7 +425,7 @@ class CustomersController extends AdminAppController
 
         $customers = $this->paginate($query, [
             'sortWhitelist' => [
-                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_default_group', 'Customers.email', 'Customers.active', 'Customers.newsletter', 'Customers.date_add'
+                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_default_group', 'Customers.email', 'Customers.active', 'Customers.newsletter', 'Customers.date_add', 'Customers.timebased_currency_enabled'
             ],
             'order' => [
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
@@ -435,8 +435,14 @@ class CustomersController extends AdminAppController
         $i = 0;
         $this->Payment = TableRegistry::get('Payments');
         $this->Order = TableRegistry::get('Orders');
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        }
+        
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                
                 $paymentProductSum = $this->Payment->getSum($customer->id_customer, 'product');
                 $paymentPaybackSum = $this->Payment->getSum($customer->id_customer, 'payback');
                 $paymentDepositSum = $this->Payment->getSum($customer->id_customer, 'deposit');
@@ -457,6 +463,11 @@ class CustomersController extends AdminAppController
                 if (Configure::read('app.isDepositPaymentCashless')) {
                     $customer->payment_product_delta += $customer->payment_deposit_delta;
                 }
+                
+                if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+                    $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
+                }
+                
             }
 
             $customer->order_count = $this->Order->getCountByCustomerId($customer->id_customer);

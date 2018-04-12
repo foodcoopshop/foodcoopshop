@@ -259,7 +259,7 @@ class ManufacturersController extends AdminAppController
 
         $manufacturers = $this->paginate($query, [
             'sortWhitelist' => [
-                'Manufacturers.name', 'Manufacturers.iban', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart')
+                'Manufacturers.name', 'Manufacturers.iban', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -270,6 +270,10 @@ class ManufacturersController extends AdminAppController
         $this->Payment = TableRegistry::get('Payments');
         $this->OrderDetail = TableRegistry::get('OrderDetails');
 
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        }
+        
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $this->Product->getCountByManufacturerId($manufacturer->id_manufacturer);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
@@ -277,7 +281,6 @@ class ManufacturersController extends AdminAppController
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
             $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
                 $manufacturer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance($manufacturer->id_manufacturer);
             }
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {

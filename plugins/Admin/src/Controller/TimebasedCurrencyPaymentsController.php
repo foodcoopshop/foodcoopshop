@@ -328,7 +328,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->render('paymentsCustomer');
     }
     
-    public function paymentDetailsSuperadmin($customerId, $manufacturerId = null)
+    public function paymentDetailsSuperadmin($manufacturerId = null, $customerId)
     {
         $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('all', [
@@ -336,18 +336,24 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'Customers.id_customer' => $customerId
             ],
         ])->first();
-            
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
-        ])->first();
+        
+        if ($manufacturerId > 0) {
+            $this->Manufacturer = TableRegistry::get('Manufacturers');
+            $manufacturer = $this->Manufacturer->find('all', [
+                'conditions' => [
+                    'Manufacturers.id_manufacturer' => $manufacturerId
+                ],
+            ])->first();
+        }
         
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
         $this->set('isEditAllowedGlobally', true);
-        $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name . ' für ' . $manufacturer->name);
+        $titleForLayout = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name;
+        if (!empty($manufacturer)) {
+            $titleForLayout .= ' für ' . $manufacturer->name;
+        }
+        $this->set('title_for_layout', $titleForLayout);
         $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
         $this->set('helpText', [
             'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und gegebenfalls bearbeiten.',
@@ -430,10 +436,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);
         
-        $sumPayments = $this->TimebasedCurrencyPayment->getSum(null, $customerId);
+        $sumPayments = $this->TimebasedCurrencyPayment->getSum($manufacturerId, $customerId);
         $this->set('sumPayments', $sumPayments);
         
-        $sumOrders = $this->TimebasedCurrencyOrderDetail->getSum(null, $customerId);
+        $sumOrders = $this->TimebasedCurrencyOrderDetail->getSum($manufacturerId, $customerId);
         $this->set('sumOrders', $sumOrders * -1);
         
         $creditBalance = $sumPayments - $sumOrders;

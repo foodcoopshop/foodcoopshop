@@ -83,6 +83,9 @@ echo '<th>Bestellungen</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>Guthaben</th>';
 }
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
+}
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter', 'Email') . '</th>';
 }
@@ -96,6 +99,7 @@ $sumPaymentsProductDelta = 0;
 $sumPaymentsDepositDelta = 0;
 $sumOrdersCount = 0;
 $sumEmailReminders = 0;
+$sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
     $i ++;
 
@@ -206,6 +210,34 @@ foreach ($customers as $customer) {
         $sumPaymentsProductDelta += $customer->payment_product_delta;
         echo '</td>';
     }
+    
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        echo '<td>';
+        if ($customer->timebased_currency_enabled) {
+            $sumTimebasedCurrency += $customer->timebased_currency_credit_balance;
+            
+            $timebasedCurrencyCreditBalanceClasses = [];
+            if ($customer->timebased_currency_credit_balance < 0) {
+                $timebasedCurrencyCreditBalanceClasses[] = 'negative';
+            }
+            $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($customer->timebased_currency_credit_balance);
+            
+            if ($appAuth->isSuperadmin()) {
+                echo $this->Html->getJqueryUiIcon(
+                    $timebasedCurrencyCreditBalanceHtml,
+                    [
+                        'class' => 'icon-with-text',
+                        'title' => $this->TimebasedCurrency->getName() . ' anzeigen'
+                    ],
+                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer)
+                );
+            } else {
+                echo $timebasedCurrencyCreditBalanceHtml;
+            }
+        }
+        echo '</td>';
+    }
+    
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
@@ -247,6 +279,9 @@ if ($this->Html->paymentIsCashless()) {
         echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
     }
     echo '</td>';
+}
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td><b>' . $sumEmailReminders . '</b></td>';

@@ -171,9 +171,9 @@ class SlugHelper extends Helper
         return '/admin/timebased-currency-payments/my-payment-details-manufacturer/'.$customerId;
     }
     
-    public function getTimebasedCurrencyPaymentDetailsForSuperadmins($customerId, $manufacturerId)
+    public function getTimebasedCurrencyPaymentDetailsForSuperadmins($manufacturerId, $customerId)
     {
-        return '/admin/timebased-currency-payments/payment-details-superadmin/'.$customerId . '/' . $manufacturerId;
+        return '/admin/timebased-currency-payments/payment-details-superadmin/'.$manufacturerId . '/' . $customerId;
     }
     
     public function getTimebasedCurrencyPaymentEdit($paymentId)
