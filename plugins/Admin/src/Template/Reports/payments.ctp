@@ -24,7 +24,7 @@ $this->element('addScript', [
 ]);
 if ($paymentType == 'product') {
     $this->element('highlightRowAfterEdit', [
-        'rowIdPrefix' => '#cakePayment-'
+        'rowIdPrefix' => '#payment-'
     ]);
 }
 ?>
@@ -96,7 +96,7 @@ foreach ($payments as $payment) {
         $paymentSum += $payment->amount;
     }
 
-    echo '<tr id="cakePayment-'.$payment->id.'" class="data ' . $rowClass . '">';
+    echo '<tr id="payment-'.$payment->id.'" class="data ' . $rowClass . '">';
 
     if ($paymentType == 'product') {
         echo '<td>';

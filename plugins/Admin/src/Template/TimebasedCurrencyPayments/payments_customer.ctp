@@ -22,6 +22,10 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initTooltip('.comment');"
 ]);
 
+$this->element('highlightRowAfterEdit', [
+    'rowIdPrefix' => '#timebased-currency-payment-'
+]);
+
 $colspan = 5;
 if ($isDeleteAllowedGlobally) {
     $this->element('addScript', ['script' =>
@@ -75,7 +79,7 @@ echo '<table class="list">';
             $rowClass = ['deactivated', 'line-through'];
         }
         
-        echo '<tr data-payment-id="'.$payment['paymentId'].'" class="' . join(' ', $rowClass) . '">';
+        echo '<tr id="timebased-currency-payment-'.$payment['paymentId'].'" data-payment-id="'.$payment['paymentId'].'" class="' . join(' ', $rowClass) . '">';
             
             echo '<td style="text-align:center;width:50px;">';
                 if ($payment['status'] > APP_DEL) {
