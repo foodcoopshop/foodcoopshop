@@ -15,22 +15,22 @@ foodcoopshop.TimebasedCurrency = {
 
 	shortcode: '',
 		
-    setShortcode: function (shortcode) {
+    setShortcode: function(shortcode) {
         this.shortcode = shortcode;
     },
 
-    formatFloatAsTimebasedCurrency : function(float) {
+    formatFloatAsTimebasedCurrency: function(float) {
         return foodcoopshop.Helper.formatFloatAsString(float) + '&nbsp;' + this.shortcode;
 	},
 	
-	getTimebasedCurrencyAsFloat(timebasedCurrency) {
+	getTimebasedCurrencyAsFloat: function(timebasedCurrency) {
 		var regexAsString = '&nbsp;' + this.shortcode;
 		var regex = new RegExp(regexAsString, 'g');
 		var result = foodcoopshop.Helper.getStringAsFloat(timebasedCurrency.replace(regex, ''));
 		return result;
 	},
 		
-	updateHoursSumDropdown : function(maxSeconds, selectedIndex) {
+	updateHoursSumDropdown: function(maxSeconds, selectedIndex) {
 		
 		maxSeconds = Math.floor(parseFloat(maxSeconds) * 3600);
 		var dropdown = $('#timebased-currency-order-seconds-sum-tmp');
