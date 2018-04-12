@@ -294,6 +294,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
+        $this->set('isEditAllowedGlobally', false);
         $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
         $this->paymentListCustomer(null, $this->AppAuth->getUserId());
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
@@ -316,6 +317,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         $this->set('showAddForm', false);
         $this->set('isDeleteAllowedGlobally', false);
+        $this->set('isEditAllowedGlobally', true);
         $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name);
         $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
         $this->set('helpText', [
@@ -344,6 +346,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
+        $this->set('isEditAllowedGlobally', true);
         $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name . ' für ' . $manufacturer->name);
         $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
         $this->set('helpText', [

@@ -152,8 +152,8 @@ echo '<table class="list">';
                 }
             echo '</td>';
             
-            echo '<td style="text-align:center;width:'.($appAuth->isSuperadmin() ? 50 : 25).'px;">';
-                if ($payment['paymentId'] && $payment['isEditAllowed']) {
+            echo '<td style="text-align:center;width:'.($isEditAllowedGlobally && $isDeleteAllowedGlobally ? 50 : 25).'px;">';
+                if ($payment['isEditAllowed'] && $isEditAllowedGlobally) {
                     echo $this->Html->getJqueryUiIcon(
                         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
                         [
