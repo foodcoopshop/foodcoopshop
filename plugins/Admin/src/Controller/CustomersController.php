@@ -195,9 +195,9 @@ class CustomersController extends AdminAppController
         
         
         $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
-        $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
+        $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId) * -1;
         $this->set('timebasedCurrencyCreditBalance', $timebasedCurrencyCreditBalance);
-        $this->set('timebasedCurrencyDisableOptionAllowed', $timebasedCurrencyCreditBalance < 0);
+        $this->set('timebasedCurrencyDisableOptionAllowed', $timebasedCurrencyCreditBalance >= 0);
 
         $this->setFormReferer();
 
