@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Mailer\AppEmail;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -137,12 +138,17 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->request->data['TimebasedCurrencyPayments']['seconds'] = $this->request->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->request->getData('TimebasedCurrencyPayments.minutes') * 60;
         $this->request->data['TimebasedCurrencyPayments']['modified_by'] = $this->AppAuth->getUserId();
         
+        $unchangedPaymentSeconds = $payment->seconds;
+        $unchangedPaymentApproval = $payment->approval;
+        
         $payment = $this->TimebasedCurrencyPayment->patchEntity($payment, $this->request->getData());
+        
         if (!empty($payment->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('payment', $payment);
             $this->render('edit');
         } else {
+            
             $payment = $this->TimebasedCurrencyPayment->save($payment);
             
             if (!$isEditMode) {
@@ -177,7 +183,26 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 $message .= ' ' . $customer->name;
             }
             
-            $message .= ' wurde ' . $messageSuffix . '.';
+            $message .= ' wurde ' . $messageSuffix;
+            
+            $sendEmailToCustomer = ($unchangedPaymentSeconds != $payment->seconds) || ($unchangedPaymentApproval != -1 && $payment->approval == -1);
+            if ($sendEmailToCustomer) {
+                $email = new AppEmail();
+                $email->setTemplate('Admin.timebased_currency_payment_information')
+                ->setTo($payment->customer->email)
+                ->setSubject('Wichtige Informationen zu deiner Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')))
+                ->setViewVars([
+                    'appAuth' => $this->AppAuth,
+                    'data' => $payment->customer,
+                    'unchangedPaymentSeconds' => $unchangedPaymentSeconds,
+                    'unchangedPaymentApproval' => $unchangedPaymentApproval,
+                    'payment' => $payment
+                ]);
+                $email->send();
+                $message .= ' und eine E-Mail an das Mitglied verschickt';
+            }
+            $message .= '.';
+            
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message);
             $this->Flash->success($message);
             
@@ -220,6 +245,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $payment = $this->TimebasedCurrencyPayment->find('all', [
             'conditions' => [
                 'TimebasedCurrencyPayments.id' => $paymentId
+            ],
+            'contain' => [
+                'Customers'
             ]
         ])->first();
         

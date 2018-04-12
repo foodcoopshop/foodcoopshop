@@ -64,13 +64,15 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
         echo $this->element('dateFields', ['dateFrom' => ($payment->working_day ? $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : null), 'nameFrom' => 'TimebasedCurrencyPayments[working_day]', 'showDateTo' => false]);
     echo '</div>';
     echo $this->Form->control('TimebasedCurrencyPayments.hours', [
-        'label' => 'Stunden',
+        'label' => 'Stunden <span class="after small">Das Mitglied erhält bei Änderung der Zeit automatisch eine E-Mail (inklusive Kommentar).</span>',
+        'escape' => false,
         'type' => 'select',
         'options' => [0,1,2,3,4,5,6,7,8,9,10,11,12],
         'class' => 'selectpicker-disabled time'
     ]);
     echo $this->Form->control('TimebasedCurrencyPayments.minutes', [
-        'label' => 'Minuten',
+        'label' => 'Minuten</span>',
+        'escape' => false,
         'type' => 'select',
         'options' => [0 => '00', 15 => '15', 30 => '30', 45 => '45'],
         'class' => 'selectpicker-disabled time'
@@ -88,12 +90,12 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
         ]);
         echo $this->Form->control('TimebasedCurrencyPayments.approval', [
             'type' => 'select',
-            'label' => 'Bestätigt? <span class="after small">Ist die Eintragung vom Mitglied in Ordnung?</span>',
+            'label' => 'Bestätigt? <span class="after small">Das Mitglied erhält automatisch eine E-Mail, wenn auf <b>'.$this->Html->getApprovalStates()[-1].'</b> geändert wird</span>',
             'options' => $this->Html->getApprovalStates(),
             'escape' => false
         ]);
         echo $this->Form->control('TimebasedCurrencyPayments.approval_comment', [
-            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen für das Mitglied.</div>',
+            'label' => 'Kommentar<br /><br /><div class="after small">Hier ist Platz für Anmerkungen für das Mitglied.</div>',
             'type' => 'textarea',
             'class' => 'ckeditor',
             'escape' => false
@@ -103,7 +105,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
             'script' => Configure::read('app.jsNamespace') . ".Helper.initCkeditor('timebasedcurrencypayments-text');"
         ]);
         echo $this->Form->control('TimebasedCurrencyPayments.text', [
-            'label' => 'Anmerkungen<br /><br /><div class="after small">Hier ist Platz für Anmerkungen für den Hersteller.</div>',
+            'label' => 'Kommentar<br /><br /><div class="after small">Hier ist Platz für Anmerkungen für den Hersteller.</div>',
             'type' => 'textarea',
             'class' => 'ckeditor',
             'escape' => false
