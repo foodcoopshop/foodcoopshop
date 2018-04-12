@@ -84,7 +84,7 @@ echo '<tr class="sort">';
 echo '</tr>';
 $i = 0;
 $productCountSum = 0;
-$depositSum = null;
+$depositSum = 0;
 $timebasedCurrencySum = null;
 foreach ($manufacturers as $manufacturer) {
     $i ++;
@@ -281,10 +281,12 @@ echo '<tr>';
 echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $productCountSum . '</b></td>';
 $colspan = 10;
-if ($depositSum !== null) {
-    $colspan--;
-    echo '<td><b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b></td>';
-}
+echo '<td>';
+    if ($depositSum > 0) {
+        echo '<b class="' . ($depositSum < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($depositSum) . '</b>';
+    }
+echo '</td>';
+
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
@@ -292,7 +294,6 @@ if (Configure::read('app.allowManualOrderListSending')) {
     $colspan ++;
 }
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    $colspan --;
     echo '<td><b class="' . ($timebasedCurrencySum < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencySum) . '</b></td>';
 }
 echo '<td colspan="' . $colspan . '"></td>';
