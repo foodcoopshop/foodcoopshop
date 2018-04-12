@@ -11,11 +11,11 @@
     ],
     "config": {
         "platform": {
-            "php": "7.0"
+            "php": "7.1"
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "cakephp/cakephp": "3.5.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "@stable",
@@ -33,7 +33,7 @@
         "cakephp/bake": "@stable",
         "cakephp/debug_kit": "~3.2",
         "cakephp/cakephp-codesniffer": "3.*",
-        "phpunit/phpunit": "6.*"
+        "phpunit/phpunit": "7.*"
     },
     "autoload": {
         "psr-4": {
