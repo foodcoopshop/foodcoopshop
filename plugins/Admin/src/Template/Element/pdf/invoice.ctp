@@ -121,8 +121,14 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
 }
 
 if ($sumTimebasedCurrencyPriceIncl > 0) {
-    $html = '<p>Gesamtbetrag: <b>' . $this->Html->formatAsEuro($sumPriceIncl). '</b>';
-    $html .= '<br />Davon zahlbar in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': <b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b></p>';
+    
+    $sumPriceForTimebasedCurrency = $sumPriceIncl;
+    if (isset($newSumPriceIncl)) {
+        $sumPriceForTimebasedCurrency = $newSumPriceIncl;
+    }
+    $sumPriceForTimebasedCurrency -= $sumTimebasedCurrencyPriceIncl;
+    $html = '<p>Davon bezahlt in Euro: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrency). '</b>';
+    $html .= '<br />Davon bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': <b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b></p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 }
