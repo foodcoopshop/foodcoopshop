@@ -135,8 +135,8 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         $m = TableRegistry::get('Manufacturers');
         $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
         $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
-        $html .= '<br />Betrag, der überwiesen wird: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee). '</b>';
-        $html .= '<br />Als variabler Mitgliedsbeitrag einbehalten: <b>'.$this->Html->formatAsEuro($compensatedPrice).'</b></p>';
+        $html .= '<br />Einbehaltener variabler Mitgliedsbeitrag: <b>'.$this->Html->formatAsEuro($compensatedPrice).'</b>';
+        $html .= '<br />Betrag, der auf dein Konto überwiesen wird: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee). '</b></p>';
     } else {
         $html .= '</p>';
     }
