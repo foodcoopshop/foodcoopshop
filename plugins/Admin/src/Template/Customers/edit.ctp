@@ -90,8 +90,8 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    $label = 'Zeitwährungs-Modul aktiv? ';
-    $label .= '<span class="after small">Ich möchte meine Produkte (auch) in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' bezahlen. Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/zeitwaehrungs-modul" target="_blank">in der Online-Doku</a>.';
+    $label = 'Stundenabrechnungs-Modul aktiv? ';
+    $label .= '<span class="after small">Ich möchte meine Produkte (auch) in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' bezahlen. Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/stundenabrechnungs-modul" target="_blank">in der Online-Doku</a>.';
     if (!$timebasedCurrencyDisableOptionAllowed) {
         $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
     }

@@ -157,21 +157,21 @@ class ConfigurationsTable extends AppTable
     
     public function validationFcsTimebasedCurrencyName(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib den Namen der Zeitwährung an.');
+        $validator->notEmpty('value', 'Bitte gib den Namen der Stundenabrechnung an.');
         $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
         return $validator;
     }
     
     public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib die Abkührung der Zeitwährung an.');
+        $validator->notEmpty('value', 'Bitte gib die Abkürzung des Namens der Stundenabrechnung an.');
         $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
         return $validator;
     }
     
     public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib den Umrechnungskurs der Zeitwährung in € an.');
+        $validator->notEmpty('value', 'Bitte gib den Umrechnungskurs für die Stundenabrechnung in € an.');
         $validator->decimal('value', 2, 'Bitte trage genau 2 Kommastellen ein.');
         return $validator;
     }

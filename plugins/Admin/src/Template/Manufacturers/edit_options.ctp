@@ -195,21 +195,21 @@ echo '<div class="holiday-wrapper">';
     }
 
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo '<h2>Zeitwährung</h2>';
+        echo '<h2>Stundenabrechnung</h2>';
         echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
-            'label' => 'Zeitwährungs-Modul aktiv? <span class="after small">Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/zeitwaehrungs-modul" target="_blank">in der Online-Doku</a>.</span>',
+            'label' => 'Stundenabrechnungs-Modul aktiv? <span class="after small">Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/stundenabrechnungs-modul" target="_blank">in der Online-Doku</a>.</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
         if ($manufacturer->timebased_currency_enabled) {
             echo $this->Form->control('Manufacturers.timebased_currency_max_percentage', [
-                'label' => 'Maximaler Anteil der Zeitwährung in Prozent <span class="after small">gültig für alle Produkte - bei 0 ist die Zeitwährungsfunktion im Shop deaktiviert</span>',
+                'label' => 'Maximaler Anteil der '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' in Prozent <span class="after small">gültig für alle Produkte - bei 0 ist das Stundenabrechnungs-Modul im Shop deaktiviert</span>',
                 'type' => 'text',
                 'class' => 'short',
                 'escape' => false
             ]);
             echo $this->Form->control('Manufacturers.timebased_currency_max_credit_balance', [
-                'label' => 'Maximaler Kontostand in Stunden <span class="after small">bis zu dem in der Zeitwährung bezahlt werden kann</span>',
+                'label' => 'Maximaler Kontostand in Stunden <span class="after small">bis zu dem in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' bezahlt werden kann</span>',
                 'type' => 'text',
                 'class' => 'short',
                 'escape' => false
