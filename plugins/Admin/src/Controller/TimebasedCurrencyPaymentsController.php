@@ -218,7 +218,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $payment = $this->TimebasedCurrencyPayment->newEntity(
             [
                 'active' => APP_ON,
-                'id_customer' => $this->AppAuth->isSuperadmin() ? $customerId : $this->AppAuth->getUserUid(),
+                'id_customer' => $this->AppAuth->isSuperadmin() ? $customerId : $this->AppAuth->getUserId(),
                 'created_by' => $this->AppAuth->getUserId(),
                 'working_day' => Configure::read('app.timeHelper')->getCurrentDay()
             ],
