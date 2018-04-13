@@ -185,7 +185,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             
             $message .= ' wurde ' . $messageSuffix;
             
-            $sendEmailToCustomer = ($unchangedPaymentSeconds != $payment->seconds) || ($unchangedPaymentApproval != -1 && $payment->approval == -1);
+            $sendEmailToCustomer = $isEditMode && ($unchangedPaymentSeconds != $payment->seconds) || ($unchangedPaymentApproval != -1 && $payment->approval == -1);
             if ($sendEmailToCustomer) {
                 $email = new AppEmail();
                 $email->setTemplate('Admin.timebased_currency_payment_information')
