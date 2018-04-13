@@ -128,18 +128,54 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
     }
     $sumPriceForTimebasedCurrency -= $sumTimebasedCurrencyPriceIncl;
     
-    $html = '<p>Von den Mitgliedern bezahlt in Euro: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrency). '</b>';
-    $html .= '<br />Von den Mitgliedern bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ': <b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
+    $firstColumnWidth = 200;
+    $secondColumnWidth = 60;
+    
+    $html = '<table border="0" cellspacing="0" cellpadding="1">';
+        
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Von den Mitgliedern bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Von den Mitgliedern bezahlt in Euro:';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>' .  $this->Html->formatAsEuro($sumPriceForTimebasedCurrency) . '</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
     
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
         $m = TableRegistry::get('Manufacturers');
         $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
         $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
-        $html .= '<br />Einbehaltener variabler Mitgliedsbeitrag: <b>'.$this->Html->formatAsEuro($compensatedPrice).'</b>';
-        $html .= '<br />Betrag, der auf dein Konto überwiesen wird: <b>' . $this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee). '</b></p>';
-    } else {
-        $html .= '</p>';
+        
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Einbehaltener variabler Mitgliedsbeitrag:';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>'.$this->Html->formatAsEuro($compensatedPrice).'</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+        
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Betrag, der auf dein Konto überwiesen wird:';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>'.$this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
     }
+    
+    $html .= '</table>';
     
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
