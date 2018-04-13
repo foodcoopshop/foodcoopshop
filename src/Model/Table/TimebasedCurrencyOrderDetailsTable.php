@@ -31,6 +31,27 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $this->setPrimaryKey('id_order_detail');
     }
     
+    public function changePrice($orderDetail, $price, $quantity)
+    {
+        
+        $manufacturerTable = TableRegistry::get('Manufacturers');
+        
+        $maxPercentage = $orderDetail->timebased_currency_order_detail->max_percentage;
+        $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $quantity;
+        $netProductPricePerUnit = $this->OrderDetails->Products->getNetPrice($orderDetail->product_id, $grossProductPricePerUnit);
+        
+        $this->save(
+            $this->patchEntity(
+                $orderDetail->timebased_currency_order_detail,
+                [
+                    'money_incl' => round($manufacturerTable->getTimebasedCurrencyMoney($grossProductPricePerUnit, $maxPercentage), 2) * $quantity,
+                    'money_excl' => round($manufacturerTable->getTimebasedCurrencyMoney($netProductPricePerUnit, $maxPercentage), 2) * $quantity,
+                    'seconds' => $manufacturerTable->getCartTimebasedCurrencySeconds($grossProductPricePerUnit, $maxPercentage) * $quantity
+                ]
+            )
+        );
+    }
+    
     public function getUniqueCustomers($manufacturerId)
     {
         $customersFromOrderDetails = $this->find('all', [
