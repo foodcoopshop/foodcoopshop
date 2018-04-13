@@ -1737,7 +1737,7 @@ foodcoopshop.Admin = {
             var currentQuantity = $(this).closest('tr').find('td:nth-child(3) span.product-quantity-for-dialog').html();
             var select = $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity');
             select.find('option').remove();
-            for (var i = 1; i < currentQuantity; i++) {
+            for (var i = currentQuantity - 1; i >= 1; i--) {
                 select.append($('<option>', {
                     value: i,
                     text: i
