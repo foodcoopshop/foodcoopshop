@@ -399,6 +399,9 @@ body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
 }
+body.order_details.index .timebased-currency-object {
+	display: none;
+}
 body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.icon-with-text {
   padding-top: 3px;
   padding-bottom: 3px;
@@ -820,8 +823,15 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#dialogOrderDetailProductPricePrice {
+#order-detail-product-price-edit-form input {
     margin-bottom: 5px;
+    margin-right: 5px;
+    text-align: right;
+    width: 75px;
+}
+#order-detail-product-price-edit-form span.small {
+    line-height: 16px;
+    margin-left: 5px;
 }
 .btn:not(.dropdown-toggle):not(.btn-close) {
     padding: 3px 6px;

@@ -19,7 +19,39 @@ foodcoopshop.TimebasedCurrency = {
         this.shortcode = shortcode;
     },
 
-    formatFloatAsTimebasedCurrency: function(float) {
+	getTimebasedCurrencyPrice: function(originalPrice, max_percentage) {
+		return originalPrice * (100 - max_percentage) / 100;
+	},
+	
+	getTimebasedCurrencyOriginalPrice: function(timebasedCurrencyPrice, max_percentage) {
+		return timebasedCurrencyPrice / (100 - max_percentage) * 100;
+	},
+	
+	bindOrderDetailProductPriceField: function(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField) {
+        productPriceField.off('keyup');
+        productPriceField.on('keyup', function() {
+        	var currentPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
+        	var updatedTimebasedCurrencyPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyPrice(
+    			currentPrice,
+    			timebasedCurrencyData.max_percentage
+			);
+        	productTimebasedCurrencyPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedTimebasedCurrencyPrice));
+        });
+	},
+	
+	bindOrderDetailProductTimebasedCurrencyPriceField : function(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField) {
+        productTimebasedCurrencyPriceField.off('keyup');
+        productTimebasedCurrencyPriceField.on('keyup', function() {
+        	var currentTimebasedCurrencyPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
+        	var updatedPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyOriginalPrice(
+    			currentTimebasedCurrencyPrice,
+    			timebasedCurrencyData.max_percentage
+			);
+        	productPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedPrice));
+        });
+	},
+
+	formatFloatAsTimebasedCurrency: function(float) {
         return foodcoopshop.Helper.formatFloatAsString(float) + '&nbsp;' + this.shortcode;
 	},
 	

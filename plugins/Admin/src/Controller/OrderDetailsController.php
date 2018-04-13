@@ -415,12 +415,38 @@ class OrderDetailsController extends AdminAppController
                 'Orders.Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
-                'OrderDetailTaxes'
+                'OrderDetailTaxes',
+                'TimebasedCurrencyOrderDetails',
+                'Orders.TimebasedCurrencyOrders'
             ]
         ])->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_quantity);
+        
+        if (!empty($object->timebased_currency_order_detail)) {
+            
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+            $this->Manufacturer = TableRegistry::get('Manufacturers');
+            
+            $maxPercentage = $object->timebased_currency_order_detail->max_percentage;
+            $grossProductPricePerUnit = $productPrice / (100 - $maxPercentage) * 100 / $object->product_quantity;
+            $netProductPricePerUnit = $this->OrderDetail->Products->getNetPrice($object->product_id, $grossProductPricePerUnit);
+            
+            $this->TimebasedCurrencyOrderDetail->save(
+                $this->TimebasedCurrencyOrderDetail->patchEntity(
+                    $object->timebased_currency_order_detail,
+                    [
+                        'money_incl' => round($this->Manufacturer->getTimebasedCurrencyMoney($grossProductPricePerUnit, $maxPercentage), 2) * $object->product_quantity,
+                        'money_excl' => round($this->Manufacturer->getTimebasedCurrencyMoney($netProductPricePerUnit, $maxPercentage), 2) * $object->product_quantity,
+                        'seconds' => $this->Manufacturer->getCartTimebasedCurrencySeconds($grossProductPricePerUnit, $maxPercentage) * $object->product_quantity
+                    ]
+                )
+            );
+            
+            $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
+            $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
+        }
 
         $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_quantity . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
 
@@ -538,7 +564,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
-            $email->send();
+//             $email->send();
 
             $message .= ' versendet.';
             if ($cancellationReason != '') {

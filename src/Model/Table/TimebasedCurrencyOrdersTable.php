@@ -42,9 +42,6 @@ class TimebasedCurrencyOrdersTable extends AppTable
     {
         $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
         
-//         $this->TimebasedCurrencyOrderDetail->association('OrderDetails')->setConditions(
-//             ['OrderDetails.id_order' => $$order->id_order]
-//         );
         $query = $this->TimebasedCurrencyOrderDetail->find('all');
         $query->contain(['OrderDetails']);
         $query->select(['sumMoneyIncl' => $query->func()->sum('TimebasedCurrencyOrderDetails.money_incl')]);
@@ -72,8 +69,6 @@ class TimebasedCurrencyOrdersTable extends AppTable
             'money_excl_sum' => $sumMoneyExcl,
             'seconds_sum' => $sumSeconds
         ];
-        Log::write(LOG_ERR, $timebasedCurrencyOrder2update);
-        Log::write(LOG_ERR, $order->timebased_currency_order);
         
         $this->save(
             $this->patchEntity($order->timebased_currency_order, $timebasedCurrencyOrder2update)

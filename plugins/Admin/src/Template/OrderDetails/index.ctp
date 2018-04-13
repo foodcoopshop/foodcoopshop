@@ -200,24 +200,32 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
 
     echo '<td class="right">';
-    echo '<div class="table-cell-wrapper quantity">';
-    if ($groupBy == '') {
-        if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'order-detail-product-quantity-edit-button',
-                'title' => 'Zum Ändern der Anzahl anklicken'
-            ], 'javascript:void(0);');
+    
+        if (!empty($orderDetail->timebased_currency_order_detail)) {
+            echo '<span id="timebased-currency-object-'.$orderDetail->id_order_detail.'" class="timebased-currency-object"></span>';
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Admin.setOrderDetailTimebasedCurrencyData($('#timebased-currency-object-".$orderDetail->id_order_detail."'),'".json_encode($orderDetail->timebased_currency_order_detail)."');"
+            ]);
         }
-        $quantity = $orderDetail->product_quantity;
-        $style = '';
-        if ($quantity > 1) {
-            $style = 'font-weight:bold;';
+        
+        echo '<div class="table-cell-wrapper quantity">';
+        if ($groupBy == '') {
+            if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                    'class' => 'order-detail-product-quantity-edit-button',
+                    'title' => 'Zum Ändern der Anzahl anklicken'
+                ], 'javascript:void(0);');
+            }
+            $quantity = $orderDetail->product_quantity;
+            $style = '';
+            if ($quantity > 1) {
+                $style = 'font-weight:bold;';
+            }
+            echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
+        } else {
+            echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }
-        echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
-    } else {
-        echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
-    }
-    echo '</div>';
+        echo '</div>';
     echo '</td>';
 
     if ($groupBy != '') {
