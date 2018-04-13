@@ -31,6 +31,11 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $this->setPrimaryKey('id_order_detail');
     }
     
+    /**
+     * @param OrderDetail $orderDetail
+     * @param float $price
+     * @param int $quantity
+     */
     public function changePrice($orderDetail, $price, $quantity)
     {
         
@@ -52,6 +57,10 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         );
     }
     
+    /**
+     * @param int $manufacturerId
+     * @return array
+     */
     public function getUniqueCustomers($manufacturerId)
     {
         $customersFromOrderDetails = $this->find('all', [
@@ -71,6 +80,10 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         return $result;
     }
     
+    /**
+     * @param array $results
+     * @return array
+     */
     public function addTimebasedCurrencyDataToInvoiceData($results)
     {
         $timebasedCurrencyAwareResults = [];
@@ -120,6 +133,11 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         return $manufacturers;
     }
     
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @return \Cake\ORM\Query
+     */
     private function getFilteredQuery($manufacturerId, $customerId)
     {
         if ($manufacturerId) {
@@ -147,6 +165,11 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         return $query;
     }
     
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @return array
+     */
     public function getOrders($manufacturerId = null, $customerId = null)
     {
         $query = $this->getFilteredQuery($manufacturerId, $customerId);
@@ -159,6 +182,11 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         return $orders;
     }
     
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @return float
+     */
     public function getCreditBalance($manufacturerId = null, $customerId = null)
     {
         $timebasedCurrencyPayment = TableRegistry::get('TimebasedCurrencyPayments');

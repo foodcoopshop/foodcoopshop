@@ -23,6 +23,10 @@ class TimebasedCurrencyHelper extends Helper
     
     public $helpers = ['MyTime', 'MyHtml', 'MyNumber'];
     
+    /**
+     * @param boolean $showText
+     * @return string
+     */
     public function getOrderInformationText($showText)
     {
         $text = '';
@@ -32,17 +36,29 @@ class TimebasedCurrencyHelper extends Helper
         return $text;
     }
     
+    /**
+     * @return string
+     */
     public function getName()
     {
         return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto';
     }
     
+    /**
+     * @param int $seconds
+     * @return string
+     */
     public function formatSecondsToTimebasedCurrency($seconds)
     {
         $hours = round($seconds / 3600, 2);
         return $this->MyHtml->formatAsUnit($hours, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
     }
     
+    /**
+     * @param int $maxSeconds
+     * @param float $exchangeRate
+     * @return array
+     */
     public function getTimebasedCurrencyHoursDropdown($maxSeconds, $exchangeRate)
     {
         $stepsInSeconds = 15 * 60;
@@ -67,6 +83,11 @@ class TimebasedCurrencyHelper extends Helper
         return $dropdown;
     }
     
+    /**
+     * @param int $seconds
+     * @param float $exchangeRate
+     * @return string
+     */
     public function getCartTimebasedCurrencySecondsAsEuroForDropdown($seconds, $exchangeRate)
     {
         return str_replace('&nbsp;', ' ', $this->MyHtml->formatAsEuro(

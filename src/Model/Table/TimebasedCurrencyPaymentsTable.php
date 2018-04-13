@@ -33,6 +33,10 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
     
+    /**
+     * @param int $manufacturerId
+     * @return array
+     */
     public function getUniqueCustomers($manufacturerId)
     {
         $timebasedCurrencyPayments = $this->find('all', [
@@ -51,6 +55,10 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         return $result;
     }
 
+    /**
+     * @param Validator $validator
+     * @return \Cake\Validation\Validator
+     */
     public function validationDefault(Validator $validator)
     {
         $validator->add('hours', 'greaterThan', [
@@ -65,6 +73,11 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         return $validator;
     }
     
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @return \Cake\ORM\Query
+     */
     private function getPayments($manufacturerId, $customerId)
     {
         if (!$manufacturerId && !$customerId) {
@@ -92,6 +105,11 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         
     }
     
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     * @return int
+     */
     public function getUnapprovedCount($manufacturerId = null, $customerId = null)
     {
         $query = $this->getPayments($manufacturerId, $customerId);

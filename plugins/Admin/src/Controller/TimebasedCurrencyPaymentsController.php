@@ -53,6 +53,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         }
     }
 
+    /**
+     * $param Event $event
+     * @see \App\Controller\AppController::beforeFilter()
+     */
     public function beforeFilter(Event $event)
     {
         $this->TimebasedCurrencyPayment = TableRegistry::get('TimebasedCurrencyPayments');
@@ -131,6 +135,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         ]));
     }
     
+    /**
+     * @param TimebasedCurrencyPayment $payment
+     * @param boolean $isEditMode
+     */
     public function _processForm($payment, $isEditMode)
     {
         
@@ -228,6 +236,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('payment', $payment);
     }
     
+    /**
+     * @param int $customerId
+     */
     public function add($customerId)
     {
         $payment = $this->TimebasedCurrencyPayment->newEntity(
@@ -251,6 +262,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
     }
     
+    /**
+     * @param int $paymentId
+     */
     public function edit($paymentId)
     {
         if ($paymentId === null) {
@@ -276,6 +290,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->_processForm($payment, true);
     }
     
+    /**
+     * @param int $manufacturerId
+     */
     private function paymentListManufacturer($manufacturerId)
     {
         $customersFromOrderDetails = $this->TimebasedCurrencyOrderDetail->getUniqueCustomers($manufacturerId);
@@ -311,6 +328,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('creditBalance', $creditBalance);
     }
     
+    /**
+     * @param int $manufacturerId
+     */
     public function paymentsManufacturer($manufacturerId)
     {
         $this->Manufacturer = TableRegistry::get('Manufacturers');
@@ -351,6 +371,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->render('paymentsCustomer');
     }
     
+    /**
+     * @param int $customerId
+     */
     public function myPaymentDetailsManufacturer($customerId)
     {
         $this->Customer = TableRegistry::get('Customers');
@@ -374,6 +397,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->render('paymentsCustomer');
     }
     
+    /**
+     * @param int $customerId
+     */
     public function paymentDetailsSuperadmin($customerId)
     {
         $manufacturerId = $this->request->getQuery('manufacturerId');
@@ -400,6 +426,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->render('paymentsCustomer');
     }
     
+    /**
+     * @param int $manufacturerId
+     * @param int $customerId
+     */
     private function paymentListCustomer($manufacturerId = null, $customerId)
     {
      
