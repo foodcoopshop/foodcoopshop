@@ -813,7 +813,7 @@ body.payments .bottom-button-container {
 }
 
 body.timebased_currency_payments table.list {
-	width: 750px;
+	width: 850px;
 }
 body.payments .bottom-button-container {
     float: left;
