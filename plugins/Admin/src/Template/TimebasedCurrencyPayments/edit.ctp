@@ -80,6 +80,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
     if (!$isEditMode) {
         echo $this->Form->control('TimebasedCurrencyPayments.id_manufacturer', [
             'type' => 'select',
+            'empty' => 'Hersteller auswählen...',
             'options' => $manufacturersForDropdown,
             'label' => 'Hersteller'
         ]);

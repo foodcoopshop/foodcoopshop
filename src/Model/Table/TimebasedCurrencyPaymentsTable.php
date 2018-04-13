@@ -60,6 +60,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
                 return $context['data']['seconds'] == 0;
             }
         ]);
+        $validator->notEmpty('id_manufacturer', 'Bitte wähle einen Hersteller aus.');
         $validator = $this->getNumberRangeValidator($validator, 'approval', -1, 1);
         return $validator;
     }
