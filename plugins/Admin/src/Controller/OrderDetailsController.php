@@ -564,7 +564,7 @@ class OrderDetailsController extends AdminAppController
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
-//             $email->send();
+            $email->send();
 
             $message .= ' versendet.';
             if ($cancellationReason != '') {
