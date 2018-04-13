@@ -105,7 +105,22 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         if ($this->AppAuth->getUserId() != $payment->id_customer) {
             $message .= ' von ' . $payment->customer->name;
         }
-        $message .= ' wurde erfolgreich gelöscht.';
+        $message .= ' wurde erfolgreich gelöscht';
+        
+        if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
+            $email = new AppEmail();
+            $email->setTemplate('Admin.timebased_currency_payment_deleted')
+            ->setTo($payment->customer->email)
+            ->setSubject('Deine Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' wurde gelöscht.')
+            ->setViewVars([
+                'appAuth' => $this->AppAuth,
+                'data' => $payment->customer,
+                'payment' => $payment
+            ]);
+            $email->send();
+            $message .= ' und eine E-Mail an '.$payment->customer->name.' verschickt';
+        }
+        $message .= '.';
         
         $this->ActionLog->customSave('timebased_currency_payment_deleted', $this->AppAuth->getUserId(), $paymentId, 'timebased_currency_payments', $message . ' (PaymentId: ' . $paymentId . ')');
         $this->Flash->success($message);
@@ -199,7 +214,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                     'payment' => $payment
                 ]);
                 $email->send();
-                $message .= ' und eine E-Mail an das Mitglied verschickt';
+                $message .= ' und eine E-Mail an '.$payment->customer->name.' verschickt';
             }
             $message .= '.';
             
