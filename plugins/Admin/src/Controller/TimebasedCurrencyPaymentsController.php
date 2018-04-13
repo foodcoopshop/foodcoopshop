@@ -17,7 +17,7 @@ use Cake\Utility\Hash;
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.2.0
+ * @since         FoodCoopShop 2.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
@@ -335,17 +335,19 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     
     public function myPaymentsCustomer()
     {
+        $manufacturerId = $this->request->getQuery('manufacturerId');
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
         $this->set('isEditAllowedGlobally', false);
-        $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
-        $this->paymentListCustomer(null, $this->AppAuth->getUserId());
+        $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName() . ' für');
+        $this->paymentListCustomer($manufacturerId, $this->AppAuth->getUserId());
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
         $this->set('helpText', [
             'Hier kannst du deine Zeit-Eintragungen erstellen und löschen.',
             'Du siehst auch, wenn der Hersteller Korrekturen vorgenommen bzw. Kommentare zu deinen Zeit-Eintragungen erstellt hat.',
             'Durchgestrichene Zeit-Eintragungen wurden vom Hersteller gesperrt und zählen nicht zur Summe. Du kannst sie korrigieren, indem du sie löschst und anschließend neu erstellst.'
         ]);
+        $this->set('showManufacturerDropdown', true);
         $this->render('paymentsCustomer');
     }
     
@@ -367,12 +369,15 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und gegebenfalls bearbeiten.',
             'Durchgestrichene Zeit-Eintragungen wurden vom Mitglied gelöscht und zählen nicht zur Summe.'
         ]);
+        $this->set('showManufacturerDropdown', false);
         $this->paymentListCustomer($this->AppAuth->getManufacturerId(), $customerId);
         $this->render('paymentsCustomer');
     }
     
-    public function paymentDetailsSuperadmin($manufacturerId = null, $customerId)
+    public function paymentDetailsSuperadmin($customerId)
     {
+        $manufacturerId = $this->request->getQuery('manufacturerId');
+        
         $this->Customer = TableRegistry::get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -380,28 +385,17 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             ],
         ])->first();
         
-        if ($manufacturerId > 0) {
-            $this->Manufacturer = TableRegistry::get('Manufacturers');
-            $manufacturer = $this->Manufacturer->find('all', [
-                'conditions' => [
-                    'Manufacturers.id_manufacturer' => $manufacturerId
-                ],
-            ])->first();
-        }
-        
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
         $this->set('isEditAllowedGlobally', true);
-        $titleForLayout = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name;
-        if (!empty($manufacturer)) {
-            $titleForLayout .= ' für ' . $manufacturer->name;
-        }
+        $titleForLayout = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name . ' für';
         $this->set('title_for_layout', $titleForLayout);
         $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
         $this->set('helpText', [
             'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und gegebenfalls bearbeiten.',
             'Durchgestrichene Zeit-Eintragungen wurden vom Mitglied gelöscht und zählen nicht zur Summe.'
         ]);
+        $this->set('showManufacturerDropdown', true);
         $this->paymentListCustomer($manufacturerId, $customerId);
         $this->render('paymentsCustomer');
     }
@@ -409,6 +403,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     private function paymentListCustomer($manufacturerId = null, $customerId)
     {
      
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $manufacturersForDropdown = $this->Manufacturer->getTimebasedCurrencyManufacturersForDropdown();
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
+        
         $timebasedCurrencyOrders = $this->TimebasedCurrencyOrderDetail->getOrders($manufacturerId, $customerId);
         
         $payments = [];
@@ -489,6 +487,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('creditBalance', $creditBalance);
         
         $this->set('customerId', $customerId);
+        $this->set('manufacturerId', $manufacturerId);
         
     }
     

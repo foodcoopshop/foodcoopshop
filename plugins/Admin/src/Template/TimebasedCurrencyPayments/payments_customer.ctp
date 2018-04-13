@@ -42,6 +42,19 @@ if ($isDeleteAllowedGlobally) {
 
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
+    <?php if ($showManufacturerDropdown) { ?>
+        <?php echo $this->Form->create(null, ['type' => 'get']); ?>
+            <?php
+                echo $this->Form->control('manufacturerId', [
+                    'type' => 'select',
+                    'label' => '',
+                    'options' => $manufacturersForDropdown,
+                    'empty' => 'alle Hersteller',
+                    'default' => $manufacturerId != '' ? $manufacturerId : ''
+                ]);
+            ?>
+        <?php echo $this->Form->end(); ?>
+    <?php } ?>
     <div class="right"></div>
 </div>
 
