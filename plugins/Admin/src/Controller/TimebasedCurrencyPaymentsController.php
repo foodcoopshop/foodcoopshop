@@ -41,7 +41,20 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 return $this->AppAuth->isTimebasedCurrencyEnabledForManufacturer();
                 break;
             case 'edit':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isTimebasedCurrencyEnabledForManufacturer();
+                if ($this->AppAuth->isTimebasedCurrencyEnabledForManufacturer()) {
+                    $paymentId = (int) $this->request->getParam('pass')[0];
+                    $payment = $this->TimebasedCurrencyPayment->find('all', [
+                        'conditions' => [
+                            'TimebasedCurrencyPayments.id' => $paymentId,
+                            'TimebasedCurrencyPayments.id_manufacturer' => $this->AppAuth->getManufacturerId()
+                        ]
+                    ])->first();
+                    
+                    if (!empty($payment)) {
+                        return true;
+                    }
+                }
+                return $this->AppAuth->isSuperadmin();
                 break;
             case 'paymentsManufacturer':
             case 'paymentsDetailsSuperadmin':
@@ -241,10 +254,15 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     public function add($customerId)
     {
+        
+        if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
+            $this->redirect(Configure::read('app.slugHelper')->getTimebasedCurrencyPaymentAdd($this->AppAuth->getUserId()));
+        }
+        
         $payment = $this->TimebasedCurrencyPayment->newEntity(
             [
                 'active' => APP_ON,
-                'id_customer' => $this->AppAuth->isSuperadmin() ? $customerId : $this->AppAuth->getUserId(),
+                'id_customer' => $customerId,
                 'created_by' => $this->AppAuth->getUserId(),
                 'working_day' => Configure::read('app.timeHelper')->getCurrentDay()
             ],
