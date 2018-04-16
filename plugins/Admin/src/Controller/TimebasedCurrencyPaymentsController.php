@@ -264,7 +264,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'active' => APP_ON,
                 'id_customer' => $customerId,
                 'created_by' => $this->AppAuth->getUserId(),
-                'working_day' => Configure::read('app.timeHelper')->getCurrentDay()
+                'working_day' => Configure::read('app.timeHelper')->getCurrentDay(),
+                'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
             ],
             ['validate' => false]
         );
