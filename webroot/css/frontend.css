@@ -719,7 +719,9 @@ body.manufacturers.detail .imprint {
 .cart span.deposit,
 .cart p.deposit-sum-wrapper,
 .cart p.tax-sum-wrapper,
-.cart span.tax {
+.cart span.tax,
+.cart span.timebasedCurrencyMoney,
+.cart span.timebasedCurrencySeconds {
     float: left;
     display: none;
 }
@@ -783,6 +785,15 @@ body.carts.detail .cart:not(#cart) a.btn {
     line-height: 26px;
     margin-top: -5px;
 }
+#CartsDetailForm .input.checkbox {
+    margin-left: 10px;
+}
+#CartsDetailForm #timebased-currency-order-seconds-sum-tmp {
+    width: 170px;
+}
+#CartsDetailForm label[for="timebased-currency-order-seconds-sum-tmp"] {
+    margin-right: 10px;
+}
 #RegistrationForm .input.checkbox {
     margin-top: 0;
 }
@@ -800,6 +811,10 @@ body.carts.detail .cart:not(#cart) a.btn {
     font-size: 14px;
     float: left;
     margin-bottom: 5px;
+}
+#CartsDetailForm .input.text .error-message {
+    margin-left: 321px ! important;
+    width: 386px ! important;
 }
 #CartsDetailForm .input.checkbox input[type="checkbox"],
 #RegistrationForm .input.checkbox input[type="checkbox"] {
@@ -831,10 +846,14 @@ body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     font-size: 13px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
-body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
+body.carts.detail .cart:not(#cart) p.tax-sum-wrapper,
+body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
     display: block;
     float: left;
     width: 100%;
+}
+body.carts.detail .cart:not(#cart) p.timebased-currency-sum-wrapper {
+    margin-top: 20px;
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
@@ -843,7 +862,7 @@ body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
     margin-right: 17px;
 }
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 body.carts.detail .cart:not(#cart) span.manufacturer-link {
     display: inline;
@@ -852,7 +871,18 @@ body.carts.detail .cart:not(#cart) span.manufacturer-link {
 body.carts.detail .cart:not(#cart) span.deposit {
     display: inline;
     clear: both;
-    margin-right: 25px;
+    margin-right: 22px;
+}
+body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds {
+    display: inline;
+    clear: both;
+    text-align: right;
+    padding-right: 25px;
+    width: 100%;
+}
+body.carts.detail .cart:not(#cart) span.timebasedCurrencySeconds span {
+    float: right;
+    clear: both;
 }
 body.carts.detail .cart:not(#cart) .image {
     display: inline;
