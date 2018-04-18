@@ -862,7 +862,7 @@ body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
     margin-right: 17px;
 }
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 body.carts.detail .cart:not(#cart) span.manufacturer-link {
     display: inline;
