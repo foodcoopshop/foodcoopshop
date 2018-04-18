@@ -31,6 +31,37 @@ class ProductsTableTest extends AppCakeTestCase
         $this->Product = TableRegistry::get('Products');
     }
 
+    public function testGetCompositeProductIdAndAttributeId()
+    {
+        $tests = [
+            [
+                'ids' => [
+                    'productId' => 5,
+                    'attributeId' => 0
+                ],
+                'result' => '5',
+            ],
+            [
+                'ids' => [
+                    'productId' => 8,
+                    'attributeId' => 0
+                ],
+                'result' => 8,
+            ],
+            [
+                'ids' => [
+                    'productId' => 80,
+                    'attributeId' => 9
+                ],
+                'result' => '80-9',
+            ]
+        ];
+        
+        foreach ($tests as $test) {
+            $result = $this->Product->getCompositeProductIdAndAttributeId($test['ids']['productId'], $test['ids']['attributeId']);
+            $this->assertEquals($test['result'], $result);
+        }
+    }
     public function testGetProductIdAndAttributeId()
     {
         $tests = [

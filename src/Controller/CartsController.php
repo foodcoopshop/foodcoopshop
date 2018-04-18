@@ -732,119 +732,24 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $attributeId = 0;
-        $productId = $initialProductId;
-        $explodedProductId = explode('-', $initialProductId);
-        if (count($explodedProductId) == 2) {
-            $productId = $explodedProductId[0];
-            $attributeId = (int) $explodedProductId[1];
-        }
-
-        $amount = (int) $this->request->getData('amount');
-        // allow -1 and 1 - 99
-        if ($amount == 0 || $amount < - 1 || $amount > 99) {
-            $message = 'Die gewünschte Anzahl "' . $amount . '" ist nicht gültig.';
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ]));
-        }
-
-        // get product data from database
         $this->Product = TableRegistry::get('Products');
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ],
-            'contain' => [
-                'ProductLangs',
-                'StockAvailables',
-                'ProductAttributes',
-                'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
-            ]
-        ])->first();
-
-        $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
-        $combinedAmount = $amount;
-        if ($existingCartProduct) {
-            $combinedAmount = $existingCartProduct['amount'] + $amount;
-        }
-        // check if passed product exists
-        if (empty($product)) {
-            $message = 'Das Produkt mit der ID ' . $productId . ' ist nicht vorhanden.';
-            $this->log($message);
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ]));
-        }
-
-        // stock available check for product
-        if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
-            $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product->stock_available->quantity;
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ]));
-        }
-
-        // check if passed optional product/attribute relation exists
-        if ($attributeId > 0) {
-            $attributeIdFound = false;
-            foreach ($product->product_attributes as $attribute) {
-                if ($attribute->id_product_attribute == $attributeId) {
-                    $attributeIdFound = true;
-                    // stock available check for attribute
-                    if ($attribute->stock_available->quantity < $combinedAmount && $amount > 0) {
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute->product_attribute_combination->attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute->stock_available->quantity;
-                        die(json_encode([
-                            'status' => 0,
-                            'msg' => $message,
-                            'productId' => $initialProductId
-                        ]));
-                    }
-                    break;
-                }
-            }
-            if (! $attributeIdFound) {
-                $message = 'Die Variante existiert nicht: ' . $initialProductId;
-                die(json_encode([
-                    'status' => 0,
-                    'msg' => $message,
-                    'productId' => $initialProductId
-                ]));
-            }
-        }
-
-        // update amount if cart product already exists
-        $cart = $this->AppAuth->getCart();
-        $this->AppAuth->setCart($cart);
-        $cartProductTable = TableRegistry::get('CartProducts');
-
-        $cartProduct2save = [
-            'id_product' => $productId,
-            'amount' => $combinedAmount,
-            'id_product_attribute' => $attributeId,
-            'id_cart' => $cart['Cart']['id_cart']
-        ];
-        if ($existingCartProduct) {
-            $oldEntity = $cartProductTable->get($existingCartProduct['cartProductId']);
-            $entity = $cartProductTable->patchEntity($oldEntity, $cartProduct2save);
-        } else {
-            $entity = $cartProductTable->newEntity($cartProduct2save);
-        }
-        $cartProductTable->save($entity);
-
+        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
+        $amount = (int) $this->request->getData('amount');
+        
+        $this->CartTable = TableRegistry::get('Carts');
+        $result = $this->CartTable->addToCart($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount);
+        
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
+        
+        if (is_array($result)) {
+            die(json_encode($result));
+        }
 
         die(json_encode([
             'status' => 1,
             'msg' => 'ok'
         ]));
+        
     }
 }

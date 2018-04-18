@@ -104,6 +104,15 @@ class ProductsTable extends AppTable
             'attributeId' => $attributeId
         ];
     }
+    
+    public function getCompositeProductIdAndAttributeId($productId, $attributeId = 0)
+    {
+        $compositeId = $productId;
+        if ($attributeId > 0) {
+            $compositeId .= '-'.$attributeId;
+        }
+        return $compositeId;
+    }
 
     /**
      * @param array $products
