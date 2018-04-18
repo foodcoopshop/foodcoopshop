@@ -247,9 +247,10 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     private function doTestCustomerRecord($manufacturer)
     {
-        $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer);
+        $customerRecord = $this->Manufacturer->getCustomerRecord($manufacturer->address_manufacturer->email);
         $this->assertEquals($manufacturer->address_manufacturer->firstname, $customerRecord->firstname);
         $this->assertEquals($manufacturer->address_manufacturer->lastname, $customerRecord->lastname);
+        $this->assertEquals($manufacturer->address_manufacturer->email, $customerRecord->email);
         $this->assertEquals(APP_ON, $customerRecord->active);
     }
 
