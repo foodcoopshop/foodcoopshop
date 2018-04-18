@@ -676,6 +676,11 @@ body.manufacturers.detail .imprint {
 #cart p.products span.product span:not(:first-of-type) {
     margin-right: 3px;
 }
+#cart #load-last-order-details {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #d6d4d4;
+}
 .cart p.no-products {
     margin-bottom: 20px;
 }

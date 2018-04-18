@@ -449,6 +449,15 @@ foodcoopshop.Cart = {
 
         });
 
+    },
+    
+    initLoadLastOrderDetailsDropdown : function() {
+    	$('#load-last-order-details').on('change', function() {
+    		var deliveryDate = $(this).val();
+    		if (deliveryDate != '') {
+    			document.location.href = '/warenkorb/' + 'addLastOrderToCart/' + deliveryDate;
+    		}
+    	});
     }
 
 };

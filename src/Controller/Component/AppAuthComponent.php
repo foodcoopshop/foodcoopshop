@@ -76,6 +76,13 @@ class AppAuthComponent extends AuthComponent
     {
         return $this->user('id_default_group');
     }
+    
+    public function getLastOrderDetailsForDropdown()
+    {
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
+        return $dropdownData;
+    }
 
     private function setManufacturer()
     {

@@ -43,7 +43,23 @@ if ($appAuth->Cart->getProducts() !== null) {
     <h3><i class="fa fa-shopping-cart"></i>Warenkorb</h3>
     
     <div class="inner">
-        <?php
+    
+    	<?php
+    	if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {
+    	    $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
+    	    if (!empty($lastOrderDetails)) {
+        	    $this->element('addScript', ['script' =>
+        	        Configure::read('app.jsNamespace') . ".Cart.initLoadLastOrderDetailsDropdown();"
+        	    ]);
+        	    echo $this->Form->control('load-last-order-details', [
+            	    'label' => '',
+            	    'type' => 'select',
+        	        'empty' => 'Vergangene Bestellung laden...',
+        	        'options' => $lastOrderDetails
+            	]);
+    	    }
+    	}
+        	
         if ($appAuth->user() && $this->Html->paymentIsCashless()) {
             if ($this->request->getSession()->check('Auth.shopOrderCustomer')) {
                 $this->element('addScript', ['script' =>

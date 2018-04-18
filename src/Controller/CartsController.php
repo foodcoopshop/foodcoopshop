@@ -691,6 +691,39 @@ class CartsController extends FrontendController
         ]));
     }
 
+    public function addLastOrderToCart($deliveryDate)
+    {
+        
+        $formattedDeliveryDate = strtotime($deliveryDate);
+        
+        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodFirstDay($formattedDeliveryDate)));
+        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodLastDay($formattedDeliveryDate)));
+        
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
+        
+        if ($orderDetails->count() > 0) {
+            
+            $newCartProductsData = [];
+            foreach($orderDetails as $orderDetail) {
+                $newCartProductsData[] = [
+                    'id_cart' => $this->AppAuth->Cart->getCartId(),
+                    'id_product' => $orderDetail->product_id,
+                    'id_product_attribute' => $orderDetail->product_attribute_id,
+                    'amount' => $orderDetail->product_quantity
+                ];
+            }
+            
+            $this->CartProducts = TableRegistry::get('CartProducts');
+            $newCartProducts = $this->CartProducts->newEntities($newCartProductsData);
+            $this->CartProducts->saveMany($newCartProducts);
+        }
+        
+        $this->Flash->success('Deine Produkte vom ' . $deliveryDate . ' wurden in den Warenkorb geladen.');
+        $this->redirect($this->referer());
+        
+    }
+    
     public function ajaxAdd()
     {
         $this->RequestHandler->renderAs($this, 'ajax');

@@ -43,6 +43,67 @@ class OrderDetailsTable extends AppTable
             'foreignKey' => 'id_order_detail'
         ]);
     }
+    
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    public function getLastOrderDetailsForDropdown($customerId)
+    {
+        
+        $weeks = 15;
+        $result = [];
+        
+        $j = $weeks;
+        while($j >= 1) {
+            
+            $dateFrom = strtotime('- '.$j * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$j * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            
+            $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
+            
+            if ($orderDetails->count() > 0) {
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
+                $result[$deliveryDay] = 'Abholtag ' . $deliveryDay . ' - ' . $orderDetails->count() . ' Produkt' . ($orderDetails->count() == 1 ? '' : 'e');
+            }
+            
+            $j--;
+            
+        }
+        
+        $result = array_reverse($result);
+        return $result;
+        
+    }
+    
+    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
+    {
+        $conditions = [
+            'Orders.id_customer' => $customerId,
+            'RIGHT(Orders.date_add, 8) <> \'00:00:00\'' // exlude shop orders
+        ];
+        $conditions[] = 'Orders.current_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
+        
+        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+            date('Y-m-d', $dateFrom)
+        ).'\'';
+        
+        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+            date('Y-m-d', $dateTo)
+        ).'\'';
+        
+        $orderDetails = $this->find('all', [
+            'conditions' => $conditions,
+            'order' => [
+                'Orders.date_add' => 'DESC'
+            ],
+            'contain' => [
+                'Orders'
+            ]
+        ]);
+        
+        return $orderDetails;
+    }
 
     public function deleteOrderDetail($orderDetail)
     {
