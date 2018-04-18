@@ -76,10 +76,13 @@ $this->element('addScript', [
     
                 echo '<td style="width:30px;">';
     
-                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                        'title' => 'Einstellung bearbeiten',
-                        'class' => 'edit-configuration-button'
-                    ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
+                    // timebased currency module is still in beta mode - only enable it in database and do not show edit icon
+                    if ($configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED') {
+                        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                            'title' => 'Einstellung bearbeiten',
+                            'class' => 'edit-configuration-button'
+                        ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
+                    }
     
                 echo '</td>';
 
