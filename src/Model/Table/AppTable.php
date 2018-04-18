@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use App\Network\AppSession;
 use App\ORM\AppMarshaller;
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -39,7 +40,7 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
-    protected function getNumberRangeValidator(Validator $validator, $field, $min, $max)
+    public function getNumberRangeValidator(Validator $validator, $field, $min, $max)
     {
         $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
         $validator->lessThanOrEqual($field, $max, $message);
@@ -78,13 +79,13 @@ class AppTable extends Table
     }
 
     /**
-     * @return boolean
+     * @return boolean | array
      */
-    protected function user()
+    protected function getLoggedUser()
     {
         $session = new AppSession();
         if ($session->read('Auth.User.id_customer') !== null) {
-            return $session->read('Auth.User.id_customer');
+            return $session->read('Auth.User');
         }
         return false;
     }
@@ -94,13 +95,20 @@ class AppTable extends Table
      */
     protected function getFieldsForProductListQuery()
     {
-        return "Products.id_product,
+        $fields = "Products.id_product,
                 ProductLangs.name, ProductLangs.description_short, ProductLangs.description, ProductLangs.unity,
                 ProductShops.price, ProductShops.created,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
-                StockAvailables.quantity ";
+                Manufacturers.timebased_currency_enabled,
+                StockAvailables.quantity";
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";
+        }
+        $fields .= " ";
+        return $fields;
     }
 
     /**
@@ -127,7 +135,7 @@ class AppTable extends Table
                     AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturers.active = :active ";
 
-        if (! $this->user()) {
+        if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
         return $conditions;

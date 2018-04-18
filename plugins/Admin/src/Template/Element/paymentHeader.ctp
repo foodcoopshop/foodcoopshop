@@ -19,9 +19,10 @@ use Cake\Core\Configure;
 
     <?php
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-            var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" . Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
+        'script' => 
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" .
+            Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
     ]);
     ?>
     
@@ -31,7 +32,6 @@ use Cake\Core\Configure;
         </ul>
     </div>    
     
-    <?php /* filter container rendered to show print and help icons */ ?>
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right"></div>
@@ -46,7 +46,7 @@ echo $this->Html->link('<i class="fa ' . $icon . ' fa-lg"></i> ' . $buttonText, 
 ]);
 echo '<div id="add-payment-form" class="add-payment-form">';
 echo '<h3>Neue Zahlung eintragen</h3>';
-echo '<p>Bitte tippe hier den Betrag ein, den du <br />soeben auf unser Konto überwiesen hast.</p>';
+echo '<p>Bitte trage hier den Betrag ein, den du <br />soeben auf unser Konto überwiesen hast.</p>';
 echo $this->Form->control('Payments.amount', [
     'label' => 'Betrag in €',
     'type' => 'string'

@@ -19,8 +19,14 @@ use Cake\Core\Configure;
     <?php
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-            var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" . Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button', false);" . Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
+            $('input.datepicker').datepicker();".
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
+            Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" .
+            Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button');" .
+            Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
     ]);
     ?>
     
@@ -77,6 +83,9 @@ echo '<th>Bestellungen</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>Guthaben</th>';
 }
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    echo '<th>' . $this->Paginator->sort('Customers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
+}
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.newsletter', 'Email') . '</th>';
 }
@@ -90,6 +99,7 @@ $sumPaymentsProductDelta = 0;
 $sumPaymentsDepositDelta = 0;
 $sumOrdersCount = 0;
 $sumEmailReminders = 0;
+$sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
     $i ++;
 
@@ -105,43 +115,30 @@ foreach ($customers as $customer) {
 
     echo '<td>';
 
-    $customerName = $customer->name;
-
-    if ($appAuth->isSuperadmin()) {
-        echo '<span class="edit-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'title' => 'Bearbeiten'
-            ], $this->Slug->getCustomerEdit($customer->id_customer));
-        echo '</span>';
-    }
-    if ($customer->order_count <= 3) {
-        $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
-    }
-
-    echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
-        'title' => 'Zu allen Bestellungen von ' . $customer->name,
-        'escape' => false
-    ]) . '</span>';
-
-    $details = $customer->address_customer->address1;
-    if ($customer->address_customer->address2 != '') {
-        $details .= '<br />' . $customer->address_customer->address2;
-    }
-    $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
-
-    if ($customer->address_customer->phone_mobile != '') {
-        $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
-    }
-    if ($customer->address_customer->phone != '') {
-        $details .= '<br />Tel.: ' . $customer->address_customer->phone;
-    }
-
-    echo '<div class="customer-details-wrapper">';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
-        'class' => 'customer-details-read-button',
-        'title' => $details
-    ], 'javascript:void(0);');
-    echo '</div>';
+        $customerName = $customer->name;
+    
+        if ($appAuth->isSuperadmin()) {
+            echo '<span class="edit-wrapper">';
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                    'title' => 'Bearbeiten'
+                ], $this->Slug->getCustomerEdit($customer->id_customer));
+            echo '</span>';
+        }
+        if ($customer->order_count <= 3) {
+            $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
+        }
+    
+        echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
+            'title' => 'Zu allen Bestellungen von ' . $customer->name,
+            'escape' => false
+        ]) . '</span>';
+    
+        echo '<div class="customer-details-wrapper">';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
+                'class' => 'customer-details-read-button',
+                'title' => $this->Html->getCustomerAddress($customer)
+            ], 'javascript:void(0);');
+        echo '</div>';
 
     echo '</td>';
 
@@ -213,6 +210,34 @@ foreach ($customers as $customer) {
         $sumPaymentsProductDelta += $customer->payment_product_delta;
         echo '</td>';
     }
+    
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        echo '<td>';
+        if ($customer->timebased_currency_enabled) {
+            $sumTimebasedCurrency += $customer->timebased_currency_credit_balance;
+            
+            $timebasedCurrencyCreditBalanceClasses = [];
+            if ($customer->timebased_currency_credit_balance < 0) {
+                $timebasedCurrencyCreditBalanceClasses[] = 'negative';
+            }
+            $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($customer->timebased_currency_credit_balance);
+            
+            if ($appAuth->isSuperadmin()) {
+                echo $this->Html->getJqueryUiIcon(
+                    $timebasedCurrencyCreditBalanceHtml,
+                    [
+                        'class' => 'icon-with-text',
+                        'title' => $this->TimebasedCurrency->getName() . ' anzeigen'
+                    ],
+                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer)
+                );
+            } else {
+                echo $timebasedCurrencyCreditBalanceHtml;
+            }
+        }
+        echo '</td>';
+    }
+    
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
@@ -234,8 +259,7 @@ foreach ($customers as $customer) {
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             [
                 'class' => 'customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' disabled' : ''),
-                'title' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen',
-                'data-title-for-overlay' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen'
+                'title' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen'
             ],
             'javascript:void(0);'
         );
@@ -250,11 +274,14 @@ echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     $sumPaymentsDepositDelta += $manufacturerDepositMoneySum;
     echo '<td>';
-    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsProductDelta) . '</b>';
+    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsProductDelta) . '</b>';
     if (Configure::read('app.isDepositPaymentCashless')) {
-        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">€&nbsp;' . $this->Html->formatAsDecimal($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
+        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
     }
     echo '</td>';
+}
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td><b>' . $sumEmailReminders . '</b></td>';

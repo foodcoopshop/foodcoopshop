@@ -23,7 +23,7 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
-
+    
     initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');
@@ -277,11 +277,19 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsEuro: function (float) {
-        return '€&nbsp;' + float.toFixed(2).replace(/\./, ',');
+        return this.formatFloatAsString(float) + '&nbsp;€';
     },
-
+      
     getEuroAsFloat: function (string) {
-        return parseFloat(string.replace(/€&nbsp;/, '').replace(/,/, '.'));
+        return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
+    },
+    
+    formatFloatAsString: function(float) {
+    	return float.toFixed(2).replace(/\./, ',');
+    },
+    
+    getStringAsFloat: function (string) {
+    	return parseFloat(string.replace(/,/, '.'));
     },
 
     bindToggleLinks: function (autoOpen) {
@@ -400,12 +408,13 @@ foodcoopshop.Helper = {
         });
     },
 
-    initTooltip: function (container, interactive) {
-        var interactive = interactive || true;
+    initTooltip: function (container, trigger) {
+        var trigger = trigger || 'hover';
         $(container).not('.tooltipstered').tooltipster({
         	contentAsHTML: true,
-        	interactive: interactive,
+        	interactive: true,
         	maxWidth: 400,
+        	trigger: trigger,
         	theme: ['tooltipster-light']
         });
     },

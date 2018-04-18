@@ -57,7 +57,7 @@ class CheckCreditBalanceShell extends AppShell
             if ($customer->email == 'fcs-demo-mitglied@mailinator.com' || $delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
-                $delta = '€ ' . Configure::read('app.htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
+                $delta = Configure::read('app.htmlHelper')->formatAsDecimal($delta) . ' €'; // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
                 $outString .= $customer->name . ': ' . $delta . '<br />';
                 $email = new AppEmail();
                 $email->setTemplate('Admin.check_credit_balance')

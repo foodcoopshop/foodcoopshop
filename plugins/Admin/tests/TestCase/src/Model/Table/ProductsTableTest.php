@@ -505,7 +505,7 @@ class ProductsTableTest extends AppCakeTestCase
             if ($forceUseThisDeposit) {
                 $expectedDeposit = $forceUseThisDeposit;
             }
-            $expectedDeposit = str_replace(',', '.', $expectedDeposit);
+            $expectedDeposit = Configure::read('app.numberHelper')->replaceCommaWithDot($expectedDeposit);
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['DepositProducts'];
             } else {
@@ -542,7 +542,7 @@ class ProductsTableTest extends AppCakeTestCase
             if ($forceUseThisPrice) {
                 $expectedPrice = $forceUseThisPrice;
             }
-            $expectedPrice = str_replace(',', '.', $expectedPrice);
+            $expectedPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($expectedPrice);
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['ProductShops'];
             } else {

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Mailer\AppEmail;
+use App\Model\Table\OrdersTable;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
@@ -54,6 +55,18 @@ class CartsController extends FrontendController
     public function isAuthorized($user)
     {
         return $this->AppAuth->user() && Configure::read('appDb.FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
+    }
+    
+    public function ajaxGetTimebasedCurrencyHoursDropdown($maxSeconds)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        $maxSeconds = (int) $maxSeconds;
+        $options = Configure::read('app.timebasedCurrencyHelper')->getTimebasedCurrencyHoursDropdown($maxSeconds, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
+        $this->set('data', [
+            'options' => $options,
+            'status' => !empty($options)
+        ]);
+        $this->set('_serialize', 'data');
     }
 
     public function detail()
@@ -145,7 +158,185 @@ class CartsController extends FrontendController
         $this->RequestHandler->renderAs($this, 'pdf');
         $this->render('generateCancellationInformationAndForm');
     }
-
+    
+    /**
+     * does not send email to inactive users (superadmins can place shop orders for inactive users!)
+     * @param array $cart
+     * @param array $orders
+     * @param array $products
+     */
+    private function sendConfirmationEmailToCustomer($cart, $order, $products)
+    {
+        if ($this->AppAuth->user('active')) {
+            $email = new AppEmail();
+            $email->setTemplate('customer_order_successful')
+            ->setTo($this->AppAuth->getEmail())
+            ->setSubject('Bestellbestätigung')
+            ->setViewVars([
+                'cart' => $cart,
+                'appAuth' => $this->AppAuth,
+                'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
+                'order' => $order
+            ]);
+            
+            $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+            
+            $email->send();
+        }
+    }
+    
+    private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions)
+    {
+        $i = 0;
+        foreach ($stockAvailable2saveData as &$data) {
+            $this->Product->StockAvailables->updateAll(
+                $stockAvailable2saveData[$i],
+                $stockAvailable2saveConditions[$i]
+            );
+            $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
+            $i++;
+        }
+    }
+    
+    private function saveOrderDetails($orderDetails2save, $order)
+    {
+        foreach ($orderDetails2save as &$orderDetail) {
+            
+            $orderDetail['id_order'] = $order->id_order;
+            
+            // timebased_currency: ORDER_DETAILS
+            if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
+                
+                foreach($this->AppAuth->Cart->getProducts() as $cartProduct) {
+                    if ($cartProduct['cartProductId'] == $orderDetail['cartProductId']) {
+                        
+                        if (isset($cartProduct['isTimebasedCurrencyUsed'])) {
+                        
+                            $orderDetail['timebased_currency_order_detail']['money_excl'] = $cartProduct['timebasedCurrencyMoneyExcl'];
+                            $orderDetail['timebased_currency_order_detail']['money_incl'] = $cartProduct['timebasedCurrencyMoneyIncl'];
+                            $orderDetail['timebased_currency_order_detail']['seconds'] = $cartProduct['timebasedCurrencySeconds'];
+                            $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
+                            $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
+                            
+                            // override prices from timebased_currency adapted cart
+                            $orderDetail['product_price'] = $cartProduct['priceExcl'];
+                            $orderDetail['total_price_tax_excl'] = $cartProduct['priceExcl'];
+                            $orderDetail['total_price_tax_incl'] = $cartProduct['price'];
+                        }
+                        
+                        continue;
+                    }
+                }
+                
+            }
+        }
+        
+        $this->Order->OrderDetails->saveMany(
+            $this->Order->OrderDetails->newEntities($orderDetails2save)
+        );
+    }
+    
+    /**
+     * @param array $order
+     * @return OrdersTable $order
+     */
+    private function saveOrder($orderEntity)
+    {
+        $order2save = [
+            'Orders' => [
+                'id_customer' => $this->AppAuth->getUserId(),
+                'id_cart' => $this->AppAuth->Cart->getCartId(),
+                'current_state' => ORDER_STATE_OPEN,
+                'total_paid' => $this->AppAuth->Cart->getProductSum(),
+                'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
+                'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
+                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
+            ]
+        ];
+        
+        // timebased_currency: ORDERS
+        if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
+            $order2save['timebased_currency_order']['money_excl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyMoneyExclSum();
+            $order2save['timebased_currency_order']['money_incl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyMoneyInclSum();
+            $order2save['timebased_currency_order']['seconds_sum'] = $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
+        }
+        
+        // avoid saving empty record for timebased_currency_order
+        if (!$this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
+            unset($orderEntity->timebased_currency_order);
+        }
+        
+        $patchedOrder = $this->Order->patchEntity($orderEntity, $order2save);
+        $order = $this->Order->save($patchedOrder);
+        
+        if (!$order) {
+            $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
+            $this->Flash->error($message);
+            $this->log($message);
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
+        }
+        
+        // get order again to have field date_add available as a datetime-object
+        $order = $this->Order->find('all', [
+            'conditions' => [
+                'Orders.id_order' => $order->id_order
+            ]
+        ])->first();
+        
+        return $order;
+    }
+    
+    private function saveOrderDetailTax($orderId)
+    {
+        $orderDetails = $this->Order->OrderDetails->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order' => $orderId
+            ],
+            'contain' => [
+                'OrderDetailTaxes'
+            ]
+        ]);
+        
+        if (empty($orderDetails)) {
+            $message = 'Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten.';
+            $this->Flash->error($message);
+            $this->log($message);
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
+        }
+        
+        $orderDetailTax2save = [];
+        $this->OrderDetailTax = TableRegistry::get('OrderDetailTaxes');
+        foreach ($orderDetails as $orderDetail) {
+            // should not be necessary but a user somehow managed to set product_quantity as 0
+            $quantity = $orderDetail->product_quantity;
+            if ($quantity == 0) {
+                $this->log('product_quantity was 0, would have resulted in division by zero error');
+                continue;
+            }
+            
+            $productId = $orderDetail->product_id;
+            $price = $orderDetail->total_price_tax_incl;
+            
+            $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $quantity);
+            $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $quantity);
+            $totalTaxAmount = $unitTaxAmount * $quantity;
+            
+            $orderDetailTax2save[] = [
+                'id_order_detail' => $orderDetail->id_order_detail,
+                'id_tax' => 0, // do not use the field id_tax in order_details_tax but id_tax in order_details!
+                'unit_amount' => $unitTaxAmount,
+                'total_amount' => $totalTaxAmount
+            ];
+        }
+        
+        $this->OrderDetailTax->saveMany(
+            $this->OrderDetailTax->newEntities($orderDetailTax2save)
+        );
+        
+    }
+    
     public function finish()
     {
 
@@ -153,7 +344,7 @@ class CartsController extends FrontendController
             $this->redirect('/');
             return;
         }
-
+        
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCart();
 
@@ -162,12 +353,12 @@ class CartsController extends FrontendController
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
-        foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
-            $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
-            if ($ccp['amount'] == 0) {
+        foreach ($this->AppAuth->Cart->getProducts() as $cartProduct) {
+            $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
+            if ($cartProduct['amount'] == 0) {
                 $this->log('amount of cart productId ' . $ids['productId'] . ' (attributeId : ' . $ids['attributeId'] . ') was 0 and therefore removed from cart');
-                $ccp = TableRegistry::get('CartProducts');
-                $ccp->remove($ids['productId'], $ids['attributeId'], $this->AppAuth->Cart->getCartId());
+                $cartProductTable = TableRegistry::get('CartProducts');
+                $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->AppAuth->Cart->getCartId());
                 $productWithAmount0Found = true;
             }
         }
@@ -188,8 +379,8 @@ class CartsController extends FrontendController
         $products = [];
         $stockAvailable2saveData = [];
 
-        foreach ($this->AppAuth->Cart->getProducts() as $ccp) {
-            $ids = $this->Product->getProductIdAndAttributeId($ccp['productId']);
+        foreach ($this->AppAuth->Cart->getProducts() as $cartProduct) {
+            $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
 
             $product = $this->Product->find('all', [
                 'conditions' => [
@@ -216,9 +407,9 @@ class CartsController extends FrontendController
             $stockAvailableQuantity = $product->stock_available->quantity;
 
             // stock available check for product (without attributeId)
-            if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $ccp['amount']) {
-                $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
-                $cartErrors[$ccp['productId']][] = $message;
+            if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $cartProduct['amount']) {
+                $message = 'Die gewünschte Anzahl (' . $cartProduct['amount'] . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if ($ids['attributeId'] > 0) {
@@ -228,49 +419,50 @@ class CartsController extends FrontendController
                         $attributeIdFound = true;
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
                         // stock available check for attribute
-                        if ($stockAvailableQuantity < $ccp['amount']) {
+                        if ($stockAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = TableRegistry::get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = 'Die gewünschte Anzahl (' . $ccp['amount'] . ') der Variante "' . $attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
-                            $cartErrors[$ccp['productId']][] = $message;
+                            $message = 'Die gewünschte Anzahl (' . $cartProduct['amount'] . ') der Variante "' . $attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $cartErrors[$cartProduct['productId']][] = $message;
                         }
                         break;
                     }
                 }
                 if (! $attributeIdFound) {
                     $message = 'Die Variante existiert nicht. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um deine Bestellung abzuschließen.';
-                    $cartErrors[$ccp['productId']][] = $message;
+                    $cartErrors[$cartProduct['productId']][] = $message;
                 }
             }
 
             if (! $product->active) {
                 $message = 'Das Produkt "' . $product->product_lang->name . '" ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
-                $cartErrors[$ccp['productId']][] = $message;
+                $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (! $product->manufacturer->active || $product->is_holiday_active) {
                 $message = 'Der Hersteller des Produktes "' . $product->product_lang->name . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
-                $cartErrors[$ccp['productId']][] = $message;
+                $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            // build orderDetails2save
             $orderDetails2save[] = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
-                'product_name' => $this->Cart->getProductNameWithUnity($ccp['productName'], $ccp['unity']),
-                'product_quantity' => $ccp['amount'],
-                'product_price' => $ccp['priceExcl'],
-                'total_price_tax_excl' => $ccp['priceExcl'],
-                'total_price_tax_incl' => $ccp['price'],
+                'product_name' => $this->Cart->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
+                'product_quantity' => $cartProduct['amount'],
+                'product_price' => $cartProduct['priceExcl'],
+                'total_price_tax_excl' => $cartProduct['priceExcl'],
+                'total_price_tax_incl' => $cartProduct['price'],
                 'id_tax' => $product->id_tax,
-                'deposit' => $ccp['deposit']
+                'deposit' => $cartProduct['deposit'],
+                'product' => $product,
+                'cartProductId' => $cartProduct['cartProductId']
             ];
-
-            $newQuantity = $stockAvailableQuantity - $ccp['amount'];
+            
+            $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
             if ($newQuantity < 0) {
                 $message = 'attention, this should never happen! stock available would have been negative: productId: ' . $ids['productId'] . ', attributeId: ' . $ids['attributeId'] . '; changed it manually to 0 to avoid negative stock available value.';
                 $newQuantity = 0; // never ever allow negative stock available
@@ -288,160 +480,61 @@ class CartsController extends FrontendController
 
         $formErrors = false;
         $this->Order = TableRegistry::get('Orders');
+        
+        if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+            $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
+            $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
+            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
+        }
         $order = $this->Order->newEntity(
+            $this->request->getData(),
             [
-                'Orders' => [
-                    'cancellation_terms_accepted' => $this->request->getData('Orders.cancellation_terms_accepted'),
-                    'general_terms_and_conditions_accepted' => $this->request->getData('Orders.general_terms_and_conditions_accepted'),
-                    'comment' => $this->request->getData('Orders.comment')
-                ]
-            ],
-            ['validate' => 'cart']
+                'validate' => 'cart'
+            ]
         );
         if (!empty($order->getErrors())) {
             $formErrors = true;
         }
+        
         $this->set('order', $order); // to show error messages in form (from validation)
         $this->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || !empty($formErrors)) {
             $this->Flash->error('Es sind Fehler aufgetreten.');
         } else {
-            // START save order
-            $order2save = [
-                'id_customer' => $this->AppAuth->getUserId(),
-                'id_cart' => $this->AppAuth->Cart->getCartId(),
-                'current_state' => ORDER_STATE_OPEN,
-                'total_paid' => $this->AppAuth->Cart->getProductSum(),
-                'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
-                'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
-                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
-            ];
-            $order = $this->Order->save(
-                $this->Order->patchEntity($order, $order2save)
-            );
-            if (!$order) {
-                $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
-                $this->Flash->error($message);
-                $this->log($message);
-                $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
+            
+            $selectedTimebasedCurrencySeconds = 0;
+            $selectedTimeAdaptionFactor = 0;
+            if (!empty($this->request->getData('timebased_currency_order.seconds_sum_tmp')) && $this->request->getData('timebased_currency_order.seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->request->getData('timebased_currency_order.seconds_sum_tmp');
+                $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
             }
-            $orderId = $order->id_order;
-
-            // get order again to have field created available as a datetime-object
-            $order = $this->Order->find('all', [
-                'conditions' => [
-                    'Orders.id_order' => $orderId
-                ]
-            ])->first();
-            // END save order
-
-            // START update order_id in orderDetails2save
-            foreach ($orderDetails2save as &$orderDetail) {
-                $orderDetail['id_order'] = $orderId;
+            
+            if ($selectedTimeAdaptionFactor > 0) {
+                $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor);
+                $this->AppAuth->setCart($cart);
             }
-
-            $this->Order->OrderDetails->saveMany(
-                $this->Order->OrderDetails->newEntities($orderDetails2save)
-            );
-            // END update order_id in orderDetails2save
-
-            // START save order_detail_tax
-            $orderDetails = $this->Order->OrderDetails->find('all', [
-                'conditions' => [
-                    'OrderDetails.id_order' => $orderId
-                ],
-                'contain' => [
-                    'OrderDetailTaxes'
-                ]
-            ]);
-
-            if (empty($orderDetails)) {
-                $message = 'Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten.';
-                $this->Flash->error($message);
-                $this->log($message);
-                $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
-            }
-
-            $orderDetailTax2save = [];
-            $this->OrderDetailTax = TableRegistry::get('OrderDetailTaxes');
-            foreach ($orderDetails as $orderDetail) {
-                // should not be necessary but a user somehow managed to set product_quantity as 0
-                $quantity = $orderDetail->product_quantity;
-                if ($quantity == 0) {
-                    $this->log('product_quantity was 0, would have resulted in division by zero error');
-                    continue;
-                }
-
-                $productId = $orderDetail->product_id;
-                $price = $orderDetail->total_price_tax_incl;
-
-                $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $quantity);
-                $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $quantity);
-                $totalTaxAmount = $unitTaxAmount * $quantity;
-
-                $orderDetailTax2save[] = [
-                    'id_order_detail' => $orderDetail->id_order_detail,
-                    'id_tax' => 0, // do not use the field id_tax in order_details_tax but id_tax in order_details!
-                    'unit_amount' => $unitTaxAmount,
-                    'total_amount' => $totalTaxAmount
-                ];
-            }
-
-            $this->OrderDetailTax->saveMany(
-                $this->OrderDetailTax->newEntities($orderDetailTax2save)
-            );
-            // END save order_detail_tax
-
+            
+            $order = $this->saveOrder($order);
+            
+            $this->saveOrderDetails($orderDetails2save, $order);
+            $this->saveOrderDetailTax($order->id_order);
+            $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
+            
             $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
-
-            // START update stock available
-            $i = 0;
-            foreach ($stockAvailable2saveData as &$data) {
-                $this->Product->StockAvailables->updateAll(
-                    $stockAvailable2saveData[$i],
-                    $stockAvailable2saveConditions[$i]
-                );
-                $this->Product->StockAvailables->updateQuantityForMainProduct($stockAvailable2saveConditions[$i]['id_product']);
-                $i ++;
-            }
-            // END update stock available
-
+            
             $this->AppAuth->Cart->markAsSaved();
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
             $this->ActionLog = TableRegistry::get('ActionLogs');
-            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $orderId, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
+            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
-            // START send confirmation email to customer
-            // do not send email to inactive users (superadmins can place shop orders for inactive users!)
-            if ($this->AppAuth->user('active')) {
-                $email = new AppEmail();
-                $email->setTemplate('customer_order_successful')
-                    ->setTo($this->AppAuth->getEmail())
-                    ->setSubject('Bestellbestätigung')
-                    ->setViewVars([
-                    'cart' => $cart,
-                    'appAuth' => $this->AppAuth,
-                    'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
-                    'order' => $order,
-                    'depositSum' => $this->AppAuth->Cart->getDepositSum(),
-                    'productSum' => $this->AppAuth->Cart->getProductSum(),
-                    'productAndDepositSum' => $this->AppAuth->Cart->getProductAndDepositSum()
-                    ]);
-
-                $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
-                $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
-                $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
-
-                $email->send();
-            }
-            //END send confirmation email to customer
+            $this->sendConfirmationEmailToCustomer($cart, $order, $products);
 
             // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
 
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($orderId));
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($order->id_order));
         }
 
         $this->setAction('detail');
@@ -586,8 +679,8 @@ class CartsController extends FrontendController
             ]));
         }
 
-        $ccp = TableRegistry::get('CartProducts');
-        $ccp->remove($productId, $attributeId, $cart['Cart']['id_cart']);
+        $cartProductTable = TableRegistry::get('CartProducts');
+        $cartProductTable->remove($productId, $attributeId, $cart['Cart']['id_cart']);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -697,7 +790,7 @@ class CartsController extends FrontendController
         // update amount if cart product already exists
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
-        $ccp = TableRegistry::get('CartProducts');
+        $cartProductTable = TableRegistry::get('CartProducts');
 
         $cartProduct2save = [
             'id_product' => $productId,
@@ -706,12 +799,12 @@ class CartsController extends FrontendController
             'id_cart' => $cart['Cart']['id_cart']
         ];
         if ($existingCartProduct) {
-            $oldEntity = $ccp->get($existingCartProduct['cartProductId']);
-            $entity = $ccp->patchEntity($oldEntity, $cartProduct2save);
+            $oldEntity = $cartProductTable->get($existingCartProduct['cartProductId']);
+            $entity = $cartProductTable->patchEntity($oldEntity, $cartProduct2save);
         } else {
-            $entity = $ccp->newEntity($cartProduct2save);
+            $entity = $cartProductTable->newEntity($cartProduct2save);
         }
-        $ccp->save($entity);
+        $cartProductTable->save($entity);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();

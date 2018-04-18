@@ -37,35 +37,48 @@ if (!$appAuth->termsOfUseAccepted()) {
         <p class="deposit-sum-wrapper"><b>+ Pfand gesamt</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
     <?php } ?>
     
+    <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+    	<p class="timebased-currency-sum-wrapper"><b>Davon in <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
+    <?php } ?>
+
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
         <p class="tax-sum-wrapper">Enthaltene Umsatzsteuer: <span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
-        
-        <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
-            <p><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
-        <?php } ?>
 
-        <p>Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
-        
         <?php
-
-        if ($this->Html->paymentIsCashless()) {
-            echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
-        } else {
-            echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
-        }
-            ?>
-         
-        <p>
-            Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
-        </p>
-    
-            <?php
             echo $this->Form->create($order, [
                 'class' => 'fcs-form',
                 'id' => 'CartsDetailForm',
                 'url' => $this->Slug->getCartFinish()
             ]);
 
+            if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer() && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
+                echo $this->Form->control('timebased_currency_order.seconds_sum_tmp', [
+                    'label' => 'Wie viel davon will ich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' bezahlen?',
+                    'type' => 'select',
+                    'options' => $this->TimebasedCurrency->getTimebasedCurrencyHoursDropdown($appAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp(), Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'))
+                ]);
+            }
+        ?>
+        
+        <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
+            <p style="margin-top: 20px;"><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
+        <?php } ?>
+
+        <p style="margin-top: 20px;">Um die Bestellung abzuschließen, klicke bitte auf "Zahlungspflichtig bestellen". 
+        
+        <?php
+            if ($this->Html->paymentIsCashless()) {
+                echo 'Der Betrag wird dann automatisch von deinem Guthaben abgebucht.</p>';
+            } else {
+                echo 'Den Betrag bitte bei der Abholung in bar bezahlen.</p>';
+            }
+        ?>
+         
+        <p>
+            Bitte hole deine Produkte am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()); ?>) ab. Die genaue Uhrzeit steht in der Box rechts.
+        </p>
+    
+    	<?php
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/generalTermsAndConditions');
             echo '</div>';
@@ -90,7 +103,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && $this->request->data['Orders']['comment'] != '') {
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && isset($this->request->data['Orders']['comment']) && $this->request->data['Orders']['comment'] != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
                 ]);

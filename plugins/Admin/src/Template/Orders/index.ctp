@@ -20,8 +20,16 @@ use Cake\Core\Configure;
         <?php
         $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-            var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" . Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" . Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
+            $('input.datepicker').datepicker();".
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" .
+            Configure::read('app.cakeServerName') . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
+            Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" .
+            Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" .
+            Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
         "
         ]);
 
@@ -32,6 +40,13 @@ use Cake\Core\Configure;
                     Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ]);
         }
+        
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
+            ]);
+        }
+        
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#order-'
         ]);
@@ -145,8 +160,7 @@ use Cake\Core\Configure;
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
                     [
                     'class' => 'order-comment-edit-button' . ($order->comment == '' ? ' disabled' : ''),
-                    'title' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen',
-                    'data-title-for-overlay' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen'
+                    'title' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen'
                     ],
                     'javascript:void(0);'
                 );
@@ -170,7 +184,10 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td class="right">';
-        echo $this->Html->formatAsEuro($paidField);
+            echo $this->Html->formatAsEuro($paidField);
+            if (!empty($order->timebased_currency_order)) {
+                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($order->timebased_currency_order->seconds_sum).'">&nbsp;*</b>';
+            }
         echo '</td>';
 
         if (Configure::read('app.isDepositPaymentCashless')) {
@@ -231,7 +248,9 @@ use Cake\Core\Configure;
 
     echo '<tr>';
     echo '<td colspan="2"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> Datensätze</td>';
-    echo '<td class="right"><b>' . $this->Html->formatAsEuro($sumPrice) . '</b></td>';
+    echo '<td class="right">';
+        echo '<b>' . $this->Html->formatAsEuro($sumPrice) . '</b>';
+    echo '</td>';
     echo '<td colspan="5"></td>';
     echo '</tr>';
 
@@ -257,8 +276,10 @@ use Cake\Core\Configure;
             echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Bestellungen abschließen</button>';
         }
     }
-
     echo '</div>';
+    
+    echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+    
     echo '<div class="sc"></div>';
 
     ?>

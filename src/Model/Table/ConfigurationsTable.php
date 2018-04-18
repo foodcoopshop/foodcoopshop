@@ -85,6 +85,7 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsMinimalCreditBalance(Validator $validator)
     {
+        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 500);
         return $validator;
     }
@@ -149,6 +150,48 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsTimebasedCurrencyEnabled(Validator $validator)
+    {
+        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+    }
+    
+    public function validationFcsTimebasedCurrencyName(Validator $validator)
+    {
+        $validator->notEmpty('value', 'Bitte gib den Namen der Stundenabrechnung an.');
+        $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
+        return $validator;
+    }
+    
+    public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
+    {
+        $validator->notEmpty('value', 'Bitte gib die Abkürzung des Namens der Stundenabrechnung an.');
+        $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
+        return $validator;
+    }
+    
+    public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
+    {
+        $validator->notEmpty('value', 'Bitte gib den Umrechnungskurs für die Stundenabrechnung in € an.');
+        $validator->decimal('value', 2, 'Bitte trage genau 2 Kommastellen ein.');
+        return $validator;
+    }
+    
+    public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
+    {
+        $validator->notEmpty('value', 'Bitte gib einen Wert an.');
+        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 50);
+        return $validator;
+    }
+    
+    public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
+    {
+        $validator->notEmpty('value', 'Bitte gib einen Wert an.');
+        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
+        return $validator;
+    }
+    
     private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
     {
         $validator->inList($field, array_keys($values), 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values)));

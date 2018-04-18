@@ -45,7 +45,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     <div class="inner">
         <?php
         if ($appAuth->user() && $this->Html->paymentIsCashless()) {
-            if ($this->request->getSession()->read('Auth.shopOrderCustomer')) {
+            if ($this->request->getSession()->check('Auth.shopOrderCustomer')) {
                 $this->element('addScript', ['script' =>
                     Configure::read('app.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
                 ]);
@@ -67,12 +67,17 @@ if ($appAuth->Cart->getProducts() !== null) {
         }
         ?>
         
-        <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in appcontroller ?>
+        <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in AppController ?>
             <p class="no-products">Dein Warenkorb ist leer.</p>
             <p class="products"></p>
             <p class="sum-wrapper"><b>Summe</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             <p class="deposit-sum-wrapper"><b>Pfand</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             <p class="tax-sum-wrapper"><b>Umsatzsteuer</b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+            
+            <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            	<p class="timebased-currency-sum-wrapper"><b>Davon in <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
+            <?php } ?>
+            
             <p class="tmp-wrapper"></p>
             
             <div class="sc"></div>

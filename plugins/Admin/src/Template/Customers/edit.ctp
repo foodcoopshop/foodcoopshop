@@ -83,8 +83,24 @@ echo $this->Form->control('Customers.address_customer.phone', [
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo $this->Form->control('Customers.newsletter', [
-        'label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.',
-        'type' => 'checkbox'
+        'label' => 'Bestellerinnerung<span class="after small">Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.</span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+}
+
+if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+    $label = 'Stundenabrechnungs-Modul aktiv? ';
+    $label .= '<span class="after small">Ich möchte meine Produkte (auch) in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' bezahlen. Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/stundenabrechnungs-modul" target="_blank">in der Online-Doku</a>.';
+    if (!$timebasedCurrencyDisableOptionAllowed) {
+        $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
+    }
+    $label .= '</span>';
+    echo $this->Form->control('Customers.timebased_currency_enabled', [
+        'label' => $label,
+        'type' => 'checkbox',
+        'disabled' => (!$timebasedCurrencyDisableOptionAllowed ? 'disabled' : ''),
+        'escape' => false
     ]);
 }
 

@@ -300,7 +300,9 @@ class OrdersController extends AdminAppController
             'contain' => $orderParams['contain']
         ])
         ->select($this->Order->Customers);
-
+        
+        $query->select($this->Order->TimebasedCurrencyOrders);
+        
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
@@ -319,7 +321,16 @@ class OrdersController extends AdminAppController
             $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
         }
         $this->set('orders', $orders);
-
+        
+        $timebasedCurrencyOrderInList = false;
+        foreach($orders as $order) {
+            if (!empty($order->timebased_currency_order)) {
+                $timebasedCurrencyOrderInList = true;
+                break;
+            }
+        }
+        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
+        
         $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
         $this->set('title_for_layout', 'Bestellungen');

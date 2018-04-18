@@ -6,8 +6,6 @@ use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
- * MenuHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -30,6 +28,7 @@ class ConfigurationHelper extends Helper
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
             case 'FCS_ORDER_COMMENT_ENABLED':
+            case 'FCS_TIMEBASED_CURRENCY_ENABLED':
                 return [
                     APP_ON => 'ja',
                     APP_OFF => 'nein'

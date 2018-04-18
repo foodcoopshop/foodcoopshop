@@ -34,9 +34,9 @@ use Cake\Core\Configure;
     <?php echo $this->element('email/orderedProductsTable', [
         'manufacturerId' => null,
         'cartProducts' => $cart['CartProducts'],
-        'depositSum' => $depositSum,
-        'productSum' => $productSum,
-        'productAndDepositSum' => $productAndDepositSum
+        'depositSum' => $appAuth->Cart->getDepositSum(),
+        'productSum' => $appAuth->Cart->getProductSum(),
+        'productAndDepositSum' => $appAuth->Cart->getProductAndDepositSum()
     ]); ?>
 </table>
 

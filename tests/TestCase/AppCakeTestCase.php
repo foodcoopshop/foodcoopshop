@@ -318,17 +318,25 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '')
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
     {
-        $this->browser->post(
-            $this->Slug->getCartFinish(),
-            [
-                'Orders' => [
-                    'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                    'cancellation_terms_accepted' => $cancellation_terms_accepted,
-                    'comment' => $comment
-                ]
+        $data = [
+            'Orders' => [
+                'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                'cancellation_terms_accepted' => $cancellation_terms_accepted
             ]
+        ];
+        
+        if ($comment != '') {
+            $data['Orders']['comment'] = $comment;
+        }
+        
+        if ($timebaseCurrencyTimeSum !== null) {
+            $data['timebased_currency_order']['seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
+        }
+        
+        $this->browser->post(
+            $this->Slug->getCartFinish(), $data
         );
     }
 
@@ -347,9 +355,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         return $this->browser->getJsonDecodedContent();
     }
 
-    protected function changeManufacturer($manufacturerId, $option, $value)
+    protected function changeManufacturer($manufacturerId, $field, $value)
     {
-        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
+        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$field.' = :value WHERE id_manufacturer = :manufacturerId';
         $params = [
             'value' => $value,
             'manufacturerId' => $manufacturerId
@@ -357,7 +365,18 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $statement = self::$dbConnection->prepare($query);
         return $statement->execute($params);
     }
-
+    
+    protected function changeCustomer($customerId, $field, $value)
+    {
+        $query = 'UPDATE ' . $this->Customer->getTable().' SET '.$field.' = :value WHERE id_customer = :customerId';
+        $params = [
+            'value' => $value,
+            'customerId' => $customerId
+        ];
+        $statement = self::$dbConnection->prepare($query);
+        return $statement->execute($params);
+    }
+    
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
@@ -392,4 +411,16 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->browser->doFoodCoopShopLogin();
     }
+    
+    protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
+    {
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', '10,50');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
+        $this->changeCustomer(Configure::read('test.customerId'), 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
+    }
+    
 }

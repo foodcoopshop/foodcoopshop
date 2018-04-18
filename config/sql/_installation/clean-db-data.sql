@@ -41,6 +41,8 @@ TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
+TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
+TRUNCATE TABLE `fcs_timebased_currency_orders`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -86,7 +88,7 @@ INSERT INTO `fcs_configuration` VALUES
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',130,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (551,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bankverbindung für die Mitgliedsbeitrags-Einzahlungen\".','MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',140,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',120,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup).<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',300,'2016-10-06 00:00:00','2016-10-06 00:00:00'),
+(553,1,'FCS_BACKUP_EMAIL_ADDRESS_BCC','E-Mail-Adresse, an die sämtliche vom System generierten E-Mails als BCC verschickt werden (Backup).<br /><div class=\"small\">Kann leer gelassen werden.</div>','','text',190,'2016-10-06 00:00:00','2016-10-06 00:00:00'),
 (554,1,'FCS_SHOW_FOODCOOPSHOP_BACKLINK','Auf Homepage Link auf www.foodcoopshop.com anzeigen?<br /><div class=\"small\">Der Link wird im Footer angezeigt.</div>','1','boolean',180,'2016-11-27 00:00:00','2016-11-27 00:00:00'),
 (555,1,'FCS_PAYMENT_PRODUCT_MAXIMUM','Maximalbetrag für jede Guthaben-Aufladung in Euro','500','number',127,'2016-11-28 00:00:00','2016-11-28 00:00:00'),
 (556,1,'FCS_APP_NAME','Name der Foodcoop','','text',5,'2017-01-12 00:00:00','2017-01-12 00:00:00'),
@@ -98,7 +100,13 @@ INSERT INTO `fcs_configuration` VALUES
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','0','boolean',13,'2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'2017-08-02 00:00:00','2017-08-02 00:00:00'),
-(567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00');
+(567,1,'FCS_NETWORK_PLUGIN_ENABLED','Netzwerk-Modul aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/netzwerk-modul\" target=\"_blank\">Infos zum Netzwerk-Modul</a></div>','0','readonly',50,'2017-09-14 00:00:00','2017-09-14 00:00:00'),
+(568,1,'FCS_TIMEBASED_CURRENCY_ENABLED','Stundenabrechnungs-Modul aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/stundenabrechnungs-modul\" target=\"_blank\">Infos zum Stundenabrechnung-Modul</a></div>','0','boolean',200,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(569,1,'FCS_TIMEBASED_CURRENCY_NAME','Stundenabrechnung: Name der Einheit<br /><div class=\"small\">max. 10 Zeichen</div>','Stunden','text',210,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Stundenabrechnung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Stundenabrechnung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Stundenabrechnung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','0','number',250,'2018-03-16 15:23:34','2018-03-16 15:23:34');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -172,6 +180,12 @@ INSERT INTO `fcs_tax` VALUES
 (2,10.000,1,0),
 (3,13.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_timebased_currency_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_timebased_currency_orders` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

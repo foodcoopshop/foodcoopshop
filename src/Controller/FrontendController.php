@@ -38,6 +38,7 @@ class FrontendController extends AppController
     protected function prepareProductsForFrontend($products)
     {
         $this->Product = TableRegistry::get('Products');
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
         $this->ProductAttribute = TableRegistry::get('ProductAttributes');
 
         foreach ($products as &$product) {
@@ -46,7 +47,15 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             $product['attributes'] = [];
-
+            
+            if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                    $product['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
+                }
+            }
+            
             $attributes = $this->ProductAttribute->find('all', [
                 'conditions' => [
                     'ProductAttributes.id_product' => $product['id_product']
@@ -63,8 +72,9 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
+                $grossPrice = $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price);
                 $preparedAttributes['ProductAttributeShops'] = [
-                    'gross_price' => $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price),
+                    'gross_price' => $grossPrice,
                     'tax' => $grossPrice - $attribute->product_attribute_shop->price,
                     'default_on' => $attribute->product_attribute_shop->default_on
                 ];
@@ -79,6 +89,15 @@ class FrontendController extends AppController
                         'name' => $attribute->product_attribute_combination->attribute->name
                     ]
                 ];
+                
+                if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                    if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                        $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->product_attribute_shop->price, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
+                    }
+                }
+                
                 $product['attributes'][] = $preparedAttributes;
             }
         }
@@ -178,7 +197,7 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
-        if ($this->request->getSession()->read('Auth.shopOrderCustomer')) {
+        if ($this->request->getSession()->check('Auth.shopOrderCustomer')) {
             $this->request->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
             $this->AppAuth->setUser($this->request->getSession()->read('Auth.shopOrderCustomer'));
         }
@@ -189,7 +208,6 @@ class FrontendController extends AppController
             $shoppingLimitReached = Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
         }
-
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
 }

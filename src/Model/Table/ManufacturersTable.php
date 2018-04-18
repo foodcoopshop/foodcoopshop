@@ -71,9 +71,25 @@ class ManufacturersTable extends AppTable
             'provider' => 'table',
             'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).'
         ]);
+        $validator->numeric('timebased_currency_max_percentage', 'Kommastellen sind nicht zulässig.');
+        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
+        $validator->numeric('timebased_currency_max_credit_balance', 'Kommastellen sind nicht zulässig.');
+        $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
+    
+    public function getTimebasedCurrencyMoney($price, $percentage)
+    {
+        return $price * $percentage / 100;
+    }
 
+    public function getCartTimebasedCurrencySeconds($price, $percentage)
+    {
+        $result = $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100 * 3600;
+        $result = round($result, 0);
+        return $result;
+    }
+    
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
      * @return boolean
@@ -156,10 +172,22 @@ class ManufacturersTable extends AppTable
      * @param int $defaultTaxId
      * @return int
      */
+    public function getOptionTimebasedCurrencyEnabled($timebasedCurrencyEnabled)
+    {
+        $result = false;
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $timebasedCurrencyEnabled) {
+            $result = true;
+        }
+        return $result;
+    }
+    /**
+     * @param int $defaultTaxId
+     * @return int
+     */
     public function getOptionDefaultTaxId($defaultTaxId)
     {
         $result = $defaultTaxId;
-        if (is_null($defaultTaxId)) { // !sic
+        if (is_null($defaultTaxId)) {
             $result = Configure::read('app.defaultTaxId');
         }
         return $result;
@@ -358,6 +386,23 @@ class ManufacturersTable extends AppTable
         return round($price * $variableMemberFee / 100, 2);
     }
 
+    public function getTimebasedCurrencyManufacturersForDropdown()
+    {
+        $manufacturers = $this->find('all', [
+            'order' => [
+                'Manufacturers.name' => 'ASC'
+            ],
+            'conditions' => [
+                'Manufacturers.timebased_currency_enabled' => true
+            ]
+        ]);
+        $result = [];
+        foreach ($manufacturers as $manufacturer) {
+            $result[$manufacturer->id_manufacturer] = $manufacturer->name;
+        }
+        return $result;
+    }
+    
     public function getForDropdown()
     {
         $manufacturers = $this->find('all', [
@@ -402,7 +447,7 @@ class ManufacturersTable extends AppTable
             'active' => APP_ON,
             'shopId' => Configure::read('app.shopId')
         ];
-        if (! $this->user()) {
+        if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
         }
 
@@ -423,7 +468,7 @@ class ManufacturersTable extends AppTable
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }
 
-    public function getOrderList($manufacturerId, $order, $from, $to, $orderState)
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $from, $to, $orderState)
     {
         switch ($order) {
             case 'product':
@@ -444,6 +489,7 @@ class ManufacturersTable extends AppTable
         ma.firstname as ManufacturerFirstname, ma.lastname as ManufacturerLastname, ma.address1 as ManufacturerAddress1, ma.postcode as ManufacturerPostcode, ma.city as ManufacturerCity,
         t.rate as TaxRate,
         odt.total_amount AS OrderDetailTaxAmount,
+        od.id_order_detail AS OrderDetailId,
         od.product_id AS ProductId,
         od.product_name AS ProductName,
         od.product_quantity AS OrderDetailQuantity,

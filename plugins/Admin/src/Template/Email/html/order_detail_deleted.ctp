@@ -29,7 +29,7 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Preis: <b>€ <?php echo $this->MyHtml->formatAsDecimal($orderDetail->total_price_tax_incl); ?></b></li>
+                <li>Preis: <b><?php echo $this->MyHtml->formatAsDecimal($orderDetail->total_price_tax_incl); ?> €</b></li>
                 <li>Anzahl: <b><?php echo $orderDetail->product_quantity; ?></b></li>
                 <li>Hersteller: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
                 <li>Bestelldatum: <b><?php echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b></li>

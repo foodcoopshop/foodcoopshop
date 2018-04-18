@@ -38,6 +38,39 @@ class CartsTable extends AppTable
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
+    
+    public function adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor)
+    {
+        
+        $cartProductSum = 0;
+        $cartProductSumExcl = 0;
+        $cartProductSecondsSum = 0;
+        foreach($cart['CartProducts'] as &$cartProduct) {
+            if (isset($cartProduct['timebasedCurrencySeconds'])) {
+                $calculatedSeconds = round($cartProduct['timebasedCurrencySeconds'] * $selectedTimeAdaptionFactor, 0);
+                $cartProduct['timebasedCurrencySeconds'] = $calculatedSeconds;
+                $cartProductSecondsSum += $cartProduct['timebasedCurrencySeconds'];
+                $cartProduct['isTimebasedCurrencyUsed'] = true;
+            }
+            if (isset($cartProduct['timebasedCurrencyMoneyIncl'])) {
+                $cartProduct['timebasedCurrencyMoneyIncl'] = round($cartProduct['timebasedCurrencyMoneyIncl'] * $selectedTimeAdaptionFactor, 2);
+                $cartProduct['price'] -= $cartProduct['timebasedCurrencyMoneyIncl'];
+                $cartProductSum += $cartProduct['price'];
+            }
+            if (isset($cartProduct['timebasedCurrencyMoneyExcl'])) {
+                $cartProduct['timebasedCurrencyMoneyExcl'] = round($cartProduct['timebasedCurrencyMoneyExcl'] *  $selectedTimeAdaptionFactor, 2);
+                $cartProduct['priceExcl'] -= $cartProduct['timebasedCurrencyMoneyExcl'];
+                $cartProductSumExcl += $cartProduct['priceExcl'];
+            }
+        }
+        
+        $cart['CartTimebasedCurrencyUsed'] = true;
+        $cart['CartTimebasedCurrencySecondsSum'] = $cartProductSecondsSum;
+        $cart['CartProductSum'] = $cartProductSum;
+        $cart['CartProductSumExcl'] = $cartProductSumExcl;
+                
+        return $cart;
+    }
 
     public function getCart($customerId)
     {
@@ -55,8 +88,11 @@ class CartsTable extends AppTable
             $cart = $this->save($this->newEntity($cart2save));
         }
 
-        $ccp = TableRegistry::get('CartProducts');
-        $cartProducts = $ccp->find('all', [
+        $cartProductsTable = TableRegistry::get('CartProducts');
+        $productsTable = TableRegistry::get('Products');
+        $manufacturersTable = TableRegistry::get('Manufacturers');
+        
+        $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['id_cart']
             ],
@@ -96,10 +132,16 @@ class CartsTable extends AppTable
                 ),
                 ['class' => 'product-name']
             );
-
+            
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
+                
+                $netPricePerPiece = $cartProduct->product_attribute->product_attribute_shop->price;
+                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
+                $grossPrice = $grossPricePerPiece * $cartProduct->amount;
+                $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
+                
                 // attribute
-                $preparedCart['CartProducts'][] = [
+                $productData = [
                     'cartProductId' => $cartProduct->id_cart_product,
                     'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
                     'productName' => $cartProduct->product_lang->name,
@@ -111,20 +153,20 @@ class CartsTable extends AppTable
                     'manufacturerName' => $cartProduct->product->manufacturer->name,
                     'image' => $productImage,
                     'deposit' => !empty($cartProduct->product_attribute->deposit_product_attribute->deposit) ? $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount : 0, // * 1 to convert to float
-                    'price' => $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product_attribute->product_attribute_shop->price) * $cartProduct->amount,
+                    'price' => $grossPrice,
                     'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
-                    'tax' => $ccp->Products->getUnitTax(
-                        $ccp->Products->getGrossPrice(
-                            $cartProduct->id_product,
-                            $cartProduct->product_attribute->product_attribute_shop->price
-                        ) * $cartProduct->amount,
-                        $cartProduct->product_attribute->product_attribute_shop->price,
-                        $cartProduct->amount
-                    ) * $cartProduct->amount
+                    'tax' => $tax
                 ];
+                
             } else {
                 // no attribute
-                $preparedCart['CartProducts'][] = [
+                
+                $netPricePerPiece = $cartProduct->product->product_shop->price;
+                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
+                $grossPrice = $grossPricePerPiece * $cartProduct->amount;
+                $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
+                
+                $productData = [
                     'cartProductId' => $cartProduct->id_cart_product,
                     'productId' => $cartProduct->id_product,
                     'productName' => $cartProduct->product_lang->name,
@@ -136,18 +178,23 @@ class CartsTable extends AppTable
                     'manufacturerName' => $cartProduct->product->manufacturer->name,
                     'image' => $productImage,
                     'deposit' => !empty($cartProduct->product->deposit_product->deposit) ? $cartProduct->product->deposit_product->deposit * $cartProduct->amount : 0,
-                    'price' => $ccp->Products->getGrossPrice($cartProduct->id_product, $cartProduct->product->product_shop->price) * $cartProduct->amount,
+                    'price' => $grossPrice,
                     'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
-                    'tax' => $ccp->Products->getUnitTax(
-                        $ccp->Products->getGrossPrice(
-                            $cartProduct->id_product,
-                            $cartProduct->product->product_shop->price
-                        ) * $cartProduct->amount,
-                        $cartProduct->product->product_shop->price,
-                        $cartProduct->amount
-                    ) * $cartProduct->amount
+                    'tax' => $tax
                 ];
+                
             }
+            
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
+                if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
+                    $productData['timebasedCurrencyMoneyIncl'] = round($manufacturersTable->getTimebasedCurrencyMoney($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                    $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($netPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                    $productData['timebasedCurrencySeconds'] = $manufacturersTable->getCartTimebasedCurrencySeconds($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage) * $cartProduct->amount;
+                }
+            }
+            
+            $preparedCart['CartProducts'][] = $productData;
+            
         }
 
         // sum up deposits and products
@@ -155,11 +202,23 @@ class CartsTable extends AppTable
         $preparedCart['CartProductSum'] = 0;
         $preparedCart['CartProductSumExcl'] = 0;
         $preparedCart['CartTaxSum'] = 0;
+        $preparedCart['CartTimebasedCurrencyMoneyExclSum'] = 0;
+        $preparedCart['CartTimebasedCurrencyMoneyInclSum'] = 0;
+        $preparedCart['CartTimebasedCurrencySecondsSum'] = 0;
         foreach ($preparedCart['CartProducts'] as $p) {
             $preparedCart['CartDepositSum'] += $p['deposit'];
             $preparedCart['CartProductSum'] += $p['price'];
             $preparedCart['CartTaxSum'] += $p['tax'];
             $preparedCart['CartProductSumExcl'] += $p['priceExcl'];
+            if (!empty($p['timebasedCurrencyMoneyExcl'])) {
+                $preparedCart['CartTimebasedCurrencyMoneyExclSum'] += $p['timebasedCurrencyMoneyExcl'];
+            }
+            if (!empty($p['timebasedCurrencyMoneyIncl'])) {
+                $preparedCart['CartTimebasedCurrencyMoneyInclSum'] += $p['timebasedCurrencyMoneyIncl'];
+            }
+            if (!empty($p['timebasedCurrencySeconds'])) {
+                $preparedCart['CartTimebasedCurrencySecondsSum'] += $p['timebasedCurrencySeconds'];
+            }
         }
         return $preparedCart;
     }

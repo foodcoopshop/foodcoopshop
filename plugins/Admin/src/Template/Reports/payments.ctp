@@ -17,14 +17,14 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-        var datefieldSelector = $('input.datepicker');
-        datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();".
+        $('input.datepicker').datepicker();" .
+        Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
 ]);
 if ($paymentType == 'product') {
     $this->element('highlightRowAfterEdit', [
-        'rowIdPrefix' => '#cakePayment-'
+        'rowIdPrefix' => '#payment-'
     ]);
 }
 ?>
@@ -89,14 +89,14 @@ foreach ($payments as $payment) {
     $rowClass = '';
     $additionalText = '';
     if ($payment->status == APP_DEL) {
-        $rowClass = 'deactivated';
+        $rowClass = 'deactivated line-through';
         $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $payment->date_changed->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' - scheint in der Summe nicht auf)';
     } else {
         $i ++;
         $paymentSum += $payment->amount;
     }
 
-    echo '<tr id="cakePayment-'.$payment->id.'" class="data ' . $rowClass . '">';
+    echo '<tr id="payment-'.$payment->id.'" class="data ' . $rowClass . '">';
 
     if ($paymentType == 'product') {
         echo '<td>';

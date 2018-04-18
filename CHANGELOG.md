@@ -6,6 +6,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [mrothauer](https://github.com/mrothauer)
+* [SaibotP](https://github.com/SaibotP)
+
+
+### Neue Funktionen
+- Hersteller können ihre Produkte jetzt auch in Stunden anbieten, abgerechnet wird über das neue [Stundenabrechnungs-Modul](https://foodcoopshop.github.io/de/stundenabrechnungs-modul). / [PR#213](https://github.com/foodcoopshop/foodcoopshop/pull/213) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
 
 ### Für Entwickler
 - Update auf PHPUnit 7. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/885c1365fd0ed12f2589f92f2fcdca82993c3558) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>

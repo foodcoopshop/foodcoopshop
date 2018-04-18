@@ -64,40 +64,46 @@ $this->element('addScript', [
             if (! Configure::read('app.memberFeeEnabled') && $configuration->name == 'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') {
                 continue;
             }
-
+            if (! Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED' && substr($configuration->name, 0, 23) == 'FCS_TIMEBASED_CURRENCY_') {
+                continue;
+            }
+            
             echo '<tr>';
 
-            echo '<td class="first">';
-            echo $configuration->text;
-            echo '</td>';
+                echo '<td class="first">';
+                    echo $configuration->text;
+                echo '</td>';
+    
+                echo '<td style="width:30px;">';
+    
+                    // timebased currency module is still in beta mode - only enable it in database and do not show edit icon
+                    if ($configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED') {
+                        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                            'title' => 'Einstellung bearbeiten',
+                            'class' => 'edit-configuration-button'
+                        ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
+                    }
+    
+                echo '</td>';
 
-            echo '<td style="width:30px;">';
-
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'title' => 'Einstellung bearbeiten',
-                'class' => 'edit-configuration-button'
-            ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
-
-            echo '</td>';
-
-            echo '<td>';
-
-            switch ($configuration->type) {
-                case 'number':
-                case 'text':
-                case 'textarea':
-                case 'textarea_big':
-                    echo $configuration->value;
-                    break;
-                case 'dropdown':
-                    echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value);
-                    break;
-                case 'boolean':
-                    echo (boolean) $configuration->value ? 'ja' : 'nein';
-                    break;
-            }
-
-            echo '</td>';
+                echo '<td>';
+    
+                switch ($configuration->type) {
+                    case 'number':
+                    case 'text':
+                    case 'textarea':
+                    case 'textarea_big':
+                        echo $configuration->value;
+                        break;
+                    case 'dropdown':
+                        echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value);
+                        break;
+                    case 'boolean':
+                        echo (boolean) $configuration->value ? 'ja' : 'nein';
+                        break;
+                }
+    
+                echo '</td>';
 
             echo '</tr>';
         }
@@ -179,13 +185,13 @@ $this->element('addScript', [
 
             echo '<tr>';
 
-            echo '<td class="first">';
-            echo $configuration->text;
-            echo '</td>';
-
-            echo '<td>';
-            echo $configuration->value;
-            echo '</td>';
+                echo '<td class="first">';
+                    echo $configuration->text;
+                echo '</td>';
+    
+                echo '<td>';
+                    echo $configuration->value;
+                echo '</td>';
 
             echo '</tr>';
         }

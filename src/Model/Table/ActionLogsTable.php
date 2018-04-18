@@ -376,6 +376,16 @@ class ActionLogsTable extends AppTable
             ]
         ],
 
+        'timebased_currency_payment_added' => [
+            'de' => 'Stundenabrechnung: Zeit-Eintragung erstellt'
+        ],
+        'timebased_currency_payment_changed' => [
+            'de' => 'Stundenabrechnung: Zeit-Eintragung geändert'
+        ],
+        'timebased_currency_payment_deleted' => [
+            'de' => 'Stundenabrechnung: Zeit-Eintragung gelöscht'
+        ],
+        
         'cronjob_backup_database' => [
             'de' => 'Cronjob: Datenbank gebackupt'
         ],

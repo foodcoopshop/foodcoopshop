@@ -54,7 +54,7 @@ echo $this->Form->create($slider, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
     'url' => $isEditMode ? $this->Slug->getSliderEdit($slider->id_slider) : $this->Slug->getSliderAdd(),
-    'id' => 'categoryEditForm'
+    'id' => 'sliderEditForm'
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);

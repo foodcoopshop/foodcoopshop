@@ -16,9 +16,8 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-        var datefieldSelector = $('input.datepicker');
-        datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();
+    'script' => 
+        Configure::read('app.jsNamespace') . ".Admin.init();
     "
 ]);
 ?>

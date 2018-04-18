@@ -259,7 +259,7 @@ class ManufacturersController extends AdminAppController
 
         $manufacturers = $this->paginate($query, [
             'sortWhitelist' => [
-                'Manufacturers.name', 'Manufacturers.iban', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart')
+                'Manufacturers.name', 'Manufacturers.iban', 'Manufacturers.active', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -270,12 +270,19 @@ class ManufacturersController extends AdminAppController
         $this->Payment = TableRegistry::get('Payments');
         $this->OrderDetail = TableRegistry::get('OrderDetails');
 
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        }
+        
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $this->Product->getCountByManufacturerId($manufacturer->id_manufacturer);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
             $manufacturer->deposit_credit_balance = $sumDepositDelivered[0]['sumDepositDelivered'] - $sumDepositReturned[0]['sumDepositReturned'];
+            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+                $manufacturer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance($manufacturer->id_manufacturer);
+            }
             if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                 $manufacturer->variable_member_fee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             }
@@ -299,7 +306,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -318,7 +325,7 @@ class ManufacturersController extends AdminAppController
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
+            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
@@ -401,7 +408,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN
         ], 'F');
 
@@ -416,7 +423,7 @@ class ManufacturersController extends AdminAppController
             $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
                 ORDER_STATE_OPEN
             ], 'F');
             $this->render('get_order_list_by_customer');
@@ -512,7 +519,9 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->send_ordered_product_quantity_changed_notification)) {
             $manufacturer->send_ordered_product_quantity_changed_notification = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
         }
-
+        
+        $manufacturer->timebased_currency_max_credit_balance /= 3600;
+        
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = TableRegistry::get('Customers');
             $this->set('customersForDropdown', $this->Customer->getForDropdown());
@@ -551,9 +560,15 @@ class ManufacturersController extends AdminAppController
                 'validate' => 'editOptions'
             ]
         );
-
+        if (!empty($this->request->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
+            $this->request->data['Manufacturers']['timebased_currency_max_credit_balance'] *= 3600;
+        }
+        
         if (!empty($manufacturer->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            if (!empty($this->request->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
+                $this->request->data['Manufacturers']['timebased_currency_max_credit_balance'] /= 3600;
+            }
             $this->set('manufacturer', $manufacturer);
             $this->render('edit_options');
         } else {
@@ -638,14 +653,17 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    private function prepareInvoiceAndOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
+    private function prepareInvoiceOrOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
     {
-        $results = $this->Manufacturer->getOrderList($manufacturerId, $groupType, $from, $to, $orderState);
+        $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $from, $to, $orderState);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
-
+        
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $results = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($results);
+        
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
         $this->set('from', date('d.m.Y', strtotime(str_replace('/', '-', $from))));
@@ -659,17 +677,22 @@ class ManufacturersController extends AdminAppController
         $sumPriceExcl = 0;
         $sumTax = 0;
         $sumAmount = 0;
+        $sumTimebasedCurrencyPriceIncl = 0;
         foreach ($results as $result) {
             $sumPriceIncl += $result['OrderDetailPriceIncl'];
             $sumPriceExcl += $result['OrderDetailPriceExcl'];
             $sumTax += $result['OrderDetailTaxAmount'];
             $sumAmount += $result['OrderDetailQuantity'];
+            if (isset($result['OrderDetailTimebasedCurrencyPriceInclAmount'])) {
+                $sumTimebasedCurrencyPriceIncl += $result['OrderDetailTimebasedCurrencyPriceInclAmount'];
+            }
         }
         $this->set('sumPriceExcl', $sumPriceExcl);
         $this->set('sumTax', $sumTax);
         $this->set('sumPriceIncl', $sumPriceIncl);
         $this->set('sumAmount', $sumAmount);
-
+        $this->set('sumTimebasedCurrencyPriceIncl', $sumTimebasedCurrencyPriceIncl);
+        
         $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
         $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
@@ -679,7 +702,7 @@ class ManufacturersController extends AdminAppController
 
     public function getInvoice($manufacturerId, $from, $to)
     {
-        $results = $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, [
+        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -688,7 +711,7 @@ class ManufacturersController extends AdminAppController
             // do not throw exception because no debug mails wanted
             die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
         }
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, [
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -698,13 +721,13 @@ class ManufacturersController extends AdminAppController
     public function getOrderListByProduct($manufacturerId, $from, $to)
     {
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'product', $from, $to, $orderStates);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, $orderStates);
     }
 
     public function getOrderListByCustomer($manufacturerId, $from, $to)
     {
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
-        $this->prepareInvoiceAndOrderList($manufacturerId, 'customer', $from, $to, $orderStates);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, $orderStates);
     }
 
     /**

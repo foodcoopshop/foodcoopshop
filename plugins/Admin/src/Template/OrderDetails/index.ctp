@@ -20,15 +20,25 @@ use Cake\Core\Configure;
     <?php
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-            var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" .
-            Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initCancelSelectionButton();" .
-            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
-            Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');".
-            Configure::read('app.jsNamespace') . ".Admin.initDeleteOrderDetail();" . Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
+            $('input.datepicker').datepicker();".
+            Configure::read('app.jsNamespace').".Admin.init();" .
+            Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();" .
+            Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
+            Configure::read('app.jsNamespace').".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');".
+            Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
+            Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();" .
+            Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
     ]);
+    
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
+        ]);
+    }
     ?>
     
     <div class="filter-container">
@@ -190,24 +200,32 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
 
     echo '<td class="right">';
-    echo '<div class="table-cell-wrapper quantity">';
-    if ($groupBy == '') {
-        if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'order-detail-product-quantity-edit-button',
-                'title' => 'Zum Ändern der Anzahl anklicken'
-            ], 'javascript:void(0);');
+    
+        if (!empty($orderDetail->timebased_currency_order_detail)) {
+            echo '<span id="timebased-currency-object-'.$orderDetail->id_order_detail.'" class="timebased-currency-object"></span>';
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Admin.setOrderDetailTimebasedCurrencyData($('#timebased-currency-object-".$orderDetail->id_order_detail."'),'".json_encode($orderDetail->timebased_currency_order_detail)."');"
+            ]);
         }
-        $quantity = $orderDetail->product_quantity;
-        $style = '';
-        if ($quantity > 1) {
-            $style = 'font-weight:bold;';
+        
+        echo '<div class="table-cell-wrapper quantity">';
+        if ($groupBy == '') {
+            if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                    'class' => 'order-detail-product-quantity-edit-button',
+                    'title' => 'Zum Ändern der Anzahl anklicken'
+                ], 'javascript:void(0);');
+            }
+            $quantity = $orderDetail->product_quantity;
+            $style = '';
+            if ($quantity > 1) {
+                $style = 'font-weight:bold;';
+            }
+            echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
+        } else {
+            echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }
-        echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
-    } else {
-        echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
-    }
-    echo '</div>';
+        echo '</div>';
     echo '</td>';
 
     if ($groupBy != '') {
@@ -248,6 +266,9 @@ foreach ($orderDetails as $orderDetail) {
             ], 'javascript:void(0);');
         }
         echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
+        if (!empty($orderDetail->timebased_currency_order_detail)) {
+            echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds).'">&nbsp;*</b>';
+        }
     } else {
         echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
     }
@@ -405,6 +426,8 @@ if ($buttonExists) {
     echo '</div>';
     echo '<div class="sc"></div>';
 }
+
+echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
 
 ?>
     <div class="sc"></div>

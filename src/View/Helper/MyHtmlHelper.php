@@ -9,8 +9,6 @@ use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
 
 /**
- * MyHtmlHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -94,6 +92,23 @@ class MyHtmlHelper extends HtmlHelper
         $result = str_replace('  ', ' ', $result);
 
         return $result;
+    }
+    
+    public function getCustomerAddress($customer)
+    {
+        $details = $customer->address_customer->address1;
+        if ($customer->address_customer->address2 != '') {
+            $details .= '<br />' . $customer->address_customer->address2;
+        }
+        $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
+        
+        if ($customer->address_customer->phone_mobile != '') {
+            $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
+        }
+        if ($customer->address_customer->phone != '') {
+            $details .= '<br />Tel.: ' . $customer->address_customer->phone;
+        }
+        return $details;
     }
 
     /**
@@ -231,7 +246,12 @@ class MyHtmlHelper extends HtmlHelper
 
     public function formatAsEuro($amount)
     {
-        return '€&nbsp;' . self::formatAsDecimal($amount);
+        return self::formatAsUnit($amount, '€');
+    }
+    
+    public function formatAsUnit($amount, $shortcode)
+    {
+        return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
     }
 
     public function formatAsPercent($amount)

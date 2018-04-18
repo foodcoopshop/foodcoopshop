@@ -6,8 +6,6 @@ use Cake\Core\Configure;
 use Cake\View\Helper\TimeHelper;
 
 /**
- * MyTimeHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -22,7 +20,7 @@ use Cake\View\Helper\TimeHelper;
  */
 class MyTimeHelper extends TimeHelper
 {
-
+    
     public function getLastDayOfGivenMonth($monthAndYear)
     {
         return date('t', strtotime($monthAndYear));

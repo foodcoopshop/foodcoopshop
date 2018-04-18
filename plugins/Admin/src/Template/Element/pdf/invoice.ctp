@@ -78,8 +78,8 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 // Produktauflistung End
 
-if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-    // TODO do that in controller where it belongs to :-)
+if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0 && $sumTimebasedCurrencyPriceIncl == 0) {
+    
     $m = TableRegistry::get('Manufacturers');
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
@@ -116,6 +116,67 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $pdf->writeHTML($html, true, false, true, false, '');
 } else {
     $html = '<p>Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen.</p>';
+    $pdf->Ln(3);
+    $pdf->writeHTML($html, true, false, true, false, '');
+}
+
+if ($sumTimebasedCurrencyPriceIncl > 0) {
+    
+    $sumPriceForTimebasedCurrency = $sumPriceIncl;
+    if (isset($newSumPriceIncl)) {
+        $sumPriceForTimebasedCurrency = $newSumPriceIncl;
+    }
+    $sumPriceForTimebasedCurrency -= $sumTimebasedCurrencyPriceIncl;
+    
+    $firstColumnWidth = 200;
+    $secondColumnWidth = 60;
+    
+    $html = '<table border="0" cellspacing="0" cellpadding="1">';
+        
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Von den Mitgliedern bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Von den Mitgliedern bezahlt in Euro:';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>' .  $this->Html->formatAsEuro($sumPriceForTimebasedCurrency) . '</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+    
+    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
+        $m = TableRegistry::get('Manufacturers');
+        $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
+        $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
+        
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Einbehaltener variabler Mitgliedsbeitrag:';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>'.$this->Html->formatAsEuro($compensatedPrice).'</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+        
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= 'Betrag, der auf dein Konto überwiesen wird:';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>'.$this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+    }
+    
+    $html .= '</table>';
+    
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 }

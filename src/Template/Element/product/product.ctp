@@ -128,6 +128,14 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
+                if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
+                    echo $this->element('timebasedCurrency/addProductInfo', [
+                        'class' => 'timebased-currency-product-info',
+                        'money' => $attribute['timebased_currency_money_incl'],
+                        'seconds' => $attribute['timebased_currency_seconds'],
+                        'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
+                    ]);
+                }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
                 echo '</div>';
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
@@ -153,10 +161,18 @@ if ($product['description'] != '') {
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo '<div class="line">';
             echo '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
-            if ($product['deposit']) {
-                echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
-            }
+                if ($product['deposit']) {
+                    echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
+                }
                 echo '</div>';
+                if (!$this->request->getSession()->read('Auth.shopOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                    echo $this->element('timebasedCurrency/addProductInfo', [
+                        'class' => 'timebased-currency-product-info',
+                        'money' => $product['timebased_currency_money_incl'],
+                        'seconds' => $product['timebased_currency_seconds'],
+                        'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
+                    ]);
+                }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);

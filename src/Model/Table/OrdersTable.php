@@ -30,6 +30,9 @@ class OrdersTable extends AppTable
         $this->hasMany('OrderDetails', [
             'foreignKey' => 'id_order'
         ]);
+        $this->hasOne('TimebasedCurrencyOrders', [
+            'foreignKey' => 'id_order'
+        ]);
         $this->setPrimaryKey('id_order');
     }
 
@@ -137,19 +140,20 @@ class OrdersTable extends AppTable
             $conditions['Orders.id_order'] = $orderId;
         }
 
+        $contain = ['Customers', 'TimebasedCurrencyOrders'];
+        
         $fields = [];
         $orderParams = [
             'conditions' => $conditions,
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
             'fields' => $fields,
-            'contain' => ['Customers']
+            'contain' => $contain
         ];
         return $orderParams;
     }
 
-    public function recalculateOrderDetailPricesInOrder($order)
+    public function updateSums($order)
     {
-        $orderId = $order->id_order;
 
         $query = $this->OrderDetails->find('all');
         $query->select(['sumPriceExcl' => $query->func()->sum('OrderDetails.total_price_tax_excl')]);
@@ -157,7 +161,7 @@ class OrdersTable extends AppTable
         $query->select(['sumDeposit' => $query->func()->sum('OrderDetails.deposit')]);
 
         $query->group('OrderDetails.id_order');
-        $query->having(['OrderDetails.id_order' => $orderId]);
+        $query->having(['OrderDetails.id_order' => $order->id_order]);
 
         $orderDetails = $query->first();
 
@@ -179,7 +183,6 @@ class OrdersTable extends AppTable
             'total_deposit' => $sumDeposit
         ];
 
-        // update table orders
         $this->save(
             $this->patchEntity($order, $order2update)
         );

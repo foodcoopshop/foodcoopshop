@@ -173,7 +173,7 @@ class ProductsTable extends AppTable
     public function getPriceAsFloat($price)
     {
         $price = trim($price);
-        $price = str_replace(',', '.', $price);
+        $price = Configure::read('app.numberHelper')->replaceCommaWithDot($price);
 
         if (!is_numeric($price)) {
             return -1; // do not return false, because 0 is a valid return value!
@@ -767,7 +767,7 @@ class ProductsTable extends AppTable
 
     public function getNetPrice($productId, $grossPrice)
     {
-        $grossPrice = str_replace(',', '.', $grossPrice);
+        $grossPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($grossPrice);
 
         if (! $grossPrice > - 1) { // allow 0 as new price
             return false;

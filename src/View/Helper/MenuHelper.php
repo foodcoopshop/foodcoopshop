@@ -6,8 +6,6 @@ use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
- * MenuHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -173,4 +171,21 @@ class MenuHelper extends Helper
         }
         return [];
     }
+    
+    public function getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth)
+    {
+        if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForCustomers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+        }
+        return [];
+    }
+    
+    public function getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth)
+    {
+        if ($appAuth->isTimebasedCurrencyEnabledForManufacturer()) {
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForManufacturers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+        }
+        return [];
+    }
+    
 }

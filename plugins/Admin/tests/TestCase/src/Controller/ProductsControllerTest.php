@@ -16,6 +16,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 class ProductsControllerTest extends AppCakeTestCase
@@ -94,8 +95,8 @@ class ProductsControllerTest extends AppCakeTestCase
      */
     private function assertPriceChange($productId, $price, $expectedNetPrice)
     {
-        $price = str_replace(',', '.', $price);
-        $expectedNetPrice = str_replace(',', '.', $expectedNetPrice);
+        $price = Configure::read('app.numberHelper')->replaceCommaWithDot($price);
+        $expectedNetPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($expectedNetPrice);
         $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);

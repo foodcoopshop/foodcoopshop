@@ -170,7 +170,7 @@ foodcoopshop.Mobile = {
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');
         cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">€&nbsp;0,00</span><i class="fa fa-shopping-cart fa-2x"></i>');
+        cartButton.html('<span class="sum">0,00&nbsp;€</span><i class="fa fa-shopping-cart fa-2x"></i>');
         $('#' + headerId).append(cartButton);
 
         var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
