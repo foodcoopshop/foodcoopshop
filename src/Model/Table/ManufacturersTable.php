@@ -23,7 +23,7 @@ use Cake\Validation\Validator;
 
 class ManufacturersTable extends AppTable
 {
-
+    
     public function initialize(array $config)
     {
         $this->setTable('manufacturer');
@@ -43,7 +43,7 @@ class ManufacturersTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-
+    
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('name', 'Bitte gib einen Namen an.');
@@ -62,7 +62,7 @@ class ManufacturersTable extends AppTable
         $validator->urlWithProtocol('homepage', 'Bitte gibt eine gültige Internet-Adresse an.');
         return $validator;
     }
-
+    
     public function validationEditOptions(Validator $validator)
     {
         $validator->allowEmpty('send_order_list_cc');
@@ -82,7 +82,7 @@ class ManufacturersTable extends AppTable
     {
         return $price * $percentage / 100;
     }
-
+    
     public function getCartTimebasedCurrencySeconds($price, $percentage)
     {
         $result = $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100 * 3600;
@@ -102,7 +102,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-
+    
     /**
      * @param $boolean $sendOrderedProductPriceChangedNotification
      * @return boolean
@@ -115,7 +115,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-
+    
     /**
      * @param $boolean $sendOrderedProductQuantityChangedNotification
      * @return boolean
@@ -128,7 +128,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-
+    
     /**
      * @param $boolean $sendInvoice
      * @return boolean
@@ -141,7 +141,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-
+    
     /**
      * @param $boolean $sendInvoice
      * @return boolean
@@ -154,7 +154,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-
+    
     /**
      * @param $boolean $bulkOrdersAllowed
      * @return boolean
@@ -167,7 +167,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-
+    
     /**
      * @param int $defaultTaxId
      * @return int
@@ -192,7 +192,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-
+    
     /**
      * @param int $variableMemberFee
      * @return int
@@ -205,7 +205,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-
+    
     /**
      * @param $boolean $sendOrderList
      * @return boolean
@@ -218,7 +218,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-
+    
     /**
      * @param $string $sendOrderListCc
      * @return array
@@ -229,79 +229,46 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderListCc) || $sendOrderListCc == '') {
             return $ccRecipients;
         }
-
+        
         $ccs = explode(',', $sendOrderListCc);
         foreach ($ccs as $cc) {
             $ccRecipients[] = $cc;
         }
         return $ccRecipients;
     }
-
+    
     /**
-     * bindings with email as foreign key was tricky...
-     *
-     * @param array $manufacturer
-     * @return boolean
+     * @param string $email
+     * @return Customer array
      */
-    public function getCustomerRecord($manufacturer)
+    public function getCustomerRecord($email)
     {
         $cm = TableRegistry::get('Customers');
-
-        if (empty($manufacturer->address_manufacturer)) {
+        
+        if (empty($email)) {
             return [];
         }
-
+        
         $customer = $cm->find('all', [
             'conditions' => [
-                'Customers.email' => $manufacturer->address_manufacturer->email
+                'Customers.email' => $email
             ]
         ])->first();
-
+        
         if (empty($customer->address_customer->id_address)) {
             return $customer;
         }
-
+        
         if (!empty($customer->address_customer)) {
             return [];
         }
-
+        
         return $customer;
     }
-
-    /**
-     * @param int $manufacturerId
-     * @return array
-     */
-    public function getCustomerByManufacturerId($manufacturerId)
-    {
-        $manufacturer = $this->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
-        ])->first();
-        if (!empty($manufacturer)) {
-            return $this->getCustomerRecord($manufacturer);
-        }
-        return false;
-    }
-
-    public function getCustomerIdByManufacturerId($manufacturerId)
-    {
-        $customer = $this->getCustomerByManufacturerId($manufacturerId);
-        if (!empty($customer)) {
-            return $$customer['Customers']['id_customer'];
-        }
-        return 0;
-    }
-
-    public function hasCustomerRecord($manufacturer)
-    {
-        return (boolean) count($this->getCustomerRecord($manufacturer));
-    }
-
+    
     public function getForMenu($appAuth)
     {
-
+        
         if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::get('Products');
         }
@@ -311,7 +278,7 @@ class ManufacturersTable extends AppTable
         if (! $appAuth->user()) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
-
+        
         $manufacturers = $this->find('all', [
             'fields' => [
                 'Manufacturers.id_manufacturer',
@@ -325,7 +292,7 @@ class ManufacturersTable extends AppTable
             ],
             'conditions' => $conditions
         ]);
-
+        
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer->name;
@@ -355,7 +322,7 @@ class ManufacturersTable extends AppTable
         }
         return $manufacturersForMenu;
     }
-
+    
     /**
      * @param float $price
      * @param integer $variableMemberFee
@@ -365,7 +332,7 @@ class ManufacturersTable extends AppTable
     {
         return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
-
+    
     /**
      * @param float $price
      * @param integer $variableMemberFee
@@ -375,7 +342,7 @@ class ManufacturersTable extends AppTable
     {
         return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
-
+    
     /**
      * @param float $price
      * @param integer $variableMemberFee
@@ -385,7 +352,7 @@ class ManufacturersTable extends AppTable
     {
         return round($price * $variableMemberFee / 100, 2);
     }
-
+    
     public function getTimebasedCurrencyManufacturersForDropdown()
     {
         $manufacturers = $this->find('all', [
@@ -410,7 +377,7 @@ class ManufacturersTable extends AppTable
                 'Manufacturers.name' => 'ASC'
             ]
         ]);
-
+        
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
@@ -428,10 +395,10 @@ class ManufacturersTable extends AppTable
         if (! empty($offlineManufacturers)) {
             $manufacturersForDropdown['offline'] = $offlineManufacturers;
         }
-
+        
         return $manufacturersForDropdown;
     }
-
+    
     public function getProductsByManufacturerId($manufacturerId)
     {
         $sql = "SELECT ";
@@ -441,7 +408,7 @@ class ManufacturersTable extends AppTable
         $sql .= $this->getConditionsForProductListQuery();
         $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
         $sql .= $this->getOrdersForProductListQuery();
-
+        
         $params = [
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
@@ -450,14 +417,14 @@ class ManufacturersTable extends AppTable
         if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
         }
-
+        
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-
+        
         return $products;
     }
-
+    
     /**
      * turns eg 24 into 0024
      *
@@ -467,7 +434,7 @@ class ManufacturersTable extends AppTable
     {
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }
-
+    
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $from, $to, $orderState)
     {
         switch ($order) {
@@ -478,9 +445,9 @@ class ManufacturersTable extends AppTable
                 $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
-
+        
         $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
-
+        
         $sql = "SELECT
         m.id_manufacturer ManufacturerId,
         m.name AS ManufacturerName,
@@ -514,7 +481,7 @@ class ManufacturersTable extends AppTable
             AND ma.id_manufacturer > 0
             AND o.current_state IN (" . join(',', $orderState) . ")
             ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
-
+        
         // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
         $params = [
             'manufacturerId' => $manufacturerId,

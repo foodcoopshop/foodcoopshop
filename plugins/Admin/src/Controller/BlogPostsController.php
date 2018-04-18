@@ -60,8 +60,7 @@ class BlogPostsController extends AdminAppController
         $blogPost = $this->BlogPost->newEntity(
             [
                 'active' => APP_ON,
-                'is_featured' => APP_ON,
-                'update_modified_field' => APP_ON
+                'is_featured' => APP_ON
             ],
             ['validate' => false]
         );
@@ -126,7 +125,7 @@ class BlogPostsController extends AdminAppController
             $this->request->data['BlogPosts']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
         }
         
-        if (!$this->request->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer()) {
+        if (!$this->request->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer() && $isEditMode) {
             $this->BlogPost->removeBehavior('Timestamp');
         }
         
