@@ -62,8 +62,8 @@ use Cake\Core\Configure;
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
-            <?php echo $this->Form->control('isQuantityZero', ['type'=>'checkbox', 'label' =>'Anzahl 0?', 'checked' => $isQuantityZero]);?>
-            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' =>'Preis 0?', 'checked' => $isPriceZero]);?>
+            <?php echo $this->Form->control('isQuantityMinFilterSet', ['type'=>'checkbox', 'label' =>'Anzahl < 3', 'checked' => $isQuantityMinFilterSet]);?>
+            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' =>'Preis = 0', 'checked' => $isPriceZero]);?>
             
             <div class="right">
                 <?php

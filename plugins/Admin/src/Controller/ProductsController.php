@@ -761,11 +761,11 @@ class ProductsController extends AdminAppController
         }
         $this->set('categoryId', $categoryId);
 
-        $isQuantityZero = 0; // default value
-        if (!empty($this->request->getQuery('isQuantityZero'))) {
-            $isQuantityZero = $this->request->getQuery('isQuantityZero');
+        $isQuantityMinFilterSet = 0; // default value
+        if (!empty($this->request->getQuery('isQuantityMinFilterSet'))) {
+            $isQuantityMinFilterSet = $this->request->getQuery('isQuantityMinFilterSet');
         }
-        $this->set('isQuantityZero', $isQuantityZero);
+        $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
 
         $isPriceZero = 0; // default value
         if (!empty($this->request->getQuery('isPriceZero'))) {
@@ -774,7 +774,7 @@ class ProductsController extends AdminAppController
         $this->set('isPriceZero', $isPriceZero);
 
         if ($manufacturerId != '') {
-            $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityZero, $isPriceZero, false, $this);
+            $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, $productId, $manufacturerId, $active, $categoryId, $isQuantityMinFilterSet, $isPriceZero, false, $this);
         } else {
             $preparedProducts = [];
         }

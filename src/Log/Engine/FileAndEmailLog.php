@@ -40,7 +40,20 @@ class FileAndEmailLog extends FileLog
     private function sendEmailWithErrorInformation($message)
     {
 
-        $ignoredExceptionsRegex = '/(MissingController|MissingAction|RecordNotFound|MissingRoute)Exception|cancellation_terms_accepted|general_terms_and_conditions_accepted/';
+        $ignoredPatterns = [
+            'MissingControllerException',
+            'MissingActionException',
+            'RecordNotFoundException',
+            'MissingRouteException',
+            'cancellation_terms_accepted',
+            'general_terms_and_conditions_accepted',
+            'terms_of_use_accepted_date_checkbox',
+            '{"passwd_old',
+            '{"passwd_1',
+            '{"passwd_2',
+            '{"email":{"unique":'
+        ];
+        $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
