@@ -6,6 +6,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Bugfixes
 - Das Ändern der E-Mail-Adresse beim Hersteller hat nicht korrekt funktioniert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1b72e5dad95287d48efd09882e6aa57d4d52b6d9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Beim Erstellen eines neuen Blog-Artikels wurde das Feld "nach vorne reihen" irrtümlich angezeigt. Das Deaktivieren dieser Funktion hat zu einem Fehlern geführt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/22c550947df41bfc56fea049db4343e70d511a57) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.0.1 2017-04-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.0...v2.0.1)
 
