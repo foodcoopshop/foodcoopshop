@@ -44,19 +44,18 @@ echo $this->Form->create($customer, [
 ]);
 
 echo $this->Form->control('Customers.passwd_old', [
-    'label' => 'Altes Passwort',
+    'label' => 'Altes Passwort *',
     'type' => 'password',
-    'required' => true
 ]);
 echo $this->Form->control('Customers.passwd_1', [
-    'label' => 'Neues Passwort',
+    'label' => 'Neues Passwort *<br /><span class="small">mindestens 8 Zeichen</span>',
     'type' => 'password',
-    'required' => true
+    'escape' => false,
 ]);
 echo $this->Form->control('Customers.passwd_2', [
-    'label' => 'Neues Passwort (nochmal)',
+    'label' => 'Neues Passwort (nochmal) * <br /><span class="small">mindestens 8 Zeichen</span>',
     'type' => 'password',
-    'required' => true
+    'escape' => false,
 ]);
 
 echo $this->Form->end();
