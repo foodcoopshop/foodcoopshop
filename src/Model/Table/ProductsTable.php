@@ -395,7 +395,7 @@ class ProductsTable extends AppTable
      * @param array $products
      * @return array $preparedProducts
      */
-    public function getProductsForBackend($appAuth, $productId, $manufacturerId, $active, $categoryId = '', $isQuantityZero = 0, $isPriceZero = 0, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($appAuth, $productId, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = 0, $isPriceZero = 0, $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
@@ -415,8 +415,8 @@ class ProductsTable extends AppTable
             $conditions['Products.active'] = $active;
         }
 
-        if ($isQuantityZero != '') {
-            $conditions[] = $this->getIsQuantityZeroCondition();
+        if ($isQuantityMinFilterSet != '') {
+            $conditions[] = $this->getIsQuantityMinFilterSetCondition();
         }
 
         if ($isPriceZero != '') {
@@ -426,10 +426,10 @@ class ProductsTable extends AppTable
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
-            if (preg_match('/'.$this->getIsQuantityZeroCondition().'/', $condition)) {
+            if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
                 $this->association('ProductAttributes')->setConditions(
                     [
-                        'StockAvailables.quantity' => 0
+                        'StockAvailables.quantity < 3'
                     ]
                 );
                 $quantityIsZeroFilterOn = true;
@@ -793,9 +793,9 @@ class ProductsTable extends AppTable
         return $netPrice;
     }
 
-    private function getIsQuantityZeroCondition()
+    private function getIsQuantityMinFilterSetCondition()
     {
-        return 'StockAvailables.quantity = 0';
+        return 'StockAvailables.quantity < 3';
     }
 
     private function getIsPriceZeroCondition()
