@@ -418,7 +418,7 @@ foodcoopshop.Cart = {
 	                        );
                         }
                     }
-                    p.slideUp('slow', function () {
+                    p.slideUp(500, function () {
                         p.remove();
                     });
                     $('.error-message.' + productId).remove();
