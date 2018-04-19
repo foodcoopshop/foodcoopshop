@@ -453,16 +453,24 @@ foodcoopshop.Cart = {
     
     initLoadLastOrderDetailsDropdown : function() {
     	$('#load-last-order-details').on('change', function() {
-    		var deliveryDate = $(this).val();
-    		if (deliveryDate != '') {
-    			
-    			var dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
-    				dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+    		var selectedValue = $(this).val();
+    		if (selectedValue != '') {
+    			if (selectedValue == 'remove-all-products-from-cart') {
+    				var title = 'Warenkorb leeren';
+        			var dialogHtml = '<p>Möchtest du den aktuellen Warenkorb wirklich leeren?</p>';
+        			var redirectUrl = '/warenkorb/' + 'emptyCart/';
+    			} else {
+    				var title = 'Vergangene Bestellung laden';
+        			var dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
+    				dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>';
+    				var redirectUrl = '/warenkorb/' + 'addLastOrderToCart/' + selectedValue;
+    			}
+				dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
                 $('<div></div>').appendTo('body')
                 .html(dialogHtml)
                 .dialog({
                     modal: true,
-                    title: 'Vergangene Bestellung laden?',
+                    title: title,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
@@ -473,7 +481,7 @@ foodcoopshop.Cart = {
                         'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
-                			document.location.href = '/warenkorb/' + 'addLastOrderToCart/' + deliveryDate;
+                			document.location.href = redirectUrl;
                         }
                     },
                     close: function (event, ui) {

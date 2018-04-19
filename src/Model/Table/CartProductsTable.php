@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\ORM\TableRegistry;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -149,6 +150,10 @@ class CartProductsTable extends AppTable
     
     public function removeAll($cartId)
     {
+        $cartId = (int) $cartId;
+        if (!$cartId > 0) {
+            throw new InvalidParameterException('wrong cartId: ' . $cartId);
+        }
         $cartProduct2remove = [
             'CartProducts.id_cart' => $cartId
         ];
@@ -157,6 +162,10 @@ class CartProductsTable extends AppTable
 
     public function remove($productId, $attributeId, $cartId)
     {
+        $cartId = (int) $cartId;
+        if (!$cartId > 0) {
+            throw new InvalidParameterException('wrong cartId: ' . $cartId);
+        }
         $cartProduct2remove = [
             'CartProducts.id_product' => $productId,
             'CartProducts.id_product_attribute' => $attributeId,

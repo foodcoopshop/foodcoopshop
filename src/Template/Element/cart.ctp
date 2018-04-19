@@ -47,6 +47,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     	<?php
     	if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {
     	    $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
+    	    $lastOrderDetails['remove-all-products-from-cart'] = 'Warenkorb leeren...';
     	    if (!empty($lastOrderDetails)) {
         	    $this->element('addScript', ['script' =>
         	        Configure::read('app.jsNamespace') . ".Cart.initLoadLastOrderDetailsDropdown();"

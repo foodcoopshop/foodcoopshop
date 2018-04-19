@@ -691,12 +691,26 @@ class CartsController extends FrontendController
         ]));
     }
 
-    public function addLastOrderToCart($deliveryDate)
+    public function emptyCart()
     {
-        
+        $this->doEmptyCart();
+        $message = 'Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.';
+        $this->Flash->success($message);
+        $this->redirect($this->referer());
+    }
+    
+    private function doEmptyCart()
+    {
         $this->CartProduct = TableRegistry::get('CartProducts');
         $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId());
         $this->AppAuth->setCart($this->AppAuth->getCart());
+    }
+    
+    public function addLastOrderToCart($deliveryDate)
+    {
+        
+        $this->doEmptyCart();
+        $this->CartProduct = TableRegistry::get('CartProducts');
         
         $formattedDeliveryDate = strtotime($deliveryDate);
         
@@ -720,7 +734,7 @@ class CartsController extends FrontendController
         }
         
         if (empty($errorMessages)) {
-            $message = 'Dein Warenkorb wurde geleert und <b>alle ' . $orderDetails->count() . ' Produkte</b> wurden in den Warenkorb geladen.';
+            $message = 'Dein Warenkorb wurde geleert und <b>alle Produkte</b> deiner vergangenen Bestellung wurden in den Warenkorb geladen.';
             $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
             $this->Flash->success($message);
         } else {
@@ -730,6 +744,7 @@ class CartsController extends FrontendController
             $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $this->Flash->error($message);
         }
+        
         $this->redirect($this->referer());
         
     }
