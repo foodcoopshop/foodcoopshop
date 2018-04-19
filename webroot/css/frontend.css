@@ -1120,7 +1120,8 @@ body.products.detail .product-wrapper {
     margin-bottom: 20px;
 }
 #inner-content ul,
-#info-box ul {
+#info-box ul,
+#flashMessage ul {
   padding-left: 10px;
   margin-left: 10px;
   margin-top: 10px;
@@ -1129,6 +1130,9 @@ body.products.detail .product-wrapper {
 #info-box li {
     list-style-type: disc;
     line-height: 23px;
+}
+#flashMessage li {
+	list-style-type: disc;
 }
 #info-box li {
     line-height: 19px;
