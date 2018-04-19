@@ -51,27 +51,34 @@ class OrderDetailsTable extends AppTable
     public function getLastOrderDetailsForDropdown($customerId)
     {
         
-        $weeks = 15;
+        $ordersToLoad = 3;
+        
+        $foundOrders = 0;
         $result = [];
         
-        $j = $weeks;
-        while($j >= 1) {
+        $i = 0;
+        while($foundOrders < $ordersToLoad) {
             
-            $dateFrom = strtotime('- '.$j * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
-            $dateTo = strtotime('- '.$j * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            
+            // stop trying to search for valid orders if year is 2013
+            if (date('Y', $dateFrom) == '2013') {
+                break;
+            }
             
             $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
             
             if ($orderDetails->count() > 0) {
                 $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
                 $result[$deliveryDay] = 'Abholtag ' . $deliveryDay . ' - ' . $orderDetails->count() . ' Produkt' . ($orderDetails->count() == 1 ? '' : 'e');
+                $foundOrders++;
             }
             
-            $j--;
+            $i++;
             
         }
         
-        $result = array_reverse($result);
         return $result;
         
     }
