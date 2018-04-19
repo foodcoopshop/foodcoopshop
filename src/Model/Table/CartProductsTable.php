@@ -146,6 +146,14 @@ class CartProductsTable extends AppTable
         return true;
         
     }
+    
+    public function removeAll($cartId)
+    {
+        $cartProduct2remove = [
+            'CartProducts.id_cart' => $cartId
+        ];
+        return $this->deleteAll($cartProduct2remove);
+    }
 
     public function remove($productId, $attributeId, $cartId)
     {

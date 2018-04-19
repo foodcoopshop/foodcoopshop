@@ -455,7 +455,31 @@ foodcoopshop.Cart = {
     	$('#load-last-order-details').on('change', function() {
     		var deliveryDate = $(this).val();
     		if (deliveryDate != '') {
-    			document.location.href = '/warenkorb/' + 'addLastOrderToCart/' + deliveryDate;
+    			
+    			var dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
+    				dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+                $('<div></div>').appendTo('body')
+                .html(dialogHtml)
+                .dialog({
+                    modal: true,
+                    title: 'Vergangene Bestellung laden?',
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: {
+                        'Abbrechen': function () {
+                            $(this).dialog('close');
+                        },
+                        'Ja': function () {
+                            $('.ui-dialog .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+                			document.location.href = '/warenkorb/' + 'addLastOrderToCart/' + deliveryDate;
+                        }
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
     		}
     	});
     }

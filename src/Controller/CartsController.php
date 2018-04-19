@@ -694,6 +694,10 @@ class CartsController extends FrontendController
     public function addLastOrderToCart($deliveryDate)
     {
         
+        $this->CartProduct = TableRegistry::get('CartProducts');
+        $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId());
+        $this->AppAuth->setCart($this->AppAuth->getCart());
+        
         $formattedDeliveryDate = strtotime($deliveryDate);
         
         $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodFirstDay($formattedDeliveryDate)));
@@ -705,7 +709,6 @@ class CartsController extends FrontendController
         $errorMessages = [];
         $loadedProducts = $orderDetails->count();
         if ($orderDetails->count() > 0) {
-            $this->CartProduct = TableRegistry::get('CartProducts');
             $newCartProductsData = [];
             foreach($orderDetails as $orderDetail) {
                 $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_quantity);
@@ -717,13 +720,13 @@ class CartsController extends FrontendController
         }
         
         if (empty($errorMessages)) {
-            $message = 'Alle ' . $orderDetails->count();
-            $message .= ' Produkte wurden erfolgreich in den Warenkorb geladen.<br />';
+            $message = 'Dein Warenkorb wurde geleert und <b>alle ' . $orderDetails->count() . ' Produkte</b> wurden in den Warenkorb geladen.';
+            $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
             $this->Flash->success($message);
         } else {
-            $message = $loadedProducts . ' von ' . $orderDetails->count();
-            $message .= ' Produkte wurden erfolgreich in den Warenkorb geladen.<br />';
-            $message .= '<br /><b>Fehlermeldungen</b>';
+            $message = 'Dein Warenkorb wurde geleert und <b>' . $loadedProducts . ' von ' . $orderDetails->count() . ' Produkte</b> wurden in den Warenkorb geladen.';
+            $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
+            $message .= '<br /><br /><b>Fehlermeldungen</b>';
             $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $this->Flash->error($message);
         }
