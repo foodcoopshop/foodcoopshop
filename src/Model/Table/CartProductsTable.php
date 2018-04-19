@@ -128,7 +128,6 @@ class CartProductsTable extends AppTable
         // update amount if cart product already exists
         $cart = $appAuth->getCart();
         $appAuth->setCart($cart);
-        $cartProductTable = TableRegistry::get('CartProducts');
         
         $cartProduct2save = [
             'id_product' => $productId,
@@ -137,22 +136,33 @@ class CartProductsTable extends AppTable
             'id_cart' => $cart['Cart']['id_cart']
         ];
         if ($existingCartProduct) {
-            $oldEntity = $cartProductTable->get($existingCartProduct['cartProductId']);
-            $entity = $cartProductTable->patchEntity($oldEntity, $cartProduct2save);
+            $oldEntity = $this->get($existingCartProduct['cartProductId']);
+            $entity = $this->patchEntity($oldEntity, $cartProduct2save);
         } else {
-            $entity = $cartProductTable->newEntity($cartProduct2save);
+            $entity = $this->newEntity($cartProduct2save);
         }
-        $cartProductTable->save($entity);
+        $this->save($entity);
         
         return true;
         
     }
     
-    public function removeAll($cartId)
+    public function removeAll($cartId, $customerId)
     {
         $cartId = (int) $cartId;
         if (!$cartId > 0) {
             throw new InvalidParameterException('wrong cartId: ' . $cartId);
+        }
+        // deleteAll cannot check associations
+        $this->Cart = TableRegistry::get('Carts');
+        $cart = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_cart' => $cartId,
+                'Carts.id_customer' => $customerId
+            ]
+        ])->first();
+        if (empty($cart)) {
+            throw new InvalidParameterException('no cart found for cartId: ' . $cartId . ' and customerId: ' . $customerId);
         }
         $cartProduct2remove = [
             'CartProducts.id_cart' => $cartId

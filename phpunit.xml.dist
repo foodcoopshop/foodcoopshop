@@ -43,6 +43,7 @@
             <file>plugins/Admin/tests/TestCase/src/Controller/ProductsControllerTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Controller/TimebasedCurrencyPaymentsControllerTest.php</file>
             
+            <file>plugins/Admin/tests/TestCase/src/Model/Table/CartProductsTableTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductAttributesTableTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductsTableTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductLangsTableTest.php</file>

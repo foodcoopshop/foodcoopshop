@@ -697,7 +697,7 @@ class CartsController extends FrontendController
     private function doEmptyCart()
     {
         $this->CartProduct = TableRegistry::get('CartProducts');
-        $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId());
+        $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
     
