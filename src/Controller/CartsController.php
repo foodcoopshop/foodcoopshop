@@ -658,20 +658,15 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $attributeId = 0;
-        $productId = $initialProductId;
-        $explodedProductId = explode('-', $initialProductId);
-        if (count($explodedProductId) == 2) {
-            $productId = $explodedProductId[0];
-            $attributeId = (int) $explodedProductId[1];
-        }
+        $this->Product = TableRegistry::get('Products');
+        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
 
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
 
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
-            $message = 'Produkt ' . $productId . ' war nicht in Warenkorb vorhanden.';
+            $message = 'Produkt ' . $ids['productId'] . ' war nicht in Warenkorb vorhanden.';
             die(json_encode([
                 'status' => 0,
                 'msg' => $message,
@@ -680,7 +675,7 @@ class CartsController extends FrontendController
         }
 
         $cartProductTable = TableRegistry::get('CartProducts');
-        $cartProductTable->remove($productId, $attributeId, $cart['Cart']['id_cart']);
+        $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']['id_cart']);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
