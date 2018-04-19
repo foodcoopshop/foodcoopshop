@@ -744,6 +744,7 @@ class CartsController extends FrontendController
             $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $this->Flash->error($message);
         }
+        $this->log($message);
         
         $this->redirect($this->referer());
         
