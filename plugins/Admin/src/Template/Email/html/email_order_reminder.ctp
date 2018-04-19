@@ -28,7 +28,7 @@ use Cake\Core\Configure;
 
             <p>
                 Möchtest du deine letzte Bestellung in den Warenkorb laden? Der aktuelle Warenkorb wird dafür vorher geleert.<br /> <a
-                    href="<?php echo Configure::read('app.cakeServerName'); ?>">/warenkorb/addLastOrderToCart<?php echo Configure::read('app.cakeServerName'); ?>/warenkorb/addLastOrderToCart</a>
+                    href="<?php echo Configure::read('app.cakeServerName'); ?>/warenkorb/addLastOrderToCart"><?php echo Configure::read('app.cakeServerName'); ?>/warenkorb/addLastOrderToCart</a>
             </p>
 
             <p>
