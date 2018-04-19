@@ -463,7 +463,7 @@ foodcoopshop.Cart = {
     				var title = 'Vergangene Bestellung laden';
         			var dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
     				dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>';
-    				var redirectUrl = '/warenkorb/' + 'addLastOrderToCart/' + selectedValue;
+    				var redirectUrl = '/warenkorb/' + 'addOrderToCart/' + selectedValue;
     			}
 				dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
                 $('<div></div>').appendTo('body')

@@ -706,7 +706,13 @@ class CartsController extends FrontendController
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
     
-    public function addLastOrderToCart($deliveryDate)
+    public function addOrderToCart($deliveryDate)
+    {
+        $this->doAddOrderToCart($deliveryDate);
+        $this->redirect($this->referer());
+    }
+    
+    private function doAddOrderToCart($deliveryDate)
     {
         
         $this->doEmptyCart();
@@ -744,10 +750,24 @@ class CartsController extends FrontendController
             $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $this->Flash->error($message);
         }
+        
         $this->log($message);
         
-        $this->redirect($this->referer());
-        
+    }
+    
+    public function addLastOrderToCart()
+    {
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
+        if (empty($orderDetails)) {
+            $message = 'Es sind keine Bestellungen vorhanden.';
+            $this->Flash->error($message);
+        } else {
+            reset($orderDetails);
+            $lastOrderDate = key($orderDetails);
+            $this->doAddOrderToCart($lastOrderDate);
+        }
+        $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
     }
     
     public function ajaxAdd()
