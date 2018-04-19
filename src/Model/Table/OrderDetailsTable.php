@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -69,9 +70,9 @@ class OrderDetailsTable extends AppTable
             
             $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
             
-            if ($orderDetails->count() > 0) {
+            if (count($orderDetails) > 0) {
                 $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
-                $result[$deliveryDay] = 'Abholtag ' . $deliveryDay . ' - ' . $orderDetails->count() . ' Produkt' . ($orderDetails->count() == 1 ? '' : 'e');
+                $result[$deliveryDay] = 'Abholtag ' . $deliveryDay . ' - ' . count($orderDetails) . ' Produkt' . (count($orderDetails) == 1 ? '' : 'e');
                 $foundOrders++;
             }
             
@@ -105,11 +106,22 @@ class OrderDetailsTable extends AppTable
                 'Orders.date_add' => 'DESC'
             ],
             'contain' => [
-                'Orders'
+                'Orders',
+                'Products.Manufacturers'
             ]
-        ]);
+        ])->toArray();
         
-        return $orderDetails;
+        // manually remove products from bulk orders manufacturers
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $cleanedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            $isBulkOrderManufacturer = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
+            if (!$isBulkOrderManufacturer) {
+                $cleanedOrderDetails[] = $orderDetail;
+            }
+        }
+        
+        return $cleanedOrderDetails;
     }
 
     public function deleteOrderDetail($orderDetail)

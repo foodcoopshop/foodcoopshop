@@ -727,8 +727,8 @@ class CartsController extends FrontendController
         $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
         
         $errorMessages = [];
-        $loadedProducts = $orderDetails->count();
-        if ($orderDetails->count() > 0) {
+        $loadedProducts = count($orderDetails);
+        if (count($orderDetails) > 0) {
             $newCartProductsData = [];
             foreach($orderDetails as $orderDetail) {
                 $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_quantity);
@@ -744,7 +744,7 @@ class CartsController extends FrontendController
             $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
             $this->Flash->success($message);
         } else {
-            $message = 'Dein Warenkorb wurde geleert und <b>' . $loadedProducts . ' von ' . $orderDetails->count() . ' Produkte</b> wurden in den Warenkorb geladen.';
+            $message = 'Dein Warenkorb wurde geleert und <b>' . $loadedProducts . ' von ' . count($orderDetails) . ' Produkte</b> wurden in den Warenkorb geladen.';
             $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
             $message .= '<br /><br /><b>Fehlermeldungen</b>';
             $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
