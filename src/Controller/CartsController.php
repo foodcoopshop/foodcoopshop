@@ -736,8 +736,8 @@ class CartsController extends FrontendController
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->request->getData('amount');
         
-        $this->CartTable = TableRegistry::get('Carts');
-        $result = $this->CartTable->addToCart($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount);
+        $this->CartProduct = TableRegistry::get('CartProducts');
+        $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount);
         
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
