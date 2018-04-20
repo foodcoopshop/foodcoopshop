@@ -737,14 +737,13 @@ class CartsController extends FrontendController
         if (empty($errorMessages)) {
             $message = 'Dein Warenkorb wurde geleert und <b>alle Produkte</b> deiner vergangenen Bestellung wurden in den Warenkorb geladen.';
             $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
-            $this->Flash->success($message);
         } else {
             $message = 'Dein Warenkorb wurde geleert und <b>' . $loadedProducts . ' von ' . count($orderDetails) . ' Produkte</b> wurden in den Warenkorb geladen.';
             $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
-            $message .= '<br /><br /><b>Fehlermeldungen</b>';
+            $message .= '<br /><br /><b>Nicht mehr verfügbar:</b>';
             $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
-            $this->Flash->error($message);
         }
+        $this->Flash->success($message);
         
         $this->log($message);
         
