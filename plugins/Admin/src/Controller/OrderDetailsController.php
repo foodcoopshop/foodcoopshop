@@ -433,13 +433,15 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_quantity);
         
+        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_quantity . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
+        
         if (!empty($object->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $productPrice, $object->product_quantity);
             $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
             $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
         }
-
+        
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_price_changed')
