@@ -26,7 +26,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         parent::setUp();
         $reducedMaxPercentage = 15;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
-        $this->EmailLog = TableRegistry::get('EmailLogs');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
     
     public function testAddPaymentLoggedOut()

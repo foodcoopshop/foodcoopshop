@@ -25,8 +25,8 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->Payment = TableRegistry::get('Payments');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
     }
 
     public function testAddPaymentLoggedOut()
@@ -182,7 +182,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function addDepositToManufacturer($depositText, $ActionLogText)
     {
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
 
         $this->loginAsSuperadmin();
         $amountToAdd = 10;

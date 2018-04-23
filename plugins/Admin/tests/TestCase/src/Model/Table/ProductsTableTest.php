@@ -28,7 +28,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
 
     public function testGetProductIdAndAttributeId()

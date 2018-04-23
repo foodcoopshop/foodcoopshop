@@ -31,15 +31,15 @@ class ProductsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
                 return $this->AppAuth->user();
                 break;
             default:
-                if (!empty($this->request->getData('productId'))) {
-                    $ids = $this->Product->getProductIdAndAttributeId($this->request->getData('productId'));
+                if (!empty($this->getRequest()->getData('productId'))) {
+                    $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
                     $productId = $ids['productId'];
                     $product = $this->Product->find('all', [
                         'conditions' => [
@@ -60,18 +60,18 @@ class ProductsController extends AdminAppController
                  */
                 if ($this->AppAuth->isManufacturer()) {
                     // param productId is passed via ajaxCall
-                    if (!empty($this->request->getData('productId'))) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->request->getData('productId'));
+                    if (!empty($this->getRequest()->getData('productId'))) {
+                        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
                         $productId = $ids['productId'];
                     }
                     // param objectId is passed via ajaxCall
-                    if (!empty($this->request->getData('objectId'))) {
-                        $ids = $this->Product->getProductIdAndAttributeId($this->request->getData('objectId'));
+                    if (!empty($this->getRequest()->getData('objectId'))) {
+                        $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('objectId'));
                         $productId = $ids['productId'];
                     }
                     // param productId is passed as first argument of url
-                    if (!empty($this->request->getParam('pass')[0])) {
-                        $productId = $this->request->getParam('pass')[0];
+                    if (!empty($this->getRequest()->getParam('pass')[0])) {
+                        $productId = $this->getRequest()->getParam('pass')[0];
                     }
                     if (!isset($productId)) {
                         return false;
@@ -94,8 +94,8 @@ class ProductsController extends AdminAppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->Product = TableRegistry::get('Products');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
 
     public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
@@ -168,7 +168,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -177,8 +177,8 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = $this->request->getData('objectId');
-        $filename = $this->request->getData('filename');
+        $productId = $this->getRequest()->getData('objectId');
+        $filename = $this->getRequest()->getData('filename');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         $product = $this->Product->find('all', [
@@ -227,7 +227,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
             'status' => 1,
@@ -298,13 +298,13 @@ class ProductsController extends AdminAppController
                 $attribute = $attribute->product_attribute_combination->attribute->name;
             }
         }
-        $this->request->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
         $messageString = 'Die Variante "' . $attribute . '" für das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich erstellt.';
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -318,7 +318,7 @@ class ProductsController extends AdminAppController
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -335,7 +335,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct->id_product, 'products', $messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $newProduct->id_product);
+        $this->getRequest()->getSession()->write('highlightedRowId', $newProduct->id_product);
         $this->redirect($this->referer());
     }
 
@@ -343,8 +343,8 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = (int) $this->request->getData('productId');
-        $taxId = (int) $this->request->getData('taxId');
+        $productId = (int) $this->getRequest()->getData('productId');
+        $taxId = (int) $this->getRequest()->getData('taxId');
 
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
@@ -400,7 +400,7 @@ class ProductsController extends AdminAppController
                 );
             }
 
-            $this->Tax = TableRegistry::get('Taxes');
+            $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
             $tax = $this->Tax->find('all', [
                 'conditions' => [
                     'Taxes.id_tax' => $taxId
@@ -427,7 +427,7 @@ class ProductsController extends AdminAppController
 
         $this->Flash->success($messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
             'status' => 1,
@@ -439,10 +439,10 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = (int) $this->request->getData('productId');
+        $productId = (int) $this->getRequest()->getData('productId');
         $selectedCategories = [];
-        if (!empty($this->request->getData('selectedCategories'))) {
-            $selectedCategories = $this->request->getData('selectedCategories');
+        if (!empty($this->getRequest()->getData('selectedCategories'))) {
+            $selectedCategories = $this->getRequest()->getData('selectedCategories');
         }
 
         $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle-produkte'
@@ -458,12 +458,12 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $this->CategoryProduct = TableRegistry::get('CategoryProducts');
+        $this->CategoryProduct = TableRegistry::getTableLocator()->get('CategoryProducts');
         $this->CategoryProduct->deleteAll([
             'id_product' => $productId
         ]);
 
-        $this->Category = TableRegistry::get('Categories');
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
         foreach ($selectedCategories as $selectedCategory) {
             // only add if entry of passed id exists in category lang table
@@ -486,7 +486,7 @@ class ProductsController extends AdminAppController
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
             'status' => 1,
@@ -498,7 +498,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $originalProductId = $this->request->getData('productId');
+        $originalProductId = $this->getRequest()->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -531,17 +531,17 @@ class ProductsController extends AdminAppController
         try {
             $this->Product->changeQuantity(
                 [
-                    [$originalProductId => $this->request->getData('quantity')]
+                    [$originalProductId => $this->getRequest()->getData('quantity')]
                 ]
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
 
-        $quantity = $this->Product->getQuantityAsInteger($this->request->getData('quantity'));
+        $quantity = $this->Product->getQuantityAsInteger($this->getRequest()->getData('quantity'));
         $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
         $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . $oldProduct->stock_available->quantity . ' auf ' . $quantity . ' geändert.');
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
             'status' => 1,
@@ -553,7 +553,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $originalProductId = $this->request->getData('productId');
+        $originalProductId = $this->getRequest()->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -586,17 +586,17 @@ class ProductsController extends AdminAppController
         try {
             $this->Product->changePrice(
                 [
-                    [$originalProductId => $this->request->getData('price')]
+                    [$originalProductId => $this->getRequest()->getData('price')]
                 ]
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
 
-        $price = $this->Product->getPriceAsFloat($this->request->getData('price'));
+        $price = $this->Product->getPriceAsFloat($this->getRequest()->getData('price'));
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name. '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price)) . ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($price) . ' geändert.');
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set('data', [
             'status' => 1,
@@ -610,7 +610,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
 
-        $originalProductId = $this->request->getData('productId');
+        $originalProductId = $this->getRequest()->getData('productId');
 
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
@@ -630,7 +630,7 @@ class ProductsController extends AdminAppController
         try {
             $this->Product->changeDeposit(
                 [
-                    [$originalProductId => $this->request->getData('deposit')]
+                    [$originalProductId => $this->getRequest()->getData('deposit')]
                 ]
             );
         } catch (InvalidParameterException $e) {
@@ -659,13 +659,13 @@ class ProductsController extends AdminAppController
             $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
         }
 
-        $deposit = $this->Product->getPriceAsFloat($this->request->getData('deposit'));
+        $deposit = $this->Product->getPriceAsFloat($this->getRequest()->getData('deposit'));
         $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
         $this->Flash->success('Der Pfand des Produktes <b>' . $productName . '</b> wurde erfolgreich geändert.');
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set('data', [
             'status' => 1,
@@ -679,7 +679,7 @@ class ProductsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $productId = $this->request->getData('productId');
+        $productId = $this->getRequest()->getData('productId');
 
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
@@ -695,11 +695,11 @@ class ProductsController extends AdminAppController
             $this->Product->ProductLangs->changeName(
                 [
                     [$productId => [
-                        'name' => $this->request->getData('name'),
-                        'description' => $this->request->getData('description'),
-                        'description_short' => $this->request->getData('descriptionShort'),
-                        'unity' => $this->request->getData('unity'),
-                        'is_declaration_ok' => $this->request->getData('isDeclarationOk')
+                        'name' => $this->getRequest()->getData('name'),
+                        'description' => $this->getRequest()->getData('description'),
+                        'description_short' => $this->getRequest()->getData('descriptionShort'),
+                        'unity' => $this->getRequest()->getData('unity'),
+                        'is_declaration_ok' => $this->getRequest()->getData('isDeclarationOk')
                     ]]
                 ]
             );
@@ -709,20 +709,20 @@ class ProductsController extends AdminAppController
 
         $this->Flash->success('Das Produkt wurde erfolgreich geändert.');
 
-        if ($this->request->getData('name') != $oldProduct->product_lang->name) {
-            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde umbenannt in <i>"' . $this->request->getData('name') . '"</i>.');
+        if ($this->getRequest()->getData('name') != $oldProduct->product_lang->name) {
+            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde umbenannt in <i>"' . $this->getRequest()->getData('name') . '"</i>.');
         }
-        if ($this->request->getData('unity') != $oldProduct->product_lang->unity) {
-            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert in <i>"' . $this->request->getData('unity') . '"</i>.');
+        if ($this->getRequest()->getData('unity') != $oldProduct->product_lang->unity) {
+            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert in <i>"' . $this->getRequest()->getData('unity') . '"</i>.');
         }
-        if ($this->request->getData('description') != $oldProduct->product_lang->description) {
-            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert: <div class="changed">' . $this->request->getData('description') . ' </div>');
+        if ($this->getRequest()->getData('description') != $oldProduct->product_lang->description) {
+            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert: <div class="changed">' . $this->getRequest()->getData('description') . ' </div>');
         }
-        if ($this->request->getData('descriptionShort') != $oldProduct->product_lang->description_short) {
-            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert. <div class="changed">' . $this->request->getData('descriptionShort') . '</div>');
+        if ($this->getRequest()->getData('descriptionShort') != $oldProduct->product_lang->description_short) {
+            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert. <div class="changed">' . $this->getRequest()->getData('descriptionShort') . '</div>');
         }
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
             'status' => 1,
@@ -733,14 +733,14 @@ class ProductsController extends AdminAppController
     public function index()
     {
         $productId = '';
-        if (! empty($this->request->getQuery('productId'))) {
-            $productId = $this->request->getQuery('productId');
+        if (! empty($this->getRequest()->getQuery('productId'))) {
+            $productId = $this->getRequest()->getQuery('productId');
         }
         $this->set('productId', $productId);
 
         $manufacturerId = '';
-        if (! empty($this->request->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->request->getQuery('manufacturerId');
+        if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
+            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         }
 
         // always filter by manufacturer id so that no other products than the own are shown
@@ -750,26 +750,26 @@ class ProductsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         $active = 'all'; // default value
-        if (in_array('active', array_keys($this->request->getQueryParams()))) {
-            $active = $this->request->getQuery('active');
+        if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
+            $active = $this->getRequest()->getQuery('active');
         }
         $this->set('active', $active);
 
         $categoryId = ''; // default value
-        if (!empty($this->request->getQuery('categoryId'))) {
-            $categoryId = $this->request->getQuery('categoryId');
+        if (!empty($this->getRequest()->getQuery('categoryId'))) {
+            $categoryId = $this->getRequest()->getQuery('categoryId');
         }
         $this->set('categoryId', $categoryId);
 
         $isQuantityMinFilterSet = 0; // default value
-        if (!empty($this->request->getQuery('isQuantityMinFilterSet'))) {
-            $isQuantityMinFilterSet = $this->request->getQuery('isQuantityMinFilterSet');
+        if (!empty($this->getRequest()->getQuery('isQuantityMinFilterSet'))) {
+            $isQuantityMinFilterSet = $this->getRequest()->getQuery('isQuantityMinFilterSet');
         }
         $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
 
         $isPriceZero = 0; // default value
-        if (!empty($this->request->getQuery('isPriceZero'))) {
-            $isPriceZero = $this->request->getQuery('isPriceZero');
+        if (!empty($this->getRequest()->getQuery('isPriceZero'))) {
+            $isPriceZero = $this->getRequest()->getQuery('isPriceZero');
         }
         $this->set('isPriceZero', $isPriceZero);
 
@@ -780,15 +780,15 @@ class ProductsController extends AdminAppController
         }
         $this->set('products', $preparedProducts);
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
-        $this->Category = TableRegistry::get('Categories');
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
         $manufacturersForDropdown = ['all' => 'Alle Hersteller'];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        $this->Tax = TableRegistry::get('Taxes');
+        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if ($manufacturerId > 0) {
@@ -810,8 +810,8 @@ class ProductsController extends AdminAppController
         $this->set('title_for_layout', 'Produkte');
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
-            $this->SyncManufacturer = TableRegistry::get('Network.SyncManufacturers');
-            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
+            $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
+            $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
             $this->helpers[] = 'Network.Network';
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
             $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
@@ -870,7 +870,7 @@ class ProductsController extends AdminAppController
             $newCreated = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
         }
 
-        $this->ProductShop = TableRegistry::get('ProductShops');
+        $this->ProductShop = TableRegistry::getTableLocator()->get('ProductShops');
         $sql = "UPDATE ".$this->Product->getTable()." p, ".$this->ProductShop->getTable()." ps 
                 SET p.created  = " . $newCreated . ",
                     ps.created = " . $newCreated . "
@@ -900,7 +900,7 @@ class ProductsController extends AdminAppController
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
@@ -935,7 +935,7 @@ class ProductsController extends AdminAppController
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller "' . $product->manufacturer->name . '" wurde ' . $statusText . '.');
 
-        $this->request->getSession()->write('highlightedRowId', $productId);
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }

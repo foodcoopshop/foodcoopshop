@@ -32,7 +32,7 @@ class CartsController extends FrontendController
 
         parent::beforeFilter($event);
 
-        if ($this->request->is('ajax')) {
+        if ($this->getRequest()->is('ajax')) {
             $message = '';
             if (empty($this->AppAuth->user())) {
                 $message = 'Du bist nicht angemeldet.';
@@ -72,8 +72,8 @@ class CartsController extends FrontendController
     public function detail()
     {
         $this->set('title_for_layout', 'Dein Warenkorb');
-        if (!$this->request->is('post')) {
-            $this->Order = TableRegistry::get('Orders');
+        if (!$this->getRequest()->is('post')) {
+            $this->Order = TableRegistry::getTableLocator()->get('Orders');
             $this->set('order', $this->Order->newEntity());
         }
     }
@@ -119,7 +119,7 @@ class CartsController extends FrontendController
     private function generateOrderConfirmation($order)
     {
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $this->set('order', $order);
         $manufacturers = [];
@@ -175,7 +175,7 @@ class CartsController extends FrontendController
             ->setViewVars([
                 'cart' => $cart,
                 'appAuth' => $this->AppAuth,
-                'originalLoggedCustomer' => $this->request->getSession()->check('Auth.originalLoggedCustomer') ? $this->request->getSession()->read('Auth.originalLoggedCustomer') : null,
+                'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null,
                 'order' => $order
             ]);
             
@@ -307,7 +307,7 @@ class CartsController extends FrontendController
         }
         
         $orderDetailTax2save = [];
-        $this->OrderDetailTax = TableRegistry::get('OrderDetailTaxes');
+        $this->OrderDetailTax = TableRegistry::getTableLocator()->get('OrderDetailTaxes');
         foreach ($orderDetails as $orderDetail) {
             // should not be necessary but a user somehow managed to set product_quantity as 0
             $quantity = $orderDetail->product_quantity;
@@ -340,7 +340,7 @@ class CartsController extends FrontendController
     public function finish()
     {
 
-        if (!$this->request->is('post')) {
+        if (!$this->getRequest()->is('post')) {
             $this->redirect('/');
             return;
         }
@@ -348,8 +348,8 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', 'Warenkorb abschließen');
         $cart = $this->AppAuth->getCart();
 
-        $this->Cart = TableRegistry::get('Carts');
-        $this->Product = TableRegistry::get('Products');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
@@ -357,7 +357,7 @@ class CartsController extends FrontendController
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
                 $this->log('amount of cart productId ' . $ids['productId'] . ' (attributeId : ' . $ids['attributeId'] . ') was 0 and therefore removed from cart');
-                $cartProductTable = TableRegistry::get('CartProducts');
+                $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
                 $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->AppAuth->Cart->getCartId());
                 $productWithAmount0Found = true;
             }
@@ -420,7 +420,7 @@ class CartsController extends FrontendController
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
                         // stock available check for attribute
                         if ($stockAvailableQuantity < $cartProduct['amount']) {
-                            $this->Attribute = TableRegistry::get('Attributes');
+                            $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
@@ -479,15 +479,15 @@ class CartsController extends FrontendController
         $this->set('cartErrors', $cartErrors);
 
         $formErrors = false;
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            $validator = $this->Order->TimebasedCurrencyOrders->validator('default');
+            $validator = $this->Order->TimebasedCurrencyOrders->getValidator('default');
             $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
             $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
         }
         $order = $this->Order->newEntity(
-            $this->request->getData(),
+            $this->getRequest()->getData(),
             [
                 'validate' => 'cart'
             ]
@@ -505,8 +505,8 @@ class CartsController extends FrontendController
             
             $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->request->getData('timebased_currency_order.seconds_sum_tmp')) && $this->request->getData('timebased_currency_order.seconds_sum_tmp') > 0) {
-                $selectedTimebasedCurrencySeconds = $this->request->getData('timebased_currency_order.seconds_sum_tmp');
+            if (!empty($this->getRequest()->getData('timebased_currency_order.seconds_sum_tmp')) && $this->getRequest()->getData('timebased_currency_order.seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->getRequest()->getData('timebased_currency_order.seconds_sum_tmp');
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
             }
             
@@ -526,7 +526,7 @@ class CartsController extends FrontendController
             $this->AppAuth->Cart->markAsSaved();
 
             $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
 
             $this->sendConfirmationEmailToCustomer($cart, $order, $products);
@@ -543,7 +543,7 @@ class CartsController extends FrontendController
     public function sendShopOrderNotificationToManufacturers($cartProducts, $order)
     {
 
-        if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {
+        if (!$this->getRequest()->getSession()->check('Auth.shopOrderCustomer')) {
             return false;
         }
 
@@ -552,7 +552,7 @@ class CartsController extends FrontendController
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
@@ -581,7 +581,7 @@ class CartsController extends FrontendController
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->request->getSession()->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
@@ -595,9 +595,9 @@ class CartsController extends FrontendController
 
     public function orderSuccessful($orderId)
     {
-        $orderId = (int) $this->request->getParam('pass')[0];
+        $orderId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId,
@@ -613,7 +613,7 @@ class CartsController extends FrontendController
 
         $this->set('order', $order);
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
@@ -654,7 +654,7 @@ class CartsController extends FrontendController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $initialProductId = $this->request->getData('productId');
+        $initialProductId = $this->getRequest()->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
 
@@ -679,7 +679,7 @@ class CartsController extends FrontendController
             ]));
         }
 
-        $cartProductTable = TableRegistry::get('CartProducts');
+        $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
         $cartProductTable->remove($productId, $attributeId, $cart['Cart']['id_cart']);
 
         // ajax calls do not call beforeRender
@@ -695,7 +695,7 @@ class CartsController extends FrontendController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $initialProductId = $this->request->getData('productId');
+        $initialProductId = $this->getRequest()->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
 
@@ -707,7 +707,7 @@ class CartsController extends FrontendController
             $attributeId = (int) $explodedProductId[1];
         }
 
-        $amount = (int) $this->request->getData('amount');
+        $amount = (int) $this->getRequest()->getData('amount');
         // allow -1 and 1 - 99
         if ($amount == 0 || $amount < - 1 || $amount > 99) {
             $message = 'Die gewünschte Anzahl "' . $amount . '" ist nicht gültig.';
@@ -719,7 +719,7 @@ class CartsController extends FrontendController
         }
 
         // get product data from database
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -790,7 +790,7 @@ class CartsController extends FrontendController
         // update amount if cart product already exists
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
-        $cartProductTable = TableRegistry::get('CartProducts');
+        $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
 
         $cartProduct2save = [
             'id_product' => $productId,

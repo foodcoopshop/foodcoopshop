@@ -51,18 +51,18 @@ class CustomersController extends FrontendController
     public function acceptUpdatedTermsOfUse()
     {
 
-        if (!$this->request->is('post')) {
+        if (!$this->getRequest()->is('post')) {
             $this->redirect('/');
         }
 
         $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $patchedEntity = $this->Customer->patchEntity(
             $this->Customer->get($this->AppAuth->getUserId()),
             [
                 'Customers' => [
-                    'terms_of_use_accepted_date_checkbox' => $this->request->getData('Customers.terms_of_use_accepted_date_checkbox'),
+                    'terms_of_use_accepted_date_checkbox' => $this->getRequest()->getData('Customers.terms_of_use_accepted_date_checkbox'),
                     'terms_of_use_accepted_date' => Date::now()
                 ]
             ],
@@ -88,17 +88,17 @@ class CustomersController extends FrontendController
             'title_for_layout' => 'Neues Passwort anfordern'
         ]);
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->newEntity();
 
-        if (!empty($this->request->getData())) {
+        if (!empty($this->getRequest()->getData())) {
             $this->loadComponent('Sanitize');
-            $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+            $this->getRequest()->setData($this->Sanitize->trimRecursive($this->getRequest()->getData()));
+            $this->getRequest()->setData($this->Sanitize->stripTagsRecursive($this->getRequest()->getData()));
 
             $customer = $this->Customer->patchEntity(
                 $customer,
-                $this->request->getData(),
+                $this->getRequest()->getData(),
                 [
                     'validate' => 'newPasswordRequest'
                 ]
@@ -110,7 +110,7 @@ class CustomersController extends FrontendController
                 $changePasswordCode = StringComponent::createRandomString(12);
                 $originalPrimaryKey = $this->Customer->getPrimaryKey();
                 $this->Customer->setPrimaryKey('email');
-                $oldEntity = $this->Customer->get($this->request->getData('Customers.email'));
+                $oldEntity = $this->Customer->get($this->getRequest()->getData('Customers.email'));
                 $this->Customer->setPrimaryKey($originalPrimaryKey);
                 $patchedEntity = $this->Customer->patchEntity(
                     $oldEntity,
@@ -124,7 +124,7 @@ class CustomersController extends FrontendController
                 $email = new AppEmail();
                 $email->setTemplate('new_password_request_successful')
                     ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
-                    ->setTo($this->request->getData('Customers.email'))
+                    ->setTo($this->getRequest()->getData('Customers.email'))
                     ->setViewVars([
                         'changePasswordCode' => $changePasswordCode,
                         'customer' => $oldEntity
@@ -143,13 +143,13 @@ class CustomersController extends FrontendController
 
     public function generateNewPassword()
     {
-        $changePasswordCode = $this->request->getParam('pass')[0];
+        $changePasswordCode = $this->getRequest()->getParam('pass')[0];
 
         if (!isset($changePasswordCode)) {
             throw new RecordNotFoundException('change password code not passed');
         }
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.change_password_code' => $changePasswordCode
@@ -186,12 +186,12 @@ class CustomersController extends FrontendController
         /**
          * login start
          */
-        if ($this->request->here == Configure::read('app.slugHelper')->getLogin()) {
+        if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error('Du bist bereits angemeldet.');
             }
 
-            if ($this->request->is('post')) {
+            if ($this->getRequest()->is('post')) {
                 $user = $this->AppAuth->identify();
                 if ($user) {
                     $this->AppAuth->setUser($user);
@@ -200,17 +200,17 @@ class CustomersController extends FrontendController
                     $this->Flash->error('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
                 }
 
-                if (!empty($this->request->getData('remember_me')) && $this->request->getData('remember_me')) {
+                if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me')) {
                     $ph = new AppPasswordHasher();
                     $cookie = (new Cookie('remember_me'))
                     ->withValue(
                         [
-                            'passwd' => $ph->hash($this->request->getData('passwd')),
-                            'email' => $this->request->getData('email')
+                            'passwd' => $ph->hash($this->getRequest()->getData('passwd')),
+                            'email' => $this->getRequest()->getData('email')
                         ]
                     )
                     ->withExpiry(new DateTime('+6 day'));
-                    $this->response = $this->response->withCookie($cookie);
+                    $this->setResponse($this->getResponse()->withCookie($cookie));
                 }
             }
         }
@@ -218,7 +218,7 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $ph = new AppPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
         $customer = $this->Customer->newEntity(
@@ -232,10 +232,10 @@ class CustomersController extends FrontendController
             ]
         );
 
-        if ($this->request->here == Configure::read('app.slugHelper')->getRegistration()) {
+        if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getRegistration()) {
             // prevent spam
             // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
-            if (!empty($this->request->getData()) && ($this->request->getData('antiSpam') == 'lalala' || $this->request->getData('antiSpam') < 3)) {
+            if (!empty($this->getRequest()->getData()) && ($this->getRequest()->getData('antiSpam') == 'lalala' || $this->getRequest()->getData('antiSpam') < 3)) {
                 $this->Flash->error('S-p-a-m-!');
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
                 return;
@@ -246,18 +246,18 @@ class CustomersController extends FrontendController
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
 
-            if (! empty($this->request->getData())) {
+            if (! empty($this->getRequest()->getData())) {
                 $this->loadComponent('Sanitize');
-                $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-                $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+                $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
+                $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
 
-                $this->request->data['Customers']['email'] = $this->request->getData('Customers.address_customer.email');
-                $this->request->data['Customers']['address_customer']['firstname'] = $this->request->getData('Customers.firstname');
-                $this->request->data['Customers']['address_customer']['lastname'] = $this->request->getData('Customers.lastname');
+                $this->getRequest()->data['Customers']['email'] = $this->getRequest()->getData('Customers.address_customer.email');
+                $this->getRequest()->data['Customers']['address_customer']['firstname'] = $this->getRequest()->getData('Customers.firstname');
+                $this->getRequest()->data['Customers']['address_customer']['lastname'] = $this->getRequest()->getData('Customers.lastname');
 
                 $customer = $this->Customer->patchEntity(
                     $customer,
-                    $this->request->getData(),
+                    $this->getRequest()->getData(),
                     [
                         'validate' => 'registration',
                         'associated' => [
@@ -279,8 +279,8 @@ class CustomersController extends FrontendController
                     );
 
                     // write action log
-                    $this->ActionLog = TableRegistry::get('ActionLogs');
-                    $message = 'Das Mitglied ' . $this->request->getData('Customers.firstname') . ' ' . $this->request->getData('Customers.lastname') . ' hat ein Mitgliedskonto erstellt.';
+                    $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+                    $message = 'Das Mitglied ' . $this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname') . ' hat ein Mitgliedskonto erstellt.';
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
                     // START send confirmation email to customer
@@ -292,7 +292,7 @@ class CustomersController extends FrontendController
                         $template = 'customer_registered_inactive';
                     }
                     $email->setTemplate($template)
-                        ->setTo($this->request->getData('Customers.address_customer.email'))
+                        ->setTo($this->getRequest()->getData('Customers.address_customer.email'))
                         ->setSubject('Willkommen')
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
@@ -328,7 +328,7 @@ class CustomersController extends FrontendController
     {
         $this->set('title_for_layout', 'Mitgliedskonto erfolgreich erstellt');
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
     }

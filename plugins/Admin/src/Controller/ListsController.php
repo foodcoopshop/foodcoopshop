@@ -32,13 +32,13 @@ class ListsController extends AdminAppController
     public function orderLists()
     {
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $path = realpath(Configure::read('app.folder_order_lists'));
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
         $dateFrom = date('d.m.Y', Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
-        if (! empty($this->request->getQuery('dateFrom'))) {
-            $dateFrom = $this->request->getQuery('dateFrom');
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
@@ -105,7 +105,7 @@ class ListsController extends AdminAppController
      */
     public function getFile()
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->request->getQuery('file');
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->getRequest()->getQuery('file');
         $explodedString = explode('\\', $filenameWithPath);
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="' . $explodedString[count($explodedString) - 1] . '"');

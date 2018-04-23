@@ -27,7 +27,7 @@ class OrderDetailsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'delete':
             case 'editProductPrice':
             case 'editProductQuantity':
@@ -38,15 +38,15 @@ class OrderDetailsController extends AdminAppController
                  * START customer/manufacturer OWNER check
                  * param orderDetailId / orderDetailIds is passed via ajaxCall
                  */
-                if (!empty($this->request->getData('orderDetailIds'))) {
+                if (!empty($this->getRequest()->getData('orderDetailIds'))) {
                     $accessAllowed = false;
-                    foreach ($this->request->getData('orderDetailIds') as $orderDetailId) {
+                    foreach ($this->getRequest()->getData('orderDetailIds') as $orderDetailId) {
                         $accessAllowed |= $this->checkOrderDetailIdAccess($orderDetailId);
                     }
                     return $accessAllowed;
                 }
-                if (!empty($this->request->getData('orderDetailId'))) {
-                    return $this->checkOrderDetailIdAccess($this->request->getData('orderDetailId'));
+                if (!empty($this->getRequest()->getData('orderDetailId'))) {
+                    return $this->checkOrderDetailIdAccess($this->getRequest()->getData('orderDetailId'));
                 }
                 return false;
             default:
@@ -62,7 +62,7 @@ class OrderDetailsController extends AdminAppController
     private function checkOrderDetailIdAccess($orderDetailId)
     {
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
-            $this->OrderDetail = TableRegistry::get('OrderDetails');
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $orderDetail = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.id_order_detail' => $orderDetailId
@@ -99,8 +99,8 @@ class OrderDetailsController extends AdminAppController
             'OrderDetails.product_quantity' => 'sum_amount',
             'OrderDetails.deposit' => 'sum_deposit'
         ];
-        if (!empty($this->request->getQuery('sort')) && isset($sortMatches[$this->request->getQuery('sort')])) {
-            $sortField = $sortMatches[$this->request->getQuery('sort')];
+        if (!empty($this->getRequest()->getQuery('sort')) && isset($sortMatches[$this->getRequest()->getQuery('sort')])) {
+            $sortField = $sortMatches[$this->getRequest()->getQuery('sort')];
         }
         return $sortField;
     }
@@ -111,8 +111,8 @@ class OrderDetailsController extends AdminAppController
     private function getSortDirectionForGroupedOrderDetails()
     {
         $sortDirection = 'ASC';
-        if (!empty($this->request->getQuery('direction') && in_array($this->request->getQuery('direction'), ['asc', 'desc']))) {
-            $sortDirection = $this->request->getQuery('direction');
+        if (!empty($this->getRequest()->getQuery('direction') && in_array($this->getRequest()->getQuery('direction'), ['asc', 'desc']))) {
+            $sortDirection = $this->getRequest()->getQuery('direction');
         }
         return $sortDirection;
     }
@@ -122,40 +122,40 @@ class OrderDetailsController extends AdminAppController
 
         // for filter from action logs page
         $orderDetailId = '';
-        if (! empty($this->request->getQuery('orderDetailId'))) {
-            $orderDetailId = $this->request->getQuery('orderDetailId');
+        if (! empty($this->getRequest()->getQuery('orderDetailId'))) {
+            $orderDetailId = $this->getRequest()->getQuery('orderDetailId');
         }
 
         $dateFrom = '';
         $dateTo = '';
         if ($orderDetailId == '') {
             $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->request->getQuery('dateFrom'))) {
-                $dateFrom = $this->request->getQuery('dateFrom');
+            if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+                $dateFrom = $this->getRequest()->getQuery('dateFrom');
             }
             $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->request->getQuery('dateTo'))) {
-                $dateTo = $this->request->getQuery('dateTo');
+            if (! empty($this->getRequest()->getQuery('dateTo'))) {
+                $dateTo = $this->getRequest()->getQuery('dateTo');
             }
         }
         $this->set('dateFrom', $dateFrom);
         $this->set('dateTo', $dateTo);
 
         $manufacturerId = '';
-        if (! empty($this->request->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->request->getQuery('manufacturerId');
+        if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
+            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         }
         $this->set('manufacturerId', $manufacturerId);
 
         $orderId = '';
-        if (! empty($this->request->getQuery('orderId'))) {
-            $orderId = $this->request->getQuery('orderId');
+        if (! empty($this->getRequest()->getQuery('orderId'))) {
+            $orderId = $this->getRequest()->getQuery('orderId');
         }
         $this->set('orderId', $orderId);
 
         $deposit = '';
-        if (! empty($this->request->getQuery('deposit'))) {
-            $deposit = $this->request->getQuery('deposit');
+        if (! empty($this->getRequest()->getQuery('deposit'))) {
+            $deposit = $this->getRequest()->getQuery('deposit');
         }
         $this->set('deposit', $deposit);
 
@@ -165,43 +165,43 @@ class OrderDetailsController extends AdminAppController
         }
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
-        if (in_array('orderStates', array_keys($this->request->getQueryParams()))) {
-            $orderStates = $this->request->getQuery('orderStates');
+        if (in_array('orderStates', array_keys($this->getRequest()->getQueryParams()))) {
+            $orderStates = $this->getRequest()->getQuery('orderStates');
             if ($orderStates == '') {
                 $orderStates = [];
             }
         }
         // legacy cakephp2: param was called "orderState" and contained csv data
-        if (in_array('orderState', array_keys($this->request->getQueryParams()))) {
-            $orderStates = explode(', ', $this->request->getQuery('orderState'));
+        if (in_array('orderState', array_keys($this->getRequest()->getQueryParams()))) {
+            $orderStates = explode(', ', $this->getRequest()->getQuery('orderState'));
         }
         $this->set('orderStates', $orderStates);
 
         $productId = '';
-        if (! empty($this->request->getQuery('productId'))) {
-            $productId = $this->request->getQuery('productId');
+        if (! empty($this->getRequest()->getQuery('productId'))) {
+            $productId = $this->getRequest()->getQuery('productId');
         }
         $this->set('productId', $productId);
 
         $customerId = '';
-        if (! empty($this->request->getQuery('customerId'))) {
-            $customerId = $this->request->getQuery('customerId');
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = $this->getRequest()->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 
         $groupBy = '';
-        if (! empty($this->request->getQuery('groupBy'))) {
-            $groupBy = $this->request->getQuery('groupBy');
+        if (! empty($this->getRequest()->getQuery('groupBy'))) {
+            $groupBy = $this->getRequest()->getQuery('groupBy');
         }
 
         // legacy: still allow old variable "groupByManufacturer"
-        if (! empty($this->request->getQuery('groupByManufacturer'))) {
+        if (! empty($this->getRequest()->getQuery('groupByManufacturer'))) {
             $groupBy = 'manufacturer';
         }
 
         $this->set('groupBy', $groupBy);
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
 
         $query = $this->OrderDetail->find('all', [
@@ -221,7 +221,7 @@ class OrderDetailsController extends AdminAppController
             ]
         ])->toArray();
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         switch ($groupBy) {
             case 'manufacturer':
@@ -261,7 +261,7 @@ class OrderDetailsController extends AdminAppController
             default:
                 $i = 0;
                 foreach ($orderDetails as $orderDetail) {
-                    $this->Manufacturer = TableRegistry::get('Manufacturers');
+                    $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
                     $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
                     $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
                     $orderDetail->row_class = [];
@@ -303,9 +303,9 @@ class OrderDetailsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderDetailId = (int) $this->request->getData('orderDetailId');
-        $productQuantity = trim($this->request->getData('productQuantity'));
-        $editQuantityReason = strip_tags(html_entity_decode($this->request->getData('editQuantityReason')));
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $productQuantity = trim($this->getRequest()->getData('productQuantity'));
+        $editQuantityReason = strip_tags(html_entity_decode($this->getRequest()->getData('editQuantityReason')));
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 1) {
             $message = 'input format wrong';
@@ -316,7 +316,7 @@ class OrderDetailsController extends AdminAppController
             ]));
         }
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -338,9 +338,9 @@ class OrderDetailsController extends AdminAppController
         $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $object->product_quantity);
 
         if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $productPrice, $productQuantity);
-            $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
+            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
             $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
         }
         
@@ -361,7 +361,7 @@ class OrderDetailsController extends AdminAppController
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
 
         // never send email to manufacturer if bulk orders are allowed
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_quantity_changed_notification);
 
@@ -382,7 +382,7 @@ class OrderDetailsController extends AdminAppController
 
         $message .= ' Der Lagerstand wurde auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
 
         $this->Flash->success($message);
@@ -397,10 +397,10 @@ class OrderDetailsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderDetailId = (int) $this->request->getData('orderDetailId');
-        $editPriceReason = strip_tags(html_entity_decode($this->request->getData('editPriceReason')));
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));
 
-        $productPrice = trim($this->request->getData('productPrice'));
+        $productPrice = trim($this->getRequest()->getData('productPrice'));
         $productPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($productPrice);
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
@@ -414,7 +414,7 @@ class OrderDetailsController extends AdminAppController
 
         $productPrice = floatval($productPrice);
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -436,9 +436,9 @@ class OrderDetailsController extends AdminAppController
         $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_quantity . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
         
         if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $productPrice, $object->product_quantity);
-            $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
+            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
             $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
         }
         
@@ -457,7 +457,7 @@ class OrderDetailsController extends AdminAppController
         $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
 
         // never send email to manufacturer if bulk orders are allowed
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
 
@@ -473,7 +473,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editPriceReason . '"</b>';
         }
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
@@ -490,8 +490,8 @@ class OrderDetailsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderDetailIds = $this->request->getData('orderDetailIds');
-        $cancellationReason = strip_tags(html_entity_decode($this->request->getData('cancellationReason')));
+        $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
+        $cancellationReason = strip_tags(html_entity_decode($this->getRequest()->getData('cancellationReason')));
 
         if (!(is_array($orderDetailIds))) {
             die(json_encode([
@@ -500,7 +500,7 @@ class OrderDetailsController extends AdminAppController
             ]));
         }
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $flashMessage = '';
         foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('all', [
@@ -525,7 +525,7 @@ class OrderDetailsController extends AdminAppController
             $this->OrderDetail->Orders->updateSums($orderDetail->order);
             
             if (!empty($orderDetail->timebased_currency_order_detail)) {
-                $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
+                $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
                 $this->TimebasedCurrencyOrder->updateSums($orderDetail->order);
             }
             
@@ -545,7 +545,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' und eine E-Mail an <b>' . $orderDetail->order->customer->name . '</b>';
 
             // never send email to manufacturer if bulk orders are allowed
-            $this->Manufacturer = TableRegistry::get('Manufacturers');
+            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
             $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
@@ -565,7 +565,7 @@ class OrderDetailsController extends AdminAppController
 
             $message .= ' Der Lagerstand wurde um ' . $orderDetail->product_quantity . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);
         }
 
@@ -586,7 +586,7 @@ class OrderDetailsController extends AdminAppController
     private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productQuantity)
     {
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($oldOrderDetail->product_id, $productPrice / $productQuantity);
         $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPrice, $unitPriceExcl, $productQuantity);
@@ -650,7 +650,7 @@ class OrderDetailsController extends AdminAppController
         $quantity = $stockAvailableObject->quantity;
 
         // do the acutal updates for increasing quantity
-        $this->StockAvailable = TableRegistry::get('StockAvailables');
+        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
         $originalPrimaryKey = $this->StockAvailable->getPrimaryKey();
         $this->StockAvailable->setPrimaryKey('id_stock_available');
         $newQuantity = $quantity + $orderDetailQuantityBeforeQuantityChange - $orderDetail->product_quantity;

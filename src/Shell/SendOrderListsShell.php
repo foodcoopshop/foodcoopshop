@@ -29,9 +29,9 @@ class SendOrderListsShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->Order = TableRegistry::get('Orders');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 

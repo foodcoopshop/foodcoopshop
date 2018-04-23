@@ -15,7 +15,7 @@
 
 use App\Lib\Pdf\AppTcpdf;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\TableLocator;
 use Cake\Filesystem\Folder;
 
 $pdf = new AppTcpdf();
@@ -80,7 +80,7 @@ $pdf->renderTable();
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0 && $sumTimebasedCurrencyPriceIncl == 0) {
     
-    $m = TableRegistry::get('Manufacturers');
+    $m = TableLocator::get('Manufacturers');
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
     $firstColumnWidth = 365;
@@ -152,7 +152,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         $html .= '</tr>';
     
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-        $m = TableRegistry::get('Manufacturers');
+        $m = TableLocator::get('Manufacturers');
         $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
         $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
         

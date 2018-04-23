@@ -65,7 +65,7 @@ class ProductsTable extends AppTable
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
 
     /**
@@ -870,7 +870,7 @@ class ProductsTable extends AppTable
     {
         $defaultQuantity = 999;
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id);
 
         // INSERT PRODUCT

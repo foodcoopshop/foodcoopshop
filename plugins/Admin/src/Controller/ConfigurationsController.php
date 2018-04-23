@@ -42,7 +42,7 @@ class ConfigurationsController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.id_configuration' => $configurationId
@@ -63,19 +63,19 @@ class ConfigurationsController extends AdminAppController
 
         $this->setFormReferer();
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('configuration', $configuration);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
 
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
-            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+            $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
-            $this->request->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->request->getData('Configurations.value'));
+            $this->getRequest()->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'));
         }
 
         $validationName = Inflector::camelize(strtolower($configuration->name));
@@ -86,7 +86,7 @@ class ConfigurationsController extends AdminAppController
 
         $configuration = $this->Configuration->patchEntity(
             $configuration,
-            $this->request->getData(),
+            $this->getRequest()->getData(),
             [
                 'validate' => $validatorExists ? $validationName : false
             ]
@@ -97,10 +97,10 @@ class ConfigurationsController extends AdminAppController
             $this->set('configuration', $configuration);
         } else {
             $configuration = $this->Configuration->save($configuration);
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
             $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', 'Die Einstellung "' . $configuration->name . '" wurde geändert in <i>"' . $configuration->value . '"</i>');
-            $this->redirect($this->request->getData('referer'));
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('configuration', $configuration);
@@ -108,7 +108,7 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
         $email = new AppEmail();
         $email
@@ -145,9 +145,9 @@ class ConfigurationsController extends AdminAppController
     public function index()
     {
         $this->helpers[] = 'Configuration';
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations());
-        $this->Tax = TableRegistry::get('Taxes');
+        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $defaultTax = $this->Tax->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => Configure::read('app.defaultTaxId')
@@ -158,7 +158,7 @@ class ConfigurationsController extends AdminAppController
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
             $this->helpers[] = 'Network.Network';
-            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
+            $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);
         }

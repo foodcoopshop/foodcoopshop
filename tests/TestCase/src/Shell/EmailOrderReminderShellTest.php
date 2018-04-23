@@ -19,7 +19,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::get('EmailLogs');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->EmailOrderReminder = new EmailOrderReminderShell(new ConsoleIo());
     }
 
@@ -40,7 +40,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
                 Configure::read('app.timeHelper')->getCurrentDay()
             )
         );
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $this->Order->save(
             $this->Order->patchEntity(
                 $this->Order->get(1),
