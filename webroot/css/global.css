@@ -139,7 +139,12 @@ h2.warning {
     background: #009335;
     color: #fff;
 }
-
+#flashMessage.success .error {
+    background: #f3515c;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
 .vertical.menu {
     width: 145px;
     background: #efefef;
