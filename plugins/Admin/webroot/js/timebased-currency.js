@@ -19,33 +19,35 @@ foodcoopshop.TimebasedCurrency = {
         this.shortcode = shortcode;
     },
 
-	getTimebasedCurrencyPrice: function(originalPrice, max_percentage) {
-		return originalPrice * (100 - max_percentage) / 100;
+	getTimebasedCurrencyPrice: function(originalPrice, percentage) {
+		return originalPrice * (100 - percentage) / 100;
 	},
 	
-	getTimebasedCurrencyOriginalPrice: function(timebasedCurrencyPrice, max_percentage) {
-		return timebasedCurrencyPrice / (100 - max_percentage) * 100;
+	getTimebasedCurrencyOriginalPrice: function(timebasedCurrencyPrice, percentage) {
+		return timebasedCurrencyPrice / (100 - percentage) * 100;
 	},
 	
 	bindOrderDetailProductPriceField: function(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField) {
+		var appliedPercentage = timebasedCurrencyData.money_incl / foodcoopshop.Helper.getStringAsFloat(productPriceField.val()) * 100;
         productPriceField.off('keyup');
         productPriceField.on('keyup', function() {
         	var currentPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
         	var updatedTimebasedCurrencyPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyPrice(
     			currentPrice,
-    			timebasedCurrencyData.max_percentage
+    			appliedPercentage
 			);
         	productTimebasedCurrencyPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedTimebasedCurrencyPrice));
         });
 	},
 	
 	bindOrderDetailProductTimebasedCurrencyPriceField : function(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField) {
+		var appliedPercentage = timebasedCurrencyData.money_incl / foodcoopshop.Helper.getStringAsFloat(productPriceField.val()) * 100;
         productTimebasedCurrencyPriceField.off('keyup');
         productTimebasedCurrencyPriceField.on('keyup', function() {
         	var currentTimebasedCurrencyPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
         	var updatedPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyOriginalPrice(
     			currentTimebasedCurrencyPrice,
-    			timebasedCurrencyData.max_percentage
+    			appliedPercentage,
 			);
         	productPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedPrice));
         });
