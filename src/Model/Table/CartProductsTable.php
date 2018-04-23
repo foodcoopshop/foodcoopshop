@@ -50,7 +50,7 @@ class CartProductsTable extends AppTable
         
         // allow -1 and 1 - 99
         if ($amount == 0 || $amount < - 1 || $amount > 99) {
-            $message = 'Die gewünschte Anzahl "' . $amount . '" ist nicht gültig.';
+            $message = 'Die gewünschte Anzahl <b>' . $amount . '</b> ist nicht gültig.';
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -63,14 +63,24 @@ class CartProductsTable extends AppTable
             'conditions' => [
                 'Products.id_product' => $productId
             ],
+            'fields' => [
+                'is_holiday_active' => '!'.$this->Products->getManufacturerHolidayConditions()
+            ],
             'contain' => [
+                'Manufacturers',
                 'ProductLangs',
                 'StockAvailables',
                 'ProductAttributes',
                 'ProductAttributes.StockAvailables',
                 'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
-        ])->first();
+        ])
+        ->select($this->Products)
+        ->select($this->Products->ProductLangs)
+        ->select($this->Products->StockAvailables)
+        ->select($this->Products->Manufacturers)
+        ->select($this->Products->ProductAttributes->StockAvailables)
+        ->first();
         
         $existingCartProduct = $appAuth->Cart->getProduct($initialProductId);
         $combinedAmount = $amount;
@@ -89,7 +99,7 @@ class CartProductsTable extends AppTable
         
         // stock available check for product
         if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
-            $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product->stock_available->quantity;
+            $message = 'Die gewünschte Anzahl <b>' . $combinedAmount . '</b> des Produktes <b>' . $product->product_lang->name . '</b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product->stock_available->quantity;
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -105,7 +115,7 @@ class CartProductsTable extends AppTable
                     $attributeIdFound = true;
                     // stock available check for attribute
                     if ($attribute->stock_available->quantity < $combinedAmount && $amount > 0) {
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute->product_attribute_combination->attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute->stock_available->quantity;
+                        $message = 'Die gewünschte Anzahl <b>' . $combinedAmount . '</b> der Variante <b>' . $attribute->product_attribute_combination->attribute->name . '</b> des Produktes <b>' . $product->product_lang->name . '</b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute->stock_available->quantity;
                         return [
                             'status' => 0,
                             'msg' => $message,
@@ -123,6 +133,24 @@ class CartProductsTable extends AppTable
                     'productId' => $initialProductId
                 ];
             }
+        }
+        
+        if (! $product->active) {
+            $message = 'Das Produkt <b>' . $product->product_lang->name . '</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar.';
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId
+            ];
+        }
+        
+        if (! $product->manufacturer->active || $product->is_holiday_active) {
+            $message = 'Der Hersteller des Produktes <b>' . $product->product_lang->name . '</b> hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar.';
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId
+            ];
         }
         
         // update amount if cart product already exists
