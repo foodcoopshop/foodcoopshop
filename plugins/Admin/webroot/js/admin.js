@@ -256,7 +256,7 @@ foodcoopshop.Admin = {
             var dialog = foodcoopshop.Admin.createCustomerCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
 
-            var text = $(this).data('title-for-overlay');
+            var text = $(this).attr('title');
             if (text == 'Kommentar hinzufügen') {
                 text = '';
             }
@@ -339,11 +339,11 @@ foodcoopshop.Admin = {
             var dialog = foodcoopshop.Admin.createOrderCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogOrderComment');
 
-            var text = $(this).data('title-for-overlay');
+            var text = $(this).attr('title');
             if (text == 'Kommentar hinzufügen') {
                 text = '';
             }
-            CKEDITOR.instances['dialogOrderComment'].setData(text); // attr title is deleted after toolbar init
+            CKEDITOR.instances['dialogOrderComment'].setData(text);
             $('#order-comment-edit-form #dialogOrderId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
 
