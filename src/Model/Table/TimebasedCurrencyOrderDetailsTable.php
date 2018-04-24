@@ -141,7 +141,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     private function getFilteredQuery($manufacturerId, $customerId)
     {
         if ($manufacturerId) {
-            $productsAssociation = $this->association('OrderDetails')->association('Products');
+            $productsAssociation = $this->getAssociation('OrderDetails')->getAssociation('Products');
             $productsAssociation->setJoinType('INNER'); // necessary to apply condition
             $productsAssociation->setConditions([
                 'Products.id_manufacturer' => $manufacturerId

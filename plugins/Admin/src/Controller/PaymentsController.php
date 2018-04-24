@@ -532,7 +532,7 @@ class PaymentsController extends AdminAppController
 
     private function preparePayments()
     {
-        $paymentsAssociation = $this->Customer->association('Payments');
+        $paymentsAssociation = $this->Customer->getAssociation('Payments');
         $paymentsAssociation->setConditions(
             array_merge(
                 $paymentsAssociation->getConditions(),

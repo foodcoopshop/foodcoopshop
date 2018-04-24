@@ -75,7 +75,7 @@ class ConfigurationsController extends AdminAppController
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
-            $this->getRequest()->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'));
+            $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
         }
 
         $validationName = Inflector::camelize(strtolower($configuration->name));

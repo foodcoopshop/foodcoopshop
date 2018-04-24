@@ -115,10 +115,10 @@ class PagesController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content']);
-
-        $this->getRequest()->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'));
-        $this->getRequest()->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content'])));
+        
+        $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
+        $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->AppAuth->getUserId()));
 
         $page = $this->Page->patchEntity($page, $this->getRequest()->getData());
         if (!empty($page->getErrors())) {

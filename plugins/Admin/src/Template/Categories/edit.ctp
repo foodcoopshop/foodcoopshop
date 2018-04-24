@@ -93,7 +93,7 @@ echo $this->Form->control('Categories.delete_image', [
     'escape' => false
 ]);
 
-if ($this->request->here != $this->Slug->getCategoryAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
     echo $this->Form->control('Categories.delete_category', [
         'label' => 'Kategorie löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',

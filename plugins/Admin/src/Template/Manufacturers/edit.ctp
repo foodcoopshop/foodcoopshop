@@ -37,7 +37,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a>
-        <?php if ($this->request->here != $this->Slug->getManufacturerProfile()) { ?>
+        <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
             class="fa fa-remove"></i> Abbrechen</a>
         <?php } ?>
@@ -114,7 +114,7 @@ if ($appAuth->isManufacturer()) {
     echo '<div class="sc"></div>';
 
     echo '<h2>Profil';
-    if ($this->request->here != $this->Slug->getManufacturerAdd()) {
+    if ($this->request->getRequestTarget() != $this->Slug->getManufacturerAdd()) {
         echo ' <span>' . $this->Html->link('Hier geht\'s zum Hersteller-Profil', $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name), [
         'target' => '_blank'
         ]) . '</span>';

@@ -49,7 +49,7 @@ echo $this->Form->create($tax, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-if ($this->request->here != $this->Slug->getTaxAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getTaxAdd()) {
     echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($tax->rate) . '</p>';
 } else {
     echo $this->Form->control('Taxes.rate', [

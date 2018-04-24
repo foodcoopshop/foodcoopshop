@@ -47,7 +47,7 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $this->Customer->association('ActiveOrders')->setConditions(
+        $this->Customer->getAssociation('ActiveOrders')->setConditions(
             [
                 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
                     Configure::read('app.timeHelper')->getOrderPeriodFirstDay(

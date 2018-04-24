@@ -117,12 +117,12 @@ class BlogPostsController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content']);
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content'])));
 
-        $this->getRequest()->data['BlogPosts']['id_customer'] = $this->AppAuth->getUserId();
+        $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->AppAuth->getUserId()));
         
         if ($this->AppAuth->isManufacturer()) {
-            $this->getRequest()->data['BlogPosts']['id_manufacturer'] = $this->AppAuth->getManufacturerId();
+            $this->setRequest($this->getRequest()->withData('BlogPosts.id_manufacturer', $this->AppAuth->getManufacturerId()));
         }
         
         if (!$this->getRequest()->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer() && $isEditMode) {

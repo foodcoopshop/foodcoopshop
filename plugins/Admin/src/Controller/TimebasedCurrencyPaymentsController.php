@@ -165,14 +165,14 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['approval_comment', 'text']);
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['approval_comment', 'text'])));
         
         if (!empty($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))) {
-            $this->getRequest()->data['TimebasedCurrencyPayments']['working_day'] = new Time($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'));
+            $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.working_day', new Time($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))));
         }
         
-        $this->getRequest()->data['TimebasedCurrencyPayments']['seconds'] = $this->getRequest()->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->getRequest()->getData('TimebasedCurrencyPayments.minutes') * 60;
-        $this->getRequest()->data['TimebasedCurrencyPayments']['modified_by'] = $this->AppAuth->getUserId();
+        $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.seconds', $this->getRequest()->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->getRequest()->getData('TimebasedCurrencyPayments.minutes') * 60));
+        $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.modified_by', $this->AppAuth->getUserId()));
         
         $unchangedPaymentSeconds = $payment->seconds;
         $unchangedPaymentApproval = $payment->approval;

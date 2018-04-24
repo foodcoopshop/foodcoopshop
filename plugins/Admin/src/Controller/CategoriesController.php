@@ -90,7 +90,7 @@ class CategoriesController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['description']);
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['description'])));
 
         $category = $this->Category->patchEntity($category, $this->getRequest()->getData());
         if (!empty($category->getErrors())) {

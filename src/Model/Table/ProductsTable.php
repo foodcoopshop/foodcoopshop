@@ -427,7 +427,7 @@ class ProductsTable extends AppTable
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
             if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
-                $this->association('ProductAttributes')->setConditions(
+                $this->getAssociation('ProductAttributes')->setConditions(
                     [
                         'StockAvailables.quantity < 3'
                     ]
@@ -435,7 +435,7 @@ class ProductsTable extends AppTable
                 $quantityIsZeroFilterOn = true;
             }
             if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->association('ProductAttributeShops')->setConditions(
+                $this->ProductAttributes->getAssociation('ProductAttributeShops')->setConditions(
                     [
                         'ProductAttributeShops.price' => 0
                     ]
