@@ -33,7 +33,7 @@ class CartsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-
+    
     public function getProductNameWithUnity($productName, $unity)
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');

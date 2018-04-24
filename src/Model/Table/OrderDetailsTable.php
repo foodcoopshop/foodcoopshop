@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -42,6 +43,85 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('TimebasedCurrencyOrderDetails', [
             'foreignKey' => 'id_order_detail'
         ]);
+    }
+    
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    public function getLastOrderDetailsForDropdown($customerId)
+    {
+        
+        $ordersToLoad = 3;
+        
+        $foundOrders = 0;
+        $result = [];
+        
+        $i = 0;
+        while($foundOrders < $ordersToLoad) {
+            
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            
+            // stop trying to search for valid orders if year is 2013
+            if (date('Y', $dateFrom) == '2013') {
+                break;
+            }
+            
+            $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
+            
+            if (count($orderDetails) > 0) {
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
+                $result[$deliveryDay] = 'Abholtag ' . $deliveryDay . ' - ' . count($orderDetails) . ' Produkt' . (count($orderDetails) == 1 ? '' : 'e');
+                $foundOrders++;
+            }
+            
+            $i++;
+            
+        }
+        
+        return $result;
+        
+    }
+    
+    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
+    {
+        $conditions = [
+            'Orders.id_customer' => $customerId,
+            'RIGHT(Orders.date_add, 8) <> \'00:00:00\'' // exlude shop orders
+        ];
+        $conditions[] = 'Orders.current_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
+        
+        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+            date('Y-m-d', $dateFrom)
+        ).'\'';
+        
+        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+            date('Y-m-d', $dateTo)
+        ).'\'';
+        
+        $orderDetails = $this->find('all', [
+            'conditions' => $conditions,
+            'order' => [
+                'Orders.date_add' => 'DESC'
+            ],
+            'contain' => [
+                'Orders',
+                'Products.Manufacturers'
+            ]
+        ])->toArray();
+        
+        // manually remove products from bulk orders manufacturers
+        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $cleanedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            $isBulkOrderManufacturer = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
+            if (!$isBulkOrderManufacturer) {
+                $cleanedOrderDetails[] = $orderDetail;
+            }
+        }
+        
+        return $cleanedOrderDetails;
     }
 
     public function deleteOrderDetail($orderDetail)

@@ -76,7 +76,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomer();
         $response = $this->addProductToCart($this->productId1, 100);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl "100" ist nicht gültig.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>100</b> ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -126,7 +126,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $amount = 1;
         $this->addProductToCart($this->productId1, $amount);
-        $this->addTooManyProducts($this->productId1, 99, $amount, 'Die gewünschte Anzahl (100) des Produktes "Artischocke" ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
+        $this->addTooManyProducts($this->productId1, 99, $amount, 'Die gewünschte Anzahl <b>100</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
     }
     
     public function testAddTooManyAttributes()
@@ -134,7 +134,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $amount = 1;
         $this->addProductToCart($this->productId2, $amount);
-        $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl (49) der Variante "0,5l" des Produktes "Milch" ist leider nicht mehr verfügbar. Verfügbare Menge: 20', 0);
+        $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 20', 0);
     }
     
     public function testProductDeactivatedWhileShopping()
@@ -187,7 +187,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Anzahl \(2\) des Produktes (.*) ist leider nicht mehr (.*) Menge: 1/', $this->browser->getContent()); // ü needs to be escaped properly
+        $this->assertRegExp('/Anzahl <b>2/', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Menge: 1', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
     }
     
@@ -200,7 +201,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Anzahl \(3\) der Variante (.*) des Produktes (.*) ist leider nicht mehr (.*) Menge: 1/', $this->browser->getContent()); // ü needs to be escaped properly
+        $this->assertRegExp('/Anzahl \<b\>3/', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Menge: 1', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
     

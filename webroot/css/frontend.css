@@ -676,6 +676,13 @@ body.manufacturers.detail .imprint {
 #cart p.products span.product span:not(:first-of-type) {
     margin-right: 3px;
 }
+body.carts.detail #load-last-order-details,
+#cart #load-last-order-details {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #d6d4d4;
+	background-color: #fff;
+}
 .cart p.no-products {
     margin-bottom: 20px;
 }
@@ -1115,7 +1122,8 @@ body.products.detail .product-wrapper {
     margin-bottom: 20px;
 }
 #inner-content ul,
-#info-box ul {
+#info-box ul,
+#flashMessage ul {
   padding-left: 10px;
   margin-left: 10px;
   margin-top: 10px;
@@ -1124,6 +1132,9 @@ body.products.detail .product-wrapper {
 #info-box li {
     list-style-type: disc;
     line-height: 23px;
+}
+#flashMessage li {
+	list-style-type: disc;
 }
 #info-box li {
     line-height: 19px;

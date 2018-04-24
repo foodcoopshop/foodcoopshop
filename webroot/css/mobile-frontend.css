@@ -267,6 +267,10 @@
     #LoginForm .input.checkbox .error-message {
         width: 80% ! important;
     }
+    body.carts.detail #load-last-order-details {
+        margin-bottom: 10px;
+        border: 1px solid #d6d4d4;
+    }
 
     /**
      * sidebar-right: info box starts here
