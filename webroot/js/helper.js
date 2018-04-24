@@ -410,12 +410,16 @@ foodcoopshop.Helper = {
 
     initTooltip: function (container, trigger) {
         var trigger = trigger || 'hover';
-        $(container).not('.tooltipstered').tooltipster({
-        	contentAsHTML: true,
-        	interactive: true,
-        	maxWidth: 400,
-        	trigger: trigger,
-        	theme: ['tooltipster-light']
+        $(container).each(function() {
+            var title = $(this).attr('title');
+            $(this).not('.tooltipstered').tooltipster({
+            	contentAsHTML: true,
+            	interactive: true,
+            	maxWidth: 400,
+            	trigger: trigger,
+            	theme: ['tooltipster-light']
+            });
+            $(this).attr('title', title);
         });
     },
 

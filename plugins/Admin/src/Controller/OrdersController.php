@@ -182,6 +182,13 @@ class OrdersController extends AdminAppController
         $orderState = $this->getRequest()->getData('orderState');
 
         $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        if (empty($orderIds) || empty($orderState)) {
+            die(json_encode([
+                'status' => 0,
+                'msg' => 'error'
+            ]));
+        }
+        
         foreach ($orderIds as $orderId) {
             $oldOrder = $this->Order->find('all', [
                 'conditions' => [

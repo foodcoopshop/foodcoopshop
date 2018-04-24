@@ -378,6 +378,7 @@ class CartsController extends FrontendController
         $orderDetails2save = [];
         $products = [];
         $stockAvailable2saveData = [];
+        $stockAvailable2saveConditions = [];
 
         foreach ($this->AppAuth->Cart->getProducts() as $cartProduct) {
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
