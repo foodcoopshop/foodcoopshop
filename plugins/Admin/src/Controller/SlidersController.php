@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -74,8 +74,8 @@ class SlidersController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
         if (!empty($slider->getErrors())) {

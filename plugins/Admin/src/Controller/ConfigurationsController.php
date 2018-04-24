@@ -5,7 +5,7 @@ use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -69,10 +69,10 @@ class ConfigurationsController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
 
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
-            $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
+            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
             $this->getRequest()->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'));

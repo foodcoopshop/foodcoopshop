@@ -7,7 +7,7 @@ use App\Mailer\AppEmail;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -118,7 +118,7 @@ class ManufacturersController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['description', 'short_description']);
 
         $this->getRequest()->data['Manufacturers']['iban'] = str_replace(' ', '', $this->getRequest()->getData('Manufacturers.iban'));
@@ -555,8 +555,8 @@ class ManufacturersController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,

@@ -5,7 +5,7 @@ use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -207,12 +207,12 @@ class CustomersController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
-        $this->getRequest()->data['Customers']['email'] = $this->getRequest()->getData('Customers.address_customer.email');
-        $this->getRequest()->data['Customers']['address_customer']['firstname'] = $this->getRequest()->getData('Customers.firstname');
-        $this->getRequest()->data['Customers']['address_customer']['lastname'] = $this->getRequest()->getData('Customers.lastname');
+        $this->setRequest($this->getRequest()->withData('Customers.email', $this->getRequest()->getData('Customers.address_customer.email')));
+        $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
+        $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
 
         $customer = $this->Customer->patchEntity(
             $customer,

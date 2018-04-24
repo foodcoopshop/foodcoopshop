@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -89,7 +89,7 @@ class CategoriesController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['description']);
 
         $category = $this->Category->patchEntity($category, $this->getRequest()->getData());

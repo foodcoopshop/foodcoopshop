@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -114,7 +114,7 @@ class PagesController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content']);
 
         $this->getRequest()->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'));

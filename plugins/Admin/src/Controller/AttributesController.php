@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -78,8 +78,8 @@ class AttributesController extends AdminAppController
         }
 
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
-        $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
         if (!empty($attribute->getErrors())) {

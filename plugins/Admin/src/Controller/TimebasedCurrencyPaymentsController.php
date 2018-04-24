@@ -6,7 +6,7 @@ use App\Mailer\AppEmail;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
@@ -164,7 +164,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         }
         
         $this->loadComponent('Sanitize');
-        $this->getRequest()->data = $this->Sanitize->trimRecursive($this->getRequest()->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->getRequest()->data = $this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['approval_comment', 'text']);
         
         if (!empty($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))) {
