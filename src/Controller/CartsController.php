@@ -409,7 +409,7 @@ class CartsController extends FrontendController
 
             // stock available check for product (without attributeId)
             if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $cartProduct['amount']) {
-                $message = 'Die gewünschte Anzahl (' . $cartProduct['amount'] . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                $message = 'Die gewünschte Anzahl <b>' . $cartProduct['amount'] . '</b> des Produktes <b>' . $product->product_lang->name . '</b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
@@ -427,7 +427,7 @@ class CartsController extends FrontendController
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = 'Die gewünschte Anzahl (' . $cartProduct['amount'] . ') der Variante "' . $attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $message = 'Die gewünschte Anzahl <b>' . $cartProduct['amount'] . '</b> der Variante <b>' . $attribute->name . '</b> des Produktes <b>' . $product->product_lang->name . '<b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
                         break;
@@ -440,12 +440,12 @@ class CartsController extends FrontendController
             }
 
             if (! $product->active) {
-                $message = 'Das Produkt "' . $product->product_lang->name . '" ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = 'Das Produkt <b>' . $product->product_lang->name . '</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (! $product->manufacturer->active || $product->is_holiday_active) {
-                $message = 'Der Hersteller des Produktes "' . $product->product_lang->name . '" hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = 'Der Hersteller des Produktes <b>' . $product->product_lang->name . '</b> hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
@@ -659,20 +659,15 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $attributeId = 0;
-        $productId = $initialProductId;
-        $explodedProductId = explode('-', $initialProductId);
-        if (count($explodedProductId) == 2) {
-            $productId = $explodedProductId[0];
-            $attributeId = (int) $explodedProductId[1];
-        }
+        $this->Product = TableRegistry::get('Products');
+        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
 
         $cart = $this->AppAuth->getCart();
         $this->AppAuth->setCart($cart);
 
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
-            $message = 'Produkt ' . $productId . ' war nicht in Warenkorb vorhanden.';
+            $message = 'Produkt ' . $ids['productId'] . ' war nicht in Warenkorb vorhanden.';
             die(json_encode([
                 'status' => 0,
                 'msg' => $message,
@@ -681,7 +676,7 @@ class CartsController extends FrontendController
         }
 
         $cartProductTable = TableRegistry::get('CartProducts');
-        $cartProductTable->remove($productId, $attributeId, $cart['Cart']['id_cart']);
+        $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']['id_cart']);
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
@@ -692,6 +687,92 @@ class CartsController extends FrontendController
         ]));
     }
 
+    public function emptyCart()
+    {
+        $this->doEmptyCart();
+        $message = 'Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.';
+        $this->Flash->success($message);
+        $this->redirect($this->referer());
+    }
+    
+    private function doEmptyCart()
+    {
+        $this->CartProduct = TableRegistry::get('CartProducts');
+        $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
+        $this->AppAuth->setCart($this->AppAuth->getCart());
+    }
+    
+    public function addOrderToCart($deliveryDate)
+    {
+        $this->doAddOrderToCart($deliveryDate);
+        $this->redirect($this->referer());
+    }
+    
+    private function doAddOrderToCart($deliveryDate)
+    {
+        
+        $this->doEmptyCart();
+        $this->CartProduct = TableRegistry::get('CartProducts');
+        
+        $formattedDeliveryDate = strtotime($deliveryDate);
+        
+        $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodFirstDay($formattedDeliveryDate)));
+        $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodLastDay($formattedDeliveryDate)));
+        
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
+        
+        $errorMessages = [];
+        $loadedProducts = count($orderDetails);
+        if (count($orderDetails) > 0) {
+            $newCartProductsData = [];
+            foreach($orderDetails as $orderDetail) {
+                $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_quantity);
+                if (is_array($result)) {
+                    $errorMessages[] = $result['msg'];
+                    $loadedProducts--;
+                }
+            }
+        }
+        
+        $message = 'Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen.';
+        $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
+
+        if (!empty($errorMessages)) {
+            $message .= '<div class="error">';
+                $removedProducts = count($orderDetails) - $loadedProducts;
+                $message .= '<b>';
+                if ($removedProducts == 1) {
+                    $message .= $removedProducts . ' Produkt ist';
+                } else {
+                    $message .= $removedProducts . ' Produkte sind';
+                }
+                $message .= ' nicht mehr verfügbar</b>';
+                $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
+            $message .= '</div>';
+        }
+        
+        $this->Flash->success($message);
+        
+        $this->log($message);
+        
+    }
+    
+    public function addLastOrderToCart()
+    {
+        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
+        if (empty($orderDetails)) {
+            $message = 'Es sind keine Bestellungen vorhanden.';
+            $this->Flash->error($message);
+        } else {
+            reset($orderDetails);
+            $lastOrderDate = key($orderDetails);
+            $this->doAddOrderToCart($lastOrderDate);
+        }
+        $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
+    }
+    
     public function ajaxAdd()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
@@ -700,119 +781,24 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $attributeId = 0;
-        $productId = $initialProductId;
-        $explodedProductId = explode('-', $initialProductId);
-        if (count($explodedProductId) == 2) {
-            $productId = $explodedProductId[0];
-            $attributeId = (int) $explodedProductId[1];
-        }
-
-        $amount = (int) $this->request->getData('amount');
-        // allow -1 and 1 - 99
-        if ($amount == 0 || $amount < - 1 || $amount > 99) {
-            $message = 'Die gewünschte Anzahl "' . $amount . '" ist nicht gültig.';
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ]));
-        }
-
-        // get product data from database
         $this->Product = TableRegistry::get('Products');
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ],
-            'contain' => [
-                'ProductLangs',
-                'StockAvailables',
-                'ProductAttributes',
-                'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
-            ]
-        ])->first();
-
-        $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
-        $combinedAmount = $amount;
-        if ($existingCartProduct) {
-            $combinedAmount = $existingCartProduct['amount'] + $amount;
-        }
-        // check if passed product exists
-        if (empty($product)) {
-            $message = 'Das Produkt mit der ID ' . $productId . ' ist nicht vorhanden.';
-            $this->log($message);
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ]));
-        }
-
-        // stock available check for product
-        if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
-            $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product->stock_available->quantity;
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ]));
-        }
-
-        // check if passed optional product/attribute relation exists
-        if ($attributeId > 0) {
-            $attributeIdFound = false;
-            foreach ($product->product_attributes as $attribute) {
-                if ($attribute->id_product_attribute == $attributeId) {
-                    $attributeIdFound = true;
-                    // stock available check for attribute
-                    if ($attribute->stock_available->quantity < $combinedAmount && $amount > 0) {
-                        $message = 'Die gewünschte Anzahl (' . $combinedAmount . ') der Variante "' . $attribute->product_attribute_combination->attribute->name . '" des Produktes "' . $product->product_lang->name . '" ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute->stock_available->quantity;
-                        die(json_encode([
-                            'status' => 0,
-                            'msg' => $message,
-                            'productId' => $initialProductId
-                        ]));
-                    }
-                    break;
-                }
-            }
-            if (! $attributeIdFound) {
-                $message = 'Die Variante existiert nicht: ' . $initialProductId;
-                die(json_encode([
-                    'status' => 0,
-                    'msg' => $message,
-                    'productId' => $initialProductId
-                ]));
-            }
-        }
-
-        // update amount if cart product already exists
-        $cart = $this->AppAuth->getCart();
-        $this->AppAuth->setCart($cart);
-        $cartProductTable = TableRegistry::get('CartProducts');
-
-        $cartProduct2save = [
-            'id_product' => $productId,
-            'amount' => $combinedAmount,
-            'id_product_attribute' => $attributeId,
-            'id_cart' => $cart['Cart']['id_cart']
-        ];
-        if ($existingCartProduct) {
-            $oldEntity = $cartProductTable->get($existingCartProduct['cartProductId']);
-            $entity = $cartProductTable->patchEntity($oldEntity, $cartProduct2save);
-        } else {
-            $entity = $cartProductTable->newEntity($cartProduct2save);
-        }
-        $cartProductTable->save($entity);
-
+        $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
+        $amount = (int) $this->request->getData('amount');
+        
+        $this->CartProduct = TableRegistry::get('CartProducts');
+        $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount);
+        
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
+        
+        if (is_array($result)) {
+            die(json_encode($result));
+        }
 
         die(json_encode([
             'status' => 1,
             'msg' => 'ok'
         ]));
+        
     }
 }

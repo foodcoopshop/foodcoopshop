@@ -262,16 +262,12 @@ foodcoopshop.Helper = {
     },
 
     applyBlinkEffect: function (container, callback) {
-        container.fadeTo('fast', 1, function () {
-            $(this).fadeTo('fast', 0, function () {
-                $(this).fadeTo('fast', 1, function () {
-                    $(this).fadeTo('fast', 0, function () {
-                        $(this).fadeTo('fast', 1);
-                        if (callback) {
-                            callback();
-                        }
-                    });
-                });
+        container.fadeTo(150, 1, function () {
+            $(this).fadeTo(150, 0, function () {
+                $(this).fadeTo(150, 1);
+                if (callback) {
+                    callback();
+                }
             });
         });
     },
