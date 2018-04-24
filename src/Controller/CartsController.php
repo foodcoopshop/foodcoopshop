@@ -734,17 +734,23 @@ class CartsController extends FrontendController
             }
         }
         
-        if (empty($errorMessages)) {
-            $message = 'Dein Warenkorb wurde geleert und <b>alle Produkte</b> deiner vergangenen Bestellung wurden in den Warenkorb geladen.';
-            $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
-        } else {
-            $message = 'Dein Warenkorb wurde geleert und <b>' . $loadedProducts . ' von ' . count($orderDetails) . ' Produkte</b> wurden in den Warenkorb geladen.';
-            $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
+        $message = 'Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen.';
+        $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
+
+        if (!empty($errorMessages)) {
             $message .= '<div class="error">';
-                $message .= '<b>Nicht mehr verfügbar:</b>';
+                $removedProducts = count($orderDetails) - $loadedProducts;
+                $message .= '<b>';
+                if ($removedProducts == 1) {
+                    $message .= $removedProducts . ' Produkt ist';
+                } else {
+                    $message .= $removedProducts . ' Produkte sind';
+                }
+                $message .= ' nicht mehr verfügbar</b>';
                 $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $message .= '</div>';
         }
+        
         $this->Flash->success($message);
         
         $this->log($message);
