@@ -26,8 +26,8 @@ class CartProductsTableTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->CartProduct = TableRegistry::get('CartProducts');
-        $this->Cart = TableRegistry::get('Carts');
+        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
     }
     
     /**

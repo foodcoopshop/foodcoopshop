@@ -79,7 +79,7 @@ class AppAuthComponent extends AuthComponent
     
     public function getLastOrderDetailsForDropdown()
     {
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
         return $dropdownData;
     }

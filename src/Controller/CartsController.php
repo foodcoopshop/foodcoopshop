@@ -659,7 +659,7 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
 
         $cart = $this->AppAuth->getCart();
@@ -697,7 +697,7 @@ class CartsController extends FrontendController
     
     private function doEmptyCart()
     {
-        $this->CartProduct = TableRegistry::get('CartProducts');
+        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
@@ -712,14 +712,14 @@ class CartsController extends FrontendController
     {
         
         $this->doEmptyCart();
-        $this->CartProduct = TableRegistry::get('CartProducts');
+        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         
         $formattedDeliveryDate = strtotime($deliveryDate);
         
         $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodFirstDay($formattedDeliveryDate)));
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodLastDay($formattedDeliveryDate)));
         
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
         
         $errorMessages = [];
@@ -760,7 +760,7 @@ class CartsController extends FrontendController
     
     public function addLastOrderToCart()
     {
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
         if (empty($orderDetails)) {
             $message = 'Es sind keine Bestellungen vorhanden.';
@@ -780,11 +780,11 @@ class CartsController extends FrontendController
         $initialProductId = $this->getRequest()->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
-        $amount = (int) $this->request->getData('amount');
+        $amount = (int) $this->getRequest()->getData('amount');
         
-        $this->CartProduct = TableRegistry::get('CartProducts');
+        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount);
 
         // ajax calls do not call beforeRender
