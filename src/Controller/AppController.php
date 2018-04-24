@@ -162,7 +162,7 @@ class AppController extends Controller
     protected function sendAjaxError($error)
     {
         if ($this->getRequest()->is('ajax')) {
-            $this->getResponse()->statusCode(500);
+            $this->getResponse()->withStatus(500);
             $response = [
                 'status' => APP_OFF,
                 'msg' => $error->getMessage()
