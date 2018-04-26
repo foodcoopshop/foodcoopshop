@@ -108,7 +108,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 "$('.toggle-link').trigger('click');"
                 ]);
             }
-            echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fa fa-plus-circle"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Nachricht an den Abholdienst schreiben?',
             'escape' => false
@@ -124,7 +124,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         ?>
         
         <p>
-            <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
+            <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check"></i> Zahlungspflichtig bestellen</button>
         </p>
                 
         </form>

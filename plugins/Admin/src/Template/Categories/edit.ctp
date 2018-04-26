@@ -38,7 +38,7 @@ if (!empty($category->tmp_image != '')) {
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="btn btn-default cancel"><i class="fa fa-times"></i> Abbrechen</a>
     </div>
 </div>
 

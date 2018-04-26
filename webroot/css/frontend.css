@@ -139,7 +139,7 @@ body.categories.detail div.description-wrapper {
 .vertical.menu a {
     padding: 3px 10px;
 }
-.vertical.menu a i.fa {
+.vertical.menu .svg-inline--fa {
     font-size: 13px;
     width: auto;
     top: 7px;
@@ -1044,8 +1044,8 @@ a.blog-post-wrapper:hover .img-wrapper {
 .blog-wrapper .owl-nav button:hover {
     opacity: 0.8;
 }
-.blog-wrapper .owl-prev.disabled i,
-.blog-wrapper .owl-next.disabled i {
+.blog-wrapper .owl-prev.disabled .svg-inline--fa,
+.blog-wrapper .owl-next.disabled .svg-inline--fa {
     opacity: 0.3;
 }
 .blog-wrapper .owl-prev {

@@ -34,7 +34,7 @@ if (Configure::read('app.isDepositPaymentCashless')) {
 echo $this->element('paymentHeader', [
     'helpText' => $helpText,
     'buttonText' => 'Eingezahltes Guthaben eintragen',
-    'icon' => 'fa-euro'
+    'icon' => 'fa-euro-sign'
 ]);
 
 if (count($payments) == 0) {

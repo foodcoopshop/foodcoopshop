@@ -28,16 +28,16 @@ use Cake\Core\Configure;
 
 <div class="second-column">
     <h2>Kontakt</h2>
-    <p><i class="fa fa-map-marker fa-2x fa-fw"></i> <span>
+    <p><i class="fa fa-map-marker-alt fa-2x fa-fw"></i> <span>
     <?php
        echo Configure::read('appDb.FCS_APP_NAME').', ';
        echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration());
     ?></span></p>
     <?php
-       echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
+       echo '<p><i class="far fa-envelope fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
     if (Configure::read('appDb.FCS_FACEBOOK_URL') != '') { ?>
         <p>
-            <a target="_blank" href="<?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?>"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>
+            <a target="_blank" href="<?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?>"><i class="fab fa-2x fa-fw fa-facebook"></i></a>
             <a target="_blank" href="<?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?>"><?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?></a>
         </p>
     <?php

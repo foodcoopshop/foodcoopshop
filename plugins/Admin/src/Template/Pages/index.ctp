@@ -31,7 +31,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), [
+                echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), [
                     'class' => 'btn btn-default',
                     'escape' => false
                 ]);

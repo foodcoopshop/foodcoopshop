@@ -33,7 +33,7 @@ $this->element('addScript', [
             class="fa fa-check"></i> Speichern</a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerMyOptions()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
-            class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-times"></i> Abbrechen</a>
         <?php } ?>
     </div>
 </div>

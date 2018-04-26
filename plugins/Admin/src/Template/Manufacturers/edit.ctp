@@ -39,7 +39,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
             class="fa fa-check"></i> Speichern</a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
-            class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-times"></i> Abbrechen</a>
         <?php } ?>
     </div>
 </div>
@@ -102,7 +102,7 @@ if ($appAuth->isManufacturer()) {
 
     if ($isEditMode) {
         $buttonOptions = ['class' => 'btn btn-default', 'escape' => false];
-        $buttonIcon = '<i class="fa fa-cogs fa-lg"></i> ';
+        $buttonIcon = '<i class="fa fa-cogs"></i> ';
         if ($appAuth->isManufacturer()) {
             $optionsLink = $this->Html->link($buttonIcon . 'Hier geht\'s zu deinen Einstellungen', $this->Slug->getManufacturerMyOptions(), $buttonOptions);
         } else {

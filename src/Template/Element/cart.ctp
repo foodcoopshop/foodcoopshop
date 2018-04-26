@@ -100,7 +100,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             <div class="sc"></div>
             
             <p><a class="btn btn-success" href="<?php echo $this->Slug->getCartDetail(); ?>">
-                <i class="fa fa-shopping-cart fa-lg"></i> Warenkorb anzeigen
+                <i class="fa fa-shopping-cart"></i> Warenkorb anzeigen
             </a></p>
             
         <?php } ?>

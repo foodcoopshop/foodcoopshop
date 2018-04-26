@@ -1323,7 +1323,7 @@ foodcoopshop.Admin = {
 
         $('.filter-container .right a.cancel').on('click', function () {
             foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-remove');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-times');
             var referer = $('input[name=referer').val();
             if (referer == '') {
                 referer = '/';
@@ -1912,8 +1912,8 @@ foodcoopshop.Admin = {
     addPrintAndHelpIcon: function () {
 
         var html = '<div class="icons">';
-            html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
-            html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
+            html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print"></i></a>';
+            html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question"></i></a>';
         html += '</div>';
 
         var container = $('.filter-container').length > 0 ? $('.filter-container') : $('.filter-container-not-fixed');

@@ -36,13 +36,6 @@ class NpmPostInstallShell extends AppShell
         $this->copyFontawesomeFonts();
     }
 
-    private function copyFontawesomeFonts()
-    {
-        $folder = new Folder($this->vendorDir . DS . 'font-awesome' . DS . 'fonts' . DS);
-        $folder->copy(WWW_ROOT . 'fonts');
-        $this->out('Fontawesome fonts copied.');
-    }
-
     private function copyBoostrapFonts()
     {
         $folder = new Folder($this->vendorDir . DS . 'bootstrap' . DS . 'dist' . DS . 'fonts' . DS);

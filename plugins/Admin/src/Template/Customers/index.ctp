@@ -294,7 +294,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+echo '<button class="email-to-all btn btn-default" data-column="4"><i class="far fa-envelope"></i> Alle E-Mail-Adressen kopieren</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

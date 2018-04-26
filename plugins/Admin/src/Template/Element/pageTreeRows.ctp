@@ -44,7 +44,7 @@ foreach ($pages as $page) {
 
     echo '<td>';
     if ($level > 0) {
-        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
+        echo '<i class="fa fa-level-up-alt fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
     }
     echo $page->title;
     echo '</td>';
