@@ -35,7 +35,7 @@ $imageExists = ! preg_match('/no-single-default/', $imageSrc);
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="btn btn-default cancel"><i class="fa fa-times"></i> Abbrechen</a>
     </div>
 </div>
 
@@ -110,7 +110,7 @@ echo $this->Form->control('BlogPosts.active', [
     'type' => 'checkbox'
 ]);
 
-if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->here != $this->Slug->getBlogPostAdd()) {
+if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->control('BlogPosts.update_modified_field', [
         'label' => 'Nach vorne reihen? <span class="after small">Falls angehakt, wird der Blog-Artikel an die erste Stelle der Liste gereiht.</span>',
         'type' => 'checkbox',
@@ -118,7 +118,7 @@ if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->here !=
     ]);
 }
 
-if ($this->request->here != $this->Slug->getBlogPostAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->control('BlogPosts.delete_blog_post', [
         'label' => 'Blog-Artikel löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',

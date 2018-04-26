@@ -6,7 +6,7 @@ use App\Mailer\AppEmail;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
@@ -28,7 +28,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'myPaymentsCustomer':
                 return $this->AppAuth->isTimebasedCurrencyEnabledForCustomer();
                 break;
@@ -42,7 +42,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 break;
             case 'edit':
                 if ($this->AppAuth->isTimebasedCurrencyEnabledForManufacturer()) {
-                    $paymentId = (int) $this->request->getParam('pass')[0];
+                    $paymentId = (int) $this->getRequest()->getParam('pass')[0];
                     $payment = $this->TimebasedCurrencyPayment->find('all', [
                         'conditions' => [
                             'TimebasedCurrencyPayments.id' => $paymentId,
@@ -72,9 +72,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     public function beforeFilter(Event $event)
     {
-        $this->TimebasedCurrencyPayment = TableRegistry::get('TimebasedCurrencyPayments');
-        $this->TimebasedCurrencyOrder = TableRegistry::get('TimebasedCurrencyOrders');
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyPayment = TableRegistry::getTableLocator()->get('TimebasedCurrencyPayments');
+        $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         parent::beforeFilter($event);
     }
     
@@ -82,7 +82,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
         
-        $paymentId = $this->request->getData('paymentId');
+        $paymentId = $this->getRequest()->getData('paymentId');
         
         $payment = $this->TimebasedCurrencyPayment->find('all', [
             'conditions' => [
@@ -112,7 +112,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             )
         );
         
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $message = 'Die Zeit-Eintragung';
         if ($payment->working_day) {
             $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
@@ -158,26 +158,26 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
         
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('payment', $payment);
             return;
         }
         
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['approval_comment', 'text']);
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['approval_comment', 'text'])));
         
-        if (!empty($this->request->getData('TimebasedCurrencyPayments.working_day'))) {
-            $this->request->data['TimebasedCurrencyPayments']['working_day'] = new Time($this->request->getData('TimebasedCurrencyPayments.working_day'));
+        if (!empty($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))) {
+            $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.working_day', new Time($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))));
         }
         
-        $this->request->data['TimebasedCurrencyPayments']['seconds'] = $this->request->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->request->getData('TimebasedCurrencyPayments.minutes') * 60;
-        $this->request->data['TimebasedCurrencyPayments']['modified_by'] = $this->AppAuth->getUserId();
+        $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.seconds', $this->getRequest()->getData('TimebasedCurrencyPayments.hours') * 3600 + $this->getRequest()->getData('TimebasedCurrencyPayments.minutes') * 60));
+        $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.modified_by', $this->AppAuth->getUserId()));
         
         $unchangedPaymentSeconds = $payment->seconds;
         $unchangedPaymentApproval = $payment->approval;
         
-        $payment = $this->TimebasedCurrencyPayment->patchEntity($payment, $this->request->getData());
+        $payment = $this->TimebasedCurrencyPayment->patchEntity($payment, $this->getRequest()->getData());
         
         if (!empty($payment->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
@@ -195,7 +195,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 $actionLogType = 'timebased_currency_payment_changed';
             }
             
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $message = 'Die Zeiteintragung ';
             if ($payment->working_day) {
                 $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
@@ -203,7 +203,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $message .= '<b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds) . ')</b>';
             
             if ($this->AppAuth->getUserId() != $payment->id_customer) {
-                $this->Customer = TableRegistry::get('Customers');
+                $this->Customer = TableRegistry::getTableLocator()->get('Customers');
                 $customer = $this->Customer->find('all', [
                     'conditions' => [
                         'Customers.id_customer' => $payment->id_customer
@@ -242,8 +242,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message);
             $this->Flash->success($message);
             
-            $this->request->getSession()->write('highlightedRowId', $payment->id);
-            $this->redirect($this->request->getData('referer'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
+            $this->redirect($this->getRequest()->getData('referer'));
         }
         
         $this->set('payment', $payment);
@@ -270,12 +270,12 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', 'Zeit-Eintragung erstellen');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = $this->Manufacturer->getTimebasedCurrencyManufacturersForDropdown();
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->_processForm($payment, false);
         
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
         
@@ -352,7 +352,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     public function paymentsManufacturer($manufacturerId)
     {
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -374,7 +374,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     
     public function myPaymentsCustomer()
     {
-        $manufacturerId = $this->request->getQuery('manufacturerId');
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
         $this->set('isEditAllowedGlobally', false);
@@ -395,7 +395,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     public function myPaymentDetailsManufacturer($customerId)
     {
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -421,9 +421,9 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     public function paymentDetailsSuperadmin($customerId)
     {
-        $manufacturerId = $this->request->getQuery('manufacturerId');
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -452,7 +452,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     private function paymentListCustomer($manufacturerId = null, $customerId)
     {
      
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = $this->Manufacturer->getTimebasedCurrencyManufacturersForDropdown();
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         

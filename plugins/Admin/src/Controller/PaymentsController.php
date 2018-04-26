@@ -30,7 +30,7 @@ class PaymentsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'overview':
                 return Configure::read('app.htmlHelper')->paymentIsCashless() && $this->AppAuth->user() && ! $this->AppAuth->isManufacturer();
                 break;
@@ -39,13 +39,13 @@ class PaymentsController extends AdminAppController
                 break;
             case 'product':
                 // allow redirects for legacy links
-                if (empty($this->request->getQuery('customerId'))) {
+                if (empty($this->getRequest()->getQuery('customerId'))) {
                     $this->redirect(Configure::read('app.slugHelper')->getMyCreditBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'memberFee':
-                if (empty($this->request->getQuery('customerId'))) {
+                if (empty($this->getRequest()->getQuery('customerId'))) {
                     $this->redirect(Configure::read('app.slugHelper')->getMyMemberFeeBalance());
                 }
                 return $this->AppAuth->isSuperadmin();
@@ -66,9 +66,9 @@ class PaymentsController extends AdminAppController
 
     public function beforeFilter(Event $event)
     {
-        $this->Payment = TableRegistry::get('Payments');
-        $this->Customer = TableRegistry::get('Customers');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         parent::beforeFilter($event);
     }
 
@@ -132,14 +132,14 @@ class PaymentsController extends AdminAppController
             throw new RecordNotFoundException('payment not found');
         }
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('payment', $payment);
             return;
         }
 
         $payment = $this->Payment->patchEntity(
             $payment,
-            $this->request->getData(),
+            $this->getRequest()->getData(),
             [
                 'validate' => 'edit'
             ]
@@ -158,7 +158,7 @@ class PaymentsController extends AdminAppController
             );
             $payment = $this->Payment->save($payment);
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             switch ($payment->approval) {
                 case -1:
                     $actionLogType = 'payment_product_approval_not_ok';
@@ -193,9 +193,9 @@ class PaymentsController extends AdminAppController
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message.' (PaymentId: ' . $payment->id.').');
             $this->Flash->success($message.'.');
 
-            $this->request->getSession()->write('highlightedRowId', $payment->id);
+            $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
 
-            $this->redirect($this->request->getData('referer'));
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('payment', $payment);
@@ -205,7 +205,7 @@ class PaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $type = trim($this->request->getData('type'));
+        $type = trim($this->getRequest()->getData('type'));
         if (! in_array($type, [
             'product',
             'deposit',
@@ -221,7 +221,7 @@ class PaymentsController extends AdminAppController
             ]));
         }
 
-        $amount = $this->request->getData('amount');
+        $amount = $this->getRequest()->getData('amount');
 
         if (preg_match('/^\-/', $amount)) {
             $message = 'Ein negativer Betrag ist nicht erlaubt: ' . $amount;
@@ -239,17 +239,17 @@ class PaymentsController extends AdminAppController
         }
 
         $text = '';
-        if (!empty($this->request->getData('text'))) {
-            $text = strip_tags(html_entity_decode($this->request->getData('text')));
+        if (!empty($this->getRequest()->getData('text'))) {
+            $text = strip_tags(html_entity_decode($this->getRequest()->getData('text')));
         }
 
         $message = Configure::read('app.htmlHelper')->getPaymentText($type);
         if (in_array($type, ['product', 'payback'])) {
-            $customerId = (int) $this->request->getData('customerId');
+            $customerId = (int) $this->getRequest()->getData('customerId');
         }
         if ($type == 'member_fee') {
-            $customerId = (int) $this->request->getData('customerId');
-            $text = implode(',', $this->request->getData('months_range'));
+            $customerId = (int) $this->getRequest()->getData('customerId');
+            $text = implode(',', $this->getRequest()->getData('months_range'));
         }
 
         $actionLogType = $type;
@@ -259,7 +259,7 @@ class PaymentsController extends AdminAppController
             'member_fee_flexible'
         ])) {
             // payments to deposits can be added to customers or manufacturers
-            $customerId = (int) $this->request->getData('customerId');
+            $customerId = (int) $this->getRequest()->getData('customerId');
             if ($customerId > 0) {
                 $userType = 'customer';
                 $customer = $this->Customer->find('all', [
@@ -278,7 +278,7 @@ class PaymentsController extends AdminAppController
                 $message .= ' für ' . $customer->name;
             }
 
-            $manufacturerId = (int) $this->request->getData('manufacturerId');
+            $manufacturerId = (int) $this->getRequest()->getData('manufacturerId');
 
             if ($manufacturerId > 0) {
                 $userType = 'manufacturer';
@@ -357,7 +357,7 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.htmlHelper')->formatAsEuro($amount).'</b>';
 
         if ($type == 'member_fee') {
@@ -396,7 +396,7 @@ class PaymentsController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $paymentId = $this->request->getData('paymentId');
+        $paymentId = $this->getRequest()->getData('paymentId');
 
         $payment = $this->Payment->find('all', [
             'conditions' => [
@@ -429,7 +429,7 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
 
         $actionLogType = $payment->type;
         if ($payment->type == 'deposit') {
@@ -470,8 +470,8 @@ class PaymentsController extends AdminAppController
     private function getCustomerId()
     {
         $customerId = '';
-        if (!empty($this->request->getQuery('customerId'))) {
-            $customerId = $this->request->getQuery('customerId');
+        if (!empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = $this->getRequest()->getQuery('customerId');
         } if ($this->customerId > 0) {
             $customerId = $this->customerId;
         }
@@ -532,7 +532,7 @@ class PaymentsController extends AdminAppController
 
     private function preparePayments()
     {
-        $paymentsAssociation = $this->Customer->association('Payments');
+        $paymentsAssociation = $this->Customer->getAssociation('Payments');
         $paymentsAssociation->setConditions(
             array_merge(
                 $paymentsAssociation->getConditions(),
@@ -617,7 +617,7 @@ class PaymentsController extends AdminAppController
         $this->set('column_title', $this->viewVars['title_for_layout']);
 
         $title = $this->viewVars['title_for_layout'];
-        if (in_array($this->request->action, ['product', 'member_fee'])) {
+        if (in_array($this->getRequest()->getParam('action'), ['product', 'member_fee'])) {
             $title .= ' von ' . $customer->name;
         }
         $this->set('title_for_layout', $title);

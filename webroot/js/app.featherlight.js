@@ -110,7 +110,7 @@ foodcoopshop.AppFeatherlight = {
                     var formButtons = '';
                     formButtons += '<div class="form-buttons">';
                     formButtons += '<button type="button" class="btn btn-success save"><i class="fa fa-check"></i> Speichern</button>';
-                    formButtons += '<button type="button" class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</button>';
+                    formButtons += '<button type="button" class="btn btn-default cancel"><i class="fa fa-times"></i> Abbrechen</button>';
                     formButtons += '</div>';
 
                     $(formButtons).appendTo(placeholder);
@@ -153,7 +153,7 @@ foodcoopshop.AppFeatherlight = {
 
     closeAndReloadLightbox: function () {
         var button = $('.featherlight-inner .btn.cancel');
-        foodcoopshop.Helper.addSpinnerToButton(button, 'fa-remove');
+        foodcoopshop.Helper.addSpinnerToButton(button, 'fa-times');
         foodcoopshop.Helper.disableButton(button);
         document.location.reload();
     },

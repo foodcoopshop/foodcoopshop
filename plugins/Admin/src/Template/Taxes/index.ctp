@@ -31,7 +31,7 @@ use Cake\Core\Configure;
         <div class="right">
             <?php
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Steuersatz erstellen', $this->Slug->getTaxAdd(), [
+            echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neue Steuersatz erstellen', $this->Slug->getTaxAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
             ]);

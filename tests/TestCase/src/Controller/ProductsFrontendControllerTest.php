@@ -24,7 +24,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', true);
     }
 

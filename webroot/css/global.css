@@ -167,16 +167,16 @@ h2.warning {
   color: #009335;
 }
 .vertical.menu a:hover,
-.vertical.menu a:hover i,
+.vertical.menu a:hover .svg-inline--fa,
 .vertical.menu a:hover span.additional-info,
 .vertical.menu a.active,
-.vertical.menu a.active i,
+.vertical.menu a.active .svg-inline--fa,
 .vertical.menu a.active span.additional-info {
     background-color: #719f41;
     color: #fff ! important;
 }
-.vertical.menu a i.fa {
-    font-size: 17px;
+.vertical.menu .svg-inline--fa {
+    font-size: 16px;
     position: absolute;
     left: 3px;
     top: 6px;
@@ -189,14 +189,6 @@ h2.warning {
 }
 .vertical.menu > li ul {
     display: none;
-}
-.vertical.menu li.has-children > a:not(.active) i:before,
-a.toggle-link:not(.collapsed) i:before  {
-    content: "\f055"; /* fa-icon-plus-sign */
-}
-.vertical.menu li.has-children > a.active i:before,
-a.toggle-link.collapsed i:before {
-    content: "\f056" /* fa-icon-minus-sign */
 }
 .vertical.menu li.has-children a.active + ul {
     display: block;

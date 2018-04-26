@@ -79,7 +79,7 @@ class AppAuthComponent extends AuthComponent
     
     public function getLastOrderDetailsForDropdown()
     {
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
         return $dropdownData;
     }
@@ -90,7 +90,7 @@ class AppAuthComponent extends AuthComponent
             return;
         }
 
-        $mm = TableRegistry::get('Manufacturers');
+        $mm = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->manufacturer = $mm->find('all', [
             'conditions' => [
                 'AddressManufacturers.email' => $this->user('email'),
@@ -191,7 +191,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalance()
     {
-        $c = TableRegistry::get('Customers');
+        $c = TableRegistry::getTableLocator()->get('Customers');
         return $c->getCreditBalance($this->getUserId());
     }
 
@@ -205,7 +205,7 @@ class AppAuthComponent extends AuthComponent
         if (! $this->user()) {
             return null;
         }
-        $cart = TableRegistry::get('Carts');
+        $cart = TableRegistry::getTableLocator()->get('Carts');
         return $cart->getCart($this->getUserId());
     }
     

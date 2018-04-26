@@ -40,7 +40,7 @@ class AppSimpleBrowser extends SimpleBrowser
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
 
         $this->setConnectionTimeout(300); // 5 min should be enough
         $this->baseUrl = Configure::read('app.cakeServerName');

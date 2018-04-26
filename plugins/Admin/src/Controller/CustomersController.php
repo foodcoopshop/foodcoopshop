@@ -5,7 +5,7 @@ use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -29,7 +29,7 @@ class CustomersController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'edit':
                 return $this->AppAuth->isSuperadmin();
                 break;
@@ -47,8 +47,8 @@ class CustomersController extends AdminAppController
 
     public function ajaxEditGroup()
     {
-        $customerId = (int) $this->request->getData('customerId');
-        $groupId = (int) $this->request->getData('groupId');
+        $customerId = (int) $this->getRequest()->getData('customerId');
+        $groupId = (int) $this->getRequest()->getData('groupId');
 
         if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
@@ -59,7 +59,7 @@ class CustomersController extends AdminAppController
             ]));
         }
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -88,7 +88,7 @@ class CustomersController extends AdminAppController
 
         $messageString = 'Die Gruppe des Mitglieds <b>' . $oldCustomer->name . '</b> wurde von <b>' . Configure::read('app.htmlHelper')->getGroupName($oldGroup) . '</b> auf <b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
         $this->Flash->success($messageString);
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
         die(json_encode([
@@ -100,21 +100,21 @@ class CustomersController extends AdminAppController
     {
         $this->set('title_for_layout', 'Passwort ändern');
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()
             ]
         ])->first();
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('customer', $customer);
             return;
         }
 
         $customer = $this->Customer->patchEntity(
             $customer,
-            $this->request->getData(),
+            $this->getRequest()->getData(),
             [
                 'validate' => 'changePassword'
             ]
@@ -129,7 +129,7 @@ class CustomersController extends AdminAppController
                 $this->Customer->patchEntity(
                     $customer,
                     [
-                        'passwd' => $ph->hash($this->request->getData('Customers.passwd_1'))
+                        'passwd' => $ph->hash($this->getRequest()->getData('Customers.passwd_1'))
                     ]
                 )
             );
@@ -147,7 +147,7 @@ class CustomersController extends AdminAppController
             }
             $message .= '</b> hat sein Passwort geändert.';
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success('Dein neues Passwort wurde erfolgreich gespeichert.');
             $this->redirect($this->referer());
@@ -160,7 +160,7 @@ class CustomersController extends AdminAppController
     {
         $this->set('title_for_layout', 'Mein Profil bearbeiten');
         $this->_processForm($this->AppAuth->getUserId());
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -172,7 +172,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('title_for_layout', 'Profil bearbeiten');
         $this->_processForm($customerId);
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -183,7 +183,7 @@ class CustomersController extends AdminAppController
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -194,29 +194,29 @@ class CustomersController extends AdminAppController
         ])->first();
         
         
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId) * -1;
         $this->set('timebasedCurrencyCreditBalance', $timebasedCurrencyCreditBalance);
         $this->set('timebasedCurrencyDisableOptionAllowed', $timebasedCurrencyCreditBalance >= 0);
 
         $this->setFormReferer();
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('customer', $customer);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
-        $this->request->data['Customers']['email'] = $this->request->getData('Customers.address_customer.email');
-        $this->request->data['Customers']['address_customer']['firstname'] = $this->request->getData('Customers.firstname');
-        $this->request->data['Customers']['address_customer']['lastname'] = $this->request->getData('Customers.lastname');
+        $this->setRequest($this->getRequest()->withData('Customers.email', $this->getRequest()->getData('Customers.address_customer.email')));
+        $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
+        $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
 
         $customer = $this->Customer->patchEntity(
             $customer,
-            $this->request->getData(),
+            $this->getRequest()->getData(),
             [
                 'validate' => 'edit',
                 'associated' => [
@@ -239,7 +239,7 @@ class CustomersController extends AdminAppController
                 ]
             );
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
                 $message = 'Dein Profil wurde geändert.';
             } else {
@@ -248,13 +248,13 @@ class CustomersController extends AdminAppController
             $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $customer->id_customer);
+            $this->getRequest()->getSession()->write('highlightedRowId', $customer->id_customer);
 
-            if ($this->request->here == Configure::read('app.slugHelper')->getCustomerProfile()) {
+            if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getCustomerProfile()) {
                 $this->renewAuthSession();
             }
 
-            $this->redirect($this->request->getData('referer'));
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('customer', $customer);
@@ -280,7 +280,7 @@ class CustomersController extends AdminAppController
             throw new RecordNotFoundException('status needs to be 0 or 1');
         }
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -328,7 +328,7 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
@@ -338,10 +338,10 @@ class CustomersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $customerId = $this->request->getData('customerId');
-        $customerComment = htmlspecialchars_decode($this->request->getData('customerComment'));
+        $customerId = $this->getRequest()->getData('customerId');
+        $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -362,7 +362,7 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds <b>' . $oldCustomer->name . '</b> wurde geändert: <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode([
@@ -374,32 +374,32 @@ class CustomersController extends AdminAppController
     public function index()
     {
         $active = 1; // default value
-        if (in_array('active', array_keys($this->request->getQueryParams()))) {
-            $active = $this->request->getQuery('active');
+        if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
+            $active = $this->getRequest()->getQuery('active');
         }
         $this->set('active', $active);
 
         $validOrdersCountFrom = ''; // default value
-        if (!empty($this->request->getQuery('validOrdersCountFrom'))) {
-            $validOrdersCountFrom = $this->request->getQuery('validOrdersCountFrom');
+        if (!empty($this->getRequest()->getQuery('validOrdersCountFrom'))) {
+            $validOrdersCountFrom = $this->getRequest()->getQuery('validOrdersCountFrom');
         }
         $this->set('validOrdersCountFrom', $validOrdersCountFrom);
 
         $validOrdersCountTo = ''; // default value
-        if (!empty($this->request->getQuery('validOrdersCountTo'))) {
-            $validOrdersCountTo = $this->request->getQuery('validOrdersCountTo');
+        if (!empty($this->getRequest()->getQuery('validOrdersCountTo'))) {
+            $validOrdersCountTo = $this->getRequest()->getQuery('validOrdersCountTo');
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
         $dateFrom = '01.01.2014';
-        if (! empty($this->request->getQuery('dateFrom'))) {
-            $dateFrom = $this->request->getQuery('dateFrom');
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = date('d.m.Y');
-        if (! empty($this->request->getQuery('dateTo'))) {
-            $dateTo = $this->request->getQuery('dateTo');
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = $this->getRequest()->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
@@ -410,7 +410,7 @@ class CustomersController extends AdminAppController
             ];
         }
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
         $this->Customer->dropManufacturersInNextFind();
@@ -433,11 +433,11 @@ class CustomersController extends AdminAppController
         ])->toArray();
 
         $i = 0;
-        $this->Payment = TableRegistry::get('Payments');
-        $this->Order = TableRegistry::get('Orders');
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
         
         foreach ($customers as $customer) {

@@ -37,9 +37,9 @@ class FrontendController extends AppController
      */
     protected function prepareProductsForFrontend($products)
     {
-        $this->Product = TableRegistry::get('Products');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $this->ProductAttribute = TableRegistry::get('ProductAttributes');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->ProductAttribute = TableRegistry::getTableLocator()->get('ProductAttributes');
 
         foreach ($products as &$product) {
             $grossPrice = $this->Product->getGrossPrice($product['id_product'], $product['price']);
@@ -106,15 +106,15 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->request->getSession()->read('Auth.originalLoggedCustomer')) {
-            $this->AppAuth->setUser($this->request->getSession()->read('Auth.originalLoggedCustomer'));
+        if ($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer')) {
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer'));
         }
     }
 
     protected function destroyShopOrderCustomer()
     {
-        $this->request->getSession()->delete('Auth.shopOrderCustomer');
-        $this->request->getSession()->delete('Auth.originalLoggedCustomer');
+        $this->getRequest()->getSession()->delete('Auth.shopOrderCustomer');
+        $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
     }
 
     // is not called on ajax actions!
@@ -126,7 +126,7 @@ class FrontendController extends AppController
         // when a shop order was placed, the pdfs that are rendered for the order confirmation email
         // called this method and therefore called resetOriginalLoggedCustomer() => email was sent t
         // the user who placed the order for a member and not to the member
-        if ($this->response->type() != 'text/html') {
+        if ($this->getResponse()->getType() != 'text/html') {
             return;
         }
 
@@ -134,7 +134,7 @@ class FrontendController extends AppController
 
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->Category = TableRegistry::get('Categories');
+            $this->Category = TableRegistry::getTableLocator()->get('Categories');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu();
@@ -155,11 +155,11 @@ class FrontendController extends AppController
         }
         $this->set('categoriesForMenu', $categoriesForMenu);
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
@@ -186,7 +186,7 @@ class FrontendController extends AppController
     {
         parent::beforeFilter($event);
 
-        if (($this->name == 'Categories' && $this->request->action == 'detail') || $this->name == 'Carts') {
+        if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
             $this->AppAuth->allow();
@@ -197,9 +197,9 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
          */
-        if ($this->request->getSession()->check('Auth.shopOrderCustomer')) {
-            $this->request->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->setUser($this->request->getSession()->read('Auth.shopOrderCustomer'));
+        if ($this->getRequest()->getSession()->check('Auth.shopOrderCustomer')) {
+            $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.shopOrderCustomer'));
         }
         if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();

@@ -32,7 +32,7 @@ use Cake\Core\Configure;
         <div class="right">
             <?php
             echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Kategorie erstellen', $this->Slug->getCategoryAdd(), [
+            echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neue Kategorie erstellen', $this->Slug->getCategoryAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
             ]);

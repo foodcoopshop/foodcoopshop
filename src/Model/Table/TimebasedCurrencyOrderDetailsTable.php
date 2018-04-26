@@ -39,7 +39,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     public function changePrice($orderDetail, $price, $quantity)
     {
         
-        $manufacturerTable = TableRegistry::get('Manufacturers');
+        $manufacturerTable = TableRegistry::getTableLocator()->get('Manufacturers');
         
         $maxPercentage = $orderDetail->timebased_currency_order_detail->max_percentage;
         $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $quantity;
@@ -88,7 +88,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     {
         $timebasedCurrencyAwareResults = [];
         
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         
         foreach($results as $result) {
             $timebasedCurrencyAwareResult = $result;
@@ -141,7 +141,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     private function getFilteredQuery($manufacturerId, $customerId)
     {
         if ($manufacturerId) {
-            $productsAssociation = $this->association('OrderDetails')->association('Products');
+            $productsAssociation = $this->getAssociation('OrderDetails')->getAssociation('Products');
             $productsAssociation->setJoinType('INNER'); // necessary to apply condition
             $productsAssociation->setConditions([
                 'Products.id_manufacturer' => $manufacturerId
@@ -189,7 +189,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
      */
     public function getCreditBalance($manufacturerId = null, $customerId = null)
     {
-        $timebasedCurrencyPayment = TableRegistry::get('TimebasedCurrencyPayments');
+        $timebasedCurrencyPayment = TableRegistry::getTableLocator()->get('TimebasedCurrencyPayments');
         $creditBalance = $this->getSum($manufacturerId, $customerId) - $timebasedCurrencyPayment->getSum($manufacturerId, $customerId);
         return $creditBalance;
     }

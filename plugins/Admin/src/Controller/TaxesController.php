@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -31,7 +31,7 @@ class TaxesController extends AdminAppController
 
     public function add()
     {
-        $this->Tax = TableRegistry::get('Taxes');
+        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $tax = $this->Tax->newEntity(
             [
                 'rate' => 0,
@@ -42,7 +42,7 @@ class TaxesController extends AdminAppController
         $this->set('title_for_layout', 'Steuersatz erstellen');
         $this->_processForm($tax, false);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -53,7 +53,7 @@ class TaxesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Tax = TableRegistry::get('Taxes');
+        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $tax = $this->Tax->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => $taxId
@@ -73,16 +73,16 @@ class TaxesController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('tax', $tax);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
-        $tax = $this->Tax->patchEntity($tax, $this->request->getData());
+        $tax = $this->Tax->patchEntity($tax, $this->getRequest()->getData());
         if (!empty($tax->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('tax', $tax);
@@ -98,13 +98,13 @@ class TaxesController extends AdminAppController
                 $actionLogType = 'tax_changed';
             }
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $message = 'Der Steuersatz <b>' . Configure::read('app.htmlHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $tax->id_tax);
-            $this->redirect($this->request->getData('referer'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $tax->id_tax);
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('tax', $tax);
@@ -116,7 +116,7 @@ class TaxesController extends AdminAppController
             'Taxes.active > ' . APP_DEL
         ];
 
-        $this->Tax = TableRegistry::get('Taxes');
+        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $query = $this->Tax->find('all', [
             'conditions' => $conditions
         ]);

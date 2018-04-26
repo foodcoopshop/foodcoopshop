@@ -27,7 +27,7 @@ class ProductLangsTableTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->ProductLang = TableRegistry::get('ProductLangs');
+        $this->ProductLang = TableRegistry::getTableLocator()->get('ProductLangs');
     }
 
     public function testChangeNameWithOneProductAndInvalidStringName()

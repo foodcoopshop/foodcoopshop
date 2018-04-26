@@ -23,7 +23,7 @@ $this->element('addScript', [
 $idForImageUpload = !empty($slider->id_slider) ? $slider->id_slider : StringComponent::createRandomString(6);
 
 $imageSrc = false;
-if ($this->request->here != $this->Slug->getSliderAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     $imageSrc = $this->Html->getSliderImageSrc($slider->image);
     if (!empty($slider->tmp_image) && $slider->tmp_image != '') {
         $imageSrc = str_replace('\\', '/', $slider->tmp_image);
@@ -36,7 +36,7 @@ if ($this->request->here != $this->Slug->getSliderAdd()) {
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="btn btn-default cancel"><i class="fa fa-times"></i> Abbrechen</a>
     </div>
 </div>
 
@@ -85,7 +85,7 @@ echo $this->Form->control('Sliders.active', [
     'type' => 'checkbox'
 ]);
 
-if ($this->request->here != $this->Slug->getSliderAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     echo $this->Form->control('Sliders.delete_slider', [
         'label' => 'Slideshow-Bild löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',

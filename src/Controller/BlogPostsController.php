@@ -31,10 +31,10 @@ class BlogPostsController extends FrontendController
 
         parent::beforeFilter($event);
 
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'detail':
-                $blogPostId = (int) $this->request->getParam('pass')[0];
-                $this->BlogPost = TableRegistry::get('BlogPosts');
+                $blogPostId = (int) $this->getRequest()->getParam('pass')[0];
+                $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
                 $blogPost = $this->BlogPost->find('all', [
                     'conditions' => [
                         'BlogPosts.id_blog_post' => $blogPostId,
@@ -47,7 +47,7 @@ class BlogPostsController extends FrontendController
                 if (!empty($blogPost) && !$this->AppAuth->user()
                     && ($blogPost->is_private || (!empty($blogPost->manufacturer) && $blogPost->manufacturer->is_private))
                     ) {
-                        $this->AppAuth->deny($this->request->action);
+                        $this->AppAuth->deny($this->getRequest()->getParam('action'));
                 }
                 break;
         }
@@ -55,7 +55,7 @@ class BlogPostsController extends FrontendController
 
     public function detail()
     {
-        $blogPostId = (int) $this->request->getParam('pass')[0];
+        $blogPostId = (int) $this->getRequest()->getParam('pass')[0];
 
         $conditions = [
             'BlogPosts.active' => APP_ON
@@ -74,7 +74,7 @@ class BlogPostsController extends FrontendController
         }
 
         $correctSlug = Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title);
-        if ($correctSlug != Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        if ($correctSlug != Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
@@ -106,9 +106,9 @@ class BlogPostsController extends FrontendController
             'BlogPosts.active' => APP_ON
         ];
 
-        if (!empty($this->request->getParam('manufacturerSlug'))) {
-            $manufacturerId = (int) $this->request->getParam('manufacturerSlug');
-            $this->Manufacturer = TableRegistry::get('Manufacturers');
+        if (!empty($this->getRequest()->getParam('manufacturerSlug'))) {
+            $manufacturerId = (int) $this->getRequest()->getParam('manufacturerSlug');
+            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -127,7 +127,7 @@ class BlogPostsController extends FrontendController
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->find('all', [
             'conditions' => $conditions,
             'order' => [

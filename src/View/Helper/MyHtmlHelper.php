@@ -3,7 +3,6 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\Utility\Inflector;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -502,14 +501,14 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
     {
         $url = Configure::read('app.folder_order_lists_with_current_year_and_month') . DS;
-        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $deliveryDay . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
         $url = Configure::read('app.folder_invoices_with_current_year_and_month') . DS;
-        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $invoiceDate . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 

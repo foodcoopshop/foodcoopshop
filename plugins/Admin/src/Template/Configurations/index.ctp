@@ -118,7 +118,7 @@ $this->element('addScript', [
                 <?php if (!Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
-                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), [
+                    echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neue Remote-Foodcoop erstellen', $this->Network->getSyncDomainAdd(), [
                         'class' => 'btn btn-default',
                         'escape' => false
                     ]);

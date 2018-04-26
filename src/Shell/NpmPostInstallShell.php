@@ -33,14 +33,6 @@ class NpmPostInstallShell extends AppShell
         $this->copyAdaptedKcfinderFiles();
         $this->copyJqueryUiImages();
         $this->copyBoostrapFonts();
-        $this->copyFontawesomeFonts();
-    }
-
-    private function copyFontawesomeFonts()
-    {
-        $folder = new Folder($this->vendorDir . DS . 'font-awesome' . DS . 'fonts' . DS);
-        $folder->copy(WWW_ROOT . 'fonts');
-        $this->out('Fontawesome fonts copied.');
     }
 
     private function copyBoostrapFonts()

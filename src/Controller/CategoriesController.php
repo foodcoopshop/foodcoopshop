@@ -30,19 +30,19 @@ class CategoriesController extends FrontendController
     {
         parent::beforeFilter($event);
         if (! (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
-            $this->AppAuth->deny($this->request->action);
+            $this->AppAuth->deny($this->getRequest()->getParam('action'));
         } else {
-            $this->AppAuth->allow($this->request->action);
+            $this->AppAuth->allow($this->getRequest()->getParam('action'));
         }
     }
 
     public function newProducts()
     {
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::get('Categories');
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
@@ -55,8 +55,8 @@ class CategoriesController extends FrontendController
     public function search()
     {
         $keyword = '';
-        if (! empty($this->request->getQuery('keyword'))) {
-            $keyword = trim($this->request->getQuery('keyword'));
+        if (! empty($this->getRequest()->getQuery('keyword'))) {
+            $keyword = trim($this->getRequest()->getQuery('keyword'));
         }
 
         if ($keyword == '') {
@@ -65,11 +65,11 @@ class CategoriesController extends FrontendController
 
         $this->set('keyword', $keyword);
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::get('Categories');
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
@@ -81,9 +81,9 @@ class CategoriesController extends FrontendController
 
     public function detail()
     {
-        $categoryId = (int) $this->request->getParam('pass')[0];
+        $categoryId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Category = TableRegistry::get('Categories');
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $category = $this->Category->find('all', [
             'conditions' => [
                 'Categories.id_category' => $categoryId,
@@ -96,11 +96,11 @@ class CategoriesController extends FrontendController
         }
 
         $correctSlug = Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name);
-        if ($correctSlug != Configure::read('app.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        if ($correctSlug != Configure::read('app.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
