@@ -26,7 +26,7 @@ class PagesControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
     }
 
     public function testAllPublicUrls()

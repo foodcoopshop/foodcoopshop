@@ -46,6 +46,6 @@ $this->element('addScript', ['script' =>
             ]);
         ?>
         <br />
-        <button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Speichern</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Speichern</button>
     </form>
 </div>

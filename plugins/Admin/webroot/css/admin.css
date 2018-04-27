@@ -154,10 +154,10 @@ form.fcs-form .bootstrap-select {
 .vertical.menu li.has-children ul a {
     padding-left: 33px;
 }
-.vertical.menu li.has-children ul a i.fa {
-    font-size: 13px;
-    left: 13px;
-    top: 5px;
+.vertical.menu li.has-children ul a .svg-inline--fa {
+    font-size: 11px;
+    left: 14px;
+    top: 6px;
 }
 .vertical.menu a {
     border-right: none;
@@ -942,7 +942,7 @@ form.fcs-form .input.select .after.small {
     line-height: 28px;
     margin-left: 5px;
 }
-.bootstrap-select span.filter-option i.fa {
+.bootstrap-select span.filter-option .svg-inline--fa {
     position: absolute;
     right: 25px;
     top: 9px;

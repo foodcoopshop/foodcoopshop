@@ -50,7 +50,7 @@ class AppEmail extends Email
      */
     public function logEmailInDatabase($email)
     {
-        $emailLogModel = TableRegistry::get('EmailLogs');
+        $emailLogModel = TableRegistry::getTableLocator()->get('EmailLogs');
         $email2save = [
             'from_address' => json_encode($this->getFrom()),
             'to_address' => json_encode($this->getTo()),

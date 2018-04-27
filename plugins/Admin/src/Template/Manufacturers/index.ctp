@@ -36,7 +36,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), [
+                echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), [
                     'class' => 'btn btn-default',
                     'escape' => false
                 ]);
@@ -301,7 +301,7 @@ echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+echo '<button class="email-to-all btn btn-default" data-column="4"><i class="far fa-envelope"></i> Alle E-Mail-Adressen kopieren</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

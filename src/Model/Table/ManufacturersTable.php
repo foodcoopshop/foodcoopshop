@@ -243,7 +243,7 @@ class ManufacturersTable extends AppTable
      */
     public function getCustomerRecord($email)
     {
-        $cm = TableRegistry::get('Customers');
+        $cm = TableRegistry::getTableLocator()->get('Customers');
         
         if (empty($email)) {
             return [];
@@ -270,7 +270,7 @@ class ManufacturersTable extends AppTable
     {
         
         if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = TableRegistry::get('Products');
+            $productModel = TableRegistry::getTableLocator()->get('Products');
         }
         $conditions = [
             'Manufacturers.active' => APP_ON

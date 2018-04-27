@@ -49,7 +49,7 @@ $this->element('addScript', ['script' =>
         ?>
          
         <div class="sc"></div>
-        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fa fa-sign-in fa-lg"></i> Anmelden</button>
+        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fa fa-sign-in-alt"></i> Anmelden</button>
         
   </form>
   
@@ -110,7 +110,7 @@ $this->element('addScript', ['script' =>
               
               <div class="sc"></div>
               <br />
-              <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> Mitgliedskonto erstellen</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-user"></i> Mitgliedskonto erstellen</button>
           
           </div>
         <?php echo $this->Form->end(); ?>

@@ -29,7 +29,7 @@ $this->element('highlightRowAfterEdit', [
     <div class="right">
         <?php
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-        echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Slideshow-Bild erstellen', $this->Slug->getSliderAdd(), [
+        echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neues Slideshow-Bild erstellen', $this->Slug->getSliderAdd(), [
             'class' => 'btn btn-default',
             'escape' => false
         ]);

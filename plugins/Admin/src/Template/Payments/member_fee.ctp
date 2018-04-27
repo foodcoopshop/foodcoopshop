@@ -96,7 +96,7 @@ if (count($payments) == 0) {
     echo '</table>';
 } // end of count($payments)
 
-if ($this->request->action == 'member_fee') {
+if ($this->request->getParam('action') == 'member_fee') {
     echo '<div class="bottom-button-container">';
     echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
     echo '</div>';

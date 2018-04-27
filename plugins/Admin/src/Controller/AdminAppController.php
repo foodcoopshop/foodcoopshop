@@ -33,7 +33,7 @@ class AdminAppController extends AppController
 
     public function setReferer()
     {
-        $this->set('referer', ! empty($this->request->getData('referer')) ? $this->request->getData('referer') : $this->referer());
+        $this->set('referer', ! empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }
 
     /**

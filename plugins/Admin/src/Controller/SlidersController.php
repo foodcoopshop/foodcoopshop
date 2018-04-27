@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -26,7 +26,7 @@ class SlidersController extends AdminAppController
 
     public function add()
     {
-        $this->Slider = TableRegistry::get('Sliders');
+        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $slider = $this->Slider->newEntity(
             [
                 'active' => APP_ON,
@@ -37,7 +37,7 @@ class SlidersController extends AdminAppController
         $this->set('title_for_layout', 'Slideshow-Bild erstellen');
         $this->_processForm($slider, false);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -48,7 +48,7 @@ class SlidersController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Slider = TableRegistry::get('Sliders');
+        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $slider = $this->Slider->find('all', [
             'conditions' => [
                 'Sliders.id_slider' => $sliderId
@@ -68,16 +68,16 @@ class SlidersController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('slider', $slider);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
-        $slider = $this->Slider->patchEntity($slider, $this->request->getData());
+        $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
         if (!empty($slider->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('slider', $slider);
@@ -93,18 +93,18 @@ class SlidersController extends AdminAppController
                 $actionLogType = 'slider_changed';
             }
 
-            if (!empty($this->request->getData('Sliders.tmp_image'))) {
-                $filename = $this->saveUploadedImage($slider->id_slider, $this->request->getData('Sliders.tmp_image'), Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
+            if (!empty($this->getRequest()->getData('Sliders.tmp_image'))) {
+                $filename = $this->saveUploadedImage($slider->id_slider, $this->getRequest()->getData('Sliders.tmp_image'), Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
                 $slider = $this->Slider->patchEntity($slider, ['image' => $filename]);
                 $this->Slider->save($slider);
             }
 
-            if (!empty($this->request->getData('Sliders.delete_image'))) {
+            if (!empty($this->getRequest()->getData('Sliders.delete_image'))) {
                 $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
             }
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
-            if (!empty($this->request->getData('Sliders.delete_slider'))) {
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            if (!empty($this->getRequest()->getData('Sliders.delete_slider'))) {
                 $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
                 $this->Slider->save($slider);
                 $messageSuffix = 'gelöscht';
@@ -114,8 +114,8 @@ class SlidersController extends AdminAppController
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $slider->id_slider);
-            $this->redirect($this->request->getData('referer'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $slider->id_slider);
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('slider', $slider);
@@ -127,7 +127,7 @@ class SlidersController extends AdminAppController
             'Sliders.active > ' . APP_DEL
         ];
 
-        $this->Slider = TableRegistry::get('Sliders');
+        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $query = $this->Slider->find('all', [
             'conditions' => $conditions
         ]);

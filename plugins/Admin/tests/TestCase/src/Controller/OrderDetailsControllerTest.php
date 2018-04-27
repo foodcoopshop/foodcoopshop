@@ -42,9 +42,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Order = TableRegistry::get('Orders');
-        $this->EmailLog = TableRegistry::get('EmailLogs');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
     }
 
     public function testCancellationAsManufacturer()
@@ -132,7 +132,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $changedOrder = $this->getOrderWithTimebasedCurrencyAssociations($order->id_order);
        
         // assert if record TimebasedCurrencyOrderDetail was removed
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $timebasedCurrencyOrderDetail = $this->TimebasedCurrencyOrderDetail->find('all', [
             'conditions' => [
                 'TimebasedCurrencyOrderDetails.id_order_detail' => $orderDetailId
@@ -485,9 +485,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     private function assertChangedStockAvailable($productIds, $expectedQuantity)
     {
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($productIds);
-        $this->StockAvailable = TableRegistry::get('StockAvailables');
+        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
         $changedStockAvailable = $this->StockAvailable->find('all', [
             'conditions' => [
                 'StockAvailables.id_product' => $ids['productId'],

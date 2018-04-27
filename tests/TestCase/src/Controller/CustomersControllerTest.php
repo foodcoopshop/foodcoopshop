@@ -27,7 +27,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::get('EmailLogs');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
 
     public function testNewPasswordRequestWithWrongEmail()

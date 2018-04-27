@@ -25,7 +25,7 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
         'escape' => false
     ];
     $options['class'] = 'btn btn-default';
-    echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
+    echo $this->Html->link('<i class="fa fa-shopping-cart"></i> Sofort-Bestellung', 'javascript:void(0);', $options);
     echo $this->Form->control(null, [
         'type' => 'select',
         'label' => '',

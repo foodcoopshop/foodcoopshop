@@ -182,7 +182,7 @@ class CartProductsTable extends AppTable
             throw new InvalidParameterException('wrong cartId: ' . $cartId);
         }
         // deleteAll cannot check associations
-        $this->Cart = TableRegistry::get('Carts');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cartId,

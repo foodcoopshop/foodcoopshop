@@ -209,7 +209,7 @@ locale_set_default('de');
 setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
 
-TableRegistry::get('Configurations')->loadConfigurations();
+TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', [
         'routes' => true,

@@ -73,7 +73,7 @@ use Cake\Core\Configure;
                         'script' => Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', [
+                    echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neues Produkt', 'javascript:void(0);', [
                         'class' => 'btn btn-default',
                         'escape' => false
                     ]);

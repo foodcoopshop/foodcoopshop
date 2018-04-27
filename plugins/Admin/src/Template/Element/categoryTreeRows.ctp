@@ -39,7 +39,7 @@ foreach ($categories as $category) {
 
     echo '<td>';
     if ($subRow) {
-        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left: ' . (($category->level_depth - 2) * 10) . 'px;"></i>';
+        echo '<i class="fa fa-level-up-alt fa-rotate-90" style="margin-right:5px;margin-left: ' . (($category->level_depth - 2) * 10) . 'px;"></i>';
     }
         echo $category->name;
     echo '</td>';

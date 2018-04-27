@@ -88,9 +88,9 @@ class CartsTable extends AppTable
             $cart = $this->save($this->newEntity($cart2save));
         }
 
-        $cartProductsTable = TableRegistry::get('CartProducts');
-        $productsTable = TableRegistry::get('Products');
-        $manufacturersTable = TableRegistry::get('Manufacturers');
+        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [

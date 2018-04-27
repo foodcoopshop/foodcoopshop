@@ -64,9 +64,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
-        $this->Configuration = TableRegistry::get('Configurations');
-        $this->Customer = TableRegistry::get('Customers');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->generatePasswordHashes();
     }
 

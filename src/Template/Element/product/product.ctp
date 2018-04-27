@@ -47,7 +47,7 @@ if ($product['description_short'] != '') {
 
 if ($product['description'] != '') {
     echo $this->Html->link(
-        '<i class="fa"></i> Mehr anzeigen',
+        '<i class="fa fa-plus-circle"></i> Mehr anzeigen',
         'javascript:void(0);',
         [
         'class' => 'toggle-link',

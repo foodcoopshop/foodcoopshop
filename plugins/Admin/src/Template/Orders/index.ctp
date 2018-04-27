@@ -267,13 +267,13 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();"
         ]);
-        echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+        echo '<button class="email-to-all btn btn-default" data-column="4"><i class="far fa-envelope"></i> Alle E-Mail-Adressen kopieren</button>';
         if (! $groupByCustomer && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".Admin.initCloseOrdersButton();" . Configure::read('app.jsNamespace') . ".Admin.initGenerateOrdersAsPdf();"
             ]);
-            echo '<button class="btn btn-default generate-orders-as-pdf"><i class="fa fa-file-pdf-o"></i> Bestellungen als PDF generieren</button>';
-            echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Bestellungen abschließen</button>';
+            echo '<button class="btn btn-default generate-orders-as-pdf"><i class="far fa-file-pdf"></i> Bestellungen als PDF generieren</button>';
+            echo '<button id="closeOrdersButton" class="btn btn-default"><i class="far fa-check-square"></i> Alle Bestellungen abschließen</button>';
         }
     }
     echo '</div>';

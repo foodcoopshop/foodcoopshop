@@ -391,7 +391,7 @@ $buttonHtml = '';
 
 if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
     $buttonExists = true;
-    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="10"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="10"><i class="far fa-envelope"></i> Alle E-Mail-Adressen kopieren</button>';
 }
 
 if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId != '') {
@@ -403,7 +403,7 @@ if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId !
             'script' => Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrderDetails();"
         ]);
         $buttonExists = true;
-        $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> Bestellstatus ändern</button>';
+        $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square"></i> Bestellstatus ändern</button>';
     }
 }
 

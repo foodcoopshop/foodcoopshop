@@ -30,7 +30,7 @@ if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED')) {
     ?>
     
     <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-success btn-cart" href="javascript:void(0);">
-        <i class="fa fa-shopping-cart fa-lg"></i> In den Warenkorb
+        <i class="fa fa-cart-plus"></i> In den Warenkorb
     </a>
 
 </div>

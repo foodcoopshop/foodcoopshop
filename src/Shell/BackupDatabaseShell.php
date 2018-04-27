@@ -33,7 +33,7 @@ class BackupDatabaseShell extends AppShell
         ini_set('max_execution_time', 300);
         ini_set('memory_limit', '256M');
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
 
         $this->startTimeLogging();
 

@@ -103,12 +103,12 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && isset($this->request->data['Orders']['comment']) && $this->request->data['Orders']['comment'] != '') {
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && !empty($this->request->getData('Orders.comment')) && $this->request->getData('Orders.comment') != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
                 ]);
             }
-            echo $this->Html->link('<i class="fa"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fa fa-plus-circle"></i> Nachricht an den Abholdienst schreiben?', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Nachricht an den Abholdienst schreiben?',
             'escape' => false
@@ -124,7 +124,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         ?>
         
         <p>
-            <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> Zahlungspflichtig bestellen</button>
+            <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check"></i> Zahlungspflichtig bestellen</button>
         </p>
                 
         </form>

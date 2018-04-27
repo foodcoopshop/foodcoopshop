@@ -33,8 +33,8 @@ foodcoopshop.Helper = {
             responsiveClass: true,
             nav: true,
             navText: [
-                '<i class="fa fa-arrow-circle-o-left fa-3x"></i>',
-                '<i class="fa fa-arrow-circle-o-right fa-3x"></i>'
+                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
+                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
             ],
             responsive: {
                 320: {
@@ -66,7 +66,7 @@ foodcoopshop.Helper = {
 
     initLoginForm: function () {
         $('#LoginForm button[type="submit"]').on('click', function () {
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
         });
@@ -224,7 +224,20 @@ foodcoopshop.Helper = {
         // select horizontal main if sub is selected
         var selectedSubMenu = $('.menu.horizontal ul a.active').closest('ul');
         selectedSubMenu.closest('li').find('a').first().addClass('active'); // set main manu item active if sub navi is selected
-
+        
+        // change icon to plus or minus if children exist
+        var naviElement = $('.vertical.menu li.has-children > a:not(.active)');
+        naviElement.find('i').remove();
+        var icon = fontawesome.icon(fontawesome.findIconDefinition({iconName: 'plus-circle'}));
+        naviElement.append(icon.html);
+        naviElement.find('svg').addClass('fa-fw'); // did not find out how pass config fa-fw to icon before appending it 
+        
+        var naviElement = $('.vertical.menu li.has-children > a.active');
+        naviElement.find('i').remove();
+        var icon = fontawesome.icon(fontawesome.findIconDefinition({iconName: 'minus-circle'}));
+        naviElement.append(icon.html);
+        naviElement.find('svg').addClass('fa-fw'); // did not find out how pass config fa-fw to icon before appending it 
+        
     },
 
     initProductAttributesButtons: function () {
@@ -240,15 +253,15 @@ foodcoopshop.Helper = {
     },
 
     addSpinnerToButton: function (button, iconClass) {
-        button.find('i').removeClass(iconClass);
-        button.find('i').addClass('fa-spinner')
-        button.find('i').addClass('fa-spin');
+        button.find('svg').removeClass(iconClass);
+        button.find('svg').addClass('fa-spinner')
+        button.find('svg').addClass('fa-spin');
     },
 
     removeSpinnerFromButton: function (button, iconClass) {
-        button.find('i').removeClass('fa-spinner')
-        button.find('i').removeClass('fa-spin');
-        button.find('i').addClass(iconClass);
+        button.find('svg').removeClass('fa-spinner')
+        button.find('svg').removeClass('fa-spin');
+        button.find('svg').addClass(iconClass);
     },
 
     enableButton: function (button) {
@@ -297,9 +310,11 @@ foodcoopshop.Helper = {
 
             if (toggleMode == 'none') {
                 $(this).html($(this).html().replace(/Mehr/, 'Weniger'));
+                $(this).find('svg').attr('data-icon', 'minus-circle');
                 $(this).addClass('collapsed');
             } else {
                 $(this).html($(this).html().replace(/Weniger/, 'Mehr'));
+                $(this).find('svg').attr('data-icon', 'plus-circle');
                 $(this).removeClass('collapsed');
             }
 
@@ -448,7 +463,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2017-11-20';
+        CKEDITOR.timestamp = '2018-04-26';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js'
         });
@@ -476,7 +491,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2016-08-29';
+        CKEDITOR.timestamp = '2018-04-26';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -491,7 +506,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2017-11-20';
+        CKEDITOR.timestamp = '2018-04-26';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });

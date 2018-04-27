@@ -31,9 +31,9 @@ $this->element('addScript', [
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a>
-        <?php if ($this->request->here != $this->Slug->getManufacturerMyOptions()) { ?>
+        <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerMyOptions()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
-            class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-times"></i> Abbrechen</a>
         <?php } ?>
     </div>
 </div>

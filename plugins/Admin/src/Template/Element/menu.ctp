@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
-if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
+if (! $appAuth->user() || $this->request->getParam('action') == 'iframeStartPage') {
     return;
 }
 
@@ -36,7 +36,7 @@ $cancelledArticlesMenuElement = [
     'slug' => $this->Slug->getActionLogsList().'/index/?type=order_detail_cancelled',
     'name' => 'Stornierte Produkte',
     'options' => [
-        'fa-icon' => 'fa-fw fa-remove'
+        'fa-icon' => 'fa-fw fa-times'
     ]
 ];
 $ordersMenuElement = [
@@ -71,14 +71,14 @@ $blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
     'name' => 'Blog-Artikel',
     'options' => [
-        'fa-icon' => 'fa-fw fa-file-text'
+        'fa-icon' => 'fa-fw fa-file-alt'
     ]
 ];
 $homepageAdministrationElement = [
     'slug' => $this->Slug->getPagesListAdmin(),
     'name' => 'Homepage-Verwaltung',
     'options' => [
-        'fa-icon' => 'fa-fw fa-pencil-square-o'
+        'fa-icon' => 'fa-fw fa-edit'
     ]
 ];
 $menu = [];
@@ -160,7 +160,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => 'Mitglieder',
         'options' => [
-            'fa-icon' => 'fa-fw fa-male'
+            'fa-icon' => 'fa-fw fa-user'
         ]
     ];
     $menu[] = $actionLogsMenuElement;
@@ -180,7 +180,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getPagesListAdmin(),
         'name' => 'Seiten',
         'options' => [
-            'fa-icon' => 'fa-fw fa-pencil-square-o'
+            'fa-icon' => 'fa-fw fa-edit'
         ]
     ];
 
@@ -223,7 +223,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'slug' => $reportSlug,
             'name' => 'Finanzberichte',
             'options' => [
-                'fa-icon' => 'fa-fw fa-money'
+                'fa-icon' => 'fa-fw fa-money-bill-alt'
             ]
         ];
         $homepageAdministrationElement['children'][] = [
@@ -263,7 +263,7 @@ if ($appAuth->isManufacturer()) {
         ]
     ];
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
-        $od = TableRegistry::get('OrderDetails');
+        $od = TableRegistry::getTableLocator()->get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [

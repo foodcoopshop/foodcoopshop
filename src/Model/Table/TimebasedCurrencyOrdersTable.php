@@ -47,7 +47,7 @@ class TimebasedCurrencyOrdersTable extends AppTable
      */
     public function updateSums($order)
     {
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         
         $query = $this->TimebasedCurrencyOrderDetail->find('all');
         $query->contain(['OrderDetails']);

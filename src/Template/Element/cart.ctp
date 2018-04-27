@@ -29,7 +29,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             Configure::read('app.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
         ]);
     }
-    if ($this->name == 'Carts' && $this->request->action == 'detail') {
+    if ($this->name == 'Carts' && $this->request->getParam('action') == 'detail') {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
             Configure::read('app.jsNamespace').".Cart.initChangeAmountLinks();"
@@ -100,7 +100,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             <div class="sc"></div>
             
             <p><a class="btn btn-success" href="<?php echo $this->Slug->getCartDetail(); ?>">
-                <i class="fa fa-shopping-cart fa-lg"></i> Warenkorb anzeigen
+                <i class="fa fa-shopping-cart"></i> Warenkorb anzeigen
             </a></p>
             
         <?php } ?>

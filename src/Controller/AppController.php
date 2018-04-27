@@ -30,7 +30,9 @@ class AppController extends Controller
 
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
+        $this->loadComponent('RequestHandler', [
+            'enableBeforeRedirect' => false
+        ]);
         $this->loadComponent('Flash', [
             'clear' => true
         ]);
@@ -53,9 +55,6 @@ class AppController extends Controller
                     ],
                     'passwordHasher' => [
                         'className' => 'App'
-                    ],
-                    'scope' => [
-                        'Customers.active' => true
                     ],
                     'finder' => 'auth' // CustomersTable::findAuth
                 ]
@@ -81,16 +80,16 @@ class AppController extends Controller
     {
 
         $isMobile = false;
-        if ($this->request->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+        if ($this->getRequest()->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
 
-        $rememberMeCookie = $this->request->getCookie('remember_me');
+        $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);
             if (isset($value->email) && isset($value->passwd)) {
-                $this->Customer = TableRegistry::get('Customers');
+                $this->Customer = TableRegistry::getTableLocator()->get('Customers');
                 $customer = $this->Customer->find('all', [
                     'conditions' => [
                         'Customers.email' => $value->email,
@@ -107,7 +106,7 @@ class AppController extends Controller
         }
 
         if ($this->AppAuth->isManufacturer()) {
-            $this->Manufacturer = TableRegistry::get('Manufacturers');
+            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
@@ -131,7 +130,7 @@ class AppController extends Controller
      */
     protected function renewAuthSession()
     {
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()
@@ -148,7 +147,7 @@ class AppController extends Controller
 
     public function setFormReferer()
     {
-        $this->set('referer', !empty($this->request->getData('referer')) ? $this->request->getData('referer') : $this->referer());
+        $this->set('referer', !empty($this->getRequest()->getData('referer')) ? $this->getRequest()->getData('referer') : $this->referer());
     }
 
     /**
@@ -162,8 +161,8 @@ class AppController extends Controller
      */
     protected function sendAjaxError($error)
     {
-        if ($this->request->is('ajax')) {
-            $this->response->statusCode(500);
+        if ($this->getRequest()->is('ajax')) {
+            $this->getResponse()->withStatus(500);
             $response = [
                 'status' => APP_OFF,
                 'msg' => $error->getMessage()

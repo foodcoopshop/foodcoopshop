@@ -32,7 +32,7 @@ use Cake\Utility\Hash;
         <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Variante erstellen', $this->Slug->getAttributeAdd(), [
+            echo $this->Html->link('<i class="fa fa-plus-circle"></i> Neue Variante erstellen', $this->Slug->getAttributeAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
             ]);
@@ -88,7 +88,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['online'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fa fa-plus-circle"></i> Zugewiesene Produkte (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
@@ -99,7 +99,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['offline'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fa fa-plus-circle"></i> Zugewiesene Produkte (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => 'Zugewiesene Produkte anzeigen',
             'escape' => false
