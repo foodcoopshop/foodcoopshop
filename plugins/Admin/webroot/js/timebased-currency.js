@@ -47,7 +47,7 @@ foodcoopshop.TimebasedCurrency = {
         	var currentTimebasedCurrencyPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
         	var updatedPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyOriginalPrice(
     			currentTimebasedCurrencyPrice,
-    			appliedPercentage,
+    			appliedPercentage
 			);
         	productPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedPrice));
         });
