@@ -54,16 +54,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "7f97eafa1a95df71ba30b85b744a56c708148467"
+                "reference": "9739f275edd4f97c2a50dc028d870ce51e7aa058"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/7f97eafa1a95df71ba30b85b744a56c708148467",
-                "reference": "7f97eafa1a95df71ba30b85b744a56c708148467",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/9739f275edd4f97c2a50dc028d870ce51e7aa058",
+                "reference": "9739f275edd4f97c2a50dc028d870ce51e7aa058",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2018-04-20T01:11:49+00:00"
+            "time": "2018-04-28T02:02:20+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -486,16 +486,16 @@
         },
         {
             "name": "markstory/asset_compress",
-            "version": "3.2.3",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/markstory/asset_compress.git",
-                "reference": "598e1043220f3bf797e18b4133cbe8b9e86be807"
+                "reference": "2cf2a9e20c56705b15b5e8a5fad5c6d7a864f068"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/598e1043220f3bf797e18b4133cbe8b9e86be807",
-                "reference": "598e1043220f3bf797e18b4133cbe8b9e86be807",
+                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/2cf2a9e20c56705b15b5e8a5fad5c6d7a864f068",
+                "reference": "2cf2a9e20c56705b15b5e8a5fad5c6d7a864f068",
                 "shasum": ""
             },
             "require": {
@@ -540,7 +540,7 @@
                 "minifier",
                 "sass"
             ],
-            "time": "2017-05-01T01:39:20+00:00"
+            "time": "2018-04-28T01:45:15+00:00"
         },
         {
             "name": "markstory/mini-asset",
