@@ -31,7 +31,7 @@ class ToolsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
 
         // check if uploaded file is image file
-        $formatInfo = getimagesize($this->request->getData('upload.tmp_name'));
+        $formatInfo = getimagesize($this->getRequest()->getData('upload.tmp_name'));
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
             $message = 'Die hochgeladene Datei muss im Format "jpg" sein.';
@@ -41,13 +41,13 @@ class ToolsController extends AdminAppController
             ]));
         }
 
-        $extension = strtolower(pathinfo($this->request->getData('upload.name'), PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($this->getRequest()->getData('upload.name'), PATHINFO_EXTENSION));
         if ($extension == 'jpeg') {
             $extension = 'jpg';
         }
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
-        Image::make($this->request->getData('upload.tmp_name'))
+        Image::make($this->getRequest()->getData('upload.tmp_name'))
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);
 
@@ -62,9 +62,9 @@ class ToolsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
 
         // check if uploaded file is image file
-        $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->request->getData('filename');
+        $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->getRequest()->getData('filename');
 
-        $direction = $this->request->getData('direction');
+        $direction = $this->getRequest()->getData('direction');
 
         $directionInDegrees = null;
         if ($direction == 'CW') {
@@ -96,7 +96,7 @@ class ToolsController extends AdminAppController
         ->rotate($directionInDegrees)
             ->save($uploadedFile);
 
-        $rotatedImageSrc = $this->request->getData('filename') . '?' . StringComponent::createRandomString(3);
+        $rotatedImageSrc = $this->getRequest()->getData('filename') . '?' . StringComponent::createRandomString(3);
         die(json_encode([
             'status' => 1,
             'rotatedImageSrc' => $rotatedImageSrc

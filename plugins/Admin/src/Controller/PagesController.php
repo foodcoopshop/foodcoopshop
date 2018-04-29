@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -27,7 +27,7 @@ class PagesController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'home':
                 if ($this->AppAuth->user()) {
                     return true;
@@ -45,7 +45,7 @@ class PagesController extends AdminAppController
 
     public function add()
     {
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $page = $this->Page->newEntity(
             [
                 'active' => APP_ON,
@@ -59,7 +59,7 @@ class PagesController extends AdminAppController
 
         $this->_processForm($page, false);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -70,7 +70,7 @@ class PagesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $page = $this->Page->find('all', [
             'conditions' => [
                 'Pages.id_page' => $pageId
@@ -108,19 +108,19 @@ class PagesController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('page', $page);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData(), ['content']);
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content'])));
+        
+        $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
+        $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->AppAuth->getUserId()));
 
-        $this->request->data['Pages']['extern_url'] = StringComponent::addHttpToUrl($this->request->getData('Pages.extern_url'));
-        $this->request->data['Pages']['id_customer'] = $this->AppAuth->getUserId();
-
-        $page = $this->Page->patchEntity($page, $this->request->getData());
+        $page = $this->Page->patchEntity($page, $this->getRequest()->getData());
         if (!empty($page->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('page', $page);
@@ -136,8 +136,8 @@ class PagesController extends AdminAppController
                 $actionLogType = 'page_changed';
             }
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
-            if (!empty($this->request->getData('Pages.delete_page'))) {
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            if (!empty($this->getRequest()->getData('Pages.delete_page'))) {
                 $page = $this->Page->patchEntity($page, ['active' => APP_DEL]);
                 $this->Page->save($page);
                 $messageSuffix = 'gelöscht';
@@ -147,8 +147,8 @@ class PagesController extends AdminAppController
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'pages', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $page->id_page);
-            $this->redirect($this->request->getData('referer'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $page->id_page);
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('page', $page);
@@ -159,8 +159,8 @@ class PagesController extends AdminAppController
         $conditions = [];
 
         $customerId = '';
-        if (! empty($this->request->getQuery('customerId'))) {
-            $customerId = $this->request->getQuery('customerId');
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = $this->getRequest()->getQuery('customerId');
             $conditions = [
                 'Pages.id_customer' => $customerId
             ];
@@ -169,7 +169,7 @@ class PagesController extends AdminAppController
 
         $conditions[] = 'Pages.active > ' . APP_DEL;
 
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $totalPagesCount = $this->Page->find('all', [
             'conditions' => $conditions
         ])->count();
@@ -180,7 +180,7 @@ class PagesController extends AdminAppController
 
         $this->set('title_for_layout', 'Seiten');
 
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
     }
 }

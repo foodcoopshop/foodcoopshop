@@ -30,8 +30,8 @@ class ProductsController extends FrontendController
     {
         parent::beforeFilter($event);
 
-        $this->Product = TableRegistry::get('Products');
-        $productId = (int) $this->request->getParam('pass')[0];
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $productId = (int) $this->getRequest()->getParam('pass')[0];
 
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -49,19 +49,19 @@ class ProductsController extends FrontendController
               && (!empty($product->manufacturer) && $product->manufacturer->is_private)
               )
             ) {
-                $this->AppAuth->deny($this->request->action);
+                $this->AppAuth->deny($this->getRequest()->getParam('action'));
         }
     }
 
     public function detail()
     {
-        $productId = (int) $this->request->getParam('pass')[0];
+        $productId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::get('Categories');
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $product = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
 
@@ -72,7 +72,7 @@ class ProductsController extends FrontendController
         $this->set('product', $product[0]);
 
         $correctSlug = Configure::read('app.slugHelper')->getProductDetail($productId, $product[0]['name']);
-        if ($correctSlug != Configure::read('app.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        if ($correctSlug != Configure::read('app.slugHelper')->getProductDetail($productId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 

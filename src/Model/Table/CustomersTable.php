@@ -138,7 +138,7 @@ class CustomersTable extends AppTable
         $validator->email('email', false, 'Die E-Mail-Adresse ist nicht gültig.');
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {
-                $ct = TableRegistry::get('Customers');
+                $ct = TableRegistry::getTableLocator()->get('Customers');
                 return $ct->exists([
                     'email' => $value
                 ]);
@@ -147,7 +147,7 @@ class CustomersTable extends AppTable
         ]);
         $validator->add('email', 'account_inactive', [
             'rule' => function ($value, $context) {
-                $ct = TableRegistry::get('Customers');
+                $ct = TableRegistry::getTableLocator()->get('Customers');
                 $record  = $ct->find('all', [
                     'conditions' => [
                         'email' => $value
@@ -175,22 +175,26 @@ class CustomersTable extends AppTable
 
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
-        return $query->contain([
+        $query->where([
+            'Customers.active' => true
+        ]);
+        $query->contain([
             'AddressCustomers'
         ]);
+        return $query;
     }
 
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
 
-        $this->association('ValidOrders')->setConditions([
+        $this->getAssociation('ValidOrders')->setConditions([
             'ValidOrders.current_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
         ]);
-        $this->association('ActiveOrders')->setConditions([
+        $this->getAssociation('ActiveOrders')->setConditions([
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
         ]);
-        $this->association('PaidCashFreeOrders')->setConditions([
+        $this->getAssociation('PaidCashFreeOrders')->setConditions([
             'PaidCashFreeOrders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
         ]);
     }
@@ -204,7 +208,7 @@ class CustomersTable extends AppTable
 
     public function dropManufacturersInNextFind()
     {
-        $this->association('AddressCustomers')->setJoinType('INNER');
+        $this->getAssociation('AddressCustomers')->setJoinType('INNER');
     }
 
     /**
@@ -215,7 +219,7 @@ class CustomersTable extends AppTable
      */
     public function getManufacturerRecord($customer)
     {
-        $mm = TableRegistry::get('Manufacturers');
+        $mm = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
                 'AddressManufacturers.email' => $customer->email
@@ -276,12 +280,12 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
-        $payment = TableRegistry::get('Payments');
+        $payment = TableRegistry::getTableLocator()->get('Payments');
         $paymentSumProduct = $payment->getSum($customerId, 'product');
         $paybackSumProduct = $payment->getSum($customerId, 'payback');
         $paymentSumDeposit = $payment->getSum($customerId, 'deposit');
         
-        $order = TableRegistry::get('Orders');
+        $order = TableRegistry::getTableLocator()->get('Orders');
         $productSum = $order->getSumProduct($customerId);
         $depositSum = $order->getSumDeposit($customerId);
         

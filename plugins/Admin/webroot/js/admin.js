@@ -123,7 +123,7 @@ foodcoopshop.Admin = {
         filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
             foodcoopshop.Admin.triggerFilter();
         });
-
+        
         filterContainer.find('select').each(function () {
             var options = {
                 liveSearch: true,
@@ -138,7 +138,7 @@ foodcoopshop.Admin = {
             }
             $(this).selectpicker(options);
         });
-
+        
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
     },
 

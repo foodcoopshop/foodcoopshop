@@ -15,8 +15,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::get('EmailLogs');
-        $this->Order = TableRegistry::get('Orders');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $this->SendOrderLists = new SendOrderListsShell(new ConsoleIo());
     }
 

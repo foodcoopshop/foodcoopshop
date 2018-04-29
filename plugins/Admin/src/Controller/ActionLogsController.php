@@ -25,9 +25,9 @@ class ActionLogsController extends AdminAppController
 
     public function beforeFilter(Event $event)
     {
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->Customer = TableRegistry::get('Customers');
-        $this->Product = TableRegistry::get('Products');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         parent::beforeFilter($event);
     }
 
@@ -36,14 +36,14 @@ class ActionLogsController extends AdminAppController
         $conditions = [];
 
         $dateFrom = date('d.m.Y', strtotime('-6 day'));
-        if (! empty($this->request->getQuery('dateFrom'))) {
-            $dateFrom = $this->request->getQuery('dateFrom');
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = date('d.m.Y');
-        if (! empty($this->request->getQuery('dateTo'))) {
-            $dateTo = $this->request->getQuery('dateTo');
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = $this->getRequest()->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
@@ -51,8 +51,8 @@ class ActionLogsController extends AdminAppController
         $conditions[] = 'DATE_FORMAT(ActionLogs.date, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
 
         $customerId = '';
-        if (! empty($this->request->getQuery('customerId'))) {
-            $customerId = $this->request->getQuery('customerId');
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = $this->getRequest()->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 
@@ -61,8 +61,8 @@ class ActionLogsController extends AdminAppController
         }
 
         $productId = '';
-        if (! empty($this->request->getQuery('productId'))) {
-            $productId = $this->request->getQuery('productId');
+        if (! empty($this->getRequest()->getQuery('productId'))) {
+            $productId = $this->getRequest()->getQuery('productId');
         }
         $this->set('productId', $productId);
 
@@ -97,8 +97,8 @@ class ActionLogsController extends AdminAppController
         }
 
         $type = '';
-        if (! empty($this->request->getQuery('type'))) {
-            $type = $this->request->getQuery('type');
+        if (! empty($this->getRequest()->getQuery('type'))) {
+            $type = $this->getRequest()->getQuery('type');
             $conditions[] = 'ActionLogs.type = \'' . $type . '\'';
         }
         $this->set('type', $type);

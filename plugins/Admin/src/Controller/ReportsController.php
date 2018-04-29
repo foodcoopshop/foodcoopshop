@@ -25,8 +25,8 @@ class ReportsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        if (isset($this->request->getParam('pass')[0])) {
-            switch ($this->request->getParam('pass')[0]) {
+        if (isset($this->getRequest()->getParam('pass')[0])) {
+            switch ($this->getRequest()->getParam('pass')[0]) {
                 // allow deposit for cash configuration
                 case 'deposit':
                     return $this->AppAuth->isSuperadmin();
@@ -38,23 +38,23 @@ class ReportsController extends AdminAppController
 
     public function payments($paymentType)
     {
-        $this->Payment = TableRegistry::get('Payments');
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
-        if (! empty($this->request->getQuery('dateFrom'))) {
-            $dateFrom = $this->request->getQuery('dateFrom');
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
-        if (! empty($this->request->getQuery('dateTo'))) {
-            $dateTo = $this->request->getQuery('dateTo');
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = $this->getRequest()->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
         $customerId = '';
-        if (! empty($this->request->getQuery('customerId'))) {
-            $customerId = $this->request->getQuery('customerId');
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = $this->getRequest()->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 

@@ -42,11 +42,11 @@ class CartsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Cart = TableRegistry::get('Carts');
-        $this->Product = TableRegistry::get('Products');
-        $this->Order = TableRegistry::get('Orders');
-        $this->StockAvailable = TableRegistry::get('StockAvailables');
-        $this->EmailLog = TableRegistry::get('EmailLogs');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
 
     public function testAddLoggedOut()

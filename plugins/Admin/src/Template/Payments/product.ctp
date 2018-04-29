@@ -230,7 +230,7 @@ if (count($payments) == 0) {
     echo '</table>';
 } // end of count($payments)
 
-if ($this->request->action == 'product') {
+if ($this->request->getParam('action') == 'product') {
     echo '<div class="bottom-button-container">';
         echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
     echo '</div>';

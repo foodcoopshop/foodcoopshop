@@ -93,7 +93,7 @@ echo $this->Form->control('Pages.extern_url', [
     'escape' => false
 ]);
 
-if ($this->request->here != $this->Slug->getPageAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
     echo $this->Form->control('Pages.delete_page', [
         'label' => 'Seite löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
         'type' => 'checkbox',

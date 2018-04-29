@@ -56,7 +56,7 @@ echo $this->Form->control('Attributes.name', [
     'label' => 'Name'
 ]);
 
-if ($this->request->here != $this->Slug->getAttributeAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getAttributeAdd()) {
     echo $this->Form->control('Attributes.delete_attribute', [
         'label' => 'Variante löschen? <span class="after small">' . ($attribute->has_combined_products ? 'Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind.' : 'Anhaken und dann auf <b>Speichern</b> klicken.') . '</span>',
         'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),

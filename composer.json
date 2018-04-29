@@ -16,11 +16,11 @@
     },
     "require": {
         "php": ">=7.1",
-        "cakephp/cakephp": "3.5.*",
+        "cakephp/cakephp": "3.6.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "@stable",
         "cakephp/plugin-installer": "~1.0",
-        "markstory/asset_compress": "3.2.*",
+        "markstory/asset_compress": "3.*",
         "intervention/image": "2.*",
         "tecnickcom/tcpdf": "6.2.*",
         "simpletest/simpletest": "1.*",

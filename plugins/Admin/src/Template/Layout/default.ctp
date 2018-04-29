@@ -46,7 +46,7 @@ use Cake\Utility\Inflector;
     
 </head>
 <body
-    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->action)); ?>">
+    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
 
     <div id="container">
         

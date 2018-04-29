@@ -65,7 +65,7 @@ class ProductsTable extends AppTable
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
 
     /**
@@ -436,7 +436,7 @@ class ProductsTable extends AppTable
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
             if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
-                $this->association('ProductAttributes')->setConditions(
+                $this->getAssociation('ProductAttributes')->setConditions(
                     [
                         'StockAvailables.quantity < 3'
                     ]
@@ -444,7 +444,7 @@ class ProductsTable extends AppTable
                 $quantityIsZeroFilterOn = true;
             }
             if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->association('ProductAttributeShops')->setConditions(
+                $this->ProductAttributes->getAssociation('ProductAttributeShops')->setConditions(
                     [
                         'ProductAttributeShops.price' => 0
                     ]
@@ -879,7 +879,7 @@ class ProductsTable extends AppTable
     {
         $defaultQuantity = 999;
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id);
 
         // INSERT PRODUCT

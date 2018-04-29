@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -30,7 +30,7 @@ class AttributesController extends AdminAppController
 
     public function add()
     {
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $attribute = $this->Attribute->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
@@ -38,7 +38,7 @@ class AttributesController extends AdminAppController
         $this->set('title_for_layout', 'Variante erstellen');
         $this->_processForm($attribute, false);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -49,14 +49,14 @@ class AttributesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $attribute = $this->Attribute->find('all', [
             'conditions' => [
                 'Attributes.id_attribute' => $attributeId
             ]
         ])->first();
 
-        $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
+        $this->ProductAttributeCombination = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
         $combinationCounts = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         $attribute->has_combined_products = count($combinationCounts['online']) + count($combinationCounts['offline']) > 0;
 
@@ -72,16 +72,16 @@ class AttributesController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('attribute', $attribute);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
-        $attribute = $this->Attribute->patchEntity($attribute, $this->request->getData());
+        $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
         if (!empty($attribute->getErrors())) {
             $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
             $this->set('attribute', $attribute);
@@ -97,8 +97,8 @@ class AttributesController extends AdminAppController
                 $actionLogType = 'attribute_changed';
             }
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
-            if (!empty($this->request->getData('Attributes.delete_attribute'))) {
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
                 $messageSuffix = 'gelöscht';
                 $actionLogType = 'attribute_deleted';
@@ -107,8 +107,8 @@ class AttributesController extends AdminAppController
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $attribute->id_attribute);
-            $this->redirect($this->request->getData('referer'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $attribute->id_attribute);
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('attribute', $attribute);
@@ -120,7 +120,7 @@ class AttributesController extends AdminAppController
             'Attributes.active > ' . APP_DEL
         ];
 
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $query = $this->Attribute->find('all', [
             'conditions' => $conditions
         ]);
@@ -133,7 +133,7 @@ class AttributesController extends AdminAppController
             ]
         ])->toArray();
 
-        $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
+        $this->ProductAttributeCombination = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
         foreach ($attributes as $attribute) {
             $attribute->combination_product = $this->ProductAttributeCombination->getCombinationCounts($attribute->id_attribute);
         }

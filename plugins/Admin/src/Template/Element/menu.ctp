@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
-if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
+if (! $appAuth->user() || $this->request->getParam('action') == 'iframeStartPage') {
     return;
 }
 
@@ -263,7 +263,7 @@ if ($appAuth->isManufacturer()) {
         ]
     ];
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
-        $od = TableRegistry::get('OrderDetails');
+        $od = TableRegistry::getTableLocator()->get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [
