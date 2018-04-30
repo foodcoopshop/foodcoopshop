@@ -314,9 +314,13 @@ use Cake\Core\Configure;
         echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
         if (empty($product->product_attributes)) {
-            echo '<span class="price-for-dialog">';
-            echo $this->Html->formatAsDecimal($product->gross_price);
-            echo '</span>';
+            if (empty($product->unit)) {
+                echo '<span class="price-for-dialog">';
+                    echo $this->Html->formatAsDecimal($product->gross_price);
+                echo '</span>';
+            } else {
+                echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . '&nbsp;/&nbsp;' . $product->unit->name;
+            }
         }
         if (empty($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [

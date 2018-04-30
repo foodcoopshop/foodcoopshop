@@ -21,7 +21,7 @@ CREATE TABLE `fcs_action_logs` (
   `text` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -202,7 +202,7 @@ CREATE TABLE `fcs_email_logs` (
   `headers` text,
   `message` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -548,6 +548,22 @@ CREATE TABLE `fcs_timebased_currency_payments` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `created_by` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_units` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_product` int(10) unsigned DEFAULT NULL,
+  `id_product_attribute` int(11) unsigned DEFAULT NULL,
+  `price_incl_per_unit` decimal(10,6) unsigned DEFAULT NULL,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',
+  `quantity_in_units` decimal(10,6) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_product` (`id_product`),
+  UNIQUE KEY `id_product_attribute` (`id_product_attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

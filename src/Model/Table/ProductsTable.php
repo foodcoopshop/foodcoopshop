@@ -59,6 +59,9 @@ class ProductsTable extends AppTable
         $this->hasMany('CategoryProducts', [
             'foreignKey' => 'id_product'
         ]);
+        $this->hasOne('Units', [
+            'foreignKey' => 'id_product'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
@@ -461,6 +464,7 @@ class ProductsTable extends AppTable
             'DepositProducts',
             'Images',
             'Taxes',
+            'Units',
             'Manufacturers',
             'StockAvailables' => [
                 'conditions' => [
@@ -475,6 +479,7 @@ class ProductsTable extends AppTable
             ],
             'ProductAttributes.ProductAttributeShops',
             'ProductAttributes.DepositProductAttributes',
+            'ProductAttributes.Units',
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
 
@@ -504,6 +509,7 @@ class ProductsTable extends AppTable
         ->select('Images.id_image')
         ->select($this->Taxes)
         ->select($this->Manufacturers)
+        ->select($this->Units)
         ->select($this->StockAvailables);
 
         if ($controller) {
@@ -617,6 +623,7 @@ class ProductsTable extends AppTable
                             'quantity' => $attribute->stock_available->quantity
                         ],
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
+                        'unit' => !empty($attribute->unit) ? $attribute->unit : [],
                         'category' => [
                             'names' => [],
                             'all_products_found' => true

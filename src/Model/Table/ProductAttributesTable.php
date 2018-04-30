@@ -41,6 +41,9 @@ class ProductAttributesTable extends AppTable
             'className' => 'ProductAttributeShops',
             'foreignKey' => 'id_product_attribute'
         ]);
+        $this->hasOne('Units', [
+            'foreignKey' => 'id_product_attribute'
+        ]);
     }
 
     public function add($productId, $attributeId)
