@@ -100,8 +100,8 @@ foodcoopshop.Helper = {
      */
     updateAntiSpamField: function (form) {
 
-        if (document.getElementById("antiSpam")) {
-            a = document.getElementById("antiSpam");
+        if (document.getElementById('antiSpam')) {
+            var a = document.getElementById('antiSpam');
             if (isNaN(a.value) == true) {
                 a.value = 0;
             } else {
@@ -202,8 +202,8 @@ foodcoopshop.Helper = {
     initMenu: function () {
 
         // select and show submenu of vertical menu, recursive!
-        var selectedSubMenu = $('.menu.vertical ul a.active').closest('ul');
-        var s = selectedSubMenu.closest('li').find('a').parentsUntil('ul.vertical-menu', 'li.has-children')
+        var selectedVerticalSubMenu = $('.menu.vertical ul a.active').closest('ul');
+        var s = selectedVerticalSubMenu.closest('li').find('a').parentsUntil('ul.vertical-menu', 'li.has-children');
         s.each(function () {
             var m = $(this).find('a').first();
             m.addClass('active');
@@ -222,8 +222,8 @@ foodcoopshop.Helper = {
         });
 
         // select horizontal main if sub is selected
-        var selectedSubMenu = $('.menu.horizontal ul a.active').closest('ul');
-        selectedSubMenu.closest('li').find('a').first().addClass('active'); // set main manu item active if sub navi is selected
+        var selectedHorizontalSubMenu = $('.menu.horizontal ul a.active').closest('ul');
+        selectedHorizontalSubMenu.closest('li').find('a').first().addClass('active'); // set main manu item active if sub navi is selected
 
     },
 
@@ -236,17 +236,17 @@ foodcoopshop.Helper = {
             var activeEntityWrapper = $('#entity-wrapper-' + id);
             activeEntityWrapper.addClass('active');
             activeEntityWrapper.show();
-        })
+        });
     },
 
     addSpinnerToButton: function (button, iconClass) {
         button.find('i').removeClass(iconClass);
-        button.find('i').addClass('fa-spinner')
+        button.find('i').addClass('fa-spinner');
         button.find('i').addClass('fa-spin');
     },
 
     removeSpinnerFromButton: function (button, iconClass) {
-        button.find('i').removeClass('fa-spinner')
+        button.find('i').removeClass('fa-spinner');
         button.find('i').removeClass('fa-spin');
         button.find('i').addClass(iconClass);
     },
@@ -281,11 +281,11 @@ foodcoopshop.Helper = {
     },
     
     formatFloatAsString: function(float) {
-    	return float.toFixed(2).replace(/\./, ',');
+        return float.toFixed(2).replace(/\./, ',');
     },
     
     getStringAsFloat: function (string) {
-    	return parseFloat(string.replace(/,/, '.'));
+        return parseFloat(string.replace(/,/, '.'));
     },
 
     bindToggleLinks: function (autoOpen) {
@@ -405,15 +405,15 @@ foodcoopshop.Helper = {
     },
 
     initTooltip: function (container, trigger) {
-        var trigger = trigger || 'hover';
+        trigger = trigger || 'hover';
         $(container).each(function() {
             var title = $(this).attr('title');
             $(this).not('.tooltipstered').tooltipster({
-            	contentAsHTML: true,
-            	interactive: true,
-            	maxWidth: 400,
-            	trigger: trigger,
-            	theme: ['tooltipster-light']
+                contentAsHTML: true,
+                interactive: true,
+                maxWidth: 400,
+                trigger: trigger,
+                theme: ['tooltipster-light']
             });
             $(this).attr('title', title);
         });
@@ -437,7 +437,7 @@ foodcoopshop.Helper = {
     showContent: function () {
         // do not use jquery .animate() or .show() here, if loaded in iframe and firefox, this does not work
         // only css('display') works
-        $('body:not(.cake_errors) #container').css('display', 'block')
+        $('body:not(.cake_errors) #container').css('display', 'block');
     },
 
     initCkeditor: function (name) {
@@ -541,8 +541,8 @@ foodcoopshop.Helper = {
      */
     resolveIndex : function (path, obj) {
         return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : undefined
-        }, obj || self)
+            return prev ? prev[curr] : undefined;
+        }, obj || self);
     },
 
     getRandomCode: function () {

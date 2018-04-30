@@ -20,7 +20,7 @@ foodcoopshop.Cart = {
      */
     initCartProducts: function (cartProducts) {
 
-        var cartProducts = $.parseJSON(cartProducts);
+        cartProducts = $.parseJSON(cartProducts);
         if (cartProducts.length == 0) {
             return;
         }
@@ -61,8 +61,8 @@ foodcoopshop.Cart = {
     },
 
     initCartErrors: function (cartErrors) {
-        var cartErrors = $.parseJSON(cartErrors);
-        for (key in cartErrors) {
+        cartErrors = $.parseJSON(cartErrors);
+        for (var key in cartErrors) {
             var productContainer = $('.carts.detail .cart:not(#cart) .product.' + key);
             productContainer.addClass('error');
             productContainer.after('<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>');
@@ -70,7 +70,7 @@ foodcoopshop.Cart = {
     },
 
     updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours) {
-    	
+        
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
         oldAmount.html(parseInt(oldAmount.html()) + parseInt(amount));
@@ -107,11 +107,11 @@ foodcoopshop.Cart = {
         // update timebasedCurrencyHours
         var oldTimebasedCurrencyHours = productContainer.find('.timebasedCurrencySeconds');
         if (oldTimebasedCurrencyHours.length > 0) {
-	        var newTimebasedCurrencyHours =  (
-	        		foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(oldTimebasedCurrencyHours.html()) +
-	        		(timebasedCurrencyHours * amount)
-	        );
-	        oldTimebasedCurrencyHours.html(foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(newTimebasedCurrencyHours));
+            var newTimebasedCurrencyHours =  (
+                foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(oldTimebasedCurrencyHours.html()) +
+                    (timebasedCurrencyHours * amount)
+            );
+            oldTimebasedCurrencyHours.html(foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(newTimebasedCurrencyHours));
         }
     },
 
@@ -147,9 +147,9 @@ foodcoopshop.Cart = {
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
             var timebasedCurrencyHours = 0;
             if (timebasedCurrencyElement.length > 0) {
-            	timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(
-        			timebasedCurrencyElement.html()
-    			);
+                timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(
+                    timebasedCurrencyElement.html()
+                );
             }
             
             var productContainer = $('#cart p.products .product.' + productId);
@@ -255,10 +255,10 @@ foodcoopshop.Cart = {
             var newTax = tax / oldAmount;
             
             var timebasedCurrencyHoursContainer = productContainer.find('.timebasedCurrencySeconds');
-        	var newTimebasedCurrencyHours = 0;
+            var newTimebasedCurrencyHours = 0;
             if (timebasedCurrencyHoursContainer.length > 0) {
-            	var timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHoursContainer.html())
-            	newTimebasedCurrencyHours = timebasedCurrencyHours / oldAmount;
+                var timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHoursContainer.html());
+                newTimebasedCurrencyHours = timebasedCurrencyHours / oldAmount;
             }
             
             var depositContainer = productContainer.find('.deposit span');
@@ -271,7 +271,7 @@ foodcoopshop.Cart = {
             var elementClass = $(this).find('i').attr('class');
             var amount = 1;
             if (elementClass.match(/minus/)) {
-                var amount = -1;
+                amount = -1;
             }
 
             var button = $(this);
@@ -318,8 +318,8 @@ foodcoopshop.Cart = {
 
     getCartProductHtml: function (productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours) {
         var imgHtml = '<span class="image">' + image + '</span>';
-        if (!$(image).attr('src').match(/de\-default\-home/)) {
-            imgHtml = '<a href="'  + $(image).attr('src').replace(/\-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
+        if (!$(image).attr('src').match(/de-default-home/)) {
+            imgHtml = '<a href="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
         }
         return '<span data-product-id="' + productId + '" class="product' + ' ' + productId + '">' +
                 imgHtml +
@@ -374,13 +374,13 @@ foodcoopshop.Cart = {
     updateCartTimebasedCurrencySum: function (amount) {
         var cartTimebasedCurrencySum = $('.cart p.timebased-currency-sum-wrapper span.sum');
         if (cartTimebasedCurrencySum.length > 0) {
-        	var newHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(cartTimebasedCurrencySum.html()) + amount;
-	        cartTimebasedCurrencySum.html(
-	            foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(
-	                newHours
-	            )
-	        );
-	        foodcoopshop.TimebasedCurrency.updateHoursSumDropdown(newHours, $('#timebased-currency-order-seconds-sum-tmp').find(':selected').val());
+            var newHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(cartTimebasedCurrencySum.html()) + amount;
+            cartTimebasedCurrencySum.html(
+                foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(
+                    newHours
+                )
+            );
+            foodcoopshop.TimebasedCurrency.updateHoursSumDropdown(newHours, $('#timebased-currency-order-seconds-sum-tmp').find(':selected').val());
         }
     },
 
@@ -413,9 +413,9 @@ foodcoopshop.Cart = {
                         );
                         var timebasedCurrencyHours = p.find('.timebasedCurrencySeconds');
                         if (timebasedCurrencyHours.length > 0) {
-	                        foodcoopshop.Cart.updateCartTimebasedCurrencySum(
-	                            foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHours.html()) * -1
-	                        );
+                            foodcoopshop.Cart.updateCartTimebasedCurrencySum(
+                                foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHours.html()) * -1
+                            );
                         }
                     }
                     p.slideUp(500, function () {
@@ -452,44 +452,47 @@ foodcoopshop.Cart = {
     },
     
     initLoadLastOrderDetailsDropdown : function() {
-    	$('#load-last-order-details').on('change', function() {
-    		var selectedValue = $(this).val();
-    		if (selectedValue != '') {
-    			if (selectedValue == 'remove-all-products-from-cart') {
-    				var title = 'Warenkorb leeren';
-        			var dialogHtml = '<p>Möchtest du den aktuellen Warenkorb wirklich leeren?</p>';
-        			var redirectUrl = '/warenkorb/' + 'emptyCart/';
-    			} else {
-    				var title = 'Vergangene Bestellung laden';
-        			var dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
-    				dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>';
-    				var redirectUrl = '/warenkorb/' + 'addOrderToCart/' + selectedValue;
-    			}
-				dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+        $('#load-last-order-details').on('change', function() {
+            var selectedValue = $(this).val();
+            if (selectedValue != '') {
+                var title = '';
+                var dialogHtml = '';
+                var redirectUrl = '';
+                if (selectedValue == 'remove-all-products-from-cart') {
+                    title = 'Warenkorb leeren';
+                    dialogHtml = '<p>Möchtest du den aktuellen Warenkorb wirklich leeren?</p>';
+                    redirectUrl = '/warenkorb/' + 'emptyCart/';
+                } else {
+                    title = 'Vergangene Bestellung laden';
+                    dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
+                    dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>';
+                    redirectUrl = '/warenkorb/' + 'addOrderToCart/' + selectedValue;
+                }
+                dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
                 $('<div></div>').appendTo('body')
-                .html(dialogHtml)
-                .dialog({
-                    modal: true,
-                    title: title,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: {
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
+                    .html(dialogHtml)
+                    .dialog({
+                        modal: true,
+                        title: title,
+                        autoOpen: true,
+                        width: 400,
+                        resizable: false,
+                        buttons: {
+                            'Abbrechen': function () {
+                                $(this).dialog('close');
+                            },
+                            'Ja': function () {
+                                $('.ui-dialog .ajax-loader').show();
+                                $('.ui-dialog button').attr('disabled', 'disabled');
+                                document.location.href = redirectUrl;
+                            }
                         },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                			document.location.href = redirectUrl;
+                        close: function (event, ui) {
+                            $(this).remove();
                         }
-                    },
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-    		}
-    	});
+                    });
+            }
+        });
     }
 
 };

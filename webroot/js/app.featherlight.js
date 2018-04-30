@@ -51,13 +51,13 @@ foodcoopshop.AppFeatherlight = {
     },
 
     initLightboxForHref: function (container) {
-          var configuration = this.initLightbox({
-                afterContent : function () {
-                    $('.featherlight-inner').addClass('href');
-                    foodcoopshop.AppFeatherlight.setMaxHeightInner();
-                }
-            });
-          $(container).featherlight(configuration);
+        var configuration = this.initLightbox({
+            afterContent : function () {
+                $('.featherlight-inner').addClass('href');
+                foodcoopshop.AppFeatherlight.setMaxHeightInner();
+            }
+        });
+        $(container).featherlight(configuration);
     },
 
     initLightboxForImages: function (container) {
@@ -139,9 +139,9 @@ foodcoopshop.AppFeatherlight = {
 
                 },
 
-            afterClose: function () {
-                lightboxCloseMethod();
-            }
+                afterClose: function () {
+                    lightboxCloseMethod();
+                }
 
             });
 
@@ -174,7 +174,7 @@ foodcoopshop.AppFeatherlight = {
         if (img.attr('src') != img.data('src')) {
             img.on('load', function () {
                 $(this).removeClass('loading');
-            }).attr('src', img.data('src'));;
+            }).attr('src', img.data('src'));
         }
     }
 

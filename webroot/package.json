@@ -31,5 +31,8 @@
     "owl.carousel": "^2.3.4",
     "slidebars": "^2.0.2",
     "tooltipster": "^4.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
   }
 }

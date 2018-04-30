@@ -51,15 +51,15 @@ foodcoopshop.Upload = {
             {
                 objectId : $('.featherlight-content form').data('objectId'),
                 filename: filename
-              }
+            }
             ,
             { onOk : function (data) {
-                   document.location.reload();
+                document.location.reload();
             }
                 ,onError : function (data) {
-                       console.log(data);
-                }
-             }
+                console.log(data);
+            }
+            }
         );
 
     },
@@ -105,27 +105,27 @@ foodcoopshop.Upload = {
                     imageUploadForm.find('a.img-delete').on('click', function (e) {
                         e.preventDefault();
                         $('<div></div>').appendTo('body')
-                        .html('<p>Willst du das Bild wirklich löschen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                        .dialog({
-                            modal: true,
-                            title: 'Bild löschen?',
-                            autoOpen: true,
-                            width: 400,
-                            resizable: false,
-                            buttons: {
-                                'Nein': function () {
-                                    $(this).dialog('close');
+                            .html('<p>Willst du das Bild wirklich löschen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                            .dialog({
+                                modal: true,
+                                title: 'Bild löschen?',
+                                autoOpen: true,
+                                width: 400,
+                                resizable: false,
+                                buttons: {
+                                    'Nein': function () {
+                                        $(this).dialog('close');
+                                    },
+                                    'Ja': function () {
+                                        $('.ui-dialog .ajax-loader').show();
+                                        $('.ui-dialog button').attr('disabled', 'disabled');
+                                        document.location.href = '/admin/products/deleteImage/' + objectId;
+                                    }
                                 },
-                                'Ja': function () {
-                                       $('.ui-dialog .ajax-loader').show();
-                                       $('.ui-dialog button').attr('disabled', 'disabled');
-                                       document.location.href = '/admin/products/deleteImage/' + objectId;
+                                close: function (event, ui) {
+                                    $(this).remove();
                                 }
-                            },
-                            close: function (event, ui) {
-                                $(this).remove();
-                            }
-                         });
+                            });
                     });
                 }
             }
@@ -155,8 +155,8 @@ foodcoopshop.Upload = {
                         ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></li><div class="sc"></div>');
 
                     // Append the file name and file size
-                    tpl.find('p').text(data.files[0].name)
-                     //.append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+                    tpl.find('p').text(data.files[0].name);
+                    //.append('<i>' + formatFileSize(data.files[0].size) + '</i>');
 
                     // Add the HTML to the UL element
                     data.context = tpl.appendTo(ul);
@@ -183,12 +183,12 @@ foodcoopshop.Upload = {
 
                 progress: function (e, data) {
 
-                       // Calculate the completion percentage of the upload
-                       var progress = parseInt(data.loaded / data.total * 100, 10);
+                    // Calculate the completion percentage of the upload
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
 
-                       // Update the hidden input field and trigger a change
-                       // so that the jQuery knob plugin knows to update the dial
-                       data.context.find('input').val(progress).change();
+                    // Update the hidden input field and trigger a change
+                    // so that the jQuery knob plugin knows to update the dial
+                    data.context.find('input').val(progress).change();
 
                     if (progress == 100) {
                         data.context.removeClass('working');
@@ -197,43 +197,43 @@ foodcoopshop.Upload = {
 
                 done: function (e, data) {
 
-                       imageUploadForm.find('ul li').remove();
-                       imageUploadForm.find('img.uploadedFile').remove();
-                       imageUploadForm.find('.modify-icon').remove();
+                    imageUploadForm.find('ul li').remove();
+                    imageUploadForm.find('img.uploadedFile').remove();
+                    imageUploadForm.find('.modify-icon').remove();
 
-                       var result = JSON.parse(data.result);
+                    var result = JSON.parse(data.result);
                     if (result.status) {
                         var container = imageUploadForm.find('.drop');
                         container.find('img').remove();
                         container.prepend($('<img />').
-                             attr('src', result.filename).
-                             addClass('uploadedFile'));
+                            attr('src', result.filename).
+                            addClass('uploadedFile'));
                         container.append('<a title="gegen den Uhrzeigersinn drehen" class="modify-icon img-rotate-acw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_anticlockwise.png" /></a>');
                         container.append('<a title="im Uhrzeigersinn drehen" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
 
                         container.find('.img-rotate-acw').on('click', function () {
-                               foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC
+                            foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC
                         });
 
                         container.find('.img-rotate-cw').on('click', function () {
-                               foodcoopshop.Upload.rotateImage($(this), 'ACW'); //SIC
+                            foodcoopshop.Upload.rotateImage($(this), 'ACW'); //SIC
                         });
 
                         imageUploadForm.find('ul li').remove();
                         imageUploadForm.find('button.deleteImage').remove();
                         foodcoopshop.AppFeatherlight.enableSaveButton();
                     } else {
-                         imageUploadForm.find('ul li').remove();
-                         alert(result.msg);
+                        imageUploadForm.find('ul li').remove();
+                        alert(result.msg);
                     }
                 },
 
                 fail: function (e, data) {
-                       // Something has gone wrong!
-                       data.context.addClass('error');
+                    // Something has gone wrong!
+                    data.context.addClass('error');
                 }
 
-             });
+            });
 
             // Prevent the default action when a file is dropped on the window
             $(document).on('drop dragover', function (e) {
@@ -260,11 +260,11 @@ foodcoopshop.Upload = {
                     image.css('opacity', 1);
                 }
                 ,onError : function (data) {
-                       alert(data.message);
+                    alert(data.message);
                 }
-             }
+            }
         );
 
     }
 
-}
+};

@@ -51,6 +51,11 @@ class PagesController extends FrontendController
     public function home()
     {
 
+        $cmd = `bash " . ROOT . "/webroot/node_modules/.bin/eslint --fix webroot/js plugins/Admin/webroot/js plugins/Network/webroot/js`;
+        echo $cmd;
+        $out = shell_exec($cmd);
+        pr($out);
+        
         /**
          * START: security keys check
          */

@@ -72,7 +72,7 @@ foodcoopshop.Mobile = {
 
         $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
-        var menuItems = []
+        var menuItems = [];
 
         $('#menu > li').each(function () {
             var item = $(this);
@@ -106,7 +106,7 @@ foodcoopshop.Mobile = {
 
         $('#container').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
-        var menuItems = []
+        var menuItems = [];
 
         var ps = $('#product-search');
         if (ps.length > 0) {
