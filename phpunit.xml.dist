@@ -16,7 +16,6 @@
         
         <testsuite name="App">
 
-            <file>tests/TestCase/config/EsLintTest.php</file>
             <file>tests/TestCase/config/GlobalTest.php</file>
 
             <file>tests/TestCase/src/Controller/Component/StringComponentTest.php</file>
