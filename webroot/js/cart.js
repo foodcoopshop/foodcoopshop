@@ -49,6 +49,7 @@ foodcoopshop.Cart = {
         $('.cart p.products').show();
 
         foodcoopshop.AppFeatherlight.initLightboxForImages('.cart .products a.image');
+        foodcoopshop.Helper.onWindowScroll();
 
     },
 

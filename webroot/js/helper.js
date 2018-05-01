@@ -195,7 +195,12 @@ foodcoopshop.Helper = {
         $('.inner-right').css('left', newLeft);
 
         // adapt height of cart
-        $('#cart p.products').css('max-height', parseInt($(window).height()) - 145);
+        var difference = 150;
+        var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
+        if (loadLastOrderDetailsDropdown.length > 0) {
+            difference += loadLastOrderDetailsDropdown.closest('.input').height();
+        }
+        $('#cart p.products').css('max-height', parseInt($(window).height()) - difference);
 
     },
 
