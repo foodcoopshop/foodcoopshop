@@ -419,7 +419,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         foreach ($orders as $order) {
             foreach ($order->order_details as $orderDetail) {
-                $this->assertFalse($orderDetail->product_quantity == 0, 'product quantity must not be 0!');
+                $this->assertFalse($orderDetail->product_amount == 0, 'product amount must not be 0!');
             }
         }
     }
@@ -507,12 +507,12 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
     }
     
-    private function checkOrderDetails($orderDetail, $name, $quantity, $productAttributeId, $deposit, $productPrice, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
+    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $productPrice, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
     {
 
         // check order_details
         $this->assertEquals($orderDetail->product_name, $name, '%s order_detail product name was not correct');
-        $this->assertEquals($orderDetail->product_quantity, $quantity, 'order_detail quantity was not correct');
+        $this->assertEquals($orderDetail->product_amount, $amount, 'order_detail amount was not correct');
         $this->assertEquals($orderDetail->product_attribute_id, $productAttributeId, 'order_detail product_attribute_id was not correct');
         $this->assertEquals($orderDetail->deposit, $deposit, 'order_detail deposit was not correct');
         $this->assertEquals($orderDetail->product_price, $productPrice, 'order_detail product_price was not correct');

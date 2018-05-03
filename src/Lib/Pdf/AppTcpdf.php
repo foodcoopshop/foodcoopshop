@@ -59,7 +59,7 @@ class AppTcpdf extends TCPDF
         $i = 0;
 
         foreach ($results as $result) {
-            $amount = $result['OrderDetailQuantity'];
+            $amount = $result['OrderDetailAmount'];
             $priceIncl = $result['OrderDetailPriceIncl'];
             $priceExcl = $result['OrderDetailPriceExcl'];
             $tax = $result['OrderDetailTaxAmount'];

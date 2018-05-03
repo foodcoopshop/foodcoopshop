@@ -75,7 +75,7 @@ return [
         'defaultSendShopOrderNotification' => true,
         'defaultSendOrderedProductDeletedNotification' => true,
         'defaultSendOrderedProductPriceChangedNotification' => true,
-        'defaultSendOrderedProductQuantityChangedNotification' => true,
+        'defaultSendOrderedProductAmountChangedNotification' => true,
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',

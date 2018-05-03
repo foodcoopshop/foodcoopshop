@@ -117,14 +117,14 @@ class ManufacturersTable extends AppTable
     }
     
     /**
-     * @param $boolean $sendOrderedProductQuantityChangedNotification
+     * @param $boolean $sendOrderedProductAmountChangedNotification
      * @return boolean
      */
-    public function getOptionSendOrderedProductQuantityChangedNotification($sendOrderedProductQuantityChangedNotification)
+    public function getOptionSendOrderedProductAmountChangedNotification($sendOrderedProductAmountChangedNotification)
     {
-        $result = $sendOrderedProductQuantityChangedNotification;
-        if (is_null($sendOrderedProductQuantityChangedNotification)) {
-            $result = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+        $result = $sendOrderedProductAmountChangedNotification;
+        if (is_null($sendOrderedProductAmountChangedNotification)) {
+            $result = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
         return (boolean) $result;
     }
@@ -459,7 +459,7 @@ class ManufacturersTable extends AppTable
         od.id_order_detail AS OrderDetailId,
         od.product_id AS ProductId,
         od.product_name AS ProductName,
-        od.product_quantity AS OrderDetailQuantity,
+        od.product_amount AS OrderDetailAmount,
         od.total_price_tax_incl AS OrderDetailPriceIncl,
         od.total_price_tax_excl as OrderDetailPriceExcl,
         DATE_FORMAT (o.date_add, '%d.%m.%Y') as OrderDateAdd,

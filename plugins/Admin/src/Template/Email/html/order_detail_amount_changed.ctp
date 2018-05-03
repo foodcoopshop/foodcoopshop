@@ -29,8 +29,8 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alte Anzahl: <b><?php echo $oldOrderDetail->product_quantity; ?></b></li>
-                <li>Neue Anzahl: <b><?php echo $newOrderDetail->product_quantity; ?></b></li>
+                <li>Alte Anzahl: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
+                <li>Neue Anzahl: <b><?php echo $newOrderDetail->product_amount; ?></b></li>
             </ul>
 
             <p>

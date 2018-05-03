@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
-            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductAmountEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
@@ -130,7 +130,7 @@ if (count($orderDetails) > 0 && $groupBy == '') {
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.product_quantity', 'Anzahl');
+    echo $this->Paginator->sort('OrderDetails.product_amount', 'Anzahl');
 echo '</th>';
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<th>';
@@ -173,7 +173,7 @@ foreach ($orderDetails as $orderDetail) {
     $i ++;
     if ($groupBy == '') {
         $sumPrice += $orderDetail->total_price_tax_incl;
-        $sumAmount += $orderDetail->product_quantity;
+        $sumAmount += $orderDetail->product_amount;
         $sumDeposit += $orderDetail->deposit;
     } else {
         $sumPrice += $orderDetail['sum_price'];
@@ -208,20 +208,20 @@ foreach ($orderDetails as $orderDetail) {
             ]);
         }
         
-        echo '<div class="table-cell-wrapper quantity">';
+        echo '<div class="table-cell-wrapper amount">';
         if ($groupBy == '') {
-            if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
+            if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'order-detail-product-quantity-edit-button',
+                    'class' => 'order-detail-product-amount-edit-button',
                     'title' => 'Zum Ändern der Anzahl anklicken'
                 ], 'javascript:void(0);');
             }
-            $quantity = $orderDetail->product_quantity;
+            $amount = $orderDetail->product_amount;
             $style = '';
-            if ($quantity > 1) {
+            if ($amount > 1) {
                 $style = 'font-weight:bold;';
             }
-            echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
+            echo '<span class="product-amount-for-dialog" style="' . $style . '">' . $amount . '</span><span style="' . $style . '">x</span>';
         } else {
             echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }

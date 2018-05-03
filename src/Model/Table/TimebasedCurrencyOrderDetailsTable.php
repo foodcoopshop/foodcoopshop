@@ -34,24 +34,24 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     /**
      * @param OrderDetail $orderDetail
      * @param float $price
-     * @param int $quantity
+     * @param int $amount
      */
-    public function changePrice($orderDetail, $price, $quantity)
+    public function changePrice($orderDetail, $price, $amount)
     {
         
         $manufacturerTable = TableRegistry::getTableLocator()->get('Manufacturers');
         
         $maxPercentage = $orderDetail->timebased_currency_order_detail->max_percentage;
-        $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $quantity;
+        $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $amount;
         $netProductPricePerUnit = $this->OrderDetails->Products->getNetPrice($orderDetail->product_id, $grossProductPricePerUnit);
         
         $this->save(
             $this->patchEntity(
                 $orderDetail->timebased_currency_order_detail,
                 [
-                    'money_incl' => round($manufacturerTable->getTimebasedCurrencyMoney($grossProductPricePerUnit, $maxPercentage), 2) * $quantity,
-                    'money_excl' => round($manufacturerTable->getTimebasedCurrencyMoney($netProductPricePerUnit, $maxPercentage), 2) * $quantity,
-                    'seconds' => $manufacturerTable->getCartTimebasedCurrencySeconds($grossProductPricePerUnit, $maxPercentage) * $quantity
+                    'money_incl' => round($manufacturerTable->getTimebasedCurrencyMoney($grossProductPricePerUnit, $maxPercentage), 2) * $amount,
+                    'money_excl' => round($manufacturerTable->getTimebasedCurrencyMoney($netProductPricePerUnit, $maxPercentage), 2) * $amount,
+                    'seconds' => $manufacturerTable->getCartTimebasedCurrencySeconds($grossProductPricePerUnit, $maxPercentage) * $amount
                 ]
             )
         );
@@ -100,7 +100,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             if (!empty($timebasedCurrencyOrderDetail)) {
                 $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] = $result['OrderDetailPriceExcl'] + $timebasedCurrencyOrderDetail->money_excl;
                 $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] = $result['OrderDetailPriceIncl'] + $timebasedCurrencyOrderDetail->money_incl;
-                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $this->Product->getUnitTax($timebasedCurrencyAwareResult['OrderDetailPriceIncl'], $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] / $result['OrderDetailQuantity'], $result['OrderDetailQuantity']) * $result['OrderDetailQuantity']; 
+                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $this->Product->getUnitTax($timebasedCurrencyAwareResult['OrderDetailPriceIncl'], $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] / $result['OrderDetailAmount'], $result['OrderDetailAmount']) * $result['OrderDetailAmount']; 
                 $timebasedCurrencyAwareResult['OrderDetailTimebasedCurrencyPriceInclAmount'] = $timebasedCurrencyOrderDetail->money_incl;
                 $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = true;
             }

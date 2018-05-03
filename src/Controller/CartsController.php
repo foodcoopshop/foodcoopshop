@@ -309,19 +309,19 @@ class CartsController extends FrontendController
         $orderDetailTax2save = [];
         $this->OrderDetailTax = TableRegistry::getTableLocator()->get('OrderDetailTaxes');
         foreach ($orderDetails as $orderDetail) {
-            // should not be necessary but a user somehow managed to set product_quantity as 0
-            $quantity = $orderDetail->product_quantity;
-            if ($quantity == 0) {
-                $this->log('product_quantity was 0, would have resulted in division by zero error');
+            // should not be necessary but a user somehow managed to set product_amount as 0
+            $amount = $orderDetail->product_amount;
+            if ($amount == 0) {
+                $this->log('product_amount was 0, would have resulted in division by zero error');
                 continue;
             }
             
             $productId = $orderDetail->product_id;
             $price = $orderDetail->total_price_tax_incl;
             
-            $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $quantity);
-            $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $quantity);
-            $totalTaxAmount = $unitTaxAmount * $quantity;
+            $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $amount);
+            $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $amount);
+            $totalTaxAmount = $unitTaxAmount * $amount;
             
             $orderDetailTax2save[] = [
                 'id_order_detail' => $orderDetail->id_order_detail,
@@ -453,7 +453,7 @@ class CartsController extends FrontendController
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
                 'product_name' => $this->Cart->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
-                'product_quantity' => $cartProduct['amount'],
+                'product_amount' => $cartProduct['amount'],
                 'product_price' => $cartProduct['priceExcl'],
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
@@ -727,7 +727,7 @@ class CartsController extends FrontendController
         if (count($orderDetails) > 0) {
             $newCartProductsData = [];
             foreach($orderDetails as $orderDetail) {
-                $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_quantity);
+                $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
                     $errorMessages[] = $result['msg'];
                     $loadedProducts--;

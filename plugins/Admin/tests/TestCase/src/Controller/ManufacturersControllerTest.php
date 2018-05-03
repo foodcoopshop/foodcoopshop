@@ -119,7 +119,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendOrderList = false;
         $newSendInvoice = false;
         $newSendOrderedProductPriceChangedNotification = false;
-        $newSendOrderedProductQuantityChangedNotification = false;
+        $newSendOrderedProductAmountChangedNotification = false;
         $newSendShopOrderNotification = false;
         $newBulkOrdersAllowed = false;
         $newDefaultTaxId = 3;
@@ -143,7 +143,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->setFieldById('manufacturers-send-order-list-cc', implode(',', $newSendOrderListCc)); // correct
 
         $this->browser->setFieldById('manufacturers-send-ordered-product-price-changed-notification', $newSendOrderedProductPriceChangedNotification);// do not use 0 here
-        $this->browser->setFieldById('manufacturers-send-ordered-product-quantity-changed-notification', $newSendOrderedProductQuantityChangedNotification); // do not use 0 here
+        $this->browser->setFieldById('manufacturers-send-ordered-product-amount-changed-notification', $newSendOrderedProductAmountChangedNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-send-shop-order-notification', $newSendShopOrderNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-bulk-orders-allowed', $newBulkOrdersAllowed); // do not use 0 here
         $this->browser->setFieldById('manufacturers-default-tax-id', $newDefaultTaxId); // do not use 0 here
@@ -168,8 +168,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($manufacturerNew->send_ordered_product_price_changed_notification);
         $this->assertEquals($sendOrderedProductPriceChangedNotification, $newSendOrderedProductPriceChangedNotification, 'saving option send_ordered_product_price_changed_notification failed');
 
-        $sendOrderedProductQuantityChangedNotification = $this->Manufacturer->getOptionSendOrderedProductQuantityChangedNotification($manufacturerNew->send_ordered_product_quantity_changed_notification);
-        $this->assertEquals($sendOrderedProductQuantityChangedNotification, $newSendOrderedProductQuantityChangedNotification, 'saving option send_ordered_product_quantity_changed_notification failed');
+        $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($manufacturerNew->send_ordered_product_amount_changed_notification);
+        $this->assertEquals($sendOrderedProductAmountChangedNotification, $newSendOrderedProductAmountChangedNotification, 'saving option send_ordered_product_amount_changed_notification failed');
 
         $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturerNew->send_shop_order_notification);
         $this->assertEquals($sendShopOrderNotification, $newSendShopOrderNotification, 'saving option send_shop_order_notification failed');

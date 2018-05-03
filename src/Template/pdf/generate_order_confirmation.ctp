@@ -77,10 +77,10 @@ if (!empty($manufacturers)) {
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
             $quantityStyle = '';
-            if ($orderDetail->product_quantity > 1) {
+            if ($orderDetail->product_amount > 1) {
                 $quantityStyle = ' background-color:#cecece;';
             }
-            $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_quantity . 'x</td>';
+            $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
             $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
             $pdf->table .= '<td style="text-align: right"; width="' . $widths[2] . '">' . $this->Html->formatAsEuro($orderDetail->total_price_tax_incl) . '</td>';
 
@@ -94,7 +94,7 @@ if (!empty($manufacturers)) {
             $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">' . $deposit . '</td>';
 
             $sumPrice += $orderDetail->total_price_tax_incl;
-            $sumQuantity += $orderDetail->product_quantity;
+            $sumQuantity += $orderDetail->product_amount;
 
             $sumOrderDetailTax += $orderDetail->order_detail_tax->total_amount;
 

@@ -18,6 +18,11 @@ class PricePerUnit extends AbstractMigration
               UNIQUE KEY `id_product` (`id_product`),
               UNIQUE KEY `id_product_attribute` (`id_product_attribute`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+            ALTER TABLE `fcs_order_detail` CHANGE `product_quantity` `product_amount` INT(10) UNSIGNED NOT NULL DEFAULT '0';
+            ALTER TABLE `fcs_manufacturer` CHANGE `send_ordered_product_quantity_changed_notification` `send_ordered_product_amount_changed_notification` INT(10) UNSIGNED NULL DEFAULT NULL;
+            UPDATE fcs_action_logs set type = 'order_detail_product_amount_changed' WHERE type = 'order_detail_product_quantity_changed';
+
         ");
     }
     

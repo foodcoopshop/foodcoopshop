@@ -383,7 +383,7 @@ div.cke {
 #cke_configurations-value,
 #cke_dialogCancellationReason,
 #cke_dialogEditPriceReason,
-#cke_dialogEditQuantityReason {
+#cke_dialogEditAmountReason {
     float: left;
 }
 #product-name-edit-form div.textarea-wrapper {
@@ -416,7 +416,7 @@ body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.i
 #product-name-edit-form div.textarea-wrapper a:hover  {
   color: #333;
 }
-#order-detail-product-quantity-edit-form div.textarea-wrapper {
+#order-detail-product-amount-edit-form div.textarea-wrapper {
     float: left;
     margin-top: 10px;
 }

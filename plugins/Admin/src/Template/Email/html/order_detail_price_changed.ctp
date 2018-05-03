@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Der Preis des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde korrigiert. Du hast <?php echo $oldOrderDetail->product_quantity; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
+                Der Preis des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde korrigiert. Du hast <?php echo $oldOrderDetail->product_amount; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
                 bestellt.
             </p>
 
