@@ -221,7 +221,6 @@ class CartsController extends FrontendController
                             $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
                             
                             // override prices from timebased_currency adapted cart
-                            $orderDetail['product_price'] = $cartProduct['priceExcl'];
                             $orderDetail['total_price_tax_excl'] = $cartProduct['priceExcl'];
                             $orderDetail['total_price_tax_incl'] = $cartProduct['price'];
                         }
@@ -454,7 +453,6 @@ class CartsController extends FrontendController
                 'product_attribute_id' => $ids['attributeId'],
                 'product_name' => $this->Cart->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
                 'product_amount' => $cartProduct['amount'],
-                'product_price' => $cartProduct['priceExcl'],
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
                 'id_tax' => $product->id_tax,

@@ -597,7 +597,6 @@ class OrderDetailsController extends AdminAppController
         $orderDetail2save = [
             'total_price_tax_incl' => $productPrice,
             'total_price_tax_excl' => $totalPriceTaxExcl,
-            'product_price' => $unitPriceExcl,
             'product_amount' => $productAmount,
             'deposit' => $oldOrderDetail->deposit / $oldOrderDetail->product_amount * $productAmount
         ];
