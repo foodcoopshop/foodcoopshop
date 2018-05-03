@@ -508,7 +508,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<b>€</b><br />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="checkbox" name="dialogPricePricePerUnitEnabled" id="dialogPricePricePerUnitEnabled" value="" />';
-        dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Einheit festlegen?</label><br />';
+        dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Einheit verwenden?</label><br />';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
         dialogHtml += '<b>€</b> pro <b>1</b> ';
