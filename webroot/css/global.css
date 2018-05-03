@@ -206,7 +206,8 @@ a.toggle-link.collapsed i:before {
     padding-top: 3px;
     padding-bottom: 3px;
 }
-.vertical.menu a.deactivated {
+.vertical.menu a.deactivated,
+div.deactivated {
     opacity: 0.5;
 }
 .dialog {

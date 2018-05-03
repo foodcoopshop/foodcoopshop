@@ -429,6 +429,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
         dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label> (zum Löschen <b>0</b> eintragen)';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
+        dialogHtml += '<b>€</b><br />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
         dialogHtml += '</form>';
@@ -498,26 +499,43 @@ foodcoopshop.Admin = {
     initProductPriceEditDialog: function (container) {
 
         var dialogId = 'product-price-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogPricePrice">Eingabe in €</label>';
-        dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
+        var dialogHtml = '';
+        dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis ändern">';
+            dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
+                dialogHtml += '<label for="dialogPricePrice"></label><br />';
+                dialogHtml += '<div class="price-wrapper">';
+                    dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
+                    dialogHtml += '<b>€</b><br />';
+                dialogHtml += '</div>';
+                dialogHtml += '<input type="checkbox" name="dialogPricePricePerUnitEnabled" id="dialogPricePricePerUnitEnabled" value="" />';
+                dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Einheit festlegen?</label><br />';
+                dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
+                    dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
+                    dialogHtml += '<b>€</b> pro <b>1</b> ';
+                    dialogHtml += '<input type="text" name="dialogPriceUnitName" id="dialogPriceUnitName" value="" />';
+                    dialogHtml += 'z.B. kg / l';
+                dialogHtml += '</div>';
+                dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
+                dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+            dialogHtml += '</form>';
         dialogHtml += '</div>';
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 200,
+            height: 300,
             width: 350,
             modal: true,
 
             close: function () {
                 $('#dialogPricePrice').val('');
                 $('#dialogPriceProductId').val('');
+                $('#dialogPricePricePerUnitEnabled').prop('checked', false);
+                $('div.price-per-unit-wrapper').addClass('deactivated');
+                $('div.price-wrapper').removeClass('deactivated');
+                $('#dialogPricePriceInclPerUnit').val('');
+                $('#dialogPriceUnitName').val('');
             },
 
             buttons: {
@@ -557,11 +575,39 @@ foodcoopshop.Admin = {
 
             }
         });
+        
+        $('#' + dialogId + ' #dialogPricePricePerUnitEnabled').on('change', function() {
+            var priceAsUnitWrapper = $('#' + dialogId + ' .price-per-unit-wrapper');
+            var priceWrapper = $('#' + dialogId + ' .price-wrapper');
+            if (this.checked) {
+                priceAsUnitWrapper.removeClass('deactivated');
+                priceWrapper.addClass('deactivated');
+            } else {
+                priceAsUnitWrapper.addClass('deactivated');
+                priceWrapper.removeClass('deactivated');
+            }
+        });        
 
         $('.product-price-edit-button').on('click', function () {
+            
             var row = $(this).closest('tr');
+            var productId = row.find('td:nth-child(1)').html();
+            
+            var unitData = {};
+            var unitObject = $('#product-unit-object-' + productId);
+            if (unitObject.length > 0) {
+                unitData = unitObject.data('product-unit-object');
+                if (unitData.price_per_unit_enabled === 1) {
+                    var checkbox = $('#' + dialogId + ' #dialogPricePricePerUnitEnabled');
+                    checkbox.prop('checked', true);
+                    checkbox.trigger('change');
+                }
+                $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(foodcoopshop.Helper.formatFloatAsString(unitData.price_incl_per_unit));
+                $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
+            }
+            
             $('#' + dialogId + ' #dialogPricePrice').val(row.find('span.price-for-dialog').html());
-            $('#' + dialogId + ' #dialogPriceProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogPriceProductId').val(productId);
             $('#' + dialogId + ' label[for="dialogPricePrice"]').html(row.find('span.name-for-dialog').html());
             dialog.dialog('open');
         });
@@ -1517,6 +1563,10 @@ foodcoopshop.Admin = {
         elementToAttach.data('timebased-currency-object', $.parseJSON(timebasedCurrencyObject));
     },
     
+    setProductUnitData : function(elementToAttach, productUnitObject) {
+        elementToAttach.data('product-unit-object', $.parseJSON(productUnitObject));
+    },
+
     initOrderDetailProductPriceEditDialog: function (container) {
 
         $('#cke_dialogPriceEditReason').val('');

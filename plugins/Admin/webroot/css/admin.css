@@ -174,10 +174,10 @@ form.fcs-form .bootstrap-select {
     top: 10px;
 }
 #product-name-edit-form input[type="text"],
-#product-price-edit-form input,
-#product-deposit-edit-form input,
+#product-price-edit-form input[type="text"],
+#product-deposit-edit-form input[type="text"],
 #product-name-edit-form textarea,
-#product-quantity-edit-form input {
+#product-quantity-edit-form input[type="text"] {
     width: 300px;
     margin-bottom: 10px;
 }
@@ -823,11 +823,26 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#order-detail-product-price-edit-form input {
+#order-detail-product-price-edit-form input[type="text"],
+#product-price-edit-form input[type="text"],
+#product-deposit-edit-form input[type="text"] {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
     width: 75px;
+}
+#product-price-edit-form input[type="checkbox"] {
+	float: left;
+}
+.checkbox-label {
+	margin-top: 4px;
+	margin-left: 5px;
+	float: left;
+}
+#product-price-edit-form .price-per-unit-wrapper {
+	width: 100%;
+	float: left;
+	margin-top: 5px;
 }
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;

@@ -311,25 +311,29 @@ use Cake\Core\Configure;
 
         echo '</td>';
 
+        if (!empty($product->unit)) {
+            echo '<span id="product-unit-object-'.$product->id_product.'" class="product-unit-object"></span>';
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Admin.setProductUnitData($('#product-unit-object-".$product->id_product."'),'".json_encode($product->unit)."');"
+            ]);
+        }
+        
         echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
-        if (empty($product->product_attributes)) {
-            if (empty($product->unit)) {
-                echo '<span class="price-for-dialog">';
+	        if (empty($product->product_attributes)) {
+	            echo '<span class="price-for-dialog '.(!empty($product->unit) ? 'hide' : '').'">';
                     echo $this->Html->formatAsDecimal($product->gross_price);
                 echo '</span>';
-            } else {
-                echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . '&nbsp;/&nbsp;' . $product->unit->name;
-            }
-        }
-        if (empty($product->product_attributes)) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'product-price-edit-button',
-                'title' => 'Preis ändern'
-            ], 'javascript:void(0);');
-        }
-        echo '</div>';
-        echo '</td>';
+                if (!empty($product->unit)) {
+                    echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . '&nbsp;/&nbsp;' . $product->unit->name;
+                }
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                    'class' => 'product-price-edit-button',
+                    'title' => 'Preis ändern'
+                ], 'javascript:void(0);');
+    	    }
+    	    echo '</div>';
+	    echo '</td>';
 
         echo '<td>';
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
