@@ -427,9 +427,9 @@ foodcoopshop.Admin = {
         var dialogId = 'product-deposit-edit-form';
         var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand">';
         dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label> (zum Löschen <b>0</b> eintragen)';
+        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label><br />';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
-        dialogHtml += '<b>€</b><br />';
+        dialogHtml += '<b>€</b> (zum Löschen <b>0</b> eintragen)<br />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
         dialogHtml += '</form>';
@@ -490,7 +490,8 @@ foodcoopshop.Admin = {
             var row = $(this).closest('tr');
             $('#' + dialogId + ' #dialogDepositDeposit').val(row.find('span.deposit-for-dialog').html());
             $('#' + dialogId + ' #dialogDepositProductId').val(row.find('td:nth-child(1)').html());
-            $('#' + dialogId + ' label[for="dialogDepositDeposit"]').html(row.find('span.name-for-dialog').html());
+            var label = foodcoopshop.Admin.getProductNameForDialog(row);
+            $('#' + dialogId + ' label[for="dialogDepositDeposit"]').html(label);
             dialog.dialog('open');
         });
 
@@ -558,6 +559,9 @@ foodcoopshop.Admin = {
                         {
                             productId: $('#dialogPriceProductId').val(),
                             price: $('#dialogPricePrice').val(),
+                            priceInclPerUnit: $('#dialogPricePriceInclPerUnit').val(),
+                            pricePerUnitEnabled: $('#dialogPricePricePerUnitEnabled').val(),
+                            priceUnitName: $('#dialogPriceUnitName').val()
                         },
                         {
                             onOk: function (data) {
@@ -608,10 +612,20 @@ foodcoopshop.Admin = {
             
             $('#' + dialogId + ' #dialogPricePrice').val(row.find('span.price-for-dialog').html());
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
-            $('#' + dialogId + ' label[for="dialogPricePrice"]').html(row.find('span.name-for-dialog').html());
+            var label = foodcoopshop.Admin.getProductNameForDialog(row);
+            $('#' + dialogId + ' label[for="dialogPricePrice"]').html(label);
             dialog.dialog('open');
         });
 
+    },
+    
+    getProductNameForDialog : function(row) {
+        var label = row.find('span.name-for-dialog').html();
+        // show name of main product
+        if (row.hasClass('sub-row')) {
+            label = row.prevAll('.main-product').find('span.name-for-dialog').html() + ': ' + label;
+        }
+        return label;
     },
 
     createProductNameEditDialog: function (container) {
@@ -837,9 +851,11 @@ foodcoopshop.Admin = {
         });
 
         $('.product-quantity-edit-button').on('click', function () {
-            $('#' + dialogId + ' #dialogQuantityQuantity').val($(this).closest('tr').find('span.quantity-for-dialog').html().replace(/\./, ''));
-            $('#' + dialogId + ' #dialogQuantityProductId').val($(this).closest('tr').find('td:nth-child(1)').html());
-            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html($(this).closest('tr').find('span.name-for-dialog').html());
+            var row = $(this).closest('tr');
+            $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
+            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
+            var label = foodcoopshop.Admin.getProductNameForDialog(row);
+            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
             dialog.dialog('open');
         });
 
@@ -1224,21 +1240,23 @@ foodcoopshop.Admin = {
 
     initSetDefaultAttribute: function (container) {
         $(container).find('.set-as-default-attribute-button').on('click', function () {
-            var productIdString = $(this).parent().parent().parent().parent().parent().attr('id').replace(/product-/, '').split('-');
+
+            var row = $(this).closest('tr');
+
+            var productIdString = row.attr('id').replace(/product-/, '').split('-');
             var productId = productIdString[0];
             var attributeId = productIdString[1];
-
-            var dataRow = $(this).parent().parent().parent().parent().parent();
-            var attributeName = dataRow.find('td:nth-child(4) span.name-for-dialog').html();
-            var htmlCode = '<p>Neue Standard-Variante wirklich auf <b>' + attributeName + '</b> ändern?</p>';
-            htmlCode += '<p>Die Standard-Variante ist die Variante, die beim Bestellen vorausgewählt ist.</p>';
+            
+            var label = foodcoopshop.Admin.getProductNameForDialog(row);
+            var htmlCode = '<p>Die Standard-Variante ist die Variante, die beim Bestellen vorausgewählt ist.</p>';
+            htmlCode += '<p>Neue Standard-Variante wirklich auf <b>' + label + '</b> ändern?</p>';
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Neue Standard-Variante für Produkt ändern',
+                    title: 'Standard-Variante ändern',
                     autoOpen: true,
                     width: 450,
                     resizable: false,

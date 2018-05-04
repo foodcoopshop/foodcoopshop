@@ -846,7 +846,7 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $message = 'Die Standard-Variante des Produktes <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wurde auf "' . $productAttribute->product_attribute_combination->attribute->name . '" geändert.';
+        $message = 'Die Standard-Variante des Produktes <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wurde auf <b>' . $productAttribute->product_attribute_combination->attribute->name . '</b> geändert.';
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
 
