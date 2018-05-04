@@ -862,6 +862,9 @@ body.payments .bottom-button-container {
 	float: left;
 	margin-top: 5px;
 }
+#product-price-edit-form .deactivated {
+    visibility: hidden;
+}
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;
     margin-left: 5px;
