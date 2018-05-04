@@ -183,15 +183,7 @@ foodcoopshop.Admin = {
     createCustomerCommentEditDialog: function (container) {
 
         var dialogId = 'customer-comment-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Mitglieder-Kommentar ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForCustomerCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -270,16 +262,7 @@ foodcoopshop.Admin = {
     createOrderCommentEditDialog: function (container) {
 
         var dialogId = 'order-comment-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Kommentar zu Bestellung ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<textarea class="ckeditor" name="dialogOrderComment" id="dialogOrderComment" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogOrderId" id="dialogOrderId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
-
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -354,14 +337,7 @@ foodcoopshop.Admin = {
     initOrderEditDialog: function (container) {
 
         var dialogId = 'order-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Bestellung rückdatieren">';
-        dialogHtml += '<form>';
-        dialogHtml += '<p style="margin-top: 10px;">Bestellung rückdatieren auf</p>';
-        dialogHtml += '<div class="date-dropdown-placeholder"></div>';
-        dialogHtml += '<input type="hidden" name="orderId" id="orderId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -425,15 +401,7 @@ foodcoopshop.Admin = {
     initProductDepositEditDialog: function (container) {
 
         var dialogId = 'product-deposit-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Pfand">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogDepositDeposit">Eingabe in €</label><br />';
-        dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
-        dialogHtml += '<b>€</b> (zum Löschen <b>0</b> eintragen)<br />';
-        dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductDepositEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -500,26 +468,7 @@ foodcoopshop.Admin = {
     initProductPriceEditDialog: function (container) {
 
         var dialogId = 'product-price-edit-form';
-        var dialogHtml = '';
-        dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogPricePrice"></label><br />';
-        dialogHtml += '<div class="price-wrapper">';
-        dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        dialogHtml += '<b>€</b><br />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="checkbox" name="dialogPricePricePerUnitEnabled" id="dialogPricePricePerUnitEnabled" value="" />';
-        dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Einheit verwenden?</label><br />';
-        dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
-        dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        dialogHtml += '<b>€</b> pro <b></b> ';
-        dialogHtml += '<input type="text" name="dialogPriceUnitName" id="dialogPriceUnitName" value="" />';
-        dialogHtml += 'z.B. kg / l';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -631,25 +580,7 @@ foodcoopshop.Admin = {
     createProductNameEditDialog: function (container) {
 
         var dialogId = 'product-name-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Name und Beschreibung ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogName">Name</label><br />';
-        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">Wichtig: Bitte keine Produkte in andere Produkte umbenennen, sondern dafür ein neues Produkt erstellen!</span><br />';
-        dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span style="font-weight:normal">(z.B. 1 kg, 0,5 l)</span></label><br />';
-        dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescriptionShort" class="label-description-short">Kurze Beschreibung</label><br />';
-        dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><br />';
-        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />Produktdeklaration OK?</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Hilfe</a><br />';
-        dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductNameEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -790,14 +721,7 @@ foodcoopshop.Admin = {
     initProductQuantityEditDialog: function (container) {
 
         var dialogId = 'product-quantity-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Anzahl ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogQuantityQuantity"></label>';
-        dialogHtml += '<input type="text" name="dialogQuantityQuantity" id="dialogQuantityQuantity" value="" />';
-        dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductQuantityEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -1590,19 +1514,7 @@ foodcoopshop.Admin = {
         $('#cke_dialogPriceEditReason').val('');
 
         var dialogId = 'order-detail-product-price-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Preis korrigieren">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogOrderDetailProductPricePrice"></label><br />';
-        dialogHtml += '<input type="text" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
-        dialogHtml += '<b>€</b>';
-        dialogHtml += '<div class="textarea-wrapper" style="margin-top: 10px;">';
-        dialogHtml += '<label for="dialogEditPriceReason">Warum wird der Preis korrigiert (Pflichtfeld)?</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogOrderDetailProductPriceOrderDetailId" id="dialogOrderDetailProductPriceOrderDetailId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderDetailProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -1726,18 +1638,7 @@ foodcoopshop.Admin = {
         $('#cke_dialogEditAmountReason').val('');
 
         var dialogId = 'order-detail-product-amount-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Anzahl vermindern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogOrderDetailProductAmount"></label><br />';
-        dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogEditAmountReason">Warum wird Anzahl korrigiert (Pflichtfeld)?</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderDetailProductAmountEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -1821,14 +1722,7 @@ foodcoopshop.Admin = {
     initCustomerGroupEditDialog: function (container) {
 
         var dialogId = 'customer-group-edit-form';
-        var dialogHtml = '<div id="' + dialogId + '" class="dialog" title="Gruppe ändern">';
-        dialogHtml += '<form onkeypress="return event.keyCode != 13;">';
-        dialogHtml += '<label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />';
-        dialogHtml += '<select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>';
-        dialogHtml += '<input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />';
-        dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        dialogHtml += '</form>';
-        dialogHtml += '</div>';
+        var dialogHtml = foodcoopshop.Dialog.getHtmlForCustomerGroupEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
