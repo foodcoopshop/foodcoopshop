@@ -28,6 +28,10 @@ class PricePerUnit extends AbstractMigration
 
             ALTER TABLE `fcs_order_detail` DROP `product_price`;
 
+            ALTER TABLE `fcs_units` DROP INDEX `id_product`;
+            ALTER TABLE `fcs_units` DROP INDEX `id_product_attribute`;
+            ALTER TABLE `fcs_units` ADD UNIQUE( `id_product`, `id_product_attribute`);
+
         ");
     }
     

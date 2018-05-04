@@ -563,8 +563,7 @@ CREATE TABLE `fcs_units` (
   `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',
   `quantity_in_units` decimal(10,6) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_product` (`id_product`),
-  UNIQUE KEY `id_product_attribute` (`id_product_attribute`)
+  UNIQUE KEY `id_product` (`id_product`, `id_product_attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
