@@ -1763,8 +1763,8 @@ foodcoopshop.Admin = {
                         '/admin/order-details/editProductAmount/',
                         {
                             orderDetailId: $('#dialogOrderDetailProductAmountOrderDetailId').val(),
-                            productQuantity: $('#dialogOrderDetailProductAmountAmount').val(),
-                            editQuantityReason: ckeditorData
+                            productAmount: $('#dialogOrderDetailProductAmountAmount').val(),
+                            editAmountReason: ckeditorData
                         },
                         {
                             onOk: function (data) {
