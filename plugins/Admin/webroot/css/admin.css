@@ -845,6 +845,10 @@ body.payments .bottom-button-container {
     text-align: right;
     width: 75px;
 }
+#product-price-edit-form input#dialogPriceUnitName {
+	text-align: left;
+}
+
 #product-price-edit-form input[type="checkbox"] {
 	float: left;
 }

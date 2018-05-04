@@ -321,10 +321,10 @@ use Cake\Core\Configure;
         echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
 	        if (empty($product->product_attributes)) {
-	            echo '<span class="price-for-dialog '.(!empty($product->unit) ? 'hide' : '').'">';
+	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
                     echo $this->Html->formatAsDecimal($product->gross_price);
                 echo '</span>';
-                if (!empty($product->unit)) {
+                if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                     echo '<span class="unit-price-for-dialog">';
                         echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . ' / ' . $product->unit->name;
                     echo '</span>';

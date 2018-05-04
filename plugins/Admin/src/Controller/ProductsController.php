@@ -552,6 +552,10 @@ class ProductsController extends AdminAppController
     public function editPrice()
     {
         $this->RequestHandler->renderAs($this, 'json');
+        
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $originalProductId = $this->getRequest()->getData('productId');
 
@@ -568,7 +572,9 @@ class ProductsController extends AdminAppController
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeShops',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+                'ProductAttributes.Units',
+                'Units'
             ]
         ])->first();
 
@@ -588,6 +594,13 @@ class ProductsController extends AdminAppController
                 [
                     [$originalProductId => $this->getRequest()->getData('price')]
                 ]
+            );
+            $this->Product->Units->saveUnits(
+                $ids['productId'],
+                $ids['attributeId'],
+                $this->getRequest()->getData('pricePerUnitEnabled'),
+                $this->getRequest()->getData('priceInclPerUnit'),
+                $this->getRequest()->getData('priceUnitName')
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);

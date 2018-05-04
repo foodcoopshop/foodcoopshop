@@ -17,9 +17,30 @@ namespace App\Model\Table;
 class UnitsTable extends AppTable
 {
 
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
+    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name) {
+        
+        $idCondition = [
+            'id_product' => $productId,
+            'id_product_attribute' => $productAttributeId
+        ];
+        
+        $entity = $this->find('all', [
+            'conditions' => $idCondition
+        ])->first();
+        
+        if (empty($entity)) {
+            $entity = $this->newEntity($idCondition);
+        }
+        if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == '' && $unitName == '') {
+            $this->deleteAll($idCondition);
+        } else {
+            $patchedEntity = $this->patchEntity($entity, [
+                'price_per_unit_enabled' => $pricePerUnitEnabled,
+                'price_incl_per_unit' => $priceInclPerUnit,
+                'name' => $name
+            ]);
+            $this->save($patchedEntity);
+        }
     }
 
 }

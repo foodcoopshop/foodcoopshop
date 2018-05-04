@@ -512,7 +512,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Einheit verwenden?</label><br />';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        dialogHtml += '<b>€</b> pro <b>1</b> ';
+        dialogHtml += '<b>€</b> pro <b></b> ';
         dialogHtml += '<input type="text" name="dialogPriceUnitName" id="dialogPriceUnitName" value="" />';
         dialogHtml += 'z.B. kg / l';
         dialogHtml += '</div>';
@@ -560,7 +560,7 @@ foodcoopshop.Admin = {
                             productId: $('#dialogPriceProductId').val(),
                             price: $('#dialogPricePrice').val(),
                             priceInclPerUnit: $('#dialogPricePriceInclPerUnit').val(),
-                            pricePerUnitEnabled: $('#dialogPricePricePerUnitEnabled').val(),
+                            pricePerUnitEnabled: $('#dialogPricePricePerUnitEnabled:checked').length > 0 ? 1 : 0,
                             priceUnitName: $('#dialogPriceUnitName').val()
                         },
                         {
