@@ -14,10 +14,6 @@
  */
 namespace App\View;
 
-use Cake\Event\EventManager;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
-
 /**
  * A view class that is used for AJAX responses.
  * Currently only switches the default layout and sets the response type -
