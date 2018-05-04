@@ -179,20 +179,20 @@ class ProductsTable extends AppTable
     }
 
     /**
-     * @param string $price
+     * @param string $string
      * @return boolean / float
      */
-    public function getPriceAsFloat($price)
+    public function getStringAsFloat($string)
     {
-        $price = trim($price);
-        $price = Configure::read('app.numberHelper')->replaceCommaWithDot($price);
+        $float = trim($string);
+        $float = Configure::read('app.numberHelper')->replaceCommaWithDot($float);
 
-        if (!is_numeric($price)) {
+        if (!is_numeric($float)) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-        $price = floatval($price);
+        $float = floatval($float);
 
-        return $price;
+        return $float;
     }
 
     /**
@@ -211,7 +211,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getPriceAsFloat($product[$productId]);
+            $deposit = $this->getStringAsFloat($product[$productId]);
             if ($deposit < 0) {
                 throw new InvalidParameterException('Eingabeformat von Pfand ist nicht korrekt: '.$product[$productId]);
             }
@@ -220,7 +220,7 @@ class ProductsTable extends AppTable
         $success = false;
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getPriceAsFloat($product[$productId]);
+            $deposit = $this->getStringAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -289,7 +289,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getPriceAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]);
             if ($price < 0) {
                 throw new InvalidParameterException('Eingabeformat von Preis ist nicht korrekt: '.$product[$productId]);
             }
@@ -298,7 +298,7 @@ class ProductsTable extends AppTable
         $success = false;
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getPriceAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 

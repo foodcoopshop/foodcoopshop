@@ -17,7 +17,7 @@ namespace App\Model\Table;
 class UnitsTable extends AppTable
 {
 
-    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name) {
+    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $quantityInUnits) {
         
         $idCondition = [
             'id_product' => $productId,
@@ -31,13 +31,14 @@ class UnitsTable extends AppTable
         if (empty($entity)) {
             $entity = $this->newEntity($idCondition);
         }
-        if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == '' && $name == '') {
+        if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == '' && $name == '' && $quantityInUnits == '') {
             $this->deleteAll($idCondition);
         } else {
             $patchedEntity = $this->patchEntity($entity, [
                 'price_per_unit_enabled' => $pricePerUnitEnabled,
                 'price_incl_per_unit' => $priceInclPerUnit,
-                'name' => $name
+                'name' => $name,
+                'quantity_in_units' => $quantityInUnits
             ]);
             $this->save($patchedEntity);
         }

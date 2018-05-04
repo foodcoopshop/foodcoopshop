@@ -599,14 +599,15 @@ class ProductsController extends AdminAppController
                 $ids['productId'],
                 $ids['attributeId'],
                 $this->getRequest()->getData('pricePerUnitEnabled'),
-                $this->getRequest()->getData('priceInclPerUnit'),
-                $this->getRequest()->getData('priceUnitName')
+                $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')),
+                $this->getRequest()->getData('priceUnitName'),
+                $this->Product->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'))
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
 
-        $price = $this->Product->getPriceAsFloat($this->getRequest()->getData('price'));
+        $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name. '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price)) . ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($price) . ' geändert.');
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
@@ -672,7 +673,7 @@ class ProductsController extends AdminAppController
             $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
         }
 
-        $deposit = $this->Product->getPriceAsFloat($this->getRequest()->getData('deposit'));
+        $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
         $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);

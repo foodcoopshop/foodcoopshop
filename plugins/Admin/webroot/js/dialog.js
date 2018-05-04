@@ -54,7 +54,8 @@ foodcoopshop.Dialog = {
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
         dialogHtml += '<b>€</b> pro <b></b> ';
         dialogHtml += '<input type="text" name="dialogPriceUnitName" id="dialogPriceUnitName" value="" />';
-        dialogHtml += 'z.B. kg / l';
+        dialogHtml += 'z.B. kg / l<br />';
+        dialogHtml += '<input type="text" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> Menge in kg / l pro Bestelleinheit (z.B. 0,25)';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
         dialogHtml = this.addWrappersAndLoaderToDialogHtml('Preis ändern', dialogId, dialogHtml);

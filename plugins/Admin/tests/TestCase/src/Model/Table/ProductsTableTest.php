@@ -559,7 +559,7 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0]->deposit_product_attribute;
             }
-            $this->assertEquals($expectedDeposit, $this->Product->getPriceAsFloat($resultEntity->deposit), 'changing the deposit did not work');
+            $this->assertEquals($expectedDeposit, $this->Product->getStringAsFloat($resultEntity->deposit), 'changing the deposit did not work');
         }
     }
 
