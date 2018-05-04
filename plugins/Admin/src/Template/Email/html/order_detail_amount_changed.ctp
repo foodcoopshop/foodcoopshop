@@ -38,8 +38,8 @@ use Cake\Core\Configure;
                 <b>
                 <?php
 
-                if ($editQuantityReason != '') {
-                    echo '"' . $editQuantityReason . '"';
+                if ($editAmountReason != '') {
+                    echo '"' . $editAmountReason . '"';
                 } else {
                     echo 'Kein Grund angegeben.';
                 }
