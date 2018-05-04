@@ -31,7 +31,8 @@ class UnitsTable extends AppTable
         if (empty($entity)) {
             $entity = $this->newEntity($idCondition);
         }
-        if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == '' && $name == '' && $quantityInUnits == '') {
+        
+        if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == -1  && $name == '' && $quantityInUnits == -1) {
             $this->deleteAll($idCondition);
         } else {
             $patchedEntity = $this->patchEntity($entity, [
