@@ -193,7 +193,9 @@ form.fcs-form .bootstrap-select {
 }
 span.name-for-dialog,
 span.quantity-for-dialog,
+span.product-amount-for-dialog,
 span.price-for-dialog,
+span.unit-price-for-dialog,
 span.deposit-for-dialog,
 span.categories-for-dialog,
 span.tax-for-dialog,
@@ -277,6 +279,11 @@ body.products.index .filter-container div.input.select {
 }
 body.products.index .bootstrap-select {
   width: 172px ! important;
+}
+body.products.index td.status {
+	text-align: center;
+	padding-left: 10px;
+	width: 42px;
 }
 #filter-loader {
   position: fixed;
@@ -398,6 +405,10 @@ div.cke {
 body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
+}
+body.order_details.index td.date-short2,
+body.orders.index td.date-short2 {
+	width: 100px;
 }
 body.order_details.index .timebased-currency-object {
 	display: none;
@@ -664,12 +675,15 @@ body.payments.my_member_fee #help-container {
     margin-left: 10px;
 }
 .table-cell-wrapper {
-    float: right;
+    float: left;
 }
-.table-cell-wrapper.price {
-    width: 65px;
+body.products.index .table-cell-wrapper.price {
+    width: 85px;
 }
-.table-cell-wrapper.quantity {
+body.order_details.index .table-cell-wrapper.price {
+    width: 55px;
+}
+.table-cell-wrapper.amount {
     width: 48px;
 }
 .table-cell-wrapper.group {

@@ -158,6 +158,7 @@ return [
             'DateLong' =>  'dd. MMMM y',
             'DateLong2' => 'dd.MM.yyyy',
             'DateNTimeShort' => 'dd.MM.y HH:mm',
+            'DateNTimeShort2' => 'dd.MM.yy HH:mm',
             'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
             'TimeShort' => 'HH:mm',
             'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm',
