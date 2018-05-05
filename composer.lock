@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "ccd88de63586cd16d663a27ec69d4642",
@@ -1734,16 +1734,16 @@
         },
         {
             "name": "cakephp/bake",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "2cb39b9148b13ebd9032e384af0d4e9c0eafcb2f"
+                "reference": "68db6894e7b572f073b0c7654796b020890b7906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/2cb39b9148b13ebd9032e384af0d4e9c0eafcb2f",
-                "reference": "2cb39b9148b13ebd9032e384af0d4e9c0eafcb2f",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/68db6894e7b572f073b0c7654796b020890b7906",
+                "reference": "68db6894e7b572f073b0c7654796b020890b7906",
                 "shasum": ""
             },
             "require": {
@@ -1778,7 +1778,7 @@
                 "bake",
                 "cakephp"
             ],
-            "time": "2018-04-24T18:12:33+00:00"
+            "time": "2018-05-02T01:34:25+00:00"
         },
         {
             "name": "cakephp/cakephp-codesniffer",
