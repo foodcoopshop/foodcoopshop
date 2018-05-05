@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "ccd88de63586cd16d663a27ec69d4642",
@@ -1827,16 +1827,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.15.2",
+            "version": "3.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "fc57dadd29835e26c810690071695c8dea382667"
+                "reference": "e1961268e3b30ac05aa3a5bd1a0ca043f4397580"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/fc57dadd29835e26c810690071695c8dea382667",
-                "reference": "fc57dadd29835e26c810690071695c8dea382667",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/e1961268e3b30ac05aa3a5bd1a0ca043f4397580",
+                "reference": "e1961268e3b30ac05aa3a5bd1a0ca043f4397580",
                 "shasum": ""
             },
             "require": {
@@ -1883,7 +1883,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2018-04-23T15:05:25+00:00"
+            "time": "2018-04-29T19:27:19+00:00"
         },
         {
             "name": "composer/ca-bundle",
