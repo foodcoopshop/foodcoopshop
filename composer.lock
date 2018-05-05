@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "ccd88de63586cd16d663a27ec69d4642",
@@ -487,20 +487,20 @@
         },
         {
             "name": "markstory/asset_compress",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/markstory/asset_compress.git",
-                "reference": "2cf2a9e20c56705b15b5e8a5fad5c6d7a864f068"
+                "reference": "05c2452ceed6821ef447c495c10c613458efd225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/2cf2a9e20c56705b15b5e8a5fad5c6d7a864f068",
-                "reference": "2cf2a9e20c56705b15b5e8a5fad5c6d7a864f068",
+                "url": "https://api.github.com/repos/markstory/asset_compress/zipball/05c2452ceed6821ef447c495c10c613458efd225",
+                "reference": "05c2452ceed6821ef447c495c10c613458efd225",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": ">=3.3.3 <4.0.0",
+                "cakephp/cakephp": ">=3.6.0 <4.0.0",
                 "markstory/mini-asset": ">=1.4.0 <2.0.0"
             },
             "require-dev": {
@@ -541,7 +541,7 @@
                 "minifier",
                 "sass"
             ],
-            "time": "2018-04-28T01:45:15+00:00"
+            "time": "2018-05-01T01:19:24+00:00"
         },
         {
             "name": "markstory/mini-asset",
