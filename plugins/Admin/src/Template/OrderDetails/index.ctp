@@ -151,6 +151,9 @@ if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER
 echo '<th>';
     echo $this->Paginator->sort('OrderDetails.deposit', 'Pfand');
 echo '</th>';
+echo '<th>';
+    echo $this->Paginator->sort('OrderDetails.quantity_in_units', 'Gewicht');
+echo '</th>';
 if ($groupBy == '') {
     echo '<th>';
         echo $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
@@ -304,6 +307,20 @@ foreach ($orderDetails as $orderDetail) {
         }
     }
     echo '</td>';
+    
+    echo '<td class="right">';
+    if ($groupBy == '') {
+        if ($orderDetail->quantity_in_units > 0) {
+            if ($editRecordAllowed) {
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                    'class' => 'order-detail-quantity-edit-button',
+                    'title' => 'Zum Ändern des Gewichts anklicken'
+                ], 'javascript:void(0);');
+            }
+            echo $this->Html->formatAsDecimal($orderDetail->quantity_in_units) . ' ' . $orderDetail->unit_name;
+        }
+    }
+    echo '</td>';
 
     if ($groupBy == '') {
         if ($groupBy == '') {
@@ -383,7 +400,7 @@ if ($sumDeposit > 0) {
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 if ($groupBy == '') {
-    echo '<td colspan="4"></td>';
+    echo '<td colspan="5"></td>';
 }
 echo '</tr>';
 echo '</table>';
