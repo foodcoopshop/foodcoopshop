@@ -684,7 +684,7 @@ body.products.index .table-cell-wrapper.price {
     width: 85px;
 }
 body.order_details.index .table-cell-wrapper.price {
-    width: 55px;
+    width: 60px;
 }
 .table-cell-wrapper.amount {
     width: 48px;
