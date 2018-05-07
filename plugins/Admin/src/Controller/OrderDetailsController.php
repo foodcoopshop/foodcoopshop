@@ -341,7 +341,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->changeOrderDetailQuantity($object, $productQuantity);
         
-        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($object->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
+        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
         
         // send email to customer
         $email = new AppEmail();

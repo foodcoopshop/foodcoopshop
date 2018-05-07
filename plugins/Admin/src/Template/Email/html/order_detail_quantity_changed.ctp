@@ -29,8 +29,8 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis für <?php $this->MyHtml->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> €</b></li>
-                <li>Neuer Preis für <?php $this->MyHtml->formatAsDecimal($newOrderDetail->quantity_in_units) . ' ' . $newOrderDetail->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> €</b></li>
+                <li>Alter Preis für <?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> €</b></li>
+                <li>Neuer Preis für <?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->quantity_in_units) . ' ' . $newOrderDetail->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> €</b></li>
             </ul>
 
                 <?php if ($this->MyHtml->paymentIsCashless()) { ?>
