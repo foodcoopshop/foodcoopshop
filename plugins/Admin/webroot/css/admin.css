@@ -22,7 +22,7 @@ body {
 
 #container {
     position: relative;
-    min-width: 1141px; /* 990px + navi width 150 + border */
+    min-width: 1201px; /* 1050px + navi width 150 + border */
     display: none;
 }
 
