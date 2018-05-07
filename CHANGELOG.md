@@ -5,6 +5,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## Unveröffentlicht / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.2...HEAD)
 
 ### Herzlichen Dank an alle beteiligten Personen
+* [EvaSee](https://github.com/EvaSee)
 * [mrothauer](https://github.com/mrothauer)
 * [SaibotP](https://github.com/SaibotP)
 * [tantelisl](https://github.com/tantelisl)
@@ -12,6 +13,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen
 - Hersteller können ihre Produkte auch in Stunden anbieten, abgerechnet wird über das neue [Stundenabrechnungs-Modul](https://foodcoopshop.github.io/de/stundenabrechnungs-modul). / [PR#213](https://github.com/foodcoopshop/foodcoopshop/pull/213) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
 - Mitglieder können vergangene Bestellungen in ihren Warenkorb laden. In der Bestellerinnerungs-Email befindet sich ein Link, mit dem die letzte Bestellung automatisch in den Warenkorb geladen werden kann. / [PR#215](https://github.com/foodcoopshop/foodcoopshop/pull/215) / [I#74](https://github.com/foodcoopshop/foodcoopshop/issues/74) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/tantelisl"><img src="https://github.com/tantelisl.png" width="20"></a>
+- Verbesserungen Produkt-Admin: Nach dem Deaktivieren wird nicht mehr automatisch runtergescrollt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/f190414f5be1cfbba86fbf26100e08f9aff0dda2) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#146](https://github.com/foodcoopshop/foodcoopshop/issues/146) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
 
 ### Für Entwickler
 - Vendor-Updates: CakePHP-Update v3.6, CKEditor v4.9.2, Featherlight v1.7.13, OwlCarousel v2.3.4 / [PR#218](https://github.com/foodcoopshop/foodcoopshop/pull/218) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
