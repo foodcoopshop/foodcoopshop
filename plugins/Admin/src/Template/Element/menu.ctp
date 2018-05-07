@@ -32,7 +32,7 @@ $actionLogsMenuElement = [
         'fa-icon' => 'fa-fw fa-eye'
     ]
 ];
-$cancelledArticlesMenuElement = [
+$cancelledProductsMenuElement = [
     'slug' => $this->Slug->getActionLogsList().'/index/?type=order_detail_cancelled',
     'name' => 'Stornierte Produkte',
     'options' => [
@@ -99,7 +99,7 @@ $menu[] = [
 if ($appAuth->isCustomer()) {
     $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
-        $cancelledArticlesMenuElement
+        $cancelledProductsMenuElement
     ];
     $menu[] = $ordersMenuElement;
     $menu[] = $customerProfileMenuElement;
@@ -119,7 +119,7 @@ if ($appAuth->isCustomer()) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
-        $cancelledArticlesMenuElement,
+        $cancelledProductsMenuElement,
         [
             'slug' => '/admin/lists/orderLists',
             'name' => 'Bestelllisten',
@@ -247,7 +247,7 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-tags'
         ]
     ];
-    $menu[] = $cancelledArticlesMenuElement;
+    $menu[] = $cancelledProductsMenuElement;
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
         'name' => 'Mein Profil',
