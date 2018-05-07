@@ -400,8 +400,9 @@ if ($sumDeposit > 0) {
     $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+echo '<td></td>';
 if ($groupBy == '') {
-    echo '<td colspan="5"></td>';
+    echo '<td colspan="4"></td>';
 }
 echo '</tr>';
 echo '</table>';
