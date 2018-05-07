@@ -944,13 +944,12 @@ class ProductsController extends AdminAppController
         if ($status) {
             $statusText = 'aktiviert';
             $actionLogType = 'product_set_active';
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         }
 
         $this->Flash->success('Das Produkt "' . $product->product_lang->name . '" wurde erfolgreich ' . $statusText . '.');
 
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller "' . $product->manufacturer->name . '" wurde ' . $statusText . '.');
-
-        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
     }
