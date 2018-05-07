@@ -41,7 +41,7 @@ foodcoopshop.DialogOrderDetail = {
     getHtmlForOrderDetailProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
         dialogHtml += '<input type="text" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
-        dialogHtml += '<b></b> *';
+        dialogHtml += '<b></b> * - Der Preis wird automatisch angepasst.';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
         dialogHtml += '<br /><br />* auf max. 2 Kommastellen genau';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gewicht korrigieren', dialogId, dialogHtml);
