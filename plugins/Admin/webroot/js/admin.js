@@ -26,6 +26,16 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    addWrappersAndLoaderToDialogHtml : function(title, dialogId, dialogHtml) {
+        var html = '<div id="' + dialogId + '" class="dialog" title="' + title + '">';
+        html += '<form onkeypress="return event.keyCode != 13;">';
+        html += dialogHtml;
+        html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+        html += '</form>';
+        html += '</div>';
+        return html;
+    },
+
     disableSelectpickerItems : function (selector, ids) {
         $(selector).find('option').each(function () {
             var currentId = parseInt($(this).val());
@@ -183,7 +193,7 @@ foodcoopshop.Admin = {
     createCustomerCommentEditDialog: function (container) {
 
         var dialogId = 'customer-comment-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForCustomerCommentEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogCustomer.getHtmlForCustomerCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -262,7 +272,7 @@ foodcoopshop.Admin = {
     createOrderCommentEditDialog: function (container) {
 
         var dialogId = 'order-comment-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderCommentEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -337,7 +347,7 @@ foodcoopshop.Admin = {
     initOrderEditDialog: function (container) {
 
         var dialogId = 'order-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -401,7 +411,7 @@ foodcoopshop.Admin = {
     initProductDepositEditDialog: function (container) {
 
         var dialogId = 'product-deposit-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductDepositEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDepositEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -468,7 +478,7 @@ foodcoopshop.Admin = {
     initProductPriceEditDialog: function (container) {
 
         var dialogId = 'product-price-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductPriceEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -583,7 +593,7 @@ foodcoopshop.Admin = {
     createProductNameEditDialog: function (container) {
 
         var dialogId = 'product-name-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductNameEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductNameEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -724,7 +734,7 @@ foodcoopshop.Admin = {
     initProductQuantityEditDialog: function (container) {
 
         var dialogId = 'product-quantity-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForProductQuantityEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -1517,7 +1527,7 @@ foodcoopshop.Admin = {
         $('#cke_dialogPriceEditReason').val('');
 
         var dialogId = 'order-detail-product-price-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderDetailProductPriceEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -1641,7 +1651,7 @@ foodcoopshop.Admin = {
         $('#cke_dialogEditAmountReason').val('');
 
         var dialogId = 'order-detail-product-amount-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForOrderDetailProductAmountEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductAmountEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
@@ -1725,7 +1735,7 @@ foodcoopshop.Admin = {
     initCustomerGroupEditDialog: function (container) {
 
         var dialogId = 'customer-group-edit-form';
-        var dialogHtml = foodcoopshop.Dialog.getHtmlForCustomerGroupEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogCustomer.getHtmlForCustomerGroupEdit(dialogId);
         $(container).append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog({
