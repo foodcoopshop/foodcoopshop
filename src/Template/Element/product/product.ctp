@@ -148,8 +148,8 @@ if ($product['description'] != '') {
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
+                echo $pricePerUnitInfoText;
             }
-            echo $pricePerUnitInfoText;
             echo '</div>';
         }
 
