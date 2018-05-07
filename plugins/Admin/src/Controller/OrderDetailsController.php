@@ -298,6 +298,15 @@ class OrderDetailsController extends AdminAppController
 
         $this->set('title_for_layout', 'Bestellte Produkte');
     }
+    
+    public function editProductQuantity()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $productQuantity = trim($this->getRequest()->getData('productQuantity'));
+        
+    }
 
     public function editProductAmount()
     {

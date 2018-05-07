@@ -30,4 +30,4 @@ foodcoopshop.DialogCustomer = {
         return dialogHtml;
     }
 
-}
+};

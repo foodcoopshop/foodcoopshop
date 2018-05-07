@@ -28,6 +28,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductAmountEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
@@ -151,7 +152,7 @@ if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER
 echo '<th>';
     echo $this->Paginator->sort('OrderDetails.deposit', 'Pfand');
 echo '</th>';
-echo '<th>';
+echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.quantity_in_units', 'Gewicht');
 echo '</th>';
 if ($groupBy == '') {
@@ -313,11 +314,11 @@ foreach ($orderDetails as $orderDetail) {
         if ($orderDetail->quantity_in_units > 0) {
             if ($editRecordAllowed) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'order-detail-quantity-edit-button',
+                    'class' => 'order-detail-product-quantity-edit-button',
                     'title' => 'Zum Ändern des Gewichts anklicken'
                 ], 'javascript:void(0);');
             }
-            echo $this->Html->formatAsDecimal($orderDetail->quantity_in_units) . ' ' . $orderDetail->unit_name;
+            echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->unit_name.'</span>';
         }
     }
     echo '</td>';

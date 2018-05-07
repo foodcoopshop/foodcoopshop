@@ -30,4 +30,4 @@ foodcoopshop.DialogOrder = {
         return dialogHtml;
     }
 
-}
+};

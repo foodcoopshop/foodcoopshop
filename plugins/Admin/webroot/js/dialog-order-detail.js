@@ -13,6 +13,18 @@
  */
 foodcoopshop.DialogOrderDetail = {
 
+    getHtmlForOrderDetailProductAmountEdit : function(dialogId) {
+        var dialogHtml = '<label for="dialogOrderDetailProductAmount"></label><br />';
+        dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
+        dialogHtml += '<div class="textarea-wrapper">';
+        dialogHtml += '<label for="dialogEditAmountReason">Warum wird Anzahl korrigiert (Pflichtfeld)?</label>';
+        dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason" />';
+        dialogHtml += '</div>';
+        dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Anzahl vermindern', dialogId, dialogHtml);
+        return dialogHtml;
+    },
+    
     getHtmlForOrderDetailProductPriceEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductPricePrice"></label><br />';
         dialogHtml += '<input type="text" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
@@ -26,16 +38,14 @@ foodcoopshop.DialogOrderDetail = {
         return dialogHtml;
     },
 
-    getHtmlForOrderDetailProductAmountEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogOrderDetailProductAmount"></label><br />';
-        dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogEditAmountReason">Warum wird Anzahl korrigiert (Pflichtfeld)?</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason" />';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Anzahl vermindern', dialogId, dialogHtml);
+    getHtmlForOrderDetailProductQuantityEdit : function(dialogId) {
+        var dialogHtml = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
+        dialogHtml += '<input type="text" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
+        dialogHtml += '<b></b> *';
+        dialogHtml += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
+        dialogHtml += '<br /><br />* auf max. 2 Kommastellen genau';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gewicht korrigieren', dialogId, dialogHtml);
         return dialogHtml;
     }
     
-}
+};

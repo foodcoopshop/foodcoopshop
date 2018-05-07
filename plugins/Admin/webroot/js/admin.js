@@ -109,7 +109,7 @@ foodcoopshop.Admin = {
                 orderIds.push($(this).html());
             });
 
-            var customerName = $('table.list tr:nth-child(3) td:nth-child(9)').html();
+            var customerName = $('table.list tr:nth-child(3) td:nth-child(10)').html();
             var buttons = foodcoopshop.Admin.getOrderStateButtons(
                 $.unique(orderIds),
                 false,
@@ -954,7 +954,7 @@ foodcoopshop.Admin = {
         infoText += '<ul>';
         for (var i in orderDetailIds) {
             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).parent().parent().parent().parent();
-            infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9)').html() + '</li>';
+            infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(10)').html() + '</li>';
         }
         infoText += '</ul>';
 
@@ -1521,6 +1521,79 @@ foodcoopshop.Admin = {
     setProductUnitData : function(elementToAttach, productUnitObject) {
         elementToAttach.data('product-unit-object', $.parseJSON(productUnitObject));
     },
+    
+    initOrderDetailProductQuantityEditDialog: function(container) {
+        
+        var dialogId = 'order-detail-product-quantity-edit-form';
+        var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductQuantityEdit(dialogId);
+        $(container).append(dialogHtml);
+
+        var dialog = $('#' + dialogId).dialog({
+
+            autoOpen: false,
+            width: 400,
+            modal: true,
+            close: function () {
+                $('#dialogOrderDetailProductQuantityQuantity').val('');
+                $('#dialogOrderDetailProductQuantityOrderDetailId').val('');
+            },
+            buttons: {
+
+                'Abbrechen': function () {
+                    dialog.dialog('close');
+                },
+
+                'Speichern': function () {
+
+                    if ($('#dialogOrderDetailProductQuantityQuantity').val() == '' || $('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
+                        return false;
+                    }
+                    
+                    var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
+                    
+                    $('#order-detail-product-quantity-edit-form .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/order-details/editProductQuantity/',
+                        {
+                            orderDetailId: $('#dialogOrderDetailProductQuantityOrderDetailId').val(),
+                            productQuantity: productQuantity,
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                dialog.dialog('close');
+                                $('#order-detail-product-quantity-edit-form .ajax-loader').hide();
+                                alert(data.msg);
+                            }
+                        }
+                    );
+
+                }
+
+            }
+        });
+        
+        $('.order-detail-product-quantity-edit-button').on('click', function () {
+            
+            var row = $(this).closest('tr');
+            var orderDetailId = row.find('td:nth-child(2)').html();
+            var quantity = row.find('td:nth-child(8) span.quantity-in-units').html();
+            var unitName = row.find('td:nth-child(8) span.unit-name').html();
+            var productQuantityField = $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity');
+            
+            $('#' + dialogId + ' b').html(unitName);
+            $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
+            
+            productQuantityField.val(quantity);
+            dialog.dialog('open');
+        });        
+        
+    },
 
     initOrderDetailProductPriceEditDialog: function (container) {
 
@@ -1602,7 +1675,7 @@ foodcoopshop.Admin = {
             var productPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice');
             
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(9)').html() + ')');
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
             
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
             var timebasedCurrencyObject = $('#timebased-currency-object-' + orderDetailId);
@@ -1726,7 +1799,12 @@ foodcoopshop.Admin = {
                 }));
             }
             $('#' + dialogId + ' #dialogOrderDetailProductAmountOrderDetailId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductAmount"]').html('<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.<br />Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen.<br /><br /></span>' + $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />Neue Anzahl:');
+            var infoTextForEditProductAmount = '<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.';
+            infoTextForEditProductAmount += '<br />Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen.<br /><br /></span>';
+            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html();
+            infoTextForEditProductAmount += ' <span style="font-weight:normal;">(von ';
+            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(10)').html() + ')<br />Neue Anzahl:';
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductAmount"]').html(infoTextForEditProductAmount);
             dialog.dialog('open');
         });
 
