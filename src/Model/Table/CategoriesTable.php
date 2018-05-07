@@ -103,6 +103,7 @@ class CategoriesTable extends AppTable
 
     /**
      * custom sql for best performance
+     * product attributes ARE NOT fetched in this query!
      */
     public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false)
     {

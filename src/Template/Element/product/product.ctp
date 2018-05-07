@@ -124,7 +124,13 @@ if ($product['description'] != '') {
             echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo '<div class="line">';
-                echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']). '</div>';
+                $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']) . '</div>';
+                $pricePerUnitInfoText = '';
+                if ($attribute['Units']['price_per_unit_enabled']) {
+                    $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units']);
+                    $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['quantity_in_units']);
+                }
+                echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
@@ -143,6 +149,7 @@ if ($product['description'] != '') {
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
             }
+            echo $pricePerUnitInfoText;
             echo '</div>';
         }
 
@@ -160,7 +167,13 @@ if ($product['description'] != '') {
         echo '<div class="entity-wrapper active">';
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo '<div class="line">';
-            echo '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
+            $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
+            $pricePerUnitInfoText = '';
+            if ($product['price_per_unit_enabled']) {
+                $priceHtml = $this->Html->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units']);
+                $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['quantity_in_units']);
+            }
+            echo $priceHtml;
                 if ($product['deposit']) {
                     echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
                 }
@@ -178,6 +191,7 @@ if ($product['description'] != '') {
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailable' => $product['quantity']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['quantity']]);
+                echo $pricePerUnitInfoText;
         }
         echo '</div>';
 

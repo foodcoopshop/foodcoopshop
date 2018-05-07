@@ -37,6 +37,24 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getPricePerUnit($priceInclPerUnit, $quantityInUnits)
+    {
+        return '<div class="price">' . $this->formatAsEuro($priceInclPerUnit * $quantityInUnits) . '</div> <div class="price-asterisk">*</div>';
+    }
+    
+    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $quantityInUnits)
+    {
+        $infoText = '<div class="additional-price-info">';
+        $infoText .= '* Preis: '. $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
+        $infoText .= ' Aktueller Preis ';
+        if ($quantityInUnits > 0) {
+            $infoText .= 'basiert auf ' . $this->formatAsDecimal($quantityInUnits) . ' ' . $unitName . ' und ';
+        }
+        $infoText .= 'wird noch angepasst.';
+        $infoText .= '</div>';
+        return $infoText;
+    }
+    
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number

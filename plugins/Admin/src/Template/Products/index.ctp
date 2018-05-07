@@ -326,7 +326,7 @@ use Cake\Core\Configure;
                 echo '</span>';
                 if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                     echo '<span class="unit-price-for-dialog">';
-                        echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . ' / ' . $product->unit->name;
+                    echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . ' / ' . $product->unit->name;
                     echo '</span>';
                 }
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [

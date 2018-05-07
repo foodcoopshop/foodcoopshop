@@ -19,6 +19,10 @@ class UnitsTable extends AppTable
 
     public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $quantityInUnits) {
         
+        if ($productAttributeId > 0) {
+            $productId = 0;
+        }
+        
         $idCondition = [
             'id_product' => $productId,
             'id_product_attribute' => $productAttributeId

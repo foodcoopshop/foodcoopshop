@@ -573,8 +573,8 @@ class ProductsController extends AdminAppController
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeShops',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
-                'ProductAttributes.Units',
-                'Units'
+                'ProductAttributes.UnitProductAttributes',
+                'UnitProducts'
             ]
         ])->first();
 
@@ -595,7 +595,8 @@ class ProductsController extends AdminAppController
                     [$originalProductId => $this->getRequest()->getData('price')]
                 ]
             );
-            $this->Product->Units->saveUnits(
+            $this->Unit = TableRegistry::getTableLocator()->get('Units'); 
+            $this->Unit->saveUnits(
                 $ids['productId'],
                 $ids['attributeId'],
                 $this->getRequest()->getData('pricePerUnitEnabled'),

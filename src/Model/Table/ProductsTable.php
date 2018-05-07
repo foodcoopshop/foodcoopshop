@@ -59,7 +59,7 @@ class ProductsTable extends AppTable
         $this->hasMany('CategoryProducts', [
             'foreignKey' => 'id_product'
         ]);
-        $this->hasOne('Units', [
+        $this->hasOne('UnitProducts', [
             'foreignKey' => 'id_product'
         ]);
         $this->addBehavior('Timestamp');
@@ -464,7 +464,7 @@ class ProductsTable extends AppTable
             'DepositProducts',
             'Images',
             'Taxes',
-            'Units',
+            'UnitProducts',
             'Manufacturers',
             'StockAvailables' => [
                 'conditions' => [
@@ -479,7 +479,7 @@ class ProductsTable extends AppTable
             ],
             'ProductAttributes.ProductAttributeShops',
             'ProductAttributes.DepositProductAttributes',
-            'ProductAttributes.Units',
+            'ProductAttributes.UnitProductAttributes',
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
 
@@ -509,9 +509,9 @@ class ProductsTable extends AppTable
         ->select('Images.id_image')
         ->select($this->Taxes)
         ->select($this->Manufacturers)
-        ->select($this->Units)
+        ->select($this->UnitProducts)
         ->select($this->StockAvailables);
-
+        
         if ($controller) {
             $query = $controller->paginate($query, [
                 'sortWhitelist' => [
@@ -559,6 +559,11 @@ class ProductsTable extends AppTable
                 $product->deposit = 0;
             }
 
+            $product->unit = null;
+            if (!empty($product->unit_product)) {
+                $product->unit = $product->unit_product;
+            }
+            
             if (empty($product->tax)) {
                 $product->tax = (object) [
                     'rate' => 0
@@ -623,7 +628,7 @@ class ProductsTable extends AppTable
                             'quantity' => $attribute->stock_available->quantity
                         ],
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
-                        'unit' => !empty($attribute->unit) ? $attribute->unit : [],
+                        'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
                         'category' => [
                             'names' => [],
                             'all_products_found' => true
@@ -648,7 +653,7 @@ class ProductsTable extends AppTable
         }
 
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
-
+        
         return $preparedProducts;
     }
 

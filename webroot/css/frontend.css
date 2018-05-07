@@ -473,12 +473,22 @@ body.superadmin .product-wrapper .heading h4 {
     width: 100%;
     float: left;
 }
-.product-wrapper .price {
+.product-wrapper .price,
+.product-wrapper .price-asterisk {
     color: #719f41;
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
     float: left;
+}
+.product-wrapper .price-asterisk {
+	margin-left: 5px;
+}
+.product-wrapper .additional-price-info {
+	float: left;
+	margin-top: -5px;
+	line-height: 16px;
+	font-style: italic;
 }
 .product-wrapper .deposit {
     float: right;
