@@ -45,12 +45,11 @@ class MyHtmlHelper extends HtmlHelper
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $quantityInUnits)
     {
         $infoText = '<div class="additional-price-info">';
-        $infoText .= '* Preis: '. $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
-        $infoText .= ' Aktueller Preis ';
+        $infoText .= ' * Preis-Basis: ' . $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
         if ($quantityInUnits > 0) {
-            $infoText .= 'basiert auf ' . $this->formatAsDecimal($quantityInUnits) . ' ' . $unitName . ' und ';
+            $infoText .= ', ca. ' . $this->formatAsDecimal($quantityInUnits) . ' ' . $unitName;
         }
-        $infoText .= 'kann noch angepasst werden.';
+        $infoText .= ', Preis wird evtl. noch angepasst.';
         $infoText .= '</div>';
         return $infoText;
     }
