@@ -104,9 +104,11 @@ class CartsTable extends AppTable
                 'Products.ProductShops',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
+                'Products.UnitProducts',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.ProductAttributeShops',
                 'ProductAttributes.DepositProductAttributes',
+                'ProductAttributes.UnitProductAttributes',
                 'Products.Images'
             ]
         ])->toArray();
@@ -170,6 +172,9 @@ class CartsTable extends AppTable
                     $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
                     $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
+                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
+                    $productData['price'] =  $newPriceIncl * $cartProduct->amount;
+                    $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
                 }
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
@@ -211,7 +216,10 @@ class CartsTable extends AppTable
                 if (!empty($cartProduct->product->unit_product)) {
                     $unitName = $cartProduct->product->unit_product->name;
                     $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
-                    $quantityInUnits = $cartProduct->product_attribute->unit_product->quantity_in_units;
+                    $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
+                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
+                    $productData['price'] =  $newPriceIncl * $cartProduct->amount;
+                    $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
                 }
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
