@@ -486,8 +486,9 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .additional-price-info {
 	float: left;
-	margin-top: -5px;
-	line-height: 16px;
+	margin-top: 5px;
+	line-height: 17px;
+	color: #969696;
 }
 .product-wrapper .deposit {
     float: right;
@@ -527,6 +528,7 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper span.not-available-info {
     display: block;
     margin-top: 10px;
+    line-height: 17px;    
 }
 body.manufacturers.detail .manufacturer-infos {
     width: 100%;
