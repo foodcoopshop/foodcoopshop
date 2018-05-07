@@ -69,13 +69,9 @@ Configure::load('app_config', 'default');
 Configure::load('custom_config', 'default');
 Configure::load('credentials', 'default');
 
-/*
- * When debug = true the metadata cache should only last
- * for a short time.
- */
+// disable caching if debug is on
 if (Configure::read('debug')) {
-    Configure::write('Cache._cake_model_.duration', '+2 minutes');
-    Configure::write('Cache._cake_core_.duration', '+2 minutes');
+    Cache::disable();
 }
 
 /*
