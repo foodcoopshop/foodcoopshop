@@ -75,7 +75,7 @@ echo $this->Form->control('selectGroupId', [
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
-echo '<th>' . $this->Paginator->sort('Customers' . Configure::read('app.customerMainNamePart'), 'Name') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Name') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', 'Gruppe') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', 'Status') . '</th>';
