@@ -6,6 +6,7 @@ use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use App\Model\Table\OrderDetailsTable;
 
 /**
  * OrderDetailsController
@@ -337,8 +338,10 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->quantity_in_units * $productQuantity;
         $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
+
+        $this->changeOrderDetailQuantity($object, $productQuantity);
         
-        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
+        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($object->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
         
         // send email to customer
         $email = new AppEmail();
@@ -416,6 +419,9 @@ class OrderDetailsController extends AdminAppController
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $productAmount);
         $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $object->product_amount);
 
+        $productQuantity = $oldOrderDetail->quantity_in_units / $oldOrderDetail->product_amount * $productAmount;
+        $this->changeOrderDetailQuantity($object, $productQuantity);
+        
         if (!empty($object->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $productPrice, $productAmount);
@@ -660,6 +666,20 @@ class OrderDetailsController extends AdminAppController
             'status' => 1,
             'msg' => 'ok'
         ]));
+    }
+    
+    /**
+     * @param OrderDetailsTable $oldOrderDetail
+     * @param float $productQuantity
+     */
+    private function changeOrderDetailQuantity($oldOrderDetail, $productQuantity)
+    {
+        $orderDetail2save = [
+            'quantity_in_units' => $productQuantity
+        ];
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
+        );
     }
 
     private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productAmount)

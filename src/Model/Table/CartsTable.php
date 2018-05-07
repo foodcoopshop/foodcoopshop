@@ -173,12 +173,12 @@ class CartsTable extends AppTable
                     $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
                     $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
-                    $productData['price'] =  $newPriceIncl * $cartProduct->amount;
+                    $productData['price'] =  $newPriceIncl;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
                 }
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
-                $productData['quantityInUnits'] = $quantityInUnits;
+                $productData['quantityInUnits'] = $quantityInUnits * $cartProduct->amount;
                 
             } else {
                 // no attribute
@@ -223,7 +223,7 @@ class CartsTable extends AppTable
                 }
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
-                $productData['quantityInUnits'] = $quantityInUnits;
+                $productData['quantityInUnits'] = $quantityInUnits * $cartProduct->amount;
                 
             }
             
