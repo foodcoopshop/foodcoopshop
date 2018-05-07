@@ -23,8 +23,9 @@ class PricePerUnit extends AbstractMigration
             ALTER TABLE `fcs_manufacturer` CHANGE `send_ordered_product_quantity_changed_notification` `send_ordered_product_amount_changed_notification` INT(10) UNSIGNED NULL DEFAULT NULL;
             UPDATE fcs_action_logs set type = 'order_detail_product_amount_changed' WHERE type = 'order_detail_product_quantity_changed';
 
-            ALTER TABLE `fcs_order_detail` ADD `product_units` DECIMAL(10,2) UNSIGNED NULL AFTER `total_price_tax_excl`;
-            ALTER TABLE `fcs_order_detail` ADD `product_unit_price` DECIMAL(10,2) UNSIGNED NULL AFTER `product_units`;
+            ALTER TABLE `fcs_order_detail` ADD `quantity_in_units` DECIMAL(10,2) UNSIGNED NULL AFTER `total_price_tax_excl`;
+            ALTER TABLE `fcs_order_detail` ADD `price_incl_per_unit` DECIMAL(10,2) UNSIGNED NULL AFTER `quantity_in_units`;
+            ALTER TABLE `fcs_order_detail` ADD `unit_name` VARCHAR(50) NULL AFTER `price_incl_per_unit`;
 
             ALTER TABLE `fcs_order_detail` DROP `product_price`;
 

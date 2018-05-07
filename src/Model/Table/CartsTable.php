@@ -152,11 +152,28 @@ class CartsTable extends AppTable
                     'manufacturerLink' => $manufacturerLink,
                     'manufacturerName' => $cartProduct->product->manufacturer->name,
                     'image' => $productImage,
-                    'deposit' => !empty($cartProduct->product_attribute->deposit_product_attribute->deposit) ? $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount : 0, // * 1 to convert to float
                     'price' => $grossPrice,
                     'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
                     'tax' => $tax
                 ];
+                
+                $deposit = 0;
+                if (!empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
+                     $deposit = $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount;
+                }
+                $productData['deposit'] = $deposit;
+                
+                $unitName = '';
+                $priceInclPerUnit = 0;
+                $quantityInUnits = 0;
+                if (!empty($cartProduct->product_attribute->unit_product_attribute)) {
+                    $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
+                    $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
+                    $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
+                }
+                $productData['unitName'] = $unitName;
+                $productData['priceInclPerUnit'] = $priceInclPerUnit;
+                $productData['quantityInUnits'] = $quantityInUnits;
                 
             } else {
                 // no attribute
@@ -177,11 +194,28 @@ class CartsTable extends AppTable
                     'manufacturerLink' => $manufacturerLink,
                     'manufacturerName' => $cartProduct->product->manufacturer->name,
                     'image' => $productImage,
-                    'deposit' => !empty($cartProduct->product->deposit_product->deposit) ? $cartProduct->product->deposit_product->deposit * $cartProduct->amount : 0,
                     'price' => $grossPrice,
                     'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
                     'tax' => $tax
                 ];
+                
+                $deposit = 0;
+                if (!empty($cartProduct->product->deposit_product->deposit)) {
+                    $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
+                }
+                $productData['deposit'] = $deposit;
+                
+                $unitName = '';
+                $priceInclPerUnit = 0;
+                $quantityInUnits = 0;
+                if (!empty($cartProduct->product->unit_product)) {
+                    $unitName = $cartProduct->product->unit_product->name;
+                    $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
+                    $quantityInUnits = $cartProduct->product_attribute->unit_product->quantity_in_units;
+                }
+                $productData['unitName'] = $unitName;
+                $productData['priceInclPerUnit'] = $priceInclPerUnit;
+                $productData['quantityInUnits'] = $quantityInUnits;
                 
             }
             

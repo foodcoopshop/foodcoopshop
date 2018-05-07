@@ -458,7 +458,10 @@ class CartsController extends FrontendController
                 'id_tax' => $product->id_tax,
                 'deposit' => $cartProduct['deposit'],
                 'product' => $product,
-                'cartProductId' => $cartProduct['cartProductId']
+                'cartProductId' => $cartProduct['cartProductId'],
+                'unit_name' => $cartProduct['unitName'],
+                'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
+                'quantity_in_units' => $cartProduct['quantityInUnits'],
             ];
             
             $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];

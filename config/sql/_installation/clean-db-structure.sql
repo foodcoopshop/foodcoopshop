@@ -279,8 +279,9 @@ CREATE TABLE `fcs_order_detail` (
   `product_amount` int(10) unsigned NOT NULL DEFAULT '0',
   `total_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `product_units` decimal(10,2) unsigned DEFAULT NULL,
-  `product_unit_price` decimal(10,2) unsigned DEFAULT NULL,
+  `quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
+  `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
+  `unit_name` varchar(50) DEFAULT NULL,
   `id_tax` int(11) unsigned DEFAULT '0',
   `deposit` decimal(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id_order_detail`),
@@ -558,12 +559,12 @@ CREATE TABLE `fcs_units` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_product` int(10) unsigned DEFAULT NULL,
   `id_product_attribute` int(11) unsigned DEFAULT NULL,
-  `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
+  `price_incl_per_unit` decimal(10,6) unsigned DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',
-  `quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
+  `quantity_in_units` decimal(10,6) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_product` (`id_product`, `id_product_attribute`)
+  UNIQUE KEY `id_product` (`id_product`,`id_product_attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
