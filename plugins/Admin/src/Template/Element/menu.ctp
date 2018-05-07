@@ -32,11 +32,18 @@ $actionLogsMenuElement = [
         'fa-icon' => 'fa-fw fa-eye'
     ]
 ];
-$cancelledArticlesMenuElement = [
+$cancelledProductsMenuElement = [
     'slug' => $this->Slug->getActionLogsList().'/index/?type=order_detail_cancelled',
     'name' => 'Stornierte Produkte',
     'options' => [
         'fa-icon' => 'fa-fw fa-remove'
+    ]
+];
+$paymentDepositCustomerAddedMenuElement = [
+    'slug' => $this->Slug->getActionLogsList().'/index/?type=payment_deposit_customer_added',
+    'name' => 'Pfand-Rückgaben',
+    'options' => [
+        'fa-icon' => 'fa-fw fa-euro'
     ]
 ];
 $ordersMenuElement = [
@@ -99,7 +106,8 @@ $menu[] = [
 if ($appAuth->isCustomer()) {
     $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
-        $cancelledArticlesMenuElement
+        $paymentDepositCustomerAddedMenuElement,
+        $cancelledProductsMenuElement
     ];
     $menu[] = $ordersMenuElement;
     $menu[] = $customerProfileMenuElement;
@@ -119,7 +127,8 @@ if ($appAuth->isCustomer()) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
-        $cancelledArticlesMenuElement,
+        $paymentDepositCustomerAddedMenuElement,
+        $cancelledProductsMenuElement,
         [
             'slug' => '/admin/lists/orderLists',
             'name' => 'Bestelllisten',
@@ -247,7 +256,7 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-tags'
         ]
     ];
-    $menu[] = $cancelledArticlesMenuElement;
+    $menu[] = $cancelledProductsMenuElement;
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
         'name' => 'Mein Profil',

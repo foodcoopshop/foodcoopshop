@@ -67,11 +67,11 @@ body.taxes.edit #flashMessage {
     top: 3px;
 }
 #content {
-    width: 990px;
+    width: 1050px;
     margin-top: 5px;
     line-height: 20px;
     float: left;
-    margin-left: 145px;
+    margin-left: 150px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
     padding: 2px 2px 2px 1px;
@@ -142,6 +142,9 @@ form.fcs-form .bootstrap-select {
     top: 0;
     background-color: #fff;
     min-height: 500px;
+}
+.vertical.menu {
+	width: 150px;
 }
 .vertical.menu > li a img.logo {
     padding: 0;
@@ -219,11 +222,11 @@ span.is-declaration-ok-wrapper .fa-close {
 
 .filter-container {
     position: fixed;
-    left: 145px;
+    left: 150px;
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: 990px; /* be aware of table border if scrolled */
+    width: 1050px; /* be aware of table border if scrolled */
     z-index: 100;
     border-bottom: 1px solid #dfdfdf;
 }
