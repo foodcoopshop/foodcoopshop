@@ -337,9 +337,9 @@ class OrderDetailsController extends AdminAppController
         
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->quantity_in_units * $productQuantity;
-        $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
-
         $this->changeOrderDetailQuantity($object, $productQuantity);
+
+        $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
         
         $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
         
