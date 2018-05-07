@@ -484,7 +484,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 330,
+            height: 350,
             width: 550,
             modal: true,
 

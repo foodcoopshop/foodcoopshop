@@ -857,6 +857,7 @@ body.payments .bottom-button-container {
 #product-price-edit-form label.radio {
 	margin-left: 20px;
 	line-height: 28px;
+	position: static;
 }
 #product-price-edit-form label.radio input {
 	margin-right: 5px;
