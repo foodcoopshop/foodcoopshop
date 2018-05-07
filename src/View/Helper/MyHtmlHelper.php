@@ -50,7 +50,7 @@ class MyHtmlHelper extends HtmlHelper
         if ($quantityInUnits > 0) {
             $infoText .= 'basiert auf ' . $this->formatAsDecimal($quantityInUnits) . ' ' . $unitName . ' und ';
         }
-        $infoText .= 'wird noch angepasst.';
+        $infoText .= 'kann noch angepasst werden.';
         $infoText .= '</div>';
         return $infoText;
     }
