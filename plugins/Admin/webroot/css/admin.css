@@ -678,7 +678,7 @@ body.payments.my_member_fee #help-container {
     margin-left: 10px;
 }
 .table-cell-wrapper {
-    float: left;
+    float: right;
 }
 body.products.index .table-cell-wrapper.price {
     width: 85px;

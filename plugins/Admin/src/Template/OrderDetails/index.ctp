@@ -129,7 +129,7 @@ if (count($orderDetails) > 0 && $groupBy == '') {
 }
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
-echo '<th>';
+echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.product_amount', 'Anzahl');
 echo '</th>';
 if ($groupBy == '' || $groupBy == 'product') {
@@ -141,12 +141,12 @@ if ($groupBy == '' || $groupBy == 'product') {
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
     echo $this->Paginator->sort('Manufacturers.name', 'Hersteller');
 echo '</th>';
-echo '<th>';
+echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', 'Betrag');
 echo '</th>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
-    echo '<th>Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
+    echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
 echo '<th>';
     echo $this->Paginator->sort('OrderDetails.deposit', 'Pfand');
@@ -199,7 +199,7 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="right">';
     
         if (!empty($orderDetail->timebased_currency_order_detail)) {
             echo '<span id="timebased-currency-object-'.$orderDetail->id_order_detail.'" class="timebased-currency-object"></span>';
@@ -256,7 +256,7 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</td>';
 
-    echo '<td class="' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
+    echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {
         if ($editRecordAllowed) {
@@ -282,7 +282,7 @@ foreach ($orderDetails as $orderDetail) {
         echo $orderDetail['variable_member_fee'] . '%';
         echo '</td>';
 
-        echo '<td>';
+        echo '<td class="right">';
         if ($priceDiffers) {
             echo '<span style="color:red;font-weight:bold;">';
         }
@@ -293,7 +293,7 @@ foreach ($orderDetails as $orderDetail) {
         echo '</td>';
     }
 
-    echo '<td>';
+    echo '<td class="right">';
     if ($groupBy == '') {
         if ($orderDetail->deposit > 0) {
             echo $this->Html->formatAsDecimal($orderDetail->deposit);
@@ -354,7 +354,7 @@ foreach ($orderDetails as $orderDetail) {
 
 echo '<tr>';
 echo '<td colspan="1"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b></td>';
-echo '<td><b>' . $this->Html->formatAsDecimal($sumAmount, 0) . 'x</b></td>';
+echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumAmount, 0) . 'x</b></td>';
 if ($groupBy == '') {
     if ($appAuth->isManufacturer()) {
         echo '<td></td>';
@@ -372,16 +372,16 @@ if ($groupBy == 'product') {
         echo '<td colspan="2"></td>';
     }
 }
-echo '<td><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
+echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
-    echo '<td><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
+    echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
 $sumDepositString = '';
 if ($sumDeposit > 0) {
     $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
-echo '<td><b>' . $sumDepositString . '</b></td>';
+echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 if ($groupBy == '') {
     echo '<td colspan="4"></td>';
 }
