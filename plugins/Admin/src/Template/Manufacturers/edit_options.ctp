@@ -121,7 +121,7 @@ echo '<div class="holiday-wrapper">';
     echo '<div class="sc"></div>';
 
     echo $this->Form->control('Manufacturers.send_ordered_product_price_changed_notification', [
-        'label' => 'Preis-Änderungen von bestellten Produkten <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail erhalten.</span>',
+        'label' => 'Preis- und Gewichtänderungen von bestellten Produkten <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Preis- und Gewichtsänderung eines bereits bestellten Produktes eine Info-Mail erhalten.</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

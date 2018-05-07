@@ -305,6 +305,76 @@ class OrderDetailsController extends AdminAppController
         
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
+        $productQuantity = Configure::read('app.numberHelper')->replaceCommaWithDot($productQuantity);
+
+        if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 0) {
+            $message = 'input format wrong';
+            $this->log($message);
+            die(json_encode([
+                'status' => 0,
+                'msg' => $message
+            ]));
+        }
+        
+        $productQuantity = floatval($productQuantity);
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Orders',
+                'Orders.Customers',
+                'Products.Manufacturers',
+                'Products.Manufacturers.AddressManufacturers',
+                'OrderDetailTaxes',
+                'TimebasedCurrencyOrderDetails',
+                'Orders.TimebasedCurrencyOrders'
+            ]
+        ])->first();
+        
+        $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
+        $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->quantity_in_units * $productQuantity;
+        $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
+        
+        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
+        
+        // send email to customer
+        $email = new AppEmail();
+        $email->setTemplate('Admin.order_detail_quantity_changed')
+        ->setTo($oldOrderDetail->order->customer->email)
+        ->setSubject('Gewicht korrigiert: ' . $oldOrderDetail->product_name)
+        ->setViewVars([
+            'oldOrderDetail' => $oldOrderDetail,
+            'newOrderDetail' => $newOrderDetail,
+            'appAuth' => $this->AppAuth
+        ]);
+        
+        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
+        
+        // never send email to manufacturer if bulk orders are allowed
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
+        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+        
+        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
+            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+        }
+        
+        $email->send();
+        
+        $message .= ' versendet.';
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->Flash->success($message);
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok'
+        ]));
         
     }
 

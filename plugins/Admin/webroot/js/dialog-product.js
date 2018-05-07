@@ -39,13 +39,13 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '* <b>€</b>, inkl. USt., pro Bestelleinheit<br />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="checkbox" name="dialogPricePricePerUnitEnabled" id="dialogPricePricePerUnitEnabled" value="" />';
-        dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Einheit (kg / l) verwenden? <br /><span style="font-weight:normal">(bei Gewichtsänderung nach Lieferung)</span></label><br />';
+        dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Gewicht eintragen? <br /><span style="font-weight:normal">(für Gewichtsanpassung nach Lieferung)</span></label><br />';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
         dialogHtml += '* <b>€</b>, inkl. USt., pro </b> ';
         dialogHtml += '<input type="text" name="dialogPriceUnitName" id="dialogPriceUnitName" value="" />';
-        dialogHtml += 'z.B. kg / l<br />';
-        dialogHtml += '<input type="text" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" />* ungefähre Menge in kg / l pro Bestelleinheit (z.B. 0,25)';
+        dialogHtml += 'z.B. kg / g<br />';
+        dialogHtml += '<input type="text" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" />* ungefähres Gewicht in kg / g pro Bestelleinheit (z.B. 0,25)';
         dialogHtml += '</div>';
         dialogHtml += '<br /><br />* auf max. 2 Kommastellen genau';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
