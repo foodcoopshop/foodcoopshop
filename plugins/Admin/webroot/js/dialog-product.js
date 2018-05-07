@@ -34,12 +34,18 @@ foodcoopshop.DialogProduct = {
     
     getHtmlForProductPriceEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogPricePrice"></label><br />';
+        dialogHtml += '<label class="radio">';
+        dialogHtml += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price" checked="checked" class="price" />';
+        dialogHtml += 'Preis pro Bestelleinheit';
+        dialogHtml += '</label>';
         dialogHtml += '<div class="price-wrapper">';
         dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        dialogHtml += '* <b>€</b>, inkl. USt., pro Bestelleinheit<br />';
+        dialogHtml += '* <b>€</b>, inkl. USt.<br />';
         dialogHtml += '</div>';
-        dialogHtml += '<input type="checkbox" name="dialogPricePricePerUnitEnabled" id="dialogPricePricePerUnitEnabled" value="" />';
-        dialogHtml += '<label class="checkbox-label" for="dialogPricePricePerUnitEnabled">Preis pro Gewicht eintragen? <br /><span style="font-weight:normal">(für Gewichtsanpassung nach Lieferung)</span></label><br />';
+        dialogHtml += '<label class="radio">';
+        dialogHtml += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price-per-unit" class="price-per-unit"/>';
+        dialogHtml += 'Preis pro Gewicht (für Gewichtsanpassung nach Lieferung)';
+        dialogHtml += '</label>';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
         dialogHtml += '* <b>€</b>, inkl. USt., pro </b> ';

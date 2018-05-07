@@ -491,7 +491,7 @@ foodcoopshop.Admin = {
             close: function () {
                 $('#dialogPricePrice').val('');
                 $('#dialogPriceProductId').val('');
-                $('#dialogPricePricePerUnitEnabled').prop('checked', false);
+                $('input[name="dialogPricePricePerUnitEnabled"].price').prop('checked', false);
                 $('div.price-per-unit-wrapper').addClass('deactivated');
                 $('div.price-wrapper').removeClass('deactivated');
                 $('#dialogPricePriceInclPerUnit').val('');
@@ -520,7 +520,7 @@ foodcoopshop.Admin = {
                             productId: $('#dialogPriceProductId').val(),
                             price: $('#dialogPricePrice').val(),
                             priceInclPerUnit: $('#dialogPricePriceInclPerUnit').val(),
-                            pricePerUnitEnabled: $('#dialogPricePricePerUnitEnabled:checked').length > 0 ? 1 : 0,
+                            pricePerUnitEnabled: $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0,
                             priceUnitName: $('#dialogPriceUnitName').val(),
                             priceQuantityInUnits : $('#dialogPriceQuantityInUnits').val()
                         },
@@ -541,10 +541,10 @@ foodcoopshop.Admin = {
             }
         });
         
-        $('#' + dialogId + ' #dialogPricePricePerUnitEnabled').on('change', function() {
+        $('#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]').on('change', function() {
             var priceAsUnitWrapper = $('#' + dialogId + ' .price-per-unit-wrapper');
             var priceWrapper = $('#' + dialogId + ' .price-wrapper');
-            if (this.checked) {
+            if ($(this).val() == 'price-per-unit') {
                 priceAsUnitWrapper.removeClass('deactivated');
                 priceWrapper.addClass('deactivated');
             } else {
@@ -563,9 +563,9 @@ foodcoopshop.Admin = {
             if (unitObject.length > 0) {
                 unitData = unitObject.data('product-unit-object');
                 if (unitData.price_per_unit_enabled === 1) {
-                    var checkbox = $('#' + dialogId + ' #dialogPricePricePerUnitEnabled');
-                    checkbox.prop('checked', true);
-                    checkbox.trigger('change');
+                    var radio = $('#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"].price-per-unit');
+                    radio.prop('checked', true);
+                    radio.trigger('change');
                 }
                 $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(foodcoopshop.Helper.formatFloatAsString(unitData.price_incl_per_unit));
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);

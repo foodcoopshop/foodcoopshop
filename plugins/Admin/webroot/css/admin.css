@@ -854,21 +854,26 @@ body.payments .bottom-button-container {
 	text-align: left;
 }
 
-#product-price-edit-form input[type="checkbox"] {
+#product-price-edit-form label.radio {
+	margin-left: 20px;
+	line-height: 28px;
+}
+#product-price-edit-form label.radio input {
+	margin-right: 5px;
+	position: static;
 	float: left;
 }
-.checkbox-label {
-	margin-top: 4px;
-	margin-left: 5px;
-	float: left;
+#product-price-edit-form label.radio input:focus {
+    outline: none;
 }
-#product-price-edit-form .price-per-unit-wrapper {
+#product-price-edit-form .price-per-unit-wrapper,
+#product-price-edit-form .price-wrapper {
 	width: 100%;
 	float: left;
 	margin-top: 5px;
 }
 #product-price-edit-form .deactivated {
-    visibility: hidden;
+    opacity: 0.3;
 }
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;
