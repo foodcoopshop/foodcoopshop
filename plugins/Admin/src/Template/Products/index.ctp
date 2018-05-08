@@ -332,7 +332,7 @@ use Cake\Core\Configure;
             ]);
         }
         
-        echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 ? 'not-available' : '') . '">';
+        echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 || (!empty($product->unit) && $product->unit->price_per_unit_enabled && $product->unit->price_incl_per_unit == 0) ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
 	        if (empty($product->product_attributes)) {
 	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
