@@ -491,7 +491,7 @@ foodcoopshop.Admin = {
             close: function () {
                 $('#dialogPricePrice').val('');
                 $('#dialogPriceProductId').val('');
-                $('input[name="dialogPricePricePerUnitEnabled"].price').prop('checked', false);
+                $('input[name="dialogPricePricePerUnitEnabled"]').prop('checked', false);
                 $('div.price-per-unit-wrapper').addClass('deactivated');
                 $('div.price-wrapper').removeClass('deactivated');
                 $('#dialogPricePriceInclPerUnit').val('');
@@ -558,19 +558,23 @@ foodcoopshop.Admin = {
             var row = $(this).closest('tr');
             var productId = row.find('td:nth-child(1)').html();
             
+            var radioMainSelector = '#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]';
+            var radio;
             var unitData = {};
             var unitObject = $('#product-unit-object-' + productId);
             if (unitObject.length > 0) {
                 unitData = unitObject.data('product-unit-object');
                 if (unitData.price_per_unit_enabled === 1) {
-                    var radio = $('#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"].price-per-unit');
-                    radio.prop('checked', true);
-                    radio.trigger('change');
+                    radio = $(radioMainSelector + '.price-per-unit');
                 }
                 $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(foodcoopshop.Helper.formatFloatAsString(unitData.price_incl_per_unit));
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
                 $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(foodcoopshop.Helper.formatFloatAsString(unitData.quantity_in_units));
+            } else {
+                radio = $(radioMainSelector + '.price');
             }
+            radio.prop('checked', true);
+            radio.trigger('change');
             
             $('#' + dialogId + ' #dialogPricePrice').val(row.find('span.price-for-dialog').html());
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
