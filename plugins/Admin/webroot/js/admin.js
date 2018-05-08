@@ -551,7 +551,7 @@ foodcoopshop.Admin = {
                 priceAsUnitWrapper.addClass('deactivated');
                 priceWrapper.removeClass('deactivated');
             }
-        });        
+        });
 
         $('.product-price-edit-button').on('click', function () {
             
@@ -569,6 +569,7 @@ foodcoopshop.Admin = {
                 }
                 $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(foodcoopshop.Helper.formatFloatAsString(unitData.price_incl_per_unit));
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
+                $('#' + dialogId + ' #dialogPriceUnitName').trigger('change');
                 $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(foodcoopshop.Helper.formatFloatAsString(unitData.quantity_in_units));
             } else {
                 radio = $(radioMainSelector + '.price');
@@ -583,6 +584,15 @@ foodcoopshop.Admin = {
             dialog.dialog('open');
         });
 
+        $('#dialogPriceUnitName').on('change', function() {
+            $('#' + dialogId + ' span.unit-name-placeholder').html($(this).val());
+            var placeholderValue = '0,25';
+            if ($(this).val() == 'g') {
+                placeholderValue = '250';
+            }
+            $('#' + dialogId + ' #dialogPriceQuantityInUnits').attr('placeholder', 'z.B. ' + placeholderValue);
+        }).trigger('change');
+        
     },
     
     getProductNameForDialog : function(row) {
