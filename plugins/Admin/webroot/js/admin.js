@@ -571,7 +571,8 @@ foodcoopshop.Admin = {
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
                 $('#' + dialogId + ' #dialogPriceUnitName').trigger('change');
                 $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(foodcoopshop.Helper.formatFloatAsString(unitData.quantity_in_units));
-            } else {
+            }
+            if (radio === undefined) {
                 radio = $(radioMainSelector + '.price');
             }
             radio.prop('checked', true);
