@@ -600,7 +600,7 @@ foodcoopshop.Admin = {
         var label = row.find('span.name-for-dialog').html();
         // show name of main product
         if (row.hasClass('sub-row')) {
-            label = row.prevAll('.main-product').find('span.name-for-dialog').html() + ': ' + label;
+            label = row.prevAll('.main-product:first').find('span.name-for-dialog').html() + ': ' + label;
         }
         return label;
     },
