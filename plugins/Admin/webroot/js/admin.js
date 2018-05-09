@@ -1701,6 +1701,10 @@ foodcoopshop.Admin = {
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
             $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
             
+            if (row.find('td:nth-child(8)').html() != '') {
+                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b style="color:red;float:left;margin-bottom:5px;">Um das Gewicht anzupassen, ändere bitte den Wert in der Spalte "Gewicht" (zwei Spalten rechts).</b>');
+            }
+            
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
             var timebasedCurrencyObject = $('#timebased-currency-object-' + orderDetailId);
             if (timebasedCurrencyObject.length > 0 && $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice').length == 0) {
