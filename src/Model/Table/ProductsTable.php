@@ -936,6 +936,10 @@ class ProductsTable extends AppTable
             'ProductAttributeShops.id_product_attribute' => $productAttributeId
         ]);
 
+        $this->ProductAttributes->UnitProductAttributes->deleteAll([
+            'UnitProductAttributes.id_product_attribute' => $productAttributeId
+        ]);
+        
         // deleteAll can only get primary key as condition
         $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
         $this->StockAvailables->setPrimaryKey('id_product_attribute');
