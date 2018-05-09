@@ -286,7 +286,7 @@ class CartsController extends FrontendController
         
         return $order;
     }
-    
+
     private function saveOrderDetailTax($orderId)
     {
         $orderDetails = $this->Order->OrderDetails->find('all', [
@@ -448,7 +448,7 @@ class CartsController extends FrontendController
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            $orderDetails2save[] = [
+            $orderDetail2save = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
                 'product_name' => $this->Cart->getProductNameWithUnity($cartProduct['productName'], $cartProduct['unity']),
@@ -458,11 +458,19 @@ class CartsController extends FrontendController
                 'id_tax' => $product->id_tax,
                 'deposit' => $cartProduct['deposit'],
                 'product' => $product,
-                'cartProductId' => $cartProduct['cartProductId'],
-                'unit_name' => $cartProduct['unitName'],
-                'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
-                'quantity_in_units' => $cartProduct['quantityInUnits'],
+                'cartProductId' => $cartProduct['cartProductId']
             ];
+            
+            if ($cartProduct['unitName'] != '') {
+                $orderDetail2save['order_detail_unit'] = [
+                    'unit_name' => $cartProduct['unitName'],
+                    'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
+                    'quantity_in_units' => $cartProduct['quantityInUnits'],
+                    'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
+                ];
+            }
+            
+            $orderDetails2save[] = $orderDetail2save;
             
             $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
             if ($newQuantity < 0) {

@@ -43,6 +43,9 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('TimebasedCurrencyOrderDetails', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->hasOne('OrderDetailUnits', [
+            'foreignKey' => 'id_order_detail'
+        ]);
     }
     
     /**
@@ -136,6 +139,10 @@ class OrderDetailsTable extends AppTable
             $this->TimebasedCurrencyOrderDetails->delete($orderDetail->timebased_currency_order_detail);
         }
         
+        if (!empty($orderDetail->order_detail_unit)) {
+            $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
+        }
+    
     }
 
     /**
@@ -244,9 +251,8 @@ class OrderDetailsTable extends AppTable
             'Orders.Customers',
             'Products.Manufacturers.AddressManufacturers',
             'Products.ProductLangs',
-            'Products.UnitProducts',
-            'ProductAttributes.UnitProductAttributes',
-            'TimebasedCurrencyOrderDetails'
+            'TimebasedCurrencyOrderDetails',
+            'OrderDetailUnits'
         ];
         
         if ($customerId != '') {

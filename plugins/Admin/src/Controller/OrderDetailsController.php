@@ -270,15 +270,8 @@ class OrderDetailsController extends AdminAppController
                         $orderDetail->row_class[] = 'deactivated';
                     }
                     $orderDetail->quantityInUnitsNotYetChanged = false;
-                    if (!empty($orderDetail->product->unit_product)) {
-                        $unitObject = $orderDetail->product->unit_product;
-                    }
-                    if (!empty($orderDetail->product_attribute->unit_product_attribute)) {
-                        $unitObject = $orderDetail->product_attribute->unit_product_attribute;
-                    }
-                    if (isset($unitObject)) {
-                        // round makes the comparison work..
-                        if (round($orderDetail->quantity_in_units, 3) == round($unitObject->quantity_in_units * $orderDetail->product_amount, 3)) {
+                    if (!empty($orderDetail->order_detail_unit)) {
+                        if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
                             $orderDetail->quantityInUnitsNotYetChanged = true;
                         }
                     }
@@ -343,18 +336,24 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
+                'OrderDetailUnits',
                 'TimebasedCurrencyOrderDetails',
                 'Orders.TimebasedCurrencyOrders'
             ]
         ])->first();
         
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->quantity_in_units * $productQuantity;
-        $this->changeOrderDetailQuantity($object, $productQuantity);
+        $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
+        
+        $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->order_detail_unit->product_quantity_in_units * $productQuantity;
+        $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
 
         $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
         
-        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' angepasst ';
+        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') ';
+        $message .= 'wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
+        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity);
+        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' angepasst ';
         
         // send email to customer
         $email = new AppEmail();
@@ -422,7 +421,8 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders'
+                'Orders.TimebasedCurrencyOrders',
+                'OrderDetailUnits'
             ]
         ])->first();
 
@@ -432,8 +432,10 @@ class OrderDetailsController extends AdminAppController
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $productAmount);
         $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $object->product_amount);
 
-        $productQuantity = $oldOrderDetail->quantity_in_units / $oldOrderDetail->product_amount * $productAmount;
-        $this->changeOrderDetailQuantity($object, $productQuantity);
+        if (!empty($object->order_detail_unit)) {
+            $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $oldOrderDetail->product_amount * $productAmount;
+            $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
+        }
         
         if (!empty($object->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -613,7 +615,8 @@ class OrderDetailsController extends AdminAppController
                     'ProductAttributes.StockAvailables',
                     'OrderDetailTaxes',
                     'TimebasedCurrencyOrderDetails',
-                    'Orders.TimebasedCurrencyOrders'
+                    'Orders.TimebasedCurrencyOrders',
+                    'OrderDetailUnits'
                 ]
             ])->first();
 
@@ -685,13 +688,13 @@ class OrderDetailsController extends AdminAppController
      * @param OrderDetailsTable $oldOrderDetail
      * @param float $productQuantity
      */
-    private function changeOrderDetailQuantity($oldOrderDetail, $productQuantity)
+    private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
     {
-        $orderDetail2save = [
-            'quantity_in_units' => $productQuantity
+        $orderDetailUnit2save = [
+            'product_quantity_in_units' => $productQuantity
         ];
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity($oldOrderDetail, $orderDetail2save)
+        $this->OrderDetail->OrderDetailUnits->save(
+            $this->OrderDetail->OrderDetailUnits->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save)
         );
     }
 

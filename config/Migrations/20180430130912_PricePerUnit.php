@@ -19,19 +19,24 @@ class PricePerUnit extends AbstractMigration
               UNIQUE KEY `id_product_attribute` (`id_product_attribute`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-            ALTER TABLE `fcs_order_detail` CHANGE `product_quantity` `product_amount` INT(10) UNSIGNED NOT NULL DEFAULT '0';
-            ALTER TABLE `fcs_manufacturer` CHANGE `send_ordered_product_quantity_changed_notification` `send_ordered_product_amount_changed_notification` INT(10) UNSIGNED NULL DEFAULT NULL;
-            UPDATE fcs_action_logs set type = 'order_detail_product_amount_changed' WHERE type = 'order_detail_product_quantity_changed';
-
-            ALTER TABLE `fcs_order_detail` ADD `quantity_in_units` DECIMAL(10,2) UNSIGNED NULL AFTER `total_price_tax_excl`;
-            ALTER TABLE `fcs_order_detail` ADD `price_incl_per_unit` DECIMAL(10,2) UNSIGNED NULL AFTER `quantity_in_units`;
-            ALTER TABLE `fcs_order_detail` ADD `unit_name` VARCHAR(50) NULL AFTER `price_incl_per_unit`;
-
-            ALTER TABLE `fcs_order_detail` DROP `product_price`;
-
             ALTER TABLE `fcs_units` DROP INDEX `id_product`;
             ALTER TABLE `fcs_units` DROP INDEX `id_product_attribute`;
             ALTER TABLE `fcs_units` ADD UNIQUE( `id_product`, `id_product_attribute`);
+
+            ALTER TABLE `fcs_order_detail` DROP `product_price`;
+            ALTER TABLE `fcs_order_detail` CHANGE `product_quantity` `product_amount` INT(10) UNSIGNED NOT NULL DEFAULT '0';
+
+            ALTER TABLE `fcs_manufacturer` CHANGE `send_ordered_product_quantity_changed_notification` `send_ordered_product_amount_changed_notification` INT(10) UNSIGNED NULL DEFAULT NULL;
+            UPDATE fcs_action_logs set type = 'order_detail_product_amount_changed' WHERE type = 'order_detail_product_quantity_changed';
+
+            CREATE TABLE `fcs_order_detail_units` (
+              `id_order_detail` int(11) NOT NULL DEFAULT '0',
+              `product_quantity_in_units` DECIMAL(10,2) UNSIGNED DEFAULT NULL,
+              `price_incl_per_unit` DECIMAL(10,2) UNSIGNED DEFAULT NULL,
+              `quantity_in_units` DECIMAL(10,2) UNSIGNED DEFAULT NULL,
+              `unit_name` VARCHAR(50) NOT NULL DEFAULT '',
+              UNIQUE KEY `id_order_detail` (`id_order_detail`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
         ");
     }

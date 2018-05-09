@@ -168,6 +168,7 @@ class CartsTable extends AppTable
                 $unitName = '';
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
+                $productQuantityInUnits = 0;
                 if (!empty($cartProduct->product_attribute->unit_product_attribute)) {
                     $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
                     $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
@@ -178,7 +179,8 @@ class CartsTable extends AppTable
                 }
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
-                $productData['quantityInUnits'] = $quantityInUnits * $cartProduct->amount;
+                $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
+                $productData['quantityInUnits'] = $quantityInUnits;
                 
             } else {
                 // no attribute
@@ -213,6 +215,7 @@ class CartsTable extends AppTable
                 $unitName = '';
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
+                $productQuantityInUnits = 0;
                 if (!empty($cartProduct->product->unit_product)) {
                     $unitName = $cartProduct->product->unit_product->name;
                     $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
@@ -223,7 +226,8 @@ class CartsTable extends AppTable
                 }
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
-                $productData['quantityInUnits'] = $quantityInUnits * $cartProduct->amount;
+                $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
+                $productData['quantityInUnits'] = $quantityInUnits;
                 
             }
             
