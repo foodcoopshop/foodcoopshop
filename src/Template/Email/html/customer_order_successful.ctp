@@ -43,15 +43,15 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
     
-        <tr><td style="padding-top:20px;">
-            Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
-        </td></tr>
-        
         <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
-            <tr><td>
+            <tr><td style="padding-top:20px;">
             	* Preis wird evtl. noch angepasst.
             </td></tr>
         <?php } ?>
+        
+        <tr><td style="padding-top:20px;">
+            Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
+        </td></tr>
         
         <tr><td>
             <?php
