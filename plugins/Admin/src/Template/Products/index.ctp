@@ -259,7 +259,7 @@ use Cake\Core\Configure;
             echo '<span data-is-declaration-ok="'.$product->product_lang->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->product_lang->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
         }
 
-        // show unity only if product has no attributes and field "unity" is not empty
+        // show unity only if product has no attributes, field "unity" is not empty and product has no unit record
         if (empty($product->product_attributes)) {
             if (!empty($product->product_lang) && $product->product_lang->unity != '') {
                 echo ': ';
@@ -332,7 +332,7 @@ use Cake\Core\Configure;
             ]);
         }
         
-        echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 || (!empty($product->unit) && $product->unit->price_per_unit_enabled && $product->unit->price_incl_per_unit == 0) ? 'not-available' : '') . '">';
+        echo '<td class="' . ($product->price_is_zero ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
 	        if (empty($product->product_attributes)) {
 	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';

@@ -559,10 +559,23 @@ class ProductsTable extends AppTable
                 $product->deposit = 0;
             }
 
+            $product->price_is_zero = false;
+            if (empty($product->product_attributes) && $product->gross_price == 0) {
+                $product->price_is_zero = true;
+            }
             $product->unit = null;
             if (!empty($product->unit_product)) {
                 $product->unit = $product->unit_product;
+                $product->product_lang->name .= $product->unit_product->quantity_in_units . ' ' . $product->unit_product->name;
+                if ($product->unit_product->price_per_unit_enabled) {
+                    if ($product->unit_product->price_incl_per_unit == 0) {
+                        $product->price_is_zero = true;
+                    } else  {
+                        $product->price_is_zero = false;
+                    }
+                }
             }
+            
             
             if (empty($product->tax)) {
                 $product->tax = (object) [
@@ -606,11 +619,26 @@ class ProductsTable extends AppTable
                     if ($rowIsOdd) {
                         $rowClass[] = 'custom-odd';
                     }
+                    
+                    $priceIsZero = false;
+                    if ($grossPrice == 0) {
+                        $priceIsZero = true;
+                    }
+                    if (!empty($attribute->unit_product_attribute)) {
+                        if ($attribute->unit_product_attribute->price_per_unit_enabled) {
+                            if ($attribute->unit_product_attribute->price_incl_per_unit == 0) {
+                                $priceIsZero = true;
+                            } else {
+                                $priceIsZero = false;
+                            }
+                        }
+                    }
 
                     $preparedProduct = [
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
                         'active' => - 1,
+                        'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
                         'product_lang' => [
                             'name' => ($addProductNameToAttributes ? $product->product_lang->name . ' : ' : '') . $attribute->product_attribute_combination->attribute->name,
