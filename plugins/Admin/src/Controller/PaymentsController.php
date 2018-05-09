@@ -601,10 +601,12 @@ class PaymentsController extends AdminAppController
         
         $timebasedCurrencyOrderInList = false;
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            foreach($customer->paid_cash_free_orders as $order) {
-                if (!empty($order->timebased_currency_order)) {
-                    $timebasedCurrencyOrderInList = true;
-                    break;
+            if (!empty($customer->paid_cash_free_orders)) {
+                foreach($customer->paid_cash_free_orders as $order) {
+                    if (!empty($order->timebased_currency_order)) {
+                        $timebasedCurrencyOrderInList = true;
+                        break;
+                    }
                 }
             }
         }
