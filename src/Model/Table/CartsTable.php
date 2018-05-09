@@ -148,7 +148,6 @@ class CartsTable extends AppTable
                     'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
                     'productName' => $cartProduct->product_lang->name,
                     'productLink' => $productLink,
-                    'unity' => $cartProduct->product_attribute->product_attribute_combination->attribute->name,
                     'amount' => $cartProduct->amount,
                     'manufacturerId' => $cartProduct->product->id_manufacturer,
                     'manufacturerLink' => $manufacturerLink,
@@ -169,14 +168,17 @@ class CartsTable extends AppTable
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
                 $productQuantityInUnits = 0;
-                if (!empty($cartProduct->product_attribute->unit_product_attribute)) {
+                $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
+                if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
                     $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
                     $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
                     $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
                     $productData['price'] =  $newPriceIncl;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
+                    $unity .=  ', ' . Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled, $quantityInUnits, $unitName);
                 }
+                $productData['unity'] = $unity;
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
                 $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
@@ -195,7 +197,6 @@ class CartsTable extends AppTable
                     'productId' => $cartProduct->id_product,
                     'productName' => $cartProduct->product_lang->name,
                     'productLink' => $productLink,
-                    'unity' => $cartProduct->product_lang->unity,
                     'amount' => $cartProduct->amount,
                     'manufacturerId' => $cartProduct->product->id_manufacturer,
                     'manufacturerLink' => $manufacturerLink,
@@ -216,14 +217,20 @@ class CartsTable extends AppTable
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
                 $productQuantityInUnits = 0;
-                if (!empty($cartProduct->product->unit_product)) {
+                $unity = $cartProduct->product_lang->unity;
+                if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
                     $unitName = $cartProduct->product->unit_product->name;
                     $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
                     $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
                     $productData['price'] =  $newPriceIncl * $cartProduct->amount;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
+                    if ($unity != '') {
+                        $unity .= ', ';
+                    }
+                    $unity .=  Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product->unit_product->price_per_unit_enabled, $quantityInUnits, $unitName);
                 }
+                $productData['unity'] = $unity;
                 $productData['unitName'] = $unitName;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
                 $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
