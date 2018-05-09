@@ -27,6 +27,7 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
+TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_orders`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -536,8 +537,8 @@ INSERT INTO `fcs_manufacturer` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
-(1,1,346,0,'Artischocke : Stück',1,1.820000,1.652893,NULL,NULL,NULL,2,0.50),
-(2,1,340,0,'Beuschl',1,4.545455,4.545455,NULL,NULL,NULL,0,0.00);
+(1,1,346,0,'Artischocke : Stück',1,1.820000,1.652893,2,0.50),
+(2,1,340,0,'Beuschl',1,4.545455,4.545455,0,0.00);
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
@@ -545,6 +546,9 @@ INSERT INTO `fcs_order_detail_tax` VALUES
 (1,0.170000,0.170000),
 (2,0.000000,0.000000);
 /*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 INSERT INTO `fcs_orders` VALUES
