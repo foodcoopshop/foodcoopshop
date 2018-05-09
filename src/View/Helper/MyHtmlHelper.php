@@ -36,6 +36,15 @@ class MyHtmlHelper extends HtmlHelper
         </script>";
         parent::__construct($View, $config);
     }
+    
+    public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName)
+    {
+        $result = '';
+        if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
+            $result = '<span class="quantity-in-units">ca. ' . $quantityInUnits . ' ' . $unitName . '</span>';
+        }
+        return $result;
+    }
 
     public function getPricePerUnit($priceInclPerUnit, $quantityInUnits)
     {

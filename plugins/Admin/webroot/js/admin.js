@@ -600,7 +600,7 @@ foodcoopshop.Admin = {
         var label = row.find('span.name-for-dialog').html();
         // show name of main product
         if (row.hasClass('sub-row')) {
-            label = row.prevAll('.main-product:first').find('span.name-for-dialog').html() + ': ' + label;
+            label = row.prevAll('.main-product:first').find('span.name-for-dialog .product-name').html() + ': ' + label;
         }
         return label;
     },
@@ -693,7 +693,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
             var row = $(this).closest('tr');
             var nameCell = row.find('td:nth-child(4)');
-            $('#' + dialogId + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog').html()));
+            $('#' + dialogId + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog .product-name').html()));
             $('#' + dialogId + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
             var unityElement = nameCell.find('span.unity-for-dialog');
             var unity = '';

@@ -559,14 +559,27 @@ class ProductsTable extends AppTable
                 $product->deposit = 0;
             }
 
+            
+            // show unity only for main products
+            $additionalProductNameInfos = [];
+            if (empty($product->product_attributes) && $product->product_lang->unity != '') {
+                $additionalProductNameInfos[] = '<span class="unity-for-dialog">' . $product->product_lang->unity . '</span>';
+            }
+            
             $product->price_is_zero = false;
             if (empty($product->product_attributes) && $product->gross_price == 0) {
                 $product->price_is_zero = true;
             }
             $product->unit = null;
             if (!empty($product->unit_product)) {
+                
                 $product->unit = $product->unit_product;
-                $product->product_lang->name .= $product->unit_product->quantity_in_units . ' ' . $product->unit_product->name;
+                
+                $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
+                if ($quantityInUnitsString != '') {
+                    $additionalProductNameInfos[] = $quantityInUnitsString;
+                }
+                
                 if ($product->unit_product->price_per_unit_enabled) {
                     if ($product->unit_product->price_incl_per_unit == 0) {
                         $product->price_is_zero = true;
@@ -574,8 +587,14 @@ class ProductsTable extends AppTable
                         $product->price_is_zero = false;
                     }
                 }
+                
             }
             
+            $product->product_lang->unchanged_name = $product->product_lang->name;
+            $product->product_lang->name = '<span class="product-name">' . $product->product_lang->name . '</span>';
+            if (!empty($additionalProductNameInfos)) {
+                $product->product_lang->name = $product->product_lang->name . ': ' . join(', ', $additionalProductNameInfos);
+            }
             
             if (empty($product->tax)) {
                 $product->tax = (object) [
@@ -620,12 +639,24 @@ class ProductsTable extends AppTable
                         $rowClass[] = 'custom-odd';
                     }
                     
+                    
+                    $productName = $attribute->product_attribute_combination->attribute->name;
+                    if ($addProductNameToAttributes) {
+                        $productName = $product->product_lang->name . ': ' . $productName;
+                    }
+                    
                     $priceIsZero = false;
                     if ($grossPrice == 0) {
                         $priceIsZero = true;
                     }
                     if (!empty($attribute->unit_product_attribute)) {
                         if ($attribute->unit_product_attribute->price_per_unit_enabled) {
+                            
+                            $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnits($attribute->unit_product_attribute->price_per_unit_enabled, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->name);
+                            if ($quantityInUnitsString != '') {
+                                $productName .= ', ' . $quantityInUnitsString;
+                            }
+                            
                             if ($attribute->unit_product_attribute->price_incl_per_unit == 0) {
                                 $priceIsZero = true;
                             } else {
@@ -633,7 +664,7 @@ class ProductsTable extends AppTable
                             }
                         }
                     }
-
+                    
                     $preparedProduct = [
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
@@ -641,7 +672,8 @@ class ProductsTable extends AppTable
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
                         'product_lang' => [
-                            'name' => ($addProductNameToAttributes ? $product->product_lang->name . ' : ' : '') . $attribute->product_attribute_combination->attribute->name,
+                            'unchanged_name' => $product->product_lang->unchanged_name,
+                            'name' => $productName,
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''

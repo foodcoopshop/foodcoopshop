@@ -438,7 +438,8 @@ body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.i
 .product-attributes-dropdown {
     width: 400px;
 }
-body.products.index .unity-for-dialog {
+body.products.index table.list .unity-for-dialog, /* do not apply in dialogs! */
+body.products.index table.list .quantity-in-units {
     font-size: 11px;
     font-style: italic;
 }

@@ -259,16 +259,6 @@ use Cake\Core\Configure;
             echo '<span data-is-declaration-ok="'.$product->product_lang->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->product_lang->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
         }
 
-        // show unity only if product has no attributes, field "unity" is not empty and product has no unit record
-        if (empty($product->product_attributes)) {
-            if (!empty($product->product_lang) && $product->product_lang->unity != '') {
-                echo ': ';
-                echo '<span class="unity-for-dialog">';
-                echo $product->product_lang->unity;
-                echo '</span>';
-            }
-        }
-
         echo '<span class="description-short-for-dialog">';
         echo $product->product_lang->description_short;
         echo '</span>';
@@ -428,7 +418,7 @@ use Cake\Core\Configure;
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
                 'title' => 'Produkt-Vorschau',
                 'target' => '_blank'
-            ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->name));
+            ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->unchanged_name));
         }
         echo '</td>';
 
