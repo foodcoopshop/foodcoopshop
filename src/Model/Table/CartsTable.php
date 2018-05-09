@@ -117,6 +117,8 @@ class CartsTable extends AppTable
             'Cart' => $cart,
             'CartProducts' => []
         ];
+        $productsWithUnitCount = 0;
+        
         foreach ($cartProducts as &$cartProduct) {
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
 
@@ -177,6 +179,7 @@ class CartsTable extends AppTable
                     $productData['price'] =  $newPriceIncl;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
                     $unity .=  ', ' . Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled, $quantityInUnits, $unitName);
+                    $productsWithUnitsCount++;
                 }
                 $productData['unity'] = $unity;
                 $productData['unitName'] = $unitName;
@@ -229,6 +232,7 @@ class CartsTable extends AppTable
                         $unity .= ', ';
                     }
                     $unity .=  Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product->unit_product->price_per_unit_enabled, $quantityInUnits, $unitName);
+                    $productsWithUnitCount++;
                 }
                 $productData['unity'] = $unity;
                 $productData['unitName'] = $unitName;
@@ -251,6 +255,7 @@ class CartsTable extends AppTable
         }
 
         // sum up deposits and products
+        $preparedCart['ProductsWithUnitCount'] = $productsWithUnitCount;
         $preparedCart['CartDepositSum'] = 0;
         $preparedCart['CartProductSum'] = 0;
         $preparedCart['CartProductSumExcl'] = 0;

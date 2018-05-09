@@ -47,6 +47,12 @@ use Cake\Core\Configure;
             Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
         
+        <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
+            <tr><td>
+            	* Preis wird evtl. noch angepasst.
+            </td></tr>
+        <?php } ?>
+        
         <tr><td>
             <?php
             if ($this->MyHtml->paymentIsCashless()) {

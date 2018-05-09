@@ -60,6 +60,11 @@ use Cake\Core\Configure;
                 </td>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php echo $this->MyHtml->formatAsEuro($product['price']); ?>
+                    <?php
+                        if ($product['unitName'] != '') {
+                            echo ' *';
+                        }
+                    ?>
                 </td>
                 
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
