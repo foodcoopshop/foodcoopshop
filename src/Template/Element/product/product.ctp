@@ -128,7 +128,7 @@ if ($product['description'] != '') {
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
                     $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units']);
-                    $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['quantity_in_units']);
+                    $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name']);
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
@@ -155,10 +155,18 @@ if ($product['description'] != '') {
 
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
+            
+            $radioButtonLabel = [];
+            $radioButtonLabel[] = $attribute['ProductAttributeCombinations']['Attributes']['name'];
+            
+            $unitString = $this->Html->getQuantityInUnits($attribute['Units']['price_per_unit_enabled'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_name']);
+            if ($unitString != '') {
+                $radioButtonLabel[] = $unitString;
+            }
             echo '<div class="radio">
                            <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
                                <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                               $attribute['ProductAttributeCombinations']['Attributes']['name'].'
+                               join(', ', $radioButtonLabel) . '
                            </label>
                        </div>';
         }
@@ -171,7 +179,7 @@ if ($product['description'] != '') {
             $pricePerUnitInfoText = '';
             if ($product['price_per_unit_enabled']) {
                 $priceHtml = $this->Html->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units']);
-                $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['quantity_in_units']);
+                $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name']);
             }
             echo $priceHtml;
                 if ($product['deposit']) {
@@ -195,8 +203,16 @@ if ($product['description'] != '') {
         }
         echo '</div>';
 
+        $unityStrings = []; 
         if ($product['unity'] != '') {
-            echo '<div class="unity">Einheit: <span class="value">' . $product['unity'].'</span></div>';
+            $unityStrings[] = $product['unity'];
+        }
+        $unitString = $this->Html->getQuantityInUnits($product['price_per_unit_enabled'], $product['quantity_in_units'], $product['unit_name']);
+        if ($unitString != '') {
+            $unityStrings[] = $unitString;
+        }
+        if (!empty($unityStrings)) {
+            echo '<div class="unity">Einheit: <span class="value">' . join(', ', $unityStrings).'</span></div>';
         }
     }
 

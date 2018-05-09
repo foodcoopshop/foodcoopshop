@@ -575,7 +575,7 @@ class ProductsTable extends AppTable
                 
                 $product->unit = $product->unit_product;
                 
-                $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnits($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
+                $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnitsWithWrapper($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
                 if ($quantityInUnitsString != '') {
                     $additionalProductNameInfos[] = $quantityInUnitsString;
                 }
@@ -652,7 +652,7 @@ class ProductsTable extends AppTable
                     if (!empty($attribute->unit_product_attribute)) {
                         if ($attribute->unit_product_attribute->price_per_unit_enabled) {
                             
-                            $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnits($attribute->unit_product_attribute->price_per_unit_enabled, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->name);
+                            $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnitsWithWrapper($attribute->unit_product_attribute->price_per_unit_enabled, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->name);
                             if ($quantityInUnitsString != '') {
                                 $productName .= ', ' . $quantityInUnitsString;
                             }

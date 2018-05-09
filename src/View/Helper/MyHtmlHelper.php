@@ -37,11 +37,16 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
+    public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName)
+    {
+        return '<span class="quantity-in-units">' . $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName) . '</span>';
+    }
+    
     public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName)
     {
         $result = '';
         if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
-            $result = '<span class="quantity-in-units">ca. ' . $quantityInUnits . ' ' . $unitName . '</span>';
+            $result = 'ca. ' . $this->formatAsDecimal($quantityInUnits, 2, true) . ' ' . $unitName;
         }
         return $result;
     }
@@ -51,14 +56,11 @@ class MyHtmlHelper extends HtmlHelper
         return '<div class="price">' . $this->formatAsEuro($priceInclPerUnit * $quantityInUnits) . '</div> <div class="price-asterisk">*</div>';
     }
     
-    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $quantityInUnits)
+    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName)
     {
         $infoText = '<div class="line">';
             $infoText .= '<span class="additional-price-info">';
             $infoText .= ' * Preis-Basis: ' . $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
-            if ($quantityInUnits > 0) {
-                $infoText .= ', ca. ' . $this->formatAsDecimal($quantityInUnits) . ' ' . $unitName;
-            }
             $infoText .= ', Preis wird evtl. noch angepasst.';
             $infoText .= '</span>';
         $infoText .= '</div>';
@@ -296,9 +298,13 @@ class MyHtmlHelper extends HtmlHelper
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
 
-    public function formatAsDecimal($amount, $decimals = 2)
+    public function formatAsDecimal($amount, $decimals = 2, $cutOffZeros = false)
     {
-        return number_format($amount, $decimals, ',', '.');
+        $result = number_format($amount, $decimals, ',', '.');
+        if ($cutOffZeros) {
+            $result = floatval($amount);
+        }
+        return $result;
     }
 
     public function getCustomerOrderBy()
