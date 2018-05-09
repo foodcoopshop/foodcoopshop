@@ -462,6 +462,8 @@ class ManufacturersTable extends AppTable
         od.product_amount AS OrderDetailAmount,
         od.total_price_tax_incl AS OrderDetailPriceIncl,
         od.total_price_tax_excl as OrderDetailPriceExcl,
+        odu.product_quantity_in_units as OrderDetailUnitQuantityInUnits,
+        odu.unit_name as OrderDetailUnitUnitName,
         DATE_FORMAT (o.date_add, '%d.%m.%Y') as OrderDateAdd,
         c.id_customer AS CustomerId,
         {$customerNameAsSql} AS CustomerName
@@ -469,6 +471,7 @@ class ManufacturersTable extends AppTable
             LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
             LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
             LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
+            LEFT JOIN ".$this->tablePrefix."order_detail_units odu ON od.id_order_detail = odu.id_order_detail
             LEFT JOIN ".$this->tablePrefix."product_lang pl ON p.id_product = pl.id_product
             LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
             LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer

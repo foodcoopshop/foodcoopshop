@@ -55,7 +55,7 @@ $headers = [
     'Mitglied'
 ];
 
-$pdf->renderDetailedOrderList($results, $widths, $headers, $groupType);
+$pdf->renderDetailedOrderList($results, $widths, $headers, $groupType, false);
 $pdf->addLastSumRow(
     $headers,
     $this->Html->formatAsDecimal($sumPriceExcl),

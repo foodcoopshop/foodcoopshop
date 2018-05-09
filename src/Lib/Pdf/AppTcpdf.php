@@ -95,6 +95,9 @@ class AppTcpdf extends TCPDF
                 $this->table .= '<td style="' . $amountStyle . '" align="right" width="' . $widths[$indexForWidth] . '">' . $amount . 'x</td>';
 
                 $indexForWidth ++;
+                if ($result['OrderDetailUnitQuantityInUnits'] != '') {
+                    $productName .= ', ' .  Configure::read('app.htmlHelper')->formatAsDecimal($result['OrderDetailUnitQuantityInUnits'], 2, true) . ' ' . $result['OrderDetailUnitUnitName'];
+                }
                 $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $productName . '</td>';
 
                 if (in_array('Preis exkl.', $headers)) {
