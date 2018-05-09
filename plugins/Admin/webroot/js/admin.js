@@ -1600,7 +1600,18 @@ foodcoopshop.Admin = {
             
             $('#' + dialogId + ' b').html(unitName);
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
+            
+            var amount = row.find('td:nth-child(3) .product-amount-for-dialog').html();
+            var label = row.find('td:nth-child(4) a.name-for-dialog').html()
+            label += ' <span style="font-weight:normal;">(';
+            if (amount > 1) {
+                label += '<b>' + amount + '</b>' + 'x bestellt ';
+                var quantityString = $('#' + dialogId + ' span.quantity-string');
+                var newHtml = quantityString.html().replace(/Gewicht/, 'Gesamtgewicht');
+                quantityString.html(newHtml);
+            }
+            label += 'von ' + row.find('td:nth-child(10)').html() + ')';
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
             
             productQuantityField.val(quantity);
             dialog.dialog('open');
