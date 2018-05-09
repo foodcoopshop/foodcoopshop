@@ -269,6 +269,19 @@ class OrderDetailsController extends AdminAppController
                     if ($bulkOrdersAllowed) {
                         $orderDetail->row_class[] = 'deactivated';
                     }
+                    $orderDetail->quantityInUnitsNotYetChanged = false;
+                    if (!empty($orderDetail->product->unit_product)) {
+                        $unitObject = $orderDetail->product->unit_product;
+                    }
+                    if (!empty($orderDetail->product_attribute->unit_product_attribute)) {
+                        $unitObject = $orderDetail->product_attribute->unit_product_attribute;
+                    }
+                    if (isset($unitObject)) {
+                        // round makes the comparison work..
+                        if (round($orderDetail->quantity_in_units, 3) == round($unitObject->quantity_in_units * $orderDetail->product_amount, 3)) {
+                            $orderDetail->quantityInUnitsNotYetChanged = true;
+                        }
+                    }
                     $i ++;
                 }
                 break;

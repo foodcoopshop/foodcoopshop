@@ -244,6 +244,8 @@ class OrderDetailsTable extends AppTable
             'Orders.Customers',
             'Products.Manufacturers.AddressManufacturers',
             'Products.ProductLangs',
+            'Products.UnitProducts',
+            'ProductAttributes.UnitProductAttributes',
             'TimebasedCurrencyOrderDetails'
         ];
         

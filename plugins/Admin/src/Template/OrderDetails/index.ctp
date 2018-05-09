@@ -309,8 +309,8 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</td>';
     
-    echo '<td class="right">';
     if ($groupBy == '') {
+        echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
         if ($orderDetail->quantity_in_units > 0) {
             if ($editRecordAllowed) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -320,6 +320,8 @@ foreach ($orderDetails as $orderDetail) {
             }
             echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->unit_name.'</span>';
         }
+    } else {
+        echo '<td>';
     }
     echo '</td>';
 
