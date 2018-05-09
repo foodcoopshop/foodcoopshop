@@ -90,7 +90,15 @@ if (!empty($manufacturer['Products'])) {
 }
 
     echo '<div class="imprint">';
+    
         echo '<h2>Impressum</h2>';
         echo $this->Html->getManufacturerImprint($manufacturer, 'html', false);
+        
+        if (!empty($manufacturer->modified)) {
+            echo '<p><i>';
+            echo 'Geändert am ' . $manufacturer->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo '</i></p>';
+        }
+        
     echo '</div>';
 ?>
