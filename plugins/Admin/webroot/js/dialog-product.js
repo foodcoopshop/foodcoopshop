@@ -16,7 +16,7 @@ foodcoopshop.DialogProduct = {
     getHtmlForProductNameEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogName">Name</label><br />';
         dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">Wichtig: Bitte keine Produkte in andere Produkte umbenennen, sondern dafür ein neues Produkt erstellen!</span><br />';
-        dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span style="font-weight:normal">(z.B. 1 kg, 0,5 l)</span></label><br />';
+        dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span>(z.B. Stück, 2 Paar, 6er-Pack) <br />Ungefähres Gewicht bitte beim <b>Preis</b> eintragen.</span></label><br />';
         dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
         dialogHtml += '<div class="textarea-wrapper">';
         dialogHtml += '<label for="dialogDescriptionShort" class="label-description-short">Kurze Beschreibung</label><br />';
@@ -44,7 +44,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '</div>';
         dialogHtml += '<label class="radio">';
         dialogHtml += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price-per-unit" class="price-per-unit"/>';
-        dialogHtml += 'Preis pro Gewicht (für Gewichtsanpassung nach Lieferung)';
+        dialogHtml += 'Preis nach Gewicht (für Gewichtsanpassung nach Lieferung)';
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';

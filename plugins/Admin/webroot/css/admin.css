@@ -540,6 +540,10 @@ form div.error-message {
     font-weight: bold;
     font-size: 14px;
 }
+#labelUnity span {
+    font-weight: normal;
+    font-size: 12px;	
+}
 .product-description-rename-info {
     position: absolute;
     right: 30px;

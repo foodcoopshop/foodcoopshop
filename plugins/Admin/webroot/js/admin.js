@@ -614,7 +614,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            height: 640,
+            height: 660,
             width: 795,
             modal: true,
 
@@ -720,11 +720,9 @@ foodcoopshop.Admin = {
             );
 
             // hide unity field if product has attributes
-            var unitySelector = $('#' + dialogId + ' #labelUnity, #' + dialogId + ' #dialogUnity');
-            if ($(this).parent().parent().parent().parent().next().hasClass('sub-row')) {
-                unitySelector.hide();
-            } else {
-                unitySelector.show();
+            if ($(this).closest('tr').next().hasClass('sub-row')) {
+                $('#' + dialogId + ' #dialogUnity').hide();
+                $('#' + dialogId + ' #labelUnity').html('Gewicht<br />' + '<span>Ungefähres Gewicht bitte beim Preis eintragen.</span>');
             }
 
             dialog.dialog('open');
