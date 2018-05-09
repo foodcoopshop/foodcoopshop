@@ -86,7 +86,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
             'Wichtige Informationen zu deiner Zeit-Eintragung vom',
             [
                 'Hallo Demo Mitglied,',
-                'Die eingetragene Zeit wurde von <b>0,50&nbsp;h</b> auf <b>0,25&nbsp;h</b> korrigiert.',
+                'Die eingetragene Zeit wurde von <b>0,50&nbsp;h</b> auf <b>0,25&nbsp;h</b> angepasst.',
                 'Deine Zeit-Aufladung wurde als "da stimmt was nicht..." markiert.',
             ],
             [

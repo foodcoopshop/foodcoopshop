@@ -341,13 +341,13 @@ class OrderDetailsController extends AdminAppController
 
         $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
         
-        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' korrigiert ';
+        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->quantity_in_units) . ' ' . $oldOrderDetail->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity) . ' ' . $oldOrderDetail->unit_name . ' angepasst ';
         
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_quantity_changed')
         ->setTo($oldOrderDetail->order->customer->email)
-        ->setSubject('Gewicht korrigiert: ' . $oldOrderDetail->product_name)
+        ->setSubject('Gewicht angepasst: ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
@@ -435,7 +435,7 @@ class OrderDetailsController extends AdminAppController
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_amount_changed')
         ->setTo($oldOrderDetail->order->customer->email)
-        ->setSubject('Bestellte Anzahl korrigiert: ' . $oldOrderDetail->product_name)
+        ->setSubject('Bestellte Anzahl angepasst: ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
@@ -518,7 +518,7 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
         
-        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' korrigiert ';
+        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' angepasst ';
         
         if (!empty($object->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -531,7 +531,7 @@ class OrderDetailsController extends AdminAppController
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_price_changed')
         ->setTo($oldOrderDetail->order->customer->email)
-        ->setSubject('Preis korrigiert: ' . $oldOrderDetail->product_name)
+        ->setSubject('Preis angepasst: ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,

@@ -17,7 +17,7 @@ foodcoopshop.DialogOrderDetail = {
         var dialogHtml = '<label for="dialogOrderDetailProductAmount"></label><br />';
         dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogEditAmountReason">Warum wird Anzahl korrigiert (Pflichtfeld)?</label>';
+        dialogHtml += '<label for="dialogEditAmountReason">Warum wird Anzahl angepasst (Pflichtfeld)?</label>';
         dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
@@ -30,11 +30,11 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml += '<input type="text" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
         dialogHtml += '<b>€</b>';
         dialogHtml += '<div class="textarea-wrapper" style="margin-top: 10px;">';
-        dialogHtml += '<label for="dialogEditPriceReason">Warum wird der Preis korrigiert (Pflichtfeld)?</label>';
+        dialogHtml += '<label for="dialogEditPriceReason">Warum wird der Preis angepasst (Pflichtfeld)?</label>';
         dialogHtml += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductPriceOrderDetailId" id="dialogOrderDetailProductPriceOrderDetailId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Preis korrigieren', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Preis anpassen', dialogId, dialogHtml);
         return dialogHtml;
     },
 
@@ -43,7 +43,7 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml += '<input type="text" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
         dialogHtml += '<b></b> * - Der Preis wird automatisch angepasst.';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gewicht korrigieren', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gewicht anpassen', dialogId, dialogHtml);
         return dialogHtml;
     }
     

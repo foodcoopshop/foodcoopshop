@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Das Gewicht des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde korrigiert. Du hast <?php echo $oldOrderDetail->product_amount; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
+                Das Gewicht des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast <?php echo $oldOrderDetail->product_amount; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
                 bestellt.
             </p>
 
