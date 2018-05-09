@@ -152,10 +152,10 @@ if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER
 echo '<th>';
     echo $this->Paginator->sort('OrderDetails.deposit', 'Pfand');
 echo '</th>';
-echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.quantity_in_units', 'Gewicht');
-echo '</th>';
 if ($groupBy == '') {
+    echo '<th class="right">';
+        echo $this->Paginator->sort('OrderDetails.quantity_in_units', 'Gewicht');
+    echo '</th>';
     echo '<th>';
         echo $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
     echo '</th>';
@@ -311,19 +311,17 @@ foreach ($orderDetails as $orderDetail) {
     
     if ($groupBy == '') {
         echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
-        if ($orderDetail->quantity_in_units > 0) {
-            if ($editRecordAllowed) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'order-detail-product-quantity-edit-button',
-                    'title' => 'Zum Ändern des Gewichts anklicken'
-                ], 'javascript:void(0);');
+            if ($orderDetail->quantity_in_units > 0) {
+                if ($editRecordAllowed) {
+                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                        'class' => 'order-detail-product-quantity-edit-button',
+                        'title' => 'Zum Ändern des Gewichts anklicken'
+                    ], 'javascript:void(0);');
+                }
+                echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->unit_name.'</span>';
             }
-            echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->unit_name.'</span>';
-        }
-    } else {
-        echo '<td>';
+        echo '</td>';
     }
-    echo '</td>';
 
     if ($groupBy == '') {
         if ($groupBy == '') {
@@ -402,9 +400,8 @@ if ($sumDeposit > 0) {
     $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
-echo '<td></td>';
 if ($groupBy == '') {
-    echo '<td colspan="4"></td>';
+    echo '<td colspan="5"></td>';
 }
 echo '</tr>';
 echo '</table>';
