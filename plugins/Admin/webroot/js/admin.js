@@ -1544,7 +1544,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            width: 440,
+            width: 460,
             modal: true,
             close: function () {
                 $('#dialogOrderDetailProductQuantityQuantity').val('');

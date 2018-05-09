@@ -40,9 +40,9 @@ foodcoopshop.DialogOrderDetail = {
 
     getHtmlForOrderDetailProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
-        dialogHtml += '<span class="quantity-string">Geliefertes Gewicht</span>: <input type="text" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
-        dialogHtml += '<b></b>';
-        dialogHtml += '<br />Der Preis wird automatisch angepasst.';
+        dialogHtml += '<br /><span class="quantity-string">Geliefertes Gewicht</span>: <input type="text" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
+        dialogHtml += '<b></b> *';
+        dialogHtml += '<br /><br />* Der Preis wird nach dem Speichern automatisch angepasst.';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gewicht anpassen', dialogId, dialogHtml);
         return dialogHtml;
