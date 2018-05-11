@@ -56,6 +56,13 @@ echo $this->Form->control('Attributes.name', [
     'label' => 'Name'
 ]);
 
+echo $this->Form->control('Attributes.can_be_used_as_unit', [
+    'label' => 'Gewichtseinheit? <span class="after small">Bitte anhaken, falls diese Variante einer Gewichtseinheit (z.B. kg, g) entspricht. Diese Information wird für die Funktion <a href="https://foodcoopshop.github.io/de/produkte" target="_blank">Preis nach Gewicht</a> benötigt.</span>',
+    'type' => 'checkbox',
+    'escape' => false
+]);
+
+
 if ($this->request->getRequestTarget() != $this->Slug->getAttributeAdd()) {
     echo $this->Form->control('Attributes.delete_attribute', [
         'label' => 'Variante löschen? <span class="after small">' . ($attribute->has_combined_products ? 'Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind.' : 'Anhaken und dann auf <b>Speichern</b> klicken.') . '</span>',

@@ -53,6 +53,7 @@ DROP TABLE IF EXISTS `fcs_attribute`;
 CREATE TABLE `fcs_attribute` (
   `id_attribute` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) DEFAULT NULL,
+  `can_be_used_as_unit` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,

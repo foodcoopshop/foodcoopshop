@@ -40,6 +40,8 @@ class PricePerUnit extends AbstractMigration
               UNIQUE KEY `id_order_detail` (`id_order_detail`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+            ALTER TABLE `fcs_attribute` ADD `can_be_used_as_unit` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0' AFTER `name`;
+
         ");
     }
     

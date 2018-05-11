@@ -640,28 +640,27 @@ class ProductsTable extends AppTable
                     }
                     
                     
-                    $productName = $attribute->product_attribute_combination->attribute->name;
-                    if ($addProductNameToAttributes) {
-                        $productName = $product->product_lang->name . ': ' . $productName;
-                    }
-                    
                     $priceIsZero = false;
                     if ($grossPrice == 0) {
                         $priceIsZero = true;
                     }
-                    if (!empty($attribute->unit_product_attribute)) {
-                        if ($attribute->unit_product_attribute->price_per_unit_enabled) {
-                            
-                            $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnitsWithWrapper($attribute->unit_product_attribute->price_per_unit_enabled, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->name);
-                            if ($quantityInUnitsString != '') {
-                                $productName .= ', ' . $quantityInUnitsString;
-                            }
-                            
-                            if ($attribute->unit_product_attribute->price_incl_per_unit == 0) {
-                                $priceIsZero = true;
-                            } else {
-                                $priceIsZero = false;
-                            }
+                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnitsWithWrapper($attribute->unit_product_attribute->price_per_unit_enabled, $attribute->unit_product_attribute->quantity_in_units, $attribute->unit_product_attribute->name);
+                        if ($quantityInUnitsString != '') {
+                            $productName = $attribute->product_attribute_combination->attribute->name . ', ' . $quantityInUnitsString;
+                        }
+                        if ($attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
+                            $productName = $quantityInUnitsString;
+                        }
+                        if ($attribute->unit_product_attribute->price_incl_per_unit == 0) {
+                            $priceIsZero = true;
+                        } else {
+                            $priceIsZero = false;
+                        }
+                    } else {
+                        $productName = $attribute->product_attribute_combination->attribute->name;
+                        if ($addProductNameToAttributes) {
+                            $productName = $product->product_lang->name . ': ' . $productName;
                         }
                     }
                     

@@ -87,7 +87,8 @@ class FrontendController extends AppController
                 ];
                 $preparedAttributes['ProductAttributeCombinations'] = [
                     'Attributes' => [
-                        'name' => $attribute->product_attribute_combination->attribute->name
+                        'name' => $attribute->product_attribute_combination->attribute->name,
+                        'can_be_used_as_unit' => $attribute->product_attribute_combination->attribute->can_be_used_as_unit
                     ]
                 ];
                 $preparedAttributes['Units'] = [

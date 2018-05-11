@@ -178,10 +178,16 @@ class CartsTable extends AppTable
                     $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
                     $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
-                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $amount, 2);
+                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
                     $productData['price'] =  $newPriceIncl;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
-                    $unity .=  ', ' . Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled, $quantityInUnits, $unitName);
+                    $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled, $quantityInUnits, $unitName);
+                    if ($quantityInUnitsString != '') {
+                        $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name . ', ' . $quantityInUnitsString;
+                    }
+                    if ($cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
+                        $unity = $quantityInUnitsString;
+                    }
                     $productsWithUnitCount++;
                 }
                 $productData['unity_with_unit'] = $unity;

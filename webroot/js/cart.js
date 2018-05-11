@@ -34,7 +34,7 @@ foodcoopshop.Cart = {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
             $('.cart p.products').append(
-                this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours)
+                this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours)
             );
             sum += cp.price;
             depositSum += cp.deposit;

@@ -127,7 +127,7 @@ if ($product['description'] != '') {
                 $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
-                    $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['amount']);
+                    $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
                     $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
                 }
                 echo $priceHtml;
@@ -156,17 +156,20 @@ if ($product['description'] != '') {
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
             
-            $radioButtonLabel = [];
-            $radioButtonLabel[] = $attribute['ProductAttributeCombinations']['Attributes']['name'];
+            $radioButtonLabel = $attribute['ProductAttributeCombinations']['Attributes']['name'];
+            $quantityInUnitsString = $this->Html->getQuantityInUnits($attribute['Units']['price_per_unit_enabled'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_name']);
             
-            $unitString = $this->Html->getQuantityInUnits($attribute['Units']['price_per_unit_enabled'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_name']);
-            if ($unitString != '') {
-                $radioButtonLabel[] = $unitString;
+            if ($quantityInUnitsString != '') {
+                $radioButtonLabel .=', ' . $quantityInUnitsString;
             }
+            if ($attribute['ProductAttributeCombinations']['Attributes']['can_be_used_as_unit']) {
+                $radioButtonLabel = $quantityInUnitsString;
+            }
+            
             echo '<div class="radio">
                       <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
                           <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                               join(', ', $radioButtonLabel) . '
+                               $radioButtonLabel.'
                       </label>
                   </div>';
            
