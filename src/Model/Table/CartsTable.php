@@ -72,6 +72,10 @@ class CartsTable extends AppTable
         return $cart;
     }
 
+    /**
+     * @param int $customerId
+     * @return array
+     */
     public function getCart($customerId)
     {
         $cart = $this->find('all', [
@@ -89,7 +93,6 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-        $productsTable = TableRegistry::getTableLocator()->get('Products');
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         
         $cartProducts = $cartProductsTable->find('all', [
@@ -117,146 +120,33 @@ class CartsTable extends AppTable
             'Cart' => $cart,
             'CartProducts' => []
         ];
-        $productsWithUnitCount = 0;
         
         foreach ($cartProducts as &$cartProduct) {
-            $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
 
             $imageId = 0;
             if (!empty($cartProduct->product->image)) {
                 $imageId = $cartProduct->product->image->id_image;
             }
 
+            if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
+                $productData = $this->prepareProductAttribute($cartProduct);
+            } else {
+                $productData = $this->prepareMainProduct($cartProduct);
+            }
+            
             $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
             $productLink = Configure::read('app.htmlHelper')->link(
                 $cartProduct->product_lang->name,
                 Configure::read('app.slugHelper')->getProductDetail(
                     $cartProduct->id_product,
                     $cartProduct->product_lang->name
-                ),
+                    ),
                 ['class' => 'product-name']
             );
-            
-            if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
-                
-                $netPricePerPiece = $cartProduct->product_attribute->product_attribute_shop->price;
-                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
-                $grossPrice = $grossPricePerPiece * $cartProduct->amount;
-                $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
-                
-                // attribute
-                $productData = [
-                    'cartProductId' => $cartProduct->id_cart_product,
-                    'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
-                    'productName' => $cartProduct->product_lang->name,
-                    'productLink' => $productLink,
-                    'amount' => $cartProduct->amount,
-                    'manufacturerId' => $cartProduct->product->id_manufacturer,
-                    'manufacturerLink' => $manufacturerLink,
-                    'manufacturerName' => $cartProduct->product->manufacturer->name,
-                    'image' => $productImage,
-                    'price' => $grossPrice,
-                    'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
-                    'tax' => $tax
-                ];
-                
-                $deposit = 0;
-                if (!empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
-                     $deposit = $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount;
-                }
-                $productData['deposit'] = $deposit;
-                
-                $unitName = '';
-                $unitAmount = 0;
-                $priceInclPerUnit = 0;
-                $quantityInUnits = 0;
-                $productQuantityInUnits = 0;
-                $unity = '';
-                if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
-                    $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
-                }
-                $productData['unity'] = $unity;
-                if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
-                    $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
-                    $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
-                    $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
-                    $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
-                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
-                    $productData['price'] =  $newPriceIncl;
-                    $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
-                    $unity = Configure::read('app.htmlHelper')->getQuantityInUnitsStringForAttributes(
-                        $cartProduct->product_attribute->product_attribute_combination->attribute->name,
-                        $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
-                        $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled,
-                        $quantityInUnits,
-                        $unitName
-                    );
-                    $productsWithUnitCount++;
-                }
-                $productData['unity_with_unit'] = $unity;
-                $productData['unitName'] = $unitName;
-                $productData['unitAmount'] = $unitAmount;
-                $productData['priceInclPerUnit'] = $priceInclPerUnit;
-                $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
-                $productData['quantityInUnits'] = $quantityInUnits;
-                
-            } else {
-                // no attribute
-                
-                $netPricePerPiece = $cartProduct->product->product_shop->price;
-                $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
-                $grossPrice = $grossPricePerPiece * $cartProduct->amount;
-                $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
-                
-                $productData = [
-                    'cartProductId' => $cartProduct->id_cart_product,
-                    'productId' => $cartProduct->id_product,
-                    'productName' => $cartProduct->product_lang->name,
-                    'productLink' => $productLink,
-                    'amount' => $cartProduct->amount,
-                    'manufacturerId' => $cartProduct->product->id_manufacturer,
-                    'manufacturerLink' => $manufacturerLink,
-                    'manufacturerName' => $cartProduct->product->manufacturer->name,
-                    'image' => $productImage,
-                    'price' => $grossPrice,
-                    'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
-                    'tax' => $tax
-                ];
-                
-                $deposit = 0;
-                if (!empty($cartProduct->product->deposit_product->deposit)) {
-                    $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
-                }
-                $productData['deposit'] = $deposit;
-                
-                $unitName = '';
-                $unitAmount = 0;
-                $priceInclPerUnit = 0;
-                $quantityInUnits = 0;
-                $productQuantityInUnits = 0;
-                $unity = $cartProduct->product_lang->unity;
-                $productData['unity'] = $unity;
-                if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
-                    $unitName = $cartProduct->product->unit_product->name;
-                    $unitAmount = $cartProduct->product->unit_product->amount;
-                    $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
-                    $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
-                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
-                    $productData['price'] =  $newPriceIncl * $cartProduct->amount;
-                    $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
-                    if ($unity != '') {
-                        $unity .= ', ';
-                    }
-                    $unity .=  Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product->unit_product->price_per_unit_enabled, $quantityInUnits, $unitName);
-                    $productsWithUnitCount++;
-                }
-                $productData['unity_with_unit'] = $unity;
-                $productData['unitName'] = $unitName;
-                $productData['unitAmount'] = $unitAmount;
-                $productData['priceInclPerUnit'] = $priceInclPerUnit;
-                $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
-                $productData['quantityInUnits'] = $quantityInUnits;
-            }
+            $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
+            $productData['image'] = $productImage;
+            $productData['productLink'] = $productLink;
+            $productData['manufacturerLink'] = $manufacturerLink;
             
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
                 if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
@@ -271,7 +161,7 @@ class CartsTable extends AppTable
         }
 
         // sum up deposits and products
-        $preparedCart['ProductsWithUnitCount'] = $productsWithUnitCount;
+        $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
         $preparedCart['CartDepositSum'] = 0;
         $preparedCart['CartProductSum'] = 0;
         $preparedCart['CartProductSumExcl'] = 0;
@@ -296,4 +186,154 @@ class CartsTable extends AppTable
         }
         return $preparedCart;
     }
+    
+    /**
+     * @param array $productData
+     * @return number
+     */
+    private function getProductsWithUnitCount($productData)
+    {
+        $count = 0;
+        foreach($productData as $product) {
+            if (isset($product['usesQuantityInUnits']) && $product['usesQuantityInUnits']) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+    
+    /**
+     * @param CartProductsTable $cartProduct
+     * @return array
+     */
+    private function prepareMainProduct($cartProduct)
+    {
+        
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        
+        $netPricePerPiece = $cartProduct->product->product_shop->price;
+        $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
+        $grossPrice = $grossPricePerPiece * $cartProduct->amount;
+        $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
+        
+        $productData = [
+            'cartProductId' => $cartProduct->id_cart_product,
+            'productId' => $cartProduct->id_product,
+            'productName' => $cartProduct->product_lang->name,
+            'amount' => $cartProduct->amount,
+            'manufacturerId' => $cartProduct->product->id_manufacturer,
+            'manufacturerName' => $cartProduct->product->manufacturer->name,
+            'price' => $grossPrice,
+            'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
+            'tax' => $tax
+        ];
+        
+        $deposit = 0;
+        if (!empty($cartProduct->product->deposit_product->deposit)) {
+            $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
+        }
+        $productData['deposit'] = $deposit;
+        
+        $unitName = '';
+        $unitAmount = 0;
+        $priceInclPerUnit = 0;
+        $quantityInUnits = 0;
+        $productQuantityInUnits = 0;
+        $unity = $cartProduct->product_lang->unity;
+        $productData['unity'] = $unity;
+        if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
+            $unitName = $cartProduct->product->unit_product->name;
+            $unitAmount = $cartProduct->product->unit_product->amount;
+            $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
+            $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
+            $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
+            $productData['price'] =  $newPriceIncl * $cartProduct->amount;
+            $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
+            if ($unity != '') {
+                $unity .= ', ';
+            }
+            $unity .=  Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product->unit_product->price_per_unit_enabled, $quantityInUnits, $unitName);
+            $productData['usesQuantityInUnits'] = true;
+        }
+        $productData['unity_with_unit'] = $unity;
+        $productData['unitName'] = $unitName;
+        $productData['unitAmount'] = $unitAmount;
+        $productData['priceInclPerUnit'] = $priceInclPerUnit;
+        $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
+        $productData['quantityInUnits'] = $quantityInUnits;
+        
+        return $productData;
+        
+    }
+    
+    /**
+     * @param CartProductsTable $cartProduct
+     * @return array
+     */
+    private function prepareProductAttribute($cartProduct)
+    {
+        
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        
+        $netPricePerPiece = $cartProduct->product_attribute->product_attribute_shop->price;
+        $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
+        $grossPrice = $grossPricePerPiece * $cartProduct->amount;
+        $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
+        
+        $productData = [
+            'cartProductId' => $cartProduct->id_cart_product,
+            'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
+            'productName' => $cartProduct->product_lang->name,
+            'amount' => $cartProduct->amount,
+            'manufacturerId' => $cartProduct->product->id_manufacturer,
+            'manufacturerName' => $cartProduct->product->manufacturer->name,
+            'price' => $grossPrice,
+            'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
+            'tax' => $tax
+        ];
+        
+        $deposit = 0;
+        if (!empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
+            $deposit = $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount;
+        }
+        $productData['deposit'] = $deposit;
+        
+        $unitName = '';
+        $unitAmount = 0;
+        $priceInclPerUnit = 0;
+        $quantityInUnits = 0;
+        $productQuantityInUnits = 0;
+        $unity = '';
+        if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
+            $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
+        }
+        $productData['unity'] = $unity;
+        if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
+            $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
+            $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
+            $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
+            $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
+            $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
+            $productData['price'] =  $newPriceIncl;
+            $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
+            $unity = Configure::read('app.htmlHelper')->getQuantityInUnitsStringForAttributes(
+                $cartProduct->product_attribute->product_attribute_combination->attribute->name,
+                $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled,
+                $quantityInUnits,
+                $unitName
+            );
+            $productData['usesQuantityInUnits'] = true;
+        }
+        $productData['unity_with_unit'] = $unity;
+        $productData['unitName'] = $unitName;
+        $productData['unitAmount'] = $unitAmount;
+        $productData['priceInclPerUnit'] = $priceInclPerUnit;
+        $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
+        $productData['quantityInUnits'] = $quantityInUnits;
+        
+        return $productData;
+        
+    }
+    
 }
