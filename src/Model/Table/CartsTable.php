@@ -257,7 +257,7 @@ class CartsTable extends AppTable
             if ($unity != '') {
                 $unity .= ', ';
             }
-            $unity .=  Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product->unit_product->price_per_unit_enabled, $quantityInUnits, $unitName);
+            $unity .=  Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product->unit_product->price_per_unit_enabled, $quantityInUnits, $unitName, $cartProduct->amount);
             $productData['usesQuantityInUnits'] = true;
         }
         $productData['unity_with_unit'] = $unity;
@@ -328,7 +328,8 @@ class CartsTable extends AppTable
                 $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
                 $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled,
                 $quantityInUnits,
-                $unitName
+                $unitName,
+                $cartProduct->amount
             );
             $productData['usesQuantityInUnits'] = true;
         }

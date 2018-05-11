@@ -37,9 +37,9 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
-    public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName)
+    public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount=1)
     {
-        $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName);
+        $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount);
         if ($quantityInUnitsString != '') {
             $unitName = $attributeName . ', ' . $quantityInUnitsString;
         }
@@ -57,11 +57,11 @@ class MyHtmlHelper extends HtmlHelper
         return '<span class="quantity-in-units">' . $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName) . '</span>';
     }
     
-    public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName)
+    public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName, $amount=1)
     {
         $result = '';
         if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
-            $result = 'ca. ' . $this->formatAsDecimal($quantityInUnits, 2, true) . ' ' . $unitName;
+            $result = 'ca. ' . $this->formatAsDecimal($quantityInUnits, 2, true) * $amount . ' ' . $unitName;
         }
         return $result;
     }

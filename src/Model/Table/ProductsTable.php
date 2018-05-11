@@ -650,7 +650,8 @@ class ProductsTable extends AppTable
                             $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
                             $attribute->unit_product_attribute->price_per_unit_enabled,
                             $attribute->unit_product_attribute->quantity_in_units,
-                            $attribute->unit_product_attribute->name
+                            $attribute->unit_product_attribute->name,
+                            $cartProduct->amount
                         );
                         if ($attribute->unit_product_attribute->price_incl_per_unit == 0) {
                             $priceIsZero = true;
