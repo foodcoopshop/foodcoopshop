@@ -362,6 +362,7 @@ class OrderDetailsController extends AdminAppController
         ->setSubject('Gewicht angepasst: ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
+            'newProductQuantityInUnits' => $productQuantity,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth
         ]);
@@ -742,7 +743,8 @@ class OrderDetailsController extends AdminAppController
                 'Orders.Customers',
                 'Products.StockAvailables',
                 'Products.Manufacturers',
-                'ProductAttributes.StockAvailables'
+                'ProductAttributes.StockAvailables',
+                'OrderDetailUnits'
             ]
         ])->first();
 
