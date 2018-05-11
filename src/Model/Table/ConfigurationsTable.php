@@ -130,7 +130,7 @@ class ConfigurationsTable extends AppTable
     public function validationFcsPaymentProductMaximum(Validator $validator)
     {
         $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
-        return $this->getNumberRangeValidator($validator, 'value', 'value', 50, 1000);
+        return $this->getNumberRangeValidator($validator, 'value', 50, 1000);
     }
 
     public function validationFcsCustomerGroup(Validator $validator)
