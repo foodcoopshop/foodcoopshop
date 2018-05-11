@@ -45,7 +45,7 @@ use Cake\Core\Configure;
     
         <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
             <tr><td style="padding-top:20px;">
-            	* Preis wird evtl. noch angepasst.
+            	* Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern.
             </td></tr>
         <?php } ?>
         

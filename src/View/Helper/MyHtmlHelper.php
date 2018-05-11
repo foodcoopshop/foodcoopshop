@@ -60,7 +60,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         $infoText = '<div class="line">';
             $infoText .= '<span class="additional-price-info">';
-            $infoText .= ' * Preis-Basis: ' . $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
+            $infoText .= ' * Basis-Preis: ' . $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
             $infoText .= ', Preis wird evtl. noch angepasst.';
             $infoText .= '</span>';
         $infoText .= '</div>';
