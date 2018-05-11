@@ -508,7 +508,21 @@ foodcoopshop.Admin = {
 
                 'Speichern': function () {
 
-                    if ($('#dialogPricePrice').val() == '' || $('#dialogPriceProductId').val() == '') {
+                    var pricePerUnitEnabled = $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0;
+                    
+                    var priceInclPerUnit = $('#dialogPricePriceInclPerUnit').val();
+                    if (pricePerUnitEnabled && isNaN(parseFloat(priceInclPerUnit.replace(/,/, '.')))) {
+                        alert('Der Preis nach Gewicht muss größer als 0 sein.');
+                        return false;
+                    }
+                    
+                    var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
+                    if (pricePerUnitEnabled && isNaN(parseFloat(quantityInUnits.replace(/,/, '.')))) {
+                        alert('Das ungefähre Liefergewicht muss größer als 0 sein.');
+                        return false;
+                    }
+
+                    if ($('#dialogPriceProductId').val() == '') {
                         return false;
                     }
 
@@ -520,11 +534,11 @@ foodcoopshop.Admin = {
                         {
                             productId: $('#dialogPriceProductId').val(),
                             price: $('#dialogPricePrice').val(),
-                            priceInclPerUnit: $('#dialogPricePriceInclPerUnit').val(),
-                            pricePerUnitEnabled: $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0,
+                            priceInclPerUnit: priceInclPerUnit,
+                            pricePerUnitEnabled: pricePerUnitEnabled,
                             priceUnitName: $('#dialogPriceUnitName').val(),
                             priceUnitAmount: $('#dialogPriceUnitAmount').val(),
-                            priceQuantityInUnits : $('#dialogPriceQuantityInUnits').val()
+                            priceQuantityInUnits : quantityInUnits
                         },
                         {
                             onOk: function (data) {
@@ -1563,11 +1577,15 @@ foodcoopshop.Admin = {
 
                 'Speichern': function () {
 
-                    if ($('#dialogOrderDetailProductQuantityQuantity').val() == '' || $('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
+                    var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
+                    if (isNaN(parseFloat(productQuantity.replace(/,/, '.')))) {
+                        alert('Das Liefergewicht muss größer als 0 sein.');
                         return false;
                     }
                     
-                    var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
+                    if ($('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
+                        return false;
+                    }
                     
                     $('#order-detail-product-quantity-edit-form .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
