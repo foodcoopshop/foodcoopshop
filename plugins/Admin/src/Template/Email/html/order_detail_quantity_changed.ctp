@@ -32,10 +32,14 @@ use Cake\Core\Configure;
                 <li>Alter Preis für <?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> €</b></li>
                 <li>Neuer Preis für <?php echo $this->MyHtml->formatAsDecimal($newProductQuantityInUnits) . ' ' . $newOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> €</b></li>
             </ul>
+            
+            <p>
+            	Der Basis-Preis beträgt <?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->order_detail_unit->price_incl_per_unit) . ' € / ' . $oldOrderDetail->order_detail_unit->unit_name; ?>.
+            </p>
 
-                <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                    <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
-                <?php } ?>
+            <?php if ($this->MyHtml->paymentIsCashless()) { ?>
+                <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
+            <?php } ?>
 
             </td>
 
