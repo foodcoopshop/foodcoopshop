@@ -51,7 +51,7 @@ use Cake\Core\Configure;
                     <?php
                     echo $product['productName'];
                     if ($product['unity_with_unit'] != '') {
-                        echo ': ' . $product['unity_with_unit'];
+                        echo ' : ' . $product['unity_with_unit'];
                     }
                     ?>
                 </td>
