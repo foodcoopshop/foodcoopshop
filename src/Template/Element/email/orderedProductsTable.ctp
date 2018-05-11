@@ -50,8 +50,8 @@ use Cake\Core\Configure;
                 <td valign="middle" style="border:1px solid #d6d4d4;">
                     <?php
                     echo $product['productName'];
-                    if ($product['unity'] != '') {
-                        echo ' : ' . $product['unity'];
+                    if ($product['unity_with_unit'] != '') {
+                        echo ': ' . $product['unity_with_unit'];
                     }
                     ?>
                 </td>
