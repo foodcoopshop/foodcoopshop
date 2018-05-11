@@ -93,7 +93,6 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
@@ -148,14 +147,6 @@ class CartsTable extends AppTable
             $productData['productLink'] = $productLink;
             $productData['manufacturerLink'] = $manufacturerLink;
             
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
-                if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
-                    $productData['timebasedCurrencyMoneyIncl'] = round($manufacturersTable->getTimebasedCurrencyMoney($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
-                    $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($netPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
-                    $productData['timebasedCurrencySeconds'] = $manufacturersTable->getCartTimebasedCurrencySeconds($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage) * $cartProduct->amount;
-                }
-            }
-            
             $preparedCart['CartProducts'][] = $productData;
             
         }
@@ -185,6 +176,20 @@ class CartsTable extends AppTable
             }
         }
         return $preparedCart;
+    }
+    
+    private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
+    {
+        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
+            if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
+                $productData['timebasedCurrencyMoneyIncl'] = round($manufacturersTable->getTimebasedCurrencyMoney($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                $productData['timebasedCurrencyMoneyExcl'] = round($manufacturersTable->getTimebasedCurrencyMoney($netPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage), 2) * $cartProduct->amount;
+                $productData['timebasedCurrencySeconds'] = $manufacturersTable->getCartTimebasedCurrencySeconds($grossPricePerPiece, $cartProduct->product->manufacturer->timebased_currency_max_percentage) * $cartProduct->amount;
+            }
+        }
+        return $productData;
+        
     }
     
     /**
@@ -262,6 +267,8 @@ class CartsTable extends AppTable
         $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
         $productData['quantityInUnits'] = $quantityInUnits;
         
+        $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
+        
         return $productData;
         
     }
@@ -331,6 +338,8 @@ class CartsTable extends AppTable
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
         $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
         $productData['quantityInUnits'] = $quantityInUnits;
+        
+        $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
         
         return $productData;
         
