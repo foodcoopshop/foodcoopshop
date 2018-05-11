@@ -171,7 +171,10 @@ class CartsTable extends AppTable
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
                 $productQuantityInUnits = 0;
-                $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
+                $unity = '';
+                if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
+                    $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
+                }
                 $productData['unity'] = $unity;
                 if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
                     $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
@@ -253,7 +256,6 @@ class CartsTable extends AppTable
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
                 $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
                 $productData['quantityInUnits'] = $quantityInUnits;
-                
             }
             
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
