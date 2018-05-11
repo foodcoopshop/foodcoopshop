@@ -41,7 +41,7 @@ foodcoopshop.DialogOrderDetail = {
     getHtmlForOrderDetailProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
         dialogHtml += '<br /><span class="quantity-string">Geliefertes Gewicht</span>: <input type="text" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
-        dialogHtml += '<b></b> *';
+        dialogHtml += '<b></b>';
         dialogHtml += '<br />';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
         dialogHtml += '<ul style="margin-top:5px;">';
