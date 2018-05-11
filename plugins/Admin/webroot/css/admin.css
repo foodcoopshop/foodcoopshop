@@ -856,6 +856,11 @@ body.payments .bottom-button-container {
     text-align: right;
     width: 75px;
 }
+#order-detail-product-price-edit-form .price-per-unit-info-text {
+	color:red;
+	float:left;
+	margin-bottom:5px;
+}
 #product-price-edit-form input#dialogPriceUnitName {
 	text-align: left;
 }

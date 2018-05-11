@@ -1708,8 +1708,9 @@ foodcoopshop.Admin = {
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
             $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
             
+            $('#' + dialogId + ' .price-per-unit-info-text').remove();
             if (row.find('td:nth-child(8)').html() != '') {
-                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b style="color:red;float:left;margin-bottom:5px;">Um das Gewicht anzupassen, ändere bitte den Wert in der Spalte "Gewicht" (zwei Spalten rechts).</b>');
+                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">Um das Gewicht anzupassen, ändere bitte den Wert in der Spalte "Gewicht" zwei Spalten weiter rechts. Der Preis wird dann automatisch berechnet und angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf.</b>');
             }
             
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
