@@ -181,13 +181,13 @@ class CartsTable extends AppTable
                     $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
                     $productData['price'] =  $newPriceIncl;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
-                    $quantityInUnitsString = Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled, $quantityInUnits, $unitName);
-                    if ($quantityInUnitsString != '') {
-                        $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name . ', ' . $quantityInUnitsString;
-                    }
-                    if ($cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
-                        $unity = $quantityInUnitsString;
-                    }
+                    $unity = Configure::read('app.htmlHelper')->getQuantityInUnitsStringForAttributes(
+                        $cartProduct->product_attribute->product_attribute_combination->attribute->name,
+                        $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                        $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled,
+                        $quantityInUnits,
+                        $unitName
+                    );
                     $productsWithUnitCount++;
                 }
                 $productData['unity_with_unit'] = $unity;

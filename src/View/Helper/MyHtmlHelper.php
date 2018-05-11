@@ -37,6 +37,21 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
+    public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName)
+    {
+        $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName);
+        if ($quantityInUnitsString != '') {
+            $unitName = $attributeName . ', ' . $quantityInUnitsString;
+        }
+        if ($attributeCanBeUsedAsUnit) {
+            $unitName = $quantityInUnitsString;
+        }
+        if ($unitName == '') {
+            $unitName = $attributeName;
+        }
+        return $unitName;
+    }
+    
     public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName)
     {
         return '<span class="quantity-in-units">' . $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName) . '</span>';
