@@ -164,11 +164,12 @@ if ($product['description'] != '') {
                 $radioButtonLabel[] = $unitString;
             }
             echo '<div class="radio">
-                           <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
-                               <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
+                      <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
+                          <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
                                join(', ', $radioButtonLabel) . '
-                           </label>
-                       </div>';
+                      </label>
+                  </div>';
+           
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
