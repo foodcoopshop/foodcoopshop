@@ -1548,11 +1548,12 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            width: 460,
+            width: 500,
             modal: true,
             close: function () {
                 $('#dialogOrderDetailProductQuantityQuantity').val('');
                 $('#dialogOrderDetailProductQuantityOrderDetailId').val('');
+                $('#dialogOrderDetailProductQuantityDoNotChangePrice').prop('checked', false);
             },
             buttons: {
 
@@ -1576,6 +1577,7 @@ foodcoopshop.Admin = {
                         {
                             orderDetailId: $('#dialogOrderDetailProductQuantityOrderDetailId').val(),
                             productQuantity: productQuantity,
+                            doNotChangePrice: $('#dialogOrderDetailProductQuantityDoNotChangePrice:checked').length > 0 ? 1 : 0
                         },
                         {
                             onOk: function (data) {
@@ -1619,6 +1621,9 @@ foodcoopshop.Admin = {
             quantityString.html(newHtml);
             label += 'von ' + row.find('td:nth-child(10)').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
+            
+            var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html(); 
+            $('#' + dialogId + ' li.price-per-unit-base-info').html('Basis-Preis: ' + pricePerUnitBaseInfo);
             
             productQuantityField.val(quantity);
             dialog.dialog('open');

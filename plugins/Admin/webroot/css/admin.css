@@ -362,8 +362,13 @@ input.datepicker {
   margin-left: 15px;
   margin-top: 10px;
 }
-#help-container li {
+#help-container li,
+.ui-dialog-content li {
     list-style-type: disc;
+}
+.ui-dialog-content li {
+	margin-left: 20px;
+	margin-top: 5px;
 }
 .warning {
     color: red;

@@ -312,6 +312,7 @@ class OrderDetailsController extends AdminAppController
         
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
+        $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
         $productQuantity = Configure::read('app.numberHelper')->replaceCommaWithDot($productQuantity);
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 0) {
@@ -345,43 +346,44 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
         
-        $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->order_detail_unit->product_quantity_in_units * $productQuantity;
+        if (!$doNotChangePrice) {
+            $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->order_detail_unit->product_quantity_in_units * $productQuantity;
+            $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
+        }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
-
-        $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
         
         $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') ';
         $message .= 'wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units, 2, true);
         $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity, 2, true);
         $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' angepasst ';
         
-        // send email to customer
-        $email = new AppEmail();
-        $email->setTemplate('Admin.order_detail_quantity_changed')
-        ->setTo($oldOrderDetail->order->customer->email)
-        ->setSubject('Gewicht angepasst: ' . $oldOrderDetail->product_name)
-        ->setViewVars([
-            'oldOrderDetail' => $oldOrderDetail,
-            'newProductQuantityInUnits' => $productQuantity,
-            'newOrderDetail' => $newOrderDetail,
-            'appAuth' => $this->AppAuth
-        ]);
+        // send email to customer if price was changed
+        if (!$doNotChangePrice) {
+            $email = new AppEmail();
+            $email->setTemplate('Admin.order_detail_quantity_changed')
+            ->setTo($oldOrderDetail->order->customer->email)
+            ->setSubject('Gewicht angepasst: ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'newProductQuantityInUnits' => $productQuantity,
+                'newOrderDetail' => $newOrderDetail,
+                'appAuth' => $this->AppAuth
+            ]);
+            $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
         
-        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
-        
-        // never send email to manufacturer if bulk orders are allowed
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
-        $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-        
-        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
-            $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            // never send email to manufacturer if bulk orders are allowed
+            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
+            $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+            
+            if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+                $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
+                $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+            }
+            
+            $email->send();
+            $message .= ' versendet.';
         }
-        
-        $email->send();
-        
-        $message .= ' versendet.';
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
