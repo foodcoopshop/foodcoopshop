@@ -602,6 +602,7 @@ class ProductsController extends AdminAppController
                 $this->getRequest()->getData('pricePerUnitEnabled'),
                 $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')),
                 $this->getRequest()->getData('priceUnitName'),
+                $this->getRequest()->getData('priceUnitAmount'),
                 $this->Product->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'))
             );
         } catch (InvalidParameterException $e) {

@@ -167,6 +167,7 @@ class CartsTable extends AppTable
                 $productData['deposit'] = $deposit;
                 
                 $unitName = '';
+                $unitAmount = 0;
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
                 $productQuantityInUnits = 0;
@@ -174,9 +175,10 @@ class CartsTable extends AppTable
                 $productData['unity'] = $unity;
                 if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
                     $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
+                    $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
                     $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
-                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
+                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $amount, 2);
                     $productData['price'] =  $newPriceIncl;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
                     $unity .=  ', ' . Configure::read('app.htmlHelper')->getQuantityInUnits($cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled, $quantityInUnits, $unitName);
@@ -184,6 +186,7 @@ class CartsTable extends AppTable
                 }
                 $productData['unity_with_unit'] = $unity;
                 $productData['unitName'] = $unitName;
+                $productData['unitAmount'] = $unitAmount;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
                 $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
                 $productData['quantityInUnits'] = $quantityInUnits;
@@ -218,6 +221,7 @@ class CartsTable extends AppTable
                 $productData['deposit'] = $deposit;
                 
                 $unitName = '';
+                $unitAmount = 0;
                 $priceInclPerUnit = 0;
                 $quantityInUnits = 0;
                 $productQuantityInUnits = 0;
@@ -225,9 +229,10 @@ class CartsTable extends AppTable
                 $productData['unity'] = $unity;
                 if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
                     $unitName = $cartProduct->product->unit_product->name;
+                    $unitAmount = $cartProduct->product->unit_product->amount;
                     $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
                     $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
-                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits, 2);
+                    $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
                     $productData['price'] =  $newPriceIncl * $cartProduct->amount;
                     $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
                     if ($unity != '') {
@@ -238,6 +243,7 @@ class CartsTable extends AppTable
                 }
                 $productData['unity_with_unit'] = $unity;
                 $productData['unitName'] = $unitName;
+                $productData['unitAmount'] = $unitAmount;
                 $productData['priceInclPerUnit'] = $priceInclPerUnit;
                 $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
                 $productData['quantityInUnits'] = $quantityInUnits;

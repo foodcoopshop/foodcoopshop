@@ -48,7 +48,17 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        dialogHtml += '<b>€</b> (inkl. USt.) für 1 ';
+        dialogHtml += '<b>€</b> (inkl. USt.) für ';
+        dialogHtml += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
+        dialogHtml += '<option value="1" selected>1</option>';
+        dialogHtml += '<option value="10">10</option>';
+        dialogHtml += '<option value="20">20</option>';
+        dialogHtml += '<option value="50">50</option>';
+        dialogHtml += '<option value="100">100</option>';
+        dialogHtml += '<option value="200">200</option>';
+        dialogHtml += '<option value="500">500</option>';
+        dialogHtml += '<option value="1000">1.000</option>';
+        dialogHtml += '</select> ';
         dialogHtml += '<select name="dialogPriceUnitName" id="dialogPriceUnitName">';
         dialogHtml += '<option value="kg" selected>kg (Kilo)</option>';
         dialogHtml += '<option value="g">g (Gramm)</option>';

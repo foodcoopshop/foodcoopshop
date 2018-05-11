@@ -51,20 +51,25 @@ class MyHtmlHelper extends HtmlHelper
         return $result;
     }
 
-    public function getPricePerUnit($priceInclPerUnit, $quantityInUnits)
+    public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
     {
-        return '<div class="price">' . $this->formatAsEuro($priceInclPerUnit * $quantityInUnits) . '</div> <div class="price-asterisk">*</div>';
+        return '<div class="price">' . $this->formatAsEuro($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
     }
     
-    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName)
+    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount)
     {
         $infoText = '<div class="line">';
             $infoText .= '<span class="additional-price-info">';
-            $infoText .= ' * Basis-Preis: ' . $this->formatAsEuro($priceInclPerUnit) . ' / ' . $unitName;
+            $infoText .= ' * Basis-Preis: ' . $this->getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount);
             $infoText .= ', Preis wird evtl. noch angepasst.';
             $infoText .= '</span>';
         $infoText .= '</div>';
         return $infoText;
+    }
+    
+    public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
+    {
+        return $this->formatAsEuro($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
     }
     
     /**
@@ -298,10 +303,10 @@ class MyHtmlHelper extends HtmlHelper
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
 
-    public function formatAsDecimal($amount, $decimals = 2, $cutOffZeros = false)
+    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
     {
         $result = number_format($amount, $decimals, ',', '.');
-        if ($cutOffZeros) {
+        if ($removeTrailingZeros) {
             $result = floatval($amount);
         }
         return $result;

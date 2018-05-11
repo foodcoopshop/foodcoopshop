@@ -318,7 +318,7 @@ foreach ($orderDetails as $orderDetail) {
                         'title' => 'Zum Ändern des Gewichts anklicken'
                     ], 'javascript:void(0);');
                 }
-                echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
+                echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units, 2, true) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
             }
         echo '</td>';
     }

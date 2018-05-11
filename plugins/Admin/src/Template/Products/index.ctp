@@ -325,18 +325,18 @@ use Cake\Core\Configure;
         echo '<td class="' . ($product->price_is_zero ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
 	        if (empty($product->product_attributes)) {
+	            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+	                'class' => 'product-price-edit-button',
+	                'title' => 'Preis ändern'
+	            ], 'javascript:void(0);');
 	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
-                    echo $this->Html->formatAsDecimal($product->gross_price);
+                    echo $this->Html->formatAsEuro($product->gross_price);
                 echo '</span>';
                 if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                     echo '<span class="unit-price-for-dialog">';
-                    echo $this->Html->formatAsDecimal($product->unit->price_incl_per_unit) . ' / ' . $product->unit->name;
+                        echo $this->Html->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
                     echo '</span>';
                 }
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'product-price-edit-button',
-                    'title' => 'Preis ändern'
-                ], 'javascript:void(0);');
     	    }
     	    echo '</div>';
 	    echo '</td>';

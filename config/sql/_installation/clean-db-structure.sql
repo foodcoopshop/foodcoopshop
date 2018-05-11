@@ -307,6 +307,7 @@ CREATE TABLE `fcs_order_detail_units` (
   `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
   `quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
   `unit_name` varchar(50) NOT NULL DEFAULT '',
+  `unit_amount` int(10) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -570,6 +571,7 @@ CREATE TABLE `fcs_units` (
   `id_product_attribute` int(11) unsigned DEFAULT NULL,
   `price_incl_per_unit` decimal(10,6) unsigned DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
+  `amount` int(10) unsigned DEFAULT NULL,
   `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',
   `quantity_in_units` decimal(10,6) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),

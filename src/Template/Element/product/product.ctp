@@ -127,8 +127,8 @@ if ($product['description'] != '') {
                 $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
-                    $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units']);
-                    $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name']);
+                    $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['amount']);
+                    $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
@@ -179,8 +179,8 @@ if ($product['description'] != '') {
             $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
             $pricePerUnitInfoText = '';
             if ($product['price_per_unit_enabled']) {
-                $priceHtml = $this->Html->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units']);
-                $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name']);
+                $priceHtml = $this->Html->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
+                $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['unit_amount']);
             }
             echo $priceHtml;
                 if ($product['deposit']) {

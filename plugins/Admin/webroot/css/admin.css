@@ -688,6 +688,7 @@ body.payments.my_member_fee #help-container {
 }
 body.products.index .table-cell-wrapper.price {
     width: 85px;
+    text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
     width: 60px;

@@ -102,7 +102,7 @@ class AppTable extends Table
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 Manufacturers.timebased_currency_enabled,
-                Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.quantity_in_units,
+                Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
                 StockAvailables.quantity";
         
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {

@@ -17,7 +17,7 @@ namespace App\Model\Table;
 class UnitsTable extends AppTable
 {
 
-    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $quantityInUnits) {
+    public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits) {
         
         if ($productAttributeId > 0) {
             $productId = 0;
@@ -43,6 +43,7 @@ class UnitsTable extends AppTable
                 'price_per_unit_enabled' => $pricePerUnitEnabled,
                 'price_incl_per_unit' => $priceInclPerUnit,
                 'name' => $name,
+                'amount' => $amount,
                 'quantity_in_units' => $quantityInUnits
             ]);
             $this->save($patchedEntity);

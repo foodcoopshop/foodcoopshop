@@ -496,6 +496,7 @@ foodcoopshop.Admin = {
                 $('div.price-wrapper').removeClass('deactivated');
                 $('#dialogPricePriceInclPerUnit').val('');
                 $('#dialogPriceUnitName').val('');
+                $('#dialogPriceUnitAmount').val('');
                 $('#dialogPriceQuantityInUnits').val('');
             },
 
@@ -522,6 +523,7 @@ foodcoopshop.Admin = {
                             priceInclPerUnit: $('#dialogPricePriceInclPerUnit').val(),
                             pricePerUnitEnabled: $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0,
                             priceUnitName: $('#dialogPriceUnitName').val(),
+                            priceUnitAmount: $('#dialogPriceUnitAmount').val(),
                             priceQuantityInUnits : $('#dialogPriceQuantityInUnits').val()
                         },
                         {
@@ -570,6 +572,7 @@ foodcoopshop.Admin = {
                 $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(foodcoopshop.Helper.formatFloatAsString(unitData.price_incl_per_unit));
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
                 $('#' + dialogId + ' #dialogPriceUnitName').trigger('change');
+                $('#' + dialogId + ' #dialogPriceUnitAmount').val(unitData.amount);
                 $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(foodcoopshop.Helper.formatFloatAsString(unitData.quantity_in_units));
             }
             if (radio === undefined) {
@@ -578,7 +581,8 @@ foodcoopshop.Admin = {
             radio.prop('checked', true);
             radio.trigger('change');
             
-            $('#' + dialogId + ' #dialogPricePrice').val(row.find('span.price-for-dialog').html());
+            var price = row.find('span.price-for-dialog').html().replace(/&nbsp;€/, '');
+            $('#' + dialogId + ' #dialogPricePrice').val(price);
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogPricePrice"]').html(label);
@@ -1604,12 +1608,15 @@ foodcoopshop.Admin = {
             var amount = row.find('td:nth-child(3) .product-amount-for-dialog').html();
             var label = row.find('td:nth-child(4) a.name-for-dialog').html()
             label += ' <span style="font-weight:normal;">(';
+            var quantityString = $('#' + dialogId + ' span.quantity-string');
+            var newHtml = '';
             if (amount > 1) {
                 label += '<b>' + amount + '</b>' + 'x bestellt ';
-                var quantityString = $('#' + dialogId + ' span.quantity-string');
-                var newHtml = quantityString.html().replace(/Gewicht/, 'Gesamtgewicht');
-                quantityString.html(newHtml);
+                newHtml = quantityString.html().replace(/Gewicht/, 'Gesamtgewicht');
+            } else {
+                newHtml = quantityString.html().replace(/Gesamtgewicht/, 'Gewicht');
             }
+            quantityString.html(newHtml);
             label += 'von ' + row.find('td:nth-child(10)').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
             
