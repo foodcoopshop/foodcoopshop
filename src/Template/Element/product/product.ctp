@@ -37,7 +37,7 @@ if ($product['is_new']) {
     echo '<div class="second-column">';
 
     echo '<div class="heading">';
-        echo '<h4><a href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+        echo '<h4><a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
     echo '</div>';
     echo '<div class="sc"></div>';
 
