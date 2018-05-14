@@ -178,7 +178,6 @@ class CustomersController extends AdminAppController
         
         // TODO implement isAuthorized
         // TODO neues action log: user gelöscht, von wem?
-        // TODO blog posts / pages
         // TODO if own profile:  $this->AppAuth->logout(); and redirect to home (js)
     }
     
