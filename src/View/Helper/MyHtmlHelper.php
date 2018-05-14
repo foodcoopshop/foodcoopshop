@@ -61,7 +61,10 @@ class MyHtmlHelper extends HtmlHelper
     {
         $result = '';
         if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
-            $result = 'ca. ' . $this->formatAsDecimal($quantityInUnits, 2, true) * $amount . ' ' . $unitName;
+            if ($amount > 1) {
+                $result  = 'je ' . $result;
+            }
+            $result .= 'ca. ' . $this->formatAsDecimal($quantityInUnits, 2, true) . ' ' . $unitName;
         }
         return $result;
     }

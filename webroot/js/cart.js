@@ -74,8 +74,25 @@ foodcoopshop.Cart = {
         
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
-        oldAmount.html(parseInt(oldAmount.html()) + parseInt(amount));
+        var oldAmountValue = parseInt(oldAmount.html());
+        var newAmount = oldAmountValue + parseInt(amount);
+        oldAmount.html(newAmount);
         foodcoopshop.Helper.applyBlinkEffect(oldAmount);
+        
+        // update unity
+        var oldUnity = productContainer.find('span.unity');
+        var newUnityHtml = oldUnity.html();
+        
+        if (newAmount > 1 && oldAmountValue == 1) {
+            newUnityHtml = newUnityHtml.replace(/ca./, 'je ca.');
+        }
+        if (newAmount == 1 && oldAmountValue > 1) {
+            newUnityHtml = newUnityHtml.replace(/je ca./, 'ca.');
+        }
+        if (newUnityHtml != oldUnity.html()) {
+            oldUnity.html(newUnityHtml);
+            foodcoopshop.Helper.applyBlinkEffect(oldUnity);
+        }
 
         // update price
         var oldPrice = productContainer.find('span.price');
