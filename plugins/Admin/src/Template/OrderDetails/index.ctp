@@ -319,7 +319,7 @@ foreach ($orderDetails as $orderDetail) {
                     ], 'javascript:void(0);');
                 }
                 echo '<span class="quantity-in-units">' . $this->Html->formatAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units, 2, true) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
-                echo '<span class="hide price-per-unit-base-info">'.$this->Html->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
+                echo '<span class="hide price-per-unit-base-info">'.$this->PricePerUnit->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
             }
         echo '</td>';
     }

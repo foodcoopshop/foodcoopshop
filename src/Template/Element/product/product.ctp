@@ -127,8 +127,8 @@ if ($product['description'] != '') {
                 $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
-                    $priceHtml = $this->Html->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
-                    $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
+                    $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
+                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
@@ -156,7 +156,7 @@ if ($product['description'] != '') {
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
             
-            $radioButtonLabel = $this->Html->getQuantityInUnitsStringForAttributes(
+            $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
                 $attribute['ProductAttributeCombinations']['Attributes']['name'],
                 $attribute['ProductAttributeCombinations']['Attributes']['can_be_used_as_unit'],
                 $attribute['Units']['price_per_unit_enabled'],
@@ -180,8 +180,8 @@ if ($product['description'] != '') {
             $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
             $pricePerUnitInfoText = '';
             if ($product['price_per_unit_enabled']) {
-                $priceHtml = $this->Html->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
-                $pricePerUnitInfoText = $this->Html->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['unit_amount']);
+                $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
+                $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['unit_amount']);
             }
             echo $priceHtml;
                 if ($product['deposit']) {
@@ -209,7 +209,7 @@ if ($product['description'] != '') {
         if ($product['unity'] != '') {
             $unityStrings[] = $product['unity'];
         }
-        $unitString = $this->Html->getQuantityInUnits($product['price_per_unit_enabled'], $product['quantity_in_units'], $product['unit_name']);
+        $unitString = $this->PricePerUnit->getQuantityInUnits($product['price_per_unit_enabled'], $product['quantity_in_units'], $product['unit_name']);
         if ($unitString != '') {
             $unityStrings[] = $unitString;
         }

@@ -334,7 +334,7 @@ use Cake\Core\Configure;
                 echo '</span>';
                 if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                     echo '<span class="unit-price-for-dialog">';
-                        echo $this->Html->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
+                        echo $this->PricePerUnit->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
                     echo '</span>';
                 }
     	    }
