@@ -511,13 +511,13 @@ foodcoopshop.Admin = {
                     var pricePerUnitEnabled = $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0;
                     
                     var priceInclPerUnit = $('#dialogPricePriceInclPerUnit').val();
-                    if (pricePerUnitEnabled && isNaN(parseFloat(priceInclPerUnit.replace(/,/, '.')))) {
+                    if (pricePerUnitEnabled && (isNaN(parseFloat(priceInclPerUnit.replace(/,/, '.'))) || priceInclPerUnit < 0)) {
                         alert('Der Preis nach Gewicht muss größer als 0 sein.');
                         return false;
                     }
                     
                     var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
-                    if (pricePerUnitEnabled && isNaN(parseFloat(quantityInUnits.replace(/,/, '.')))) {
+                    if (pricePerUnitEnabled && isNaN(parseFloat(quantityInUnits.replace(/,/, '.'))) || quantityInUnits < 0) {
                         alert('Das ungefähre Liefergewicht muss größer als 0 sein.');
                         return false;
                     }
@@ -587,7 +587,7 @@ foodcoopshop.Admin = {
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
                 $('#' + dialogId + ' #dialogPriceUnitName').trigger('change');
                 $('#' + dialogId + ' #dialogPriceUnitAmount').val(unitData.amount);
-                $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(foodcoopshop.Helper.formatFloatAsString(unitData.quantity_in_units));
+                $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(unitData.quantity_in_units);
             }
             if (radio === undefined) {
                 radio = $(radioMainSelector + '.price');
@@ -604,12 +604,15 @@ foodcoopshop.Admin = {
         });
 
         $('#dialogPriceUnitName').on('change', function() {
-            $('#' + dialogId + ' span.unit-name-placeholder').html($(this).val());
-            var placeholderValue = '0,25';
+            var stepValue = '0.01';
+            var minValue = '0.01';
             if ($(this).val() == 'g') {
-                placeholderValue = '250';
+                stepValue = 1;
+                minValue = 1;
             }
-            $('#' + dialogId + ' #dialogPriceQuantityInUnits').attr('placeholder', 'z.B. ' + placeholderValue);
+            var quantityInUnitsField = $('#' + dialogId + ' #dialogPriceQuantityInUnits');
+            quantityInUnitsField.attr('step', stepValue);
+            quantityInUnitsField.attr('min', minValue);
         }).trigger('change');
         
     },
@@ -1578,7 +1581,7 @@ foodcoopshop.Admin = {
                 'Speichern': function () {
 
                     var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
-                    if (isNaN(parseFloat(productQuantity.replace(/,/, '.')))) {
+                    if (isNaN(parseFloat(productQuantity.replace(/,/, '.'))) || productQuantity < 0) {
                         alert('Das Liefergewicht muss größer als 0 sein.');
                         return false;
                     }
@@ -1618,9 +1621,9 @@ foodcoopshop.Admin = {
             
             var row = $(this).closest('tr');
             var orderDetailId = row.find('td:nth-child(2)').html();
-            var quantity = row.find('td:nth-child(8) span.quantity-in-units').html();
             var unitName = row.find('td:nth-child(8) span.unit-name').html();
-            var productQuantityField = $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity');
+            var quantity = row.find('td:nth-child(8) span.quantity-in-units').html();
+            $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity').val(foodcoopshop.Helper.getStringAsFloat(quantity));
             
             $('#' + dialogId + ' b').html(unitName);
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
@@ -1643,7 +1646,6 @@ foodcoopshop.Admin = {
             var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html(); 
             $('#' + dialogId + ' li.price-per-unit-base-info').html('Basis-Preis: ' + pricePerUnitBaseInfo);
             
-            productQuantityField.val(quantity);
             dialog.dialog('open');
         });        
         

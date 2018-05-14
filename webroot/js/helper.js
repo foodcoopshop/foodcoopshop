@@ -285,8 +285,15 @@ foodcoopshop.Helper = {
         return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
     },
     
-    formatFloatAsString: function(float) {
-        return float.toFixed(2).replace(/\./, ',');
+    formatFloatAsString: function(float, removeTrailingZeros) {
+        removeTrailingZeros = removeTrailingZeros || false;
+        if (removeTrailingZeros) {
+            float = float.toString();
+        } else {
+            float = float.toFixed(2);
+        }
+        floatAsString = float.replace(/\./, ',');
+        return floatAsString;
     },
     
     getStringAsFloat: function (string) {

@@ -63,7 +63,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<option value="kg" selected>kg (Kilo)</option>';
         dialogHtml += '<option value="g">g (Gramm)</option>';
         dialogHtml += '</select><br />';
-        dialogHtml += '<input type="text" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ungefähres Liefergewicht in <span class="unit-name-placeholder">kg</span> pro Bestelleinheit';
+        dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ungefähres Liefergewicht in <span class="unit-name-placeholder">kg</span> pro Bestelleinheit';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Preis ändern', dialogId, dialogHtml);
