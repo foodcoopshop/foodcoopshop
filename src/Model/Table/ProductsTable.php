@@ -581,11 +581,7 @@ class ProductsTable extends AppTable
                 }
                 
                 if ($product->unit_product->price_per_unit_enabled) {
-                    if ($product->unit_product->price_incl_per_unit == 0) {
-                        $product->price_is_zero = true;
-                    } else  {
-                        $product->price_is_zero = false;
-                    }
+                    $product->price_is_zero = false;
                 }
                 
             }
@@ -652,11 +648,7 @@ class ProductsTable extends AppTable
                             $attribute->unit_product_attribute->quantity_in_units,
                             $attribute->unit_product_attribute->name
                         );
-                        if ($attribute->unit_product_attribute->price_incl_per_unit == 0) {
-                            $priceIsZero = true;
-                        } else {
-                            $priceIsZero = false;
-                        }
+                        $priceIsZero = false;
                     } else {
                         $productName = $attribute->product_attribute_combination->attribute->name;
                         if ($addProductNameToAttributes) {
