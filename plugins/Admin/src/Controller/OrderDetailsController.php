@@ -349,6 +349,7 @@ class OrderDetailsController extends AdminAppController
         if (!$doNotChangePrice) {
             $newProductPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->order_detail_unit->product_quantity_in_units * $productQuantity;
             $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
+            $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
         
@@ -440,12 +441,7 @@ class OrderDetailsController extends AdminAppController
             $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
         }
         
-        if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $this->TimebasedCurrencyOrderDetail->changePrice($object, $productPrice, $productAmount);
-            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
-            $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
-        }
+        $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $productAmount);
         
         $message = 'Die Anzahl des bestellten Produktes <b>' . $oldOrderDetail->product_name . '" </b> wurde erfolgreich von ' . $oldOrderDetail->product_amount . ' auf ' . $productAmount . ' geändert';
 
@@ -537,13 +533,7 @@ class OrderDetailsController extends AdminAppController
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
         
         $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' angepasst ';
-        
-        if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
-            $this->TimebasedCurrencyOrderDetail->changePrice($object, $productPrice, $object->product_amount);
-            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
-            $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
-        }
+        $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
         
         // send email to customer
         $email = new AppEmail();
@@ -753,6 +743,16 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->Orders->updateSums($newOrderDetail);
 
         return $newOrderDetail;
+    }
+    
+    private function changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newPrice, $amount)
+    {
+        if (!empty($object->timebased_currency_order_detail)) {
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail->changePrice($object, $newPrice, $amount);
+            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
+            $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
+        }
     }
 
     private function increaseQuantityForProduct($orderDetail, $orderDetailAmountBeforeAmountChange)
