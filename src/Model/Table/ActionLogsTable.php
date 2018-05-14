@@ -466,6 +466,12 @@ class ActionLogsTable extends AppTable
             ]
         ]);
     }
+    
+    public function removeCustomerFromAllActionLogs($customerName) {
+        $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \'Gelöschtes Mitglied\')';
+        $statement = $this->getConnection()->prepare($query);
+        return $statement->execute();
+    }
 
     public function customSave($type, $customerId, $objectId, $objectType, $text)
     {

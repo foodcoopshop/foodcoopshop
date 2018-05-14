@@ -155,6 +155,53 @@ class CustomersController extends AdminAppController
 
         $this->set('customer', $customer);
     }
+    
+    
+    public function delete($customerId)
+    {
+        $errors = $this->deleteCustomerIsAllowedWithDetails($customerId);
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ]
+        ])->first();
+        if (empty($customer)) {
+            throw new RecordNotFoundException('customer ' + $customerId + ' not found');
+        }
+        $this->Customer->deleteAll(['id_customer' => $customerId]);
+        $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->removeCustomerFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
+        $this->ActionLog->removeCustomerFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
+        
+        // TODO implement isAuthorized
+        // TODO neues action log: user gelöscht, von wem?
+        // TODO blog posts / pages
+        // TODO if own profile:  $this->AppAuth->logout(); and redirect to home (js)
+    }
+    
+    /**
+     * @param int $customerId
+     * @return boolean
+     */
+    private function deleteCustomerIsAllowed($customerId)
+    {
+        $errors = $this->deleteCustomerIsAllowedWithDetails($customerId);
+        return empty($errors);
+    }
+    
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    private function deleteCustomerIsAllowedWithDetails($customerId)
+    {
+        $errors = [];
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        return $errors;
+    }
 
     public function profile()
     {
@@ -182,6 +229,8 @@ class CustomersController extends AdminAppController
 
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
+        
+        $this->set('deleteCustomerIsAllowed', $this->deleteCustomerIsAllowed($customerId));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [

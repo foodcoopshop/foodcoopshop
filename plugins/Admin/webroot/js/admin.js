@@ -25,6 +25,28 @@ foodcoopshop.Admin = {
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
+    
+    bindDeleteCustomerButton : function(deleteCustomerIsAllowed, customerId) {
+        $('.delete-customer-button').on('click', function() {
+            if (deleteCustomerIsAllowed) {
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/customers/delete/' + customerId,
+                    {},
+                    {
+                        onOk: function (data) {
+//                            document.location.reload();
+                        },
+                        onError: function (data) {
+//                            document.location.reload();
+                        }
+                    }
+                );
+                
+            } else {
+                alert('nicht erlaubt');
+            }
+        });
+    },
 
     disableSelectpickerItems : function (selector, ids) {
         $(selector).find('option').each(function () {
@@ -1288,7 +1310,10 @@ foodcoopshop.Admin = {
             var emailColumn = $(this).data('column');
             var emails = [];
             $('table.list tr.data').each(function () {
-                emails.push($(this).find('td:nth-child(' + emailColumn + ') span.email').html());
+                var emailContainer = $(this).find('td:nth-child(' + emailColumn + ') span.email');
+                if (emailContainer.length > 0 && emailContainer.html() != '') {
+                    emails.push(emailContainer.html());
+                }
             });
             emails = $.unique(emails);
 

@@ -68,7 +68,7 @@ use Cake\Core\Configure;
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
                         'rowId' => $orderDetails[0]->order->id_order,
-                        'userName' => $orderDetails[0]->order->customer->name,
+                        'userName' => !empty($orderDetails[0]->order->customer) ? $orderDetails[0]->order->customer->name : 'Gelöschtes Mitglied',
                         'customerId' => $orderDetails[0]->order->id_customer,
                         'manufacturerId' => null // explicitly unset manufacturerId
                     ]);
@@ -314,12 +314,16 @@ foreach ($orderDetails as $orderDetail) {
 
         echo '<td>';
         if ($groupBy == '') {
-            echo $orderDetail->order->customer->name;
+            if (!empty($orderDetail->order->customer)) {
+                echo $orderDetail->order->customer->name;
+            } else {
+                echo 'Gelöschtes Mitglied';
+            }
         }
         echo '</td>';
 
         echo '<td class="hide">';
-        if ($groupBy == '') {
+        if ($groupBy == '' && !empty($orderDetail->order->customer)) {
             echo '<span class="email">' . $orderDetail->order->customer->email . '</span>';
         }
         echo '</td>';

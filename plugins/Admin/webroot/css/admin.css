@@ -890,6 +890,11 @@ form.fcs-form .input.checkbox input {
 form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
+body.customers .delete-customer-button {
+    float:left;
+    clear:both;
+    margin-bottom:10px; 
+}
 body.configurations.index td.first {
     vertical-align: top;
     width: 450px;

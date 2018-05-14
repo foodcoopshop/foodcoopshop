@@ -145,7 +145,7 @@ use Cake\Core\Configure;
             $rowClass[] = 'selected';
         }
 
-        echo '<tr id="order-' . ($groupByCustomer ? $order->customer->id_customer : $order->id_order) . '" class="' . join(' ', $rowClass) . '">';
+        echo '<tr id="order-' . ($groupByCustomer ? $order->id_customer : $order->id_order) . '" class="' . join(' ', $rowClass) . '">';
 
         echo '<td class="hide order-id">';
         if (! $groupByCustomer) {
@@ -166,21 +166,21 @@ use Cake\Core\Configure;
                 );
             echo '</span>';
         }
-        if ($order->customer->order_count <= 3) {
+        if (isset($order->customer->order_count) && $order->customer->order_count <= 3) {
             echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order->customer->order_count . 'x bestellt."></i></span>';
         }
-        echo '<span class="customer-name">'.$order->customer->name.'</span>';
+        echo '<span class="customer-name">'.(!empty($order->customer) ? $order->customer->name : 'Gelöschtes Mitglied').'</span>';
         echo '</td>';
 
         echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
-            'title' => 'Alle bestellten Produkte von ' . $order->customer->name . ' anzeigen',
+            'title' => !empty($order->customer) ? 'Alle bestellten Produkte von ' . $order->customer->name . ' anzeigen' : 'Alle bestellten Produkte von gelöschtem Mitglied anzeigen',
             'class' => 'icon-with-text'
-        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->customer->id_customer . '&orderStates[]=' . join(',', $orderStates));
+        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->id_customer . '&orderStates[]=' . join(',', $orderStates));
         echo '</td>';
 
         echo '<td class="hide">';
-        echo '<span class="email">' . $order->customer->email . '</span>';
+        echo '<span class="email">' . (!empty($order->customer)? $order->customer->email : ''). '</span>';
         echo '</td>';
 
         echo '<td class="right">';
@@ -194,9 +194,9 @@ use Cake\Core\Configure;
             echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
                 echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
-                    'rowId' => $groupByCustomer ? $order->customer->id_customer : $order->id_order,
-                    'userName' => $order->customer->name,
-                    'customerId' => $order->customer->id_customer
+                    'rowId' => $groupByCustomer ? $order->id_customer : $order->id_order,
+                    'userName' => !empty($order->customer) ? $order->customer->name : 'Gelöschtes Mitglied',
+                    'customerId' => $order->id_customer
                 ]);
             echo '</td>';
         }

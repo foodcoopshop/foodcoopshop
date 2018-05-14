@@ -313,6 +313,7 @@ class OrdersController extends AdminAppController
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
+            $query->select('Orders.id_customer');
             $query->group(['Orders.id_customer']);
         } else {
             $query->select($this->Order);
@@ -325,7 +326,9 @@ class OrdersController extends AdminAppController
             'order' => $orderParams['order']
         ])->toArray();
         foreach ($orders as $order) {
-            $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
+            if (!empty($order->customer)) {
+                $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
+            }
         }
         $this->set('orders', $orders);
         
