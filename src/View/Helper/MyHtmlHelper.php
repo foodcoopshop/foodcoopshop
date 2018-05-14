@@ -527,13 +527,17 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getActiveStates()
+    public function getActiveStates($includeDeleted=false)
     {
-        return [
+        $result = [
             1 => 'aktiviert',
             0 => 'deaktiviert',
-            'all' => 'alle'
         ];
+        if ($includeDeleted) {
+            $result[-1] = 'gelöscht';
+        }
+        $result['all'] = 'alle';
+        return $result;
     }
 
     public function getVisibleOrderStates()

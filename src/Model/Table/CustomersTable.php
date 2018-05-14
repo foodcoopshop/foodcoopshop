@@ -277,6 +277,73 @@ class CustomersTable extends AppTable
         }
         return 0;
     }
+    
+    public function getProductBalanceForDeletedCustomers()
+    {
+        
+        $productBalanceSum = 0;
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        
+        $query = $orderTable->find('all', [
+            'contain' => [
+                'Customers'
+            ],
+            'conditions' => [
+                'Customers.id_customer IS NULL'
+            ]
+        ]);
+        $query->group('Orders.id_customer');
+        
+        $removedCustomerIds = [];
+        foreach($query as $order) {
+            $removedCustomerIds[] = $order->id_customer;
+        }
+        
+        foreach($removedCustomerIds as $removedCustomerId) {
+            $paymentSumProduct = $paymentTable->getSum($removedCustomerId, 'product');
+            $paybackSumProduct = $paymentTable->getSum($removedCustomerId, 'payback');
+            $productSum = $orderTable->getSumProduct($removedCustomerId);
+            $productBalance = $paymentSumProduct - $paybackSumProduct - $productSum;
+            $productBalanceSum += $productBalance;
+        }
+        
+        return $productBalanceSum;
+        
+    }
+    
+    public function getDepositBalanceForDeletedCustomers()
+    {
+        
+        $depositBalanceSum = 0;
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        
+        $query = $paymentTable->find('all', [
+            'contain' => [
+                'Customers'
+            ],
+            'conditions' => [
+                'Customers.id_customer IS NULL'
+            ]
+        ]);
+        $query->group('Payments.id_customer');
+        
+        $removedCustomerIds = [];
+        foreach($query as $payment) {
+            $removedCustomerIds[] = $payment->id_customer;
+        }
+        
+        foreach($removedCustomerIds as $removedCustomerId) {
+            $paymentSumDeposit = $paymentTable->getSum($removedCustomerId, 'deposit');
+            $depositSum = $orderTable->getSumDeposit($removedCustomerId);
+            $depositBalance = $paymentSumDeposit - $depositSum;
+            $depositBalanceSum += $depositBalance;
+        }
+        
+        return $depositBalanceSum;
+        
+    }
 
     public function getCreditBalance($customerId)
     {

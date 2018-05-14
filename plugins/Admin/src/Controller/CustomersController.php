@@ -451,14 +451,19 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        
         $conditions = [];
-        if ($active != 'all') {
+        if (in_array($active, [APP_ON, APP_OFF])) {
             $conditions = [
                 'Customers.active' => $active
             ];
         }
+        if ($active == APP_DEL) {
+            pr('Pfand: ' . $this->Customer->getDepositBalanceForDeletedCustomers());
+            pr('Waren: ' . $this->Customer->getProductBalanceForDeletedCustomers());
+        }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
         $this->Customer->dropManufacturersInNextFind();
