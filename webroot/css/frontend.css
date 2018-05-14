@@ -862,6 +862,7 @@ body.carts.detail .cart:not(#cart) span.right .delete {
 body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     float: left;
     font-size: 13px;
+    margin-top: 1px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper,
