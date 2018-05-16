@@ -58,6 +58,7 @@ class AppTcpdf extends TCPDF
         $priceInclSum = 0;
         $priceExclSum = 0;
         $taxSum = 0;
+        $unitSum = [];
         $i = 0;
 
         foreach ($results as $result) {
@@ -70,13 +71,13 @@ class AppTcpdf extends TCPDF
             $taxRate = $result['TaxRate'];
 
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
             }
 
             if ($groupType == 'product' && isset($lastProductName) && ($lastProductName != $productName || $lastTaxRate != $taxRate)) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate, $lastUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
             }
@@ -85,6 +86,10 @@ class AppTcpdf extends TCPDF
             $priceInclSum += $priceIncl;
             $priceExclSum += $priceExcl;
             $taxSum += $tax;
+            
+            if ($result['OrderDetailUnitQuantityInUnits'] != '') {
+                @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitQuantityInUnits'];
+            }
 
             if (! $onlyShowSums) {
                 $this->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
@@ -152,22 +157,23 @@ class AppTcpdf extends TCPDF
             // very last row
             if ($i + 1 == count($results)) {
                 if ($groupType == 'customer') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $taxRate);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $taxRate, $unitSum);
                 }
                 if ($groupType == 'product') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $taxRate);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $taxRate, $unitSum);
                 }
             }
 
             $lastProductName = $productName;
             $lastCustomerName = $customerName;
             $lastTaxRate = $taxRate;
-
+            $lastUnitSum = $unitSum;
+            
             $i ++;
         }
     }
 
-    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $taxRate = '')
+    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $taxRate = '', $unitSum)
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -190,7 +196,14 @@ class AppTcpdf extends TCPDF
         $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . $amountSum . 'x</td>';
         $indexForWidth ++;
 
-        $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $lastObjectName . '</td>';
+        $unitSumString = '';
+        if ($detailsHidden) {
+            $unitSumString = Configure::read('app.pricePerUnitHelper')->getStringFromUnitSums($unitSum, ', ');
+            if ($unitSumString != '') {
+                $unitSumString = ', ' . $unitSumString;
+            }
+        }
+        $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $lastObjectName . $unitSumString .  '</td>';
         $indexForWidth ++;
 
         if (in_array('Preis exkl.', $headers)) {
@@ -248,7 +261,7 @@ class AppTcpdf extends TCPDF
         if ($colspan == 2) {
             $detailsHidden = true;
         }
-
+        
         if ($detailsHidden) {
             $this->table .= '<tr><td></td></tr>';
         }

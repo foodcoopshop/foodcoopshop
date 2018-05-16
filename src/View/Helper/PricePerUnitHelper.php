@@ -22,6 +22,19 @@ class PricePerUnitHelper extends Helper
     
     public $helpers = ['MyHtml'];
     
+    public function getStringFromUnitSums($unitSum, $separator)
+    {
+        $unitSumString = '';
+        if (!empty($unitSum)) {
+            $preparedUnitSum = [];
+            foreach($unitSum as $unitName => $unitSum) {
+                $preparedUnitSum[] = $unitSum . ' ' . $unitName;
+            }
+            $unitSumString = join($separator, $preparedUnitSum);
+        }
+        return $unitSumString;
+    }
+    
     public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount=1)
     {
         $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount);
