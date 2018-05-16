@@ -86,7 +86,8 @@ class OrdersController extends AdminAppController
                 'OrderDetails' => [
                     'sort' => ['OrderDetails.product_name' => 'ASC']
                 ],
-                'OrderDetails.Products.Manufacturers'
+                'OrderDetails.Products.Manufacturers',
+                'OrderDetails.OrderDetailUnits'
             ],
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
         ]);
