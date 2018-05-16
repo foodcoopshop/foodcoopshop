@@ -38,17 +38,18 @@ class PricePerUnitHelper extends Helper
     
     public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount=1)
     {
+        $result = $attributeName;
         $quantityInUnitsString = $this->getQuantityInUnits($unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount);
         if ($quantityInUnitsString != '') {
-            $unitName = $attributeName . ', ' . $quantityInUnitsString;
+            $result = $attributeName . ', ' . $quantityInUnitsString;
         }
         if ($attributeCanBeUsedAsUnit) {
-            $unitName = $quantityInUnitsString;
+            $result = $quantityInUnitsString;
         }
-        if ($unitName == '') {
-            $unitName = $attributeName;
+        if ($result == '') {
+            $result = $attributeName;
         }
-        return $unitName;
+        return $result;
     }
     
     public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName)
