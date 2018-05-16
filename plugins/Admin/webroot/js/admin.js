@@ -604,8 +604,8 @@ foodcoopshop.Admin = {
         });
 
         $('#dialogPriceUnitName').on('change', function() {
-            var stepValue = '0.01';
-            var minValue = '0.01';
+            var stepValue = '0.001';
+            var minValue = '0.001';
             if ($(this).val() == 'g') {
                 stepValue = 1;
                 minValue = 1;

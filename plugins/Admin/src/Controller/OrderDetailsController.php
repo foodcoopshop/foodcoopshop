@@ -354,8 +354,8 @@ class OrderDetailsController extends AdminAppController
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
         
         $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') ';
-        $message .= 'wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units, 2, true);
-        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productQuantity, 2, true);
+        $message .= 'wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
+        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatUnitAsDecimal($productQuantity);
         $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' angepasst ';
         
         // send email to customer if price was changed

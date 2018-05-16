@@ -49,7 +49,7 @@ class PricePerUnitHelper extends Helper
             if ($amount > 1) {
                 $result  = 'je ' . $result;
             }
-            $result .= 'ca. ' . $this->MyHtml->formatAsDecimal($quantityInUnits, 2, true) . ' ' . $unitName;
+            $result .= 'ca. ' . $this->MyHtml->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
         }
         return $result;
     }

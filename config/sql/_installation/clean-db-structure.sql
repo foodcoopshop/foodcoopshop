@@ -306,7 +306,7 @@ CREATE TABLE `fcs_order_detail_units` (
   `id_order_detail` int(11) NOT NULL DEFAULT '0',
   `product_quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
   `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
-  `quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
+  `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   `unit_name` varchar(50) NOT NULL DEFAULT '',
   `unit_amount` int(10) unsigned DEFAULT NULL,
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
@@ -570,11 +570,11 @@ CREATE TABLE `fcs_units` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_product` int(10) unsigned DEFAULT NULL,
   `id_product_attribute` int(11) unsigned DEFAULT NULL,
-  `price_incl_per_unit` decimal(10,6) unsigned DEFAULT NULL,
+  `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `amount` int(10) unsigned DEFAULT NULL,
   `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',
-  `quantity_in_units` decimal(10,6) unsigned DEFAULT NULL,
+  `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_product` (`id_product`,`id_product_attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

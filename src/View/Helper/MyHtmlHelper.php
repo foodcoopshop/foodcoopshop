@@ -267,6 +267,11 @@ class MyHtmlHelper extends HtmlHelper
     {
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
+    
+    public function formatUnitAsDecimal($amount)
+    {
+        return $this->formatAsDecimal($amount, 3, true);
+    }
 
     public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
     {

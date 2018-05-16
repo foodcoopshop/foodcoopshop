@@ -93,7 +93,7 @@ foreach ($orders as $order) {
 
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[5] . '">';
         if (!empty($orderDetail->order_detail_unit)) {
-            $pdf->table .= $this->Html->formatAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units, 2, true) . ' ' . $orderDetail->order_detail_unit->unit_name;
+            $pdf->table .= $this->Html->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $orderDetail->order_detail_unit->unit_name;
         }
         $pdf->table .= '</td>';
         
