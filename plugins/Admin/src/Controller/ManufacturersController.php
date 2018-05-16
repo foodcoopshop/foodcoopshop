@@ -547,6 +547,12 @@ class ManufacturersController extends AdminAppController
             return;
         }
 
+        // if checkbox is disabled, false is returned even if checkbox is active
+        // as i could not find out how to unset a specific request data index, override with value from database
+        if ($this->AppAuth->isManufacturer()) {
+            $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
+        }
+        
         if (!empty($this->getRequest()->getData('Manufacturers.holiday_from'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_from', new Time($this->getRequest()->getData('Manufacturers.holiday_from'))));
             
@@ -621,11 +627,6 @@ class ManufacturersController extends AdminAppController
                 $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));
                 $this->setRequest($this->getRequest()->withData('Manufacturers.variable_member_fee', null));
                 $this->setRequest($this->getRequest()->withData('Manufacturers.id_customer', null));
-            }
-
-            // html could be manipulated and checkbox disabled attribute removed
-            if ($this->AppAuth->isManufacturer()) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.active', null));
             }
 
             // sic! patch again!
