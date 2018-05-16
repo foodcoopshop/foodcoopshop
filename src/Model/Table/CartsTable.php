@@ -312,7 +312,6 @@ class CartsTable extends AppTable
         $productQuantityInUnits = 0;
         $unity = '';
         
-        $productData['unity'] = $unity;
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
             $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
@@ -333,6 +332,8 @@ class CartsTable extends AppTable
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
         }
+        
+        $productData['unity'] = $unity;
         $productData['unity_with_unit'] = $unity;
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
