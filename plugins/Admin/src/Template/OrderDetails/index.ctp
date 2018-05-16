@@ -170,6 +170,7 @@ $sumPrice = 0;
 $sumAmount = 0;
 $sumDeposit = 0;
 $sumReducedPrice = 0;
+$sumUnits = [];
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
     $editRecordAllowed = $groupBy == '' && ($orderDetail->order->current_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
@@ -312,6 +313,7 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '') {
         echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
             if (!empty($orderDetail->order_detail_unit)) {
+                @$sumUnits[$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
                 if ($editRecordAllowed) {
                     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                         'class' => 'order-detail-product-quantity-edit-button',
@@ -401,8 +403,20 @@ if ($sumDeposit > 0) {
     $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+
+$sumUnitsString = '';
+if (!empty($sumUnits)) {
+    $preparedSumUnits = [];
+    foreach($sumUnits as $unitName => $sumUnit) {
+        $preparedSumUnits[] = $sumUnit . ' ' . $unitName;
+    }
+    $sumUnitsString = join('<br />', $preparedSumUnits);
+}
+echo '<td class="right"><b>' . $sumUnitsString . '</b></td>';
+
+
 if ($groupBy == '') {
-    echo '<td colspan="5"></td>';
+    echo '<td colspan="4"></td>';
 }
 echo '</tr>';
 echo '</table>';
