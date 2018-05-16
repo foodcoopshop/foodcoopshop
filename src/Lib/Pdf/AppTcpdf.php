@@ -74,12 +74,14 @@ class AppTcpdf extends TCPDF
                 $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
+                $unitSum = [];
             }
 
             if ($groupType == 'product' && isset($lastProductName) && ($lastProductName != $productName || $lastTaxRate != $taxRate)) {
                 $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate, $lastUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
+                $unitSum = [];
             }
 
             $amountSum += $amount;
