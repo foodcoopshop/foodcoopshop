@@ -2,6 +2,7 @@
 
 namespace App\View\Helper;
 
+use Cake\Log\Log;
 use Cake\View\Helper;
 
 /**

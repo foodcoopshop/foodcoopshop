@@ -102,25 +102,16 @@ class AppTcpdf extends TCPDF
                 $this->table .= '<td style="' . $amountStyle . '" align="right" width="' . $widths[$indexForWidth] . '">' . $amount . 'x</td>';
 
                 $indexForWidth ++;
-                if ($result['OrderDetailUnitQuantityInUnits'] != '') {
+                
+                $unity = '';
+                if ($result['OrderDetailUnitQuantityInUnits'] > 0) {
                     if ($isOrderList) {
-                        if ($result['OrderDetailProductAttributeId'] > 0) {
-                            $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
-                                $result['AttributeName'],
-                                $result['AttributeCanBeUsedAsUnit'],
-                                true,
-                                $result['OrderDetailUnitQuantityInUnits'],
-                                $result['OrderDetailUnitUnitName'],
-                                $amount
-                            );
-                        } else {
-                            $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
-                                true,
-                                $result['OrderDetailUnitQuantityInUnits'],
-                                $result['OrderDetailUnitUnitName'],
-                                $amount
-                            );
-                        }
+                        $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
+                            true,
+                            $result['OrderDetailUnitQuantityInUnits'],
+                            $result['OrderDetailUnitUnitName'],
+                            $amount
+                        );
                     } else {
                         // for invoice detail
                         $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
