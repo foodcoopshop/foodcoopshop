@@ -37,9 +37,8 @@ foreach ($orders as $order) {
 
     $widths = [
         45,
-        225,
+        270,
         100,
-        45,
         45,
         45
     ];
@@ -48,8 +47,7 @@ foreach ($orders as $order) {
         'Produkt',
         'Hersteller',
         'Preis',
-        'Pfand',
-        'Gewicht'
+        'Pfand'
     ];
 
     $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
@@ -73,9 +71,30 @@ foreach ($orders as $order) {
             $quantityStyle = ' background-color:#cecece;';
         }
         $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
-        $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
+        
+        $unity = '';
+        if (!empty($orderDetail->order_detail_unit)) {
+            $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
+                true,
+                $orderDetail->order_detail_unit->product_quantity_in_units,
+                $orderDetail->order_detail_unit->unit_name,
+                $orderDetail->product_amount
+            );
+            if ($unity != '') {
+                $unity = ', ' . $unity;
+            }
+        }
+        $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . $unity . '</td>';
+        
+        
         $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail->product->manufacturer->name . '</td>';
-        $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">';
+
+        $priceStyle = '';
+        if (!empty($orderDetail->order_detail_unit)) {
+            $priceStyle = ' background-color:#cecece;';
+        }
+        
+        $pdf->table .= '<td style="' . $quantityStyle . 'text-align: right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Html->formatAsEuro($orderDetail->total_price_tax_incl);
         if (!empty($orderDetail->order_detail_unit)) {
             $pdf->table .= ' *';
@@ -90,12 +109,6 @@ foreach ($orders as $order) {
             $deposit = '';
         }
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
-
-        $pdf->table .= '<td style="text-align: right"; width="' . $widths[5] . '">';
-        if (!empty($orderDetail->order_detail_unit)) {
-            $pdf->table .= $this->Html->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $orderDetail->order_detail_unit->unit_name;
-        }
-        $pdf->table .= '</td>';
         
         $sumPrice += $orderDetail['total_price_tax_incl'];
         $sumQuantity += $orderDetail['product_amount'];
@@ -118,7 +131,6 @@ foreach ($orders as $order) {
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">Gesamt</td>';
                 $pdf->table .= '<td colspan="2" style="font-size:10px;font-weight:bold;text-align:center;" width="' . ($widths[3] + $widths[4]) . '">' . $this->Html->formatAsEuro($sumPrice + $sumDeposit) . '</td>';
-                $pdf->table .= '<td></td>';
             $pdf->table .= '</tr>';
         }
 
