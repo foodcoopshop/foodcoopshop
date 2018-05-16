@@ -613,6 +613,7 @@ foodcoopshop.Admin = {
             var quantityInUnitsField = $('#' + dialogId + ' #dialogPriceQuantityInUnits');
             quantityInUnitsField.attr('step', stepValue);
             quantityInUnitsField.attr('min', minValue);
+            $('#' + dialogId + ' span.unit-name-placeholder').html($(this).val());
         }).trigger('change');
         
     },
