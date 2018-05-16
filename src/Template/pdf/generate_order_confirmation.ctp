@@ -80,9 +80,9 @@ if (!empty($manufacturers)) {
             if ($orderDetail->product_amount > 1) {
                 $quantityStyle = ' background-color:#cecece;';
             }
-            $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
+            $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;" width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
             $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
-            $pdf->table .= '<td style="text-align: right"; width="' . $widths[2] . '">' . $this->Html->formatAsEuro($orderDetail->total_price_tax_incl) . '</td>';
+            $pdf->table .= '<td style="text-align: right;" width="' . $widths[2] . '">' . $this->Html->formatAsEuro($orderDetail->total_price_tax_incl) . '</td>';
 
             $deposit = $orderDetail->deposit;
             if ($deposit > 0) {
@@ -91,7 +91,7 @@ if (!empty($manufacturers)) {
             } else {
                 $deposit = '';
             }
-            $pdf->table .= '<td style="text-align: right"; width="' . $widths[3] . '">' . $deposit . '</td>';
+            $pdf->table .= '<td style="text-align: right;" width="' . $widths[3] . '">' . $deposit . '</td>';
 
             $sumPrice += $orderDetail->total_price_tax_incl;
             $sumQuantity += $orderDetail->product_amount;
@@ -110,11 +110,11 @@ if (!empty($manufacturers)) {
                 } else {
                     $sumDepositAsString = '';
                 }
-                    $pdf->table .= '<td style="text-align:right;font-weight:bold;"; width="' . $widths[3] . '"><p>' . $sumDepositAsString . '</p></td>';
+                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[3] . '"><p>' . $sumDepositAsString . '</p></td>';
                 $pdf->table .= '</tr>';
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                     $pdf->table .= '<td colspan="2" style="text-align:right;" width="' . ($widths[0] + $widths[1]) . '"><h3>Gesamt</h3></td>';
-                    $pdf->table .= '<td colspan="2" style="text-align:center"; width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->Html->formatAsEuro($sumPrice + $sumDeposit) . '</h3></td>';
+                    $pdf->table .= '<td colspan="2" style="text-align:center;" width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->Html->formatAsEuro($sumPrice + $sumDeposit) . '</h3></td>';
                 $pdf->table .= '</tr>';
             }
         }
