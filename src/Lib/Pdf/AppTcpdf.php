@@ -44,6 +44,8 @@ class AppTcpdf extends TCPDF
     {
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 
+        $isOrderList = $this->isOrderList($headers);
+        
         // Header
         $num_headers = count($headers);
         for ($i = 0; $i < $num_headers; ++ $i) {
@@ -96,9 +98,34 @@ class AppTcpdf extends TCPDF
 
                 $indexForWidth ++;
                 if ($result['OrderDetailUnitQuantityInUnits'] != '') {
-                    $productName .= ', ' .  Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
+                    if ($isOrderList) {
+                        if ($result['OrderDetailProductAttributeId'] > 0) {
+                            $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
+                                $result['AttributeName'],
+                                $result['AttributeCanBeUsedAsUnit'],
+                                true,
+                                $result['OrderDetailUnitQuantityInUnits'],
+                                $result['OrderDetailUnitUnitName'],
+                                $amount
+                            );
+                        } else {
+                            $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
+                                true,
+                                $result['OrderDetailUnitQuantityInUnits'],
+                                $result['OrderDetailUnitUnitName'],
+                                $amount
+                            );
+                        }
+                    } else {
+                        // for invoice detail
+                        $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
+                    }
                 }
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $productName . '</td>';
+                
+                if ($unity != '') {
+                    $unity = ', ' . $unity;
+                }
+                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $productName . $unity . '</td>';
 
                 if (in_array('Preis exkl.', $headers)) {
                     $indexForWidth ++;
@@ -194,6 +221,11 @@ class AppTcpdf extends TCPDF
         if (! $detailsHidden) {
             $this->table .= '<tr border="0"><td></td></tr>';
         }
+    }
+    
+    public function isOrderList($headers)
+    {
+        return $this->getCorrectColspan($headers) == 3;
     }
 
     public function getCorrectColspan($headers)
