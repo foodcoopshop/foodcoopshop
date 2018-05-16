@@ -586,6 +586,7 @@ class ProductsController extends AdminAppController
                 }
                 $oldProduct->product_lang->name = $oldProduct->product_lang->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
                 $oldProduct->product_shop->price = $attribute->product_attribute_shop->price;
+                $oldProduct->unit_product = $attribute->unit_product_attribute;
             }
         }
 
@@ -595,12 +596,13 @@ class ProductsController extends AdminAppController
                     [$originalProductId => $this->getRequest()->getData('price')]
                 ]
             );
-            $this->Unit = TableRegistry::getTableLocator()->get('Units'); 
+            $this->Unit = TableRegistry::getTableLocator()->get('Units');
+            $priceInclPerUnit = $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit'));
             $this->Unit->saveUnits(
                 $ids['productId'],
                 $ids['attributeId'],
                 $this->getRequest()->getData('pricePerUnitEnabled'),
-                $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')),
+                $priceInclPerUnit,
                 $this->getRequest()->getData('priceUnitName'),
                 $this->getRequest()->getData('priceUnitAmount'),
                 $this->Product->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'))
@@ -611,7 +613,24 @@ class ProductsController extends AdminAppController
 
         $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name. '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price)) . ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($price) . ' geändert.');
+        
+        if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
+            $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
+        } else {
+            $oldPrice = Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
+        }
+        
+        if ($this->getRequest()->getData('pricePerUnitEnabled')) {
+            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($priceInclPerUnit, $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
+        } else {
+            $newPrice = Configure::read('app.htmlHelper')->formatAsEuro($price);
+        }
+        
+        $actionLogMessage  = 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name;
+        $actionLogMessage .= '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ';
+        $actionLogMessage .= $oldPrice . ' auf ' . $newPrice . ' geändert.';
+        
+        $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set('data', [
