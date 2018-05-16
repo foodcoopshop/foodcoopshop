@@ -412,7 +412,7 @@ if (!empty($sumUnits)) {
     }
     $sumUnitsString = join('<br />', $preparedSumUnits);
 }
-echo '<td class="right"><b>' . $sumUnitsString . '</b></td>';
+echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
 
 
 if ($groupBy == '') {
