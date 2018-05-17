@@ -306,11 +306,11 @@ class CartsTable extends AppTable
         $productData['deposit'] = $deposit;
         
         $unitName = '';
+        $unityName = '';
         $unitAmount = 0;
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
         $productQuantityInUnits = 0;
-        $unity = '';
         
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
@@ -331,9 +331,9 @@ class CartsTable extends AppTable
             $productData['usesQuantityInUnits'] = true;
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
+            $unityName = $unity;
         }
-        
-        $productData['unity'] = $unity;
+        $productData['unity'] = $unityName;
         $productData['unity_with_unit'] = $unity;
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
