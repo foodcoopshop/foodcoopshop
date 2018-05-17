@@ -54,7 +54,11 @@ class PricePerUnitHelper extends Helper
     
     public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName)
     {
-        return '<span class="quantity-in-units">' . $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName) . '</span>';
+        $quantityInUnitsString = $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName);
+        if ($quantityInUnitsString != '') {
+            $quantityInUnitsString = '<span class="quantity-in-units">' . $quantityInUnitsString . '</span>';
+        }
+        return $quantityInUnitsString;
     }
     
     public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName, $amount=1)
