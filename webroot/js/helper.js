@@ -586,7 +586,7 @@ foodcoopshop.Helper = {
         var root = '#content';
 
         var responsiveHeaderSelector = '#responsive-header';
-        if (foodcoopshop.Helper.isMobile() && $(resonsiveHeaderSelector).length == 1) {
+        if (foodcoopshop.Helper.isMobile() && $(responsiveHeaderSelector).length == 1) {
             root = responsiveHeaderSelector;
         }
 

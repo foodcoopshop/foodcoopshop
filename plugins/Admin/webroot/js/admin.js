@@ -29,8 +29,10 @@ foodcoopshop.Admin = {
     appendFlashMessageToDialog : function(element, message) {
         foodcoopshop.Helper.showErrorMessage(message);
         var flashMessage = $('#flashMessage');
-        var left = (element.width() - flashMessage.width()) / 2;
-        flashMessage.css('left', left + 'px');
+        if (!foodcoopshop.Helper.isMobile()) {
+            var left = (element.width() - flashMessage.width()) / 2;
+            flashMessage.css('left', left + 'px');
+        }
         element.prepend(flashMessage);
     }, 
 
