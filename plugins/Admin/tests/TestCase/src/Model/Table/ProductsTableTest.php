@@ -198,9 +198,9 @@ class ProductsTableTest extends AppCakeTestCase
         // 1) change quantity to same quantityto be able to test if the quantity has not changed
         $sameQuantity = '20';
         $products = [
-            [346 => $sameQuantity],
             [102 => $sameQuantity],
-            [161 => $sameQuantity],
+            [346 => $sameQuantity],
+            [103 => $sameQuantity]
         ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
@@ -209,7 +209,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => '14'],
             [346 => '-1'], // invalid quantity
-            [161 => '1']
+            [103 => '1']
         ];
 
         $exceptionThrown = false;
@@ -301,16 +301,16 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [346 => $samePrice],
             [102 => $samePrice],
-            [161 => $samePrice],
+            [103 => $samePrice]
         ];
         $this->Product->changePrice($products);
         $this->assertProductPrice($products);
 
         // try to change prices, but include one invalid price
         $products = [
-            [102 => '2,58'],
             [346 => '-1'], // invalid price
-            [161 => '1,01']
+            [102 => '2,58'],
+            [103 => '1,01']
         ];
 
         $exceptionThrown = false;
@@ -355,16 +355,16 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [346 => $sameDeposit],
             [102 => $sameDeposit],
-            [161 => $sameDeposit],
+            [103 => $sameDeposit]
         ];
         $this->Product->changeDeposit($products);
         $this->assertProductDeposit($products);
 
         // try to change deposits, but include one invalid deposit
         $products = [
-            [102 => '2,00'],
             [346 => '-1'], // invalid deposit
-            [161 => '1,00']
+            [102 => '2,00'],
+            [103 => '1,00']
         ];
 
         $exceptionThrown = false;
@@ -444,7 +444,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 1],
             [340 => 1],
-            [342 => 0]
+            [346 => 0]
         ];
         $response = $this->Product->changeStatus($products);
         $this->assertEquals(true, $response);
@@ -474,7 +474,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [346 => 0],  // pass correct but different to current status
             [102 => -1], // invalid status
-            [161 => 0]   // pass correct but different to current status
+            [103 => 0]   // pass correct but different to current status
         ];
 
         $exceptionThrown = false;
