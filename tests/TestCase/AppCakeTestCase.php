@@ -58,8 +58,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
         $this->initSimpleBrowser();
 
-        self::resetTestDatabaseData();
-
         $View = new View();
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
@@ -67,14 +65,27 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $this->generatePasswordHashes();
+        
+        self::resetTestDatabaseData();
+        
     }
 
     protected static function resetTestDatabaseData()
     {
+        
         self::$dbConnection = ConnectionManager::get('test');
         self::$testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
         self::importDump(self::$testDumpDir . 'test-db-data.sql');
+        
+        // regenerate password hashes
+        $ph = new AppPasswordHasher();
+        $query = 'UPDATE fcs_customer SET passwd = :passwd;';
+        $params = [
+            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
+        ];
+        $statement = self::$dbConnection->prepare($query);
+        $statement->execute($params);
+        
     }
 
     public function initSimpleBrowser()
@@ -237,20 +248,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             $preparedBccAddresses[] = $email;
         }
         $this->assertEquals($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong', 0, 0, true);
-    }
-
-    /**
-     * due to different app.cookieKeys, logins would not work with a defined hash
-     */
-    protected function generatePasswordHashes()
-    {
-        $ph = new AppPasswordHasher();
-        $query = 'UPDATE '.$this->Customer->getTable().' SET passwd = :passwd;';
-        $params = [
-            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
-        ];
-        $statement = self::$dbConnection->prepare($query);
-        $statement->execute($params);
     }
 
     protected function changeReadOnlyConfiguration($configKey, $value)
