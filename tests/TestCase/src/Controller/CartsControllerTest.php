@@ -417,6 +417,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order->order_details[1]->order_detail_unit->unit_name, 'kg');
         $this->assertEquals($order->order_details[1]->order_detail_unit->unit_amount, 1);
         
+        // check order_detail_taxes
+        $this->assertEquals($order->order_details[0]->order_detail_tax->unit_amount, 0.48);
+        $this->assertEquals($order->order_details[0]->order_detail_tax->total_amount, 0.96);
+
+        $this->assertEquals($order->order_details[1]->order_detail_tax->unit_amount, 0.91);
+        $this->assertEquals($order->order_details[1]->order_detail_tax->total_amount, 2.73);
+        
     }
     
     public function testShopOrder()
