@@ -1,6 +1,9 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+use App\Lib\Error\Exception\InvalidParameterException;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -17,6 +20,40 @@ namespace App\Model\Table;
 class UnitsTable extends AppTable
 {
 
+    public function validationDefault(Validator $validator)
+    {
+        $validator->numeric('price_incl_per_unit', 'Der Preis nach Gewicht muss eine Zahl sein.');
+        $validator->greaterThan('price_incl_per_unit', 0, 'Der Preis nach Gewicht muss größer als 0 sein.');
+        $validator
+            ->add('name', 'validName', [
+                'rule' => 'isValidName',
+                'message' => 'Der Name ist nicht erlaubt.',
+                'provider' => 'table',
+            ]);
+        $validator->notEmpty('name', 'Der Name muss angegeben sein.');
+        $validator->numeric('amount', 'Die Anzahl muss eine Zahl sein.');
+        $validator->greaterThan('amount', 0, 'Die Anzahl muss größer als 0 sein.');
+        $validator->numeric('quantity_in_units', 'Das ungefähre Liefergewicht muss eine Zahl sein.');
+        $validator->greaterThan('quantity_in_units', 0, 'Das ungefähre Liefergewicht muss größer als 0 sein.');
+        return $validator;
+    }
+    
+    public function isValidName($value, array $context)
+    {
+        return in_array($value, ['kg', 'g'], true);
+    }
+    
+    /**
+     * @param int $productId
+     * @param int $productAttributeId
+     * @param boolean $pricePerUnitEnabled
+     * @param double $priceInclPerUnit
+     * @param string $name
+     * @param int $amount
+     * @param double $quantityInUnits
+     * @throws InvalidParameterException
+     * @return $result
+     */
     public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits) {
         
         if ($productAttributeId > 0) {
@@ -37,17 +74,31 @@ class UnitsTable extends AppTable
         }
         
         if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == -1  && $quantityInUnits == -1) {
-            $this->deleteAll($idCondition);
+            $result = $this->deleteAll($idCondition);
         } else {
             $patchedEntity = $this->patchEntity($entity, [
-                'price_per_unit_enabled' => $pricePerUnitEnabled,
+                'price_per_unit_enabled' => (int) $pricePerUnitEnabled,
                 'price_incl_per_unit' => $priceInclPerUnit,
                 'name' => $name,
                 'amount' => $amount,
                 'quantity_in_units' => $quantityInUnits
             ]);
-            $this->save($patchedEntity);
+            
+            if (!empty($entity->getErrors())) {
+                $preparedErrors = [];
+                foreach($entity->getErrors() as $field => $message) {
+                    $errors = array_keys($message);
+                    foreach($errors as $error) {
+                        $preparedErrors[] = $message[$error];
+                    }
+                }
+                throw new InvalidParameterException(join(' ', $preparedErrors));
+            }
+            
+            $result = $this->save($patchedEntity);
         }
+        
+        return $result;
     }
 
 }

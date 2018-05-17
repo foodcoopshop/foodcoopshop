@@ -341,17 +341,29 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     *
-     * @param int $productId
+     * @param string $productId
      * @param double $price
-     * @return json string
+     * @param boolean $pricePerUnitEnabled
+     * @param number $priceInclPerUnit
+     * @param string $priceUnitName
+     * @param number $priceUnitAmount
+     * @param number $priceQuantityInUnits
+     * @return mixed
      */
-    protected function changeProductPrice($productId, $price)
+    protected function changeProductPrice($productId, $price, $usePricePerUnit = false, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
-        $this->browser->ajaxPost('/admin/products/editPrice', [
+        $data = [
             'productId' => $productId,
             'price' => $price
-        ]);
+        ];
+        if ($usePricePerUnit) {
+            $data['pricePerUnitEnabled'] = $pricePerUnitEnabled;
+            $data['priceInclPerUnit'] = $priceInclPerUnit;
+            $data['priceUnitName'] = $priceUnitName;
+            $data['priceUnitAmount'] = $priceUnitAmount;
+            $data['priceQuantityInUnits'] = $priceQuantityInUnits;
+        }
+        $this->browser->ajaxPost('/admin/products/editPrice', $data);
         return $this->browser->getJsonDecodedContent();
     }
 

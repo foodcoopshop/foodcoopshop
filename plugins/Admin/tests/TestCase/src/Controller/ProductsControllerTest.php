@@ -77,6 +77,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->assertPriceChange(346, '2,20', '2,00');
     }
+    
+    public function testEditPricePerUnitOfProductAsSuperadmin()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertPriceChange(346, '2,20', '2,00');
+    }
 
     public function testEditPriceOfAttributeAsSuperadmin()
     {

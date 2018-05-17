@@ -48,6 +48,7 @@
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductAttributesTableTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductsTableTest.php</file>
             <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductLangsTableTest.php</file>
+            <file>plugins/Admin/tests/TestCase/src/Model/Table/UnitsTableTest.php</file>
             
         </testsuite>
         
