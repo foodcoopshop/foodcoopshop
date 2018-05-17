@@ -253,7 +253,7 @@ class CartsTable extends AppTable
             $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
             $productData['price'] =  $newPriceIncl * $cartProduct->amount;
-            $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
+            $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl) * $cartProduct->amount;
             if ($unity != '') {
                 $unity .= ', ';
             }
@@ -318,8 +318,8 @@ class CartsTable extends AppTable
             $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
             $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
-            $productData['price'] =  $newPriceIncl;
-            $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $cartProduct->amount);
+            $productData['price'] =  $newPriceIncl * $cartProduct->amount;
+            $productData['priceExcl'] =  $productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl) * $cartProduct->amount;
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                 $cartProduct->product_attribute->product_attribute_combination->attribute->name,
                 $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,

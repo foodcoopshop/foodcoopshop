@@ -64,7 +64,8 @@ INSERT INTO `fcs_address` VALUES
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_attribute` VALUES
 (33,'0,5l',0,1,NULL,NULL),
-(35,'1 kg',1,1,NULL,NULL);
+(35,'1 kg',1,1,NULL,NULL),
+(36,'0,5 kg',1,1,NULL,NULL);
 /*!40000 ALTER TABLE `fcs_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_blog_posts` DISABLE KEYS */;
@@ -91,15 +92,17 @@ INSERT INTO `fcs_category` VALUES
 
 /*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;
 INSERT INTO `fcs_category_product` VALUES
+(16,339),
 (20,60),
 (20,102),
 (20,103),
 (20,163),
-(16,339),
 (20,339),
 (20,340),
 (20,344),
-(20,346);
+(20,346),
+(20,347),
+(20,348);
 /*!40000 ALTER TABLE `fcs_category_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_configuration` DISABLE KEYS */;
@@ -155,8 +158,7 @@ INSERT INTO `fcs_customer` VALUES
 INSERT INTO `fcs_deposits` VALUES
 (1,346,0,0.5),
 (2,0,9,0.5),
-(3,0,10,0.5),
-(4,0,11,0.5);
+(3,0,10,0.5);
 /*!40000 ALTER TABLE `fcs_deposits` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
@@ -217,22 +219,30 @@ INSERT INTO `fcs_product` VALUES
 (339,5,15,0,0,0.000000,1,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
 (340,4,20,0,0,0.000000,1,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
 (344,5,20,0,0,0.000000,1,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,5,20,2,0,0.000000,1,'2015-08-19 09:35:45','2015-08-19 09:35:45');
+(346,5,20,2,0,0.000000,1,'2015-08-19 09:35:45','2015-08-19 09:35:45'),
+(347,4,20,2,0,0.000000,1,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
+(348,4,20,2,0,0.000000,1,'2018-05-17 16:15:33','2018-05-17 16:16:38');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute` VALUES
-(10,60,0.000000,0,0);
+(10,60,0.000000,0,0),
+(11,348,0.000000,0,1),
+(12,348,0.000000,0,0);
 /*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute_combination` VALUES
-(33,10);
+(33,10),
+(35,12),
+(36,11);
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute_shop` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute_shop` VALUES
-(10,1,0.545455,0,60);
+(10,1,0.545455,0,60),
+(11,1,0.000000,1,348),
+(12,1,0.000000,0,348);
 /*!40000 ALTER TABLE `fcs_product_attribute_shop` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_lang` DISABLE KEYS */;
@@ -244,7 +254,9 @@ INSERT INTO `fcs_product_lang` VALUES
 (339,'','','','Kartoffel',0),
 (340,'','','','Beuschl',0),
 (344,'','','100 g','Knoblauch',0),
-(346,'','','Stück','Artischocke',0);
+(346,'','','Stück','Artischocke',0),
+(347,'','','Stück','Forelle',0),
+(348,'','','','Rindfleisch',0);
 /*!40000 ALTER TABLE `fcs_product_lang` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_shop` DISABLE KEYS */;
@@ -256,7 +268,9 @@ INSERT INTO `fcs_product_shop` VALUES
 (339,15,0.000000,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
 (340,20,4.545455,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
 (344,20,0.636364,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,20,1.652893,'2015-08-19 09:35:46','2015-08-19 09:35:46');
+(346,20,1.652893,'2015-08-19 09:35:46','2015-08-19 09:35:46'),
+(347,20,0.000000,'2018-05-17 16:13:39','2018-05-17 16:13:39'),
+(348,20,0.000000,'2018-05-17 16:15:33','2018-05-17 16:15:33');
 /*!40000 ALTER TABLE `fcs_product_shop` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
@@ -276,10 +290,10 @@ INSERT INTO `fcs_stock_available` VALUES
 (686,346,0,97),
 (692,60,9,996),
 (693,60,10,20),
-(694,60,11,999),
-(701,102,14,999),
-(702,102,15,998),
-(703,102,16,999);
+(704,347,0,999),
+(705,348,0,1998),
+(706,348,11,999),
+(707,348,12,999);
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
@@ -307,6 +321,10 @@ INSERT INTO `fcs_tax` VALUES
 /*!40000 ALTER TABLE `fcs_timebased_currency_payments` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_units` DISABLE KEYS */;
+INSERT INTO `fcs_units` VALUES
+(1,347,0,1.50,'g',100,1,350.000),
+(2,0,11,20.00,'kg',1,1,0.500),
+(3,0,12,20.00,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -252,13 +252,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkOrder($order, $orderId, $orderComment);
 
         // check order_details for product1
-        $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.305786, 3.64, 0.17, 0.34, 2);
+        $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2);
 
         // check order_details for product2 (third! index)
-        $this->checkOrderDetails($order->order_details[2], 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.636365, 1.86, 0.07, 0.21, 3);
+        $this->checkOrderDetails($order->order_details[2], 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3);
 
         // check order_details for product3 (second! index)
-        $this->checkOrderDetails($order->order_details[1], 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.636364, 0.000000, 0.000000, 0);
+        $this->checkOrderDetails($order->order_details[1], 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.000000, 0.000000, 0);
 
         $this->checkStockAvailable($this->productId1, 95);
         $this->checkStockAvailable($this->productId2, 17);
@@ -369,6 +369,53 @@ class CartsControllerTest extends AppCakeTestCase
         
         $this->assertEmpty($order->order_details[3]->timebased_currency_order_detail);
         
+    }
+    
+    public function testFinishCartWithPricePerUnit()
+    {
+        $this->loginAsSuperadmin();
+        
+        $productIdA = 347; // forelle
+        $productIdB = '348-11'; // rindfleisch, 0,5 kg
+        
+        $this->addProductToCart($productIdA, 2);
+        $this->addProductToCart($productIdB, 3);
+        
+        $this->finishCart(1, 1);
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        
+        $this->checkCartStatusAfterFinish();
+        
+        $order = $this->Order->find('all', [
+            'conditions' => [
+                'Orders.id_order' => $orderId
+            ],
+            'contain' => [
+                'OrderDetails.OrderDetailTaxes',
+                'OrderDetails.OrderDetailUnits'
+            ]
+        ])->first();
+        
+        // check order
+        $this->assertEquals($order->total_paid_tax_excl, 36.818181, 'order total_paid_tax_excl not correct');
+        $this->assertEquals($order->total_paid_tax_incl, 40.500000, 'order total_paid_tax_incl not correct');
+        
+        // check order_details
+        $this->checkOrderDetails($order->order_details[0], 'Forelle : Stück', 2, 0, 0, 9.545454, 10.5, 0.48, 0.96, 2);
+        $this->checkOrderDetails($order->order_details[1], 'Rindfleisch : je ca. 0,5 kg', 3, 11, 0, 27.272727, 30, 0.91, 2.73, 2);
+
+        // check order_details_units
+        $this->assertEquals($order->order_details[0]->order_detail_unit->product_quantity_in_units, 700);
+        $this->assertEquals($order->order_details[0]->order_detail_unit->price_incl_per_unit, 1.5);
+        $this->assertEquals($order->order_details[0]->order_detail_unit->quantity_in_units, 350);
+        $this->assertEquals($order->order_details[0]->order_detail_unit->unit_name, 'g');
+        $this->assertEquals($order->order_details[0]->order_detail_unit->unit_amount, 100);
+        
+        $this->assertEquals($order->order_details[1]->order_detail_unit->product_quantity_in_units, 1.5);
+        $this->assertEquals($order->order_details[1]->order_detail_unit->price_incl_per_unit, 20);
+        $this->assertEquals($order->order_details[1]->order_detail_unit->quantity_in_units, 0.5);
+        $this->assertEquals($order->order_details[1]->order_detail_unit->unit_name, 'kg');
+        $this->assertEquals($order->order_details[1]->order_detail_unit->unit_amount, 1);
         
     }
     
@@ -503,7 +550,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
     }
     
-    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $productPrice, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
+    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
     {
 
         // check order_details
