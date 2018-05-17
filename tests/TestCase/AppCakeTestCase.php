@@ -349,18 +349,15 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function changeProductPrice($productId, $price, $usePricePerUnit = false, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
-        $data = [
+        $this->browser->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
-            'price' => $price
-        ];
-        if ($usePricePerUnit) {
-            $data['pricePerUnitEnabled'] = $pricePerUnitEnabled;
-            $data['priceInclPerUnit'] = $priceInclPerUnit;
-            $data['priceUnitName'] = $priceUnitName;
-            $data['priceUnitAmount'] = $priceUnitAmount;
-            $data['priceQuantityInUnits'] = $priceQuantityInUnits;
-        }
-        $this->browser->ajaxPost('/admin/products/editPrice', $data);
+            'price' => $price,
+            'pricePerUnitEnabled' => $pricePerUnitEnabled,
+            'priceInclPerUnit' => $priceInclPerUnit,
+            'priceUnitName' => $priceUnitName,
+            'priceUnitAmount' => $priceUnitAmount,
+            'priceQuantityInUnits' => $priceQuantityInUnits
+        ]);
         return $this->browser->getJsonDecodedContent();
     }
 

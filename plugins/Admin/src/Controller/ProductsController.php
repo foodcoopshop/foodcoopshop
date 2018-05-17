@@ -596,20 +596,18 @@ class ProductsController extends AdminAppController
                     [$originalProductId => $this->getRequest()->getData('price')]
                 ]
             );
-            // only handle saving price per unit if data is in request
-            if (!empty($this->getRequest()->getData('priceInclPerUnit'))) {
-                $this->Unit = TableRegistry::getTableLocator()->get('Units');
-                $priceInclPerUnit = $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit'));
-                $this->Unit->saveUnits(
-                    $ids['productId'],
-                    $ids['attributeId'],
-                    $this->getRequest()->getData('pricePerUnitEnabled'),
-                    $priceInclPerUnit,
-                    $this->getRequest()->getData('priceUnitName'),
-                    $this->getRequest()->getData('priceUnitAmount'),
-                    $this->Product->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'))
-                );
-            }
+            $this->Unit = TableRegistry::getTableLocator()->get('Units');
+            $priceInclPerUnit = $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit'));
+            $pricePerUnitEnabled = $this->getRequest()->getData('pricePerUnitEnabled');
+            $this->Unit->saveUnits(
+                $ids['productId'],
+                $ids['attributeId'],
+                $pricePerUnitEnabled,
+                $priceInclPerUnit,
+                $this->getRequest()->getData('priceUnitName'),
+                $this->getRequest()->getData('priceUnitAmount'),
+                $this->Product->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'))
+            );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }

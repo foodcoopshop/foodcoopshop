@@ -73,30 +73,32 @@ class UnitsTable extends AppTable
             $entity = $this->newEntity($idCondition);
         }
         
-        if ($pricePerUnitEnabled == 0 && $priceInclPerUnit == -1  && $quantityInUnits == -1) {
-            $result = $this->deleteAll($idCondition);
-        } else {
-            $patchedEntity = $this->patchEntity($entity, [
-                'price_per_unit_enabled' => (int) $pricePerUnitEnabled,
-                'price_incl_per_unit' => $priceInclPerUnit,
-                'name' => $name,
-                'amount' => $amount,
-                'quantity_in_units' => $quantityInUnits
-            ]);
-            
-            if (!empty($entity->getErrors())) {
-                $preparedErrors = [];
-                foreach($entity->getErrors() as $field => $message) {
-                    $errors = array_keys($message);
-                    foreach($errors as $error) {
-                        $preparedErrors[] = $message[$error];
-                    }
+        $pricePerUnitEnabled = (int) $pricePerUnitEnabled;
+        
+        $patchedEntity = $this->patchEntity($entity, [
+            'price_per_unit_enabled' => $pricePerUnitEnabled,
+            'price_incl_per_unit' => $priceInclPerUnit,
+            'name' => $name,
+            'amount' => $amount,
+            'quantity_in_units' => $quantityInUnits,
+            ],
+            [
+                'validate' => $pricePerUnitEnabled ? 'default' : false
+            ]
+        );
+        
+        if (!empty($entity->getErrors())) {
+            $preparedErrors = [];
+            foreach($entity->getErrors() as $field => $message) {
+                $errors = array_keys($message);
+                foreach($errors as $error) {
+                    $preparedErrors[] = $message[$error];
                 }
-                throw new InvalidParameterException(join(' ', $preparedErrors));
             }
-            
-            $result = $this->save($patchedEntity);
+            throw new InvalidParameterException(join(' ', $preparedErrors));
         }
+        
+        $result = $this->save($patchedEntity);
         
         return $result;
     }

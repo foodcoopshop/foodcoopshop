@@ -116,6 +116,13 @@ class UnitsTableTest extends AppCakeTestCase
         $this->doSave();
     }
     
+    public function testSaveProductNoValidationIfDisabled()
+    {
+        $this->pricePerUnitEnabled = false;
+        $result = $this->doSave();
+        $this->assertNotEmpty($result);
+    }
+    
     public function testSaveProductOK()
     {
         $result = $this->doSave();
