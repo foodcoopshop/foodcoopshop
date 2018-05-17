@@ -896,6 +896,10 @@ body.payments .bottom-button-container {
 #product-price-edit-form .deactivated {
     opacity: 0.3;
 }
+#product-price-edit-form select {
+	background-color: #fff;
+	width: 80px;
+}
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;
     margin-left: 5px;

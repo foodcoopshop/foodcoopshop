@@ -60,8 +60,8 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<option value="1000">1.000</option>';
         dialogHtml += '</select> ';
         dialogHtml += '<select name="dialogPriceUnitName" id="dialogPriceUnitName">';
-        dialogHtml += '<option value="kg" selected>kg (Kilo)</option>';
-        dialogHtml += '<option value="g">g (Gramm)</option>';
+        dialogHtml += '<option value="kg" selected>kg</option>';
+        dialogHtml += '<option value="g">g</option>';
         dialogHtml += '</select><br />';
         dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ungefähres Liefergewicht in <span class="unit-name-placeholder">kg</span> pro Bestelleinheit';
         dialogHtml += '</div>';
