@@ -506,7 +506,7 @@ class ProductsTableTest extends AppCakeTestCase
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['StockAvailables'];
             } else {
-                $this->Product->getAssociation('ProductAttributes')->conditions(
+                $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
                 $contain = ['ProductAttributes.StockAvailables'];
@@ -541,7 +541,7 @@ class ProductsTableTest extends AppCakeTestCase
                 $contain = ['DepositProducts'];
             } else {
                 $contain = ['ProductAttributes', 'ProductAttributes.DepositProductAttributes'];
-                $this->Product->getAssociation('ProductAttributes')->conditions(
+                $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
             }
@@ -577,7 +577,7 @@ class ProductsTableTest extends AppCakeTestCase
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['ProductShops'];
             } else {
-                $this->Product->getAssociation('ProductAttributes')->conditions(
+                $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
                 $contain = ['ProductAttributes.ProductAttributeShops'];
