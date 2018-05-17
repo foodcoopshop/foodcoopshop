@@ -585,8 +585,9 @@ foodcoopshop.Helper = {
 
         var root = '#content';
 
-        if (foodcoopshop.Helper.isMobile()) {
-            root = '#responsive-header';
+        var responsiveHeaderSelector = '#responsive-header';
+        if (foodcoopshop.Helper.isMobile() && $(resonsiveHeaderSelector).length == 1) {
+            root = responsiveHeaderSelector;
         }
 
         var messageNode = $('<div />');
