@@ -25,6 +25,14 @@ foodcoopshop.Admin = {
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
+    
+    appendFlashMessageToDialog : function(element, message) {
+        foodcoopshop.Helper.showErrorMessage(message);
+        var flashMessage = $('#flashMessage');
+        var left = (element.width() - flashMessage.width()) / 2;
+        flashMessage.css('left', left + 'px');
+        element.prepend(flashMessage);
+    }, 
 
     addWrappersAndLoaderToDialogHtml : function(title, dialogId, dialogHtml) {
         var html = '<div id="' + dialogId + '" class="dialog" title="' + title + '">';
@@ -511,16 +519,7 @@ foodcoopshop.Admin = {
                     var pricePerUnitEnabled = $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0;
                     
                     var priceInclPerUnit = $('#dialogPricePriceInclPerUnit').val();
-                    if (pricePerUnitEnabled && (isNaN(parseFloat(priceInclPerUnit.replace(/,/, '.'))) || priceInclPerUnit < 0)) {
-                        alert('Der Preis nach Gewicht muss größer als 0 sein.');
-                        return false;
-                    }
-                    
                     var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
-                    if (pricePerUnitEnabled && isNaN(parseFloat(quantityInUnits.replace(/,/, '.'))) || quantityInUnits < 0) {
-                        alert('Das ungefähre Liefergewicht muss größer als 0 sein.');
-                        return false;
-                    }
 
                     if ($('#dialogPriceProductId').val() == '') {
                         return false;
@@ -545,9 +544,9 @@ foodcoopshop.Admin = {
                                 document.location.reload();
                             },
                             onError: function (data) {
-                                dialog.dialog('close');
-                                $('#product-price-edit-form .ajax-loader').hide();
-                                foodcoopshop.Helper.showErrorMessage(data.msg);
+                                var form = $('#product-price-edit-form form');
+                                form.find('.ajax-loader').hide();
+                                foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg)
                             }
                         }
                     );

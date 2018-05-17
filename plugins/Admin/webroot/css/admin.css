@@ -370,6 +370,10 @@ input.datepicker {
 	margin-left: 20px;
 	margin-top: 5px;
 }
+.ui-dialog-content #flashMessage {
+	position: absolute;
+	top: 10px;
+}
 .warning {
     color: red;
 }
