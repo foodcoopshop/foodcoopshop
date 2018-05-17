@@ -165,26 +165,26 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $order = $this->preparePricePerUnitOrder();
-//         pr($order->order_details[0]);
         
-        $newQuantity = 400;
+        $newQuantity = 800;
         $this->editOrderDetailQuantity($order->order_details[0]->id_order_detail, $newQuantity, false);
         
         $changedOrder = $this->getOrderWithUnitAssociations($order->id_order);
-//         pr($changedOrder->order_details[0]);
         
-        $this->assertEquals(6, $changedOrder->total_paid);
-        $this->assertEquals(6, $changedOrder->total_paid_tax_incl);
-        $this->assertEquals(5.46, $changedOrder->total_paid_tax_excl);
-        $this->assertEquals(6, $changedOrder->order_details[0]->total_price_tax_incl);
-        $this->assertEquals(5.46, $changedOrder->order_details[0]->total_price_tax_excl);
+        $this->assertEquals(12, $changedOrder->total_paid);
+        $this->assertEquals(12, $changedOrder->total_paid_tax_incl);
+        $this->assertEquals(10.9, $changedOrder->total_paid_tax_excl);
+        $this->assertEquals(12, $changedOrder->order_details[0]->total_price_tax_incl);
+        $this->assertEquals(10.9, $changedOrder->order_details[0]->total_price_tax_excl);
         $this->assertEquals($newQuantity, $changedOrder->order_details[0]->order_detail_unit->product_quantity_in_units);
         
-//         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-//         $expectedCcEmails = [];
-//         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertEquals(0.55, $changedOrder->order_details[0]->order_detail_tax->unit_amount);
+        $this->assertEquals(1.10, $changedOrder->order_details[0]->order_detail_tax->total_amount);
         
-//         $this->assertChangedOrderPrice($this->mockOrder->id_order, 8.075455);
+        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
+        $expectedCcEmails = [Configure::read('test.loginEmailMeatManufacturer')];
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst: Forelle : Stück', [$newQuantity, 'Demo Superadmin', Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->total_paid_tax_incl)], $expectedToEmails, $expectedCcEmails);
     }
     
     public function testEditOrderDetailPriceWithTimebasedCurrency()
