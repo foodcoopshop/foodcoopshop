@@ -229,8 +229,6 @@ class CustomersController extends AdminAppController
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
         
-        $this->set('deleteCustomerIsAllowed', $this->deleteCustomerIsAllowed($customerId));
-
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [

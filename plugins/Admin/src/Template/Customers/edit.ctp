@@ -19,7 +19,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();" .
-        Configure::read('app.jsNamespace') . ".Admin.bindDeleteCustomerButton(".$deleteCustomerIsAllowed.", ".$customer->id_customer.");
+        Configure::read('app.jsNamespace') . ".Admin.bindDeleteCustomerButton(".$customer->id_customer.");
     "
 ]);
 ?>

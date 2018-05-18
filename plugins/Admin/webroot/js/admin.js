@@ -26,26 +26,41 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
     
-    bindDeleteCustomerButton : function(deleteCustomerIsAllowed, customerId) {
+    bindDeleteCustomerButton : function(customerId) {
+        
         $('.delete-customer-button').on('click', function() {
-            if (deleteCustomerIsAllowed) {
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/customers/delete/' + customerId,
-                    {},
-                    {
-                        onOk: function (data) {
-//                            document.location.reload();
+            $('<div></div>').appendTo('body')
+                .html('<p>Willst du dein Mitgliedskonto wirklich unwiderruflich löschen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .dialog({
+                    modal: true,
+                    title: 'Mitgliedskonto löschen?',
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: {
+                        'Abbrechen': function () {
+                            $(this).dialog('close');
                         },
-                        onError: function (data) {
-//                            document.location.reload();
+                        'Ja': function () {
+                            foodcoopshop.Helper.ajaxCall(
+                                '/admin/customers/delete/' + customerId,
+                                {},
+                                {
+                                    onOk: function (data) {
+                                        document.location.reload();
+                                    },
+                                    onError: function (data) {
+                                        document.location.reload();
+                                    }
+                                });
                         }
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
                     }
-                );
-                
-            } else {
-                alert('nicht erlaubt');
-            }
+                });
         });
+        
     },
 
     disableSelectpickerItems : function (selector, ids) {
