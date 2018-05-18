@@ -76,7 +76,7 @@ foreach ($orders as $order) {
         if (!empty($orderDetail->order_detail_unit)) {
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
                 true,
-                $orderDetail->order_detail_unit->product_quantity_in_units,
+                $orderDetail->order_detail_unit->quantity_in_units,
                 $orderDetail->order_detail_unit->unit_name,
                 $orderDetail->product_amount
             );
@@ -94,7 +94,7 @@ foreach ($orders as $order) {
             $priceStyle = ' background-color:#cecece;';
         }
         
-        $pdf->table .= '<td style="' . $quantityStyle . 'text-align: right"; width="' . $widths[3] . '">';
+        $pdf->table .= '<td style="' . $priceStyle . 'text-align: right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Html->formatAsEuro($orderDetail->total_price_tax_incl);
         if (!empty($orderDetail->order_detail_unit)) {
             $pdf->table .= ' *';
