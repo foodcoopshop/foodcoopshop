@@ -1737,7 +1737,7 @@ foodcoopshop.Admin = {
             
             $('#' + dialogId + ' .price-per-unit-info-text').remove();
             if (row.find('td:nth-child(8)').html() != '') {
-                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">Um das Gewicht anzupassen, ändere bitte den Wert in der Spalte "Gewicht" zwei Spalten weiter rechts. Der Preis wird dann automatisch berechnet und angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf.</b>');
+                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">Um das Gewicht anzupassen, ändere bitte den Wert "Gewicht" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf.</b>');
             }
             
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
