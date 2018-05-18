@@ -187,6 +187,32 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst: Forelle : Stück', [$newQuantity, 'Demo Superadmin', 'Der Basis-Preis beträgt 1,50&nbsp;€ / 100 g'], $expectedToEmails, $expectedCcEmails);
     }
     
+    public function testEditOrderDetailQuantityAsSuperAdminDoNotChangePrice() 
+    {
+        $this->loginAsSuperadmin();
+        
+        $order = $this->preparePricePerUnitOrder();
+        
+        $newQuantity = 800;
+        $this->editOrderDetailQuantity($order->order_details[0]->id_order_detail, $newQuantity, true);
+        
+        $changedOrder = $this->getOrderWithUnitAssociations($order->id_order);
+        
+        $this->assertEquals($order->total_paid, $changedOrder->total_paid);
+        $this->assertEquals($order->total_paid_tax_incl, $changedOrder->total_paid_tax_incl);
+        $this->assertEquals($order->total_paid_tax_excl, $changedOrder->total_paid_tax_excl);
+        $this->assertEquals($order->order_details[0]->total_price_tax_incl, $changedOrder->order_details[0]->total_price_tax_incl);
+        $this->assertEquals($order->order_details[0]->total_price_tax_excl, $changedOrder->order_details[0]->total_price_tax_excl);
+        $this->assertEquals($newQuantity, $changedOrder->order_details[0]->order_detail_unit->product_quantity_in_units);
+        
+        $this->assertEquals($order->order_details[0]->order_detail_tax->unit_amount, $changedOrder->order_details[0]->order_detail_tax->unit_amount);
+        $this->assertEquals($order->order_details[0]->order_detail_tax->total_amount, $changedOrder->order_details[0]->order_detail_tax->total_amount);
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+        
+    }
+    
     public function testEditOrderDetailPriceWithTimebasedCurrency()
     {
         
