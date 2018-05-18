@@ -314,6 +314,9 @@ class CartsTable extends AppTable
         
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
+            if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
+                $unityName = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
+            }
             $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
             $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
             $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
