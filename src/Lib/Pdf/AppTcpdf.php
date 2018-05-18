@@ -90,7 +90,7 @@ class AppTcpdf extends TCPDF
             $taxSum += $tax;
             
             if ($result['OrderDetailUnitQuantityInUnits'] != '') {
-                @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitQuantityInUnits'];
+                @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
             }
 
             if (! $onlyShowSums) {
@@ -116,7 +116,7 @@ class AppTcpdf extends TCPDF
                         );
                     } else {
                         // for invoice detail
-                        $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
+                        $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
                     }
                 }
                 
