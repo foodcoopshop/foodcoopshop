@@ -29,19 +29,24 @@ foodcoopshop.Admin = {
     bindDeleteCustomerButton : function(customerId) {
         
         $('.delete-customer-button').on('click', function() {
-            $('<div></div>').appendTo('body')
-                .html('<p>Mitgliedskonto wirklich unwiderruflich löschen? Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+            $('<div id="delete-customer-dialog"></div>').appendTo('body')
+                .html('<p>Mitgliedskonto wirklich unwiderruflich löschen?<p><p>Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: 'Mitgliedskonto löschen?',
                     autoOpen: true,
-                    width: 400,
+                    width: 500,
+                    height: 300,
                     resizable: false,
                     buttons: {
                         'Abbrechen': function () {
                             $(this).dialog('close');
                         },
                         'Ja': function () {
+                            
+                            $('#product-price-edit-form .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+                            
                             foodcoopshop.Helper.ajaxCall(
                                 '/admin/customers/delete/' + customerId,
                                 {},
@@ -50,7 +55,10 @@ foodcoopshop.Admin = {
                                         document.location.href = data.redirectUrl;
                                     },
                                     onError: function (data) {
-                                        console.log(data);
+                                        var form = $('#delete-customer-dialog');
+                                        form.find('.ajax-loader').hide();
+                                        var message = '<p><b>Beim Löschen des Mitgliedskontos sind Fehler aufgetreten:</b> </p>';
+                                        foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg)
                                     }
                                 });
                         }

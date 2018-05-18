@@ -51,6 +51,9 @@ class CustomersTable extends AppTable
             'foreignKey' => 'id_customer',
             'limit' => 1
         ]);
+        $this->hasMany('Manufacturers', [
+            'foreignKey' => 'id_customer'
+        ]);
         $this->hasMany('Payments', [
             'foreignKey' => 'id_customer',
             'sort' => [

@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
@@ -161,16 +162,61 @@ class CustomersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
         
-        $errors = $this->deleteCustomerIsAllowedWithDetails($customerId);
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => $customerId
-            ]
-        ])->first();
-        if (empty($customer)) {
-            throw new RecordNotFoundException('customer ' + $customerId + ' not found');
+        
+        try {
+            
+            $activeOrdersAssociation = $this->Customer->getAssociation('ActiveOrders')->setConditions([
+                'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')',
+                'ActiveOrders.current_state <> ' . ORDER_STATE_CANCELLED
+            ]);
+                
+            $customer = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.id_customer' => $customerId
+                ],
+                'contain' => [
+                    'Manufacturers',
+                    'ActiveOrders'
+                ]
+            ])->first();
+            
+            if (empty($customer)) {
+                throw new RecordNotFoundException('customer ' . $customerId . ' not found');
+            }
+            
+            $errors = [];
+            $openOrders = count($customer->active_orders);
+            if ($openOrders > 0) {
+                $errors[] = 'Anzahl der Bestellungen, die noch nicht verrechnet sind: '. $openOrders . '. Die letzte Bestellung muss mindestens vor zwei Monaten getätigt worden sein.';
+            }
+            $creditBalance = $this->Customer->getCreditBalance($customerId);
+            if ($creditBalance != 0) {
+                $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.htmlHelper')->formatAsEuro($creditBalance) . '. Es muss 0 betragen.';
+            }
+            
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
+            if ($timebasedCurrencyCreditBalance != 0) {
+                $errors[] = 'Das Guthaben des Stundenkontos beträgt ' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'. Es muss 0 betragen.';
+            }
+            
+            if (!empty($customer->manufacturers)) {
+                $manufacturerNames = [];
+                foreach($customer->manufacturers as $manufacturer) {
+                    $manufacturerNames[] = $manufacturer->name;
+                }
+                $errors[] = 'Das Mitglied ist noch folgenden Herstellern als Ansprechperson zugeordnet: ' . join(', ', $manufacturerNames);
+            }
+            
+            if (!empty($errors)) {
+                $this->log($errors);
+                throw new Exception('<ul><li>' . join('</li><li>', $errors) . '</li></ul>');
+            }
+        } catch (Exception $e) {
+            $this->sendAjaxError($e);
         }
+        
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
         
@@ -203,27 +249,6 @@ class CustomersController extends AdminAppController
         
         $this->set('_serialize', 'data');
         
-    }
-    
-    /**
-     * @param int $customerId
-     * @return boolean
-     */
-    private function deleteCustomerIsAllowed($customerId)
-    {
-        $errors = $this->deleteCustomerIsAllowedWithDetails($customerId);
-        return empty($errors);
-    }
-    
-    /**
-     * @param int $customerId
-     * @return array
-     */
-    private function deleteCustomerIsAllowedWithDetails($customerId)
-    {
-        $errors = [];
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        return $errors;
     }
 
     public function profile()
