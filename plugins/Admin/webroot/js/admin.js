@@ -30,7 +30,7 @@ foodcoopshop.Admin = {
         
         $('.delete-customer-button').on('click', function() {
             $('<div></div>').appendTo('body')
-                .html('<p>Willst du dein Mitgliedskonto wirklich unwiderruflich löschen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>Mitgliedskonto wirklich unwiderruflich löschen? Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: 'Mitgliedskonto löschen?',
@@ -47,10 +47,10 @@ foodcoopshop.Admin = {
                                 {},
                                 {
                                     onOk: function (data) {
-                                        document.location.reload();
+                                        document.location.href = data.redirectUrl;
                                     },
                                     onError: function (data) {
-                                        document.location.reload();
+                                        console.log(data);
                                     }
                                 });
                         }

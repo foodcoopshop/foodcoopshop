@@ -159,6 +159,8 @@ class CustomersController extends AdminAppController
     
     public function delete($customerId)
     {
+        $this->RequestHandler->renderAs($this, 'json');
+        
         $errors = $this->deleteCustomerIsAllowedWithDetails($customerId);
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
@@ -176,9 +178,31 @@ class CustomersController extends AdminAppController
         $this->ActionLog->removeCustomerFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
         $this->ActionLog->removeCustomerFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
         
-        // TODO implement isAuthorized
-        // TODO neues action log: user gelöscht, von wem?
-        // TODO if own profile:  $this->AppAuth->logout(); and redirect to home (js)
+        $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        if ($isOwnProfile) {
+            $message = 'Dein Mitgliedskonto wurde gelöscht. Falls du später wieder mal mitmachen möchtest, musst du dich neu registrieren.';
+            $redirectUrl = Configure::read('app.slugHelper')->getHome();
+        } else {
+            $message = 'Das Mitgliedskonto von <b>' . $customer->name . '</b> wurde von ' . $this->AppAuth->getUsername() .  ' gelöscht.';
+            $redirectUrl = Configure::read('app.slugHelper')->getAdminHome();
+        }
+        $this->ActionLog->customSave('customer_deleted', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
+        $this->Flash->success($message);
+        
+        if ($isOwnProfile) {
+            $this->AppAuth->logout();
+        }
+        
+        $this->set('data', [
+            'status' => 1,
+            'msg' => 'ok',
+            'redirectUrl' => $redirectUrl
+        ]);
+        
+        $this->set('_serialize', 'data');
+        
     }
     
     /**

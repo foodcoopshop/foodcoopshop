@@ -332,7 +332,10 @@ class ActionLogsTable extends AppTable
         'customer_group_changed' => [
             'de' => 'Mitglied: Gruppe geändert'
         ],
-
+        'customer_deleted' => [
+            'de' => 'Mitglied: gelöscht'
+        ],
+        
         'manufacturer_description_changed' => [
             'de' => 'Hersteller: Beschreibung geändert',
             'access' => [
