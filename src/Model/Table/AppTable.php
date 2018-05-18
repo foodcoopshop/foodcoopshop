@@ -102,6 +102,7 @@ class AppTable extends Table
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 Manufacturers.timebased_currency_enabled,
+                Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
                 StockAvailables.quantity";
         
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
@@ -121,6 +122,7 @@ class AppTable extends Table
                 LEFT JOIN ".$this->tablePrefix."stock_available StockAvailables ON Products.id_product = StockAvailables.id_product
                 LEFT JOIN ".$this->tablePrefix."images Images ON Images.id_product = Products.id_product
                 LEFT JOIN ".$this->tablePrefix."deposits Deposits ON Products.id_product = Deposits.id_product
+                LEFT JOIN ".$this->tablePrefix."units Units ON Products.id_product = Units.id_product
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturers ON Manufacturers.id_manufacturer = Products.id_manufacturer ";
     }
 
@@ -131,6 +133,7 @@ class AppTable extends Table
     {
         $conditions = "WHERE 1
                     AND StockAvailables.id_product_attribute = 0
+                    AND (Units.id_product_attribute = 0 OR Units.id_product_attribute IS NULL)
                     AND Products.active = :active
                     AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturers.active = :active ";

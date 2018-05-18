@@ -21,7 +21,7 @@ CREATE TABLE `fcs_action_logs` (
   `text` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -53,6 +53,7 @@ DROP TABLE IF EXISTS `fcs_attribute`;
 CREATE TABLE `fcs_attribute` (
   `id_attribute` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) DEFAULT NULL,
+  `can_be_used_as_unit` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -202,7 +203,7 @@ CREATE TABLE `fcs_email_logs` (
   `headers` text,
   `message` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -259,7 +260,7 @@ CREATE TABLE `fcs_manufacturer` (
   `send_shop_order_notification` tinyint(4) unsigned DEFAULT NULL,
   `send_ordered_product_deleted_notification` int(10) unsigned DEFAULT NULL,
   `send_ordered_product_price_changed_notification` int(10) unsigned DEFAULT NULL,
-  `send_ordered_product_quantity_changed_notification` int(10) unsigned DEFAULT NULL,
+  `send_ordered_product_amount_changed_notification` int(10) unsigned DEFAULT NULL,
   `enabled_sync_domains` varchar(50) DEFAULT NULL,
   `timebased_currency_enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `timebased_currency_max_percentage` tinyint(3) unsigned NOT NULL DEFAULT '30',
@@ -276,8 +277,7 @@ CREATE TABLE `fcs_order_detail` (
   `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `product_attribute_id` int(10) unsigned DEFAULT NULL,
   `product_name` varchar(255) NOT NULL DEFAULT '',
-  `product_quantity` int(10) unsigned NOT NULL DEFAULT '0',
-  `product_price` decimal(20,6) NOT NULL DEFAULT '0.000000',
+  `product_amount` int(10) unsigned NOT NULL DEFAULT '0',
   `total_price_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `id_tax` int(11) unsigned DEFAULT '0',
@@ -297,6 +297,19 @@ CREATE TABLE `fcs_order_detail_tax` (
   `unit_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
   `total_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
   KEY `id_order_detail` (`id_order_detail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_order_detail_units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_order_detail_units` (
+  `id_order_detail` int(11) NOT NULL DEFAULT '0',
+  `product_quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
+  `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
+  `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
+  `unit_name` varchar(50) NOT NULL DEFAULT '',
+  `unit_amount` int(10) unsigned DEFAULT NULL,
+  UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_orders`;
@@ -548,6 +561,22 @@ CREATE TABLE `fcs_timebased_currency_payments` (
   `modified_by` int(10) unsigned DEFAULT NULL,
   `created_by` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_units` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_product` int(10) unsigned DEFAULT NULL,
+  `id_product_attribute` int(11) unsigned DEFAULT NULL,
+  `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `amount` int(10) unsigned DEFAULT NULL,
+  `price_per_unit_enabled` tinyint(4) NOT NULL DEFAULT '0',
+  `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_product` (`id_product`,`id_product_attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -383,8 +383,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('paymentBalanceTitle', 'Mein Kontostand');
         $this->set('helpText', [
             'Hier kannst du deine Zeit-Eintragungen erstellen und löschen.',
-            'Du siehst auch, wenn der Hersteller Korrekturen vorgenommen bzw. Kommentare zu deinen Zeit-Eintragungen erstellt hat.',
-            'Durchgestrichene Zeit-Eintragungen wurden vom Hersteller gesperrt und zählen nicht zur Summe. Du kannst sie korrigieren, indem du sie löschst und anschließend neu erstellst.'
+            'Du siehst auch, wenn der Hersteller Anpassungen vorgenommen bzw. Kommentare zu deinen Zeit-Eintragungen erstellt hat.',
+            'Durchgestrichene Zeit-Eintragungen wurden vom Hersteller gesperrt und zählen nicht zur Summe. Du kannst sie anpassen, indem du sie löschst und anschließend neu erstellst.'
         ]);
         $this->set('showManufacturerDropdown', true);
         $this->render('paymentsCustomer');

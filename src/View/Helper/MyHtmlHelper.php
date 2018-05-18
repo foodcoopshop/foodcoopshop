@@ -36,7 +36,7 @@ class MyHtmlHelper extends HtmlHelper
         </script>";
         parent::__construct($View, $config);
     }
-
+    
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number
@@ -267,10 +267,19 @@ class MyHtmlHelper extends HtmlHelper
     {
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
-
-    public function formatAsDecimal($amount, $decimals = 2)
+    
+    public function formatUnitAsDecimal($amount)
     {
-        return number_format($amount, $decimals, ',', '.');
+        return $this->formatAsDecimal($amount, 3, true);
+    }
+
+    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
+    {
+        $result = number_format($amount, $decimals, ',', '.');
+        if ($removeTrailingZeros) {
+            $result = floatval($amount);
+        }
+        return $result;
     }
 
     public function getCustomerOrderBy()

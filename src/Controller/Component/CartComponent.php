@@ -34,6 +34,14 @@ class CartComponent extends Component
         return null;
     }
 
+    public function getProductsWithUnitCount()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['ProductsWithUnitCount'];
+        }
+        return 0;
+    }
+    
     public function getProductAndDepositSum()
     {
         return $this->getProductSum() + $this->getDepositSum();

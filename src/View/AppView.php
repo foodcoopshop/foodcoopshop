@@ -52,6 +52,6 @@ class AppView extends View
         $this->loadHelper('Text');
         $this->loadHelper('AssetCompress.AssetCompress');
         $this->loadHelper('TimebasedCurrency');
-        
+        $this->loadHelper('PricePerUnit');
     }
 }

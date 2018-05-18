@@ -178,6 +178,12 @@ class ActionLogsTable extends AppTable
             ]
         ],
         'order_detail_product_quantity_changed' => [
+            'de' => 'Bestelltes Produkt: Gewicht geändert',
+            'access' => [
+                'manufacturer'
+            ]
+        ],
+        'order_detail_product_amount_changed' => [
             'de' => 'Bestelltes Produkt: Anzahl geändert',
             'access' => [
                 'manufacturer'

@@ -29,6 +29,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductAmountEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
@@ -130,7 +131,7 @@ if (count($orderDetails) > 0 && $groupBy == '') {
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.product_quantity', 'Anzahl');
+    echo $this->Paginator->sort('OrderDetails.product_amount', 'Anzahl');
 echo '</th>';
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<th>';
@@ -148,10 +149,13 @@ if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER
     echo '<th>%</th>';
     echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
 }
-echo '<th class="right">';
+echo '<th>';
     echo $this->Paginator->sort('OrderDetails.deposit', 'Pfand');
 echo '</th>';
 if ($groupBy == '') {
+    echo '<th class="right">';
+        echo $this->Paginator->sort('OrderDetailsUnits.quantity_in_units', 'Gewicht');
+    echo '</th>';
     echo '<th>';
         echo $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
     echo '</th>';
@@ -166,6 +170,7 @@ $sumPrice = 0;
 $sumAmount = 0;
 $sumDeposit = 0;
 $sumReducedPrice = 0;
+$sumUnits = [];
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
     $editRecordAllowed = $groupBy == '' && ($orderDetail->order->current_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
@@ -173,7 +178,7 @@ foreach ($orderDetails as $orderDetail) {
     $i ++;
     if ($groupBy == '') {
         $sumPrice += $orderDetail->total_price_tax_incl;
-        $sumAmount += $orderDetail->product_quantity;
+        $sumAmount += $orderDetail->product_amount;
         $sumDeposit += $orderDetail->deposit;
     } else {
         $sumPrice += $orderDetail['sum_price'];
@@ -208,20 +213,20 @@ foreach ($orderDetails as $orderDetail) {
             ]);
         }
         
-        echo '<div class="table-cell-wrapper quantity">';
+        echo '<div class="table-cell-wrapper amount">';
         if ($groupBy == '') {
-            if ($orderDetail->product_quantity > 1 && $editRecordAllowed) {
+            if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'order-detail-product-quantity-edit-button',
+                    'class' => 'order-detail-product-amount-edit-button',
                     'title' => 'Zum Ändern der Anzahl anklicken'
                 ], 'javascript:void(0);');
             }
-            $quantity = $orderDetail->product_quantity;
+            $amount = $orderDetail->product_amount;
             $style = '';
-            if ($quantity > 1) {
+            if ($amount > 1) {
                 $style = 'font-weight:bold;';
             }
-            echo '<span class="product-quantity-for-dialog" style="' . $style . '">' . $quantity . '</span><span style="' . $style . '">x</span>';
+            echo '<span class="product-amount-for-dialog" style="' . $style . '">' . $amount . '</span><span style="' . $style . '">x</span>';
         } else {
             echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }
@@ -304,11 +309,29 @@ foreach ($orderDetails as $orderDetail) {
         }
     }
     echo '</td>';
+    
+    if ($groupBy == '') {
+        echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
+            if (!empty($orderDetail->order_detail_unit)) {
+                @$sumUnits[$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
+                if ($editRecordAllowed) {
+                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                        'class' => 'order-detail-product-quantity-edit-button',
+                        'title' => 'Zum Ändern des Gewichts anklicken'
+                    ], 'javascript:void(0);');
+                }
+                echo '<span class="quantity-in-units">' . $this->Html->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
+                echo '<span class="hide price-per-unit-base-info">'.$this->PricePerUnit->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
+            }
+        echo '</td>';
+    }
 
     if ($groupBy == '') {
-        echo '<td>';
         if ($groupBy == '') {
-            echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo '<td class="date-short2">';
+            echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort2'));
+        } else {
+            echo '<td>';
         }
         echo '</td>';
 
@@ -384,6 +407,10 @@ if ($sumDeposit > 0) {
     $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+
+$sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
+echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
+
 if ($groupBy == '') {
     echo '<td colspan="4"></td>';
 }

@@ -177,10 +177,10 @@ form.fcs-form .bootstrap-select {
     top: 10px;
 }
 #product-name-edit-form input[type="text"],
-#product-price-edit-form input,
-#product-deposit-edit-form input,
+#product-price-edit-form input[type="text"],
+#product-deposit-edit-form input[type="text"],
 #product-name-edit-form textarea,
-#product-quantity-edit-form input {
+#product-quantity-edit-form input[type="text"] {
     width: 300px;
     margin-bottom: 10px;
 }
@@ -196,7 +196,9 @@ form.fcs-form .bootstrap-select {
 }
 span.name-for-dialog,
 span.quantity-for-dialog,
+span.product-amount-for-dialog,
 span.price-for-dialog,
+span.unit-price-for-dialog,
 span.deposit-for-dialog,
 span.categories-for-dialog,
 span.tax-for-dialog,
@@ -281,6 +283,11 @@ body.products.index .filter-container div.input.select {
 body.products.index .bootstrap-select {
   width: 172px ! important;
 }
+body.products.index td.status {
+	text-align: center;
+	padding-left: 10px;
+	width: 42px;
+}
 #filter-loader {
   position: fixed;
   top: 10px;
@@ -355,8 +362,17 @@ input.datepicker {
   margin-left: 15px;
   margin-top: 10px;
 }
-#help-container li {
+#help-container li,
+.ui-dialog-content li {
     list-style-type: disc;
+}
+.ui-dialog-content li {
+	margin-left: 20px;
+	margin-top: 5px;
+}
+.ui-dialog-content #flashMessage {
+	position: absolute;
+	top: 10px;
 }
 .warning {
     color: red;
@@ -386,7 +402,8 @@ div.cke {
 #cke_configurations-value,
 #cke_dialogCancellationReason,
 #cke_dialogEditPriceReason,
-#cke_dialogEditQuantityReason {
+#cke_dialogEditQuantityReason,
+#cke_dialogEditAmountReason {
     float: left;
 }
 #product-name-edit-form div.textarea-wrapper {
@@ -401,6 +418,10 @@ div.cke {
 body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
+}
+body.order_details.index td.date-short2,
+body.orders.index td.date-short2 {
+	width: 100px;
 }
 body.order_details.index .timebased-currency-object {
 	display: none;
@@ -419,14 +440,15 @@ body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.i
 #product-name-edit-form div.textarea-wrapper a:hover  {
   color: #333;
 }
-#order-detail-product-quantity-edit-form div.textarea-wrapper {
+#order-detail-product-amount-edit-form div.textarea-wrapper {
     float: left;
     margin-top: 10px;
 }
 .product-attributes-dropdown {
     width: 400px;
 }
-body.products.index .unity-for-dialog {
+body.products.index table.list .unity-for-dialog, /* do not apply in dialogs! */
+body.products.index table.list .quantity-in-units {
     font-size: 11px;
     font-style: italic;
 }
@@ -526,6 +548,10 @@ form div.error-message {
     color: red;
     font-weight: bold;
     font-size: 14px;
+}
+#labelUnity span {
+    font-weight: normal;
+    font-size: 12px;	
 }
 .product-description-rename-info {
     position: absolute;
@@ -669,10 +695,14 @@ body.payments.my_member_fee #help-container {
 .table-cell-wrapper {
     float: right;
 }
-.table-cell-wrapper.price {
-    width: 65px;
+body.products.index .table-cell-wrapper.price {
+    width: 85px;
+    text-align: right;
 }
-.table-cell-wrapper.quantity {
+body.order_details.index .table-cell-wrapper.price {
+    width: 60px;
+}
+.table-cell-wrapper.amount {
     width: 48px;
 }
 .table-cell-wrapper.group {
@@ -826,11 +856,53 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#order-detail-product-price-edit-form input {
+#order-detail-product-price-edit-form input[type="text"],
+#order-detail-product-quantity-edit-form input[type="text"],
+#order-detail-product-quantity-edit-form input[type="number"],
+#product-price-edit-form input[type="text"],
+#product-price-edit-form input[type="number"],
+#product-deposit-edit-form input[type="text"] {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
     width: 75px;
+}
+#order-detail-product-price-edit-form .price-per-unit-info-text {
+	color:red;
+	float:left;
+	margin-bottom:5px;
+}
+#product-price-edit-form input#dialogPriceUnitName {
+	text-align: left;
+}
+
+#product-price-edit-form label.radio {
+	margin-left: 20px;
+	line-height: 28px;
+	position: static;
+}
+#product-price-edit-form label.radio input {
+	margin-right: 5px;
+	position: static;
+	float: left;
+    width: 20px;
+    height: 20px;
+}
+#product-price-edit-form label.radio input:focus {
+    outline: none;
+}
+#product-price-edit-form .price-per-unit-wrapper,
+#product-price-edit-form .price-wrapper {
+	width: 100%;
+	float: left;
+	margin-top: 5px;
+}
+#product-price-edit-form .deactivated {
+    opacity: 0.3;
+}
+#product-price-edit-form select {
+	background-color: #fff;
+	width: 80px;
 }
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;

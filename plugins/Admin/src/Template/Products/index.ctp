@@ -19,7 +19,21 @@ use Cake\Core\Configure;
      
         <?php
         $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
+        'script' =>
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . 
+            Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . 
+            Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
         ]);
         $this->element('highlightRowAfterEdit', [
@@ -245,16 +259,6 @@ use Cake\Core\Configure;
             echo '<span data-is-declaration-ok="'.$product->product_lang->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->product_lang->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
         }
 
-        // show unity only if product has no attributes and field "unity" is not empty
-        if (empty($product->product_attributes)) {
-            if (!empty($product->product_lang) && $product->product_lang->unity != '') {
-                echo ': ';
-                echo '<span class="unity-for-dialog">';
-                echo $product->product_lang->unity;
-                echo '</span>';
-            }
-        }
-
         echo '<span class="description-short-for-dialog">';
         echo $product->product_lang->description_short;
         echo '</span>';
@@ -311,21 +315,31 @@ use Cake\Core\Configure;
 
         echo '</td>';
 
-        echo '<td class="' . (empty($product->product_attributes) && $product->gross_price == 0 ? 'not-available' : '') . '">';
+        if (!empty($product->unit)) {
+            echo '<span id="product-unit-object-'.$product->id_product.'" class="product-unit-object"></span>';
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Admin.setProductUnitData($('#product-unit-object-".$product->id_product."'),'".json_encode($product->unit)."');"
+            ]);
+        }
+        
+        echo '<td class="' . ($product->price_is_zero ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
-        if (empty($product->product_attributes)) {
-            echo '<span class="price-for-dialog">';
-            echo $this->Html->formatAsDecimal($product->gross_price);
-            echo '</span>';
-        }
-        if (empty($product->product_attributes)) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'product-price-edit-button',
-                'title' => 'Preis ändern'
-            ], 'javascript:void(0);');
-        }
-        echo '</div>';
-        echo '</td>';
+	        if (empty($product->product_attributes)) {
+	            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+	                'class' => 'product-price-edit-button',
+	                'title' => 'Preis ändern'
+	            ], 'javascript:void(0);');
+	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
+                    echo $this->Html->formatAsEuro($product->gross_price);
+                echo '</span>';
+                if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
+                    echo '<span class="unit-price-for-dialog">';
+                        echo $this->PricePerUnit->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
+                    echo '</span>';
+                }
+    	    }
+    	    echo '</div>';
+	    echo '</td>';
 
         echo '<td>';
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
@@ -379,7 +393,7 @@ use Cake\Core\Configure;
         }
         echo '</td>';
 
-        echo '<td style="text-align: center;padding-left:10px;width:42px;">';
+        echo '<td class="status">';
 
         if ($product->active == 1) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
@@ -404,7 +418,7 @@ use Cake\Core\Configure;
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
                 'title' => 'Produkt-Vorschau',
                 'target' => '_blank'
-            ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->name));
+            ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->unchanged_name));
         }
         echo '</td>';
 

@@ -55,6 +55,7 @@ echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>' . $this->Paginator->sort('Attributes.name', 'Name') . '</th>';
+echo '<th>' . $this->Paginator->sort('Attributes.can_be_used_as_unit', 'Gewicht') . '</th>';
 echo '<th>Aktivierten Produkten zugewiesen?</th>';
 echo '<th>Deaktivierten Produkten zugewiesen?</th>';
 echo '<th>' . $this->Paginator->sort('Attributes.modified', 'geändert am') . '</th>';
@@ -85,6 +86,13 @@ foreach ($attributes as $attribute) {
     echo '<td>';
     echo $attribute->name;
     echo '</td>';
+    
+    echo '<td style="text-align:center;padding-left:5px;width:42px;">';
+        if ($attribute->can_be_used_as_unit == 1) {
+            echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        }
+    echo '</td>';
+    
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['online'])) {

@@ -34,7 +34,7 @@ use Cake\Core\Configure;
 			</p>
 
             <?php if ($unchangedPaymentSeconds != $payment->seconds) { ?>
-                <p>Die eingetragene Zeit wurde von <b><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($unchangedPaymentSeconds); ?></b> auf <b><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment->seconds); ?></b> korrigiert.</p>
+                <p>Die eingetragene Zeit wurde von <b><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($unchangedPaymentSeconds); ?></b> auf <b><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment->seconds); ?></b> angepasst.</p>
             <?php } ?>
             
             <?php if ($unchangedPaymentApproval != -1 && $payment->approval == -1) { ?>

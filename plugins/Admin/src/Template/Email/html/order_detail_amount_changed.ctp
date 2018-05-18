@@ -24,22 +24,22 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Der Preis des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast <?php echo $oldOrderDetail->product_amount; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
+                Die Anzahl des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
                 bestellt.
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> €</b></li>
-                <li>Neuer Preis: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> €</b></li>
+                <li>Alte Anzahl: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
+                <li>Neue Anzahl: <b><?php echo $newOrderDetail->product_amount; ?></b></li>
             </ul>
 
             <p>
-                Warum wurde der Preis angepasst?<br />
+                Warum wurde die Anzahl angepasst?<br />
                 <b>
                 <?php
 
-                if ($editPriceReason != '') {
-                    echo '"' . $editPriceReason . '"';
+                if ($editAmountReason != '') {
+                    echo '"' . $editAmountReason . '"';
                 } else {
                     echo 'Kein Grund angegeben.';
                 }

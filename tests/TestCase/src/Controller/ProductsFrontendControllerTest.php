@@ -30,7 +30,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOfflineManufacturerPublicLoggedOut()
     {
-        $productId = 47;
+        $productId = 60;
         $this->changeProductStatus($productId, 0);
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
@@ -39,7 +39,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOfflineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomer();
-        $productId = 47;
+        $productId = 60;
         $this->changeProductStatus($productId, 0);
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
@@ -47,20 +47,20 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOnlineManufacturerPublicLoggedOut()
     {
-        $this->browser->get($this->Slug->getProductDetail(47, 'Demo Product'));
+        $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assert200OkHeader();
     }
 
     public function testProductDetailOnlineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomer();
-        $this->browser->get($this->Slug->getProductDetail(47, 'Demo Product'));
+        $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assert200OkHeader();
     }
 
     public function testProductDetailOnlineManufacturerPrivateLoggedOut()
     {
-        $productId = 47;
+        $productId = 60;
         $manufacturerId = 15;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));

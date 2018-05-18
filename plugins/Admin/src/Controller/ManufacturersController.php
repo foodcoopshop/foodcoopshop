@@ -521,8 +521,8 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->send_ordered_product_price_changed_notification)) {
             $manufacturer->send_ordered_product_price_changed_notification = Configure::read('app.defaultSendOrderedProductPriceChangedNotification');
         }
-        if (is_null($manufacturer->send_ordered_product_quantity_changed_notification)) {
-            $manufacturer->send_ordered_product_quantity_changed_notification = Configure::read('app.defaultSendOrderedProductQuantityChangedNotification');
+        if (is_null($manufacturer->send_ordered_product_amount_changed_notification)) {
+            $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
         
         $manufacturer->timebased_currency_max_credit_balance /= 3600;
@@ -547,6 +547,12 @@ class ManufacturersController extends AdminAppController
             return;
         }
 
+        // if checkbox is disabled, false is returned even if checkbox is active
+        // as i could not find out how to unset a specific request data index, override with value from database
+        if ($this->AppAuth->isManufacturer()) {
+            $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
+        }
+        
         if (!empty($this->getRequest()->getData('Manufacturers.holiday_from'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_from', new Time($this->getRequest()->getData('Manufacturers.holiday_from'))));
             
@@ -606,8 +612,8 @@ class ManufacturersController extends AdminAppController
             if ($this->getRequest()->getData('Manufacturers.send_ordered_product_price_changed_notification') == Configure::read('app.defaultSendOrderedProductPriceChangedNotification')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.send_ordered_product_price_changed_notification', null));
             }
-            if ($this->getRequest()->getData('Manufacturers.send_ordered_product_quantity_changed_notification') == Configure::read('app.defaultSendOrderedProductQuantityChangedNotification')) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.send_ordered_product_quantity_changed_notification', null));
+            if ($this->getRequest()->getData('Manufacturers.send_ordered_product_amount_changed_notification') == Configure::read('app.defaultSendOrderedProductAmountChangedNotification')) {
+                $this->setRequest($this->getRequest()->withData('Manufacturers.send_ordered_product_amount_changed_notification', null));
             }
 
             if (isset($isAllowedEditManufacturerOptionsDropdown) && $isAllowedEditManufacturerOptionsDropdown) {
@@ -621,11 +627,6 @@ class ManufacturersController extends AdminAppController
                 $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));
                 $this->setRequest($this->getRequest()->withData('Manufacturers.variable_member_fee', null));
                 $this->setRequest($this->getRequest()->withData('Manufacturers.id_customer', null));
-            }
-
-            // html could be manipulated and checkbox disabled attribute removed
-            if ($this->AppAuth->isManufacturer()) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.active', null));
             }
 
             // sic! patch again!
@@ -688,7 +689,7 @@ class ManufacturersController extends AdminAppController
             $sumPriceIncl += $result['OrderDetailPriceIncl'];
             $sumPriceExcl += $result['OrderDetailPriceExcl'];
             $sumTax += $result['OrderDetailTaxAmount'];
-            $sumAmount += $result['OrderDetailQuantity'];
+            $sumAmount += $result['OrderDetailAmount'];
             if (isset($result['OrderDetailTimebasedCurrencyPriceInclAmount'])) {
                 $sumTimebasedCurrencyPriceIncl += $result['OrderDetailTimebasedCurrencyPriceInclAmount'];
             }
