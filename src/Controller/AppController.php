@@ -116,11 +116,6 @@ class AppController extends Controller
             $this->set('variableMemberFeeForTermsOfUse', $variableMemberFee);
         }
 
-        // should be removed in v2.1 - fixes different logged user format of cakephp 2 and 3
-        if (!is_object($this->AppAuth->user('terms_of_use_accepted_date'))) {
-            $this->renewAuthSession();
-        }
-
         parent::beforeFilter($event);
     }
 
