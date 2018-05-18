@@ -41,6 +41,7 @@ class PricePerUnit extends AbstractMigration
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
             ALTER TABLE `fcs_attribute` ADD `can_be_used_as_unit` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0' AFTER `name`;
+            UPDATE fcs_attribute SET can_be_used_as_unit = 1 WHERE name REGEXP \"^.*[k]?[g]{1}$\";
 
         ");
     }
