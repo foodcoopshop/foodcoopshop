@@ -75,16 +75,40 @@ class AppController extends Controller
         $loggedUser = $this->AppAuth->user();
         $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
     }
+    
+    /**
+     * check valid login on each request
+     * logged in user should be logged out if deleted or deactivated by admin
+     */
+    private function validateAuthentication()
+    {
+        if ($this->AppAuth->user()) {
+            $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+            $query = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.email' => $this->AppAuth->getEmail()
+                ]
+            ]);
+            $query = $this->Customer->findAuth($query, []);
+            if (empty($query->first())) {
+                $this->Flash->error('Du wurdest abgemeldet.');
+                $this->AppAuth->logout();
+                $this->redirect(Configure::read('app.slugHelper')->getHome());
+            }
+        }
+    }
 
     public function beforeFilter(Event $event)
     {
+        
+        $this->validateAuthentication();
 
         $isMobile = false;
         if ($this->getRequest()->is('mobile') && !preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
-
+        
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);
