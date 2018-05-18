@@ -30,7 +30,7 @@ foodcoopshop.Admin = {
         
         $('.delete-customer-button').on('click', function() {
             $('<div id="delete-customer-dialog"></div>').appendTo('body')
-                .html('<p>Mitgliedskonto wirklich unwiderruflich löschen?<p><p>Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p style="margin-top: 10px;">Mitgliedskonto wirklich unwiderruflich löschen?<p><p>Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: 'Mitgliedskonto löschen?',
@@ -46,7 +46,6 @@ foodcoopshop.Admin = {
                             
                             $('#product-price-edit-form .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
-                            
                             foodcoopshop.Helper.ajaxCall(
                                 '/admin/customers/delete/' + customerId,
                                 {},

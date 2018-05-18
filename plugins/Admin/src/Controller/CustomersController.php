@@ -35,6 +35,7 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'profile':
+            case 'delete':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
                 break;
             case 'changePassword':
@@ -210,8 +211,9 @@ class CustomersController extends AdminAppController
             }
             
             if (!empty($errors)) {
-                $this->log($errors);
-                throw new Exception('<ul><li>' . join('</li><li>', $errors) . '</li></ul>');
+                $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
+                $this->log('Fehler bei Mitgliedskonto löschen (' . $customer->name . '): <br />' . $errorString);
+                throw new Exception($errorString);
             }
         } catch (Exception $e) {
             $this->sendAjaxError($e);
