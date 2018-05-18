@@ -32,6 +32,7 @@ class OrderDetailsController extends AdminAppController
             case 'delete':
             case 'editProductPrice':
             case 'editProductAmount':
+            case 'editProductQuantity':
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
                 }
