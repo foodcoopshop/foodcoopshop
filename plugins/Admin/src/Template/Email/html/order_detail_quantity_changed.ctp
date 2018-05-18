@@ -34,7 +34,7 @@ use Cake\Core\Configure;
             </ul>
             
             <p>
-            	Der Basis-Preis beträgt <?php echo $this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amont); ?>.
+            	Der Basis-Preis beträgt <?php echo $this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount); ?>.
             </p>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
