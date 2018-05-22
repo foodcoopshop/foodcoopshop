@@ -198,9 +198,12 @@ class CustomersController extends AdminAppController
             if ($openOrders > 0) {
                 $errors[] = 'Anzahl der Bestellungen, die noch nicht vor mindestens zwei Monaten getätigt worden sind: '. $openOrders . '.';
             }
-            $creditBalance = $this->Customer->getCreditBalance($customerId);
-            if ($creditBalance != 0) {
-                $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.htmlHelper')->formatAsEuro($creditBalance) . '. Es muss 0 betragen.';
+            
+            if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
+                $creditBalance = $this->Customer->getCreditBalance($customerId);
+                if ($creditBalance != 0) {
+                    $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.htmlHelper')->formatAsEuro($creditBalance) . '. Es muss 0 betragen.';
+                }
             }
             
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
