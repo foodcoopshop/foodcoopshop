@@ -41,7 +41,6 @@ header('Pragma: no-cache');
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     
     <?php echo $this->element('jsNamespace'); ?>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
         echo $this->element('renderCss', ['configs' => ['frontend']]);
