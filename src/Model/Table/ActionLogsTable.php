@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\I18n\Time;
 
 /**
@@ -338,7 +339,10 @@ class ActionLogsTable extends AppTable
         'customer_group_changed' => [
             'de' => 'Mitglied: Gruppe geändert'
         ],
-
+        'customer_deleted' => [
+            'de' => 'Mitglied: gelöscht'
+        ],
+        
         'manufacturer_description_changed' => [
             'de' => 'Hersteller: Beschreibung geändert',
             'access' => [
@@ -471,6 +475,12 @@ class ActionLogsTable extends AppTable
                 'object_type' => 'payments'
             ]
         ]);
+    }
+    
+    public function removeCustomerFromAllActionLogs($customerName) {
+        $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
+        $statement = $this->getConnection()->prepare($query);
+        return $statement->execute();
     }
 
     public function customSave($type, $customerId, $objectId, $objectType, $text)

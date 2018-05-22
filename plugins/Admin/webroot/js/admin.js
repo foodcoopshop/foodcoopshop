@@ -26,6 +26,49 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
     
+    bindDeleteCustomerButton : function(customerId) {
+        
+        $('.delete-customer-button').on('click', function() {
+            $('<div id="delete-customer-dialog"></div>').appendTo('body')
+                .html('<p style="margin-top: 10px;">Mitgliedskonto wirklich unwiderruflich löschen?<p><p>Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .dialog({
+                    modal: true,
+                    title: 'Mitgliedskonto löschen?',
+                    autoOpen: true,
+                    width: 500,
+                    height: 300,
+                    resizable: false,
+                    buttons: {
+                        'Abbrechen': function () {
+                            $(this).dialog('close');
+                        },
+                        'Ja': function () {
+                            
+                            $('#delete-customer-dialog .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+                            foodcoopshop.Helper.ajaxCall(
+                                '/admin/customers/delete/' + customerId,
+                                {},
+                                {
+                                    onOk: function (data) {
+                                        document.location.href = data.redirectUrl;
+                                    },
+                                    onError: function (data) {
+                                        var form = $('#delete-customer-dialog');
+                                        form.find('.ajax-loader').hide();
+                                        var message = '<p><b>Beim Löschen des Mitgliedskontos sind Fehler aufgetreten:</b> </p>';
+                                        foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg)
+                                    }
+                                });
+                        }
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+        });
+    }, 
+    
     appendFlashMessageToDialog : function(element, message) {
         foodcoopshop.Helper.showErrorMessage(message);
         var flashMessage = $('#flashMessage');
@@ -1325,7 +1368,10 @@ foodcoopshop.Admin = {
             var emailColumn = $(this).data('column');
             var emails = [];
             $('table.list tr.data').each(function () {
-                emails.push($(this).find('td:nth-child(' + emailColumn + ') span.email').html());
+                var emailContainer = $(this).find('td:nth-child(' + emailColumn + ') span.email');
+                if (emailContainer.length > 0 && emailContainer.html() != '') {
+                    emails.push(emailContainer.html());
+                }
             });
             emails = $.unique(emails);
 

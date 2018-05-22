@@ -81,7 +81,9 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td>';
-    echo $page->customer->name;
+    if (!empty($page->customer)) {
+        echo $page->customer->name;
+    }
     echo '</td>';
 
     echo '<td>';

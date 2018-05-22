@@ -962,6 +962,12 @@ form.fcs-form .input.checkbox input {
 form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
+body.customers .delete-customer-button {
+    float:right;
+    clear:both;
+    margin-bottom: 15px;
+    margin-top: 15px; 
+}
 body.configurations.index td.first {
     vertical-align: top;
     width: 450px;
@@ -1035,17 +1041,17 @@ div.date-field-wrapper {
     position: relative;
     display: inline-block;
 }
-body.reports ul.nav-tabs {
+ul.nav-tabs {
     background: #efefef;
     margin-top: -2px;
     margin-left: -2px;
-    width: 986px;
+    width: 1046px;
     padding-bottom: 1px;
 }
-body.reports .nav > li > a {
+ul.nav-tabs > li > a {
     padding: 5px 10px;
 }
-body.reports ul.nav-tabs a:hover {
+ul.nav-tabs a:hover {
     background-color: #fff;
 }
 a.btn-arrow {

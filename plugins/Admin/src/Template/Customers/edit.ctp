@@ -16,7 +16,10 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
+    'script' =>
+        Configure::read('app.jsNamespace') . ".Admin.init();" .
+        Configure::read('app.jsNamespace') . ".Admin.initForm();" .
+        Configure::read('app.jsNamespace') . ".Admin.bindDeleteCustomerButton(".$customer->id_customer.");
     "
 ]);
 ?>
@@ -103,6 +106,8 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         'escape' => false
     ]);
 }
+
+echo '<a class="delete-customer-button btn btn-danger">Mitgliedskonto unwiderruflich löschen?</a>';
 
 echo $this->Form->end(); ?>
 

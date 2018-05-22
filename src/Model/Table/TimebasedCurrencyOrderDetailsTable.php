@@ -61,20 +61,19 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
      * @param int $manufacturerId
      * @return array
      */
-    public function getUniqueCustomers($manufacturerId)
+    public function getUniqueCustomerIds($manufacturerId)
     {
         $customersFromOrderDetails = $this->find('all', [
             'conditions' => [
                 'Products.id_manufacturer' => $manufacturerId
             ],
             'contain' => [
-                'OrderDetails.Products',
-                'OrderDetails.Orders.Customers.AddressCustomers'
+                'OrderDetails.Products'
             ]
         ]);
         $result = [];
         foreach($customersFromOrderDetails as $customersFromOrderDetail) {
-            $result[] = $customersFromOrderDetail->order_detail->order->customer;
+            $result[] = $customersFromOrderDetail->order_detail->order->id_customer;
         }
         $result = array_unique($result);
         return $result;
