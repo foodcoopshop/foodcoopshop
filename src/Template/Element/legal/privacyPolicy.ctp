@@ -52,7 +52,7 @@ use Cake\Core\Configure;
 
 <h2>3. Über die Website eingegebenen Daten</h2>
 
-Sollten Sie im Rahmen der Website Daten eingeben, verarbeiten wir Ihre Daten wie folgt:</p>
+<p>Sollten Sie im Rahmen der Website Daten eingeben, verarbeiten wir Ihre Daten wie folgt:</p>
 
 <p>3.1. Daten über die Bestellungen: Jene Daten, welche Sie im Rahmen Ihrer Anmeldung sowie im Rahmen der Bestellungen bekanntgegeben haben, werden ausschließlich für die Abwicklung der Bestellung verwendet. Die Daten werden für die Dauer von sieben Jahren gespeichert.</p>
 
