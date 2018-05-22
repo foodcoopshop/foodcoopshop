@@ -33,6 +33,7 @@ class CustomersController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'edit':
+            case 'creditBalanceSum':
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'profile':
@@ -475,6 +476,66 @@ class CustomersController extends AdminAppController
             'msg' => 'ok'
         ]));
     }
+    
+    public function creditBalanceSum()
+    {
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+        }
+        $this->set('dateFrom', $dateFrom);
+        
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = $this->getRequest()->getQuery('dateTo');
+        }
+        $this->set('dateTo', $dateTo);
+        
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        
+        $activatedCustomers = [
+            'customer_type' => 'Summe der Guthaben <b>aktivierter</b> Mitglieder',
+            'count' => count($this->Customer->getCustomerIdsWithStatus(APP_ON)),
+            'payment_deposit_delta' => $this->Customer->getDepositBalanceForCustomers(APP_ON) * -1,
+            'payment_product_delta' => $this->Customer->getProductBalanceForCustomers(APP_ON)
+        ];
+        
+        $deactivatedCustomers = [
+            'customer_type' => 'Summe der Guthaben <b>deaktivierter</b> Mitglieder',
+            'count' => count($this->Customer->getCustomerIdsWithStatus(APP_OFF)),
+            'payment_deposit_delta' => $this->Customer->getDepositBalanceForCustomers(APP_OFF) * -1,
+            'payment_product_delta' => $this->Customer->getProductBalanceForCustomers(APP_OFF)
+        ];
+        
+        $deletedCustomers = [
+            'customer_type' => 'Summe der Guthaben <b>gelöschter</b> Mitglieder',
+            'count' => 0,
+            'payment_deposit_delta' => $this->Customer->getDepositBalanceForDeletedCustomers() * -1,
+            'payment_product_delta' => $this->Customer->getProductBalanceForDeletedCustomers()
+        ];
+        
+        $manufacturers = [
+            'customer_type' => 'Summe der geleisteten Pfand-Rückzahlungen für Hersteller',
+            'count' => 0,
+            'payment_deposit_delta' => $this->Payment->getManufacturerDepositMoneySum() * -1,
+            'payment_product_delta' => 0
+        ];
+        
+        $customers[] = $activatedCustomers;
+        $customers[] = $deactivatedCustomers;
+        $customers[] = $deletedCustomers;
+        $customers[] = $manufacturers;
+        $this->set('customers', $customers);
+        
+        $sums = [];
+        foreach($customers as $customer) {
+            @$sums['deposit_delta'] += $customer['payment_deposit_delta'];
+            @$sums['product_delta'] += $customer['payment_product_delta'];
+        }
+        $this->set('sums', $sums);
+        
+        $this->set('title_for_layout', 'Guthaben- und Pfand-Saldo');
+    }
 
     public function index()
     {
@@ -510,16 +571,9 @@ class CustomersController extends AdminAppController
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         
-        $conditions = [];
-        if (in_array($active, [APP_ON, APP_OFF])) {
-            $conditions = [
-                'Customers.active' => $active
-            ];
-        }
-        if ($active == APP_DEL) {
-            pr('Pfand: ' . $this->Customer->getDepositBalanceForDeletedCustomers());
-            pr('Waren: ' . $this->Customer->getProductBalanceForDeletedCustomers());
-        }
+        $conditions = [
+            'Customers.active' => $active
+        ];
 
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
@@ -541,7 +595,7 @@ class CustomersController extends AdminAppController
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
             ]
         ])->toArray();
-
+        
         $i = 0;
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $this->Order = TableRegistry::getTableLocator()->get('Orders');
@@ -625,6 +679,7 @@ class CustomersController extends AdminAppController
 
             $i ++;
         }
+        
         $this->set('customers', $customers);
 
         $this->set('manufacturerDepositMoneySum', $this->Payment->getManufacturerDepositMoneySum());

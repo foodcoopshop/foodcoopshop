@@ -32,7 +32,7 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(true), 'default' => isset($active) ? $active : '']); ?>
+            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             Anzahl Bestellungen zwischen <input id="validOrdersCountFrom" name="validOrdersCountFrom"
                 type="text"
                 value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
@@ -115,7 +115,7 @@ foreach ($customers as $customer) {
 
     echo '<td>';
 
-        $customerName = $customer->name;
+        $customerName = $this->Html->getNameRespectingIsDeleted($customer);
     
         if ($appAuth->isSuperadmin()) {
             echo '<span class="edit-wrapper">';
@@ -129,7 +129,7 @@ foreach ($customers as $customer) {
         }
     
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
-            'title' => 'Zu allen Bestellungen von ' . $customer->name,
+            'title' => 'Zu allen Bestellungen von ' . $this->Html->getNameRespectingIsDeleted($customer),
             'escape' => false
         ]) . '</span>';
     

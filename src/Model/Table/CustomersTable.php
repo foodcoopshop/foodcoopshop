@@ -286,7 +286,6 @@ class CustomersTable extends AppTable
         
         $productBalanceSum = 0;
         $orderTable = TableRegistry::getTableLocator()->get('Orders');
-        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
         
         $query = $orderTable->find('all', [
             'contain' => [
@@ -303,10 +302,22 @@ class CustomersTable extends AppTable
             $removedCustomerIds[] = $order->id_customer;
         }
         
-        foreach($removedCustomerIds as $removedCustomerId) {
-            $paymentSumProduct = $paymentTable->getSum($removedCustomerId, 'product');
-            $paybackSumProduct = $paymentTable->getSum($removedCustomerId, 'payback');
-            $productSum = $orderTable->getSumProduct($removedCustomerId);
+        $productBalanceSum = $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
+        return $productBalanceSum;
+        
+    }
+    
+    private function getProductBalanceSumForCustomerIds($customerIds)
+    {
+        
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        $productBalanceSum = 0;
+        
+        foreach($customerIds as $customerId) {
+            $paymentSumProduct = $paymentTable->getSum($customerId, 'product');
+            $paybackSumProduct = $paymentTable->getSum($customerId, 'payback');
+            $productSum = $orderTable->getSumProduct($customerId);
             $productBalance = $paymentSumProduct - $paybackSumProduct - $productSum;
             $productBalanceSum += $productBalance;
         }
@@ -318,9 +329,7 @@ class CustomersTable extends AppTable
     public function getDepositBalanceForDeletedCustomers()
     {
         
-        $depositBalanceSum = 0;
         $paymentTable = TableRegistry::getTableLocator()->get('Payments');
-        $orderTable = TableRegistry::getTableLocator()->get('Orders');
         
         $query = $paymentTable->find('all', [
             'contain' => [
@@ -337,15 +346,61 @@ class CustomersTable extends AppTable
             $removedCustomerIds[] = $payment->id_customer;
         }
         
-        foreach($removedCustomerIds as $removedCustomerId) {
-            $paymentSumDeposit = $paymentTable->getSum($removedCustomerId, 'deposit');
-            $depositSum = $orderTable->getSumDeposit($removedCustomerId);
+        $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($removedCustomerIds);
+        return $depositBalanceSum;
+        
+    }
+    
+    public function getProductBalanceForCustomers($status)
+    {
+        $customerIds = $this->getCustomerIdsWithStatus($status);
+        $productBalanceSum = $this->getProductBalanceSumForCustomerIds($customerIds);
+        return $productBalanceSum;
+        
+    }
+    
+    public function getDepositBalanceForCustomers($status)
+    {
+        $customerIds = $this->getCustomerIdsWithStatus($status);
+        $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($customerIds);
+        return $depositBalanceSum;
+    }
+    
+    public function getCustomerIdsWithStatus($status)
+    {
+        $conditions = [
+            'Customers.active' => $status
+        ];
+        $conditions[] = $this->getConditionToExcludeHostingUser();
+        $this->dropManufacturersInNextFind();
+        $query = $this->find('all', [
+            'contain' => [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ],
+            'conditions' => $conditions
+        ]);
+        
+        $customerIds = [];
+        foreach($query as $customer) {
+            $customerIds[] = $customer->id_customer;
+        }
+        return $customerIds;
+    }
+    
+    private function getDepositBalanceSumForCustomerIds($customerIds)
+    {
+        
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        
+        $depositBalanceSum = 0;
+        foreach($customerIds as $customerId) {
+            $paymentSumDeposit = $paymentTable->getSum($customerId, 'deposit');
+            $depositSum = $orderTable->getSumDeposit($customerId);
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;
         }
-        
         return $depositBalanceSum;
-        
     }
 
     public function getCreditBalance($customerId)

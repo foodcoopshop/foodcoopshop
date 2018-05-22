@@ -22,7 +22,7 @@ use App\Controller\Component\StringComponent;
  */
 class MyHtmlHelper extends HtmlHelper
 {
-
+    
     public function __construct(View $View, array $config = [])
     {
         // wrap js block with jquery document ready
@@ -360,6 +360,24 @@ class MyHtmlHelper extends HtmlHelper
         return implode(', ', $preparedText);
     }
 
+    public function getReportTabs()
+    {
+        $tabs = [];
+        foreach($this->getPaymentTexts() as $key => $paymentText) {
+            $tabs[] = [
+                'name' => $paymentText,
+                'url' => Configure::read('app.slugHelper')->getReport($key),
+                'key' => $key
+            ];
+        }
+        $tabs[] = [
+            'name' => 'Guthaben- und Pfand-Saldo',
+            'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
+            'key' => 'credit_balance_sum'
+        ];
+        return $tabs;
+    }
+    
     public function getPaymentTexts()
     {
         $paymentTexts = [
@@ -552,17 +570,13 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getActiveStates($includeDeleted=false)
+    public function getActiveStates()
     {
-        $result = [
+        return [
             1 => 'aktiviert',
             0 => 'deaktiviert',
+            'all' => 'alle'
         ];
-        if ($includeDeleted) {
-            $result[-1] = 'gelöscht';
-        }
-        $result['all'] = 'alle';
-        return $result;
     }
 
     public function getVisibleOrderStates()

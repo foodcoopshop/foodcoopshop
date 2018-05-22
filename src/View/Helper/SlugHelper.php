@@ -100,6 +100,11 @@ class SlugHelper extends Helper
         }
         return $url;
     }
+    
+    public function getCreditBalanceSum()
+    {
+        return '/admin/customers/credit_balance_sum';
+    }
 
     public function getCartDetail()
     {
