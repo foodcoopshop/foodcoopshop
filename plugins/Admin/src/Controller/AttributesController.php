@@ -126,7 +126,7 @@ class AttributesController extends AdminAppController
         ]);
         $attributes = $this->paginate($query, [
             'sortWhitelist' => [
-                'Attributes.name', 'Attributes.modified'
+                'Attributes.name', 'Attributes.modified', 'Attributes.can_be_used_as_unit'
             ],
             'order' => [
                 'Attributes.name' => 'ASC'

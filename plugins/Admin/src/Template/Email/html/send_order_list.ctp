@@ -32,10 +32,6 @@ use Cake\Core\Configure;
             <p>
                 <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
             </p>
-            
-            <?php if (!empty($manufacturer->customer)) { ?>
-                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer->customer->name . ', ' . $manufacturer->customer->email . ', ' . $manufacturer->customer->address_customer->phone_mobile; ?></p>
-            <?php } ?>
 
             <ul style="padding-left: 10px;">
                 <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
@@ -43,10 +39,10 @@ use Cake\Core\Configure;
                 <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
                 <li>Hochladen von Produkt-Fotos</li>
                 <li>Aktivieren bzw. Deaktivieren deiner Produkte</li>
-                <li>Produkte als "neu" markieren</li>
-                <li>Ändern des Preises und Stornieren von bereits bestellten Produkten</li>
+                <li>Produkte als neu markieren</li>
+                <li>Anpassen des Preises, des Gewichts und Stornieren von bereits bestellten Produkten</li>
                 <li>Pfandkonto (falls du Pfand verwendest)</li>
-                <li>Lieferpause: Zeitraum angeben, deine Produkte werden automatisch angezeigt bzw. deaktiviert.</li>
+                <li>Lieferpause: Zeitraum angeben und deine Produkte werden automatisch angezeigt bzw. deaktiviert</li>
                 <li>Benachrichtigungs-E-Mails und weitere Einstellungen ändern</li>
                 <li>Passwort ändern</li>
             </ul>
@@ -66,6 +62,10 @@ use Cake\Core\Configure;
                 Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls du bei uns auch bestellen möchtest, registriere dich bitte auf
                 unserer Seite und verwende dazu aber eine andere E-Mail-Adresse.
             </p>
+            
+            <?php if (!empty($manufacturer->customer)) { ?>
+                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer->customer->name . ', ' . $manufacturer->customer->email . ', ' . $manufacturer->customer->address_customer->phone_mobile; ?></p>
+            <?php } ?>
 
         </td>
 

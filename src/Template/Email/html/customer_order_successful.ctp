@@ -43,6 +43,12 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
     
+        <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
+            <tr><td style="padding-top:20px;">
+            	* Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern.
+            </td></tr>
+        <?php } ?>
+        
         <tr><td style="padding-top:20px;">
             Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
         </td></tr>

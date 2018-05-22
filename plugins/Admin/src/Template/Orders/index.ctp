@@ -201,9 +201,9 @@ use Cake\Core\Configure;
             echo '</td>';
         }
 
-        echo '<td style="width: 115px;">';
+        echo '<td class="date-short2">';
         if (! $groupByCustomer) {
-            echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort2'));
         } else {
             echo $order->orders_count;
         }

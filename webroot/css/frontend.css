@@ -473,12 +473,22 @@ body.superadmin .product-wrapper .heading h4 {
     width: 100%;
     float: left;
 }
-.product-wrapper .price {
+.product-wrapper .price,
+.product-wrapper .price-asterisk {
     color: #719f41;
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
     float: left;
+}
+.product-wrapper .price-asterisk {
+	margin-left: 5px;
+}
+.product-wrapper .additional-price-info {
+	float: left;
+	margin-top: 5px;
+	line-height: 17px;
+	color: #969696;
 }
 .product-wrapper .deposit {
     float: right;
@@ -518,6 +528,7 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper span.not-available-info {
     display: block;
     margin-top: 10px;
+    line-height: 17px;    
 }
 body.manufacturers.detail .manufacturer-infos {
     width: 100%;
@@ -851,6 +862,7 @@ body.carts.detail .cart:not(#cart) span.right .delete {
 body.carts.detail .cart:not(#cart) span.product-name-wrapper span.unity {
     float: left;
     font-size: 13px;
+    margin-top: 1px;
 }
 body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper,
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper,

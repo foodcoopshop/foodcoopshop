@@ -37,7 +37,7 @@ if ($product['is_new']) {
     echo '<div class="second-column">';
 
     echo '<div class="heading">';
-        echo '<h4><a href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+        echo '<h4><a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
     echo '</div>';
     echo '<div class="sc"></div>';
 
@@ -124,7 +124,13 @@ if ($product['description'] != '') {
             echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo '<div class="line">';
-                echo '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']). '</div>';
+                $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']) . '</div>';
+                $pricePerUnitInfoText = '';
+                if ($attribute['Units']['price_per_unit_enabled']) {
+                    $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
+                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
+                }
+                echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
                 }
@@ -142,25 +148,42 @@ if ($product['description'] != '') {
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
+                echo $pricePerUnitInfoText;
             }
             echo '</div>';
         }
 
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
+            
+            $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
+                $attribute['ProductAttributeCombinations']['Attributes']['name'],
+                $attribute['ProductAttributeCombinations']['Attributes']['can_be_used_as_unit'],
+                $attribute['Units']['price_per_unit_enabled'],
+                $attribute['Units']['quantity_in_units'],
+                $attribute['Units']['unit_name']
+            );
+            
             echo '<div class="radio">
-                           <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
-                               <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
-                               $attribute['ProductAttributeCombinations']['Attributes']['name'].'
-                           </label>
-                       </div>';
+                      <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
+                          <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
+                               $radioButtonLabel.'
+                      </label>
+                  </div>';
+           
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
         echo '<div class="entity-wrapper active">';
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo '<div class="line">';
-            echo '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
+            $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
+            $pricePerUnitInfoText = '';
+            if ($product['price_per_unit_enabled']) {
+                $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
+                $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['unit_amount']);
+            }
+            echo $priceHtml;
                 if ($product['deposit']) {
                     echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
                 }
@@ -178,11 +201,20 @@ if ($product['description'] != '') {
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailable' => $product['quantity']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['quantity']]);
+                echo $pricePerUnitInfoText;
         }
         echo '</div>';
 
+        $unityStrings = []; 
         if ($product['unity'] != '') {
-            echo '<div class="unity">Einheit: <span class="value">' . $product['unity'].'</span></div>';
+            $unityStrings[] = $product['unity'];
+        }
+        $unitString = $this->PricePerUnit->getQuantityInUnits($product['price_per_unit_enabled'], $product['quantity_in_units'], $product['unit_name']);
+        if ($unitString != '') {
+            $unityStrings[] = $unitString;
+        }
+        if (!empty($unityStrings)) {
+            echo '<div class="unity">Einheit: <span class="value">' . join(', ', $unityStrings).'</span></div>';
         }
     }
 

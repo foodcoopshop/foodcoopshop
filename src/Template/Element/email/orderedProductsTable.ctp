@@ -50,8 +50,8 @@ use Cake\Core\Configure;
                 <td valign="middle" style="border:1px solid #d6d4d4;">
                     <?php
                     echo $product['productName'];
-                    if ($product['unity'] != '') {
-                        echo ' : ' . $product['unity'];
+                    if ($product['unity_with_unit'] != '') {
+                        echo ' : ' . $product['unity_with_unit'];
                     }
                     ?>
                 </td>
@@ -60,6 +60,11 @@ use Cake\Core\Configure;
                 </td>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php echo $this->MyHtml->formatAsEuro($product['price']); ?>
+                    <?php
+                        if ($product['unitName'] != '') {
+                            echo ' *';
+                        }
+                    ?>
                 </td>
                 
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">

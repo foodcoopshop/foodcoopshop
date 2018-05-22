@@ -59,6 +59,9 @@ class ProductsTable extends AppTable
         $this->hasMany('CategoryProducts', [
             'foreignKey' => 'id_product'
         ]);
+        $this->hasOne('UnitProducts', [
+            'foreignKey' => 'id_product'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
@@ -176,20 +179,20 @@ class ProductsTable extends AppTable
     }
 
     /**
-     * @param string $price
+     * @param string $string
      * @return boolean / float
      */
-    public function getPriceAsFloat($price)
+    public function getStringAsFloat($string)
     {
-        $price = trim($price);
-        $price = Configure::read('app.numberHelper')->replaceCommaWithDot($price);
+        $float = trim($string);
+        $float = Configure::read('app.numberHelper')->replaceCommaWithDot($float);
 
-        if (!is_numeric($price)) {
+        if (!is_numeric($float)) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-        $price = floatval($price);
+        $float = floatval($float);
 
-        return $price;
+        return $float;
     }
 
     /**
@@ -208,7 +211,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getPriceAsFloat($product[$productId]);
+            $deposit = $this->getStringAsFloat($product[$productId]);
             if ($deposit < 0) {
                 throw new InvalidParameterException('Eingabeformat von Pfand ist nicht korrekt: '.$product[$productId]);
             }
@@ -217,7 +220,7 @@ class ProductsTable extends AppTable
         $success = false;
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getPriceAsFloat($product[$productId]);
+            $deposit = $this->getStringAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -286,7 +289,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getPriceAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]);
             if ($price < 0) {
                 throw new InvalidParameterException('Eingabeformat von Preis ist nicht korrekt: '.$product[$productId]);
             }
@@ -295,7 +298,7 @@ class ProductsTable extends AppTable
         $success = false;
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getPriceAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -461,6 +464,7 @@ class ProductsTable extends AppTable
             'DepositProducts',
             'Images',
             'Taxes',
+            'UnitProducts',
             'Manufacturers',
             'StockAvailables' => [
                 'conditions' => [
@@ -475,6 +479,7 @@ class ProductsTable extends AppTable
             ],
             'ProductAttributes.ProductAttributeShops',
             'ProductAttributes.DepositProductAttributes',
+            'ProductAttributes.UnitProductAttributes',
             'ProductAttributes.ProductAttributeCombinations.Attributes'
         ];
 
@@ -504,8 +509,9 @@ class ProductsTable extends AppTable
         ->select('Images.id_image')
         ->select($this->Taxes)
         ->select($this->Manufacturers)
+        ->select($this->UnitProducts)
         ->select($this->StockAvailables);
-
+        
         if ($controller) {
             $query = $controller->paginate($query, [
                 'sortWhitelist' => [
@@ -553,6 +559,39 @@ class ProductsTable extends AppTable
                 $product->deposit = 0;
             }
 
+            
+            // show unity only for main products
+            $additionalProductNameInfos = [];
+            if (empty($product->product_attributes) && $product->product_lang->unity != '') {
+                $additionalProductNameInfos[] = '<span class="unity-for-dialog">' . $product->product_lang->unity . '</span>';
+            }
+            
+            $product->price_is_zero = false;
+            if (empty($product->product_attributes) && $product->gross_price == 0) {
+                $product->price_is_zero = true;
+            }
+            $product->unit = null;
+            if (!empty($product->unit_product)) {
+                
+                $product->unit = $product->unit_product;
+                
+                $quantityInUnitsString = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsWithWrapper($product->unit_product->price_per_unit_enabled, $product->unit_product->quantity_in_units, $product->unit_product->name);
+                if ($quantityInUnitsString != '') {
+                    $additionalProductNameInfos[] = $quantityInUnitsString;
+                }
+                
+                if ($product->unit_product->price_per_unit_enabled) {
+                    $product->price_is_zero = false;
+                }
+                
+            }
+            
+            $product->product_lang->unchanged_name = $product->product_lang->name;
+            $product->product_lang->name = '<span class="product-name">' . $product->product_lang->name . '</span>';
+            if (!empty($additionalProductNameInfos)) {
+                $product->product_lang->name = $product->product_lang->name . ': ' . join(', ', $additionalProductNameInfos);
+            }
+            
             if (empty($product->tax)) {
                 $product->tax = (object) [
                     'rate' => 0
@@ -595,14 +634,37 @@ class ProductsTable extends AppTable
                     if ($rowIsOdd) {
                         $rowClass[] = 'custom-odd';
                     }
-
+                    
+                    
+                    $priceIsZero = false;
+                    if ($grossPrice == 0) {
+                        $priceIsZero = true;
+                    }
+                    if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $productName =  $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
+                            $attribute->product_attribute_combination->attribute->name,
+                            $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
+                            $attribute->unit_product_attribute->price_per_unit_enabled,
+                            $attribute->unit_product_attribute->quantity_in_units,
+                            $attribute->unit_product_attribute->name
+                        );
+                        $priceIsZero = false;
+                    } else {
+                        $productName = $attribute->product_attribute_combination->attribute->name;
+                        if ($addProductNameToAttributes) {
+                            $productName = $product->product_lang->name . ': ' . $productName;
+                        }
+                    }
+                    
                     $preparedProduct = [
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
                         'active' => - 1,
+                        'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
                         'product_lang' => [
-                            'name' => ($addProductNameToAttributes ? $product->product_lang->name . ' : ' : '') . $attribute->product_attribute_combination->attribute->name,
+                            'unchanged_name' => $product->product_lang->unchanged_name,
+                            'name' => $productName,
                             'description_short' => '',
                             'description' => '',
                             'unity' => ''
@@ -617,6 +679,7 @@ class ProductsTable extends AppTable
                             'quantity' => $attribute->stock_available->quantity
                         ],
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
+                        'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
                         'category' => [
                             'names' => [],
                             'all_products_found' => true
@@ -641,7 +704,7 @@ class ProductsTable extends AppTable
         }
 
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
-
+        
         return $preparedProducts;
     }
 
@@ -864,6 +927,10 @@ class ProductsTable extends AppTable
             'ProductAttributeShops.id_product_attribute' => $productAttributeId
         ]);
 
+        $this->ProductAttributes->UnitProductAttributes->deleteAll([
+            'UnitProductAttributes.id_product_attribute' => $productAttributeId
+        ]);
+        
         // deleteAll can only get primary key as condition
         $originalPrimaryKey = $this->StockAvailables->getPrimaryKey();
         $this->StockAvailables->setPrimaryKey('id_product_attribute');

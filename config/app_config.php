@@ -75,7 +75,7 @@ return [
         'defaultSendShopOrderNotification' => true,
         'defaultSendOrderedProductDeletedNotification' => true,
         'defaultSendOrderedProductPriceChangedNotification' => true,
-        'defaultSendOrderedProductQuantityChangedNotification' => true,
+        'defaultSendOrderedProductAmountChangedNotification' => true,
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
@@ -148,7 +148,8 @@ return [
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'numberHelper' => new App\View\Helper\MyNumberHelper(new Cake\View\View()),
         'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View()),
-        'timebasedCurrencyHelper' => new App\View\Helper\TimebasedCurrencyHelper(new Cake\View\View())
+        'timebasedCurrencyHelper' => new App\View\Helper\TimebasedCurrencyHelper(new Cake\View\View()),
+        'pricePerUnitHelper' => new App\View\Helper\PricePerUnitHelper(new Cake\View\View())
     ],
     'DateFormat' => [
         'Database' => 'yyyy-MM-dd',
@@ -158,6 +159,7 @@ return [
             'DateLong' =>  'dd. MMMM y',
             'DateLong2' => 'dd.MM.yyyy',
             'DateNTimeShort' => 'dd.MM.y HH:mm',
+            'DateNTimeShort2' => 'dd.MM.yy HH:mm',
             'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
             'TimeShort' => 'HH:mm',
             'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm',

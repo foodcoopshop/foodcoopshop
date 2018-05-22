@@ -73,6 +73,9 @@ b.negative,
 span.negative {
     color: red ! important;
 }
+table.list td.slim {
+	line-height: 15px;
+}
 table.list th,
 table.list td {
   border: 1px solid #dfdfdf;
