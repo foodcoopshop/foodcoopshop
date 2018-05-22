@@ -148,7 +148,7 @@ foreach ($payments as $payment) {
     if (!empty($payment->manufacturer)) {
         echo $payment->manufacturer->name;
     } else {
-        echo $payment->customer->name;
+        echo $this->Html->getNameRespectingIsDeleted($payment->customer);
     }
         echo $additionalText;
     echo '</td>';
