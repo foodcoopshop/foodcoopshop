@@ -44,7 +44,7 @@ foodcoopshop.Admin = {
                         },
                         'Ja': function () {
                             
-                            $('#product-price-edit-form .ajax-loader').show();
+                            $('#delete-customer-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
                             foodcoopshop.Helper.ajaxCall(
                                 '/admin/customers/delete/' + customerId,

@@ -493,38 +493,34 @@ class CustomersController extends AdminAppController
         
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         
-        $activatedCustomers = [
+        $customers[] = [
             'customer_type' => 'Summe der Guthaben <b>aktivierter</b> Mitglieder',
             'count' => count($this->Customer->getCustomerIdsWithStatus(APP_ON)),
-            'payment_deposit_delta' => $this->Customer->getDepositBalanceForCustomers(APP_ON) * -1,
-            'payment_product_delta' => $this->Customer->getProductBalanceForCustomers(APP_ON)
+            'payment_product_delta' => $this->Customer->getProductBalanceForCustomers(APP_ON),
+            'payment_deposit_delta' => $this->Customer->getDepositBalanceForCustomers(APP_ON) * -1
         ];
         
-        $deactivatedCustomers = [
+        $customers[] = [
             'customer_type' => 'Summe der Guthaben <b>deaktivierter</b> Mitglieder',
             'count' => count($this->Customer->getCustomerIdsWithStatus(APP_OFF)),
-            'payment_deposit_delta' => $this->Customer->getDepositBalanceForCustomers(APP_OFF) * -1,
-            'payment_product_delta' => $this->Customer->getProductBalanceForCustomers(APP_OFF)
+            'payment_product_delta' => $this->Customer->getProductBalanceForCustomers(APP_OFF),
+            'payment_deposit_delta' => $this->Customer->getDepositBalanceForCustomers(APP_OFF) * -1
         ];
         
-        $deletedCustomers = [
+        $customers[] = [
             'customer_type' => 'Summe der Guthaben <b>gelöschter</b> Mitglieder',
             'count' => 0,
-            'payment_deposit_delta' => $this->Customer->getDepositBalanceForDeletedCustomers() * -1,
-            'payment_product_delta' => $this->Customer->getProductBalanceForDeletedCustomers()
+            'payment_product_delta' => $this->Customer->getProductBalanceForDeletedCustomers(),
+            'payment_deposit_delta' => $this->Customer->getDepositBalanceForDeletedCustomers() * -1
         ];
         
-        $manufacturers = [
+        $customers[] = [
             'customer_type' => 'Summe der geleisteten Pfand-Rückzahlungen für Hersteller',
             'count' => 0,
-            'payment_deposit_delta' => $this->Payment->getManufacturerDepositMoneySum() * -1,
-            'payment_product_delta' => 0
+            'payment_product_delta' => 0,
+            'payment_deposit_delta' => $this->Payment->getManufacturerDepositMoneySum() * -1
         ];
         
-        $customers[] = $activatedCustomers;
-        $customers[] = $deactivatedCustomers;
-        $customers[] = $deletedCustomers;
-        $customers[] = $manufacturers;
         $this->set('customers', $customers);
         
         $sums = [];

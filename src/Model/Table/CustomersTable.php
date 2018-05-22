@@ -312,8 +312,8 @@ class CustomersTable extends AppTable
         
         $paymentTable = TableRegistry::getTableLocator()->get('Payments');
         $orderTable = TableRegistry::getTableLocator()->get('Orders');
-        $productBalanceSum = 0;
         
+        $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
             $paymentSumProduct = $paymentTable->getSum($customerId, 'product');
             $paybackSumProduct = $paymentTable->getSum($customerId, 'payback');

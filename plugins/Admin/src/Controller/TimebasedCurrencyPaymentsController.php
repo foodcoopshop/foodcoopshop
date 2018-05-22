@@ -3,7 +3,6 @@
 namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
-use App\Model\Entity\Customer;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
