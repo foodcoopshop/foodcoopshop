@@ -21,6 +21,7 @@ use Cake\Core\Configure;
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
         $menu[] = ['name' => 'Nutzungsbedingungen', 'slug' => $this->Slug->getTermsOfUse()];
         $menu[] = ['name' => 'Datenschutzerklärung', 'slug' => $this->Slug->getPrivacyPolicy()];
+        $menu[] = ['name' => 'Allergenliste', 'slug' => $this->Slug->getListOfAllergens()];
         echo '<h2>Informationen</h2>';
         echo $this->Menu->render($menu, ['id' => 'footer-menu', 'class' => 'menu']);
     ?>

@@ -41,6 +41,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getNewPasswordRequest(),
             $this->Slug->getPageDetail(3, 'Page'),
             $this->Slug->getLogin(),
+            $this->Slug->getListOfAllergens(),
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy()
         ];
