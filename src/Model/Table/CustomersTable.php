@@ -315,14 +315,14 @@ class CustomersTable extends AppTable
         
         $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
-            $paymentSumProduct = $paymentTable->getSum($customerId, 'product');
-            $paybackSumProduct = $paymentTable->getSum($customerId, 'payback');
-            $productSum = $orderTable->getSumProduct($customerId);
-            $productBalance = $paymentSumProduct - $paybackSumProduct - $productSum;
+            $productPaymentSum = $paymentTable->getSum($customerId, 'product');
+            $paybackPaymentSum = $paymentTable->getSum($customerId, 'payback');
+            $productOrderSum = $orderTable->getSumProduct($customerId);
+            $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
             $productBalanceSum += $productBalance;
         }
         
-        return $productBalanceSum;
+        return round($productBalanceSum, 2);
         
     }
     
@@ -400,22 +400,22 @@ class CustomersTable extends AppTable
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;
         }
-        return $depositBalanceSum;
+        return round($depositBalanceSum, 2);
     }
-
+    
     public function getCreditBalance($customerId)
     {
         $payment = TableRegistry::getTableLocator()->get('Payments');
-        $paymentSumProduct = $payment->getSum($customerId, 'product');
-        $paybackSumProduct = $payment->getSum($customerId, 'payback');
-        $paymentSumDeposit = $payment->getSum($customerId, 'deposit');
+        $paymentProductSum = $payment->getSum($customerId, 'product');
+        $paybackProductSum = $payment->getSum($customerId, 'payback');
+        $paymentDepositSum = $payment->getSum($customerId, 'deposit');
         
         $order = TableRegistry::getTableLocator()->get('Orders');
         $productSum = $order->getSumProduct($customerId);
         $depositSum = $order->getSumDeposit($customerId);
         
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        return round($paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum, 2);
+        return round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
     }
 
     public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true)

@@ -494,41 +494,37 @@ class CustomersController extends AdminAppController
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         
         $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_ON);
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON) * -1;
+        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
         $customers[] = [
             'customer_type' => 'Summe der Guthaben <b>aktivierter</b> Mitglieder',
             'count' => count($this->Customer->getCustomerIdsWithStatus(APP_ON)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta, 
-            'payment_product_delta' => $paymentProductDelta,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
         
         $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_OFF);
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_OFF) * -1;
+        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_OFF);
         $customers[] = [
             'customer_type' => 'Summe der Guthaben <b>deaktivierter</b> Mitglieder',
             'count' => count($this->Customer->getCustomerIdsWithStatus(APP_OFF)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_product_delta' => $paymentProductDelta,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
         
-        $paymentProductDelta = $this->Customer->getProductBalanceForDeletedCustomers() * -1;
-        $paymentDepositDelta = $this->Customer->getDepositBalanceForDeletedCustomers() * -1;
+        $paymentProductDelta = $this->Customer->getProductBalanceForDeletedCustomers();
+        $paymentDepositDelta = $this->Customer->getDepositBalanceForDeletedCustomers();
         $customers[] = [
             'customer_type' => 'Summe der Guthaben <b>gelöschter</b> Mitglieder',
             'count' => 0,
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
-            'payment_product_delta' => $paymentProductDelta,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
         
-        $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum() * -1;
+        $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum();
         $customers[] = [
             'customer_type' => 'Summe der geleisteten Pfand-Rückzahlungen für Hersteller',
             'count' => 0,
             'credit_balance' => 0,
-            'payment_product_delta' => 0,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
         
@@ -587,7 +583,7 @@ class CustomersController extends AdminAppController
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
-
+        
         $this->Customer->dropManufacturersInNextFind();
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
@@ -617,32 +613,10 @@ class CustomersController extends AdminAppController
         
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-                
-                $paymentProductSum = $this->Payment->getSum($customer->id_customer, 'product');
-                $paymentPaybackSum = $this->Payment->getSum($customer->id_customer, 'payback');
-                $paymentDepositSum = $this->Payment->getSum($customer->id_customer, 'deposit');
-
-                $sumTotalProduct = 0;
-                $sumTotalDeposit = 0;
-                foreach ($customer->paid_cash_free_orders as $paidCashFreeOrder) {
-                    $sumTotalProduct += $paidCashFreeOrder->total_paid;
-                    if (Configure::read('app.isDepositPaymentCashless') && strtotime($paidCashFreeOrder->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate'))) {
-                        $sumTotalDeposit += $paidCashFreeOrder['total_deposit'];
-                    }
-                }
-                // sometimes strange values like 2.8421709430404E-14 appear
-                $customer->payment_product_delta = round($paymentProductSum - $paymentPaybackSum - $sumTotalProduct, 2);
-                $customer->payment_deposit_delta = round($paymentDepositSum - $sumTotalDeposit, 2);
-
-                // combine deposit delta in product delta to show same credit balance in list like in personal payment product page
-                if (Configure::read('app.isDepositPaymentCashless')) {
-                    $customer->payment_product_delta += $customer->payment_deposit_delta;
-                }
-                
+                $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
                 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
                     $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
                 }
-                
             }
 
             $customer->order_count = $this->Order->getCountByCustomerId($customer->id_customer);
@@ -693,7 +667,6 @@ class CustomersController extends AdminAppController
         
         $this->set('customers', $customers);
 
-        $this->set('manufacturerDepositMoneySum', $this->Payment->getManufacturerDepositMoneySum());
         $this->set('title_for_layout', 'Mitglieder');
     }
 }

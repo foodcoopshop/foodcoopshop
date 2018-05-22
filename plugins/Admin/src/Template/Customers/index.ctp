@@ -51,15 +51,6 @@ use Cake\Core\Configure;
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
-            <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
-                <li>Der Betrag unterhalb des Gesamt-Guthabens ist der <b>Saldo
-                    des Pfandes</b>. Ist er negativ, liegt "zuviel" Pfand auf dem
-                Guthaben-Konto und sollte - wenn er an einen Hersteller ausbezahlt
-                wird, im FCS mit einem Foodcoop-User verbucht werden, damit der
-                Pfand wieder stimmt.
-            </li>
-            <li>Das Gesamt-Guthaben hat diesen Pfand-Betrag inkludiert, da es ja
-                die Summe aller Mitglieder-Guthaben ist.</li>
             <?php } ?>
         </ul>
     </div>    
@@ -95,17 +86,11 @@ echo '<th>Komm.</th>';
 echo '</tr>';
 
 $i = 0;
-$sumPaymentsProductDelta = 0;
-$sumPaymentsDepositDelta = 0;
 $sumOrdersCount = 0;
 $sumEmailReminders = 0;
 $sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
     $i ++;
-
-    if ($this->Html->paymentIsCashless()) {
-        $sumPaymentsDepositDelta += $customer->payment_deposit_delta;
-    }
 
     echo '<tr class="data">';
 
@@ -188,11 +173,11 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
-        $negativeClass = $customer->payment_product_delta < 0 ? 'negative' : '';
+        $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
         echo '<td align="center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
-            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer->payment_product_delta);
+            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer->credit_balance);
             echo $this->Html->getJqueryUiIcon(
                 $creditBalanceHtml,
                 [
@@ -202,12 +187,11 @@ foreach ($customers as $customer) {
                 $this->Slug->getCreditBalance($customer->id_customer)
             );
         } else {
-            if ($customer->payment_product_delta != 0) {
-                echo $this->Html->formatAsEuro($customer->payment_product_delta);
+            if ($customer->credit_balance != 0) {
+                echo $this->Html->formatAsEuro($customer->credit_balance);
             }
         }
-
-        $sumPaymentsProductDelta += $customer->payment_product_delta;
+        
         echo '</td>';
     }
     
@@ -272,13 +256,7 @@ echo '<tr>';
 echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
 echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
-    $sumPaymentsDepositDelta += $manufacturerDepositMoneySum;
-    echo '<td>';
-    echo '<b class="' . ($sumPaymentsProductDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsProductDelta) . '</b>';
-    if (Configure::read('app.isDepositPaymentCashless')) {
-        echo '<br /><b class="' . ($sumPaymentsDepositDelta < 0 ? 'negative' : '') . '">'. $this->Html->formatAsEuro($sumPaymentsDepositDelta) . '&nbsp;Pf.</b>';
-    }
-    echo '</td>';
+    echo '<td></td>';
 }
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
