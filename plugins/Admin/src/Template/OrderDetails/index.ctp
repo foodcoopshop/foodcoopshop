@@ -404,10 +404,9 @@ if ($sumDeposit > 0) {
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 
-$sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
-echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
-
 if ($groupBy == '') {
+    $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
+    echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
     echo '<td colspan="4"></td>';
 }
 echo '</tr>';
