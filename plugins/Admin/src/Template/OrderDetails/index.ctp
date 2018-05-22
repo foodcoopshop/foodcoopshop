@@ -418,7 +418,7 @@ $buttonHtml = '';
 
 if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
     $buttonExists = true;
-    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="10"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="11"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
 }
 
 if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId != '') {
