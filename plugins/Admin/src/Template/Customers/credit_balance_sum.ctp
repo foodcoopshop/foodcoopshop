@@ -37,14 +37,18 @@ echo $this->element('reportNavTabs', [
 echo '<table class="list">';
 echo '<tr class="sort">';
     echo '<th>Mitglieder</th>';
-    echo '<th>Warenwert</th>';
-    echo '<th>Pfand</th>';
+    echo '<th>Guthaben gesamt</th>';
+    echo '<th>Anteil Warenwert</th>';
+    echo '<th>Anteil Pfand</th>';
 echo '</tr>';
 
 foreach($customers as $customer) {
     echo '<tr>';
         echo '<td>';
             echo $customer['customer_type'] . ($customer['count'] > 0 ? ' ('.$customer['count'].')' : '');
+        echo '</td>';
+        echo '<td class="' . ($customer['credit_balance'] < 0 ? 'negative' : '') . '">';
+            echo $this->Html->formatAsEuro($customer['credit_balance']);
         echo '</td>';
         echo '<td class="' . ($customer['payment_product_delta'] < 0 ? 'negative' : '') . '">'; 
             echo $this->Html->formatAsEuro($customer['payment_product_delta']);
@@ -57,6 +61,9 @@ foreach($customers as $customer) {
 
 echo '<tr>';
     echo '<td><b>Summe gesamt: '.$this->Html->formatAsEuro($sums['product_delta'] + $sums['deposit_delta']).'</b></td>';
+    echo '<td class="' . ($sums['credit_balance'] < 0 ? 'negative' : '') . '">';
+        echo '<b>' . $this->Html->formatAsEuro($sums['credit_balance']) . '</b>';
+    echo '</td>';
     echo '<td class="' . ($sums['product_delta'] < 0 ? 'negative' : '') . '">';
         echo '<b>' . $this->Html->formatAsEuro($sums['product_delta']) . '</b>';
     echo '</td>';
