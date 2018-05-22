@@ -63,7 +63,7 @@ echo '<table class="list">';
                     ], 'javascript:void(0);');
                 echo '</span>';
                 
-                echo '<span style="float: left;">' . (empty($payment['customer']) ? 'Gelöschtes Mitglied' : $payment['customer']->name).'</span>';
+                echo '<span style="float: left;">' . $this->Html->getNameRespectingIsDeleted($payment['customer']).'</span>';
                 
                 if ($appAuth->isManufacturer()) {
                     $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customerId']);

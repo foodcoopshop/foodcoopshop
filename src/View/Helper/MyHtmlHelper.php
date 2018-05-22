@@ -37,6 +37,19 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
+    public function getNameRespectingIsDeleted($customer)
+    {
+        if (empty($customer)) {
+            return self::getDeletedCustomerName();
+        }
+        return $customer->name;
+    }
+    
+    public function getDeletedCustomerName()
+    {
+        return 'Gelöschtes Mitglied';
+    }
+    
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number

@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\I18n\Time;
 
 /**
@@ -477,7 +478,7 @@ class ActionLogsTable extends AppTable
     }
     
     public function removeCustomerFromAllActionLogs($customerName) {
-        $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \'Gelöschtes Mitglied\')';
+        $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
         $statement = $this->getConnection()->prepare($query);
         return $statement->execute();
     }

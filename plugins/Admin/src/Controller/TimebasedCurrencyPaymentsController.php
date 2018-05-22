@@ -412,13 +412,14 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             ],
         ])->first();
         
+        $customerName = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($customer);
         $this->set('showAddForm', false);
         $this->set('isDeleteAllowedGlobally', false);
         $this->set('isEditAllowedGlobally', true);
-        $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . (empty($customer) ? 'Gelöschtes Mitglied' : $customer->name));
-        $this->set('paymentBalanceTitle', 'Kontostand von ' . (empty($customer) ? 'Gelöschtes Mitglied' : $customer->name));
+        $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customerName);
+        $this->set('paymentBalanceTitle', 'Kontostand von ' . $customerName);
         $this->set('helpText', [
-            'Hier kannst du die Zeit-Eintragungen von ' . (empty($customer) ? 'Gelöschtes Mitglied' : $customer->name) . ' bestätigen und gegebenfalls bearbeiten.',
+            'Hier kannst du die Zeit-Eintragungen von ' . $customerName . ' bestätigen und gegebenfalls bearbeiten.',
             'Durchgestrichene Zeit-Eintragungen wurden vom Mitglied gelöscht und zählen nicht zur Summe.'
         ]);
         $this->set('showManufacturerDropdown', false);

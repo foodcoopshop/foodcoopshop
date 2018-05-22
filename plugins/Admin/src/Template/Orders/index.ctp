@@ -169,12 +169,12 @@ use Cake\Core\Configure;
         if (isset($order->customer->order_count) && $order->customer->order_count <= 3) {
             echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order->customer->order_count . 'x bestellt."></i></span>';
         }
-        echo '<span class="customer-name">'.(!empty($order->customer) ? $order->customer->name : 'Gelöschtes Mitglied').'</span>';
+        echo '<span class="customer-name">'.$this->Html->getNameRespectingIsDeleted($order->customer).'</span>';
         echo '</td>';
 
         echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
-            'title' => !empty($order->customer) ? 'Alle bestellten Produkte von ' . $order->customer->name . ' anzeigen' : 'Alle bestellten Produkte von gelöschtem Mitglied anzeigen',
+            'title' => 'Alle bestellten Produkte von ' . $this->Html->getNameRespectingIsDeleted($order->customer). ' anzeigen',
             'class' => 'icon-with-text'
         ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->id_customer . '&orderStates[]=' . join(',', $orderStates));
         echo '</td>';
@@ -195,7 +195,7 @@ use Cake\Core\Configure;
                 echo $this->element('addDepositPaymentOverlay', [
                     'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
                     'rowId' => $groupByCustomer ? $order->id_customer : $order->id_order,
-                    'userName' => !empty($order->customer) ? $order->customer->name : 'Gelöschtes Mitglied',
+                    'userName' => $this->Html->getNameRespectingIsDeleted($order->customer),
                     'customerId' => $order->id_customer
                 ]);
             echo '</td>';
