@@ -764,8 +764,6 @@ class CartsController extends FrontendController
         
         $this->Flash->success($message);
         
-        $this->log($message);
-        
     }
     
     public function addLastOrderToCart()
