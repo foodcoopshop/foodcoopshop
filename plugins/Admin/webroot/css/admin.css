@@ -963,10 +963,10 @@ form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
 body.customers .delete-customer-button {
-    float:left;
+    float:right;
     clear:both;
-    margin-bottom:10px;
-    margin-top: 15px: 
+    margin-bottom: 15px;
+    margin-top: 15px; 
 }
 body.configurations.index td.first {
     vertical-align: top;
