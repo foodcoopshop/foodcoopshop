@@ -196,7 +196,7 @@ class CustomersController extends AdminAppController
             $errors = [];
             $openOrders = count($customer->active_orders);
             if ($openOrders > 0) {
-                $errors[] = 'Anzahl der Bestellungen, die noch nicht verrechnet sind: '. $openOrders . '. Die letzte Bestellung muss mindestens vor zwei Monaten getätigt worden sein.';
+                $errors[] = 'Anzahl der Bestellungen, die noch nicht vor mindestens zwei Monaten getätigt worden sind: '. $openOrders . '.';
             }
             $creditBalance = $this->Customer->getCreditBalance($customerId);
             if ($creditBalance != 0) {
@@ -235,7 +235,7 @@ class CustomersController extends AdminAppController
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
-            $message = 'Dein Mitgliedskonto wurde gelöscht. Falls du später wieder mal mitmachen möchtest, musst du dich neu registrieren.';
+            $message = 'Dein Mitgliedskonto wurde erfolgreich gelöscht.';
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
         } else {
             $message = $this->AppAuth->getUsername() .  ' hat ein Mitgliedskonto gelöscht.';
