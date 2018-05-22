@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
+use App\Model\Entity\Customer;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -314,20 +315,29 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     private function paymentListManufacturer($manufacturerId)
     {
-        $customersFromOrderDetails = $this->TimebasedCurrencyOrderDetail->getUniqueCustomers($manufacturerId);
-        $customersFromPayments = $this->TimebasedCurrencyPayment->getUniqueCustomers($manufacturerId);
+        $customerIdsFromOrderDetails = $this->TimebasedCurrencyOrderDetail->getUniqueCustomerIds($manufacturerId);
+        $customerIdsFromPayments = $this->TimebasedCurrencyPayment->getUniqueCustomerIds($manufacturerId);
         
-        $customers = array_merge($customersFromOrderDetails, $customersFromPayments);
-        $customers = array_unique($customers);
+        $customerIds = array_merge($customerIdsFromOrderDetails, $customerIdsFromPayments);
+        $customerIds = array_unique($customerIds);
         
         $payments = [];
-        foreach($customers as $customer) {
+        foreach($customerIds as $customerId) {
             $payment = [];
+            $customer = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.id_customer' => $customerId
+                ],
+                'contain' => [
+                    'AddressCustomers'
+                ]
+            ])->first();
             $payment['customer'] = $customer;
             $payment['manufacturerId'] = $manufacturerId;
-            $payment['unapprovedCount'] = $this->TimebasedCurrencyPayment->getUnapprovedCount($manufacturerId, $customer->id_customer);
-            $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($manufacturerId, $customer->id_customer) * -1;
-            $payment['secondsOpen'] = $this->TimebasedCurrencyOrderDetail->getSum($manufacturerId, $customer->id_customer);
+            $payment['customerId'] = $customerId;
+            $payment['unapprovedCount'] = $this->TimebasedCurrencyPayment->getUnapprovedCount($manufacturerId, $customerId);
+            $payment['secondsDone'] = $this->TimebasedCurrencyPayment->getSum($manufacturerId, $customerId) * -1;
+            $payment['secondsOpen'] = $this->TimebasedCurrencyOrderDetail->getSum($manufacturerId, $customerId);
             $payment['creditBalance'] = $payment['secondsOpen'] + $payment['secondsDone'];
             $payments[] = $payment;
         }
@@ -405,10 +415,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('showAddForm', false);
         $this->set('isDeleteAllowedGlobally', false);
         $this->set('isEditAllowedGlobally', true);
-        $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . $customer->name);
-        $this->set('paymentBalanceTitle', 'Kontostand von ' . $customer->name);
+        $this->set('title_for_layout', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto von ' . (empty($customer) ? 'Gelöschtes Mitglied' : $customer->name));
+        $this->set('paymentBalanceTitle', 'Kontostand von ' . (empty($customer) ? 'Gelöschtes Mitglied' : $customer->name));
         $this->set('helpText', [
-            'Hier kannst du die Zeit-Eintragungen von ' . $customer->name . ' bestätigen und gegebenfalls bearbeiten.',
+            'Hier kannst du die Zeit-Eintragungen von ' . (empty($customer) ? 'Gelöschtes Mitglied' : $customer->name) . ' bestätigen und gegebenfalls bearbeiten.',
             'Durchgestrichene Zeit-Eintragungen wurden vom Mitglied gelöscht und zählen nicht zur Summe.'
         ]);
         $this->set('showManufacturerDropdown', false);

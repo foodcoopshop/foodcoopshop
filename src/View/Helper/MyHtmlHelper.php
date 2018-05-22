@@ -95,6 +95,9 @@ class MyHtmlHelper extends HtmlHelper
     
     public function getCustomerAddress($customer)
     {
+        if (empty($customer->address_customer)) {
+            return '';
+        }
         $details = $customer->address_customer->address1;
         if ($customer->address_customer->address2 != '') {
             $details .= '<br />' . $customer->address_customer->address2;
