@@ -51,7 +51,6 @@ use Cake\Core\Configure;
             <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
                 haben erst 3x oder weniger bestellt.
             </li>
-            <?php } ?>
         </ul>
     </div>    
     
