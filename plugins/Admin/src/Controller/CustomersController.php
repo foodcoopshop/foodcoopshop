@@ -8,6 +8,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Exception\ForbiddenException;
 
 /**
  * CustomersController
@@ -163,6 +164,12 @@ class CustomersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'json');
         
+        $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
+        
+        if (!$isOwnProfile && !$this->AppAuth->isSuperadmin()) {
+            throw new ForbiddenException('deleting user ' . $customerId . 'denied');
+        }
+        
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         
         try {
@@ -225,8 +232,6 @@ class CustomersController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->removeCustomerFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
         $this->ActionLog->removeCustomerFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
-        
-        $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
