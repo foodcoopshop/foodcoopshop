@@ -48,7 +48,9 @@ foodcoopshop.Admin = {
                             $('.ui-dialog button').attr('disabled', 'disabled');
                             foodcoopshop.Helper.ajaxCall(
                                 '/admin/customers/delete/' + customerId,
-                                {},
+                                {
+                                    referer: $('input[name="referer"]').val()
+                                },
                                 {
                                     onOk: function (data) {
                                         document.location.href = data.redirectUrl;

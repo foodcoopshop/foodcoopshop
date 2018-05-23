@@ -243,7 +243,7 @@ class CustomersController extends AdminAppController
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
         } else {
             $message = $this->AppAuth->getUsername() .  ' hat ein Mitgliedskonto gelöscht.';
-            $redirectUrl = Configure::read('app.slugHelper')->getAdminHome();
+            $redirectUrl = $this->getRequest()->getData('referer');
         }
         $this->ActionLog->customSave('customer_deleted', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
         $this->Flash->success($message);
