@@ -154,7 +154,7 @@ echo '<th>';
 echo '</th>';
 if ($groupBy == '') {
     echo '<th class="right">';
-        echo $this->Paginator->sort('OrderDetailsUnits.quantity_in_units', 'Gewicht');
+        echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', 'Gewicht');
     echo '</th>';
     echo '<th>';
         echo $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
