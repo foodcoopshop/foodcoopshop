@@ -37,19 +37,16 @@ class TimebasedCurrencyPaymentsTable extends AppTable
      * @param int $manufacturerId
      * @return array
      */
-    public function getUniqueCustomers($manufacturerId)
+    public function getUniqueCustomerIds($manufacturerId)
     {
         $timebasedCurrencyPayments = $this->find('all', [
             'conditions' => [
                 'TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'Customers.AddressCustomers'
             ]
         ]);
         $result = [];
         foreach($timebasedCurrencyPayments as $timebasedCurrencyPayment) {
-            $result[] = $timebasedCurrencyPayment->customer;
+            $result[] = $timebasedCurrencyPayment->id_customer;
         }
         $result = array_unique($result);
         return $result;

@@ -22,7 +22,7 @@ use App\Controller\Component\StringComponent;
  */
 class MyHtmlHelper extends HtmlHelper
 {
-
+    
     public function __construct(View $View, array $config = [])
     {
         // wrap js block with jquery document ready
@@ -35,6 +35,19 @@ class MyHtmlHelper extends HtmlHelper
             //]]>
         </script>";
         parent::__construct($View, $config);
+    }
+    
+    public function getNameRespectingIsDeleted($customer)
+    {
+        if (empty($customer)) {
+            return self::getDeletedCustomerName();
+        }
+        return $customer->name;
+    }
+    
+    public function getDeletedCustomerName()
+    {
+        return 'Gelöschtes Mitglied';
     }
     
     /**
@@ -95,6 +108,9 @@ class MyHtmlHelper extends HtmlHelper
     
     public function getCustomerAddress($customer)
     {
+        if (empty($customer->address_customer)) {
+            return '';
+        }
         $details = $customer->address_customer->address1;
         if ($customer->address_customer->address2 != '') {
             $details .= '<br />' . $customer->address_customer->address2;
@@ -344,6 +360,24 @@ class MyHtmlHelper extends HtmlHelper
         return implode(', ', $preparedText);
     }
 
+    public function getReportTabs()
+    {
+        $tabs = [];
+        foreach($this->getPaymentTexts() as $key => $paymentText) {
+            $tabs[] = [
+                'name' => $paymentText,
+                'url' => Configure::read('app.slugHelper')->getReport($key),
+                'key' => $key
+            ];
+        }
+        $tabs[] = [
+            'name' => 'Guthaben- und Pfand-Saldo',
+            'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
+            'key' => 'credit_balance_sum'
+        ];
+        return $tabs;
+    }
+    
     public function getPaymentTexts()
     {
         $paymentTexts = [

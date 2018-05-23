@@ -54,7 +54,7 @@ echo '<table class="list">';
             echo '<td>';
                 
                 $details = $this->Html->getCustomerAddress($payment['customer']);
-                $details .= '<br />' . $payment['customer']->email;
+                $details .= '<br />' . (empty($payment['customer']) ? '' : $payment['customer']->email);
                 
                 echo '<span style="float: left;margin-right: 5px;">';
                     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
@@ -63,12 +63,12 @@ echo '<table class="list">';
                     ], 'javascript:void(0);');
                 echo '</span>';
                 
-                echo '<span style="float: left;">' . $payment['customer']->name.'</span>';
+                echo '<span style="float: left;">' . $this->Html->getNameRespectingIsDeleted($payment['customer']).'</span>';
                 
                 if ($appAuth->isManufacturer()) {
-                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customer']->id_customer);
+                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customerId']);
                 } else {
-                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($payment['manufacturerId'], $payment['customer']->id_customer);
+                    $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($payment['manufacturerId'], $payment['customerId']);
                 }
                 echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',

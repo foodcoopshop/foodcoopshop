@@ -48,22 +48,13 @@ if ($paymentType == 'product') {
     </ul>
 </div>
 
-<ul class="nav nav-tabs">
-    <?php
-    foreach ($this->Html->getPaymentTexts() as $pt => $paymentText) {
-        $btnClass = '';
-        if ($pt == $this->request->getParam('pass')[0]) {
-            $btnClass = 'active';
-        }
-        // show deposit report also for cash configuration
-        if ($this->Html->paymentIsCashless() || in_array($pt, ['deposit', 'member_fee', 'member_fee_flexible'])) {
-            echo '<li class="' . $btnClass . '"><a href="' . $this->Slug->getReport($pt) . '?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '">' . $paymentText . '</a></li>';
-        }
-    }
-?>
-</ul>
-
 <?php
+
+echo $this->element('reportNavTabs', [
+    'key' => $this->request->getParam('pass')[0],
+    'dateFrom' => $dateFrom,
+    'dateTo' => $dateTo,
+]);
 
 echo '<table class="list">';
 echo '<tr class="sort">';
@@ -148,7 +139,7 @@ foreach ($payments as $payment) {
     if (!empty($payment->manufacturer)) {
         echo $payment->manufacturer->name;
     } else {
-        echo $payment->customer->name;
+        echo $this->Html->getNameRespectingIsDeleted($payment->customer);
     }
         echo $additionalText;
     echo '</td>';
