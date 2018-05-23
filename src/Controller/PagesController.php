@@ -139,4 +139,9 @@ class PagesController extends FrontendController
     {
         $this->set('title_for_layout', 'Datenschutzerklärung');
     }
+    
+    public function listOfAllergens()
+    {
+        $this->set('title_for_layout', 'Allergenliste');
+    }
 }

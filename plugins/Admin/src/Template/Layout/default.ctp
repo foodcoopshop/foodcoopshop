@@ -31,7 +31,6 @@ use Cake\Utility\Inflector;
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 
     <?php echo $this->element('jsNamespace'); ?>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
     $cssConfigs = ['admin'];

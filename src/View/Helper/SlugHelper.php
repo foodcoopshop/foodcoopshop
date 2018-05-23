@@ -67,6 +67,11 @@ class SlugHelper extends Helper
     {
         return '/datenschutzerklaerung';
     }
+    
+    public function getListOfAllergens()
+    {
+        return '/allergenliste';
+    }
 
     public function getManufacturerList()
     {

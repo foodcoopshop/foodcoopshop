@@ -56,6 +56,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/Informationen-ueber-Ruecktrittsrecht', ['controller' => 'Carts', 'action' => 'generateCancellationInformationPdf']);
     $routes->connect('/nutzungsbedingungen', ['controller' => 'Pages', 'action' => 'termsOfUse']);
     $routes->connect('/datenschutzerklaerung', ['controller' => 'Pages', 'action' => 'privacyPolicy']);
+    $routes->connect('/allergenliste', ['controller' => 'Pages', 'action' => 'listOfAllergens']);
     $routes->connect('/nutzungsbedingungen-akzeptieren', ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);
 
     $routes->connect('/neue-produkte', ['controller' => 'Categories', 'action' => 'newProducts']);
