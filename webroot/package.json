@@ -17,7 +17,7 @@
     "blueimp-file-upload": "~9.18.0",
     "bootstrap": "^3.3.7",
     "bootstrap-select": "1.12.4",
-    "ckeditor": "^4.9.2",
+    "ckeditor": "^4.8.0",
     "components-jqueryui": "~1.12",
     "famfamfam-silk": "~1.0.0",
     "featherlight": "^1.7.13",
