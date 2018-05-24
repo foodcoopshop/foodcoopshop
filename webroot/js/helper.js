@@ -292,7 +292,7 @@ foodcoopshop.Helper = {
         } else {
             float = float.toFixed(2);
         }
-        floatAsString = float.replace(/\./, ',');
+        var floatAsString = float.replace(/\./, ',');
         return floatAsString;
     },
     

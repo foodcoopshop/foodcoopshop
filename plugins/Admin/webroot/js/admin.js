@@ -1774,7 +1774,7 @@ foodcoopshop.Admin = {
         });
 
         $('.order-detail-product-price-edit-button').on('click', function () {
-        
+            
             var row = $(this).closest('tr');
             var orderDetailId = row.find('td:nth-child(2)').html();
             var price = row.find('td:nth-child(6) span.product-price-for-dialog').html();
@@ -1783,9 +1783,11 @@ foodcoopshop.Admin = {
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
             $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
             
+            var productTimebasedCurrencyPriceField;
+            
             $('#' + dialogId + ' .price-per-unit-info-text').remove();
             if (row.find('td:nth-child(8)').html() != '') {
-                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">Um das Gewicht anzupassen, ändere bitte den Wert "Gewicht" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf.</b>');
+                productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">Um das Gewicht anzupassen, ändere bitte den Wert "Gewicht" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf.</b>');
             }
             
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
@@ -1803,7 +1805,7 @@ foodcoopshop.Admin = {
             
             if (timebasedCurrencyObject.length > 0) {
                 var newPrice = foodcoopshop.Helper.getStringAsFloat(price) + timebasedCurrencyData.money_incl;
-                var productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice');
+                productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice');
                 productPriceField.val(foodcoopshop.Helper.formatFloatAsString(newPrice));
                 productTimebasedCurrencyPriceField.val(price);
                 foodcoopshop.TimebasedCurrency.bindOrderDetailProductPriceField(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField);
