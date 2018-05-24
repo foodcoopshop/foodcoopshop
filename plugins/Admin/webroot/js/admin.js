@@ -59,7 +59,7 @@ foodcoopshop.Admin = {
                                         var form = $('#delete-customer-dialog');
                                         form.find('.ajax-loader').hide();
                                         var message = '<p><b>Beim Löschen des Mitgliedskontos sind Fehler aufgetreten:</b> </p>';
-                                        foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg)
+                                        foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg);
                                     }
                                 });
                         }
@@ -593,7 +593,7 @@ foodcoopshop.Admin = {
                             onError: function (data) {
                                 var form = $('#product-price-edit-form form');
                                 form.find('.ajax-loader').hide();
-                                foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg)
+                                foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
                             }
                         }
                     );
@@ -1679,7 +1679,7 @@ foodcoopshop.Admin = {
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
             
             var amount = row.find('td:nth-child(3) .product-amount-for-dialog').html();
-            var label = row.find('td:nth-child(4) a.name-for-dialog').html()
+            var label = row.find('td:nth-child(4) a.name-for-dialog').html();
             label += ' <span style="font-weight:normal;">(';
             var quantityString = $('#' + dialogId + ' span.quantity-string');
             var newHtml = '';
