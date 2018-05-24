@@ -427,7 +427,7 @@ class CustomersController extends AdminAppController
             $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             $email->send();
 
-            $message .= ' und eine Info-Mail an ' . $customer->email . ' versendet';
+            $message .= ' und wurde per E-Mail darüber informiert';
         }
 
         $message .= '.';
