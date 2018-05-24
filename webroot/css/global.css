@@ -484,3 +484,6 @@ a.btn.btn-success:hover i.cgold,
 i.gold {
   color: #FFD700 ! important;
 }
+.tooltipster-sidetip.tooltipster-light .tooltipster-box {
+	background: #fff ! important;
+}
