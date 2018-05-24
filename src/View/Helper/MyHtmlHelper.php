@@ -50,6 +50,11 @@ class MyHtmlHelper extends HtmlHelper
         return 'Gelöschtes Mitglied';
     }
     
+    public function getDeletedCustomerEmail()
+    {
+        return 'Gelöschte E-Mail-Adresse';
+    }
+    
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number

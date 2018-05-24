@@ -234,8 +234,9 @@ class CustomersController extends AdminAppController
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->ActionLog->removeCustomerFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
-        $this->ActionLog->removeCustomerFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
+        $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
+        $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
+        $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
