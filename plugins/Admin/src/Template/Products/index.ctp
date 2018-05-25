@@ -33,6 +33,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . 
             Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . 
             Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
         ]);
@@ -208,7 +209,7 @@ use Cake\Core\Configure;
         if ((! empty($product->product_attributes) || isset($product->product_attributes))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
                 'class' => 'add-image-button',
-                'title' => 'Neues Bild hochladen bzw. austauschen',
+                'title' => $imageExists ? '<img height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />' : 'Bild hinzufügen',
                 'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
             echo $this->element('imageUploadForm', [
@@ -225,7 +226,7 @@ use Cake\Core\Configure;
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-name-edit-button',
-                'title' => 'Name und Beschreibung ändern'
+                'title' => '<b>Kurze Beschreibung</b><br />'.$product->product_lang->description_short.'<br /><br /><b>Lange Beschreibung</b><br />'.$product->product_lang->description,
             ], 'javascript:void(0);');
         }
 
