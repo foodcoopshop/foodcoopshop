@@ -397,12 +397,12 @@ class CartsControllerTest extends AppCakeTestCase
         ])->first();
         
         // check order
-        $this->assertEquals($order->total_paid_tax_excl, 36.818181, 'order total_paid_tax_excl not correct');
+        $this->assertEquals($order->total_paid_tax_excl, 36.81, 'order total_paid_tax_excl not correct');
         $this->assertEquals($order->total_paid_tax_incl, 40.500000, 'order total_paid_tax_incl not correct');
         
         // check order_details
-        $this->checkOrderDetails($order->order_details[0], 'Forelle : Stück', 2, 0, 0, 9.545454, 10.5, 0.48, 0.96, 2);
-        $this->checkOrderDetails($order->order_details[1], 'Rindfleisch', 3, 11, 0, 27.272727, 30, 0.91, 2.73, 2);
+        $this->checkOrderDetails($order->order_details[0], 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 2);
+        $this->checkOrderDetails($order->order_details[1], 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 2);
 
         // check order_details_units
         $this->assertEquals($order->order_details[0]->order_detail_unit->product_quantity_in_units, 700);
