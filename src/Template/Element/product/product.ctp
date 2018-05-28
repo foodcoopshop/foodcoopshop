@@ -15,6 +15,8 @@
 
 use Cake\Core\Configure;
 
+$showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $appAuth->user();
+
 echo '<div class="product-wrapper">';
 
     echo '<div class="first-column">';
@@ -122,7 +124,7 @@ if ($product['description'] != '') {
                 $entityClasses[] = 'active';
             }
             echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
-            if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+            if ($showProductPrice) {
                 echo '<div class="line">';
                 $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($attribute['ProductAttributeShops']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
@@ -144,10 +146,14 @@ if ($product['description'] != '') {
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
                 echo '</div>';
+            }
+            if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailables']['quantity']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
+            }
+            if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }
             echo '</div>';
@@ -175,7 +181,7 @@ if ($product['description'] != '') {
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
         echo '<div class="entity-wrapper active">';
-        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+        if ($showProductPrice) {
             echo '<div class="line">';
             $priceHtml =  '<div class="price">' . $this->Html->formatAsEuro($product['gross_price']) . '</div>';
             $pricePerUnitInfoText = '';
@@ -197,11 +203,15 @@ if ($product['description'] != '') {
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';
-                echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
-                echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);
-                echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailable' => $product['quantity']]);
-                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['quantity']]);
-                echo $pricePerUnitInfoText;
+        }
+        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+            echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
+            echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);
+            echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailable' => $product['quantity']]);
+            echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['quantity']]);
+        }
+        if ($showProductPrice) {
+            echo $pricePerUnitInfoText;
         }
         echo '</div>';
 
