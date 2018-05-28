@@ -27,6 +27,7 @@ TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
+TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_orders`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
@@ -84,7 +85,7 @@ INSERT INTO `fcs_configuration` VALUES
 (544,1,'FCS_CART_ENABLED','Ist die Bestell-Funktion aktiviert?<br /><div class=\"small\">Falls die Foodcoop mal Urlaub macht, kann das Bestellen hier deaktiviert werden.</div>','1','boolean',10,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (545,1,'FCS_ACCOUNTING_EMAIL','E-Mail-Adresse des Finanzverantwortlichen<br /><div class=\"small\">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>','','text',110,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (546,1,'FCS_AUTHENTICATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea',160,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?<br /><div class=\"small\">Die Preise werden nicht angezeigt.</div>','0','boolean',20,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
+(547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?','0','boolean',20,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',50,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (549,1,'FCS_MINIMAL_CREDIT_BALANCE','Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class=\"small\">Z.B.: \"100\" für 100 € im Minus. 0 bedeutet \"kein Bestell-Limit\".</div>','50','number',125,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',130,'2017-07-26 13:24:47','2017-07-26 13:24:47'),
@@ -108,7 +109,8 @@ INSERT INTO `fcs_configuration` VALUES
 (570,1,'FCS_TIMEBASED_CURRENCY_SHORTCODE','Stundenabrechnung: Abkürzung<br /><div class=\"small\">max. 3 Zeichen</div>','h','text',220,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
 (571,1,'FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE','Stundenabrechnung: Umrechnungskurs<br /><div class=\"small\">in €, 2 Kommastellen</div>','10,00','number',230,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
 (572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Stundenabrechnung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
-(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','0','number',250,'2018-03-16 15:23:34','2018-03-16 15:23:34');
+(573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','0','number',250,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
+(574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Produktpreis für nicht eingeloggte Mitglieder anzeigen?','0','boolean',21,'2018-05-28 18:05:54','2018-05-28 18:05:54');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
@@ -134,6 +136,9 @@ INSERT INTO `fcs_configuration` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
