@@ -209,7 +209,7 @@ use Cake\Core\Configure;
         if ((! empty($product->product_attributes) || isset($product->product_attributes))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
                 'class' => 'add-image-button',
-                'title' => $imageExists ? '<img height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />' : 'Bild hinzufügen',
+                'title' => $imageExists ? '<img class="no-max-width" height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />' : 'Bild hinzufügen',
                 'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
             echo $this->element('imageUploadForm', [
