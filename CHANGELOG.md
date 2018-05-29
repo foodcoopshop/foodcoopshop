@@ -9,8 +9,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [mrothauer](https://github.com/mrothauer)
 * [SaibotP](https://github.com/SaibotP)
 * [tantelisl](https://github.com/tantelisl)
+* [veronimus](https://github.com/veronimus)
 
 ### Neue Funktionen
+- Die Produtpreise können jetzt auch für Nicht-Mitglieder angezeigt werden. / [PR#231](https://github.com/foodcoopshop/foodcoopshop/pull/231) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#210](https://github.com/foodcoopshop/foodcoopshop/issues/210) / <a href="https://github.com/veronimus"><img src="https://github.com/veronimus.png" width="20"></a>
 - Im Produkt-Admin werden Bild und Beschreibung jetzt als Mouseover angezeigt. / [PR#229](https://github.com/foodcoopshop/foodcoopshop/pull/229) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#145](https://github.com/foodcoopshop/foodcoopshop/issues/145) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
 - Anpassungen für die DSGVO und Rechtliches: Im Footer befindet sich jetzt die Allergenliste, die Schriftart wird nicht mehr vom Google-Server geladen. [PR#227](https://github.com/foodcoopshop/foodcoopshop/pull/227) / [I#225](https://github.com/foodcoopshop/foodcoopshop/issues/225) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Mitglieder können jetzt in ihrem Profil ihr eigenes Mitgliedskonto löschen, Superadmins können das auch für andere Mitglieder tun. [PR#226](https://github.com/foodcoopshop/foodcoopshop/pull/226) / [I#29](https://github.com/foodcoopshop/foodcoopshop/issues/29) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>

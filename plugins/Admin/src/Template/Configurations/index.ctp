@@ -68,6 +68,10 @@ $this->element('addScript', [
                 continue;
             }
             
+            if ($configuration->name == 'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS' && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                continue;
+            }
+            
             echo '<tr>';
 
                 echo '<td class="first">';

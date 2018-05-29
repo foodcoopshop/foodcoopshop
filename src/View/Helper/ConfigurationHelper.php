@@ -25,6 +25,7 @@ class ConfigurationHelper extends Helper
         switch ($name) {
             case 'FCS_CART_ENABLED':
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
+            case 'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS':
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
             case 'FCS_ORDER_COMMENT_ENABLED':
