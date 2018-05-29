@@ -56,12 +56,6 @@ use Cake\Core\Configure;
     
 <?php
 
-echo $this->Form->control('selectGroupId', [
-    'type' => 'select',
-    'label' => '',
-    'options' => $this->Html->getAuthDependentGroups($appAuth->getGroupId())
-]);
-
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
@@ -274,6 +268,14 @@ echo '<div class="bottom-button-container">';
 echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
+
+echo '<div class="hide">';
+    echo $this->Form->control('selectGroupId', [
+        'type' => 'select',
+        'label' => '',
+        'options' => $this->Html->getAuthDependentGroups($appAuth->getGroupId())
+    ]);
+echo '</div>';
 
 ?>
     <div class="sc"></div>
