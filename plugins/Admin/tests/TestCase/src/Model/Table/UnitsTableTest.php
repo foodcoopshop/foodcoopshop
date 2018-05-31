@@ -98,7 +98,7 @@ class UnitsTableTest extends AppCakeTestCase
     
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine Zahl sein. Das ungefähre Liefergewicht muss größer als 0 sein.
+     * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine Zahl sein.
      */
     public function testSaveProductWithInvalidQuantityInUnitsString()
     {
@@ -108,11 +108,11 @@ class UnitsTableTest extends AppCakeTestCase
     
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Das ungefähre Liefergewicht muss größer als 0 sein.
+     * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine positive Zahl sein.
      */
-    public function testSaveProductWithInvalidQuantityInUnitsZero()
+    public function testSaveProductWithInvalidQuantityInUnitsNegative()
     {
-        $this->quantityInUnits = 0;
+        $this->quantityInUnits = -1;
         $this->doSave();
     }
     
