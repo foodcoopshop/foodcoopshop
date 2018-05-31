@@ -114,10 +114,10 @@ class AppTcpdf extends TCPDF
                             $result['OrderDetailUnitUnitName'],
                             $amount
                         );
-                    } else {
-                        // for invoice detail
-                        $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
                     }
+                }
+                if (!$isOrderList) {
+                    $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
                 }
                 
                 if ($unity != '') {

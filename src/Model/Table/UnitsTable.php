@@ -33,8 +33,7 @@ class UnitsTable extends AppTable
         $validator->notEmpty('name', 'Der Name muss angegeben sein.');
         $validator->numeric('amount', 'Die Anzahl muss eine Zahl sein.');
         $validator->greaterThan('amount', 0, 'Die Anzahl muss größer als 0 sein.');
-        $validator->numeric('quantity_in_units', 'Das ungefähre Liefergewicht muss eine Zahl sein.');
-        $validator->greaterThan('quantity_in_units', 0, 'Das ungefähre Liefergewicht muss größer als 0 sein.');
+        $validator->greaterThanOrEqual('quantity_in_units', 0, 'Das ungefähre Liefergewicht muss eine positive Zahl sein.');
         return $validator;
     }
     
