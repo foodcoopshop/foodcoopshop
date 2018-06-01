@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 echo $this->MyHtml->scriptBlock(
     Configure::read('app.jsNamespace').".Helper.loadLocalizedJs('".I18n::getLocale()."');",

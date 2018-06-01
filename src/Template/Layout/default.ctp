@@ -13,7 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 ?>
