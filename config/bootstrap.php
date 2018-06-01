@@ -212,4 +212,6 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     ]);
 }
 
-I18n::setLocale(Configure::read('appDb.FCS_LOCALE'));
+if (in_array(Configure::read('appDb.FCS_LOCALE'), array_keys(Configure::read('app.implementedLocales')))) {
+    I18n::setLocale(Configure::read('appDb.FCS_LOCALE'));
+}
