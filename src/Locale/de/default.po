@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-01 12:29+0200\n"
-"PO-Revision-Date: 2018-06-01 12:32+0200\n"
+"POT-Creation-Date: 2018-06-01 15:20+0200\n"
+"PO-Revision-Date: 2018-06-01 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -14,6 +14,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
+
+msgid "Stay signed in"
+msgstr "Angemeldet bleiben"
+
+msgid "and accept cookie"
+msgstr "und Cookie akzeptieren"
+
+msgid "Forgot password?"
+msgstr "Passwort vergessen?"
+
+msgid "Sign in"
+msgstr "Anmelden"
+
+msgid "Create account"
+msgstr "Mitgliedskonto erstellen"
+
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Additional information"
+msgstr "Adresszusatz"
+
+msgid "Zip"
+msgstr "PLZ"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "I want to receive an order reminder e-mail every week."
+msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden."
+
+msgid "I accept the"
+msgstr "Ich akzeptiere die"
+
+msgid "terms of use"
+msgstr "Nutzungsbedingungen"
 
 msgid "News"
 msgstr "Aktuelles"
