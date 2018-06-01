@@ -25,16 +25,18 @@ class MyHtmlHelper extends HtmlHelper
     
     public function __construct(View $View, array $config = [])
     {
-        // wrap js block with jquery document ready
-        $this->_defaultConfig['templates']['javascriptblock'] =
-        "<script{{attrs}}>
+        $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
+        parent::__construct($View, $config);
+    }
+    
+    function wrapJavascriptBlock($content) {
+        return "<script>
             //<![CDATA[
                 $(document).ready(function() {
-                    {{content}}
+                    ".$content."
                 });
             //]]>
         </script>";
-        parent::__construct($View, $config);
     }
     
     public function getNameRespectingIsDeleted($customer)

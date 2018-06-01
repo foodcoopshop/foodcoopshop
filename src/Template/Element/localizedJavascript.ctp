@@ -16,7 +16,9 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
 echo $this->MyHtml->scriptBlock(
-    Configure::read('app.jsNamespace').".Helper.loadLocalizedJs('".I18n::getLocale()."');",
+    $this->Html->wrapJavascriptBlock(
+        Configure::read('app.jsNamespace').".Helper.loadLocalizedJs('".I18n::getLocale()."');"
+    ),
     ['inline' => true]
 );
 ?>

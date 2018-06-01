@@ -119,7 +119,9 @@ header('Pragma: no-cache');
     
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo $this->Html->scriptBlock(
-            Configure::read('app.jsNamespace').".TimebasedCurrency.setShortcode('".Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')."');",
+            $this->Html->wrapJavascriptBlock(
+                Configure::read('app.jsNamespace').".TimebasedCurrency.setShortcode('".Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')."');"
+            ),
             ['inline' => true]
         );
     }
@@ -130,11 +132,18 @@ header('Pragma: no-cache');
     
         // add script BEFORE all scripts that are loaded in views (block)
         echo $this->MyHtml->scriptBlock(
-            Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();",
+            $this->Html->wrapJavascriptBlock(
+                Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();"
+            ),
             ['inline' => true]
         );
     }
-    echo $this->fetch('script'); // all scripts from layouts
+    
+    $scripts = $this->fetch('script');
+    if ($scripts != '') {
+        echo $this->Html->wrapJavascriptBlock($scripts);
+    }
+    
 ?>
 
 </body>
