@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 ?>
@@ -115,9 +116,10 @@ header('Pragma: no-cache');
     
 <?php
     echo $this->element('renderJs', ['configs' => ['frontend']]);
+    echo $this->element('localizedJavascript');
     
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-        echo $this->MyHtml->scriptBlock(
+        echo $this->Html->scriptBlock(
             Configure::read('app.jsNamespace').".TimebasedCurrency.setShortcode('".Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')."');",
             ['inline' => true]
         );

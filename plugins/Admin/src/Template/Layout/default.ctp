@@ -70,6 +70,7 @@ if ($this->plugin != 'Admin') {
     $jsConfigs[] = $this->plugin.'.all';
 }
 echo $this->element('renderJs', ['configs' => $jsConfigs]);
+echo $this->element('localizedJavascript');
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-01 15:20+0200\n"
-"PO-Revision-Date: 2018-06-01 15:20+0200\n"
+"POT-Creation-Date: 2018-06-01 15:59+0200\n"
+"PO-Revision-Date: 2018-06-01 16:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -14,6 +14,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
+
+msgid "Do you really want to sign out?"
+msgstr "Willst du dich wirklich abmelden?"
+
+msgid "Sign out?"
+msgstr "Abmelden?"
 
 msgid "Stay signed in"
 msgstr "Angemeldet bleiben"

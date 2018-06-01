@@ -24,6 +24,21 @@ foodcoopshop.Helper = {
         }
     },
     
+    loadLocalizedJs : function(locale) {
+        foodcoopshop.Helper.ajaxCall(
+            '/localized/strings/' + locale + '.json',
+            {},
+            {
+                onOk: function (data) {
+                    translatedJs = data.translatedJs;
+                },
+                onError: function (data) {
+                    console.log(data);
+                }
+            }
+        );        
+    },
+    
     initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');
@@ -352,10 +367,10 @@ foodcoopshop.Helper = {
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
             $('<div></div>').appendTo('body')
-                .html('<p>Willst du dich wirklich abmelden?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + translatedJs.helper.initLogoutButton.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Abmelden?',
+                    title: translatedJs.helper.initLogoutButton.logout,
                     dialogClass: 'logout-button',
                     autoOpen: true,
                     width: 400,
