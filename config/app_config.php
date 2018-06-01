@@ -144,6 +144,11 @@ return [
          */
         'termsOfUseLastUpdate' => '2016-11-28',
 
+        'implementedLocales' => [
+            'de' => 'Deutsch',
+            'en' => 'Englisch'
+        ],
+        
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'numberHelper' => new App\View\Helper\MyNumberHelper(new Cake\View\View()),

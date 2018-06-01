@@ -100,6 +100,12 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
+    public function validationFcsLocale(Validator $validator)
+    {
+        $validator->inList('value', array_keys(Configure::read('app.implementedLocales')), 'Die Sprache ist nicht gültig.');
+        return $validator;
+    }
+    
     public function validationFcsShowProductPriceForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);

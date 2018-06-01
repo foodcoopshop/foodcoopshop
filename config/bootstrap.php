@@ -38,6 +38,7 @@ use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
+use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
@@ -210,3 +211,5 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
         'autoload' => true
     ]);
 }
+
+I18n::setLocale(Configure::read('appDb.FCS_LOCALE'));
