@@ -145,8 +145,8 @@ return [
         'termsOfUseLastUpdate' => '2016-11-28',
 
         'implementedLocales' => [
-            'de' => 'Deutsch',
-            'en' => 'Englisch'
+            'de_DE' => 'Deutsch',
+            'en_US' => 'Englisch'
         ],
         
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),

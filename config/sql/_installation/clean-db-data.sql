@@ -111,7 +111,7 @@ INSERT INTO `fcs_configuration` VALUES
 (572,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER','Stundenabrechnung: Überziehungsrahmen für Mitglieder<br /><div class=\"small\">Wie viele Stunden kann ein Mitglied maximal ins Minus gehen?</div>','0','number',240,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
 (573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','0','number',250,'2018-03-16 15:23:34','2018-03-16 15:23:34'),
 (574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Produktpreis für nicht eingeloggte Mitglieder anzeigen?','0','boolean',21,'2018-05-28 18:05:54','2018-05-28 18:05:54'),
-(575,1,'FCS_LOCALE','Sprache<br /><div class=\"small\">In welcher Sprache möchtest du die Software verwenden?</div>','de','dropdown',195,'2018-06-01 12:24:01','2018-06-01 12:24:01');
+(575,1,'FCS_LOCALE','Sprache<br /><div class=\"small\">In welcher Sprache möchtest du die Software verwenden?</div>','de_DE','dropdown',195,'2018-06-01 12:24:01','2018-06-01 12:24:01');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
