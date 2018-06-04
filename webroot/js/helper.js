@@ -367,10 +367,10 @@ foodcoopshop.Helper = {
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
             $('<div></div>').appendTo('body')
-                .html('<p>' + translatedJs.helper.initLogoutButton.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + translatedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: translatedJs.helper.initLogoutButton.logout,
+                    title: translatedJs.helper.logout,
                     dialogClass: 'logout-button',
                     autoOpen: true,
                     width: 400,
