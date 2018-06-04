@@ -144,13 +144,13 @@ class MenuHelper extends Helper
             }
 
             if ($this->plugin != '') {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => 'Abmelden<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out', 'class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out', 'class' => ['logout-button']]];
             } else {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => 'Abmelden', 'options' => ['class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('sign_out'), 'options' => ['class' => ['logout-button']]];
             }
         } else {
             if ($this->plugin == '') {
-                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => 'Anmelden'];
+                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('sign_in')];
             }
         }
         return $menuElement;

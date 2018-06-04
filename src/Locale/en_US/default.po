@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 11:07+0200\n"
-"PO-Revision-Date: 2018-06-04 11:11+0200\n"
+"POT-Creation-Date: 2018-06-04 12:09+0200\n"
+"PO-Revision-Date: 2018-06-04 12:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -75,8 +75,17 @@ msgstr "I accept the"
 msgid "terms_of_use"
 msgstr "terms of use"
 
+msgid "admin_area"
+msgstr "Admin area"
+
+msgid "manufacturer_area"
+msgstr "Manufacturer area"
+
 msgid "news"
 msgstr "News"
+
+msgid "sign_out"
+msgstr "Sign out"
 
 msgid "route_sign_in"
 msgstr "sign-in"
