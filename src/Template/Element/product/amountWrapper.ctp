@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 ?>
 <div class="amount-wrapper">
 
-    <span class="left-of-input"><?php echo __('amount'); ?></span>
+    <span class="left-of-input"><?php echo __('Amount'); ?></span>
     <input name="amount" value="1" type="text">
 
 <?php if ($stockAvailable > 0 && $stockAvailable <= Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')) { ?>

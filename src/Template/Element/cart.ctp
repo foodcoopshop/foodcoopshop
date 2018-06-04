@@ -40,7 +40,7 @@ if ($appAuth->Cart->getProducts() !== null) {
 
 <div id="cart" class="box cart">
     
-    <h3><i class="fa fa-shopping-cart"></i><?php echo __('cart'); ?></h3>
+    <h3><i class="fa fa-shopping-cart"></i><?php echo __('Cart'); ?></h3>
     
     <div class="inner">
     
@@ -48,14 +48,14 @@ if ($appAuth->Cart->getProducts() !== null) {
     	if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {
     	    $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
     	    if (!empty($lastOrderDetails)) {
-    	        $lastOrderDetails['remove-all-products-from-cart'] = __('empty_cart').'...';
+    	        $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
     	        $this->element('addScript', ['script' =>
         	        Configure::read('app.jsNamespace') . ".Cart.initLoadLastOrderDetailsDropdown();"
         	    ]);
         	    echo $this->Form->control('load-last-order-details', [
             	    'label' => '',
             	    'type' => 'select',
-        	        'empty' => __('load_past_orders').'...',
+        	        'empty' => __('Load_past_orders').'...',
         	        'options' => $lastOrderDetails
             	]);
     	    }
@@ -67,8 +67,8 @@ if ($appAuth->Cart->getProducts() !== null) {
                     Configure::read('app.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
                 ]);
                 echo '<p class="shop-order-customer-info">';
-                    echo __('this_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')->name.'</b>']);
-                echo '<b><a class="btn btn-default" href="javascript:void(0);">'.__('cancel_shop_order?').'</a></b>';
+                    echo __('This_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')->name.'</b>']);
+                echo '<b><a class="btn btn-default" href="javascript:void(0);">'.__('Cancel_shop_order?').'</a></b>';
                 echo '</p>';
                 
             }
@@ -77,11 +77,11 @@ if ($appAuth->Cart->getProducts() !== null) {
                 $class[] = 'negative';
             }
             echo '<div class="credit-balance-wrapper">';
-              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
+              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
             if ($shoppingLimitReached) {
-                echo '<p><b class="negative">'.__('you_reached_the_order_limit_{0}_please_add_credit',[$this->Html->formatAsEuro(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE'))]).'</b></p>';
+                echo '<p><b class="negative">'.__('You_reached_the_order_limit_{0}_please_add_credit.',[$this->Html->formatAsEuro(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE'))]).'</b></p>';
                 echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
-                echo __('add_credit');
+                echo __('Add_credit');
                 echo '</a></p>';
             }
                 echo '</div>';
@@ -89,14 +89,14 @@ if ($appAuth->Cart->getProducts() !== null) {
         ?>
         
         <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in AppController ?>
-            <p class="no-products"><?php echo __('your_cart_is_empty'); ?></p>
+            <p class="no-products"><?php echo __('Your_cart_is_empty'); ?></p>
             <p class="products"></p>
-            <p class="sum-wrapper"><b><?php echo __('sum'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
-            <p class="deposit-sum-wrapper"><b><?php echo __('deposit'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
-            <p class="tax-sum-wrapper"><b><?php echo __('value_added_tax'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+            <p class="sum-wrapper"><b><?php echo __('Sum'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+            <p class="deposit-sum-wrapper"><b><?php echo __('Deposit'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+            <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
             
             <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
-            	<p class="timebased-currency-sum-wrapper"><b><?php echo __('from_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
+            	<p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
             <?php } ?>
             
             <p class="tmp-wrapper"></p>
@@ -104,7 +104,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             <div class="sc"></div>
             
             <p><a class="btn btn-success" href="<?php echo $this->Slug->getCartDetail(); ?>">
-                <i class="fa fa-shopping-cart fa-lg"></i> <?php echo __('show_cart_button'); ?>
+                <i class="fa fa-shopping-cart fa-lg"></i> <?php echo __('Show_cart_button'); ?>
             </a></p>
             
         <?php } ?>

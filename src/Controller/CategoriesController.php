@@ -47,7 +47,7 @@ class CategoriesController extends FrontendController
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
-        $this->set('title_for_layout', __('new_products'));
+        $this->set('title_for_layout', __('New_products'));
 
         $this->render('detail');
     }

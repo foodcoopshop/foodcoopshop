@@ -75,7 +75,7 @@ class OrderDetailsTable extends AppTable
             
             if (count($orderDetails) > 0) {
                 $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
-                $result[$deliveryDay] = 'Abholtag ' . $deliveryDay . ' - ' . count($orderDetails) . ' Produkt' . (count($orderDetails) == 1 ? '' : 'e');
+                $result[$deliveryDay] = __('Pick_up_day') . ' ' . $deliveryDay . ' - ' . count($orderDetails) . ' Produkt' . (count($orderDetails) == 1 ? '' : 'e');
                 $foundOrders++;
             }
             

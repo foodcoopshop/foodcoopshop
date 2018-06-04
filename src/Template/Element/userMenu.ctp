@@ -15,13 +15,13 @@
 
 $menu = [];
 
-$adminName = __('admin_area');
+$adminName = __('Admin_area');
 $profileSlug = $this->Slug->getCustomerProfile();
 $class = ['btn btn-success'];
 $userName = $appAuth->user('firstname') . ' ' . $appAuth->user('lastname');
 if ($appAuth->isManufacturer()) {
     $profileSlug = $this->Slug->getManufacturerProfile();
-    $adminName = __('manufacturer_area');
+    $adminName = __('Manufacturer_area');
     $userName = $appAuth->getManufacturerName();
 }
 if ($appAuth->user()) {

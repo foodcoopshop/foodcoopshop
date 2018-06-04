@@ -22,7 +22,7 @@ $this->element('addScript', ['script' =>
 
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
-echo '<h1>'.__('news').'</h1>';
+echo '<h1>'.__('News').'</h1>';
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
     'useCarousel' => false

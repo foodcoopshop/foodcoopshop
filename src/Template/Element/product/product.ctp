@@ -30,8 +30,8 @@ if (!$largeImageExists) {
     echo '</a>';
 }
 if ($product['is_new']) {
-    echo '<a href="/'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('new').'">
-                    <i class="fa fa-star gold"></i> '.__('new').'
+    echo '<a href="/'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('New').'">
+                    <i class="fa fa-star gold"></i> '.__('New').'
                 </a>';
 }
     echo '</div>';
@@ -49,18 +49,18 @@ if ($product['description_short'] != '') {
 
 if ($product['description'] != '') {
     echo $this->Html->link(
-        '<i class="fa"></i> '.__('show_more'),
+        '<i class="fa"></i> '.__('Show_more'),
         'javascript:void(0);',
         [
         'class' => 'toggle-link',
-        'title' => __('more_infos_to_product_{0}', [$product['name']]),
+        'title' => __('More_infos_to_product_{0}', [$product['name']]),
         'escape' => false
         ]
     );
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
-    echo '<br />'.__('manufacturer').': ';
+    echo '<br />'.__('Manufacturer').': ';
     echo $this->Html->link(
         $product['ManufacturersName'],
         $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
@@ -71,7 +71,7 @@ if ($product['description'] != '') {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
             [
-                'title' => __('edit_product')
+                'title' => __('Edit_product')
             ],
             $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product'])
         );
@@ -114,7 +114,7 @@ if ($product['description'] != '') {
 
         // every attribute has quantity = 0
         if (empty($preparedProductAttributes)) {
-            echo '<p>'.__('currently_not_on_stock').'.</p>';
+            echo '<p>'.__('Currently_not_on_stock').'.</p>';
         }
 
         // render remaining attributes (with attribute "checked")
@@ -141,7 +141,7 @@ if ($product['description'] != '') {
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
                         'seconds' => $attribute['timebased_currency_seconds'],
-                        'labelPrefix' => __('from_which_{0}_percent', [$product['timebased_currency_max_percentage']]) . '% '
+                        'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
@@ -199,7 +199,7 @@ if ($product['description'] != '') {
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],
                         'seconds' => $product['timebased_currency_seconds'],
-                        'labelPrefix' => __('from_which_{0}_percent', [$product['timebased_currency_max_percentage']]) . '% '
+                        'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';
@@ -224,7 +224,7 @@ if ($product['description'] != '') {
             $unityStrings[] = $unitString;
         }
         if (!empty($unityStrings)) {
-            echo '<div class="unity">'.__('unit').': <span class="value">' . join(', ', $unityStrings).'</span></div>';
+            echo '<div class="unity">'.__('Unit').': <span class="value">' . join(', ', $unityStrings).'</span></div>';
         }
     }
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 16:34+0200\n"
+"POT-Creation-Date: 2018-06-04 17:09+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,220 +14,226 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "your_cart"
+msgid "Your_cart"
 msgstr ""
 
-msgid "finish_cart"
+msgid "Finish_cart"
 msgstr ""
 
-msgid "your_cart_was_empty"
+msgid "Your_cart_was_empty"
 msgstr ""
 
-msgid "new_products"
+msgid "New_products"
 msgstr ""
 
-msgid "sign_in"
+msgid "Sign_in"
 msgstr ""
 
-msgid "all_products"
+msgid "All_products"
 msgstr ""
 
-msgid "really_sign_out?"
+msgid "Really_sign_out?"
 msgstr ""
 
-msgid "sign_out?"
+msgid "Sign_out?"
 msgstr ""
 
 msgid "route_sign_out"
 msgstr ""
 
+msgid "Pick_up_day"
+msgstr ""
+
 msgid "found"
 msgstr ""
 
-msgid "your_cart_is_empty"
+msgid "Your_cart_is_empty"
 msgstr ""
 
-msgid "product_sum_including_vat"
+msgid "Product_sum_including_vat"
 msgstr ""
 
-msgid "deposit_sum"
+msgid "Deposit_sum"
 msgstr ""
 
-msgid "from_which_in"
+msgid "From_which_in"
 msgstr ""
 
-msgid "including vat"
+msgid "Including_vat"
 msgstr ""
 
-msgid "how_much_of_it_do_i_want_to_pay_in_{0}?"
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr ""
 
-msgid "to_finish_order_click_here"
+msgid "To_finish_order_click_here."
 msgstr ""
 
-msgid "the_amount_will_be_reduced_from_your_credit_balance"
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
 msgstr ""
 
-msgid "please_pay_when_picking_up_products"
+msgid "Please_pay_when_picking_up_products."
 msgstr ""
 
-msgid "please_pick_up_your_products_on_{0}_at_{1}"
+msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 msgstr ""
 
 msgid "general_terms_of_use"
 msgstr ""
 
-msgid "i_accept_the_{0}"
+msgid "I_accept_the_{0}"
 msgstr ""
 
 msgid "right_of_withdrawal"
 msgstr ""
 
-msgid "i_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods"
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr ""
 
-msgid "write_message_to_pick_up_team?"
+msgid "Write_message_to_pick_up_team?"
 msgstr ""
 
-msgid "placeholder_message_order_comment"
+msgid "Placeholder_message_order_comment."
 msgstr ""
 
-msgid "order_button"
+msgid "Order_button"
 msgstr ""
 
-msgid "email"
+msgid "Email"
 msgstr ""
 
-msgid "password"
+msgid "Password"
 msgstr ""
 
-msgid "stay_signed_in"
+msgid "Stay_signed_in"
 msgstr ""
 
 msgid "and_accept_cookie"
 msgstr ""
 
-msgid "forgot_password?"
+msgid "Forgot_password?"
 msgstr ""
 
-msgid "create_account"
+msgid "Create_account"
 msgstr ""
 
-msgid "firstname"
+msgid "Firstname"
 msgstr ""
 
-msgid "lastname"
+msgid "Lastname"
 msgstr ""
 
-msgid "street"
+msgid "Street"
 msgstr ""
 
-msgid "additional_information"
+msgid "Additional_information"
 msgstr ""
 
-msgid "zip"
+msgid "Zip"
 msgstr ""
 
-msgid "city"
+msgid "City"
 msgstr ""
 
-msgid "mobile"
+msgid "Mobile"
 msgstr ""
 
-msgid "phone"
+msgid "Phone"
 msgstr ""
 
-msgid "want_to_receive_reminder_emails?"
+msgid "Want_to_receive_reminder_emails?"
 msgstr ""
 
 msgid "terms_of_use"
 msgstr ""
 
-msgid "cart"
+msgid "Cart"
 msgstr ""
 
-msgid "empty_cart"
+msgid "Empty_cart"
 msgstr ""
 
-msgid "load_past_orders"
+msgid "Load_past_orders"
 msgstr ""
 
-msgid "this_order_will_be_placed_for_{0}"
+msgid "This_order_will_be_placed_for_{0}"
 msgstr ""
 
-msgid "cancel_shop_order?"
+msgid "Cancel_shop_order?"
 msgstr ""
 
-msgid "your_credit_balance"
+msgid "Your_credit_balance"
 msgstr ""
 
-msgid "you_reached_the_order_limit_{0}_please_add_credit"
+msgid "You_reached_the_order_limit_{0}_please_add_credit."
 msgstr ""
 
-msgid "add_credit"
+msgid "Add_credit"
 msgstr ""
 
-msgid "sum"
+msgid "Sum"
 msgstr ""
 
-msgid "deposit"
+msgid "Deposit"
 msgstr ""
 
-msgid "value_added_tax"
+msgid "Value_added_tax"
 msgstr ""
 
-msgid "show_cart_button"
+msgid "Show_cart_button"
 msgstr ""
 
-msgid "products"
+msgid "Products"
 msgstr ""
 
-msgid "manufacturers"
+msgid "Manufacturers"
 msgstr ""
 
-msgid "news"
+msgid "News"
 msgstr ""
 
-msgid "admin_area"
+msgid "Admin_area"
 msgstr ""
 
-msgid "manufacturer_area"
+msgid "Manufacturer_area"
 msgstr ""
 
-msgid "amount"
+msgid "Amount"
 msgstr ""
 
 msgid "available"
 msgstr ""
 
-msgid "move_in_cart"
+msgid "Move_in_cart"
 msgstr ""
 
-msgid "currently_not_on_stock"
+msgid "Currently_not_on_stock"
 msgstr ""
 
-msgid "new"
+msgid "New"
 msgstr ""
 
-msgid "show_more"
+msgid "Show_more"
 msgstr ""
 
-msgid "more_infos_to_product_{0}"
+msgid "More_infos_to_product_{0}"
 msgstr ""
 
-msgid "manufacturer"
+msgid "Manufacturer"
 msgstr ""
 
-msgid "edit_product"
+msgid "Edit_product"
 msgstr ""
 
-msgid "from_which_{0}_percent"
+msgid "deposit"
 msgstr ""
 
-msgid "unit"
+msgid "from_which_{0}_%"
 msgstr ""
 
-msgid "sign_out"
+msgid "Unit"
+msgstr ""
+
+msgid "Sign_out"
 msgstr ""
 
 msgid "route_accept_terms_of_use"
