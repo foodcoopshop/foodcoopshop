@@ -324,39 +324,3 @@ msgstr "suche"
 
 msgid "route_product"
 msgstr "produkt"
-
-#~ msgid "news"
-#~ msgstr "Aktuelles"
-
-#~ msgid "manufacturers"
-#~ msgstr "Hersteller"
-
-#~ msgid "create_account"
-#~ msgstr "Mitgliedskonto erstellen"
-
-#~ msgid "currently_not_on_stock"
-#~ msgstr "Derzeit leider nicht verfügbar"
-
-#~ msgid "cart"
-#~ msgstr "Warenkorb"
-
-#~ msgid "write_message_to_pick_up_team?"
-#~ msgstr "Nachricht an Abholdienst schreiben?"
-
-#~ msgid "city"
-#~ msgstr "Stadt"
-
-#~ msgid "i_accept_the_{0}"
-#~ msgstr "Ich akzeptiere die {0}"
-
-#~ msgid "sign_in"
-#~ msgstr "Anmelden"
-
-#~ msgid "unit"
-#~ msgstr "Einheit"
-
-#~ msgid "from_which_in"
-#~ msgstr "Davon in"
-
-#~ msgid "vat"
-#~ msgstr "Umsatzsteuer"
