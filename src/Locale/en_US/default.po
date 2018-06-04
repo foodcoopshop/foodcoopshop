@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 16:03+0200\n"
-"PO-Revision-Date: 2018-06-04 16:12+0200\n"
+"POT-Creation-Date: 2018-06-04 16:34+0200\n"
+"PO-Revision-Date: 2018-06-04 16:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -85,13 +85,16 @@ msgid "right_of_withdrawal"
 msgstr "right of withdrawal"
 
 msgid "i_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods"
-msgstr "I accept the {0} and accept that this is not valid for perishable goods"
+msgstr ""
+"I accept the {0} and accept that this is not valid for perishable goods"
 
 msgid "write_message_to_pick_up_team?"
 msgstr "Want to write a message to the pick up team?"
 
 msgid "placeholder_message_order_comment"
-msgstr "Your message will be shown next to your order in the admin area. Manufacturers cannot not this message."
+msgstr ""
+"Your message will be shown next to your order in the admin area. "
+"Manufacturers cannot not this message."
 
 msgid "order_button"
 msgstr "Buy now"
@@ -144,6 +147,42 @@ msgstr "I want to receive an order reminder e-mail every week."
 msgid "terms_of_use"
 msgstr "terms of use"
 
+msgid "cart"
+msgstr "Cart"
+
+msgid "empty_cart"
+msgstr "Remove products from cart"
+
+msgid "load_past_orders"
+msgstr "Load past orders"
+
+msgid "this_order_will_be_placed_for_{0}"
+msgstr "This order will be placed for {0}"
+
+msgid "cancel_shop_order?"
+msgstr "Cancel shop order?"
+
+msgid "your_credit_balance"
+msgstr "Your credit balance"
+
+msgid "you_reached_the_order_limit_{0}_please_add_credit"
+msgstr "You reached the order limit of {0}. Please add credit."
+
+msgid "add_credit"
+msgstr "Add credit"
+
+msgid "sum"
+msgstr "Sum"
+
+msgid "deposit"
+msgstr "deposit"
+
+msgid "value_added_tax"
+msgstr "Value added tax"
+
+msgid "show_cart_button"
+msgstr "Show cart"
+
 msgid "products"
 msgstr "Products"
 
@@ -185,9 +224,6 @@ msgstr "Manufacturer"
 
 msgid "edit_product"
 msgstr "Edit product"
-
-msgid "deposit"
-msgstr "deposit"
 
 msgid "from_which_{0}_percent"
 msgstr "from which {0} %"

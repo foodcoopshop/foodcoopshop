@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 16:03+0200\n"
-"PO-Revision-Date: 2018-06-04 16:05+0200\n"
+"POT-Creation-Date: 2018-06-04 16:34+0200\n"
+"PO-Revision-Date: 2018-06-04 16:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -152,6 +152,45 @@ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
+msgid "cart"
+msgstr "Warenkorb"
+
+msgid "empty_cart"
+msgstr "Warenkorb leeren"
+
+msgid "load_past_orders"
+msgstr "Vergangene Bestellungen laden"
+
+msgid "this_order_will_be_placed_for_{0}"
+msgstr "Diese Bestellung wird für {0} getätigt."
+
+msgid "cancel_shop_order?"
+msgstr "Sofort-Bestellung abbrechen?"
+
+msgid "your_credit_balance"
+msgstr "Dein Guthaben"
+
+msgid "you_reached_the_order_limit_{0}_please_add_credit"
+msgstr ""
+"Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen "
+"neues Guthaben auf."
+
+msgid "add_credit"
+msgstr "Guthaben aufladen"
+
+msgid "sum"
+msgstr "Summe"
+
+msgid "deposit"
+msgstr "Pfand"
+
+msgid "value_added_tax"
+msgstr "Umsatzsteuer"
+
+#, fuzzy
+msgid "show_cart_button"
+msgstr "Warenkorb anzeigen"
+
 msgid "products"
 msgstr "Produkte"
 
@@ -193,9 +232,6 @@ msgstr "Hersteller"
 
 msgid "edit_product"
 msgstr "Produkt bearbeiten"
-
-msgid "deposit"
-msgstr "Pfand"
 
 msgid "from_which_{0}_percent"
 msgstr "davon {0} %"
@@ -283,3 +319,6 @@ msgstr "suche"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "vat"
+#~ msgstr "Umsatzsteuer"

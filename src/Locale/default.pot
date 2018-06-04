@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 16:03+0200\n"
+"POT-Creation-Date: 2018-06-04 16:34+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -143,6 +143,42 @@ msgstr ""
 msgid "terms_of_use"
 msgstr ""
 
+msgid "cart"
+msgstr ""
+
+msgid "empty_cart"
+msgstr ""
+
+msgid "load_past_orders"
+msgstr ""
+
+msgid "this_order_will_be_placed_for_{0}"
+msgstr ""
+
+msgid "cancel_shop_order?"
+msgstr ""
+
+msgid "your_credit_balance"
+msgstr ""
+
+msgid "you_reached_the_order_limit_{0}_please_add_credit"
+msgstr ""
+
+msgid "add_credit"
+msgstr ""
+
+msgid "sum"
+msgstr ""
+
+msgid "deposit"
+msgstr ""
+
+msgid "value_added_tax"
+msgstr ""
+
+msgid "show_cart_button"
+msgstr ""
+
 msgid "products"
 msgstr ""
 
@@ -183,9 +219,6 @@ msgid "manufacturer"
 msgstr ""
 
 msgid "edit_product"
-msgstr ""
-
-msgid "deposit"
 msgstr ""
 
 msgid "from_which_{0}_percent"
