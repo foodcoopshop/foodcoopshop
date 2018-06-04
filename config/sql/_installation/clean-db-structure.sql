@@ -304,7 +304,7 @@ DROP TABLE IF EXISTS `fcs_order_detail_units`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_order_detail_units` (
   `id_order_detail` int(11) NOT NULL DEFAULT '0',
-  `product_quantity_in_units` decimal(10,2) unsigned DEFAULT NULL,
+  `product_quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   `price_incl_per_unit` decimal(10,2) unsigned DEFAULT NULL,
   `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   `unit_name` varchar(50) NOT NULL DEFAULT '',

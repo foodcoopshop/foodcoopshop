@@ -687,9 +687,8 @@ class OrderDetailsController extends AdminAppController
         $orderDetailUnit2save = [
             'product_quantity_in_units' => $productQuantity
         ];
-        $this->OrderDetail->OrderDetailUnits->save(
-            $this->OrderDetail->OrderDetailUnits->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save)
-        );
+        $patchedEntity = $this->OrderDetail->OrderDetailUnits->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save);
+        $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
     }
 
     private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productAmount)

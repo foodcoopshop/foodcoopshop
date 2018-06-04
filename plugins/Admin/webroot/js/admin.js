@@ -1671,9 +1671,11 @@ foodcoopshop.Admin = {
             
             var row = $(this).closest('tr');
             var orderDetailId = row.find('td:nth-child(2)').html();
-            var unitName = row.find('td:nth-child(8) span.unit-name').html();
+            var unitName = row.find('td:nth-child(8) span.unit-name').html().trim();
             var quantity = row.find('td:nth-child(8) span.quantity-in-units').html();
-            $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity').val(foodcoopshop.Helper.getStringAsFloat(quantity));
+            var quantityInUnitsField = $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity');
+            
+            quantityInUnitsField.val(foodcoopshop.Helper.getStringAsFloat(quantity));
             
             $('#' + dialogId + ' b').html(unitName);
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
@@ -1692,6 +1694,16 @@ foodcoopshop.Admin = {
             quantityString.html(newHtml);
             label += 'von ' + row.find('td:nth-child(10)').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
+            
+            var stepValue = '0.001';
+            var minValue = '0.001';
+            switch(unitName) {
+                case 'g':
+                    stepValue = 1;
+                    minValue = 1;
+            }
+            quantityInUnitsField.attr('step', stepValue);
+            quantityInUnitsField.attr('min', minValue);
             
             var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html(); 
             $('#' + dialogId + ' li.price-per-unit-base-info').html('Basis-Preis: ' + pricePerUnitBaseInfo);
