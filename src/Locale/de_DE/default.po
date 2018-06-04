@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 12:09+0200\n"
-"PO-Revision-Date: 2018-06-04 12:10+0200\n"
+"POT-Creation-Date: 2018-06-04 14:34+0200\n"
+"PO-Revision-Date: 2018-06-04 14:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -87,8 +87,83 @@ msgstr "Aktuelles"
 msgid "sign_out"
 msgstr "Abmelden"
 
+msgid "route_accept_terms_of_use"
+msgstr "nutzungsbedingungen-akzeptieren"
+
+msgid "route_manufacturer_detail"
+msgstr "hersteller"
+
+msgid "route_news"
+msgstr "aktuelles"
+
+msgid "route_content"
+msgstr "content"
+
+msgid "route_terms_of_use"
+msgstr "nutzungsbedingungen"
+
+msgid "route_privacy_policy"
+msgstr "datenschutzerklaerung"
+
+msgid "route_list_of_allergens"
+msgstr "allergenliste"
+
+msgid "route_manufacturer_list"
+msgstr "hersteller"
+
+msgid "route_cart"
+msgstr "warenkorb"
+
+msgid "route_cart_show"
+msgstr "anzeigen"
+
+msgid "route_cart_finish"
+msgstr "abschliessen"
+
+msgid "route_cart_finished"
+msgstr "abgeschlossen"
+
+msgid "route_all_products"
+msgstr "alle-produkte"
+
+msgid "route_category"
+msgstr "kategorie"
+
 msgid "route_sign_in"
 msgstr "anmelden"
 
+msgid "route_sign_out"
+msgstr "abmelden"
+
 msgid "route_registration"
 msgstr "registrierung"
+
+msgid "route_generate_new_password"
+msgstr "neues-passwort-generieren"
+
+msgid "route_request_new_password"
+msgstr "neues-passwort-anfordern"
+
+msgid "route_news_list"
+msgstr "aktuelles"
+
+msgid "route_news_detail"
+msgstr "aktuelles"
+
+msgid "routes_product"
+msgstr "produkt"
+
+msgid "route_registration_successful"
+msgstr "registrierung/abgeschlossen"
+
+msgid "route_information_about_right_of_withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+msgid "route_new_products"
+msgstr "neue-produkte"
+
+msgid "route_search"
+msgstr "suche"
+
+msgid "route_product"
+msgstr "produkt"

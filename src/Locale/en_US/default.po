@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 12:09+0200\n"
-"PO-Revision-Date: 2018-06-04 12:10+0200\n"
+"POT-Creation-Date: 2018-06-04 14:34+0200\n"
+"PO-Revision-Date: 2018-06-04 14:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -87,8 +87,83 @@ msgstr "News"
 msgid "sign_out"
 msgstr "Sign out"
 
+msgid "route_accept_terms_of_use"
+msgstr "terms-of-use"
+
+msgid "route_manufacturer_detail"
+msgstr "manufacturer"
+
+msgid "route_news"
+msgstr "news"
+
+msgid "route_content"
+msgstr "content"
+
+msgid "route_terms_of_use"
+msgstr "terms of use"
+
+msgid "route_privacy_policy"
+msgstr "privacy-policy"
+
+msgid "route_list_of_allergens"
+msgstr "list-of-allergens"
+
+msgid "route_manufacturer_list"
+msgstr "manufacturers"
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "route_cart_show"
+msgstr "show"
+
+msgid "route_cart_finish"
+msgstr "finish"
+
+msgid "route_cart_finished"
+msgstr "finished"
+
+msgid "route_all_products"
+msgstr "all-products"
+
+msgid "route_category"
+msgstr "category"
+
 msgid "route_sign_in"
 msgstr "sign-in"
 
+msgid "route_sign_out"
+msgstr "sign-out"
+
 msgid "route_registration"
 msgstr "register"
+
+msgid "route_generate_new_password"
+msgstr "generate-new-password"
+
+msgid "route_request_new_password"
+msgstr "request-new-password"
+
+msgid "route_news_list"
+msgstr "news"
+
+msgid "route_news_detail"
+msgstr "news"
+
+msgid "routes_product"
+msgstr "product"
+
+msgid "route_registration_successful"
+msgstr "registration-successful"
+
+msgid "route_information_about_right_of_withdrawal"
+msgstr "information-about-right-of-withdrawal"
+
+msgid "route_new_products"
+msgstr "new-products"
+
+msgid "route_search"
+msgstr "search"
+
+msgid "route_product"
+msgstr "product"

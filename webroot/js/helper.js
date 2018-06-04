@@ -382,7 +382,7 @@ foodcoopshop.Helper = {
                         'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/logout';
+                            document.location.href = '/' + translatedJs.helper.logoutRoute;
                         }
                     },
                     close: function (event, ui) {

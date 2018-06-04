@@ -34,7 +34,8 @@ class LocalizedController extends Controller
         $string = [
             'helper' => [
                 'logoutInfoText' => __('really_sign_out?'),
-                'logout' => __('sign_out?')
+                'logout' => __('sign_out?'),
+                'logoutRoute' => __('route_sign_out')
             ]
         ];
         return $string;
