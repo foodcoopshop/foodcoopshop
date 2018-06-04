@@ -26,7 +26,7 @@ $this->element('addScript', ['script' =>
     $btnClass = 'btn-success';
     ?>
   
-  <h1>Anmelden</h1>
+  <h1><?php echo __('sign_in'); ?></h1>
   
   <form id="LoginForm" method="post" accept-charset="utf-8">
         

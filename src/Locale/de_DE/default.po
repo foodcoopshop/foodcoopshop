@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 10:45+0200\n"
-"PO-Revision-Date: 2018-06-04 10:50+0200\n"
+"POT-Creation-Date: 2018-06-04 11:07+0200\n"
+"PO-Revision-Date: 2018-06-04 11:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -14,6 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
+
+msgid "sign_in"
+msgstr "Anmelden"
 
 msgid "really_sign_out?"
 msgstr "Willst du dich wirklich abmelden?"
@@ -35,9 +38,6 @@ msgstr "und Cookie akzeptieren"
 
 msgid "forgot_password?"
 msgstr "Passwort vergessen?"
-
-msgid "sign_in"
-msgstr "Anmelden"
 
 msgid "create_account"
 msgstr "Mitgliedskonto erstellen"
@@ -75,17 +75,11 @@ msgstr "Ich akzeptiere die"
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
-msgid "News"
+msgid "news"
 msgstr "Aktuelles"
 
-#~ msgid "Do you really want to sign out?"
-#~ msgstr "Willst du dich wirklich abmelden?"
+msgid "route_sign_in"
+msgstr "anmelden"
 
-#~ msgid "Sign in"
-#~ msgstr "Anmelden"
-
-#~ msgid "City"
-#~ msgstr "Ort"
-
-#~ msgid "I want to receive an order reminder e-mail every week."
-#~ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden."
+msgid "route_registration"
+msgstr "registrierung"

@@ -49,8 +49,8 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/', ['controller' => 'pages', 'action' => 'home']);
 
-    $routes->connect('/anmelden', ['controller' => 'Customers', 'action' => 'login']);
-    $routes->connect('/registrierung', ['controller' => 'Customers', 'action' => 'login']);
+    $routes->connect('/'.__('route_sign_in'), ['controller' => 'Customers', 'action' => 'login']);
+    $routes->connect('/'.__('route_registration'), ['controller' => 'Customers', 'action' => 'login']);
     $routes->connect('/registrierung/abgeschlossen', ['controller' => 'Customers', 'action' => 'registrationSuccessful']);
     $routes->connect('/logout', ['controller' => 'Customers', 'action' => 'logout']);
     $routes->connect('/Informationen-ueber-Ruecktrittsrecht', ['controller' => 'Carts', 'action' => 'generateCancellationInformationPdf']);

@@ -182,7 +182,7 @@ class CustomersController extends FrontendController
 
     public function login()
     {
-        $this->set('title_for_layout', 'Anmelden');
+        $this->set('title_for_layout', __('sign_in'));
 
         /**
          * login start

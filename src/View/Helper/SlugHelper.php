@@ -148,7 +148,7 @@ class SlugHelper extends Helper
 
     public function getLogin()
     {
-        return '/anmelden';
+        return '/'.__('route_sign_in');
     }
 
     public function getLogout()
@@ -158,7 +158,7 @@ class SlugHelper extends Helper
 
     public function getRegistration()
     {
-        return '/registrierung';
+        return '/'.__('route_registration');
     }
 
     public function getMyTimebasedCurrencyBalanceForManufacturers()

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 10:43+0200\n"
-"PO-Revision-Date: 2018-06-04 10:49+0200\n"
+"POT-Creation-Date: 2018-06-04 11:07+0200\n"
+"PO-Revision-Date: 2018-06-04 11:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -14,6 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
+
+msgid "sign_in"
+msgstr "Sign in"
 
 msgid "really_sign_out?"
 msgstr "Do you really want to sign out?"
@@ -35,9 +38,6 @@ msgstr "and accept cookie"
 
 msgid "forgot_password?"
 msgstr "Forgot password?"
-
-msgid "sign_in"
-msgstr "Sign in"
 
 msgid "create_account"
 msgstr "Create account"
@@ -75,5 +75,11 @@ msgstr "I accept the"
 msgid "terms_of_use"
 msgstr "terms of use"
 
-msgid "News"
-msgstr ""
+msgid "news"
+msgstr "News"
+
+msgid "route_sign_in"
+msgstr "sign-in"
+
+msgid "route_registration"
+msgstr "register"

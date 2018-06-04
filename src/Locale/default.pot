@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 10:45+0200\n"
+"POT-Creation-Date: 2018-06-04 11:07+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "sign_in"
+msgstr ""
 
 msgid "really_sign_out?"
 msgstr ""
@@ -33,9 +36,6 @@ msgid "and_accept_cookie"
 msgstr ""
 
 msgid "forgot_password?"
-msgstr ""
-
-msgid "sign_in"
 msgstr ""
 
 msgid "create_account"
@@ -74,6 +74,12 @@ msgstr ""
 msgid "terms_of_use"
 msgstr ""
 
-msgid "News"
+msgid "news"
+msgstr ""
+
+msgid "route_sign_in"
+msgstr ""
+
+msgid "route_registration"
 msgstr ""
 
