@@ -72,8 +72,11 @@ use Cake\Core\Configure;
         Configure::read('app.jsNamespace').".Helper.initAnystretch();"
     ]);
 
-    echo $this->fetch('script'); // all scripts from layouts
-
+    $scripts = $this->fetch('script');
+    if ($scripts != '') {
+        echo $this->Html->wrapJavascriptBlock($scripts);
+    }
+    
 ?>
 
 </body>
