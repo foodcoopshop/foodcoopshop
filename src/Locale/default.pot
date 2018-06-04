@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 14:48+0200\n"
+"POT-Creation-Date: 2018-06-04 15:08+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -89,13 +89,37 @@ msgstr ""
 msgid "manufacturers"
 msgstr ""
 
+msgid "news"
+msgstr ""
+
 msgid "admin_area"
 msgstr ""
 
 msgid "manufacturer_area"
 msgstr ""
 
-msgid "news"
+msgid "new"
+msgstr ""
+
+msgid "show_more"
+msgstr ""
+
+msgid "more_infos_to_product_{0}"
+msgstr ""
+
+msgid "manufacturer"
+msgstr ""
+
+msgid "edit_product"
+msgstr ""
+
+msgid "deposit"
+msgstr ""
+
+msgid "from_which_{0}_percent"
+msgstr ""
+
+msgid "unit"
 msgstr ""
 
 msgid "sign_out"

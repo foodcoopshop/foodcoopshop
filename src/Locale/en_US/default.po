@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 14:48+0200\n"
-"PO-Revision-Date: 2018-06-04 14:49+0200\n"
+"POT-Creation-Date: 2018-06-04 15:08+0200\n"
+"PO-Revision-Date: 2018-06-04 15:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 
 msgid "new_products"
 msgstr "New products"
@@ -90,14 +90,38 @@ msgstr "Products"
 msgid "manufacturers"
 msgstr "Manufacturers"
 
+msgid "news"
+msgstr "News"
+
 msgid "admin_area"
 msgstr "Admin area"
 
 msgid "manufacturer_area"
 msgstr "Manufacturer area"
 
-msgid "news"
-msgstr "News"
+msgid "new"
+msgstr "New"
+
+msgid "show_more"
+msgstr "Show more"
+
+msgid "more_infos_to_product_{0}"
+msgstr "More infos to product {0}"
+
+msgid "manufacturer"
+msgstr "Manufacturer"
+
+msgid "edit_product"
+msgstr "Edit product"
+
+msgid "deposit"
+msgstr "deposit"
+
+msgid "from_which_{0}_percent"
+msgstr "from which {0} %"
+
+msgid "unit"
+msgstr "Unit"
 
 msgid "sign_out"
 msgstr "Sign out"

@@ -30,8 +30,8 @@ if (!$largeImageExists) {
     echo '</a>';
 }
 if ($product['is_new']) {
-    echo '<a href="/neue-produkte" class="image-badge btn btn-success" title="Neu">
-                    <i class="fa fa-star gold"></i> Neu
+    echo '<a href="/'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('new').'">
+                    <i class="fa fa-star gold"></i> '.__('new').'
                 </a>';
 }
     echo '</div>';
@@ -49,18 +49,18 @@ if ($product['description_short'] != '') {
 
 if ($product['description'] != '') {
     echo $this->Html->link(
-        '<i class="fa"></i> Mehr anzeigen',
+        '<i class="fa"></i> '.__('show_more'),
         'javascript:void(0);',
         [
         'class' => 'toggle-link',
-        'title' => 'Mehr Infos zu "'.$product['name'].'" anzeigen',
+        'title' => __('more_infos_to_product_{0}', [$product['name']]),
         'escape' => false
         ]
     );
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
-    echo '<br />Hersteller: ';
+    echo '<br />'.__('manufacturer').': ';
     echo $this->Html->link(
         $product['ManufacturersName'],
         $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
@@ -71,7 +71,7 @@ if ($product['description'] != '') {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
             [
-                'title' => 'Produkt bearbeiten'
+                'title' => __('edit_product')
             ],
             $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product'])
         );
@@ -134,14 +134,14 @@ if ($product['description'] != '') {
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
-                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> Pfand</div>';
+                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsEuro($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
                 }
                 if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
                         'seconds' => $attribute['timebased_currency_seconds'],
-                        'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
+                        'labelPrefix' => __('from_which_{0}_percent', [$product['timebased_currency_max_percentage']]) . '% '
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($attribute['ProductAttributeShops']['tax']) . '</div>';
@@ -191,7 +191,7 @@ if ($product['description'] != '') {
             }
             echo $priceHtml;
                 if ($product['deposit']) {
-                    echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> Pfand</div>';
+                    echo '<div class="deposit">+ <b>' . $this->Html->formatAsEuro($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
                 if (!$this->request->getSession()->read('Auth.shopOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
@@ -199,7 +199,7 @@ if ($product['description'] != '') {
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],
                         'seconds' => $product['timebased_currency_seconds'],
-                        'labelPrefix' => 'davon ' . $product['timebased_currency_max_percentage'] . '% '
+                        'labelPrefix' => __('from_which_{0}_percent', [$product['timebased_currency_max_percentage']]) . '% '
                     ]);
                 }
                 echo '<div class="tax">'. $this->Html->formatAsEuro($product['tax']) . '</div>';
@@ -224,7 +224,7 @@ if ($product['description'] != '') {
             $unityStrings[] = $unitString;
         }
         if (!empty($unityStrings)) {
-            echo '<div class="unity">Einheit: <span class="value">' . join(', ', $unityStrings).'</span></div>';
+            echo '<div class="unity">'.__('unit').': <span class="value">' . join(', ', $unityStrings).'</span></div>';
         }
     }
 
