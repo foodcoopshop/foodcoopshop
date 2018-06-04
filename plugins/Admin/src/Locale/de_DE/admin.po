@@ -1,0 +1,25 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-06-04 12:00+0200\n"
+"PO-Revision-Date: 2018-06-04 11:41+0200\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.7\n"
+
+msgid "to_the_admin_area"
+msgstr "im Admin-Beriche"
+
+msgid "to_the_manufacturer_area"
+msgstr "im Hersteller-Bereich"
+
+msgid "welcome"
+msgstr "Willkommen"
