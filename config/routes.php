@@ -67,7 +67,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/'.__('route_news_detail').'/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
     $routes->connect('/'.__('route_search').'/*', ['controller' => 'Categories', 'action' => 'search']);
     $routes->connect('/'.__('route_category').'/*', ['controller' => 'Categories', 'action' => 'detail']);
-    $routes->connect('/'.__('route_product').'*/', ['controller' => 'Products', 'action' => 'detail']);
+    $routes->connect('/'.__('route_product').'/*', ['controller' => 'Products', 'action' => 'detail']);
     $routes->connect('/'.__('route_manufacturer_list'), ['controller' => 'Manufacturers', 'action' => 'index']);
     $routes->connect('/'.__('route_manufacturer_detail').'/:manufacturerSlug/'.__('news'), ['controller' => 'BlogPosts', 'action' => 'index']);
     $routes->connect('/'.__('route_manufacturer_detail').'/*', ['controller' => 'Manufacturers', 'action' => 'detail']);
