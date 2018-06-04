@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-06-04 17:09+0200\n"
-"PO-Revision-Date: 2018-06-04 17:10+0200\n"
+"PO-Revision-Date: 2018-06-04 17:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -119,7 +119,6 @@ msgstr "Angemeldet bleiben"
 msgid "and_accept_cookie"
 msgstr "und Cookie akzeptieren"
 
-#, fuzzy
 msgid "Forgot_password?"
 msgstr "Passwort vergessen?"
 
@@ -194,33 +193,27 @@ msgstr "Umsatzsteuer"
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
 
-#, fuzzy
 msgid "Products"
 msgstr "Produkte"
 
-#, fuzzy
 msgid "Manufacturers"
 msgstr "Hersteller"
 
 msgid "News"
 msgstr "Aktuelles"
 
-#, fuzzy
 msgid "Admin_area"
 msgstr "Admin-Bereich"
 
-#, fuzzy
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
 
-#, fuzzy
 msgid "Amount"
 msgstr "Anzahl"
 
 msgid "available"
 msgstr "verfügbar"
 
-#, fuzzy
 msgid "Move_in_cart"
 msgstr "In den Warenkorb"
 
@@ -230,7 +223,6 @@ msgstr "Derzeit leider nicht verfügbar"
 msgid "New"
 msgstr "Neu"
 
-#, fuzzy
 msgid "Show_more"
 msgstr "Mehr anzeigen"
 
@@ -332,3 +324,39 @@ msgstr "suche"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "news"
+#~ msgstr "Aktuelles"
+
+#~ msgid "manufacturers"
+#~ msgstr "Hersteller"
+
+#~ msgid "create_account"
+#~ msgstr "Mitgliedskonto erstellen"
+
+#~ msgid "currently_not_on_stock"
+#~ msgstr "Derzeit leider nicht verfügbar"
+
+#~ msgid "cart"
+#~ msgstr "Warenkorb"
+
+#~ msgid "write_message_to_pick_up_team?"
+#~ msgstr "Nachricht an Abholdienst schreiben?"
+
+#~ msgid "city"
+#~ msgstr "Stadt"
+
+#~ msgid "i_accept_the_{0}"
+#~ msgstr "Ich akzeptiere die {0}"
+
+#~ msgid "sign_in"
+#~ msgstr "Anmelden"
+
+#~ msgid "unit"
+#~ msgstr "Einheit"
+
+#~ msgid "from_which_in"
+#~ msgstr "Davon in"
+
+#~ msgid "vat"
+#~ msgstr "Umsatzsteuer"
