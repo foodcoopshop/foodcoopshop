@@ -166,16 +166,16 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $order = $this->preparePricePerUnitOrder();
         
-        $newQuantity = 800;
+        $newQuantity = 800.584;
         $this->editOrderDetailQuantity($order->order_details[0]->id_order_detail, $newQuantity, false);
         
         $changedOrder = $this->getOrderWithUnitAssociations($order->id_order);
         
-        $this->assertEquals(12, $changedOrder->total_paid);
-        $this->assertEquals(12, $changedOrder->total_paid_tax_incl);
-        $this->assertEquals(10.9, $changedOrder->total_paid_tax_excl);
-        $this->assertEquals(12, $changedOrder->order_details[0]->total_price_tax_incl);
-        $this->assertEquals(10.9, $changedOrder->order_details[0]->total_price_tax_excl);
+        $this->assertEquals(12.00876, $changedOrder->total_paid);
+        $this->assertEquals(12.00876, $changedOrder->total_paid_tax_incl);
+        $this->assertEquals(10.90876, $changedOrder->total_paid_tax_excl);
+        $this->assertEquals(12.00876, $changedOrder->order_details[0]->total_price_tax_incl);
+        $this->assertEquals(10.90876, $changedOrder->order_details[0]->total_price_tax_excl);
         $this->assertEquals($newQuantity, $changedOrder->order_details[0]->order_detail_unit->product_quantity_in_units);
         
         $this->assertEquals(0.55, $changedOrder->order_details[0]->order_detail_tax->unit_amount);
@@ -187,13 +187,13 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst: Forelle : Stück', [$newQuantity, 'Demo Superadmin', 'Der Basis-Preis beträgt 1,50&nbsp;€ / 100 g'], $expectedToEmails, $expectedCcEmails);
     }
     
-    public function testEditOrderDetailQuantityAsSuperAdminDoNotChangePrice() 
+    public function testEditOrderDetailQuantityAsSuperadminDoNotChangePrice() 
     {
         $this->loginAsSuperadmin();
         
         $order = $this->preparePricePerUnitOrder();
         
-        $newQuantity = 800;
+        $newQuantity = 800.854;
         $this->editOrderDetailQuantity($order->order_details[0]->id_order_detail, $newQuantity, true);
         
         $changedOrder = $this->getOrderWithUnitAssociations($order->id_order);
