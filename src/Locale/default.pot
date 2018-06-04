@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-01 16:15+0200\n"
+"POT-Creation-Date: 2018-06-04 10:45+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,58 +14,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Do you really want to sign out?"
+msgid "really_sign_out?"
 msgstr ""
 
-msgid "Sign out?"
+msgid "sign_out?"
 msgstr ""
 
-msgid "Stay signed in"
+msgid "email"
 msgstr ""
 
-msgid "and accept cookie"
+msgid "password"
 msgstr ""
 
-msgid "Forgot password?"
+msgid "stay_signed_in"
 msgstr ""
 
-msgid "Sign in"
+msgid "and_accept_cookie"
 msgstr ""
 
-msgid "Create account"
+msgid "forgot_password?"
 msgstr ""
 
-msgid "Firstname"
+msgid "sign_in"
 msgstr ""
 
-msgid "Lastname"
+msgid "create_account"
 msgstr ""
 
-msgid "Street"
+msgid "firstname"
 msgstr ""
 
-msgid "Additional information"
+msgid "lastname"
 msgstr ""
 
-msgid "Zip"
+msgid "street"
 msgstr ""
 
-msgid "City"
+msgid "additional_information"
 msgstr ""
 
-msgid "Mobile"
+msgid "zip"
 msgstr ""
 
-msgid "Phone"
+msgid "city"
 msgstr ""
 
-msgid "I want to receive an order reminder e-mail every week."
+msgid "mobile"
 msgstr ""
 
-msgid "I accept the"
+msgid "phone"
 msgstr ""
 
-msgid "terms of use"
+msgid "want_to_receive_reminder_emails?"
+msgstr ""
+
+msgid "i_accept_the"
+msgstr ""
+
+msgid "terms_of_use"
 msgstr ""
 
 msgid "News"

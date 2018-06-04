@@ -34,8 +34,8 @@ class LocalizedController extends Controller
         $string = [
             'helper' => [
                 'initLogoutButton' => [
-                    'logoutInfoText' => __('Do you really want to sign out?'),
-                    'logout' => __('Sign out?')
+                    'logoutInfoText' => __('really_sign_out?'),
+                    'logout' => __('sign_out?')
                 ]
             ]
         ];

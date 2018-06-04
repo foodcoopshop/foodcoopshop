@@ -1,0 +1,79 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-06-04 10:43+0200\n"
+"PO-Revision-Date: 2018-06-04 10:49+0200\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.7\n"
+
+msgid "really_sign_out?"
+msgstr "Do you really want to sign out?"
+
+msgid "sign_out?"
+msgstr "Sign out?"
+
+msgid "email"
+msgstr "E-Mail"
+
+msgid "password"
+msgstr "Password"
+
+msgid "stay_signed_in"
+msgstr "Stay signed in"
+
+msgid "and_accept_cookie"
+msgstr "and accept cookie"
+
+msgid "forgot_password?"
+msgstr "Forgot password?"
+
+msgid "sign_in"
+msgstr "Sign in"
+
+msgid "create_account"
+msgstr "Create account"
+
+msgid "firstname"
+msgstr "First name"
+
+msgid "lastname"
+msgstr "Last name"
+
+msgid "street"
+msgstr "Street"
+
+msgid "additional_information"
+msgstr "Additional information"
+
+msgid "zip"
+msgstr "Zip"
+
+msgid "city"
+msgstr "City"
+
+msgid "mobile"
+msgstr "Mobile"
+
+msgid "phone"
+msgstr "Phone"
+
+msgid "want_to_receive_reminder_emails?"
+msgstr "I want to receive an order reminder e-mail every week."
+
+msgid "i_accept_the"
+msgstr "I accept the"
+
+msgid "terms_of_use"
+msgstr "terms of use"
+
+msgid "News"
+msgstr ""

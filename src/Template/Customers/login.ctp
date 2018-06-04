@@ -31,13 +31,13 @@ $this->element('addScript', ['script' =>
   <form id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          echo $this->Form->control('email', ['label' => 'E-Mail']);
-          echo $this->Form->control('passwd', ['label' => 'Passwort']);
+          echo $this->Form->control('email', ['label' => __('email')]);
+          echo $this->Form->control('passwd', ['label' => __('password')]);
 
           echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
-                  'label' => __('Stay signed in').'<br /><small>'.__('and accept cookie').'</small>',
+                  'label' => __('stay_signed_in').'<br /><small>'.__('and_accept_cookie').'</small>',
                   'escape' => false
               ]);
               echo '</div>';
@@ -45,11 +45,11 @@ $this->element('addScript', ['script' =>
         
         <div class="sc"></div>
         <?php
-            echo '<a style="margin-top: 10px;float: left;" href="/neues-passwort-anfordern">'.__('Forgot password?').'</a>';
+            echo '<a style="margin-top: 10px;float: left;" href="/neues-passwort-anfordern">'.__('forgot_password?').'</a>';
         ?>
          
         <div class="sc"></div>
-        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fa fa-sign-in fa-lg"></i> <?php echo __('Sign in'); ?></button>
+        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fa fa-sign-in fa-lg"></i> <?php echo __('sign_in'); ?></button>
         
   </form>
   
@@ -60,7 +60,7 @@ $this->element('addScript', ['script' =>
         ]);
     ?>
       <div class="sc"></div>
-      <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;"><?php echo __('Create account'); ?></h1>
+      <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;"><?php echo __('create_account'); ?></h1>
       
             <?php
             echo $this->Form->create(
@@ -81,27 +81,27 @@ $this->element('addScript', ['script' =>
 
                   echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
 
-                  echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here
-                  echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
+                  echo $this->Form->control('Customers.firstname', ['label' => __('firstname'), 'required' => true]); // required should not be necessary here
+                  echo $this->Form->control('Customers.lastname', ['label' => __('lastname'), 'required' => true]); // required should not be necessary here
 
-                  echo $this->Form->control('Customers.address_customer.address1', ['label' => __('Street')]);
-                  echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional information')]);
+                  echo $this->Form->control('Customers.address_customer.address1', ['label' => __('street')]);
+                  echo $this->Form->control('Customers.address_customer.address2', ['label' => __('additional_information')]);
 
-                  echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
-                  echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);
+                  echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('zip')]);
+                  echo $this->Form->control('Customers.address_customer.city', ['label' => __('city')]);
 
-                  echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('Mobile')]);
-                  echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
+                  echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('mobile')]);
+                  echo $this->Form->control('Customers.address_customer.phone', ['label' => __('phone')]);
 
             if (Configure::read('app.emailOrderReminderEnabled')) {
-                echo $this->Form->control('Customers.newsletter', ['label' => __('I want to receive an order reminder e-mail every week.'), 'type' => 'checkbox']);
+                echo $this->Form->control('Customers.newsletter', ['label' => __('want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
             }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
                   echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                      'label' => __('I accept the').'<a href="#terms-of-use">'.__('terms of use').'</a>',
+                      'label' => __('i_accept_the').'<a href="#terms-of-use">'.__('terms_of_use').'</a>',
                       'type' => 'checkbox',
                       'escape' => false
                   ]);
@@ -110,7 +110,7 @@ $this->element('addScript', ['script' =>
               
               <div class="sc"></div>
               <br />
-              <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> <?php echo __('Create account'); ?></button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> <?php echo __('create_account'); ?></button>
           
           </div>
         <?php echo $this->Form->end(); ?>
