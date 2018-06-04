@@ -101,7 +101,7 @@ $this->element('addScript', ['script' =>
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
                   echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                      'label' => __('i_accept_the').'<a href="#terms-of-use">'.__('terms_of_use').'</a>',
+                      'label' => __('i_accept_the').' <a href="#terms-of-use">'.__('terms_of_use').'</a>',
                       'type' => 'checkbox',
                       'escape' => false
                   ]);
