@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 14:34+0200\n"
-"PO-Revision-Date: 2018-06-04 14:35+0200\n"
+"POT-Creation-Date: 2018-06-04 14:48+0200\n"
+"PO-Revision-Date: 2018-06-04 14:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -15,14 +15,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
 
+msgid "new_products"
+msgstr "New products"
+
 msgid "sign_in"
 msgstr "Sign in"
+
+msgid "all_products"
+msgstr "All products"
 
 msgid "really_sign_out?"
 msgstr "Do you really want to sign out?"
 
 msgid "sign_out?"
 msgstr "Sign out?"
+
+msgid "route_sign_out"
+msgstr "sign-out"
 
 msgid "email"
 msgstr "E-Mail"
@@ -75,6 +84,12 @@ msgstr "I accept the"
 msgid "terms_of_use"
 msgstr "terms of use"
 
+msgid "products"
+msgstr "Products"
+
+msgid "manufacturers"
+msgstr "Manufacturers"
+
 msgid "admin_area"
 msgstr "Admin area"
 
@@ -123,6 +138,9 @@ msgstr "finish"
 msgid "route_cart_finished"
 msgstr "finished"
 
+msgid "route_new_products"
+msgstr "new-products"
+
 msgid "route_all_products"
 msgstr "all-products"
 
@@ -131,9 +149,6 @@ msgstr "category"
 
 msgid "route_sign_in"
 msgstr "sign-in"
-
-msgid "route_sign_out"
-msgstr "sign-out"
 
 msgid "route_registration"
 msgstr "register"
@@ -158,9 +173,6 @@ msgstr "registration-successful"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "information-about-right-of-withdrawal"
-
-msgid "route_new_products"
-msgstr "new-products"
 
 msgid "route_search"
 msgstr "search"

@@ -19,7 +19,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".
-    Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('Produkte');".
+    Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('".__('products')."');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"

@@ -18,20 +18,20 @@ use Cake\Core\Configure;
 $menu = [];
 if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
     $menu[] = [
-        'name' => 'Produkte', 'slug' => $this->Slug->getAllProducts(),
+        'name' => __('products'), 'slug' => $this->Slug->getAllProducts(),
         'children' => $categoriesForMenu
     ];
 }
 
 if (!empty($manufacturersForMenu)) {
     $menu[] = [
-        'name' => 'Hersteller', 'slug' => $this->Slug->getManufacturerList(),
+        'name' => __('manufacturers'), 'slug' => $this->Slug->getManufacturerList(),
         'children' => $manufacturersForMenu
     ];
 }
 
 $menu[] = [
-    'name' => 'Aktuelles', 'slug' => $this->Slug->getBlogList()
+    'name' => __('news'), 'slug' => $this->Slug->getBlogList()
 ];
 
 $menu = array_merge($menu, $this->Menu->buildPageMenu($pagesForHeader));

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 14:34+0200\n"
+"POT-Creation-Date: 2018-06-04 14:48+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,13 +14,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+msgid "new_products"
+msgstr ""
+
 msgid "sign_in"
+msgstr ""
+
+msgid "all_products"
 msgstr ""
 
 msgid "really_sign_out?"
 msgstr ""
 
 msgid "sign_out?"
+msgstr ""
+
+msgid "route_sign_out"
 msgstr ""
 
 msgid "email"
@@ -74,6 +83,12 @@ msgstr ""
 msgid "terms_of_use"
 msgstr ""
 
+msgid "products"
+msgstr ""
+
+msgid "manufacturers"
+msgstr ""
+
 msgid "admin_area"
 msgstr ""
 
@@ -122,6 +137,9 @@ msgstr ""
 msgid "route_cart_finished"
 msgstr ""
 
+msgid "route_new_products"
+msgstr ""
+
 msgid "route_all_products"
 msgstr ""
 
@@ -129,9 +147,6 @@ msgid "route_category"
 msgstr ""
 
 msgid "route_sign_in"
-msgstr ""
-
-msgid "route_sign_out"
 msgstr ""
 
 msgid "route_registration"
@@ -156,9 +171,6 @@ msgid "route_registration_successful"
 msgstr ""
 
 msgid "route_information_about_right_of_withdrawal"
-msgstr ""
-
-msgid "route_new_products"
 msgstr ""
 
 msgid "route_search"

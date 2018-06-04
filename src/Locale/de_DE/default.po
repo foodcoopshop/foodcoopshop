@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 14:34+0200\n"
-"PO-Revision-Date: 2018-06-04 14:34+0200\n"
+"POT-Creation-Date: 2018-06-04 14:48+0200\n"
+"PO-Revision-Date: 2018-06-04 14:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -15,14 +15,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.7\n"
 
+msgid "new_products"
+msgstr "Neue Produkte"
+
 msgid "sign_in"
 msgstr "Anmelden"
+
+msgid "all_products"
+msgstr "Alle Produkte"
 
 msgid "really_sign_out?"
 msgstr "Willst du dich wirklich abmelden?"
 
 msgid "sign_out?"
 msgstr "Abmelden?"
+
+msgid "route_sign_out"
+msgstr "abmelden"
 
 msgid "email"
 msgstr "E-Mail"
@@ -75,6 +84,12 @@ msgstr "Ich akzeptiere die"
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
+msgid "products"
+msgstr "Produkte"
+
+msgid "manufacturers"
+msgstr "Hersteller"
+
 msgid "admin_area"
 msgstr "Admin-Bereich"
 
@@ -123,6 +138,9 @@ msgstr "abschliessen"
 msgid "route_cart_finished"
 msgstr "abgeschlossen"
 
+msgid "route_new_products"
+msgstr "neue-produkte"
+
 msgid "route_all_products"
 msgstr "alle-produkte"
 
@@ -131,9 +149,6 @@ msgstr "kategorie"
 
 msgid "route_sign_in"
 msgstr "anmelden"
-
-msgid "route_sign_out"
-msgstr "abmelden"
 
 msgid "route_registration"
 msgstr "registrierung"
@@ -158,9 +173,6 @@ msgstr "registrierung/abgeschlossen"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
-
-msgid "route_new_products"
-msgstr "neue-produkte"
 
 msgid "route_search"
 msgstr "suche"
