@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 15:08+0200\n"
-"PO-Revision-Date: 2018-06-04 15:05+0200\n"
+"POT-Creation-Date: 2018-06-04 16:03+0200\n"
+"PO-Revision-Date: 2018-06-04 16:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -14,6 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.8\n"
+
+msgid "your_cart"
+msgstr "Dein Warenkorb"
+
+msgid "finish_cart"
+msgstr "Warenkorb abschließen"
+
+msgid "your_cart_was_empty"
+msgstr "Dein Warenkorb war leer"
 
 msgid "new_products"
 msgstr "Neue Produkte"
@@ -32,6 +41,68 @@ msgstr "Abmelden?"
 
 msgid "route_sign_out"
 msgstr "abmelden"
+
+msgid "found"
+msgstr "gefunden"
+
+msgid "your_cart_is_empty"
+msgstr "Dein Warenkorb ist leer"
+
+msgid "product_sum_including_vat"
+msgstr "Warenwert gesamt (inkl. USt.)"
+
+msgid "deposit_sum"
+msgstr "Pfand gesamt"
+
+msgid "from_which_in"
+msgstr "Davon in"
+
+msgid "including vat"
+msgstr "Enthaltene Umsatzsteuer"
+
+msgid "how_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+
+msgid "to_finish_order_click_here"
+msgstr ""
+"Um die Bestellung abzuschließen, klicke bitte auf \"Zahlungspflichtig "
+"bestellen\""
+
+msgid "the_amount_will_be_reduced_from_your_credit_balance"
+msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht"
+
+msgid "please_pay_when_picking_up_products"
+msgstr "Den Betrag bitte bei der Abholung in bar bezahlen"
+
+msgid "please_pick_up_your_products_on_{0}_at_{1}"
+msgstr ""
+"Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht "
+"in der Box rechts."
+
+msgid "general_terms_of_use"
+msgstr "AGB"
+
+msgid "i_accept_the_{0}"
+msgstr "Ich akzeptiere die {0}"
+
+msgid "right_of_withdrawal"
+msgstr "Rücktrittsrecht"
+
+msgid "i_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods"
+msgstr ""
+"Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht "
+"verderbliche Waren."
+
+msgid "write_message_to_pick_up_team?"
+msgstr "Nachricht an Abholdienst schreiben?"
+
+msgid "placeholder_message_order_comment"
+msgstr ""
+"Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die "
+"Hersteller sehen diese Nachricht nicht."
+
+msgid "order_button"
+msgstr "Zahlungspflichtig bestellen"
 
 msgid "email"
 msgstr "E-Mail"
@@ -78,9 +149,6 @@ msgstr "Telefon"
 msgid "want_to_receive_reminder_emails?"
 msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 
-msgid "i_accept_the"
-msgstr "Ich akzeptiere die"
-
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
@@ -99,13 +167,24 @@ msgstr "Admin-Bereich"
 msgid "manufacturer_area"
 msgstr "Hersteller-Bereich"
 
+msgid "amount"
+msgstr "Anzahl"
+
+msgid "available"
+msgstr "verfügbar"
+
+msgid "move_in_cart"
+msgstr "In den Warenkorb"
+
+msgid "currently_not_on_stock"
+msgstr "Derzeit leider nicht verfügbar"
+
 msgid "new"
 msgstr "Neu"
 
 msgid "show_more"
 msgstr "Mehr anzeigen"
 
-#, fuzzy
 msgid "more_infos_to_product_{0}"
 msgstr "Mehr Infos zu {0}"
 
@@ -118,7 +197,6 @@ msgstr "Produkt bearbeiten"
 msgid "deposit"
 msgstr "Pfand"
 
-#, fuzzy
 msgid "from_which_{0}_percent"
 msgstr "davon {0} %"
 

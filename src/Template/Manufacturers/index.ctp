@@ -23,7 +23,7 @@ $this->element('addScript', ['script' =>
 <h1>Hersteller
 <?php
 if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
-    echo '<span>'.$manufacturers->count() . ' gefunden</span>';
+    echo '<span>'.$manufacturers->count() . ' ' . __('found') . '</span>';
 }
 ?>
 </h1>

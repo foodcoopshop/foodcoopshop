@@ -16,7 +16,7 @@
 // render empty line is ok - to avoid jumping on attribute change
 $notAvailableInfoText = '';
 if ($stockAvailable == 0) {
-    $notAvailableInfoText = 'Derzeit leider nicht verfügbar.';
+    $notAvailableInfoText = __('currently_not_on_stock').'.';
 }
 echo '<div class="line">
         <span class="not-available-info">'.$notAvailableInfoText.'</span>

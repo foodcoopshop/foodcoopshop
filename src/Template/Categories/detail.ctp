@@ -36,7 +36,7 @@ if (!empty($blogPosts)) {
 }
 ?>
 
-<h1><?php echo $title_for_layout; ?> <span><?php echo count($products); ?> gefunden</span></h1>
+<h1><?php echo $title_for_layout; ?> <span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
 

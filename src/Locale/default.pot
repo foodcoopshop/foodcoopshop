@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 15:08+0200\n"
+"POT-Creation-Date: 2018-06-04 16:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "your_cart"
+msgstr ""
+
+msgid "finish_cart"
+msgstr ""
+
+msgid "your_cart_was_empty"
+msgstr ""
 
 msgid "new_products"
 msgstr ""
@@ -30,6 +39,60 @@ msgid "sign_out?"
 msgstr ""
 
 msgid "route_sign_out"
+msgstr ""
+
+msgid "found"
+msgstr ""
+
+msgid "your_cart_is_empty"
+msgstr ""
+
+msgid "product_sum_including_vat"
+msgstr ""
+
+msgid "deposit_sum"
+msgstr ""
+
+msgid "from_which_in"
+msgstr ""
+
+msgid "including vat"
+msgstr ""
+
+msgid "how_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr ""
+
+msgid "to_finish_order_click_here"
+msgstr ""
+
+msgid "the_amount_will_be_reduced_from_your_credit_balance"
+msgstr ""
+
+msgid "please_pay_when_picking_up_products"
+msgstr ""
+
+msgid "please_pick_up_your_products_on_{0}_at_{1}"
+msgstr ""
+
+msgid "general_terms_of_use"
+msgstr ""
+
+msgid "i_accept_the_{0}"
+msgstr ""
+
+msgid "right_of_withdrawal"
+msgstr ""
+
+msgid "i_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods"
+msgstr ""
+
+msgid "write_message_to_pick_up_team?"
+msgstr ""
+
+msgid "placeholder_message_order_comment"
+msgstr ""
+
+msgid "order_button"
 msgstr ""
 
 msgid "email"
@@ -77,9 +140,6 @@ msgstr ""
 msgid "want_to_receive_reminder_emails?"
 msgstr ""
 
-msgid "i_accept_the"
-msgstr ""
-
 msgid "terms_of_use"
 msgstr ""
 
@@ -96,6 +156,18 @@ msgid "admin_area"
 msgstr ""
 
 msgid "manufacturer_area"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "available"
+msgstr ""
+
+msgid "move_in_cart"
+msgstr ""
+
+msgid "currently_not_on_stock"
 msgstr ""
 
 msgid "new"

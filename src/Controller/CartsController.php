@@ -71,7 +71,7 @@ class CartsController extends FrontendController
 
     public function detail()
     {
-        $this->set('title_for_layout', 'Dein Warenkorb');
+        $this->set('title_for_layout', __('your_cart'));
         if (!$this->getRequest()->is('post')) {
             $this->Order = TableRegistry::getTableLocator()->get('Orders');
             $this->set('order', $this->Order->newEntity());
@@ -344,7 +344,7 @@ class CartsController extends FrontendController
             return;
         }
         
-        $this->set('title_for_layout', 'Warenkorb abschließen');
+        $this->set('title_for_layout', __('finish_cart'));
         $cart = $this->AppAuth->getCart();
 
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
@@ -369,7 +369,7 @@ class CartsController extends FrontendController
         // END check if no amount is 0
 
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
-            $this->Flash->error('Dein Warenkorb war leer.');
+            $this->Flash->error(__('your_cart_was_empty'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
         }
 

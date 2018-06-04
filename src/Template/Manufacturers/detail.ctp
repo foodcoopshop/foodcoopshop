@@ -31,7 +31,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 
 <?php
 if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
-    echo '<span>'.count($manufacturer['Products']) . ' gefunden</span>';
+    echo '<span>'.count($manufacturer['Products']) . ' ' . __('found') . '</span>';
 }
 ?>
 </h1>

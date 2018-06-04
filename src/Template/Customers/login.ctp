@@ -93,15 +93,16 @@ $this->element('addScript', ['script' =>
                   echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('mobile')]);
                   echo $this->Form->control('Customers.address_customer.phone', ['label' => __('phone')]);
 
-            if (Configure::read('app.emailOrderReminderEnabled')) {
-                echo $this->Form->control('Customers.newsletter', ['label' => __('want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
-            }
+                  if (Configure::read('app.emailOrderReminderEnabled')) {
+                      echo $this->Form->control('Customers.newsletter', ['label' => __('want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                  }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
+                  $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
                   echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                      'label' => __('i_accept_the').' <a href="#terms-of-use">'.__('terms_of_use').'</a>',
+                      'label' => __('i_accept_the_{0}', [$termsOfUseLink]),
                       'type' => 'checkbox',
                       'escape' => false
                   ]);

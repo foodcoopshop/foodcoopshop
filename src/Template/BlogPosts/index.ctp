@@ -24,7 +24,7 @@ $this->element('addScript', ['script' =>
 <?php if (isset($manufacturer->name)) {
     echo ' von ' . $manufacturer->name;
 } ?>
-<span><?php echo $blogPosts->count(); ?> gefunden</span></h1>
+<span><?php echo $blogPosts->count(); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
 foreach ($blogPosts as $blogPost) {

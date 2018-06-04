@@ -114,7 +114,7 @@ if ($product['description'] != '') {
 
         // every attribute has quantity = 0
         if (empty($preparedProductAttributes)) {
-            echo '<p>Derzeit leider nicht verfügbar.</p>';
+            echo '<p>'.__('currently_not_on_stock').'.</p>';
         }
 
         // render remaining attributes (with attribute "checked")
