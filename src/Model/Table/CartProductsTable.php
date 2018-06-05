@@ -99,7 +99,7 @@ class CartProductsTable extends AppTable
         
         // stock available check for product
         if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
-            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}', ['<b>' . $combinedAmount . '</b>', $product->product_lang->name, $product->stock_available->quantity]);
+            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->product_lang->name . '</b>', $product->stock_available->quantity]);
             return [
                 'status' => 0,
                 'msg' => $message,
