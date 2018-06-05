@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 10:52+0200\n"
-"PO-Revision-Date: 2018-06-05 10:56+0200\n"
+"POT-Creation-Date: 2018-06-05 11:48+0200\n"
+"PO-Revision-Date: 2018-06-05 11:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -351,6 +351,24 @@ msgstr "Imprint"
 msgid "Sign_out"
 msgstr "Sign out"
 
+msgid "Website"
+msgstr "Website"
+
+msgid "VAT_number"
+msgstr "VAT number"
+
+msgid "Commercial_register_number"
+msgstr "Commercial register number"
+
+msgid "Company_court"
+msgstr "Company court"
+
+msgid "Supervisory_authority"
+msgstr "Supervisory authority"
+
+msgid "Chamber"
+msgstr "Chamber"
+
 msgid "route_accept_terms_of_use"
 msgstr "terms-of-use"
 
@@ -407,6 +425,12 @@ msgstr "news"
 
 msgid "routes_product"
 msgstr "product"
+
+msgid "Access_denied_please_sign_in."
+msgstr "Access denied, please sign in."
+
+msgid "This_order_contains_the_variable_member_fee."
+msgstr "This order contains the variable member fee."
 
 msgid "route_registration_successful"
 msgstr "registration-successful"

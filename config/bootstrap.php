@@ -215,3 +215,8 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
 if (in_array(Configure::read('appDb.FCS_LOCALE'), array_keys(Configure::read('app.implementedLocales')))) {
     I18n::setLocale(Configure::read('appDb.FCS_LOCALE'));
 }
+
+// gettext not available in app_config
+define('ACCESS_DENIED_MESSAGE', __('Access_denied_please_sign_in.'));
+Configure::write('app.manufacturerComponensationInfoText', __('This_order_contains_the_variable_member_fee.'));
+
