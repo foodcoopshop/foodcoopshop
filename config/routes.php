@@ -77,12 +77,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/'.__('route_cart').'/'.__('route_cart_finished').'/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
     $routes->connect('/'.__('route_cart').'/:action/*', ['controller' => 'Carts']);
     
-    $routes->connect('/localized/strings/*', [
-        'controller' => 'Localized', 'action' => 'strings'
-    ])->setExtensions(['json']);
-    $routes->connect('/js/localized/*', [
-        'controller' => 'Localized', 'action' => 'renderAsJsFile'
-    ]);
+    $routes->connect('/js/localized/*', ['controller' => 'Localized', 'action' => 'renderAsJsFile']);
     
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
 
