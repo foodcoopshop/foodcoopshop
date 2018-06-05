@@ -199,10 +199,13 @@ Plugin::load('Admin', [
     'autoload' => true
 ]);
 
-date_default_timezone_set('Europe/Berlin');
-locale_set_default('de');
-setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
+
+if (in_array(Configure::read('app.locale'), array_keys(Configure::read('app.implementedLocales')))) {
+    locale_set_default(Configure::read('app.locale'));
+    setlocale(LC_ALL, Configure::read('app.locale').'.UTF-8');
+    I18n::setLocale(Configure::read('app.locale'));
+}
 
 TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
@@ -210,10 +213,6 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
         'routes' => true,
         'autoload' => true
     ]);
-}
-
-if (in_array(Configure::read('app.locale'), array_keys(Configure::read('app.implementedLocales')))) {
-    I18n::setLocale(Configure::read('app.locale'));
 }
 
 // gettext not available in app_config
