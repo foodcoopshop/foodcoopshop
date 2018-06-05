@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 17:09+0200\n"
-"PO-Revision-Date: 2018-06-04 17:13+0200\n"
+"POT-Creation-Date: 2018-06-05 08:49+0200\n"
+"PO-Revision-Date: 2018-06-05 08:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -44,6 +44,9 @@ msgstr "abmelden"
 
 msgid "Pick_up_day"
 msgstr "Abholtag"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
 
 msgid "found"
 msgstr "gefunden"

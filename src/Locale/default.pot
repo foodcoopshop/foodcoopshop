@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 17:09+0200\n"
+"POT-Creation-Date: 2018-06-05 08:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -42,6 +42,9 @@ msgid "route_sign_out"
 msgstr ""
 
 msgid "Pick_up_day"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
 msgid "found"
