@@ -67,13 +67,13 @@ header('Pragma: no-cache');
     
         <div id="header">
             <div class="logo-wrapper">
-                <a href="<?php echo $this->Slug->getHome(); ?>" title="Home">
+                <a href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
                     <img class="logo" src="/files/images/logo.jpg" />
                 </a>
             </div>
             <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
-                <form id="product-search" action="/suche">
-                    <input placeholder="Suche" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+                <form id="product-search" action="/<?php echo __('route_search');?>">
+                    <input placeholder="<?php echo __('Search'); ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
                 </form>
             <?php } ?>
