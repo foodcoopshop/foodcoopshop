@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 12:10+0200\n"
-"PO-Revision-Date: 2018-06-05 12:12+0200\n"
+"POT-Creation-Date: 2018-06-05 15:49+0200\n"
+"PO-Revision-Date: 2018-06-05 15:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -32,6 +32,9 @@ msgstr "Dein Warenkorb war leer"
 
 msgid "New_products"
 msgstr "Neue Produkte"
+
+msgid "Search"
+msgstr "Suche"
 
 msgid "Sign_in"
 msgstr "Anmelden"
@@ -113,6 +116,9 @@ msgstr "Anzeigen"
 
 msgid "Show_all_products"
 msgstr "Alle Produkte anzeigen"
+
+msgid "Welcome"
+msgstr "Willkommen"
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
@@ -336,6 +342,9 @@ msgstr "Kontodaten (Guthaben aufladen)"
 msgid "Bank_account_member_fee"
 msgstr "Kontodaten (Mitgliedsbeitrag)"
 
+msgid "DELIVERY_DAY"
+msgstr "ABHOLTAG"
+
 msgid "Products"
 msgstr "Produkte"
 
@@ -374,6 +383,9 @@ msgstr "davon {0} %"
 
 msgid "Unit"
 msgstr "Einheit"
+
+msgid "route_search"
+msgstr "suche"
 
 msgid "News_from"
 msgstr "Aktuelles von"
@@ -476,9 +488,6 @@ msgstr "registrierung/abgeschlossen"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
-
-msgid "route_search"
-msgstr "suche"
 
 msgid "route_product"
 msgstr "produkt"

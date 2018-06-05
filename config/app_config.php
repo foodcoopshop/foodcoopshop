@@ -140,10 +140,11 @@ return [
          * date of the last update of terms of use
          */
         'termsOfUseLastUpdate' => '2016-11-28',
-
+        
+        // no gettext available here to translate language names!
         'implementedLocales' => [
             'de_DE' => 'Deutsch',
-            'en_US' => 'Englisch'
+            'en_US' => 'English'
         ],
         
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),

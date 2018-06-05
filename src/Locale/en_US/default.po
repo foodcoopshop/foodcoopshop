@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 12:10+0200\n"
-"PO-Revision-Date: 2018-06-05 12:15+0200\n"
+"POT-Creation-Date: 2018-06-05 15:49+0200\n"
+"PO-Revision-Date: 2018-06-05 15:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -32,6 +32,9 @@ msgstr "Your cart was empty"
 
 msgid "New_products"
 msgstr "New products"
+
+msgid "Search"
+msgstr "Search"
 
 msgid "Sign_in"
 msgstr "Sign in"
@@ -112,6 +115,9 @@ msgstr "Show"
 
 msgid "Show_all_products"
 msgstr "Show all products"
+
+msgid "Welcome"
+msgstr "Welcome"
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "The desired amount {0} is not valid."
@@ -326,6 +332,9 @@ msgstr "Bank account (credit)"
 msgid "Bank_account_member_fee"
 msgstr "Bank account (member fee)"
 
+msgid "DELIVERY_DAY"
+msgstr "DELIVERY_DAY"
+
 msgid "Products"
 msgstr "Products"
 
@@ -364,6 +373,9 @@ msgstr "from which {0} %"
 
 msgid "Unit"
 msgstr "Unit"
+
+msgid "route_search"
+msgstr "search"
 
 msgid "News_from"
 msgstr "News from"
@@ -466,9 +478,6 @@ msgstr "registration-successful"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "information-about-right-of-withdrawal"
-
-msgid "route_search"
-msgstr "search"
 
 msgid "route_product"
 msgstr "product"

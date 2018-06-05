@@ -74,11 +74,12 @@ class PagesController extends FrontendController
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->set('title_for_layout', 'Willkommen');
+        $this->set('title_for_layout', __('Welcome'));
 
         $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
+        
     }
 
     public function detail()
