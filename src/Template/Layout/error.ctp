@@ -66,6 +66,7 @@ use Cake\Core\Configure;
     
 <?php
 
+    echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
 
     $this->element('addScript', ['script' =>

@@ -298,7 +298,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
 
             foodcoopshop.Helper.ajaxCall(
-                '/' + localizedJs.cart.routeCart + '/ajaxAdd/',
+                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
                 {
                     productId: productId,
                     amount: amount
@@ -350,7 +350,7 @@ foodcoopshop.Cart = {
             '<span class="right">' +
                 '<span class="delete"><a class="btn" title="Aus dem Warenkorb löschen?" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsEuro(price) + '</span>' +
-                (deposit > 0 ? '<span class="deposit">Pfand + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
+                (deposit > 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
                 (timebasedCurrencyHours ? '<span class="timebasedCurrencySeconds">' + foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(timebasedCurrencyHours) + '</span>'  : '') +
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsEuro(tax) + '</span>' +
             '</span>' +
@@ -446,7 +446,7 @@ foodcoopshop.Cart = {
             var button = $(this);
             foodcoopshop.Helper.disableButton(button);
             foodcoopshop.Helper.ajaxCall(
-                '/' + localizedJs.cart.routeCart + '/ajaxRemove/',
+                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxRemove/',
                 {
                     productId: productId
                 },
@@ -477,25 +477,25 @@ foodcoopshop.Cart = {
                 var dialogHtml = '';
                 var redirectUrl = '';
                 if (selectedValue == 'remove-all-products-from-cart') {
-                    title = localizedJs.cart.emptyCart + '?';
-                    dialogHtml = '<p>' + localizedJs.cart.reallyEmptyCart + '</p>';
-                    redirectUrl = '/' + localizedJs.cart.routeCart + '/emptyCart/';
+                    title = foodcoopshop.LocalizedJs.cart.emptyCart + '?';
+                    dialogHtml = '<p>' + foodcoopshop.LocalizedJs.cart.reallyEmptyCart + '</p>';
+                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart/';
                 } else {
-                    title = localizedJs.cart.loadPastOrder;
-                    dialogHtml = localizedJs.cart.loadPastOrderDescriptionHtml;
-                    redirectUrl = '/' + localizedJs.cart.routeCart + '/addOrderToCart/' + selectedValue;
+                    title = foodcoopshop.LocalizedJs.cart.loadPastOrder;
+                    dialogHtml = foodcoopshop.LocalizedJs.cart.loadPastOrderDescriptionHtml;
+                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart/' + selectedValue;
                 }
                 dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
                 
                 var buttons = {};
                 buttons['cancel'] = {
-                    text: localizedJs.cart.cancel,
+                    text: foodcoopshop.LocalizedJs.cart.cancel,
                     click: function() {
                         $(this).dialog('close');
                     }
                 };
                 buttons['yes'] = {
-                    text: localizedJs.cart.yes,
+                    text: foodcoopshop.LocalizedJs.cart.yes,
                     click: function() {
                         $('.ui-dialog .ajax-loader').show();
                         $('.ui-dialog button').attr('disabled', 'disabled');

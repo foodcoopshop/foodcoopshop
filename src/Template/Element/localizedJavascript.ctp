@@ -12,13 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-echo $this->MyHtml->scriptBlock(
-    $this->Html->wrapJavascriptBlock(
-        Configure::read('app.jsNamespace').".Helper.loadLocalizedJs('".I18n::getLocale()."');"
-    ),
-    ['inline' => true]
-);
+echo $this->Html->script(['/js/localized/' . I18n::getLocale()]);
+
 ?>

@@ -16,18 +16,9 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Http\Exception\NotFoundException;
 
 class LocalizedController extends Controller
 {
-    
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('RequestHandler', [
-            'enableBeforeRedirect' => false
-        ]);
-    }
     
     private function getStrings()
     {
@@ -51,22 +42,11 @@ class LocalizedController extends Controller
         return $strings;
     }
     
-    public function strings($locale)
-    {
-        if (!$this->request->is('json')) {
-            throw new NotFoundException();
-        }
-        
-        $this->RequestHandler->renderAs($this, 'json');
-        
-        $this->set('data', [
-            'localizedJs' => $this->getStrings(),
-            'status' => 1,
-        ]);
-        
-        $this->set('_serialize', 'data');
-        
+    public function renderAsJsFile() {
+        $this->viewBuilder()->setLayout('ajax');
+        $this->set('localizedJs', $this->getStrings());
     }
+    
 }
 
 ?>

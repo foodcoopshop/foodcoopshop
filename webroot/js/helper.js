@@ -24,21 +24,6 @@ foodcoopshop.Helper = {
         }
     },
     
-    loadLocalizedJs : function(locale) {
-        foodcoopshop.Helper.ajaxCall(
-            '/localized/strings/' + locale + '.json',
-            {},
-            {
-                onOk: function (data) {
-                    localizedJs = data.localizedJs;
-                },
-                onError: function (data) {
-                    console.log(data);
-                }
-            }
-        );        
-    },
-    
     initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');
@@ -367,10 +352,10 @@ foodcoopshop.Helper = {
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
             $('<div></div>').appendTo('body')
-                .html('<p>' + localizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: localizedJs.helper.logout,
+                    title: foodcoopshop.LocalizedJs.helper.logout,
                     dialogClass: 'logout-button',
                     autoOpen: true,
                     width: 400,
@@ -382,7 +367,7 @@ foodcoopshop.Helper = {
                         'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/' + localizedJs.helper.routeLogout;
+                            document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
                         }
                     },
                     close: function (event, ui) {

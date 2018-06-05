@@ -114,8 +114,8 @@ header('Pragma: no-cache');
     <div class="sc"></div>
     
 <?php
-    echo $this->element('renderJs', ['configs' => ['frontend']]);
     echo $this->element('localizedJavascript');
+    echo $this->element('renderJs', ['configs' => ['frontend']]);
     
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo $this->Html->scriptBlock(

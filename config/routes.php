@@ -80,6 +80,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/localized/strings/*', [
         'controller' => 'Localized', 'action' => 'strings'
     ])->setExtensions(['json']);
+    $routes->connect('/js/localized/*', [
+        'controller' => 'Localized', 'action' => 'renderAsJsFile'
+    ]);
     
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
 
