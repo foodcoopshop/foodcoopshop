@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 17:09+0200\n"
+"POT-Creation-Date: 2018-06-05 15:04+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,81 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Pick_up_day"
+msgstr ""
+
+msgid "Activities"
+msgstr ""
+
+msgid "Cancelled_products"
+msgstr ""
+
+msgid "Deposit returns"
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Ordered_products"
+msgstr ""
+
+msgid "My_data"
+msgstr ""
+
+msgid "Change_password"
+msgstr ""
+
+msgid "Blog_posts"
+msgstr ""
+
+msgid "Website_administration"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Order_lists"
+msgstr ""
+
+msgid "Manufacturers"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Deposit_account"
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Slideshow"
+msgstr ""
+
+msgid "Tax_rates"
+msgstr ""
+
+msgid "Financial_reports"
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
+msgid "My_products"
+msgstr ""
+
+msgid "My_profile"
+msgstr ""
+
+msgid "Contact_person"
 msgstr ""
 
 msgid "to_the_admin_area"

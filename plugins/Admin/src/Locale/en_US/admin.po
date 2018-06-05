@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-04 17:09+0200\n"
-"PO-Revision-Date: 2018-06-04 17:10+0200\n"
+"POT-Creation-Date: 2018-06-05 15:04+0000\n"
+"PO-Revision-Date: 2018-06-05 17:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -17,6 +17,81 @@ msgstr ""
 
 msgid "Pick_up_day"
 msgstr "Pick-up day"
+
+msgid "Activities"
+msgstr "Activities"
+
+msgid "Cancelled_products"
+msgstr "Cancelled products"
+
+msgid "Deposit returns"
+msgstr "Returned deposit"
+
+msgid "Orders"
+msgstr "Orders"
+
+msgid "Ordered_products"
+msgstr "Ordered products"
+
+msgid "My_data"
+msgstr "My data"
+
+msgid "Change_password"
+msgstr "Change password"
+
+msgid "Blog_posts"
+msgstr "Blog post"
+
+msgid "Website_administration"
+msgstr "Website administration"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Order_lists"
+msgstr "Order lists"
+
+msgid "Manufacturers"
+msgstr "Manufacturers"
+
+msgid "Products"
+msgstr "Products"
+
+msgid "Deposit_account"
+msgstr "Deposit account"
+
+msgid "Members"
+msgstr "Members"
+
+msgid "Pages"
+msgstr "Pages"
+
+msgid "Categories"
+msgstr "Categories"
+
+msgid "Attributes"
+msgstr "Attributes"
+
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgid "Tax_rates"
+msgstr "Tax rates"
+
+msgid "Financial_reports"
+msgstr "Financial reports"
+
+msgid "Configurations"
+msgstr "Settings"
+
+msgid "My_products"
+msgstr "My products"
+
+msgid "My_profile"
+msgstr "My profile"
+
+msgid "Contact_person"
+msgstr "Contact person"
 
 msgid "to_the_admin_area"
 msgstr "to the admin area"
