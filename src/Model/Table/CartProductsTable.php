@@ -115,7 +115,8 @@ class CartProductsTable extends AppTable
                     $attributeIdFound = true;
                     // stock available check for attribute
                     if ($attribute->stock_available->quantity < $combinedAmount && $amount > 0) {
-                        $message = 'Die gewünschte Anzahl <b>' . $combinedAmount . '</b> der Variante <b>' . $attribute->product_attribute_combination->attribute->name . '</b> des Produktes <b>' . $product->product_lang->name . '</b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $attribute->stock_available->quantity;
+                        $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}', ['<b>' . $combinedAmount . '</b>', '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>', '<b>' . $product->product_lang->name . '</b>', $attribute->stock_available->quantity]);
+                        
                         return [
                             'status' => 0,
                             'msg' => $message,
@@ -136,7 +137,7 @@ class CartProductsTable extends AppTable
         }
         
         if (! $product->active) {
-            $message = 'Das Produkt <b>' . $product->product_lang->name . '</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar.';
+            $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->product_lang->name . '</b>']);
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -145,7 +146,7 @@ class CartProductsTable extends AppTable
         }
         
         if (! $product->manufacturer->active || $product->is_holiday_active) {
-            $message = 'Der Hersteller des Produktes <b>' . $product->product_lang->name . '</b> hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar.';
+            $message = __('The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated.', ['<b>' . $product->product_lang->name . '</b>']);
             return [
                 'status' => 0,
                 'msg' => $message,
