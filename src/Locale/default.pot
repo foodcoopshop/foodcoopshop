@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 11:48+0200\n"
+"POT-Creation-Date: 2018-06-05 12:02+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -75,6 +75,12 @@ msgid "Cancel"
 msgstr ""
 
 msgid "Remove_from_cart?"
+msgstr ""
+
+msgid "for_each"
+msgstr ""
+
+msgid "approx."
 msgstr ""
 
 msgid "Home"
@@ -357,6 +363,12 @@ msgid "Supervisory_authority"
 msgstr ""
 
 msgid "Chamber"
+msgstr ""
+
+msgid "Base_price"
+msgstr ""
+
+msgid "price_will_be_eventually_adapted."
 msgstr ""
 
 msgid "route_accept_terms_of_use"

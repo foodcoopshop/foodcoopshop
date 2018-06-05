@@ -84,10 +84,12 @@ foodcoopshop.Cart = {
         var newUnityHtml = oldUnity.html();
         
         if (newAmount > 1 && oldAmountValue == 1) {
-            newUnityHtml = newUnityHtml.replace(/ca./, 'je ca.');
+            var approxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.approx);
+            newUnityHtml = newUnityHtml.replace(approxRegExp, foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
         }
         if (newAmount == 1 && oldAmountValue > 1) {
-            newUnityHtml = newUnityHtml.replace(/je ca./, 'ca.');
+            var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
+            newUnityHtml = newUnityHtml.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
         }
         if (newUnityHtml != oldUnity.html()) {
             oldUnity.html(newUnityHtml);

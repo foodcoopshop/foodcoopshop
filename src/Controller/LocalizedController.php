@@ -39,7 +39,9 @@ class LocalizedController extends Controller
                 'loadPastOrderDescriptionHtml' => __('Load_past_order_dialog_description_html'),
                 'yes' => __('Yes'),
                 'cancel' => __('Cancel'),
-                'removeFromCart' => __('Remove_from_cart?')
+                'removeFromCart' => __('Remove_from_cart?'),
+                'forEach' => __('for_each'),
+                'approx' => __('approx.')
             ],
             'mobile' => [
                 'home' => __('Home'),

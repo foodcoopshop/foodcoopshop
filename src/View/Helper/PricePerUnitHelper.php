@@ -66,9 +66,9 @@ class PricePerUnitHelper extends Helper
         $result = '';
         if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
             if ($amount > 1) {
-                $result  = 'je ' . $result;
+                $result  = __('for_each') . ' ' . $result;
             }
-            $result .= 'ca. ' . $this->MyHtml->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
+            $result .= __('approx.') . ' ' . $this->MyHtml->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
         }
         return $result;
     }
@@ -82,8 +82,8 @@ class PricePerUnitHelper extends Helper
     {
         $infoText = '<div class="line">';
         $infoText .= '<span class="additional-price-info">';
-        $infoText .= ' * Basis-Preis: ' . $this->getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount);
-        $infoText .= ', Preis wird evtl. noch angepasst.';
+        $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount);
+        $infoText .= ', ' . __('price_will_be_eventually_adapted.');
         $infoText .= '</span>';
         $infoText .= '</div>';
         return $infoText;

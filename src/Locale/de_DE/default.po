@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 11:48+0200\n"
-"PO-Revision-Date: 2018-06-05 11:48+0200\n"
+"POT-Creation-Date: 2018-06-05 12:02+0200\n"
+"PO-Revision-Date: 2018-06-05 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -80,6 +80,12 @@ msgstr "Abbrechen"
 
 msgid "Remove_from_cart?"
 msgstr "Aus dem Warenkorb löschen?"
+
+msgid "for_each"
+msgstr "je"
+
+msgid "approx."
+msgstr "ca."
 
 msgid "Home"
 msgstr "Home"
@@ -376,6 +382,12 @@ msgstr "Aufsichtsbehörde"
 
 msgid "Chamber"
 msgstr "Kammer"
+
+msgid "Base_price"
+msgstr "Basis-Preis"
+
+msgid "price_will_be_eventually_adapted."
+msgstr "Preis wird evtl. noch angepasst."
 
 msgid "route_accept_terms_of_use"
 msgstr "nutzungsbedingungen-akzeptieren"
