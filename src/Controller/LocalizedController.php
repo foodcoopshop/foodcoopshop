@@ -16,6 +16,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 class LocalizedController extends Controller
 {
@@ -37,6 +38,18 @@ class LocalizedController extends Controller
                 'loadPastOrderDescriptionHtml' => __('Load_past_order_dialog_description_html'),
                 'yes' => __('Yes'),
                 'cancel' => __('Cancel')
+            ],
+            'mobile' => [
+                'home' => __('Home'),
+                'routeManufacturerList' => __('route_manufacturer_list'),
+                'manufacturers' => __('Manufacturers'),
+                'routeNewsList' => __('route_news_list'),
+                'news' => __('News'),
+                'pages' => __('Pages'),
+                'routeAllCategories' => Configure::read('app.slugHelper')->getAllProducts(),
+                'shoppingLimitReached' => __('Shopping_limit_reached'),
+                'show' => __('Show'),
+                'showAllProducts' => __('Show_all_products')
             ]
         ];
         return $strings;

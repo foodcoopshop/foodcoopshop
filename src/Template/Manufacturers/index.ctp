@@ -61,7 +61,7 @@ foreach ($manufacturers as $manufacturer) {
 
         echo '<div class="third-column">';
             echo $this->Html->link(
-                'Alle Produkte anzeigen' . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
+                __('Show_all_products') . ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') ? ' (' . $manufacturer->product_count .')' : ''),
                 $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
                 ['class' => 'btn btn-success']
             );

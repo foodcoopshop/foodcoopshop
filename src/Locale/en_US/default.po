@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 09:28+0200\n"
-"PO-Revision-Date: 2018-06-05 09:28+0200\n"
+"POT-Creation-Date: 2018-06-05 10:30+0200\n"
+"PO-Revision-Date: 2018-06-05 10:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -68,14 +68,59 @@ msgstr "Yes"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Home"
+msgstr "Home"
+
+msgid "route_manufacturer_list"
+msgstr "manufacturers"
+
+msgid "Manufacturers"
+msgstr "Manufacturer"
+
+msgid "route_news_list"
+msgstr "news"
+
+msgid "News"
+msgstr "News"
+
+msgid "Pages"
+msgstr "Pages"
+
+msgid "Shopping_limit_reached"
+msgstr "Shopping limit reached"
+
+msgid "Show"
+msgstr "Show"
+
+msgid "Show_all_products"
+msgstr "Show all products"
+
 msgid "Pick_up_day"
 msgstr "Pick-up day"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 product} other{# products}}"
 
+msgid "Modified_on"
+msgstr "Modified on"
+
+msgid "Go_to_blog_from"
+msgstr "Show blog from"
+
+msgid "by"
+msgstr "by"
+
+msgid "Edit"
+msgstr "Edit"
+
 msgid "found"
 msgstr "found"
+
+msgid "Show_more"
+msgstr "Show more"
+
+msgid "Go_to_manufacturer"
+msgstr "Show manufacturer"
 
 msgid "Your_cart_is_empty"
 msgstr "Your cart is empty"
@@ -212,14 +257,29 @@ msgstr "Value added tax"
 msgid "Show_cart_button"
 msgstr "Show cart"
 
+msgid "Terms_of_use"
+msgstr "Terms of use"
+
+msgid "Privacy_policy"
+msgstr "Privacy policy"
+
+msgid "List_of_allergens"
+msgstr "List of allergens"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Bank_account_credit_balance"
+msgstr "Bank account (credit)"
+
+msgid "Bank_account_member_fee"
+msgstr "Bank account (member fee)"
+
 msgid "Products"
 msgstr "Products"
-
-msgid "Manufacturers"
-msgstr "Manufacturer"
-
-msgid "News"
-msgstr "News"
 
 msgid "Admin_area"
 msgstr "Admin area"
@@ -242,9 +302,6 @@ msgstr "Currently not on stock"
 msgid "New"
 msgstr "New"
 
-msgid "Show_more"
-msgstr "Show more"
-
 msgid "More_infos_to_product_{0}"
 msgstr "More infos to product {0}"
 
@@ -259,6 +316,12 @@ msgstr "from which {0} %"
 
 msgid "Unit"
 msgstr "Unit"
+
+msgid "News_from"
+msgstr "News from"
+
+msgid "Imprint"
+msgstr "Imprint"
 
 msgid "Sign_out"
 msgstr "Sign out"
@@ -283,9 +346,6 @@ msgstr "privacy-policy"
 
 msgid "route_list_of_allergens"
 msgstr "list-of-allergens"
-
-msgid "route_manufacturer_list"
-msgstr "manufacturers"
 
 msgid "route_cart_show"
 msgstr "show"
@@ -317,9 +377,6 @@ msgstr "generate-new-password"
 msgid "route_request_new_password"
 msgstr "request-new-password"
 
-msgid "route_news_list"
-msgstr "news"
-
 msgid "route_news_detail"
 msgstr "news"
 
@@ -339,9 +396,5 @@ msgid "route_product"
 msgstr "product"
 
 #, fuzzy
-#~ msgid "empty_cart"
-#~ msgstr "Remove products from cart"
-
-#, fuzzy
-#~ msgid "load_past_order"
-#~ msgstr "Load past orders"
+#~ msgid "Modified on"
+#~ msgstr "Modified on"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 09:28+0200\n"
-"PO-Revision-Date: 2018-06-05 09:28+0200\n"
+"POT-Creation-Date: 2018-06-05 10:30+0200\n"
+"PO-Revision-Date: 2018-06-05 10:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,14 +69,59 @@ msgstr "Ja"
 msgid "Cancel"
 msgstr "Abbrechen"
 
+msgid "Home"
+msgstr "Home"
+
+msgid "route_manufacturer_list"
+msgstr "hersteller"
+
+msgid "Manufacturers"
+msgstr "Hersteller"
+
+msgid "route_news_list"
+msgstr "aktuelles"
+
+msgid "News"
+msgstr "Aktuelles"
+
+msgid "Pages"
+msgstr "Seiten"
+
+msgid "Shopping_limit_reached"
+msgstr "Guthaben-Limit erreicht"
+
+msgid "Show"
+msgstr "Anzeigen"
+
+msgid "Show_all_products"
+msgstr "Alle Produkte anzeigen"
+
 msgid "Pick_up_day"
 msgstr "Abholtag"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
 
+msgid "Modified_on"
+msgstr "Geändert am"
+
+msgid "Go_to_blog_from"
+msgstr "Zum Blog von"
+
+msgid "by"
+msgstr "von"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
 msgid "found"
 msgstr "gefunden"
+
+msgid "Show_more"
+msgstr "Mehr anzeigen"
+
+msgid "Go_to_manufacturer"
+msgstr "Zum Hersteller"
 
 msgid "Your_cart_is_empty"
 msgstr "Dein Warenkorb ist leer"
@@ -220,14 +265,29 @@ msgstr "Umsatzsteuer"
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
 
+msgid "Terms_of_use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Privacy_policy"
+msgstr "Datenschutzerklärung"
+
+msgid "List_of_allergens"
+msgstr "Allergenliste"
+
+msgid "Information"
+msgstr "Informationen"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Bank_account_credit_balance"
+msgstr "Kontodaten (Guthaben aufladen)"
+
+msgid "Bank_account_member_fee"
+msgstr "Kontodaten (Mitgliedsbeitrag)"
+
 msgid "Products"
 msgstr "Produkte"
-
-msgid "Manufacturers"
-msgstr "Hersteller"
-
-msgid "News"
-msgstr "Aktuelles"
 
 msgid "Admin_area"
 msgstr "Admin-Bereich"
@@ -250,9 +310,6 @@ msgstr "Derzeit leider nicht verfügbar"
 msgid "New"
 msgstr "Neu"
 
-msgid "Show_more"
-msgstr "Mehr anzeigen"
-
 msgid "More_infos_to_product_{0}"
 msgstr "Mehr Infos zu {0}"
 
@@ -267,6 +324,12 @@ msgstr "davon {0} %"
 
 msgid "Unit"
 msgstr "Einheit"
+
+msgid "News_from"
+msgstr "Aktuelles von"
+
+msgid "Imprint"
+msgstr "Impressum"
 
 msgid "Sign_out"
 msgstr "Abmelden"
@@ -291,9 +354,6 @@ msgstr "datenschutzerklaerung"
 
 msgid "route_list_of_allergens"
 msgstr "allergenliste"
-
-msgid "route_manufacturer_list"
-msgstr "hersteller"
 
 msgid "route_cart_show"
 msgstr "anzeigen"
@@ -325,9 +385,6 @@ msgstr "neues-passwort-generieren"
 msgid "route_request_new_password"
 msgstr "neues-passwort-anfordern"
 
-msgid "route_news_list"
-msgstr "aktuelles"
-
 msgid "route_news_detail"
 msgstr "aktuelles"
 
@@ -347,9 +404,5 @@ msgid "route_product"
 msgstr "produkt"
 
 #, fuzzy
-#~ msgid "empty_cart"
-#~ msgstr "Warenkorb leeren"
-
-#, fuzzy
-#~ msgid "load_past_order"
-#~ msgstr "Vergangene Bestellungen laden"
+#~ msgid "Modified on"
+#~ msgstr "Geändert am"

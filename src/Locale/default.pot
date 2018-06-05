@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 09:28+0200\n"
+"POT-Creation-Date: 2018-06-05 10:30+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -65,13 +65,58 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Home"
+msgstr ""
+
+msgid "route_manufacturer_list"
+msgstr ""
+
+msgid "Manufacturers"
+msgstr ""
+
+msgid "route_news_list"
+msgstr ""
+
+msgid "News"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Shopping_limit_reached"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Show_all_products"
+msgstr ""
+
 msgid "Pick_up_day"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
+msgid "Modified_on"
+msgstr ""
+
+msgid "Go_to_blog_from"
+msgstr ""
+
+msgid "by"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
 msgid "found"
+msgstr ""
+
+msgid "Show_more"
+msgstr ""
+
+msgid "Go_to_manufacturer"
 msgstr ""
 
 msgid "Your_cart_is_empty"
@@ -206,13 +251,28 @@ msgstr ""
 msgid "Show_cart_button"
 msgstr ""
 
+msgid "Terms_of_use"
+msgstr ""
+
+msgid "Privacy_policy"
+msgstr ""
+
+msgid "List_of_allergens"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Bank_account_credit_balance"
+msgstr ""
+
+msgid "Bank_account_member_fee"
+msgstr ""
+
 msgid "Products"
-msgstr ""
-
-msgid "Manufacturers"
-msgstr ""
-
-msgid "News"
 msgstr ""
 
 msgid "Admin_area"
@@ -236,9 +296,6 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-msgid "Show_more"
-msgstr ""
-
 msgid "More_infos_to_product_{0}"
 msgstr ""
 
@@ -252,6 +309,12 @@ msgid "from_which_{0}_%"
 msgstr ""
 
 msgid "Unit"
+msgstr ""
+
+msgid "News_from"
+msgstr ""
+
+msgid "Imprint"
 msgstr ""
 
 msgid "Sign_out"
@@ -276,9 +339,6 @@ msgid "route_privacy_policy"
 msgstr ""
 
 msgid "route_list_of_allergens"
-msgstr ""
-
-msgid "route_manufacturer_list"
 msgstr ""
 
 msgid "route_cart_show"
@@ -309,9 +369,6 @@ msgid "route_generate_new_password"
 msgstr ""
 
 msgid "route_request_new_password"
-msgstr ""
-
-msgid "route_news_list"
 msgstr ""
 
 msgid "route_news_detail"
