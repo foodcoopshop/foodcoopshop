@@ -31,14 +31,24 @@ class LocalizedController extends Controller
     
     private function getStrings()
     {
-        $string = [
+        $strings = [
             'helper' => [
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
-                'logoutRoute' => __('route_sign_out')
+                'routeLogout' => __('route_sign_out')
+            ],
+            'cart' => [
+                'routeCart' => __('route_cart'),
+                'emptyCart' => __('Empty_cart'),
+                'deposit' => __('deposit'),
+                'reallyEmptyCart' => __('Really_empty_cart?'),
+                'loadPastOrder' => __('Load_past_order'),
+                'loadPastOrderDescriptionHtml' => __('Load_past_order_dialog_description_html'),
+                'yes' => __('Yes'),
+                'cancel' => __('Cancel')
             ]
         ];
-        return $string;
+        return $strings;
     }
     
     public function strings($locale)
@@ -50,7 +60,7 @@ class LocalizedController extends Controller
         $this->RequestHandler->renderAs($this, 'json');
         
         $this->set('data', [
-            'translatedJs' => $this->getStrings(),
+            'localizedJs' => $this->getStrings(),
             'status' => 1,
         ]);
         

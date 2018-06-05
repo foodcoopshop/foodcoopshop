@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 08:49+0200\n"
+"POT-Creation-Date: 2018-06-05 09:28+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -39,6 +39,30 @@ msgid "Sign_out?"
 msgstr ""
 
 msgid "route_sign_out"
+msgstr ""
+
+msgid "route_cart"
+msgstr ""
+
+msgid "Empty_cart"
+msgstr ""
+
+msgid "deposit"
+msgstr ""
+
+msgid "Really_empty_cart?"
+msgstr ""
+
+msgid "Load_past_order"
+msgstr ""
+
+msgid "Load_past_order_dialog_description_html"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Cancel"
 msgstr ""
 
 msgid "Pick_up_day"
@@ -152,9 +176,6 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-msgid "Empty_cart"
-msgstr ""
-
 msgid "Load_past_orders"
 msgstr ""
 
@@ -227,9 +248,6 @@ msgstr ""
 msgid "Edit_product"
 msgstr ""
 
-msgid "deposit"
-msgstr ""
-
 msgid "from_which_{0}_%"
 msgstr ""
 
@@ -261,9 +279,6 @@ msgid "route_list_of_allergens"
 msgstr ""
 
 msgid "route_manufacturer_list"
-msgstr ""
-
-msgid "route_cart"
 msgstr ""
 
 msgid "route_cart_show"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 08:49+0200\n"
-"PO-Revision-Date: 2018-06-05 08:50+0200\n"
+"POT-Creation-Date: 2018-06-05 09:28+0200\n"
+"PO-Revision-Date: 2018-06-05 09:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -41,6 +41,32 @@ msgstr "Sign out?"
 
 msgid "route_sign_out"
 msgstr "sign-out"
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "Empty_cart"
+msgstr "Remove products from cart"
+
+msgid "deposit"
+msgstr "deposit"
+
+msgid "Really_empty_cart?"
+msgstr "Really empty cart?"
+
+msgid "Load_past_order"
+msgstr "Load past order"
+
+msgid "Load_past_order_dialog_description_html"
+msgstr ""
+"<p>The selected order will be loaded and <b>the current cart will be "
+"emptied</b>.</p><p>You can add products afterwards.</p>"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "Cancel"
+msgstr "Cancel"
 
 msgid "Pick_up_day"
 msgstr "Pick-up day"
@@ -156,9 +182,6 @@ msgstr "terms of use"
 msgid "Cart"
 msgstr "Cart"
 
-msgid "Empty_cart"
-msgstr "Remove products from cart"
-
 msgid "Load_past_orders"
 msgstr "Load past orders"
 
@@ -231,9 +254,6 @@ msgstr "Manufacturer"
 msgid "Edit_product"
 msgstr "Edit product"
 
-msgid "deposit"
-msgstr "deposit"
-
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
 
@@ -266,9 +286,6 @@ msgstr "list-of-allergens"
 
 msgid "route_manufacturer_list"
 msgstr "manufacturers"
-
-msgid "route_cart"
-msgstr "cart"
 
 msgid "route_cart_show"
 msgstr "show"
@@ -320,3 +337,11 @@ msgstr "search"
 
 msgid "route_product"
 msgstr "product"
+
+#, fuzzy
+#~ msgid "empty_cart"
+#~ msgstr "Remove products from cart"
+
+#, fuzzy
+#~ msgid "load_past_order"
+#~ msgstr "Load past orders"

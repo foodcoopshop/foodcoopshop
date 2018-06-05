@@ -30,7 +30,7 @@ foodcoopshop.Helper = {
             {},
             {
                 onOk: function (data) {
-                    translatedJs = data.translatedJs;
+                    localizedJs = data.localizedJs;
                 },
                 onError: function (data) {
                     console.log(data);
@@ -367,10 +367,10 @@ foodcoopshop.Helper = {
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
             $('<div></div>').appendTo('body')
-                .html('<p>' + translatedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + localizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: translatedJs.helper.logout,
+                    title: localizedJs.helper.logout,
                     dialogClass: 'logout-button',
                     autoOpen: true,
                     width: 400,
@@ -382,7 +382,7 @@ foodcoopshop.Helper = {
                         'Ja': function () {
                             $('.ui-dialog .ajax-loader').show();
                             $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/' + translatedJs.helper.logoutRoute;
+                            document.location.href = '/' + localizedJs.helper.routeLogout;
                         }
                     },
                     close: function (event, ui) {

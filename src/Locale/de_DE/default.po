@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 08:49+0200\n"
-"PO-Revision-Date: 2018-06-05 08:51+0200\n"
+"POT-Creation-Date: 2018-06-05 09:28+0200\n"
+"PO-Revision-Date: 2018-06-05 09:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -41,6 +41,33 @@ msgstr "Abmelden?"
 
 msgid "route_sign_out"
 msgstr "abmelden"
+
+msgid "route_cart"
+msgstr "warenkorb"
+
+msgid "Empty_cart"
+msgstr "Warenkorb leeren"
+
+msgid "deposit"
+msgstr "Pfand"
+
+msgid "Really_empty_cart?"
+msgstr "Möchtest du den aktuellen Warenkorb wirklich leeren?"
+
+msgid "Load_past_order"
+msgstr "Vergangene Bestellungen laden"
+
+msgid "Load_past_order_dialog_description_html"
+msgstr ""
+"<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird "
+"dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein "
+"hinzufügen.</p>"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Cancel"
+msgstr "Abbrechen"
 
 msgid "Pick_up_day"
 msgstr "Abholtag"
@@ -161,9 +188,6 @@ msgstr "Nutzungsbedingungen"
 msgid "Cart"
 msgstr "Warenkorb"
 
-msgid "Empty_cart"
-msgstr "Warenkorb leeren"
-
 msgid "Load_past_orders"
 msgstr "Vergangene Bestellungen laden"
 
@@ -238,9 +262,6 @@ msgstr "Hersteller"
 msgid "Edit_product"
 msgstr "Produkt bearbeiten"
 
-msgid "deposit"
-msgstr "Pfand"
-
 msgid "from_which_{0}_%"
 msgstr "davon {0} %"
 
@@ -273,9 +294,6 @@ msgstr "allergenliste"
 
 msgid "route_manufacturer_list"
 msgstr "hersteller"
-
-msgid "route_cart"
-msgstr "warenkorb"
 
 msgid "route_cart_show"
 msgstr "anzeigen"
@@ -327,3 +345,11 @@ msgstr "suche"
 
 msgid "route_product"
 msgstr "produkt"
+
+#, fuzzy
+#~ msgid "empty_cart"
+#~ msgstr "Warenkorb leeren"
+
+#, fuzzy
+#~ msgid "load_past_order"
+#~ msgstr "Vergangene Bestellungen laden"
