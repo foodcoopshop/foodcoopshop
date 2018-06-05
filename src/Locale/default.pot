@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 10:30+0200\n"
+"POT-Creation-Date: 2018-06-05 10:52+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,12 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "You_are_not_signed_in."
+msgstr ""
+
+msgid "No_access_for_manufacturers."
+msgstr ""
 
 msgid "Your_cart"
 msgstr ""
@@ -41,6 +47,9 @@ msgstr ""
 msgid "route_sign_out"
 msgstr ""
 
+msgid "An_error_occurred"
+msgstr ""
+
 msgid "route_cart"
 msgstr ""
 
@@ -63,6 +72,9 @@ msgid "Yes"
 msgstr ""
 
 msgid "Cancel"
+msgstr ""
+
+msgid "Remove_from_cart?"
 msgstr ""
 
 msgid "Home"
@@ -90,6 +102,15 @@ msgid "Show"
 msgstr ""
 
 msgid "Show_all_products"
+msgstr ""
+
+msgid "The_desired_amount_{0}_is_not_valid."
+msgstr ""
+
+msgid "Product_with_id_{0}_does_not_exist."
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}"
 msgstr ""
 
 msgid "Pick_up_day"

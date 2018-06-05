@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 10:30+0200\n"
-"PO-Revision-Date: 2018-06-05 10:32+0200\n"
+"POT-Creation-Date: 2018-06-05 10:52+0200\n"
+"PO-Revision-Date: 2018-06-05 10:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -14,6 +14,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.8\n"
+
+msgid "You_are_not_signed_in."
+msgstr "Your are not signed in."
+
+msgid "No_access_for_manufacturers."
+msgstr "Sorry, but manufacturers do not have access."
 
 msgid "Your_cart"
 msgstr "Your cart"
@@ -42,6 +48,9 @@ msgstr "Sign out?"
 msgid "route_sign_out"
 msgstr "sign-out"
 
+msgid "An_error_occurred"
+msgstr "An error occurred"
+
 msgid "route_cart"
 msgstr "cart"
 
@@ -67,6 +76,9 @@ msgstr "Yes"
 
 msgid "Cancel"
 msgstr "Cancel"
+
+msgid "Remove_from_cart?"
+msgstr "Remove from cart?"
 
 msgid "Home"
 msgstr "Home"
@@ -94,6 +106,19 @@ msgstr "Show"
 
 msgid "Show_all_products"
 msgstr "Show all products"
+
+msgid "The_desired_amount_{0}_is_not_valid."
+msgstr "The desired amount {0} is not valid."
+
+msgid "Product_with_id_{0}_does_not_exist."
+msgstr "The product with id {0} does not exist."
+
+msgid ""
+"The_desired_amount_{0}_of_the_product_{1}"
+"_is_not_available_any_more_available_amount_{2}"
+msgstr ""
+"The desired amount {0} of the product {1} is not available any more. "
+"Available amount: {2}"
 
 msgid "Pick_up_day"
 msgstr "Pick-up day"

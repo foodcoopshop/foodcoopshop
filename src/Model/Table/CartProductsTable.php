@@ -50,7 +50,7 @@ class CartProductsTable extends AppTable
         
         // allow -1 and 1 - 99
         if ($amount == 0 || $amount < - 1 || $amount > 99) {
-            $message = 'Die gewünschte Anzahl <b>' . $amount . '</b> ist nicht gültig.';
+            $message = __('The_desired_amount_{0}_is_not_valid.', ['<b>' . $amount . '</b>']);
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -89,7 +89,7 @@ class CartProductsTable extends AppTable
         }
         // check if passed product exists
         if (empty($product)) {
-            $message = 'Das Produkt mit der ID ' . $productId . ' ist nicht vorhanden.';
+            $message = __('Product_with_id_{0}_does_not_exist.', [$productId]);
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -99,7 +99,7 @@ class CartProductsTable extends AppTable
         
         // stock available check for product
         if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
-            $message = 'Die gewünschte Anzahl <b>' . $combinedAmount . '</b> des Produktes <b>' . $product->product_lang->name . '</b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $product->stock_available->quantity;
+            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}', ['<b>' . $combinedAmount . '</b>', $product->product_lang->name, $product->stock_available->quantity]);
             return [
                 'status' => 0,
                 'msg' => $message,

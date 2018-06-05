@@ -658,7 +658,7 @@ foodcoopshop.Helper = {
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 data = {
                     status: 9,
-                    msg: 'Es ist ein Fehler aufgetreten.',
+                    msg: foodcoopshop.LocalizedJs.helper.anErrorOccurred + '.',
                     jquery: {
                         XMLHttpRequest: XMLHttpRequest,
                         textStatus: textStatus,

@@ -35,10 +35,10 @@ class CartsController extends FrontendController
         if ($this->getRequest()->is('ajax')) {
             $message = '';
             if (empty($this->AppAuth->user())) {
-                $message = 'Du bist nicht angemeldet.';
+                $message = __('You_are_not_signed_in.');
             }
             if ($this->AppAuth->isManufacturer()) {
-                $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
+                $message = __('No_access_for_manufacturers.');
             }
             if ($message != '') {
                 $this->log($message);

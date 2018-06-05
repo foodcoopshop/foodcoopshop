@@ -27,7 +27,8 @@ class LocalizedController extends Controller
             'helper' => [
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
-                'routeLogout' => __('route_sign_out')
+                'routeLogout' => __('route_sign_out'),
+                'anErrorOccurred' => __('An_error_occurred')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
@@ -37,7 +38,8 @@ class LocalizedController extends Controller
                 'loadPastOrder' => __('Load_past_order'),
                 'loadPastOrderDescriptionHtml' => __('Load_past_order_dialog_description_html'),
                 'yes' => __('Yes'),
-                'cancel' => __('Cancel')
+                'cancel' => __('Cancel'),
+                'removeFromCart' => __('Remove_from_cart?')
             ],
             'mobile' => [
                 'home' => __('Home'),
