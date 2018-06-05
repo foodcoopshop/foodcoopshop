@@ -16,10 +16,10 @@
 <div class="sidebar">
     <?php
     if (!empty($categoriesForMenu)) {
-        echo $this->Menu->render($categoriesForMenu, ['id' => 'categories-menu', 'class' => 'vertical menu', 'header' => 'Kategorien']);
+        echo $this->Menu->render($categoriesForMenu, ['id' => 'categories-menu', 'class' => 'vertical menu', 'header' => __('Categories')]);
     }
     if (!empty($manufacturersForMenu)) {
-        echo $this->Menu->render($manufacturersForMenu, ['id' => 'manufacturers-menu', 'class' => 'vertical menu', 'header' => 'Hersteller']);
+        echo $this->Menu->render($manufacturersForMenu, ['id' => 'manufacturers-menu', 'class' => 'vertical menu', 'header' => __('Manufacturers')]);
     }
     ?>
 </div>
