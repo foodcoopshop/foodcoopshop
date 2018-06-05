@@ -29,7 +29,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 
 <?php
 if (!empty($blogPosts)) {
-    echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
+    echo '<h2><a href="'.$this->Slug->getBlogList().'">'.__('News').'</a></h2>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);
