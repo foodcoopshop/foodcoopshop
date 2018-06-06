@@ -110,46 +110,10 @@ use Cake\Core\Configure;
                         );
                     echo '</div>';
                 }
-
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite werden deine <b>Produkt</b> verwaltet.
-            </li>
-            <li>
-                Du kannst neue Produkte erstellen (Button rechts oben), mit einem Klick auf einen der Bearbeiten-Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')); ?> kannst den entsprechenden (z.B. Kategorien, Anzahl, Preis...) ändern.
-            </li>
-            <li>Hinweis zum Ändern der Beschreibung: <b><i>Kurze</i> Beschreibung</b>
-                steht im Shop immer neben dem Bild und ist in den Listen zu lesen. <b><i>Lange</i>
-                    Beschreibung</b> steht nur auf der Produkt-Detailseite (z.B. für
-                das Anführen von Inhaltsstoffen geeignet).
-            </li>
-            <li>Du kannst deine Produkte <b>online bzw. offline setzen</b> (Icons <?php echo $this->Html->image($this->Html->getFamFamFamPath('accept.png')); ?> bzw. <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts).
-            </li>
-            <li><b>Varianten: </b>Mit dem <?php echo $this->Html->image($this->Html->getFamFamFamPath('add.png')); ?>-Icon kannst du eine neue Variante (z.B. 1kg, 2kg und 5kg) zu deinen Produkten anlegen. Das <?php echo $this->Html->image($this->Html->getFamFamFamPath('star.png')); ?>-Icon sagt dir, welche Variante beim Bestellen standardmäßig ausgewählt ist, diese Standardvariante kannst du ändern.
-                Varianten können auf "nicht bestellbar" gesetzt werden, in dem du die Anzahl auf 0 setzt.
-            </li>
-            <li>Falls eine gewünschte Variante noch nicht zur Verfügung steht,
-                sag uns bitte Bescheid. Wir legen sie dann für dich an.</li>
-            <li>Wenn du von einem Produkt nur eine <b>beschränkte Anzahl</b>
-                liefern kannst, ändere die Anzahl bitte dementsprechend. Unser
-                System vermindert bei jeder Bestellung den Lagerbestand und stoppt
-                die Bestellmöglichkeit, wenn keine Produkte mehr verfügbar sind,
-                automatisch. Somit bekommt jeder, der bestellt, seine Ware und es
-                muss nichts storniert werden.
-            </li>
-            <li><b>Bilder hochladen:</b> Durch Anklicken des <?php echo $this->Html->image($this->Html->getFamFamFamPath('image_add.png')); ?>-Icons kannst ein Bild zu deinem Produkt hochladen. Wenn zu einem Produkt noch kein Bild hochgeladen wurde, ist das Icon rot hinterlegt. Bilder zu Varianten sind nicht möglich. 
-            </li>
-            <li>Du siehst, für welche Produkte wir Pfand einheben. Möchtest du den
-                Pfand ändern, sag uns bitte Bescheid.</li>
-            <li><b>Neue Produkte</b> können im Shop als "neu" gekennzeichnet werden und scheinen dann <?php echo Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW'); ?> Tage lang unter <a
-                href="<?php echo Configure::read('app.cakeServerName'); ?>/neue-produkte"
-                target="_blank">"Neue Produkte"</a> auf.</li>
-        </ul>
     </div>
     
     <?php

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 15:04+0000\n"
+"POT-Creation-Date: 2018-06-06 16:59+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,7 +14,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Pick_up_day"
+msgid "Orders"
+msgstr ""
+
+msgid "Shop_order"
+msgstr ""
+
+msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "docs_route_settings"
+msgstr ""
+
+msgid "docs_route_members"
+msgstr ""
+
+msgid "docs_route_deposit"
 msgstr ""
 
 msgid "Activities"
@@ -24,9 +39,6 @@ msgid "Cancelled_products"
 msgstr ""
 
 msgid "Deposit returns"
-msgstr ""
-
-msgid "Orders"
 msgstr ""
 
 msgid "Ordered_products"
@@ -92,6 +104,18 @@ msgstr ""
 msgid "Contact_person"
 msgstr ""
 
+msgid "docs_route_products"
+msgstr ""
+
+msgid "docs_route_manufacturers"
+msgstr ""
+
+msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Group_by_member"
+msgstr ""
+
 msgid "to_the_admin_area"
 msgstr ""
 
@@ -99,5 +123,17 @@ msgid "to_the_manufacturer_area"
 msgstr ""
 
 msgid "Welcome"
+msgstr ""
+
+msgid "docs_route_credit_system"
+msgstr ""
+
+msgid "docs_route_financial_reports"
+msgstr ""
+
+msgid "docs_route_paying_with_time_module"
+msgstr ""
+
+msgid "Pick_up_day"
 msgstr ""
 

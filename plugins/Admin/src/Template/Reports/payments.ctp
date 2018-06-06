@@ -34,18 +34,10 @@ if ($paymentType == 'product') {
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
         <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
-        <div class="right"></div>
+        <div class="right">
+        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_financial_reports'))]); ?>
+        </div>
     <?php echo $this->Form->end(); ?>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>
-            Hier findest du die Auswertung für: <?php echo $this->Html->getPaymentText($paymentType); ?>
-        </li>
-        <li>Gelöschte Einzahlungen werden ausgegraut angeführt.</li>
-        <li>Falls die Zahlung von einem anderen Mitglied eingetragen wurde, wird seit v1.3 wird dieses Mitglied in der Spalte "Eingetragen von" angezeigt.</li>
-    </ul>
 </div>
 
 <?php

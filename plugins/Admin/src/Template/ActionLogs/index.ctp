@@ -37,18 +37,12 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->control('type', ['class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '']); ?>
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
-            <div class="right"></div>
+            <div class="right">
+            	<?php
+            	   echo $this->element('printIcon');
+            	?>
+            </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite siehst du alle Aktivitäten im FoodCoopShop.</li>
-            <?php if ($appAuth->isManufacturer()) { ?>
-                <li>Die stornierten Produkte werden erst ab dem
-                20.07.2015 angezeigt.</li>
-            <?php } ?>
-        </ul>
     </div>
 
 <?php

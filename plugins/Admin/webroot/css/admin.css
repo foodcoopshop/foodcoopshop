@@ -94,8 +94,8 @@ body.pages.home #content {
 #content-logo {
     margin: 10px 0 15px -5px;
 }
-body.pages.display #menu a.help {
-    display: none;
+a.btn-default.help {
+    color: #f3515c;
 }
 .input.select, .input.checkbox, .input.text {
     display: inline-block;
@@ -245,10 +245,6 @@ span.is-declaration-ok-wrapper .fa-close {
 .filter-container-not-fixed .right .icons {
     float: left;
 }
-.filter-container .right .icons a:not(:first-child),
-.filter-container-not-fixed .right .icons a:not(:first-child) {
-    margin-left: 3px;
-}
 .filter-container .right a.submit,
 .filter-container .right a.cancel {
    float: left;
@@ -341,30 +337,6 @@ td span.description-for-dialog {
 input.datepicker {
     width: 110px;
     text-align: center;
-}
-#help-container {
-    float: left;
-    border-bottom: 1px solid #dfdfdf;
-    background: white;
-    width: 100%;
-    padding: 5px;
-    display: none;
-    margin-bottom: 5px;
-}
-#help-container p {
-    margin-bottom: 0;
-}
-#help-container img {
-    margin-bottom: 5px;
-}
-#help-container ul {
-  padding-left: 10px;
-  margin-left: 15px;
-  margin-top: 10px;
-}
-#help-container li,
-.ui-dialog-content li {
-    list-style-type: disc;
 }
 .ui-dialog-content li {
 	margin-left: 20px;
@@ -642,14 +614,6 @@ body.orders.index td span.customer-is-new {
 }
 .jquery-ui-icon a.icon-with-text.button {
     padding: 7px;
-}
-body.deposits #help-container,
-body.payments.overview #help-container,
-body.timebased_currency_payments.my_payments_customer #help-container,
-body.timebased_currency_payments.my_payment_details_manufacturer #help-container,
-body.timebased_currency_payments.payment_details_superadmin #help-container,
-body.payments.my_member_fee #help-container {
-    display: block;
 }
 .featherlight-content h3 {
     margin: 0;

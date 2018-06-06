@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-05 15:04+0000\n"
-"PO-Revision-Date: 2018-06-05 17:03+0200\n"
+"POT-Creation-Date: 2018-06-06 16:59+0000\n"
+"PO-Revision-Date: 2018-06-06 19:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -15,8 +15,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.8\n"
 
-msgid "Pick_up_day"
-msgstr "Abholtag"
+msgid "Orders"
+msgstr "Bestellungen"
+
+msgid "Shop_order"
+msgstr "Sofort-Bestellung"
+
+msgid "No_member_found_with_id_{0}."
+msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "docs_route_settings"
+msgstr "einstellungen"
+
+msgid "docs_route_members"
+msgstr "mitglieder"
+
+msgid "docs_route_deposit"
+msgstr "pfand"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -26,9 +41,6 @@ msgstr "Stornierte Produkte"
 
 msgid "Deposit returns"
 msgstr "Pfand-Rückgaben"
-
-msgid "Orders"
-msgstr "Bestellungen"
 
 msgid "Ordered_products"
 msgstr "Bestellte Produkte"
@@ -93,6 +105,18 @@ msgstr "Mein Profil"
 msgid "Contact_person"
 msgstr "Ansprechperson"
 
+msgid "docs_route_products"
+msgstr "produkte"
+
+msgid "docs_route_manufacturers"
+msgstr "hersteller"
+
+msgid "docs_route_pick_up_products"
+msgstr "abholung-der-produkte"
+
+msgid "Group_by_member"
+msgstr "Gruppieren nach Mitglied"
+
 msgid "to_the_admin_area"
 msgstr "im Admin-Beriche"
 
@@ -101,3 +125,19 @@ msgstr "im Hersteller-Bereich"
 
 msgid "Welcome"
 msgstr "Willkommen"
+
+msgid "docs_route_credit_system"
+msgstr "guthaben-system"
+
+msgid "docs_route_financial_reports"
+msgstr "finanzberichte"
+
+msgid "docs_route_paying_with_time_module"
+msgstr "stundenabrechnung"
+
+msgid "Pick_up_day"
+msgstr "Abholtag"
+
+#, fuzzy
+#~ msgid "Go_to_manufacturers_doc"
+#~ msgstr "im Hersteller-Bereich"

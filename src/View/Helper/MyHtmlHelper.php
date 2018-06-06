@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -37,6 +38,13 @@ class MyHtmlHelper extends HtmlHelper
                 });
             //]]>
         </script>";
+    }
+    
+    public function getDocsUrl($page)
+    {
+        $languageCode = substr(I18n::getLocale(), 0, 2);
+        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/' . $page;
+        return $url;
     }
     
     public function getNameRespectingIsDeleted($customer)

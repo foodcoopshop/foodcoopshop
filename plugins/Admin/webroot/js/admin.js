@@ -17,7 +17,6 @@ foodcoopshop.Admin = {
         this.initFilter();
         this.improveTableLayout();
         foodcoopshop.Helper.initJqueryUiIcons();
-        this.addPrintAndHelpIcon();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.Helper.initLogoutButton();
@@ -2085,29 +2084,6 @@ foodcoopshop.Admin = {
 
             });
         }
-    },
-
-    addPrintAndHelpIcon: function () {
-
-        var html = '<div class="icons">';
-        html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
-        html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
-        html += '</div>';
-
-        var container = $('.filter-container').length > 0 ? $('.filter-container') : $('.filter-container-not-fixed');
-        container.find('div.right').append(html);
-
-        container.find('div.right a.help').on('click', function () {
-            $('#help-container').stop(true).animate({
-                height: 'toggle'
-            }, 0);
-            $.scrollTo('body', 1000, {
-                offset: {
-                    top: 0
-                }
-            });
-        });
-
     },
 
     setMenuFixed: function () {

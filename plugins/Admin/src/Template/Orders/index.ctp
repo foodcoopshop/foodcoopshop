@@ -57,45 +57,17 @@ use Cake\Core\Configure;
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->control('groupByCustomer', ['type'=>'checkbox', 'label' =>'Gruppieren nach Mitglied', 'checked' => $groupByCustomer]);?>
+                <?php echo $this->Form->control('groupByCustomer', ['type'=>'checkbox', 'label' => __d('admin', 'Group_by_member'), 'checked' => $groupByCustomer]);?>
             <?php } ?>
             <div class="right">
                 <?php
                     echo $this->element('addShopOrderButton', [
                         'customers' => $customersForDropdown
                     ]);
+                    echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die <b>Bestellungen</b>
-                verwaltet.
-            </li>
-            <li>Eine Bestellung (im Unterschied zum <b>bestellten Produkt</b>)
-                beinhaltet einen oder mehrere bestellte Produkte.
-            </li>
-            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Produkte anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Produkte des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
-            <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied das Produkt sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
-            <li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
-                der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,
-                wieviel jedes Mitglied tatsächlich zu bezahlen hat. Diese Liste ist
-                ideal für eine Gesamtübersicht des Abholdienstes (nach allen
-                Stornierungen).</li>
-            <li>Unten rechts ist ein Button, mit dem man alle E-Mail-Adressen der
-                Mitglieder in der Liste erhält. So kann man Informationen an alle
-                Leute aussenden, die bestellt haben.</li>
-            <li>Mit Klick <?php echo $this->Html->image($this->Html->getFamFamFamPath('money_euro.png')); ?> "Bestellstatus ändern" kannst du den Bestellstatus der Bestellung ändern.</li>
-            <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
-                haben erst 3x oder weniger bestellt.
-            </li>
-            <?php if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) { ?>
-                    <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
-            <?php } ?>
-        </ul>
     </div>
     
     <?php

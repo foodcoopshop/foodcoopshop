@@ -77,47 +77,15 @@ use Cake\Core\Configure;
             }
             if (!$appAuth->isManufacturer()) {
                 echo $this->element('addShopOrderButton', [
-                'customers' => $customersForShopOrderDropdown
+                    'customers' => $customersForShopOrderDropdown
                 ]);
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             }
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
 
-    <div id="help-container">
-        <ul>
-            <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die <b>bestellten Produkte</b>
-                verwaltet.
-            </li>
-            <li><b>Produkt stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du das Produkt stornieren. Von Mittwoch bis Freitag
-                <?php if (!$appAuth->isManufacturer()) { ?>
-                    werden beim Stornieren das Mitglied und der Hersteller
-                <?php } else { ?>
-                    wird beim Stornieren das Mitglied
-                <?php } ?>
-                per E-Mail verständigt, dass das Produkt nicht geliefert wird. Du kannst auch angeben, warum das Produkt storniert wird.</li>
-            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Produkten ändern und dafür auch einen Grund angeben. Das Mitglied  
-            <?php if (!$appAuth->isManufacturer()) { ?>
-                und der Hersteller werden
-            <?php } else { ?>
-                wird
-            <?php } ?>
-                dabei automatisch per E-Mail benachrichtigt.</li>
-            <li>Wenn du auf den Button rechts unten klickst, erhältst du die
-                E-Mail-Adressen von allen Mitgliedern.</li>
-            <li>Wenn du auf das Häkchen ganz links klickst, ist die Zeile bis zum
-                nächsten Laden der Seite grün markiert.</li>
-            <?php if ($appAuth->isManufacturer()) { ?>
-                <li>Du kannst nach Produkt filtern.</li>
-            <?php } else { ?>
-                <li>Du kannst die Liste nach verschiedensten Kriterien
-                filtern.</li>
-            <?php } ?>
-        </ul>
-    </div>
-    
 <?php
 echo '<table class="list">';
 echo '<tr class="sort">';
