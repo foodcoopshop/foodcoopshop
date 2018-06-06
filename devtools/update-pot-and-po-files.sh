@@ -16,4 +16,9 @@ do
     msgmerge plugins/Admin/src/Locale/$locale/admin.po plugins/Admin/src/Locale/default.pot --output-file=plugins/Admin/src/Locale/$locale/admin.po
 done
 
-#todo: get and merge translations for network plugin
+#get and merge translations for network plugin
+bin/cake i18n extract --plugin Network --ignore-model-validation --overwrite --extract-core no --merge yes --no-location
+for locale in "${LOCALES[@]}"
+do
+    msgmerge plugins/Network/src/Locale/$locale/network.po plugins/Network/src/Locale/default.pot --output-file=plugins/Network/src/Locale/$locale/network.po
+done
