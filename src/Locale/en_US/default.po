@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:35+0000\n"
-"PO-Revision-Date: 2018-06-07 11:36+0200\n"
+"POT-Creation-Date: 2018-06-07 09:55+0000\n"
+"PO-Revision-Date: 2018-06-07 11:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -426,6 +426,9 @@ msgstr "To change your profile please stop the shop order mode."
 msgid "Signed_in"
 msgstr "Signed in"
 
+msgid "Hello"
+msgstr "Hello"
+
 msgid "Amount"
 msgstr "Amount"
 
@@ -458,6 +461,12 @@ msgstr "Unit"
 
 msgid "route_search"
 msgstr "search"
+
+msgid "This_email_was_created_automatcially."
+msgstr "This e-mail was automatically created."
+
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr "You can unsubscribe it <href=\"{0}\">in your settings</a>."
 
 msgid "News_from"
 msgstr "News from"

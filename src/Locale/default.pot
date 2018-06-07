@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:35+0000\n"
+"POT-Creation-Date: 2018-06-07 09:55+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -404,6 +404,9 @@ msgstr ""
 msgid "Signed_in"
 msgstr ""
 
+msgid "Hello"
+msgstr ""
+
 msgid "Amount"
 msgstr ""
 
@@ -435,6 +438,12 @@ msgid "Unit"
 msgstr ""
 
 msgid "route_search"
+msgstr ""
+
+msgid "This_email_was_created_automatcially."
+msgstr ""
+
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
 msgstr ""
 
 msgid "News_from"

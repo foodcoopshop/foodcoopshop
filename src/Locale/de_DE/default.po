@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:35+0000\n"
-"PO-Revision-Date: 2018-06-07 11:35+0200\n"
+"POT-Creation-Date: 2018-06-07 09:55+0000\n"
+"PO-Revision-Date: 2018-06-07 11:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -444,6 +444,9 @@ msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 msgid "Signed_in"
 msgstr "Eingeloggt"
 
+msgid "Hello"
+msgstr "Hallo"
+
 msgid "Amount"
 msgstr "Anzahl"
 
@@ -476,6 +479,12 @@ msgstr "Einheit"
 
 msgid "route_search"
 msgstr "suche"
+
+msgid "This_email_was_created_automatcially."
+msgstr "Diese E-Mail wurde automatisch erstellt."
+
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr "Du kannst sie <href=\"{0}\">in deinen Einstellungen abbestellen.</a>."
 
 msgid "News_from"
 msgstr "Aktuelles von"
