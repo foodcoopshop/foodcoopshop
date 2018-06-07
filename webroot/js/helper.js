@@ -24,6 +24,15 @@ foodcoopshop.Helper = {
         }
     },
     
+    getJqueryUiNoButton : function() {
+        return {
+            text: foodcoopshop.LocalizedJs.helper.no,
+            click: function() {
+                $(this).dialog('close');
+            }
+        };
+    },
+
     getJqueryUiCancelButton : function() {
         return {
             text: foodcoopshop.LocalizedJs.helper.cancel,
@@ -388,36 +397,38 @@ foodcoopshop.Helper = {
 
     initLogoutShopOrderCustomerButton: function () {
         $('#cart .shop-order-customer-info a.btn').on('click', function () {
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    foodcoopshop.Helper.ajaxCall(
+                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteShopOrderCustomer',
+                        {},
+                        {
+                            onOk: function (data) {
+                                $('.featherlight', window.parent.document).remove();
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                document.location.reload();
+                            }
+                        }
+                    );
+                }
+            };
+            
             $('<div></div>').appendTo('body')
-                .html('<p>Willst du die Sofort-Bestellung wirklich abbrechen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelShopOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Sofort-Bestellung abbrechen?',
+                    title: foodcoopshop.LocalizedJs.helper.CancelShopOrder,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.Helper.ajaxCall(
-                                '/carts/ajaxDeleteShopOrderCustomer',
-                                {},
-                                {
-                                    onOk: function (data) {
-                                        $('.featherlight', window.parent.document).remove();
-                                        document.location.reload();
-                                    },
-                                    onError: function (data) {
-                                        document.location.reload();
-                                    }
-                                }
-                            );
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

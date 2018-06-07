@@ -1374,7 +1374,7 @@ foodcoopshop.Admin = {
                 .html('<p>' + emails.join(',') + '</p>')
                 .dialog({
                     modal: true,
-                    title: 'E-Mail-Adressen',
+                    title: foodcoopshop.LocalizedJs.admin.EmailAddresses,
                     autoOpen: true,
                     width: 800,
                     resizable: false,
@@ -2031,7 +2031,7 @@ foodcoopshop.Admin = {
                     },
                     afterContent: function () {
 
-                        var header = $('<div class="message-container"><span class="start"><b>Sofort-Bestellung </b> tätigen für: </span> Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert.</div>');
+                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceShopOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.ShopOrderDateIsSetBackAfterPlacingIt + '</div>');
                         $('.featherlight-close').after(header);
 
                         // only clone dropdown once
@@ -2246,73 +2246,50 @@ foodcoopshop.Admin = {
                     orderIdsContainer.each(function () {
                         orderIds.push($(this).html());
                     });
+                    var buttons = {};
+                    buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+                    buttons['yes'] = {
+                        text: foodcoopshop.LocalizedJs.helper.yes,
+                        click: function() {
+                            $('.ui-dialog .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+                            var orderState;
+                            if ($.inArray('cash', foodcoopshop.Helper.paymentMethods) != -1) {
+                                orderState = 2;
+                            }
+                            if ($.inArray('cashless', foodcoopshop.Helper.paymentMethods) != -1) {
+                                orderState = 1;
+                            }
+                            foodcoopshop.Helper.ajaxCall(
+                                '/admin/orders/changeOrderStateToClosed/',
+                                {
+                                    orderIds: orderIds,
+                                    orderState: orderState
+                                },
+                                {
+                                    onOk: function (data) {
+                                        document.location.reload();
+                                    },
+                                    onError: function (data) {
+                                        document.location.reload();
+                                    }
+                                }
+                            );                            
+                        }
+                    };
 
                     $('<div></div>')
                         .appendTo('body')
                         .html(
-                            '<p>Möchtest du wirklich alle angezeigten Bestellungen <b>abschließen</b>?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
+                            '<p>' + foodcoopshop.LocalizedJs.admin.ReallyCloseAllOrders + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
                         )
                         .dialog({
                             modal: true,
-                            title: 'Alle Bestellungen abschließen',
+                            title: foodcoopshop.LocalizedJs.admin.CloseAllOrders,
                             autoOpen: true,
                             width: 400,
                             resizable: false,
-                            buttons: {
-                                'Nein': function () {
-                                    $(this).dialog('close');
-                                },
-                                'Ja': function () {
-
-                                    $('.ui-dialog .ajax-loader')
-                                        .show();
-                                    $('.ui-dialog button')
-                                        .attr(
-                                            'disabled',
-                                            'disabled'
-                                        );
-                                    var orderState;
-                                    if ($
-                                        .inArray(
-                                            'cash',
-                                            foodcoopshop.Helper.paymentMethods
-                                        ) != -1) {
-                                        orderState = 2;
-                                    }
-                                    if ($
-                                        .inArray(
-                                            'cashless',
-                                            foodcoopshop.Helper.paymentMethods
-                                        ) != -1) {
-                                        orderState = 1;
-                                    }
-
-                                    foodcoopshop.Helper
-                                        .ajaxCall(
-                                            '/admin/orders/changeOrderStateToClosed/',
-                                            {
-                                                orderIds: orderIds,
-                                                orderState: orderState
-                                            },
-                                            {
-                                                onOk: function (
-                                                    data
-                                                ) {
-                                                    document.location
-                                                        .reload();
-                                                },
-                                                onError: function (
-                                                    data
-                                                ) {
-                                                    document.location
-                                                        .reload();
-                                                }
-                                            }
-                                        );
-
-                                }
-
-                            },
+                            buttons: buttons,
                             close: function (event, ui) {
                                 $(this).remove();
                             }
@@ -2324,10 +2301,7 @@ foodcoopshop.Admin = {
 
     initGenerateOrdersAsPdf: function () {
 
-        $('button.generate-orders-as-pdf')
-            .on(
-                'click',
-                function () {
+        $('button.generate-orders-as-pdf').on('click', function () {
 
                     var orderIdsContainer = $('table.list td.order-id');
                     var orderIds = [];
@@ -2335,34 +2309,28 @@ foodcoopshop.Admin = {
                         orderIds.push($(this).html());
                     });
 
-                    $('<div></div>')
-                        .appendTo('body')
-                        .html(
-                            '<p>Möchtest du wirklich alle Bestellungen als PDF generieren?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
+                    var buttons = {};
+                    buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+                    buttons['yes'] = {
+                        text: foodcoopshop.LocalizedJs.helper.yes,
+                        click: function() {
+                            $('.ui-dialog .ajax-loader').show();
+                            $('.ui-dialog button').attr('disabled', 'disabled');
+                            window.open('/admin/orders/ordersAsPdf.pdf?orderIds=' + orderIds.join(','));
+                            $(this).dialog('close');
+                        }
+                    };
+
+                    $('<div></div>').appendTo('body').html(
+                            '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateOrdersAsPdf + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
                         )
                         .dialog({
                             modal: true,
-                            title: 'Bestellungen als PDF generieren',
+                            title: foodcoopshop.LocalizedJs.admin.GenerateOrdersAsPdf,
                             autoOpen: true,
                             width: 400,
                             resizable: false,
-                            buttons: {
-                                'Nein': function () {
-                                    $(this).dialog('close');
-                                },
-                                'Ja': function () {
-                                    $('.ui-dialog .ajax-loader')
-                                        .show();
-                                    $('.ui-dialog button')
-                                        .attr(
-                                            'disabled',
-                                            'disabled'
-                                        );
-                                    window.open('/admin/orders/ordersAsPdf.pdf?orderIds=' + orderIds.join(','));
-                                    $(this).dialog('close');
-                                }
-
-                            },
+                            buttons: buttons,
                             close: function (event, ui) {
                                 $(this).remove();
                             }

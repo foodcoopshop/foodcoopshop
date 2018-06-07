@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 10:54+0000\n"
+"POT-Creation-Date: 2018-06-07 13:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -104,6 +104,9 @@ msgstr ""
 msgid "An_error_occurred"
 msgstr ""
 
+msgid "No"
+msgstr ""
+
 msgid "Yes"
 msgstr ""
 
@@ -111,6 +114,12 @@ msgid "Save"
 msgstr ""
 
 msgid "Cancel"
+msgstr ""
+
+msgid "Cancel_shop_order?"
+msgstr ""
+
+msgid "Really_cancel_shop_order?"
 msgstr ""
 
 msgid "route_cart"
@@ -167,6 +176,27 @@ msgstr ""
 msgid "Show_all_products"
 msgstr ""
 
+msgid "Place_shop_order_for"
+msgstr ""
+
+msgid "Shop_order_date_is_set_back_after_placing_it."
+msgstr ""
+
+msgid "Close_all_orders?"
+msgstr ""
+
+msgid "Really_close_all_orders?"
+msgstr ""
+
+msgid "Generate_orders_as_pdf?"
+msgstr ""
+
+msgid "Really_generate_orders_as_pdf?"
+msgstr ""
+
+msgid "Email_addresses"
+msgstr ""
+
 msgid "Change_comment_of_order"
 msgstr ""
 
@@ -192,6 +222,21 @@ msgid "The_product_{0}_is_not_activated_any_more."
 msgstr ""
 
 msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgstr ""
+
+msgid "Members:_active"
+msgstr ""
+
+msgid "Members:_never_ordered"
+msgstr ""
+
+msgid "Manufacturers:_active"
+msgstr ""
+
+msgid "Manufacturers:_inactive"
+msgstr ""
+
+msgid "Members:_inactive"
 msgstr ""
 
 msgid "Pick_up_day"
@@ -353,9 +398,6 @@ msgstr ""
 msgid "This_order_will_be_placed_for_{0}"
 msgstr ""
 
-msgid "Cancel_shop_order?"
-msgstr ""
-
 msgid "Your_credit_balance"
 msgstr ""
 
@@ -489,6 +531,12 @@ msgid "Supervisory_authority"
 msgstr ""
 
 msgid "Chamber"
+msgstr ""
+
+msgid "Empty_glasses"
+msgstr ""
+
+msgid "Compensation_payment"
 msgstr ""
 
 msgid "Base_price"

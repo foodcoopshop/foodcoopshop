@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 10:54+0000\n"
-"PO-Revision-Date: 2018-06-07 12:54+0200\n"
+"POT-Creation-Date: 2018-06-07 13:35+0000\n"
+"PO-Revision-Date: 2018-06-07 15:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -105,6 +105,9 @@ msgstr "sign-out"
 msgid "An_error_occurred"
 msgstr "An error occurred"
 
+msgid "No"
+msgstr "No"
+
 msgid "Yes"
 msgstr "Yes"
 
@@ -113,6 +116,12 @@ msgstr "Save"
 
 msgid "Cancel"
 msgstr "Cancel"
+
+msgid "Cancel_shop_order?"
+msgstr "Cancel shop order?"
+
+msgid "Really_cancel_shop_order?"
+msgstr "Do you really want to cancel the shop order?"
 
 msgid "route_cart"
 msgstr "cart"
@@ -170,6 +179,27 @@ msgstr "Show"
 msgid "Show_all_products"
 msgstr "Show all products"
 
+msgid "Place_shop_order_for"
+msgstr "Place shop order for"
+
+msgid "Shop_order_date_is_set_back_after_placing_it."
+msgstr "Shop order date is set back after placing it."
+
+msgid "Close_all_orders?"
+msgstr "Close all orders?"
+
+msgid "Really_close_all_orders?"
+msgstr "Really close all visible orders?"
+
+msgid "Generate_orders_as_pdf?"
+msgstr "Generate orders as PDF?"
+
+msgid "Really_generate_orders_as_pdf?"
+msgstr "Really generate orders as PDF?"
+
+msgid "Email_addresses"
+msgstr "Email addresses"
+
 msgid "Change_comment_of_order"
 msgstr "Change order comment"
 
@@ -208,6 +238,21 @@ msgid ""
 msgstr ""
 "The manufacturer of the product {0} either has a delivery break or the "
 "product is not activated any more."
+
+msgid "Members:_active"
+msgstr "Members: active"
+
+msgid "Members:_never_ordered"
+msgstr "Members: never placed an order"
+
+msgid "Manufacturers:_active"
+msgstr "Manufacturers: active"
+
+msgid "Manufacturers:_inactive"
+msgstr "Manufacturers: inactive"
+
+msgid "Members:_inactive"
+msgstr "Members: inactive"
 
 msgid "Pick_up_day"
 msgstr "Pick-up day"
@@ -375,9 +420,6 @@ msgstr "Load past orders"
 msgid "This_order_will_be_placed_for_{0}"
 msgstr "This order will be placed for {0}"
 
-msgid "Cancel_shop_order?"
-msgstr "Cancel shop order?"
-
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
 
@@ -512,6 +554,12 @@ msgstr "Supervisory authority"
 
 msgid "Chamber"
 msgstr "Chamber"
+
+msgid "Empty_glasses"
+msgstr "Empty glasses"
+
+msgid "Compensation_payment"
+msgstr "Compensation payment"
 
 msgid "Base_price"
 msgstr "Base price"

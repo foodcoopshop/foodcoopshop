@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 10:54+0000\n"
-"PO-Revision-Date: 2018-06-07 12:28+0200\n"
+"POT-Creation-Date: 2018-06-07 13:35+0000\n"
+"PO-Revision-Date: 2018-06-07 15:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -39,8 +39,30 @@ msgstr "members"
 msgid "docs_route_deposit"
 msgstr "deposit"
 
+msgid "Add_deposit_amount"
+msgstr "Add deposit amount"
+
+msgid "Add_deposit"
+msgstr "Add deposit"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Add deposit amount for {0}"
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr ""
+"Please add the value of empty glasses that are taken back by the "
+"manufacturer."
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr ""
+"Did the manufacturer take away empty glasses or was his deposit account "
+"equalized with money?"
+
+msgid "Amount_in_{0}"
+msgstr "Amount in {0}"
+
 msgid "Chose_member..."
-msgstr "Chose members..."
+msgstr "Chose member..."
 
 msgid "1_day_ahead"
 msgstr "1 day ahead"
@@ -128,6 +150,11 @@ msgstr "manufacturers"
 
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgstr ""
+"Please chose the member you want to place the shop order for in the dropdown "
+"above."
 
 msgid "Group_by_member"
 msgstr "Group by member"

@@ -29,9 +29,12 @@ class LocalizedController extends Controller
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),
                 'anErrorOccurred' => __('An_error_occurred'),
+                'no' => __('No'),
                 'yes' => __('Yes'),
                 'save' => __('Save'),
-                'cancel' => __('Cancel')
+                'cancel' => __('Cancel'),
+                'CancelShopOrder' => __('Cancel_shop_order?'),
+                'ReallyCancelShopOrder' => __('Really_cancel_shop_order?')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
@@ -60,7 +63,14 @@ class LocalizedController extends Controller
                 'routeCart' => __('route_cart')
             ],
             'admin' => [
-                'routeCartFinished' => Configure::read('app.slugHelper')->getCartFinish()
+                'routeCartFinished' => Configure::read('app.slugHelper')->getCartFinish(),
+                'PlaceShopOrderFor' => __('Place_shop_order_for'),
+                'ShopOrderDateIsSetBackAfterPlacingIt' => __('Shop_order_date_is_set_back_after_placing_it.'),
+                'CloseAllOrders' => __('Close_all_orders?'),
+                'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
+                'GenerateOrdersAsPdf' => __('Generate_orders_as_pdf?'),
+                'ReallyGenerateOrdersAsPdf' => __('Really_generate_orders_as_pdf?'),
+                'EmailAddresses' => __('Email_addresses')
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),

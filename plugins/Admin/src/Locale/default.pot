@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 10:54+0000\n"
+"POT-Creation-Date: 2018-06-07 13:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -36,6 +36,24 @@ msgid "docs_route_members"
 msgstr ""
 
 msgid "docs_route_deposit"
+msgstr ""
+
+msgid "Add_deposit_amount"
+msgstr ""
+
+msgid "Add_deposit"
+msgstr ""
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr ""
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr ""
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr ""
+
+msgid "Amount_in_{0}"
 msgstr ""
 
 msgid "Chose_member..."
@@ -126,6 +144,9 @@ msgid "docs_route_manufacturers"
 msgstr ""
 
 msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
 msgstr ""
 
 msgid "Group_by_member"

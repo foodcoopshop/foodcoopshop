@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 10:54+0000\n"
-"PO-Revision-Date: 2018-06-07 12:27+0200\n"
+"POT-Creation-Date: 2018-06-07 13:35+0000\n"
+"PO-Revision-Date: 2018-06-07 15:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -38,6 +38,28 @@ msgstr "mitglieder"
 
 msgid "docs_route_deposit"
 msgstr "pfand"
+
+msgid "Add_deposit_amount"
+msgstr "Pfand-Betrag eintragen"
+
+msgid "Add_deposit"
+msgstr "Pfand eintragen"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Pfand-Betrag für {0} eintragen"
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr ""
+"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller "
+"zurückgenommen wird."
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr ""
+"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit "
+"Geld ausgeglichen?"
+
+msgid "Amount_in_{0}"
+msgstr "Betrag in {0}"
 
 msgid "Chose_member..."
 msgstr "Mitglied auswählen..."
@@ -128,6 +150,11 @@ msgstr "hersteller"
 
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgstr ""
+"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen "
+"möchtest."
 
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"

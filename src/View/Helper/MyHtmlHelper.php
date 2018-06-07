@@ -423,8 +423,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerDepositPaymentTexts()
     {
         $paymentTexts = [
-            'empty_glasses' => 'Leergebinde',
-            'money' => 'Ausgleichszahlung'
+            'empty_glasses' => __('Empty_glasses'),
+            'money' => __('Compensation_payment')
         ];
         return $paymentTexts;
     }

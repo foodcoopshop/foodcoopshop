@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 10:54+0000\n"
-"PO-Revision-Date: 2018-06-07 12:54+0200\n"
+"POT-Creation-Date: 2018-06-07 13:35+0000\n"
+"PO-Revision-Date: 2018-06-07 15:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -110,6 +110,9 @@ msgstr "abmelden"
 msgid "An_error_occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
+msgid "No"
+msgstr "Nein"
+
 msgid "Yes"
 msgstr "Ja"
 
@@ -118,6 +121,12 @@ msgstr "Speichern"
 
 msgid "Cancel"
 msgstr "Abbrechen"
+
+msgid "Cancel_shop_order?"
+msgstr "Sofort-Bestellung abbrechen?"
+
+msgid "Really_cancel_shop_order?"
+msgstr "Möchtest du die Sofort-Bestellung wirklich abbrechen?"
 
 msgid "route_cart"
 msgstr "warenkorb"
@@ -176,6 +185,27 @@ msgstr "Anzeigen"
 msgid "Show_all_products"
 msgstr "Alle Produkte anzeigen"
 
+msgid "Place_shop_order_for"
+msgstr "Sofort-Bestellung tätigen für"
+
+msgid "Shop_order_date_is_set_back_after_placing_it."
+msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."
+
+msgid "Close_all_orders?"
+msgstr "Alle Bestellungen abschließen?"
+
+msgid "Really_close_all_orders?"
+msgstr "Möchtest du wirklich alle Bestellungen abschließen?"
+
+msgid "Generate_orders_as_pdf?"
+msgstr "Bestellungen als PDF generieren?"
+
+msgid "Really_generate_orders_as_pdf?"
+msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
+
+msgid "Email_addresses"
+msgstr "E-Mail-Adressen"
+
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
 
@@ -216,6 +246,21 @@ msgid ""
 msgstr ""
 "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht "
 "mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "Members:_active"
+msgstr "Mitglieder: aktiv"
+
+msgid "Members:_never_ordered"
+msgstr "Mitglieder: noch nie bestellt"
+
+msgid "Manufacturers:_active"
+msgstr "Hersteller: aktiv"
+
+msgid "Manufacturers:_inactive"
+msgstr "Hersteller: inaktiv"
+
+msgid "Members:_inactive"
+msgstr "Mitglieder: inaktiv"
 
 msgid "Pick_up_day"
 msgstr "Abholtag"
@@ -391,9 +436,6 @@ msgstr "Vergangene Bestellungen laden"
 msgid "This_order_will_be_placed_for_{0}"
 msgstr "Diese Bestellung wird für {0} getätigt."
 
-msgid "Cancel_shop_order?"
-msgstr "Sofort-Bestellung abbrechen?"
-
 msgid "Your_credit_balance"
 msgstr "Dein Guthaben"
 
@@ -530,6 +572,12 @@ msgstr "Aufsichtsbehörde"
 
 msgid "Chamber"
 msgstr "Kammer"
+
+msgid "Empty_glasses"
+msgstr "Leergebinde"
+
+msgid "Compensation_payment"
+msgstr "Ausgleichszahlung"
 
 msgid "Base_price"
 msgstr "Basis-Preis"
