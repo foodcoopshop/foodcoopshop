@@ -161,6 +161,11 @@ class SlugHelper extends Helper
         return '/'.__('route_sign_out');
     }
 
+    public function getRegistrationSuccessful()
+    {
+        return '/'.__('route_registration_successful');
+    }
+    
     public function getRegistration()
     {
         return '/'.__('route_registration');

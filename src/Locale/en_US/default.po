@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-06 16:59+0000\n"
-"PO-Revision-Date: 2018-06-05 17:15+0200\n"
+"POT-Creation-Date: 2018-06-07 07:59+0000\n"
+"PO-Revision-Date: 2018-06-07 10:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -36,8 +36,56 @@ msgstr "New products"
 msgid "Search"
 msgstr "Search"
 
+msgid "Accept_terms_of_use"
+msgstr "Accepting terms of use"
+
+msgid "Accepting_the_terms_of_use_have_been_saved."
+msgstr "Accepting the terms of use have been saved."
+
+msgid "Request_new_password"
+msgstr "Request new password"
+
+msgid "Errors_while_saving!"
+msgstr "Errors while saving!"
+
+msgid "Request_for_new_password_for_{0}"
+msgstr "Request for new password for {0}"
+
+msgid "We_sent_a_link_to_you_for_generating_a_new_password."
+msgstr "We sent a link to you to generate a new password."
+
+msgid "Generated_new_password_for_{0}"
+msgstr "Generated a new password for you {0}"
+
+msgid "We_sent_a_new_password_to_you."
+msgstr "We sent a new password to you."
+
 msgid "Sign_in"
 msgstr "Sign in"
+
+msgid "You_are_already_signed_in."
+msgstr "You are already signed in."
+
+msgid "Signing_in_failed_account_inactive_or_password_wrong?"
+msgstr "Signing in failed. Accout inactive or password wrong?"
+
+msgid "Member_{0}_created_an_account."
+msgstr "Member {0} created an account."
+
+msgid "Terms_of_use"
+msgstr "Terms of use"
+
+msgid "Welcome"
+msgstr "Welcome"
+
+msgid "New_registration_{0}"
+msgstr "New registration {0}"
+
+msgid "Account_created_successfully"
+msgstr "Account created successfully"
+
+msgid "You_have_been_signed_out."
+msgstr "You have been signed out."
 
 msgid "All_products"
 msgstr "All products"
@@ -115,9 +163,6 @@ msgstr "Show"
 
 msgid "Show_all_products"
 msgstr "Show all products"
-
-msgid "Welcome"
-msgstr "Welcome"
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "The desired amount {0} is not valid."
@@ -311,9 +356,6 @@ msgstr "Value added tax"
 msgid "Show_cart_button"
 msgstr "Show cart"
 
-msgid "Terms_of_use"
-msgstr "Terms of use"
-
 msgid "Privacy_policy"
 msgstr "Privacy policy"
 
@@ -455,6 +497,9 @@ msgstr "category"
 msgid "route_sign_in"
 msgstr "sign-in"
 
+msgid "route_registration_successful"
+msgstr "registration-successful"
+
 msgid "route_registration"
 msgstr "register"
 
@@ -476,14 +521,15 @@ msgstr "Access denied, please sign in."
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "This order contains the variable member fee."
 
-msgid "route_registration_successful"
-msgstr "registration-successful"
-
 msgid "route_information_about_right_of_withdrawal"
 msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#, fuzzy
+#~ msgid "You_are_already_signed_in"
+#~ msgstr "Your are not signed in."
 
 #, fuzzy
 #~ msgid "Modified on"

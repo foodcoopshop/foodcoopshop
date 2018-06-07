@@ -125,7 +125,7 @@ class CustomersController extends AdminAppController
         );
 
         if (!empty($customer->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
         } else {
             $ph = new AppPasswordHasher();
@@ -333,7 +333,7 @@ class CustomersController extends AdminAppController
         );
 
         if (!empty($customer->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
             $this->render('edit');
         } else {

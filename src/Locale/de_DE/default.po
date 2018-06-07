@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-06 16:59+0000\n"
-"PO-Revision-Date: 2018-06-05 17:15+0200\n"
+"POT-Creation-Date: 2018-06-07 07:59+0000\n"
+"PO-Revision-Date: 2018-06-07 09:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -36,8 +36,61 @@ msgstr "Neue Produkte"
 msgid "Search"
 msgstr "Suche"
 
+msgid "Accept_terms_of_use"
+msgstr "Nutzungsbedingungen akzeptieren"
+
+msgid "Accepting_the_terms_of_use_have_been_saved."
+msgstr ""
+"Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank."
+
+msgid "Request_new_password"
+msgstr "Neues Passwort anfordern"
+
+msgid "Errors_while_saving!"
+msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "Request_for_new_password_for_{0}"
+msgstr "Anfrage für neues Passwort für {0}"
+
+msgid "We_sent_a_link_to_you_for_generating_a_new_password."
+msgstr ""
+"Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort "
+"generieren kannst."
+
+msgid "Generated_new_password_for_{0}"
+msgstr "Neues Passwort für {0} generiert"
+
+msgid "We_sent_a_new_password_to_you."
+msgstr "Wir haben dir dein neues Passwort zugeschickt."
+
 msgid "Sign_in"
 msgstr "Anmelden"
+
+msgid "You_are_already_signed_in."
+msgstr "Du bist bereits angemeldet."
+
+msgid "Signing_in_failed_account_inactive_or_password_wrong?"
+msgstr ""
+"Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert "
+"oder das Passwort stimmt nicht?"
+
+msgid "Member_{0}_created_an_account."
+msgstr "Das Mitglied {0} hat ein Mitgliedskonto erstellt."
+
+msgid "Terms_of_use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Welcome"
+msgstr "Willkommen"
+
+msgid "New_registration_{0}"
+msgstr "Neue Registrierung: {0}"
+
+msgid "Account_created_successfully"
+msgstr "Mitgliedskonto erfolgreich erstellt"
+
+msgid "You_have_been_signed_out."
+msgstr "Du hast dich erfolgreich abgemeldet."
 
 msgid "All_products"
 msgstr "Alle Produkte"
@@ -116,9 +169,6 @@ msgstr "Anzeigen"
 
 msgid "Show_all_products"
 msgstr "Alle Produkte anzeigen"
-
-msgid "Welcome"
-msgstr "Willkommen"
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
@@ -321,9 +371,6 @@ msgstr "Umsatzsteuer"
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
 
-msgid "Terms_of_use"
-msgstr "Nutzungsbedingungen"
-
 msgid "Privacy_policy"
 msgstr "Datenschutzerklärung"
 
@@ -465,6 +512,9 @@ msgstr "kategorie"
 msgid "route_sign_in"
 msgstr "anmelden"
 
+msgid "route_registration_successful"
+msgstr "registrierung/abgeschlossen"
+
 msgid "route_registration"
 msgstr "registrierung"
 
@@ -486,14 +536,14 @@ msgstr "Zugriff verweigert, bitte melde dich an."
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "Die Bestellung beinhaltet den variablen Mitgliedsbeitrag."
 
-msgid "route_registration_successful"
-msgstr "registrierung/abgeschlossen"
-
 msgid "route_information_about_right_of_withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "You_are_already_signed_in"
+#~ msgstr "Du bist bereits angemeldet."
 
 #, fuzzy
 #~ msgid "Modified on"

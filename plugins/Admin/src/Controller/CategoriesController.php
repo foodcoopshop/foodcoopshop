@@ -94,7 +94,7 @@ class CategoriesController extends AdminAppController
 
         $category = $this->Category->patchEntity($category, $this->getRequest()->getData());
         if (!empty($category->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('category', $category);
             $this->render('edit');
         } else {

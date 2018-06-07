@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-06 16:59+0000\n"
+"POT-Creation-Date: 2018-06-07 07:59+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -35,7 +35,55 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Accept_terms_of_use"
+msgstr ""
+
+msgid "Accepting_the_terms_of_use_have_been_saved."
+msgstr ""
+
+msgid "Request_new_password"
+msgstr ""
+
+msgid "Errors_while_saving!"
+msgstr ""
+
+msgid "Request_for_new_password_for_{0}"
+msgstr ""
+
+msgid "We_sent_a_link_to_you_for_generating_a_new_password."
+msgstr ""
+
+msgid "Generated_new_password_for_{0}"
+msgstr ""
+
+msgid "We_sent_a_new_password_to_you."
+msgstr ""
+
 msgid "Sign_in"
+msgstr ""
+
+msgid "You_are_already_signed_in."
+msgstr ""
+
+msgid "Signing_in_failed_account_inactive_or_password_wrong?"
+msgstr ""
+
+msgid "Member_{0}_created_an_account."
+msgstr ""
+
+msgid "Terms_of_use"
+msgstr ""
+
+msgid "Welcome"
+msgstr ""
+
+msgid "New_registration_{0}"
+msgstr ""
+
+msgid "Account_created_successfully"
+msgstr ""
+
+msgid "You_have_been_signed_out."
 msgstr ""
 
 msgid "All_products"
@@ -111,9 +159,6 @@ msgid "Show"
 msgstr ""
 
 msgid "Show_all_products"
-msgstr ""
-
-msgid "Welcome"
 msgstr ""
 
 msgid "The_desired_amount_{0}_is_not_valid."
@@ -293,9 +338,6 @@ msgstr ""
 msgid "Show_cart_button"
 msgstr ""
 
-msgid "Terms_of_use"
-msgstr ""
-
 msgid "Privacy_policy"
 msgstr ""
 
@@ -437,6 +479,9 @@ msgstr ""
 msgid "route_sign_in"
 msgstr ""
 
+msgid "route_registration_successful"
+msgstr ""
+
 msgid "route_registration"
 msgstr ""
 
@@ -456,9 +501,6 @@ msgid "Access_denied_please_sign_in."
 msgstr ""
 
 msgid "This_order_contains_the_variable_member_fee."
-msgstr ""
-
-msgid "route_registration_successful"
 msgstr ""
 
 msgid "route_information_about_right_of_withdrawal"

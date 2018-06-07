@@ -70,7 +70,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $response = $this->add($manufacturerData);
 
         // provoke errors
-        $this->assertRegExpWithUnquotedString('Beim Speichern sind Fehler aufgetreten!', $response);
+        $this->assertRegExpWithUnquotedString(__d('admin', 'Errors_while_saving!'), $response);
         $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen IBAN ein.', $response);
         $this->assertRegExpWithUnquotedString('Bitte gib einen gültigen BIC ein.', $response);
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);

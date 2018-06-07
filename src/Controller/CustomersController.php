@@ -55,7 +55,7 @@ class CustomersController extends FrontendController
             $this->redirect('/');
         }
 
-        $this->set('title_for_layout', 'Nutzungsbedingungen akzeptieren');
+        $this->set('title_for_layout', __('Accept_terms_of_use'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $patchedEntity = $this->Customer->patchEntity(
@@ -76,7 +76,7 @@ class CustomersController extends FrontendController
 
         if (empty($errors)) {
             $this->Customer->save($patchedEntity);
-            $this->Flash->success('Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank.');
+            $this->Flash->success(__('Accepting_the_terms_of_use_have_been_saved.'));
             $this->renewAuthSession();
             $this->redirect($this->referer());
         }
@@ -85,7 +85,7 @@ class CustomersController extends FrontendController
     public function newPasswordRequest()
     {
         $this->set([
-            'title_for_layout' => 'Neues Passwort anfordern'
+            'title_for_layout' => __('Request_new_password')
         ]);
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
@@ -106,7 +106,7 @@ class CustomersController extends FrontendController
             );
 
             if (!empty($customer->getErrors())) {
-                $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                $this->Flash->error(__('Errors_while_saving!'));
             } else {
                 $changePasswordCode = StringComponent::createRandomString(12);
                 $originalPrimaryKey = $this->Customer->getPrimaryKey();
@@ -124,7 +124,7 @@ class CustomersController extends FrontendController
                 // send email
                 $email = new AppEmail();
                 $email->setTemplate('new_password_request_successful')
-                    ->setSubject('Anfrage für neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME'))
+                    ->setSubject(__('Request_for_new_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
                     ->setTo($this->getRequest()->getData('Customers.email'))
                     ->setViewVars([
                         'changePasswordCode' => $changePasswordCode,
@@ -132,7 +132,7 @@ class CustomersController extends FrontendController
                     ]);
 
                 if ($email->send()) {
-                    $this->Flash->success('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.');
+                    $this->Flash->success(__('We_sent_a_link_to_you_for_generating_a_new_password.'));
                 }
 
                 $this->redirect('/');
@@ -166,7 +166,7 @@ class CustomersController extends FrontendController
         // send email
         $email = new AppEmail();
             $email->setTemplate('new_password_set_successful')
-            ->setSubject('Neues Passwort für ' . Configure::read('appDb.FCS_APP_NAME') . ' generiert')
+            ->setSubject(__('Generated_new_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
             ->setTo($customer->email)
             ->setViewVars([
                 'password' => $newPassword,
@@ -174,7 +174,7 @@ class CustomersController extends FrontendController
             ]);
 
         if ($email->send()) {
-            $this->Flash->success('Wir haben dir dein neues Passwort zugeschickt.');
+            $this->Flash->success(__('We_sent_a_new_password_to_you.'));
         }
 
         $this->redirect(Configure::read('app.slugHelper')->getLogin());
@@ -189,7 +189,7 @@ class CustomersController extends FrontendController
          */
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
-                $this->Flash->error('Du bist bereits angemeldet.');
+                $this->Flash->error(__('You_are_already_signed_in.'));
             }
 
             if ($this->getRequest()->is('post')) {
@@ -198,7 +198,7 @@ class CustomersController extends FrontendController
                     $this->AppAuth->setUser($user);
                     $this->redirect($this->AppAuth->redirectUrl());
                 } else {
-                    $this->Flash->error('Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?');
+                    $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
                 }
 
                 if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me')) {
@@ -243,7 +243,7 @@ class CustomersController extends FrontendController
             }
 
             if ($this->AppAuth->user()) {
-                $this->Flash->error('Du bist bereits angemeldet.');
+                $this->Flash->error(__('You_are_already_signed_in.'));
                 $this->redirect(Configure::read('app.slugHelper')->getLogin());
             }
 
@@ -269,7 +269,7 @@ class CustomersController extends FrontendController
                 );
 
                 if (!empty($customer->getErrors())) {
-                    $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+                    $this->Flash->error(__('Errors_while_saving!'));
                 } else {
                     $newCustomer = $this->Customer->save(
                         $customer,
@@ -282,20 +282,21 @@ class CustomersController extends FrontendController
 
                     // write action log
                     $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-                    $message = 'Das Mitglied ' . $this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname') . ' hat ein Mitgliedskonto erstellt.';
+                    $message = __('Member_{0}_created_an_account.', [$this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname')]);
+                    
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
                     // START send confirmation email to customer
                     $email = new AppEmail();
                     if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
-                        $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer), 'mimetype' => 'application/pdf']]);
+                        $email->addAttachments([__('Terms_of_use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer), 'mimetype' => 'application/pdf']]);
                     } else {
                         $template = 'customer_registered_inactive';
                     }
                     $email->setTemplate($template)
                         ->setTo($this->getRequest()->getData('Customers.address_customer.email'))
-                        ->setSubject('Willkommen')
+                        ->setSubject(__('Welcome'))
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $newCustomer,
@@ -309,7 +310,7 @@ class CustomersController extends FrontendController
                         $email = new AppEmail();
                         $email->setTemplate('customer_registered_notification')
                             ->setTo(Configure::read('app.registrationNotificationEmails'))
-                            ->setSubject('Neue Registrierung: ' . $newCustomer->firstname . ' ' . $newCustomer->lastname)
+                            ->setSubject(__('New_registration_{0}', [$newCustomer->firstname . ' ' . $newCustomer->lastname]))
                             ->setViewVars([
                             'appAuth' => $this->AppAuth,
                                 'data' => $newCustomer
@@ -318,8 +319,8 @@ class CustomersController extends FrontendController
                     }
                     // END
 
-                    $this->Flash->success('Deine Registrierung war erfolgreich.');
-                    $this->redirect('/registrierung/abgeschlossen');
+                    $this->Flash->success(_('Your_registration_was_successful.'));
+                    $this->redirect(Configure::read('app.slugHelper')->getRegistrationSuccessful());
                 }
             }
         }
@@ -328,7 +329,7 @@ class CustomersController extends FrontendController
 
     public function registrationSuccessful()
     {
-        $this->set('title_for_layout', 'Mitgliedskonto erfolgreich erstellt');
+        $this->set('title_for_layout', __('Account_created_successfully'));
 
         $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
@@ -337,7 +338,7 @@ class CustomersController extends FrontendController
 
     public function logout()
     {
-        $this->Flash->success('Du hast dich erfolgreich abgemeldet.');
+        $this->Flash->success(__('You_have_been_signed_out.'));
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyShopOrderCustomer();
         $this->AppAuth->logout();

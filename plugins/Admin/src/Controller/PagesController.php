@@ -122,7 +122,7 @@ class PagesController extends AdminAppController
 
         $page = $this->Page->patchEntity($page, $this->getRequest()->getData());
         if (!empty($page->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('page', $page);
             $this->render('edit');
         } else {
