@@ -201,10 +201,10 @@ Plugin::load('Admin', [
 
 mb_internal_encoding('UTF-8');
 
-if (in_array(Configure::read('app.locale'), array_keys(Configure::read('app.implementedLocales')))) {
-    locale_set_default(Configure::read('app.locale'));
-    setlocale(LC_ALL, Configure::read('app.locale').'.UTF-8');
-    I18n::setLocale(Configure::read('app.locale'));
+if (in_array(Configure::read('App.defaultLocale'), array_keys(Configure::read('app.implementedLocales')))) {
+    locale_set_default(Configure::read('App.defaultLocale'));
+    setlocale(LC_ALL, Configure::read('App.defaultLocale').'.UTF-8');
+    I18n::setLocale(Configure::read('App.defaultLocale'));
 }
 
 TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();

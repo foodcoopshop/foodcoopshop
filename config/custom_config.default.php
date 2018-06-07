@@ -52,6 +52,15 @@ return [
     'Security' => [
         'salt' => ''
     ],
+    
+    /**
+     * locale can be overriden here, attention: "App" namespace (not "app")
+     * since v2.1 FoodCoopShop is multilingual
+     * @see app_config.php:implementedLocales for valid locales
+     */
+//     'App' => [
+//         'defaultLocale' => 'en_US'
+//     ],
 
     'app' => [
         /**
@@ -95,13 +104,7 @@ return [
          */
         'paymentMethods' => [
             'cashless'
-        ],
-        
-        /**
-         * which language you want to use? since v2.1 FoodCoopShop is multilingual
-         * @see app_config.php:implementedLocales for valid locales
-         */
-        'locale' => 'de_DE'
+        ]
         
     ]
 ];
