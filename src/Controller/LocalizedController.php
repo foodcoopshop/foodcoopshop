@@ -25,6 +25,7 @@ class LocalizedController extends Controller
     {
         $strings = [
             'helper' => [
+                'defaultLocale' => Configure::read('App.defaultLocale'),
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),
