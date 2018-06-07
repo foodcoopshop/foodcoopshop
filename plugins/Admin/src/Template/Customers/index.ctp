@@ -232,11 +232,13 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td style="padding-left: 11px;">';
+        $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen';
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             [
                 'class' => 'customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' disabled' : ''),
-                'title' => $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen'
+                'title' => $commentText,
+                'originalTitle' => $commentText
             ],
             'javascript:void(0);'
         );

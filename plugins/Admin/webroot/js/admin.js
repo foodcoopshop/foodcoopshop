@@ -313,7 +313,7 @@ foodcoopshop.Admin = {
             var dialog = foodcoopshop.Admin.createCustomerCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
 
-            var text = $(this).attr('title');
+            var text = $(this).attr('originalTitle');
             if (text == 'Kommentar hinzufügen') {
                 text = '';
             }
@@ -387,7 +387,7 @@ foodcoopshop.Admin = {
             var dialog = foodcoopshop.Admin.createOrderCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogOrderComment');
 
-            var text = $(this).attr('title');
+            var text = $(this).attr('originalTitle');
             if (text == 'Kommentar hinzufügen') {
                 text = '';
             }

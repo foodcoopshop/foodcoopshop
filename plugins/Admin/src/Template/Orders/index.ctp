@@ -156,11 +156,13 @@ use Cake\Core\Configure;
         echo '<td style="max-width: 200px;">';
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
             echo '<span class="order-comment-wrapper">';
+                $commentText = $order->comment != '' ? $order->comment : 'Kommentar hinzufügen';
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
                     [
                     'class' => 'order-comment-edit-button' . ($order->comment == '' ? ' disabled' : ''),
-                    'title' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen'
+                    'title' => $commentText,
+                    'originalTitle' => $commentText
                     ],
                     'javascript:void(0);'
                 );
