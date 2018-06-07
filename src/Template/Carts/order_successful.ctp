@@ -20,24 +20,26 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 
-<h1>Bestellung abgeschlossen</h1>
+<h1><?php echo __('Order_placed'); ?></h1>
 
-<p><b>Vielen Dank, deine Bestellung wurde erfolgreich abgeschlossen.</b></p>
+<p><b><?php echo __('Thank_you_your_order_was_placed_succesfully.'); ?></b></p>
 
 <ul>
 
-    <li>Die Bestellbestätigung wurde per E-Mail an <b><?php echo $order->customer->email; ?></b> versendet.</li>
-    <li>Bitte hole die bestellten Waren verlässlich am <b><?php echo $this->Time->getFormattedDeliveryDateByCurrentDay(); ?></b> in unserem Abhollager ab.</li>
+    <li><?php echo __('The_order_confirmation_was_sent_by_email_to_{0}.', ['<b>'.$order->customer->email.'</b>']); ?></li>
+    <li><?php echo __('Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store.', [$this->Time->getFormattedDeliveryDateByCurrentDay()]); ?></li>
 
     <?php if ($this->Html->paymentIsCashless()) { ?>
-        <li>Der Warenwert von <b><?php echo $this->Html->formatAsEuro($order->total_paid); ?></b>
+        <li>
             <?php if ($order->total_deposit > 0) { ?>
-                 (zuzüglich <b><?php echo $this->Html->formatAsEuro($order->total_deposit); ?></b> Pfand)
+            	 <?php echo __('The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Html->formatAsEuro($order->total_paid).'</b>', '<b>'.$this->Html->formatAsEuro($order->total_deposit).'</b>']); ?>
+            <?php } else { ?>
+            	<?php echo __('The_product_value_{0}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Html->formatAsEuro($order->total_paid).'</b>']); ?>
             <?php } ?>
-            wurde automatisch von deinem Guthaben abgezogen.</li>
-        <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>">Guthaben aufladen</a></li>
+        </li>
+        <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>"><?php echo __('Increase_credit'); ?></a></li>
     <?php } else { ?>
-        <li>Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen.</li>
+        <li><?php echo __('Please_do_not_forget_to_bring_exact_amount_of_cash.'); ?></li>
     <?php } ?>
 
 </ul>

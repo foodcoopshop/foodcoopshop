@@ -2060,7 +2060,8 @@ foodcoopshop.Admin = {
                                         // called after each url change in iframe!
                                         $.featherlight.hideLoader();
                                         var currentUrl = $(this).get(0).contentWindow.document.URL;
-                                        if (currentUrl.match(/warenkorb\/abgeschlossen/)) {
+                                        var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished.replace('/', '\/'))
+                                        if (currentUrl.match(cartFinishedRegExp)) {
                                             $.featherlight.showLoader();
                                             document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
                                         }

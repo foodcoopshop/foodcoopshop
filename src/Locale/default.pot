@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 07:59+0000\n"
+"POT-Creation-Date: 2018-06-07 09:05+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -257,6 +257,30 @@ msgstr ""
 msgid "Order_button"
 msgstr ""
 
+msgid "Order_placed"
+msgstr ""
+
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr ""
+
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr ""
+
+msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
+msgstr ""
+
+msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
+msgstr ""
+
+msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+msgstr ""
+
+msgid "Increase_credit"
+msgstr ""
+
+msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -369,6 +393,12 @@ msgid "Admin_area"
 msgstr ""
 
 msgid "Manufacturer_area"
+msgstr ""
+
+msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgstr ""
+
+msgid "Signed_in"
 msgstr ""
 
 msgid "Amount"

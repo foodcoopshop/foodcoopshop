@@ -54,7 +54,14 @@ class LocalizedController extends Controller
                 'shoppingLimitReached' => __('Shopping_limit_reached'),
                 'show' => __('Show'),
                 'showAllProducts' => __('Show_all_products')
-            ]
+            ],
+            'timebasedCurrency' => [
+                'routeCart' => __('route_cart')
+            ],
+            'admin' => [
+                'routeCartFinished' => Configure::read('app.slugHelper')->getCartFinish()
+            ],
+            
         ];
         return $strings;
     }

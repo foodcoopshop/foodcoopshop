@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 07:59+0000\n"
-"PO-Revision-Date: 2018-06-07 10:04+0200\n"
+"POT-Creation-Date: 2018-06-07 09:05+0000\n"
+"PO-Revision-Date: 2018-06-07 11:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -275,6 +275,34 @@ msgstr ""
 msgid "Order_button"
 msgstr "Buy now"
 
+msgid "Order_placed"
+msgstr "Order placed"
+
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr "Thank you, your order was placed successfully."
+
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr "The order confirmation was sent to you by e-mail ({0})."
+
+msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
+msgstr "Please pick up the ordered products on {0} in our pick up store."
+
+msgid ""
+"The_product_value_{0}_with_an_additional_deposit_of_{1}"
+"_was_automatically_reduced_from_your_credit."
+msgstr ""
+"The product value {0} with an additional deposit value of {1} was "
+"automatically reduced from your credit."
+
+msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+msgstr "The product value {0} was automatically reduced from your credit."
+
+msgid "Increase_credit"
+msgstr "Increase your credit"
+
+msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+msgstr "Please do not forget to bring the exact amount of cash."
+
 msgid "Email"
 msgstr "E-mail"
 
@@ -388,6 +416,12 @@ msgstr "Admin area"
 
 msgid "Manufacturer_area"
 msgstr "Manufacturer area"
+
+msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgstr "To change your profile please stop the shop order mode."
+
+msgid "Signed_in"
+msgstr "Signed in"
 
 msgid "Amount"
 msgstr "Amount"

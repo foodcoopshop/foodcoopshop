@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 07:59+0000\n"
-"PO-Revision-Date: 2018-06-07 09:58+0200\n"
+"POT-Creation-Date: 2018-06-07 09:05+0000\n"
+"PO-Revision-Date: 2018-06-07 11:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -288,6 +288,37 @@ msgstr ""
 msgid "Order_button"
 msgstr "Zahlungspflichtig bestellen"
 
+msgid "Order_placed"
+msgstr "Bestellung abgeschlossen"
+
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr "Vielen Dank, deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
+
+msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
+msgstr ""
+"Bitte hole die bestellten Waren verlässlich am {0} in unserem Abhollager ab."
+
+msgid ""
+"The_product_value_{0}_with_an_additional_deposit_of_{1}"
+"_was_automatically_reduced_from_your_credit."
+msgstr ""
+"Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem "
+"Guthaben abgezogen."
+
+msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."
+
+msgid "Increase_credit"
+msgstr "Guthaben aufladen"
+
+msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+msgstr ""
+"Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar "
+"mitzunehmen."
+
 msgid "Email"
 msgstr "E-Mail"
 
@@ -403,6 +434,12 @@ msgstr "Admin-Bereich"
 
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
+
+msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
+
+msgid "Signed_in"
+msgstr "Eingeloggt"
 
 msgid "Amount"
 msgstr "Anzahl"
