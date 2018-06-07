@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 14:08+0000\n"
+"POT-Creation-Date: 2018-06-07 14:53+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -92,6 +92,21 @@ msgstr ""
 msgid "All_products"
 msgstr ""
 
+msgid "datepicker_close"
+msgstr ""
+
+msgid "datepicker_prev"
+msgstr ""
+
+msgid "datepicker_next"
+msgstr ""
+
+msgid "datepicker_today"
+msgstr ""
+
+msgid "WeekHeader"
+msgstr ""
+
 msgid "Really_sign_out?"
 msgstr ""
 
@@ -120,6 +135,120 @@ msgid "Cancel_shop_order?"
 msgstr ""
 
 msgid "Really_cancel_shop_order?"
+msgstr ""
+
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "JanuaryShort"
+msgstr ""
+
+msgid "FebruaryShort"
+msgstr ""
+
+msgid "MarchShort"
+msgstr ""
+
+msgid "AprilShort"
+msgstr ""
+
+msgid "MayShort"
+msgstr ""
+
+msgid "JuneShort"
+msgstr ""
+
+msgid "JulyShort"
+msgstr ""
+
+msgid "AugustShort"
+msgstr ""
+
+msgid "SeptemberShort"
+msgstr ""
+
+msgid "OctoberShort"
+msgstr ""
+
+msgid "NovemberShort"
+msgstr ""
+
+msgid "DecemberShort"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "MondayShort"
+msgstr ""
+
+msgid "TuesdayShort"
+msgstr ""
+
+msgid "WednesdayShort"
+msgstr ""
+
+msgid "ThursdayShort"
+msgstr ""
+
+msgid "FridayShort"
+msgstr ""
+
+msgid "SaturdayShort"
+msgstr ""
+
+msgid "SundayShort"
 msgstr ""
 
 msgid "route_cart"

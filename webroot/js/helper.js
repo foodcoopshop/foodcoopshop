@@ -530,30 +530,69 @@ foodcoopshop.Helper = {
 
     },
 
-    /**
-     * German initialisation for the jQuery UI date picker plugin. Written by
-     * Milian Wolff (mail@milianw.de).
-     */
     initDatepicker: function () {
         jQuery(function ($) {
-            $.datepicker.regional['de'] = {
-                closeText: 'schließen',
-                prevText: '&#x3c;zurück',
-                nextText: 'Vor&#x3e;',
-                currentText: 'heute',
-                monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai',
-                    'Juni', 'Juli', 'August', 'September', 'Oktober',
-                    'November', 'Dezember'
+            $.datepicker.regional = {
+                closeText: foodcoopshop.LocalizedJs.datepicker.close,
+                prevText: '&#x3c;' + foodcoopshop.LocalizedJs.datepicker.prev,
+                nextText: foodcoopshop.LocalizedJs.datepicker.next + '&#x3e;',
+                currentText: foodcoopshop.LocalizedJs.datepicker.today,
+                monthNames: [
+                    foodcoopshop.LocalizedJs.helper.January,
+                    foodcoopshop.LocalizedJs.helper.February,
+                    foodcoopshop.LocalizedJs.helper.March,
+                    foodcoopshop.LocalizedJs.helper.April,
+                    foodcoopshop.LocalizedJs.helper.May,
+                    foodcoopshop.LocalizedJs.helper.June,
+                    foodcoopshop.LocalizedJs.helper.July,
+                    foodcoopshop.LocalizedJs.helper.August,
+                    foodcoopshop.LocalizedJs.helper.September,
+                    foodcoopshop.LocalizedJs.helper.October,
+                    foodcoopshop.LocalizedJs.helper.November,
+                    foodcoopshop.LocalizedJs.helper.December
                 ],
-                monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'
+                monthNamesShort: [
+                    foodcoopshop.LocalizedJs.helper.JanuaryShort,
+                    foodcoopshop.LocalizedJs.helper.FebruaryShort,
+                    foodcoopshop.LocalizedJs.helper.MarchShort,
+                    foodcoopshop.LocalizedJs.helper.AprilShort,
+                    foodcoopshop.LocalizedJs.helper.MayShort,
+                    foodcoopshop.LocalizedJs.helper.JuneShort,
+                    foodcoopshop.LocalizedJs.helper.JulyShort,
+                    foodcoopshop.LocalizedJs.helper.AugustShort,
+                    foodcoopshop.LocalizedJs.helper.SeptemberShort,
+                    foodcoopshop.LocalizedJs.helper.OctoberShort,
+                    foodcoopshop.LocalizedJs.helper.NovemberShort,
+                    foodcoopshop.LocalizedJs.helper.DecemberShort
                 ],
-                dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch',
-                    'Donnerstag', 'Freitag', 'Samstag'
+                dayNames: [
+                    foodcoopshop.LocalizedJs.helper.Sunday,
+                    foodcoopshop.LocalizedJs.helper.Monday,
+                    foodcoopshop.LocalizedJs.helper.Tuesday,
+                    foodcoopshop.LocalizedJs.helper.Wednesday,
+                    foodcoopshop.LocalizedJs.helper.Thursday,
+                    foodcoopshop.LocalizedJs.helper.Friday,
+                    foodcoopshop.LocalizedJs.helper.Saturday
                 ],
-                dayNamesShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                dayNamesMin: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                weekHeader: 'Wo',
+                dayNamesShort: [
+                    foodcoopshop.LocalizedJs.helper.SundayShort,
+                    foodcoopshop.LocalizedJs.helper.MondayShort,
+                    foodcoopshop.LocalizedJs.helper.TuesdayShort,
+                    foodcoopshop.LocalizedJs.helper.WednesdayShort,
+                    foodcoopshop.LocalizedJs.helper.ThursdayShort,
+                    foodcoopshop.LocalizedJs.helper.FridayShort,
+                    foodcoopshop.LocalizedJs.helper.SaturdayShort
+                ],
+                dayNamesMin: [
+                    foodcoopshop.LocalizedJs.helper.SundayShort,
+                    foodcoopshop.LocalizedJs.helper.MondayShort,
+                    foodcoopshop.LocalizedJs.helper.TuesdayShort,
+                    foodcoopshop.LocalizedJs.helper.WednesdayShort,
+                    foodcoopshop.LocalizedJs.helper.ThursdayShort,
+                    foodcoopshop.LocalizedJs.helper.FridayShort,
+                    foodcoopshop.LocalizedJs.helper.SaturdayShort
+                ],
+                weekHeader: foodcoopshop.LocalizedJs.datepicker.weekHeader,
                 dateFormat: 'dd.mm.yy',
                 firstDay: 1,
                 isRTL: false,
@@ -564,7 +603,7 @@ foodcoopshop.Helper = {
                 duration: 'fast',
                 yearRange: '2014:2020'
             };
-            $.datepicker.setDefaults($.datepicker.regional['de']);
+            $.datepicker.setDefaults($.datepicker.regional);
         });
     },
 

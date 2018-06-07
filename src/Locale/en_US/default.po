@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 14:08+0000\n"
-"PO-Revision-Date: 2018-06-07 15:37+0200\n"
+"POT-Creation-Date: 2018-06-07 14:53+0000\n"
+"PO-Revision-Date: 2018-06-07 16:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -93,6 +93,21 @@ msgstr "You have been signed out."
 msgid "All_products"
 msgstr "All products"
 
+msgid "datepicker_close"
+msgstr "close"
+
+msgid "datepicker_prev"
+msgstr "prev"
+
+msgid "datepicker_next"
+msgstr "next"
+
+msgid "datepicker_today"
+msgstr "today"
+
+msgid "WeekHeader"
+msgstr "We."
+
 msgid "Really_sign_out?"
 msgstr "Do you really want to sign out?"
 
@@ -122,6 +137,120 @@ msgstr "Cancel shop order?"
 
 msgid "Really_cancel_shop_order?"
 msgstr "Do you really want to cancel the shop order?"
+
+msgid "January"
+msgstr "January"
+
+msgid "February"
+msgstr "February"
+
+msgid "March"
+msgstr "Mar"
+
+msgid "April"
+msgstr "April"
+
+msgid "May"
+msgstr "May"
+
+msgid "June"
+msgstr "June"
+
+msgid "July"
+msgstr "July"
+
+msgid "August"
+msgstr "August"
+
+msgid "September"
+msgstr "September"
+
+msgid "October"
+msgstr "October"
+
+msgid "November"
+msgstr "November"
+
+msgid "December"
+msgstr "December"
+
+msgid "JanuaryShort"
+msgstr "Jan"
+
+msgid "FebruaryShort"
+msgstr "Feb"
+
+msgid "MarchShort"
+msgstr "Mar"
+
+msgid "AprilShort"
+msgstr "Apr"
+
+msgid "MayShort"
+msgstr "May"
+
+msgid "JuneShort"
+msgstr "Jun"
+
+msgid "JulyShort"
+msgstr "Jul"
+
+msgid "AugustShort"
+msgstr "Aug"
+
+msgid "SeptemberShort"
+msgstr "Sep"
+
+msgid "OctoberShort"
+msgstr "Oct"
+
+msgid "NovemberShort"
+msgstr "Nov"
+
+msgid "DecemberShort"
+msgstr "Dec"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "MondayShort"
+msgstr "Mo"
+
+msgid "TuesdayShort"
+msgstr "Tue"
+
+msgid "WednesdayShort"
+msgstr "Wed"
+
+msgid "ThursdayShort"
+msgstr "Thu"
+
+msgid "FridayShort"
+msgstr "Fri"
+
+msgid "SaturdayShort"
+msgstr "Sat"
+
+msgid "SundayShort"
+msgstr "Sun"
 
 msgid "route_cart"
 msgstr "cart"
