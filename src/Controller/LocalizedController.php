@@ -28,7 +28,10 @@ class LocalizedController extends Controller
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),
-                'anErrorOccurred' => __('An_error_occurred')
+                'anErrorOccurred' => __('An_error_occurred'),
+                'yes' => __('Yes'),
+                'save' => __('Save'),
+                'cancel' => __('Cancel')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
@@ -37,8 +40,6 @@ class LocalizedController extends Controller
                 'reallyEmptyCart' => __('Really_empty_cart?'),
                 'loadPastOrder' => __('Load_past_order'),
                 'loadPastOrderDescriptionHtml' => __('Load_past_order_dialog_description_html'),
-                'yes' => __('Yes'),
-                'cancel' => __('Cancel'),
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
                 'approx' => __('approx.')
@@ -61,6 +62,11 @@ class LocalizedController extends Controller
             'admin' => [
                 'routeCartFinished' => Configure::read('app.slugHelper')->getCartFinish()
             ],
+            'dialogOrder' => [
+                'ChangeCommentOfOrder' => __('Change_comment_of_order'),
+                'SetDateOfOrderBackTo' => __('Set_date_of_order_back_to'),
+                'SetDateOfOrderBack' => __('Set_date_of_order_back')
+            ]
             
         ];
         return $strings;

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:55+0000\n"
-"PO-Revision-Date: 2018-06-07 11:56+0200\n"
+"POT-Creation-Date: 2018-06-07 10:54+0000\n"
+"PO-Revision-Date: 2018-06-07 12:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -105,6 +105,15 @@ msgstr "sign-out"
 msgid "An_error_occurred"
 msgstr "An error occurred"
 
+msgid "Yes"
+msgstr "Yes"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
 msgid "route_cart"
 msgstr "cart"
 
@@ -124,12 +133,6 @@ msgid "Load_past_order_dialog_description_html"
 msgstr ""
 "<p>The selected order will be loaded and <b>the current cart will be "
 "emptied</b>.</p><p>You can add products afterwards.</p>"
-
-msgid "Yes"
-msgstr "Yes"
-
-msgid "Cancel"
-msgstr "Cancel"
 
 msgid "Remove_from_cart?"
 msgstr "Remove from cart?"
@@ -166,6 +169,15 @@ msgstr "Show"
 
 msgid "Show_all_products"
 msgstr "Show all products"
+
+msgid "Change_comment_of_order"
+msgstr "Change order comment"
+
+msgid "Set_date_of_order_back_to"
+msgstr "Set date of order back to"
+
+msgid "Set_date_of_order_back"
+msgstr "Set date of order back"
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "The desired amount {0} is not valid."
@@ -405,11 +417,17 @@ msgstr "Bank account (credit)"
 msgid "Bank_account_member_fee"
 msgstr "Bank account (member fee)"
 
+msgid "Help"
+msgstr "Help"
+
 msgid "DELIVERY_DAY"
 msgstr "DELIVERY_DAY"
 
 msgid "Products"
 msgstr "Products"
+
+msgid "Print"
+msgstr "Print"
 
 msgid "Categories"
 msgstr "Categories"
@@ -566,6 +584,12 @@ msgstr "Access denied, please sign in."
 
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "This order contains the variable member fee."
+
+msgid "order_state_open"
+msgstr "open"
+
+msgid "order_state_closed"
+msgstr "closed"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "information-about-right-of-withdrawal"

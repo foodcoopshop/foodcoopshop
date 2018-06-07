@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 07:59+0000\n"
-"PO-Revision-Date: 2018-06-07 10:01+0200\n"
+"POT-Creation-Date: 2018-06-07 10:54+0000\n"
+"PO-Revision-Date: 2018-06-07 12:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -30,11 +30,23 @@ msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 msgid "docs_route_settings"
 msgstr "einstellungen"
 
+msgid "Pick_up_day"
+msgstr "Abholtag"
+
 msgid "docs_route_members"
 msgstr "mitglieder"
 
 msgid "docs_route_deposit"
 msgstr "pfand"
+
+msgid "Chose_member..."
+msgstr "Mitglied auswählen..."
+
+msgid "1_day_ahead"
+msgstr "1 Tag zurück"
+
+msgid "1_day_back"
+msgstr "1 Tag vor"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -120,6 +132,60 @@ msgstr "abholung-der-produkte"
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"
 
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Order_date"
+msgstr "Bestelldatum"
+
+msgid "Order_count"
+msgstr "Anzahl Bestellungen"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Add_comment"
+msgstr "Kommentar hinzufügen"
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr "Neuling: Erst {0}x bestellt."
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Alle bestellten Produkte von {0} anzeigen"
+
+msgid "Additional_in_{0}"
+msgstr "Zusätzlich in {0}"
+
+msgid "Deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "Change_order_state"
+msgstr "Bestellstatus ändern"
+
+msgid "Set_date_of_order_back"
+msgstr "Bestellung rückdatieren"
+
+msgid "records"
+msgstr "Datensätze"
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Bestellungen als PDF generieren"
+
+msgid "Close_all_orders"
+msgstr "Alle Bestellungen abschließen"
+
 msgid "to_the_admin_area"
 msgstr "im Admin-Beriche"
 
@@ -137,9 +203,6 @@ msgstr "finanzberichte"
 
 msgid "docs_route_paying_with_time_module"
 msgstr "stundenabrechnung"
-
-msgid "Pick_up_day"
-msgstr "Abholtag"
 
 #, fuzzy
 #~ msgid "Go_to_manufacturers_doc"

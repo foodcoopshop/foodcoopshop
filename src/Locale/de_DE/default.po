@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:55+0000\n"
-"PO-Revision-Date: 2018-06-07 11:57+0200\n"
+"POT-Creation-Date: 2018-06-07 10:54+0000\n"
+"PO-Revision-Date: 2018-06-07 12:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -110,6 +110,15 @@ msgstr "abmelden"
 msgid "An_error_occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
 msgid "route_cart"
 msgstr "warenkorb"
 
@@ -130,12 +139,6 @@ msgstr ""
 "<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird "
 "dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein "
 "hinzufügen.</p>"
-
-msgid "Yes"
-msgstr "Ja"
-
-msgid "Cancel"
-msgstr "Abbrechen"
 
 msgid "Remove_from_cart?"
 msgstr "Aus dem Warenkorb löschen?"
@@ -172,6 +175,15 @@ msgstr "Anzeigen"
 
 msgid "Show_all_products"
 msgstr "Alle Produkte anzeigen"
+
+msgid "Change_comment_of_order"
+msgstr "Kommentar zu Bestellung ändern"
+
+msgid "Set_date_of_order_back_to"
+msgstr "Bestellung rückdatieren auf"
+
+msgid "Set_date_of_order_back"
+msgstr "Bestellung rückdatieren"
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
@@ -423,11 +435,17 @@ msgstr "Kontodaten (Guthaben aufladen)"
 msgid "Bank_account_member_fee"
 msgstr "Kontodaten (Mitgliedsbeitrag)"
 
+msgid "Help"
+msgstr "Hilfe"
+
 msgid "DELIVERY_DAY"
 msgstr "ABHOLTAG"
 
 msgid "Products"
 msgstr "Produkte"
+
+msgid "Print"
+msgstr "Drucken"
 
 msgid "Categories"
 msgstr "Kategorien"
@@ -585,11 +603,20 @@ msgstr "Zugriff verweigert, bitte melde dich an."
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "Die Bestellung beinhaltet den variablen Mitgliedsbeitrag."
 
+msgid "order_state_open"
+msgstr "offen"
+
+msgid "order_state_closed"
+msgstr "abgeschlossen"
+
 msgid "route_information_about_right_of_withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "open"
+#~ msgstr "offen"
 
 #~ msgid "You_are_already_signed_in"
 #~ msgstr "Du bist bereits angemeldet."

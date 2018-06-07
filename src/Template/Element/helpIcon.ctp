@@ -13,4 +13,4 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<a class="btn btn-default help" title="Hilfe" href="<?php echo $link; ?>" target="_blank"><i class="fa fa-question fa-lg"></i></a>
+<a class="btn btn-default help" title="<?php echo __('Help'); ?>" href="<?php echo $link; ?>" target="_blank"><i class="fa fa-question fa-lg"></i></a>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:55+0000\n"
+"POT-Creation-Date: 2018-06-07 10:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -104,6 +104,15 @@ msgstr ""
 msgid "An_error_occurred"
 msgstr ""
 
+msgid "Yes"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
 msgid "route_cart"
 msgstr ""
 
@@ -120,12 +129,6 @@ msgid "Load_past_order"
 msgstr ""
 
 msgid "Load_past_order_dialog_description_html"
-msgstr ""
-
-msgid "Yes"
-msgstr ""
-
-msgid "Cancel"
 msgstr ""
 
 msgid "Remove_from_cart?"
@@ -162,6 +165,15 @@ msgid "Show"
 msgstr ""
 
 msgid "Show_all_products"
+msgstr ""
+
+msgid "Change_comment_of_order"
+msgstr ""
+
+msgid "Set_date_of_order_back_to"
+msgstr ""
+
+msgid "Set_date_of_order_back"
 msgstr ""
 
 msgid "The_desired_amount_{0}_is_not_valid."
@@ -383,10 +395,16 @@ msgstr ""
 msgid "Bank_account_member_fee"
 msgstr ""
 
+msgid "Help"
+msgstr ""
+
 msgid "DELIVERY_DAY"
 msgstr ""
 
 msgid "Products"
+msgstr ""
+
+msgid "Print"
 msgstr ""
 
 msgid "Categories"
@@ -543,6 +561,12 @@ msgid "Access_denied_please_sign_in."
 msgstr ""
 
 msgid "This_order_contains_the_variable_member_fee."
+msgstr ""
+
+msgid "order_state_open"
+msgstr ""
+
+msgid "order_state_closed"
 msgstr ""
 
 msgid "route_information_about_right_of_withdrawal"

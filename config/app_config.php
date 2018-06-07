@@ -50,10 +50,6 @@ return [
     ],
     'app' => [
         'jsNamespace' => 'foodcoopshop',
-        'visibleOrderStates' => [
-            ORDER_STATE_OPEN => 'offen',
-            ORDER_STATE_CASH_FREE => 'abgeschlossen',
-        ],
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS.'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',

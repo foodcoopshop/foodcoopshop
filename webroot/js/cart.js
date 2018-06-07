@@ -490,14 +490,9 @@ foodcoopshop.Cart = {
                 dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
                 
                 var buttons = {};
-                buttons['cancel'] = {
-                    text: foodcoopshop.LocalizedJs.cart.cancel,
-                    click: function() {
-                        $(this).dialog('close');
-                    }
-                };
+                buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
                 buttons['yes'] = {
-                    text: foodcoopshop.LocalizedJs.cart.yes,
+                    text: foodcoopshop.LocalizedJs.helper.yes,
                     click: function() {
                         $('.ui-dialog .ajax-loader').show();
                         $('.ui-dialog button').attr('disabled', 'disabled');

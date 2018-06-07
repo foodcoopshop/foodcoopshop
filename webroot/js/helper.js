@@ -24,6 +24,15 @@ foodcoopshop.Helper = {
         }
     },
     
+    getJqueryUiCancelButton : function() {
+        return {
+            text: foodcoopshop.LocalizedJs.helper.cancel,
+            click: function() {
+                $(this).dialog('close');
+            }
+        };
+    },
+    
     initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');

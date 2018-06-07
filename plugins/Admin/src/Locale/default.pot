@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 07:59+0000\n"
+"POT-Creation-Date: 2018-06-07 10:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -29,10 +29,22 @@ msgstr ""
 msgid "docs_route_settings"
 msgstr ""
 
+msgid "Pick_up_day"
+msgstr ""
+
 msgid "docs_route_members"
 msgstr ""
 
 msgid "docs_route_deposit"
+msgstr ""
+
+msgid "Chose_member..."
+msgstr ""
+
+msgid "1_day_ahead"
+msgstr ""
+
+msgid "1_day_back"
 msgstr ""
 
 msgid "Activities"
@@ -119,6 +131,60 @@ msgstr ""
 msgid "Group_by_member"
 msgstr ""
 
+msgid "Member"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Order_date"
+msgstr ""
+
+msgid "Order_count"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Add_comment"
+msgstr ""
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr ""
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr ""
+
+msgid "Additional_in_{0}"
+msgstr ""
+
+msgid "Deposit_return"
+msgstr ""
+
+msgid "Change_order_state"
+msgstr ""
+
+msgid "Set_date_of_order_back"
+msgstr ""
+
+msgid "records"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Generate_orders_as_pdf"
+msgstr ""
+
+msgid "Close_all_orders"
+msgstr ""
+
 msgid "to_the_admin_area"
 msgstr ""
 
@@ -135,8 +201,5 @@ msgid "docs_route_financial_reports"
 msgstr ""
 
 msgid "docs_route_paying_with_time_module"
-msgstr ""
-
-msgid "Pick_up_day"
 msgstr ""
 

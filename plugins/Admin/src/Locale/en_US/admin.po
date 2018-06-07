@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 07:59+0000\n"
-"PO-Revision-Date: 2018-06-07 10:05+0200\n"
+"POT-Creation-Date: 2018-06-07 10:54+0000\n"
+"PO-Revision-Date: 2018-06-07 12:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -30,11 +30,23 @@ msgstr "No member found with id {0}."
 msgid "docs_route_settings"
 msgstr "settings"
 
+msgid "Pick_up_day"
+msgstr "Pick-up day"
+
 msgid "docs_route_members"
 msgstr "members"
 
 msgid "docs_route_deposit"
 msgstr "deposit"
+
+msgid "Chose_member..."
+msgstr "Chose members..."
+
+msgid "1_day_ahead"
+msgstr "1 day ahead"
+
+msgid "1_day_back"
+msgstr "1 day back"
 
 msgid "Activities"
 msgstr "Activities"
@@ -120,6 +132,60 @@ msgstr "pick-up-products"
 msgid "Group_by_member"
 msgstr "Group by member"
 
+msgid "Member"
+msgstr "Member"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Order_date"
+msgstr "Order date"
+
+msgid "Order_count"
+msgstr "Order count"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Add_comment"
+msgstr "Add comment"
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr "Newbie: has only ordered {0} times."
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Show all ordered products from {0}"
+
+msgid "Additional_in_{0}"
+msgstr "Additional in {0}"
+
+msgid "Deposit_return"
+msgstr "Deposit return"
+
+msgid "Change_order_state"
+msgstr "Change order state"
+
+msgid "Set_date_of_order_back"
+msgstr "Set date of order back"
+
+msgid "records"
+msgstr "records"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Generte orders as PDF"
+
+msgid "Close_all_orders"
+msgstr "Close all orders"
+
 msgid "to_the_admin_area"
 msgstr "to the admin area"
 
@@ -137,9 +203,6 @@ msgstr "financial-reports"
 
 msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
-
-msgid "Pick_up_day"
-msgstr "Pick-up day"
 
 #, fuzzy
 #~ msgid "Go_to_manufacturers_doc"

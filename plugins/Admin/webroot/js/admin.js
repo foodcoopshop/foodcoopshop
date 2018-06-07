@@ -329,48 +329,42 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
-        var dialog = $('#' + dialogId).dialog({
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                $('#order-comment-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
 
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/orders/editComment/',
+                    {
+                        orderId: $('#dialogOrderId').val(),
+                        orderComment: CKEDITOR.instances['dialogOrderComment'].getData()
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            console.log(data);
+                        }
+                    }
+                );
+            }
+        };
+        
+        var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             height: 460,
             width: 350,
             modal: true,
-
             close: function () {
                 $('#cke_dialogOrderComment').val('');
                 $('#dialogOrderId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    $('#order-comment-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/orders/editComment/',
-                        {
-                            orderId: $('#dialogOrderId').val(),
-                            orderComment: CKEDITOR.instances['dialogOrderComment'].getData()
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                console.log(data);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         return dialog;
