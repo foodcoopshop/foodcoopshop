@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 13:35+0000\n"
-"PO-Revision-Date: 2018-06-07 15:13+0200\n"
+"POT-Creation-Date: 2018-06-07 14:08+0000\n"
+"PO-Revision-Date: 2018-06-07 16:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -17,6 +17,12 @@ msgstr ""
 
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "Group_by_product"
+msgstr "Gruppieren nach Produkt"
+
+msgid "Group_by_manufacturer"
+msgstr "Gruppieren nach Hersteller"
 
 msgid "Orders"
 msgstr "Bestellungen"
@@ -49,14 +55,10 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Pfand-Betrag für {0} eintragen"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller "
-"zurückgenommen wird."
+msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen wird."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit "
-"Geld ausgeglichen?"
+msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
 
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
@@ -76,7 +78,7 @@ msgstr "Aktivitäten"
 msgid "Cancelled_products"
 msgstr "Stornierte Produkte"
 
-msgid "Deposit returns"
+msgid "Deposit_returns"
 msgstr "Pfand-Rückgaben"
 
 msgid "Ordered_products"
@@ -148,37 +150,86 @@ msgstr "produkte"
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
 
+msgid "all_products"
+msgstr "alle Produkte"
+
+msgid "all_manufacturers"
+msgstr "alle Hersteller"
+
+msgid "all_members"
+msgstr "alle Mitglieder"
+
+msgid "Order_number_abbr"
+msgstr "Bestell-Nr."
+
+msgid "Group_by..."
+msgstr "Gruppieren nach..."
+
+msgid "Deposit_return"
+msgstr "Pfand-Rückgabe"
+
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen "
-"möchtest."
-
-msgid "Group_by_member"
-msgstr "Gruppieren nach Mitglied"
-
-msgid "Member"
-msgstr "Mitglied"
-
-msgid "Email"
-msgstr "E-Mail"
 
 msgid "Amount"
 msgstr "Anzahl"
 
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
+
 msgid "Deposit"
 msgstr "Pfand"
+
+msgid "Weight"
+msgstr "Gewicht"
 
 msgid "Order_date"
 msgstr "Bestelldatum"
 
-msgid "Order_count"
-msgstr "Anzahl Bestellungen"
+msgid "Member"
+msgstr "Mitglied"
 
 msgid "Status"
 msgstr "Status"
+
+msgid "Click_to_change_amount"
+msgstr "Zum Ändern der Anzahl anklicken"
+
+msgid "Click_to_change_price"
+msgstr "Zum Ändern des Preises anklicken"
+
+msgid "Additional_in_{0}"
+msgstr "Zusätzlich in {0}"
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Change_order_status"
+msgstr "Bestellstatus ändern"
+
+msgid "Back_to_deposit_account"
+msgstr "Zurück zum Pfandkonto"
+
+msgid "Cancel_selected_products"
+msgstr "Ausgewählte Produkte stornieren"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+
+msgid "Group_by_member"
+msgstr "Gruppieren nach Mitglied"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Order_count"
+msgstr "Anzahl Bestellungen"
 
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
@@ -189,23 +240,11 @@ msgstr "Neuling: Erst {0}x bestellt."
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
 
-msgid "Additional_in_{0}"
-msgstr "Zusätzlich in {0}"
-
-msgid "Deposit_return"
-msgstr "Pfand-Rückgabe"
-
-msgid "Change_order_state"
-msgstr "Bestellstatus ändern"
-
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
 
 msgid "records"
 msgstr "Datensätze"
-
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Bestellungen als PDF generieren"
@@ -231,6 +270,5 @@ msgstr "finanzberichte"
 msgid "docs_route_paying_with_time_module"
 msgstr "stundenabrechnung"
 
-#, fuzzy
-#~ msgid "Go_to_manufacturers_doc"
-#~ msgstr "im Hersteller-Bereich"
+#~ msgid "Deposit returns"
+#~ msgstr "Pfand-Rückgaben"

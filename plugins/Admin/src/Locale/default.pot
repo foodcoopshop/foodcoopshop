@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 13:35+0000\n"
+"POT-Creation-Date: 2018-06-07 14:08+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Errors_while_saving!"
+msgstr ""
+
+msgid "Group_by_product"
+msgstr ""
+
+msgid "Group_by_manufacturer"
 msgstr ""
 
 msgid "Orders"
@@ -71,7 +77,7 @@ msgstr ""
 msgid "Cancelled_products"
 msgstr ""
 
-msgid "Deposit returns"
+msgid "Deposit_returns"
 msgstr ""
 
 msgid "Ordered_products"
@@ -143,7 +149,73 @@ msgstr ""
 msgid "docs_route_manufacturers"
 msgstr ""
 
+msgid "all_products"
+msgstr ""
+
+msgid "all_manufacturers"
+msgstr ""
+
+msgid "all_members"
+msgstr ""
+
+msgid "Order_number_abbr"
+msgstr ""
+
+msgid "Group_by..."
+msgstr ""
+
+msgid "Deposit_return"
+msgstr ""
+
 msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Order_date"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Click_to_change_amount"
+msgstr ""
+
+msgid "Click_to_change_price"
+msgstr ""
+
+msgid "Additional_in_{0}"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Change_order_status"
+msgstr ""
+
+msgid "Back_to_deposit_account"
+msgstr ""
+
+msgid "Cancel_selected_products"
 msgstr ""
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
@@ -152,25 +224,10 @@ msgstr ""
 msgid "Group_by_member"
 msgstr ""
 
-msgid "Member"
-msgstr ""
-
 msgid "Email"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
-msgid "Deposit"
-msgstr ""
-
-msgid "Order_date"
-msgstr ""
-
 msgid "Order_count"
-msgstr ""
-
-msgid "Status"
 msgstr ""
 
 msgid "Add_comment"
@@ -182,22 +239,10 @@ msgstr ""
 msgid "Show_all_ordered_products_from_{0}"
 msgstr ""
 
-msgid "Additional_in_{0}"
-msgstr ""
-
-msgid "Deposit_return"
-msgstr ""
-
-msgid "Change_order_state"
-msgstr ""
-
 msgid "Set_date_of_order_back"
 msgstr ""
 
 msgid "records"
-msgstr ""
-
-msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "Generate_orders_as_pdf"

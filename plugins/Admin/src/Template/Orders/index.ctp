@@ -191,8 +191,8 @@ use Cake\Core\Configure;
                 $statusChangeIcon = 'error';
             }
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' ' . __d('admin', 'Change_order_state') : ''), [
-                    'title' => __d('admin', 'Change_order_state'),
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' ' . __d('admin', 'Change_order_status') : ''), [
+                    'title' => __d('admin', 'Change_order_status'),
                     'class' => 'change-order-state-button icon-with-text'
                 ], 'javascript:void(0);');
             }

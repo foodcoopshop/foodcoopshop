@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 13:35+0000\n"
-"PO-Revision-Date: 2018-06-07 15:14+0200\n"
+"POT-Creation-Date: 2018-06-07 14:08+0000\n"
+"PO-Revision-Date: 2018-06-07 16:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -17,6 +17,12 @@ msgstr ""
 
 msgid "Errors_while_saving!"
 msgstr "Errors while saving!"
+
+msgid "Group_by_product"
+msgstr "Group by product"
+
+msgid "Group_by_manufacturer"
+msgstr "Group by manufacturer"
 
 msgid "Orders"
 msgstr "Orders"
@@ -49,14 +55,10 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Please add the value of empty glasses that are taken back by the "
-"manufacturer."
+msgstr "Please add the value of empty glasses that are taken back by the manufacturer."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Did the manufacturer take away empty glasses or was his deposit account "
-"equalized with money?"
+msgstr "Did the manufacturer take away empty glasses or was his deposit account equalized with money?"
 
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
@@ -76,8 +78,8 @@ msgstr "Activities"
 msgid "Cancelled_products"
 msgstr "Cancelled products"
 
-msgid "Deposit returns"
-msgstr "Returned deposit"
+msgid "Deposit_returns"
+msgstr "Deposit returns"
 
 msgid "Ordered_products"
 msgstr "Ordered products"
@@ -148,37 +150,86 @@ msgstr "products"
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
 
+msgid "all_products"
+msgstr "all products"
+
+msgid "all_manufacturers"
+msgstr "all manufacturers"
+
+msgid "all_members"
+msgstr "all members"
+
+msgid "Order_number_abbr"
+msgstr "Order nº"
+
+msgid "Group_by..."
+msgstr "Group by..."
+
+msgid "Deposit_return"
+msgstr "Deposit return"
+
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Please chose the member you want to place the shop order for in the dropdown "
-"above."
-
-msgid "Group_by_member"
-msgstr "Group by member"
-
-msgid "Member"
-msgstr "Member"
-
-msgid "Email"
-msgstr "Email"
 
 msgid "Amount"
 msgstr "Amount"
 
+msgid "Product"
+msgstr "Product"
+
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Amount minus eventual variable member fee"
+
 msgid "Deposit"
 msgstr "Deposit"
+
+msgid "Weight"
+msgstr "Weight"
 
 msgid "Order_date"
 msgstr "Order date"
 
-msgid "Order_count"
-msgstr "Order count"
+msgid "Member"
+msgstr "Member"
 
 msgid "Status"
 msgstr "Status"
+
+msgid "Click_to_change_amount"
+msgstr "Click to change amount"
+
+msgid "Click_to_change_price"
+msgstr "Click to change price"
+
+msgid "Additional_in_{0}"
+msgstr "Additional in {0}"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
+
+msgid "Change_order_status"
+msgstr "Change order status"
+
+msgid "Back_to_deposit_account"
+msgstr "Back to deposit account"
+
+msgid "Cancel_selected_products"
+msgstr "Cancel selected products"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgstr "Please chose the member you want to place the shop order for in the dropdown above."
+
+msgid "Group_by_member"
+msgstr "Group by member"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Order_count"
+msgstr "Order count"
 
 msgid "Add_comment"
 msgstr "Add comment"
@@ -189,23 +240,11 @@ msgstr "Newbie: has only ordered {0} times."
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
 
-msgid "Additional_in_{0}"
-msgstr "Additional in {0}"
-
-msgid "Deposit_return"
-msgstr "Deposit return"
-
-msgid "Change_order_state"
-msgstr "Change order state"
-
 msgid "Set_date_of_order_back"
 msgstr "Set date of order back"
 
 msgid "records"
 msgstr "records"
-
-msgid "Copy_all_email_addresses"
-msgstr "Copy all e-mail adresses"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Generte orders as PDF"
@@ -231,6 +270,5 @@ msgstr "financial-reports"
 msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
 
-#, fuzzy
-#~ msgid "Go_to_manufacturers_doc"
-#~ msgstr "to the manufacturer area"
+#~ msgid "Deposit returns"
+#~ msgstr "Returned deposit"
