@@ -319,7 +319,7 @@ class CustomersController extends FrontendController
                     }
                     // END
 
-                    $this->Flash->success(_('Your_registration_was_successful.'));
+                    $this->Flash->success(__('Your_registration_was_successful.'));
                     $this->redirect(Configure::read('app.slugHelper')->getRegistrationSuccessful());
                 }
             }

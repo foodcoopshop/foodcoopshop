@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 09:05+0000\n"
+"POT-Creation-Date: 2018-06-07 09:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -78,6 +78,9 @@ msgid "Welcome"
 msgstr ""
 
 msgid "New_registration_{0}"
+msgstr ""
+
+msgid "Your_registration_was_successful."
 msgstr ""
 
 msgid "Account_created_successfully"
