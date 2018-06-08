@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-08 15:31+0000\n"
+"POT-Creation-Date: 2018-06-08 15:47+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -432,6 +432,9 @@ msgid "Adapt_price_reason_is_mandatory."
 msgstr ""
 
 msgid "Cancellation_reason_is_mandatory."
+msgstr ""
+
+msgid "Please_enter_a_number."
 msgstr ""
 
 msgid "Change_comment_of_order"

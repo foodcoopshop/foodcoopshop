@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-08 15:31+0000\n"
+"POT-Creation-Date: 2018-06-08 15:47+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -21,6 +21,9 @@ msgid "Group_by_product"
 msgstr ""
 
 msgid "Group_by_manufacturer"
+msgstr ""
+
+msgid "Ordered_products"
 msgstr ""
 
 msgid "Orders"
@@ -78,9 +81,6 @@ msgid "Cancelled_products"
 msgstr ""
 
 msgid "Deposit_returns"
-msgstr ""
-
-msgid "Ordered_products"
 msgstr ""
 
 msgid "My_data"

@@ -153,6 +153,7 @@ class LocalizedController extends Controller
                 'DeliveredWeightNeedsToBeGreaterThan0' => __('Delivered_weight_needs_to_be_greater_than_0.'),
                 'AdaptPriceReasonIsMandatory' => __('Adapt_price_reason_is_mandatory.'),
                 'CancellationReasonIsMandatory' => __('Cancellation_reason_is_mandatory.'),
+                'PleaseEnterANumber' => __('Please_enter_a_number.')
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),

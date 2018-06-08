@@ -395,6 +395,38 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderEdit(dialogId);
         $(container).append(dialogHtml);
 
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['yes'] = {
+            text: foodcoopshop.LocalizedJs.helper.yes,
+            click: function() {
+                var newDate = $('#' + dialogId + ' .date-dropdown-placeholder select').val();
+
+                if (newDate == '' || $('#orderId').val() == '') {
+                    return false;
+                }
+
+                $('#order-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/orders/editDate/',
+                    {
+                        orderId: $('#orderId').val(),
+                        date: newDate
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            console.log(data);
+                        }
+                    }
+                );
+            }
+        };
+        
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -406,43 +438,7 @@ foodcoopshop.Admin = {
                 $('#' + dialogId + ' .date-dropdown-placeholder').html('');
                 $('#orderId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    var newDate = $('#' + dialogId + ' .date-dropdown-placeholder select').val();
-
-                    if (newDate == '' || $('#orderId').val() == '') {
-                        return false;
-                    }
-
-                    $('#order-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/orders/editDate/',
-                        {
-                            orderId: $('#orderId').val(),
-                            date: newDate
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                console.log(data);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         $('.edit-button').on('click', function () {
@@ -2380,7 +2376,7 @@ foodcoopshop.Admin = {
 
         var amount = $('.featherlight-content #payments-amount').val();
         if (isNaN(parseFloat(amount.replace(/,/, '.')))) {
-            alert('Bitte gib eine Zahl ein.');
+            alert(foodcoopshop.LocalizedJs.admin.PleaseEnterANumber);
             foodcoopshop.AppFeatherlight.enableSaveButton();
             return;
         }

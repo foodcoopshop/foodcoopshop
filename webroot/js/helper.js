@@ -25,11 +25,11 @@ foodcoopshop.Helper = {
     },
     
     getJqueryUiNoButton : function() {
-        this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
+        return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
     },
 
     getJqueryUiCancelButton : function() {
-        this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.cancel);
+        return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.cancel);
     },
     
     getJqueryUiCloseDialogButton : function(label) {
@@ -368,6 +368,18 @@ foodcoopshop.Helper = {
 
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
+            
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+                }
+            };
+            
             $('<div></div>').appendTo('body')
                 .html('<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
@@ -377,19 +389,7 @@ foodcoopshop.Helper = {
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
-                        }
-                    },
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
+                    buttons: buttons
                 });
         });
     },
