@@ -2039,30 +2039,23 @@ foodcoopshop.Admin = {
                         // only clone dropdown once
                         if ($('.message-container span.start select').length == 0) {
                             var customersDropdown = $('#add-order-button-wrapper select').clone(true);
-                            customersDropdown.attr(
-                                'id',
-                                'customersDropdown'
-                            );
-                            customersDropdown
-                                .change(function () {
-                                    var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
-                                    $('iframe.featherlight-inner').attr('src', newSrc);
-                                    $.featherlight.showLoader();
-                                });
+                            customersDropdown.attr('id', 'customersDropdown');
+                            customersDropdown.on('change', function () {
+                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
+                                $('iframe.featherlight-inner').attr('src', newSrc);
+                                $.featherlight.showLoader();
+                            });
 
-                            $('iframe.featherlight-inner')
-                                .load(
-                                    function () {
-                                        // called after each url change in iframe!
-                                        $.featherlight.hideLoader();
-                                        var currentUrl = $(this).get(0).contentWindow.document.URL;
-                                        var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
-                                        if (currentUrl.match(cartFinishedRegExp)) {
-                                            $.featherlight.showLoader();
-                                            document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
-                                        }
-                                    }
-                                );
+                            $('iframe.featherlight-inner').on('load', function () {
+                                // called after each url change in iframe!
+                                $.featherlight.hideLoader();
+                                var currentUrl = $(this).get(0).contentWindow.document.URL;
+                                var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
+                                if (currentUrl.match(cartFinishedRegExp)) {
+                                    $.featherlight.showLoader();
+                                    document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
+                                }
+                            });
                             customersDropdown.show();
                             customersDropdown.removeClass('hide');
                             customersDropdown.appendTo('.message-container span.start');
