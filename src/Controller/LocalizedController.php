@@ -116,7 +116,11 @@ class LocalizedController extends Controller
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
                 'GenerateOrdersAsPdf' => __('Generate_orders_as_pdf?'),
                 'ReallyGenerateOrdersAsPdf' => __('Really_generate_orders_as_pdf?'),
-                'EmailAddresses' => __('Email_addresses')
+                'EmailAddresses' => __('Email_addresses'),
+                'ChangeOrderStatus' => __('Change_order_status?'),
+                'ReallyChangeOrderStatusFrom' => __('Really_change_order_status_from_%s?'),
+                'orderStateCancelled' => __('order_state_cancelled'),
+                'orderStateOpen' => __('order_state_open')
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),

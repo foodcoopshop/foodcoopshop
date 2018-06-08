@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-07 14:53+0000\n"
-"PO-Revision-Date: 2018-06-07 16:54+0200\n"
+"POT-Creation-Date: 2018-06-08 12:40+0000\n"
+"PO-Revision-Date: 2018-06-08 14:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -334,6 +334,15 @@ msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
 
 msgid "Email_addresses"
 msgstr "E-Mail-Adressen"
+
+msgid "Change_order_status?"
+msgstr "Bestellstatus ändern?"
+
+msgid "Really_change_order_status_from_%s?"
+msgstr "Willst du den Bestellstatus der Bestellung von {0} wirklich ändern?"
+
+msgid "order_state_cancelled"
+msgstr "storniert"
 
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"

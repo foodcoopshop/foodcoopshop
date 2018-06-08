@@ -879,7 +879,6 @@ foodcoopshop.Admin = {
                 [dataRow.find('td:nth-child(1)').html()],
                 true,
                 dataRow.find('td:nth-child(5)').html(),
-                //totalSum
                 dataRow.find('td:nth-child(2) span.customer-name').html()
             );
         });
@@ -945,28 +944,55 @@ foodcoopshop.Admin = {
             };
         }
 
-        buttons['abbrechen'] = function () {
-            $(this).dialog('close');
-        };
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
 
         if (showCancelOrderButton) {
-            buttons['storniert'] = function () {
+            buttons['cancelled'] = {
+                text: foodcoopshop.LocalizedJs.admin.orderStateCancelled,
+                click: function () {
+            
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+    
+                    if (totalSum != '0,00&nbsp;€') {
+                        $('.ui-dialog .ajax-loader').hide();
+                        alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
+                        $('.ui-dialog button').attr('disabled', false);
+                        return;
+                    }
+    
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/orders/changeOrderState/',
+                        {
+                            orderIds: orderIds,
+                            orderState: 6
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.href = data.redirectUrl;
+                            },
+                            onError: function (data) {
+                                document.location.reload();
+                            }
+                        }
+                    );
+
+                }
+            }
+        }
+
+        buttons['open'] = {
+            text: foodcoopshop.LocalizedJs.admin.orderStateOpen,
+            click : function () {
 
                 $('.ui-dialog .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
-
-                if (totalSum != '0,00&nbsp;€') {
-                    $('.ui-dialog .ajax-loader').hide();
-                    alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
-                    $('.ui-dialog button').attr('disabled', false);
-                    return;
-                }
-
+    
                 foodcoopshop.Helper.ajaxCall(
                     '/admin/orders/changeOrderState/',
                     {
                         orderIds: orderIds,
-                        orderState: 6
+                        orderState: 3
                     },
                     {
                         onOk: function (data) {
@@ -977,38 +1003,15 @@ foodcoopshop.Admin = {
                         }
                     }
                 );
-
-            };
-        }
-
-        buttons['offen'] = function () {
-
-            $('.ui-dialog .ajax-loader').show();
-            $('.ui-dialog button').attr('disabled', 'disabled');
-
-            foodcoopshop.Helper.ajaxCall(
-                '/admin/orders/changeOrderState/',
-                {
-                    orderIds: orderIds,
-                    orderState: 3
-                },
-                {
-                    onOk: function (data) {
-                        document.location.href = data.redirectUrl;
-                    },
-                    onError: function (data) {
-                        document.location.reload();
-                    }
-                }
-            );
+            }
 
         };
 
         $('<div></div>').appendTo('body')
-            .html(foodcoopshop.Admin.additionalOrderStatusChangeInfo + '<p>Willst du den Bestellstatus der Bestellung von <b>' + customerName + '</b> wirklich ändern?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+            .html(foodcoopshop.Admin.additionalOrderStatusChangeInfo + '<p>' + foodcoopshop.LocalizedJs.admin.ReallyChangeOrderStatusFrom.replace(/\{0\}/g, '<b>' + customerName + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
             .dialog({
                 modal: true,
-                title: 'Bestellstatus ändern?',
+                title: foodcoopshop.LocalizedJs.admin.ChangeOrderStatus,
                 autoOpen: true,
                 width: 620,
                 resizable: false,
@@ -2236,66 +2239,62 @@ foodcoopshop.Admin = {
      */
     initCloseOrdersButton: function (container) {
 
-        $('#closeOrdersButton')
-            .on(
-                'click',
-                function () {
-
-                    var orderIdsContainer = $('table.list td.order-id');
-                    var orderIds = [];
-                    orderIdsContainer.each(function () {
-                        orderIds.push($(this).html());
-                    });
-                    var buttons = {};
-                    buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-                    buttons['yes'] = {
-                        text: foodcoopshop.LocalizedJs.helper.yes,
-                        click: function() {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            var orderState;
-                            if ($.inArray('cash', foodcoopshop.Helper.paymentMethods) != -1) {
-                                orderState = 2;
+        $('#closeOrdersButton').on('click', function () {
+            var orderIdsContainer = $('table.list td.order-id');
+            var orderIds = [];
+            orderIdsContainer.each(function () {
+                orderIds.push($(this).html());
+            });
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    var orderState;
+                    if ($.inArray('cash', foodcoopshop.Helper.paymentMethods) != -1) {
+                        orderState = 2;
+                    }
+                    if ($.inArray('cashless', foodcoopshop.Helper.paymentMethods) != -1) {
+                        orderState = 1;
+                    }
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/orders/changeOrderStateToClosed/',
+                        {
+                            orderIds: orderIds,
+                            orderState: orderState
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                document.location.reload();
                             }
-                            if ($.inArray('cashless', foodcoopshop.Helper.paymentMethods) != -1) {
-                                orderState = 1;
-                            }
-                            foodcoopshop.Helper.ajaxCall(
-                                '/admin/orders/changeOrderStateToClosed/',
-                                {
-                                    orderIds: orderIds,
-                                    orderState: orderState
-                                },
-                                {
-                                    onOk: function (data) {
-                                        document.location.reload();
-                                    },
-                                    onError: function (data) {
-                                        document.location.reload();
-                                    }
-                                }
-                            );                            
                         }
-                    };
-
-                    $('<div></div>')
-                        .appendTo('body')
-                        .html(
-                            '<p>' + foodcoopshop.LocalizedJs.admin.ReallyCloseAllOrders + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
-                        )
-                        .dialog({
-                            modal: true,
-                            title: foodcoopshop.LocalizedJs.admin.CloseAllOrders,
-                            autoOpen: true,
-                            width: 400,
-                            resizable: false,
-                            buttons: buttons,
-                            close: function (event, ui) {
-                                $(this).remove();
-                            }
-                        });
+                    );                            
                 }
-            );
+            };
+
+            $('<div></div>')
+                .appendTo('body')
+                .html(
+                    '<p>' + foodcoopshop.LocalizedJs.admin.ReallyCloseAllOrders + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
+                )
+                .dialog({
+                    modal: true,
+                    title: foodcoopshop.LocalizedJs.admin.CloseAllOrders,
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: buttons,
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+            }
+        );
 
     },
 

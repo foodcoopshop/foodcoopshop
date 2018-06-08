@@ -602,7 +602,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStates()
     {
         $orderStates = self::getVisibleOrderStates();
-        $orderStates[ORDER_STATE_CANCELLED] = 'storniert';
+        $orderStates[ORDER_STATE_CANCELLED] = __('order_state_cancelled');
         return $orderStates;
     }
 
