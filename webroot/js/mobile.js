@@ -181,7 +181,7 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append($('#header .logo-wrapper'));
 
         // button renamings
-        var regexp = new RegExp(foodcoopshop.LocalizedJs.mobile.showAllProducts)
+        var regexp = new RegExp(foodcoopshop.LocalizedJs.mobile.showAllProducts);
         $('.manufacturer-wrapper div.third-column a.btn').each(function (btn) {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });

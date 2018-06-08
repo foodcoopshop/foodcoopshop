@@ -17,11 +17,11 @@ foodcoopshop.DialogOrderDetail = {
         var dialogHtml = '<label for="dialogOrderDetailProductAmount"></label><br />';
         dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogEditAmountReason">Warum wird Anzahl angepasst (Pflichtfeld)?</label>';
+        dialogHtml += '<label for="dialogEditAmountReason">' + foodcoopshop.LocalizedJs.admin.WhyIsAmountDecreased + '</label>';
         dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Anzahl vermindern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.DecreaseAmount, dialogId, dialogHtml);
         return dialogHtml;
     },
     
@@ -30,31 +30,31 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml += '<input type="text" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
         dialogHtml += '<b>€</b>';
         dialogHtml += '<div class="textarea-wrapper" style="margin-top: 10px;">';
-        dialogHtml += '<label for="dialogEditPriceReason">Warum wird der Preis angepasst (Pflichtfeld)?</label>';
+        dialogHtml += '<label for="dialogEditPriceReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPriceAdapted + '</label>';
         dialogHtml += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductPriceOrderDetailId" id="dialogOrderDetailProductPriceOrderDetailId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Preis anpassen', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.AdaptPrice, dialogId, dialogHtml);
         return dialogHtml;
     },
 
     getHtmlForOrderDetailProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
-        dialogHtml += '<br /><span class="quantity-string">Geliefertes Gewicht</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
+        dialogHtml += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
         dialogHtml += '<b></b>';
         dialogHtml += '<br />';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
         dialogHtml += '<ul style="margin-top:5px;">';
         dialogHtml += '<li class="price-per-unit-base-info"></li>';
-        dialogHtml += '<li>Der Preis wird nach dem Speichern automatisch angepasst.</li>';
-        dialogHtml += '<li>Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde.</li>';
+        dialogHtml += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
+        dialogHtml += '<li>' + foodcoopshop.LocalizedJs.admin.FieldIsRedIfWeightNotYetAdapted + '</li>';
         dialogHtml += '</ul>';
         dialogHtml += '<label class="checkbox">';
         dialogHtml += '<input type="checkbox" name="dialogOrderDetailProductQuantityDoNotChangePrice" id="dialogOrderDetailProductQuantityDoNotChangePrice" value="" />';
-        dialogHtml += '<span style="font-weight:normal;">Den Preis nicht automatisch anpassen, nur das Gewicht ändern.</span>';
+        dialogHtml += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.DoNotAutomaticallyAdaptPriceJustChangeWeight + '</span>';
         dialogHtml += '</label>';
         dialogHtml += '<br />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gewicht anpassen', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.AdaptWeight, dialogId, dialogHtml);
         return dialogHtml;
     }
     

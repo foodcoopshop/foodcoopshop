@@ -341,6 +341,7 @@ input.datepicker {
 .ui-dialog-content li {
 	margin-left: 20px;
 	margin-top: 5px;
+	list-style: disc;
 }
 .ui-dialog-content #flashMessage {
 	position: absolute;

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-08 12:40+0000\n"
+"POT-Creation-Date: 2018-06-08 15:31+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -333,6 +333,105 @@ msgid "Really_change_order_status_from_%s?"
 msgstr ""
 
 msgid "order_state_cancelled"
+msgstr ""
+
+msgid "order_state_open"
+msgstr ""
+
+msgid "Decrease_amount"
+msgstr ""
+
+msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
+msgstr ""
+
+msgid "New_amount"
+msgstr ""
+
+msgid "Why_is_amount_decreased_(mandatory_field)?"
+msgstr ""
+
+msgid "Adapt_price?"
+msgstr ""
+
+msgid "ordered_by"
+msgstr ""
+
+msgid "Explaination_text_apdapt_price_form_apapt_weight."
+msgstr ""
+
+msgid "Why_is_price_adapted_(mandatory_field)?"
+msgstr ""
+
+msgid "Original_price_without_reduction_of_price_in_time"
+msgstr ""
+
+msgid "From_which_really_paid_in"
+msgstr ""
+
+msgid "Euro"
+msgstr ""
+
+msgid "Adapt_weight?"
+msgstr ""
+
+msgid "Delivered_weight"
+msgstr ""
+
+msgid "Delivered_total_weight"
+msgstr ""
+
+msgid "Base_price"
+msgstr ""
+
+msgid "Price_is_automatically_adapted_after_save."
+msgstr ""
+
+msgid "The_field_is_red_if_weight_not_yet_adapted."
+msgstr ""
+
+msgid "Do_not_automatically_apapt_price_just_change_weight."
+msgstr ""
+
+msgid "Really_cancel_ordered_product?"
+msgstr ""
+
+msgid "Do_you_really_want_to_cancel_product_%s?"
+msgstr ""
+
+msgid "Do_you_really_want_to_cancel_product_%s_from_%s?"
+msgstr ""
+
+msgid "Why_is_product_cancelled_(mandatory_field)?"
+msgstr ""
+
+msgid "Yes_do_cancel_button!"
+msgstr ""
+
+msgid "Do_not_cancel_button"
+msgstr ""
+
+msgid "Please_only_cancel_if_ok_for_manufacturer!"
+msgstr ""
+
+msgid "Really_cancel_selected_products?"
+msgstr ""
+
+msgid "You_selected_1_product_for_cancellation"
+msgstr ""
+
+msgid "You_selected_%s_products_for_cancellation"
+msgstr ""
+
+msgid "Adapt_amount_reason_is_mandatory."
+msgstr ""
+
+msgid "Delivered_weight_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "Adapt_price_reason_is_mandatory."
+msgstr ""
+
+msgid "Cancellation_reason_is_mandatory."
 msgstr ""
 
 msgid "Change_comment_of_order"
@@ -677,9 +776,6 @@ msgstr ""
 msgid "Compensation_payment"
 msgstr ""
 
-msgid "Base_price"
-msgstr ""
-
 msgid "price_will_be_eventually_adapted."
 msgstr ""
 
@@ -747,9 +843,6 @@ msgid "Access_denied_please_sign_in."
 msgstr ""
 
 msgid "This_order_contains_the_variable_member_fee."
-msgstr ""
-
-msgid "order_state_open"
 msgstr ""
 
 msgid "order_state_closed"

@@ -25,17 +25,16 @@ foodcoopshop.Helper = {
     },
     
     getJqueryUiNoButton : function() {
-        return {
-            text: foodcoopshop.LocalizedJs.helper.no,
-            click: function() {
-                $(this).dialog('close');
-            }
-        };
+        this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
     },
 
     getJqueryUiCancelButton : function() {
+        this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.cancel);
+    },
+    
+    getJqueryUiCloseDialogButton : function(label) {
         return {
-            text: foodcoopshop.LocalizedJs.helper.cancel,
+            text: label,
             click: function() {
                 $(this).dialog('close');
             }

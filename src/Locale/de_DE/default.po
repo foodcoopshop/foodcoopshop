@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-08 12:40+0000\n"
-"PO-Revision-Date: 2018-06-08 14:40+0200\n"
+"POT-Creation-Date: 2018-06-08 15:31+0000\n"
+"PO-Revision-Date: 2018-06-08 17:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -105,10 +105,10 @@ msgid "datepicker_prev"
 msgstr "zurück"
 
 msgid "datepicker_next"
-msgstr "next"
+msgstr "vor"
 
 msgid "datepicker_today"
-msgstr "today"
+msgstr "heute"
 
 msgid "WeekHeader"
 msgstr "Wo"
@@ -343,6 +343,110 @@ msgstr "Willst du den Bestellstatus der Bestellung von {0} wirklich ändern?"
 
 msgid "order_state_cancelled"
 msgstr "storniert"
+
+msgid "order_state_open"
+msgstr "offen"
+
+msgid "Decrease_amount"
+msgstr "Anzahl vermindern"
+
+msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
+msgstr ""
+"Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das "
+"Produkt nachbuchen."
+
+msgid "New_amount"
+msgstr "Neue Anzahl"
+
+msgid "Why_is_amount_decreased_(mandatory_field)?"
+msgstr "Warum wird Anzahl vermindert (Pflichtfeld)?"
+
+msgid "Adapt_price?"
+msgstr "Preis anpassen?"
+
+msgid "ordered_by"
+msgstr "bestellt von"
+
+msgid "Explaination_text_apdapt_price_form_apapt_weight."
+msgstr ""
+"Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten "
+"weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich "
+"gelieferte Gewicht scheint auf der Rechnung auf."
+
+msgid "Why_is_price_adapted_(mandatory_field)?"
+msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
+
+msgid "Original_price_without_reduction_of_price_in_time"
+msgstr "Original-Preis ohne Abzug von Betrag in Zeit"
+
+msgid "From_which_really_paid_in"
+msgstr "Davon tatsächlich bezahlter Betrag in"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "Adapt_weight?"
+msgstr "Gewicht anpassen?"
+
+msgid "Delivered_weight"
+msgstr "Geliefertes Gewicht"
+
+msgid "Delivered_total_weight"
+msgstr "Geliefertes Gesamtgewicht"
+
+msgid "Base_price"
+msgstr "Basis-Preis"
+
+msgid "Price_is_automatically_adapted_after_save."
+msgstr "Der Preis wird nach dem Speichern automatisch angepasst."
+
+msgid "The_field_is_red_if_weight_not_yet_adapted."
+msgstr "Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde."
+
+msgid "Do_not_automatically_apapt_price_just_change_weight."
+msgstr "Den Preis nicht automatisch anpassen, nur das Gewicht ändern."
+
+msgid "Really_cancel_ordered_product?"
+msgstr "Bestelltes Produkt wirklich stornieren?"
+
+msgid "Do_you_really_want_to_cancel_product_%s?"
+msgstr "Möchtest du das Produkt {0} wirklich stornieren?"
+
+msgid "Do_you_really_want_to_cancel_product_%s_from_%s?"
+msgstr "Möchtest du das Produkt {0} vom Hersteller {1} wirklich stornieren?"
+
+msgid "Why_is_product_cancelled_(mandatory_field)?"
+msgstr "Warum wird das Produkt storniert (Pflichtfeld)?"
+
+msgid "Yes_do_cancel_button!"
+msgstr "Ja, stornieren!"
+
+msgid "Do_not_cancel_button"
+msgstr "Abbrechen"
+
+msgid "Please_only_cancel_if_ok_for_manufacturer!"
+msgstr "Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
+
+msgid "Really_cancel_selected_products?"
+msgstr "Ausgewählte Produkte wirklich stornieren?"
+
+msgid "You_selected_1_product_for_cancellation"
+msgstr "Du hast 1 Produkt zum Stornieren ausgewählt"
+
+msgid "You_selected_%s_products_for_cancellation"
+msgstr "Du hast {0] Produkte zum Stornieren ausgewählt"
+
+msgid "Adapt_amount_reason_is_mandatory."
+msgstr "Bitte gib an, warum die Anzahl vermindert wird."
+
+msgid "Delivered_weight_needs_to_be_greater_than_0."
+msgstr "Das Liefergewicht muss größer als 0 sein."
+
+msgid "Adapt_price_reason_is_mandatory."
+msgstr "Bitte gib an, warum der Preis angepasst wird."
+
+msgid "Cancellation_reason_is_mandatory."
+msgstr "Bitte gib an, warum storniert wird."
 
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
@@ -717,9 +821,6 @@ msgstr "Leergebinde"
 msgid "Compensation_payment"
 msgstr "Ausgleichszahlung"
 
-msgid "Base_price"
-msgstr "Basis-Preis"
-
 msgid "price_will_be_eventually_adapted."
 msgstr "Preis wird evtl. noch angepasst."
 
@@ -789,9 +890,6 @@ msgstr "Zugriff verweigert, bitte melde dich an."
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "Die Bestellung beinhaltet den variablen Mitgliedsbeitrag."
 
-msgid "order_state_open"
-msgstr "offen"
-
 msgid "order_state_closed"
 msgstr "abgeschlossen"
 
@@ -800,6 +898,15 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "weight"
+#~ msgstr "Gewicht"
+
+#~ msgid "Total_weight"
+#~ msgstr "Gesamtgewicht"
+
+#~ msgid "ordered"
+#~ msgstr "bestellt"
 
 #~ msgid "open"
 #~ msgstr "offen"

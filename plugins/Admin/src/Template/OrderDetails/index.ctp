@@ -285,7 +285,7 @@ foreach ($orderDetails as $orderDetail) {
                 if ($editRecordAllowed) {
                     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                         'class' => 'order-detail-product-quantity-edit-button',
-                        'title' => 'Zum Ändern des Gewichts anklicken'
+                        'title' => __d('admin', 'Click_to_change_weight')
                     ], 'javascript:void(0);');
                 }
                 echo '<span class="quantity-in-units">' . $this->Html->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
@@ -326,7 +326,7 @@ foreach ($orderDetails as $orderDetail) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-order-detail',
                 'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
-                'title' => 'Produkt stornieren?'
+                'title' => __d('admin', 'Click_to_cancel_product')
             ], 'javascript:void(0);');
         }
         echo '</td>';

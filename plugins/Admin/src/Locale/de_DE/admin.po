@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-08 12:40+0000\n"
-"PO-Revision-Date: 2018-06-08 14:26+0200\n"
+"POT-Creation-Date: 2018-06-08 15:31+0000\n"
+"PO-Revision-Date: 2018-06-08 17:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -55,14 +55,10 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Pfand-Betrag für {0} eintragen"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller "
-"zurückgenommen wird."
+msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen wird."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit "
-"Geld ausgeglichen?"
+msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
 
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
@@ -211,6 +207,12 @@ msgstr "Zum Ändern des Preises anklicken"
 msgid "Additional_in_{0}"
 msgstr "Zusätzlich in {0}"
 
+msgid "Click_to_change_weight"
+msgstr "Zum Ändern des Gewichtes anklicken"
+
+msgid "Click_to_cancel_product"
+msgstr "Zum Stornieren des Produktes anklicken"
+
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
 
@@ -224,9 +226,7 @@ msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen "
-"möchtest."
+msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"
@@ -275,6 +275,9 @@ msgstr "finanzberichte"
 
 msgid "docs_route_paying_with_time_module"
 msgstr "stundenabrechnung"
+
+#~ msgid "Cancel_product?"
+#~ msgstr "Produkt stornieren?"
 
 #~ msgid "Deposit returns"
 #~ msgstr "Pfand-Rückgaben"
