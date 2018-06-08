@@ -79,7 +79,7 @@ use Cake\Core\Configure;
     echo '<th></th>';
     echo '<th class="hide">' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
     if (! $groupByCustomer) {
-        echo '<th class="right">' . $this->Paginator->sort('Orders.total_paid', __d('admin', 'Amount')) . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('Orders.total_paid', __d('admin', 'Price')) . '</th>';
     } else {
         echo '<th class="right">'.__d('admin', 'Amount').'</th>';
     }

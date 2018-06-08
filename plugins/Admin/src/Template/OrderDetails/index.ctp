@@ -111,7 +111,7 @@ echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
     echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Amount'));
+    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
 echo '</th>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
