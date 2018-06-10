@@ -12,8 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\I18n\I18n;
 
-echo $this->Html->script(['/js/localized/' . I18n::getLocale()]);
+echo $this->Html->script(['/js/localized-javascript.js']);
 
 ?>
