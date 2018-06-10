@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 ?>
@@ -86,6 +87,7 @@ if ($isMobile) {
 }
 
 if ($this->plugin == 'Admin') {
+    echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js');
     echo $this->Html->script('/node_modules/ckeditor/ckeditor');
     echo $this->Html->script('/node_modules/ckeditor/adapters/jquery');
 }
