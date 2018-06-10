@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-10 12:28+0000\n"
+"POT-Creation-Date: 2018-06-10 12:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -27,6 +27,24 @@ msgid "Finish_cart"
 msgstr ""
 
 msgid "Your_cart_was_empty"
+msgstr ""
+
+msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
+msgstr ""
+
+msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."
+msgstr ""
+
+msgid "You_can_add_more_products_now."
+msgstr ""
+
+msgid "1_product_is_not_available_any_more."
+msgstr ""
+
+msgid "{0}_products_are_not_available_any_more."
+msgstr ""
+
+msgid "There_are_no_orders_available."
 msgstr ""
 
 msgid "New_products"

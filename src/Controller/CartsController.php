@@ -700,7 +700,7 @@ class CartsController extends FrontendController
     public function emptyCart()
     {
         $this->doEmptyCart();
-        $message = 'Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.';
+        $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
         $this->Flash->success($message);
         $this->redirect($this->referer());
     }
@@ -745,19 +745,20 @@ class CartsController extends FrontendController
             }
         }
         
-        $message = 'Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen.';
-        $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
+        $message = __('Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart.');
+        $message .= '<br />';
+        $message .= __('You_can_add_more_products_now.');;
 
         if (!empty($errorMessages)) {
             $message .= '<div class="error">';
                 $removedProducts = count($orderDetails) - $loadedProducts;
                 $message .= '<b>';
                 if ($removedProducts == 1) {
-                    $message .= $removedProducts . ' Produkt ist';
+                    $message .= __('1_product_is_not_available_any_more.');
                 } else {
-                    $message .= $removedProducts . ' Produkte sind';
+                    $message .= __('{0}_products_are_not_available_any_more.', [$removedProducts]);
                 }
-                $message .= ' nicht mehr verfügbar</b>';
+                $message .= ' </b>';
                 $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $message .= '</div>';
         }
@@ -771,7 +772,7 @@ class CartsController extends FrontendController
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
         if (empty($orderDetails)) {
-            $message = 'Es sind keine Bestellungen vorhanden.';
+            $message = __('There_are_no_orders_available.');
             $this->Flash->error($message);
         } else {
             reset($orderDetails);
