@@ -117,7 +117,9 @@ class AppTcpdf extends TCPDF
                     }
                 }
                 if (!$isOrderList) {
-                    $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
+                    if ($result['OrderDetailUnitProductQuantityInUnits'] > 0) {
+                        $unity = Configure::read('app.htmlHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
+                    }
                 }
                 
                 if ($unity != '') {
