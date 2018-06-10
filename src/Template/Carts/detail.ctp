@@ -53,7 +53,7 @@ if (!$appAuth->termsOfUseAccepted()) {
 
             if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer() && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
                 echo $this->Form->control('timebased_currency_order.seconds_sum_tmp', [
-                    'label' => __('How_much_of_it_do_i_want_to_pay_in_{0}?'), [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')],
+                    'label' => __('How_much_of_it_do_i_want_to_pay_in_{0}?', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]),
                     'type' => 'select',
                     'options' => $this->TimebasedCurrency->getTimebasedCurrencyHoursDropdown($appAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp(), Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'))
                 ]);
