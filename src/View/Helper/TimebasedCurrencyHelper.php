@@ -31,7 +31,7 @@ class TimebasedCurrencyHelper extends Helper
     {
         $text = '';
         if ($showText) {
-            $text = '<p style="clear:both;">* Mouseover zeigt den bezahlten Betrag in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME').' an.</p>';
+            $text = '<p style="clear:both;">* '.__('Mouseover_shows_the_paid_amont_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).'</p>';
         }
         return $text;
     }
@@ -41,7 +41,7 @@ class TimebasedCurrencyHelper extends Helper
      */
     public function getName()
     {
-        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . 'konto';
+        return __('Paying_with_time_account_name_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]);
     }
     
     /**

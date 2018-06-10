@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-10 12:35+0000\n"
-"PO-Revision-Date: 2018-06-10 14:38+0200\n"
+"POT-Creation-Date: 2018-06-10 12:45+0000\n"
+"PO-Revision-Date: 2018-06-10 14:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -797,6 +797,12 @@ msgstr "Imprint"
 msgid "Sign_out"
 msgstr "Sign out"
 
+msgid "Credit"
+msgstr "Credit"
+
+msgid "Member_fee"
+msgstr "Member fee"
+
 msgid "Website"
 msgstr "Website"
 
@@ -883,6 +889,12 @@ msgstr "news"
 
 msgid "routes_product"
 msgstr "product"
+
+msgid "Mouseover_shows_the_paid_amont_in_{0}."
+msgstr "Mouseover shows the paid amount in {0}."
+
+msgid "Paying_with_time_account_name_{0}"
+msgstr "Account of {0}"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."

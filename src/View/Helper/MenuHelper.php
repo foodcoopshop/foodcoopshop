@@ -159,7 +159,7 @@ class MenuHelper extends Helper
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => 'Guthaben', 'options' => ['fa-icon' => 'fa-fw fa-euro']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => 'fa-fw fa-euro']];
         }
         return [];
     }
@@ -167,7 +167,7 @@ class MenuHelper extends Helper
     public function getPaymentMemberFeeMenuElement()
     {
         if (Configure::read('app.memberFeeEnabled')) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => ['fa-icon' => 'fa-fw fa-heart']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyMemberFeeBalance(), 'name' => __('Member_fee'), 'options' => ['fa-icon' => 'fa-fw fa-heart']];
         }
         return [];
     }

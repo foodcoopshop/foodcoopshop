@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-10 12:35+0000\n"
-"PO-Revision-Date: 2018-06-10 14:37+0200\n"
+"POT-Creation-Date: 2018-06-10 12:45+0000\n"
+"PO-Revision-Date: 2018-06-10 14:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -31,7 +31,7 @@ msgid "Your_cart_was_empty"
 msgstr "Dein Warenkorb war leer"
 
 msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
-msgstr ""
+msgstr "Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen."
 
 msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."
 msgstr ""
@@ -814,6 +814,12 @@ msgstr "Impressum"
 msgid "Sign_out"
 msgstr "Abmelden"
 
+msgid "Credit"
+msgstr "Guthaben"
+
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
 msgid "Website"
 msgstr "Homepage"
 
@@ -900,6 +906,12 @@ msgstr "aktuelles"
 
 msgid "routes_product"
 msgstr "produkt"
+
+msgid "Mouseover_shows_the_paid_amont_in_{0}."
+msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
+
+msgid "Paying_with_time_account_name_{0}"
+msgstr "{0}konto"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
