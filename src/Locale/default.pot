@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-10 20:45+0000\n"
+"POT-Creation-Date: 2018-06-10 21:04+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -462,6 +462,81 @@ msgid "Set_date_of_order_back_to"
 msgstr ""
 
 msgid "Set_date_of_order_back"
+msgstr ""
+
+msgid "Action_Log_Product_created"
+msgstr ""
+
+msgid "Action_Log_Product_attribute_created"
+msgstr ""
+
+msgid "Action_Log_Product_image_uploaded"
+msgstr ""
+
+msgid "Action_Log_Product_image_deleted"
+msgstr ""
+
+msgid "Action_Log_Product_attribute_deleted"
+msgstr ""
+
+msgid "Action_Log_Product_deactivated"
+msgstr ""
+
+msgid "Action_Log_Product_activated"
+msgstr ""
+
+msgid "Action_Log_Product_quantity_changed"
+msgstr ""
+
+msgid "Action_Log_Product_price_changed"
+msgstr ""
+
+msgid "Action_Log_Product_name_changed"
+msgstr ""
+
+msgid "Action_Log_Product_unity_changed"
+msgstr ""
+
+msgid "Action_Log_Product_description_changed"
+msgstr ""
+
+msgid "Action_Log_Product_description_short_changed"
+msgstr ""
+
+msgid "Action_Log_Product_deposit_changed"
+msgstr ""
+
+msgid "Action_Log_Product_tax_rate_changed"
+msgstr ""
+
+msgid "Action_Log_Product_categories_changed"
+msgstr ""
+
+msgid "Action_Log_Product_set_to_not_new"
+msgstr ""
+
+msgid "Action_Log_Product_set_to_new"
+msgstr ""
+
+msgid "Action_Log_Product_default_attribute_changed"
+msgstr ""
+
+msgid "Action_Log_Network_module_product_synchronized"
+msgstr ""
+
+msgid "Action_Log_Order_status_changed"
+msgstr ""
+
+msgid "Action_Log_Orders_closed"
+msgstr ""
+
+msgid "Action_Log_Order_comment_changed"
+msgstr ""
+
+msgid "Action_Log_Order_date_changed"
+msgstr ""
+
+msgid "Action_Log_Order_shop_order_placed"
 msgstr ""
 
 msgid "The_desired_amount_{0}_is_not_valid."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-10 20:45+0000\n"
-"PO-Revision-Date: 2018-06-10 14:45+0200\n"
+"POT-Creation-Date: 2018-06-10 21:04+0000\n"
+"PO-Revision-Date: 2018-06-10 23:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -34,7 +34,9 @@ msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
 msgstr "Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen."
 
 msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."
-msgstr "Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen."
+msgstr ""
+"Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb "
+"geladen."
 
 msgid "You_can_add_more_products_now."
 msgstr "Du kannst jetzt weitere Produkte hinzufügen."
@@ -70,7 +72,9 @@ msgid "Request_for_new_password_for_{0}"
 msgstr "Anfrage für neues Passwort für {0}"
 
 msgid "We_sent_a_link_to_you_for_generating_a_new_password."
-msgstr "Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst."
+msgstr ""
+"Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren "
+"kannst."
 
 msgid "Generated_new_password_for_{0}"
 msgstr "Neues Passwort für {0} generiert"
@@ -85,7 +89,9 @@ msgid "You_are_already_signed_in."
 msgstr "Du bist bereits angemeldet."
 
 msgid "Signing_in_failed_account_inactive_or_password_wrong?"
-msgstr "Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder das Passwort stimmt nicht?"
+msgstr ""
+"Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder "
+"das Passwort stimmt nicht?"
 
 msgid "Member_{0}_created_an_account."
 msgstr "Das Mitglied {0} hat ein Mitgliedskonto erstellt."
@@ -286,7 +292,9 @@ msgid "Load_past_order"
 msgstr "Vergangene Bestellungen laden"
 
 msgid "Load_past_order_dialog_description_html"
-msgstr "<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
+msgstr ""
+"<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch "
+"geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
 
 msgid "Remove_from_cart?"
 msgstr "Aus dem Warenkorb löschen?"
@@ -361,7 +369,9 @@ msgid "Decrease_amount"
 msgstr "Anzahl vermindern"
 
 msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
-msgstr "Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen."
+msgstr ""
+"Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt "
+"nachbuchen."
 
 msgid "New_amount"
 msgstr "Neue Anzahl"
@@ -376,7 +386,10 @@ msgid "ordered_by"
 msgstr "bestellt von"
 
 msgid "Explaination_text_apdapt_price_form_apapt_weight."
-msgstr "Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf."
+msgstr ""
+"Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter "
+"rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte "
+"Gewicht scheint auf der Rechnung auf."
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
@@ -465,23 +478,109 @@ msgstr "Bestellung rückdatieren auf"
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
 
+msgid "Action_Log_Product_created"
+msgstr "Produkt: erstellt"
+
+msgid "Action_Log_Product_attribute_created"
+msgstr "Produkt: Variante erstellt"
+
+msgid "Action_Log_Product_image_uploaded"
+msgstr "Produkt: Bild hochgeladen"
+
+msgid "Action_Log_Product_image_deleted"
+msgstr "Produkt: Bild gelöscht"
+
+msgid "Action_Log_Product_attribute_deleted"
+msgstr "Produkt: Variante gelöscht"
+
+msgid "Action_Log_Product_deactivated"
+msgstr "Produkt: deaktiviert"
+
+msgid "Action_Log_Product_activated"
+msgstr "Produkt: aktiviert"
+
+msgid "Action_Log_Product_quantity_changed"
+msgstr "Produkt: Anzahl geändert"
+
+msgid "Action_Log_Product_price_changed"
+msgstr "Produkt: Preis geändert"
+
+msgid "Action_Log_Product_name_changed"
+msgstr "Produkt: Name geändert"
+
+msgid "Action_Log_Product_unity_changed"
+msgstr "Produkt: Einheit geändert"
+
+msgid "Action_Log_Product_description_changed"
+msgstr "Produkt: Beschreibung geändert"
+
+msgid "Action_Log_Product_description_short_changed"
+msgstr "Produkt: Beschreibung kurz geändert"
+
+msgid "Action_Log_Product_deposit_changed"
+msgstr "Produkt: Pfand geändert"
+
+msgid "Action_Log_Product_tax_rate_changed"
+msgstr "Produkt: Steuersatz geändert"
+
+msgid "Action_Log_Product_categories_changed"
+msgstr "Produkt: Kategorien geändert"
+
+msgid "Action_Log_Product_set_to_not_new"
+msgstr "Produkt: nicht mehr als \"neu\" anzeigen"
+
+msgid "Action_Log_Product_set_to_new"
+msgstr "Produkt: als \"neu\" anzeigen"
+
+msgid "Action_Log_Product_default_attribute_changed"
+msgstr "Produkt: Standard-Variante geändert"
+
+msgid "Action_Log_Network_module_product_synchronized"
+msgstr "Netzwerk-Modul: Produkte synchronisiert"
+
+msgid "Action_Log_Order_status_changed"
+msgstr "Bestellung: Status geändert"
+
+msgid "Action_Log_Orders_closed"
+msgstr "Bestellungen: abgeschlossen"
+
+msgid "Action_Log_Order_comment_changed"
+msgstr "Bestellung: Kommentar geändert"
+
+msgid "Action_Log_Order_date_changed"
+msgstr "Bestellung: rückdatiert"
+
+msgid "Action_Log_Order_shop_order_placed"
+msgstr "Bestellung: Sofort-Bestellung getätigt"
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}"
-msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
+msgid ""
+"The_desired_amount_{0}_of_the_product_{1}"
+"_is_not_available_any_more_available_amount_{2}"
+msgstr ""
+"Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. "
+"Verfügbare Menge: {2}"
 
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}"
-msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
+msgid ""
+"The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}"
+"_is_not_available_any_more_available_amount_{3}"
+msgstr ""
+"Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr "
+"verfügbar. Verfügbare Menge: {3}"
 
 msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
+msgstr ""
+"Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
 
 msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
-msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+msgstr ""
+"Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr "
+"aktiviert und das Produkt ist somit nicht mehr bestellbar."
 
 msgid "Members:_active"
 msgstr "Mitglieder: aktiv"
@@ -544,7 +643,8 @@ msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wieviel davon möchtest du in {0} bezahlen?"
 
 msgid "To_finish_order_click_here."
-msgstr "Um die Bestellung abzuschließen, klicke bitte auf \"Zahlungspflichtig bestellen\"."
+msgstr ""
+"Um die Bestellung abzuschließen, klicke bitte auf \"Zahlungspflichtig bestellen\"."
 
 msgid "The_amount_will_be_reduced_from_your_credit_balance."
 msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
@@ -553,7 +653,9 @@ msgid "Please_pay_when_picking_up_products."
 msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
 
 msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
+msgstr ""
+"Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der "
+"Box rechts."
 
 msgid "general_terms_of_use"
 msgstr "AGB"
@@ -565,13 +667,17 @@ msgid "right_of_withdrawal"
 msgstr "Rücktrittsrecht"
 
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
+msgstr ""
+"Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht "
+"verderbliche Waren."
 
 msgid "Write_message_to_pick_up_team?"
 msgstr "Nachricht an Abholdienst schreiben?"
 
 msgid "Placeholder_message_order_comment."
-msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
+msgstr ""
+"Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die "
+"Hersteller sehen diese Nachricht nicht."
 
 msgid "Order_button"
 msgstr "Zahlungspflichtig bestellen"
@@ -588,8 +694,12 @@ msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
 msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
 msgstr "Bitte hole die bestellten Waren verlässlich am {0} in unserem Abhollager ab."
 
-msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-msgstr "Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben abgezogen."
+msgid ""
+"The_product_value_{0}_with_an_additional_deposit_of_{1}"
+"_was_automatically_reduced_from_your_credit."
+msgstr ""
+"Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben "
+"abgezogen."
 
 msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
 msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."
@@ -598,7 +708,9 @@ msgid "Increase_credit"
 msgstr "Guthaben aufladen"
 
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
-msgstr "Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen."
+msgstr ""
+"Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar "
+"mitzunehmen."
 
 msgid "Email"
 msgstr "E-Mail"
@@ -661,7 +773,9 @@ msgid "Your_credit_balance"
 msgstr "Dein Guthaben"
 
 msgid "You_reached_the_order_limit_{0}_please_add_credit."
-msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues Guthaben auf."
+msgstr ""
+"Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues "
+"Guthaben auf."
 
 msgid "Add_credit"
 msgstr "Guthaben aufladen"

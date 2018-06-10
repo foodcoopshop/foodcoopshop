@@ -73,7 +73,7 @@ foreach ($actionLogs as $actionLog) {
 
     echo '<td>';
     echo $this->Html->link(
-        $actionType['de'],
+        $actionType['name'],
         '/admin/action-logs/index/?type='.$actionLog->type.'&productId='.$productId.'&customerId='.$customerId.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';
