@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 06:37+0000\n"
+"POT-Creation-Date: 2018-06-11 08:59+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -951,6 +951,9 @@ msgid "Paying_with_time_account_name_{0}"
 msgstr ""
 
 msgid "Access_denied_please_sign_in."
+msgstr ""
+
+msgid "order_state_cash"
 msgstr ""
 
 msgid "This_order_contains_the_variable_member_fee."
