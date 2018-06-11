@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:13+0200\n"
+"POT-Creation-Date: 2018-06-11 18:16+0200\n"
 "PO-Revision-Date: 2018-06-11 17:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1097,6 +1097,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+msgid "View"
+msgstr ""
 
 #~ msgid "Do_you_really_want_to_cancel_product_%s_from_%s?"
 #~ msgstr "Do you really want to cancel product {0} from {1}?"
