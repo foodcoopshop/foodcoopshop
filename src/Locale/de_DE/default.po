@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 17:31+0200\n"
-"PO-Revision-Date: 2018-06-11 17:32+0200\n"
+"POT-Creation-Date: 2018-06-11 17:46+0200\n"
+"PO-Revision-Date: 2018-06-11 17:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Member_{0}_created_an_account."
 msgstr "Das Mitglied {0} hat ein Mitgliedskonto erstellt."
 
-msgid "Terms_of_use"
+msgid "Filename_Terms-of-use"
 msgstr "Nutzungsbedingungen"
 
 msgid "Welcome"
@@ -831,6 +831,9 @@ msgstr "Umsatzsteuer"
 
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
+
+msgid "Terms_of_use"
+msgstr "Nutzungsbedingungen"
 
 msgid "Privacy_policy"
 msgstr "Datenschutzerklärung"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 17:31+0200\n"
-"PO-Revision-Date: 2018-06-11 17:44+0200\n"
+"POT-Creation-Date: 2018-06-11 17:46+0200\n"
+"PO-Revision-Date: 2018-06-11 17:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -148,8 +148,8 @@ msgstr "Signing in failed. Accout inactive or password wrong?"
 msgid "Member_{0}_created_an_account."
 msgstr "Member {0} created an account."
 
-msgid "Terms_of_use"
-msgstr "Terms of use"
+msgid "Filename_Terms-of-use"
+msgstr "Terms-of-use"
 
 msgid "Welcome"
 msgstr "Welcome"
@@ -821,6 +821,9 @@ msgstr "Value added tax"
 
 msgid "Show_cart_button"
 msgstr "Show cart"
+
+msgid "Terms_of_use"
+msgstr "Terms of use"
 
 msgid "Privacy_policy"
 msgstr "Privacy policy"
