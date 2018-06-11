@@ -19,6 +19,9 @@
 
 define('ACCESS_DENIED_MESSAGE', __('Access_denied_please_sign_in.'));
 
+// called only for translation
+__('order_state_cash');
+
 return [
     'app' => [
         'manufacturerComponensationInfoText' => __('This_order_contains_the_variable_member_fee.'),
