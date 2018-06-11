@@ -71,9 +71,9 @@ $headers = [
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
 $pdf->addLastSumRow(
     $headers,
-    $this->Html->formatAsDecimal($sumPriceExcl),
-    $this->Html->formatAsDecimal($sumTax),
-    $this->Html->formatAsDecimal($sumPriceIncl)
+    $this->MyHtml->formatAsDecimal($sumPriceExcl),
+    $this->MyHtml->formatAsDecimal($sumTax),
+    $this->MyHtml->formatAsDecimal($sumPriceIncl)
 );
 $pdf->renderTable();
 // Produktauflistung End
@@ -94,7 +94,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3> - ' . $this->Html->formatAsDecimal($compensatedPrice) . '</h3>';
+    $html .= '<h3> - ' . $this->MyHtml->formatAsDecimal($compensatedPrice) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
@@ -104,7 +104,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3>' . $this->Html->formatAsDecimal($newSumPriceIncl) . '</h3>';
+    $html .= '<h3>' . $this->MyHtml->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
@@ -138,7 +138,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= 'Von den Mitgliedern bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->Html->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
+                $html .= '<b>' .  $this->MyHtml->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
 
@@ -147,7 +147,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= 'Von den Mitgliedern bezahlt in Euro:';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->Html->formatAsEuro($sumPriceForTimebasedCurrency) . '</b>';
+                $html .= '<b>' .  $this->MyHtml->formatAsEuro($sumPriceForTimebasedCurrency) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
     
@@ -161,7 +161,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= 'Einbehaltener variabler Mitgliedsbeitrag:';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->Html->formatAsEuro($compensatedPrice).'</b>';
+                $html .= '<b>'.$this->MyHtml->formatAsEuro($compensatedPrice).'</b>';
             $html .= '</td>';
         $html .= '</tr>';
         
@@ -170,7 +170,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= 'Betrag, der auf dein Konto überwiesen wird:';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->Html->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+                $html .= '<b>'.$this->MyHtml->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
             $html .= '</td>';
         $html .= '</tr>';
     }
