@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 16:10+0200\n"
-"PO-Revision-Date: 2018-06-11 16:15+0200\n"
+"POT-Creation-Date: 2018-06-11 16:44+0200\n"
+"PO-Revision-Date: 2018-06-11 16:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -24,11 +24,75 @@ msgstr "Herstellern steht diese Funktion leider nicht zur Verfügung."
 msgid "Your_cart"
 msgstr "Dein Warenkorb"
 
+msgid "Order_confirmation"
+msgstr "Bestellbestätigung"
+
+msgid "Filename_Cancellation-information-and-form"
+msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
+
+msgid "Filename_Order-confirmation"
+msgstr "Bestelluebersicht"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Allgemeine-Geschaeftsbedingungen"
+
+msgid "Error_while_creating_the_order."
+msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
+
+msgid "Error_while_saving_the_ordered_products."
+msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
+
 msgid "Finish_cart"
 msgstr "Warenkorb abschließen"
 
 msgid "Your_cart_was_empty"
 msgstr "Dein Warenkorb war leer"
+
+msgid ""
+"The_desired_amount_{0}_of_the_product_{1}"
+"_is_not_available_any_more_available_amount_{2}."
+msgstr ""
+"Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. "
+"Verfügbare Menge: {2}"
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr ""
+"Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die "
+"Bestellung abzuschließen."
+
+msgid ""
+"The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}"
+"_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+"Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr "
+"verfügbar. Verfügbare Menge: {3}"
+
+msgid "The_attribute_does_not_exist."
+msgstr "Die Variante existiert nicht."
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+"Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
+
+msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgstr ""
+"Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr "
+"aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Notification_about_shop_order_order_number_{0}"
+msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
+
+msgid "Your_order_has_been_placed"
+msgstr "Deine Bestellung ist abgeschlossen"
+
+msgid "Product_{0}_was_not_available_in_cart."
+msgstr "Produkt {0} war nicht in Warenkorb vorhanden."
 
 msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
 msgstr "Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen."
@@ -558,29 +622,6 @@ msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
-
-msgid ""
-"The_desired_amount_{0}_of_the_product_{1}"
-"_is_not_available_any_more_available_amount_{2}"
-msgstr ""
-"Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. "
-"Verfügbare Menge: {2}"
-
-msgid ""
-"The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}"
-"_is_not_available_any_more_available_amount_{3}"
-msgstr ""
-"Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr "
-"verfügbar. Verfügbare Menge: {3}"
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr ""
-"Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
-
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
-msgstr ""
-"Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr "
-"aktiviert und das Produkt ist somit nicht mehr bestellbar."
 
 msgid "Members:_active"
 msgstr "Mitglieder: aktiv"

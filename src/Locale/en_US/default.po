@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 16:10+0200\n"
-"PO-Revision-Date: 2018-06-11 16:14+0200\n"
+"POT-Creation-Date: 2018-06-11 16:44+0200\n"
+"PO-Revision-Date: 2018-06-11 16:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -24,11 +24,72 @@ msgstr "Sorry, but manufacturers do not have access."
 msgid "Your_cart"
 msgstr "Your cart"
 
+msgid "Order_confirmation"
+msgstr "Order confirmation"
+
+msgid "Filename_Cancellation-information-and-form"
+msgstr "Cancellation-information-and-form"
+
+msgid "Filename_Order-confirmation"
+msgstr "Order-confirmation"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "General-terms-and-conditions"
+
+msgid "Error_while_creating_the_order."
+msgstr "Error while creating the order."
+
+msgid "Error_while_saving_the_ordered_products."
+msgstr "Error while saving the ordered products."
+
 msgid "Finish_cart"
 msgstr "Finish cart"
 
 msgid "Your_cart_was_empty"
 msgstr "Your cart was empty"
+
+msgid ""
+"The_desired_amount_{0}_of_the_product_{1}"
+"_is_not_available_any_more_available_amount_{2}."
+msgstr ""
+"The desired amount {0} of the product {1} is not available any more. Available "
+"amount: {2}"
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Please change the amout or remove product from cart to place order."
+
+msgid ""
+"The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}"
+"_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+"The desired amount {0} of the attribute {1} of the product {2} is not available any "
+"more. Available amount: {3}"
+
+msgid "The_attribute_does_not_exist."
+msgstr "The attribute does not exist."
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "The product {0} is not activated any more."
+
+msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgstr ""
+"The manufacturer of the product {0} either has a delivery break or the product is "
+"not activated any more."
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Your order was placed successfully."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} has placed a new order ({1})."
+
+msgid "Notification_about_shop_order_order_number_{0}"
+msgstr "Notification about shop order order n° {0}"
+
+msgid "Your_order_has_been_placed"
+msgstr "Your order has been placed."
+
+msgid "Product_{0}_was_not_available_in_cart."
+msgstr "Product {0} was not available in cart."
 
 msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
 msgstr "Your cart has been emptied, you can add new products now."
@@ -550,28 +611,6 @@ msgstr "The desired amount {0} is not valid."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "The product with id {0} does not exist."
-
-msgid ""
-"The_desired_amount_{0}_of_the_product_{1}"
-"_is_not_available_any_more_available_amount_{2}"
-msgstr ""
-"The desired amount {0} of the product {1} is not available any more. Available "
-"amount: {2}"
-
-msgid ""
-"The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}"
-"_is_not_available_any_more_available_amount_{3}"
-msgstr ""
-"The desired amount {0} of the attribute {1} of the product {2} is not available any "
-"more. Available amount: {3}"
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "The product {0} is not activated any more."
-
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
-msgstr ""
-"The manufacturer of the product {0} either has a delivery break or the product is "
-"not activated any more."
 
 msgid "Members:_active"
 msgstr "Members: active"

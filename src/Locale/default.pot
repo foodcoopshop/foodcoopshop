@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 16:10+0200\n"
+"POT-Creation-Date: 2018-06-11 16:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -23,10 +23,61 @@ msgstr ""
 msgid "Your_cart"
 msgstr ""
 
+msgid "Order_confirmation"
+msgstr ""
+
+msgid "Filename_Cancellation-information-and-form"
+msgstr ""
+
+msgid "Filename_Order-confirmation"
+msgstr ""
+
+msgid "Filename_General-terms-and-conditions"
+msgstr ""
+
+msgid "Error_while_creating_the_order."
+msgstr ""
+
+msgid "Error_while_saving_the_ordered_products."
+msgstr ""
+
 msgid "Finish_cart"
 msgstr ""
 
 msgid "Your_cart_was_empty"
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr ""
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+
+msgid "The_attribute_does_not_exist."
+msgstr ""
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+
+msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgstr ""
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr ""
+
+msgid "Notification_about_shop_order_order_number_{0}"
+msgstr ""
+
+msgid "Your_order_has_been_placed"
+msgstr ""
+
+msgid "Product_{0}_was_not_available_in_cart."
 msgstr ""
 
 msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
@@ -543,18 +594,6 @@ msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
-msgstr ""
-
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}"
-msgstr ""
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}"
-msgstr ""
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr ""
-
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
 msgstr ""
 
 msgid "Members:_active"
