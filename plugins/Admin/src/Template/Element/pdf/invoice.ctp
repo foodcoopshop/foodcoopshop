@@ -152,7 +152,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         $html .= '</tr>';
     
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-        $m = TableLocator::get('Manufacturers');
+        $m = TableRegistry::getTableLocator()->get('Manufacturers');
         $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
         $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
         
