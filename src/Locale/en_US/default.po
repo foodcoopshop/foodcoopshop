@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-10 21:04+0000\n"
-"PO-Revision-Date: 2018-06-10 23:10+0200\n"
+"POT-Creation-Date: 2018-06-11 06:37+0000\n"
+"PO-Revision-Date: 2018-06-11 08:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -794,6 +794,9 @@ msgstr "Bank account (member fee)"
 
 msgid "Help"
 msgstr "Help"
+
+msgid "Help?"
+msgstr "Help?"
 
 msgid "DELIVERY_DAY"
 msgstr "DELIVERY_DAY"
