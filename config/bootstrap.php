@@ -200,6 +200,7 @@ Plugin::load('Admin', [
 ]);
 
 mb_internal_encoding('UTF-8');
+date_default_timezone_set('Europe/Berlin');
 
 if (in_array(Configure::read('App.defaultLocale'), array_keys(Configure::read('app.implementedLocales')))) {
     locale_set_default(Configure::read('App.defaultLocale'));
