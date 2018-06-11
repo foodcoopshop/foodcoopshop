@@ -21,10 +21,10 @@
 
 <h1></h1>
 
-**FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone.
+**FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone. It's available in **German** and **English**.
 
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
-* Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com) 
+* Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com) - English translation can be improved
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Roadmap for 2018
