@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 08:59+0000\n"
-"PO-Revision-Date: 2018-06-11 10:59+0200\n"
+"POT-Creation-Date: 2018-06-11 16:10+0200\n"
+"PO-Revision-Date: 2018-06-11 16:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -760,6 +760,20 @@ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "terms_and_conditions"
+msgstr "Nutzungsbedingungen"
+
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr ""
+"um diese Plattform weiterhin verwenden zu können, lese bitte die geänderten {0} und "
+"akzeptiere sie."
+
+msgid "I_accept_the_{0}."
+msgstr "Ich akzeptiere die {0}."
+
 msgid "Cart"
 msgstr "Warenkorb"
 
@@ -839,9 +853,6 @@ msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 
 msgid "Signed_in"
 msgstr "Eingeloggt"
-
-msgid "Hello"
-msgstr "Hallo"
 
 msgid "Amount"
 msgstr "Anzahl"

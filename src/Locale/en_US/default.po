@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 08:59+0000\n"
-"PO-Revision-Date: 2018-06-11 10:59+0200\n"
+"POT-Creation-Date: 2018-06-11 16:10+0200\n"
+"PO-Revision-Date: 2018-06-11 16:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -744,6 +744,20 @@ msgstr "Do you want to receive an order reminder e-mail every week?"
 msgid "terms_of_use"
 msgstr "terms of use"
 
+msgid "Hello"
+msgstr "Hello"
+
+msgid "terms_and_conditions"
+msgstr "terms and conditions"
+
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr ""
+"if you want to continue to use this platform, please read the changed {0} and "
+"accept them."
+
+msgid "I_accept_the_{0}."
+msgstr "I accept the {0}."
+
 msgid "Cart"
 msgstr "Cart"
 
@@ -821,9 +835,6 @@ msgstr "To change your profile please stop the shop order mode."
 
 msgid "Signed_in"
 msgstr "Signed in"
-
-msgid "Hello"
-msgstr "Hello"
 
 msgid "Amount"
 msgstr "Amount"
@@ -907,7 +918,7 @@ msgid "price_will_be_eventually_adapted."
 msgstr "price will be eventually adapted."
 
 msgid "route_accept_terms_of_use"
-msgstr "terms-of-use"
+msgstr "accept-terms-of-use"
 
 msgid "route_manufacturer_detail"
 msgstr "manufacturer"

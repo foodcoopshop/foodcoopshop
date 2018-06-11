@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 08:59+0000\n"
+"POT-Creation-Date: 2018-06-11 16:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -722,6 +722,18 @@ msgstr ""
 msgid "terms_of_use"
 msgstr ""
 
+msgid "Hello"
+msgstr ""
+
+msgid "terms_and_conditions"
+msgstr ""
+
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr ""
+
+msgid "I_accept_the_{0}."
+msgstr ""
+
 msgid "Cart"
 msgstr ""
 
@@ -798,9 +810,6 @@ msgid "To_change_your_profile_please_stop_the_shop_order_mode."
 msgstr ""
 
 msgid "Signed_in"
-msgstr ""
-
-msgid "Hello"
 msgstr ""
 
 msgid "Amount"
