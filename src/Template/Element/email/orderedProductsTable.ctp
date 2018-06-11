@@ -20,7 +20,13 @@ use Cake\Core\Configure;
     
         <tr>
             <?php
-            $columns = ['Anzahl', 'Produkte', 'Hersteller', 'Preis', 'Pfand'];
+            $columns = [
+                __('Amount'),
+                __('Product'),
+                __('Manufacturer'),
+                __('Price'),
+                __('Deposit')
+            ];
             if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
                 $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
             }
