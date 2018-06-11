@@ -28,11 +28,11 @@ use Cake\Core\Configure;
                 <?php $link = Configure::read('app.cakeServerName').'/admin/customers/index/active:'.(Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
                 
                 <?php if (!Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
-                    <p><?php echo __('Here_you_can_activate_the_new_member_and_see_the_data'); ?>
+                    <p><?php echo __('Here_you_can_activate_the_new_member_and_see_the_data'); ?>:
                 <?php } else { ?>
-                    <p><?php echo __('Here_you_can_see_the_data_of_the_new_member'); ?>
+                    <p><?php echo __('Here_you_can_see_the_data_of_the_new_member'); ?>:
                 <?php } ?>
-                    :<br />
+                    <br />
                     <a href="<?php echo $link ?>"><?php echo $link; ?></a>
                 </p>
                 
