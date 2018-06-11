@@ -218,3 +218,7 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
 // gettext not available in app_config
 Configure::load('localized_config', 'default');
 
+if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
+    Configure::load('localized_custom_config', 'default');
+}
+
