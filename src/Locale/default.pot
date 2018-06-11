@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 16:59+0200\n"
+"POT-Creation-Date: 2018-06-11 17:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -854,6 +854,27 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Product"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "You_can_sign_in_here_for_ordering"
+msgstr ""
+
+msgid "E-mail_address"
+msgstr ""
+
+msgid "You_can_change_your_password_here"
+msgstr ""
+
+msgid "You_can_change_your_profile_here"
+msgstr ""
+
 msgid "available"
 msgstr ""
 
@@ -869,9 +890,6 @@ msgstr ""
 msgid "More_infos_to_product_{0}"
 msgstr ""
 
-msgid "Manufacturer"
-msgstr ""
-
 msgid "Edit_product"
 msgstr ""
 
@@ -881,6 +899,9 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 
+msgid "Your_account_at_{0}_has_just_been_activated."
+msgstr ""
+
 msgid "Thank_you_for_your_order_number_{0}_from_{1}."
 msgstr ""
 
@@ -888,6 +909,27 @@ msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can
 msgstr ""
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr ""
+
+msgid "Your_registration_at_{0}_has_just_been_successful!"
+msgstr ""
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr ""
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr ""
+
+msgid "Dear_responsible_person_for_new_members,"
+msgstr ""
+
+msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+msgstr ""
+
+msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+msgstr ""
+
+msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
 msgid "route_search"

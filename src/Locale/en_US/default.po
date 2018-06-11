@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 16:59+0200\n"
-"PO-Revision-Date: 2018-06-11 17:00+0200\n"
+"POT-Creation-Date: 2018-06-11 17:31+0200\n"
+"PO-Revision-Date: 2018-06-11 17:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -873,6 +873,27 @@ msgstr "Signed in"
 msgid "Amount"
 msgstr "Amount"
 
+msgid "Product"
+msgstr "Product"
+
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "You_can_sign_in_here_for_ordering"
+msgstr "You can sign in here for placing a new order"
+
+msgid "E-mail_address"
+msgstr "E-mail address"
+
+msgid "You_can_change_your_password_here"
+msgstr "You can change your password here"
+
+msgid "You_can_change_your_profile_here"
+msgstr "You can change your profile here"
+
 msgid "available"
 msgstr "available"
 
@@ -888,9 +909,6 @@ msgstr "New"
 msgid "More_infos_to_product_{0}"
 msgstr "More infos to product {0}"
 
-msgid "Manufacturer"
-msgstr "Manufacturer"
-
 msgid "Edit_product"
 msgstr "Edit product"
 
@@ -900,6 +918,9 @@ msgstr "from which {0} %"
 msgid "Unit"
 msgstr "Unit"
 
+msgid "Your_account_at_{0}_has_just_been_activated."
+msgstr "Your account at {0} has just been activated."
+
 msgid "Thank_you_for_your_order_number_{0}_from_{1}."
 msgstr "Thank you for order n° {0} from {1}."
 
@@ -908,6 +929,27 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
+
+msgid "Your_registration_at_{0}_has_just_been_successful!"
+msgstr "Your registration at {0} has been successful!"
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr "Your account was created but not activated yet. This means, you can't login yet!"
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "You will get an e-mail as soon as we activate you."
+
+msgid "Dear_responsible_person_for_new_members,"
+msgstr "Dear responsible for new members,"
+
+msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+msgstr "there has been a new registration: {0] ({1}) from {2}."
+
+msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+msgstr "Here you can activate the new member and see the data"
+
+msgid "Here_you_can_see_the_data_of_the_new_member"
+msgstr "Here you can see the data of the new member"
 
 msgid "route_search"
 msgstr "search"
