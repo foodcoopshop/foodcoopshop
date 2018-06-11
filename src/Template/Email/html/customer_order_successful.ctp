@@ -19,12 +19,12 @@ use Cake\Core\Configure;
     <tbody>
         <tr>
             <td style="font-weight:bold;font-size:18px;padding-bottom:20px;">
-                <?php __('Hello'); ?> <?php echo $appAuth->getUsername(); ?>,
+                <?php echo __('Hello'); ?> <?php echo $appAuth->getUsername(); ?>,
             </td>
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-            	<?php __('Thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'))]); ?>
+            	<?php echo __('Thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'))]); ?>
             </td>
         </tr>
     </tbody>
