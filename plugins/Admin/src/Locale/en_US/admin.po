@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 15:05+0200\n"
-"PO-Revision-Date: 2018-06-12 15:08+0200\n"
+"POT-Creation-Date: 2018-06-12 16:42+0200\n"
+"PO-Revision-Date: 2018-06-12 16:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -17,6 +17,33 @@ msgstr ""
 
 msgid "Errors_while_saving!"
 msgstr "Error occurred while saving your data!"
+
+msgid "created"
+msgstr "created"
+
+msgid "changed"
+msgstr "changed"
+
+msgid "Add_manufacturer"
+msgstr "Add manufacturer"
+
+msgid "Edit_manufacturer"
+msgstr "Edit manufacturer"
+
+msgid "Manufacturer_{0}_was"
+msgstr "Manufacturer was {0}."
+
+msgid "Edit_settings"
+msgstr "Edit settings"
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr "The ettings of manufacturer {0} have been changed."
+
+msgid "Your_settings_have_been_changed."
+msgstr "Your settings have been changed."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
 
 msgid "Group_by_product"
 msgstr "Group by product"
@@ -62,6 +89,12 @@ msgstr "Show ordered products"
 
 msgid "records"
 msgstr "records"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
 
 msgid "{0,plural,=1{record} other{records}}"
 msgstr "{0,plural,=1{record} other{records}}"
@@ -183,17 +216,152 @@ msgstr "products"
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
 
-msgid "Add_manufacturer"
-msgstr "Add manufacturer"
+msgid "in_your_imprint"
+msgstr "in your imprint"
+
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr "the manufacturer's imprint"
 
 msgid "Name"
 msgstr "Name"
 
-msgid "Deposit"
-msgstr "Deposit"
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr "Will be shown spam-protected {0}."
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr "Will be shown {0}."
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Example_given_abbreviation"
+msgstr "E. g."
+
+msgid "Website"
+msgstr "Website"
+
+msgid "To_your_settings"
+msgstr "Go to your settings"
+
+msgid "To_the_settings_of_manufacturer"
+msgstr "Go to manufacturer's settings page"
+
+msgid "To_manufacturer_profile"
+msgstr "Go to the manufacturer's profile"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Click_on_logo_to_change_it."
+msgstr "Click on logo to change it."
+
+msgid "Upload_new_logo_or_change_it"
+msgstr "Upload new logo or change it"
+
+msgid "Delete_logo?"
+msgstr "Delete logo?"
+
+msgid "Do_not_forget_to_press_save"
+msgstr "Don't forget to press save button"
+
+msgid "Short_description"
+msgstr "Short description"
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr ""
+"Will be shown on the manufacturer overview page. Can't be independently changed by the manufacturer."
+
+msgid "Long_description"
+msgstr "Long description"
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr "To save long description please press save and then edit the manufacturer."
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr "Will be shown on the manufacturer's profile page."
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "How do I use the editor?"
+
+msgid "Bank_account_data"
+msgstr "Bank account data"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr "is kept private and is only used to transfer money to your bank account."
+
+msgid "Bank"
+msgstr "Ban"
 
 msgid "IBAN"
 msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "Company_data"
+msgstr "Company data"
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+"for your imprint and your invoices. The imprint can be found on your profile in the bottom right "
+"corner."
+
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Street"
+msgstr "Street"
+
+msgid "Additional_address_information"
+msgstr "Additional information"
+
+msgid "Zip"
+msgstr "Zip"
+
+msgid "City"
+msgstr "City"
+
+msgid "VAT_number"
+msgstr "VAT number"
+
+msgid "if_it_is_available"
+msgstr "if available"
+
+msgid "Commercial_register_number"
+msgstr "Comercial register number"
+
+msgid "Company_court"
+msgstr "Company court"
+
+msgid "Supervisory_authority"
+msgstr "Supervisory authority"
+
+msgid "e. g. chamber_of_agriculture"
+msgstr "e. g. chamber of agriculture"
+
+msgid "Chamber"
+msgstr "Chamber"
+
+msgid "Additional_text_for_invoice"
+msgstr "Additional text for invoice"
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr "Will be printed on the end of your invoice's overview page."
+
+msgid "Example_for_additional_invoice_text"
+msgstr " "
+
+msgid "Deposit"
+msgstr "Deposit"
 
 msgid "Active"
 msgstr "Active"
@@ -315,9 +483,6 @@ msgstr "Please chose the member you want to place the shop order for in the drop
 msgid "Group_by_member"
 msgstr "Group by member"
 
-msgid "Email"
-msgstr "E-mail"
-
 msgid "Order_count"
 msgstr "Order count"
 
@@ -374,6 +539,9 @@ msgstr "Show category"
 
 msgid "Show_order"
 msgstr "Show order"
+
+#~ msgid "Email_address"
+#~ msgstr "E-mail"
 
 #, fuzzy
 #~ msgid "Cancel_product?"

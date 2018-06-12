@@ -188,10 +188,10 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $payment = $this->TimebasedCurrencyPayment->save($payment);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'timebased_currency_payment_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'timebased_currency_payment_changed';
             }
             

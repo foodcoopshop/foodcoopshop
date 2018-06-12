@@ -72,7 +72,7 @@ class ManufacturersController extends AdminAppController
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Hersteller erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_manufacturer'));
         $this->_processForm($manufacturer, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -103,7 +103,7 @@ class ManufacturersController extends AdminAppController
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Hersteller bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_manufacturer'));
         $this->_processForm($manufacturer, true);
     }
 
@@ -148,11 +148,11 @@ class ManufacturersController extends AdminAppController
 
             if (!$isEditMode) {
                 $customer = [];
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'manufacturer_added';
             } else {
                 $customer = $this->Manufacturer->getCustomerRecord($unchangedManufacturerAddress->email);
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'manufacturer_changed';
             }
 
@@ -179,7 +179,7 @@ class ManufacturersController extends AdminAppController
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $message = 'Der Hersteller <b>' . $manufacturer->name . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'Manufacturer_{0}_was', ['<b>' . $manufacturer->name . '</b>']) . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
@@ -480,7 +480,7 @@ class ManufacturersController extends AdminAppController
     {
         $this->editOptions($this->AppAuth->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
-        $this->set('title_for_layout', 'Einstellungen bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_settings'));
         if (empty($this->getRequest()->getData())) {
             $this->render('editOptions');
         }
@@ -501,7 +501,7 @@ class ManufacturersController extends AdminAppController
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', $manufacturer->name . ': Einstellungen bearbeiten');
+        $this->set('title_for_layout', $manufacturer->name . ': ' . __d('admin', 'Edit_settings'));
 
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
@@ -652,12 +652,11 @@ class ManufacturersController extends AdminAppController
                 $this->renewAuthSession();
             }
 
-            $message = 'Die Einstellungen des Herstellers <b>' . $manufacturer->name . '</b>';
+            $message = __d('admin', 'The_settings_of_manufacturer_{0}_have_been_changed.', ['<b>' . $manufacturer->name . '</b>']);
             if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
-                $message = 'Deine Einstellungen';
+                $message = __d('admin', 'Your_settings_have_been_changed.');
                 $this->renewAuthSession();
             }
-            $message .= ' wurden erfolgreich gespeichert.';
 
             $this->Flash->success($message);
 
@@ -675,7 +674,7 @@ class ManufacturersController extends AdminAppController
         $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
-            die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
         
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -730,7 +729,7 @@ class ManufacturersController extends AdminAppController
         ]);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
-            die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
         $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN,

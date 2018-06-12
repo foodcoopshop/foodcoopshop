@@ -90,10 +90,10 @@ class AttributesController extends AdminAppController
             $attribute = $this->Attribute->save($attribute);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'attribute_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'attribute_changed';
             }
 

@@ -91,10 +91,10 @@ class TaxesController extends AdminAppController
             $tax = $this->Tax->save($tax);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'tax_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'tax_changed';
             }
 

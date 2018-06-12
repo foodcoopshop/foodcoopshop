@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 15:05+0200\n"
+"POT-Creation-Date: 2018-06-12 16:42+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,33 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Errors_while_saving!"
+msgstr ""
+
+msgid "created"
+msgstr ""
+
+msgid "changed"
+msgstr ""
+
+msgid "Add_manufacturer"
+msgstr ""
+
+msgid "Edit_manufacturer"
+msgstr ""
+
+msgid "Manufacturer_{0}_was"
+msgstr ""
+
+msgid "Edit_settings"
+msgstr ""
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr ""
+
+msgid "Your_settings_have_been_changed."
+msgstr ""
+
+msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
 msgid "Group_by_product"
@@ -60,6 +87,12 @@ msgid "Show_ordered_product"
 msgstr ""
 
 msgid "records"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
 msgstr ""
 
 msgid "{0,plural,=1{record} other{records}}"
@@ -182,16 +215,148 @@ msgstr ""
 msgid "docs_route_manufacturers"
 msgstr ""
 
-msgid "Add_manufacturer"
+msgid "in_your_imprint"
+msgstr ""
+
+msgid "in_the_imprint_of_the_manufacturer"
 msgstr ""
 
 msgid "Name"
 msgstr ""
 
-msgid "Deposit"
+msgid "Email"
+msgstr ""
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Example_given_abbreviation"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "To_your_settings"
+msgstr ""
+
+msgid "To_the_settings_of_manufacturer"
+msgstr ""
+
+msgid "To_manufacturer_profile"
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "Click_on_logo_to_change_it."
+msgstr ""
+
+msgid "Upload_new_logo_or_change_it"
+msgstr ""
+
+msgid "Delete_logo?"
+msgstr ""
+
+msgid "Do_not_forget_to_press_save"
+msgstr ""
+
+msgid "Short_description"
+msgstr ""
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr ""
+
+msgid "Long_description"
+msgstr ""
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr ""
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr ""
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr ""
+
+msgid "Bank_account_data"
+msgstr ""
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr ""
+
+msgid "Bank"
 msgstr ""
 
 msgid "IBAN"
+msgstr ""
+
+msgid "BIC"
+msgstr ""
+
+msgid "Company_data"
+msgstr ""
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Additional_address_information"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "VAT_number"
+msgstr ""
+
+msgid "if_it_is_available"
+msgstr ""
+
+msgid "Commercial_register_number"
+msgstr ""
+
+msgid "Company_court"
+msgstr ""
+
+msgid "Supervisory_authority"
+msgstr ""
+
+msgid "e. g. chamber_of_agriculture"
+msgstr ""
+
+msgid "Chamber"
+msgstr ""
+
+msgid "Additional_text_for_invoice"
+msgstr ""
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr ""
+
+msgid "Example_for_additional_invoice_text"
+msgstr ""
+
+msgid "Deposit"
 msgstr ""
 
 msgid "Active"
@@ -312,9 +477,6 @@ msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
 msgstr ""
 
 msgid "Group_by_member"
-msgstr ""
-
-msgid "Email"
 msgstr ""
 
 msgid "Order_count"

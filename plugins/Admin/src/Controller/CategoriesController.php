@@ -101,10 +101,10 @@ class CategoriesController extends AdminAppController
             $category = $this->Category->save($category);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'category_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'category_changed';
             }
 

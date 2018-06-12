@@ -129,10 +129,10 @@ class PagesController extends AdminAppController
             $page = $this->Page->save($page);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'page_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'page_changed';
             }
 

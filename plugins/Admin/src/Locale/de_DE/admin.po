@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 15:05+0200\n"
-"PO-Revision-Date: 2018-06-12 15:03+0200\n"
+"POT-Creation-Date: 2018-06-12 16:42+0200\n"
+"PO-Revision-Date: 2018-06-12 16:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -17,6 +17,33 @@ msgstr ""
 
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "created"
+msgstr "erstellt"
+
+msgid "changed"
+msgstr "geändert"
+
+msgid "Add_manufacturer"
+msgstr "Neuen Hersteller erstellen"
+
+msgid "Edit_manufacturer"
+msgstr "Hersteller bearbeiten"
+
+msgid "Manufacturer_{0}_was"
+msgstr "Hersteller {0} wurde"
+
+msgid "Edit_settings"
+msgstr "Einstellungen berbeiten"
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
+
+msgid "Your_settings_have_been_changed."
+msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
@@ -62,6 +89,12 @@ msgstr "Bestelltes Produkt anzeigen"
 
 msgid "records"
 msgstr "Datensätze"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
 
 msgid "{0,plural,=1{record} other{records}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
@@ -187,17 +220,158 @@ msgstr "produkte"
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
 
-msgid "Add_manufacturer"
-msgstr "Neuen Hersteller erstellen"
+msgid "in_your_imprint"
+msgstr "in deinem Impressum"
+
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr "im Impressum des Herstellers"
 
 msgid "Name"
 msgstr "Name"
 
-msgid "Deposit"
-msgstr "Pfand"
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr "Wird {0} spamgeschützt angezeigt."
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr "Wird {0} angezeigt."
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Example_given_abbreviation"
+msgstr "Z. B."
+
+msgid "Website"
+msgstr "Homepage"
+
+msgid "To_your_settings"
+msgstr "Hier geht's zu deinen Einstellungen"
+
+msgid "To_the_settings_of_manufacturer"
+msgstr "Hier geht's zu den Hersteller-Einstellungen"
+
+msgid "To_manufacturer_profile"
+msgstr "Hier geht's zum Hersteller-Profil"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Click_on_logo_to_change_it."
+msgstr "Zum Ändern auf das Logo klicken."
+
+msgid "Upload_new_logo_or_change_it"
+msgstr "Neues Logo hochladen bzw. austauschen"
+
+msgid "Delete_logo?"
+msgstr "Logo löschen?"
+
+msgid "Do_not_forget_to_press_save"
+msgstr "Speicher nicht vergesen"
+
+msgid "Short_description"
+msgstr "Kurze Beschreibung"
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr ""
+"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst "
+"nicht verändert werden."
+
+msgid "Long_description"
+msgstr "Lange Beschreibung"
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr ""
+"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und "
+"dann auf \"bearbeiten\" klicken."
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr "Wird auf der Hersteller-Seite angezeigt."
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "Wie verwende ich den Editor?"
+
+msgid "Bank_account_data"
+msgstr "Bankdaten"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr ""
+"werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse "
+"verwendet."
+
+msgid "Bank"
+msgstr "Bank"
 
 msgid "IBAN"
 msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "Company_data"
+msgstr "Firmendaten"
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem "
+"Hersteller-Profil ganz unten rechts."
+
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Street"
+msgstr "Straße"
+
+#, fuzzy
+msgid "Additional_address_information"
+msgstr "Adresszusatz"
+
+msgid "Zip"
+msgstr "PLZ"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "VAT_number"
+msgstr "UID-Nummer"
+
+msgid "if_it_is_available"
+msgstr "sofern vorhanden"
+
+msgid "Commercial_register_number"
+msgstr "Firmenbuchnummer"
+
+msgid "Company_court"
+msgstr "Firmengericht"
+
+msgid "Supervisory_authority"
+msgstr "Aufsichtsbehörde"
+
+msgid "e. g. chamber_of_agriculture"
+msgstr "z. B. Landwirtschaftskammer"
+
+msgid "Chamber"
+msgstr "Kammer"
+
+msgid "Additional_text_for_invoice"
+msgstr "Zusatztext für Rechnung"
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr "Wird am Ende der Übersichtsseite deiner Rechnung eingefügt."
+
+msgid "Example_for_additional_invoice_text"
+msgstr "z. B.: \"Durchschnittsteuersatz 10% zzgl. Zusatzsteuer 10%\""
+
+msgid "Deposit"
+msgstr "Pfand"
 
 msgid "Active"
 msgstr "Aktiv"
@@ -320,9 +494,6 @@ msgstr ""
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"
 
-msgid "Email"
-msgstr "E-Mail"
-
 msgid "Order_count"
 msgstr "Anzahl Bestellungen"
 
@@ -379,6 +550,9 @@ msgstr "Kategorie anzeigen"
 
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
+
+#~ msgid "Email_address"
+#~ msgstr "E-Mail-Adresse"
 
 #~ msgid "Cancel_product?"
 #~ msgstr "Produkt stornieren?"
