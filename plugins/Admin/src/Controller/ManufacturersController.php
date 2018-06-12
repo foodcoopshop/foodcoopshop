@@ -179,7 +179,7 @@ class ManufacturersController extends AdminAppController
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $message = __d('admin', 'Manufacturer_{0}_was', ['<b>' . $manufacturer->name . '</b>']) . $messageSuffix . '.';
+            $message = __d('admin', 'Manufacturer_{0}_was', ['<b>' . $manufacturer->name . '</b>']) . ' ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
