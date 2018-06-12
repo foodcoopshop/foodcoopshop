@@ -97,7 +97,7 @@ foreach ($customers as $customer) {
             $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
         }
     
-        echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
+        echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
             'title' => 'Zu allen Bestellungen von ' . $this->Html->getNameRespectingIsDeleted($customer),
             'escape' => false
         ]) . '</span>';
@@ -215,7 +215,7 @@ foreach ($customers as $customer) {
     }
 
     echo '<td>';
-    echo $customer->date_add->i18nFormat(Configure::read('DateFormat.de.DateShort'));
+    echo $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
     echo '</td>';
 
     echo '<td>';

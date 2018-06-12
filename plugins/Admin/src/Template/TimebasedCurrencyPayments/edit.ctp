@@ -56,7 +56,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
     
     echo '<div class="input">';
         echo '<label for="TimebasedCurrencyPayments.working_day">Arbeitstag</label>';
-        echo $this->element('dateFields', ['dateFrom' => ($payment->working_day ? $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : null), 'nameFrom' => 'TimebasedCurrencyPayments[working_day]', 'showDateTo' => false]);
+        echo $this->element('dateFields', ['dateFrom' => ($payment->working_day ? $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : null), 'nameFrom' => 'TimebasedCurrencyPayments[working_day]', 'showDateTo' => false]);
     echo '</div>';
     echo $this->Form->control('TimebasedCurrencyPayments.hours', [
         'label' => 'Stunden <span class="after small">Das Mitglied erhält bei Änderung der Zeit automatisch eine E-Mail (inklusive Kommentar).</span>',

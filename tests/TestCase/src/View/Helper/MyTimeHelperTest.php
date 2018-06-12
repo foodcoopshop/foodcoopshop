@@ -24,6 +24,18 @@ class MyTimeHelperTest extends AppCakeTestCase
     {
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
+    
+    public function testFormatToDbFormatDateDe()
+    {
+        $result = $this->MyTimeHelper->formatToDbFormatDate('12.06.2018');
+        $this->assertEquals($result, '2018-06-12');
+    }
+    
+    public function testFormatToDbFormatDateEn()
+    {
+        $result = $this->MyTimeHelper->formatToDbFormatDate('06/12/2018');
+        $this->assertEquals($result, '2018-06-12');
+    }
 
     private function prepareWednesdayFridayConfig()
     {

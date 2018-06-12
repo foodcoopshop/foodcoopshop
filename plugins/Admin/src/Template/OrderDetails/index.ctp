@@ -297,7 +297,7 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '') {
         if ($groupBy == '') {
             echo '<td class="date-short2">';
-            echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort2'));
+            echo $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
         } else {
             echo '<td>';
         }

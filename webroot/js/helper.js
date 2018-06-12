@@ -592,7 +592,7 @@ foodcoopshop.Helper = {
                     foodcoopshop.LocalizedJs.helper.SaturdayShort
                 ],
                 weekHeader: foodcoopshop.LocalizedJs.datepicker.weekHeader,
-                dateFormat: 'dd.mm.yy',
+                dateFormat: foodcoopshop.LocalizedJs.datepicker.dateFormat,
                 firstDay: 1,
                 isRTL: false,
                 showMonthAfterYear: false,

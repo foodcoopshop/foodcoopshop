@@ -35,13 +35,13 @@ class ActionLogsController extends AdminAppController
     {
         $conditions = [];
 
-        $dateFrom = date('d.m.Y', strtotime('-6 day'));
+        $dateFrom = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('-6 day'));
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = date('d.m.Y');
+        $dateTo = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }

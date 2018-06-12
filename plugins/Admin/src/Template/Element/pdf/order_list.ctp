@@ -34,7 +34,7 @@ $html = '<h2>' . $title;
  */
 if (! $bulkOrdersAllowed && Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
     $deliveryDate = strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day');
-    $html .= '<br />Liefertermin: ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date('d.m.Y', $deliveryDate);
+    $html .= '<br />Liefertermin: ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $deliveryDate);
     $html .= Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') . '</h2>';
 }
 $pdf->writeHTML($html, true, false, true, false, '');

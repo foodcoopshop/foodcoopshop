@@ -32,7 +32,7 @@ use Cake\Core\Configure;
                 <li>Preis: <b><?php echo $this->MyHtml->formatAsDecimal($orderDetail->total_price_tax_incl); ?> €</b></li>
                 <li>Anzahl: <b><?php echo $orderDetail->product_amount; ?></b></li>
                 <li>Hersteller: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
-                <li>Bestelldatum: <b><?php echo $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b></li>
+                <li>Bestelldatum: <b><?php echo $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
             </ul>
 
             <p>

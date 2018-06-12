@@ -570,12 +570,6 @@ class MyHtmlHelper extends HtmlHelper
         return $url;
     }
 
-    // gehört in time helper
-    public function convertToGermanDate($date)
-    {
-        return date('d.m.Y', strtotime(str_replace('/', '-', $date)));
-    }
-
     public function getApprovalStates()
     {
         return [

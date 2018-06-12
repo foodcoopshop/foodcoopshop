@@ -448,7 +448,7 @@ class ManufacturersController extends AdminAppController
                     $productPdfFile,
                     $customerPdfFile
                 ])
-                ->setSubject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
+                ->setSubject('Bestellungen für den ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                 ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'appAuth' => $this->AppAuth,
@@ -673,8 +673,8 @@ class ManufacturersController extends AdminAppController
         
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
-        $this->set('from', date('d.m.Y', strtotime(str_replace('/', '-', $from))));
-        $this->set('to', date('d.m.Y', strtotime(str_replace('/', '-', $to))));
+        $this->set('from', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $from))));
+        $this->set('to', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $to))));
 
         // only needed for order lists: format is english because it is used for filename => sorting!
         $this->set('deliveryDay', date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')));

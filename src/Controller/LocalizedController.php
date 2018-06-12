@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 class LocalizedController extends Controller
 {
@@ -30,6 +31,7 @@ class LocalizedController extends Controller
                 'next' => __('datepicker_next'),
                 'today' => __('datepicker_today'),
                 'weekHeader' => __('WeekHeader'),
+                'dateFormat' => Configure::read('DateFormat.'.I18n::getLocale().'.DateForDatepicker')
             ],
             'helper' => [
                 'defaultLocale' => Configure::read('App.defaultLocale'),

@@ -76,7 +76,7 @@ foreach ($blogPosts as $blogPost) {
         );
 
         echo '<div class="additional-info">';
-            echo __('Modified_on') . ' ' .$blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo __('Modified_on') . ' ' .$blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
     if (!empty($blogPost->manufacturer->id_manufacturer)) {
         echo '<br />';
         if ($blogPost->manufacturer->active) {

@@ -4,6 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper\TimeHelper;
+use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,6 +22,11 @@ use Cake\View\Helper\TimeHelper;
 class MyTimeHelper extends TimeHelper
 {
     
+    public function getI18Format($formatString)
+    {
+        return Configure::read('DateFormat.'. I18n::getLocale() . '.' . $formatString);
+    }
+    
     public function getLastDayOfGivenMonth($monthAndYear)
     {
         return date('t', strtotime($monthAndYear));
@@ -33,7 +39,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getCurrentDateForDatabase()
     {
-        return date('Y-m-d H:i:s');
+        return date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
     }
 
     /**
@@ -150,8 +156,8 @@ class MyTimeHelper extends TimeHelper
             $date = strtotime('+7 day', $date);
         }
 
-        $date = date('d.m.Y', $date);
-
+        $date = date($this->getI18Format('DateShortAlt'), $date);
+        
         return $date;
     }
 
@@ -190,8 +196,8 @@ class MyTimeHelper extends TimeHelper
         if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
             $dateDiff = Configure::read('app.deliveryDayDelta') * -1;
         }
-
-        $date = date('d.m.Y', strtotime($dateDiff . ' day ', $day));
+        
+        $date = date($this->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
 
         return $date;
     }
@@ -261,29 +267,29 @@ class MyTimeHelper extends TimeHelper
         for ($i=1; $i<=$n; $i++) {
             $deltaString = '-' . $i . ' days';
             $weekDay = date('w', strtotime($deltaString, $startDate));
-            $days[date('Y-m-d H:i:s', strtotime($deltaString, $startDate))] = $this->getWeekdayName($weekDay) . ', ' . date('d.m.Y', strtotime($deltaString, $startDate));
+            $days[date(Configure::read('DateFormat.DatabaseWithTimeAlt'), strtotime($deltaString, $startDate))] = $this->getWeekdayName($weekDay) . ', ' . date($this->getI18Format('DateShortAlt'), strtotime($deltaString, $startDate));
         }
         return $days;
     }
 
     public function getFirstDayOfThisYear()
     {
-        return date('d.m.Y', strtotime('first day of january'));
+        return date($this->getI18Format('DateShortAlt'), strtotime('first day of january'));
     }
 
     public function getLastDayOfThisYear()
     {
-        return date('d.m.Y', strtotime('last day of december'));
+        return date($this->getI18Format('DateShortAlt'), strtotime('last day of december'));
     }
 
     public function getFirstDayOfLastMonth()
     {
-        return date('d.m.Y', strtotime('first day of previous month'));
+        return date($this->getI18Format('DateShortAlt'), strtotime('first day of previous month'));
     }
 
     public function getLastDayOfLastMonth()
     {
-        return date('d.m.Y', strtotime('last day of previous month'));
+        return date($this->getI18Format('DateShortAlt'), strtotime('last day of previous month'));
     }
 
     public function getLastMonthNameAndYear()
@@ -314,8 +320,7 @@ class MyTimeHelper extends TimeHelper
     }
 
     /**
-     * formats a timestamp to a short german date (e.g. 22.04.2007)
-     *
+     * formats a timestamp to a short date
      * @param integer $timestamp
      * @return Date
      */
@@ -325,107 +330,18 @@ class MyTimeHelper extends TimeHelper
         if ($dbString == '') {
             return '';
         }
-        return date("d.m.Y", $timestamp);
+        return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
 
      /**
-      * @param date $dbString must be in format dd.mm.YYYY
+      * @param date $dateString
       * @return date in format YYYY-mm-dd
       */
-    public function formatToDbFormatDate($dbString)
+    public function formatToDbFormatDate($dateString)
     {
-        $dbString = str_replace('.', '-', $dbString);
-        // BEWARE: strtotime() accepts/returns negative values since PHP5.1 in 64 bit versions
-        $timestamp = strtotime($dbString);
-        return date("Y-m-d", $timestamp);
+        $timestamp = strtotime($dateString);
+        $result = date(Configure::read('DateFormat.DatabaseAlt'), $timestamp);
+        return $result;
     }
 
-    public function formatForSavingAsDate($date)
-    {
-        $dbString = $this->formatToDbFormatDate($date);
-        // since MySQL 5.7 there are no negative or zero-dates accepted anymore
-        if ($dbString == '1970-01-01'
-            || strpos($dbString, '-') === 0
-        ) {
-            $dbString = null;
-        }
-        return $dbString;
-    }
-
-     /**
-     * formats a timestamp to a long date (e.g. 1. April 2007)
-     *
-     * @param integer $timestamp
-     * @return Date
-     */
-    public function formatToDateLong($dbString)
-    {
-        $timestamp = strtotime($dbString);
-        return strftime("%e. %B %Y", $timestamp);
-    }
-
-     /**
-   * returns the difference of two dates in seconds
-   * http://stackoverflow.com/questions/676824/how-to-calculate-the-difference-between-two-dates-using-php
-   * läuft auch auf php4
-   * @param date $date1 eg. date from db
-   * @param date $date2 eg. date from db
-   * @return int $seconds
-   */
-    public function datediff($date1, $date2)
-    {
-        $diff = abs(strtotime($date2) - strtotime($date1));
-        return $diff;
-    }
-
-    /**
-   *  formats a timestamp to a long date (e.g. 15.04.07 15:04)
-   *  @param integer $timestamp
-   *  @return string
-  */
-    public function formatToDateNTimeShort($dbString)
-    {
-        $timestamp = strtotime($dbString);
-        return strftime('%d.%m.%y %H:%M', $timestamp);
-    }
-
-  /**
-   *  formats a timestamp to a long date (e.g. 15.04.2007 15:04)
-   *  @param integer $timestamp
-   *  @return string
-  */
-    public function formatToDateNTimeLong($dbString)
-    {
-        $timestamp = strtotime($dbString);
-        return strftime('%d.%m.%Y %H:%M', $timestamp);
-    }
-
-  /**
-   *  formats a timestamp to a long date (e.g. 15.04.2007 15:04:22)
-   *  @param integer $timestamp
-   *  @return string
-  */
-    public function formatToDateNTimeLongWithSecs($dbString)
-    {
-        $timestamp = strtotime($dbString);
-        return strftime('%d.%m.%Y %H:%M:%S', $timestamp);
-    }
-
-   /**
-   *
-   * @param $timestampOrDateNTime must be in format dd.mm.YYYY hh:mm:ss or timestamp
-   * @return datetime in format YYYY-mm-dd hh:mm:ss
-   */
-    public function formatToDbFormatDateNTime($timestampOrDateNTime)
-    {
-
-        $timestamp = $timestampOrDateNTime;
-
-        if (preg_match('/ /', $timestampOrDateNTime)) { // parameter war kein timestamp
-            $dbString = str_replace('.', '-', $timestampOrDateNTime);
-            $timestamp = strtotime($dbString);
-        }
-
-        return date("Y-m-d H:i:s", $timestamp);
-    }
 }

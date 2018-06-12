@@ -177,7 +177,7 @@ use Cake\Core\Configure;
 
         echo '<td class="date-short2">';
         if (! $groupByCustomer) {
-            echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort2'));
+            echo $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
         } else {
             echo $order->orders_count;
         }

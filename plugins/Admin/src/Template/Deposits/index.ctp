@@ -65,7 +65,7 @@ if ($appAuth->isSuperadmin()) {
     echo '<div class="sc"></div>';
 
     if (empty($deposits)) {
-        echo '<h2 class="info">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
+        echo '<h2 class="info">Seit dem '.date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
     } else {
         echo '<table class="list no-clone-last-row">';
 

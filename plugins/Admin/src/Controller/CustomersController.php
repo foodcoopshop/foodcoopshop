@@ -568,7 +568,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = date('d.m.Y');
+        $dateTo = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }

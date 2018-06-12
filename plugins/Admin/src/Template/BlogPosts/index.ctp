@@ -144,7 +144,7 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td>';
-    echo $blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+    echo $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td align="center">';

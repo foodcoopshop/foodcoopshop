@@ -68,7 +68,7 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td>';
-        echo $payment['dateRaw']->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+        echo $payment['dateRaw']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
         echo '</td>';
 
         echo '<td>';

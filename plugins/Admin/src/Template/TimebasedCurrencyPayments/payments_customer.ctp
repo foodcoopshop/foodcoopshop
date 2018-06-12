@@ -130,12 +130,12 @@ echo '<table class="list">';
             echo '</td>';
             
             echo '<td>';
-                echo $payment['dateRaw']->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+                echo $payment['dateRaw']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
             echo '</td>';
             
             echo '<td>';
                 if (!empty($payment['workingDay'])) {
-                    echo $payment['workingDay']->i18nFormat(Configure::read('DateFormat.de.DateLong2'));
+                    echo $payment['workingDay']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                 }
             echo '</td>';
             

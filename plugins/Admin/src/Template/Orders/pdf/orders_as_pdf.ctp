@@ -25,7 +25,7 @@ $j = 1;
 foreach ($orders as $order) {
     $pdf->Ln(5);
     $pdf->writeHTML('<h2>' . $order->customer->name . '</h2>', true, false, true, false, '');
-    $pdf->writeHTML('<h3>Bestellung vom ' . $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong')) . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>Bestellung vom ' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')) . '</h3>', true, false, true, false, '');
 
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && $order->comment != '') {
         $pdf->SetRightMargin(16);

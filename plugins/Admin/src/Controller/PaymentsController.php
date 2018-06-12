@@ -569,7 +569,7 @@ class PaymentsController extends AdminAppController
                 $payments[] = [
                     'dateRaw' => $payment->date_add,
                     'date' => $payment->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $payment->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                    'year' => $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
                     'amount' => $payment->amount,
                     'deposit' => 0,
                     'type' => $payment->type,
@@ -586,11 +586,11 @@ class PaymentsController extends AdminAppController
                 $payments[] = [
                     'dateRaw' => $order->date_add,
                     'date' => $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $order->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                    'year' => $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
                     'amount' => $order->total_paid * - 1,
                     'deposit' => strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order->total_deposit * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
+                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
                         'title' => 'Bestellung anzeigen'
                     ]),
                     'payment_id' => null,

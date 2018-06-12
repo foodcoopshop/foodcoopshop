@@ -49,7 +49,7 @@ foreach ($payments as $payment) {
         echo '</td>';
 
         echo '<td>';
-            echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong'));
+            echo $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong'));
         echo '</td>';
 
         echo '<td>';

@@ -79,7 +79,7 @@ foreach ($actionLogs as $actionLog) {
     echo '</td>';
 
     echo '<td>';
-    echo $actionLog->date->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+    echo $actionLog->date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td>';

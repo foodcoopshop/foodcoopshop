@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Die Anzahl des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
+                Die Anzahl des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
                 bestellt.
             </p>
 

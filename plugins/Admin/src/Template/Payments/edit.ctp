@@ -61,8 +61,8 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo '<p><label>Mitglied</label>' . $payment->customer->name.'</p>';
 echo '<p><label>Betrag</label>' . $this->Html->formatAsEuro($payment->amount).'</p>';
-echo '<p><label>Datum der Aufladung</label>' . $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) .'</p>';
-echo '<p><label>Datum der letzten Änderung</label>' . $payment->date_changed->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')).'</p>';
+echo '<p><label>Datum der Aufladung</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
+echo '<p><label>Datum der letzten Änderung</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
 echo '<p><label>Letzter Bearbeiter</label>' . (empty($payment->changed_by_customer) ? 'Diese Zahlung wurde noch nicht bearbeitet' : $payment->changed_by_customer->name).'</p>';
 echo $this->Form->control('Payments.approval', [
     'type' => 'select',

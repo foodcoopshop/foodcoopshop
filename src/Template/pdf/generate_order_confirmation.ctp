@@ -28,7 +28,7 @@ if (!empty($manufacturers)) {
 
         $pdf->infoTextForFooter = 'Bestellübersicht ' . $details['Manufacturer']->name;
 
-        $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong')).'</h3>', true, false, true, false, '');
+        $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
         $pdf->Ln(8);
 
         $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');

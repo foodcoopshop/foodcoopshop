@@ -113,7 +113,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td>';
     if ($attribute->modified != '') {
-        echo $attribute->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+        echo $attribute->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         ;
     }
     echo '</td>';
