@@ -25,7 +25,7 @@ $this->element('addScript', [
     <h1>Passwort ändern</h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php echo $this->element('printIcon'); ?>
     </div>
 </div>

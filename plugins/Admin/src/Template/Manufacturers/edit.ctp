@@ -36,10 +36,10 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
-            class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
     </div>

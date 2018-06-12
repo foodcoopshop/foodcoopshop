@@ -25,8 +25,8 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
             <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
