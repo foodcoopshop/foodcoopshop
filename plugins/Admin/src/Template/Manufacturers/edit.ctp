@@ -67,7 +67,7 @@ if ($appAuth->isManufacturer()) {
 
     echo $this->Form->hidden('referer', ['value' => $referer]);
 
-    echo '<h2>Allgemein</h2>';
+    echo '<h2>'.__d('admin', 'General').'</h2>';
 
     $imprintString = $appAuth->isManufacturer() ? __d('admin', 'in_your_imprint') : __d('admin', 'in_the_imprint_of_the_manufacturer');
 

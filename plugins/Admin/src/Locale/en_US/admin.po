@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 16:42+0200\n"
-"PO-Revision-Date: 2018-06-12 16:45+0200\n"
+"POT-Creation-Date: 2018-06-12 16:48+0200\n"
+"PO-Revision-Date: 2018-06-12 16:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -215,6 +215,9 @@ msgstr "products"
 
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
+
+msgid "General"
+msgstr "General"
 
 msgid "in_your_imprint"
 msgstr "in your imprint"
