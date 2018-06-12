@@ -3,7 +3,9 @@
 source $(dirname $0)/locales.sh
 
 #get and merge translations for main app
-bin/cake i18n extract --ignore-model-validation --output src\\Locale --paths src,config --overwrite --extract-core yes --merge no --no-location --exclude plugins
+#to extract core strings change --extract-core to "yes"
+
+bin/cake i18n extract --ignore-model-validation --output src\\Locale --paths src,config --overwrite --extract-core no --merge no --no-location --exclude plugins
 for locale in "${LOCALES[@]}"
 do
     msgmerge src/Locale/$locale/cake.po src/Locale/cake.pot --output-file=src/Locale/$locale/cake.po --width=86

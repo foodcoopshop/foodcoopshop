@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:16+0200\n"
+"POT-Creation-Date: 2018-06-12 09:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -935,7 +935,34 @@ msgstr ""
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
+msgid "please_click_on_this_link_to_generate_a_new_password"
+msgstr ""
+
+msgid "you_just_generated_a_new_password_which_is"
+msgstr ""
+
+msgid "You_can_sign_in_and_change_your_password_here"
+msgstr ""
+
+msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+msgstr ""
+
+msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
+msgstr ""
+
+msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr ""
+
 msgid "route_search"
+msgstr ""
+
+msgid "homepage"
+msgstr ""
+
+msgid "page_you_have_just_been_to"
+msgstr ""
+
+msgid "Click_here_to_open_the"
 msgstr ""
 
 msgid "This_email_was_created_automatcially."
@@ -1068,8 +1095,5 @@ msgid "route_information_about_right_of_withdrawal"
 msgstr ""
 
 msgid "route_product"
-msgstr ""
-
-msgid "View"
 msgstr ""
 

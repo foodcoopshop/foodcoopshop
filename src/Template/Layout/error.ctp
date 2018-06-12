@@ -25,7 +25,6 @@ use Cake\Core\Configure;
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     
     <?php echo $this->element('jsNamespace'); ?>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php echo $this->element('renderCss', ['configs' => ['error']]); ?>
     <?php
@@ -48,14 +47,14 @@ use Cake\Core\Configure;
                 echo $this->fetch('content');
 
                 $referer = '/';
-                $refererName = 'Startseite';
+                $refererName = __('homepage');
                 if (!empty($_SERVER['HTTP_REFERER'])) {
                     $referer = $_SERVER['HTTP_REFERER'];
-                    $refererName = 'Seite, auf der du gerade warst.';
+                    $refererName = __('page_you_have_just_been_to');
                 }
 
                 ?>
-                <br /><a class="btn btn-success" href="<?php echo $referer; ?>">Hier geht's zur <?php echo $refererName; ?></a>
+                <br /><a class="btn btn-success" href="<?php echo $referer; ?>"><?php echo __('Click_here_to_open_the') . ' ' . $refererName; ?>.</a>
                 <div class="sc"></div>
             </div>
         </div>

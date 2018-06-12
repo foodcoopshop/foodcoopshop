@@ -24,7 +24,7 @@ use Cake\Core\Configure;
             <td>
                 
                 <p>
-                    bitte klicke auf folgenden Link, um dein neues Passwort zu generieren:<br />
+                    <?php echo __('please_click_on_this_link_to_generate_a_new_password'); ?>:<br />
                 </p>
                 
                 <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?></a>
