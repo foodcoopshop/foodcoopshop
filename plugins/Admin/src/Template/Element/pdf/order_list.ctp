@@ -88,7 +88,7 @@ if ($saveParam == 'F') {
     $filename = explode(DS, $filename);
     $filename = end($filename);
     $filename = substr($filename, 11);
-    $filename = $this->request->getParam('pass')[1] . '-' . $this->request->getParam('pass')[2] . '-' . $filename;
+    $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
 }
 
 echo $pdf->Output($filename, $saveParam);

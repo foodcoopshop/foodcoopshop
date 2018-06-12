@@ -22,7 +22,7 @@ $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
 
-$pdf->SetTitle('Rechnung für den Bestell-Zeitraum ' . $from . ' - ' . $to);
+$pdf->SetTitle('Rechnung für den Bestell-Zeitraum ' . $dateFrom . ' - ' . $dateTo);
 
 $html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td width="200">';
@@ -239,7 +239,7 @@ if ($saveParam == 'F') {
     $filename = explode(DS, $filename);
     $filename = end($filename);
     $filename = substr($filename, 11);
-    $filename = $this->request->getParam('pass')[1] . '-' . $this->request->getParam('pass')[2] . '-' . $filename;
+    $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
 }
 
 echo $pdf->Output($filename, $saveParam);

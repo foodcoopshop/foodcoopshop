@@ -237,11 +237,11 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     echo 'Bestellliste prüfen<br />';
-    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
+    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
             'target' => '_blank'
         ]);
     echo ' / ';
-    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
+    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
         'target' => '_blank'
     ]);
     echo '</td>';
@@ -255,7 +255,7 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     echo '<td>';
-    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
+    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
         'target' => '_blank'
     ]);
     echo '</td>';
