@@ -137,11 +137,7 @@ return [
          */
         'termsOfUseLastUpdate' => '2016-11-28',
         
-        // no gettext available here to translate language names!
-        'implementedLocales' => [
-            'de_DE' => 'Deutsch',
-            'en_US' => 'English'
-        ],
+        'implementedLocales' => ['de_DE', 'en_US'],
         
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
