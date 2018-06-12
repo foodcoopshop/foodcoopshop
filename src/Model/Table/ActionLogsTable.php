@@ -74,13 +74,13 @@ class ActionLogsTable extends AppTable
     {
         $this->types = [
             'product_added' => [
-                'name' => __('Action_Log_Product_created'),
+                'name' => __('Action_Log_Product_added'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'product_attribute_added' => [
-                'name' => __('Action_Log_Product_attribute_created'),
+                'name' => __('Action_Log_Product_attribute_added'),
                 'access' => [
                     'manufacturer'
                 ]
@@ -211,255 +211,221 @@ class ActionLogsTable extends AppTable
                 'name' => __('Action_Log_Order_shop_order_placed')
             ],
             'order_detail_product_price_changed' => [
-                'name' => 'Bestelltes Produkt: Preis geändert',
+                'name' => __('Action_Log_Order_detail_product_price_changed'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'order_detail_product_quantity_changed' => [
-                'name' => 'Bestelltes Produkt: Gewicht geändert',
+                'name' => __('Action_Log_Order_detail_product_quantity_changed'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'order_detail_product_amount_changed' => [
-                'name' => 'Bestelltes Produkt: Anzahl geändert',
+                'name' => __('Action_Log_Order_detail_product_amount_changed'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'order_detail_cancelled' => [
-                'name' => 'Bestelltes Produkt: storniert',
+                'name' => __('Action_Log_Ordered_product_cancelled'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
     
             'payment_product_added' => [
-                'name' => 'Mitglied: Guthaben-Aufladung eingetragen'
+                'name' => __('Action_Log_Member_credit_upload_added')
             ],
             'payment_product_approval_ok' => [
-                'name' => 'Guthaben-Aufladung: bestätigt'
+                'name' => __('Action_Log_Credit_upload_approval_ok')
             ],
             'payment_product_approval_open' => [
-                'name' => 'Guthaben-Aufladung: Bestätigung offen'
+                'name' => __('Action_Log_Credit_upload_approval_open')
             ],
             'payment_product_approval_not_ok' => [
-                'name' => 'Guthaben-Aufladung: da stimmt was nicht...'
+                'name' => __('Action_Log_Credit_upload_approval_not_ok')
             ],
             'payment_payback_added' => [
-                'name' => 'Mitglied: Rückzahlung eingetragen'
+                'name' => __('Action_Log_Member_payback_added')
             ],
             'payment_payback_deleted' => [
-                'name' => 'Mitglied: Rückzahlung gelöscht'
+                'name' => __('Action_Log_Member_payback_deleted')
             ],
             'payment_product_deleted' => [
-                'name' => 'Mitglied: Guthaben gelöscht'
+                'name' => __('Action_Log_Member_credit_deleted')
             ],
             'payment_deposit_customer_added' => [
-                'name' => 'Mitglied: Pfand-Betrag eingetragen'
+                'name' => __('Action_Log_Member_deposit_added')
             ],
             'payment_deposit_manufacturer_added' => [
-                'name' => 'Hersteller: Pfand-Rücknahme eingetragen',
+                'name' => __('Action_Log_Manfufacturer_deposit_added'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'payment_deposit_customer_deleted' => [
-                'name' => 'Mitglied: Pfand-Betrag gelöscht'
+                'name' => __('Action_Log_Member_deposit_deleted')
             ],
             'payment_deposit_manufacturer_deleted' => [
-                'name' => 'Hersteller: Pfand-Rücknahme gelöscht',
+                'name' => __('Action_Log_Manufacturer_deposit_deleted'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'payment_member_fee_added' => [
-                'name' => 'Mitglied: Mitgliedsbeitrag eingetragen'
+                'name' => __('Action_Log_Member_member_fee_added')
             ],
             'payment_member_fee_deleted' => [
-                'name' => 'Mitglied: Mitgliedsbeitrag gelöscht'
-            ],
-            'payment_member_fee_flexible_added' => [
-                'name' => 'Mitglied: Flexibler Mitgliedsbeitrag eingetragen (Funktion nicht mehr vorhanden)'
-            ],
-            'payment_member_fee_flexible_deleted' => [
-                'name' => 'Mitglied: Flexibler Mitgliedsbeitrag gelöscht (Funktion nicht mehr vorhanden)'
+                'name' => __('Action_Log_Member_member_fee_deleted')
             ],
     
             'blog_post_added' => [
-                'name' => 'Blog-Artikel: erstellt'
+                'name' => __('Action_Log_Blog_post_added')
             ],
             'blog_post_changed' => [
-                'name' => 'Blog-Artikel: geändert',
+                'name' => __('Action_Log_Blog_post_changed'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'blog_post_deleted' => [
-                'name' => 'Blog-Artikel: gelöscht',
+                'name' => __('Action_Log_Blog_post_deleted'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
     
             'page_added' => [
-                'name' => 'Seite: erstellt'
+                'name' => __('Action_Log_Page_added')
             ],
             'page_changed' => [
-                'name' => 'Seite: geändert'
+                'name' => __('Action_Log_Page_changed')
             ],
             'page_deleted' => [
-                'name' => 'Seite: gelöscht'
+                'name' => __('Action_Log_Page_deleted')
             ],
     
             'category_added' => [
-                'name' => 'Kategorie: erstellt'
+                'name' => __('Action_Log_Category_added')
             ],
             'category_changed' => [
-                'name' => 'Kategorie: geändert'
+                'name' => __('Action_Log_Category_changed')
             ],
             'category_deleted' => [
-                'name' => 'Kategorie: gelöscht'
+                'name' => __('Action_Log_Category_deleted')
             ],
     
             'remote_foodcoop_added' => [
-                'name' => 'Remote-Foodcoop: erstellt'
+                'name' => __('Action_Log_Remote_food_coop_added')
             ],
             'remote_foodcoop_changed' => [
-                'name' => 'Remote-Foodcoop: geändert'
+                'name' => __('Action_Log_Remote_food_coop_changed')
             ],
             'remote_foodcoop_deleted' => [
-                'name' => 'Remote-Foodcoop: gelöscht'
+                'name' => __('Action_Log_Remote_food_coop_deleted')
             ],
     
             'slider_added' => [
-                'name' => 'Slideshow-Bild: erstellt'
+                'name' => __('Action_Log_Slider_added')
             ],
             'slider_changed' => [
-                'name' => 'Slideshow-Bild: geändert'
+                'name' => __('Action_Log_Slider_changed')
             ],
             'slider_deleted' => [
-                'name' => 'Slideshow-Bild: gelöscht'
+                'name' => __('Action_Log_Slider_deleted')
             ],
     
             'tax_added' => [
-                'name' => 'Steuersatz: erstellt'
+                'name' => __('Action_Log_Tax_rate_added')
             ],
             'tax_changed' => [
-                'name' => 'Steuersatz: geändert'
+                'name' => __('Action_Log_Tax_rate_changed')
             ],
             'tax_deleted' => [
-                'name' => 'Steuersatz: gelöscht'
+                'name' => __('Action_Log_Tax_rate_deleted')
             ],
     
             'customer_registered' => [
-                'name' => 'Mitglied: Mitgliedskonto erstellt'
+                'name' => __('Action_Log_Member_account_created')
             ],
             'customer_profile_changed' => [
-                'name' => 'Mitglied: Profil geändert'
+                'name' => __('Action_Log_Member_profile_changed')
             ],
             'customer_password_changed' => [
-                'name' => 'Mitglied: Passwort geändert'
+                'name' => __('Action_Log_Member_password_changed')
             ],
             'customer_order_finished' => [
-                'name' => 'Mitglied: Bestellung getätigt'
+                'name' => __('Action_Log_Member_order_placed')
             ],
             'customer_set_inactive' => [
-                'name' => 'Mitglied: deaktiviert'
+                'name' => __('Action_Log_Member_set_inactive')
             ],
             'customer_set_active' => [
-                'name' => 'Mitglied: aktiviert'
+                'name' => __('Action_Log_Member_set_active')
             ],
             'customer_comment_changed' => [
-                'name' => 'Mitglied: Kommentar geändert'
+                'name' => __('Action_Log_Member_comment_changed')
             ],
             'customer_group_changed' => [
-                'name' => 'Mitglied: Gruppe geändert'
+                'name' => __('Action_Log_Member_group_changed')
             ],
             'customer_deleted' => [
-                'name' => 'Mitglied: gelöscht'
-            ],
-            
-            'manufacturer_description_changed' => [
-                'name' => 'Hersteller: Beschreibung geändert',
-                'access' => [
-                    'manufacturer'
-                ]
+                'name' => __('Action_Log_Member_deleted')
             ],
             'manufacturer_options_changed' => [
-                'name' => 'Hersteller: Einstellungen geändert'
-            ],
-            'manufacturer_additional_text_for_invoice_changed' => [
-                'name' => 'Hersteller: Zusatztext für Rechnung geändert',
-                'access' => [
-                    'manufacturer'
-                ]
+                'name' => __('Action_Log_Manufacturer_settings_changed')
             ],
             'manufacturer_password_changed' => [
-                'name' => 'Hersteller: Passwort geändert',
-                'access' => [
-                    'manufacturer'
-                ]
-            ],
-            'manufacturer_set_inactive' => [
-                'name' => 'Hersteller: deaktiviert',
-                'access' => [
-                    'manufacturer'
-                ]
-            ],
-            'manufacturer_set_active' => [
-                'name' => 'Hersteller: aktiviert',
+                'name' => __('Action_Log_Manufacturer_password_changed'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'manufacturer_added' => [
-                'name' => 'Hersteller: erstellt'
+                'name' => __('Action_Log_Manufacturer_added')
             ],
             'manufacturer_changed' => [
-                'name' => 'Hersteller: geändert',
+                'name' => __('Action_Log_Manufacturer_changed'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
     
             'timebased_currency_payment_added' => [
-                'name' => 'Stundenabrechnung: Zeit-Eintragung erstellt'
+                'name' => __('Action_Log_Paying_with_time_time_upload_added')
             ],
             'timebased_currency_payment_changed' => [
-                'name' => 'Stundenabrechnung: Zeit-Eintragung geändert'
+                'name' => __('Action_Log_Paying_with_time_time_upload_changed')
             ],
             'timebased_currency_payment_deleted' => [
-                'name' => 'Stundenabrechnung: Zeit-Eintragung gelöscht'
+                'name' => __('Action_Log_Paying_with_time_time_upload_deleted')
             ],
             
             'cronjob_backup_database' => [
-                'name' => 'Cronjob: Datenbank gebackupt'
+                'name' => __('Action_Log_Cronjob_database_backup_done')
             ],
             'cronjob_send_order_lists' => [
-                'name' => 'Cronjob: Bestelllisten verschickt'
+                'name' => __('Action_Log_Cronjob_order_lists_sent')
             ],
             'cronjob_send_invoices' => [
-                'name' => 'Cronjob: Rechnungen verschickt'
-            ],
-            'cronjob_sms_reminder' => [
-                'name' => 'Cronjob: SMS-Bestellerinnerung'
+                'name' => __('Action_Log_Cronjob_invoices_sent')
             ],
             'cronjob_email_order_reminder' => [
-                'name' => 'Cronjob: E-Mail-Bestellerinnerung'
+                'name' => __('Action_Log_Cronjob_email_order_reminder_sent')
             ],
             'cronjob_check_credit_balance' => [
-                'name' => 'Cronjob: Guthaben überprüfen'
+                'name' => __('Action_Log_Cronjob_check_credit_balance')
             ],
             'superadmin_deploy_successful' => [
-                'name' => 'Superadmin: Update eingespielt',
+                'name' => __('Action_Log_Superadmin_deploy_successful'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
             'superadmin_deploy_failed' => [
-                'name' => 'Superadmin: Update gescheitert',
+                'name' => __('Action_Log_Superadmin_deploy_failed'),
                 'access' => [
                     'manufacturer'
                 ],
@@ -469,17 +435,17 @@ class ActionLogsTable extends AppTable
             ],
     
             'attribute_added' => [
-                'name' => 'Variante erstellt'
+                'name' => __('Action_Log_Attribute_added')
             ],
             'attribute_changed' => [
-                'name' => 'Variante geändert'
+                'name' => __('Action_Log_Attribute_changed')
             ],
             'attribute_deleted' => [
-                'name' => 'Variante gelöscht'
+                'name' => __('Action_Log_Attribute_deleted')
             ],
     
             'configuration_changed' => [
-                'name' => 'Einstellung geändert'
+                'name' => __('Action_Log_Setting_changed')
             ]
         ];
     }

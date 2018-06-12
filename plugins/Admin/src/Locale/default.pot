@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:13+0200\n"
+"POT-Creation-Date: 2018-06-12 12:34+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -33,6 +33,33 @@ msgid "Shop_order"
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "all_activities"
+msgstr ""
+
+msgid "all_users"
+msgstr ""
+
+msgid "all_products"
+msgstr ""
+
+msgid "Action_log_type"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Show_ordered_product"
+msgstr ""
+
+msgid "records"
 msgstr ""
 
 msgid "docs_route_settings"
@@ -69,6 +96,9 @@ msgid "Chose_member..."
 msgstr ""
 
 msgid "1_day_ahead"
+msgstr ""
+
+msgid "to"
 msgstr ""
 
 msgid "1_day_back"
@@ -147,9 +177,6 @@ msgid "docs_route_products"
 msgstr ""
 
 msgid "docs_route_manufacturers"
-msgstr ""
-
-msgid "all_products"
 msgstr ""
 
 msgid "all_manufacturers"
@@ -251,9 +278,6 @@ msgstr ""
 msgid "Set_date_of_order_back"
 msgstr ""
 
-msgid "records"
-msgstr ""
-
 msgid "Generate_orders_as_pdf"
 msgstr ""
 
@@ -276,5 +300,23 @@ msgid "docs_route_financial_reports"
 msgstr ""
 
 msgid "docs_route_paying_with_time_module"
+msgstr ""
+
+msgid "Show_product"
+msgstr ""
+
+msgid "Show_manufacturer"
+msgstr ""
+
+msgid "Show_blog_post"
+msgstr ""
+
+msgid "Show_page"
+msgstr ""
+
+msgid "Show_category"
+msgstr ""
+
+msgid "Show_order"
 msgstr ""
 

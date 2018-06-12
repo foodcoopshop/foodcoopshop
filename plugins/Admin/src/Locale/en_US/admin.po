@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:13+0200\n"
-"PO-Revision-Date: 2018-06-10 22:53+0200\n"
+"POT-Creation-Date: 2018-06-12 12:34+0200\n"
+"PO-Revision-Date: 2018-06-12 12:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -36,6 +36,33 @@ msgstr "Shop order"
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
 
+msgid "all_activities"
+msgstr "all activities"
+
+msgid "all_users"
+msgstr "all users"
+
+msgid "all_products"
+msgstr "all products"
+
+msgid "Action_log_type"
+msgstr "Activity Type"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "User"
+msgstr "User"
+
+msgid "Show_ordered_product"
+msgstr "Show ordered products"
+
+msgid "records"
+msgstr "records"
+
 msgid "docs_route_settings"
 msgstr "settings"
 
@@ -58,13 +85,10 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Please add the value of empty glasses that are taken back by the manufacturer."
+msgstr "Please add the value of empty glasses that are taken back by the manufacturer."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Did the manufacturer take away empty glasses or was his deposit account equalized "
-"with money?"
+msgstr "Did the manufacturer take away empty glasses or was his deposit account equalized with money?"
 
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
@@ -74,6 +98,9 @@ msgstr "Chose member..."
 
 msgid "1_day_ahead"
 msgstr "1 day ahead"
+
+msgid "to"
+msgstr "to"
 
 msgid "1_day_back"
 msgstr "1 day back"
@@ -153,9 +180,6 @@ msgstr "products"
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
 
-msgid "all_products"
-msgstr "all products"
-
 msgid "all_manufacturers"
 msgstr "all manufacturers"
 
@@ -232,8 +256,7 @@ msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Please chose the member you want to place the shop order for in the dropdown above."
+msgstr "Please chose the member you want to place the shop order for in the dropdown above."
 
 msgid "Group_by_member"
 msgstr "Group by member"
@@ -255,9 +278,6 @@ msgstr "Show all ordered products from {0}"
 
 msgid "Set_date_of_order_back"
 msgstr "Set date of order back"
-
-msgid "records"
-msgstr "records"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Generate orders as PDF"
@@ -282,6 +302,24 @@ msgstr "financial-reports"
 
 msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
+
+msgid "Show_product"
+msgstr "Show product"
+
+msgid "Show_manufacturer"
+msgstr "Show manufacturer"
+
+msgid "Show_blog_post"
+msgstr "Show blog post"
+
+msgid "Show_page"
+msgstr "Show page"
+
+msgid "Show_category"
+msgstr "Show category"
+
+msgid "Show_order"
+msgstr "Show order"
 
 #, fuzzy
 #~ msgid "Cancel_product?"

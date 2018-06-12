@@ -1029,13 +1029,13 @@ a.btn-arrow:hover {
     color: #719f41;
 }
 a.btn-previous-day {
-    left: 138px;
+    right: 92px;
 }
 a.btn-previous-day:nth-of-type(1) {
     left: 3px;
 }
 a.btn-next-day {
-    left: 226px;
+    right: 4px;
 }
 a.btn-next-day:nth-of-type(2) {
     left: 91px;

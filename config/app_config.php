@@ -169,7 +169,7 @@ return [
             'DateLong2' => 'MM/dd/yyyy',
             'DateNTimeShort' => 'MM/dd/y HH:mm',
             'DateNTimeShort2' => 'MM/dd/yy HH:mm',
-            'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
+            'DateNTimeLongWithSecs' => 'MM/dd/y HH:mm:ss',
             'TimeShort' => 'HH:mm',
             'DateForDatepicker' => 'mm/dd/yy',
             'Year' => 'Y',

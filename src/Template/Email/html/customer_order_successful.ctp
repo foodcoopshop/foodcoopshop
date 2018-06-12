@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-            	<?php echo __('Thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))]); ?>
+            	<?php echo __('thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))]); ?>
             </td>
         </tr>
     </tbody>

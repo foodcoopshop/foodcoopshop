@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 09:47+0200\n"
+"POT-Creation-Date: 2018-06-12 12:34+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -515,10 +515,10 @@ msgstr ""
 msgid "Set_date_of_order_back"
 msgstr ""
 
-msgid "Action_Log_Product_created"
+msgid "Action_Log_Product_added"
 msgstr ""
 
-msgid "Action_Log_Product_attribute_created"
+msgid "Action_Log_Product_attribute_added"
 msgstr ""
 
 msgid "Action_Log_Product_image_uploaded"
@@ -588,6 +588,192 @@ msgid "Action_Log_Order_date_changed"
 msgstr ""
 
 msgid "Action_Log_Order_shop_order_placed"
+msgstr ""
+
+msgid "Action_Log_Order_detail_product_price_changed"
+msgstr ""
+
+msgid "Action_Log_Order_detail_product_quantity_changed"
+msgstr ""
+
+msgid "Action_Log_Order_detail_product_amount_changed"
+msgstr ""
+
+msgid "Action_Log_Ordered_product_cancelled"
+msgstr ""
+
+msgid "Action_Log_Member_credit_upload_added"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_approval_ok"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_approval_open"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_approval_not_ok"
+msgstr ""
+
+msgid "Action_Log_Member_payback_added"
+msgstr ""
+
+msgid "Action_Log_Member_payback_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_credit_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_deposit_added"
+msgstr ""
+
+msgid "Action_Log_Manfufacturer_deposit_added"
+msgstr ""
+
+msgid "Action_Log_Member_deposit_deleted"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_deposit_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_member_fee_added"
+msgstr ""
+
+msgid "Action_Log_Member_member_fee_deleted"
+msgstr ""
+
+msgid "Action_Log_Blog_post_added"
+msgstr ""
+
+msgid "Action_Log_Blog_post_changed"
+msgstr ""
+
+msgid "Action_Log_Blog_post_deleted"
+msgstr ""
+
+msgid "Action_Log_Page_added"
+msgstr ""
+
+msgid "Action_Log_Page_changed"
+msgstr ""
+
+msgid "Action_Log_Page_deleted"
+msgstr ""
+
+msgid "Action_Log_Category_added"
+msgstr ""
+
+msgid "Action_Log_Category_changed"
+msgstr ""
+
+msgid "Action_Log_Category_deleted"
+msgstr ""
+
+msgid "Action_Log_Remote_food_coop_added"
+msgstr ""
+
+msgid "Action_Log_Remote_food_coop_changed"
+msgstr ""
+
+msgid "Action_Log_Remote_food_coop_deleted"
+msgstr ""
+
+msgid "Action_Log_Slider_added"
+msgstr ""
+
+msgid "Action_Log_Slider_changed"
+msgstr ""
+
+msgid "Action_Log_Slider_deleted"
+msgstr ""
+
+msgid "Action_Log_Tax_rate_added"
+msgstr ""
+
+msgid "Action_Log_Tax_rate_changed"
+msgstr ""
+
+msgid "Action_Log_Tax_rate_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_account_created"
+msgstr ""
+
+msgid "Action_Log_Member_profile_changed"
+msgstr ""
+
+msgid "Action_Log_Member_password_changed"
+msgstr ""
+
+msgid "Action_Log_Member_order_placed"
+msgstr ""
+
+msgid "Action_Log_Member_set_inactive"
+msgstr ""
+
+msgid "Action_Log_Member_set_active"
+msgstr ""
+
+msgid "Action_Log_Member_comment_changed"
+msgstr ""
+
+msgid "Action_Log_Member_group_changed"
+msgstr ""
+
+msgid "Action_Log_Member_deleted"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_settings_changed"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_password_changed"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_added"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_changed"
+msgstr ""
+
+msgid "Action_Log_Paying_with_time_time_upload_added"
+msgstr ""
+
+msgid "Action_Log_Paying_with_time_time_upload_changed"
+msgstr ""
+
+msgid "Action_Log_Paying_with_time_time_upload_deleted"
+msgstr ""
+
+msgid "Action_Log_Cronjob_database_backup_done"
+msgstr ""
+
+msgid "Action_Log_Cronjob_order_lists_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_invoices_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_email_order_reminder_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_check_credit_balance"
+msgstr ""
+
+msgid "Action_Log_Superadmin_deploy_successful"
+msgstr ""
+
+msgid "Action_Log_Superadmin_deploy_failed"
+msgstr ""
+
+msgid "Action_Log_Attribute_added"
+msgstr ""
+
+msgid "Action_Log_Attribute_changed"
+msgstr ""
+
+msgid "Action_Log_Attribute_deleted"
+msgstr ""
+
+msgid "Action_Log_Setting_changed"
 msgstr ""
 
 msgid "The_desired_amount_{0}_is_not_valid."
@@ -905,7 +1091,7 @@ msgstr ""
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr ""
 
-msgid "Thank_you_for_your_order_number_{0}_from_{1}."
+msgid "thank_you_for_your_order_number_{0}_from_{1}."
 msgstr ""
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
