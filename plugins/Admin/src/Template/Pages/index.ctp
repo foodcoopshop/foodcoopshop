@@ -66,7 +66,7 @@ echo $this->element('pageTreeRows', [
 ]);
 
 echo '<tr>';
-echo '<td colspan="12"><b>' . $totalPagesCount . '</b> Datensätze</td>';
+echo '<td colspan="12"><b>' . $totalPagesCount . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $totalPagesCount).'</td>';
 echo '</tr>';
 
 echo '</table>';

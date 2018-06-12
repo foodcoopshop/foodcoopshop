@@ -239,7 +239,7 @@ foreach ($customers as $customer) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';

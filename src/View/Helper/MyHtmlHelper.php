@@ -573,18 +573,18 @@ class MyHtmlHelper extends HtmlHelper
     public function getApprovalStates()
     {
         return [
-            1 => 'bestätigt',
-            0 => 'offen',
-            -1 => 'da stimmt was nicht...'
+            1 => __('approval_state_ok'),
+            0 => __('approval_state_open'),
+            -1 => __('approval_state_not_ok'),
         ];
     }
 
     public function getActiveStates()
     {
         return [
-            1 => 'aktiviert',
-            0 => 'deaktiviert',
-            'all' => 'alle'
+            1 => __('active_state_active'),
+            0 => __('active_state_inactive'),
+            'all' => __('active_state_all')
         ];
     }
 

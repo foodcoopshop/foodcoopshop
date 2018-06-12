@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 12:34+0200\n"
-"PO-Revision-Date: 2018-06-12 12:35+0200\n"
+"POT-Creation-Date: 2018-06-12 15:05+0200\n"
+"PO-Revision-Date: 2018-06-12 15:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -63,6 +63,9 @@ msgstr "Bestelltes Produkt anzeigen"
 msgid "records"
 msgstr "Datensätze"
 
+msgid "{0,plural,=1{record} other{records}}"
+msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
+
 msgid "docs_route_settings"
 msgstr "einstellungen"
 
@@ -85,10 +88,14 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Pfand-Betrag für {0} eintragen"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen wird."
+msgstr ""
+"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen "
+"wird."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
+msgstr ""
+"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld "
+"ausgeglichen?"
 
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
@@ -180,6 +187,69 @@ msgstr "produkte"
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
 
+msgid "Add_manufacturer"
+msgstr "Neuen Hersteller erstellen"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Delivery_break"
+msgstr "Lieferpause"
+
+msgid "Only_for_members"
+msgstr "Nur für Mitglieder"
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr "Summe der offenen Bestellungen im angegebenen Zeitraum"
+
+msgid "Open_orders_abbreviation"
+msgstr "O.B."
+
+msgid "Settings_abbreviation"
+msgstr "Opt."
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Show_all_products_from_{0}"
+msgstr "Alle Produkte von {0} anzeigen"
+
+msgid "Show_{0}"
+msgstr "{0} anzeigen"
+
+msgid "Edit_manufacturer_settings"
+msgstr "Hersteller-Einstellungen bearbeiten"
+
+msgid "Test_order_list"
+msgstr "Bestellliste prüfen"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Manually_send_order_list"
+msgstr "Bestellliste manuell versenden"
+
+msgid "Test_invoice"
+msgstr "Rechnung prüfen"
+
+msgid "Manufacturer_profile"
+msgstr "Hersteller-Profil"
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
 
@@ -201,9 +271,6 @@ msgstr "abholung-der-produkte"
 msgid "Amount"
 msgstr "Anzahl"
 
-msgid "Product"
-msgstr "Produkt"
-
 msgid "Manufacturer"
 msgstr "Hersteller"
 
@@ -213,17 +280,11 @@ msgstr "Preis"
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
 
-msgid "Deposit"
-msgstr "Pfand"
-
 msgid "Weight"
 msgstr "Gewicht"
 
 msgid "Order_date"
 msgstr "Bestelldatum"
-
-msgid "Member"
-msgstr "Mitglied"
 
 msgid "Status"
 msgstr "Status"
@@ -243,9 +304,6 @@ msgstr "Zum Ändern des Gewichtes anklicken"
 msgid "Click_to_cancel_product"
 msgstr "Zum Stornieren des Produktes anklicken"
 
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
-
 msgid "Change_order_status"
 msgstr "Bestellstatus ändern"
 
@@ -256,7 +314,8 @@ msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+msgstr ""
+"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"

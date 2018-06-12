@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 12:34+0200\n"
+"POT-Creation-Date: 2018-06-12 15:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -60,6 +60,9 @@ msgid "Show_ordered_product"
 msgstr ""
 
 msgid "records"
+msgstr ""
+
+msgid "{0,plural,=1{record} other{records}}"
 msgstr ""
 
 msgid "docs_route_settings"
@@ -179,6 +182,69 @@ msgstr ""
 msgid "docs_route_manufacturers"
 msgstr ""
 
+msgid "Add_manufacturer"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "IBAN"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Delivery_break"
+msgstr ""
+
+msgid "Only_for_members"
+msgstr ""
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr ""
+
+msgid "Open_orders_abbreviation"
+msgstr ""
+
+msgid "Settings_abbreviation"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Show_all_products_from_{0}"
+msgstr ""
+
+msgid "Show_{0}"
+msgstr ""
+
+msgid "Edit_manufacturer_settings"
+msgstr ""
+
+msgid "Test_order_list"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Manually_send_order_list"
+msgstr ""
+
+msgid "Test_invoice"
+msgstr ""
+
+msgid "Manufacturer_profile"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
+msgstr ""
+
 msgid "all_manufacturers"
 msgstr ""
 
@@ -200,9 +266,6 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-msgid "Product"
-msgstr ""
-
 msgid "Manufacturer"
 msgstr ""
 
@@ -212,16 +275,10 @@ msgstr ""
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr ""
 
-msgid "Deposit"
-msgstr ""
-
 msgid "Weight"
 msgstr ""
 
 msgid "Order_date"
-msgstr ""
-
-msgid "Member"
 msgstr ""
 
 msgid "Status"
@@ -240,9 +297,6 @@ msgid "Click_to_change_weight"
 msgstr ""
 
 msgid "Click_to_cancel_product"
-msgstr ""
-
-msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "Change_order_status"

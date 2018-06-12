@@ -169,7 +169,7 @@ foreach ($payments as $payment) {
 }
 
 echo '<tr>';
-echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td style="text-align:right;"><b>' . $this->Html->formatAsEuro($paymentSum) . '</b></td>';
 if ($showTextColumn) {
     echo '<td></td>';

@@ -397,7 +397,7 @@ use Cake\Core\Configure;
         $colspan++;
     }
 
-    echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
+    echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
     echo '</tr>';
 
     echo '</table>';

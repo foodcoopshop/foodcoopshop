@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 12:34+0200\n"
-"PO-Revision-Date: 2018-06-12 12:36+0200\n"
+"POT-Creation-Date: 2018-06-12 15:05+0200\n"
+"PO-Revision-Date: 2018-06-12 15:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -62,6 +62,9 @@ msgstr "Show ordered products"
 
 msgid "records"
 msgstr "records"
+
+msgid "{0,plural,=1{record} other{records}}"
+msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -180,6 +183,69 @@ msgstr "products"
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
 
+msgid "Add_manufacturer"
+msgstr "Add manufacturer"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Delivery_break"
+msgstr "Delivery break"
+
+msgid "Only_for_members"
+msgstr "Only for members"
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr "Sum of open orders in given time range"
+
+msgid "Open_orders_abbreviation"
+msgstr "O.o."
+
+msgid "Settings_abbreviation"
+msgstr "Set."
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Show_all_products_from_{0}"
+msgstr "Show all products from {0}"
+
+msgid "Show_{0}"
+msgstr "Show {0}"
+
+msgid "Edit_manufacturer_settings"
+msgstr "Edit manufacturer settings"
+
+msgid "Test_order_list"
+msgstr "Test order list"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Member"
+msgstr "Member"
+
+msgid "Manually_send_order_list"
+msgstr "Manually send order list"
+
+msgid "Test_invoice"
+msgstr "Test invoice"
+
+msgid "Manufacturer_profile"
+msgstr "Manufacturer profile"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
+
 msgid "all_manufacturers"
 msgstr "all manufacturers"
 
@@ -201,9 +267,6 @@ msgstr "pick-up-products"
 msgid "Amount"
 msgstr "Amount"
 
-msgid "Product"
-msgstr "Product"
-
 msgid "Manufacturer"
 msgstr "Manufacturer"
 
@@ -213,17 +276,11 @@ msgstr "Price"
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Amount minus eventual variable member fee"
 
-msgid "Deposit"
-msgstr "Deposit"
-
 msgid "Weight"
 msgstr "Weight"
 
 msgid "Order_date"
 msgstr "Order date"
-
-msgid "Member"
-msgstr "Member"
 
 msgid "Status"
 msgstr "Status"
@@ -242,9 +299,6 @@ msgstr "Click to change weight"
 
 msgid "Click_to_cancel_product"
 msgstr "Click to cancel product"
-
-msgid "Copy_all_email_addresses"
-msgstr "Copy all e-mail adresses"
 
 msgid "Change_order_status"
 msgstr "Change order status"

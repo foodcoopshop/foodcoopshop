@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 12:34+0200\n"
+"POT-Creation-Date: 2018-06-12 15:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1194,6 +1194,24 @@ msgid "Empty_glasses"
 msgstr ""
 
 msgid "Compensation_payment"
+msgstr ""
+
+msgid "approval_state_ok"
+msgstr ""
+
+msgid "approval_state_open"
+msgstr ""
+
+msgid "approval_state_not_ok"
+msgstr ""
+
+msgid "active_state_active"
+msgstr ""
+
+msgid "active_state_inactive"
+msgstr ""
+
+msgid "active_state_all"
 msgstr ""
 
 msgid "price_will_be_eventually_adapted."

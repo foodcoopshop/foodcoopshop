@@ -168,7 +168,7 @@ foreach ($blogPosts as $blogPost) {
 }
 
 echo '<tr>';
-echo '<td colspan="11"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="11"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';
