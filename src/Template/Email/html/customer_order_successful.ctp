@@ -60,7 +60,6 @@ use Cake\Core\Configure;
                 } else {
                     echo __('Please_pay_when_picking_up_products.');
                 }
-                echo $paymentText;
             ?>
         </td></tr>
         
@@ -74,7 +73,7 @@ use Cake\Core\Configure;
             <?php
                 echo __(
                     'Please_pick_up_your_products_on_{0}_at_{1}.', [
-                        '<b>'.$this->Time->getFormattedDeliveryDateByCurrentDay().'</b>',
+                        '<b>'.$this->MyTime->getFormattedDeliveryDateByCurrentDay().'</b>',
                         str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
                     ]
                 );
