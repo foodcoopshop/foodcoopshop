@@ -1024,6 +1024,7 @@ a.btn-arrow {
     position: absolute;
     top: 7px;
     color: #ccc;
+    width: 15px;
 }
 a.btn-arrow:hover {
     color: #719f41;
@@ -1035,10 +1036,10 @@ a.btn-previous-day:nth-of-type(1) {
     left: 3px;
 }
 a.btn-next-day {
-    right: 4px;
+    right: 3px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 91px;
+    left: 92px;
 }
 a.btn-arrow i {
     font-size: 17px;
