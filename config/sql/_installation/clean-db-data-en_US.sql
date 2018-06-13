@@ -67,7 +67,7 @@ TRUNCATE TABLE `fcs_units`;
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
 INSERT INTO `fcs_category` VALUES
-(20,2,'All products','',2,3,4,1,'2016-10-19 21:05:00','2016-10-19 21:05:00');
+(20,2,'All products','',3,4,1,'2016-10-19 21:05:00','2016-10-19 21:05:00');
 /*!40000 ALTER TABLE `fcs_category` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;

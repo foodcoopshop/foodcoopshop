@@ -27,8 +27,7 @@ class CategoriesTable extends AppTable
         $this->addBehavior('Tree', [
             'left' => 'nleft',
             'right' => 'nright',
-            'parent' => 'id_parent',
-            'level' => 'level_depth'
+            'parent' => 'id_parent'
         ]);
         parent::initialize($config);
         $this->setPrimaryKey('id_category');
@@ -52,7 +51,7 @@ class CategoriesTable extends AppTable
             }
             $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $item->level_depth - 1) . ' ');
+                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }
         }
 
