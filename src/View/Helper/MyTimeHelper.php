@@ -71,7 +71,7 @@ class MyTimeHelper extends TimeHelper
     public function getFormattedDeliveryDateByCurrentDay()
     {
         $deliveryDate = self::getDeliveryDayByCurrentDay();
-        $deliveryDate = $this->getWeekdayName($this->formatAsWeekday($deliveryDate)) . ', ' . date('j.', $deliveryDate) . ' ' . $this->getMonthName(date('n', $deliveryDate)) . ' ' . date('Y', $deliveryDate);
+        $deliveryDate = $this->getWeekdayName($this->formatAsWeekday($deliveryDate)) . ', ' . date($this->getI18Format('DateShortAlt'), $deliveryDate);
         return $deliveryDate;
     }
 

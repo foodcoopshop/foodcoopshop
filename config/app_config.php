@@ -153,7 +153,6 @@ return [
         'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
         'de_DE' => [
             'DateShort' => 'dd.MM.yy',
-            'DateLong' =>  'dd. MMMM y',
             'DateLong2' => 'dd.MM.yyyy',
             'DateNTimeShort' => 'dd.MM.y HH:mm',
             'DateNTimeShort2' => 'dd.MM.yy HH:mm',
@@ -165,7 +164,6 @@ return [
         ],
         'en_US' => [
             'DateShort' => 'MM/dd//yy',
-            'DateLong' =>  'dd. MMMM y',
             'DateLong2' => 'MM/dd/yyyy',
             'DateNTimeShort' => 'MM/dd/y HH:mm',
             'DateNTimeShort2' => 'MM/dd/yy HH:mm',
