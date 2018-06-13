@@ -28,7 +28,7 @@ use Cake\Core\Configure;
                     style="color: #f3515c;"><?php echo $delta; ?></b>.
             </p>
 
-            <p>Bitte überweise bald wieder ein neues Guthaben (z.B. 100,00 €) auf
+            <p>Bitte überweise bald wieder ein neues Guthaben (z.B. 100,00 <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?>) auf
                 unser Konto.</p>
 
             <p>

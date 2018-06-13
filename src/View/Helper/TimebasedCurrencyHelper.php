@@ -90,7 +90,7 @@ class TimebasedCurrencyHelper extends Helper
      */
     public function getCartTimebasedCurrencySecondsAsEuroForDropdown($seconds, $exchangeRate)
     {
-        return str_replace('&nbsp;', ' ', $this->MyHtml->formatAsEuro(
+        return str_replace('&nbsp;', ' ', $this->MyHtml->formatAsCurrency(
             $seconds / 3600 *
             $this->MyNumber->replaceCommaWithDot($exchangeRate)
         ));

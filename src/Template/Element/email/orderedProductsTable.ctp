@@ -65,7 +65,7 @@ use Cake\Core\Configure;
                     <?php echo $product['manufacturerName']; ?>
                 </td>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
-                    <?php echo $this->MyHtml->formatAsEuro($product['price']); ?>
+                    <?php echo $this->MyHtml->formatAsCurrency($product['price']); ?>
                     <?php
                         if ($product['unitName'] != '') {
                             echo ' *';
@@ -76,7 +76,7 @@ use Cake\Core\Configure;
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php
                         if ($product['deposit'] > 0) {
-                            echo $this->MyHtml->formatAsEuro($product['deposit']);
+                            echo $this->MyHtml->formatAsCurrency($product['deposit']);
                         }
                     ?>
                 </td>
@@ -97,12 +97,12 @@ use Cake\Core\Configure;
      
          <tr>
             <td style="border:1px solid #d6d4d4;" colspan="3"></td>
-            <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyHtml->formatAsEuro($productSum); ?></td>
+            <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyHtml->formatAsCurrency($productSum); ?></td>
 
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
                 if ($depositSum > 0) {
-                    echo $this->MyHtml->formatAsEuro($depositSum);
+                    echo $this->MyHtml->formatAsCurrency($depositSum);
                 }
                 ?>
             </td>
@@ -122,7 +122,7 @@ use Cake\Core\Configure;
             <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;">Gesamt</td>
             <td align="center" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2">
                 <?php
-                    echo $this->MyHtml->formatAsEuro($productAndDepositSum);
+                    echo $this->MyHtml->formatAsCurrency($productAndDepositSum);
                 ?>
             </td>
             <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>

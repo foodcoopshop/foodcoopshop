@@ -161,7 +161,7 @@ foreach ($customers as $customer) {
         echo '<td align="center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
-            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer->credit_balance);
+            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsCurrency($customer->credit_balance);
             echo $this->Html->getJqueryUiIcon(
                 $creditBalanceHtml,
                 [
@@ -172,7 +172,7 @@ foreach ($customers as $customer) {
             );
         } else {
             if ($customer->credit_balance != 0) {
-                echo $this->Html->formatAsEuro($customer->credit_balance);
+                echo $this->Html->formatAsCurrency($customer->credit_balance);
             }
         }
         

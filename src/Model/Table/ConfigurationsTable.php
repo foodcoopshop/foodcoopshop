@@ -182,7 +182,7 @@ class ConfigurationsTable extends AppTable
     
     public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib den Umrechnungskurs für die Stundenabrechnung in € an.');
+        $validator->notEmpty('value', 'Bitte gib den Umrechnungskurs für die Stundenabrechnung in '.Configure::read('appDb.FCS_CURRENCY_SYMBOL').' an.');
         $validator->decimal('value', 2, 'Bitte trage genau 2 Kommastellen ein.');
         return $validator;
     }

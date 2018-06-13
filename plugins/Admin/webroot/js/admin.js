@@ -627,7 +627,8 @@ foodcoopshop.Admin = {
             radio.prop('checked', true);
             radio.trigger('change');
             
-            var price = row.find('span.price-for-dialog').html().replace(/&nbsp;€/, '');
+            var currencyRegExp = new RegExp('&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+            var price = row.find('span.price-for-dialog').html().replace(currencyRegExp, '');
             $('#' + dialogId + ' #dialogPricePrice').val(price);
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
@@ -947,7 +948,7 @@ foodcoopshop.Admin = {
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
     
-                    if (totalSum != '0,00&nbsp;€') {
+                    if (totalSum != '0,00&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol) {
                         $('.ui-dialog .ajax-loader').hide();
                         alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
                         $('.ui-dialog button').attr('disabled', false);
@@ -1809,7 +1810,7 @@ foodcoopshop.Admin = {
                 additionalDialogHtml += '<span class="small"> (' + foodcoopshop.LocalizedJs.admin.OriginalPriceWithoutReductionOfPriceInTime + ')</span>';
                 additionalDialogHtml += '<label for="dialogOrderDetailProductPriceTimebasedCurrency"></label><br />';
                 additionalDialogHtml += '<input type="text" name="dialogOrderDetailProductPriceTimebasedCurrencyPrice" id="dialogOrderDetailProductPriceTimebasedCurrencyPrice" value="" />';
-                additionalDialogHtml += '<b>€</b><span class="small"> (' + foodcoopshop.LocalizedJs.admin.FromWhichReallyPaidIn + ' ' + foodcoopshop.LocalizedJs.admin.Euro + ')</span>';
+                additionalDialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b><span class="small"> (' + foodcoopshop.LocalizedJs.admin.FromWhichReallyPaidIn + ' ' + foodcoopshop.LocalizedJs.admin.Euro + ')</span>';
                 additionalDialogHtml += '</span>';
                 $('#' + dialogId + ' .textarea-wrapper').before(additionalDialogHtml);
             }

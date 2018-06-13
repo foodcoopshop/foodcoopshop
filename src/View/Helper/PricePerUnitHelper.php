@@ -75,7 +75,7 @@ class PricePerUnitHelper extends Helper
     
     public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
     {
-        return '<div class="price">' . $this->MyHtml->formatAsEuro($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
+        return '<div class="price">' . $this->MyHtml->formatAsCurrency($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
     }
     
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount)
@@ -91,7 +91,7 @@ class PricePerUnitHelper extends Helper
     
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
     {
-        return $this->MyHtml->formatAsEuro($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyHtml->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+        return $this->MyHtml->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyHtml->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
     }
     
 }

@@ -29,8 +29,8 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> €</b></li>
-                <li>Neuer Preis: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> €</b></li>
+                <li>Alter Preis: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li>Neuer Preis: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
             </ul>
 
             <p>

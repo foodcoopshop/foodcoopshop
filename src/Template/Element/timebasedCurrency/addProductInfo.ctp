@@ -19,7 +19,7 @@ if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     echo '<div class="'.$class.'">';
         $titleForOverlay =
             '<span style="padding:2px;float:left;">'.
-                'Anteil in Euro: <span class="money">' . $this->Html->formatAsEuro($money).'</span><br />' .
+                'Anteil in Euro: <span class="money">' . $this->Html->formatAsCurrency($money).'</span><br />' .
                 'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':<span class="seconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>'.
             '</span>';
         ;

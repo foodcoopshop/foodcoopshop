@@ -40,7 +40,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-wrapper">';
         dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        dialogHtml += '<b>€</b> (inkl. USt.)<br />';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (inkl. USt.)<br />';
         dialogHtml += '</div>';
         dialogHtml += '<label class="radio">';
         dialogHtml += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price-per-unit" class="price-per-unit"/>';
@@ -48,7 +48,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
         dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        dialogHtml += '<b>€</b> (inkl. USt.) für ';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (inkl. USt.) für ';
         dialogHtml += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
         dialogHtml += '<option value="1" selected>1</option>';
         dialogHtml += '<option value="10">10</option>';
@@ -71,9 +71,9 @@ foodcoopshop.DialogProduct = {
     },
     
     getHtmlForProductDepositEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogDepositDeposit">Eingabe in €</label><br />';
+        var dialogHtml = '<label for="dialogDepositDeposit">Eingabe in ' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</label><br />';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
-        dialogHtml += '<b>€</b> (zum Löschen <b>0</b> eintragen)<br />';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (zum Löschen <b>0</b> eintragen)<br />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Pfand', dialogId, dialogHtml);
         return dialogHtml;

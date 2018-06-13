@@ -295,7 +295,7 @@ use Cake\Core\Configure;
 	                'title' => 'Preis ändern'
 	            ], 'javascript:void(0);');
 	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
-                    echo $this->Html->formatAsEuro($product->gross_price);
+                    echo $this->Html->formatAsCurrency($product->gross_price);
                 echo '</span>';
                 if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                     echo '<span class="unit-price-for-dialog">';

@@ -157,7 +157,7 @@ foreach ($manufacturers as $manufacturer) {
         if ($manufacturer->deposit_credit_balance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
         }
-        $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Html->formatAsEuro($manufacturer->deposit_credit_balance);
+        $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Html->formatAsCurrency($manufacturer->deposit_credit_balance);
 
         echo $this->Html->getJqueryUiIcon(
             __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
@@ -223,7 +223,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td class="right">';
     if ($manufacturer->sum_open_order_detail > 0) {
-        echo $this->Html->formatAsEuro($manufacturer->sum_open_order_detail);
+        echo $this->Html->formatAsCurrency($manufacturer->sum_open_order_detail);
     }
     echo '</td>';
 
@@ -285,7 +285,7 @@ echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 10;
 echo '<td>';
     if ($sumDeposit > 0) {
-        echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($sumDeposit) . '</b>';
+        echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Html->formatAsCurrency($sumDeposit) . '</b>';
     }
 echo '</td>';
 

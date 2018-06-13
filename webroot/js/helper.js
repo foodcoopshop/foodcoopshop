@@ -294,12 +294,13 @@ foodcoopshop.Helper = {
         });
     },
 
-    formatFloatAsEuro: function (float) {
-        return this.formatFloatAsString(float) + '&nbsp;€';
+    formatFloatAsCurrency: function (float) {
+        return this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
     },
       
     getEuroAsFloat: function (string) {
-        return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
+        var currencyRegExp = new RegExp('&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
     
     formatFloatAsString: function(float, removeTrailingZeros) {

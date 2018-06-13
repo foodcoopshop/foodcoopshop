@@ -358,7 +358,7 @@ class PaymentsController extends AdminAppController
         );
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.htmlHelper')->formatAsEuro($amount).'</b>';
+        $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.htmlHelper')->formatAsCurrency($amount).'</b>';
 
         if ($type == 'member_fee') {
             $message .= ', für ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
@@ -440,7 +440,7 @@ class PaymentsController extends AdminAppController
             $actionLogType .= '_'.$userType;
         }
 
-        $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsEuro($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
+        $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsCurrency($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
 
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
             if (isset($payment->customer->name)) {

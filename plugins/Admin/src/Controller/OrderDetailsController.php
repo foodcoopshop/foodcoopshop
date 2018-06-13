@@ -614,7 +614,7 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.htmlHelper')->formatAsEuro($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde erfolgreich storniert';
+            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.htmlHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde erfolgreich storniert';
 
             $this->OrderDetail->deleteOrderDetail($orderDetail);
             $this->OrderDetail->Orders->updateSums($orderDetail->order);

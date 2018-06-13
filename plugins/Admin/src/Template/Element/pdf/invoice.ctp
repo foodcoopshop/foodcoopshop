@@ -138,7 +138,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Paid_by_members_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->MyHtml->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
+                $html .= '<b>' .  $this->MyHtml->formatAsCurrency($sumTimebasedCurrencyPriceIncl) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
 
@@ -147,7 +147,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Paid_by_members_in_euro') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->MyHtml->formatAsEuro($sumPriceForTimebasedCurrency) . '</b>';
+                $html .= '<b>' .  $this->MyHtml->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
     
@@ -161,7 +161,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Kept_variable_member_fee') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->MyHtml->formatAsEuro($compensatedPrice).'</b>';
+                $html .= '<b>'.$this->MyHtml->formatAsCurrency($compensatedPrice).'</b>';
             $html .= '</td>';
         $html .= '</tr>';
         
@@ -170,7 +170,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Amount_that_will_be_transferred_to_your_bank_account') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->MyHtml->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+                $html .= '<b>'.$this->MyHtml->formatAsCurrency($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
             $html .= '</td>';
         $html .= '</tr>';
     }

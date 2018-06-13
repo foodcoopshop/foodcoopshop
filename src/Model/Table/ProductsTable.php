@@ -788,7 +788,7 @@ class ProductsTable extends AppTable
     public function getNetPriceAfterTaxUpdate($productId, $oldNetPrice, $oldTaxRate)
     {
 
-        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0 €
+        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0
         if (is_null($oldTaxRate)) {
             $oldTaxRate = 0;
         }

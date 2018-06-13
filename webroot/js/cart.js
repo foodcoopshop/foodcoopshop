@@ -102,7 +102,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.getEuroAsFloat(oldPrice.html()) +
             (price * amount)
         );
-        oldPrice.html(foodcoopshop.Helper.formatFloatAsEuro(newPrice));
+        oldPrice.html(foodcoopshop.Helper.formatFloatAsCurrency(newPrice));
         foodcoopshop.Helper.applyBlinkEffect(oldPrice);
 
         // update deposit
@@ -112,7 +112,7 @@ foodcoopshop.Cart = {
                 foodcoopshop.Helper.getEuroAsFloat(oldDeposit.html()) +
                 (deposit * amount)
             );
-            oldDeposit.html(foodcoopshop.Helper.formatFloatAsEuro(newDeposit));
+            oldDeposit.html(foodcoopshop.Helper.formatFloatAsCurrency(newDeposit));
             foodcoopshop.Helper.applyBlinkEffect(oldDeposit);
         }
 
@@ -122,7 +122,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.getEuroAsFloat(oldTax.html()) +
             (tax * amount)
         );
-        oldTax.html(foodcoopshop.Helper.formatFloatAsEuro(newTax));
+        oldTax.html(foodcoopshop.Helper.formatFloatAsCurrency(newTax));
         
         // update timebasedCurrencyHours
         var oldTimebasedCurrencyHours = productContainer.find('.timebasedCurrencySeconds');
@@ -351,10 +351,10 @@ foodcoopshop.Cart = {
             '<span class="manufacturer-link">' + manufacturerLink + '</span>' +
             '<span class="right">' +
                 '<span class="delete"><a class="btn" title="' + foodcoopshop.LocalizedJs.cart.removeFromCart + '" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +
-                '<span class="price">' + foodcoopshop.Helper.formatFloatAsEuro(price) + '</span>' +
-                (deposit > 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
+                '<span class="price">' + foodcoopshop.Helper.formatFloatAsCurrency(price) + '</span>' +
+                (deposit > 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsCurrency(deposit) + '</span></span>' : '') +
                 (timebasedCurrencyHours ? '<span class="timebasedCurrencySeconds">' + foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(timebasedCurrencyHours) + '</span>'  : '') +
-                '<span class="tax">' + foodcoopshop.Helper.formatFloatAsEuro(tax) + '</span>' +
+                '<span class="tax">' + foodcoopshop.Helper.formatFloatAsCurrency(tax) + '</span>' +
             '</span>' +
         '</span>';
     },
@@ -362,7 +362,7 @@ foodcoopshop.Cart = {
     updateCartSum: function (amount) {
 
         var cartSum = $('.cart p.sum-wrapper span.sum');
-        var newCartSumHtml = foodcoopshop.Helper.formatFloatAsEuro(
+        var newCartSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(
             foodcoopshop.Helper.getEuroAsFloat(cartSum.html()) + amount
         );
         cartSum.html(newCartSumHtml);
@@ -376,7 +376,7 @@ foodcoopshop.Cart = {
     updateCartDepositSum: function (amount) {
         var cartDepositSum = $('.cart p.deposit-sum-wrapper span.sum');
         cartDepositSum.html(
-            foodcoopshop.Helper.formatFloatAsEuro(
+            foodcoopshop.Helper.formatFloatAsCurrency(
                 foodcoopshop.Helper.getEuroAsFloat(cartDepositSum.html()) + amount
             )
         );
@@ -385,7 +385,7 @@ foodcoopshop.Cart = {
     updateCartTaxSum: function (amount) {
         var cartTaxSum = $('.cart p.tax-sum-wrapper span.sum');
         cartTaxSum.html(
-            foodcoopshop.Helper.formatFloatAsEuro(
+            foodcoopshop.Helper.formatFloatAsCurrency(
                 foodcoopshop.Helper.getEuroAsFloat(cartTaxSum.html()) + amount
             )
         );

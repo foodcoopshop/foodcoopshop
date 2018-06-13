@@ -274,9 +274,9 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getGroups()[$groupId];
     }
 
-    public function formatAsEuro($amount)
+    public function formatAsCurrency($amount)
     {
-        return self::formatAsUnit($amount, '€');
+        return self::formatAsUnit($amount, Configure::read('appDb.FCS_CURRENCY_SYMBOL'));
     }
     
     public function formatAsUnit($amount, $shortcode)

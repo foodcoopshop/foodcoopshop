@@ -618,13 +618,13 @@ class ProductsController extends AdminAppController
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
-            $oldPrice = Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
+            $oldPrice = Configure::read('app.htmlHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
         }
         
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
             $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($priceInclPerUnit, $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
-            $newPrice = Configure::read('app.htmlHelper')->formatAsEuro($price);
+            $newPrice = Configure::read('app.htmlHelper')->formatAsCurrency($price);
         }
         
         $actionLogMessage  = 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name;
@@ -690,13 +690,13 @@ class ProductsController extends AdminAppController
 
         $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
         if (!empty($depositEntity->deposit)) {
-            $logString .= Configure::read('app.htmlHelper')->formatAsEuro($depositEntity->deposit);
+            $logString .= Configure::read('app.htmlHelper')->formatAsCurrency($depositEntity->deposit);
         } else {
-            $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
+            $logString .= Configure::read('app.htmlHelper')->formatAsCurrency(0);
         }
 
         $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
-        $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
+        $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsCurrency($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 
