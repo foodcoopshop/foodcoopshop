@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 17:23+0200\n"
+"POT-Creation-Date: 2018-06-13 20:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -263,7 +263,7 @@ msgstr ""
 msgid "Paid_by_members_in_{0}"
 msgstr ""
 
-msgid "Paid_by_members_in_euro"
+msgid "Paid_by_members_in"
 msgstr ""
 
 msgid "Kept_variable_member_fee"
@@ -639,5 +639,8 @@ msgid "Show_category"
 msgstr ""
 
 msgid "Show_order"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 

@@ -40,6 +40,21 @@ class MyHtmlHelper extends HtmlHelper
         </script>";
     }
     
+    public function getCurrencyName($currencySymbol)
+    {
+        switch($currencySymbol) {
+            case '€':
+                return 'Euro';
+                break;
+            case '$':
+                return 'Dollar';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
+    
     public function getDocsUrl($page)
     {
         $languageCode = substr(I18n::getLocale(), 0, 2);

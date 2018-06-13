@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 17:23+0200\n"
-"PO-Revision-Date: 2018-06-13 17:24+0200\n"
+"POT-Creation-Date: 2018-06-13 20:44+0200\n"
+"PO-Revision-Date: 2018-06-13 20:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -268,8 +268,8 @@ msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf 
 msgid "Paid_by_members_in_{0}"
 msgstr "Von Mitgliedern bezahlt in {0}"
 
-msgid "Paid_by_members_in_euro"
-msgstr "Von den Mitgliedern bezahlt in Euro"
+msgid "Paid_by_members_in"
+msgstr "Von Mitgliedern bezahlt in"
 
 msgid "Kept_variable_member_fee"
 msgstr "Einbehaltener variabler Mitgliedsbeitrag"
@@ -653,6 +653,12 @@ msgstr "Kategorie anzeigen"
 
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
+
+#~ msgid "Paid_by_members_in_euro"
+#~ msgstr "Von den Mitgliedern bezahlt in Euro"
 
 #~ msgid "Email_address"
 #~ msgstr "E-Mail-Adresse"

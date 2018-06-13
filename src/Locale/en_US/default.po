@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 17:23+0200\n"
+"POT-Creation-Date: 2018-06-13 20:44+0200\n"
 "PO-Revision-Date: 2018-06-13 16:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -452,9 +452,6 @@ msgstr "Original price without the reduction of price in time"
 
 msgid "From_which_really_paid_in"
 msgstr "From which really paid in"
-
-msgid "Euro"
-msgstr "Euro"
 
 msgid "Adapt_weight?"
 msgstr "Adapt weight?"
@@ -1369,6 +1366,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Euro"
+#~ msgstr "Euro"
 
 #, fuzzy
 #~ msgid "Action_Log_Payback_deleted"

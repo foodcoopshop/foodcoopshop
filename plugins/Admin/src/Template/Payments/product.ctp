@@ -19,7 +19,7 @@ echo $this->element('paymentHeader', [
     'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
     'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
     'buttonText' => 'Eingezahltes Guthaben eintragen',
-    'icon' => 'fa-euro'
+    'icon' => 'fa-'.strtolower(Configure::read('app.currencyName'))
 ]);
 
 if (count($payments) == 0) {

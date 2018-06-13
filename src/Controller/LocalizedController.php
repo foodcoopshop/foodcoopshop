@@ -83,7 +83,8 @@ class LocalizedController extends Controller
                 'FridayShort' => __('FridayShort'),
                 'SaturdayShort' => __('SaturdayShort'),
                 'SundayShort' => __('SundayShort'),
-                'CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL')
+                'CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
+                'CurrencyName' => Configure::read('app.currencyName')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
@@ -134,7 +135,6 @@ class LocalizedController extends Controller
                 'WhyIsPriceAdapted' => __('Why_is_price_adapted_(mandatory_field)?'),
                 'OriginalPriceWithoutReductionOfPriceInTime' => __('Original_price_without_reduction_of_price_in_time'),
                 'FromWhichReallyPaidIn' => __('From_which_really_paid_in'),
-                'Euro' => __('Euro'),
                 'AdaptWeight' => __('Adapt_weight?'),
                 'DeliveredWeight' => __('Delivered_weight'),
                 'DeliveredTotalWeight' => __('Delivered_total_weight'),

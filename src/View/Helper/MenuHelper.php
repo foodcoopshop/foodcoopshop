@@ -159,7 +159,7 @@ class MenuHelper extends Helper
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => 'fa-fw fa-euro']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => 'fa-fw fa-' . strtolower(Configure::read('app.currencyName'))]];
         }
         return [];
     }

@@ -19,7 +19,7 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
 ]);
 
-echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . $buttonText, [
+echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_'.strtolower(Configure::read('app.currencyName')).'.png')) . $buttonText, [
     'title' => __d('admin', 'Add_deposit_amount'),
     'class' => 'add-payment-deposit-button icon-with-text',
     'data-object-id' => $rowId

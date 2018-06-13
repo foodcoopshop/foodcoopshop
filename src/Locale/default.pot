@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 17:23+0200\n"
+"POT-Creation-Date: 2018-06-13 20:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -435,9 +435,6 @@ msgid "Original_price_without_reduction_of_price_in_time"
 msgstr ""
 
 msgid "From_which_really_paid_in"
-msgstr ""
-
-msgid "Euro"
 msgstr ""
 
 msgid "Adapt_weight?"

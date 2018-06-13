@@ -99,7 +99,7 @@ foodcoopshop.Cart = {
         // update price
         var oldPrice = productContainer.find('span.price');
         var newPrice = (
-            foodcoopshop.Helper.getEuroAsFloat(oldPrice.html()) +
+            foodcoopshop.Helper.getCurrencyAsFloat(oldPrice.html()) +
             (price * amount)
         );
         oldPrice.html(foodcoopshop.Helper.formatFloatAsCurrency(newPrice));
@@ -109,7 +109,7 @@ foodcoopshop.Cart = {
         var oldDeposit = productContainer.find('.deposit span');
         if (oldDeposit.length > 0) {
             var newDeposit = (
-                foodcoopshop.Helper.getEuroAsFloat(oldDeposit.html()) +
+                foodcoopshop.Helper.getCurrencyAsFloat(oldDeposit.html()) +
                 (deposit * amount)
             );
             oldDeposit.html(foodcoopshop.Helper.formatFloatAsCurrency(newDeposit));
@@ -119,7 +119,7 @@ foodcoopshop.Cart = {
         // update tax
         var oldTax = productContainer.find('span.tax');
         var newTax = (
-            foodcoopshop.Helper.getEuroAsFloat(oldTax.html()) +
+            foodcoopshop.Helper.getCurrencyAsFloat(oldTax.html()) +
             (tax * amount)
         );
         oldTax.html(foodcoopshop.Helper.formatFloatAsCurrency(newTax));
@@ -150,12 +150,12 @@ foodcoopshop.Cart = {
             var productWrapper = $(this).closest('.product-wrapper');
             var productLink = productWrapper.find('.heading h4').html();
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
-            var price = foodcoopshop.Helper.getEuroAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
-            var tax = foodcoopshop.Helper.getEuroAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
+            var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
+            var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
             var image = productWrapper.find('.first-column img');
             var deposit = 0;
             if (productWrapper.find('.entity-wrapper.active .deposit b').length > 0) {
-                deposit = foodcoopshop.Helper.getEuroAsFloat(productWrapper.find('.entity-wrapper.active .deposit b').html());
+                deposit = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .deposit b').html());
             }
             var productId = productWrapper.find('.entity-wrapper.active input[name="productId"]').val();
             var unity = productWrapper.find('div.unity span.value').html();
@@ -268,8 +268,8 @@ foodcoopshop.Cart = {
 
             var productId = $(this).closest('.product').data('product-id');
             var productContainer = $('.product.' + productId);
-            var price = foodcoopshop.Helper.getEuroAsFloat(productContainer.find('.price').html());
-            var tax = foodcoopshop.Helper.getEuroAsFloat(productContainer.find('.tax').html());
+            var price = foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('.price').html());
+            var tax = foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('.tax').html());
             var oldAmount = parseInt(productContainer.find('.amount span.value').html());
             var newPrice = price / oldAmount;
             var newTax = tax / oldAmount;
@@ -284,7 +284,7 @@ foodcoopshop.Cart = {
             var depositContainer = productContainer.find('.deposit span');
             var newDeposit = 0;
             if (depositContainer.length > 0) {
-                var deposit = foodcoopshop.Helper.getEuroAsFloat(depositContainer.html());
+                var deposit = foodcoopshop.Helper.getCurrencyAsFloat(depositContainer.html());
                 newDeposit = deposit / oldAmount;
             }
 
@@ -363,7 +363,7 @@ foodcoopshop.Cart = {
 
         var cartSum = $('.cart p.sum-wrapper span.sum');
         var newCartSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(
-            foodcoopshop.Helper.getEuroAsFloat(cartSum.html()) + amount
+            foodcoopshop.Helper.getCurrencyAsFloat(cartSum.html()) + amount
         );
         cartSum.html(newCartSumHtml);
 
@@ -377,7 +377,7 @@ foodcoopshop.Cart = {
         var cartDepositSum = $('.cart p.deposit-sum-wrapper span.sum');
         cartDepositSum.html(
             foodcoopshop.Helper.formatFloatAsCurrency(
-                foodcoopshop.Helper.getEuroAsFloat(cartDepositSum.html()) + amount
+                foodcoopshop.Helper.getCurrencyAsFloat(cartDepositSum.html()) + amount
             )
         );
     },
@@ -386,7 +386,7 @@ foodcoopshop.Cart = {
         var cartTaxSum = $('.cart p.tax-sum-wrapper span.sum');
         cartTaxSum.html(
             foodcoopshop.Helper.formatFloatAsCurrency(
-                foodcoopshop.Helper.getEuroAsFloat(cartTaxSum.html()) + amount
+                foodcoopshop.Helper.getCurrencyAsFloat(cartTaxSum.html()) + amount
             )
         );
     },
@@ -420,16 +420,16 @@ foodcoopshop.Cart = {
                 foodcoopshop.Helper.applyBlinkEffect(p, function () {
                     if (index == 0) {
                         foodcoopshop.Cart.updateCartSum(
-                            foodcoopshop.Helper.getEuroAsFloat(p.find('span.price').html()) * -1
+                            foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.price').html()) * -1
                         );
                         var deposit = p.find('.deposit span');
                         if (deposit.length > 0) {
                             foodcoopshop.Cart.updateCartDepositSum(
-                                foodcoopshop.Helper.getEuroAsFloat(deposit.html()) * -1
+                                foodcoopshop.Helper.getCurrencyAsFloat(deposit.html()) * -1
                             );
                         }
                         foodcoopshop.Cart.updateCartTaxSum(
-                            foodcoopshop.Helper.getEuroAsFloat(p.find('span.tax').html()) * -1
+                            foodcoopshop.Helper.getCurrencyAsFloat(p.find('span.tax').html()) * -1
                         );
                         var timebasedCurrencyHours = p.find('.timebasedCurrencySeconds');
                         if (timebasedCurrencyHours.length > 0) {

@@ -298,7 +298,7 @@ foodcoopshop.Helper = {
         return this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
     },
       
-    getEuroAsFloat: function (string) {
+    getCurrencyAsFloat: function (string) {
         var currencyRegExp = new RegExp('&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
         return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },

@@ -144,7 +144,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
 
         $html .= '<tr>';
             $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= __d('admin', 'Paid_by_members_in_euro') . ':';
+                $html .= __d('admin', 'Paid_by_members_in') . ' ' . Configure::read('app.currencyName') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
                 $html .= '<b>' .  $this->MyHtml->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
