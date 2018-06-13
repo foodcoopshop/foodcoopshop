@@ -314,7 +314,7 @@ class OrderDetailsController extends AdminAppController
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
         $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
-        $productQuantity = Configure::read('app.numberHelper')->replaceCommaWithDot($productQuantity);
+        $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 0) {
             $message = 'input format wrong';
@@ -501,7 +501,7 @@ class OrderDetailsController extends AdminAppController
         $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));
 
         $productPrice = trim($this->getRequest()->getData('productPrice'));
-        $productPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($productPrice);
+        $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
             $message = 'input format wrong';

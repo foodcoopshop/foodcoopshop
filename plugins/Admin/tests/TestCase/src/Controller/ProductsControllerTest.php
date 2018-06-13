@@ -101,8 +101,8 @@ class ProductsControllerTest extends AppCakeTestCase
      */
     private function assertPriceChange($productId, $price, $expectedNetPrice)
     {
-        $price = Configure::read('app.numberHelper')->replaceCommaWithDot($price);
-        $expectedNetPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($expectedNetPrice);
+        $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
+        $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);

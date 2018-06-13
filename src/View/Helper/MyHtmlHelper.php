@@ -4,6 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\I18n\Number;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -321,7 +322,11 @@ class MyHtmlHelper extends HtmlHelper
 
     public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
     {
-        $result = number_format($amount, $decimals, ',', '.');
+        $result = Number::format($amount, [
+            'locale' => I18n::getLocale(),
+            'places' => $decimals,
+            'precision' => $decimals
+        ]);
         if ($removeTrailingZeros) {
             $result = floatval($amount);
         }

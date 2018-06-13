@@ -77,7 +77,7 @@ class TimebasedCurrencyHelper extends Helper
         $maxHoursValue = str_replace('&nbsp;', ' ', $maxHoursValue);
         
         if (!isset($usedValues[$maxHoursValue])) {
-            $dropdown[$this->MyNumber->replaceCommaWithDot((string) $maxSeconds)] = $maxHoursValue;
+            $dropdown[$this->MyNumber->parseFloatRespectingLocale((string) $maxSeconds)] = $maxHoursValue;
         }
         $dropdown = array_reverse($dropdown, true);
         return $dropdown;
@@ -92,7 +92,7 @@ class TimebasedCurrencyHelper extends Helper
     {
         return str_replace('&nbsp;', ' ', $this->MyHtml->formatAsCurrency(
             $seconds / 3600 *
-            $this->MyNumber->replaceCommaWithDot($exchangeRate)
+            $this->MyNumber->parseFloatRespectingLocale($exchangeRate)
         ));
     }
     

@@ -2,6 +2,7 @@
 
 namespace App\View\Helper;
 
+use Cake\I18n\I18n;
 use Cake\View\Helper\NumberHelper;
 
 /**
@@ -19,9 +20,9 @@ use Cake\View\Helper\NumberHelper;
  */
 class MyNumberHelper extends NumberHelper
 {
-    public function replaceCommaWithDot($double)
+    public function parseFloatRespectingLocale($double)
     {
-        return str_replace(',', '.', $double);
+        return self::parseFloat($double, ['locale' => I18n::getLocale()]);
     }
 }
 ?>
