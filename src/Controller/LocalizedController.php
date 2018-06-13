@@ -85,7 +85,9 @@ class LocalizedController extends Controller
                 'SaturdayShort' => __('SaturdayShort'),
                 'SundayShort' => __('SundayShort'),
                 'CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
-                'CurrencyName' => Configure::read('app.currencyName')
+                'CurrencyName' => Configure::read('app.currencyName'),
+                'ShowMore' => __('Show_more'),
+                'ShowLess' => __('Show_less')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),

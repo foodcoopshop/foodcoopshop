@@ -330,10 +330,12 @@ foodcoopshop.Helper = {
             var toggleMode = elementToToggle.css('display');
 
             if (toggleMode == 'none') {
-                $(this).html($(this).html().replace(/Mehr/, 'Weniger'));
+                var showMoreRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowMore);
+                $(this).html($(this).html().replace(showMoreRegExp, foodcoopshop.LocalizedJs.helper.ShowLess));
                 $(this).addClass('collapsed');
             } else {
-                $(this).html($(this).html().replace(/Weniger/, 'Mehr'));
+                var showLessRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowLess);
+                $(this).html($(this).html().replace(showLessRegExp, foodcoopshop.LocalizedJs.helper.ShowMore));
                 $(this).removeClass('collapsed');
             }
 
