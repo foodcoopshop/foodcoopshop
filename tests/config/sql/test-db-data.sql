@@ -86,8 +86,8 @@ INSERT INTO `fcs_carts` VALUES
 
 /*!40000 ALTER TABLE `fcs_category` DISABLE KEYS */;
 INSERT INTO `fcs_category` VALUES
-(16,0,'Fleischprodukte','',2,11,12,1,'2014-05-14 21:40:51','2014-05-14 21:48:48'),
-(20,0,'Alle Produkte','',2,3,4,1,'2014-05-14 21:53:52','2014-05-17 13:14:22');
+(16,0,'Fleischprodukte','',11,12,1,'2014-05-14 21:40:51','2014-05-14 21:48:48'),
+(20,0,'Alle Produkte','',3,4,1,'2014-05-14 21:53:52','2014-05-17 13:14:22');
 /*!40000 ALTER TABLE `fcs_category` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;
