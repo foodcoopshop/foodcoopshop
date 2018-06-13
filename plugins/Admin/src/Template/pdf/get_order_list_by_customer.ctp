@@ -15,7 +15,7 @@
 
 echo $this->element('pdf/order_list', [
     'groupType' => 'customer',
-    'groupTypeLabel' => __('admin', 'member'),
+    'groupTypeLabel' => __d('admin', 'member'),
     'results' => $results_customer,
     'manufacturer' => isset($manufacturer) ? $manufacturer : []
 ]); // not defined in sendOrderList
