@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 16:48+0200\n"
-"PO-Revision-Date: 2018-06-12 17:20+0200\n"
+"POT-Creation-Date: 2018-06-13 16:24+0200\n"
+"PO-Revision-Date: 2018-06-13 16:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -210,6 +210,103 @@ msgstr "Mein Profil"
 msgid "Contact_person"
 msgstr "Ansprechperson"
 
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
+
+msgid "conveyed_for"
+msgstr "vermittelt für"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Rechnung Nr."
+
+msgid "Orders_from"
+msgstr "Bestellungen vom"
+
+msgid "Invoice_date"
+msgstr "Rechnungsdatum"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Price_excl."
+msgstr "Preis exkl."
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Price_incl."
+msgstr "Preis inkl."
+
+msgid "variable_member_fee"
+msgstr "variabler Mitgliedsbeitrag"
+
+msgid "New_total_sum"
+msgstr "Neue Gesamtsumme"
+
+msgid ""
+"The_total_sum_below_right_(minus_{0}_"
+"%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich "
+"auf dein Konto überwiesen."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Von Mitgliedern bezahlt in {0}"
+
+msgid "Paid_by_members_in_euro"
+msgstr "Von den Mitgliedern bezahlt in Euro"
+
+msgid "Kept_variable_member_fee"
+msgstr "Einbehaltener variabler Mitgliedsbeitrag"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Betrag, der auf dein Konto überwiesen wird"
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Vielen Dank, dass du uns belieferst!"
+
+msgid "Detail_view"
+msgstr "Detailübersicht"
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Order_list_grouped_by"
+msgstr "Bestellliste gruppiert nach"
+
+msgid "Delivery_date"
+msgstr "Liefertermin"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Dear_financial_responsible"
+msgstr "Liebe(r) Finanz-Verantwortliche(r)"
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr "die Rechnungen vom {0} wurden soeben verschickt."
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr "Hier findest du die Übersicht zum Überweisen:"
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr ""
+"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den "
+"tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit "
+"und macht das Guthaben-System weniger fehleranfällig."
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr "(Link nur für Superadmins)."
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr "Vielen Dank für deine Arbeit!"
+
 msgid "docs_route_products"
 msgstr "produkte"
 
@@ -278,16 +375,15 @@ msgstr "Kurze Beschreibung"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
-"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert "
-"werden."
+"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
 
 msgid "Long_description"
 msgstr "Lange Beschreibung"
 
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr ""
-"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf "
-"\"bearbeiten\" klicken."
+"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" "
+"klicken."
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Wird auf der Hersteller-Seite angezeigt."
@@ -315,8 +411,8 @@ msgstr "Firmendaten"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
-"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil "
-"ganz unten rechts."
+"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz "
+"unten rechts."
 
 msgid "Firstname"
 msgstr "Vorname"
@@ -402,12 +498,6 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Product"
-msgstr "Produkt"
-
-msgid "Member"
-msgstr "Mitglied"
-
 msgid "Manually_send_order_list"
 msgstr "Bestellliste manuell versenden"
 
@@ -419,6 +509,12 @@ msgstr "Hersteller-Profil"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "member"
+msgstr "Mitglied"
+
+msgid "product"
+msgstr "Produkt"
 
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
@@ -438,14 +534,8 @@ msgstr "Pfand-Rückgabe"
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
 
-msgid "Amount"
-msgstr "Anzahl"
-
 msgid "Manufacturer"
 msgstr "Hersteller"
-
-msgid "Price"
-msgstr "Preis"
 
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"

@@ -21,7 +21,7 @@ $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 
-$title = $results[0]['ManufacturerName'] . ': Bestellliste sortiert nach ' . $groupType_de;
+$title = $results[0]['ManufacturerName'] . ': '.__d('admin', 'Order_list_grouped_by').' ' . $groupTypeLabel;
 
 $pdf->infoTextForFooter = $title;
 $pdf->SetTitle($title);
@@ -34,25 +34,25 @@ $html = '<h2>' . $title;
  */
 if (! $bulkOrdersAllowed && Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
     $deliveryDate = strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day');
-    $html .= '<br />Liefertermin: ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $deliveryDate);
+    $html .= '<br />'.__d('admin', 'Delivery_date').': ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $deliveryDate);
     $html .= Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') . '</h2>';
 }
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(5);
 
 $widths = [
-    30,
-    235,
+    33,
+    232,
     45,
     50,
     144
 ];
 $headers = [
-    'Anzahl',
-    'Produkt',
-    'Preis',
-    'Datum',
-    'Mitglied'
+    __d('admin', 'Amount'),
+    __d('admin', 'Product'),
+    __d('admin', 'Price'),
+    __d('admin', 'Date'),
+    __d('admin', 'Member')
 ];
 
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType, false);
@@ -65,12 +65,12 @@ $pdf->addLastSumRow(
 $pdf->renderTable();
 
 $pdf->Ln(5);
-$html = '<p>Vielen Dank, dass du uns belieferst!</p>';
+$html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();
 
-$filename = $this->MyHtml->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $deliveryDay, $groupType_de);
+$filename = $this->MyHtml->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $deliveryDay, $groupTypeLabel);
 
 if ($saveParam == 'F') {
     // pdf saved on server

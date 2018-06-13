@@ -465,7 +465,7 @@ class ManufacturersTable extends AppTable
         odu.quantity_in_units as OrderDetailUnitQuantityInUnits,
         odu.product_quantity_in_units as OrderDetailUnitProductQuantityInUnits,
         odu.unit_name as OrderDetailUnitUnitName,
-        DATE_FORMAT (o.date_add, '%d.%m.%Y') as OrderDateAdd,
+        o.date_add as OrderDateAdd,
         c.id_customer AS CustomerId,
         {$customerNameAsSql} AS CustomerName
         FROM ".$this->tablePrefix."order_detail od

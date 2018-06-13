@@ -84,15 +84,15 @@ class SendInvoicesShell extends AppShell
 
         // 5) check if manufacturers have open order details and send email
         $i = 0;
-        $outString = $dateFrom . ' bis ' . $dateTo . '<br />';
-
+        $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
+        
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if (!empty($manufacturer->current_order_count) && $sendInvoice) {
-                $productString = ($manufacturer->order_detail_amount_sum == 1 ? 'Produkt' : 'Produkte');
+                $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $outString .= ' - ' . $manufacturer->name . ': ' . $manufacturer->order_detail_amount_sum . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
@@ -108,7 +108,7 @@ class SendInvoicesShell extends AppShell
             $email = new AppEmail();
             $email->setTemplate('Admin.accounting_information_invoices_sent')
                 ->setTo($accountingEmail)
-                ->setSubject('Rechnungen für ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear() . ' wurden verschickt')
+                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
                 ->setViewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo
@@ -117,7 +117,7 @@ class SendInvoicesShell extends AppShell
         }
         // END send email to accounting employee
 
-        $outString .= 'Verschickte Rechnungen: ' . $i;
+        $outString .= __('Sent_invoices') . ': ' . $i;
 
         $this->stopTimeLogging();
 

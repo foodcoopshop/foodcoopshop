@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 16:48+0200\n"
+"POT-Creation-Date: 2018-06-13 16:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -209,6 +209,96 @@ msgstr ""
 msgid "Contact_person"
 msgstr ""
 
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr ""
+
+msgid "conveyed_for"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Orders_from"
+msgstr ""
+
+msgid "Invoice_date"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Price_excl."
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Price_incl."
+msgstr ""
+
+msgid "variable_member_fee"
+msgstr ""
+
+msgid "New_total_sum"
+msgstr ""
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+
+msgid "Paid_by_members_in_{0}"
+msgstr ""
+
+msgid "Paid_by_members_in_euro"
+msgstr ""
+
+msgid "Kept_variable_member_fee"
+msgstr ""
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr ""
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr ""
+
+msgid "Detail_view"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Order_list_grouped_by"
+msgstr ""
+
+msgid "Delivery_date"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Dear_financial_responsible"
+msgstr ""
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr ""
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr ""
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr ""
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr ""
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr ""
+
 msgid "docs_route_products"
 msgstr ""
 
@@ -395,12 +485,6 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
-msgid "Product"
-msgstr ""
-
-msgid "Member"
-msgstr ""
-
 msgid "Manually_send_order_list"
 msgstr ""
 
@@ -411,6 +495,12 @@ msgid "Manufacturer_profile"
 msgstr ""
 
 msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "member"
+msgstr ""
+
+msgid "product"
 msgstr ""
 
 msgid "all_manufacturers"
@@ -431,13 +521,7 @@ msgstr ""
 msgid "docs_route_pick_up_products"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
 msgid "Manufacturer"
-msgstr ""
-
-msgid "Price"
 msgstr ""
 
 msgid "Amount_minus_eventual_variable_member_fee"

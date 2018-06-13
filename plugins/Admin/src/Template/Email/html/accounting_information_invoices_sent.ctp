@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 10px;">
-            <p>Liebe(r) Finanz-Verantwortliche(r),</p>
+            <p><?php echo __d('admin', 'Dear_financial_responsible'); ?>,</p>
         </td>
     </tr>
 
@@ -28,24 +28,24 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                die Rechnungen vom <b><?php echo $this->MyTime->getLastMonthNameAndYear(); ?></b> wurden soeben verschickt.
+                <?php echo __d('admin', 'the_invoices_from_{0}_have_just_been_sent.', [$this->MyTime->getLastMonthNameAndYear()]); ?>
             </p>
 
             <p>
-                Hier findest du die Übersicht zum Überweisen: <br />
+                <?php echo __d('admin', 'Here_you_find_the_overview_for_making_the_transfers:'); ?><br />
                 <?php $link = Configure::read('app.cakeServerName').'/admin/order-details/index/?dateFrom='.$dateFrom.'&dateTo='.$dateTo.'&orderStates[]='.ORDER_STATE_CASH.'&orderStates[]='.ORDER_STATE_CASH_FREE.'&orderStates[]='.ORDER_STATE_OPEN.'&groupBy=manufacturer'; ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
             
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p>
-                    Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-System weniger fehleranfällig.<br />
+                    <?php echo __d('admin', 'This_is_a_great_opportunity_to_check_the_credit_uploads_link_below.')?><br />
                     <?php $link = Configure::read('app.cakeServerName').$this->Slug->getReport('product'); ?>
-                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a> (Link nur für Superadmins).
+                    <a href="<?php echo $link; ?>"><?php echo $link; ?></a> <?php echo __d('admin', '(Link_only_works_for_superadmins).'); ?>
                 </p>
             <?php } ?>
 
-            <p>Vielen Dank für deine Arbeit!</p>
+            <p><?php echo __d('admin', 'Thank_you_very_much_for_your_work!'); ?></p>
 
         </td>
 

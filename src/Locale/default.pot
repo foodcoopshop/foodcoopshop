@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 16:48+0200\n"
+"POT-Creation-Date: 2018-06-13 16:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -515,6 +515,18 @@ msgstr ""
 msgid "Set_date_of_order_back"
 msgstr ""
 
+msgid "Price_excl."
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Total_sum"
+msgstr ""
+
 msgid "Action_Log_Product_added"
 msgstr ""
 
@@ -801,6 +813,27 @@ msgid "Pick_up_day"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "Runtime"
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "to_(time_context)"
+msgstr ""
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr ""
+
+msgid "Sent_invoices"
+msgstr ""
+
+msgid "Order_period"
+msgstr ""
+
+msgid "Sent_order_lists"
 msgstr ""
 
 msgid "Modified_on"
@@ -1194,6 +1227,12 @@ msgid "Empty_glasses"
 msgstr ""
 
 msgid "Compensation_payment"
+msgstr ""
+
+msgid "_Order_list_filename_"
+msgstr ""
+
+msgid "_Invoice_filename_"
 msgstr ""
 
 msgid "approval_state_ok"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-12 16:48+0200\n"
-"PO-Revision-Date: 2018-06-12 16:33+0200\n"
+"POT-Creation-Date: 2018-06-13 16:24+0200\n"
+"PO-Revision-Date: 2018-06-13 16:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -542,6 +542,18 @@ msgstr "Bestellung rückdatieren auf"
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
 
+msgid "Price_excl."
+msgstr "Preis exkl."
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Total_sum"
+msgstr "Gesamtsumme"
+
 msgid "Action_Log_Product_added"
 msgstr "Produkt: erstellt"
 
@@ -829,6 +841,27 @@ msgstr "Abholtag"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
+msgid "Runtime"
+msgstr "Laufzeit"
+
+msgid "seconds"
+msgstr "Sekunden"
+
+msgid "to_(time_context)"
+msgstr "bis"
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Rechnungen für {0} wurden verschickt"
+
+msgid "Sent_invoices"
+msgstr "Verschickte Rechnungen"
+
+msgid "Order_period"
+msgstr "Bestellzeitraum"
+
+msgid "Sent_order_lists"
+msgstr "Verschickte Bestelllisten"
 
 msgid "Modified_on"
 msgstr "Geändert am"
@@ -1250,6 +1283,12 @@ msgstr "Leergebinde"
 
 msgid "Compensation_payment"
 msgstr "Ausgleichszahlung"
+
+msgid "_Order_list_filename_"
+msgstr "_Bestellliste_"
+
+msgid "_Invoice_filename_"
+msgstr "_Rechnung_"
 
 msgid "approval_state_ok"
 msgstr "ok"

@@ -22,11 +22,11 @@ $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
 
-$pdf->SetTitle('Rechnung für den Bestell-Zeitraum ' . $dateFrom . ' - ' . $dateTo);
+$pdf->SetTitle(__d('admin', 'Invoice_for_the_order_period_{0}_to_{1}', [$dateFrom, $dateTo]));
 
 $html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td width="200">';
-$html .= '<p><b>vermittelt für</b></p>';
+$html .= '<p><b>'.__d('admin', 'conveyed_for').'</b></p>';
 $manufacturerAddress = '<p>' . $results_product[0]['ManufacturerName'] . '<br />';
 $manufacturerAddress .= $results_product[0]['ManufacturerFirstname'] . ' ' . $results_product[0]['ManufacturerLastname'] . '<br />';
 $manufacturerAddress .= $results_product[0]['ManufacturerAddress1'] . '<br />';
@@ -40,9 +40,9 @@ if (! isset($newInvoiceNumber)) {
 }
 
 $html .= '<td width="330">';
-$html .= '<h2>Rechnung Nr.: ' . $newInvoiceNumber . '</h2>';
-$html .= '<h3>Bestellungen vom ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear() . '</h3>';
-$html .= '<h3>Rechnungsdatum: ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '</h3>';
+$html .= '<h2>'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber . '</h2>';
+$html .= '<h3>'.__d('admin', 'Orders_from').' ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear() . '</h3>';
+$html .= '<h3>'.__d('admin', 'Invoice_date').': ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '</h3>';
 $html .= '</td>';
 $html .= '</tr></table>';
 $pdf->writeHTML($html, true, false, true, false, '');
@@ -51,22 +51,22 @@ $pdf->infoTextForFooter = $results_product[0]['ManufacturerName'];
 if ($results_product[0]['ManufacturerUidNumber'] != '') {
     $pdf->infoTextForFooter .= ', UID-Nummer: ' . $results_product[0]['ManufacturerUidNumber'];
 }
-$pdf->infoTextForFooter .= ', Rechnung Nr. ' . $newInvoiceNumber;
+$pdf->infoTextForFooter .= ', '.__d('admin', 'Invoice_number_abbreviation').' ' . $newInvoiceNumber;
 
 // Produktauflistung Start
 $widths = [
-    30,
-    335,
+    33,
+    332,
     55,
     55,
     55
 ];
 $headers = [
-    'Anzahl',
-    'Produkt',
-    'Preis exkl.',
-    'USt.',
-    'Preis inkl.'
+    __d('admin', 'Amount'),
+    __d('admin', 'Product'),
+    __d('admin', 'Price_excl.'),
+    __d('admin', 'VAT'),
+    __d('admin', 'Price_incl.')
 ];
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
 $pdf->addLastSumRow(
@@ -90,7 +90,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
 
     $html .= '<tr>';
     $html .= '<td width="' . $firstColumnWidth . '">';
-    $html .= '<h3> - ' . $variableMemberFee . '% variabler Mitgliedsbeitrag</h3>';
+    $html .= '<h3> - ' . $variableMemberFee . '% '.__d('admin', 'variable_member_fee').'</h3>';
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
@@ -100,7 +100,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
 
     $html .= '<tr>';
     $html .= '<td width="' . $firstColumnWidth . '">';
-    $html .= '<h3>Neue Gesamtsumme</h3>';
+    $html .= '<h3>'.__d('admin', 'New_total_sum').'</h3>';
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
@@ -111,11 +111,11 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $html .= '</table>';
     $pdf->writeHTML($html, true, false, true, false, '');
 
-    $html = '<p>Die neue Gesamtsumme rechts unten (abzüglich ' . $variableMemberFee . '% variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen.</p>';
+    $html = '<p>'.__d('admin', 'The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible.', [$variableMemberFee]).'</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 } else {
-    $html = '<p>Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen.</p>';
+    $html = '<p>'.__d('admin', 'The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible.').'</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 }
@@ -135,7 +135,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         
         $html .= '<tr>';
             $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= 'Von den Mitgliedern bezahlt in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':';
+                $html .= __d('admin', 'Paid_by_members_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
                 $html .= '<b>' .  $this->MyHtml->formatAsEuro($sumTimebasedCurrencyPriceIncl) . '</b>';
@@ -144,7 +144,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
 
         $html .= '<tr>';
             $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= 'Von den Mitgliedern bezahlt in Euro:';
+                $html .= __d('admin', 'Paid_by_members_in_euro') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
                 $html .= '<b>' .  $this->MyHtml->formatAsEuro($sumPriceForTimebasedCurrency) . '</b>';
@@ -158,7 +158,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         
         $html .= '<tr>';
             $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= 'Einbehaltener variabler Mitgliedsbeitrag:';
+                $html .= __d('admin', 'Kept_variable_member_fee') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
                 $html .= '<b>'.$this->MyHtml->formatAsEuro($compensatedPrice).'</b>';
@@ -167,7 +167,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         
         $html .= '<tr>';
             $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= 'Betrag, der auf dein Konto überwiesen wird:';
+                $html .= __d('admin', 'Amount_that_will_be_transferred_to_your_bank_account') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
                 $html .= '<b>'.$this->MyHtml->formatAsEuro($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
@@ -188,18 +188,18 @@ if ($results_product[0]['ManufacturerAdditionalTextForInvoice'] != '') {
 }
 
 $pdf->Ln(3);
-$html = '<p>Vielen Dank, dass du uns belieferst!</p>';
+$html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
 // Detailübersicht Start
 $pdf->AddPage();
-$html = '<h2>Detailübersicht</h2>';
+$html = '<h2>'.__d('admin', 'Detail_view').'</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(5);
 
 $widths = [
-    30,
-    181,
+    33,
+    178,
     45,
     45,
     45,
@@ -207,13 +207,13 @@ $widths = [
     134
 ];
 $headers = [
-    'Anzahl',
-    'Produkt',
-    'Preis exkl.',
-    'USt.',
-    'Preis inkl.',
-    'Datum',
-    'Mitglied'
+    __d('admin', 'Amount'),
+    __d('admin', 'Product'),
+    __d('admin', 'Price_excl.'),
+    __d('admin', 'VAT'),
+    __d('admin', 'Price_incl.'),
+    __d('admin', 'Date'),
+    __d('admin', 'Member')
 ];
 $pdf->renderDetailedOrderList($results_customer, $widths, $headers, 'customer');
 $pdf->renderTable();
