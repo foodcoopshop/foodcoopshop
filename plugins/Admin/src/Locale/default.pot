@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 17:15+0200\n"
+"POT-Creation-Date: 2018-06-13 17:23+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -26,10 +26,13 @@ msgstr ""
 msgid "_Order_list_filename_"
 msgstr ""
 
-msgid "Product"
+msgid "product"
 msgstr ""
 
 msgid "member"
+msgstr ""
+
+msgid "Order_lists"
 msgstr ""
 
 msgid "Add_manufacturer"
@@ -173,9 +176,6 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-msgid "Order_lists"
-msgstr ""
-
 msgid "Manufacturers"
 msgstr ""
 
@@ -234,6 +234,9 @@ msgid "Invoice_date"
 msgstr ""
 
 msgid "Amount"
+msgstr ""
+
+msgid "Product"
 msgstr ""
 
 msgid "Price_excl."
@@ -306,6 +309,24 @@ msgid "Thank_you_very_much_for_your_work!"
 msgstr ""
 
 msgid "docs_route_products"
+msgstr ""
+
+msgid "Pick_up_date"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Order_list_by_product"
+msgstr ""
+
+msgid "Order_list_by_member"
+msgstr ""
+
+msgid "Show_list_(grouped_by_product)"
+msgstr ""
+
+msgid "Show_list_(grouped_by_member)"
 msgstr ""
 
 msgid "docs_route_manufacturers"
@@ -503,9 +524,6 @@ msgstr ""
 msgid "Copy_all_email_addresses"
 msgstr ""
 
-msgid "product"
-msgstr ""
-
 msgid "all_manufacturers"
 msgstr ""
 
@@ -522,9 +540,6 @@ msgid "Deposit_return"
 msgstr ""
 
 msgid "docs_route_pick_up_products"
-msgstr ""
-
-msgid "Manufacturer"
 msgstr ""
 
 msgid "Amount_minus_eventual_variable_member_fee"

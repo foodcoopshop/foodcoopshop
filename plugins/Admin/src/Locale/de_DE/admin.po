@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 17:15+0200\n"
-"PO-Revision-Date: 2018-06-13 16:49+0200\n"
+"POT-Creation-Date: 2018-06-13 17:23+0200\n"
+"PO-Revision-Date: 2018-06-13 17:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -27,11 +27,14 @@ msgstr "geändert"
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
 
-msgid "Product"
+msgid "product"
 msgstr "Produkt"
 
 msgid "member"
 msgstr "Mitglied"
+
+msgid "Order_lists"
+msgstr "Bestelllisten"
 
 msgid "Add_manufacturer"
 msgstr "Neuen Hersteller erstellen"
@@ -130,14 +133,10 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Pfand-Betrag für {0} eintragen"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen "
-"wird."
+msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen wird."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld "
-"ausgeglichen?"
+msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
 
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
@@ -177,9 +176,6 @@ msgstr "Homepage-Verwaltung"
 
 msgid "Home"
 msgstr "Home"
-
-msgid "Order_lists"
-msgstr "Bestelllisten"
 
 msgid "Manufacturers"
 msgstr "Hersteller"
@@ -241,6 +237,9 @@ msgstr "Rechnungsdatum"
 msgid "Amount"
 msgstr "Anzahl"
 
+msgid "Product"
+msgstr "Produkt"
+
 msgid "Price_excl."
 msgstr "Preis exkl."
 
@@ -260,13 +259,11 @@ msgid ""
 "The_total_sum_below_right_(minus_{0}_"
 "%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird "
-"so bald wie möglich auf dein Konto überwiesen."
+"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich "
+"auf dein Konto überwiesen."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-"Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto "
-"überwiesen."
+msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
 
 msgid "Paid_by_members_in_{0}"
 msgstr "Von Mitgliedern bezahlt in {0}"
@@ -309,10 +306,9 @@ msgstr "Hier findest du die Übersicht zum Überweisen:"
 
 msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
 msgstr ""
-"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen "
-"Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und "
-"bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-"
-"System weniger fehleranfällig."
+"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den "
+"tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit "
+"und macht das Guthaben-System weniger fehleranfällig."
 
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link nur für Superadmins)."
@@ -322,6 +318,24 @@ msgstr "Vielen Dank für deine Arbeit!"
 
 msgid "docs_route_products"
 msgstr "produkte"
+
+msgid "Pick_up_date"
+msgstr "Abholdatum"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Order_list_by_product"
+msgstr "Bestellliste nach Produkt"
+
+msgid "Order_list_by_member"
+msgstr "Bestellliste nach Mitglied"
+
+msgid "Show_list_(grouped_by_product)"
+msgstr "Liste anzeigen (gruppiet nach Produkt)"
+
+msgid "Show_list_(grouped_by_member)"
+msgstr "Liste anzeigen (gruppiet nach Mitglied)"
 
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
@@ -388,16 +402,15 @@ msgstr "Kurze Beschreibung"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
-"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst "
-"nicht verändert werden."
+"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
 
 msgid "Long_description"
 msgstr "Lange Beschreibung"
 
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr ""
-"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und "
-"dann auf \"bearbeiten\" klicken."
+"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" "
+"klicken."
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Wird auf der Hersteller-Seite angezeigt."
@@ -409,9 +422,7 @@ msgid "Bank_account_data"
 msgstr "Bankdaten"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
-msgstr ""
-"werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse "
-"verwendet."
+msgstr "werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet."
 
 msgid "Bank"
 msgstr "Bank"
@@ -427,8 +438,8 @@ msgstr "Firmendaten"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
-"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem "
-"Hersteller-Profil ganz unten rechts."
+"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz "
+"unten rechts."
 
 msgid "Firstname"
 msgstr "Vorname"
@@ -526,9 +537,6 @@ msgstr "Hersteller-Profil"
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
 
-msgid "product"
-msgstr "Produkt"
-
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
 
@@ -546,9 +554,6 @@ msgstr "Pfand-Rückgabe"
 
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
-
-msgid "Manufacturer"
-msgstr "Hersteller"
 
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
@@ -587,8 +592,7 @@ msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"

@@ -46,12 +46,13 @@ class ListsController extends AdminAppController
 
         foreach ($objects as $name => $object) {
             if (preg_match('/\.pdf$/', $name)) {
+                
                 // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
                 // the following preg_match does not make a batch renaming necessary
-                if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'Product').'|Artikel)_/', $name, $matches)) {
+                if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|Artikel)/', $name, $matches)) {
                     continue;
                 }
-
+                
                 $deliveryDate = substr($object->getFileName(), 0, 10);
 
                 // date check
@@ -97,7 +98,7 @@ class ListsController extends AdminAppController
         }
         $this->set('files', $files);
 
-        $this->set('title_for_layout', __('Order_lists'));
+        $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
 
     /**
