@@ -35,6 +35,7 @@ class LocalizedController extends Controller
             ],
             'helper' => [
                 'defaultLocale' => Configure::read('App.defaultLocale'),
+                'defaultLocaleInBCP47' => str_replace('_', '-', Configure::read('App.defaultLocale')),
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),

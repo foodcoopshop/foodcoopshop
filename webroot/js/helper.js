@@ -303,19 +303,23 @@ foodcoopshop.Helper = {
         return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
     
-    formatFloatAsString: function(float, removeTrailingZeros) {
-        removeTrailingZeros = removeTrailingZeros || false;
-        if (removeTrailingZeros) {
-            float = float.toString();
-        } else {
-            float = float.toFixed(2);
-        }
-        var floatAsString = float.replace(/\./, ',');
+    formatFloatAsString: function(float) {
+        var floatAsString = float.toLocaleString(
+            foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
         return floatAsString;
     },
     
     getStringAsFloat: function (string) {
-        return parseFloat(string.replace(/,/, '.'));
+        // german uses , as decimal separator and not as thousand separator
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'de-DE') {
+            string = string.replace(/,/, '.');
+        }
+        return parseFloat(string);
     },
 
     bindToggleLinks: function (autoOpen) {
