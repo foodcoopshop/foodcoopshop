@@ -28,13 +28,8 @@ $this->element('addScript', [
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
             class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
     </div>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Einstellungen ändern.</li>
-    </ul>
 </div>
 
 <div class="sc"></div>

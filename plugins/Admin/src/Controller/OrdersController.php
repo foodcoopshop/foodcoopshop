@@ -344,12 +344,12 @@ class OrdersController extends AdminAppController
         
         $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
-        $this->set('title_for_layout', 'Bestellungen');
+        $this->set('title_for_layout', __d('admin', 'Orders'));
     }
 
     public function iframeStartPage()
     {
-        $this->set('title_for_layout', 'Sofort-Bestellung');
+        $this->set('title_for_layout', __d('admin', 'Shop_order'));
     }
 
     /**
@@ -374,7 +374,7 @@ class OrdersController extends AdminAppController
         if (! empty($shopOrderCustomer)) {
             $this->getRequest()->getSession()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
         } else {
-            $this->Flash->error('Es wurde kein Mitglied mit der Id <b>' . $customerId . '</b> gefunden.');
+            $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }
         $this->redirect('/');
     }

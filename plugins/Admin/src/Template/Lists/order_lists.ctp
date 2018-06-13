@@ -28,18 +28,14 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            Abholtag <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
-            <div class="right"></div>
+            <?php echo __d('admin', 'Pick_up_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
+            <div class="right">
+            <?php
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
+            ?>
+            </div>
         <?php echo $this->Form->end(); ?>
     </div>
-
-    <div id="help-container">
-        <ul>
-            <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die verschickten Bestelllisten
-                angezeigt.</li>
-        </ul>
-    </div>    
     
     <?php
     echo '<table class="list">';

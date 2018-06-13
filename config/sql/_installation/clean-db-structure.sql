@@ -112,7 +112,6 @@ CREATE TABLE `fcs_category` (
   `id_parent` int(10) unsigned NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL,
   `description` text NOT NULL,
-  `level_depth` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `nleft` int(10) unsigned NOT NULL DEFAULT '0',
   `nright` int(10) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -121,7 +120,6 @@ CREATE TABLE `fcs_category` (
   PRIMARY KEY (`id_category`),
   KEY `category_parent` (`id_parent`),
   KEY `nleftrightactive` (`nleft`,`nright`,`active`),
-  KEY `level_depth` (`level_depth`),
   KEY `nright` (`nright`),
   KEY `activenleft` (`active`,`nleft`),
   KEY `activenright` (`active`,`nright`)
@@ -148,6 +146,7 @@ CREATE TABLE `fcs_configuration` (
   `value` text,
   `type` varchar(20) NOT NULL DEFAULT '',
   `position` int(8) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(5) DEFAULT NULL,
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_configuration`),

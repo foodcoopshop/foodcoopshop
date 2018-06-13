@@ -27,8 +27,11 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 <div class="accept-updated-terms-of-use-form">
-    <h2>Hallo <?php echo $appAuth->getUserFirstname(); ?>,</h2>
-    <p>um diese Plattform weiterhin verwenden zu können, <b><a class="terms-of-use-overlay" href="#terms-of-use">lese bitte die geänderten Nutzungsbedingungen</a></b> und akzeptiere sie.</p>
+    <h2><?php echo __('Hello'); ?> <?php echo $appAuth->getUserFirstname(); ?>,</h2>
+    <?php
+        $termsOfUseTermsLink = '<a class="terms-of-use-overlay" href="#terms-of-use">'.__('terms_and_conditions').'</a>';
+    ?>
+    <p><?php echo __('if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}.', ['<b>' . $termsOfUseTermsLink . '</b>']); ?></p>
     <form action="<?php echo $this->Slug->getAcceptTermsOfUse(); ?>" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
         <?php
             echo '<div id="terms-of-use" class="featherlight-overlay">';
@@ -39,13 +42,13 @@ $this->element('addScript', ['script' =>
         }
             echo '</div>';
             echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                'label' => 'Ich akzeptiere die <b><a class="terms-of-use-overlay" href="#terms-of-use">Nutzungsbedingungen</a></b>',
+                'label' => __('I_accept_the_{0}.', ['<b>' . $termsOfUseTermsLink . '</b>']),
                 'type' => 'checkbox',
                 'id' => 'CustomerTermsOfUseAcceptedDateCheckbox_'.StringComponent::createRandomString(),
                 'escape' => false
             ]);
         ?>
         <br />
-        <button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> Speichern</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check fa-lg"></i> <?php echo __('Save'); ?></button>
     </form>
 </div>

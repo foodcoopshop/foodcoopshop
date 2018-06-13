@@ -139,7 +139,7 @@ class ActionLogsController extends AdminAppController
 
         $titleForLayout = 'Aktivitäten';
         if (isset($this->ActionLog->types[$type])) {
-            $titleForLayout .= ' | ' . $this->ActionLog->types[$type]['de'];
+            $titleForLayout .= ' | ' . $this->ActionLog->types[$type]['name'];
         }
         $this->set('title_for_layout', $titleForLayout);
     }

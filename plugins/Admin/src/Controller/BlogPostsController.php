@@ -131,7 +131,7 @@ class BlogPostsController extends AdminAppController
         
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
         if (!empty($blogPost->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('blogPost', $blogPost);
             $this->render('edit');
         } else {

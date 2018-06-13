@@ -37,18 +37,12 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->control('type', ['class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '']); ?>
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
-            <div class="right"></div>
+            <div class="right">
+            	<?php
+            	   echo $this->element('printIcon');
+            	?>
+            </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite siehst du alle Aktivitäten im FoodCoopShop.</li>
-            <?php if ($appAuth->isManufacturer()) { ?>
-                <li>Die stornierten Produkte werden erst ab dem
-                20.07.2015 angezeigt.</li>
-            <?php } ?>
-        </ul>
     </div>
 
 <?php
@@ -79,7 +73,7 @@ foreach ($actionLogs as $actionLog) {
 
     echo '<td>';
     echo $this->Html->link(
-        $actionType['de'],
+        $actionType['name'],
         '/admin/action-logs/index/?type='.$actionLog->type.'&productId='.$productId.'&customerId='.$customerId.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';

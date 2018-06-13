@@ -473,21 +473,21 @@ class CustomersTable extends AppTable
 
         $customersForDropdown = [];
         if (! empty($onlineCustomers)) {
-            $customersForDropdown['Mitglieder: aktiv'] = $onlineCustomers;
+            $customersForDropdown[__('Members:_active')] = $onlineCustomers;
         }
         if (! empty($notYetOrderedCustomers)) {
-            $customersForDropdown['Mitglieder: noch nie bestellt'] = $notYetOrderedCustomers;
+            $customersForDropdown[__('Members:_never_ordered')] = $notYetOrderedCustomers;
         }
         if (! empty($onlineManufacturers)) {
             asort($onlineManufacturers);
-            $customersForDropdown['Hersteller: aktiv'] = $onlineManufacturers;
+            $customersForDropdown[__('Manufacturers:_active')] = $onlineManufacturers;
         }
         if (! empty($offlineManufacturers)) {
             asort($offlineManufacturers);
-            $customersForDropdown['Hersteller: inaktiv'] = $offlineManufacturers;
+            $customersForDropdown[__('Manufacturers:_inactive')] = $offlineManufacturers;
         }
         if (! empty($offlineCustomers) && $includeOfflineCustomers) {
-            $customersForDropdown['Mitglieder: inaktiv'] = $offlineCustomers;
+            $customersForDropdown[__('Members:_inactive')] = $offlineCustomers;
         }
         return $customersForDropdown;
     }

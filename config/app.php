@@ -39,7 +39,7 @@ return [
     'App' => [
         'namespace' => 'App',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
-        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'de'),
+        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'de_DE'),
         'base' => false,
         'dir' => 'src',
         'webroot' => 'webroot',

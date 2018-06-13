@@ -26,18 +26,18 @@ $this->element('addScript', ['script' =>
     $btnClass = 'btn-success';
     ?>
   
-  <h1>Anmelden</h1>
+  <h1><?php echo __('Sign_in'); ?></h1>
   
   <form id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          echo $this->Form->control('email', ['label' => 'E-Mail']);
-          echo $this->Form->control('passwd', ['label' => 'Passwort']);
+          echo $this->Form->control('email', ['label' => __('Email')]);
+          echo $this->Form->control('passwd', ['label' => __('Password')]);
 
           echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
-                  'label' => 'Angemeldet bleiben<br /><small>und Cookie akzeptieren</small>',
+                  'label' => __('Stay_signed_in').'<br /><small>'.__('and_accept_cookie').'</small>',
                   'escape' => false
               ]);
               echo '</div>';
@@ -45,11 +45,11 @@ $this->element('addScript', ['script' =>
         
         <div class="sc"></div>
         <?php
-            echo '<a style="margin-top: 10px;float: left;" href="/neues-passwort-anfordern">Passwort vergessen?</a>';
+            echo '<a style="margin-top: 10px;float: left;" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
         ?>
          
         <div class="sc"></div>
-        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fa fa-sign-in fa-lg"></i> Anmelden</button>
+        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fa fa-sign-in fa-lg"></i> <?php echo __('Sign_in'); ?></button>
         
   </form>
   
@@ -60,7 +60,7 @@ $this->element('addScript', ['script' =>
         ]);
     ?>
       <div class="sc"></div>
-      <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;">Mitgliedskonto erstellen</h1>
+      <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;"><?php echo __('Create_account'); ?></h1>
       
             <?php
             echo $this->Form->create(
@@ -71,7 +71,7 @@ $this->element('addScript', ['script' =>
                     'novalidate' => 'novalidate'
                 ]
             );
-              echo $this->Form->control('Customers.address_customer.email', ['label' => 'E-Mail', 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
+              echo $this->Form->control('Customers.address_customer.email', ['label' => __('Email'), 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
 
               echo '<div class="detail-form">';
 
@@ -81,27 +81,28 @@ $this->element('addScript', ['script' =>
 
                   echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
 
-                  echo $this->Form->control('Customers.firstname', ['label' => 'Vorname', 'required' => true]); // required should not be necessary here
-                  echo $this->Form->control('Customers.lastname', ['label' => 'Nachname', 'required' => true]); // required should not be necessary here
+                  echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here
+                  echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
 
-                  echo $this->Form->control('Customers.address_customer.address1', ['label' => 'Straße']);
-                  echo $this->Form->control('Customers.address_customer.address2', ['label' => 'Adresszusatz']);
+                  echo $this->Form->control('Customers.address_customer.address1', ['label' => __('Street')]);
+                  echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional_information')]);
 
-                  echo $this->Form->control('Customers.address_customer.postcode', ['label' => 'PLZ']);
-                  echo $this->Form->control('Customers.address_customer.city', ['label' => 'Ort']);
+                  echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
+                  echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);
 
-                  echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => 'Handy']);
-                  echo $this->Form->control('Customers.address_customer.phone', ['label' => 'Telefon']);
+                  echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('Mobile')]);
+                  echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
 
-            if (Configure::read('app.emailOrderReminderEnabled')) {
-                echo $this->Form->control('Customers.newsletter', ['label' => 'Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.', 'type' => 'checkbox']);
-            }
+                  if (Configure::read('app.emailOrderReminderEnabled')) {
+                      echo $this->Form->control('Customers.newsletter', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                  }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
                     echo $this->element('legal/termsOfUse');
                   echo '</div>';
+                  $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
                   echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                      'label' => 'Ich akzeptiere die <a href="#terms-of-use">Nutzungsbedingungen</a>',
+                      'label' => __('I_accept_the_{0}', [$termsOfUseLink]),
                       'type' => 'checkbox',
                       'escape' => false
                   ]);
@@ -110,7 +111,7 @@ $this->element('addScript', ['script' =>
               
               <div class="sc"></div>
               <br />
-              <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> Mitgliedskonto erstellen</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-user fa-lg"></i> <?php echo __('Create_account'); ?></button>
           
           </div>
         <?php echo $this->Form->end(); ?>

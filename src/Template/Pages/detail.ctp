@@ -41,7 +41,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
         [
-            'title' => 'Bearbeiten'
+            'title' => __('Edit')
         ],
         $this->Slug->getPageEdit($page->id_page)
     );

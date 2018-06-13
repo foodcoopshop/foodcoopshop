@@ -35,6 +35,9 @@ class ConfigurationHelper extends Helper
                     APP_OFF => 'nein'
                 ];
                 break;
+            case 'FCS_LOCALE':
+                return Configure::read('app.implementedLocales');
+                break;
             case 'FCS_SHOP_ORDER_DEFAULT_STATE':
                 return Configure::read('app.htmlHelper')->getVisibleOrderStates();
                 break;

@@ -146,7 +146,7 @@ class PaymentsController extends AdminAppController
         );
 
         if (!empty($payment->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('payment', $payment);
         } else {
             $payment = $this->Payment->patchEntity(

@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -25,16 +26,25 @@ class MyHtmlHelper extends HtmlHelper
     
     public function __construct(View $View, array $config = [])
     {
-        // wrap js block with jquery document ready
-        $this->_defaultConfig['templates']['javascriptblock'] =
-        "<script{{attrs}}>
+        $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
+        parent::__construct($View, $config);
+    }
+    
+    function wrapJavascriptBlock($content) {
+        return "<script>
             //<![CDATA[
                 $(document).ready(function() {
-                    {{content}}
+                    ".$content."
                 });
             //]]>
         </script>";
-        parent::__construct($View, $config);
+    }
+    
+    public function getDocsUrl($page)
+    {
+        $languageCode = substr(I18n::getLocale(), 0, 2);
+        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/' . $page;
+        return $url;
     }
     
     public function getNameRespectingIsDeleted($customer)
@@ -152,33 +162,33 @@ class MyHtmlHelper extends HtmlHelper
             $imprintLines[] = @$manufacturer->address_manufacturer->postcode . ' ' . @$manufacturer->address_manufacturer->city;
         }
         if ($manufacturer->address_manufacturer->phone_mobile != '') {
-            $imprintLines[] = 'Mobil: ' . $manufacturer->address_manufacturer->phone_mobile;
+            $imprintLines[] = __('Mobile') . ': ' . $manufacturer->address_manufacturer->phone_mobile;
         }
         if ($manufacturer->address_manufacturer->phone != '') {
-            $imprintLines[] = 'Telefon: ' . $manufacturer->address_manufacturer->phone;
+            $imprintLines[] = __('Phone') . ': ' . $manufacturer->address_manufacturer->phone;
         }
-        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
+        $imprintLines[] = __('Email') . ': ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
 
         if (!$addressOnly) {
             if ($manufacturer->homepage != '') {
-                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer->homepage, $manufacturer->homepage, ['options' => ['target' => '_blank']]) : $manufacturer->homepage);
+                $imprintLines[] = __('Website') . ': ' . ($outputType == 'html' ? self::link($manufacturer->homepage, $manufacturer->homepage, ['options' => ['target' => '_blank']]) : $manufacturer->homepage);
             }
             $imprintLines[] = ''; // new line
             if ($manufacturer->uid_number != '') {
-                $imprintLines[] = 'UID-Nummer: ' . $manufacturer->uid_number;
+                $imprintLines[] = __('VAT_number') . ': ' . $manufacturer->uid_number;
             }
 
             if ($manufacturer->firmenbuchnummer != '') {
-                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer->firmenbuchnummer;
+                $imprintLines[] = __('Commercial_register_number') . ': ' . $manufacturer->firmenbuchnummer;
             }
             if ($manufacturer->firmengericht != '') {
-                $imprintLines[] = 'Firmengericht: ' . $manufacturer->firmengericht;
+                $imprintLines[] = __('Company_court') . ': ' . $manufacturer->firmengericht;
             }
             if ($manufacturer->aufsichtsbehoerde != '') {
-                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer->aufsichtsbehoerde;
+                $imprintLines[] = __('Supervisory_authority') .': ' . $manufacturer->aufsichtsbehoerde;
             }
             if ($manufacturer->kammer != '') {
-                $imprintLines[] = 'Kammer: ' . $manufacturer->kammer;
+                $imprintLines[] = __('Chamber') . ': ' . $manufacturer->kammer;
             }
         }
         return '<p>'.implode('<br />', $imprintLines).'</p>';
@@ -413,8 +423,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerDepositPaymentTexts()
     {
         $paymentTexts = [
-            'empty_glasses' => 'Leergebinde',
-            'money' => 'Ausgleichszahlung'
+            'empty_glasses' => __('Empty_glasses'),
+            'money' => __('Compensation_payment')
         ];
         return $paymentTexts;
     }
@@ -592,7 +602,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStates()
     {
         $orderStates = self::getVisibleOrderStates();
-        $orderStates[ORDER_STATE_CANCELLED] = 'storniert';
+        $orderStates[ORDER_STATE_CANCELLED] = __('order_state_cancelled');
         return $orderStates;
     }
 

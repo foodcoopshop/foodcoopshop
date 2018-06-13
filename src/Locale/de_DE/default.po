@@ -1,0 +1,1148 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-06-11 18:16+0200\n"
+"PO-Revision-Date: 2018-06-11 17:46+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.8\n"
+
+msgid "You_are_not_signed_in."
+msgstr "Du bist nicht angemeldet."
+
+msgid "No_access_for_manufacturers."
+msgstr "Herstellern steht diese Funktion leider nicht zur Verfügung."
+
+msgid "Your_cart"
+msgstr "Dein Warenkorb"
+
+msgid "Order_confirmation"
+msgstr "Bestellbestätigung"
+
+msgid "Filename_Cancellation-information-and-form"
+msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
+
+msgid "Filename_Order-confirmation"
+msgstr "Bestelluebersicht"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Allgemeine-Geschaeftsbedingungen"
+
+msgid "Error_while_creating_the_order."
+msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
+
+msgid "Error_while_saving_the_ordered_products."
+msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
+
+msgid "Finish_cart"
+msgstr "Warenkorb abschließen"
+
+msgid "Your_cart_was_empty"
+msgstr "Dein Warenkorb war leer"
+
+msgid ""
+"The_desired_amount_{0}_of_the_product_{1}"
+"_is_not_available_any_more_available_amount_{2}."
+msgstr ""
+"Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. "
+"Verfügbare Menge: {2}"
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr ""
+"Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die "
+"Bestellung abzuschließen."
+
+msgid ""
+"The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}"
+"_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+"Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr "
+"verfügbar. Verfügbare Menge: {3}"
+
+msgid "The_attribute_does_not_exist."
+msgstr "Die Variante existiert nicht."
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+"Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
+
+msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgstr ""
+"Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr "
+"aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Notification_about_shop_order_order_number_{0}"
+msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
+
+msgid "Your_order_has_been_placed"
+msgstr "Deine Bestellung ist abgeschlossen"
+
+msgid "Product_{0}_was_not_available_in_cart."
+msgstr "Produkt {0} war nicht in Warenkorb vorhanden."
+
+msgid "Your_cart_has_been_emptied_you_can_add_new_products_now."
+msgstr "Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen."
+
+msgid "Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart."
+msgstr ""
+"Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb "
+"geladen."
+
+msgid "You_can_add_more_products_now."
+msgstr "Du kannst jetzt weitere Produkte hinzufügen."
+
+msgid "1_product_is_not_available_any_more."
+msgstr "1 Produkt ist nicht mehr verfügbar."
+
+msgid "{0}_products_are_not_available_any_more."
+msgstr "{0} Produkte sind nicht mehr verfügbar."
+
+msgid "There_are_no_orders_available."
+msgstr "Es sind keine Bestellungen vorhanden."
+
+msgid "New_products"
+msgstr "Neue Produkte"
+
+msgid "Search"
+msgstr "Suche"
+
+msgid "Accept_terms_of_use"
+msgstr "Nutzungsbedingungen akzeptieren"
+
+msgid "Accepting_the_terms_of_use_have_been_saved."
+msgstr "Das Akzeptieren der Nutzungsbedingungen wurde gespeichert. Vielen Dank."
+
+msgid "Request_new_password"
+msgstr "Neues Passwort anfordern"
+
+msgid "Errors_while_saving!"
+msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "Request_for_new_password_for_{0}"
+msgstr "Anfrage für neues Passwort für {0}"
+
+msgid "We_sent_a_link_to_you_for_generating_a_new_password."
+msgstr ""
+"Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren "
+"kannst."
+
+msgid "Generated_new_password_for_{0}"
+msgstr "Neues Passwort für {0} generiert"
+
+msgid "We_sent_a_new_password_to_you."
+msgstr "Wir haben dir dein neues Passwort zugeschickt."
+
+msgid "Sign_in"
+msgstr "Anmelden"
+
+msgid "You_are_already_signed_in."
+msgstr "Du bist bereits angemeldet."
+
+msgid "Signing_in_failed_account_inactive_or_password_wrong?"
+msgstr ""
+"Anmelden ist fehlgeschlagen. Vielleicht ist dein Konto noch nicht aktiviert oder "
+"das Passwort stimmt nicht?"
+
+msgid "Member_{0}_created_an_account."
+msgstr "Das Mitglied {0} hat ein Mitgliedskonto erstellt."
+
+msgid "Filename_Terms-of-use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Welcome"
+msgstr "Willkommen"
+
+msgid "New_registration_{0}"
+msgstr "Neue Registrierung: {0}"
+
+msgid "Your_registration_was_successful."
+msgstr "Deine Registrierung war erfolgreich."
+
+msgid "Account_created_successfully"
+msgstr "Mitgliedskonto erfolgreich erstellt"
+
+msgid "You_have_been_signed_out."
+msgstr "Du hast dich erfolgreich abgemeldet."
+
+msgid "All_products"
+msgstr "Alle Produkte"
+
+msgid "datepicker_close"
+msgstr "schließen"
+
+msgid "datepicker_prev"
+msgstr "zurück"
+
+msgid "datepicker_next"
+msgstr "vor"
+
+msgid "datepicker_today"
+msgstr "heute"
+
+msgid "WeekHeader"
+msgstr "Wo"
+
+msgid "Really_sign_out?"
+msgstr "Willst du dich wirklich abmelden?"
+
+msgid "Sign_out?"
+msgstr "Abmelden?"
+
+msgid "route_sign_out"
+msgstr "abmelden"
+
+msgid "An_error_occurred"
+msgstr "Es ist ein Fehler aufgetreten"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Cancel_shop_order?"
+msgstr "Sofort-Bestellung abbrechen?"
+
+msgid "Really_cancel_shop_order?"
+msgstr "Möchtest du die Sofort-Bestellung wirklich abbrechen?"
+
+msgid "January"
+msgstr "Januar"
+
+msgid "February"
+msgstr "Februar"
+
+msgid "March"
+msgstr "März"
+
+msgid "April"
+msgstr "April"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "June"
+msgstr "Juni"
+
+msgid "July"
+msgstr "Juli"
+
+msgid "August"
+msgstr "August"
+
+msgid "September"
+msgstr "September"
+
+msgid "October"
+msgstr "Oktober"
+
+msgid "November"
+msgstr "November"
+
+msgid "December"
+msgstr "Dezember"
+
+msgid "JanuaryShort"
+msgstr "Jan"
+
+msgid "FebruaryShort"
+msgstr "Feb"
+
+msgid "MarchShort"
+msgstr "Mär"
+
+msgid "AprilShort"
+msgstr "Apr"
+
+msgid "MayShort"
+msgstr "Mai"
+
+msgid "JuneShort"
+msgstr "Jun"
+
+msgid "JulyShort"
+msgstr "Jul"
+
+msgid "AugustShort"
+msgstr "Aug"
+
+msgid "SeptemberShort"
+msgstr "Sep"
+
+msgid "OctoberShort"
+msgstr "Okt"
+
+msgid "NovemberShort"
+msgstr "Nov"
+
+msgid "DecemberShort"
+msgstr "Dez"
+
+msgid "Monday"
+msgstr "Montag"
+
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgid "Friday"
+msgstr "Freitag"
+
+msgid "Saturday"
+msgstr "Samstag"
+
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgid "MondayShort"
+msgstr "Mo"
+
+msgid "TuesdayShort"
+msgstr "Di"
+
+msgid "WednesdayShort"
+msgstr "Mi"
+
+msgid "ThursdayShort"
+msgstr "Do"
+
+msgid "FridayShort"
+msgstr "Fr"
+
+msgid "SaturdayShort"
+msgstr "Sa"
+
+msgid "SundayShort"
+msgstr "So"
+
+msgid "route_cart"
+msgstr "warenkorb"
+
+msgid "Empty_cart"
+msgstr "Warenkorb leeren"
+
+msgid "deposit"
+msgstr "Pfand"
+
+msgid "Really_empty_cart?"
+msgstr "Möchtest du den aktuellen Warenkorb wirklich leeren?"
+
+msgid "Load_past_order"
+msgstr "Vergangene Bestellungen laden"
+
+msgid "Load_past_order_dialog_description_html"
+msgstr ""
+"<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch "
+"geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
+
+msgid "Remove_from_cart?"
+msgstr "Aus dem Warenkorb löschen?"
+
+msgid "for_each"
+msgstr "je"
+
+msgid "approx."
+msgstr "ca."
+
+msgid "Home"
+msgstr "Home"
+
+msgid "route_manufacturer_list"
+msgstr "hersteller"
+
+msgid "Manufacturers"
+msgstr "Hersteller"
+
+msgid "route_news_list"
+msgstr "aktuelles"
+
+msgid "News"
+msgstr "Aktuelles"
+
+msgid "Pages"
+msgstr "Seiten"
+
+msgid "Shopping_limit_reached"
+msgstr "Guthaben-Limit erreicht"
+
+msgid "Show"
+msgstr "Anzeigen"
+
+msgid "Show_all_products"
+msgstr "Alle Produkte anzeigen"
+
+msgid "Place_shop_order_for"
+msgstr "Sofort-Bestellung tätigen für"
+
+msgid "Shop_order_date_is_set_back_after_placing_it."
+msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."
+
+msgid "Close_all_orders?"
+msgstr "Alle Bestellungen abschließen?"
+
+msgid "Really_close_all_orders?"
+msgstr "Möchtest du wirklich alle Bestellungen abschließen?"
+
+msgid "Generate_orders_as_pdf?"
+msgstr "Bestellungen als PDF generieren?"
+
+msgid "Really_generate_orders_as_pdf?"
+msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
+
+msgid "Email_addresses"
+msgstr "E-Mail-Adressen"
+
+msgid "Change_order_status?"
+msgstr "Bestellstatus ändern?"
+
+msgid "Really_change_order_status_from_{0}?"
+msgstr "Willst du den Bestellstatus der Bestellung von {0} wirklich ändern?"
+
+msgid "order_state_cancelled"
+msgstr "storniert"
+
+msgid "order_state_open"
+msgstr "offen"
+
+msgid "Decrease_amount"
+msgstr "Anzahl vermindern"
+
+msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
+msgstr ""
+"Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt "
+"nachbuchen."
+
+msgid "New_amount"
+msgstr "Neue Anzahl"
+
+msgid "Why_is_amount_decreased_(mandatory_field)?"
+msgstr "Warum wird Anzahl vermindert (Pflichtfeld)?"
+
+msgid "Adapt_price?"
+msgstr "Preis anpassen?"
+
+msgid "ordered_by"
+msgstr "bestellt von"
+
+msgid "Explaination_text_apdapt_price_form_apapt_weight."
+msgstr ""
+"Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter "
+"rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte "
+"Gewicht scheint auf der Rechnung auf."
+
+msgid "Why_is_price_adapted_(mandatory_field)?"
+msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
+
+msgid "Original_price_without_reduction_of_price_in_time"
+msgstr "Original-Preis ohne Abzug von Betrag in Zeit"
+
+msgid "From_which_really_paid_in"
+msgstr "Davon tatsächlich bezahlter Betrag in"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "Adapt_weight?"
+msgstr "Gewicht anpassen?"
+
+msgid "Delivered_weight"
+msgstr "Geliefertes Gewicht"
+
+msgid "Delivered_total_weight"
+msgstr "Geliefertes Gesamtgewicht"
+
+msgid "Base_price"
+msgstr "Basis-Preis"
+
+msgid "Price_is_automatically_adapted_after_save."
+msgstr "Der Preis wird nach dem Speichern automatisch angepasst."
+
+msgid "The_field_is_red_if_weight_not_yet_adapted."
+msgstr "Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde."
+
+msgid "Do_not_automatically_apapt_price_just_change_weight."
+msgstr "Den Preis nicht automatisch anpassen, nur das Gewicht ändern."
+
+msgid "Really_cancel_ordered_product?"
+msgstr "Bestelltes Produkt wirklich stornieren?"
+
+msgid "Do_you_really_want_to_cancel_product_{0}?"
+msgstr "Möchtest du das Produkt {0} wirklich stornieren?"
+
+msgid "Do_you_really_want_to_cancel_product_{0}_from_{1}?"
+msgstr "Möchtest du das Produkt {0} von Hersteller {1} wirklich stornieren?"
+
+msgid "Why_is_product_cancelled_(mandatory_field)?"
+msgstr "Warum wird das Produkt storniert (Pflichtfeld)?"
+
+msgid "Yes_do_cancel_button!"
+msgstr "Ja, stornieren!"
+
+msgid "Do_not_cancel_button"
+msgstr "Abbrechen"
+
+msgid "Please_only_cancel_if_ok_for_manufacturer!"
+msgstr "Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
+
+msgid "Really_cancel_selected_products?"
+msgstr "Ausgewählte Produkte wirklich stornieren?"
+
+msgid "You_selected_1_product_for_cancellation"
+msgstr "Du hast 1 Produkt zum Stornieren ausgewählt"
+
+msgid "You_selected_{0}_products_for_cancellation"
+msgstr "Du hast {0] Produkte zum Stornieren ausgewählt"
+
+msgid "Adapt_amount_reason_is_mandatory."
+msgstr "Bitte gib an, warum die Anzahl vermindert wird."
+
+msgid "Delivered_weight_needs_to_be_greater_than_0."
+msgstr "Das Liefergewicht muss größer als 0 sein."
+
+msgid "Adapt_price_reason_is_mandatory."
+msgstr "Bitte gib an, warum der Preis angepasst wird."
+
+msgid "Cancellation_reason_is_mandatory."
+msgstr "Bitte gib an, warum storniert wird."
+
+msgid "Please_enter_a_number."
+msgstr "Bitte gib eine Zahl ein."
+
+msgid "Change_comment_of_order"
+msgstr "Kommentar zu Bestellung ändern"
+
+msgid "Set_date_of_order_back_to"
+msgstr "Bestellung rückdatieren auf"
+
+msgid "Set_date_of_order_back"
+msgstr "Bestellung rückdatieren"
+
+msgid "Action_Log_Product_created"
+msgstr "Produkt: erstellt"
+
+msgid "Action_Log_Product_attribute_created"
+msgstr "Produkt: Variante erstellt"
+
+msgid "Action_Log_Product_image_uploaded"
+msgstr "Produkt: Bild hochgeladen"
+
+msgid "Action_Log_Product_image_deleted"
+msgstr "Produkt: Bild gelöscht"
+
+msgid "Action_Log_Product_attribute_deleted"
+msgstr "Produkt: Variante gelöscht"
+
+msgid "Action_Log_Product_deactivated"
+msgstr "Produkt: deaktiviert"
+
+msgid "Action_Log_Product_activated"
+msgstr "Produkt: aktiviert"
+
+msgid "Action_Log_Product_quantity_changed"
+msgstr "Produkt: Anzahl geändert"
+
+msgid "Action_Log_Product_price_changed"
+msgstr "Produkt: Preis geändert"
+
+msgid "Action_Log_Product_name_changed"
+msgstr "Produkt: Name geändert"
+
+msgid "Action_Log_Product_unity_changed"
+msgstr "Produkt: Einheit geändert"
+
+msgid "Action_Log_Product_description_changed"
+msgstr "Produkt: Beschreibung geändert"
+
+msgid "Action_Log_Product_description_short_changed"
+msgstr "Produkt: Beschreibung kurz geändert"
+
+msgid "Action_Log_Product_deposit_changed"
+msgstr "Produkt: Pfand geändert"
+
+msgid "Action_Log_Product_tax_rate_changed"
+msgstr "Produkt: Steuersatz geändert"
+
+msgid "Action_Log_Product_categories_changed"
+msgstr "Produkt: Kategorien geändert"
+
+msgid "Action_Log_Product_set_to_not_new"
+msgstr "Produkt: nicht mehr als \"neu\" anzeigen"
+
+msgid "Action_Log_Product_set_to_new"
+msgstr "Produkt: als \"neu\" anzeigen"
+
+msgid "Action_Log_Product_default_attribute_changed"
+msgstr "Produkt: Standard-Variante geändert"
+
+msgid "Action_Log_Network_module_product_synchronized"
+msgstr "Netzwerk-Modul: Produkte synchronisiert"
+
+msgid "Action_Log_Order_status_changed"
+msgstr "Bestellung: Status geändert"
+
+msgid "Action_Log_Orders_closed"
+msgstr "Bestellungen: abgeschlossen"
+
+msgid "Action_Log_Order_comment_changed"
+msgstr "Bestellung: Kommentar geändert"
+
+msgid "Action_Log_Order_date_changed"
+msgstr "Bestellung: rückdatiert"
+
+msgid "Action_Log_Order_shop_order_placed"
+msgstr "Bestellung: Sofort-Bestellung getätigt"
+
+msgid "The_desired_amount_{0}_is_not_valid."
+msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
+
+msgid "Product_with_id_{0}_does_not_exist."
+msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
+
+msgid "Members:_active"
+msgstr "Mitglieder: aktiv"
+
+msgid "Members:_never_ordered"
+msgstr "Mitglieder: noch nie bestellt"
+
+msgid "Manufacturers:_active"
+msgstr "Hersteller: aktiv"
+
+msgid "Manufacturers:_inactive"
+msgstr "Hersteller: inaktiv"
+
+msgid "Members:_inactive"
+msgstr "Mitglieder: inaktiv"
+
+msgid "Pick_up_day"
+msgstr "Abholtag"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
+msgid "Modified_on"
+msgstr "Geändert am"
+
+msgid "Go_to_blog_from"
+msgstr "Zum Blog von"
+
+msgid "by"
+msgstr "von"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "found"
+msgstr "gefunden"
+
+msgid "Show_more"
+msgstr "Mehr anzeigen"
+
+msgid "Go_to_manufacturer"
+msgstr "Zum Hersteller"
+
+msgid "Your_cart_is_empty"
+msgstr "Dein Warenkorb ist leer"
+
+msgid "Product_sum_including_vat"
+msgstr "Warenwert gesamt (inkl. USt.)"
+
+msgid "Deposit_sum"
+msgstr "Pfand gesamt"
+
+msgid "From_which_in"
+msgstr "Davon in"
+
+msgid "Including_vat"
+msgstr "Enthaltene Umsatzsteuer"
+
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+
+msgid "To_finish_order_click_here."
+msgstr ""
+"Um die Bestellung abzuschließen, klicke bitte auf \"Zahlungspflichtig bestellen\"."
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
+
+msgid "Please_pay_when_picking_up_products."
+msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
+
+msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+msgstr ""
+"Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der "
+"Box rechts."
+
+msgid "general_terms_of_use"
+msgstr "AGB"
+
+msgid "I_accept_the_{0}"
+msgstr "Ich akzeptiere die {0}"
+
+msgid "right_of_withdrawal"
+msgstr "Rücktrittsrecht"
+
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr ""
+"Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht "
+"verderbliche Waren."
+
+msgid "Write_message_to_pick_up_team?"
+msgstr "Nachricht an Abholdienst schreiben?"
+
+msgid "Placeholder_message_order_comment."
+msgstr ""
+"Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die "
+"Hersteller sehen diese Nachricht nicht."
+
+msgid "Order_button"
+msgstr "Zahlungspflichtig bestellen"
+
+msgid "Order_placed"
+msgstr "Bestellung abgeschlossen"
+
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr "Vielen Dank, deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
+
+msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
+msgstr "Bitte hole die bestellten Waren verlässlich am {0} in unserem Abhollager ab."
+
+msgid ""
+"The_product_value_{0}_with_an_additional_deposit_of_{1}"
+"_was_automatically_reduced_from_your_credit."
+msgstr ""
+"Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben "
+"abgezogen."
+
+msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."
+
+msgid "Increase_credit"
+msgstr "Guthaben aufladen"
+
+msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+msgstr ""
+"Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar "
+"mitzunehmen."
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Stay_signed_in"
+msgstr "Angemeldet bleiben"
+
+msgid "and_accept_cookie"
+msgstr "und Cookie akzeptieren"
+
+msgid "Forgot_password?"
+msgstr "Passwort vergessen?"
+
+msgid "Create_account"
+msgstr "Mitgliedskonto erstellen"
+
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Additional_information"
+msgstr "Adresszusatz"
+
+msgid "Zip"
+msgstr "PLZ"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
+
+msgid "terms_of_use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "terms_and_conditions"
+msgstr "Nutzungsbedingungen"
+
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr ""
+"um diese Plattform weiterhin verwenden zu können, lese bitte die geänderten {0} und "
+"akzeptiere sie."
+
+msgid "I_accept_the_{0}."
+msgstr "Ich akzeptiere die {0}."
+
+msgid "Cart"
+msgstr "Warenkorb"
+
+msgid "Load_past_orders"
+msgstr "Vergangene Bestellungen laden"
+
+msgid "This_order_will_be_placed_for_{0}"
+msgstr "Diese Bestellung wird für {0} getätigt."
+
+msgid "Your_credit_balance"
+msgstr "Dein Guthaben"
+
+msgid "You_reached_the_order_limit_{0}_please_add_credit."
+msgstr ""
+"Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues "
+"Guthaben auf."
+
+msgid "Add_credit"
+msgstr "Guthaben aufladen"
+
+msgid "Sum"
+msgstr "Summe"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Value_added_tax"
+msgstr "Umsatzsteuer"
+
+msgid "Show_cart_button"
+msgstr "Warenkorb anzeigen"
+
+msgid "Terms_of_use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Privacy_policy"
+msgstr "Datenschutzerklärung"
+
+msgid "List_of_allergens"
+msgstr "Allergenliste"
+
+msgid "Information"
+msgstr "Informationen"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Bank_account_credit_balance"
+msgstr "Kontodaten (Guthaben aufladen)"
+
+msgid "Bank_account_member_fee"
+msgstr "Kontodaten (Mitgliedsbeitrag)"
+
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "Help?"
+msgstr "Hilfe?"
+
+msgid "DELIVERY_DAY"
+msgstr "ABHOLTAG"
+
+msgid "Products"
+msgstr "Produkte"
+
+msgid "Print"
+msgstr "Drucken"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "Admin_area"
+msgstr "Admin-Bereich"
+
+msgid "Manufacturer_area"
+msgstr "Hersteller-Bereich"
+
+msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
+
+msgid "Signed_in"
+msgstr "Eingeloggt"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "You_can_sign_in_here_for_ordering"
+msgstr "Zum Bestellen kannst du dich hier einloggen"
+
+msgid "E-mail_address"
+msgstr "E-Mail-Adresse"
+
+msgid "You_can_change_your_password_here"
+msgstr "Hier kannst du dein Passwort ändern"
+
+msgid "You_can_change_your_profile_here"
+msgstr "Hier kannst du dein Profil ändern"
+
+msgid "available"
+msgstr "verfügbar"
+
+msgid "Move_in_cart"
+msgstr "In den Warenkorb"
+
+msgid "Currently_not_on_stock"
+msgstr "Derzeit leider nicht verfügbar"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "More_infos_to_product_{0}"
+msgstr "Mehr Infos zu {0}"
+
+msgid "Edit_product"
+msgstr "Produkt bearbeiten"
+
+msgid "from_which_{0}_%"
+msgstr "davon {0} %"
+
+msgid "Unit"
+msgstr "Einheit"
+
+msgid "Your_account_at_{0}_has_just_been_activated."
+msgstr "Dein Mitgliedkonto bei {0} wurde soeben aktiviert."
+
+msgid "Thank_you_for_your_order_number_{0}_from_{1}."
+msgstr "vielen Dank für deine Bestellung Nr. {0} vom {1}."
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+"Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann "
+"sich noch geringfügig ändern."
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr ""
+"Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten "
+"Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich "
+"vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings "
+"ausgeschlossen."
+
+msgid "Your_registration_at_{0}_has_just_been_successful!"
+msgstr "Deine Registrierung bei {0} war erfolgreich!"
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr ""
+"Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du "
+"kannst dich noch nicht einloggen!"
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
+
+msgid "Dear_responsible_person_for_new_members,"
+msgstr "Lieber Verantwortliche für neue Mitglieder,"
+
+msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+msgstr "Es gab gerade eine neue Registrierung: {0} ({1}) aus {2}."
+
+msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+msgstr "Hier kannst du das neue Mitglied aktivieren und die Daten einsehen"
+
+msgid "Here_you_can_see_the_data_of_the_new_member"
+msgstr "Hier kannst du die Daten des neuen Mitglieds einsehen"
+
+msgid "route_search"
+msgstr "suche"
+
+msgid "This_email_was_created_automatcially."
+msgstr "Diese E-Mail wurde automatisch erstellt."
+
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr "Du kannst sie <href=\"{0}\">in deinen Einstellungen abbestellen.</a>."
+
+msgid "News_from"
+msgstr "Aktuelles von"
+
+msgid "Imprint"
+msgstr "Impressum"
+
+msgid "Sign_out"
+msgstr "Abmelden"
+
+msgid "Credit"
+msgstr "Guthaben"
+
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
+msgid "Website"
+msgstr "Homepage"
+
+msgid "VAT_number"
+msgstr "UID-Nummer"
+
+msgid "Commercial_register_number"
+msgstr "Firmenbuchnummer"
+
+msgid "Company_court"
+msgstr "Firmengericht"
+
+msgid "Supervisory_authority"
+msgstr "Aufsichtsbehörde"
+
+msgid "Chamber"
+msgstr "Kammer"
+
+msgid "Empty_glasses"
+msgstr "Leergebinde"
+
+msgid "Compensation_payment"
+msgstr "Ausgleichszahlung"
+
+msgid "price_will_be_eventually_adapted."
+msgstr "Preis wird evtl. noch angepasst."
+
+msgid "route_accept_terms_of_use"
+msgstr "nutzungsbedingungen-akzeptieren"
+
+msgid "route_manufacturer_detail"
+msgstr "hersteller"
+
+msgid "route_news"
+msgstr "aktuelles"
+
+msgid "route_content"
+msgstr "content"
+
+msgid "route_terms_of_use"
+msgstr "nutzungsbedingungen"
+
+msgid "route_privacy_policy"
+msgstr "datenschutzerklaerung"
+
+msgid "route_list_of_allergens"
+msgstr "allergenliste"
+
+msgid "route_cart_show"
+msgstr "anzeigen"
+
+msgid "route_cart_finish"
+msgstr "abschliessen"
+
+msgid "route_cart_finished"
+msgstr "abgeschlossen"
+
+msgid "route_new_products"
+msgstr "neue-produkte"
+
+msgid "route_all_products"
+msgstr "alle-produkte"
+
+msgid "route_category"
+msgstr "kategorie"
+
+msgid "route_sign_in"
+msgstr "anmelden"
+
+msgid "route_registration_successful"
+msgstr "registrierung/abgeschlossen"
+
+msgid "route_registration"
+msgstr "registrierung"
+
+msgid "route_generate_new_password"
+msgstr "neues-passwort-generieren"
+
+msgid "route_request_new_password"
+msgstr "neues-passwort-anfordern"
+
+msgid "route_news_detail"
+msgstr "aktuelles"
+
+msgid "routes_product"
+msgstr "produkt"
+
+msgid "Mouseover_shows_the_paid_amont_in_{0}."
+msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
+
+msgid "Paying_with_time_account_name_{0}"
+msgstr "{0}konto"
+
+msgid "Access_denied_please_sign_in."
+msgstr "Zugriff verweigert, bitte melde dich an."
+
+msgid "order_state_cash"
+msgstr "bar bezahlt"
+
+msgid "This_order_contains_the_variable_member_fee."
+msgstr "Die Bestellung beinhaltet den variablen Mitgliedsbeitrag."
+
+msgid "order_state_closed"
+msgstr "abgeschlossen"
+
+msgid "route_information_about_right_of_withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+msgid "route_product"
+msgstr "produkt"
+
+msgid "View"
+msgstr ""
+
+#~ msgid "Do_you_really_want_to_cancel_product_%s_from_%s?"
+#~ msgstr "Möchtest du das Produkt {0} vom Hersteller {1} wirklich stornieren?"
+
+#~ msgid "weight"
+#~ msgstr "Gewicht"
+
+#~ msgid "Total_weight"
+#~ msgstr "Gesamtgewicht"
+
+#~ msgid "ordered"
+#~ msgstr "bestellt"
+
+#~ msgid "open"
+#~ msgstr "offen"
+
+#~ msgid "You_are_already_signed_in"
+#~ msgstr "Du bist bereits angemeldet."
+
+#, fuzzy
+#~ msgid "Modified on"
+#~ msgstr "Geändert am"

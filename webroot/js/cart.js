@@ -84,10 +84,12 @@ foodcoopshop.Cart = {
         var newUnityHtml = oldUnity.html();
         
         if (newAmount > 1 && oldAmountValue == 1) {
-            newUnityHtml = newUnityHtml.replace(/ca./, 'je ca.');
+            var approxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.approx);
+            newUnityHtml = newUnityHtml.replace(approxRegExp, foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
         }
         if (newAmount == 1 && oldAmountValue > 1) {
-            newUnityHtml = newUnityHtml.replace(/je ca./, 'ca.');
+            var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
+            newUnityHtml = newUnityHtml.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
         }
         if (newUnityHtml != oldUnity.html()) {
             oldUnity.html(newUnityHtml);
@@ -201,7 +203,7 @@ foodcoopshop.Cart = {
             var button = productWrapper.find('.entity-wrapper.active .btn-success');
 
             foodcoopshop.Helper.ajaxCall(
-                '/warenkorb/ajaxAdd/',
+                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
                 {
                     productId: productId,
                     amount: amount
@@ -298,7 +300,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
 
             foodcoopshop.Helper.ajaxCall(
-                '/warenkorb/ajaxAdd/',
+                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxAdd/',
                 {
                     productId: productId,
                     amount: amount
@@ -348,9 +350,9 @@ foodcoopshop.Cart = {
             '</span>' +
             '<span class="manufacturer-link">' + manufacturerLink + '</span>' +
             '<span class="right">' +
-                '<span class="delete"><a class="btn" title="Aus dem Warenkorb löschen?" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +
+                '<span class="delete"><a class="btn" title="' + foodcoopshop.LocalizedJs.cart.removeFromCart + '" href="javascript:void(0);"><i class="fa fa-times-circle"></i></a></span>' +
                 '<span class="price">' + foodcoopshop.Helper.formatFloatAsEuro(price) + '</span>' +
-                (deposit > 0 ? '<span class="deposit">Pfand + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
+                (deposit > 0 ? '<span class="deposit">' + foodcoopshop.LocalizedJs.cart.deposit + ' + <span>' + foodcoopshop.Helper.formatFloatAsEuro(deposit) + '</span></span>' : '') +
                 (timebasedCurrencyHours ? '<span class="timebasedCurrencySeconds">' + foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(timebasedCurrencyHours) + '</span>'  : '') +
                 '<span class="tax">' + foodcoopshop.Helper.formatFloatAsEuro(tax) + '</span>' +
             '</span>' +
@@ -446,7 +448,7 @@ foodcoopshop.Cart = {
             var button = $(this);
             foodcoopshop.Helper.disableButton(button);
             foodcoopshop.Helper.ajaxCall(
-                '/warenkorb/ajaxRemove/',
+                '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxRemove/',
                 {
                     productId: productId
                 },
@@ -477,16 +479,26 @@ foodcoopshop.Cart = {
                 var dialogHtml = '';
                 var redirectUrl = '';
                 if (selectedValue == 'remove-all-products-from-cart') {
-                    title = 'Warenkorb leeren';
-                    dialogHtml = '<p>Möchtest du den aktuellen Warenkorb wirklich leeren?</p>';
-                    redirectUrl = '/warenkorb/' + 'emptyCart/';
+                    title = foodcoopshop.LocalizedJs.cart.emptyCart + '?';
+                    dialogHtml = '<p>' + foodcoopshop.LocalizedJs.cart.reallyEmptyCart + '</p>';
+                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart/';
                 } else {
-                    title = 'Vergangene Bestellung laden';
-                    dialogHtml = '<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p>';
-                    dialogHtml += '<p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>';
-                    redirectUrl = '/warenkorb/' + 'addOrderToCart/' + selectedValue;
+                    title = foodcoopshop.LocalizedJs.cart.loadPastOrder;
+                    dialogHtml = foodcoopshop.LocalizedJs.cart.loadPastOrderDescriptionHtml;
+                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart/' + selectedValue;
                 }
                 dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+                
+                var buttons = {};
+                buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+                buttons['yes'] = {
+                    text: foodcoopshop.LocalizedJs.helper.yes,
+                    click: function() {
+                        $('.ui-dialog .ajax-loader').show();
+                        $('.ui-dialog button').attr('disabled', 'disabled');
+                        document.location.href = redirectUrl;
+                    }
+                };
                 $('<div></div>').appendTo('body')
                     .html(dialogHtml)
                     .dialog({
@@ -495,16 +507,7 @@ foodcoopshop.Cart = {
                         autoOpen: true,
                         width: 400,
                         resizable: false,
-                        buttons: {
-                            'Abbrechen': function () {
-                                $(this).dialog('close');
-                            },
-                            'Ja': function () {
-                                $('.ui-dialog .ajax-loader').show();
-                                $('.ui-dialog button').attr('disabled', 'disabled');
-                                document.location.href = redirectUrl;
-                            }
-                        },
+                        buttons: buttons,
                         close: function (event, ui) {
                             $(this).remove();
                         }

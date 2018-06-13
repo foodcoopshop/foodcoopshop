@@ -39,20 +39,11 @@ use Cake\Core\Configure;
             und <input id="validOrdersCountTo" name="validOrdersCountTo" type="text"
                 value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
             und letztes Bestelldatum von <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
-            <div class="right"></div>
+            <div class="right">
+            	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
+            </div>
         <?php echo $this->Form->end(); ?>
     </div>
-
-    <div id="help-container">
-        <ul>
-            <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die <b>Mitglieder</b> verwaltet.
-            </li>
-            <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
-                haben erst 3x oder weniger bestellt.
-            </li>
-        </ul>
-    </div>    
     
 <?php
 

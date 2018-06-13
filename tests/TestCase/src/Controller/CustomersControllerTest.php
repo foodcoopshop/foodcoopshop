@@ -206,7 +206,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     private function checkForMainErrorMessage($response)
     {
-        $this->assertRegExpWithUnquotedString('Beim Speichern sind Fehler aufgetreten!', $response);
+        $this->assertRegExpWithUnquotedString(__('Errors_while_saving!'), $response);
     }
 
     /**

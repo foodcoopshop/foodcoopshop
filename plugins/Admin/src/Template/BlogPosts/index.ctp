@@ -49,16 +49,11 @@ use Cake\Core\Configure;
                     'escape' => false
                 ]);
                 echo '</div>';
+                echo $this->element('printIcon');
                 ?>
         </div>
         <?php echo $this->Form->end(); ?>
     </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite kannst du Blog-Artikel verwalten.</li>
-        </ul>
-    </div>    
     
 <?php
 

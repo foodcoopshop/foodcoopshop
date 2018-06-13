@@ -34,11 +34,9 @@ if ($isDeleteAllowedGlobally) {
 }
 ?>
 
-<div id="help-container">
-    <ul>
-        <?php echo '<li>' . join('</li><li>', $helpText) . '</li>'; ?>
-    </ul>
-</div>    
+<ul>
+    <?php echo '<li>' . join('</li><li>', $helpText) . '</li>'; ?>
+</ul>
 
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
@@ -55,7 +53,9 @@ if ($isDeleteAllowedGlobally) {
             ?>
         <?php echo $this->Form->end(); ?>
     <?php } ?>
-    <div class="right"></div>
+    <div class="right">
+    	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
+    </div>
 </div>
 
 <?php

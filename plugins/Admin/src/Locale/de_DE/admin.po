@@ -1,0 +1,291 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-06-11 18:13+0200\n"
+"PO-Revision-Date: 2018-06-08 17:51+0200\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.8\n"
+
+msgid "Errors_while_saving!"
+msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "Group_by_product"
+msgstr "Gruppieren nach Produkt"
+
+msgid "Group_by_manufacturer"
+msgstr "Gruppieren nach Hersteller"
+
+msgid "Ordered_products"
+msgstr "Bestellte Produkte"
+
+msgid "Orders"
+msgstr "Bestellungen"
+
+msgid "Shop_order"
+msgstr "Sofort-Bestellung"
+
+msgid "No_member_found_with_id_{0}."
+msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "docs_route_settings"
+msgstr "einstellungen"
+
+msgid "Pick_up_day"
+msgstr "Abholtag"
+
+msgid "docs_route_members"
+msgstr "mitglieder"
+
+msgid "docs_route_deposit"
+msgstr "pfand"
+
+msgid "Add_deposit_amount"
+msgstr "Pfand-Betrag eintragen"
+
+msgid "Add_deposit"
+msgstr "Pfand eintragen"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Pfand-Betrag für {0} eintragen"
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr ""
+"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen "
+"wird."
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr ""
+"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld "
+"ausgeglichen?"
+
+msgid "Amount_in_{0}"
+msgstr "Betrag in {0}"
+
+msgid "Chose_member..."
+msgstr "Mitglied auswählen..."
+
+msgid "1_day_ahead"
+msgstr "1 Tag zurück"
+
+msgid "1_day_back"
+msgstr "1 Tag vor"
+
+msgid "Activities"
+msgstr "Aktivitäten"
+
+msgid "Cancelled_products"
+msgstr "Stornierte Produkte"
+
+msgid "Deposit_returns"
+msgstr "Pfand-Rückgaben"
+
+msgid "My_data"
+msgstr "Meine Daten"
+
+msgid "Change_password"
+msgstr "Passwort ändern"
+
+msgid "Blog_posts"
+msgstr "Blog-Artikel"
+
+msgid "Website_administration"
+msgstr "Homepage-Verwaltung"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Order_lists"
+msgstr "Bestelllisten"
+
+msgid "Manufacturers"
+msgstr "Hersteller"
+
+msgid "Products"
+msgstr "Produkte"
+
+msgid "Deposit_account"
+msgstr "Pfandkonto"
+
+msgid "Members"
+msgstr "Mitglieder"
+
+msgid "Pages"
+msgstr "Seiten"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "Attributes"
+msgstr "Varianten"
+
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgid "Tax_rates"
+msgstr "Steuersätze"
+
+msgid "Financial_reports"
+msgstr "Finanzberichte"
+
+msgid "Configurations"
+msgstr "Einstellungen"
+
+msgid "My_products"
+msgstr "Meine Produkte"
+
+msgid "My_profile"
+msgstr "Mein Profil"
+
+msgid "Contact_person"
+msgstr "Ansprechperson"
+
+msgid "docs_route_products"
+msgstr "produkte"
+
+msgid "docs_route_manufacturers"
+msgstr "hersteller"
+
+msgid "all_products"
+msgstr "alle Produkte"
+
+msgid "all_manufacturers"
+msgstr "alle Hersteller"
+
+msgid "all_members"
+msgstr "alle Mitglieder"
+
+msgid "Order_number_abbr"
+msgstr "Bestell-Nr."
+
+msgid "Group_by..."
+msgstr "Gruppieren nach..."
+
+msgid "Deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "docs_route_pick_up_products"
+msgstr "abholung-der-produkte"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Weight"
+msgstr "Gewicht"
+
+msgid "Order_date"
+msgstr "Bestelldatum"
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Click_to_change_amount"
+msgstr "Zum Ändern der Anzahl anklicken"
+
+msgid "Click_to_change_price"
+msgstr "Zum Ändern des Preises anklicken"
+
+msgid "Additional_in_{0}"
+msgstr "Zusätzlich in {0}"
+
+msgid "Click_to_change_weight"
+msgstr "Zum Ändern des Gewichtes anklicken"
+
+msgid "Click_to_cancel_product"
+msgstr "Zum Stornieren des Produktes anklicken"
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Change_order_status"
+msgstr "Bestellstatus ändern"
+
+msgid "Back_to_deposit_account"
+msgstr "Zurück zum Pfandkonto"
+
+msgid "Cancel_selected_products"
+msgstr "Ausgewählte Produkte stornieren"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgstr ""
+"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+
+msgid "Group_by_member"
+msgstr "Gruppieren nach Mitglied"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Order_count"
+msgstr "Anzahl Bestellungen"
+
+msgid "Add_comment"
+msgstr "Kommentar hinzufügen"
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr "Neuling: Erst {0}x bestellt."
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Alle bestellten Produkte von {0} anzeigen"
+
+msgid "Set_date_of_order_back"
+msgstr "Bestellung rückdatieren"
+
+msgid "records"
+msgstr "Datensätze"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Bestellungen als PDF generieren"
+
+msgid "Close_all_orders"
+msgstr "Alle Bestellungen abschließen"
+
+msgid "to_the_admin_area"
+msgstr "im Admin-Beriche"
+
+msgid "to_the_manufacturer_area"
+msgstr "im Hersteller-Bereich"
+
+msgid "Welcome"
+msgstr "Willkommen"
+
+msgid "docs_route_credit_system"
+msgstr "guthaben-system"
+
+msgid "docs_route_financial_reports"
+msgstr "finanzberichte"
+
+msgid "docs_route_paying_with_time_module"
+msgstr "stundenabrechnung"
+
+#~ msgid "Cancel_product?"
+#~ msgstr "Produkt stornieren?"
+
+#~ msgid "Deposit returns"
+#~ msgstr "Pfand-Rückgaben"

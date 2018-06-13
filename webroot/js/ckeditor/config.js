@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function ( config ) {
     config.width = 308;
     config.height = 250;
     config.format_tags = 'p';
-    config.language = 'de';
+    config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
 
     config.enterMode = CKEDITOR.ENTER_BR;
     config.extraPlugins = 'format';

@@ -292,9 +292,9 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
 
-        $groupByForDropdown = ['product' => 'Gruppieren nach Produkt'];
+        $groupByForDropdown = ['product' => __d('admin', 'Group_by_product')];
         if (!$this->AppAuth->isManufacturer()) {
-            $groupByForDropdown['manufacturer'] = 'Gruppieren nach Hersteller';
+            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
         $this->set('customersForDropdown', $this->OrderDetail->Orders->Customers->getForDropdown());
@@ -304,7 +304,7 @@ class OrderDetailsController extends AdminAppController
             $this->set('customersForShopOrderDropdown', $this->OrderDetail->Orders->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
         }
 
-        $this->set('title_for_layout', 'Bestellte Produkte');
+        $this->set('title_for_layout', __d('admin', 'Ordered_products'));
     }
     
     public function editProductQuantity()

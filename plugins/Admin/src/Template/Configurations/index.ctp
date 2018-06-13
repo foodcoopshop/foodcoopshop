@@ -30,13 +30,9 @@ $this->element('addScript', [
 
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite siehst du die Konfiguration deiner
-                FoodCoopShop-Installation.</li>
-        </ul>
+        <div class="right">
+        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
+        </div>
     </div>
 
     <h2 class="info">Die folgenden Einstellungen können selbst geändert werden.</h2>
@@ -258,7 +254,7 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>Abholtag</td>
+            <td><?php echo __d('admin', 'Pick_up_day'); ?></td>
             <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
         </tr>
 

@@ -45,29 +45,29 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
-            <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
+            <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-                <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Hersteller', 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
+                <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>    
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
             <?php if ($appAuth->isCustomer()) { ?>
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-                <input id="orderId" type="text" placeholder="Bestell-Nr." name="orderId" value="<?php echo $orderId; ?>" />
+                <input id="orderId" type="text" placeholder="<?php echo __d('admin', 'Order_number_abbr')?>" name="orderId" value="<?php echo $orderId; ?>" />
             <?php } ?>
             <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
-            <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => 'Gruppieren nach...', 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
+            <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
             
             <?php
             if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
-                        'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
+                        'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
                         'rowId' => $orderDetails[0]->order->id_order,
                         'userName' => $this->Html->getNameRespectingIsDeleted($orderDetails[0]->order->customer),
                         'customerId' => $orderDetails[0]->order->id_customer,
@@ -77,47 +77,15 @@ use Cake\Core\Configure;
             }
             if (!$appAuth->isManufacturer()) {
                 echo $this->element('addShopOrderButton', [
-                'customers' => $customersForShopOrderDropdown
+                    'customers' => $customersForShopOrderDropdown
                 ]);
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             }
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
 
-    <div id="help-container">
-        <ul>
-            <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die <b>bestellten Produkte</b>
-                verwaltet.
-            </li>
-            <li><b>Produkt stornieren</b>: Mit einem Klick auf das Storno-Icon <?php echo $this->Html->image($this->Html->getFamFamFamPath('delete.png')); ?> ganz rechts kannst du das Produkt stornieren. Von Mittwoch bis Freitag
-                <?php if (!$appAuth->isManufacturer()) { ?>
-                    werden beim Stornieren das Mitglied und der Hersteller
-                <?php } else { ?>
-                    wird beim Stornieren das Mitglied
-                <?php } ?>
-                per E-Mail verständigt, dass das Produkt nicht geliefert wird. Du kannst auch angeben, warum das Produkt storniert wird.</li>
-            <li><b>Preis ändern</b>: Du kannst Preise von bereits bestellten Produkten ändern und dafür auch einen Grund angeben. Das Mitglied  
-            <?php if (!$appAuth->isManufacturer()) { ?>
-                und der Hersteller werden
-            <?php } else { ?>
-                wird
-            <?php } ?>
-                dabei automatisch per E-Mail benachrichtigt.</li>
-            <li>Wenn du auf den Button rechts unten klickst, erhältst du die
-                E-Mail-Adressen von allen Mitgliedern.</li>
-            <li>Wenn du auf das Häkchen ganz links klickst, ist die Zeile bis zum
-                nächsten Laden der Seite grün markiert.</li>
-            <?php if ($appAuth->isManufacturer()) { ?>
-                <li>Du kannst nach Produkt filtern.</li>
-            <?php } else { ?>
-                <li>Du kannst die Liste nach verschiedensten Kriterien
-                filtern.</li>
-            <?php } ?>
-        </ul>
-    </div>
-    
 <?php
 echo '<table class="list">';
 echo '<tr class="sort">';
@@ -131,36 +99,36 @@ if (count($orderDetails) > 0 && $groupBy == '') {
 echo '</th>';
 echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.product_amount', 'Anzahl');
+    echo $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount'));
 echo '</th>';
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<th>';
-        echo $this->Paginator->sort('OrderDetails.product_name', 'Produkt');
+        echo $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product'));
     echo '</th>';
 }
 
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
-    echo $this->Paginator->sort('Manufacturers.name', 'Hersteller');
+    echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
 echo '</th>';
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', 'Betrag');
+    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
 echo '</th>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<th>%</th>';
-    echo '<th class="right">Betrag abzügl. eventuellem variablen Mitgliedsbeitrag</th>';
+    echo '<th class="right">'.__d('admin', 'Amount_minus_eventual_variable_member_fee').'</th>';
 }
 echo '<th>';
-    echo $this->Paginator->sort('OrderDetails.deposit', 'Pfand');
+    echo $this->Paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
 echo '</th>';
 if ($groupBy == '') {
     echo '<th class="right">';
-        echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', 'Gewicht');
+        echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
     echo '</th>';
     echo '<th>';
-        echo $this->Paginator->sort('Orders.date_add', 'Bestell-Datum');
+        echo $this->Paginator->sort('Orders.date_add', __d('admin', 'Order_date'));
     echo '</th>';
-    echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Mitglied').'</th>';
-    echo '<th>'.$this->Paginator->sort('Orders.current_state', 'Status').'</th>';
+    echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
+    echo '<th>'.$this->Paginator->sort('Orders.current_state', __d('admin', 'Status')).'</th>';
     echo '<th style="width:25px;"></th>';
     echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.order_id', 'OrderID') . '</th>';
 }
@@ -218,7 +186,7 @@ foreach ($orderDetails as $orderDetail) {
             if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                     'class' => 'order-detail-product-amount-edit-button',
-                    'title' => 'Zum Ändern der Anzahl anklicken'
+                    'title' => __d('admin', 'Click_to_change_amount')
                 ], 'javascript:void(0);');
             }
             $amount = $orderDetail->product_amount;
@@ -267,12 +235,12 @@ foreach ($orderDetails as $orderDetail) {
         if ($editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'order-detail-product-price-edit-button',
-                'title' => 'Zum Ändern des Preises anklicken'
+                'title' => __d('admin', 'Click_to_change_price')
             ], 'javascript:void(0);');
         }
         echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
         if (!empty($orderDetail->timebased_currency_order_detail)) {
-            echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds).'">&nbsp;*</b>';
+            echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds)]).'">&nbsp;*</b>';
         }
     } else {
         echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
@@ -317,7 +285,7 @@ foreach ($orderDetails as $orderDetail) {
                 if ($editRecordAllowed) {
                     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                         'class' => 'order-detail-product-quantity-edit-button',
-                        'title' => 'Zum Ändern des Gewichts anklicken'
+                        'title' => __d('admin', 'Click_to_change_weight')
                     ], 'javascript:void(0);');
                 }
                 echo '<span class="quantity-in-units">' . $this->Html->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
@@ -358,7 +326,7 @@ foreach ($orderDetails as $orderDetail) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-order-detail',
                 'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
-                'title' => 'Produkt stornieren?'
+                'title' => __d('admin', 'Click_to_cancel_product')
             ], 'javascript:void(0);');
         }
         echo '</td>';
@@ -417,19 +385,22 @@ $buttonHtml = '';
 
 if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
     $buttonExists = true;
-    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="11"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="11"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
 if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId != '') {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');"
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" .
+        Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
+        Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" .
+        Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');"
     ]);
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrderDetails();"
         ]);
         $buttonExists = true;
-        $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> Bestellstatus ändern</button>';
+        $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'Change_order_status') . '</button>';
     }
 }
 
@@ -439,11 +410,11 @@ if ($deposit != '') {
     } else {
         $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
     }
-    $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
+    $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
 }
 
 if (count($orderDetails) > 0) {
-    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> Ausgewählte Produkte stornieren</a>';
+    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
 }
 
 if ($buttonExists) {

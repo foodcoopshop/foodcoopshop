@@ -33,7 +33,7 @@ use Cake\Core\Configure;
 
 <p>2.4. Der Warenwert inklusive Pfand 
 
-<?php if ($this->Html->paymentIsCashless()) { ?>
+<?php if ($this->MyHtml->paymentIsCashless()) { ?>
 wird vom vorhandenen Guthaben abgebucht
 <?php } else { ?>
 wird bei der Abholung bar bezahlt

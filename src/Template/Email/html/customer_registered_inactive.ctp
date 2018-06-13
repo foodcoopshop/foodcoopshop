@@ -23,14 +23,14 @@ use Cake\Core\Configure;
         <tr>
             <td>
                 
-                <p>Deine Registrierung bei "<?php echo Configure::read('appDb.FCS_APP_NAME'); ?>" war erfolgreich!</p>
+                <p><?php echo __('Your_registration_at_{0}_has_just_been_successful!', [Configure::read('appDb.FCS_APP_NAME')])?></p>
                 
                 <p>
-                    <b>Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!</b>
+                    <b><?php echo __('Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!'); ?></b>
                 </p>
                 
                 <p>
-                    Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben.
+                    <p><?php echo __('You_will_get_an_email_as_soon_as_we_activated_you.')?></p>
                 </p>
                 
                 <?php

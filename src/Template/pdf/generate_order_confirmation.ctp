@@ -31,7 +31,7 @@ if (!empty($manufacturers)) {
         $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong')).'</h3>', true, false, true, false, '');
         $pdf->Ln(8);
 
-        $pdf->writeHTML($this->Html->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');
+        $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');
         $pdf->Ln(6);
 
         $widths = [
@@ -82,12 +82,12 @@ if (!empty($manufacturers)) {
             }
             $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;" width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
             $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
-            $pdf->table .= '<td style="text-align: right;" width="' . $widths[2] . '">' . $this->Html->formatAsEuro($orderDetail->total_price_tax_incl) . '</td>';
+            $pdf->table .= '<td style="text-align: right;" width="' . $widths[2] . '">' . $this->MyHtml->formatAsEuro($orderDetail->total_price_tax_incl) . '</td>';
 
             $deposit = $orderDetail->deposit;
             if ($deposit > 0) {
                 $sumDeposit += $deposit;
-                $deposit = $this->Html->formatAsEuro($deposit);
+                $deposit = $this->MyHtml->formatAsEuro($deposit);
             } else {
                 $deposit = '';
             }
@@ -104,9 +104,9 @@ if (!empty($manufacturers)) {
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                     $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                     $pdf->table .= '<td width="' . $widths[1] . '"></td>';
-                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[2] . '"><p>' . $this->Html->formatAsEuro($sumPrice) . '</p></td>';
+                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[2] . '"><p>' . $this->MyHtml->formatAsEuro($sumPrice) . '</p></td>';
                 if ($sumDeposit > 0) {
-                    $sumDepositAsString = $this->Html->formatAsEuro($sumDeposit);
+                    $sumDepositAsString = $this->MyHtml->formatAsEuro($sumDeposit);
                 } else {
                     $sumDepositAsString = '';
                 }
@@ -114,7 +114,7 @@ if (!empty($manufacturers)) {
                 $pdf->table .= '</tr>';
                 $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                     $pdf->table .= '<td colspan="2" style="text-align:right;" width="' . ($widths[0] + $widths[1]) . '"><h3>Gesamt</h3></td>';
-                    $pdf->table .= '<td colspan="2" style="text-align:center;" width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->Html->formatAsEuro($sumPrice + $sumDeposit) . '</h3></td>';
+                    $pdf->table .= '<td colspan="2" style="text-align:center;" width="' . ($widths[2] + $widths[3]) . '"><h3>' . $this->MyHtml->formatAsEuro($sumPrice + $sumDeposit) . '</h3></td>';
                 $pdf->table .= '</tr>';
             }
         }
@@ -123,7 +123,7 @@ if (!empty($manufacturers)) {
 
         $pdf->writeHTML('<p>Die Preise verstehen sich inklusive Umsatzsteuer.</p>', true, false, true, false, '');
         $pdf->Ln(3);
-        $pdf->writeHTML('<p>Enthaltene Umsatzsteuer: ' . $this->Html->formatAsEuro($sumOrderDetailTax) . '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p>Enthaltene Umsatzsteuer: ' . $this->MyHtml->formatAsEuro($sumOrderDetailTax) . '</p>', true, false, true, false, '');
     }
 }
 

@@ -79,7 +79,7 @@ class SlidersController extends AdminAppController
 
         $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
         if (!empty($slider->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('slider', $slider);
             $this->render('edit');
         } else {

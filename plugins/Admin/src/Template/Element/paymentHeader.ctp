@@ -26,16 +26,14 @@ use Cake\Core\Configure;
     ]);
     ?>
     
-    <div id="help-container">
-        <ul>
-            <?php echo $helpText; ?>
-        </ul>
-    </div>    
-    
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
-        <div class="right"></div>
+        <div class="right">
+        	<?php echo $icons; ?>
+        </div>
     </div>
+
+	<p><b>Kontodaten: </b><?php echo $extraInfo; ?></p>
 
 <?php
 
