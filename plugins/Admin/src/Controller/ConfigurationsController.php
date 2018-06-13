@@ -93,7 +93,7 @@ class ConfigurationsController extends AdminAppController
         );
 
         if (!empty($configuration->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('configuration', $configuration);
         } else {
             $configuration = $this->Configuration->save($configuration);

@@ -15,13 +15,13 @@
 
 $menu = [];
 
-$adminName = 'Admin-Bereich';
+$adminName = __('Admin_area');
 $profileSlug = $this->Slug->getCustomerProfile();
 $class = ['btn btn-success'];
 $userName = $appAuth->user('firstname') . ' ' . $appAuth->user('lastname');
 if ($appAuth->isManufacturer()) {
     $profileSlug = $this->Slug->getManufacturerProfile();
-    $adminName = 'Hersteller-Bereich';
+    $adminName = __('Manufacturer_area');
     $userName = $appAuth->getManufacturerName();
 }
 if ($appAuth->user()) {
@@ -29,7 +29,7 @@ if ($appAuth->user()) {
         $menu[] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['class' => $class]];
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName];
     } else {
-        $menu[] = ['slug' => 'javascript:alert(\'Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus.\');', 'name' =>  'Eingeloggt: ' . $userName];
+        $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_shop_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
 if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {

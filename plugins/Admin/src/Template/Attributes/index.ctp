@@ -37,17 +37,12 @@ use Cake\Utility\Hash;
                 'escape' => false
             ]);
             echo '</div>';
+            echo $this->element('printIcon');
             ?>
         </div>
 
     </div>
 
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite kannst du Varianten verwalten.</li>
-        </ul>
-    </div>    
-    
 <?php
 
 echo '<table class="list">';

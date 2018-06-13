@@ -18,15 +18,15 @@ foodcoopshop.DialogOrder = {
         dialogHtml += '<textarea class="ckeditor" name="dialogOrderComment" id="dialogOrderComment" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderId" id="dialogOrderId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Kommentar zu Bestellung ändern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogOrder.ChangeCommentOfOrder, dialogId, dialogHtml);
         return dialogHtml;
     },
 
     getHtmlForOrderEdit : function(dialogId) {
-        var dialogHtml = '<p style="margin-top: 10px;">Bestellung rückdatieren auf</p>';
+        var dialogHtml = '<p style="margin-top: 10px;">' + foodcoopshop.LocalizedJs.dialogOrder.SetDateOfOrderBackTo + '</p>';
         dialogHtml += '<div class="date-dropdown-placeholder"></div>';
         dialogHtml += '<input type="hidden" name="orderId" id="orderId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Bestellung rückdatieren', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogOrder.SetDateOfOrderBack, dialogId, dialogHtml);
         return dialogHtml;
     }
 

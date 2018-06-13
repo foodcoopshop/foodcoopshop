@@ -35,14 +35,8 @@ $this->element('addScript', [
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
             class="fa fa-remove"></i> Abbrechen</a>
         <?php } ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
     </div>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Hersteller-Einstellungen ändern.</li>
-        <?php echo $this->element('docs/hersteller'); ?>
-    </ul>
 </div>
 
 <div class="sc"></div>

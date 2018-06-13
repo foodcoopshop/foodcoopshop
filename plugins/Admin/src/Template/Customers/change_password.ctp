@@ -26,14 +26,10 @@ $this->element('addScript', [
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> Speichern</a>
+        <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
 
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du dein Passwort ändern.</li>
-    </ul>
-</div>
 
 <div class="sc"></div>
 

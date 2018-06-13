@@ -45,37 +45,39 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
 
-    $routes->setExtensions(['pdf']);
+    $routes->setExtensions(['pdf', 'js']);
 
     $routes->connect('/', ['controller' => 'pages', 'action' => 'home']);
 
-    $routes->connect('/anmelden', ['controller' => 'Customers', 'action' => 'login']);
-    $routes->connect('/registrierung', ['controller' => 'Customers', 'action' => 'login']);
-    $routes->connect('/registrierung/abgeschlossen', ['controller' => 'Customers', 'action' => 'registrationSuccessful']);
-    $routes->connect('/logout', ['controller' => 'Customers', 'action' => 'logout']);
-    $routes->connect('/Informationen-ueber-Ruecktrittsrecht', ['controller' => 'Carts', 'action' => 'generateCancellationInformationPdf']);
-    $routes->connect('/nutzungsbedingungen', ['controller' => 'Pages', 'action' => 'termsOfUse']);
-    $routes->connect('/datenschutzerklaerung', ['controller' => 'Pages', 'action' => 'privacyPolicy']);
-    $routes->connect('/allergenliste', ['controller' => 'Pages', 'action' => 'listOfAllergens']);
-    $routes->connect('/nutzungsbedingungen-akzeptieren', ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);
+    $routes->connect('/'.__('route_sign_in'), ['controller' => 'Customers', 'action' => 'login']);
+    $routes->connect('/'.__('route_sign_out'), ['controller' => 'Customers', 'action' => 'logout']);
+    $routes->connect('/'.__('route_registration'), ['controller' => 'Customers', 'action' => 'login']);
+    $routes->connect('/'.__('route_registration_successful'), ['controller' => 'Customers', 'action' => 'registrationSuccessful']);
+    $routes->connect('/'.__('route_information_about_right_of_withdrawal'), ['controller' => 'Carts', 'action' => 'generateCancellationInformationPdf']);
+    $routes->connect('/'.__('route_terms_of_use'), ['controller' => 'Pages', 'action' => 'termsOfUse']);
+    $routes->connect('/'.__('route_privacy_policy'), ['controller' => 'Pages', 'action' => 'privacyPolicy']);
+    $routes->connect('/'.__('route_list_of_allergens'), ['controller' => 'Pages', 'action' => 'listOfAllergens']);
+    $routes->connect('/'.__('route_accept_terms_of_use'), ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);
 
-    $routes->connect('/neue-produkte', ['controller' => 'Categories', 'action' => 'newProducts']);
-    $routes->connect('/neues-passwort-anfordern', ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
-    $routes->connect('/neues-passwort-generieren/*', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
+    $routes->connect('/'.__('route_new_products'), ['controller' => 'Categories', 'action' => 'newProducts']);
+    $routes->connect('/'.__('route_request_new_password'), ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
+    $routes->connect('/'.__('route_generate_new_password').'/*', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
 
-    $routes->connect('/aktuelles', ['controller' => 'BlogPosts', 'action' => 'index']);
-    $routes->connect('/aktuelles/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
-    $routes->connect('/suche/*', ['controller' => 'Categories', 'action' => 'search']);
-    $routes->connect('/kategorie/*', ['controller' => 'Categories', 'action' => 'detail']);
-    $routes->connect('/produkt/*', ['controller' => 'Products', 'action' => 'detail']);
-    $routes->connect('/hersteller', ['controller' => 'Manufacturers', 'action' => 'index']);
-    $routes->connect('/hersteller/:manufacturerSlug/aktuelles', ['controller' => 'BlogPosts', 'action' => 'index']);
-    $routes->connect('/hersteller/*', ['controller' => 'Manufacturers', 'action' => 'detail']);
-    $routes->connect('/content/*', ['controller' => 'Pages', 'action' => 'detail']);
-    $routes->connect('/warenkorb/anzeigen', ['controller' => 'Carts', 'action' => 'detail']);
-    $routes->connect('/warenkorb/abschliessen', ['controller' => 'Carts', 'action' => 'finish']);
-    $routes->connect('/warenkorb/abgeschlossen/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
-    $routes->connect('/warenkorb/:action/*', ['controller' => 'Carts']);
+    $routes->connect('/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
+    $routes->connect('/'.__('route_news_detail').'/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
+    $routes->connect('/'.__('route_search').'/*', ['controller' => 'Categories', 'action' => 'search']);
+    $routes->connect('/'.__('route_category').'/*', ['controller' => 'Categories', 'action' => 'detail']);
+    $routes->connect('/'.__('route_product').'/*', ['controller' => 'Products', 'action' => 'detail']);
+    $routes->connect('/'.__('route_manufacturer_list'), ['controller' => 'Manufacturers', 'action' => 'index']);
+    $routes->connect('/'.__('route_manufacturer_detail').'/:manufacturerSlug/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
+    $routes->connect('/'.__('route_manufacturer_detail').'/*', ['controller' => 'Manufacturers', 'action' => 'detail']);
+    $routes->connect('/'.__('route_content').'/*', ['controller' => 'Pages', 'action' => 'detail']);
+    $routes->connect('/'.__('route_cart').'/'.__('route_cart_show'), ['controller' => 'Carts', 'action' => 'detail']);
+    $routes->connect('/'.__('route_cart').'/'.__('route_cart_finish'), ['controller' => 'Carts', 'action' => 'finish']);
+    $routes->connect('/'.__('route_cart').'/'.__('route_cart_finished').'/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
+    $routes->connect('/'.__('route_cart').'/:action/*', ['controller' => 'Carts']);
+    
+    $routes->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
     
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
 

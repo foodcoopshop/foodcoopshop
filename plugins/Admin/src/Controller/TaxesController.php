@@ -84,7 +84,7 @@ class TaxesController extends AdminAppController
 
         $tax = $this->Tax->patchEntity($tax, $this->getRequest()->getData());
         if (!empty($tax->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('tax', $tax);
             $this->render('edit');
         } else {

@@ -31,7 +31,6 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Core\Plugin;
@@ -39,10 +38,10 @@ use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
+use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 
 /*
@@ -200,10 +199,14 @@ Plugin::load('Admin', [
     'autoload' => true
 ]);
 
-date_default_timezone_set('Europe/Berlin');
-locale_set_default('de');
-setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
+date_default_timezone_set('Europe/Berlin');
+
+if (in_array(Configure::read('App.defaultLocale'), array_keys(Configure::read('app.implementedLocales')))) {
+    locale_set_default(Configure::read('App.defaultLocale'));
+    setlocale(LC_ALL, Configure::read('App.defaultLocale').'.UTF-8');
+    I18n::setLocale(Configure::read('App.defaultLocale'));
+}
 
 TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
@@ -212,3 +215,11 @@ if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
         'autoload' => true
     ]);
 }
+
+// gettext not available in app_config
+Configure::load('localized_config', 'default');
+
+if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
+    Configure::load('localized_custom_config', 'default');
+}
+

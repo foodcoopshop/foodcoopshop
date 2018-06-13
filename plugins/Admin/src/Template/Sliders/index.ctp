@@ -34,15 +34,10 @@ $this->element('highlightRowAfterEdit', [
             'escape' => false
         ]);
         echo '</div>';
+        echo $this->element('printIcon');
         ?>
     </div>
 
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Slideshow-Bilder verwalten.</li>
-    </ul>
 </div>
 
 <?php

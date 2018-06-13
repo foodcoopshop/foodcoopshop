@@ -22,15 +22,11 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 
-<div id="help-container">
-    <ul>
-        Übersicht über dein <?php echo $this->TimebasedCurrency->getName(); ?>.
-    </ul>
-</div>    
-
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
-    <div class="right"></div>
+    <div class="right">
+    	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
+    </div>
 </div>
 
 <?php

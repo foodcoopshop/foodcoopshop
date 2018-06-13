@@ -140,7 +140,7 @@ class ManufacturersController extends AdminAppController
             ]
         );
         if (!empty($manufacturer->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('manufacturer', $manufacturer);
             $this->render('edit');
         } else {
@@ -577,7 +577,7 @@ class ManufacturersController extends AdminAppController
         }
         
         if (!empty($manufacturer->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') / 3600));
             }

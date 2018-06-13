@@ -36,7 +36,9 @@ $this->element('addScript', [
             ]);
         }
         ?>
-        <div class="right"></div>
+        <div class="right">
+        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_deposit'))]); ?>
+        </div>
     <?php echo $this->Form->end(); ?>
 </div>
 
@@ -45,28 +47,6 @@ if (empty($manufacturer)) {
     echo '<br /><h2 class="info">Bitte wähle einen Hersteller aus.</h2>';
     return;
 }
-?>
-
-<div id="help-container">
-    <ul>
-        <?php echo $this->element('docs/abholdienst'); ?>
-        <li>Hier wird das Pfand für den Hersteller <b><?php echo $manufacturer->name; ?></b> verwaltet.</li>
-        <li>Pfand, das vor dem <?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate')));?> verkauft / geliefert wurde, wird <b>nicht berücksichtigt</b>.</li>
-        <li><b>Produkt mit Pfand geliefert</b>: Stichtag ist der Tag der Bestellung des Produktes, das "verpfandet" ist (nicht das Lieferdatum!)
-        <li><b>Leergebinde zurückgenommen</b>: Stichtag ist der Tag, an dem das Retour-Pfand ins System eingetragen wurde. Dies kann entweder in Form von Leergebinde oder als Überweisung erfolgen.</li>
-        <li>Ein Klick auf <b>Details</b> zeigt die genau Zusammensetzung des monatlichen Betrages an.</li>
-        <?php if ($appAuth->isManufacturer() || $appAuth->isAdmin()) { ?>
-            <li>Falls der Hersteller Leergebinde vom Abhollager mitnimmt, 
-        <?php } ?>
-        <?php if ($appAuth->isSuperadmin()) { ?>
-            <li>Falls du dem Hersteller das Pfandkonto mit Geld ausgleichst, oder er Leergebinde mitnimmt, 
-        <?php } ?>
-            kannst du hier eine neue Pfand-Rücknahme eintragen.</li>
-    </ul>
-</div>    
-    
-<?php
-
 
 echo '<div class="add-payment-deposit-wrapper">';
 if ($appAuth->isManufacturer() || $appAuth->isAdmin()) {

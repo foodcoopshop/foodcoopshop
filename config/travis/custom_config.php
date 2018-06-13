@@ -93,6 +93,9 @@ return [
          */
         'paymentMethods' => [
             'cashless'
-        ]
+        ],
+        
+        'locale' => 'de_DE'
+        
     ]
 ];

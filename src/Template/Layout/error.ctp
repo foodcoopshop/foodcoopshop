@@ -66,14 +66,18 @@ use Cake\Core\Configure;
     
 <?php
 
+    echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
 
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Helper.initAnystretch();"
     ]);
 
-    echo $this->fetch('script'); // all scripts from layouts
-
+    $scripts = $this->fetch('script');
+    if ($scripts != '') {
+        echo $this->Html->wrapJavascriptBlock($scripts);
+    }
+    
 ?>
 
 </body>

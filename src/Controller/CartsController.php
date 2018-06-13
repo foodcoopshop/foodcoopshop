@@ -35,10 +35,10 @@ class CartsController extends FrontendController
         if ($this->getRequest()->is('ajax')) {
             $message = '';
             if (empty($this->AppAuth->user())) {
-                $message = 'Du bist nicht angemeldet.';
+                $message = __('You_are_not_signed_in.');
             }
             if ($this->AppAuth->isManufacturer()) {
-                $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
+                $message = __('No_access_for_manufacturers.');
             }
             if ($message != '') {
                 $this->log($message);
@@ -71,7 +71,7 @@ class CartsController extends FrontendController
 
     public function detail()
     {
-        $this->set('title_for_layout', 'Dein Warenkorb');
+        $this->set('title_for_layout', __('Your_cart'));
         if (!$this->getRequest()->is('post')) {
             $this->Order = TableRegistry::getTableLocator()->get('Orders');
             $this->set('order', $this->Order->newEntity());
@@ -171,7 +171,7 @@ class CartsController extends FrontendController
             $email = new AppEmail();
             $email->setTemplate('customer_order_successful')
             ->setTo($this->AppAuth->getEmail())
-            ->setSubject('Bestellbestätigung')
+            ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $cart,
                 'appAuth' => $this->AppAuth,
@@ -179,9 +179,9 @@ class CartsController extends FrontendController
                 'order' => $order
             ]);
             
-            $email->addAttachments(['Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
-            $email->addAttachments(['Bestelluebersicht.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
-            $email->addAttachments(['Allgemeine-Geschaeftsbedingungen.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Cancellation-information-and-form').'.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
             
             $email->send();
         }
@@ -271,7 +271,7 @@ class CartsController extends FrontendController
         $order = $this->Order->save($patchedOrder);
         
         if (!$order) {
-            $message = 'Bei der Erstellung der Bestellung ist ein Fehler aufgetreten.';
+            $message = __('Error_while_creating_the_order.');
             $this->Flash->error($message);
             $this->log($message);
             $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
@@ -299,7 +299,7 @@ class CartsController extends FrontendController
         ]);
         
         if (empty($orderDetails)) {
-            $message = 'Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten.';
+            $message = __('Error_while_saving_the_ordered_products.');
             $this->Flash->error($message);
             $this->log($message);
             $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
@@ -344,7 +344,7 @@ class CartsController extends FrontendController
             return;
         }
         
-        $this->set('title_for_layout', 'Warenkorb abschließen');
+        $this->set('title_for_layout', __('Finish_cart'));
         $cart = $this->AppAuth->getCart();
 
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
@@ -369,7 +369,7 @@ class CartsController extends FrontendController
         // END check if no amount is 0
 
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
-            $this->Flash->error('Dein Warenkorb war leer.');
+            $this->Flash->error(__('Your_cart_was_empty'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
         }
 
@@ -408,7 +408,8 @@ class CartsController extends FrontendController
 
             // stock available check for product (without attributeId)
             if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $cartProduct['amount']) {
-                $message = 'Die gewünschte Anzahl <b>' . $cartProduct['amount'] . '</b> des Produktes <b>' . $product->product_lang->name . '</b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . ' Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->product_lang->name . '</b>', $stockAvailableQuantity]);
+                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
@@ -426,25 +427,29 @@ class CartsController extends FrontendController
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = 'Die gewünschte Anzahl <b>' . $cartProduct['amount'] . '</b> der Variante <b>' . $attribute->name . '</b> des Produktes <b>' . $product->product_lang->name . '<b> ist leider nicht mehr verfügbar. Verfügbare Menge: ' . $stockAvailableQuantity . '. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen.';
+                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->product_lang->name . '</b>', $stockAvailableQuantity]);
+                            $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
                         break;
                     }
                 }
                 if (! $attributeIdFound) {
-                    $message = 'Die Variante existiert nicht. Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um deine Bestellung abzuschließen.';
+                    $message = __('The_attribute_does_not_exist.');
+                    $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                     $cartErrors[$cartProduct['productId']][] = $message;
                 }
             }
 
             if (! $product->active) {
-                $message = 'Das Produkt <b>' . $product->product_lang->name . '</b> ist leider nicht mehr aktiviert und somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->product_lang->name . '</b>']);
+                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (! $product->manufacturer->active || $product->is_holiday_active) {
-                $message = 'Der Hersteller des Produktes <b>' . $product->product_lang->name . '</b> hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar. Um deine Bestellung abzuschließen, lösche bitte das Produkt aus deinem Warenkorb.';
+                $message = __('The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated.', ['<b>' . $product->product_lang->name . '</b>']);
+                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
@@ -536,9 +541,9 @@ class CartsController extends FrontendController
             
             $this->AppAuth->Cart->markAsSaved();
 
-            $this->Flash->success('Deine Bestellung wurde erfolgreich abgeschlossen.');
+            $this->Flash->success(__('Your_order_has_been_placed_succesfully.'));
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', $this->AppAuth->getUsername() . ' hat eine neue Bestellung getätigt (' . Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum()) . ').');
+            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum())]));
 
             $this->sendConfirmationEmailToCustomer($cart, $order, $products);
 
@@ -587,7 +592,7 @@ class CartsController extends FrontendController
                 $email = new AppEmail();
                 $email->setTemplate('shop_order_notification')
                 ->setTo($manufacturer->address_manufacturer->email)
-                ->setSubject('Benachrichtigung über Sofort-Bestellung Nr. ' . $order->id_order)
+                ->setSubject(__('Notification_about_shop_order_order_number_{0}', [$order->id_order]))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
@@ -628,7 +633,7 @@ class CartsController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->set('title_for_layout', 'Deine Bestellung ist abgeschlossen');
+        $this->set('title_for_layout', __('Your_order_has_been_placed'));
 
         $this->resetOriginalLoggedCustomer();
         $this->destroyShopOrderCustomer();
@@ -651,7 +656,7 @@ class CartsController extends FrontendController
     private function doManufacturerCheck($productId)
     {
         if ($this->AppAuth->isManufacturer()) {
-            $message = 'Herstellern steht diese Funktion leider nicht zur Verfügung.';
+            $message = __('No_access_for_manufacturers.');
             $this->log($message);
             die(json_encode([
                 'status' => 0,
@@ -677,7 +682,7 @@ class CartsController extends FrontendController
 
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
-            $message = 'Produkt ' . $ids['productId'] . ' war nicht in Warenkorb vorhanden.';
+            $message = __('Product_{0}_was_not_available_in_cart.', [$ids['productId']]);
             die(json_encode([
                 'status' => 0,
                 'msg' => $message,
@@ -700,7 +705,7 @@ class CartsController extends FrontendController
     public function emptyCart()
     {
         $this->doEmptyCart();
-        $message = 'Dein Warenkorb wurde geleert, du kannst jetzt neue Produkte hinzufügen.';
+        $message = __('Your_cart_has_been_emptied_you_can_add_new_products_now.');
         $this->Flash->success($message);
         $this->redirect($this->referer());
     }
@@ -745,19 +750,20 @@ class CartsController extends FrontendController
             }
         }
         
-        $message = 'Dein Warenkorb wurde geleert und deine vergangene Bestellung in den Warenkorb geladen.';
-        $message .= '<br />Du kannst jetzt weitere Produkte hinzufügen.';
+        $message = __('Your_cart_has_been_emptied_and_your_past_order_has_been_loaded_into_the_cart.');
+        $message .= '<br />';
+        $message .= __('You_can_add_more_products_now.');;
 
         if (!empty($errorMessages)) {
             $message .= '<div class="error">';
                 $removedProducts = count($orderDetails) - $loadedProducts;
                 $message .= '<b>';
                 if ($removedProducts == 1) {
-                    $message .= $removedProducts . ' Produkt ist';
+                    $message .= __('1_product_is_not_available_any_more.');
                 } else {
-                    $message .= $removedProducts . ' Produkte sind';
+                    $message .= __('{0}_products_are_not_available_any_more.', [$removedProducts]);
                 }
-                $message .= ' nicht mehr verfügbar</b>';
+                $message .= ' </b>';
                 $message .= '<ul><li>' . join('</li><li>', $errorMessages) . '</li></ul>';
             $message .= '</div>';
         }
@@ -771,7 +777,7 @@ class CartsController extends FrontendController
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
         if (empty($orderDetails)) {
-            $message = 'Es sind keine Bestellungen vorhanden.';
+            $message = __('There_are_no_orders_available.');
             $this->Flash->error($message);
         } else {
             reset($orderDetails);

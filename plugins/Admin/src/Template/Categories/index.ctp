@@ -37,16 +37,12 @@ use Cake\Core\Configure;
                 'escape' => false
             ]);
             echo '</div>';
+            echo $this->element('printIcon');
             ?>
         </div>
 
     </div>
 
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite kannst du Seiten verwalten.</li>
-        </ul>
-    </div>    
     
 <?php
 

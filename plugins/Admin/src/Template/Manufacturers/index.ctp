@@ -41,17 +41,11 @@ use Cake\Core\Configure;
                     'escape' => false
                 ]);
                 echo '</div>';
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]);
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite werden die <b>Hersteller</b> verwaltet.</li>
-            <?php echo $this->element('docs/hersteller'); ?>
-        </ul>
-    </div>    
     
 <?php
 

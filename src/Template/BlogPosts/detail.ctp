@@ -40,13 +40,13 @@ if ($blogPost->short_description != '') {
     echo $blogPost->content;
 
     echo '<p><i>';
-        echo '<br />Geändert am ' . $blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+        echo '<br />'.__('Modified_on'). ' ' . $blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
 if (!empty($blogPost->manufacturer)) {
     echo '<br />';
     if ($blogPost->manufacturer->active) {
-        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Blog von  ' . $blogPost->manufacturer->name.'</a>';
+        echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">'.__('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
     } else {
-        echo 'von ' . $blogPost->manufacturer->name;
+        echo __('by') . ' ' . $blogPost->manufacturer->name;
     }
 }
     echo '</i></p>';
@@ -56,7 +56,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
         [
-        'title' => 'Bearbeiten'
+        'title' => __('Edit')
         ],
         $this->Slug->getBlogPostEdit($blogPost->id_blog_post)
     );

@@ -1,0 +1,280 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-06-11 18:13+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Errors_while_saving!"
+msgstr ""
+
+msgid "Group_by_product"
+msgstr ""
+
+msgid "Group_by_manufacturer"
+msgstr ""
+
+msgid "Ordered_products"
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Shop_order"
+msgstr ""
+
+msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "docs_route_settings"
+msgstr ""
+
+msgid "Pick_up_day"
+msgstr ""
+
+msgid "docs_route_members"
+msgstr ""
+
+msgid "docs_route_deposit"
+msgstr ""
+
+msgid "Add_deposit_amount"
+msgstr ""
+
+msgid "Add_deposit"
+msgstr ""
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr ""
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr ""
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr ""
+
+msgid "Amount_in_{0}"
+msgstr ""
+
+msgid "Chose_member..."
+msgstr ""
+
+msgid "1_day_ahead"
+msgstr ""
+
+msgid "1_day_back"
+msgstr ""
+
+msgid "Activities"
+msgstr ""
+
+msgid "Cancelled_products"
+msgstr ""
+
+msgid "Deposit_returns"
+msgstr ""
+
+msgid "My_data"
+msgstr ""
+
+msgid "Change_password"
+msgstr ""
+
+msgid "Blog_posts"
+msgstr ""
+
+msgid "Website_administration"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Order_lists"
+msgstr ""
+
+msgid "Manufacturers"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Deposit_account"
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Slideshow"
+msgstr ""
+
+msgid "Tax_rates"
+msgstr ""
+
+msgid "Financial_reports"
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
+msgid "My_products"
+msgstr ""
+
+msgid "My_profile"
+msgstr ""
+
+msgid "Contact_person"
+msgstr ""
+
+msgid "docs_route_products"
+msgstr ""
+
+msgid "docs_route_manufacturers"
+msgstr ""
+
+msgid "all_products"
+msgstr ""
+
+msgid "all_manufacturers"
+msgstr ""
+
+msgid "all_members"
+msgstr ""
+
+msgid "Order_number_abbr"
+msgstr ""
+
+msgid "Group_by..."
+msgstr ""
+
+msgid "Deposit_return"
+msgstr ""
+
+msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Order_date"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Click_to_change_amount"
+msgstr ""
+
+msgid "Click_to_change_price"
+msgstr ""
+
+msgid "Additional_in_{0}"
+msgstr ""
+
+msgid "Click_to_change_weight"
+msgstr ""
+
+msgid "Click_to_cancel_product"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Change_order_status"
+msgstr ""
+
+msgid "Back_to_deposit_account"
+msgstr ""
+
+msgid "Cancel_selected_products"
+msgstr ""
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgstr ""
+
+msgid "Group_by_member"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Order_count"
+msgstr ""
+
+msgid "Add_comment"
+msgstr ""
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr ""
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr ""
+
+msgid "Set_date_of_order_back"
+msgstr ""
+
+msgid "records"
+msgstr ""
+
+msgid "Generate_orders_as_pdf"
+msgstr ""
+
+msgid "Close_all_orders"
+msgstr ""
+
+msgid "to_the_admin_area"
+msgstr ""
+
+msgid "to_the_manufacturer_area"
+msgstr ""
+
+msgid "Welcome"
+msgstr ""
+
+msgid "docs_route_credit_system"
+msgstr ""
+
+msgid "docs_route_financial_reports"
+msgstr ""
+
+msgid "docs_route_paying_with_time_module"
+msgstr ""
+

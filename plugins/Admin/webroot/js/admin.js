@@ -17,7 +17,6 @@ foodcoopshop.Admin = {
         this.initFilter();
         this.improveTableLayout();
         foodcoopshop.Helper.initJqueryUiIcons();
-        this.addPrintAndHelpIcon();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
         foodcoopshop.Helper.initLogoutButton();
@@ -251,6 +250,37 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogCustomer.getHtmlForCustomerCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                if ($('#dialogCustomerId').val() == '') {
+                    return false;
+                }
+
+                $('#customer-comment-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/customers/editComment/',
+                    {
+                        customerId: $('#dialogCustomerId').val(),
+                        customerComment: CKEDITOR.instances['dialogCustomerComment'].getData()
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            console.log(data);
+                        }
+                    }
+                );
+
+            }
+        };
+        
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -262,41 +292,7 @@ foodcoopshop.Admin = {
                 $('#cke_dialogCustomerComment').val('');
                 $('#dialogCustomerId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    if ($('#dialogCustomerId').val() == '') {
-                        return false;
-                    }
-
-                    $('#customer-comment-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/customers/editComment/',
-                        {
-                            customerId: $('#dialogCustomerId').val(),
-                            customerComment: CKEDITOR.instances['dialogCustomerComment'].getData()
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                console.log(data);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         return dialog;
@@ -330,48 +326,42 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderCommentEdit(dialogId);
         $(container).append(dialogHtml);
 
-        var dialog = $('#' + dialogId).dialog({
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                $('#order-comment-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
 
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/orders/editComment/',
+                    {
+                        orderId: $('#dialogOrderId').val(),
+                        orderComment: CKEDITOR.instances['dialogOrderComment'].getData()
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            console.log(data);
+                        }
+                    }
+                );
+            }
+        };
+        
+        var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             height: 460,
             width: 350,
             modal: true,
-
             close: function () {
                 $('#cke_dialogOrderComment').val('');
                 $('#dialogOrderId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    $('#order-comment-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/orders/editComment/',
-                        {
-                            orderId: $('#dialogOrderId').val(),
-                            orderComment: CKEDITOR.instances['dialogOrderComment'].getData()
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                console.log(data);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         return dialog;
@@ -405,6 +395,38 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderEdit(dialogId);
         $(container).append(dialogHtml);
 
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['yes'] = {
+            text: foodcoopshop.LocalizedJs.helper.yes,
+            click: function() {
+                var newDate = $('#' + dialogId + ' .date-dropdown-placeholder select').val();
+
+                if (newDate == '' || $('#orderId').val() == '') {
+                    return false;
+                }
+
+                $('#order-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/orders/editDate/',
+                    {
+                        orderId: $('#orderId').val(),
+                        date: newDate
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            console.log(data);
+                        }
+                    }
+                );
+            }
+        };
+        
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -416,43 +438,7 @@ foodcoopshop.Admin = {
                 $('#' + dialogId + ' .date-dropdown-placeholder').html('');
                 $('#orderId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    var newDate = $('#' + dialogId + ' .date-dropdown-placeholder select').val();
-
-                    if (newDate == '' || $('#orderId').val() == '') {
-                        return false;
-                    }
-
-                    $('#order-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/orders/editDate/',
-                        {
-                            orderId: $('#orderId').val(),
-                            date: newDate
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                console.log(data);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         $('.edit-button').on('click', function () {
@@ -886,7 +872,6 @@ foodcoopshop.Admin = {
                 [dataRow.find('td:nth-child(1)').html()],
                 true,
                 dataRow.find('td:nth-child(5)').html(),
-                //totalSum
                 dataRow.find('td:nth-child(2) span.customer-name').html()
             );
         });
@@ -952,28 +937,55 @@ foodcoopshop.Admin = {
             };
         }
 
-        buttons['abbrechen'] = function () {
-            $(this).dialog('close');
-        };
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
 
         if (showCancelOrderButton) {
-            buttons['storniert'] = function () {
+            buttons['cancelled'] = {
+                text: foodcoopshop.LocalizedJs.admin.orderStateCancelled,
+                click: function () {
+            
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+    
+                    if (totalSum != '0,00&nbsp;€') {
+                        $('.ui-dialog .ajax-loader').hide();
+                        alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
+                        $('.ui-dialog button').attr('disabled', false);
+                        return;
+                    }
+    
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/orders/changeOrderState/',
+                        {
+                            orderIds: orderIds,
+                            orderState: 6
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.href = data.redirectUrl;
+                            },
+                            onError: function (data) {
+                                document.location.reload();
+                            }
+                        }
+                    );
+
+                }
+            };
+        }
+
+        buttons['open'] = {
+            text: foodcoopshop.LocalizedJs.admin.orderStateOpen,
+            click : function () {
 
                 $('.ui-dialog .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
-
-                if (totalSum != '0,00&nbsp;€') {
-                    $('.ui-dialog .ajax-loader').hide();
-                    alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
-                    $('.ui-dialog button').attr('disabled', false);
-                    return;
-                }
-
+    
                 foodcoopshop.Helper.ajaxCall(
                     '/admin/orders/changeOrderState/',
                     {
                         orderIds: orderIds,
-                        orderState: 6
+                        orderState: 3
                     },
                     {
                         onOk: function (data) {
@@ -984,38 +996,15 @@ foodcoopshop.Admin = {
                         }
                     }
                 );
-
-            };
-        }
-
-        buttons['offen'] = function () {
-
-            $('.ui-dialog .ajax-loader').show();
-            $('.ui-dialog button').attr('disabled', 'disabled');
-
-            foodcoopshop.Helper.ajaxCall(
-                '/admin/orders/changeOrderState/',
-                {
-                    orderIds: orderIds,
-                    orderState: 3
-                },
-                {
-                    onOk: function (data) {
-                        document.location.href = data.redirectUrl;
-                    },
-                    onError: function (data) {
-                        document.location.reload();
-                    }
-                }
-            );
+            }
 
         };
 
         $('<div></div>').appendTo('body')
-            .html(foodcoopshop.Admin.additionalOrderStatusChangeInfo + '<p>Willst du den Bestellstatus der Bestellung von <b>' + customerName + '</b> wirklich ändern?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+            .html(foodcoopshop.Admin.additionalOrderStatusChangeInfo + '<p>' + foodcoopshop.LocalizedJs.admin.ReallyChangeOrderStatusFrom.replace(/\{0\}/g, '<b>' + customerName + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
             .dialog({
                 modal: true,
-                title: 'Bestellstatus ändern?',
+                title: foodcoopshop.LocalizedJs.admin.ChangeOrderStatus,
                 autoOpen: true,
                 width: 620,
                 resizable: false,
@@ -1030,17 +1019,23 @@ foodcoopshop.Admin = {
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {
 
         var productString = orderDetailIds.length == 1 ? 'Produkt' : 'Produkte';
-        var infoText = '<p>Du hast <b>' + orderDetailIds.length + '</b> ' + productString + ' zum Stornieren ausgewählt:</p>';
+        var infoText = '<p>';
+        if (orderDetailIds.length == 1) {
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProductForCancellation;
+        } else {
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0ProductsForCancellation.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
+        }
 
+        infoText += ':</p>';
         infoText += '<ul>';
         for (var i in orderDetailIds) {
-            var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).parent().parent().parent().parent();
+            var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
             infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(10)').html() + '</li>';
         }
         infoText += '</ul>';
 
-        var dialogTitle = 'Ausgewählte Produkte wirklich stornieren?';
-        var textareaLabel = 'Warum werden die Produkte storniert (Pflichtfeld)?';
+        var dialogTitle = foodcoopshop.LocalizedJs.admin.ReallyCancelSelectedProducts;
+        var textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
         foodcoopshop.Admin.openDeleteOrderDetailDialog(orderDetailIds, infoText, textareaLabel, dialogTitle);
     },
 
@@ -1050,7 +1045,7 @@ foodcoopshop.Admin = {
 
         var dialogHtml = infoText;
         if (!foodcoopshop.Helper.isManufacturer) {
-            dialogHtml += '<p class="overlay-info">Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!</p>';
+            dialogHtml += '<p class="overlay-info">' + foodcoopshop.LocalizedJs.admin.PleaseOnlyCancelIfOkForManufacturer + '</p>';
         }
 
         dialogHtml += '<div class="textarea-wrapper">';
@@ -1059,6 +1054,38 @@ foodcoopshop.Admin = {
         dialogHtml += '</div>';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.admin.DoNotCancelButton);
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.admin.YesDoCancelButton,
+            click: function() {
+                var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
+                if (ckeditorData == '') {
+                    alert(foodcoopshop.LocalizedJs.admin.CancellationReasonIsMandatory);
+                    return;
+                }
+
+                $('.ui-dialog .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/order-details/delete',
+                    {
+                        orderDetailIds: orderDetailIds,
+                        cancellationReason: ckeditorData
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            document.location.reload();
+                        }
+                    }
+                );
+            }
+        };
+        
+        
         $('<div></div>').appendTo('body')
             .html(dialogHtml)
             .dialog({
@@ -1070,37 +1097,7 @@ foodcoopshop.Admin = {
                     foodcoopshop.Helper.initCkeditor('dialogCancellationReason');
                 },
                 resizable: false,
-                buttons: {
-                    'Abbrechen': function () {
-                        $(this).dialog('close');
-                    },
-                    'Ja, stornieren!': function () {
-
-                        var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
-                        if (ckeditorData == '') {
-                            alert('Bitte an, warum du das Produkt stornierst.');
-                            return;
-                        }
-
-                        $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr('disabled', 'disabled');
-                        foodcoopshop.Helper.ajaxCall(
-                            '/admin/order-details/delete',
-                            {
-                                orderDetailIds: orderDetailIds,
-                                cancellationReason: ckeditorData
-                            },
-                            {
-                                onOk: function (data) {
-                                    document.location.reload();
-                                },
-                                onError: function (data) {
-                                    document.location.reload();
-                                }
-                            }
-                        );
-                    }
-                },
+                buttons: buttons,
                 close: function (event, ui) {
                     foodcoopshop.Helper.destroyCkeditor('dialogCancellationReason');
                 }
@@ -1114,16 +1111,20 @@ foodcoopshop.Admin = {
             var orderDetailId = $(this).attr('id').split('-');
             orderDetailId = orderDetailId[orderDetailId.length - 1];
 
-            var dataRow = $('#delete-order-detail-' + orderDetailId).parent().parent().parent().parent();
-            var infoText = '<p>Möchtest du das Produkt <b>' + dataRow.find('td:nth-child(4) a').html() + '</b>';
+            var dataRow = $('#delete-order-detail-' + orderDetailId).closest('tr');
+            var infoText = '';
 
-            if (!foodcoopshop.Helper.isManufacturer) {
-                infoText += ' vom Hersteller <b>' + dataRow.find('td:nth-child(5) a').html() + '</b>';
+            var customerName = dataRow.find('td:nth-child(4) a').html();
+            var manufacturerName = dataRow.find('td:nth-child(5) a').html();
+            
+            if (foodcoopshop.Helper.isManufacturer) {
+                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + customerName + '</b>') + '</p>';
+            } else {
+                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0From1.replace(/\{0\}/, '<b>' + customerName + '</b>').replace(/\{1\}/, '<b>' + manufacturerName + '</b>') + '</p>';
             }
-            infoText += ' wirklich stornieren?</p>';
 
-            var dialogTitle = 'Bestelltes Produkt wirklich stornieren?';
-            var textareaLabel = 'Warum wird das Produkt storniert (Pflichtfeld)?';
+            var dialogTitle = foodcoopshop.LocalizedJs.admin.ReallyCancelOrderedProduct;
+            var textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
 
             foodcoopshop.Admin.openDeleteOrderDetailDialog([orderDetailId], infoText, textareaLabel, dialogTitle);
 
@@ -1381,7 +1382,7 @@ foodcoopshop.Admin = {
                 .html('<p>' + emails.join(',') + '</p>')
                 .dialog({
                     modal: true,
-                    title: 'E-Mail-Adressen',
+                    title: foodcoopshop.LocalizedJs.admin.EmailAddresses,
                     autoOpen: true,
                     width: 800,
                     resizable: false,
@@ -1612,6 +1613,46 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductQuantityEdit(dialogId);
         $(container).append(dialogHtml);
 
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
+                if (isNaN(parseFloat(productQuantity.replace(/,/, '.'))) || productQuantity < 0) {
+                    alert(foodcoopshop.LocalizedJs.admin.DeliveredWeightNeedsToBeGreaterThan0);
+                    return false;
+                }
+                
+                if ($('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
+                    return false;
+                }
+                
+                $('#order-detail-product-quantity-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+                
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/order-details/editProductQuantity/',
+                    {
+                        orderDetailId: $('#dialogOrderDetailProductQuantityOrderDetailId').val(),
+                        productQuantity: productQuantity,
+                        doNotChangePrice: $('#dialogOrderDetailProductQuantityDoNotChangePrice:checked').length > 0 ? 1 : 0
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            dialog.dialog('close');
+                            $('#order-detail-product-quantity-edit-form .ajax-loader').hide();
+                            alert(data.msg);
+                        }
+                    }
+                );
+
+            }
+        };
+
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -1622,49 +1663,7 @@ foodcoopshop.Admin = {
                 $('#dialogOrderDetailProductQuantityOrderDetailId').val('');
                 $('#dialogOrderDetailProductQuantityDoNotChangePrice').prop('checked', false);
             },
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
-                    if (isNaN(parseFloat(productQuantity.replace(/,/, '.'))) || productQuantity < 0) {
-                        alert('Das Liefergewicht muss größer als 0 sein.');
-                        return false;
-                    }
-                    
-                    if ($('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
-                        return false;
-                    }
-                    
-                    $('#order-detail-product-quantity-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/order-details/editProductQuantity/',
-                        {
-                            orderDetailId: $('#dialogOrderDetailProductQuantityOrderDetailId').val(),
-                            productQuantity: productQuantity,
-                            doNotChangePrice: $('#dialogOrderDetailProductQuantityDoNotChangePrice:checked').length > 0 ? 1 : 0
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                dialog.dialog('close');
-                                $('#order-detail-product-quantity-edit-form .ajax-loader').hide();
-                                alert(data.msg);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
         
         $('.order-detail-product-quantity-edit-button').on('click', function () {
@@ -1686,27 +1685,29 @@ foodcoopshop.Admin = {
             var quantityString = $('#' + dialogId + ' span.quantity-string');
             var newHtml = '';
             if (amount > 1) {
-                label += '<b>' + amount + '</b>' + 'x bestellt ';
-                newHtml = quantityString.html().replace(/Gewicht/, 'Gesamtgewicht');
+                label += '<b>' + amount + '</b>' + 'x ';
+                var regExpDeliveredWeight = new RegExp(foodcoopshop.LocalizedJs.admin.DeliveredWeight);
+                newHtml = quantityString.html().replace(regExpDeliveredWeight, foodcoopshop.LocalizedJs.admin.DeliveredTotalWeight);
             } else {
-                newHtml = quantityString.html().replace(/Gesamtgewicht/, 'Gewicht');
+                var regExpDeliveredTotalWeight = new RegExp(foodcoopshop.LocalizedJs.admin.DeliveredTotalWeight);
+                newHtml = quantityString.html().replace(regExpDeliveredTotalWeight, foodcoopshop.LocalizedJs.admin.DeliveredWeight);
             }
             quantityString.html(newHtml);
-            label += 'von ' + row.find('td:nth-child(10)').html() + ')';
+            label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(10)').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
             
             var stepValue = '0.001';
             var minValue = '0.001';
             switch(unitName) {
-                case 'g':
-                    stepValue = 1;
-                    minValue = 1;
+            case 'g':
+                stepValue = 1;
+                minValue = 1;
             }
             quantityInUnitsField.attr('step', stepValue);
             quantityInUnitsField.attr('min', minValue);
             
             var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html(); 
-            $('#' + dialogId + ' li.price-per-unit-base-info').html('Basis-Preis: ' + pricePerUnitBaseInfo);
+            $('#' + dialogId + ' li.price-per-unit-base-info').html(foodcoopshop.LocalizedJs.admin.BasePrice + ': ' + pricePerUnitBaseInfo);
             
             dialog.dialog('open');
         });        
@@ -1721,6 +1722,52 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
 
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                if ($('#dialogOrderDetailProductPricePrice').val() == '' || $('#dialogOrderDetailProductPriceOrderDetailId').val() == '') {
+                    return false;
+                }
+
+                var ckeditorData = CKEDITOR.instances['dialogEditPriceReason'].getData().trim();
+                if (ckeditorData == '') {
+                    alert(foodcoopshop.LocalizedJs.admin.AdaptPriceReasonIsMandatory);
+                    return;
+                }
+                
+                var productPrice = $('#dialogOrderDetailProductPricePrice').val();
+                var timebasedCurrencyPriceObject = $('#dialogOrderDetailProductPriceTimebasedCurrencyPrice');
+                if (timebasedCurrencyPriceObject.length > 0) {
+                    productPrice = timebasedCurrencyPriceObject.val();
+                }
+                
+                $('#order-detail-product-price-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/order-details/editProductPrice/',
+                    {
+                        orderDetailId: $('#dialogOrderDetailProductPriceOrderDetailId').val(),
+                        productPrice: productPrice,
+                        editPriceReason: ckeditorData
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            dialog.dialog('close');
+                            $('#order-detail-product-price-edit-form .ajax-loader').hide();
+                            alert(data.msg);
+                        }
+                    }
+                );
+
+            }                
+        };
+
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -1734,55 +1781,7 @@ foodcoopshop.Admin = {
             open: function () {
                 foodcoopshop.Helper.initCkeditor('dialogEditPriceReason');
             },
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    if ($('#dialogOrderDetailProductPricePrice').val() == '' || $('#dialogOrderDetailProductPriceOrderDetailId').val() == '') {
-                        return false;
-                    }
-
-                    var ckeditorData = CKEDITOR.instances['dialogEditPriceReason'].getData().trim();
-                    if (ckeditorData == '') {
-                        alert('Bitte an, warum der Preis geändert wird.');
-                        return;
-                    }
-                    
-                    var productPrice = $('#dialogOrderDetailProductPricePrice').val();
-                    var timebasedCurrencyPriceObject = $('#dialogOrderDetailProductPriceTimebasedCurrencyPrice');
-                    if (timebasedCurrencyPriceObject.length > 0) {
-                        productPrice = timebasedCurrencyPriceObject.val();
-                    }
-                    
-                    $('#order-detail-product-price-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/order-details/editProductPrice/',
-                        {
-                            orderDetailId: $('#dialogOrderDetailProductPriceOrderDetailId').val(),
-                            productPrice: productPrice,
-                            editPriceReason: ckeditorData
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                dialog.dialog('close');
-                                $('#order-detail-product-price-edit-form .ajax-loader').hide();
-                                alert(data.msg);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         $('.order-detail-product-price-edit-button').on('click', function () {
@@ -1793,13 +1792,13 @@ foodcoopshop.Admin = {
             var productPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice');
             
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(von ' + row.find('td:nth-child(10)').html() + ')');
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(10)').html() + ')');
             
             var productTimebasedCurrencyPriceField;
             
             $('#' + dialogId + ' .price-per-unit-info-text').remove();
             if (row.find('td:nth-child(8)').html() != '') {
-                productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">Um das Gewicht anzupassen, ändere bitte den Wert "Gewicht" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf.</b>');
+                productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">' + foodcoopshop.LocalizedJs.admin.ExplainationTextApdaptPriceFormApaptWeight + '</b>');
             }
             
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
@@ -1807,10 +1806,10 @@ foodcoopshop.Admin = {
             if (timebasedCurrencyObject.length > 0 && $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice').length == 0) {
                 var timebasedCurrencyData = timebasedCurrencyObject.data('timebased-currency-object');
                 var additionalDialogHtml = '<span class="timebased-currency-wrapper">';
-                additionalDialogHtml += '<span class="small"> (Original-Preis ohne Abzug von Betrag in Zeit)</span>';
+                additionalDialogHtml += '<span class="small"> (' + foodcoopshop.LocalizedJs.admin.OriginalPriceWithoutReductionOfPriceInTime + ')</span>';
                 additionalDialogHtml += '<label for="dialogOrderDetailProductPriceTimebasedCurrency"></label><br />';
                 additionalDialogHtml += '<input type="text" name="dialogOrderDetailProductPriceTimebasedCurrencyPrice" id="dialogOrderDetailProductPriceTimebasedCurrencyPrice" value="" />';
-                additionalDialogHtml += '<b>€</b><span class="small"> (Davon tatsächlich bezahlter Betrag in Euro)</span>';
+                additionalDialogHtml += '<b>€</b><span class="small"> (' + foodcoopshop.LocalizedJs.admin.FromWhichReallyPaidIn + ' ' + foodcoopshop.LocalizedJs.admin.Euro + ')</span>';
                 additionalDialogHtml += '</span>';
                 $('#' + dialogId + ' .textarea-wrapper').before(additionalDialogHtml);
             }
@@ -1851,6 +1850,46 @@ foodcoopshop.Admin = {
         var dialogId = 'order-detail-product-amount-edit-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductAmountEdit(dialogId);
         $(container).append(dialogHtml);
+        
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                if ($('#dialogOrderDetailProductAmountAmount').val() == '' || $('#dialogOrderDetailProductAmountOrderDetailId').val() == '') {
+                    return false;
+                }
+
+                var ckeditorData = CKEDITOR.instances['dialogEditAmountReason'].getData().trim();
+                if (ckeditorData == '') {
+                    alert(foodcoopshop.LocalizedJs.admin.AdaptAmountReasonIsMandatory);
+                    return;
+                }
+
+                $('#order-detail-product-amount-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/order-details/editProductAmount/',
+                    {
+                        orderDetailId: $('#dialogOrderDetailProductAmountOrderDetailId').val(),
+                        productAmount: $('#dialogOrderDetailProductAmountAmount').val(),
+                        editAmountReason: ckeditorData
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            dialog.dialog('close');
+                            $('#order-detail-product-amount-edit-form .ajax-loader').hide();
+                            alert(data.msg);
+                        }
+                    }
+                );
+            }
+        };
+        
 
         var dialog = $('#' + dialogId).dialog({
 
@@ -1867,50 +1906,7 @@ foodcoopshop.Admin = {
             open: function () {
                 foodcoopshop.Helper.initCkeditor('dialogEditAmountReason');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    if ($('#dialogOrderDetailProductAmountAmount').val() == '' || $('#dialogOrderDetailProductAmountOrderDetailId').val() == '') {
-                        return false;
-                    }
-
-                    var ckeditorData = CKEDITOR.instances['dialogEditAmountReason'].getData().trim();
-                    if (ckeditorData == '') {
-                        alert('Bitte an, warum die Anzahl geändert wird.');
-                        return;
-                    }
-
-                    $('#order-detail-product-amount-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/order-details/editProductAmount/',
-                        {
-                            orderDetailId: $('#dialogOrderDetailProductAmountOrderDetailId').val(),
-                            productAmount: $('#dialogOrderDetailProductAmountAmount').val(),
-                            editAmountReason: ckeditorData
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                dialog.dialog('close');
-                                $('#order-detail-product-amount-edit-form .ajax-loader').hide();
-                                alert(data.msg);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         $('.order-detail-product-amount-edit-button').on('click', function () {
@@ -1924,11 +1920,10 @@ foodcoopshop.Admin = {
                 }));
             }
             $('#' + dialogId + ' #dialogOrderDetailProductAmountOrderDetailId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            var infoTextForEditProductAmount = '<span style="font-weight:normal"><br />Die Anzahl kann nur vermindert werden.';
-            infoTextForEditProductAmount += '<br />Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen.<br /><br /></span>';
+            var infoTextForEditProductAmount = '<span style="font-weight:normal"><br />' + foodcoopshop.LocalizedJs.admin.DecreaseAmountExplainationText + '<br /><br /></span>';
             infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html();
-            infoTextForEditProductAmount += ' <span style="font-weight:normal;">(von ';
-            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(10)').html() + ')<br />Neue Anzahl:';
+            infoTextForEditProductAmount += ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ';
+            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(10)').html() + ')<br />' + foodcoopshop.LocalizedJs.admin.NewAmount + ':';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductAmount"]').html(infoTextForEditProductAmount);
             dialog.dialog('open');
         });
@@ -2038,35 +2033,29 @@ foodcoopshop.Admin = {
                     },
                     afterContent: function () {
 
-                        var header = $('<div class="message-container"><span class="start"><b>Sofort-Bestellung </b> tätigen für: </span> Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert.</div>');
+                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceShopOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.ShopOrderDateIsSetBackAfterPlacingIt + '</div>');
                         $('.featherlight-close').after(header);
 
                         // only clone dropdown once
                         if ($('.message-container span.start select').length == 0) {
                             var customersDropdown = $('#add-order-button-wrapper select').clone(true);
-                            customersDropdown.attr(
-                                'id',
-                                'customersDropdown'
-                            );
-                            customersDropdown
-                                .change(function () {
-                                    var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
-                                    $('iframe.featherlight-inner').attr('src', newSrc);
-                                    $.featherlight.showLoader();
-                                });
+                            customersDropdown.attr('id', 'customersDropdown');
+                            customersDropdown.on('change', function () {
+                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
+                                $('iframe.featherlight-inner').attr('src', newSrc);
+                                $.featherlight.showLoader();
+                            });
 
-                            $('iframe.featherlight-inner')
-                                .load(
-                                    function () {
-                                        // called after each url change in iframe!
-                                        $.featherlight.hideLoader();
-                                        var currentUrl = $(this).get(0).contentWindow.document.URL;
-                                        if (currentUrl.match(/warenkorb\/abgeschlossen/)) {
-                                            $.featherlight.showLoader();
-                                            document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
-                                        }
-                                    }
-                                );
+                            $('iframe.featherlight-inner').on('load', function () {
+                                // called after each url change in iframe!
+                                $.featherlight.hideLoader();
+                                var currentUrl = $(this).get(0).contentWindow.document.URL;
+                                var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
+                                if (currentUrl.match(cartFinishedRegExp)) {
+                                    $.featherlight.showLoader();
+                                    document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
+                                }
+                            });
                             customersDropdown.show();
                             customersDropdown.removeClass('hide');
                             customersDropdown.appendTo('.message-container span.start');
@@ -2085,29 +2074,6 @@ foodcoopshop.Admin = {
 
             });
         }
-    },
-
-    addPrintAndHelpIcon: function () {
-
-        var html = '<div class="icons">';
-        html += '<a class="btn btn-default" title="Drucken" href="javascript:window.print();"><i class="fa fa-print fa-lg"></i></a>';
-        html += '<a class="btn btn-default help" title="Hilfe" class="help" href="javascript:void(0);"><i class="fa fa-question fa-lg"></i></a>';
-        html += '</div>';
-
-        var container = $('.filter-container').length > 0 ? $('.filter-container') : $('.filter-container-not-fixed');
-        container.find('div.right').append(html);
-
-        container.find('div.right a.help').on('click', function () {
-            $('#help-container').stop(true).animate({
-                height: 'toggle'
-            }, 0);
-            $.scrollTo('body', 1000, {
-                offset: {
-                    top: 0
-                }
-            });
-        });
-
     },
 
     setMenuFixed: function () {
@@ -2265,139 +2231,103 @@ foodcoopshop.Admin = {
      */
     initCloseOrdersButton: function (container) {
 
-        $('#closeOrdersButton')
-            .on(
-                'click',
-                function () {
-
-                    var orderIdsContainer = $('table.list td.order-id');
-                    var orderIds = [];
-                    orderIdsContainer.each(function () {
-                        orderIds.push($(this).html());
-                    });
-
-                    $('<div></div>')
-                        .appendTo('body')
-                        .html(
-                            '<p>Möchtest du wirklich alle angezeigten Bestellungen <b>abschließen</b>?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
-                        )
-                        .dialog({
-                            modal: true,
-                            title: 'Alle Bestellungen abschließen',
-                            autoOpen: true,
-                            width: 400,
-                            resizable: false,
-                            buttons: {
-                                'Nein': function () {
-                                    $(this).dialog('close');
-                                },
-                                'Ja': function () {
-
-                                    $('.ui-dialog .ajax-loader')
-                                        .show();
-                                    $('.ui-dialog button')
-                                        .attr(
-                                            'disabled',
-                                            'disabled'
-                                        );
-                                    var orderState;
-                                    if ($
-                                        .inArray(
-                                            'cash',
-                                            foodcoopshop.Helper.paymentMethods
-                                        ) != -1) {
-                                        orderState = 2;
-                                    }
-                                    if ($
-                                        .inArray(
-                                            'cashless',
-                                            foodcoopshop.Helper.paymentMethods
-                                        ) != -1) {
-                                        orderState = 1;
-                                    }
-
-                                    foodcoopshop.Helper
-                                        .ajaxCall(
-                                            '/admin/orders/changeOrderStateToClosed/',
-                                            {
-                                                orderIds: orderIds,
-                                                orderState: orderState
-                                            },
-                                            {
-                                                onOk: function (
-                                                    data
-                                                ) {
-                                                    document.location
-                                                        .reload();
-                                                },
-                                                onError: function (
-                                                    data
-                                                ) {
-                                                    document.location
-                                                        .reload();
-                                                }
-                                            }
-                                        );
-
-                                }
-
+        $('#closeOrdersButton').on('click', function () {
+            var orderIdsContainer = $('table.list td.order-id');
+            var orderIds = [];
+            orderIdsContainer.each(function () {
+                orderIds.push($(this).html());
+            });
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    var orderState;
+                    if ($.inArray('cash', foodcoopshop.Helper.paymentMethods) != -1) {
+                        orderState = 2;
+                    }
+                    if ($.inArray('cashless', foodcoopshop.Helper.paymentMethods) != -1) {
+                        orderState = 1;
+                    }
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/orders/changeOrderStateToClosed/',
+                        {
+                            orderIds: orderIds,
+                            orderState: orderState
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
                             },
-                            close: function (event, ui) {
-                                $(this).remove();
+                            onError: function (data) {
+                                document.location.reload();
                             }
-                        });
+                        }
+                    );                            
                 }
-            );
+            };
+
+            $('<div></div>')
+                .appendTo('body')
+                .html(
+                    '<p>' + foodcoopshop.LocalizedJs.admin.ReallyCloseAllOrders + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
+                )
+                .dialog({
+                    modal: true,
+                    title: foodcoopshop.LocalizedJs.admin.CloseAllOrders,
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: buttons,
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+        }
+        );
 
     },
 
     initGenerateOrdersAsPdf: function () {
 
-        $('button.generate-orders-as-pdf')
-            .on(
-                'click',
-                function () {
+        $('button.generate-orders-as-pdf').on('click', function () {
 
-                    var orderIdsContainer = $('table.list td.order-id');
-                    var orderIds = [];
-                    orderIdsContainer.each(function () {
-                        orderIds.push($(this).html());
-                    });
+            var orderIdsContainer = $('table.list td.order-id');
+            var orderIds = [];
+            orderIdsContainer.each(function () {
+                orderIds.push($(this).html());
+            });
 
-                    $('<div></div>')
-                        .appendTo('body')
-                        .html(
-                            '<p>Möchtest du wirklich alle Bestellungen als PDF generieren?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
-                        )
-                        .dialog({
-                            modal: true,
-                            title: 'Bestellungen als PDF generieren',
-                            autoOpen: true,
-                            width: 400,
-                            resizable: false,
-                            buttons: {
-                                'Nein': function () {
-                                    $(this).dialog('close');
-                                },
-                                'Ja': function () {
-                                    $('.ui-dialog .ajax-loader')
-                                        .show();
-                                    $('.ui-dialog button')
-                                        .attr(
-                                            'disabled',
-                                            'disabled'
-                                        );
-                                    window.open('/admin/orders/ordersAsPdf.pdf?orderIds=' + orderIds.join(','));
-                                    $(this).dialog('close');
-                                }
-
-                            },
-                            close: function (event, ui) {
-                                $(this).remove();
-                            }
-                        });
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    window.open('/admin/orders/ordersAsPdf.pdf?orderIds=' + orderIds.join(','));
+                    $(this).dialog('close');
                 }
-            );
+            };
+
+            $('<div></div>').appendTo('body').html(
+                '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateOrdersAsPdf + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
+            )
+                .dialog({
+                    modal: true,
+                    title: foodcoopshop.LocalizedJs.admin.GenerateOrdersAsPdf,
+                    autoOpen: true,
+                    width: 400,
+                    resizable: false,
+                    buttons: buttons,
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+        }
+        );
 
     },
 
@@ -2439,7 +2369,7 @@ foodcoopshop.Admin = {
 
         var amount = $('.featherlight-content #payments-amount').val();
         if (isNaN(parseFloat(amount.replace(/,/, '.')))) {
-            alert('Bitte gib eine Zahl ein.');
+            alert(foodcoopshop.LocalizedJs.admin.PleaseEnterANumber);
             foodcoopshop.AppFeatherlight.enableSaveButton();
             return;
         }

@@ -83,7 +83,7 @@ class AttributesController extends AdminAppController
 
         $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
         if (!empty($attribute->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('attribute', $attribute);
             $this->render('edit');
         } else {
