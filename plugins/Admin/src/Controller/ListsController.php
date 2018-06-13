@@ -97,7 +97,7 @@ class ListsController extends AdminAppController
         }
         $this->set('files', $files);
 
-        $this->set('title_for_layout', __);
+        $this->set('title_for_layout', __('Order_lists'));
     }
 
     /**
