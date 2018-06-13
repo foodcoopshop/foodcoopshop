@@ -48,7 +48,7 @@ class ListsController extends AdminAppController
             if (preg_match('/\.pdf$/', $name)) {
                 // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
                 // the following preg_match does not make a batch renaming necessary
-                if (!preg_match('/_Bestellliste_(Produkt|Artikel)_/', $name, $matches)) {
+                if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'Product').'|Artikel)_/', $name, $matches)) {
                     continue;
                 }
 
@@ -62,14 +62,14 @@ class ListsController extends AdminAppController
                 // remove date
                 $manufacturerString = substr($object->getFileName(), 11);
 
-                // remove part after bestellistenString (foodcoop name and file ending)
-                $positionBestelllistenString = strpos($manufacturerString, '_Bestellliste_'.$matches[1]);
-                $manufacturerString = substr($manufacturerString, 0, $positionBestelllistenString);
+                // remove part after $positionOrderListsString (foodcoop name and file ending)
+                $positionOrderListsString = strpos($manufacturerString, __d('admin', '_Order_list_filename_') . $matches[1]);
+                $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
                 $splittedManufacturerString = explode('_', $manufacturerString);
                 $manufacturerId = (int) end($splittedManufacturerString);
 
                 if (!$manufacturerId) {
-                    $message = 'Fehler: ManufacturerId nicht gefunden in ' . $object->getFileName();
+                    $message = 'error: ManufacturerId not found in ' . $object->getFileName();
                     $this->Flash->error($message);
                     $this->log($message);
                     $this->set('files', []);
@@ -83,7 +83,7 @@ class ListsController extends AdminAppController
                 ])->first();
 
                 $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder_order_lists'), '', $name);
-                $customerListLink = str_replace($matches[1], 'Mitglied', $productListLink);
+                $customerListLink = str_replace($matches[1], __d('admin', 'member'), $productListLink);
 
                 $files[] = [
                     'delivery_date' => $deliveryDate,
@@ -97,7 +97,7 @@ class ListsController extends AdminAppController
         }
         $this->set('files', $files);
 
-        $this->set('title_for_layout', 'Bestelllisten');
+        $this->set('title_for_layout', __);
     }
 
     /**

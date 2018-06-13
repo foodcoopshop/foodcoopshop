@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 16:24+0200\n"
-"PO-Revision-Date: 2018-06-13 16:25+0200\n"
+"POT-Creation-Date: 2018-06-13 16:48+0200\n"
+"PO-Revision-Date: 2018-06-13 16:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -23,6 +23,15 @@ msgstr "erstellt"
 
 msgid "changed"
 msgstr "geändert"
+
+msgid "_Order_list_filename_"
+msgstr "_Bestellliste_"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "member"
+msgstr "Mitglied"
 
 msgid "Add_manufacturer"
 msgstr "Neuen Hersteller erstellen"
@@ -227,9 +236,6 @@ msgstr "Rechnungsdatum"
 
 msgid "Amount"
 msgstr "Anzahl"
-
-msgid "Product"
-msgstr "Produkt"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -509,9 +515,6 @@ msgstr "Hersteller-Profil"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
-
-msgid "member"
-msgstr "Mitglied"
 
 msgid "product"
 msgstr "Produkt"
