@@ -139,9 +139,9 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     $sumProductCount += $manufacturer->product_count;
-    $productString = $manufacturer->product_count == 1 ? 'Produkt' : 'Produkte';
+    $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
     echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer->product_count . '&nbsp;' . $productString,
+        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $productString,
         [
         'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
         'class' => 'icon-with-text'
@@ -160,7 +160,7 @@ foreach ($manufacturers as $manufacturer) {
         $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Html->formatAsEuro($manufacturer->deposit_credit_balance);
 
         echo $this->Html->getJqueryUiIcon(
-            'Pfand:&nbsp;' . $depositCreditBalanceHtml,
+            __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
             [
             'class' => 'icon-with-text',
             'title' => 'Pfandkonto anzeigen'
