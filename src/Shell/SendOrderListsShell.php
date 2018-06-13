@@ -89,7 +89,7 @@ class SendOrderListsShell extends AppShell
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
-                $outString .= ' - ' . $manufacturer->name . ': ' . $manufacturer->order_detail_amount_sum . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
+                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
