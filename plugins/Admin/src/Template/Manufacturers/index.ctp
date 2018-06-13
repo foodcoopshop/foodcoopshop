@@ -141,7 +141,7 @@ foreach ($manufacturers as $manufacturer) {
     $sumProductCount += $manufacturer->product_count;
     $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
     echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $productString,
+        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . str_replace(' ', '&nbsp;', $productString),
         [
         'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
         'class' => 'icon-with-text'
