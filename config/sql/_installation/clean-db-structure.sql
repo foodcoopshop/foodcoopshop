@@ -112,8 +112,8 @@ CREATE TABLE `fcs_category` (
   `id_parent` int(10) unsigned NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL,
   `description` text NOT NULL,
-  `nleft` int(10) unsigned NOT NULL DEFAULT '0',
-  `nright` int(10) unsigned NOT NULL DEFAULT '0',
+  `nleft` int(10) NOT NULL DEFAULT '0',
+  `nright` int(10) NOT NULL DEFAULT '0',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -351,8 +351,8 @@ CREATE TABLE `fcs_pages` (
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `full_width` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `id_parent` int(10) unsigned DEFAULT NULL,
-  `lft` int(10) unsigned NOT NULL DEFAULT '0',
-  `rght` int(10) unsigned NOT NULL DEFAULT '0',
+  `lft` int(10) NOT NULL DEFAULT '0',
+  `rght` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_page`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
