@@ -116,7 +116,7 @@ class LocalizedController extends Controller
                 'routeCart' => __('route_cart')
             ],
             'admin' => [
-                'routeCartFinished' => Configure::read('app.slugHelper')->getCartFinish(),
+                'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $orderId argument,
                 'PlaceShopOrderFor' => __('Place_shop_order_for'),
                 'ShopOrderDateIsSetBackAfterPlacingIt' => __('Shop_order_date_is_set_back_after_placing_it.'),
                 'CloseAllOrders' => __('Close_all_orders?'),
