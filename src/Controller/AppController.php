@@ -91,7 +91,7 @@ class AppController extends Controller
             ]);
             $query = $this->Customer->findAuth($query, []);
             if (empty($query->first())) {
-                $this->Flash->error('Du wurdest abgemeldet.');
+                $this->Flash->error(__('You_have_been_signed_out.'));
                 $this->AppAuth->logout();
                 $this->redirect(Configure::read('app.slugHelper')->getHome());
             }
