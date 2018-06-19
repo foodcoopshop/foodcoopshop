@@ -89,7 +89,7 @@ class AppSimpleBrowser extends SimpleBrowser
             'remember_me' => false
         ]);
 
-        if (preg_match('/id="flashMessage" class="error"/', $this->getContent())) {
+        if (preg_match('/'.__('Signing_in_failed_account_inactive_or_password_wrong?').'/', $this->getContent())) {
             print_r('wrong credentials for admin login');
             print_r('AdminEmail: ' . $this->loginEmail);
             print_r('AdminPassword: ' . $this->loginPassword);
