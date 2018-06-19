@@ -53,6 +53,18 @@ class AppTable extends Table
     {
         return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
     }
+    
+    public function getAllValidationErrors($entity)
+    {
+        $preparedErrors = [];
+        foreach($entity->getErrors() as $field => $message) {
+            $errors = array_keys($message);
+            foreach($errors as $error) {
+                $preparedErrors[] = $message[$error];
+            }
+        }
+        return $preparedErrors;
+    }
 
     /**
      * {@inheritDoc}

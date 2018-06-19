@@ -48,7 +48,8 @@ if (isset($manufacturerId)) {
 
 echo $this->Form->control('Payments.amount', [
     'label' => __d('admin', 'Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
-    'type' => 'string'
+    'type' => 'number',
+    'step' => '0.01'
 ]);
 
 echo $this->Form->hidden('Payments.type', [

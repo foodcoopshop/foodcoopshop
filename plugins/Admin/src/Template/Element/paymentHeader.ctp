@@ -47,7 +47,8 @@ echo '<h3>Neue Zahlung eintragen</h3>';
 echo '<p>Bitte trage hier den Betrag ein, den du <br />soeben auf unser Konto überwiesen hast.</p>';
 echo $this->Form->control('Payments.amount', [
     'label' => 'Betrag in ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
-    'type' => 'string'
+    'type' => 'number',
+    'step' => '0.01'
 ]);
 echo $this->Form->hidden('Payments.customerId', [
     'value' => $customerId

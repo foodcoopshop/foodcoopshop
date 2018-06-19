@@ -88,14 +88,7 @@ class UnitsTable extends AppTable
         );
         
         if (!empty($entity->getErrors())) {
-            $preparedErrors = [];
-            foreach($entity->getErrors() as $field => $message) {
-                $errors = array_keys($message);
-                foreach($errors as $error) {
-                    $preparedErrors[] = $message[$error];
-                }
-            }
-            throw new InvalidParameterException(join(' ', $preparedErrors));
+            throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
         }
         
         $result = $this->save($patchedEntity);

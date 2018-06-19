@@ -343,9 +343,13 @@ input.datepicker {
 	margin-top: 5px;
 	list-style: disc;
 }
-.ui-dialog-content #flashMessage {
+.ui-dialog-content #flashMessage,
+.featherlight-content #flashMessage {
 	position: absolute;
 	top: 10px;
+}
+.featherlight-content #flashMessage {
+	z-index: 10000;
 }
 .warning {
     color: red;

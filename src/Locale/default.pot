@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 22:10+0200\n"
+"POT-Creation-Date: 2018-06-19 21:53+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "You_have_been_signed_out."
+msgstr ""
 
 msgid "You_are_not_signed_in."
 msgstr ""
@@ -153,9 +156,6 @@ msgid "Your_registration_was_successful."
 msgstr ""
 
 msgid "Account_created_successfully"
-msgstr ""
-
-msgid "You_have_been_signed_out."
 msgstr ""
 
 msgid "All_products"
@@ -378,6 +378,9 @@ msgid "Show"
 msgstr ""
 
 msgid "Show_all_products"
+msgstr ""
+
+msgid "route_cart_finished"
 msgstr ""
 
 msgid "Place_shop_order_for"
@@ -816,6 +819,12 @@ msgid "Pick_up_day"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "Please_enter_a_correct_number."
+msgstr ""
+
+msgid "The_amount_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "Runtime"
@@ -1281,9 +1290,6 @@ msgid "route_cart_show"
 msgstr ""
 
 msgid "route_cart_finish"
-msgstr ""
-
-msgid "route_cart_finished"
 msgstr ""
 
 msgid "route_new_products"

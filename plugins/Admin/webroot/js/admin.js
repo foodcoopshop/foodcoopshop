@@ -2369,12 +2369,6 @@ foodcoopshop.Admin = {
     addPaymentFormSave: function () {
 
         var amount = $('.featherlight-content #payments-amount').val();
-        if (isNaN(parseFloat(amount.replace(/,/, '.')))) {
-            alert(foodcoopshop.LocalizedJs.admin.PleaseEnterANumber);
-            foodcoopshop.AppFeatherlight.enableSaveButton();
-            return;
-        }
-
         var type = $('.featherlight-content input[name="Payments[type]"]').val();
         var customerIdDomElement = $('.featherlight-content input[name="Payments[customerId]"]');
         var manufacturerIdDomElement = $('.featherlight-content input[name="Payments[manufacturerId]"]');
@@ -2439,8 +2433,9 @@ foodcoopshop.Admin = {
                 document.location.reload();
             },
             onError: function (data) {
-                alert(data.msg);
-                document.location.reload();
+                var container = $('.featherlight-content');
+                foodcoopshop.AppFeatherlight.enableSaveButton();
+                foodcoopshop.Admin.appendFlashMessageToDialog(container, data.msg);
             }
         });
 

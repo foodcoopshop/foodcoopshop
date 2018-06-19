@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 22:10+0200\n"
-"PO-Revision-Date: 2018-06-13 22:11+0200\n"
+"POT-Creation-Date: 2018-06-19 21:53+0200\n"
+"PO-Revision-Date: 2018-06-19 21:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -14,6 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.8\n"
+
+msgid "You_have_been_signed_out."
+msgstr "Du hast dich erfolgreich abgemeldet."
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -155,9 +158,6 @@ msgstr "Deine Registrierung war erfolgreich."
 
 msgid "Account_created_successfully"
 msgstr "Mitgliedskonto erfolgreich erstellt"
-
-msgid "You_have_been_signed_out."
-msgstr "Du hast dich erfolgreich abgemeldet."
 
 msgid "All_products"
 msgstr "Alle Produkte"
@@ -381,6 +381,9 @@ msgstr "Anzeigen"
 
 msgid "Show_all_products"
 msgstr "Alle Produkte anzeigen"
+
+msgid "route_cart_finished"
+msgstr "abgeschlossen"
 
 msgid "Place_shop_order_for"
 msgstr "Sofort-Bestellung tätigen für"
@@ -821,6 +824,12 @@ msgstr "Abholtag"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
+msgid "Please_enter_a_correct_number."
+msgstr "Bitte gib eine korrekte Zahl ein."
+
+msgid "The_amount_needs_to_be_greater_than_0."
+msgstr "Der Betrag muss größer als 0 sein."
 
 msgid "Runtime"
 msgstr "Laufzeit"
@@ -1289,9 +1298,6 @@ msgstr "anzeigen"
 
 msgid "route_cart_finish"
 msgstr "abschliessen"
-
-msgid "route_cart_finished"
-msgstr "abgeschlossen"
 
 msgid "route_new_products"
 msgstr "neue-produkte"

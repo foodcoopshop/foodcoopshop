@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-13 22:10+0200\n"
-"PO-Revision-Date: 2018-06-13 20:44+0200\n"
+"POT-Creation-Date: 2018-06-19 21:53+0200\n"
+"PO-Revision-Date: 2018-06-19 21:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -658,6 +658,12 @@ msgstr "Show order"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{record} other{records}}"
+
+#~ msgid "A_negative_amount_is_not_allowed:"
+#~ msgstr "A negative amount is not allowed:"
+
+#~ msgid "The_amount_needs_to_be_greater_than_0:"
+#~ msgstr "The amount needs to be greater than 0:"
 
 #~ msgid "Paid_by_members_in_euro"
 #~ msgstr "Paid by all members"

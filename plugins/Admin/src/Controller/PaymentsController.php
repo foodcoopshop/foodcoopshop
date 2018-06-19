@@ -9,6 +9,7 @@ use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * PaymentsController
@@ -222,16 +223,19 @@ class PaymentsController extends AdminAppController
         }
 
         $amount = $this->getRequest()->getData('amount');
-
-        if (preg_match('/^\-/', $amount)) {
-            $message = 'Ein negativer Betrag ist nicht erlaubt: ' . $amount;
-            $this->log($message);
-            die(json_encode(['status'=>0,'msg'=>$message]));
+        
+        try {
+            $entity = $this->Payment->newEntity(
+                ['amount' => $amount],
+                ['validate' => 'add']
+            );
+            if (!empty($entity->getErrors())) {
+                throw new InvalidParameterException($this->Payment->getAllValidationErrors($entity)[0]);
+            }
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
         }
-
-        $amount = preg_replace('/[^0-9,.]/', '', $amount);
-        $amount = floatval(Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount));
-
+        
         if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
             $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
             $this->log($message);
