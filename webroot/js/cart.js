@@ -485,7 +485,7 @@ foodcoopshop.Cart = {
                 } else {
                     title = foodcoopshop.LocalizedJs.cart.loadPastOrder;
                     dialogHtml = foodcoopshop.LocalizedJs.cart.loadPastOrderDescriptionHtml;
-                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart/' + selectedValue;
+                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart?deliveryDate=' + selectedValue;
                 }
                 dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
                 

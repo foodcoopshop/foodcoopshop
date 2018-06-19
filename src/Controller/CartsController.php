@@ -717,8 +717,9 @@ class CartsController extends FrontendController
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
     
-    public function addOrderToCart($deliveryDate)
+    public function addOrderToCart()
     {
+        $deliveryDate = $this->getRequest()->getQuery('deliveryDate');
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
     }
