@@ -627,7 +627,7 @@ foodcoopshop.Admin = {
             radio.prop('checked', true);
             radio.trigger('change');
             
-            var currencyRegExp = new RegExp('&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+            var currencyRegExp = new RegExp('&nbsp;\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
             var price = row.find('span.price-for-dialog').html().replace(currencyRegExp, '');
             $('#' + dialogId + ' #dialogPricePrice').val(price);
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
