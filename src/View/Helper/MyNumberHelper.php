@@ -4,7 +4,6 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use Cake\Log\Log;
 use Cake\View\Helper\NumberHelper;
 
 /**
@@ -65,22 +64,20 @@ class MyNumberHelper extends NumberHelper
         return $result;
     }
     
+    /**
+     * self::parseFloat($double, ['locale' => I18n::getLocale()]); did not work with travis!
+     * @return boolean|mixed
+     */
     public function parseFloatRespectingLocale($double)
     {
-        Log::write('error', 'intl.default_locale: ' . ini_get('intl.default_locale'));
-        Log::write('error', 'doubleBefore: ' . $double);
-        $result = self::parseFloat($double, ['locale' => I18n::getLocale()]);
-        Log::write('error', 'resultAfter: ' . $result);
-        
-        // HACK to allow 0,00 as value
         if (I18n::getLocale() == 'de_DE') {
-            $double = str_replace(',', '.', $double);
+            $double = str_replace('.', '', $double);  // first replace thousand separator
+            $double = str_replace(',', '.', $double); // then replace decimal places
         }
-        
-        if (!is_numeric($double) && $result == 0) {
+        if (!is_numeric($double)) {
             return false;
         }
-        return $result; 
+        return $double; 
     }
 }
 ?>

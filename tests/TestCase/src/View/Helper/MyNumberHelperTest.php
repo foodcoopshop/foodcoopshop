@@ -58,7 +58,7 @@ class MyNumberHelperTest extends AppCakeTestCase
     public function testParseFloatRespectingLocaleValidEnglishPriceWithWrongLocale()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3.45');
-        $this->assertEquals($result, 0);
+        $this->assertEquals($result, 345);
     }
     
     public function testParseFloatRespectingLocaleValidEnglishPriceWithEnglishLocale()
