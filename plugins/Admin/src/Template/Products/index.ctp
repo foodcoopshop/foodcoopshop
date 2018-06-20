@@ -49,7 +49,7 @@ use Cake\Core\Configure;
                 echo $this->Form->control('productId', [
                     'type' => 'select',
                     'label' => '',
-                    'empty' => 'alle Produkte',
+                    'empty' => __d('admin', 'all_products'),
                     'options' => []
                 ]);
             }
@@ -58,7 +58,7 @@ use Cake\Core\Configure;
                     'type' => 'select',
                     'label' => '',
                     'options' => $manufacturersForDropdown,
-                    'empty' => 'Bitte wählen...',
+                    'empty' => __d('admin', 'chose_manufacturer...'),
                     'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
             }
@@ -72,13 +72,13 @@ use Cake\Core\Configure;
                 'type' => 'select',
                 'label' => '',
                 'multiple' => true,
-                'empty' => 'Kategorie auswählen...',
+                'empty' => __d('admin', 'chose_category...'),
                 'options' => $categoriesForSelect,
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
-            <?php echo $this->Form->control('isQuantityMinFilterSet', ['type'=>'checkbox', 'label' =>'Anzahl < 3', 'checked' => $isQuantityMinFilterSet]);?>
-            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' =>'Preis = 0', 'checked' => $isPriceZero]);?>
+            <?php echo $this->Form->control('isQuantityMinFilterSet', ['type'=>'checkbox', 'label' => __d('admin', 'amount') . ' < 3', 'checked' => $isQuantityMinFilterSet]);?>
+            <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' => __d('admin', 'price') . ' = 0', 'checked' => $isPriceZero]);?>
             
             <div class="right">
                 <?php
@@ -88,7 +88,7 @@ use Cake\Core\Configure;
                         'script' => Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Produkt', 'javascript:void(0);', [
+                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
                         'class' => 'btn btn-default',
                         'escape' => false
                     ]);
@@ -101,7 +101,7 @@ use Cake\Core\Configure;
                     ]);
                     echo '<div class="toggle-sync-button-wrapper">';
                         echo $this->Html->link(
-                            '<i class="fa fa-arrow-circle-right"></i> Produkte synchronisieren',
+                            '<i class="fa fa-arrow-circle-right"></i> ' . __d('admin', 'Synchronize_products'),
                             $this->Network->getSyncProductData(),
                             [
                                 'class' => 'btn btn-default',
@@ -126,26 +126,26 @@ use Cake\Core\Configure;
     }
 
     if (empty($products) && $manufacturerId == '') {
-        echo '<h2 class="info">Bitte wähle einen Hersteller aus.</h2>';
+        echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
     }
 
     echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
     echo '<th class="hide">ID</th>';
-    echo '<th>Variante</th>';
-    echo '<th>' . $this->Paginator->sort('Images.id_image', 'Bild') . '</th>';
-    echo '<th>' . $this->Paginator->sort('ProductLangs.name', 'Name') . '<span class="product-declaration-header">' . $this->Paginator->sort('ProductLangs.is_declaration_ok', 'Produktdeklaration') . '</span></th>';
+    echo '<th>'.__d('admin', 'Attribute').'</th>';
+    echo '<th>' . $this->Paginator->sort('Images.id_image', __d('admin', 'Image')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('ProductLangs.name', __d('admin', 'Name')) . '<span class="product-declaration-header">' . $this->Paginator->sort('ProductLangs.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
     if ($manufacturerId == 'all') {
-        echo '<th>' . $this->Paginator->sort('Manufacturers.name', 'Hersteller') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
     }
-    echo '<th>Kategorien</th>';
-    echo '<th>Anzahl</th>';
-    echo '<th>Preis</th>';
-    echo '<th>' . $this->Paginator->sort('Taxes.rate', 'Steuersatz') . '</th>';
-    echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('ProductShops.created', 'Neu?') . '</th>';
-    echo '<th>Pfand</th>';
-    echo '<th>' . $this->Paginator->sort('Products.active', 'Status') . '</th>';
+    echo '<th>'.__d('admin', 'Categories').'</th>';
+    echo '<th>'.__d('admin', 'Amount').'</th>';
+    echo '<th>'.__d('admin', 'Price').'</th>';
+    echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+    echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('ProductShops.created', __d('admin', 'New?')) . '</th>';
+    echo '<th>'.__d('admin', 'Deposit').'</th>';
+    echo '<th>' . $this->Paginator->sort('Products.active', __d('admin', 'Status')) . '</th>';
     echo '<th style="width:29px;"></th>';
     echo '</tr>';
 
@@ -163,7 +163,7 @@ use Cake\Core\Configure;
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), [
                 'class' => 'add-product-attribute-button',
-                'title' => 'Neue Variante für Produkt "' . $product->product_lang->name . '" erstellen'
+                'title' => __d('admin', 'Add_new_attribute_for_product_{0}', [$product->product_lang->unchanged_name])
             ], 'javascript:void(0);');
         }
         echo '</td>';
@@ -173,7 +173,7 @@ use Cake\Core\Configure;
         if ((! empty($product->product_attributes) || isset($product->product_attributes))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
                 'class' => 'add-image-button',
-                'title' => $imageExists ? '<img class="no-max-width" height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />' : 'Bild hinzufügen',
+                'title' => $imageExists ? '<img class="no-max-width" height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />' : __d('admin', 'add_image'),
                 'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
             echo $this->element('imageUploadForm', [
@@ -190,7 +190,7 @@ use Cake\Core\Configure;
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-name-edit-button',
-                'title' => '<b>Kurze Beschreibung</b><br />'.$product->product_lang->description_short.'<br /><br /><b>Lange Beschreibung</b><br />'.$product->product_lang->description,
+                'title' => '<b>'.__d('admin', 'Short_description').'</b><br />'.$product->product_lang->description_short.'<br /><br /><b>'.__d('admin', 'Long_description').'</b><br />'.$product->product_lang->description,
             ], 'javascript:void(0);');
         }
 
@@ -198,19 +198,19 @@ use Cake\Core\Configure;
             echo '<span style="float:left;margin-right: 5px;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-product-attribute-button',
-                'title' => 'Variante für Produkt "' . $product->product_lang->name . '" löschen'
+                'title' => __d('admin', 'Delete_attribute_for_product_{0}', [$product->product_lang->unchanged_name])
             ], 'javascript:void(0);');
             echo '</span>';
 
             echo '<span style="float:left;">';
             if ($product->product_attribute_shop->default_on == 1) {
                 echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), [
-                    'title' => 'Diese Variante ist die Standardvariante.'
+                    'title' => __d('admin', 'This_attribute_is_the_default_attribute.')
                 ]);
             } else {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('bullet_star.png')), [
                     'class' => 'set-as-default-attribute-button',
-                    'title' => 'Als neue Standard-Variante festlegen'
+                    'title' => __d('admin', 'Define_as_new_default_attribute')
                 ], 'javascript:void(0);');
             }
             echo '</span>';
@@ -253,7 +253,7 @@ use Cake\Core\Configure;
             ]);
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-categories-edit-button',
-                'title' => 'Kategorien ändern',
+                'title' => __d('admin', 'change_category'),
                 'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
             if (!isset($product->category)) {
@@ -261,7 +261,7 @@ use Cake\Core\Configure;
             }
             echo '<span class="categories-for-dialog">' . join(', ', $product->category->names) . '</span>';
             if (! $product->category->all_products_found) {
-                echo ' - <b>Kategorie "Alle Produkte" fehlt!</b>';
+                echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
             }
         }
         echo '</td>';
@@ -271,7 +271,7 @@ use Cake\Core\Configure;
         if (empty($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-quantity-edit-button',
-                'title' => 'Anzahl ändern'
+                'title' => __d('admin', 'change_amount')
             ], 'javascript:void(0);');
             echo '<span class="quantity-for-dialog">';
             echo $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
@@ -292,7 +292,7 @@ use Cake\Core\Configure;
 	        if (empty($product->product_attributes)) {
 	            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
 	                'class' => 'product-price-edit-button',
-	                'title' => 'Preis ändern'
+	                'title' => __d('admin', 'change_price')
 	            ], 'javascript:void(0);');
 	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
                     echo $this->Number->formatAsCurrency($product->gross_price);
@@ -316,7 +316,7 @@ use Cake\Core\Configure;
             echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Number->formatAsDecimal($taxRate, 1) : $this->Number->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-tax-edit-button',
-                'title' => 'Steuer ändern',
+                'title' => __d('admin', 'change_tax_rate'),
                 'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
         }
@@ -325,16 +325,16 @@ use Cake\Core\Configure;
         echo '<td>';
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             if (! $product->is_new) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' Neu', [
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' ' . __d('admin', 'New'), [
                     'class' => 'icon-with-text change-new-state change-new-state-active',
                     'id' => 'change-new-state-' . $product->id_product,
-                    'title' => 'Produkt die nächsten ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage als "neu" anzeigen?'
+                    'title' => __d('admin', 'Mark_product_as_new_for_the_next_{0}_days?', [Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')])
                 ], 'javascript:void(0);');
             } else {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', [
                     'class' => 'icon-with-text change-new-state change-new-state-inactive',
                     'id' => 'change-new-state-' . $product->id_product,
-                    'title' => 'Produkt nicht mehr als "neu" anzeigen?'
+                    'title' => __d('admin', 'Do_not_mark_product_as_new_any_more?')
                 ], 'javascript:void(0);');
             }
         }
@@ -346,7 +346,7 @@ use Cake\Core\Configure;
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                     'class' => 'product-deposit-edit-button',
-                    'title' => 'Zum Ändern des Pfands anklicken'
+                    'title' => __d('admin', 'change_deposit')
                 ], 'javascript:void(0);');
             }
             if ($product->deposit > 0) {
@@ -364,7 +364,7 @@ use Cake\Core\Configure;
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
                 'class' => 'set-state-to-inactive change-active-state',
                 'id' => 'change-active-state-' . $product->id_product,
-                'title' => 'Zum Deaktivieren anklicken'
+                'title' => __d('admin', 'deactivate')
             ], 'javascript:void(0);');
         }
 
@@ -372,7 +372,7 @@ use Cake\Core\Configure;
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'set-state-to-active change-active-state',
                 'id' => 'change-active-state-' . $product->id_product,
-                'title' => 'Zum Aktivieren anklicken'
+                'title' => __d('admin', 'activate')
             ], 'javascript:void(0);');
         }
 
@@ -381,7 +381,7 @@ use Cake\Core\Configure;
         echo '<td>';
         if ($product->active && (! empty($product->product_attributes) || isset($product->product_attributes))) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-                'title' => 'Produkt-Vorschau',
+                'title' => __d('admin', 'product_preview'),
                 'target' => '_blank'
             ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->unchanged_name));
         }

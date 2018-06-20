@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-19 21:53+0200\n"
-"PO-Revision-Date: 2018-06-19 21:34+0200\n"
+"POT-Creation-Date: 2018-06-20 17:47+0200\n"
+"PO-Revision-Date: 2018-06-20 17:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -133,19 +133,15 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Pfand-Betrag für {0} eintragen"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen "
-"wird."
+msgstr "Bitte trage hier den Wert des Leergebindes ein, das vom Hersteller zurückgenommen wird."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld "
-"ausgeglichen?"
+msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mit Geld ausgeglichen?"
 
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 
-msgid "Chose_member..."
+msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
 msgid "1_day_ahead"
@@ -263,13 +259,11 @@ msgid ""
 "The_total_sum_below_right_(minus_{0}_"
 "%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird "
-"so bald wie möglich auf dein Konto überwiesen."
+"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich "
+"auf dein Konto überwiesen."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-"Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto "
-"überwiesen."
+msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
 
 msgid "Paid_by_members_in_{0}"
 msgstr "Von Mitgliedern bezahlt in {0}"
@@ -312,10 +306,9 @@ msgstr "Hier findest du die Übersicht zum Überweisen:"
 
 msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
 msgstr ""
-"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen "
-"Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und "
-"bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-"
-"System weniger fehleranfällig."
+"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den "
+"tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit "
+"und macht das Guthaben-System weniger fehleranfällig."
 
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link nur für Superadmins)."
@@ -409,16 +402,15 @@ msgstr "Kurze Beschreibung"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
-"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst "
-"nicht verändert werden."
+"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
 
 msgid "Long_description"
 msgstr "Lange Beschreibung"
 
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr ""
-"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und "
-"dann auf \"bearbeiten\" klicken."
+"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" "
+"klicken."
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Wird auf der Hersteller-Seite angezeigt."
@@ -430,9 +422,7 @@ msgid "Bank_account_data"
 msgstr "Bankdaten"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
-msgstr ""
-"werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse "
-"verwendet."
+msgstr "werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet."
 
 msgid "Bank"
 msgstr "Bank"
@@ -448,8 +438,8 @@ msgstr "Firmendaten"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
-"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem "
-"Hersteller-Profil ganz unten rechts."
+"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz "
+"unten rechts."
 
 msgid "Firstname"
 msgstr "Vorname"
@@ -602,8 +592,7 @@ msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"
@@ -640,6 +629,93 @@ msgstr "Willkommen"
 
 msgid "docs_route_credit_system"
 msgstr "guthaben-system"
+
+msgid "chose_manufacturer..."
+msgstr "Hersteller auswählen..."
+
+msgid "chose_category..."
+msgstr "Kategorie auswählen..."
+
+msgid "amount"
+msgstr "Anzahl"
+
+msgid "price"
+msgstr "Preis"
+
+msgid "Add_product"
+msgstr "Neues Produkt"
+
+msgid "Synchronize_products"
+msgstr "Produkte synchronisieren"
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Bitte wähle einen Hersteller aus."
+
+msgid "Attribute"
+msgstr "Variante"
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "New?"
+msgstr "Neu?"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Neue Variante für Produkt {0} erstellen"
+
+msgid "add_image"
+msgstr "Bild hinzufügen"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Variante für Produkt {0} löschen"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "Diese Variante ist die Standardvariante."
+
+msgid "Define_as_new_default_attribute"
+msgstr "Als neue Standard-Variante festlegen"
+
+msgid "change_category"
+msgstr "Kategorie ändern"
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Kategorie \"Alle Produkte\" fehlt!"
+
+msgid "change_amount"
+msgstr "Anzahl ändern"
+
+msgid "change_price"
+msgstr "Preis ändern"
+
+msgid "change_tax_rate"
+msgstr "Steuersatz ändern"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
+
+msgid "change_deposit"
+msgstr "Pfand ändern"
+
+msgid "deactivate"
+msgstr "deaktivieren"
+
+msgid "activate"
+msgstr "aktivieren"
+
+msgid "product_preview"
+msgstr "Produkt-Vorschau"
 
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"

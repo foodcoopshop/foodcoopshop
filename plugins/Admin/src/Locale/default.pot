@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-19 21:53+0200\n"
+"POT-Creation-Date: 2018-06-20 17:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr ""
 
-msgid "Chose_member..."
+msgid "chose_member..."
 msgstr ""
 
 msgid "1_day_ahead"
@@ -615,6 +615,93 @@ msgid "Welcome"
 msgstr ""
 
 msgid "docs_route_credit_system"
+msgstr ""
+
+msgid "chose_manufacturer..."
+msgstr ""
+
+msgid "chose_category..."
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "price"
+msgstr ""
+
+msgid "Add_product"
+msgstr ""
+
+msgid "Synchronize_products"
+msgstr ""
+
+msgid "Please_chose_a_manufacturer."
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "New?"
+msgstr ""
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr ""
+
+msgid "add_image"
+msgstr ""
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr ""
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr ""
+
+msgid "Define_as_new_default_attribute"
+msgstr ""
+
+msgid "change_category"
+msgstr ""
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr ""
+
+msgid "change_amount"
+msgstr ""
+
+msgid "change_price"
+msgstr ""
+
+msgid "change_tax_rate"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr ""
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr ""
+
+msgid "change_deposit"
+msgstr ""
+
+msgid "deactivate"
+msgstr ""
+
+msgid "activate"
+msgstr ""
+
+msgid "product_preview"
 msgstr ""
 
 msgid "docs_route_financial_reports"

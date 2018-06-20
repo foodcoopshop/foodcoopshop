@@ -31,7 +31,7 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
         'label' => '',
         'id' => 'shopOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
-        'empty' => __d('admin', 'Chose_member...'),
+        'empty' => __d('admin', 'chose_member...'),
         'options' => $customers
     ]);
     echo '</div>';

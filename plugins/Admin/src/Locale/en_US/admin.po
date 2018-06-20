@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-19 21:53+0200\n"
-"PO-Revision-Date: 2018-06-19 21:34+0200\n"
+"POT-Creation-Date: 2018-06-20 17:47+0200\n"
+"PO-Revision-Date: 2018-06-20 17:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -133,19 +133,16 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Please add the value of empty glasses that are taken back by the manufacturer."
+msgstr "Please add the value of empty glasses that are taken back by the manufacturer."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Did the manufacturer take away empty glasses or was his deposit account equalized "
-"with money?"
+msgstr "Did the manufacturer take away empty glasses or was his deposit account equalized with money?"
 
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
 
-msgid "Chose_member..."
-msgstr "Chose member..."
+msgid "chose_member..."
+msgstr "chose member..."
 
 msgid "1_day_ahead"
 msgstr "1 day ahead"
@@ -262,13 +259,12 @@ msgid ""
 "The_total_sum_below_right_(minus_{0}_"
 "%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"The total sum below right (minus {0}% variable member fee) will be transferred to "
-"your bank account as soon as possible."
+"The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as "
+"soon as possible."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"The total sum to the right (price incl.) will be transferred to your bank account "
-"as soon as possible."
+"The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
 
 msgid "Paid_by_members_in_{0}"
 msgstr "Paid by all members in {0}"
@@ -404,8 +400,7 @@ msgstr "Short description"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
-"Will be shown on the manufacturer overview page. Can't be independently changed by "
-"the manufacturer."
+"Will be shown on the manufacturer overview page. Can't be independently changed by the manufacturer."
 
 msgid "Long_description"
 msgstr "Long description"
@@ -439,8 +434,7 @@ msgstr "Company data"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
-"for your imprint and your invoices. The imprint can be found on your profile in the "
-"bottom right corner."
+"for your imprint and your invoices. The imprint can be found on your profile in the bottom right corner."
 
 msgid "Firstname"
 msgstr "First name"
@@ -593,8 +587,7 @@ msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Please chose the member you want to place the shop order for in the dropdown above."
+msgstr "Please chose the member you want to place the shop order for in the dropdown above."
 
 msgid "Group_by_member"
 msgstr "Group by member"
@@ -631,6 +624,93 @@ msgstr "Welcome"
 
 msgid "docs_route_credit_system"
 msgstr "credit-system"
+
+msgid "chose_manufacturer..."
+msgstr "chose manufacturer..."
+
+msgid "chose_category..."
+msgstr "chose category..."
+
+msgid "amount"
+msgstr "amount"
+
+msgid "price"
+msgstr "price"
+
+msgid "Add_product"
+msgstr "Add product"
+
+msgid "Synchronize_products"
+msgstr "Synchronize products"
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Please chose a manufacturer."
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "New?"
+msgstr "New?"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Add new attribute for product {0}"
+
+msgid "add_image"
+msgstr "add image"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Delete attribute for product {0}"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "This attribute is the default attribute"
+
+msgid "Define_as_new_default_attribute"
+msgstr "Define as new default attribute"
+
+msgid "change_category"
+msgstr "change category"
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Category \"all products\" is missing!"
+
+msgid "change_amount"
+msgstr "change amount"
+
+msgid "change_price"
+msgstr "change price"
+
+msgid "change_tax_rate"
+msgstr "change tax rate"
+
+msgid "New"
+msgstr "New"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Mark product as new for the next {0} days?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Do not mark product as new any more?"
+
+msgid "change_deposit"
+msgstr "change deposit"
+
+msgid "deactivate"
+msgstr "deactivate"
+
+msgid "activate"
+msgstr "activate"
+
+msgid "product_preview"
+msgstr "product preview"
 
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"
