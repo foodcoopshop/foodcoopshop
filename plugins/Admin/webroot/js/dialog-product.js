@@ -39,7 +39,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += 'Preis pro Bestelleinheit';
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-wrapper">';
-        dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
+        dialogHtml += '<input type="number" step="0.01" name="dialogPricePrice" id="dialogPricePrice" value="" />';
         dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (inkl. USt.)<br />';
         dialogHtml += '</div>';
         dialogHtml += '<label class="radio">';
@@ -47,7 +47,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += 'Preis nach Gewicht (für Gewichtsanpassung nach Lieferung)';
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
-        dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
+        dialogHtml += '<input type="number" step="0.01" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
         dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (inkl. USt.) für ';
         dialogHtml += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
         dialogHtml += '<option value="1" selected>1</option>';

@@ -615,7 +615,7 @@ foodcoopshop.Admin = {
                 if (unitData.price_per_unit_enabled === 1) {
                     radio = $(radioMainSelector + '.price-per-unit');
                 }
-                $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(foodcoopshop.Helper.formatFloatAsString(unitData.price_incl_per_unit));
+                $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(unitData.price_incl_per_unit);
                 $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
                 $('#' + dialogId + ' #dialogPriceUnitName').trigger('change');
                 $('#' + dialogId + ' #dialogPriceUnitAmount').val(unitData.amount);
@@ -627,8 +627,7 @@ foodcoopshop.Admin = {
             radio.prop('checked', true);
             radio.trigger('change');
             
-            var currencyRegExp = new RegExp('&nbsp;\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
-            var price = row.find('span.price-for-dialog').html().replace(currencyRegExp, '');
+            var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('span.price-for-dialog').html());
             $('#' + dialogId + ' #dialogPricePrice').val(price);
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
