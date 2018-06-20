@@ -127,14 +127,14 @@ if (count($payments) == 0) {
                 $payment['amount'] = $payment['amount'] * -1;
             }
             $sumPayments += $payment['amount'];
-            echo $this->Html->formatAsCurrency($payment['amount']);
+            echo $this->Number->formatAsCurrency($payment['amount']);
         }
         echo '</td>';
 
         echo '<td style="text-align:right;" ' . $numberClass . '>';
         if ($payment['type'] == 'order') {
             $sumOrders += $payment['amount'];
-            echo $this->Html->formatAsCurrency($payment['amount']);
+            echo $this->Number->formatAsCurrency($payment['amount']);
             if (!empty($payment['timebased_currency_order'])) {
                 echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['timebased_currency_order']->seconds_sum).'">&nbsp;*</b>';
             }
@@ -145,12 +145,12 @@ if (count($payments) == 0) {
         if ($payment['deposit'] < 0) {
             if ($payment['type'] == 'order') {
                 $sumDeposits += $payment['deposit'];
-                echo $this->Html->formatAsCurrency($payment['deposit']);
+                echo $this->Number->formatAsCurrency($payment['deposit']);
             }
         }
         if ($payment['type'] == 'deposit') {
             $sumDeposits += $payment['amount'];
-            echo $this->Html->formatAsCurrency($payment['amount']);
+            echo $this->Number->formatAsCurrency($payment['amount']);
         }
         echo '</td>';
 
@@ -183,8 +183,8 @@ if (count($payments) == 0) {
 
     echo '<tr>';
     echo '<td colspan="2"></td>';
-    echo '<td align="right"><b>' . $this->Html->formatAsCurrency($sumPayments) . '</b></td>';
-    echo '<td align="right" class="negative"><b>' . $this->Html->formatAsCurrency($sumOrders) . '</b></td>';
+    echo '<td align="right"><b>' . $this->Number->formatAsCurrency($sumPayments) . '</b></td>';
+    echo '<td align="right" class="negative"><b>' . $this->Number->formatAsCurrency($sumOrders) . '</b></td>';
     $sumDepositsClass = '';
     if ($sumDeposits < 0) {
         $sumDepositsClass = ' class="negative"';
@@ -192,7 +192,7 @@ if (count($payments) == 0) {
     if (! Configure::read('app.isDepositPaymentCashless')) {
         $sumDepositsClass = ' class="hide"';
     }
-    echo '<td ' . $sumDepositsClass . 'align="right"><b>' . $this->Html->formatAsCurrency($sumDeposits) . '</b></td>';
+    echo '<td ' . $sumDepositsClass . 'align="right"><b>' . $this->Number->formatAsCurrency($sumDeposits) . '</b></td>';
     echo '<td></td>';
     echo '</tr>';
 
@@ -202,7 +202,7 @@ if (count($payments) == 0) {
     if ($creditBalance < 0) {
         $sumNumberClass = ' class="negative"';
     }
-    echo '<td ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Html->formatAsCurrency($creditBalance) . '</b></td>';
+    echo '<td ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Number->formatAsCurrency($creditBalance) . '</b></td>';
     echo '<td></td>';
     echo '<td></td>';
     echo '<td></td>';

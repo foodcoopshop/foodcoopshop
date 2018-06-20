@@ -32,9 +32,9 @@ $this->element('addScript', ['script' =>
     <?php if ($this->Html->paymentIsCashless()) { ?>
         <li>
             <?php if ($order->total_deposit > 0) { ?>
-            	 <?php echo __('The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Html->formatAsCurrency($order->total_paid).'</b>', '<b>'.$this->Html->formatAsCurrency($order->total_deposit).'</b>']); ?>
+            	 <?php echo __('The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Number->formatAsCurrency($order->total_paid).'</b>', '<b>'.$this->Number->formatAsCurrency($order->total_deposit).'</b>']); ?>
             <?php } else { ?>
-            	<?php echo __('The_product_value_{0}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Html->formatAsCurrency($order->total_paid).'</b>']); ?>
+            	<?php echo __('The_product_value_{0}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Number->formatAsCurrency($order->total_paid).'</b>']); ?>
             <?php } ?>
         </li>
         <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>"><?php echo __('Increase_credit'); ?></a></li>

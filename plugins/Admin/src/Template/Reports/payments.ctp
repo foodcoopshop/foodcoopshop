@@ -147,7 +147,7 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     echo '<td style="text-align:right;">';
-        echo $this->Html->formatAsCurrency($payment->amount);
+        echo $this->Number->formatAsCurrency($payment->amount);
     echo '</td>';
 
     if ($showTextColumn) {
@@ -170,7 +170,7 @@ foreach ($payments as $payment) {
 
 echo '<tr>';
 echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td style="text-align:right;"><b>' . $this->Html->formatAsCurrency($paymentSum) . '</b></td>';
+echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($paymentSum) . '</b></td>';
 if ($showTextColumn) {
     echo '<td></td>';
 }

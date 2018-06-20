@@ -75,7 +75,7 @@ foreach ($taxes as $tax) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->formatAsPercent($tax->rate);
+    echo $this->Number->formatAsPercent($tax->rate);
     echo '</td>';
 
     echo '<td align="center">';

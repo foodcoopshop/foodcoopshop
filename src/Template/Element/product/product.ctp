@@ -126,7 +126,7 @@ if ($product['description'] != '') {
             echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
             if ($showProductPrice) {
                 echo '<div class="line">';
-                $priceHtml =  '<div class="price">' . $this->Html->formatAsCurrency($attribute['ProductAttributeShops']['gross_price']) . '</div>';
+                $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($attribute['ProductAttributeShops']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
                     $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
@@ -134,7 +134,7 @@ if ($product['description'] != '') {
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
-                    echo '<div class="deposit">+ <b>'. $this->Html->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
+                    echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
                 }
                 if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
@@ -144,7 +144,7 @@ if ($product['description'] != '') {
                         'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
                     ]);
                 }
-                echo '<div class="tax">'. $this->Html->formatAsCurrency($attribute['ProductAttributeShops']['tax']) . '</div>';
+                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute['ProductAttributeShops']['tax']) . '</div>';
                 echo '</div>';
             }
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
@@ -183,7 +183,7 @@ if ($product['description'] != '') {
         echo '<div class="entity-wrapper active">';
         if ($showProductPrice) {
             echo '<div class="line">';
-            $priceHtml =  '<div class="price">' . $this->Html->formatAsCurrency($product['gross_price']) . '</div>';
+            $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($product['gross_price']) . '</div>';
             $pricePerUnitInfoText = '';
             if ($product['price_per_unit_enabled']) {
                 $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
@@ -191,7 +191,7 @@ if ($product['description'] != '') {
             }
             echo $priceHtml;
                 if ($product['deposit']) {
-                    echo '<div class="deposit">+ <b>' . $this->Html->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
+                    echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
                 if (!$this->request->getSession()->read('Auth.shopOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
@@ -202,7 +202,7 @@ if ($product['description'] != '') {
                         'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
                     ]);
                 }
-                echo '<div class="tax">'. $this->Html->formatAsCurrency($product['tax']) . '</div>';
+                echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
         }
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);

@@ -73,13 +73,13 @@ use Cake\Core\Configure;
 <?php if ($this->Html->paymentIsCashless()) { ?>
 <h2>6. Guthabenkonto</h2>
 
-<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyHtml->formatAsCurrency(Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
+<p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet. Der Nutzer kann jederzeit auf das Guthabenkonto bis zu einem Maximalbetrag von <?php echo $this->MyNumber->formatAsCurrency(Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')); ?> Beträge einbezahlen.
 
 <?php
 if (Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') == 0) {
     echo 'Auch bei einem negativen Kontostand sind weitere Bestellungen möglich.';
 } else {
-    echo 'Bis zu einem Kontostand von ' . $this->MyHtml->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
+    echo 'Bis zu einem Kontostand von ' . $this->MyNumber->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
 }
 ?>
 

@@ -314,7 +314,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.defaultTax</td>
-            <td><?php echo $this->Html->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? 'aktiviert' : 'deaktiviert'; ?></td>
+            <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? 'aktiviert' : 'deaktiviert'; ?></td>
         </tr>
 
         <tr>

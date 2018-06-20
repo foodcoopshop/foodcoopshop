@@ -58,7 +58,7 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td style="text-align:right;">';
-        echo $this->Html->formatAsCurrency($payment['amount']);
+        echo $this->Number->formatAsCurrency($payment['amount']);
         echo '</td>';
 
         echo '<td style="text-align:center;">';
@@ -80,7 +80,7 @@ if (count($payments) == 0) {
 
     echo '<tr>';
     echo '<td></td>';
-    echo '<td><b style="font-size: 16px;">Summe: ' . $this->Html->formatAsCurrency($sumMemberFee) . '</b></td>';
+    echo '<td><b style="font-size: 16px;">Summe: ' . $this->Number->formatAsCurrency($sumMemberFee) . '</b></td>';
     echo '<td></td>';
     echo '<td></td>';
     echo '</tr>';

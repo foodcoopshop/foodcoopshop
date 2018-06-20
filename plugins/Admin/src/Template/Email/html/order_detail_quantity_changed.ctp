@@ -29,8 +29,8 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis für <?php echo $this->MyHtml->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
-                <li>Neuer Preis für <?php echo $this->MyHtml->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyHtml->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li>Alter Preis für <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li>Neuer Preis für <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
             </ul>
             
             <p>

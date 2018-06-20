@@ -203,7 +203,7 @@ class CustomersController extends AdminAppController
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->Customer->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
-                    $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.htmlHelper')->formatAsCurrency($creditBalance) . '. Es muss 0 betragen.';
+                    $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. Es muss 0 betragen.';
                 }
             }
             

@@ -353,8 +353,8 @@ class OrderDetailsController extends AdminAppController
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
         
         $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') ';
-        $message .= 'wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
-        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatUnitAsDecimal($productQuantity);
+        $message .= 'wurde erfolgreich von ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
+        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity);
         $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' angepasst ';
         
         // send email to customer if price was changed
@@ -478,7 +478,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editAmountReason . '"</b>';
         }
 
-        $message .= ' Der Lagerstand wurde auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newAmount, 0) . ' erhöht.';
+        $message .= ' Der Lagerstand wurde auf ' . Configure::read('app.numberHelper')->formatAsDecimal($newAmount, 0) . ' erhöht.';
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_amount_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -529,7 +529,7 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
         
-        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' angepasst ';
+        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.numberHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.numberHelper')->formatAsDecimal($productPrice) . ' angepasst ';
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
         
         // send email to customer
@@ -609,7 +609,7 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.htmlHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde erfolgreich storniert';
+            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde erfolgreich storniert';
 
             $this->OrderDetail->deleteOrderDetail($orderDetail);
             $this->OrderDetail->Orders->updateSums($orderDetail->order);
@@ -653,7 +653,7 @@ class OrderDetailsController extends AdminAppController
                 $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' Der Lagerstand wurde um ' . $orderDetail->product_amount . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+            $message .= ' Der Lagerstand wurde um ' . $orderDetail->product_amount . ' auf ' . Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);

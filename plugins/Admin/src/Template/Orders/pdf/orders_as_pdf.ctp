@@ -95,7 +95,7 @@ foreach ($orders as $order) {
         }
         
         $pdf->table .= '<td style="' . $priceStyle . 'text-align: right"; width="' . $widths[3] . '">';
-        $pdf->table .= $this->Html->formatAsCurrency($orderDetail->total_price_tax_incl);
+        $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
         if (!empty($orderDetail->order_detail_unit)) {
             $pdf->table .= ' *';
             $usesQuantityInUnits++;
@@ -104,7 +104,7 @@ foreach ($orders as $order) {
         $deposit = $orderDetail->deposit;
         if ($deposit > 0) {
             $sumDeposit += $deposit;
-            $deposit = $this->Html->formatAsCurrency($deposit);
+            $deposit = $this->Number->formatAsCurrency($deposit);
         } else {
             $deposit = '';
         }
@@ -120,9 +120,9 @@ foreach ($orders as $order) {
                 $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[1] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[2] . '"></td>';
-                $pdf->table .= '<td style="text-align: right;" width="' . $widths[3] . '">' . $this->Html->formatAsCurrency($sumPrice) . '</td>';
+                $pdf->table .= '<td style="text-align: right;" width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
             if ($sumDeposit > 0) {
-                $sumDepositAsString = $this->Html->formatAsCurrency($sumDeposit);
+                $sumDepositAsString = $this->Number->formatAsCurrency($sumDeposit);
             } else {
                 $sumDepositAsString = '';
             }
@@ -130,7 +130,7 @@ foreach ($orders as $order) {
             $pdf->table .= '</tr>';
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">Gesamt</td>';
-                $pdf->table .= '<td colspan="2" style="font-size:10px;font-weight:bold;text-align:center;" width="' . ($widths[3] + $widths[4]) . '">' . $this->Html->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
+                $pdf->table .= '<td colspan="2" style="font-size:10px;font-weight:bold;text-align:center;" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
             $pdf->table .= '</tr>';
         }
 

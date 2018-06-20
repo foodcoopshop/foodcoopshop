@@ -176,7 +176,7 @@ foreach ($actionLogs as $actionLog) {
 }
 
 echo '<tr>';
-echo '<td colspan="10"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
+echo '<td colspan="10"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
 echo '</tr>';
 
 echo '</table>';

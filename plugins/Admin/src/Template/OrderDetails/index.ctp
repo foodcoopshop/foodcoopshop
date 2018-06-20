@@ -196,7 +196,7 @@ foreach ($orderDetails as $orderDetail) {
             }
             echo '<span class="product-amount-for-dialog" style="' . $style . '">' . $amount . '</span><span style="' . $style . '">x</span>';
         } else {
-            echo $this->Html->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
+            echo $this->Number->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }
         echo '</div>';
     echo '</td>';
@@ -238,12 +238,12 @@ foreach ($orderDetails as $orderDetail) {
                 'title' => __d('admin', 'Click_to_change_price')
             ], 'javascript:void(0);');
         }
-        echo '<span class="product-price-for-dialog">' . $this->Html->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
+        echo '<span class="product-price-for-dialog">' . $this->Number->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
         if (!empty($orderDetail->timebased_currency_order_detail)) {
             echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds)]).'">&nbsp;*</b>';
         }
     } else {
-        echo $this->Html->formatAsDecimal($orderDetail['sum_price']);
+        echo $this->Number->formatAsDecimal($orderDetail['sum_price']);
     }
     echo '</div>';
     echo '</td>';
@@ -259,7 +259,7 @@ foreach ($orderDetails as $orderDetail) {
         if ($priceDiffers) {
             echo '<span style="color:red;font-weight:bold;">';
         }
-        echo $this->Html->formatAsDecimal($reducedPrice);
+        echo $this->Number->formatAsDecimal($reducedPrice);
         if ($priceDiffers) {
             echo '</span>';
         }
@@ -269,11 +269,11 @@ foreach ($orderDetails as $orderDetail) {
     echo '<td class="right">';
     if ($groupBy == '') {
         if ($orderDetail->deposit > 0) {
-            echo $this->Html->formatAsDecimal($orderDetail->deposit);
+            echo $this->Number->formatAsDecimal($orderDetail->deposit);
         }
     } else {
         if ($orderDetail['sum_deposit'] > 0) {
-            echo $this->Html->formatAsDecimal($orderDetail['sum_deposit']);
+            echo $this->Number->formatAsDecimal($orderDetail['sum_deposit']);
         }
     }
     echo '</td>';
@@ -288,7 +288,7 @@ foreach ($orderDetails as $orderDetail) {
                         'title' => __d('admin', 'Click_to_change_weight')
                     ], 'javascript:void(0);');
                 }
-                echo '<span class="quantity-in-units">' . $this->Html->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
+                echo '<span class="quantity-in-units">' . $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
                 echo '<span class="hide price-per-unit-base-info">'.$this->PricePerUnit->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
             }
         echo '</td>';
@@ -342,8 +342,8 @@ foreach ($orderDetails as $orderDetail) {
 }
 
 echo '<tr>';
-echo '<td colspan="1"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b></td>';
-echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumAmount, 0) . 'x</b></td>';
+echo '<td colspan="1"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b></td>';
+echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumAmount, 0) . 'x</b></td>';
 if ($groupBy == '') {
     if ($appAuth->isManufacturer()) {
         echo '<td></td>';
@@ -361,14 +361,14 @@ if ($groupBy == 'product') {
         echo '<td colspan="2"></td>';
     }
 }
-echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumPrice) . '</b></td>';
+echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumPrice) . '</b></td>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
-    echo '<td class="right"><b>' . $this->Html->formatAsDecimal($sumReducedPrice) . '</b></td>';
+    echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
 $sumDepositString = '';
 if ($sumDeposit > 0) {
-    $sumDepositString = $this->Html->formatAsDecimal($sumDeposit);
+    $sumDepositString = $this->Number->formatAsDecimal($sumDeposit);
 }
 echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 

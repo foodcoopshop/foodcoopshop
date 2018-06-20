@@ -50,7 +50,7 @@ use Cake\Core\Configure;
         <?php } ?>
         
         <tr><td style="padding-top:20px;">
-            <?php echo __('Including_vat'); ?> <?php echo $this->MyHtml->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
+            <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
         
         <tr><td>

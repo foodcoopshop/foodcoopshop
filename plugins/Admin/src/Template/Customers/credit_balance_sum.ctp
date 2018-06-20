@@ -47,10 +47,10 @@ foreach($customers as $customer) {
             echo $customer['customer_type'] . ($customer['count'] > 0 ? ' ('.$customer['count'].')' : '');
         echo '</td>';
         echo '<td class="' . ($customer['credit_balance'] < 0 ? 'negative' : '') . '">';
-        echo $this->Html->formatAsCurrency($customer['credit_balance']);
+        echo $this->Number->formatAsCurrency($customer['credit_balance']);
         echo '</td>';
         echo '<td class="' . ($customer['payment_deposit_delta'] < 0 ? 'negative' : '') . '">';
-        echo $this->Html->formatAsCurrency($customer['payment_deposit_delta']);
+        echo $this->Number->formatAsCurrency($customer['payment_deposit_delta']);
         echo '</td>';
     echo '</tr>';
 }
@@ -58,16 +58,16 @@ foreach($customers as $customer) {
 echo '<tr>';
     echo '<td><b>Summe gesamt:</b></td>';
     echo '<td class="' . ($sums['credit_balance'] < 0 ? 'negative' : '') . '">';
-        echo '<b>' . $this->Html->formatAsCurrency($sums['credit_balance']) . '</b>';
+        echo '<b>' . $this->Number->formatAsCurrency($sums['credit_balance']) . '</b>';
     echo '</td>';
     echo '<td class="' . ($sums['deposit_delta'] < 0 ? 'negative' : '') . '">';
-        echo '<b>' . $this->Html->formatAsCurrency($sums['deposit_delta']) . ' *</b>';
+        echo '<b>' . $this->Number->formatAsCurrency($sums['deposit_delta']) . ' *</b>';
     echo '</td>';
 echo '</tr>';
 
 echo '</table>';
 
 echo '<p style="padding:5px;">
-          * Von den '.$this->Html->formatAsCurrency($sums['credit_balance']).' auf dem Guthaben-Konto sind '.$this->Html->formatAsCurrency($sums['deposit_delta']).' für Pfand-Rückzahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Rückzahlungen vorhanden.
+          * Von den '.$this->Number->formatAsCurrency($sums['credit_balance']).' auf dem Guthaben-Konto sind '.$this->Number->formatAsCurrency($sums['deposit_delta']).' für Pfand-Rückzahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Rückzahlungen vorhanden.
       </p>';
 ?>

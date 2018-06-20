@@ -99,7 +99,7 @@ class TaxesController extends AdminAppController
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $message = 'Der Steuersatz <b>' . Configure::read('app.htmlHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
+            $message = 'Der Steuersatz <b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 

@@ -93,7 +93,7 @@ class SendInvoicesShell extends AppShell
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if (!empty($manufacturer->current_order_count) && $sendInvoice) {
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
-                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
+                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
                 $i ++;

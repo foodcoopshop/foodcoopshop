@@ -32,9 +32,9 @@ if (!$appAuth->termsOfUseAccepted()) {
 
     <p class="no-products"><?php echo __('Your_cart_is_empty'); ?>.</p>
     <p class="products"></p>
-    <p class="sum-wrapper"><b><?php echo __('Product_sum_including_vat');?></b><span class="sum"><?php echo $this->Html->formatAsCurrency(0); ?></span></p>
+    <p class="sum-wrapper"><b><?php echo __('Product_sum_including_vat');?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
     <?php if ($appAuth->Cart->getDepositSum() > 0) { ?>
-        <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Html->formatAsCurrency(0); ?></span></p>
+        <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
     <?php } ?>
     
     <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
@@ -42,7 +42,7 @@ if (!$appAuth->termsOfUseAccepted()) {
     <?php } ?>
 
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
-        <p class="tax-sum-wrapper"><?php echo __('Including_vat'); ?>: <span class="sum"><?php echo $this->Html->formatAsCurrency(0); ?></span></p>
+        <p class="tax-sum-wrapper"><?php echo __('Including_vat'); ?>: <span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
 
         <?php
             echo $this->Form->create($order, [

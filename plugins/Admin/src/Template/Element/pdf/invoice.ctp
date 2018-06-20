@@ -71,9 +71,9 @@ $headers = [
 $pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
 $pdf->addLastSumRow(
     $headers,
-    $this->MyHtml->formatAsDecimal($sumPriceExcl),
-    $this->MyHtml->formatAsDecimal($sumTax),
-    $this->MyHtml->formatAsDecimal($sumPriceIncl)
+    $this->MyNumber->formatAsDecimal($sumPriceExcl),
+    $this->MyNumber->formatAsDecimal($sumTax),
+    $this->MyNumber->formatAsDecimal($sumPriceIncl)
 );
 $pdf->renderTable();
 // Produktauflistung End
@@ -94,7 +94,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3> - ' . $this->MyHtml->formatAsDecimal($compensatedPrice) . '</h3>';
+    $html .= '<h3> - ' . $this->MyNumber->formatAsDecimal($compensatedPrice) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
@@ -104,7 +104,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $html .= '</td>';
 
     $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-    $html .= '<h3>' . $this->MyHtml->formatAsDecimal($newSumPriceIncl) . '</h3>';
+    $html .= '<h3>' . $this->MyNumber->formatAsDecimal($newSumPriceIncl) . '</h3>';
     $html .= '</td>';
     $html .= '</tr>';
 
@@ -138,7 +138,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Paid_by_members_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->MyHtml->formatAsCurrency($sumTimebasedCurrencyPriceIncl) . '</b>';
+                $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumTimebasedCurrencyPriceIncl) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
 
@@ -147,7 +147,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Paid_by_members_in') . ' ' . Configure::read('app.currencyName') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>' .  $this->MyHtml->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
+                $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
     
@@ -161,7 +161,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Kept_variable_member_fee') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->MyHtml->formatAsCurrency($compensatedPrice).'</b>';
+                $html .= '<b>'.$this->MyNumber->formatAsCurrency($compensatedPrice).'</b>';
             $html .= '</td>';
         $html .= '</tr>';
         
@@ -170,7 +170,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
                 $html .= __d('admin', 'Amount_that_will_be_transferred_to_your_bank_account') . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->MyHtml->formatAsCurrency($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+                $html .= '<b>'.$this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
             $html .= '</td>';
         $html .= '</tr>';
     }

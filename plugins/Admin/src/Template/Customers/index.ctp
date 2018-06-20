@@ -161,7 +161,7 @@ foreach ($customers as $customer) {
         echo '<td align="center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
-            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsCurrency($customer->credit_balance);
+            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
             echo $this->Html->getJqueryUiIcon(
                 $creditBalanceHtml,
                 [
@@ -172,7 +172,7 @@ foreach ($customers as $customer) {
             );
         } else {
             if ($customer->credit_balance != 0) {
-                echo $this->Html->formatAsCurrency($customer->credit_balance);
+                echo $this->Number->formatAsCurrency($customer->credit_balance);
             }
         }
         
@@ -240,7 +240,7 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
+echo '<td><b>' . $this->Number->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }

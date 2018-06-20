@@ -25,6 +25,24 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->MyNumberHelper = new MyNumberHelper(new View());
     }
     
+    public function testFormatAsDecimalThreeDigits()
+    {
+        $result = $this->MyNumberHelper->formatAsDecimal(100, 3);
+        $this->assertEquals($result, '100,000');
+    }
+    
+    public function testFormatAsDecimalTwoDigitsDefault()
+    {
+        $result = $this->MyNumberHelper->formatAsDecimal(88.1);
+        $this->assertEquals($result, '88,10');
+    }
+    
+    public function testFormatAsDecimalRemoveTrailingZeros()
+    {
+        $result = $this->MyNumberHelper->formatAsDecimal(93.800, 2, true);
+        $this->assertEquals($result, '93,8');
+    }
+    
     public function testParseFloatRespectingLocaleInvalidString()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('invalid-price');

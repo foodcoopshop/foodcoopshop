@@ -4,7 +4,6 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
-use Cake\I18n\Number;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -28,6 +27,7 @@ class MyHtmlHelper extends HtmlHelper
     public function __construct(View $View, array $config = [])
     {
         $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
+        $this->helpers[] = 'MyNumber';
         parent::__construct($View, $config);
     }
     
@@ -288,49 +288,6 @@ class MyHtmlHelper extends HtmlHelper
     public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];
-    }
-
-    public function formatAsCurrency($amount)
-    {
-        return self::formatAsUnit($amount, Configure::read('appDb.FCS_CURRENCY_SYMBOL'));
-    }
-    
-    public function formatAsUnit($amount, $shortcode)
-    {
-        return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
-    }
-
-    public function formatAsPercent($amount)
-    {
-        return self::formatAsDecimal($amount) . '%';
-    }
-
-    /**
-     * shows decimals only if necessary
-     *
-     * @param decimal $amount
-     */
-    public function formatTaxRate($rate)
-    {
-        return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
-    }
-    
-    public function formatUnitAsDecimal($amount)
-    {
-        return $this->formatAsDecimal($amount, 3, true);
-    }
-
-    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
-    {
-        $result = Number::format($amount, [
-            'locale' => I18n::getLocale(),
-            'places' => $decimals,
-            'precision' => $decimals
-        ]);
-        if ($removeTrailingZeros) {
-            $result = floatval($amount);
-        }
-        return $result;
     }
 
     public function getCustomerOrderBy()

@@ -158,7 +158,7 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td class="right">';
-            echo $this->Html->formatAsCurrency($paidField);
+            echo $this->Number->formatAsCurrency($paidField);
             if (!empty($order->timebased_currency_order)) {
                 echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($order->timebased_currency_order->seconds_sum)]).'">&nbsp;*</b>';
             }
@@ -221,9 +221,9 @@ use Cake\Core\Configure;
     }
 
     echo '<tr>';
-    echo '<td colspan="2"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
+    echo '<td colspan="2"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
     echo '<td class="right">';
-        echo '<b>' . $this->Html->formatAsCurrency($sumPrice) . '</b>';
+        echo '<b>' . $this->Number->formatAsCurrency($sumPrice) . '</b>';
     echo '</td>';
     echo '<td colspan="5"></td>';
     echo '</tr>';

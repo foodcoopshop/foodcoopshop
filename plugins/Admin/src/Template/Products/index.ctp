@@ -274,7 +274,7 @@ use Cake\Core\Configure;
                 'title' => 'Anzahl ändern'
             ], 'javascript:void(0);');
             echo '<span class="quantity-for-dialog">';
-            echo $this->Html->formatAsDecimal($product->stock_available->quantity, 0);
+            echo $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
             echo '</span>';
         }
 
@@ -295,7 +295,7 @@ use Cake\Core\Configure;
 	                'title' => 'Preis ändern'
 	            ], 'javascript:void(0);');
 	            echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
-                    echo $this->Html->formatAsCurrency($product->gross_price);
+                    echo $this->Number->formatAsCurrency($product->gross_price);
                 echo '</span>';
                 if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
                     echo '<span class="unit-price-for-dialog">';
@@ -313,7 +313,7 @@ use Cake\Core\Configure;
                 'value' => $product->id_tax
             ]);
             $taxRate = $product->tax->rate;
-            echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Html->formatAsDecimal($taxRate, 1) : $this->Html->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
+            echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Number->formatAsDecimal($taxRate, 1) : $this->Number->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-tax-edit-button',
                 'title' => 'Steuer ändern',
@@ -351,7 +351,7 @@ use Cake\Core\Configure;
             }
             if ($product->deposit > 0) {
                 echo '<span class="deposit-for-dialog">';
-                echo $this->Html->formatAsDecimal($product->deposit);
+                echo $this->Number->formatAsDecimal($product->deposit);
                 echo '</span>';
             }
             echo '</div>';

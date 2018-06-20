@@ -51,7 +51,7 @@ class TimebasedCurrencyHelper extends Helper
     public function formatSecondsToTimebasedCurrency($seconds)
     {
         $hours = round($seconds / 3600, 2);
-        return $this->MyHtml->formatAsUnit($hours, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
+        return $this->MyNumber->formatAsUnit($hours, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
     }
     
     /**
@@ -90,7 +90,7 @@ class TimebasedCurrencyHelper extends Helper
      */
     public function getCartTimebasedCurrencySecondsAsCurrencyForDropdown($seconds, $exchangeRate)
     {
-        return str_replace('&nbsp;', ' ', $this->MyHtml->formatAsCurrency(
+        return str_replace('&nbsp;', ' ', $this->MyNumber->formatAsCurrency(
             $seconds / 3600 *
             $this->MyNumber->parseFloatRespectingLocale($exchangeRate)
         ));
