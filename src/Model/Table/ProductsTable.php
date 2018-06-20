@@ -190,8 +190,6 @@ class ProductsTable extends AppTable
         if ($float === false) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-        
-        $float = floatval($float);
 
         return $float;
     }
