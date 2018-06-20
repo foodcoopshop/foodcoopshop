@@ -72,6 +72,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
+    public function testEditPriceOfProductAsSuperadminToZero()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertPriceChange(346, '0', '0,00');
+    }
+    
     public function testEditPriceOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();

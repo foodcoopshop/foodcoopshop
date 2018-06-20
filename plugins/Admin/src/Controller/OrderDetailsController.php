@@ -316,7 +316,7 @@ class OrderDetailsController extends AdminAppController
         $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
-        if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 0) {
+        if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
             $message = 'input format wrong';
             $this->log($message);
             die(json_encode([
@@ -324,8 +324,6 @@ class OrderDetailsController extends AdminAppController
                 'msg' => $message
             ]));
         }
-        
-        $productQuantity = floatval($productQuantity);
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -502,8 +500,8 @@ class OrderDetailsController extends AdminAppController
 
         $productPrice = trim($this->getRequest()->getData('productPrice'));
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
-
-        if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
+        
+        if (! is_numeric($orderDetailId) || !$productPrice || $productPrice < 0) {
             $message = 'input format wrong';
             $this->log($message);
             die(json_encode([
@@ -511,8 +509,6 @@ class OrderDetailsController extends AdminAppController
                 'msg' => $message
             ]));
         }
-
-        $productPrice = floatval($productPrice);
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -529,7 +525,7 @@ class OrderDetailsController extends AdminAppController
                 'Orders.TimebasedCurrencyOrders'
             ]
         ])->first();
-
+        
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
         
@@ -554,7 +550,6 @@ class OrderDetailsController extends AdminAppController
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-
         if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);

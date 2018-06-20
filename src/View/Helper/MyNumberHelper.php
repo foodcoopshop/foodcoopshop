@@ -22,7 +22,17 @@ class MyNumberHelper extends NumberHelper
 {
     public function parseFloatRespectingLocale($double)
     {
-        return self::parseFloat($double, ['locale' => I18n::getLocale()]);
+        $result = self::parseFloat($double, ['locale' => I18n::getLocale()]);
+        
+        // HACK to allow 0,00 as value
+        if (I18n::getLocale() == 'de_DE') {
+            $double = str_replace(',', '.', $double);
+        }
+        
+        if (!is_numeric($double) && $result == 0) {
+            return false;
+        }
+        return $result; 
     }
 }
 ?>

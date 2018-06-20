@@ -29,6 +29,7 @@
             <file>tests/TestCase/src/Shell/EmailOrderReminderShellTest.php</file>
             <file>tests/TestCase/src/Shell/SendOrderListsShellTest.php</file>
 
+            <file>tests/TestCase/src/View/Helper/MyNumberHelperTest.php</file>
             <file>tests/TestCase/src/View/Helper/MyTimeHelperTest.php</file>
             <file>tests/TestCase/src/View/Helper/PricePerUnitHelperTest.php</file>
             

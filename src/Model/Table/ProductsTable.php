@@ -187,10 +187,9 @@ class ProductsTable extends AppTable
         $float = trim($string);
         $float = Configure::read('app.numberHelper')->parseFloatRespectingLocale($float);
 
-        if (!is_numeric($float)) {
+        if ($float === false) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-        $float = floatval($float);
 
         return $float;
     }
@@ -841,7 +840,7 @@ class ProductsTable extends AppTable
     {
         $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
 
-        if (! $grossPrice > - 1) { // allow 0 as new price
+        if (!$grossPrice > -1) { // allow 0 as new price
             return false;
         }
 
