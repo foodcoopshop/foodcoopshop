@@ -840,10 +840,7 @@ class ProductsTable extends AppTable
 
     public function getNetPrice($productId, $grossPrice)
     {
-        Log::write('error', 'locale: ' . I18n::getLocale());
-        Log::write('error', 'grossPriceBefore: ' . $grossPrice);
         $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
-        Log::write('error', 'grossPriceAfter: ' . $grossPrice);
         
         if (!$grossPrice > -1) { // allow 0 as new price
             return false;

@@ -4,6 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\Log\Log;
 use Cake\View\Helper\NumberHelper;
 
 /**
@@ -66,11 +67,14 @@ class MyNumberHelper extends NumberHelper
     
     public function parseFloatRespectingLocale($double)
     {
+        Log::write('error', 'doubleBefore: ' . $double);
         $result = self::parseFloat($double, ['locale' => I18n::getLocale()]);
+        Log::write('error', 'resultAfter: ' . $result);
         
         // HACK to allow 0,00 as value
         if (I18n::getLocale() == 'de_DE') {
             $double = str_replace(',', '.', $double);
+            Log::write('error', 'double-de_DE: ' . $double);
         }
         
         if (!is_numeric($double) && $result == 0) {
