@@ -54,8 +54,7 @@ before_script:
 
 script:
 #  - vendor/bin/phpunit --testsuite App,Admin --stderr
-  - vendor/bin/phpunit --filter CartsControllerTest --stderr
-  - sudo cat ./logs/debug.log
+  - vendor/bin/phpunit --filter CartsControllerTest::testFinishOrderWithComment --stderr
   - sudo cat ./logs/error.log
   
 notifications:
