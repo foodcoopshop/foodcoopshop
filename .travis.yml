@@ -17,6 +17,8 @@ env:
   - DB=mysql
   
 before_script:
+  # update and install language packs
+  - sudo apt-get update && sudo apt-get --reinstall install -qq language-pack-en language-pack-de
   # email mock
   - sudo apt-get install -y -qq postfix  
   - sudo service postfix stop
