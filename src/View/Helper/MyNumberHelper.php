@@ -67,6 +67,7 @@ class MyNumberHelper extends NumberHelper
     
     public function parseFloatRespectingLocale($double)
     {
+        Log::write('error', 'intl.default_locale: ' . ini_get('intl.default_locale'));
         Log::write('error', 'doubleBefore: ' . $double);
         $result = self::parseFloat($double, ['locale' => I18n::getLocale()]);
         Log::write('error', 'resultAfter: ' . $result);
@@ -74,7 +75,6 @@ class MyNumberHelper extends NumberHelper
         // HACK to allow 0,00 as value
         if (I18n::getLocale() == 'de_DE') {
             $double = str_replace(',', '.', $double);
-            Log::write('error', 'double-de_DE: ' . $double);
         }
         
         if (!is_numeric($double) && $result == 0) {
