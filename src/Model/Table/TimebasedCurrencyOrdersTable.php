@@ -2,7 +2,6 @@
 
 namespace App\Model\Table;
 
-use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
@@ -42,9 +41,6 @@ class TimebasedCurrencyOrdersTable extends AppTable
         return $validator;
     }
     
-    /**
-     * @param Order $order
-     */
     public function updateSums($order)
     {
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');

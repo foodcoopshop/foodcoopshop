@@ -5,8 +5,6 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
-use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
