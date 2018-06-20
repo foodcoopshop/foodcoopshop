@@ -53,12 +53,11 @@ class MyNumberHelper extends NumberHelper
     
     public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
     {
-        $result = number_format($amount, $decimals, ',', '.');
-//         $result = self::format($amount, [
-//             'locale' => I18n::getLocale(),
-//             'places' => $decimals,
-//             'precision' => $decimals
-//         ]);
+        $result = self::format($amount, [
+            'locale' => I18n::getLocale(),
+            'places' => $decimals,
+            'precision' => $decimals
+        ]);
         if ($removeTrailingZeros) {
             $result = floatval($amount);
         }
