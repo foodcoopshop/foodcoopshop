@@ -252,7 +252,6 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkOrder($order, $orderId, $orderComment);
 
         // check order_details for product1
-        pr($order->order_details[0]);
         $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2);
 
         // check order_details for product2 (third! index)

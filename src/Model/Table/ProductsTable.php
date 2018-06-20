@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 
@@ -839,6 +840,7 @@ class ProductsTable extends AppTable
     public function getNetPrice($productId, $grossPrice)
     {
         $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
+        Log::write('error', 'grossPrice: ' . $grossPrice);
 
         if (!$grossPrice > -1) { // allow 0 as new price
             return false;
