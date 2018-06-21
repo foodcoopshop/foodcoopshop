@@ -300,7 +300,6 @@ foodcoopshop.Helper = {
       
     getCurrencyAsFloat: function (string) {
         var currencyRegExp = new RegExp('&nbsp;\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
-        console.log(string.replace(currencyRegExp, ''));
         return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
     

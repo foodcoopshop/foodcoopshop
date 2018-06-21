@@ -159,12 +159,40 @@ class LocalizedController extends Controller
                 'DeliveredWeightNeedsToBeGreaterThan0' => __('Delivered_weight_needs_to_be_greater_than_0.'),
                 'AdaptPriceReasonIsMandatory' => __('Adapt_price_reason_is_mandatory.'),
                 'CancellationReasonIsMandatory' => __('Cancellation_reason_is_mandatory.'),
-                'PleaseEnterANumber' => __('Please_enter_a_number.')
+                'PleaseEnterANumber' => __('Please_enter_a_number.'),
+                'AddNewAttributeForProduct' => __('Add_new_attribute_for_product'),
+                'PleaseChoseTheNewAttributeForProduct0' => __('Please_chose_the_new_attribute_for_product_{0}.'),
+                'ThisFunctionCanOnlyBeUsedIfAttributesExist' => __('This_function_can_only_be_used_if_attributes_exist.'),
+                'ChangingDefaultAttributeInfoText0Html' => __('Changing_default_attribute_info_text_{0}_html'),
+                'ChangeDefaultAttribute' => __('Change_default_attribute'),
+                'ChangeCategories' => __('Change_categories'),
+                'Weight' => __('Weight'),
+                'EnterApproximateWeightInPriceDialog' => __('Enter_approximate_weight_in_price_dialog.') 
+                
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),
                 'SetDateOfOrderBackTo' => __('Set_date_of_order_back_to'),
                 'SetDateOfOrderBack' => __('Set_date_of_order_back')
+            ],
+            'dialogProduct' => [
+                'ChangeAmount' => __('Change_amount'),
+                'ChangePrice' => __('Change_price'),
+                'PricePerUnit' => __('Price_per_unit'),
+                'inclVAT' => __('incl_vat'),
+                'PricePerWeightForAdaptionAfterDelivery' => __('Price_per_weight_(for_adaption_after_delivery)'),
+                'for' => __('for'),
+                'approximateDeliveryWeightIn0PerUnit' => __('approximate_delivery_weight_in_{0}_per_unit'),
+                'Name' => __('Name'),
+                'ProductRenameInfoText' => __('Product_rename_info_text'),
+                'Unit' => __('Unit'),
+                'UnitDescriptionExample' => __('Unit_description_example'),
+                'DescriptionShort' => __('Description_short'),
+                'DescriptionLong' => __('Description_long'),
+                'ProductDeclarationOK' => __('Product_declaration_ok?'),
+                'DocsUrlProductDeclaration' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_product_declaration')),
+                'Help' => __('Help'),
+                'ChangeNameAndDescription' => __('Change_name_and_description')
             ]
             
         ];
