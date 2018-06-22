@@ -11,6 +11,14 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+String.prototype.replaceI18n = function(object, replace) {
+    var regExp = new RegExp('\\{' + object + '\\}', 'g');
+    return this.replace(regExp, replace);
+    
+    // code
+};
+
 foodcoopshop.Helper = {
 
     init: function () {

@@ -981,7 +981,7 @@ foodcoopshop.Admin = {
         };
 
         $('<div></div>').appendTo('body')
-            .html(foodcoopshop.Admin.additionalOrderStatusChangeInfo + '<p>' + foodcoopshop.LocalizedJs.admin.ReallyChangeOrderStatusFrom.replace(/\{0\}/g, '<b>' + customerName + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+            .html(foodcoopshop.Admin.additionalOrderStatusChangeInfo + '<p>' + foodcoopshop.LocalizedJs.admin.ReallyChangeOrderStatusFrom.replaceI18n(0, '<b>' + customerName + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
             .dialog({
                 modal: true,
                 title: foodcoopshop.LocalizedJs.admin.ChangeOrderStatus,
@@ -1140,7 +1140,7 @@ foodcoopshop.Admin = {
             
             var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
             $('<div></div>').appendTo('body')
-                .html('<p>' + reallyNewStateText.replace(/\{0\}/g,  '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: newStateText,
@@ -1201,7 +1201,7 @@ foodcoopshop.Admin = {
             var productId = dataRow.attr('id').replace(/product-/, '').split('-');
             productId = productId[productId.length - 1];
 
-            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replace(/\{0\}/g, '<b> ' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p>';
+            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replaceI18n(0, '<b> ' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p>';
             var productAttributesDropdown = $('#productattributeid').clone(true);
 
             if (productAttributesDropdown.find('option').length == 0) {
@@ -1253,7 +1253,7 @@ foodcoopshop.Admin = {
             var attributeId = productIdString[1];
             
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
-            var htmlCode = foodcoopshop.LocalizedJs.admin.ChangingDefaultAttributeInfoText0Html.replace(/\{0\}/g, '<b>' + label + '</b>');
+            var htmlCode = foodcoopshop.LocalizedJs.admin.ChangingDefaultAttributeInfoText0Html.replaceI18n(0, '<b>' + label + '</b>');
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
             var buttons = {};
@@ -2185,7 +2185,7 @@ foodcoopshop.Admin = {
             var dataRow = $('#change-active-state-' + productId).closest('tr');
             $('<div></div>')
                 .appendTo('body')
-                .html('<p>' + reallyNewStateText.replace(/\{0\}/g, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + reallyNewStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: newStateText,

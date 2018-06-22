@@ -63,7 +63,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<option value="kg" selected>kg</option>';
         dialogHtml += '<option value="g">g</option>';
         dialogHtml += '</select><br />';
-        dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replace(/\{0\}/g, '<span class="unit-name-placeholder">kg</span>');
+        dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangePrice, dialogId, dialogHtml);
