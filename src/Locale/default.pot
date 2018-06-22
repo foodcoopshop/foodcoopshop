@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-21 10:54+0200\n"
+"POT-Creation-Date: 2018-06-22 17:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -536,6 +536,33 @@ msgstr ""
 msgid "Enter_approximate_weight_in_price_dialog."
 msgstr ""
 
+msgid "Change_tax_rate"
+msgstr ""
+
+msgid "Show_product_as_new?"
+msgstr ""
+
+msgid "Do_not_show_product_as_new?"
+msgstr ""
+
+msgid "Really_show_product_{0}_as_new?"
+msgstr ""
+
+msgid "Really_do_not_show_product_{0}_as_new?"
+msgstr ""
+
+msgid "Activate_product"
+msgstr ""
+
+msgid "Deactivate_product"
+msgstr ""
+
+msgid "Really_activate_product_{0}_?"
+msgstr ""
+
+msgid "Really_deactivate_product_{0}_?"
+msgstr ""
+
 msgid "Change_comment_of_order"
 msgstr ""
 
@@ -594,6 +621,12 @@ msgid "Help"
 msgstr ""
 
 msgid "Change_name_and_description"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Enter_zero_for_delete"
 msgstr ""
 
 msgid "Price_excl."
@@ -1095,9 +1128,6 @@ msgid "Add_credit"
 msgstr ""
 
 msgid "Sum"
-msgstr ""
-
-msgid "Deposit"
 msgstr ""
 
 msgid "Value_added_tax"

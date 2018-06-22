@@ -167,8 +167,16 @@ class LocalizedController extends Controller
                 'ChangeDefaultAttribute' => __('Change_default_attribute'),
                 'ChangeCategories' => __('Change_categories'),
                 'Weight' => __('Weight'),
-                'EnterApproximateWeightInPriceDialog' => __('Enter_approximate_weight_in_price_dialog.') 
-                
+                'EnterApproximateWeightInPriceDialog' => __('Enter_approximate_weight_in_price_dialog.'),
+                'ChangeTaxRate' => __('Change_tax_rate'),
+                'ShowProductAsNew' => __('Show_product_as_new?'),
+                'DoNotShowProductAsNew' => __('Do_not_show_product_as_new?'),
+                'ReallyShowProduct0AsNew' => __('Really_show_product_{0}_as_new?'),
+                'ReallyDoNotShowProduct0AsNew' => __('Really_do_not_show_product_{0}_as_new?'),
+                'ActivateProduct' => __('Activate_product'),
+                'DeactivateProduct' => __('Deactivate_product'),
+                'ReallyActivateProduct0' => __('Really_activate_product_{0}_?'),
+                'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}_?'),
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),
@@ -192,7 +200,9 @@ class LocalizedController extends Controller
                 'ProductDeclarationOK' => __('Product_declaration_ok?'),
                 'DocsUrlProductDeclaration' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_product_declaration')),
                 'Help' => __('Help'),
-                'ChangeNameAndDescription' => __('Change_name_and_description')
+                'ChangeNameAndDescription' => __('Change_name_and_description'),
+                'Deposit' => __('Deposit'),
+                'EnterZeroForDelete' => __('Enter_zero_for_delete')
             ]
             
         ];

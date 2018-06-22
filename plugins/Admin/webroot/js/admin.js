@@ -455,54 +455,48 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDepositEdit(dialogId);
         $(container).append(dialogHtml);
 
-        var dialog = $('#' + dialogId).dialog({
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                if ($('#dialogDepositDeposit').val() == '' || $('#dialogDepositProductId').val() == '') {
+                    return false;
+                }
 
+                $('#product-deposit-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/products/editDeposit/',
+                    {
+                        productId: $('#dialogDepositProductId').val(),
+                        deposit: $('#dialogDepositDeposit').val(),
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            dialog.dialog('close');
+                            $('#product-deposit-edit-form .ajax-loader').hide();
+                            alert(data.msg);
+                        }
+                    }
+                );
+            }
+        };
+
+        var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             height: 200,
             width: 350,
             modal: true,
-
             close: function () {
                 $('#dialogDepositDeposit').val('');
                 $('#dialogDepositProductId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    if ($('#dialogDepositDeposit').val() == '' || $('#dialogDepositProductId').val() == '') {
-                        return false;
-                    }
-
-                    $('#product-deposit-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/products/editDeposit/',
-                        {
-                            productId: $('#dialogDepositProductId').val(),
-                            deposit: $('#dialogDepositDeposit').val(),
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                dialog.dialog('close');
-                                $('#product-deposit-edit-form .ajax-loader').hide();
-                                alert(data.msg);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         $('.product-deposit-edit-button').on('click', function () {
@@ -1125,31 +1119,35 @@ foodcoopshop.Admin = {
             productId = productId[productId.length - 1];
 
             var newState = 1;
-            var newStateText = 'als "neu" anzeigen';
+            var newStateText = foodcoopshop.LocalizedJs.admin.ShowProductAsNew;
+            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyShowProduct0AsNew;
             if ($(this).hasClass('change-new-state-inactive')) {
                 newState = 0;
-                newStateText = 'nicht mehr als "neu" anzeigen';
+                newStateText = foodcoopshop.LocalizedJs.admin.DoNotShowProductAsNew;
+                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDoNotShowProduct0AsNew;
             }
 
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['save'] = {
+                text: foodcoopshop.LocalizedJs.helper.save,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/admin/products/changeNewStatus/' + productId + '/' + newState;
+                }
+            };
+            
             var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
             $('<div></div>').appendTo('body')
-                .html('<p>Möchtest du das Produkt <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> wirklich im Shop ' + newStateText + '?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + reallyNewStateText.replace(/\{0\}/g,  '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Produkt ' + newStateText + '?',
+                    title: newStateText,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/admin/products/changeNewStatus/' + productId + '/' + newState;
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
@@ -1446,7 +1444,7 @@ foodcoopshop.Admin = {
 
     editTaxFormAfterLoad : function (productId) {
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
-        $('.featherlight-content label').html('Steuersatz ändern: ' + productName);
+        $('.featherlight-content label').html(foodcoopshop.LocalizedJs.admin.ChangeTaxRate + ': ' + productName);
         var selectedTaxId = $('#tax-id-' + productId).val();
         $('.featherlight-content #taxes-id-tax').val(selectedTaxId);
     },
@@ -2165,49 +2163,36 @@ foodcoopshop.Admin = {
             productId = productId[productId.length - 1];
 
             var newState = 1;
-            var newStateText = 'aktivieren';
+            var newStateText = foodcoopshop.LocalizedJs.admin.ActivateProduct;
+            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
             if ($(this).hasClass('set-state-to-inactive')) {
                 newState = 0;
-                newStateText = 'deaktivieren';
+                var newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
+                var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
             }
+            
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/admin/products/changeStatus/' + productId + '/' + newState;
+                }
+            };
 
-            var dataRow = $('#change-active-state-' + productId).parent().parent().parent().parent();
+            var dataRow = $('#change-active-state-' + productId).closest('tr');
             $('<div></div>')
                 .appendTo('body')
-                .html('<p>Möchtest du das Produkt <b>' +
-                    dataRow
-                        .find(
-                            'td:nth-child(4) span.name-for-dialog'
-                        )
-                        .html() +
-                    '</b> wirklich ' +
-                    newStateText +
-                    '?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + reallyNewStateText.replace(/\{0\}/g, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Produkt ' +
-                        newStateText + '?',
+                    title: newStateText,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader')
-                                .show();
-                            $('.ui-dialog button')
-                                .attr(
-                                    'disabled',
-                                    'disabled'
-                                );
-                            document.location.href = '/admin/products/changeStatus/' +
-                                productId +
-                                '/' +
-                                newState;
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

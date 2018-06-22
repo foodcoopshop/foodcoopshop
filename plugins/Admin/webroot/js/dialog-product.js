@@ -71,11 +71,11 @@ foodcoopshop.DialogProduct = {
     },
     
     getHtmlForProductDepositEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogDepositDeposit">Eingabe in ' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</label><br />';
+        var dialogHtml = '<label for="dialogDepositDeposit"></label><br />';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
-        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (zum Löschen <b>0</b> eintragen)<br />';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.EnterZeroForDelete + ')<br />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Pfand', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.Deposit, dialogId, dialogHtml);
         return dialogHtml;
     },
     
