@@ -23,6 +23,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Software-Hilfe komplett ausgelagert in die [Online-Dokumentation](https://foodcoopshop.github.io), Hilfe-Button hervorgehoben. [PR#234](https://github.com/foodcoopshop/foodcoopshop/pull/234) / [I#9](https://github.com/foodcoopshop/foodcoopshop/issues/9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- Netzwerk-Modul ist jetzt Teil vom Core. / [PR#237](https://github.com/foodcoopshop/foodcoopshop/pull/237) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - JQuery-Update v3.3.1 mit JQuery Migrate 1.4.1 / [PR#230](https://github.com/foodcoopshop/foodcoopshop/pull/230) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Vendor-Updates: CakePHP-Update v3.6, Featherlight v1.7.13, OwlCarousel v2.3.4 / [PR#218](https://github.com/foodcoopshop/foodcoopshop/pull/218) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Update auf PHPUnit 7. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/885c1365fd0ed12f2589f92f2fcdca82993c3558) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
