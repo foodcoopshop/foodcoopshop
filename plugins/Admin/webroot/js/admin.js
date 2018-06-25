@@ -1163,28 +1163,31 @@ foodcoopshop.Admin = {
             var productId = splittedProductId[0];
             var productAttributeId = splittedProductId[1];
 
-            var dataRow = $(this).parent().parent().parent().parent().parent();
-            var htmlCode = '<p>Die Variante <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> wirklich löschen?</p>';
+            var dataRow = $(this).closest('tr');
+            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeleteAttribute0.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>');
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
+            
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/admin/products/deleteProductAttribute/' + productId + '/' + productAttributeId;
+                }
+            };            
+            
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Variante löschen',
+                    title: foodcoopshop.LocalizedJs.admin.DeleteAttribute,
                     autoOpen: true,
                     width: 450,
                     resizable: false,
-                    buttons: {
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
-                        },
-                        'Löschen': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/admin/products/deleteProductAttribute/' + productId + '/' + productAttributeId;
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

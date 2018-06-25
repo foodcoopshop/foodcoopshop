@@ -177,6 +177,8 @@ class LocalizedController extends Controller
                 'DeactivateProduct' => __('Deactivate_product'),
                 'ReallyActivateProduct0' => __('Really_activate_product_{0}_?'),
                 'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}_?'),
+                'DeleteAttribute' => __('Delete_attribute'),
+                'ReallyDeleteAttribute0' => __('Really_delete_attribute_{0}?')
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),
@@ -203,6 +205,13 @@ class LocalizedController extends Controller
                 'ChangeNameAndDescription' => __('Change_name_and_description'),
                 'Deposit' => __('Deposit'),
                 'EnterZeroForDelete' => __('Enter_zero_for_delete')
+            ],
+            'upload' => [
+                'delete' => __('delete'),
+                'DeleteImage' => __('Delete_image?'),
+                'ReallyDeleteImage' => __('Really_delete_image?'),
+                'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
+                'rotateClockwise' => __('rotate_clockwise?')
             ]
             
         ];

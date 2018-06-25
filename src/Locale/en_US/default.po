@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-22 17:31+0200\n"
-"PO-Revision-Date: 2018-06-22 17:36+0200\n"
+"POT-Creation-Date: 2018-06-25 12:59+0200\n"
+"PO-Revision-Date: 2018-06-25 13:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -566,6 +566,12 @@ msgstr "Do you really want to activate product {0}?"
 msgid "Really_deactivate_product_{0}_?"
 msgstr "Do you really want to deactivate product {0}?"
 
+msgid "Delete_attribute"
+msgstr "Delete attribute"
+
+msgid "Really_delete_attribute_{0}?"
+msgstr "Do you really want to delete the attribute {0}?"
+
 msgid "Change_comment_of_order"
 msgstr "Change order comment"
 
@@ -631,6 +637,21 @@ msgstr "Deposit"
 
 msgid "Enter_zero_for_delete"
 msgstr "0 deletes deposit"
+
+msgid "delete"
+msgstr "delete"
+
+msgid "Delete_image?"
+msgstr "Delete image?"
+
+msgid "Really_delete_image?"
+msgstr "Do you really want to delete the image?"
+
+msgid "rotate_anti_clockwise?"
+msgstr "rotate anti clockwise?"
+
+msgid "rotate_clockwise?"
+msgstr "rotate clockwise?"
 
 msgid "Price_excl."
 msgstr "Price excl."
@@ -1162,6 +1183,18 @@ msgstr "Bank account (member fee)"
 
 msgid "Help?"
 msgstr "Help?"
+
+msgid "Replace_existing_image"
+msgstr "Replace existing image"
+
+msgid "Upload_new_image"
+msgstr "Upload new image"
+
+msgid "Please_only_use_self_made_images_(not_from_the_internet)."
+msgstr "Please only use self-made images (no images from the internet)."
+
+msgid "Search_PC"
+msgstr "Search computer"
 
 msgid "DELIVERY_DAY"
 msgstr "DELIVERY_DAY"

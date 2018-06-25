@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-22 17:31+0200\n"
+"POT-Creation-Date: 2018-06-25 12:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -563,6 +563,12 @@ msgstr ""
 msgid "Really_deactivate_product_{0}_?"
 msgstr ""
 
+msgid "Delete_attribute"
+msgstr ""
+
+msgid "Really_delete_attribute_{0}?"
+msgstr ""
+
 msgid "Change_comment_of_order"
 msgstr ""
 
@@ -627,6 +633,21 @@ msgid "Deposit"
 msgstr ""
 
 msgid "Enter_zero_for_delete"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "Delete_image?"
+msgstr ""
+
+msgid "Really_delete_image?"
+msgstr ""
+
+msgid "rotate_anti_clockwise?"
+msgstr ""
+
+msgid "rotate_clockwise?"
 msgstr ""
 
 msgid "Price_excl."
@@ -1158,6 +1179,18 @@ msgid "Bank_account_member_fee"
 msgstr ""
 
 msgid "Help?"
+msgstr ""
+
+msgid "Replace_existing_image"
+msgstr ""
+
+msgid "Upload_new_image"
+msgstr ""
+
+msgid "Please_only_use_self_made_images_(not_from_the_internet)."
+msgstr ""
+
+msgid "Search_PC"
 msgstr ""
 
 msgid "DELIVERY_DAY"

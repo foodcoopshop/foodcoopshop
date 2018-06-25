@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-21 10:54+0200\n"
+"POT-Creation-Date: 2018-06-25 12:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -72,6 +72,78 @@ msgid "Shop_order"
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
+msgstr ""
+
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
+msgstr ""
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr ""
+
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr ""
+
+msgid "A_new_product_was_created_for_{0}."
+msgstr ""
+
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+
+msgid "Nothing_changed."
+msgstr ""
+
+msgid "Saving_successful."
+msgstr ""
+
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr ""
+
+msgid "The_amount_of_the_product_{0}_was_changed_successfully."
+msgstr ""
+
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
+msgstr ""
+
+msgid "The_product_was_changed_successfully."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr ""
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr ""
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr ""
+
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr ""
+
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
+msgstr ""
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr ""
 
 msgid "all_activities"
@@ -636,9 +708,6 @@ msgid "Synchronize_products"
 msgstr ""
 
 msgid "Please_chose_a_manufacturer."
-msgstr ""
-
-msgid "Attribute"
 msgstr ""
 
 msgid "Image"

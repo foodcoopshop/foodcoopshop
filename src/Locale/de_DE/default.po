@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-22 17:31+0200\n"
-"PO-Revision-Date: 2018-06-22 17:33+0200\n"
+"POT-Creation-Date: 2018-06-25 12:59+0200\n"
+"PO-Revision-Date: 2018-06-25 13:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -567,6 +567,12 @@ msgstr "Möchtest du das Produkt {0} wirklich aktivieren?"
 msgid "Really_deactivate_product_{0}_?"
 msgstr "Möchtest du das Produkt {0} wirklich deaktivieren?"
 
+msgid "Delete_attribute"
+msgstr "Variante löschen"
+
+msgid "Really_delete_attribute_{0}?"
+msgstr "Möchtest du die Variante {0} wirklich löschen?"
+
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
 
@@ -632,6 +638,21 @@ msgstr "Pfand"
 
 msgid "Enter_zero_for_delete"
 msgstr "zum Löschen 0 eintragen"
+
+msgid "delete"
+msgstr "löschen"
+
+msgid "Delete_image?"
+msgstr "Bild löschen?"
+
+msgid "Really_delete_image?"
+msgstr "Möchtest du das Bild wirklich löschen?"
+
+msgid "rotate_anti_clockwise?"
+msgstr "gegen den Uhrzeigersinn drehen?"
+
+msgid "rotate_clockwise?"
+msgstr "im Uhrzeigersinn drehen?"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1163,6 +1184,18 @@ msgstr "Kontodaten (Mitgliedsbeitrag)"
 
 msgid "Help?"
 msgstr "Hilfe?"
+
+msgid "Replace_existing_image"
+msgstr "Bestehendes Bild überschreiben"
+
+msgid "Upload_new_image"
+msgstr "Neues Bild hochladen"
+
+msgid "Please_only_use_self_made_images_(not_from_the_internet)."
+msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet)."
+
+msgid "Search_PC"
+msgstr "PC durchsuchen"
 
 msgid "DELIVERY_DAY"
 msgstr "ABHOLTAG"

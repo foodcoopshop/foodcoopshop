@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-21 10:54+0200\n"
-"PO-Revision-Date: 2018-06-20 17:47+0200\n"
+"POT-Creation-Date: 2018-06-25 12:59+0200\n"
+"PO-Revision-Date: 2018-06-25 12:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -74,6 +74,99 @@ msgstr "Sofort-Bestellung"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid ""
+"Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}"
+"_Manufacturer_{2}."
+msgstr "Bild (ID: {0}) wurde erfolgreich gelöscht. Produkt: {1}, Hersteller: {2}"
+
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
+msgstr "Ein neues Bild zum Produkt {0} vom Hersteller {1} wurde hochgeladen."
+
+msgid ""
+"The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr ""
+"Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich gelöscht."
+
+msgid ""
+"The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}"
+"_was_successfully_created."
+msgstr ""
+"Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgreich erstellt."
+
+msgid "A_new_product_was_created_for_{0}."
+msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
+
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+"Der Steuersatz des Produktes {1} vom Hersteller {2} wurde erfolgreich von {2} auf "
+"{3} geändert."
+
+msgid "Nothing_changed."
+msgstr "Es wurden keine Änderungen gespeichert."
+
+msgid "Saving_successful."
+msgstr "Speichern erfolgreich."
+
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr "Die Kategorien des Produktes {0} vom Hersteller {1} wurden geändert: {2}"
+
+msgid "The_amount_of_the_product_{0}_was_changed_successfully."
+msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
+
+msgid ""
+"The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+"Die Anzahl des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} "
+"geändert."
+
+msgid ""
+"The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr ""
+"Der Preis des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} "
+"geändert."
+
+msgid "Attribute"
+msgstr "Variante"
+
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
+msgstr "Der Pfand des Produktes {0} wurde erfolgreich von {1} auf {2} geändert."
+
+msgid "The_product_was_changed_successfully."
+msgstr "Das Produkt wurde erfolgreich geändert."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr "Das Produkt {0} vom Hersteller {1} wurde umbenannt in {2}."
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändet in {2}."
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "Die Beschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
+
+msgid ""
+"The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "Die Kurzbeschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
+
+msgid ""
+"The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr ""
+"Die Standard-Variante des Produktes {0} vom Hersteller {1} wurde auf {2} geändert."
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr "Das Produktes {0} vom Hersteller {1} wird nicht mehr als \"neu\" angezeigt."
+
+msgid ""
+"The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}"
+"_days."
+msgstr ""
+"Das Produktes {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
+msgstr "Das Produkt {0} vom Hersteller {1} wurden deaktiviert."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
+msgstr "Das Produkt {0} vom Hersteller {1} wurden aktiviert."
 
 msgid "all_activities"
 msgstr "alle Aktivitäten"
@@ -661,9 +754,6 @@ msgstr "Produkte synchronisieren"
 
 msgid "Please_chose_a_manufacturer."
 msgstr "Bitte wähle einen Hersteller aus."
-
-msgid "Attribute"
-msgstr "Variante"
 
 msgid "Image"
 msgstr "Bild"
