@@ -96,7 +96,7 @@ if (!empty($manufacturer['Products'])) {
         
         if (!empty($manufacturer->modified)) {
             echo '<p><i>';
-            echo __('Modified_on') . ' ' . $manufacturer->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo __('Modified_on') . ' ' . $manufacturer->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
             echo '</i></p>';
         }
         

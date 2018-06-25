@@ -218,7 +218,7 @@ class CartsController extends FrontendController
                             $orderDetail['timebased_currency_order_detail']['money_incl'] = $cartProduct['timebasedCurrencyMoneyIncl'];
                             $orderDetail['timebased_currency_order_detail']['seconds'] = $cartProduct['timebasedCurrencySeconds'];
                             $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
-                            $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->replaceCommaWithDot(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
+                            $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
                             
                             // override prices from timebased_currency adapted cart
                             $orderDetail['total_price_tax_excl'] = $cartProduct['priceExcl'];
@@ -543,7 +543,7 @@ class CartsController extends FrontendController
 
             $this->Flash->success(__('Your_order_has_been_placed_succesfully.'));
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.htmlHelper')->formatAsEuro($this->AppAuth->Cart->getProductSum())]));
+            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]));
 
             $this->sendConfirmationEmailToCustomer($cart, $order, $products);
 
@@ -717,8 +717,9 @@ class CartsController extends FrontendController
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
     
-    public function addOrderToCart($deliveryDate)
+    public function addOrderToCart()
     {
+        $deliveryDate = $this->getRequest()->getQuery('deliveryDate');
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
     }

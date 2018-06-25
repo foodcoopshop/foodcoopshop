@@ -9,6 +9,7 @@ use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * PaymentsController
@@ -222,16 +223,19 @@ class PaymentsController extends AdminAppController
         }
 
         $amount = $this->getRequest()->getData('amount');
-
-        if (preg_match('/^\-/', $amount)) {
-            $message = 'Ein negativer Betrag ist nicht erlaubt: ' . $amount;
-            $this->log($message);
-            die(json_encode(['status'=>0,'msg'=>$message]));
+        
+        try {
+            $entity = $this->Payment->newEntity(
+                ['amount' => $amount],
+                ['validate' => 'add']
+            );
+            if (!empty($entity->getErrors())) {
+                throw new InvalidParameterException($this->Payment->getAllValidationErrors($entity)[0]);
+            }
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
         }
-
-        $amount = preg_replace('/[^0-9,.]/', '', $amount);
-        $amount = floatval(Configure::read('app.numberHelper')->replaceCommaWithDot($amount));
-
+        
         if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
             $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
             $this->log($message);
@@ -358,7 +362,7 @@ class PaymentsController extends AdminAppController
         );
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.htmlHelper')->formatAsEuro($amount).'</b>';
+        $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>';
 
         if ($type == 'member_fee') {
             $message .= ', für ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
@@ -440,7 +444,7 @@ class PaymentsController extends AdminAppController
             $actionLogType .= '_'.$userType;
         }
 
-        $message = 'Die Zahlung (' . Configure::read('app.htmlHelper')->formatAsEuro($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
+        $message = 'Die Zahlung (' . Configure::read('app.numberHelper')->formatAsCurrency($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
 
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
             if (isset($payment->customer->name)) {
@@ -569,7 +573,7 @@ class PaymentsController extends AdminAppController
                 $payments[] = [
                     'dateRaw' => $payment->date_add,
                     'date' => $payment->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $payment->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                    'year' => $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
                     'amount' => $payment->amount,
                     'deposit' => 0,
                     'type' => $payment->type,
@@ -586,11 +590,11 @@ class PaymentsController extends AdminAppController
                 $payments[] = [
                     'dateRaw' => $order->date_add,
                     'date' => $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $order->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                    'year' => $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
                     'amount' => $order->total_paid * - 1,
                     'deposit' => strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order->total_deposit * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
+                    'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
                         'title' => 'Bestellung anzeigen'
                     ]),
                     'payment_id' => null,

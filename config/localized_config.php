@@ -17,6 +17,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 define('ACCESS_DENIED_MESSAGE', __('Access_denied_please_sign_in.'));
 
 // called only for translation
@@ -28,7 +30,8 @@ return [
         'visibleOrderStates' => [
             ORDER_STATE_OPEN => __('order_state_open'),
             ORDER_STATE_CASH_FREE => __('order_state_closed'),
-        ]
+        ],
+        'currencyName' => Configure::read('app.htmlHelper')->getCurrencyName(Configure::read('appDb.FCS_CURRENCY_SYMBOL'))
     ]
 ];
 ?>

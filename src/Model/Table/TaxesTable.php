@@ -54,7 +54,7 @@ class TaxesTable extends AppTable
             0 => '0 %'
         ];
         foreach ($taxes as $tax) {
-            $preparedTaxes[$tax->id_tax] = Configure::read('app.htmlHelper')->formatAsPercent($tax->rate);
+            $preparedTaxes[$tax->id_tax] = Configure::read('app.numberHelper')->formatAsPercent($tax->rate);
         }
         return $preparedTaxes;
     }

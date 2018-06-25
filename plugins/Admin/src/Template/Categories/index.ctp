@@ -63,7 +63,7 @@ echo $this->element('categoryTreeRows', [
 ]);
 
 echo '<tr>';
-echo '<td colspan="12"><b>' . $totalCategoriesCount . '</b> Datensätze</td>';
+echo '<td colspan="12"><b>' . $totalCategoriesCount . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $totalCategoriesCount).'</td>';
 echo '</tr>';
 
 echo '</table>';

@@ -408,13 +408,13 @@ class ProductsController extends AdminAppController
             ])->first();
 
             if (! empty($tax)) {
-                $taxRate = Configure::read('app.htmlHelper')->formatTaxRate($tax->rate);
+                $taxRate = Configure::read('app.numberHelper')->formatTaxRate($tax->rate);
             } else {
                 $taxRate = 0; // 0 % does not have record in tax
             }
 
             if (! empty($oldProduct->tax)) {
-                $oldTaxRate = Configure::read('app.htmlHelper')->formatTaxRate($oldProduct->rate);
+                $oldTaxRate = Configure::read('app.numberHelper')->formatTaxRate($oldProduct->rate);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
@@ -618,13 +618,13 @@ class ProductsController extends AdminAppController
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
-            $oldPrice = Configure::read('app.htmlHelper')->formatAsEuro($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
         }
         
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
             $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($priceInclPerUnit, $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
-            $newPrice = Configure::read('app.htmlHelper')->formatAsEuro($price);
+            $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
         
         $actionLogMessage  = 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name;
@@ -690,13 +690,13 @@ class ProductsController extends AdminAppController
 
         $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
         if (!empty($depositEntity->deposit)) {
-            $logString .= Configure::read('app.htmlHelper')->formatAsEuro($depositEntity->deposit);
+            $logString .= Configure::read('app.numberHelper')->formatAsCurrency($depositEntity->deposit);
         } else {
-            $logString .= Configure::read('app.htmlHelper')->formatAsEuro(0);
+            $logString .= Configure::read('app.numberHelper')->formatAsCurrency(0);
         }
 
         $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
-        $logString .= ' auf ' . Configure::read('app.htmlHelper')->formatAsEuro($deposit) . ' geändert.';
+        $logString .= ' auf ' . Configure::read('app.numberHelper')->formatAsCurrency($deposit) . ' geändert.';
 
         $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
 

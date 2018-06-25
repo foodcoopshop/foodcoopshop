@@ -151,7 +151,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -223,7 +223,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $changedOrder = $this->getOrderWithTimebasedCurrencyAssociations($order->id_order);
         
         $this->assertChangedOrderPrice($changedOrder->id_order, 4.026364);
-        $this->assertEquals($this->newPrice, Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
         
         $this->assertTimebasedCurrencyOrderDetail($changedOrder->order_details[0], 1.38, 1.52, 544);
         $this->assertTimebasedCurrencyOrderSums($changedOrder, 1.52, 1.66, 596);
@@ -237,7 +237,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
@@ -254,7 +254,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -272,7 +272,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -290,7 +290,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->editOrderDetailPrice($this->mockOrder->order_details[0]->id_order_detail, $this->newPrice, $this->editPriceReason);
 
         $changedOrder = $this->getChangedMockOrderFromDatabase();
-        $this->assertEquals($this->newPrice, Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
@@ -330,7 +330,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         
         $this->assertEquals($this->newAmount, $changedOrder->order_details[0]->product_amount, 'order detail amount was not changed properly');
         $this->assertChangedOrderPrice($changedOrder->id_order, 1.896364);
-        $this->assertEquals('1,40', Configure::read('app.htmlHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
+        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->order_details[0]->total_price_tax_incl), 'order detail price was not changed properly');
         
         $this->assertTimebasedCurrencyOrderDetail($changedOrder->order_details[0], 0.55, 0.6, 216);
         $this->assertTimebasedCurrencyOrderSums($changedOrder, 0.69, 0.74, 268);

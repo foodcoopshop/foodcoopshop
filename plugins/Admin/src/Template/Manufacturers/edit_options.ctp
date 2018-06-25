@@ -30,10 +30,10 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerMyOptions()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
-            class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
     </div>
@@ -70,9 +70,9 @@ echo '<div class="holiday-wrapper">';
         echo '<label>Lieferpause?';
     echo '</div>';
     echo $this->element('dateFields', [
-        'dateFrom' => !empty($manufacturer->holiday_from) ? $manufacturer->holiday_from->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : '',
+        'dateFrom' => !empty($manufacturer->holiday_from) ? $manufacturer->holiday_from->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : '',
         'nameFrom' => 'Manufacturers[holiday_from]',
-        'dateTo' => !empty($manufacturer->holiday_to) ? $manufacturer->holiday_to->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : '',
+        'dateTo' => !empty($manufacturer->holiday_to) ? $manufacturer->holiday_to->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : '',
         'nameTo' => 'Manufacturers[holiday_to]'
     ]);
     echo '<span class="description small"><a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Wie verwende ich die Funktion "Lieferpause"?</a>';

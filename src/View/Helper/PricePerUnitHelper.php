@@ -2,7 +2,6 @@
 
 namespace App\View\Helper;
 
-use Cake\Log\Log;
 use Cake\View\Helper;
 
 /**
@@ -21,7 +20,7 @@ use Cake\View\Helper;
 class PricePerUnitHelper extends Helper
 {
     
-    public $helpers = ['MyHtml'];
+    public $helpers = ['MyHtml', 'MyNumber'];
     
     public function getStringFromUnitSums($unitSum, $separator)
     {
@@ -68,14 +67,14 @@ class PricePerUnitHelper extends Helper
             if ($amount > 1) {
                 $result  = __('for_each') . ' ' . $result;
             }
-            $result .= __('approx.') . ' ' . $this->MyHtml->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
+            $result .= __('approx.') . ' ' . $this->MyNumber->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
         }
         return $result;
     }
     
     public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
     {
-        return '<div class="price">' . $this->MyHtml->formatAsEuro($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
+        return '<div class="price">' . $this->MyNumber->formatAsCurrency($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
     }
     
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount)
@@ -91,7 +90,7 @@ class PricePerUnitHelper extends Helper
     
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
     {
-        return $this->MyHtml->formatAsEuro($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyHtml->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
     }
     
 }

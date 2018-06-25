@@ -75,7 +75,7 @@ foreach ($taxes as $tax) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->formatAsPercent($tax->rate);
+    echo $this->Number->formatAsPercent($tax->rate);
     echo '</td>';
 
     echo '<td align="center">';
@@ -90,7 +90,7 @@ foreach ($taxes as $tax) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

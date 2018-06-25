@@ -14,21 +14,21 @@
 foodcoopshop.DialogProduct = {
     
     getHtmlForProductNameEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogName">Name</label><br />';
-        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">Wichtig: Bitte keine Produkte in andere Produkte umbenennen, sondern dafür ein neues Produkt erstellen!</span><br />';
-        dialogHtml += '<label id="labelUnity" for="dialogUnity">Einheit <span>(z.B. Stück, 2 Paar, 6er-Pack) <br />Ungefähres Gewicht bitte beim <b>Preis</b> eintragen.</span></label><br />';
+        var dialogHtml = '<label for="dialogName">' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</label><br />';
+        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
+        dialogHtml += '<label id="labelUnity" for="dialogUnity">' + foodcoopshop.LocalizedJs.dialogProduct.Unit + ' <span>' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '<br />' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span></label><br />';
         dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescriptionShort" class="label-description-short">Kurze Beschreibung</label><br />';
+        dialogHtml += '<label for="dialogDescriptionShort" class="label-description-short">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</label><br />';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort" />';
         dialogHtml += '</div>';
         dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">Lange Beschreibung</label><br />';
-        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />Produktdeklaration OK?</label><a href="https://foodcoopshop.github.io/de/lebensmittelkennzeichnung" target="_blank"><i class="fa fa-arrow-circle-right"></i> Hilfe</a><br />';
+        dialogHtml += '<label for="dialogDescription">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</label><br />';
+        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fa fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Name und Beschreibung ändern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeNameAndDescription, dialogId, dialogHtml);
         return dialogHtml;
     },
     
@@ -36,19 +36,19 @@ foodcoopshop.DialogProduct = {
         var dialogHtml = '<label for="dialogPricePrice"></label><br />';
         dialogHtml += '<label class="radio">';
         dialogHtml += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price" checked="checked" class="price" />';
-        dialogHtml += 'Preis pro Bestelleinheit';
+        dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.PricePerUnit;
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-wrapper">';
-        dialogHtml += '<input type="text" name="dialogPricePrice" id="dialogPricePrice" value="" />';
-        dialogHtml += '<b>€</b> (inkl. USt.)<br />';
+        dialogHtml += '<input type="number" step="0.01" name="dialogPricePrice" id="dialogPricePrice" value="" />';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.inclVAT + ')<br />';
         dialogHtml += '</div>';
         dialogHtml += '<label class="radio">';
         dialogHtml += '<input type="radio" name="dialogPricePricePerUnitEnabled" value="price-per-unit" class="price-per-unit"/>';
-        dialogHtml += 'Preis nach Gewicht (für Gewichtsanpassung nach Lieferung)';
+        dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.PricePerWeightForAdaptionAfterDelivery;
         dialogHtml += '</label>';
         dialogHtml += '<div class="price-per-unit-wrapper deactivated">';
-        dialogHtml += '<input type="text" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
-        dialogHtml += '<b>€</b> (inkl. USt.) für ';
+        dialogHtml += '<input type="number" step="0.01" name="dialogPricePriceInclPerUnit" id="dialogPricePriceInclPerUnit" value="" />';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.inclVAT + ') ' + foodcoopshop.LocalizedJs.dialogProduct.for;
         dialogHtml += '<select name="dialogPriceUnitAmount" id="dialogPriceUnitAmount">';
         dialogHtml += '<option value="1" selected>1</option>';
         dialogHtml += '<option value="10">10</option>';
@@ -63,19 +63,19 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<option value="kg" selected>kg</option>';
         dialogHtml += '<option value="g">g</option>';
         dialogHtml += '</select><br />';
-        dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ungefähres Liefergewicht in <span class="unit-name-placeholder">kg</span> pro Bestelleinheit';
+        dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogPriceProductId" id="dialogPriceProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Preis ändern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangePrice, dialogId, dialogHtml);
         return dialogHtml;
     },
     
     getHtmlForProductDepositEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogDepositDeposit">Eingabe in €</label><br />';
+        var dialogHtml = '<label for="dialogDepositDeposit"></label><br />';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
-        dialogHtml += '<b>€</b> (zum Löschen <b>0</b> eintragen)<br />';
+        dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b> (' + foodcoopshop.LocalizedJs.dialogProduct.EnterZeroForDelete + ')<br />';
         dialogHtml += '<input type="hidden" name="dialogDepositProductId" id="dialogDepositProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Pfand', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.Deposit, dialogId, dialogHtml);
         return dialogHtml;
     },
     
@@ -83,7 +83,7 @@ foodcoopshop.DialogProduct = {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
         dialogHtml += '<input type="text" name="dialogQuantityQuantity" id="dialogQuantityQuantity" value="" />';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Anzahl ändern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
         return dialogHtml;
     }
 

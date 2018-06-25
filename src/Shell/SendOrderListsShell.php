@@ -79,7 +79,7 @@ class SendOrderListsShell extends AppShell
 
         // 5) check if manufacturers have open order details and send email
         $i = 0;
-        $outString = 'Bestellzeitraum: ' . $dateFrom . ' bis ' . $dateTo . '<br />';
+        $outString = __('Order_period').': ' . $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
 
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
@@ -88,9 +88,9 @@ class SendOrderListsShell extends AppShell
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
-                $productString = ($manufacturer->order_detail_amount_sum == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer->name . ': ' . $manufacturer->order_detail_amount_sum . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo;
+                $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
+                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
+                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }
@@ -98,7 +98,7 @@ class SendOrderListsShell extends AppShell
 
         $this->browser->doFoodCoopShopLogout();
 
-        $outString .= 'Verschickte Bestelllisten: ' . $i;
+        $outString .= __('Sent_order_lists') . ': ' . $i;
 
         $this->stopTimeLogging();
 

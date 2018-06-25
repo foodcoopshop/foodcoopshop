@@ -137,11 +137,7 @@ return [
          */
         'termsOfUseLastUpdate' => '2016-11-28',
         
-        // no gettext available here to translate language names!
-        'implementedLocales' => [
-            'de_DE' => 'Deutsch',
-            'en_US' => 'English'
-        ],
+        'implementedLocales' => ['de_DE', 'en_US'],
         
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
@@ -153,16 +149,30 @@ return [
     'DateFormat' => [
         'Database' => 'yyyy-MM-dd',
         'DatabaseWithTime' => 'yyyy-MM-dd HH:mm:ss',
-        'de' => [
+        'DatabaseAlt' => 'Y-m-d',
+        'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
+        'de_DE' => [
             'DateShort' => 'dd.MM.yy',
-            'DateLong' =>  'dd. MMMM y',
             'DateLong2' => 'dd.MM.yyyy',
             'DateNTimeShort' => 'dd.MM.y HH:mm',
             'DateNTimeShort2' => 'dd.MM.yy HH:mm',
             'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
             'TimeShort' => 'HH:mm',
-            'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm',
-            'Year' => 'Y'
+            'DateForDatepicker' => 'dd.mm.yy',
+            'Year' => 'Y',
+            'DateShortAlt' => 'd.m.Y'
+        ],
+        'en_US' => [
+            'DateShort' => 'MM/dd//yy',
+            'DateLong2' => 'MM/dd/yyyy',
+            'DateNTimeShort' => 'MM/dd/y HH:mm',
+            'DateNTimeShort2' => 'MM/dd/yy HH:mm',
+            'DateNTimeLongWithSecs' => 'MM/dd/y HH:mm:ss',
+            'TimeShort' => 'HH:mm',
+            'DateForDatepicker' => 'mm/dd/yy',
+            'Year' => 'Y',
+            'DateShortAlt' => 'm/d/Y'
         ]
+        
     ]
 ];

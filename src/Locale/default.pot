@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:16+0200\n"
+"POT-Creation-Date: 2018-06-22 17:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "You_have_been_signed_out."
+msgstr ""
 
 msgid "You_are_not_signed_in."
 msgstr ""
@@ -153,9 +156,6 @@ msgid "Your_registration_was_successful."
 msgstr ""
 
 msgid "Account_created_successfully"
-msgstr ""
-
-msgid "You_have_been_signed_out."
 msgstr ""
 
 msgid "All_products"
@@ -320,6 +320,12 @@ msgstr ""
 msgid "SundayShort"
 msgstr ""
 
+msgid "Show_more"
+msgstr ""
+
+msgid "Show_less"
+msgstr ""
+
 msgid "route_cart"
 msgstr ""
 
@@ -372,6 +378,9 @@ msgid "Show"
 msgstr ""
 
 msgid "Show_all_products"
+msgstr ""
+
+msgid "route_cart_finished"
 msgstr ""
 
 msgid "Place_shop_order_for"
@@ -435,9 +444,6 @@ msgid "Original_price_without_reduction_of_price_in_time"
 msgstr ""
 
 msgid "From_which_really_paid_in"
-msgstr ""
-
-msgid "Euro"
 msgstr ""
 
 msgid "Adapt_weight?"
@@ -506,6 +512,57 @@ msgstr ""
 msgid "Please_enter_a_number."
 msgstr ""
 
+msgid "Add_new_attribute_for_product"
+msgstr ""
+
+msgid "Please_chose_the_new_attribute_for_product_{0}."
+msgstr ""
+
+msgid "This_function_can_only_be_used_if_attributes_exist."
+msgstr ""
+
+msgid "Changing_default_attribute_info_text_{0}_html"
+msgstr ""
+
+msgid "Change_default_attribute"
+msgstr ""
+
+msgid "Change_categories"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Enter_approximate_weight_in_price_dialog."
+msgstr ""
+
+msgid "Change_tax_rate"
+msgstr ""
+
+msgid "Show_product_as_new?"
+msgstr ""
+
+msgid "Do_not_show_product_as_new?"
+msgstr ""
+
+msgid "Really_show_product_{0}_as_new?"
+msgstr ""
+
+msgid "Really_do_not_show_product_{0}_as_new?"
+msgstr ""
+
+msgid "Activate_product"
+msgstr ""
+
+msgid "Deactivate_product"
+msgstr ""
+
+msgid "Really_activate_product_{0}_?"
+msgstr ""
+
+msgid "Really_deactivate_product_{0}_?"
+msgstr ""
+
 msgid "Change_comment_of_order"
 msgstr ""
 
@@ -515,10 +572,79 @@ msgstr ""
 msgid "Set_date_of_order_back"
 msgstr ""
 
-msgid "Action_Log_Product_created"
+msgid "Change_amount"
 msgstr ""
 
-msgid "Action_Log_Product_attribute_created"
+msgid "Change_price"
+msgstr ""
+
+msgid "Price_per_unit"
+msgstr ""
+
+msgid "incl_vat"
+msgstr ""
+
+msgid "Price_per_weight_(for_adaption_after_delivery)"
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "approximate_delivery_weight_in_{0}_per_unit"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Product_rename_info_text"
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "Unit_description_example"
+msgstr ""
+
+msgid "Description_short"
+msgstr ""
+
+msgid "Description_long"
+msgstr ""
+
+msgid "Product_declaration_ok?"
+msgstr ""
+
+msgid "docs_route_product_declaration"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Change_name_and_description"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Enter_zero_for_delete"
+msgstr ""
+
+msgid "Price_excl."
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Total_sum"
+msgstr ""
+
+msgid "Action_Log_Product_added"
+msgstr ""
+
+msgid "Action_Log_Product_attribute_added"
 msgstr ""
 
 msgid "Action_Log_Product_image_uploaded"
@@ -590,6 +716,192 @@ msgstr ""
 msgid "Action_Log_Order_shop_order_placed"
 msgstr ""
 
+msgid "Action_Log_Order_detail_product_price_changed"
+msgstr ""
+
+msgid "Action_Log_Order_detail_product_quantity_changed"
+msgstr ""
+
+msgid "Action_Log_Order_detail_product_amount_changed"
+msgstr ""
+
+msgid "Action_Log_Ordered_product_cancelled"
+msgstr ""
+
+msgid "Action_Log_Member_credit_upload_added"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_approval_ok"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_approval_open"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_approval_not_ok"
+msgstr ""
+
+msgid "Action_Log_Member_payback_added"
+msgstr ""
+
+msgid "Action_Log_Member_payback_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_credit_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_deposit_added"
+msgstr ""
+
+msgid "Action_Log_Manfufacturer_deposit_added"
+msgstr ""
+
+msgid "Action_Log_Member_deposit_deleted"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_deposit_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_member_fee_added"
+msgstr ""
+
+msgid "Action_Log_Member_member_fee_deleted"
+msgstr ""
+
+msgid "Action_Log_Blog_post_added"
+msgstr ""
+
+msgid "Action_Log_Blog_post_changed"
+msgstr ""
+
+msgid "Action_Log_Blog_post_deleted"
+msgstr ""
+
+msgid "Action_Log_Page_added"
+msgstr ""
+
+msgid "Action_Log_Page_changed"
+msgstr ""
+
+msgid "Action_Log_Page_deleted"
+msgstr ""
+
+msgid "Action_Log_Category_added"
+msgstr ""
+
+msgid "Action_Log_Category_changed"
+msgstr ""
+
+msgid "Action_Log_Category_deleted"
+msgstr ""
+
+msgid "Action_Log_Remote_food_coop_added"
+msgstr ""
+
+msgid "Action_Log_Remote_food_coop_changed"
+msgstr ""
+
+msgid "Action_Log_Remote_food_coop_deleted"
+msgstr ""
+
+msgid "Action_Log_Slider_added"
+msgstr ""
+
+msgid "Action_Log_Slider_changed"
+msgstr ""
+
+msgid "Action_Log_Slider_deleted"
+msgstr ""
+
+msgid "Action_Log_Tax_rate_added"
+msgstr ""
+
+msgid "Action_Log_Tax_rate_changed"
+msgstr ""
+
+msgid "Action_Log_Tax_rate_deleted"
+msgstr ""
+
+msgid "Action_Log_Member_account_created"
+msgstr ""
+
+msgid "Action_Log_Member_profile_changed"
+msgstr ""
+
+msgid "Action_Log_Member_password_changed"
+msgstr ""
+
+msgid "Action_Log_Member_order_placed"
+msgstr ""
+
+msgid "Action_Log_Member_set_inactive"
+msgstr ""
+
+msgid "Action_Log_Member_set_active"
+msgstr ""
+
+msgid "Action_Log_Member_comment_changed"
+msgstr ""
+
+msgid "Action_Log_Member_group_changed"
+msgstr ""
+
+msgid "Action_Log_Member_deleted"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_settings_changed"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_password_changed"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_added"
+msgstr ""
+
+msgid "Action_Log_Manufacturer_changed"
+msgstr ""
+
+msgid "Action_Log_Paying_with_time_time_upload_added"
+msgstr ""
+
+msgid "Action_Log_Paying_with_time_time_upload_changed"
+msgstr ""
+
+msgid "Action_Log_Paying_with_time_time_upload_deleted"
+msgstr ""
+
+msgid "Action_Log_Cronjob_database_backup_done"
+msgstr ""
+
+msgid "Action_Log_Cronjob_order_lists_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_invoices_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_email_order_reminder_sent"
+msgstr ""
+
+msgid "Action_Log_Cronjob_check_credit_balance"
+msgstr ""
+
+msgid "Action_Log_Superadmin_deploy_successful"
+msgstr ""
+
+msgid "Action_Log_Superadmin_deploy_failed"
+msgstr ""
+
+msgid "Action_Log_Attribute_added"
+msgstr ""
+
+msgid "Action_Log_Attribute_changed"
+msgstr ""
+
+msgid "Action_Log_Attribute_deleted"
+msgstr ""
+
+msgid "Action_Log_Setting_changed"
+msgstr ""
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
@@ -617,6 +929,33 @@ msgstr ""
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
+msgid "Please_enter_a_correct_number."
+msgstr ""
+
+msgid "The_amount_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "Runtime"
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "to_(time_context)"
+msgstr ""
+
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr ""
+
+msgid "Sent_invoices"
+msgstr ""
+
+msgid "Order_period"
+msgstr ""
+
+msgid "Sent_order_lists"
+msgstr ""
+
 msgid "Modified_on"
 msgstr ""
 
@@ -630,9 +969,6 @@ msgid "Edit"
 msgstr ""
 
 msgid "found"
-msgstr ""
-
-msgid "Show_more"
 msgstr ""
 
 msgid "Go_to_manufacturer"
@@ -740,7 +1076,7 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
-msgid "Additional_information"
+msgid "Additional_address_information"
 msgstr ""
 
 msgid "Zip"
@@ -794,9 +1130,6 @@ msgstr ""
 msgid "Sum"
 msgstr ""
 
-msgid "Deposit"
-msgstr ""
-
 msgid "Value_added_tax"
 msgstr ""
 
@@ -822,9 +1155,6 @@ msgid "Bank_account_credit_balance"
 msgstr ""
 
 msgid "Bank_account_member_fee"
-msgstr ""
-
-msgid "Help"
 msgstr ""
 
 msgid "Help?"
@@ -899,13 +1229,10 @@ msgstr ""
 msgid "from_which_{0}_%"
 msgstr ""
 
-msgid "Unit"
-msgstr ""
-
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr ""
 
-msgid "Thank_you_for_your_order_number_{0}_from_{1}."
+msgid "thank_you_for_your_order_number_{0}_from_{1}."
 msgstr ""
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
@@ -935,7 +1262,34 @@ msgstr ""
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
+msgid "please_click_on_this_link_to_generate_a_new_password"
+msgstr ""
+
+msgid "you_just_generated_a_new_password_which_is"
+msgstr ""
+
+msgid "You_can_sign_in_and_change_your_password_here"
+msgstr ""
+
+msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+msgstr ""
+
+msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
+msgstr ""
+
+msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr ""
+
 msgid "route_search"
+msgstr ""
+
+msgid "homepage"
+msgstr ""
+
+msgid "page_you_have_just_been_to"
+msgstr ""
+
+msgid "Click_here_to_open_the"
 msgstr ""
 
 msgid "This_email_was_created_automatcially."
@@ -983,6 +1337,30 @@ msgstr ""
 msgid "Compensation_payment"
 msgstr ""
 
+msgid "_Order_list_filename_"
+msgstr ""
+
+msgid "_Invoice_filename_"
+msgstr ""
+
+msgid "approval_state_ok"
+msgstr ""
+
+msgid "approval_state_open"
+msgstr ""
+
+msgid "approval_state_not_ok"
+msgstr ""
+
+msgid "active_state_active"
+msgstr ""
+
+msgid "active_state_inactive"
+msgstr ""
+
+msgid "active_state_all"
+msgstr ""
+
 msgid "price_will_be_eventually_adapted."
 msgstr ""
 
@@ -1011,9 +1389,6 @@ msgid "route_cart_show"
 msgstr ""
 
 msgid "route_cart_finish"
-msgstr ""
-
-msgid "route_cart_finished"
 msgstr ""
 
 msgid "route_new_products"
@@ -1068,8 +1443,5 @@ msgid "route_information_about_right_of_withdrawal"
 msgstr ""
 
 msgid "route_product"
-msgstr ""
-
-msgid "View"
 msgstr ""
 

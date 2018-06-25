@@ -2,6 +2,8 @@
 
 namespace App\View\Helper;
 
+use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\View\Helper\NumberHelper;
 
 /**
@@ -19,9 +21,62 @@ use Cake\View\Helper\NumberHelper;
  */
 class MyNumberHelper extends NumberHelper
 {
-    public function replaceCommaWithDot($double)
+    
+    public function formatAsCurrency($amount)
     {
-        return str_replace(',', '.', $double);
+        return self::formatAsUnit($amount, Configure::read('appDb.FCS_CURRENCY_SYMBOL'));
+    }
+    
+    public function formatAsUnit($amount, $shortcode)
+    {
+        return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
+    }
+    
+    public function formatAsPercent($amount)
+    {
+        return self::formatAsDecimal($amount) . '%';
+    }
+    
+    /**
+     * shows decimals only if necessary
+     * @param $rate
+     */
+    public function formatTaxRate($rate)
+    {
+        return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
+    }
+    
+    public function formatUnitAsDecimal($amount)
+    {
+        return self::formatAsDecimal($amount, 3, true);
+    }
+    
+    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
+    {
+        $result = self::format($amount, [
+            'locale' => I18n::getLocale(),
+            'places' => $decimals,
+            'precision' => $decimals
+        ]);
+        if ($removeTrailingZeros) {
+            $result = floatval($amount);
+        }
+        return $result;
+    }
+    
+    /**
+     * self::parseFloat($double, ['locale' => I18n::getLocale()]); did not work with travis!
+     * @return boolean|mixed
+     */
+    public function parseFloatRespectingLocale($double)
+    {
+        if (I18n::getLocale() == 'de_DE') {
+            $double = str_replace(',', '.', $double); // then replace decimal places
+        }
+        if (!is_numeric($double)) {
+            return false;
+        }
+        return $double; 
     }
 }
 ?>

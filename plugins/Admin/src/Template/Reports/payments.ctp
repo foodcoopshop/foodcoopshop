@@ -73,7 +73,7 @@ foreach ($payments as $payment) {
     $additionalText = '';
     if ($payment->status == APP_DEL) {
         $rowClass = 'deactivated line-through';
-        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $payment->date_changed->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' - scheint in der Summe nicht auf)';
+        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - scheint in der Summe nicht auf)';
     } else {
         $i ++;
         $paymentSum += $payment->amount;
@@ -137,7 +137,7 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     echo '<td style="text-align:right;width:135px;">';
-        echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+        echo $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td>';
@@ -147,7 +147,7 @@ foreach ($payments as $payment) {
     echo '</td>';
 
     echo '<td style="text-align:right;">';
-        echo $this->Html->formatAsEuro($payment->amount);
+        echo $this->Number->formatAsCurrency($payment->amount);
     echo '</td>';
 
     if ($showTextColumn) {
@@ -169,8 +169,8 @@ foreach ($payments as $payment) {
 }
 
 echo '<tr>';
-echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> Datensätze</td>';
-echo '<td style="text-align:right;"><b>' . $this->Html->formatAsEuro($paymentSum) . '</b></td>';
+echo '<td colspan="'.$colspan.'"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td style="text-align:right;"><b>' . $this->Number->formatAsCurrency($paymentSum) . '</b></td>';
 if ($showTextColumn) {
     echo '<td></td>';
 }

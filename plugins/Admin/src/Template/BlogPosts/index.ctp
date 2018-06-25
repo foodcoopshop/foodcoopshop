@@ -144,7 +144,7 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td>';
-    echo $blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+    echo $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td align="center">';
@@ -168,7 +168,7 @@ foreach ($blogPosts as $blogPost) {
 }
 
 echo '<tr>';
-echo '<td colspan="11"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="11"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

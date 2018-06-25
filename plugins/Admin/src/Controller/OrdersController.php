@@ -407,7 +407,7 @@ class OrdersController extends AdminAppController
             )
         );
 
-        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder->customer->name . ' wurde vom ' . $oldDate->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
+        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder->customer->name . ' wurde vom ' . $oldDate->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 

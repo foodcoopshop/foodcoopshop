@@ -72,6 +72,12 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
+    public function testEditPriceOfProductAsSuperadminToZero()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertPriceChange(346, '0', '0,00');
+    }
+    
     public function testEditPriceOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
@@ -101,8 +107,8 @@ class ProductsControllerTest extends AppCakeTestCase
      */
     private function assertPriceChange($productId, $price, $expectedNetPrice)
     {
-        $price = Configure::read('app.numberHelper')->replaceCommaWithDot($price);
-        $expectedNetPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($expectedNetPrice);
+        $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
+        $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);

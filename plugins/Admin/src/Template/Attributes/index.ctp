@@ -113,7 +113,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td>';
     if ($attribute->modified != '') {
-        echo $attribute->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+        echo $attribute->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         ;
     }
     echo '</td>';
@@ -122,7 +122,7 @@ foreach ($attributes as $attribute) {
 }
 
 echo '<tr>';
-echo '<td colspan="11"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="11"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

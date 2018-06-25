@@ -314,9 +314,9 @@ class OrderDetailsController extends AdminAppController
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
         $doNotChangePrice = $this->getRequest()->getData('doNotChangePrice');
-        $productQuantity = Configure::read('app.numberHelper')->replaceCommaWithDot($productQuantity);
+        $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
-        if (! is_numeric($orderDetailId) || ! is_numeric($productQuantity) || $productQuantity < 0) {
+        if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
             $message = 'input format wrong';
             $this->log($message);
             die(json_encode([
@@ -324,8 +324,6 @@ class OrderDetailsController extends AdminAppController
                 'msg' => $message
             ]));
         }
-        
-        $productQuantity = floatval($productQuantity);
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -355,8 +353,8 @@ class OrderDetailsController extends AdminAppController
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
         
         $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') ';
-        $message .= 'wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
-        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.htmlHelper')->formatUnitAsDecimal($productQuantity);
+        $message .= 'wurde erfolgreich von ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
+        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity);
         $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' angepasst ';
         
         // send email to customer if price was changed
@@ -480,7 +478,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' Grund: <b>"' . $editAmountReason . '"</b>';
         }
 
-        $message .= ' Der Lagerstand wurde auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newAmount, 0) . ' erhöht.';
+        $message .= ' Der Lagerstand wurde auf ' . Configure::read('app.numberHelper')->formatAsDecimal($newAmount, 0) . ' erhöht.';
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_amount_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -501,9 +499,9 @@ class OrderDetailsController extends AdminAppController
         $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));
 
         $productPrice = trim($this->getRequest()->getData('productPrice'));
-        $productPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($productPrice);
-
-        if (! is_numeric($orderDetailId) || ! is_numeric($productPrice) || $productPrice < 0) {
+        $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
+        
+        if (! is_numeric($orderDetailId) || !$productPrice || $productPrice < 0) {
             $message = 'input format wrong';
             $this->log($message);
             die(json_encode([
@@ -511,8 +509,6 @@ class OrderDetailsController extends AdminAppController
                 'msg' => $message
             ]));
         }
-
-        $productPrice = floatval($productPrice);
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -529,11 +525,11 @@ class OrderDetailsController extends AdminAppController
                 'Orders.TimebasedCurrencyOrders'
             ]
         ])->first();
-
+        
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
         
-        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.htmlHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($productPrice) . ' angepasst ';
+        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.numberHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.numberHelper')->formatAsDecimal($productPrice) . ' angepasst ';
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
         
         // send email to customer
@@ -554,7 +550,6 @@ class OrderDetailsController extends AdminAppController
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-
         if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -614,7 +609,7 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.htmlHelper')->formatAsEuro($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' wurde erfolgreich storniert';
+            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde erfolgreich storniert';
 
             $this->OrderDetail->deleteOrderDetail($orderDetail);
             $this->OrderDetail->Orders->updateSums($orderDetail->order);
@@ -658,7 +653,7 @@ class OrderDetailsController extends AdminAppController
                 $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' Der Lagerstand wurde um ' . $orderDetail->product_amount . ' auf ' . Configure::read('app.htmlHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
+            $message .= ' Der Lagerstand wurde um ' . $orderDetail->product_amount . ' auf ' . Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);

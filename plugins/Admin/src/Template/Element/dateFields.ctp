@@ -31,7 +31,7 @@ $this->element('addScript', [
         class="fa fa-arrow-circle-right fa"></i></a>
         
     <?php if (!isset($showDateTo) || $showDateTo) { ?>
-         bis <a
+         <?php echo __d('admin', 'to'); ?> <a
         class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_back'); ?>"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
         <input id="dateTo" type="text" class="datepicker"

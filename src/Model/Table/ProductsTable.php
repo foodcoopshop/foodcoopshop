@@ -185,12 +185,11 @@ class ProductsTable extends AppTable
     public function getStringAsFloat($string)
     {
         $float = trim($string);
-        $float = Configure::read('app.numberHelper')->replaceCommaWithDot($float);
+        $float = Configure::read('app.numberHelper')->parseFloatRespectingLocale($float);
 
-        if (!is_numeric($float)) {
+        if ($float === false) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-        $float = floatval($float);
 
         return $float;
     }
@@ -788,7 +787,7 @@ class ProductsTable extends AppTable
     public function getNetPriceAfterTaxUpdate($productId, $oldNetPrice, $oldTaxRate)
     {
 
-        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0 €
+        // if old tax was 0, $oldTaxRate === null (tax 0 has no record in table tax) and would reset the price to 0
         if (is_null($oldTaxRate)) {
             $oldTaxRate = 0;
         }
@@ -839,9 +838,9 @@ class ProductsTable extends AppTable
 
     public function getNetPrice($productId, $grossPrice)
     {
-        $grossPrice = Configure::read('app.numberHelper')->replaceCommaWithDot($grossPrice);
-
-        if (! $grossPrice > - 1) { // allow 0 as new price
+        $grossPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($grossPrice);
+        
+        if (!$grossPrice > -1) { // allow 0 as new price
             return false;
         }
 

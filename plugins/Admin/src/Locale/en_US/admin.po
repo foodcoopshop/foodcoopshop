@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:13+0200\n"
-"PO-Revision-Date: 2018-06-10 22:53+0200\n"
+"POT-Creation-Date: 2018-06-21 10:54+0200\n"
+"PO-Revision-Date: 2018-06-20 17:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -17,6 +17,45 @@ msgstr ""
 
 msgid "Errors_while_saving!"
 msgstr "Error occurred while saving your data!"
+
+msgid "created"
+msgstr "created"
+
+msgid "changed"
+msgstr "changed"
+
+msgid "_Order_list_filename_"
+msgstr "_Order_list_"
+
+msgid "product"
+msgstr "product"
+
+msgid "member"
+msgstr "member"
+
+msgid "Order_lists"
+msgstr "Order lists"
+
+msgid "Add_manufacturer"
+msgstr "Add manufacturer"
+
+msgid "Edit_manufacturer"
+msgstr "Edit manufacturer"
+
+msgid "Manufacturer_{0}_was"
+msgstr "Manufacturer was {0}."
+
+msgid "Edit_settings"
+msgstr "Edit settings"
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr "The ettings of manufacturer {0} have been changed."
+
+msgid "Your_settings_have_been_changed."
+msgstr "Your settings have been changed."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
 
 msgid "Group_by_product"
 msgstr "Group by product"
@@ -35,6 +74,42 @@ msgstr "Shop order"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
+
+msgid "all_activities"
+msgstr "all activities"
+
+msgid "all_users"
+msgstr "all users"
+
+msgid "all_products"
+msgstr "all products"
+
+msgid "Action_log_type"
+msgstr "Activity Type"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "User"
+msgstr "User"
+
+msgid "Show_ordered_product"
+msgstr "Show ordered products"
+
+msgid "records"
+msgstr "records"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "{0,plural,=1{record} other{records}}"
+msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -69,11 +144,14 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
 
-msgid "Chose_member..."
-msgstr "Chose member..."
+msgid "chose_member..."
+msgstr "chose member..."
 
 msgid "1_day_ahead"
 msgstr "1 day ahead"
+
+msgid "to"
+msgstr "to"
 
 msgid "1_day_back"
 msgstr "1 day back"
@@ -101,9 +179,6 @@ msgstr "Website administration"
 
 msgid "Home"
 msgstr "Home"
-
-msgid "Order_lists"
-msgstr "Order lists"
 
 msgid "Manufacturers"
 msgstr "Manufacturers"
@@ -147,14 +222,321 @@ msgstr "My profile"
 msgid "Contact_person"
 msgstr "Contact person"
 
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr "Invoice for the order period {0} to {1}"
+
+msgid "conveyed_for"
+msgstr "conveyed for"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Invoice nº"
+
+msgid "Orders_from"
+msgstr "Orders from"
+
+msgid "Invoice_date"
+msgstr "Invoice date"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Price_excl."
+msgstr "Price excl."
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Price_incl."
+msgstr "Price incl."
+
+msgid "variable_member_fee"
+msgstr "variable member fee"
+
+msgid "New_total_sum"
+msgstr "New total sum"
+
+msgid ""
+"The_total_sum_below_right_(minus_{0}_"
+"%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+"The total sum below right (minus {0}% variable member fee) will be transferred to "
+"your bank account as soon as possible."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+"The total sum to the right (price incl.) will be transferred to your bank account "
+"as soon as possible."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Paid by all members in {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Paid by all members in"
+
+msgid "Kept_variable_member_fee"
+msgstr "Kept variable member fee"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Amount that will be transferred to your bank account"
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Thank you very much for delivering your products to us!"
+
+msgid "Detail_view"
+msgstr "Detail view"
+
+msgid "Member"
+msgstr "Member"
+
+msgid "Order_list_grouped_by"
+msgstr "Order list grouped by"
+
+msgid "Delivery_date"
+msgstr "Delivery date"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Dear_financial_responsible"
+msgstr "Dear financial responsible"
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr "the invoices from {0} have just been sent."
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr "Here you find the overview for making the money transfers:"
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr "This is a great opportunity to check the creit uploads."
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr "(Link only works for superadmins)."
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr "Thank you very much for your work!"
+
 msgid "docs_route_products"
 msgstr "products"
+
+msgid "Pick_up_date"
+msgstr "Pick-up date"
+
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
+msgid "Order_list_by_product"
+msgstr "Order list by product"
+
+msgid "Order_list_by_member"
+msgstr "Order list by member"
+
+msgid "Show_list_(grouped_by_product)"
+msgstr "Show list (grouped by product)"
+
+msgid "Show_list_(grouped_by_member)"
+msgstr "Show list (grouped by member)"
 
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
 
-msgid "all_products"
-msgstr "all products"
+msgid "General"
+msgstr "General"
+
+msgid "in_your_imprint"
+msgstr "in your imprint"
+
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr "the manufacturer's imprint"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr "Will be shown spam-protected {0}."
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr "Will be shown {0}."
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Example_given_abbreviation"
+msgstr "E. g."
+
+msgid "Website"
+msgstr "Website"
+
+msgid "To_your_settings"
+msgstr "Go to your settings"
+
+msgid "To_the_settings_of_manufacturer"
+msgstr "Go to manufacturer's settings page"
+
+msgid "To_manufacturer_profile"
+msgstr "Go to the manufacturer profile page"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Click_on_logo_to_change_it."
+msgstr "Click on logo to change it."
+
+msgid "Upload_new_logo_or_change_it"
+msgstr "Upload new logo or change it"
+
+msgid "Delete_logo?"
+msgstr "Delete logo?"
+
+msgid "Do_not_forget_to_press_save"
+msgstr "Don't forget to press save button"
+
+msgid "Short_description"
+msgstr "Short description"
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr ""
+"Will be shown on the manufacturer overview page. Can't be independently changed by "
+"the manufacturer."
+
+msgid "Long_description"
+msgstr "Long description"
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr "To save long description please press save and then edit the manufacturer."
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr "Will be shown on the manufacturer's profile page."
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "How do I use the editor?"
+
+msgid "Bank_account_data"
+msgstr "Bank account data"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr "is kept private and is only used to transfer money to your bank account."
+
+msgid "Bank"
+msgstr "Ban"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "Company_data"
+msgstr "Company data"
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+"for your imprint and your invoices. The imprint can be found on your profile in the "
+"bottom right corner."
+
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Street"
+msgstr "Street"
+
+msgid "Additional_address_information"
+msgstr "Additional information"
+
+msgid "Zip"
+msgstr "Zip"
+
+msgid "City"
+msgstr "City"
+
+msgid "VAT_number"
+msgstr "VAT number"
+
+msgid "if_it_is_available"
+msgstr "if available"
+
+msgid "Commercial_register_number"
+msgstr "Comercial register number"
+
+msgid "Company_court"
+msgstr "Company court"
+
+msgid "Supervisory_authority"
+msgstr "Supervisory authority"
+
+msgid "e. g. chamber_of_agriculture"
+msgstr "e. g. chamber of agriculture"
+
+msgid "Chamber"
+msgstr "Chamber"
+
+msgid "Additional_text_for_invoice"
+msgstr "Additional text for invoice"
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr "Will be printed on the end of your invoice's overview page."
+
+msgid "Example_for_additional_invoice_text"
+msgstr " "
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Delivery_break"
+msgstr "Delivery break"
+
+msgid "Only_for_members"
+msgstr "Only for members"
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr "Sum of open orders in given time range"
+
+msgid "Open_orders_abbreviation"
+msgstr "O.o."
+
+msgid "Settings_abbreviation"
+msgstr "Set."
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Show_all_products_from_{0}"
+msgstr "Show all products from {0}"
+
+msgid "Show_{0}"
+msgstr "Show {0}"
+
+msgid "Edit_manufacturer_settings"
+msgstr "Edit manufacturer settings"
+
+msgid "Test_order_list"
+msgstr "Test order list"
+
+msgid "Manually_send_order_list"
+msgstr "Manually send order list"
+
+msgid "Test_invoice"
+msgstr "Test invoice"
+
+msgid "Manufacturer_profile"
+msgstr "Manufacturer profile"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
 
 msgid "all_manufacturers"
 msgstr "all manufacturers"
@@ -174,32 +556,14 @@ msgstr "Deposit return"
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
 
-msgid "Amount"
-msgstr "Amount"
-
-msgid "Product"
-msgstr "Product"
-
-msgid "Manufacturer"
-msgstr "Manufacturer"
-
-msgid "Price"
-msgstr "Price"
-
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Amount minus eventual variable member fee"
-
-msgid "Deposit"
-msgstr "Deposit"
 
 msgid "Weight"
 msgstr "Weight"
 
 msgid "Order_date"
 msgstr "Order date"
-
-msgid "Member"
-msgstr "Member"
 
 msgid "Status"
 msgstr "Status"
@@ -219,9 +583,6 @@ msgstr "Click to change weight"
 msgid "Click_to_cancel_product"
 msgstr "Click to cancel product"
 
-msgid "Copy_all_email_addresses"
-msgstr "Copy all e-mail adresses"
-
 msgid "Change_order_status"
 msgstr "Change order status"
 
@@ -238,9 +599,6 @@ msgstr ""
 msgid "Group_by_member"
 msgstr "Group by member"
 
-msgid "Email"
-msgstr "E-mail"
-
 msgid "Order_count"
 msgstr "Order count"
 
@@ -255,9 +613,6 @@ msgstr "Show all ordered products from {0}"
 
 msgid "Set_date_of_order_back"
 msgstr "Set date of order back"
-
-msgid "records"
-msgstr "records"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Generate orders as PDF"
@@ -277,11 +632,131 @@ msgstr "Welcome"
 msgid "docs_route_credit_system"
 msgstr "credit-system"
 
+msgid "chose_manufacturer..."
+msgstr "chose manufacturer..."
+
+msgid "chose_category..."
+msgstr "chose category..."
+
+msgid "amount"
+msgstr "amount"
+
+msgid "price"
+msgstr "price"
+
+msgid "Add_product"
+msgstr "Add product"
+
+msgid "Synchronize_products"
+msgstr "Synchronize products"
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Please chose a manufacturer."
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Product_declaration"
+msgstr "Product declaration"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "New?"
+msgstr "New?"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Add new attribute for product {0}"
+
+msgid "add_image"
+msgstr "add image"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Delete attribute for product {0}"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "This attribute is the default attribute"
+
+msgid "Define_as_new_default_attribute"
+msgstr "Define as new default attribute"
+
+msgid "change_category"
+msgstr "change category"
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Category \"all products\" is missing!"
+
+msgid "change_amount"
+msgstr "change amount"
+
+msgid "change_price"
+msgstr "change price"
+
+msgid "change_tax_rate"
+msgstr "change tax rate"
+
+msgid "New"
+msgstr "New"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Mark product as new for the next {0} days?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Do not mark product as new any more?"
+
+msgid "change_deposit"
+msgstr "change deposit"
+
+msgid "deactivate"
+msgstr "deactivate"
+
+msgid "activate"
+msgstr "activate"
+
+msgid "product_preview"
+msgstr "product preview"
+
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"
 
 msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
+
+msgid "Show_product"
+msgstr "Show product"
+
+msgid "Show_manufacturer"
+msgstr "Show manufacturer"
+
+msgid "Show_blog_post"
+msgstr "Show blog post"
+
+msgid "Show_page"
+msgstr "Show page"
+
+msgid "Show_category"
+msgstr "Show category"
+
+msgid "Show_order"
+msgstr "Show order"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{record} other{records}}"
+
+#~ msgid "A_negative_amount_is_not_allowed:"
+#~ msgstr "A negative amount is not allowed:"
+
+#~ msgid "The_amount_needs_to_be_greater_than_0:"
+#~ msgstr "The amount needs to be greater than 0:"
+
+#~ msgid "Paid_by_members_in_euro"
+#~ msgstr "Paid by all members"
+
+#~ msgid "Email_address"
+#~ msgstr "E-mail"
 
 #, fuzzy
 #~ msgid "Cancel_product?"

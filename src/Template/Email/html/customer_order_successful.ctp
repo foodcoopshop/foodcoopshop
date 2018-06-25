@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-            	<?php echo __('Thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'))]); ?>
+            	<?php echo __('thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))]); ?>
             </td>
         </tr>
     </tbody>
@@ -50,7 +50,7 @@ use Cake\Core\Configure;
         <?php } ?>
         
         <tr><td style="padding-top:20px;">
-            <?php echo __('Including_vat'); ?> <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
+            <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
         
         <tr><td>

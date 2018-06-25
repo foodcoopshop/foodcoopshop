@@ -86,10 +86,10 @@ class SlidersController extends AdminAppController
             $slider = $this->Slider->save($slider);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'slider_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'slider_changed';
             }
 

@@ -35,8 +35,8 @@ $this->element('addScript', ['script' => $script]);
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
             <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
     </div>
 </div>
@@ -56,7 +56,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
     
     echo '<div class="input">';
         echo '<label for="TimebasedCurrencyPayments.working_day">Arbeitstag</label>';
-        echo $this->element('dateFields', ['dateFrom' => ($payment->working_day ? $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : null), 'nameFrom' => 'TimebasedCurrencyPayments[working_day]', 'showDateTo' => false]);
+        echo $this->element('dateFields', ['dateFrom' => ($payment->working_day ? $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : null), 'nameFrom' => 'TimebasedCurrencyPayments[working_day]', 'showDateTo' => false]);
     echo '</div>';
     echo $this->Form->control('TimebasedCurrencyPayments.hours', [
         'label' => 'Stunden <span class="after small">Das Mitglied erhält bei Änderung der Zeit automatisch eine E-Mail (inklusive Kommentar).</span>',

@@ -281,13 +281,13 @@ $this->element('addScript', [
         <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
             <tr>
             <td>app.depositPaymentCashlessStartDate</td>
-            <td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
+            <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
         </tr>
         <?php } ?>
 
         <tr>
             <td>app.depositForManufacturersStartDate</td>
-            <td><?php echo date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
+            <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate'))); ?></td>
         </tr>
 
         <tr>
@@ -314,7 +314,7 @@ $this->element('addScript', [
 
         <tr>
             <td>app.defaultTax</td>
-            <td><?php echo $this->Html->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? 'aktiviert' : 'deaktiviert'; ?></td>
+            <td><?php echo $this->Number->formatAsPercent($defaultTax->rate); ?> - <?php echo $defaultTax->active ? 'aktiviert' : 'deaktiviert'; ?></td>
         </tr>
 
         <tr>

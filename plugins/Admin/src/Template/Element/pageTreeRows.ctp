@@ -87,7 +87,7 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td>';
-    echo $page->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+    echo $page->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td align="center">';

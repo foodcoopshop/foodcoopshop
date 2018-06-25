@@ -11,6 +11,14 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+String.prototype.replaceI18n = function(object, replace) {
+    var regExp = new RegExp('\\{' + object + '\\}', 'g');
+    return this.replace(regExp, replace);
+    
+    // code
+};
+
 foodcoopshop.Helper = {
 
     init: function () {
@@ -294,27 +302,32 @@ foodcoopshop.Helper = {
         });
     },
 
-    formatFloatAsEuro: function (float) {
-        return this.formatFloatAsString(float) + '&nbsp;€';
+    formatFloatAsCurrency: function (float) {
+        return this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
     },
       
-    getEuroAsFloat: function (string) {
-        return this.getStringAsFloat(string.replace(/&nbsp;€/, ''));
+    getCurrencyAsFloat: function (string) {
+        var currencyRegExp = new RegExp('&nbsp;\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
     
-    formatFloatAsString: function(float, removeTrailingZeros) {
-        removeTrailingZeros = removeTrailingZeros || false;
-        if (removeTrailingZeros) {
-            float = float.toString();
-        } else {
-            float = float.toFixed(2);
-        }
-        var floatAsString = float.replace(/\./, ',');
+    formatFloatAsString: function(float) {
+        var floatAsString = float.toLocaleString(
+            foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
         return floatAsString;
     },
     
     getStringAsFloat: function (string) {
-        return parseFloat(string.replace(/,/, '.'));
+        // german uses , as decimal separator and not as thousand separator
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'de-DE') {
+            string = string.replace(/,/, '.');
+        }
+        return parseFloat(string);
     },
 
     bindToggleLinks: function (autoOpen) {
@@ -325,10 +338,12 @@ foodcoopshop.Helper = {
             var toggleMode = elementToToggle.css('display');
 
             if (toggleMode == 'none') {
-                $(this).html($(this).html().replace(/Mehr/, 'Weniger'));
+                var showMoreRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowMore);
+                $(this).html($(this).html().replace(showMoreRegExp, foodcoopshop.LocalizedJs.helper.ShowLess));
                 $(this).addClass('collapsed');
             } else {
-                $(this).html($(this).html().replace(/Weniger/, 'Mehr'));
+                var showLessRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowLess);
+                $(this).html($(this).html().replace(showLessRegExp, foodcoopshop.LocalizedJs.helper.ShowMore));
                 $(this).removeClass('collapsed');
             }
 
@@ -592,7 +607,7 @@ foodcoopshop.Helper = {
                     foodcoopshop.LocalizedJs.helper.SaturdayShort
                 ],
                 weekHeader: foodcoopshop.LocalizedJs.datepicker.weekHeader,
-                dateFormat: 'dd.mm.yy',
+                dateFormat: foodcoopshop.LocalizedJs.datepicker.dateFormat,
                 firstDay: 1,
                 isRTL: false,
                 showMonthAfterYear: false,

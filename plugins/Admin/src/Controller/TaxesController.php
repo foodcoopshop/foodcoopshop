@@ -91,15 +91,15 @@ class TaxesController extends AdminAppController
             $tax = $this->Tax->save($tax);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'tax_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'tax_changed';
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $message = 'Der Steuersatz <b>' . Configure::read('app.htmlHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
+            $message = 'Der Steuersatz <b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 

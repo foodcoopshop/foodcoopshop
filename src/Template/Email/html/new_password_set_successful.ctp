@@ -24,11 +24,11 @@ use Cake\Core\Configure;
             <td>
                 
                 <p>
-                    du hast gerade ein neues Passwort generiert, es lautet:<br />
+                    <?php echo __('you_just_generated_a_new_password_which_is'); ?>:<br />
                     <b><?php echo $password; ?></b>
                 </p>
                 
-                <p>Du kannst dich hier anmelden und das Passwort gleich ändern:<br />
+                <p><?php echo __('You_can_sign_in_and_change_your_password_here'); ?>:<br />
                 <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
                 
             </td>

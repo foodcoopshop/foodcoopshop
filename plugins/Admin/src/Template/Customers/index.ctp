@@ -97,7 +97,7 @@ foreach ($customers as $customer) {
             $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
         }
     
-        echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date('d.m.Y') . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
+        echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
             'title' => 'Zu allen Bestellungen von ' . $this->Html->getNameRespectingIsDeleted($customer),
             'escape' => false
         ]) . '</span>';
@@ -161,7 +161,7 @@ foreach ($customers as $customer) {
         echo '<td align="center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
-            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Html->formatAsEuro($customer->credit_balance);
+            $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
             echo $this->Html->getJqueryUiIcon(
                 $creditBalanceHtml,
                 [
@@ -172,7 +172,7 @@ foreach ($customers as $customer) {
             );
         } else {
             if ($customer->credit_balance != 0) {
-                echo $this->Html->formatAsEuro($customer->credit_balance);
+                echo $this->Number->formatAsCurrency($customer->credit_balance);
             }
         }
         
@@ -215,7 +215,7 @@ foreach ($customers as $customer) {
     }
 
     echo '<td>';
-    echo $customer->date_add->i18nFormat(Configure::read('DateFormat.de.DateShort'));
+    echo $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
     echo '</td>';
 
     echo '<td>';
@@ -239,8 +239,8 @@ foreach ($customers as $customer) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
-echo '<td><b>' . $this->Html->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
+echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td><b>' . $this->Number->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }

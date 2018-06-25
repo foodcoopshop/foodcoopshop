@@ -41,10 +41,10 @@ use Cake\Core\Configure;
     echo '<table class="list">';
 
     echo '<tr class="sort">';
-    echo '<th>Abholdatum</th>';
-    echo '<th>Hersteller</th>';
-    echo '<th>Bestellliste nach Produkt</th>';
-    echo '<th>Bestellliste nach Mitglied</th>';
+    echo '<th>'.__d('admin', 'Pick_up_date').'</th>';
+    echo '<th>'.__d('admin', 'Manufacturer').'</th>';
+    echo '<th>'.__d('admin', 'Order_list_by_product').'</th>';
+    echo '<th>'.__d('admin', 'Order_list_by_member').'</th>';
     echo '</tr>';
 
     $i = 0;
@@ -62,16 +62,16 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Produkt)', [
-            'title' => 'Liste anzeigen (gruppiert nach Produkt)',
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' ' . __d('admin', 'Show_list_(grouped_by_product)'), [
+            'title' => __d('admin', 'Show_list_(grouped_by_product)'),
             'target' => '_blank',
             'class' => 'icon-with-text'
         ], $file['product_list_link']);
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Liste anzeigen (gruppiert nach Mitglied)', [
-            'title' => 'Liste anzeigen (gruppiert nach Mitglied)',
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' ' . __d('admin', 'Show_list_(grouped_by_member)'), [
+            'title' => __d('admin', 'Show_list_(grouped_by_member)'),
             'target' => '_blank',
             'class' => 'icon-with-text'
         ], $file['customer_list_link']);
@@ -81,7 +81,7 @@ use Cake\Core\Configure;
     }
 
     echo '<tr>';
-    echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
+    echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
     echo '</tr>';
 
     echo '</table>';

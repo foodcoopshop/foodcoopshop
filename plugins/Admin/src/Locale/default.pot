@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:13+0200\n"
+"POT-Creation-Date: 2018-06-21 10:54+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,45 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Errors_while_saving!"
+msgstr ""
+
+msgid "created"
+msgstr ""
+
+msgid "changed"
+msgstr ""
+
+msgid "_Order_list_filename_"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "member"
+msgstr ""
+
+msgid "Order_lists"
+msgstr ""
+
+msgid "Add_manufacturer"
+msgstr ""
+
+msgid "Edit_manufacturer"
+msgstr ""
+
+msgid "Manufacturer_{0}_was"
+msgstr ""
+
+msgid "Edit_settings"
+msgstr ""
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr ""
+
+msgid "Your_settings_have_been_changed."
+msgstr ""
+
+msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
 msgid "Group_by_product"
@@ -33,6 +72,42 @@ msgid "Shop_order"
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "all_activities"
+msgstr ""
+
+msgid "all_users"
+msgstr ""
+
+msgid "all_products"
+msgstr ""
+
+msgid "Action_log_type"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Show_ordered_product"
+msgstr ""
+
+msgid "records"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "{0,plural,=1{record} other{records}}"
 msgstr ""
 
 msgid "docs_route_settings"
@@ -65,10 +140,13 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr ""
 
-msgid "Chose_member..."
+msgid "chose_member..."
 msgstr ""
 
 msgid "1_day_ahead"
+msgstr ""
+
+msgid "to"
 msgstr ""
 
 msgid "1_day_back"
@@ -96,9 +174,6 @@ msgid "Website_administration"
 msgstr ""
 
 msgid "Home"
-msgstr ""
-
-msgid "Order_lists"
 msgstr ""
 
 msgid "Manufacturers"
@@ -143,13 +218,310 @@ msgstr ""
 msgid "Contact_person"
 msgstr ""
 
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr ""
+
+msgid "conveyed_for"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Orders_from"
+msgstr ""
+
+msgid "Invoice_date"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Price_excl."
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Price_incl."
+msgstr ""
+
+msgid "variable_member_fee"
+msgstr ""
+
+msgid "New_total_sum"
+msgstr ""
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+
+msgid "Paid_by_members_in_{0}"
+msgstr ""
+
+msgid "Paid_by_members_in"
+msgstr ""
+
+msgid "Kept_variable_member_fee"
+msgstr ""
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr ""
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr ""
+
+msgid "Detail_view"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Order_list_grouped_by"
+msgstr ""
+
+msgid "Delivery_date"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Dear_financial_responsible"
+msgstr ""
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr ""
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr ""
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr ""
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr ""
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr ""
+
 msgid "docs_route_products"
+msgstr ""
+
+msgid "Pick_up_date"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Order_list_by_product"
+msgstr ""
+
+msgid "Order_list_by_member"
+msgstr ""
+
+msgid "Show_list_(grouped_by_product)"
+msgstr ""
+
+msgid "Show_list_(grouped_by_member)"
 msgstr ""
 
 msgid "docs_route_manufacturers"
 msgstr ""
 
-msgid "all_products"
+msgid "General"
+msgstr ""
+
+msgid "in_your_imprint"
+msgstr ""
+
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Example_given_abbreviation"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "To_your_settings"
+msgstr ""
+
+msgid "To_the_settings_of_manufacturer"
+msgstr ""
+
+msgid "To_manufacturer_profile"
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "Click_on_logo_to_change_it."
+msgstr ""
+
+msgid "Upload_new_logo_or_change_it"
+msgstr ""
+
+msgid "Delete_logo?"
+msgstr ""
+
+msgid "Do_not_forget_to_press_save"
+msgstr ""
+
+msgid "Short_description"
+msgstr ""
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr ""
+
+msgid "Long_description"
+msgstr ""
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr ""
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr ""
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr ""
+
+msgid "Bank_account_data"
+msgstr ""
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr ""
+
+msgid "Bank"
+msgstr ""
+
+msgid "IBAN"
+msgstr ""
+
+msgid "BIC"
+msgstr ""
+
+msgid "Company_data"
+msgstr ""
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Additional_address_information"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "VAT_number"
+msgstr ""
+
+msgid "if_it_is_available"
+msgstr ""
+
+msgid "Commercial_register_number"
+msgstr ""
+
+msgid "Company_court"
+msgstr ""
+
+msgid "Supervisory_authority"
+msgstr ""
+
+msgid "e. g. chamber_of_agriculture"
+msgstr ""
+
+msgid "Chamber"
+msgstr ""
+
+msgid "Additional_text_for_invoice"
+msgstr ""
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr ""
+
+msgid "Example_for_additional_invoice_text"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Delivery_break"
+msgstr ""
+
+msgid "Only_for_members"
+msgstr ""
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr ""
+
+msgid "Open_orders_abbreviation"
+msgstr ""
+
+msgid "Settings_abbreviation"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Show_all_products_from_{0}"
+msgstr ""
+
+msgid "Show_{0}"
+msgstr ""
+
+msgid "Edit_manufacturer_settings"
+msgstr ""
+
+msgid "Test_order_list"
+msgstr ""
+
+msgid "Manually_send_order_list"
+msgstr ""
+
+msgid "Test_invoice"
+msgstr ""
+
+msgid "Manufacturer_profile"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "all_manufacturers"
@@ -170,31 +542,13 @@ msgstr ""
 msgid "docs_route_pick_up_products"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
-msgid "Product"
-msgstr ""
-
-msgid "Manufacturer"
-msgstr ""
-
-msgid "Price"
-msgstr ""
-
 msgid "Amount_minus_eventual_variable_member_fee"
-msgstr ""
-
-msgid "Deposit"
 msgstr ""
 
 msgid "Weight"
 msgstr ""
 
 msgid "Order_date"
-msgstr ""
-
-msgid "Member"
 msgstr ""
 
 msgid "Status"
@@ -215,9 +569,6 @@ msgstr ""
 msgid "Click_to_cancel_product"
 msgstr ""
 
-msgid "Copy_all_email_addresses"
-msgstr ""
-
 msgid "Change_order_status"
 msgstr ""
 
@@ -233,9 +584,6 @@ msgstr ""
 msgid "Group_by_member"
 msgstr ""
 
-msgid "Email"
-msgstr ""
-
 msgid "Order_count"
 msgstr ""
 
@@ -249,9 +597,6 @@ msgid "Show_all_ordered_products_from_{0}"
 msgstr ""
 
 msgid "Set_date_of_order_back"
-msgstr ""
-
-msgid "records"
 msgstr ""
 
 msgid "Generate_orders_as_pdf"
@@ -272,9 +617,117 @@ msgstr ""
 msgid "docs_route_credit_system"
 msgstr ""
 
+msgid "chose_manufacturer..."
+msgstr ""
+
+msgid "chose_category..."
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "price"
+msgstr ""
+
+msgid "Add_product"
+msgstr ""
+
+msgid "Synchronize_products"
+msgstr ""
+
+msgid "Please_chose_a_manufacturer."
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Product_declaration"
+msgstr ""
+
+msgid "Tax_rate"
+msgstr ""
+
+msgid "New?"
+msgstr ""
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr ""
+
+msgid "add_image"
+msgstr ""
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr ""
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr ""
+
+msgid "Define_as_new_default_attribute"
+msgstr ""
+
+msgid "change_category"
+msgstr ""
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr ""
+
+msgid "change_amount"
+msgstr ""
+
+msgid "change_price"
+msgstr ""
+
+msgid "change_tax_rate"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr ""
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr ""
+
+msgid "change_deposit"
+msgstr ""
+
+msgid "deactivate"
+msgstr ""
+
+msgid "activate"
+msgstr ""
+
+msgid "product_preview"
+msgstr ""
+
 msgid "docs_route_financial_reports"
 msgstr ""
 
 msgid "docs_route_paying_with_time_module"
+msgstr ""
+
+msgid "Show_product"
+msgstr ""
+
+msgid "Show_manufacturer"
+msgstr ""
+
+msgid "Show_blog_post"
+msgstr ""
+
+msgid "Show_page"
+msgstr ""
+
+msgid "Show_category"
+msgstr ""
+
+msgid "Show_order"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 

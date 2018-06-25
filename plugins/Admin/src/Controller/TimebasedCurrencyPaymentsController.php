@@ -115,7 +115,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $message = 'Die Zeit-Eintragung';
         if ($payment->working_day) {
-            $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
+            $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' ';
         }
         $message .= ' <b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ')</b> ';
         
@@ -128,7 +128,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $email = new AppEmail();
             $email->setTemplate('Admin.timebased_currency_payment_deleted')
             ->setTo($payment->customer->email)
-            ->setSubject('Deine Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')) . ' wurde gelöscht.')
+            ->setSubject('Deine Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde gelöscht.')
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $payment->customer,
@@ -188,17 +188,17 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $payment = $this->TimebasedCurrencyPayment->save($payment);
             
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'timebased_currency_payment_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'timebased_currency_payment_changed';
             }
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $message = 'Die Zeiteintragung ';
             if ($payment->working_day) {
-                $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' ';
+                $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' ';
             }
             $message .= '<b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds) . ')</b>';
             
@@ -226,7 +226,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 $email = new AppEmail();
                 $email->setTemplate('Admin.timebased_currency_payment_information')
                 ->setTo($payment->customer->email)
-                ->setSubject('Wichtige Informationen zu deiner Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')))
+                ->setSubject('Wichtige Informationen zu deiner Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'data' => $payment->customer,
@@ -473,7 +473,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $payments[] = [
                 'dateRaw' => $timebasedCurrencyOrder['order']->date_add,
                 'date' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                'year' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.de.Year')),
+                'year' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
                 'secondsOpen' => $timebasedCurrencyOrder['SumSeconds'] * - 1,
                 'secondsDone' => null,
                 'type' => 'order',
@@ -485,8 +485,8 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'text' => Configure::read('app.htmlHelper')->link(
                     'Bestellung Nr. ' . $orderId . ' (' . 
                         Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder['order']->current_state] . ')',
-                        '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . 
-                        '&dateTo=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.de.DateLong2')) .
+                        '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
+                        '&dateTo=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
                         '&orderId=' . $orderId . '&customerId=' . $timebasedCurrencyOrder['order']->id_customer, [
                     'title' => 'Bestellung anzeigen'
                 ]),
@@ -516,7 +516,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $payments[] = [
                 'dateRaw' => $timebasedCurrencyPayment->created,
                 'date' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                'year' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('DateFormat.de.Year')),
+                'year' => $timebasedCurrencyPayment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
                 'workingDay' => $timebasedCurrencyPayment->working_day,
                 'secondsOpen' => null,
                 'secondsDone' => $timebasedCurrencyPayment->seconds,

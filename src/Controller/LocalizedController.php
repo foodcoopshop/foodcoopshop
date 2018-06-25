@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 class LocalizedController extends Controller
 {
@@ -30,9 +31,11 @@ class LocalizedController extends Controller
                 'next' => __('datepicker_next'),
                 'today' => __('datepicker_today'),
                 'weekHeader' => __('WeekHeader'),
+                'dateFormat' => Configure::read('DateFormat.'.I18n::getLocale().'.DateForDatepicker')
             ],
             'helper' => [
                 'defaultLocale' => Configure::read('App.defaultLocale'),
+                'defaultLocaleInBCP47' => str_replace('_', '-', Configure::read('App.defaultLocale')),
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),
@@ -81,6 +84,10 @@ class LocalizedController extends Controller
                 'FridayShort' => __('FridayShort'),
                 'SaturdayShort' => __('SaturdayShort'),
                 'SundayShort' => __('SundayShort'),
+                'CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
+                'CurrencyName' => Configure::read('app.currencyName'),
+                'ShowMore' => __('Show_more'),
+                'ShowLess' => __('Show_less')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),
@@ -131,7 +138,6 @@ class LocalizedController extends Controller
                 'WhyIsPriceAdapted' => __('Why_is_price_adapted_(mandatory_field)?'),
                 'OriginalPriceWithoutReductionOfPriceInTime' => __('Original_price_without_reduction_of_price_in_time'),
                 'FromWhichReallyPaidIn' => __('From_which_really_paid_in'),
-                'Euro' => __('Euro'),
                 'AdaptWeight' => __('Adapt_weight?'),
                 'DeliveredWeight' => __('Delivered_weight'),
                 'DeliveredTotalWeight' => __('Delivered_total_weight'),
@@ -153,12 +159,50 @@ class LocalizedController extends Controller
                 'DeliveredWeightNeedsToBeGreaterThan0' => __('Delivered_weight_needs_to_be_greater_than_0.'),
                 'AdaptPriceReasonIsMandatory' => __('Adapt_price_reason_is_mandatory.'),
                 'CancellationReasonIsMandatory' => __('Cancellation_reason_is_mandatory.'),
-                'PleaseEnterANumber' => __('Please_enter_a_number.')
+                'PleaseEnterANumber' => __('Please_enter_a_number.'),
+                'AddNewAttributeForProduct' => __('Add_new_attribute_for_product'),
+                'PleaseChoseTheNewAttributeForProduct0' => __('Please_chose_the_new_attribute_for_product_{0}.'),
+                'ThisFunctionCanOnlyBeUsedIfAttributesExist' => __('This_function_can_only_be_used_if_attributes_exist.'),
+                'ChangingDefaultAttributeInfoText0Html' => __('Changing_default_attribute_info_text_{0}_html'),
+                'ChangeDefaultAttribute' => __('Change_default_attribute'),
+                'ChangeCategories' => __('Change_categories'),
+                'Weight' => __('Weight'),
+                'EnterApproximateWeightInPriceDialog' => __('Enter_approximate_weight_in_price_dialog.'),
+                'ChangeTaxRate' => __('Change_tax_rate'),
+                'ShowProductAsNew' => __('Show_product_as_new?'),
+                'DoNotShowProductAsNew' => __('Do_not_show_product_as_new?'),
+                'ReallyShowProduct0AsNew' => __('Really_show_product_{0}_as_new?'),
+                'ReallyDoNotShowProduct0AsNew' => __('Really_do_not_show_product_{0}_as_new?'),
+                'ActivateProduct' => __('Activate_product'),
+                'DeactivateProduct' => __('Deactivate_product'),
+                'ReallyActivateProduct0' => __('Really_activate_product_{0}_?'),
+                'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}_?'),
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),
                 'SetDateOfOrderBackTo' => __('Set_date_of_order_back_to'),
                 'SetDateOfOrderBack' => __('Set_date_of_order_back')
+            ],
+            'dialogProduct' => [
+                'ChangeAmount' => __('Change_amount'),
+                'ChangePrice' => __('Change_price'),
+                'PricePerUnit' => __('Price_per_unit'),
+                'inclVAT' => __('incl_vat'),
+                'PricePerWeightForAdaptionAfterDelivery' => __('Price_per_weight_(for_adaption_after_delivery)'),
+                'for' => __('for'),
+                'approximateDeliveryWeightIn0PerUnit' => __('approximate_delivery_weight_in_{0}_per_unit'),
+                'Name' => __('Name'),
+                'ProductRenameInfoText' => __('Product_rename_info_text'),
+                'Unit' => __('Unit'),
+                'UnitDescriptionExample' => __('Unit_description_example'),
+                'DescriptionShort' => __('Description_short'),
+                'DescriptionLong' => __('Description_long'),
+                'ProductDeclarationOK' => __('Product_declaration_ok?'),
+                'DocsUrlProductDeclaration' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_product_declaration')),
+                'Help' => __('Help'),
+                'ChangeNameAndDescription' => __('Change_name_and_description'),
+                'Deposit' => __('Deposit'),
+                'EnterZeroForDelete' => __('Enter_zero_for_delete')
             ]
             
         ];

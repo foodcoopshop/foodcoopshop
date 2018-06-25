@@ -27,6 +27,7 @@ class MyHtmlHelper extends HtmlHelper
     public function __construct(View $View, array $config = [])
     {
         $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
+        $this->helpers[] = 'MyNumber';
         parent::__construct($View, $config);
     }
     
@@ -38,6 +39,21 @@ class MyHtmlHelper extends HtmlHelper
                 });
             //]]>
         </script>";
+    }
+    
+    public function getCurrencyName($currencySymbol)
+    {
+        switch($currencySymbol) {
+            case '€':
+                return 'Euro';
+                break;
+            case '$':
+                return 'Dollar';
+                break;
+            default:
+                return '';
+                break;
+        }
     }
     
     public function getDocsUrl($page)
@@ -272,45 +288,6 @@ class MyHtmlHelper extends HtmlHelper
     public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];
-    }
-
-    public function formatAsEuro($amount)
-    {
-        return self::formatAsUnit($amount, '€');
-    }
-    
-    public function formatAsUnit($amount, $shortcode)
-    {
-        return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
-    }
-
-    public function formatAsPercent($amount)
-    {
-        return self::formatAsDecimal($amount) . '%';
-    }
-
-    /**
-     * shows decimals only if necessary
-     *
-     * @param decimal $amount
-     */
-    public function formatTaxRate($rate)
-    {
-        return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
-    }
-    
-    public function formatUnitAsDecimal($amount)
-    {
-        return $this->formatAsDecimal($amount, 3, true);
-    }
-
-    public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
-    {
-        $result = number_format($amount, $decimals, ',', '.');
-        if ($removeTrailingZeros) {
-            $result = floatval($amount);
-        }
-        return $result;
     }
 
     public function getCustomerOrderBy()
@@ -556,41 +533,35 @@ class MyHtmlHelper extends HtmlHelper
         return $string;
     }
 
-    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
+    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel)
     {
         $url = Configure::read('app.folder_order_lists_with_current_year_and_month') . DS;
-        $url .= $deliveryDay . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $deliveryDay . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . __('_Order_list_filename_') . $groupTypeLabel . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
         $url = Configure::read('app.folder_invoices_with_current_year_and_month') . DS;
-        $url .= $invoiceDate . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $invoiceDate . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . __('_Invoice_filename_') . $invoiceNumber . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
-    }
-
-    // gehört in time helper
-    public function convertToGermanDate($date)
-    {
-        return date('d.m.Y', strtotime(str_replace('/', '-', $date)));
     }
 
     public function getApprovalStates()
     {
         return [
-            1 => 'bestätigt',
-            0 => 'offen',
-            -1 => 'da stimmt was nicht...'
+            1 => __('approval_state_ok'),
+            0 => __('approval_state_open'),
+            -1 => __('approval_state_not_ok'),
         ];
     }
 
     public function getActiveStates()
     {
         return [
-            1 => 'aktiviert',
-            0 => 'deaktiviert',
-            'all' => 'alle'
+            1 => __('active_state_active'),
+            0 => __('active_state_inactive'),
+            'all' => __('active_state_all')
         ];
     }
 

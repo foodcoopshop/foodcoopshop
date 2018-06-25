@@ -18,13 +18,21 @@ use Cake\Core\Configure;
 <div id="manufacturers-list">
     <?php
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
+        'script' => 
+            Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             $('input.datepicker').datepicker();".
-            Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');".Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
+            Configure::read('app.jsNamespace') . ".Admin.init();" . 
+            Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . 
+            Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" .
+            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" .
+            Configure::read('app.cakeServerName') . "');".
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ]);
     if (Configure::read('app.allowManualOrderListSending')) {
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" . Configure::read('app.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
+            'script' => 
+                Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" .
+                Configure::read('app.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
         ]);
     }
     ?>
@@ -36,7 +44,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Hersteller erstellen', $this->Slug->getManufacturerAdd(), [
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
                     'class' => 'btn btn-default',
                     'escape' => false
                 ]);
@@ -54,18 +62,18 @@ echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
     echo '<th></th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.name', 'Name') . '</th>';
-    echo '<th style="width:83px;">Produkte</th>';
-    echo '<th>Pfand</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Name')) . '</th>';
+    echo '<th style="width:83px;">'.__d('admin', 'Products').'</th>';
+    echo '<th>'.__d('admin', 'Deposit').'</th>';
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<th>' . $this->Paginator->sort('Manufacturers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
     }
-    echo '<th>' . $this->Paginator->sort('Manufacturers.iban', 'IBAN') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.active', 'Aktiv') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', 'Lieferpause') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', 'Nur für Mitglieder') . '</th>';
-    echo '<th title="Summe offener Bestellungen im oben angegebenen Zeitraum">O.B</th>';
-    echo '<th>Opt.</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.iban', __d('admin', 'IBAN')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.active', __d('admin', 'Active')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', __d('admin', 'Delivery_break')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
+    echo '<th title="'.__d('admin', 'Sum_of_open_orders_in_given_time_range').'">'.__d('admin', 'Open_orders_abbreviation').'</th>';
+    echo '<th>'.__d('admin', 'Settings_abbreviation').'</th>';
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<th>%</th>';
     }
@@ -99,7 +107,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
     echo '<td>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => 'Bearbeiten'
+            'title' => __d('admin', 'Edit')
         ], $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer));
     echo '</td>';
 
@@ -124,18 +132,18 @@ foreach ($manufacturers as $manufacturer) {
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
         
         if (!empty($manufacturer->customer)) {
-            echo '<br /><i class="fa fa-fw fa-male" title="Ansprechperson"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+            echo '<br /><i class="fa fa-fw fa-male" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
         }
         
     echo '</td>';
 
     echo '<td style="width:140px;">';
     $sumProductCount += $manufacturer->product_count;
-    $productString = $manufacturer->product_count == 1 ? 'Produkt' : 'Produkte';
+    $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
     echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . $manufacturer->product_count . '&nbsp;' . $productString,
+        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . str_replace(' ', '&nbsp;', $productString),
         [
-        'title' => 'Alle Produkte von ' . $manufacturer->name . ' anzeigen',
+        'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
         'class' => 'icon-with-text'
         ],
         $this->Slug->getProductAdmin($manufacturer->id_manufacturer)
@@ -149,10 +157,10 @@ foreach ($manufacturers as $manufacturer) {
         if ($manufacturer->deposit_credit_balance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
         }
-        $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Html->formatAsEuro($manufacturer->deposit_credit_balance);
+        $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Number->formatAsCurrency($manufacturer->deposit_credit_balance);
 
         echo $this->Html->getJqueryUiIcon(
-            'Pfand:&nbsp;' . $depositCreditBalanceHtml,
+            __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
             [
             'class' => 'icon-with-text',
             'title' => 'Pfandkonto anzeigen'
@@ -178,7 +186,7 @@ foreach ($manufacturers as $manufacturer) {
                         $timebasedCurrencyCreditBalanceHtml,
                         [
                             'class' => 'icon-with-text',
-                            'title' => $this->TimebasedCurrency->getName() . ' anzeigen'
+                            'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()])
                         ],
                         $this->Slug->getTimebasedCurrencyBalanceForManufacturers($manufacturer->id_manufacturer)
                     );
@@ -215,7 +223,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td class="right">';
     if ($manufacturer->sum_open_order_detail > 0) {
-        echo $this->Html->formatAsEuro($manufacturer->sum_open_order_detail);
+        echo $this->Number->formatAsCurrency($manufacturer->sum_open_order_detail);
     }
     echo '</td>';
 
@@ -223,7 +231,7 @@ foreach ($manufacturers as $manufacturer) {
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')),
         [
-            'title' => 'Hersteller-Einstellungen bearbeiten'
+            'title' => __d('admin', 'Edit_manufacturer_settings')
         ],
         $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer)
     );
@@ -236,26 +244,26 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     echo '<td style="width:140px;">';
-    echo 'Bestellliste prüfen<br />';
-    echo $this->Html->link('Produkt', '/admin/manufacturers/getOrderListByProduct/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
+    echo __d('admin', 'Test_order_list').'<br />';
+    echo $this->Html->link(__d('admin', 'Product'), '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
             'target' => '_blank'
         ]);
     echo ' / ';
-    echo $this->Html->link('Mitglied', '/admin/manufacturers/getOrderListByCustomer/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
+    echo $this->Html->link(__d('admin', 'Member'), '/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
         'target' => '_blank'
     ]);
     echo '</td>';
     if (Configure::read('app.allowManualOrderListSending')) {
         echo '<td>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), [
-            'title' => 'Bestellliste manuell versenden',
+            'title' => __d('admin', 'Manually_send_order_list'),
             'class' => 'manual-order-list-send-link'
         ], 'javascript:void(0);');
         echo '</td>';
     }
 
     echo '<td>';
-    echo $this->Html->link('Rechnung prüfen', '/admin/manufacturers/getInvoice/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo . '.pdf', [
+    echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
         'target' => '_blank'
     ]);
     echo '</td>';
@@ -263,7 +271,7 @@ foreach ($manufacturers as $manufacturer) {
     if ($manufacturer->active) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => 'Hersteller-Seite',
+            'title' => __d('admin', 'Manufacturer_profile'),
             'target' => '_blank'
         ], $manufacturerLink);
     }
@@ -272,12 +280,12 @@ foreach ($manufacturers as $manufacturer) {
 }
 
 echo '<tr>';
-echo '<td colspan="3"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="3"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 10;
 echo '<td>';
     if ($sumDeposit > 0) {
-        echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Html->formatAsEuro($sumDeposit) . '</b>';
+        echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Number->formatAsCurrency($sumDeposit) . '</b>';
     }
 echo '</td>';
 
@@ -295,7 +303,7 @@ echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

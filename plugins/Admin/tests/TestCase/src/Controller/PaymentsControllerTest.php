@@ -5,8 +5,6 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 /**
- * PaymentsControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -35,25 +33,45 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assert403ForbiddenHeader();
     }
 
-    public function testAddPaymentParameterPrice()
+    public function testAddPaymentParameterPriceOk()
     {
         $this->loginAsCustomer();
-
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', 'product');
-        $this->assertEquals(0, $jsonDecodedContent->status);
-        $this->assertRegExpWithUnquotedString('Ein negativer Betrag ist nicht erlaubt', $jsonDecodedContent->msg);
-
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', 'product');
-        $this->assertEquals(1, $jsonDecodedContent->status);
-        $this->assertEquals(10, $jsonDecodedContent->amount);
-
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10.00', 'product');
-        $this->assertEquals(10, $jsonDecodedContent->amount);
-
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', 'product');
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65.03', 'product');
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
+    
+    public function testAddPaymentParameterPriceNegative()
+    {
+        $this->loginAsCustomer();
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', 'product');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
+    }
 
+    public function testAddPaymentParameterPriceAlmostZero()
+    {
+        $this->loginAsCustomer();
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0.003', 'product');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
+    }
+    
+    public function testAddPaymentParameterPriceZero()
+    {
+        $this->loginAsCustomer();
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0', 'product');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
+    }
+    
+    public function testAddPaymentParameterPriceWrongNumber()
+    {
+        $this->loginAsCustomer();
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10.--', 'product');
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertRegExpWithUnquotedString('Bitte gib eine korrekte Zahl ein', $jsonDecodedContent->msg);
+    }
+    
     public function testAddPaymentWithInvalidType()
     {
         $this->loginAsCustomer();
@@ -75,7 +93,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            10.5,
+            '10.5',
             'product'
         );
         $this->logout();
@@ -93,7 +111,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            20.5,
+            '20.5',
             'product'
         );
         $this->logout();
@@ -149,10 +167,9 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeletePaymentWithApprovalOk()
     {
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), 10.5, 'product');
+        $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
         $addResponse = $this->browser->getJsonDecodedContent();
 
-        // change approval to APP_ON via sql query
         $query = 'UPDATE ' . $this->Payment->getTable().' SET approval = :approval WHERE id = :paymentId';
         $params = [
             'approval' => APP_ON,
@@ -172,7 +189,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceBeforeAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
 
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), 10.5, 'product');
+        $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
         $response = $this->browser->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
@@ -241,7 +258,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     /**
      * @param int $customerId
-     * @param int $amount
+     * @param int $amount - strange behavior: posting a string '64,32' leads to '64.32' in controller
      * @param string $type
      * @param int $manufacturerId optional
      * @param string $text optional

@@ -85,7 +85,7 @@ $this->element('addScript', ['script' =>
                   echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
 
                   echo $this->Form->control('Customers.address_customer.address1', ['label' => __('Street')]);
-                  echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional_information')]);
+                  echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional_address_information')]);
 
                   echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
                   echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);

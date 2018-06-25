@@ -57,7 +57,7 @@ class CheckCreditBalanceShell extends AppShell
             if ($delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
-                $delta = Configure::read('app.htmlHelper')->formatAsDecimal($delta) . ' €'; // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
+                $delta = Configure::read('app.numberHelper')->formatAsDecimal($delta) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL'); // creditBalance is rendered in email view => do not use formatAsCurrency here because of &nbsp;
                 $outString .= $customer->name . ': ' . $delta . '<br />';
                 $email = new AppEmail();
                 $email->setTemplate('Admin.check_credit_balance')
@@ -71,7 +71,7 @@ class CheckCreditBalanceShell extends AppShell
             }
         }
 
-        $outString .= 'Summe: ' . Configure::read('app.htmlHelper')->formatAsEuro($deltaSum * - 1) . '<br />';
+        $outString .= 'Summe: ' . Configure::read('app.numberHelper')->formatAsCurrency($deltaSum * - 1) . '<br />';
         $outString .= 'Verschickte E-Mails: ' . $i;
 
         $this->stopTimeLogging();

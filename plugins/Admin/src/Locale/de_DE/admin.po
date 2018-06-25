@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-11 18:13+0200\n"
-"PO-Revision-Date: 2018-06-08 17:51+0200\n"
+"POT-Creation-Date: 2018-06-21 10:54+0200\n"
+"PO-Revision-Date: 2018-06-20 17:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -17,6 +17,45 @@ msgstr ""
 
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "created"
+msgstr "erstellt"
+
+msgid "changed"
+msgstr "geändert"
+
+msgid "_Order_list_filename_"
+msgstr "_Bestellliste_"
+
+msgid "product"
+msgstr "Produkt"
+
+msgid "member"
+msgstr "Mitglied"
+
+msgid "Order_lists"
+msgstr "Bestelllisten"
+
+msgid "Add_manufacturer"
+msgstr "Neuen Hersteller erstellen"
+
+msgid "Edit_manufacturer"
+msgstr "Hersteller bearbeiten"
+
+msgid "Manufacturer_{0}_was"
+msgstr "Der Hersteller {0} wurde"
+
+msgid "Edit_settings"
+msgstr "Einstellungen berbeiten"
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
+
+msgid "Your_settings_have_been_changed."
+msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
@@ -35,6 +74,42 @@ msgstr "Sofort-Bestellung"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "all_activities"
+msgstr "alle Aktivitäten"
+
+msgid "all_users"
+msgstr "alle Benutzer"
+
+msgid "all_products"
+msgstr "alle Produkte"
+
+msgid "Action_log_type"
+msgstr "Aktivitäts-Typ"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "User"
+msgstr "Benutzer"
+
+msgid "Show_ordered_product"
+msgstr "Bestelltes Produkt anzeigen"
+
+msgid "records"
+msgstr "Datensätze"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "{0,plural,=1{record} other{records}}"
+msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "docs_route_settings"
 msgstr "einstellungen"
@@ -70,11 +145,14 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 
-msgid "Chose_member..."
+msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
 msgid "1_day_ahead"
 msgstr "1 Tag zurück"
+
+msgid "to"
+msgstr "bis"
 
 msgid "1_day_back"
 msgstr "1 Tag vor"
@@ -102,9 +180,6 @@ msgstr "Homepage-Verwaltung"
 
 msgid "Home"
 msgstr "Home"
-
-msgid "Order_lists"
-msgstr "Bestelllisten"
 
 msgid "Manufacturers"
 msgstr "Hersteller"
@@ -148,14 +223,329 @@ msgstr "Mein Profil"
 msgid "Contact_person"
 msgstr "Ansprechperson"
 
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
+
+msgid "conveyed_for"
+msgstr "vermittelt für"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Rechnung Nr."
+
+msgid "Orders_from"
+msgstr "Bestellungen vom"
+
+msgid "Invoice_date"
+msgstr "Rechnungsdatum"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Price_excl."
+msgstr "Preis exkl."
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Price_incl."
+msgstr "Preis inkl."
+
+msgid "variable_member_fee"
+msgstr "variabler Mitgliedsbeitrag"
+
+msgid "New_total_sum"
+msgstr "Neue Gesamtsumme"
+
+msgid ""
+"The_total_sum_below_right_(minus_{0}_"
+"%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird "
+"so bald wie möglich auf dein Konto überwiesen."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+"Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto "
+"überwiesen."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Von Mitgliedern bezahlt in {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Von Mitgliedern bezahlt in"
+
+msgid "Kept_variable_member_fee"
+msgstr "Einbehaltener variabler Mitgliedsbeitrag"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Betrag, der auf dein Konto überwiesen wird"
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Vielen Dank, dass du uns belieferst!"
+
+msgid "Detail_view"
+msgstr "Detailübersicht"
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Order_list_grouped_by"
+msgstr "Bestellliste gruppiert nach"
+
+msgid "Delivery_date"
+msgstr "Liefertermin"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Dear_financial_responsible"
+msgstr "Liebe(r) Finanz-Verantwortliche(r)"
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr "die Rechnungen vom {0} wurden soeben verschickt."
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr "Hier findest du die Übersicht zum Überweisen:"
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr ""
+"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen "
+"Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und "
+"bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-"
+"System weniger fehleranfällig."
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr "(Link nur für Superadmins)."
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr "Vielen Dank für deine Arbeit!"
+
 msgid "docs_route_products"
 msgstr "produkte"
+
+msgid "Pick_up_date"
+msgstr "Abholdatum"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Order_list_by_product"
+msgstr "Bestellliste nach Produkt"
+
+msgid "Order_list_by_member"
+msgstr "Bestellliste nach Mitglied"
+
+msgid "Show_list_(grouped_by_product)"
+msgstr "Liste anzeigen (gruppiet nach Produkt)"
+
+msgid "Show_list_(grouped_by_member)"
+msgstr "Liste anzeigen (gruppiet nach Mitglied)"
 
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
 
-msgid "all_products"
-msgstr "alle Produkte"
+msgid "General"
+msgstr "Allgemein"
+
+msgid "in_your_imprint"
+msgstr "in deinem Impressum"
+
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr "im Impressum des Herstellers"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr "Wird {0} spamgeschützt angezeigt."
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr "Wird {0} angezeigt."
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Example_given_abbreviation"
+msgstr "Z. B."
+
+msgid "Website"
+msgstr "Homepage"
+
+msgid "To_your_settings"
+msgstr "Hier geht's zu deinen Einstellungen"
+
+msgid "To_the_settings_of_manufacturer"
+msgstr "Hier geht's zu den Hersteller-Einstellungen"
+
+msgid "To_manufacturer_profile"
+msgstr "Hier geht's zum Hersteller-Profil"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Click_on_logo_to_change_it."
+msgstr "Zum Ändern auf das Logo klicken."
+
+msgid "Upload_new_logo_or_change_it"
+msgstr "Neues Logo hochladen bzw. austauschen"
+
+msgid "Delete_logo?"
+msgstr "Logo löschen?"
+
+msgid "Do_not_forget_to_press_save"
+msgstr "Speicher nicht vergesen"
+
+msgid "Short_description"
+msgstr "Kurze Beschreibung"
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr ""
+"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst "
+"nicht verändert werden."
+
+msgid "Long_description"
+msgstr "Lange Beschreibung"
+
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr ""
+"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und "
+"dann auf \"bearbeiten\" klicken."
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr "Wird auf der Hersteller-Seite angezeigt."
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "Wie verwende ich den Editor?"
+
+msgid "Bank_account_data"
+msgstr "Bankdaten"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr ""
+"werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse "
+"verwendet."
+
+msgid "Bank"
+msgstr "Bank"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "Company_data"
+msgstr "Firmendaten"
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem "
+"Hersteller-Profil ganz unten rechts."
+
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Additional_address_information"
+msgstr "Adresszusatz"
+
+msgid "Zip"
+msgstr "PLZ"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "VAT_number"
+msgstr "UID-Nummer"
+
+msgid "if_it_is_available"
+msgstr "sofern vorhanden"
+
+msgid "Commercial_register_number"
+msgstr "Firmenbuchnummer"
+
+msgid "Company_court"
+msgstr "Firmengericht"
+
+msgid "Supervisory_authority"
+msgstr "Aufsichtsbehörde"
+
+msgid "e. g. chamber_of_agriculture"
+msgstr "z. B. Landwirtschaftskammer"
+
+msgid "Chamber"
+msgstr "Kammer"
+
+msgid "Additional_text_for_invoice"
+msgstr "Zusatztext für Rechnung"
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr "Wird am Ende der Übersichtsseite deiner Rechnung eingefügt."
+
+msgid "Example_for_additional_invoice_text"
+msgstr "z. B.: \"Durchschnittsteuersatz 10% zzgl. Zusatzsteuer 10%\""
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Delivery_break"
+msgstr "Lieferpause"
+
+msgid "Only_for_members"
+msgstr "Nur für Mitglieder"
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr "Summe der offenen Bestellungen im angegebenen Zeitraum"
+
+msgid "Open_orders_abbreviation"
+msgstr "O.B."
+
+msgid "Settings_abbreviation"
+msgstr "Opt."
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Show_all_products_from_{0}"
+msgstr "Alle Produkte von {0} anzeigen"
+
+msgid "Show_{0}"
+msgstr "{0} anzeigen"
+
+msgid "Edit_manufacturer_settings"
+msgstr "Hersteller-Einstellungen bearbeiten"
+
+msgid "Test_order_list"
+msgstr "Bestellliste prüfen"
+
+msgid "Manually_send_order_list"
+msgstr "Bestellliste manuell versenden"
+
+msgid "Test_invoice"
+msgstr "Rechnung prüfen"
+
+msgid "Manufacturer_profile"
+msgstr "Hersteller-Profil"
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
 
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
@@ -175,32 +565,14 @@ msgstr "Pfand-Rückgabe"
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
 
-msgid "Amount"
-msgstr "Anzahl"
-
-msgid "Product"
-msgstr "Produkt"
-
-msgid "Manufacturer"
-msgstr "Hersteller"
-
-msgid "Price"
-msgstr "Preis"
-
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
-
-msgid "Deposit"
-msgstr "Pfand"
 
 msgid "Weight"
 msgstr "Gewicht"
 
 msgid "Order_date"
 msgstr "Bestelldatum"
-
-msgid "Member"
-msgstr "Mitglied"
 
 msgid "Status"
 msgstr "Status"
@@ -220,9 +592,6 @@ msgstr "Zum Ändern des Gewichtes anklicken"
 msgid "Click_to_cancel_product"
 msgstr "Zum Stornieren des Produktes anklicken"
 
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
-
 msgid "Change_order_status"
 msgstr "Bestellstatus ändern"
 
@@ -239,9 +608,6 @@ msgstr ""
 msgid "Group_by_member"
 msgstr "Gruppieren nach Mitglied"
 
-msgid "Email"
-msgstr "E-Mail"
-
 msgid "Order_count"
 msgstr "Anzahl Bestellungen"
 
@@ -256,9 +622,6 @@ msgstr "Alle bestellten Produkte von {0} anzeigen"
 
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
-
-msgid "records"
-msgstr "Datensätze"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Bestellungen als PDF generieren"
@@ -278,11 +641,131 @@ msgstr "Willkommen"
 msgid "docs_route_credit_system"
 msgstr "guthaben-system"
 
+msgid "chose_manufacturer..."
+msgstr "Hersteller auswählen..."
+
+msgid "chose_category..."
+msgstr "Kategorie auswählen..."
+
+msgid "amount"
+msgstr "Anzahl"
+
+msgid "price"
+msgstr "Preis"
+
+msgid "Add_product"
+msgstr "Neues Produkt"
+
+msgid "Synchronize_products"
+msgstr "Produkte synchronisieren"
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Bitte wähle einen Hersteller aus."
+
+msgid "Attribute"
+msgstr "Variante"
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Product_declaration"
+msgstr "Produktdeklaration"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "New?"
+msgstr "Neu?"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Neue Variante für Produkt {0} erstellen"
+
+msgid "add_image"
+msgstr "Bild hinzufügen"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Variante für Produkt {0} löschen"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "Diese Variante ist die Standardvariante."
+
+msgid "Define_as_new_default_attribute"
+msgstr "Als neue Standard-Variante festlegen"
+
+msgid "change_category"
+msgstr "Kategorie ändern"
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Kategorie \"Alle Produkte\" fehlt!"
+
+msgid "change_amount"
+msgstr "Anzahl ändern"
+
+msgid "change_price"
+msgstr "Preis ändern"
+
+msgid "change_tax_rate"
+msgstr "Steuersatz ändern"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
+
+msgid "change_deposit"
+msgstr "Pfand ändern"
+
+msgid "deactivate"
+msgstr "deaktivieren"
+
+msgid "activate"
+msgstr "aktivieren"
+
+msgid "product_preview"
+msgstr "Produkt-Vorschau"
+
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
 
 msgid "docs_route_paying_with_time_module"
 msgstr "stundenabrechnung"
+
+msgid "Show_product"
+msgstr "Produkt anzeigen"
+
+msgid "Show_manufacturer"
+msgstr "Hersteller anzeigen"
+
+msgid "Show_blog_post"
+msgstr "Blog-Artikel anzeigen"
+
+msgid "Show_page"
+msgstr "Seite anzeigen"
+
+msgid "Show_category"
+msgstr "Kategorie anzeigen"
+
+msgid "Show_order"
+msgstr "Bestellung anzeigen"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
+
+#~ msgid "A_negative_amount_is_not_allowed:"
+#~ msgstr "Ein negativer Betrag ist nicht erlaubt:"
+
+#~ msgid "The_amount_needs_to_be_greater_than_0:"
+#~ msgstr "Der Betrag muss größer als 0 sein:"
+
+#~ msgid "Paid_by_members_in_euro"
+#~ msgstr "Von den Mitgliedern bezahlt in Euro"
+
+#~ msgid "Email_address"
+#~ msgstr "E-Mail-Adresse"
 
 #~ msgid "Cancel_product?"
 #~ msgstr "Produkt stornieren?"

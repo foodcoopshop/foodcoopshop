@@ -72,7 +72,7 @@ class ManufacturersController extends AdminAppController
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Hersteller erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_manufacturer'));
         $this->_processForm($manufacturer, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -103,7 +103,7 @@ class ManufacturersController extends AdminAppController
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Hersteller bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_manufacturer'));
         $this->_processForm($manufacturer, true);
     }
 
@@ -148,11 +148,11 @@ class ManufacturersController extends AdminAppController
 
             if (!$isEditMode) {
                 $customer = [];
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'manufacturer_added';
             } else {
                 $customer = $this->Manufacturer->getCustomerRecord($unchangedManufacturerAddress->email);
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'manufacturer_changed';
             }
 
@@ -179,7 +179,7 @@ class ManufacturersController extends AdminAppController
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $message = 'Der Hersteller <b>' . $manufacturer->name . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'Manufacturer_{0}_was', ['<b>' . $manufacturer->name . '</b>']) . ' ' . $messageSuffix . '.';
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
 
@@ -295,11 +295,16 @@ class ManufacturersController extends AdminAppController
         }
         $this->set('manufacturers', $manufacturers);
 
-        $this->set('title_for_layout', 'Hersteller');
+        $this->set('title_for_layout', __('Manufacturers'));
     }
 
-    public function sendInvoice($manufacturerId, $from, $to)
+    public function sendInvoice()
     {
+        
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $dateFrom = $this->getRequest()->getQuery('dateFrom');
+        $dateTo = $this->getRequest()->getQuery('dateTo');
+        
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -311,7 +316,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
+        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
@@ -330,7 +335,7 @@ class ManufacturersController extends AdminAppController
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
+            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
                 ORDER_STATE_OPEN,
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
@@ -398,8 +403,13 @@ class ManufacturersController extends AdminAppController
         return $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
     }
 
-    public function sendOrderList($manufacturerId, $from, $to)
+    public function sendOrderList()
     {
+        
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $dateFrom = $this->getRequest()->getQuery('dateFrom');
+        $dateTo = $this->getRequest()->getQuery('dateTo');
+        
         Configure::read('app.timeHelper')->recalcDeliveryDayDelta();
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -413,7 +423,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN
         ], 'F');
 
@@ -425,14 +435,14 @@ class ManufacturersController extends AdminAppController
 
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Produkt');
+            $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), __d('admin', 'product'));
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
                 ORDER_STATE_OPEN
             ], 'F');
             $this->render('get_order_list_by_customer');
-            $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), 'Mitglied');
+            $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), __d('admin', 'member'));
 
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
@@ -448,7 +458,7 @@ class ManufacturersController extends AdminAppController
                     $productPdfFile,
                     $customerPdfFile
                 ])
-                ->setSubject('Bestellungen für den ' . date('d.m.Y', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
+                ->setSubject('Bestellungen für den ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                 ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'appAuth' => $this->AppAuth,
@@ -470,7 +480,7 @@ class ManufacturersController extends AdminAppController
     {
         $this->editOptions($this->AppAuth->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
-        $this->set('title_for_layout', 'Einstellungen bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_settings'));
         if (empty($this->getRequest()->getData())) {
             $this->render('editOptions');
         }
@@ -491,7 +501,7 @@ class ManufacturersController extends AdminAppController
         if (empty($manufacturer)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', $manufacturer->name . ': Einstellungen bearbeiten');
+        $this->set('title_for_layout', $manufacturer->name . ': ' . __d('admin', 'Edit_settings'));
 
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
@@ -642,12 +652,11 @@ class ManufacturersController extends AdminAppController
                 $this->renewAuthSession();
             }
 
-            $message = 'Die Einstellungen des Herstellers <b>' . $manufacturer->name . '</b>';
+            $message = __d('admin', 'The_settings_of_manufacturer_{0}_have_been_changed.', ['<b>' . $manufacturer->name . '</b>']);
             if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getManufacturerMyOptions()) {
-                $message = 'Deine Einstellungen';
+                $message = __d('admin', 'Your_settings_have_been_changed.');
                 $this->renewAuthSession();
             }
-            $message .= ' wurden erfolgreich gespeichert.';
 
             $this->Flash->success($message);
 
@@ -660,12 +669,12 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    private function prepareInvoiceOrOrderList($manufacturerId, $groupType, $from, $to, $orderState, $saveParam = 'I')
+    private function prepareInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState, $saveParam = 'I')
     {
-        $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $from, $to, $orderState);
+        $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
-            die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
         
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -673,8 +682,8 @@ class ManufacturersController extends AdminAppController
         
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
-        $this->set('from', date('d.m.Y', strtotime(str_replace('/', '-', $from))));
-        $this->set('to', date('d.m.Y', strtotime(str_replace('/', '-', $to))));
+        $this->set('dateFrom', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))));
+        $this->set('dateTo', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateTo))));
 
         // only needed for order lists: format is english because it is used for filename => sorting!
         $this->set('deliveryDay', date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')));
@@ -707,34 +716,44 @@ class ManufacturersController extends AdminAppController
         return $results;
     }
 
-    public function getInvoice($manufacturerId, $from, $to)
+    public function getInvoice()
     {
-        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, [
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $dateFrom = $this->getRequest()->getQuery('dateFrom');
+        $dateTo = $this->getRequest()->getQuery('dateTo');
+        
+        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ]);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
-            die('Keine Bestellungen im angegebenen Zeitraum vorhanden.');
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, [
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,
             ORDER_STATE_CASH_FREE
         ]);
     }
 
-    public function getOrderListByProduct($manufacturerId, $from, $to)
+    public function getOrderListByProduct()
     {
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $dateFrom = $this->getRequest()->getQuery('dateFrom');
+        $dateTo = $this->getRequest()->getQuery('dateTo');
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $from, $to, $orderStates);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $orderStates);
     }
 
-    public function getOrderListByCustomer($manufacturerId, $from, $to)
+    public function getOrderListByCustomer()
     {
+        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $dateFrom = $this->getRequest()->getQuery('dateFrom');
+        $dateTo = $this->getRequest()->getQuery('dateTo');
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $from, $to, $orderStates);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $orderStates);
     }
 
     /**

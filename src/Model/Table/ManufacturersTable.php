@@ -435,7 +435,7 @@ class ManufacturersTable extends AppTable
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }
     
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $from, $to, $orderState)
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState)
     {
         switch ($order) {
             case 'product':
@@ -465,7 +465,7 @@ class ManufacturersTable extends AppTable
         odu.quantity_in_units as OrderDetailUnitQuantityInUnits,
         odu.product_quantity_in_units as OrderDetailUnitProductQuantityInUnits,
         odu.unit_name as OrderDetailUnitUnitName,
-        DATE_FORMAT (o.date_add, '%d.%m.%Y') as OrderDateAdd,
+        o.date_add as OrderDateAdd,
         c.id_customer AS CustomerId,
         {$customerNameAsSql} AS CustomerName
         FROM ".$this->tablePrefix."order_detail od
@@ -489,9 +489,10 @@ class ManufacturersTable extends AppTable
         // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
         $params = [
             'manufacturerId' => $manufacturerId,
-            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($from),
-            'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($to),
+            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
+            'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo),
         ];
+        
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $result = $statement->fetchAll('assoc');

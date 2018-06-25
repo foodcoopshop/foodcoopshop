@@ -77,9 +77,9 @@ if ($appAuth->Cart->getProducts() !== null) {
                 $class[] = 'negative';
             }
             echo '<div class="credit-balance-wrapper">';
-              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Html->formatAsEuro($creditBalance).'</b></p>';
+              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b></p>';
             if ($shoppingLimitReached) {
-                echo '<p><b class="negative">'.__('You_reached_the_order_limit_{0}_please_add_credit.',[$this->Html->formatAsEuro(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE'))]).'</b></p>';
+                echo '<p><b class="negative">'.__('You_reached_the_order_limit_{0}_please_add_credit.',[$this->Number->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE'))]).'</b></p>';
                 echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
                 echo __('Add_credit');
                 echo '</a></p>';
@@ -91,9 +91,9 @@ if ($appAuth->Cart->getProducts() !== null) {
         <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in AppController ?>
             <p class="no-products"><?php echo __('Your_cart_is_empty'); ?></p>
             <p class="products"></p>
-            <p class="sum-wrapper"><b><?php echo __('Sum'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
-            <p class="deposit-sum-wrapper"><b><?php echo __('Deposit'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
-            <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Html->formatAsEuro(0); ?></span></p>
+            <p class="sum-wrapper"><b><?php echo __('Sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <p class="deposit-sum-wrapper"><b><?php echo __('Deposit'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
+            <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             
             <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             	<p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>

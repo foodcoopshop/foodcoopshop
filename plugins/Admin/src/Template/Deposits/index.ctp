@@ -65,7 +65,7 @@ if ($appAuth->isSuperadmin()) {
     echo '<div class="sc"></div>';
 
     if (empty($deposits)) {
-        echo '<h2 class="info">Seit dem '.date('d.m.Y', strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
+        echo '<h2 class="info">Seit dem '.date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
     } else {
         echo '<table class="list no-clone-last-row">';
 
@@ -93,7 +93,7 @@ if ($appAuth->isSuperadmin()) {
                     '/admin/order-details/?manufacturerId='.$manufacturerId.'&dateFrom='.$deposit['dateFrom'].'&dateTo='.$deposit['dateTo'].'&deposit=1&orderStates[]='.join(',', $orderStates)
                 ).'</span>';
                 echo '<span style="float: right;">';
-                echo $this->Html->formatAsEuro($deposit['delivered']);
+                echo $this->Number->formatAsCurrency($deposit['delivered']);
                 echo '</span>';
             }
                 echo '</td>';
@@ -109,7 +109,7 @@ if ($appAuth->isSuperadmin()) {
                     $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear)
                 ).'</span>';
                 echo '<span style="float: right;">';
-                echo $this->Html->formatAsEuro($deposit['returned']);
+                echo $this->Number->formatAsCurrency($deposit['returned']);
                 echo '</span>';
             }
                 echo '</td>';
@@ -124,10 +124,10 @@ if ($appAuth->isSuperadmin()) {
 
         echo '<tr>';
             echo '<td></td>';
-            echo '<td class="right"><b>'.$this->Html->formatAsEuro($sumDepositsDelivered).'</b></td>';
+            echo '<td class="right"><b>'.$this->Number->formatAsCurrency($sumDepositsDelivered).'</b></td>';
             echo '<td class="right negative">';
         if ($sumDepositsReturned != 0) {
-            echo '<b>'.$this->Html->formatAsEuro($sumDepositsReturned).'</b>';
+            echo '<b>'.$this->Number->formatAsCurrency($sumDepositsReturned).'</b>';
         }
             echo '</td>';
         echo '</tr>';
@@ -139,7 +139,7 @@ if ($appAuth->isSuperadmin()) {
         if ($depositCreditBalance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
         }
-            echo '<td class="'.implode(' ', $depositCreditBalanceClasses).'"><b style="font-size: 16px;">'.$this->Html->formatAsEuro($depositCreditBalance).'</b></td>';
+            echo '<td class="'.implode(' ', $depositCreditBalanceClasses).'"><b style="font-size: 16px;">'.$this->Number->formatAsCurrency($depositCreditBalance).'</b></td>';
         echo '</tr>';
 
         echo '</table>';

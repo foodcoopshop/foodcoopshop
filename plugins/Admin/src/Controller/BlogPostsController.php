@@ -138,10 +138,10 @@ class BlogPostsController extends AdminAppController
             $blogPost = $this->BlogPost->save($blogPost);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'blog_post_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'blog_post_changed';
             }
 

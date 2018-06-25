@@ -203,7 +203,7 @@ class CustomersController extends AdminAppController
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->Customer->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
-                    $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.htmlHelper')->formatAsEuro($creditBalance) . '. Es muss 0 betragen.';
+                    $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. Es muss 0 betragen.';
                 }
             }
             
@@ -568,7 +568,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = date('d.m.Y');
+        $dateTo = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }

@@ -25,10 +25,10 @@ use Cake\Core\Configure;
 
             <p>
                 Deine Zeit-Eintragung vom <b>
-                	<?php echo $payment->created->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?>
+                	<?php echo $payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?>
             	</b>
             	<?php if ($payment->working_day) { ?>
-            		(Arbeitstag: <b><?php echo $payment->working_day->i18nFormat(Configure::read('DateFormat.de.DateLong2')); ?></b>)
+            		(Arbeitstag: <b><?php echo $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')); ?></b>)
             	<?php } ?>
             	wurde geändert.
 			</p>

@@ -343,9 +343,13 @@ input.datepicker {
 	margin-top: 5px;
 	list-style: disc;
 }
-.ui-dialog-content #flashMessage {
+.ui-dialog-content #flashMessage,
+.featherlight-content #flashMessage {
 	position: absolute;
 	top: 10px;
+}
+.featherlight-content #flashMessage {
+	z-index: 10000;
 }
 .warning {
     color: red;
@@ -1024,21 +1028,22 @@ a.btn-arrow {
     position: absolute;
     top: 7px;
     color: #ccc;
+    width: 15px;
 }
 a.btn-arrow:hover {
     color: #719f41;
 }
 a.btn-previous-day {
-    left: 138px;
+    right: 92px;
 }
 a.btn-previous-day:nth-of-type(1) {
     left: 3px;
 }
 a.btn-next-day {
-    left: 226px;
+    right: 3px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 91px;
+    left: 92px;
 }
 a.btn-arrow i {
     font-size: 17px;
