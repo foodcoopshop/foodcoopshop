@@ -362,7 +362,7 @@ class PaymentsController extends AdminAppController
         );
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $message .= __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
+        $message .= ' ' . __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
 
         if ($type == 'member_fee') {
             $message .= ', ' . __d('admin', 'for') . ' ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
