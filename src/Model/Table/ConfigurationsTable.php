@@ -37,14 +37,9 @@ class ConfigurationsTable extends AppTable
      * @throws ConfigFileMissingException
      * @return string (version)
      */
-    public function getVersion($plugin = null)
+    public function getVersion()
     {
-        $versionFile = 'VERSION.txt';
-        if ($plugin) {
-            $versionFileWithPath = ROOT . DS . 'plugins' . DS . $plugin . DS . $versionFile;
-        } else {
-            $versionFileWithPath = ROOT . DS . $versionFile;
-        }
+        $versionFileWithPath = ROOT . DS . 'VERSION.txt';
 
         if (!file_exists($versionFileWithPath)) {
             throw new ConfigFileMissingException('version file not found: ' . $versionFileWithPath);

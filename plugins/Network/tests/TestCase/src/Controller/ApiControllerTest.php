@@ -25,12 +25,6 @@ class ApiControllerTest extends AppCakeTestCase
 
     const API_URL = '/api/getProducts.json';
 
-    public function setUp()
-    {
-        parent::setUp();
-        $this->changeReadOnlyConfiguration('FCS_NETWORK_PLUGIN_ENABLED', 1);
-    }
-
     public function testBasicAuthLoggedOut()
     {
         $this->browser->get(self::API_URL);
@@ -46,17 +40,6 @@ class ApiControllerTest extends AppCakeTestCase
             'wrong-password'
         );
         $this->assertWrongCredentials();
-    }
-
-    public function testSuccessfulLoginAndResponse()
-    {
-        $this->markTestSkipped();
-        $this->loginWithBasicAuth();
-        $response = $this->assertJsonOK();
-        $this->assertEquals($response->loggedUser->email, Configure::read('test.loginEmailMeatManufacturer'), 'user not set in response');
-        $this->assertRegExpWithUnquotedString($response->app->domain, Configure::read('app.cakeServerName'), 'domain not set in response');
-        $this->assertRegExpWithUnquotedString($response->app->name, Configure::read('appDb.FCS_APP_NAME'), 'app name not set in response');
-        $this->assertEquals(count($response->products), 16, 'product count not correct');
     }
 
     /**
@@ -86,9 +69,7 @@ class ApiControllerTest extends AppCakeTestCase
         $this->browser->post(self::API_URL, [
             'data' => [
                 'metaData' => [
-                    'baseUrl' => Configure::read('app.cakeServerName'),
-                    'versionFoodCoopShop' => $this->Configuration->getVersion(),
-                    'versionNetworkPlugin' => $this->Configuration->getVersion('Network')
+                    'baseUrl' => Configure::read('app.cakeServerName')
                 ]
             ]
         ]);

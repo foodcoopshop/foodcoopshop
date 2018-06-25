@@ -156,7 +156,6 @@ class ConfigurationsController extends AdminAppController
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
             $this->helpers[] = 'Network.Network';
             $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);

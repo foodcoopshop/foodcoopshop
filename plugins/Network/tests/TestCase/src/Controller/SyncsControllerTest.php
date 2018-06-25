@@ -28,7 +28,6 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->Network = new NetworkHelper(new View());
-        $this->changeReadOnlyConfiguration('FCS_NETWORK_PLUGIN_ENABLED', 1);
     }
 
     public function testDenyAccessIfVariableMemberFeeEnabled()
