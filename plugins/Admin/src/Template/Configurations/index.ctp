@@ -209,19 +209,11 @@ $this->element('addScript', [
         </tr>
         <?php } ?>
 
-        <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
-        <tr>
-            <td>Version Netzwerk-Modul</td>
-            <td><?php echo $versionNetworkPlugin; ?></td>
-        </tr>
-        <?php } ?>
-
         <tr>
             <td>app.cakeServerName</td>
             <td><a target="_blank"
                 href="<?php echo Configure::read('app.cakeServerName'); ?>"><?php echo Configure::read('app.cakeServerName'); ?></a></td>
         </tr>
-        
 
         <tr>
             <td>app.emailOrderReminderEnabled</td>

@@ -1,0 +1,263 @@
+#sync-products, #sync-product-data {
+  margin: 3px;
+}
+
+body.syncs.product .sync-button-wrapper,
+body.syncs.product_data .sync-button-wrapper {
+  float: left;
+  margin-right: 3px;
+}
+
+body.syncs.product .sync-button-wrapper,
+body.syncs.product_data .sync-button-wrapper {
+  width: 275px;
+}
+
+body.syncs.product .sync-button-wrapper a.btn,
+body.syncs.product_data .sync-button-wrapper a.btn {
+  margin-bottom: 3px;
+  margin-right: 3px;
+}
+
+body.syncs #content {
+  margin-top: 0;
+}
+
+body.syncs h2 {
+  margin-top: 10px;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+form.sync-login-form {
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  float: left;
+  padding: 7px;
+  width: 241px;
+  margin-right: 5px;
+  margin-bottom: 1px;
+  background: #efefef;
+}
+
+form.sync-login-form .toggle-link {
+  margin-top: -5px;
+  margin-bottom: 0;
+}
+
+form.sync-login-form input.username {
+  margin-top: 5px;
+}
+
+form.sync-login-form input {
+  width: 100%;
+}
+
+form.sync-login-form.error {
+  background: #f3515c;
+}
+
+form.sync-login-form.error b, form.sync-login-form.error a {
+  color: #fff;
+}
+
+body.syncs.product div.product-list {
+  float: left;
+  margin-right: 1%;
+  min-height: 200px; /* force width */
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 5px;
+}
+
+div.product-list.loader {
+  background: url(/img/ajax-loader.gif) no-repeat center;
+}
+
+body.syncs.product div.product-list.local {
+  border: 3px solid rgba(113, 159, 65, .7);
+}
+
+body.syncs.product div.product-list.remote {
+  border: 3px solid orange;
+}
+
+body.syncs.product div.product-list>b {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+body.syncs.product div.product-list table.list th, body.syncs.product div.product-list table.list table.list td
+  {
+  border-left: none;
+  border-right: none;
+}
+
+body.syncs.product div.product-list>b {
+  margin-top: 5px;
+}
+
+body.syncs.product div.product-list>b, form.sync-login-form>b {
+  margin-bottom: 5px;
+  float: left;
+  overflow: hidden;
+}
+
+body.syncs.product table.sync-list>tbody>tr>*:nth-child(1),
+body.syncs.product_data tr.assigned-products {
+  display: none;
+}
+
+body.syncs.product table.sync-list tr.ok td,
+body.syncs.product table.assigned-products td {
+  color: #fff;
+  background-color: rgba(113, 159, 65, .7);
+}
+
+body.syncs.product_data tr.assigned-products td {
+  font-size: 11px;
+}
+
+body.syncs.product_data tr.assigned-products td.dirty,
+body.syncs.product_data span.dirty {
+  background-color: #f3515c;
+  color: #fff;
+}
+
+body.syncs.product table.assigned-products .spinner {
+  float: right;
+  margin-left: 5px;
+}
+
+body.syncs.product table.sync-list td.ui-droppable-hover {
+  background-color: orange;
+  opacity: .7;
+}
+
+body.syncs.product table.sync-list td.ui-draggable-dragging {
+  border: 2px solid orange;
+  background: #fff;
+  color: #333 ! important;
+}
+
+body.syncs.product table.assigned-products {
+  display: table ! important;
+  width: 100%;
+}
+
+body.syncs.product table.assigned-products td {
+  border: none;
+  color: #fff;
+}
+
+body.syncs.product table.assigned-products td,
+body.syncs.product tr.main-product span.unity,
+body.syncs.product_data tr.main-product span.unity,
+body.syncs.product_data tr.assigned-products span.unity {
+  font-size: 11px;
+  font-style: italic;
+}
+
+body.syncs.product table.assigned-products td:first-of-type {
+  width: 20px;
+}
+
+body.syncs.product table.assigned-products span.app-name {
+  float: right;
+  margin-left: 5px;
+  font-style: italic;
+}
+
+body.syncs.product a.delete-product-button i {
+  color: #fff;
+}
+
+body.syncs.product a.delete-product-button:hover i {
+  color: #f3515c;
+}
+
+.ui-draggable {
+  cursor: move; /* fallback: no `url()` support or images disabled */
+  cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
+  cursor: -moz-grab; /* Firefox 1.5-26 */
+  cursor: grab; /* W3C standards syntax, should come least */
+}
+
+.ui-draggable:active {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
+}
+
+body.syncs.product_data table.product-list {
+  width: 650px;
+}
+
+body.syncs.product_data i.description {
+  padding-left: 5px;
+}
+
+body.syncs.product_data table.product-list td.quantity, body.syncs.product_data table.product-list td.price,
+  body.syncs.product_data table.product-list td.deposit {
+  text-align: right;
+}
+
+body.syncs.product_data table.product-list td.active {
+  text-align: center;
+}
+
+body.syncs.product_data table.product-list tr.horizontal-checkboxes {
+  background-color: #ebebeb;
+}
+
+body.syncs.product_data table.product-list tr.horizontal-checkboxes td:not(:first-of-type ) {
+  text-align: center;
+}
+
+body.syncs.product_data table.product-list tr.horizontal-checkboxes.error,
+  body.syncs.product_data table.product-list tr.ok td.sync-checkbox.error {
+  background-color: #f3515c;
+}
+/* additional info in horizontal checkboxes */
+body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(2) input {
+  float: left;
+  margin-bottom: 4px;
+}
+
+body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(2) span,
+body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(2) span {
+  float: left;
+  font-size: 11px;
+  padding-left: 5px;
+  padding-top: 4px;
+}
+body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(2) span {
+  padding-top: 5px;
+}
+body.syncs.product_data table.product-list tr.error:nth-of-type(2) td:nth-of-type(2) span {
+  color: #fff;
+}
+body.syncs.product_data span.toggle-clean-rows {
+  float: right ! important;
+  font-weight: normal;
+  margin-right: 2px;
+}
+body.syncs.product_data input#toggle-clean-rows {
+  float: right ! important;
+}
+
+body.syncs.product_data h2.info,
+body.syncs.product_data h2.warning {
+    width: 650px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    float: left;
+}
+body.syncs.product_data #everything-allright {
+  display: none;
+}
+.ui-tooltip-content, /* can be removed in v2.1 */
+.tooltipster-content {
+  font-size: 11px;
+}
