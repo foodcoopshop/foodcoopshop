@@ -53,7 +53,7 @@ before_script:
   - sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
-  - vendor/bin/phpunit --testsuite App,Admin --stderr
+  - vendor/bin/phpunit --stderr
   - sudo cat ./logs/error.log
   
 notifications:

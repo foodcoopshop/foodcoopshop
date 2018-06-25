@@ -4,21 +4,6 @@
 
 <h4 align="center">Network plugin for <a href="https://github.com/foodcoopshop/foodcoopshop">FoodCoopShop</a>.</h4>
 
-<p align="center">
-  <a href="https://www.foodcoopshop.com/download">
-    <img src="https://img.shields.io/packagist/v/foodcoopshop/fcs-network-plugin.svg?label=stable"
-         alt="Latest stable version">
-  </a>
-  <a href="https://travis-ci.org/foodcoopshop/fcs-network-plugin">
-    <img src="https://travis-ci.org/foodcoopshop/fcs-network-plugin.svg"
-         alt="Build status">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"
-         alt="Software license">
-  </a>
-</p>
-
 This network plugin for FoodCoopShop provides several features that allows manufacturers to access / change data on other installations of FoodCoopShop.
 
 <h1 align="center">
