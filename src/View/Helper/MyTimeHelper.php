@@ -332,8 +332,7 @@ class MyTimeHelper extends TimeHelper
         }
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
-
-     /**
+    /**
       * @param date $dateString
       * @return date in format YYYY-mm-dd
       */

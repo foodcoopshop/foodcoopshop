@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 12:59+0200\n"
-"PO-Revision-Date: 2018-06-25 12:43+0200\n"
+"POT-Creation-Date: 2018-06-25 16:38+0200\n"
+"PO-Revision-Date: 2018-06-25 16:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -74,6 +74,59 @@ msgstr "Shop order"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
+
+msgid "Your_comment_will_be_shown_here."
+msgstr "Your comments will be shown here."
+
+msgid "Check_credit_upload"
+msgstr "Check credit upload"
+
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}."
+msgstr "The status of the credit upload for {0} was successfully changed to {1}."
+
+msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
+msgstr "The status of your credit upload was successfully changed to {0}."
+
+msgid ""
+"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}"
+"_and_an_email_was_sent_to_the_member."
+msgstr ""
+"The status of the credit upload for {0} was successfully changed to {1} and an "
+"email was sent to the member."
+
+msgid "for"
+msgstr "for"
+
+msgid "Deposit_take_back"
+msgstr "Deposit take back"
+
+msgid "was_added_successfully:_{0}"
+msgstr "was added successfully: {0}"
+
+msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
+msgstr "The amount was added to the credit system of {0} and can be deleted there."
+
+msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
+msgstr "The amount was added to the deposit account of {0} and can be deleted there."
+
+msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
+msgstr ""
+"The amount was added to the member fee system of {0} and can be deleted there."
+
+msgid "The_payment_({0}_{1})_was_removed_successfully."
+msgstr "The payment ({0}, {1}) was removed successfully."
+
+msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
+msgstr "The payment ({0}, {1}) of {2} was removed successfully."
+
+msgid "Member_fee"
+msgstr "Member fee"
+
+msgid "Credit"
+msgstr "Credit"
+
+msgid "Show_order"
+msgstr "Show order"
 
 msgid ""
 "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}"
@@ -219,6 +272,39 @@ msgstr "members"
 msgid "docs_route_deposit"
 msgstr "deposit"
 
+msgid "Please_chose_a_manufacturer."
+msgstr "Please chose a manufacturer."
+
+msgid "Add_return_of_empty_glasses"
+msgstr "Add return of empty glasses"
+
+msgid "Add_deposit_return"
+msgstr "Add deposit return"
+
+msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
+msgstr "Since {0} deposit was neither delivered nor returned."
+
+msgid "Month"
+msgstr "Month"
+
+msgid "Product_with_deposit_delivered"
+msgstr "Produt with deposit delivered"
+
+msgid "Empty_glasses_returned"
+msgstr "Empty glasses returned"
+
+msgid "Show_details"
+msgstr "Show details"
+
+msgid "Delivered_deposit"
+msgstr "Delivered deposit"
+
+msgid "Returned_deposit"
+msgstr "Returned deposit"
+
+msgid "Your_deposit_balance"
+msgstr "Your deposit balance"
+
 msgid "Add_deposit_amount"
 msgstr "Add deposit amount"
 
@@ -317,6 +403,23 @@ msgstr "My profile"
 
 msgid "Contact_person"
 msgstr "Contact person"
+
+msgid "Bank_account_data"
+msgstr "Bank account data"
+
+msgid "Add_new_payment"
+msgstr "Add new payment"
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr "Please enter the amount that you just transfered to our bank account."
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr ""
+"If you chose \"payback\", please enter the amount that you just transfered back to "
+"the bank account of the user."
+
+msgid "Please_chose_the_months_for_your_payment."
+msgstr "Please chose the months for your payment."
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Invoice for the order period {0} to {1}"
@@ -514,9 +617,6 @@ msgstr "Will be shown on the manufacturer's profile page."
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "How do I use the editor?"
-
-msgid "Bank_account_data"
-msgstr "Bank account data"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr "is kept private and is only used to transfer money to your bank account."
@@ -725,6 +825,21 @@ msgstr "to the manufacturer area"
 msgid "Welcome"
 msgstr "Welcome"
 
+msgid "Add_transfered_member_fee"
+msgstr "Add transfered member fee"
+
+msgid "There_is_no_{0}_available."
+msgstr "There is no {0} available."
+
+msgid "Delete_payment?"
+msgstr "Delete payment?"
+
+msgid "Sum"
+msgstr "Sum"
+
+msgid "Back_to_member_overview"
+msgstr "Back to member overview"
+
 msgid "docs_route_credit_system"
 msgstr "credit-system"
 
@@ -745,9 +860,6 @@ msgstr "Add product"
 
 msgid "Synchronize_products"
 msgstr "Synchronize products"
-
-msgid "Please_chose_a_manufacturer."
-msgstr "Please chose a manufacturer."
 
 msgid "Image"
 msgstr "Image"
@@ -833,11 +945,12 @@ msgstr "Show page"
 msgid "Show_category"
 msgstr "Show category"
 
-msgid "Show_order"
-msgstr "Show order"
-
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{record} other{records}}"
+
+#, fuzzy
+#~ msgid "Amount_in"
+#~ msgstr "Amount in {0}"
 
 #~ msgid "A_negative_amount_is_not_allowed:"
 #~ msgstr "A negative amount is not allowed:"

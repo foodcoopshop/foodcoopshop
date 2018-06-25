@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 12:59+0200\n"
+"POT-Creation-Date: 2018-06-25 16:38+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -72,6 +72,54 @@ msgid "Shop_order"
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "Your_comment_will_be_shown_here."
+msgstr ""
+
+msgid "Check_credit_upload"
+msgstr ""
+
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}."
+msgstr ""
+
+msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
+msgstr ""
+
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "Deposit_take_back"
+msgstr ""
+
+msgid "was_added_successfully:_{0}"
+msgstr ""
+
+msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
+msgstr ""
+
+msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
+msgstr ""
+
+msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
+msgstr ""
+
+msgid "The_payment_({0}_{1})_was_removed_successfully."
+msgstr ""
+
+msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
+msgstr ""
+
+msgid "Member_fee"
+msgstr ""
+
+msgid "Credit"
+msgstr ""
+
+msgid "Show_order"
 msgstr ""
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
@@ -194,6 +242,39 @@ msgstr ""
 msgid "docs_route_deposit"
 msgstr ""
 
+msgid "Please_chose_a_manufacturer."
+msgstr ""
+
+msgid "Add_return_of_empty_glasses"
+msgstr ""
+
+msgid "Add_deposit_return"
+msgstr ""
+
+msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Product_with_deposit_delivered"
+msgstr ""
+
+msgid "Empty_glasses_returned"
+msgstr ""
+
+msgid "Show_details"
+msgstr ""
+
+msgid "Delivered_deposit"
+msgstr ""
+
+msgid "Returned_deposit"
+msgstr ""
+
+msgid "Your_deposit_balance"
+msgstr ""
+
 msgid "Add_deposit_amount"
 msgstr ""
 
@@ -288,6 +369,21 @@ msgid "My_profile"
 msgstr ""
 
 msgid "Contact_person"
+msgstr ""
+
+msgid "Bank_account_data"
+msgstr ""
+
+msgid "Add_new_payment"
+msgstr ""
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr ""
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr ""
+
+msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
@@ -477,9 +573,6 @@ msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr ""
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
-msgstr ""
-
-msgid "Bank_account_data"
 msgstr ""
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
@@ -686,6 +779,21 @@ msgstr ""
 msgid "Welcome"
 msgstr ""
 
+msgid "Add_transfered_member_fee"
+msgstr ""
+
+msgid "There_is_no_{0}_available."
+msgstr ""
+
+msgid "Delete_payment?"
+msgstr ""
+
+msgid "Sum"
+msgstr ""
+
+msgid "Back_to_member_overview"
+msgstr ""
+
 msgid "docs_route_credit_system"
 msgstr ""
 
@@ -705,9 +813,6 @@ msgid "Add_product"
 msgstr ""
 
 msgid "Synchronize_products"
-msgstr ""
-
-msgid "Please_chose_a_manufacturer."
 msgstr ""
 
 msgid "Image"
@@ -792,9 +897,6 @@ msgid "Show_page"
 msgstr ""
 
 msgid "Show_category"
-msgstr ""
-
-msgid "Show_order"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"

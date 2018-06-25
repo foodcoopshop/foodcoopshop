@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 12:59+0200\n"
-"PO-Revision-Date: 2018-06-25 12:42+0200\n"
+"POT-Creation-Date: 2018-06-25 16:38+0200\n"
+"PO-Revision-Date: 2018-06-25 16:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -74,6 +74,64 @@ msgstr "Sofort-Bestellung"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "Your_comment_will_be_shown_here."
+msgstr "Dein Kommentar wird hier angezeigt."
+
+msgid "Check_credit_upload"
+msgstr "Guthaben-Aufladung überprüfen"
+
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} geändert."
+
+msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
+msgstr "Der Status deiner Guthaben-Aufladung wurde erfolgreich auf {0} geändert."
+
+msgid ""
+"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}"
+"_and_an_email_was_sent_to_the_member."
+msgstr ""
+"Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} geändert und "
+"eine E-Mail an das Mitglied verschickt."
+
+msgid "for"
+msgstr "für"
+
+msgid "Deposit_take_back"
+msgstr "Pfand-Rücknahme"
+
+msgid "was_added_successfully:_{0}"
+msgstr "wurde erfolgreich hinzugefügt: {0}"
+
+msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
+msgstr ""
+"Der Betrag ist im Guthaben-System von {0} eingetragen worden und kann dort wieder "
+"gelöscht werden."
+
+msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
+msgstr ""
+"Der Betrag ist im Pfandkonto von {0} eingetragen worden und kann dort wieder "
+"gelöscht werden."
+
+msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
+msgstr ""
+"Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort "
+"wieder gelöscht werden."
+
+msgid "The_payment_({0}_{1})_was_removed_successfully."
+msgstr "Die Zahlung ({0}, {1}) wurde erfolgreich gelöscht."
+
+msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
+msgstr "Die Zahlung ({0}, {1}) von {2} wurde erfolgreich gelöscht."
+
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
+msgid "Credit"
+msgstr "Guthaben"
+
+msgid "Show_order"
+msgstr "Bestellung anzeigen"
 
 msgid ""
 "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}"
@@ -216,6 +274,39 @@ msgstr "mitglieder"
 msgid "docs_route_deposit"
 msgstr "pfand"
 
+msgid "Please_chose_a_manufacturer."
+msgstr "Bitte wähle einen Hersteller aus."
+
+msgid "Add_return_of_empty_glasses"
+msgstr "Pfand-Rücknahme eintragen"
+
+msgid "Add_deposit_return"
+msgstr "Pfand-Rückgabe eintragen"
+
+msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
+msgstr "Seit dem {0} wurde noch kein Pfand geliefert oder zurückgenommen."
+
+msgid "Month"
+msgstr "Monat"
+
+msgid "Product_with_deposit_delivered"
+msgstr "Produkt mit Pfand geliefert"
+
+msgid "Empty_glasses_returned"
+msgstr "Leergebinde zurückgenommen"
+
+msgid "Show_details"
+msgstr "Details anzeigen"
+
+msgid "Delivered_deposit"
+msgstr "Pfand geliefert"
+
+msgid "Returned_deposit"
+msgstr "Pfand zurückgenommen"
+
+msgid "Your_deposit_balance"
+msgstr "Dein Pfand-Kontostand"
+
 msgid "Add_deposit_amount"
 msgstr "Pfand-Betrag eintragen"
 
@@ -315,6 +406,24 @@ msgstr "Mein Profil"
 
 msgid "Contact_person"
 msgstr "Ansprechperson"
+
+msgid "Bank_account_data"
+msgstr "Bankdaten"
+
+msgid "Add_new_payment"
+msgstr "Neue Zahlung eintragen"
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr ""
+"Bitte trage hier den Betrag ein, den du soeben auf unser Konto überwiesen hast."
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr ""
+"Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du dem Mitgiled "
+"zurücküberwiesen hast."
+
+msgid "Please_chose_the_months_for_your_payment."
+msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
@@ -518,9 +627,6 @@ msgstr "Wird auf der Hersteller-Seite angezeigt."
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "Wie verwende ich den Editor?"
-
-msgid "Bank_account_data"
-msgstr "Bankdaten"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr ""
@@ -731,6 +837,21 @@ msgstr "im Hersteller-Bereich"
 msgid "Welcome"
 msgstr "Willkommen"
 
+msgid "Add_transfered_member_fee"
+msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
+
+msgid "There_is_no_{0}_available."
+msgstr "Es wurde noch kein {0} erfasst."
+
+msgid "Delete_payment?"
+msgstr "Zahlung löschen?"
+
+msgid "Sum"
+msgstr "Summe"
+
+msgid "Back_to_member_overview"
+msgstr "Zurück zur Mitglieder-Übersicht"
+
 msgid "docs_route_credit_system"
 msgstr "guthaben-system"
 
@@ -751,9 +872,6 @@ msgstr "Neues Produkt"
 
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"
-
-msgid "Please_chose_a_manufacturer."
-msgstr "Bitte wähle einen Hersteller aus."
 
 msgid "Image"
 msgstr "Bild"
@@ -839,11 +957,11 @@ msgstr "Seite anzeigen"
 msgid "Show_category"
 msgstr "Kategorie anzeigen"
 
-msgid "Show_order"
-msgstr "Bestellung anzeigen"
-
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
+
+#~ msgid "Amount_in"
+#~ msgstr "Betrag in"
 
 #~ msgid "A_negative_amount_is_not_allowed:"
 #~ msgstr "Ein negativer Betrag ist nicht erlaubt:"

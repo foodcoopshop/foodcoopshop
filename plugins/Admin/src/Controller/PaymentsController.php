@@ -94,7 +94,7 @@ class PaymentsController extends AdminAppController
         }
 
         $payment->approval = $approval;
-        $payment->approval_comment = 'Hier wird dein Kommentar angezeigt.';
+        $payment->approval_comment = __d('admin', 'Your_comment_will_be_shown_here.');
         $email = new AppEmail();
         $email->setTemplate('Admin.payment_status_changed')
             ->setTo($payment->customer->email)
@@ -114,7 +114,7 @@ class PaymentsController extends AdminAppController
     public function edit($paymentId)
     {
 
-        $this->set('title_for_layout', 'Guthaben-Aufladung überprüfen');
+        $this->set('title_for_layout', __d('admin', 'Check_credit_upload'));
 
         $this->setFormReferer();
 
@@ -174,13 +174,13 @@ class PaymentsController extends AdminAppController
 
             $newStatusAsString = Configure::read('app.htmlHelper')->getApprovalStates()[$payment->approval];
 
-            $message = 'Der Status der Guthaben-Aufladung für <b>'.$payment->customer->name.'</b> wurde erfolgreich auf <b>' .$newStatusAsString.'</b> geändert';
+            $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
 
             if ($payment->send_email) {
                 $email = new AppEmail();
                 $email->setTemplate('Admin.payment_status_changed')
                     ->setTo($payment->customer->email)
-                    ->setSubject('Der Status deiner Guthaben-Aufladung wurde auf "'.$newStatusAsString.'" geändert.')
+                    ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['<b>' .$newStatusAsString.'</b>']))
                     ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $payment->customer,
@@ -188,7 +188,7 @@ class PaymentsController extends AdminAppController
                         'payment' => $payment
                     ]);
                 $email->send();
-                $message .= ' und eine E-Mail an das Mitglied verschickt';
+                $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
             }
 
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message.' (PaymentId: ' . $payment->id.').');
@@ -237,7 +237,7 @@ class PaymentsController extends AdminAppController
         }
         
         if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
-            $message = 'Der Maximalwert pro Aufladung ist ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
+            $message = 'FCS_PAYMENT_PRODUCT_MAXIMUM: ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
             $this->log($message);
             die(json_encode(['status'=>0,'msg'=>$message]));
         }
@@ -279,7 +279,7 @@ class PaymentsController extends AdminAppController
                         'msg' => $msg
                     ]));
                 }
-                $message .= ' für ' . $customer->name;
+                $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
             }
 
             $manufacturerId = (int) $this->getRequest()->getData('manufacturerId');
@@ -301,8 +301,8 @@ class PaymentsController extends AdminAppController
                     ]));
                 }
 
-                $message = 'Pfand-Rücknahme ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
-                $message .= ' für ' . $manufacturer->name;
+                $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
+                $message .= ' ' . __d('admin', 'for') . ' ' . $manufacturer->name;
             }
 
             if ($type == 'deposit') {
@@ -322,7 +322,7 @@ class PaymentsController extends AdminAppController
                 ]
             ])->first();
             if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
-                $message .= ' für ' . $customer->name;
+                $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
             }
             // security check
             if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
@@ -362,28 +362,27 @@ class PaymentsController extends AdminAppController
         );
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $message .= ' wurde erfolgreich eingetragen: <b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>';
+        $message .= __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
 
         if ($type == 'member_fee') {
-            $message .= ', für ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
+            $message .= ', ' . __d('admin', 'for') . ' ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);
         }
 
         $this->ActionLog->customSave('payment_' . $actionLogType . '_added', $this->AppAuth->getUserId(), $newPayment->id, 'payments', $message);
 
         if (in_array($actionLogType, ['deposit_customer', 'deposit_manufacturer', 'member_fee_flexible'])) {
-            $message .= '. Der Betrag ist ';
+            $message .= '. ';
             switch ($actionLogType) {
                 case 'deposit_customer':
-                    $message .= 'im Guthaben-System von <b>' . $customer->name . '</b>';
+                    $message .= __d('admin', 'The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']);
                     break;
                 case 'deposit_manufacturer':
-                    $message .= 'im Pfandkonto von <b>' . $manufacturer->name . '</b>';
+                    $message .= __d('admin', 'The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there.', ['<b>'.$manufacturer->name.'</b>']);
                     break;
                 case 'member_fee_flexible':
-                    $message .= 'im Mitgliedsbeitrags-System von <b>' . $customer->name . '</b>';
+                    $message .= __d('admin', 'The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there.', ['<b>'.$customer->name.'</b>']);
                     break;
             }
-            $message .= ' eingetragen worden und kann dort wieder gelöscht werden.';
         }
 
         $this->Flash->success($message);
@@ -444,18 +443,22 @@ class PaymentsController extends AdminAppController
             $actionLogType .= '_'.$userType;
         }
 
-        $message = 'Die Zahlung (' . Configure::read('app.numberHelper')->formatAsCurrency($payment->amount). ', '. Configure::read('app.htmlHelper')->getPaymentText($payment->type) .')';
-
+        $message = __d('admin', 'The_payment_({0}_{1})_was_removed_successfully.', [
+            Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
+            Configure::read('app.htmlHelper')->getPaymentText($payment->type)]
+        );
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
             if (isset($payment->customer->name)) {
                 $username = $payment->customer->name;
             } else {
                 $username = $payment->manufacturer->name;
             }
-            $message .= ' von ' . $username;
+            $message = __d('admin', 'The_payment_({0}_{1})_of_{2}_was_removed_successfully.', [
+                Configure::read('app.numberHelper')->formatAsCurrency($payment->amount),
+                Configure::read('app.htmlHelper')->getPaymentText($payment->type),
+                $username
+            ]);
         }
-
-        $message .= ' wurde erfolgreich gelöscht.';
 
         $this->ActionLog->customSave('payment_' . $actionLogType . '_deleted', $this->AppAuth->getUserId(), $paymentId, 'payments', $message . ' (PaymentId: ' . $paymentId . ')');
 
@@ -502,7 +505,7 @@ class PaymentsController extends AdminAppController
     {
 
         $this->paymentType = 'member_fee';
-        $this->set('title_for_layout', 'Mitgliedsbeitrag');
+        $this->set('title_for_layout', __d('admin', 'Member_fee'));
 
         $this->allowedPaymentTypes = [
             'member_fee'
@@ -516,7 +519,7 @@ class PaymentsController extends AdminAppController
     {
 
         $this->paymentType = 'product';
-        $this->set('title_for_layout', 'Guthaben');
+        $this->set('title_for_layout', __d('admin', 'Credit'));
 
         $this->allowedPaymentTypes = [
             'product',
@@ -552,7 +555,6 @@ class PaymentsController extends AdminAppController
             }
         }
         
-
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->getCustomerId()
@@ -565,7 +567,7 @@ class PaymentsController extends AdminAppController
             foreach ($customer->payments as $payment) {
                 $text = Configure::read('app.htmlHelper')->getPaymentText($payment->type);
                 if ($payment->type == 'member_fee') {
-                    $text .= ' für: ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($payment->text);
+                    $text .= ' '.__d('admin', 'for').': ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($payment->text);
                 } else {
                     $text .= (! empty($payment->text) ? ': "' . $payment->text . '"' : '');
                 }
@@ -595,7 +597,7 @@ class PaymentsController extends AdminAppController
                     'deposit' => strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order->total_deposit * - 1 : 0,
                     'type' => 'order',
                     'text' => Configure::read('app.htmlHelper')->link('Bestellung Nr. ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
-                        'title' => 'Bestellung anzeigen'
+                        'title' => __d('admin', 'Show_order')
                     ]),
                     'payment_id' => null,
                     'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null

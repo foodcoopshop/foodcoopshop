@@ -73,12 +73,12 @@ class MyHtmlHelper extends HtmlHelper
     
     public function getDeletedCustomerName()
     {
-        return 'Gelöschtes Mitglied';
+        return __('Deleted_Member');
     }
     
     public function getDeletedCustomerEmail()
     {
-        return 'Gelöschte E-Mail-Adresse';
+        return __('Deleted_Email_Address');
     }
     
     /**
@@ -236,8 +236,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getMenuTypes()
     {
         return [
-            'header' => 'Header (oben)',
-            'footer' => 'Footer (unten)'
+            'header' => __('Header_(top)'),
+            'footer' => __('Footer_(bottom)'),
         ];
     }
 
@@ -270,9 +270,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getGroups()
     {
         return [
-            CUSTOMER_GROUP_MEMBER => 'Mitglied',
-            CUSTOMER_GROUP_ADMIN => 'Admin',
-            CUSTOMER_GROUP_SUPERADMIN => 'Superadmin'
+            CUSTOMER_GROUP_MEMBER => __('Member'),
+            CUSTOMER_GROUP_ADMIN => __('Admin'),
+            CUSTOMER_GROUP_SUPERADMIN => __('Superadmin')
         ];
     }
 
@@ -363,7 +363,7 @@ class MyHtmlHelper extends HtmlHelper
             ];
         }
         $tabs[] = [
-            'name' => 'Guthaben- und Pfand-Saldo',
+            'name' => __('credit_and_deposit'),
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum'
         ];
@@ -373,12 +373,12 @@ class MyHtmlHelper extends HtmlHelper
     public function getPaymentTexts()
     {
         $paymentTexts = [
-            'product' => 'Guthaben-Aufladung',
-            'payback' => 'Rückzahlung',
-            'deposit' => 'Pfand-Rückgabe'
+            'product' => __('Payment_type_credit_upload'),
+            'payback' => __('Payment_type_payback'),
+            'deposit' => __('Payment_type_deposit_return')
         ];
         if (Configure::read('app.memberFeeEnabled')) {
-            $paymentTexts['member_fee'] = 'Mitgliedsbeitrag';
+            $paymentTexts['member_fee'] = __('Payment_type_member_fee');
         }
         return $paymentTexts;
     }

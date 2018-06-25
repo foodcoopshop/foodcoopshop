@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 12:59+0200\n"
-"PO-Revision-Date: 2018-06-25 13:03+0200\n"
+"POT-Creation-Date: 2018-06-25 16:38+0200\n"
+"PO-Revision-Date: 2018-06-25 16:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -572,6 +572,27 @@ msgstr "Variante löschen"
 
 msgid "Really_delete_attribute_{0}?"
 msgstr "Möchtest du die Variante {0} wirklich löschen?"
+
+msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
+msgstr "Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt."
+
+msgid "Please_chose_the_type_of_your_payment."
+msgstr "Bitte wähle die Art der Pfand-Rücknahme aus."
+
+msgid "Delete_payment"
+msgstr "Zahlung löschen?"
+
+msgid "Really_delete_payment?"
+msgstr "Möchtest du die Zahlung wirklich löschen?"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Please_chose_at_least_one_month."
+msgstr "Bitte wähle zumindest einen Monat aus."
 
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
@@ -1221,9 +1242,6 @@ msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 msgid "Signed_in"
 msgstr "Eingeloggt"
 
-msgid "Amount"
-msgstr "Anzahl"
-
 msgid "Product"
 msgstr "Produkt"
 
@@ -1353,6 +1371,12 @@ msgstr "Guthaben"
 msgid "Member_fee"
 msgstr "Mitgliedsbeitrag"
 
+msgid "Deleted_Member"
+msgstr "Gelöschtes Mitglied"
+
+msgid "Deleted_Email_Address"
+msgstr "Gelöschte E-Mail-Adresse"
+
 msgid "Website"
 msgstr "Homepage"
 
@@ -1370,6 +1394,33 @@ msgstr "Aufsichtsbehörde"
 
 msgid "Chamber"
 msgstr "Kammer"
+
+msgid "Header_(top)"
+msgstr "Header (oben)"
+
+msgid "Footer_(bottom)"
+msgstr "Footer (unten)"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Superadmin"
+msgstr "Superadmin"
+
+msgid "credit_and_deposit"
+msgstr "Guthaben und Pfand-Saldo"
+
+msgid "Payment_type_credit_upload"
+msgstr "Guthaben-Aufladung"
+
+msgid "Payment_type_payback"
+msgstr "Rückzahlung"
+
+msgid "Payment_type_deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "Payment_type_member_fee"
+msgstr "Mitgliedsbeitrag"
 
 msgid "Empty_glasses"
 msgstr "Leergebinde"

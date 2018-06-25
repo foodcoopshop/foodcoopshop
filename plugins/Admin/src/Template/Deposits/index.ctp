@@ -44,16 +44,16 @@ $this->element('addScript', [
 
 <?php
 if (empty($manufacturer)) {
-    echo '<br /><h2 class="info">Bitte wähle einen Hersteller aus.</h2>';
+    echo '<br /><h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
     return;
 }
 
 echo '<div class="add-payment-deposit-wrapper">';
 if ($appAuth->isManufacturer() || $appAuth->isAdmin()) {
-    $buttonText = 'Leergebinde-Rücknahme eintragen';
+    $buttonText = __d('admin', 'Add_return_of_empty_glasses');
 }
 if ($appAuth->isSuperadmin()) {
-    $buttonText = 'Pfand-Rücknahme eintragen';
+    $buttonText = __d('admin', 'Add_deposit_return');
 }
     echo $this->element('addDepositPaymentOverlay', [
         'buttonText' => $buttonText,
@@ -65,14 +65,14 @@ if ($appAuth->isSuperadmin()) {
     echo '<div class="sc"></div>';
 
     if (empty($deposits)) {
-        echo '<h2 class="info">Seit dem '.date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate'))).' wurde noch kein Pfand geliefert oder zurückgenommen.</h2>';
+        echo '<h2 class="info">'.__d('admin', 'Since_{0}_there_was_no_deposit_delivered_or_returned.', [date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositForManufacturersStartDate')))]).'</h2>';
     } else {
         echo '<table class="list no-clone-last-row">';
 
         echo '<tr class="sort">';
-            echo '<th class="right">Monat</th>';
-            echo '<th class="right">Produkt mit Pfand geliefert</th>';
-            echo '<th class="right">Leergebinde zurückgenommen</th>';
+            echo '<th class="right">'.__d('admin', 'Month').'</th>';
+            echo '<th class="right">'.__d('admin', 'Product_with_deposit_delivered').'</th>';
+            echo '<th class="right">'.__d('admin', 'Empty_glasses_returned').'</th>';
         echo '</tr>';
 
         foreach ($deposits as $monthAndYear => $deposit) {
@@ -87,7 +87,7 @@ if ($appAuth->isSuperadmin()) {
                 echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                     [
-                    'title' => 'Details anzeigen',
+                        'title' => __d('admin', 'Show_details'),
                     'class' => 'icon-with-text',
                     ],
                     '/admin/order-details/?manufacturerId='.$manufacturerId.'&dateFrom='.$deposit['dateFrom'].'&dateTo='.$deposit['dateTo'].'&deposit=1&orderStates[]='.join(',', $orderStates)
@@ -103,7 +103,7 @@ if ($appAuth->isSuperadmin()) {
                 echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
                     [
-                    'title' => 'Details anzeigen',
+                    'title' => __d('admin', 'Show_details'),
                     'class' => 'icon-with-text',
                     ],
                     $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear)
@@ -118,8 +118,8 @@ if ($appAuth->isSuperadmin()) {
 
         echo '<tr class="fake-th">';
             echo '<td></td>';
-            echo '<td class="right"><b>Pfand geliefert</b></td>';
-            echo '<td class="right"><b>Pfand zurückgenommen</b></td>';
+            echo '<td class="right"><b>'.__d('admin', 'Delivered_deposit').'</b></td>';
+            echo '<td class="right"><b>'.__d('admin', 'Returned_deposit').'</b></td>';
         echo '</tr>';
 
         echo '<tr>';
@@ -133,7 +133,7 @@ if ($appAuth->isSuperadmin()) {
         echo '</tr>';
 
         echo '<tr>';
-            echo '<td colspan="2" class="right"><b>Dein Pfand-Kontostand</td>';
+            echo '<td colspan="2" class="right"><b>'.__d('admin', 'Your_deposit_balance').'</td>';
             $depositCreditBalance = $sumDepositsDelivered + $sumDepositsReturned;
             $depositCreditBalanceClasses = ['right'];
         if ($depositCreditBalance < 0) {

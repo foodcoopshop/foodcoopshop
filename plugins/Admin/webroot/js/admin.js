@@ -2362,10 +2362,10 @@ foodcoopshop.Admin = {
             var message;
             var isDepositForm;
             if ($('.featherlight-content .add-payment-form').hasClass('add-payment-deposit-form')) {
-                message = 'Bitte wähle die Art der Pfand-Rücknahme aus.';
+                message = foodcoopshop.LocalizedJs.admin.PleaseChoseTypeOfPayment;
                 isDepositForm = true;
             } else {
-                message = 'Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt.';
+                message = foodcoopshop.LocalizedJs.admin.PleaseChoseIfPaybackOrCreditUpload;
                 isDepositForm = false;
             }
 
@@ -2391,7 +2391,7 @@ foodcoopshop.Admin = {
                 }
             );
             if (months_range.length == 0) {
-                alert('Bitte wähle zumindest ein Monat aus.');
+                alert(foodcoopshop.LocalizedJs.admin.PleaseChoseAtLeastOneMonth);
                 foodcoopshop.AppFeatherlight.enableSaveButton();
                 return;
             }
@@ -2423,55 +2423,50 @@ foodcoopshop.Admin = {
 
             var dataRow = $(this).closest('tr');
 
-            var dialogHtml = '<p>Willst du deine Zahlung wirklich löschen?<br />';
-            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
-            dialogHtml += 'Betrag: <b>' + dataRow.find('td:nth-child(4)').html();
+            var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeletePayment + '<br />';
+            dialogHtml += foodcoopshop.LocalizedJs.admin.Date + ': <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
+            dialogHtml += foodcoopshop.LocalizedJs.admin.Amount + ': <b>' + dataRow.find('td:nth-child(4)').html();
             if (dataRow.find('td:nth-child(6)').length > 0) {
                 dialogHtml += dataRow.find('td:nth-child(6)').html();
             }
             dialogHtml += '</b>';
             dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+            
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    var paymentId = dataRow.find('td:nth-child(1)').html();
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/payments/changeState/',
+                        {
+                            paymentId: paymentId
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            };
 
             $('<div></div>')
                 .appendTo('body')
                 .html(dialogHtml)
                 .dialog({
                     modal: true,
-                    title: 'Zahlung löschen?',
+                    title: foodcoopshop.LocalizedJs.admin.DeletePayment,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
-                        },
-
-                        'Ja': function () {
-
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-
-                            var paymentId = dataRow.find('td:nth-child(1)').html();
-
-                            foodcoopshop.Helper.ajaxCall(
-                                '/admin/payments/changeState/',
-                                {
-                                    paymentId: paymentId
-                                },
-                                {
-                                    onOk: function (data) {
-                                        document.location.reload();
-                                    },
-                                    onError: function (data) {
-                                        alert(data.msg);
-                                    }
-                                }
-                            );
-
-                        }
-
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

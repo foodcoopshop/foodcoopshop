@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 12:59+0200\n"
-"PO-Revision-Date: 2018-06-25 13:00+0200\n"
+"POT-Creation-Date: 2018-06-25 16:38+0200\n"
+"PO-Revision-Date: 2018-06-25 16:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -571,6 +571,27 @@ msgstr "Delete attribute"
 
 msgid "Really_delete_attribute_{0}?"
 msgstr "Do you really want to delete the attribute {0}?"
+
+msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
+msgstr "Please chose if you want to add a payback or a credit upload."
+
+msgid "Please_chose_the_type_of_your_payment."
+msgstr "Please chose the type of your payment"
+
+msgid "Delete_payment"
+msgstr "Delete payment"
+
+msgid "Really_delete_payment?"
+msgstr "Do you really want to delete the payment?"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Please_chose_at_least_one_month."
+msgstr "Please chose at least one month."
 
 msgid "Change_comment_of_order"
 msgstr "Change order comment"
@@ -1220,9 +1241,6 @@ msgstr "To change your profile please stop the shop order mode."
 msgid "Signed_in"
 msgstr "Signed in"
 
-msgid "Amount"
-msgstr "Amount"
-
 msgid "Product"
 msgstr "Product"
 
@@ -1350,6 +1368,12 @@ msgstr "Credit"
 msgid "Member_fee"
 msgstr "Member fee"
 
+msgid "Deleted_Member"
+msgstr "Deleted member"
+
+msgid "Deleted_Email_Address"
+msgstr "Deleted e-mail address"
+
 msgid "Website"
 msgstr "Website"
 
@@ -1367,6 +1391,33 @@ msgstr "Supervisory authority"
 
 msgid "Chamber"
 msgstr "Chamber"
+
+msgid "Header_(top)"
+msgstr "Header (top)"
+
+msgid "Footer_(bottom)"
+msgstr "Footer (bottom)"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Superadmin"
+msgstr "Superadmin"
+
+msgid "credit_and_deposit"
+msgstr "Credit and deposit"
+
+msgid "Payment_type_credit_upload"
+msgstr "Credit upload"
+
+msgid "Payment_type_payback"
+msgstr "Payback"
+
+msgid "Payment_type_deposit_return"
+msgstr "Deposit return"
+
+msgid "Payment_type_member_fee"
+msgstr "Member fee"
 
 msgid "Empty_glasses"
 msgstr "Empty glasses"

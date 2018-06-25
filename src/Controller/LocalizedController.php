@@ -178,7 +178,14 @@ class LocalizedController extends Controller
                 'ReallyActivateProduct0' => __('Really_activate_product_{0}_?'),
                 'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}_?'),
                 'DeleteAttribute' => __('Delete_attribute'),
-                'ReallyDeleteAttribute0' => __('Really_delete_attribute_{0}?')
+                'ReallyDeleteAttribute0' => __('Really_delete_attribute_{0}?'),
+                'PleaseChoseIfPaybackOrCreditUpload' => __('Please_chose_if_it_is_a_payback_or_a_credit_upload.'),
+                'PleaseChoseTypeOfPayment' => __('Please_chose_the_type_of_your_payment.'),
+                'DeletePayment' => __('Delete_payment'),
+                'ReallyDeletePayment' => __('Really_delete_payment?'),
+                'Date' => __('Date'),
+                'Amount' => __('Amount'),
+                'PleaseChoseAtLeastOneMonth' => __('Please_chose_at_least_one_month.')
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),
