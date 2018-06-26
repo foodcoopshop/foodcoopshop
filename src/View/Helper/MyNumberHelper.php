@@ -24,7 +24,11 @@ class MyNumberHelper extends NumberHelper
     
     public function formatAsCurrency($amount)
     {
-        return self::formatAsUnit($amount, Configure::read('appDb.FCS_CURRENCY_SYMBOL'));
+        $currency = self::formatAsUnit($amount, Configure::read('appDb.FCS_CURRENCY_SYMBOL'));
+        if (I18n::getLocale() == 'en_US') {
+            $currency = Configure::read('appDb.FCS_CURRENCY_SYMBOL') . self::formatAsDecimal($amount);
+        }
+        return $currency;
     }
     
     public function formatAsUnit($amount, $shortcode)
