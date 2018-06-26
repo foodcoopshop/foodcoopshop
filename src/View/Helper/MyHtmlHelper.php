@@ -114,22 +114,22 @@ class MyHtmlHelper extends HtmlHelper
             return $result;
         }
 
-        if ($long) {
-            $result .= 'Der Hersteller <b>' . $name . '</b> hat ';
-        }
+        $shortResult = '';
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
-                $result .= 'seit';
+                $shortResult .=  __('delivery_break_since_holiday_active');
             } else {
-                $result .= 'von';
+                $shortResult .=  __('delivery_break_since_holiday_not_active');
             }
-            $result .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
+            $shortResult .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
         }
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo)) {
-            $result .= ' bis ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
+            $shortResult .= ' ' . __('delivery_break_until') . ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
         }
-        if ($long && $result != '') {
-            $result .= ' Lieferpause.';
+        
+        $result = $shortResult;
+        if ($long) {
+            $result = __('The_manufacturer_{0}_has_{1}_delivery_break.', ['<b>' . $name . '</b>', $shortResult]);
         }
 
         $result = str_replace('  ', ' ', $result);
