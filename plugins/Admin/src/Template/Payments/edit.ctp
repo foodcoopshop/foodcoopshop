@@ -59,7 +59,7 @@ echo $this->Form->create($payment, [
 ]);
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<p><label>Mitglied</label>' . $payment->customer->name.'</p>';
+echo '<p><label>Mitglied</label>' . (!empty($payment->customer) ? $payment->customer->name : '').'</p>';
 echo '<p><label>Betrag</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
 echo '<p><label>Datum der Aufladung</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
 echo '<p><label>Datum der letzten Änderung</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
