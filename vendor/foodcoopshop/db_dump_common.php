@@ -8,7 +8,7 @@ if (!defined('DATASOURCE')) {
 }
 
 $locale = 'de_DE';
-// $locale = 'en_US';
+$locale = 'en_US';
 
 $datasource = array(
     'PROD' => array(
