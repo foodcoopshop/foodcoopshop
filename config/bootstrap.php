@@ -203,8 +203,6 @@ if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.i
     locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
     I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-} else {
-    throw new InvalidParameterException('invalid locale: ' . Configure::read('appDb.FCS_DEFAULT_LOCALE') . '; valid locales are: ' . join(', ', Configure::read('app.implementedLocales')));
 }
 
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
