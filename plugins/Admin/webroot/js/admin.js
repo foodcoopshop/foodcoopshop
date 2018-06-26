@@ -49,7 +49,7 @@ foodcoopshop.Admin = {
                             var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
                             foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg);
                         }
-                });                
+                    });                
             }
         };       
         
@@ -1327,7 +1327,7 @@ foodcoopshop.Admin = {
                 'http://www.foodcoopshop.test',
                 'https://demo-de.foodcoopshop.com',
                 'https://demo-en.foodcoopshop.com'
-                ]) == -1 &&
+            ]) == -1 &&
                 $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
                 alert(foodcoopshop.LocalizedJs.admin.ThisFunctionIsNotAvailableToday);
                 return;
@@ -1349,7 +1349,7 @@ foodcoopshop.Admin = {
             };
 
             var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyManuallySendOrderList.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) b').html() + '</b>') + '</p>';
-            html += '<p>' + foodcoopshop.LocalizedJs.admin.OrderPeriod + ': <b>' + $('#dateFrom').val() + ' - ' + $('#dateTo').val() + ' </b></p>'
+            html += '<p>' + foodcoopshop.LocalizedJs.admin.OrderPeriod + ': <b>' + $('#dateFrom').val() + ' - ' + $('#dateTo').val() + ' </b></p>';
             html += '<p>' + foodcoopshop.LocalizedJs.admin.AnExistingOrderListWillBeOverwritten + '</p>';
             html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
             
@@ -2161,8 +2161,8 @@ foodcoopshop.Admin = {
             var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
             if ($(this).hasClass('set-state-to-inactive')) {
                 newState = 0;
-                var newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
-                var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
+                newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
+                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
             }
             
             var buttons = {};

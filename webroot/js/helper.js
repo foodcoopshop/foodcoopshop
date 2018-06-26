@@ -301,7 +301,7 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsCurrency: function (float) {
-        var currency = this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol
+        var currency = this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
         if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
             currency = foodcoopshop.LocalizedJs.helper.CurrencySymbol + this.formatFloatAsString(float);
         }
