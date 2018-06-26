@@ -277,7 +277,7 @@ class CustomersController extends AdminAppController
         if ($customerId === null) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Profil bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         $this->_processForm($customerId);
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
@@ -348,9 +348,9 @@ class CustomersController extends AdminAppController
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
-                $message = 'Dein Profil wurde geändert.';
+                $message = __d('admin', 'Your_profile_was_changed.');
             } else {
-                $message = 'Das Profil von <b>' . $customer->name . '</b> wurde geändert.';
+                $message = __d('admin', 'The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
             }
             $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
@@ -562,7 +562,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
-        $dateFrom = '01.01.2014';
+        $dateFrom = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('01/01/2014'));
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }

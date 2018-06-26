@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-26 11:16+0200\n"
-"PO-Revision-Date: 2018-06-26 11:17+0200\n"
+"POT-Creation-Date: 2018-06-26 12:33+0200\n"
+"PO-Revision-Date: 2018-06-26 12:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1010,11 +1010,71 @@ msgstr "Attribute: deleted"
 msgid "Action_Log_Setting_changed"
 msgstr "Setting: changed"
 
+msgid "Please_enter_your_email_address."
+msgstr "Please enter your email address."
+
+msgid "The_email_address_is_not_valid."
+msgstr "The email address is not valid."
+
+msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
+msgstr "The email address is already used by another member or manufacturer."
+
+msgid "Please_enter_your_street."
+msgstr "Please enter your street."
+
+msgid "Please_enter_your_city."
+msgstr "Please enter your city."
+
+msgid "Please_enter_your_zip."
+msgstr "Please enter your zip."
+
+msgid "The_zip_is_not_valid."
+msgstr "The zip is not valid."
+
+msgid "Please_enter_your_mobile_number."
+msgstr "Please enter your mobile number."
+
+msgid "The_mobile_number_is_not_valid."
+msgstr "The mobile number is not valid."
+
+msgid "The_phone_number_is_not_valid."
+msgstr "The phone number is not valid."
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "The desired amount {0} is not valid."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "The product with id {0} does not exist."
+
+msgid "Please_enter_your_first_name."
+msgstr "Please enter your first name."
+
+msgid "Please_enter_your_last_name."
+msgstr "Please enter your last name."
+
+msgid "Please_enter_your_old_password."
+msgstr "Please enter your old password."
+
+msgid "Your_old_password_is_wrong."
+msgstr "Your old password is wrong."
+
+msgid "Please_enter_a_new_password."
+msgstr "Please enter a new password."
+
+msgid "The_password_needs_to_be_at_least_8_characters_long."
+msgstr "The password needs to be at least 8 characters long."
+
+msgid "The_passwords_do_not_match."
+msgstr "The passwords do not match."
+
+msgid "We_did_not_find_this_email_address."
+msgstr "We did not find this email address."
+
+msgid "Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_write_an_email."
+msgstr "Your account is not active any more. If you want to reactivate it, please write an email."
+
+msgid "Please_accept_the_terms_of_use."
+msgstr "Please accept the terms of use."
 
 msgid "Members:_active"
 msgstr "Members: active"

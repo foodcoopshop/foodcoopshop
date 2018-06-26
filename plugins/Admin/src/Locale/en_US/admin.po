@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 16:38+0200\n"
-"PO-Revision-Date: 2018-06-25 16:36+0200\n"
+"POT-Creation-Date: 2018-06-26 12:33+0200\n"
+"PO-Revision-Date: 2018-06-26 12:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -23,6 +23,15 @@ msgstr "created"
 
 msgid "changed"
 msgstr "changed"
+
+msgid "Edit_profile"
+msgstr "Edit profile"
+
+msgid "Your_profile_was_changed."
+msgstr "Your profile was changed."
+
+msgid "The_profile_of_{0}_was_changed."
+msgstr "The profile of {0} was changed."
 
 msgid "_Order_list_filename_"
 msgstr "_Order_list_"
@@ -91,8 +100,8 @@ msgid ""
 "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}"
 "_and_an_email_was_sent_to_the_member."
 msgstr ""
-"The status of the credit upload for {0} was successfully changed to {1} and an "
-"email was sent to the member."
+"The status of the credit upload for {0} was successfully changed to {1} and an email was sent to the "
+"member."
 
 msgid "for"
 msgstr "for"
@@ -110,8 +119,7 @@ msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_the
 msgstr "The amount was added to the deposit account of {0} and can be deleted there."
 
 msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
-msgstr ""
-"The amount was added to the member fee system of {0} and can be deleted there."
+msgstr "The amount was added to the member fee system of {0} and can be deleted there."
 
 msgid "The_payment_({0}_{1})_was_removed_successfully."
 msgstr "The payment ({0}, {1}) was removed successfully."
@@ -128,33 +136,23 @@ msgstr "Credit"
 msgid "Show_order"
 msgstr "Show order"
 
-msgid ""
-"Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}"
-"_Manufacturer_{2}."
-msgstr ""
-"Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, "
-"manufacturer: {2}."
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
+msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
 
 msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
 msgstr "A new image was uploaded to product {0} from manufacturer {1}."
 
-msgid ""
-"The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
-msgstr ""
-"The attribute {0} of the product {1} from manufacturer {2} was successfully deleted."
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully deleted."
 
-msgid ""
-"The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}"
-"_was_successfully_created."
-msgstr ""
-"The attribute {0} of the product {1} from manufacturer {2} was successfully created."
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully created."
 
 msgid "A_new_product_was_created_for_{0}."
 msgstr "A new product was created for {0}."
 
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr ""
-"The tax rate of product {0} from manufacturer {1} was changed from {2} to {3}."
+msgstr "The tax rate of product {0} from manufacturer {1} was changed from {2} to {3}."
 
 msgid "Nothing_changed."
 msgstr "Nothing changed."
@@ -163,21 +161,16 @@ msgid "Saving_successful."
 msgstr "Saving successful."
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
-msgstr ""
-"The categories of the product {0} from manufacturer {1} have been changed: {2}"
+msgstr "The categories of the product {0} from manufacturer {1} have been changed: {2}"
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "The amount of the product {0} was changed successfully."
 
-msgid ""
-"The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr ""
-"The amount of the product {0} from manufacturer {1} was changed from {2} to {3}."
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The amount of the product {0} from manufacturer {1} was changed from {2} to {3}."
 
-msgid ""
-"The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr ""
-"The price of the product {0} from manufacturer {1} was changed from {2} to {3}."
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "The price of the product {0} from manufacturer {1} was changed from {2} to {3}."
 
 msgid "Attribute"
 msgstr "Attribute"
@@ -195,28 +188,19 @@ msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "The unity of the product {0} from manufacturer {1} was changed to {2}."
 
 msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr ""
-"The description of the product {0} from manufacturer {1} has been changed: {2}"
+msgstr "The description of the product {0} from manufacturer {1} has been changed: {2}"
 
-msgid ""
-"The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
-msgstr ""
-"The short description of the product {0} from manufacturer {1} has been changed: {2}"
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "The short description of the product {0} from manufacturer {1} has been changed: {2}"
 
-msgid ""
-"The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr ""
-"The default attribute of the product {0} from manufacturer {1} was changed to {2}."
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
 msgstr "The product {0} from manufacturer {1} is not shown as \"new\" any more."
 
-msgid ""
-"The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}"
-"_days."
-msgstr ""
-"The product {0} from manufacturer {1} is shown as \"new\" from now on for the next "
-"{2} days."
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr "The product {0} has been deactivated."
@@ -269,6 +253,114 @@ msgstr "Pick-up day"
 msgid "docs_route_members"
 msgstr "members"
 
+msgid "Firstname"
+msgstr "First name"
+
+msgid "Lastname"
+msgstr "Last name"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Street"
+msgstr "Street"
+
+msgid "Additional_address_information"
+msgstr "Additional information"
+
+msgid "Zip"
+msgstr "Zip"
+
+msgid "City"
+msgstr "City"
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Order_reminder"
+msgstr "Order reminder"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Do you want to receive an order reminder e-mail every week?"
+
+msgid "Paying_with_time_module_active?"
+msgstr "Paying-with-time-module active?"
+
+msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
+msgstr "I want to bea able to pay my products also in {0}."
+
+msgid "docs_route_paying-with-time-module"
+msgstr "paying-with-time-module"
+
+msgid "How_do_I_use_the_paying_with_time_module?"
+msgstr "How do I use the paying-with-time-module?"
+
+msgid "Delete_member_irrevocably?"
+msgstr "Delete account irrevocably?"
+
+msgid "Amount_orders_between"
+msgstr "Amount orders between"
+
+msgid "and"
+msgstr "and"
+
+msgid "and_last_order_date_between"
+msgstr "and last order date between"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Group"
+msgstr "Group"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Reminder"
+msgstr "Reminder"
+
+msgid "Register_date"
+msgstr "Register date"
+
+msgid "Last_order_date"
+msgstr "Last order date"
+
+msgid "Comment_abbreviation"
+msgstr "Comm."
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr "Newbie: has only ordered {0} times."
+
+msgid "Show_all_orders_from_{0}"
+msgstr "Show all orders from {0}"
+
+msgid "Change_group"
+msgstr "Change group"
+
+msgid "deactivate"
+msgstr "deactivate"
+
+msgid "activate"
+msgstr "activate"
+
+msgid "Show_credit"
+msgstr "Show credit"
+
+msgid "Show_{0}"
+msgstr "Show {0}"
+
+msgid "Add_comment"
+msgstr "Add comment"
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
+
 msgid "docs_route_deposit"
 msgstr "deposit"
 
@@ -315,13 +407,10 @@ msgid "Add_deposit_amount_for_{0}"
 msgstr "Add deposit amount for {0}"
 
 msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-"Please add the value of empty glasses that are taken back by the manufacturer."
+msgstr "Please add the value of empty glasses that are taken back by the manufacturer."
 
 msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-"Did the manufacturer take away empty glasses or was his deposit account equalized "
-"with money?"
+msgstr "Did the manufacturer take away empty glasses or was his deposit account equalized with money?"
 
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
@@ -415,8 +504,8 @@ msgstr "Please enter the amount that you just transfered to our bank account."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr ""
-"If you chose \"payback\", please enter the amount that you just transfered back to "
-"the bank account of the user."
+"If you chose \"payback\", please enter the amount that you just transfered back to the bank account of "
+"the user."
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
@@ -461,13 +550,12 @@ msgid ""
 "The_total_sum_below_right_(minus_{0}_"
 "%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"The total sum below right (minus {0}% variable member fee) will be transferred to "
-"your bank account as soon as possible."
+"The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as "
+"soon as possible."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"The total sum to the right (price incl.) will be transferred to your bank account "
-"as soon as possible."
+"The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
 
 msgid "Paid_by_members_in_{0}"
 msgstr "Paid by all members in {0}"
@@ -550,23 +638,11 @@ msgstr "in your imprint"
 msgid "in_the_imprint_of_the_manufacturer"
 msgstr "the manufacturer's imprint"
 
-msgid "Name"
-msgstr "Name"
-
-msgid "Email"
-msgstr "E-mail"
-
 msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
 msgstr "Will be shown spam-protected {0}."
 
-msgid "Mobile"
-msgstr "Mobile"
-
 msgid "Will_be_shown_in_imprint_{0}."
 msgstr "Will be shown {0}."
-
-msgid "Phone"
-msgstr "Phone"
 
 msgid "Example_given_abbreviation"
 msgstr "E. g."
@@ -603,8 +679,7 @@ msgstr "Short description"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
-"Will be shown on the manufacturer overview page. Can't be independently changed by "
-"the manufacturer."
+"Will be shown on the manufacturer overview page. Can't be independently changed by the manufacturer."
 
 msgid "Long_description"
 msgstr "Long description"
@@ -635,26 +710,7 @@ msgstr "Company data"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
-"for your imprint and your invoices. The imprint can be found on your profile in the "
-"bottom right corner."
-
-msgid "Firstname"
-msgstr "First name"
-
-msgid "Lastname"
-msgstr "Last name"
-
-msgid "Street"
-msgstr "Street"
-
-msgid "Additional_address_information"
-msgstr "Additional information"
-
-msgid "Zip"
-msgstr "Zip"
-
-msgid "City"
-msgstr "City"
+"for your imprint and your invoices. The imprint can be found on your profile in the bottom right corner."
 
 msgid "VAT_number"
 msgstr "VAT number"
@@ -707,14 +763,8 @@ msgstr "O.o."
 msgid "Settings_abbreviation"
 msgstr "Set."
 
-msgid "Edit"
-msgstr "Edit"
-
 msgid "Show_all_products_from_{0}"
 msgstr "Show all products from {0}"
-
-msgid "Show_{0}"
-msgstr "Show {0}"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Edit manufacturer settings"
@@ -730,9 +780,6 @@ msgstr "Test invoice"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
-
-msgid "Copy_all_email_addresses"
-msgstr "Copy all e-mail adresses"
 
 msgid "all_manufacturers"
 msgstr "all manufacturers"
@@ -761,9 +808,6 @@ msgstr "Weight"
 msgid "Order_date"
 msgstr "Order date"
 
-msgid "Status"
-msgstr "Status"
-
 msgid "Click_to_change_amount"
 msgstr "Click to change amount"
 
@@ -789,20 +833,13 @@ msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr ""
-"Please chose the member you want to place the shop order for in the dropdown above."
+msgstr "Please chose the member you want to place the shop order for in the dropdown above."
 
 msgid "Group_by_member"
 msgstr "Group by member"
 
 msgid "Order_count"
 msgstr "Order count"
-
-msgid "Add_comment"
-msgstr "Add comment"
-
-msgid "Newbie_only_{0}_times_ordered."
-msgstr "Newbie: has only ordered {0} times."
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
@@ -914,12 +951,6 @@ msgstr "Do not mark product as new any more?"
 
 msgid "change_deposit"
 msgstr "change deposit"
-
-msgid "deactivate"
-msgstr "deactivate"
-
-msgid "activate"
-msgstr "activate"
 
 msgid "product_preview"
 msgstr "product preview"

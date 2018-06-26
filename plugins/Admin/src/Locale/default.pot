@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 16:38+0200\n"
+"POT-Creation-Date: 2018-06-26 12:33+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -21,6 +21,15 @@ msgid "created"
 msgstr ""
 
 msgid "changed"
+msgstr ""
+
+msgid "Edit_profile"
+msgstr ""
+
+msgid "Your_profile_was_changed."
+msgstr ""
+
+msgid "The_profile_of_{0}_was_changed."
 msgstr ""
 
 msgid "_Order_list_filename_"
@@ -237,6 +246,114 @@ msgid "Pick_up_day"
 msgstr ""
 
 msgid "docs_route_members"
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Additional_address_information"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Order_reminder"
+msgstr ""
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr ""
+
+msgid "Paying_with_time_module_active?"
+msgstr ""
+
+msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
+msgstr ""
+
+msgid "docs_route_paying-with-time-module"
+msgstr ""
+
+msgid "How_do_I_use_the_paying_with_time_module?"
+msgstr ""
+
+msgid "Delete_member_irrevocably?"
+msgstr ""
+
+msgid "Amount_orders_between"
+msgstr ""
+
+msgid "and"
+msgstr ""
+
+msgid "and_last_order_date_between"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Reminder"
+msgstr ""
+
+msgid "Register_date"
+msgstr ""
+
+msgid "Last_order_date"
+msgstr ""
+
+msgid "Comment_abbreviation"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr ""
+
+msgid "Show_all_orders_from_{0}"
+msgstr ""
+
+msgid "Change_group"
+msgstr ""
+
+msgid "deactivate"
+msgstr ""
+
+msgid "activate"
+msgstr ""
+
+msgid "Show_credit"
+msgstr ""
+
+msgid "Show_{0}"
+msgstr ""
+
+msgid "Add_comment"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "docs_route_deposit"
@@ -509,22 +626,10 @@ msgstr ""
 msgid "in_the_imprint_of_the_manufacturer"
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
-msgid "Email"
-msgstr ""
-
 msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
 msgstr ""
 
-msgid "Mobile"
-msgstr ""
-
 msgid "Will_be_shown_in_imprint_{0}."
-msgstr ""
-
-msgid "Phone"
 msgstr ""
 
 msgid "Example_given_abbreviation"
@@ -593,24 +698,6 @@ msgstr ""
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
 
-msgid "Firstname"
-msgstr ""
-
-msgid "Lastname"
-msgstr ""
-
-msgid "Street"
-msgstr ""
-
-msgid "Additional_address_information"
-msgstr ""
-
-msgid "Zip"
-msgstr ""
-
-msgid "City"
-msgstr ""
-
 msgid "VAT_number"
 msgstr ""
 
@@ -662,13 +749,7 @@ msgstr ""
 msgid "Settings_abbreviation"
 msgstr ""
 
-msgid "Edit"
-msgstr ""
-
 msgid "Show_all_products_from_{0}"
-msgstr ""
-
-msgid "Show_{0}"
 msgstr ""
 
 msgid "Edit_manufacturer_settings"
@@ -684,9 +765,6 @@ msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
-msgstr ""
-
-msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "all_manufacturers"
@@ -714,9 +792,6 @@ msgid "Weight"
 msgstr ""
 
 msgid "Order_date"
-msgstr ""
-
-msgid "Status"
 msgstr ""
 
 msgid "Click_to_change_amount"
@@ -750,12 +825,6 @@ msgid "Group_by_member"
 msgstr ""
 
 msgid "Order_count"
-msgstr ""
-
-msgid "Add_comment"
-msgstr ""
-
-msgid "Newbie_only_{0}_times_ordered."
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"
@@ -867,12 +936,6 @@ msgid "Do_not_mark_product_as_new_any_more?"
 msgstr ""
 
 msgid "change_deposit"
-msgstr ""
-
-msgid "deactivate"
-msgstr ""
-
-msgid "activate"
 msgstr ""
 
 msgid "product_preview"

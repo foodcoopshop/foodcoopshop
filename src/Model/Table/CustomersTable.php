@@ -68,15 +68,15 @@ class CustomersTable extends AppTable
 
     public function validationEdit(Validator $validator)
     {
-        $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
-        $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
+        $validator->notEmpty('firstname', __('Please_enter_your_first_name.'));
+        $validator->notEmpty('lastname', __('Please_enter_your_last_name.'));
         return $validator;
     }
 
     public function validationRegistration(Validator $validator)
     {
-        $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
-        $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
+        $validator->notEmpty('firstname', __('Please_enter_your_first_name.'));
+        $validator->notEmpty('lastname', __('Please_enter_your_last_name.'));
         $validator = $this->getValidationTermsOfUse($validator);
         return $validator;
     }
@@ -84,7 +84,7 @@ class CustomersTable extends AppTable
     public function validationChangePassword($validator)
     {
         $validator
-        ->notEmpty('passwd_old', 'Bitte gib dein altes Passwort ein.')
+        ->notEmpty('passwd_old', __('Please_enter_your_old_password.'))
         ->add('passwd_old', 'custom', [
             'rule'=>  function ($value, $context) {
                 $user = $this->get($context['data']['id_customer']);
@@ -95,38 +95,38 @@ class CustomersTable extends AppTable
                 }
                 return false;
             },
-            'message' => 'Dein altes Passwort ist leider falsch.',
+            'message' => __('Your_old_password_is_wrong.')
         ])
         ->notEmpty('passwd_old');
 
         $validator
-        ->notEmpty('passwd_1', 'Bitte gib ein neues Passwort ein.')
+        ->notEmpty('passwd_1', __('Please_enter_a_new_password.'))
         ->add('passwd_1', [
             'length' => [
                 'rule' => ['minLength', 8],
-                'message' => 'Das Passwort muss aus mindestens 8 Zeichen bestehen.',
+                'message' => __('The_password_needs_to_be_at_least_8_characters_long.')
             ]
         ])
         ->add('passwd_1', [
             'match' => [
                 'rule' => ['compareWith', 'passwd_2'],
-                'message' => 'Die Passwörter stimmen nicht überein.',
+                'message' => __('The_passwords_do_not_match.')
             ]
         ])
         ->notEmpty('passwd_1');
 
         $validator
-        ->notEmpty('passwd_2', 'Bitte gib ein neues Passwort ein.')
+        ->notEmpty('passwd_2', __('Please_enter_a_new_password.'))
         ->add('passwd_2', [
             'length' => [
                 'rule' => ['minLength', 8],
-                'message' => 'Das Passwort muss aus mindestens 8 Zeichen bestehen.',
+                'message' => __('The_password_needs_to_be_at_least_8_characters_long.')
             ]
         ])
         ->add('passwd_2', [
             'match' => [
                 'rule' => ['compareWith', 'passwd_1'],
-                'message' => 'Die Passwörter stimmen nicht überein.',
+                'message' => __('The_passwords_do_not_match.')
             ]
         ])
         ->notEmpty('passwd_2');
@@ -137,8 +137,8 @@ class CustomersTable extends AppTable
 
     public function validationNewPasswordRequest(Validator $validator)
     {
-        $validator->notEmpty('email', 'Bitte gib deine E-Mail-Adresse an.');
-        $validator->email('email', false, 'Die E-Mail-Adresse ist nicht gültig.');
+        $validator->notEmpty('email', __('Please_enter_your_email_address.'));
+        $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {
                 $ct = TableRegistry::getTableLocator()->get('Customers');
@@ -146,7 +146,7 @@ class CustomersTable extends AppTable
                     'email' => $value
                 ]);
             },
-            'message' => 'Wir haben diese E-Mail-Adresse nicht gefunden.'
+            'message' => __('We_did_not_find_this_email_address.')
         ]);
         $validator->add('email', 'account_inactive', [
             'rule' => function ($value, $context) {
@@ -161,7 +161,7 @@ class CustomersTable extends AppTable
                 }
                 return true;
             },
-            'message' => 'Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.'
+            'message' => __('Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_write_an_email.')
         ]);
         return $validator;
     }
@@ -173,7 +173,7 @@ class CustomersTable extends AppTable
 
     private function getValidationTermsOfUse(Validator $validator)
     {
-        return $validator->equals('terms_of_use_accepted_date_checkbox', 1, 'Bitte akzeptiere die Nutzungsbedingungen.');
+        return $validator->equals('terms_of_use_accepted_date_checkbox', 1, __('Please_accept_the_terms_of_use.'));
     }
 
     public function findAuth(\Cake\ORM\Query $query, array $options)

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 16:30+0200\n"
-"PO-Revision-Date: 2018-06-26 11:20+0200\n"
+"POT-Creation-Date: 2018-06-26 12:33+0200\n"
+"PO-Revision-Date: 2018-06-26 12:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -23,6 +23,15 @@ msgstr "erstellt"
 
 msgid "changed"
 msgstr "geändert"
+
+msgid "Edit_profile"
+msgstr "Profil bearbeiten"
+
+msgid "Your_profile_was_changed."
+msgstr "Dein Profil wurde geändert."
+
+msgid "The_profile_of_{0}_was_changed."
+msgstr "Das Profil von {0} wurde geändert."
 
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
@@ -246,8 +255,119 @@ msgstr "Abholtag"
 msgid "docs_route_members"
 msgstr "mitglieder"
 
+msgid "Firstname"
+msgstr "Vorname"
+
+msgid "Lastname"
+msgstr "Nachname"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Additional_address_information"
+msgstr "Adresszusatz"
+
+msgid "Zip"
+msgstr "PLZ"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Order_reminder"
+msgstr "Bestellerinnerung"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
+
+msgid "Paying_with_time_module_active?"
+msgstr "Stundenabrechnungs-Modul aktiv?"
+
+msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
+msgstr "Ich möchte meine Produkte (auch) in {0} bezahlen."
+
+msgid "docs_route_paying-with-time-module"
+msgstr "stundenabrechnung"
+
+msgid "How_do_I_use_the_paying_with_time_module?"
+msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
+
+msgid "Delete_member_irrevocably?"
+msgstr "Mitgliedskonto unwiderruflich löschen?"
+
+msgid "Amount_orders_between"
+msgstr "Anzahl Bestellungen zwischen"
+
+msgid "and"
+msgstr "und"
+
+msgid "and_last_order_date_between"
+msgstr "und letztes Bestelldatum vom"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Group"
+msgstr "Gruppe"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Reminder"
+msgstr "Erinnerung"
+
+msgid "Register_date"
+msgstr "Reg.-Datum"
+
+msgid "Last_order_date"
+msgstr "Letztes Bestell-Datum"
+
+msgid "Comment_abbreviation"
+msgstr "Komm."
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Newbie_only_{0}_times_ordered."
+msgstr "Neuling: Erst {0}x bestellt."
+
+msgid "Show_all_orders_from_{0}"
+msgstr "Alle Bestellungen von {0} anzeigen"
+
+msgid "Change_group"
+msgstr "Gruppe ändern"
+
+msgid "deactivate"
+msgstr "deaktivieren"
+
+msgid "activate"
+msgstr "aktivieren"
+
+msgid "Show_credit"
+msgstr "Guthaben anzeigen"
+
+msgid "Show_{0}"
+msgstr "{0} anzeigen"
+
+msgid "Add_comment"
+msgstr "Kommentar hinzufügen"
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
 msgid "docs_route_deposit"
 msgstr "pfand"
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Bitte wähle einen Hersteller aus."
 
 msgid "Add_return_of_empty_glasses"
 msgstr "Pfand-Rücknahme eintragen"
@@ -521,23 +641,11 @@ msgstr "in deinem Impressum"
 msgid "in_the_imprint_of_the_manufacturer"
 msgstr "im Impressum des Herstellers"
 
-msgid "Name"
-msgstr "Name"
-
-msgid "Email"
-msgstr "E-Mail"
-
 msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
 msgstr "Wird {0} spamgeschützt angezeigt."
 
-msgid "Mobile"
-msgstr "Handy"
-
 msgid "Will_be_shown_in_imprint_{0}."
 msgstr "Wird {0} angezeigt."
-
-msgid "Phone"
-msgstr "Telefon"
 
 msgid "Example_given_abbreviation"
 msgstr "Z. B."
@@ -610,24 +718,6 @@ msgstr ""
 "für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz "
 "unten rechts."
 
-msgid "Firstname"
-msgstr "Vorname"
-
-msgid "Lastname"
-msgstr "Nachname"
-
-msgid "Street"
-msgstr "Straße"
-
-msgid "Additional_address_information"
-msgstr "Adresszusatz"
-
-msgid "Zip"
-msgstr "PLZ"
-
-msgid "City"
-msgstr "Ort"
-
 msgid "VAT_number"
 msgstr "UID-Nummer"
 
@@ -679,14 +769,8 @@ msgstr "O.B."
 msgid "Settings_abbreviation"
 msgstr "Opt."
 
-msgid "Edit"
-msgstr "Bearbeiten"
-
 msgid "Show_all_products_from_{0}"
 msgstr "Alle Produkte von {0} anzeigen"
-
-msgid "Show_{0}"
-msgstr "{0} anzeigen"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Hersteller-Einstellungen bearbeiten"
@@ -702,9 +786,6 @@ msgstr "Rechnung prüfen"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
-
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
 
 msgid "all_manufacturers"
 msgstr "alle Hersteller"
@@ -732,9 +813,6 @@ msgstr "Gewicht"
 
 msgid "Order_date"
 msgstr "Bestelldatum"
-
-msgid "Status"
-msgstr "Status"
 
 msgid "Click_to_change_amount"
 msgstr "Zum Ändern der Anzahl anklicken"
@@ -768,12 +846,6 @@ msgstr "Gruppieren nach Mitglied"
 
 msgid "Order_count"
 msgstr "Anzahl Bestellungen"
-
-msgid "Add_comment"
-msgstr "Kommentar hinzufügen"
-
-msgid "Newbie_only_{0}_times_ordered."
-msgstr "Neuling: Erst {0}x bestellt."
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
@@ -832,9 +904,6 @@ msgstr "Neues Produkt"
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"
 
-msgid "Please_chose_a_manufacturer."
-msgstr "Bitte wähle einen Hersteller aus."
-
 msgid "Image"
 msgstr "Bild"
 
@@ -888,12 +957,6 @@ msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
 
 msgid "change_deposit"
 msgstr "Pfand ändern"
-
-msgid "deactivate"
-msgstr "deaktivieren"
-
-msgid "activate"
-msgstr "aktivieren"
 
 msgid "product_preview"
 msgstr "Produkt-Vorschau"

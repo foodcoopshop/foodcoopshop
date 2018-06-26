@@ -27,6 +27,32 @@ foodcoopshop.Admin = {
     
     bindDeleteCustomerButton : function(customerId) {
         
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['yes'] = {
+            text: foodcoopshop.LocalizedJs.helper.yes,
+            click: function() {
+                $('#delete-customer-dialog .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/customers/delete/' + customerId,
+                    {
+                        referer: $('input[name="referer"]').val()
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.href = data.redirectUrl;
+                        },
+                        onError: function (data) {
+                            var form = $('#delete-customer-dialog');
+                            form.find('.ajax-loader').hide();
+                            var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
+                            foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg);
+                        }
+                });                
+            }
+        };       
+        
         $('.delete-customer-button').on('click', function() {
             $('<div id="delete-customer-dialog"></div>').appendTo('body')
                 .html('<p style="margin-top: 10px;">' + foodcoopshop.LocalizedJs.admin.ReallyDeleteMember + '<p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
@@ -37,32 +63,7 @@ foodcoopshop.Admin = {
                     width: 500,
                     height: 300,
                     resizable: false,
-                    buttons: {
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            
-                            $('#delete-customer-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.Helper.ajaxCall(
-                                '/admin/customers/delete/' + customerId,
-                                {
-                                    referer: $('input[name="referer"]').val()
-                                },
-                                {
-                                    onOk: function (data) {
-                                        document.location.href = data.redirectUrl;
-                                    },
-                                    onError: function (data) {
-                                        var form = $('#delete-customer-dialog');
-                                        form.find('.ajax-loader').hide();
-                                        var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
-                                        foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg);
-                                    }
-                                });
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
