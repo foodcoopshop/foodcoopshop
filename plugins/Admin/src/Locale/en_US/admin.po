@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-26 12:33+0200\n"
-"PO-Revision-Date: 2018-06-26 12:44+0200\n"
+"POT-Creation-Date: 2018-06-26 15:57+0200\n"
+"PO-Revision-Date: 2018-06-26 15:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -54,11 +54,26 @@ msgstr "Edit manufacturer"
 msgid "Manufacturer_{0}_was"
 msgstr "Manufacturer was {0}."
 
+msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
+msgstr "Invoice for manufacturer {0} successfully sent to {1}."
+
+msgid "Invoice_number_abbreviataion_{1}_{2}"
+msgstr "Invoice nº {0}, {1}"
+
+msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
+msgstr "Order lists successfully generated for manufacturer {0}."
+
+msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{0}."
+msgstr "Order_lists_successfully_generated_for_manufacturer_{0} and sent to {1}."
+
+msgid "Order_lists_for_the_day"
+msgstr "Order lists for"
+
 msgid "Edit_settings"
 msgstr "Edit settings"
 
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
-msgstr "The ettings of manufacturer {0} have been changed."
+msgstr "The settings of manufacturer {0} have been changed."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Your settings have been changed."
@@ -742,17 +757,128 @@ msgstr "Will be printed on the end of your invoice's overview page."
 msgid "Example_for_additional_invoice_text"
 msgstr " "
 
-msgid "Deposit"
-msgstr "Deposit"
+msgid "Visibility_of_the_products"
+msgstr "Visibility of products"
 
 msgid "Active"
 msgstr "Active"
 
+msgid "Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer)."
+msgstr "Manufacturer profile and products are visibile. (Can't be changed by the manufacturer)."
+
 msgid "Delivery_break"
 msgstr "Delivery break"
 
+msgid "How_do_I_use_the_function_delivery_break?"
+msgstr "How do I use the function \"delivery break\"?"
+
 msgid "Only_for_members"
 msgstr "Only for members"
+
+msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
+msgstr "Manufacturer provile and products are only visible for signed in members."
+
+msgid "Notifications"
+msgstr "Notifications"
+
+msgid "Order_lists_by_email"
+msgstr "Order lists by email"
+
+msgid "I_want"
+msgstr "I want"
+
+msgid "The_manufacturer_wants"
+msgstr "The manufacturer wants"
+
+msgid "to_receive_the_orders_per_email_on_{0}."
+msgstr "to receive the orders per email every {0}."
+
+msgid "CC_recipient_for_order_lists"
+msgstr "CC recipient for order lists"
+
+msgid "Separate_multiple_emails_with_comma"
+msgstr "Separate multiple emails with ,"
+
+msgid "Invoices_by_email"
+msgstr "Invoices by email"
+
+msgid "to_receive_his_invoice_every_month_by_email."
+msgstr "to receive his invoice every month by email."
+
+msgid "Cancellations"
+msgstr "Cancellations"
+
+msgid "to_receive_an_email_on_every_cancellation."
+msgstr "to receive an email on every cancellation."
+
+msgid "Adaptions_of_price_and_weight_of_ordered_products"
+msgstr "Adaptiosn of price and weight of ordered products"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
+msgstr "to receive an email on every adaptaion of price or weight"
+
+msgid "Adaptions_of_the_ordered_amount"
+msgstr "Adaptions of the ordered amount"
+
+msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
+msgstr "to receive an email on every adaption of the amount of an ordered product."
+
+msgid "Shop_orders"
+msgstr "Shop orders"
+
+msgid "to_receive_an_email_on_every_shop_order."
+msgstr "to receive an email on every shop order."
+
+msgid "Other_settings"
+msgstr "Other settings"
+
+msgid "Variable_member_fee_in"
+msgstr "Variable member fee in "
+
+msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
+msgstr "The invoice for the manufacturer will be reduced by the given percentage. No decimals allowed."
+
+msgid "Preselected_tax_rate_for_new_products"
+msgstr "Preselected tax rate for new products"
+
+msgid "Manufacturer_optimized_for_bulk_orders?"
+msgstr "Manufacturer optimized for bulk orders?"
+
+msgid "Disables_all_notifications_except_sent_invoices."
+msgstr "Disables all notifications except the one for sent invoices."
+
+msgid "docs_route_bulk_orders"
+msgstr "bulk-orders"
+
+msgid "Info_page_for_bulk_orders"
+msgstr "Info page for bulk orders"
+
+msgid "Chose_member"
+msgstr "Chose member..."
+
+msgid "Remote_foodcoops"
+msgstr "Remote food-coops"
+
+msgid "Info_page_for_network_module"
+msgstr "Info page for network module"
+
+msgid "Paying_with_time"
+msgstr "Paying with time"
+
+msgid "Max_part_of_{0}_in_percent"
+msgstr "Maximal part of {0} in percent"
+
+msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
+msgstr "valid for all products. 0 means that the paying-with-time-module is deactivated in the shop."
+
+msgid "Maximum_credit_balance_in_{0}"
+msgstr "Maximum credit balance in {0}"
+
+msgid "up_to_which_it_can_be_paid_in_{0}."
+msgstr "up to which the member can pay in {0}."
+
+msgid "Deposit"
+msgstr "Deposit"
 
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr "Sum of open orders in given time range"

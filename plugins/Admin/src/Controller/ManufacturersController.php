@@ -346,7 +346,7 @@ class ManufacturersController extends AdminAppController
             $invoicePdfUrl = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
             $invoicePdfFile = $invoicePdfUrl;
 
-            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer->name . '" erfolgreich versendet an ' . $manufacturer->address_manufacturer->email . '.</a>');
+            $this->Flash->success(__d('admin', 'Invoice_for_manufacturer_{0}_successfully_sent_to_{1}.', ['<b>' . $manufacturer->name . '</b>', $manufacturer->address_manufacturer->email]));
 
             $invoice2save = [
                 'id_manufacturer' => $manufacturerId,
@@ -368,7 +368,7 @@ class ManufacturersController extends AdminAppController
                     ->setAttachments([
                     $invoicePdfFile
                     ])
-                    ->setSubject('Rechnung Nr. ' . $newInvoiceNumber . ', ' . $invoicePeriodMonthAndYear)
+                    ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{1}_{2}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
                     ->setViewVars([
                     'manufacturer' => $manufacturer,
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
@@ -447,10 +447,10 @@ class ManufacturersController extends AdminAppController
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
-            $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer->name . '" erfolgreich generiert';
+            $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
             if ($sendEmail) {
-                $flashMessage .= ' und an ' . $manufacturer->address_manufacturer->email . ' versendet';
+                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{0}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
                 $email = new AppEmail();
                 $email->setTemplate('Admin.send_order_list')
                 ->setTo($manufacturer->address_manufacturer->email)
@@ -458,7 +458,7 @@ class ManufacturersController extends AdminAppController
                     $productPdfFile,
                     $customerPdfFile
                 ])
-                ->setSubject('Bestellungen für den ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
+                ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                 ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'appAuth' => $this->AppAuth,
