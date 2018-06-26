@@ -347,7 +347,7 @@ class ProductsController extends AdminAppController
 
         $newProduct = $this->Product->add($manufacturer);
 
-        $messageString = __d('admin', 'A_new_product_was_created_for_{0}.', ['<b>' . $manufacturer->name] . '</b>');
+        $messageString = __d('admin', 'A_new_product_was_created_for_{0}.', ['<b>' . $manufacturer->name . '</b>']);
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct->id_product, 'products', $messageString);
 

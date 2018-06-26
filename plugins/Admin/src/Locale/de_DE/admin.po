@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-06-25 16:30+0200\n"
-"PO-Revision-Date: 2018-06-25 17:01+0200\n"
+"PO-Revision-Date: 2018-06-26 11:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -190,16 +190,16 @@ msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_change
 msgstr "Die Standard-Variante des Produktes {0} vom Hersteller {1} wurde auf {2} geändert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
-msgstr "Das Produktes {0} vom Hersteller {1} wird nicht mehr als \"neu\" angezeigt."
+msgstr "Das Produkt {0} vom Hersteller {1} wird nicht mehr als \"neu\" angezeigt."
 
 msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
-msgstr "Das Produktes {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
+msgstr "Das Produkt {0} vom Hersteller {1} wird jetzt {2} Tage lang als \"neu\" angezeigt."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
-msgstr "Das Produkt {0} vom Hersteller {1} wurden deaktiviert."
+msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
-msgstr "Das Produkt {0} vom Hersteller {1} wurden aktiviert."
+msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
 
 msgid "all_activities"
 msgstr "alle Aktivitäten"
