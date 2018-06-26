@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-06-26 15:57+0200\n"
-"PO-Revision-Date: 2018-06-26 15:58+0200\n"
+"PO-Revision-Date: 2018-06-26 16:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -94,7 +94,7 @@ msgid "Orders"
 msgstr "Orders"
 
 msgid "Shop_order"
-msgstr "Shop order"
+msgstr "Instant order"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
@@ -824,10 +824,10 @@ msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product.
 msgstr "to receive an email on every adaption of the amount of an ordered product."
 
 msgid "Shop_orders"
-msgstr "Shop orders"
+msgstr "Instant orders"
 
 msgid "to_receive_an_email_on_every_shop_order."
-msgstr "to receive an email on every shop order."
+msgstr "to receive an email on every instant order."
 
 msgid "Other_settings"
 msgstr "Other settings"
@@ -959,7 +959,7 @@ msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
-msgstr "Please chose the member you want to place the shop order for in the dropdown above."
+msgstr "Please chose the member you want to place the instant order for in the dropdown above."
 
 msgid "Group_by_member"
 msgstr "Group by member"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-06-26 12:33+0200\n"
-"PO-Revision-Date: 2018-06-26 12:42+0200\n"
+"PO-Revision-Date: 2018-06-26 16:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -76,7 +76,7 @@ msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} has placed a new order ({1})."
 
 msgid "Notification_about_shop_order_order_number_{0}"
-msgstr "Notification about shop order order n° {0}"
+msgstr "Notification about instant order order n° {0}"
 
 msgid "Your_order_has_been_placed"
 msgstr "Your order has been placed"
@@ -202,10 +202,10 @@ msgid "Cancel"
 msgstr "Cancel"
 
 msgid "Cancel_shop_order?"
-msgstr "Cancel shop order?"
+msgstr "Cancel instant order?"
 
 msgid "Really_cancel_shop_order?"
-msgstr "Do you really want to cancel the shop order?"
+msgstr "Do you really want to cancel the instant order?"
 
 msgid "January"
 msgstr "January"
@@ -385,10 +385,10 @@ msgid "route_cart_finished"
 msgstr "finished"
 
 msgid "Place_shop_order_for"
-msgstr "Place shop order for"
+msgstr "Place instant order for"
 
 msgid "Shop_order_date_is_set_back_after_placing_it."
-msgstr "Shop order date is set back after placing it."
+msgstr "Instant order date is set back after placing it."
 
 msgid "Close_all_orders?"
 msgstr "Close all orders?"
@@ -822,7 +822,7 @@ msgid "Action_Log_Order_date_changed"
 msgstr "Order: Date set back"
 
 msgid "Action_Log_Order_shop_order_placed"
-msgstr "Order: Shop order placed"
+msgstr "Order: Instant order placed"
 
 msgid "Action_Log_Order_detail_product_price_changed"
 msgstr "Ordered product: Price changed"
@@ -939,7 +939,7 @@ msgid "Action_Log_Member_password_changed"
 msgstr "Member: Password changed"
 
 msgid "Action_Log_Member_order_placed"
-msgstr "Member: Shop order placed"
+msgstr "Member: Instant order placed"
 
 msgid "Action_Log_Member_set_inactive"
 msgstr "Member: Deactivated"
@@ -1356,7 +1356,7 @@ msgid "Manufacturer_area"
 msgstr "Manufacturer area"
 
 msgid "To_change_your_profile_please_stop_the_shop_order_mode."
-msgstr "To change your profile please stop the shop order mode."
+msgstr "To change your profile please stop the instant order mode."
 
 msgid "Signed_in"
 msgstr "Signed in"
@@ -1449,7 +1449,7 @@ msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "This is the text of the email (with attached logo)."
 
 msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr "There has been placed a shop order for {0} by {1} (order n° {2}."
+msgstr "There has been placed a instant order for {0} by {1} (order n° {2}."
 
 msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr ""
