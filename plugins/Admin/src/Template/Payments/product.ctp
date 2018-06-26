@@ -18,13 +18,13 @@ use Cake\Core\Configure;
 echo $this->element('paymentHeader', [
     'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
     'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
-    'buttonText' => 'Eingezahltes Guthaben eintragen',
+    'buttonText' => __d('admin', 'Add_transfered_credit'),
     'icon' => 'fa-'.strtolower(Configure::read('app.currencyName'))
 ]);
 
 if (count($payments) == 0) {
     ?>
-<p>Es wurde noch kein <?php echo $title_for_layout; ?> erfasst.</p>
+<p><?php echo __d('admin', 'There_is_no_{0}_available.', [$title_for_layout]); ?></p>
 <?php
 } else {
     $this->element('addScript', [
@@ -39,11 +39,11 @@ if (count($payments) == 0) {
     
     echo '<table class="list">';
     echo '<tr class="sort">';
-        echo '<th>Datum</th>';
-        echo '<th>Text</th>';
+        echo '<th>'.__d('admin', 'Date').'</th>';
+        echo '<th>'.__d('admin', 'Text').'</th>';
         echo '<th style="text-align:right;">' . $column_title . '</th>';
-        echo '<th style="text-align:right;">Bestellwert</th>';
-        echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</th>';
+        echo '<th style="text-align:right;">'.__d('admin', 'Order_value').'</th>';
+        echo '<th ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</th>';
         echo '<th style="width:25px;"></th>';
     echo '</tr>';
 
@@ -162,7 +162,7 @@ if (count($payments) == 0) {
         if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-payment-button',
-                'title' => 'Aufladung löschen?'
+                'title' => __d('admin', 'Delete_upload?')
             ], 'javascript:void(0);');
         }
         echo '</td>';
@@ -175,9 +175,9 @@ if (count($payments) == 0) {
     echo '<tr class="fake-th">';
     echo '<td>Datum</td>';
     echo '<td>Text</td>';
-    echo '<td style="text-align:right;">Guthaben</td>';
-    echo '<td style="text-align:right;">Bestellwert</td>';
-    echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">Pfand</td>';
+    echo '<td style="text-align:right;">'.__d('admin', 'Credit').'</td>';
+    echo '<td style="text-align:right;">'.__d('admin', 'Order_value').'</td>';
+    echo '<td ' . (! Configure::read('app.isDepositPaymentCashless') ? 'class="hide" ' : '') . 'style="text-align:right;">'.__d('admin', 'Deposit').'</td>';
     echo '<td style="width:25px;"></td>';
     echo '</tr>';
 
@@ -202,7 +202,7 @@ if (count($payments) == 0) {
     if ($creditBalance < 0) {
         $sumNumberClass = ' class="negative"';
     }
-    echo '<td ' . $sumNumberClass . '><b style="font-size: 16px;">Dein Kontostand: ' . $this->Number->formatAsCurrency($creditBalance) . '</b></td>';
+    echo '<td ' . $sumNumberClass . '><b style="font-size: 16px;">'.__d('admin', 'Your_credit_balance').': ' . $this->Number->formatAsCurrency($creditBalance) . '</b></td>';
     echo '<td></td>';
     echo '<td></td>';
     echo '<td></td>';
@@ -217,15 +217,13 @@ if (count($payments) == 0) {
 
 if ($this->request->getParam('action') == 'product') {
     echo '<div class="bottom-button-container">';
-        echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> Zurück zur Mitglieder-Übersicht</a>';
+    echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
 
 echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
 
 ?>
-
-
 <div class="sc"></div>
 
 </div>

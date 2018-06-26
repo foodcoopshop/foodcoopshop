@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-26 15:57+0200\n"
-"PO-Revision-Date: 2018-06-26 16:03+0200\n"
+"POT-Creation-Date: 2018-06-26 16:17+0200\n"
+"PO-Revision-Date: 2018-06-26 16:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -23,6 +23,18 @@ msgstr "created"
 
 msgid "changed"
 msgstr "changed"
+
+msgid "Change_password"
+msgstr "Change password"
+
+msgid "The_manufacturer_{0}_has_changed_his_password."
+msgstr "The manufacturer {0} has changed his password."
+
+msgid "The_member_{0}_has_changed_his_password."
+msgstr "The member {0} has changed his password."
+
+msgid "Your_new_password_has_been_saved_successfully."
+msgstr "Your new password has been saved successfully."
 
 msgid "Edit_profile"
 msgstr "Edit profile"
@@ -148,6 +160,9 @@ msgstr "Member fee"
 msgid "Credit"
 msgstr "Credit"
 
+msgid "Order_number_abbr"
+msgstr "Order nº"
+
 msgid "Show_order"
 msgstr "Show order"
 
@@ -264,6 +279,18 @@ msgstr "settings"
 
 msgid "Pick_up_day"
 msgstr "Pick-up day"
+
+msgid "Old_password"
+msgstr "Old password"
+
+msgid "New_password"
+msgstr "New password"
+
+msgid "min_8_characters"
+msgstr "min 8 characters"
+
+msgid "New_password_again"
+msgstr "New password (again)"
 
 msgid "docs_route_members"
 msgstr "members"
@@ -453,9 +480,6 @@ msgstr "Deposit returns"
 
 msgid "My_data"
 msgstr "My data"
-
-msgid "Change_password"
-msgstr "Change password"
 
 msgid "Blog_posts"
 msgstr "Blog posts"
@@ -913,9 +937,6 @@ msgstr "all manufacturers"
 msgid "all_members"
 msgstr "all members"
 
-msgid "Order_number_abbr"
-msgstr "Order nº"
-
 msgid "Group_by..."
 msgstr "Group by..."
 
@@ -1005,6 +1026,18 @@ msgstr "Back to member overview"
 
 msgid "docs_route_credit_system"
 msgstr "credit-system"
+
+msgid "Add_transfered_credit"
+msgstr "Add transfered credit"
+
+msgid "Order_value"
+msgstr "Order value"
+
+msgid "Delete_upload?"
+msgstr "Delete upload?"
+
+msgid "Your_credit_balance"
+msgstr "Your credit balance"
 
 msgid "chose_manufacturer..."
 msgstr "chose manufacturer..."

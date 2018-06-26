@@ -102,7 +102,7 @@ class CustomersController extends AdminAppController
 
     public function changePassword()
     {
-        $this->set('title_for_layout', 'Passwort ändern');
+        $this->set('title_for_layout', __d('admin', 'Change_password'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
@@ -139,21 +139,20 @@ class CustomersController extends AdminAppController
             );
 
             if ($this->AppAuth->isManufacturer()) {
-                $message = 'Der Hersteller <b>' . $this->AppAuth->getManufacturerName();
+                $message = __d('admin', 'The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getManufacturerName() . '</b>']);
                 $actionLogType = 'manufacturer_password_changed';
                 $actionLogId = $this->AppAuth->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = 'Das Mitglied <b>' . $this->AppAuth->getUsername();
+                $message = __d('admin', 'The_member_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->AppAuth->getUserId();
                 $actionLogModel = 'customers';
             }
-            $message .= '</b> hat sein Passwort geändert.';
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
-            $this->Flash->success('Dein neues Passwort wurde erfolgreich gespeichert.');
+            $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
             $this->redirect($this->referer());
         }
 
