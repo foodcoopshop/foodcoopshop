@@ -301,7 +301,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testEditOrderDetailAmountAsManufacturer()
     {
         $this->loginAsSuperadmin();
-        $this->mockOrder = $this->generateAndGetOrder(1, 2);
+        $this->mockOrder = $this->generateAndGetOrder(5, 2);
         $this->logout();
         $this->loginAsVegetableManufacturer();
 
