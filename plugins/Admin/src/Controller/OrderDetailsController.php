@@ -403,7 +403,7 @@ class OrderDetailsController extends AdminAppController
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productAmount = trim($this->getRequest()->getData('productAmount'));
         $editAmountReason = strip_tags(html_entity_decode($this->getRequest()->getData('editAmountReason')));
-
+        
         if (! is_numeric($orderDetailId) || ! is_numeric($productAmount) || $productAmount < 1) {
             $message = 'input format wrong';
             $this->log($message);
@@ -433,7 +433,7 @@ class OrderDetailsController extends AdminAppController
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $productAmount);
-        $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $object->product_amount);
+        $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {
             $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $oldOrderDetail->product_amount * $productAmount;
