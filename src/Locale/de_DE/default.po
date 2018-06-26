@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 16:38+0200\n"
-"PO-Revision-Date: 2018-06-25 16:38+0200\n"
+"POT-Creation-Date: 2018-06-26 11:16+0200\n"
+"PO-Revision-Date: 2018-06-26 11:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -561,10 +561,22 @@ msgstr "Produkt aktivieren"
 msgid "Deactivate_product"
 msgstr "Produkt deaktivieren"
 
+msgid "Activate_member?"
+msgstr "Mitglied aktivieren?"
+
+msgid "Deactivate_member?"
+msgstr "Mitglied deaktivieren?"
+
+msgid "Really_activate_member_{0}_?"
+msgstr "Möchtest du das Mitglied {0} wirklich aktivieren?"
+
+msgid "Really_deactivate_member_{0}?"
+msgstr "Möchtest du das Mitglied {0} wirklich deaktivieren?"
+
 msgid "Really_activate_product_{0}_?"
 msgstr "Möchtest du das Produkt {0} wirklich aktivieren?"
 
-msgid "Really_deactivate_product_{0}_?"
+msgid "Really_deactivate_product_{0}?"
 msgstr "Möchtest du das Produkt {0} wirklich deaktivieren?"
 
 msgid "Delete_attribute"
@@ -594,6 +606,51 @@ msgstr "Anzahl"
 msgid "Please_chose_at_least_one_month."
 msgstr "Bitte wähle zumindest einen Monat aus."
 
+msgid "Delete_member?"
+msgstr "Mitglied löschen?"
+
+msgid "Really_delete_member?"
+msgstr "Möchtest du das Mitglied wirklich löschen?"
+
+msgid "Be_careful_there_is_no_way_back!"
+msgstr "Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!"
+
+msgid "Errors_occurred_while_member_was_deleted"
+msgstr "Beim Löschen des Mitgliedskontos sind Fehler aufgetreten"
+
+msgid "Add_comment"
+msgstr "Kommentar hinzufügen"
+
+msgid "Please_cancel_all_ordered_products_before_cancelling_the_order."
+msgstr "Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte."
+
+msgid "Add_new_product?"
+msgstr "Neues Produkt erstellen?"
+
+msgid "Really_add_new_product?"
+msgstr "Möchtest du wirklich ein neues Produkt erstellen?"
+
+msgid "This_function_is_not_available_today."
+msgstr "Diese Funktion steht heute nicht zur Verfügung."
+
+msgid "Manually_send_order_list?"
+msgstr "Bestellliste manuell versenden?"
+
+msgid "Really_manually_send_order_list_to_{0}?"
+msgstr "Willst du wirklich eine aktuelle Bestellliste an {0} versenden?"
+
+msgid "Order_period"
+msgstr "Bestellzeitraum"
+
+msgid "An_existing_order_list_will_be_overwritten!"
+msgstr "Eine bereits bestehende Bestellliste wird überschrieben!"
+
+msgid "Change_group_for"
+msgstr "Gruppe ändern für"
+
+msgid "The_member_needs_to_sign_again."
+msgstr "Das Mitglied muss sich nach der Änderung neu einloggen."
+
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
 
@@ -602,6 +659,12 @@ msgstr "Bestellung rückdatieren auf"
 
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
+
+msgid "Change_member_comment"
+msgstr "Mitglieder-Kommentar ändern"
+
+msgid "Change_group"
+msgstr "Gruppe ändern"
 
 msgid "Change_amount"
 msgstr "Anzahl ändern"
@@ -995,9 +1058,6 @@ msgstr "Rechnungen für {0} wurden verschickt"
 
 msgid "Sent_invoices"
 msgstr "Verschickte Rechnungen"
-
-msgid "Order_period"
-msgstr "Bestellzeitraum"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"

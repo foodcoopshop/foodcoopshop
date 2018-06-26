@@ -17,7 +17,7 @@ foodcoopshop.DialogCustomer = {
         var dialogHtml = '<label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />';
         dialogHtml += '<select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>';
         dialogHtml += '<input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Gruppe ändern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogCustomer.ChangeGroup, dialogId, dialogHtml);
         return dialogHtml;
     },
     
@@ -26,7 +26,7 @@ foodcoopshop.DialogCustomer = {
         dialogHtml += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml('Mitglieder-Kommentar ändern', dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogCustomer.ChangeMemberComment, dialogId, dialogHtml);
         return dialogHtml;
     }
 

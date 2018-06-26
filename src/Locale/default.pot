@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-25 16:38+0200\n"
+"POT-Creation-Date: 2018-06-26 11:16+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -557,10 +557,22 @@ msgstr ""
 msgid "Deactivate_product"
 msgstr ""
 
+msgid "Activate_member?"
+msgstr ""
+
+msgid "Deactivate_member?"
+msgstr ""
+
+msgid "Really_activate_member_{0}_?"
+msgstr ""
+
+msgid "Really_deactivate_member_{0}?"
+msgstr ""
+
 msgid "Really_activate_product_{0}_?"
 msgstr ""
 
-msgid "Really_deactivate_product_{0}_?"
+msgid "Really_deactivate_product_{0}?"
 msgstr ""
 
 msgid "Delete_attribute"
@@ -590,6 +602,51 @@ msgstr ""
 msgid "Please_chose_at_least_one_month."
 msgstr ""
 
+msgid "Delete_member?"
+msgstr ""
+
+msgid "Really_delete_member?"
+msgstr ""
+
+msgid "Be_careful_there_is_no_way_back!"
+msgstr ""
+
+msgid "Errors_occurred_while_member_was_deleted"
+msgstr ""
+
+msgid "Add_comment"
+msgstr ""
+
+msgid "Please_cancel_all_ordered_products_before_cancelling_the_order."
+msgstr ""
+
+msgid "Add_new_product?"
+msgstr ""
+
+msgid "Really_add_new_product?"
+msgstr ""
+
+msgid "This_function_is_not_available_today."
+msgstr ""
+
+msgid "Manually_send_order_list?"
+msgstr ""
+
+msgid "Really_manually_send_order_list_to_{0}?"
+msgstr ""
+
+msgid "Order_period"
+msgstr ""
+
+msgid "An_existing_order_list_will_be_overwritten!"
+msgstr ""
+
+msgid "Change_group_for"
+msgstr ""
+
+msgid "The_member_needs_to_sign_again."
+msgstr ""
+
 msgid "Change_comment_of_order"
 msgstr ""
 
@@ -597,6 +654,12 @@ msgid "Set_date_of_order_back_to"
 msgstr ""
 
 msgid "Set_date_of_order_back"
+msgstr ""
+
+msgid "Change_member_comment"
+msgstr ""
+
+msgid "Change_group"
 msgstr ""
 
 msgid "Change_amount"
@@ -990,9 +1053,6 @@ msgid "Invoices_for_{0}_have_been_sent"
 msgstr ""
 
 msgid "Sent_invoices"
-msgstr ""
-
-msgid "Order_period"
 msgstr ""
 
 msgid "Sent_order_lists"

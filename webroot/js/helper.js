@@ -15,8 +15,6 @@
 String.prototype.replaceI18n = function(object, replace) {
     var regExp = new RegExp('\\{' + object + '\\}', 'g');
     return this.replace(regExp, replace);
-    
-    // code
 };
 
 foodcoopshop.Helper = {
