@@ -14,6 +14,7 @@
  */
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 ?>
 <?php
@@ -36,9 +37,9 @@ $this->element('addScript', ['script' =>
         <?php
             echo '<div id="terms-of-use" class="featherlight-overlay">';
         if ($appAuth->isManufacturer()) {
-            echo $this->element('legal/termsOfUseForManufacturers');
+            echo $this->element('legal/'.I18n::getLocale().'/termsOfUseForManufacturers');
         } else {
-            echo $this->element('legal/termsOfUse');
+            echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
         }
             echo '</div>';
             echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [

@@ -6,28 +6,11 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.1.0
+ * @since         FoodCoopShop 2.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-use App\Controller\Component\StringComponent;
-use App\Lib\Pdf\AppTcpdf;
-use Cake\I18n\I18n;
-
-$pdf = new AppTcpdf();
-$pdf->SetLeftMargin(12);
-$pdf->SetRightMargin(12);
-
-$title = __('Terms_of_use');
-$pdf->SetTitle($title);
-$pdf->infoTextForFooter = $title;
-
-$pdf->AddPage();
-
-$html = $this->element('legal/'.I18n::getLocale().'/termsOfUse');
-$pdf->writeHTML($html, true, false, true, false, '');
-
-echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);
+?>
+<h1>Information about the right of withdrawal</h1>

@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
@@ -98,7 +99,7 @@ $this->element('addScript', ['script' =>
                   }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';
-                    echo $this->element('legal/termsOfUse');
+                    echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
                   echo '</div>';
                   $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
                   echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [

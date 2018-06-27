@@ -335,7 +335,7 @@ class AppTcpdf extends TCPDF
         $this->drawLine();
         $this->SetFontSize(10);
         $this->Cell(0, 10, $this->infoTextForFooter, 0, false, 'L', 0, '', 0, false, 'T', 'M');
-        $textForFooterRight = 'Seite ' . $this->getAliasNumPage() . ' von ' . $this->getAliasNbPages();
+        $textForFooterRight = __('Page_{0}_of_{1}', [$this->getAliasNumPage(), $this->getAliasNbPages()]);
         $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
         $this->SetFontSize(12);
     }

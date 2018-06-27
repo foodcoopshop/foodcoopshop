@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 11:17+0200\n"
+"POT-Creation-Date: 2018-06-27 13:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Order_confirmation"
 msgstr ""
 
-msgid "Filename_Cancellation-information-and-form"
+msgid "Filename_Right-of-withdrawal-information-and-form"
 msgstr ""
 
 msgid "Filename_Order-confirmation"
@@ -744,6 +744,9 @@ msgid "Member"
 msgstr ""
 
 msgid "Total_sum"
+msgstr ""
+
+msgid "Page_{0}_of_{1}"
 msgstr ""
 
 msgid "Action_Log_Product_added"
@@ -1473,6 +1476,42 @@ msgid "News_from"
 msgstr ""
 
 msgid "Imprint"
+msgstr ""
+
+msgid "Terms_and_conditions"
+msgstr ""
+
+msgid "Information_about_right_of_withdrawal"
+msgstr ""
+
+msgid "Withdrawal_form"
+msgstr ""
+
+msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+msgstr ""
+
+msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+msgstr ""
+
+msgid "Ordered_on"
+msgstr ""
+
+msgid "Received_on"
+msgstr ""
+
+msgid "Name_of_consumer(s)"
+msgstr ""
+
+msgid "Address_of_consumer(s)"
+msgstr ""
+
+msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+msgstr ""
+
+msgid "Strike_out_unnecessary_items."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
 msgid "Sign_out"

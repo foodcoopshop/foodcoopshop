@@ -49,7 +49,7 @@ class CartsController extends FrontendController
             }
         }
 
-        $this->AppAuth->allow('generateCancellationInformationPdf');
+        $this->AppAuth->allow('generateRightOfWithdrawalInformationPdf');
     }
 
     public function isAuthorized($user)
@@ -84,7 +84,7 @@ class CartsController extends FrontendController
      * @param array $order
      * @param array $orderDetails
      */
-    private function generateCancellationInformationAndForm($order, $products)
+    private function generateRightOfWithdrawalInformationAndForm($order, $products)
     {
         $this->set('order', $order);
         $manufacturers = [];
@@ -94,7 +94,7 @@ class CartsController extends FrontendController
         $this->set('manufacturers', $manufacturers);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        return $this->render('generateCancellationInformationAndForm');
+        return $this->render('generateRightOfWithdrawalInformationAndForm');
     }
 
     /**
@@ -152,11 +152,11 @@ class CartsController extends FrontendController
     /**
      * generates pdf on-the-fly
      */
-    public function generateCancellationInformationPdf()
+    public function generateRightOfWithdrawalInformationPdf()
     {
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateCancellationInformationAndForm');
+        $this->render('generateRightOfWithdrawalInformationAndForm');
     }
     
     /**
@@ -179,7 +179,7 @@ class CartsController extends FrontendController
                 'order' => $order
             ]);
             
-            $email->addAttachments([__('Filename_Cancellation-information-and-form').'.pdf' => ['data' => $this->generateCancellationInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
             $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
             $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
             

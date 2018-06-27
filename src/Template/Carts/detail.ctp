@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
@@ -88,7 +89,7 @@ if (!$appAuth->termsOfUseAccepted()) {
     
     	<?php
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
-                echo $this->element('legal/generalTermsAndConditions');
+                echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
             echo '</div>';
             $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_of_use').'</a>';
             echo $this->Form->control('Orders.general_terms_and_conditions_accepted', [
@@ -98,7 +99,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             ]);
             
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
-                echo $this->element('legal/cancellationTerms');
+                echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
             echo '</div>';
             $cancellationTermsLink = '<a href="#cancellation-terms">'.__('right_of_withdrawal').'</a>';
             echo $this->Form->control('Orders.cancellation_terms_accepted', [

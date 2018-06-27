@@ -13,9 +13,19 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 
-$this->element('addScript', ['script' =>
-    Configure::read('app.jsNamespace').".Helper.init();"
-]);
-echo $this->element('legal/'.I18n::getLocale().'/listOfAllergens');
+?>
+<h1>Terms of use</h1> 
+
+<h2>Platform owner</h2>
+
+<p>
+    <?php
+    if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
+        echo Configure::read('appDb.FCS_PLATFORM_OWNER');
+    } else {
+        echo Configure::read('appDb.FCS_APP_NAME');
+        echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
+    }
+    ?>
+</p>

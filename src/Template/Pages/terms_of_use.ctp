@@ -13,14 +13,13 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
-?>
-<?php
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 if ($appAuth->isManufacturer()) {
-    echo $this->element('legal/termsOfUseForManufacturers');
+    echo $this->element('legal/'.I18n::getLocale().'/termsOfUseForManufacturers');
 } else {
-    echo $this->element('legal/termsOfUse');
+    echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
 }
