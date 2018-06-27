@@ -39,7 +39,7 @@ class OrdersTable extends AppTable
     public function validationCart(Validator $validator)
     {
         $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
-        $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_terms_of_use.'));
+        $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
         $validator->allowEmpty('comment');
         $validator->maxLength('comment', 500, __('Please_enter_max_{0}_characters.', [500]));
         return $validator;

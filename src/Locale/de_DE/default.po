@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 16:27+0200\n"
-"PO-Revision-Date: 2018-06-27 17:25+0200\n"
+"POT-Creation-Date: 2018-06-27 17:36+0200\n"
+"PO-Revision-Date: 2018-06-27 17:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1138,7 +1138,7 @@ msgid "Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_
 msgstr "Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail."
 
 msgid "Please_accept_the_terms_of_use."
-msgstr "Bitte akzeptiere die AGB."
+msgstr "Bitte akzeptiere die Nutzungsbedingungen."
 
 msgid "Members:_active"
 msgstr "Mitglieder: aktiv"
@@ -1181,6 +1181,9 @@ msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
 
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr "Bitte akzeptiere die AGB."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
@@ -1618,6 +1621,12 @@ msgstr "Unzutreffendes streichen"
 
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
 
 msgid "Sign_out"
 msgstr "Abmelden"

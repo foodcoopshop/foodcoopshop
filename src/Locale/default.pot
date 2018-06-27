@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 16:47+0200\n"
+"POT-Creation-Date: 2018-06-27 17:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1178,6 +1178,9 @@ msgstr ""
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr ""
 
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr ""
+
 msgid "Please_enter_a_correct_number."
 msgstr ""
 
@@ -1608,6 +1611,12 @@ msgid "Strike_out_unnecessary_items."
 msgstr ""
 
 msgid "Filename_Information-about-right-of-withdrawal"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
 msgstr ""
 
 msgid "Sign_out"

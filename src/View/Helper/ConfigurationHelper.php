@@ -31,8 +31,8 @@ class ConfigurationHelper extends Helper
             case 'FCS_ORDER_COMMENT_ENABLED':
             case 'FCS_TIMEBASED_CURRENCY_ENABLED':
                 return [
-                    APP_ON => 'ja',
-                    APP_OFF => 'nein'
+                    APP_ON => __('yes'),
+                    APP_OFF => __('no')
                 ];
                 break;
             case 'FCS_LOCALE':
