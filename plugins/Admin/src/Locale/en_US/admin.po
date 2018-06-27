@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 16:47+0200\n"
-"PO-Revision-Date: 2018-06-27 17:01+0200\n"
+"POT-Creation-Date: 2018-06-27 17:31+0200\n"
+"PO-Revision-Date: 2018-06-27 17:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -277,6 +277,9 @@ msgstr "The description of the product {0} from manufacturer {1} has been change
 
 msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
 msgstr "The short description of the product {0} from manufacturer {1} has been changed: {2}"
+
+msgid "All_manufacturers"
+msgstr "All manufacturers"
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
