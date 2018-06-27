@@ -33,12 +33,6 @@ $this->element('addScript', [
     </div>
 </div>
 
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Remote-Foodcoop ändern.</li>
-    </ul>
-</div>
-
 <div class="sc"></div>
 
 <?php if ($this->request->getRequestTarget() != $this->Network->getSyncDomainAdd()) { ?>
