@@ -22,6 +22,9 @@ use Cake\Core\Configure;
         'script' => Configure::read('app.jsNamespace') . ".Admin.init();
         "
         ]);
+        $this->element('highlightRowAfterEdit', [
+            'rowIdPrefix' => '#page-'
+        ]);
     ?>
    
     <div class="filter-container">

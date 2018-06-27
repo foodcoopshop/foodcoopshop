@@ -30,7 +30,7 @@ foreach ($pages as $page) {
     if (! $page->active) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="page-' . $page->id_page . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
     echo $page->id_page;

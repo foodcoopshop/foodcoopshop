@@ -27,6 +27,7 @@ class PagesTable extends AppTable
         $this->addBehavior('Tree', [
             'parent' => 'id_parent'
         ]);
+        $this->addBehavior('Timestamp');
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
