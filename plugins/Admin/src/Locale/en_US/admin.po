@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-06-27 11:17+0200\n"
-"PO-Revision-Date: 2018-06-27 11:35+0200\n"
+"PO-Revision-Date: 2018-06-27 14:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -401,7 +401,7 @@ msgid "docs_route_settings"
 msgstr "settings"
 
 msgid "The_following_settings_can_be_changed_in_the_admin_area."
-msgstr "The following settings can be changed in the admin area."
+msgstr "The following settings can be changed in the admin panel."
 
 msgid "Setting"
 msgstr "Settings"
@@ -434,7 +434,7 @@ msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_a
 msgstr "As long as the variable member fee is activated, no remote foodcoops can be added to this foodcoop."
 
 msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
-msgstr "The following settings can <b>not</b> be changed in the admin area."
+msgstr "The following settings can <b>not</b> be changed in the admin panel."
 
 msgid "Version_FoodCoopShop"
 msgstr "Version of FoodCoopShop"
@@ -1193,10 +1193,10 @@ msgid "Pages_delete_page_sub_description"
 msgstr "Do not forget to click on the <b>Save</b> button."
 
 msgid "to_the_admin_area"
-msgstr "to the admin area"
+msgstr "to the admin panel"
 
 msgid "to_the_manufacturer_area"
-msgstr "to the manufacturer area"
+msgstr "to the manufacturer panel"
 
 msgid "Welcome"
 msgstr "Welcome"
