@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 /**
  * ToolsController

@@ -149,7 +149,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     }
     
     /**
-     * @param TimebasedCurrencyPayment $payment
+     * @param $payment
      * @param boolean $isEditMode
      */
     public function _processForm($payment, $isEditMode)

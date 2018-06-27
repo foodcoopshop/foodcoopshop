@@ -303,10 +303,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
         
         $this->finishCart(1, 1, '', '1700');
-        $this->assertRegExp('/Die Eingabe muss eine Zahl zwischen 0 und (.*) sein./', $this->browser->getContent());
+        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
         
         $this->finishCart(1, 1, '', '');
-        $this->assertRegExp('/Die Eingabe muss eine Zahl zwischen 0 und (.*) sein./', $this->browser->getContent());
+        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
         
         $this->finishCart(1, 1, '', '1200');
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());

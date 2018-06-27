@@ -53,7 +53,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormFcsCustomerGroupInvalidId()
     {
         $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', 44);
-        $this->assertRegExpWithUnquotedString('Die Eingabe muss eine Zahl zwischen 3 und 4 sein.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 3 und 4 an.', $this->browser->getContent());
     }
 
     public function testConfigurationEditFormFcsAppNameEmpty()
