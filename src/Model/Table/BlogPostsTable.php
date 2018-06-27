@@ -35,12 +35,12 @@ class BlogPostsTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('title', 'Bitte gib einen Titel an.');
-        $validator->minLength('title', 3, 'Bitte gib mindestens 3 Zeichen ein.');
+        $validator->notEmpty('title', __('Please_enter_a_title.'));
+        $validator->minLength('title', 3, __('Please_enter_at_least_{0}_characters.', [3]));
         $validator->allowEmpty('content');
-        $validator->minLength('content', 3, 'Bitte gib mindestens 3 Zeichen ein.');
+        $validator->minLength('content', 3, __('Please_enter_at_least_{0}_characters.', [3]));
         $validator->allowEmpty('short_description');
-        $validator->maxLength('short_description', 100, 'Bitte gib maximal 100 Zeichen ein.');
+        $validator->maxLength('short_description', 100, __('Please_enter_max_{0}_characters.', [100]));
         return $validator;
     }
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 11:17+0200\n"
-"PO-Revision-Date: 2018-06-27 11:19+0200\n"
+"POT-Creation-Date: 2018-06-27 16:47+0200\n"
+"PO-Revision-Date: 2018-06-27 16:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -181,11 +181,10 @@ msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
 msgstr "Der Status deiner Guthaben-Aufladung wurde erfolgreich auf {0} geändert."
 
 msgid ""
-"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}"
-"_and_an_email_was_sent_to_the_member."
+"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
 msgstr ""
-"Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} geändert und eine E-Mail an das "
-"Mitglied verschickt."
+"Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} geändert und eine E-Mail an das Mitglied "
+"verschickt."
 
 msgid "for"
 msgstr "für"
@@ -204,8 +203,7 @@ msgstr "Der Betrag ist im Pfandkonto von {0} eingetragen worden und kann dort wi
 
 msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
 msgstr ""
-"Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht "
-"werden."
+"Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."
 
 msgid "The_payment_({0}_{1})_was_removed_successfully."
 msgstr "Die Zahlung ({0}, {1}) wurde erfolgreich gelöscht."
@@ -354,20 +352,56 @@ msgstr "Speichern"
 msgid "Cancel"
 msgstr "Abbrechen"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Weight_unit"
+msgstr "Gewichtseinheit"
+
+msgid "Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg)."
+msgstr "Bitte anhaken, falls diese Variante einer Gewichtseinheit (z.B. kg, g) entspricht."
+
+msgid "docs_route_products"
+msgstr "produkte"
+
+msgid "Information_needed_for_function_price_per_unit."
+msgstr "Diese Information wird für die Funktion \"Preis nach Gewicht\" benötigt."
+
+msgid "Delete_attribute?"
+msgstr "Variante löschen?"
+
+msgid "Attribute_can_not_be_deleted_because_products_are_associated_with_it."
+msgstr "Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind."
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Weight"
+msgstr "Gewicht"
+
+msgid "Associated_to_active_products?"
+msgstr "Aktivierten Produkten zugewiesen?"
+
+msgid "Associated_to_inactive_products?"
+msgstr "Deaktivierten Produkten zugewiesen?"
+
+msgid "Modified_on"
+msgstr "Geändert am"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Associated_products"
+msgstr "Zugewiesene Produkte"
+
+msgid "Show_associated_products"
+msgstr "Zugewiesene Produkte anzeigen"
+
 msgid "{0,plural,=1{record} other{records}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
-
-msgid "all_manufacturers"
-msgstr "alle Hersteller"
-
-msgid "Image"
-msgstr "Bild"
-
-msgid "Homepage"
-msgstr "Homepage"
-
-msgid "Only_for_members"
-msgstr "Nur für Mitglieder"
 
 msgid "Title"
 msgstr "Titel"
@@ -375,29 +409,76 @@ msgstr "Titel"
 msgid "Short_description"
 msgstr "Kurze Beschreibung"
 
-msgid "Modified_by"
-msgstr "Geändert von"
+msgid "Image"
+msgstr "Bild"
+
+msgid "Click_on_image_to_change_it."
+msgstr "Zum Ändern auf das Bild klicken."
+
+msgid "Upload_new_image_or_change_it"
+msgstr "Neues Bild hochladen bzw. austauschen"
+
+msgid "Delete_image?"
+msgstr "Bild löschen?"
 
 msgid "Manufacturer"
 msgstr "Hersteller"
 
-msgid "Modified_on"
-msgstr "Geändert am"
+msgid "Chose_manufacturer"
+msgstr "Hersteller auswählen"
+
+msgid "Blog_post_manufacturer_description"
+msgstr ""
+"Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von "
+"der eigenen Einstellung \"nur für Mitglieder\")."
+
+msgid "Show_on_homepage"
+msgstr "Auf der Startseite anzeigen"
+
+msgid "Only_for_members"
+msgstr "Nur für Mitglieder"
 
 msgid "Active"
 msgstr "Aktiv"
 
-msgid "Edit"
-msgstr "Bearbeiten"
+msgid "Move_on_first_place?"
+msgstr "Nach vorne reihen?"
+
+msgid "If_checked_the_blog_post_will_be_set_to_first_place_of_list."
+msgstr "Falls angehakt, wird der Blog-Artikel an die erste Stelle der Liste gereiht."
+
+msgid "Delete_blog_post?"
+msgstr "Blog-Artikel löschen?"
+
+msgid "docs_route_manufacturers"
+msgstr "hersteller"
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "Wie verwende ich den Editor?"
+
+msgid "all_manufacturers"
+msgstr "alle Hersteller"
+
+msgid "Homepage"
+msgstr "Homepage"
+
+msgid "Modified_by"
+msgstr "Geändert von"
 
 msgid "Show_blog_post"
 msgstr "Blog-Artikel anzeigen"
 
-msgid "ID"
-msgstr "ID"
+msgid "Parent_category"
+msgstr "Übergeordnete Kategorie"
 
-msgid "Name"
-msgstr "Name"
+msgid "No_parent_category_(highest_level)"
+msgstr "Keine (oberste Ebene)"
+
+msgid "Delete_category?"
+msgstr "Kategorie löschen?"
+
+msgid "Description"
+msgstr "Beschreibung"
 
 msgid "docs_route_settings"
 msgstr "einstellungen"
@@ -760,8 +841,8 @@ msgid ""
 "The_total_sum_below_right_(minus_{0}_"
 "%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich "
-"auf dein Konto überwiesen."
+"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich auf "
+"dein Konto überwiesen."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
@@ -808,17 +889,14 @@ msgstr "Hier findest du die Übersicht zum Überweisen:"
 msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
 msgstr ""
 "Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den "
-"tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit "
-"und macht das Guthaben-System weniger fehleranfällig."
+"tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und "
+"macht das Guthaben-System weniger fehleranfällig."
 
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link nur für Superadmins)."
 
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Vielen Dank für deine Arbeit!"
-
-msgid "docs_route_products"
-msgstr "produkte"
 
 msgid "Pick_up_date"
 msgstr "Abholdatum"
@@ -834,9 +912,6 @@ msgstr "Liste anzeigen (gruppiet nach Produkt)"
 
 msgid "Show_list_(grouped_by_member)"
 msgstr "Liste anzeigen (gruppiet nach Mitglied)"
-
-msgid "docs_route_manufacturers"
-msgstr "hersteller"
 
 msgid "General"
 msgstr "Allgemein"
@@ -880,9 +955,6 @@ msgstr "Neues Logo hochladen bzw. austauschen"
 msgid "Delete_logo?"
 msgstr "Logo löschen?"
 
-msgid "Do_not_forget_to_press_save"
-msgstr "Speicher nicht vergesen"
-
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
 "Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
@@ -897,9 +969,6 @@ msgstr ""
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Wird auf der Hersteller-Seite angezeigt."
-
-msgid "How_do_I_use_the_WYSIWYG_editor?"
-msgstr "Wie verwende ich den Editor?"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr "werden nicht veröffentlicht und werden nur intern zum Überweisen deiner Erlöse verwendet."
@@ -918,8 +987,8 @@ msgstr "Firmendaten"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
-"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz "
-"unten rechts."
+"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten "
+"rechts."
 
 msgid "VAT_number"
 msgstr "UID-Nummer"
@@ -1105,9 +1174,6 @@ msgstr "abholung-der-produkte"
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
 
-msgid "Weight"
-msgstr "Gewicht"
-
 msgid "Order_date"
 msgstr "Bestelldatum"
 
@@ -1198,9 +1264,6 @@ msgstr "Menüpunkt führt auf diese Webseite (der Inhalt der Seite wird nicht an
 msgid "Pages_delete_page_main_description"
 msgstr "Seite löschen?"
 
-msgid "Pages_delete_page_sub_description"
-msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
-
 msgid "to_the_admin_area"
 msgstr "im Admin-Beriche"
 
@@ -1224,6 +1287,32 @@ msgstr "Ganze Breite"
 
 msgid "Link"
 msgstr "Link"
+
+msgid "Date_of_upload"
+msgstr "Datum der Aufladung"
+
+msgid "Date_last_modified"
+msgstr "Datum der letzten Änderung"
+
+msgid "Last_editor"
+msgstr "Zuletzt bearbeite von"
+
+msgid "This_payment_has_not_been_changed_yet."
+msgstr "Diese Zahlung wurde noch nicht bearbeitet."
+
+msgid "Send_email?"
+msgstr "E-Mail versenden?"
+
+msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment."
+msgstr ""
+"Wenn angehakt, wird das Mitglied beim Speichern per E-Mail über die Status-Änderung informiert (inkl. "
+"Kommentar)."
+
+msgid "Email_preview"
+msgstr "E-Mail-Vorschau"
+
+msgid "Comment"
+msgstr "Kommentar"
 
 msgid "Add_transfered_member_fee"
 msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
@@ -1330,8 +1419,35 @@ msgstr "Produkt-Vorschau"
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
 
+msgid "Added_by"
+msgstr "Eingetragen von"
+
+msgid "deleted_on"
+msgstr "gelöscht am"
+
+msgid "does_not_appear_in_sum."
+msgstr "scheint in der Summe nicht auf."
+
+msgid "Slider_image"
+msgstr "Slideshow-Bild"
+
+msgid "Width"
+msgstr "Breite"
+
 msgid "Rank"
 msgstr "Reihenfolge"
+
+msgid "Delete_slider_image?"
+msgstr "Slideshow-Bild löschen?"
+
+msgid "Tax_rates_can_not_be_changed."
+msgstr "Steuersätze sind nicht änderbar."
+
+msgid "e.g._10_for_10%"
+msgstr "z.B. \"10\" für 10%"
+
+msgid "Tax_rates_can_not_be_changed_later."
+msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "docs_route_paying_with_time_module"
 msgstr "stundenabrechnung"
@@ -1344,6 +1460,12 @@ msgstr "Hersteller anzeigen"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
+
+#~ msgid "Do_not_forget_to_press_save"
+#~ msgstr "Speicher nicht vergesen"
+
+#~ msgid "Pages_delete_page_sub_description"
+#~ msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
 
 #~ msgid "Amount_in"
 #~ msgstr "Betrag in"

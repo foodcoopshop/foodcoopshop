@@ -16,8 +16,11 @@
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('blogposts-content');" . Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . Configure::read('app.jsNamespace') . ".Admin.initForm();
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace') . ".Admin.init();" . 
+    Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('blogposts-content');" . 
+    Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" . 
+    Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
 
@@ -54,30 +57,30 @@ echo $this->Form->create($blogPost, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 echo $this->Form->control('BlogPosts.title', [
     'class' => 'long',
-    'label' => 'Titel'
+    'label' => __d('admin', 'Title')
 ]);
 echo $this->Form->control('BlogPosts.short_description', [
     'class' => 'long',
-    'label' => 'Kurze Beschreibung'
+    'label' => __d('admin', 'Short_description')
 ]);
 
 echo '<div class="input">';
-echo '<label>Bild';
+echo '<label>'.__d('admin', 'Image');
 if ($imageExists) {
-    echo '<br /><span class="small">Zum Ändern auf das Bild klicken.</span>';
+    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'</span>';
 }
 echo '</label>';
 echo '<div style="float:right;">';
 echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
-    'title' => 'Neues Bild hochladen bzw. austauschen',
+    'title' => __d('admin', 'Upload_new_image_or_change_it'),
     'data-object-id' => $idForImageUpload
 ], 'javascript:void(0);');
 echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
 echo '</div>';
 echo $this->Form->control('BlogPosts.delete_image', [
-    'label' => 'Bild löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
+    'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
@@ -85,29 +88,29 @@ echo $this->Form->control('BlogPosts.delete_image', [
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Form->control('BlogPosts.id_manufacturer', [
         'type' => 'select',
-        'label' => 'Hersteller',
-        'empty' => 'Hersteller auswählen',
+        'label' => __d('admin', 'Manufacturer'),
+        'empty' => __d('admin', 'Chose_manufacturer'),
         'options' => $manufacturersForDropdown
     ]);
-    echo '<span class="description small">Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung "nur für Mitglieder").</span>';
+    echo '<span class="description small">'.__d('admin', 'Blog_post_manufacturer_description') . '</span>';
 }
 
 echo $this->Form->control('BlogPosts.is_featured', [
-    'label' => 'Auf der Startseite anzeigen?',
+    'label' => __d('admin', 'Show_on_homepage') . '?',
     'type' => 'checkbox'
 ]);
 echo $this->Form->control('BlogPosts.is_private', [
-    'label' => 'Nur für Mitglieder sichtbar?',
+    'label' => __d('admin', 'Only_for_members').'?',
     'type' => 'checkbox'
 ]);
 echo $this->Form->control('BlogPosts.active', [
-    'label' => 'Aktiv?',
+    'label' => __d('admin', 'Active') . '?',
     'type' => 'checkbox'
 ]);
 
 if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->control('BlogPosts.update_modified_field', [
-        'label' => 'Nach vorne reihen? <span class="after small">Falls angehakt, wird der Blog-Artikel an die erste Stelle der Liste gereiht.</span>',
+        'label' => __d('admin', 'Move_on_first_place?') . ' <span class="after small">'.__d('admin', 'If_checked_the_blog_post_will_be_set_to_first_place_of_list.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -115,7 +118,7 @@ if (($appAuth->isSuperadmin() || $appAuth->isAdmin()) && $this->request->getRequ
 
 if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
     echo $this->Form->control('BlogPosts.delete_blog_post', [
-        'label' => 'Blog-Artikel löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
+        'label' => __d('admin', 'Delete_blog_post?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
@@ -124,7 +127,7 @@ if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
 echo $this->Form->control('BlogPosts.content', [
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
+    'label' => __d('admin', 'Text').'<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
 ]);
 

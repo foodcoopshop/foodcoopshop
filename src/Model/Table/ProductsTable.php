@@ -212,7 +212,7 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $deposit = $this->getStringAsFloat($product[$productId]);
             if ($deposit < 0) {
-                throw new InvalidParameterException('Eingabeformat von Pfand ist nicht korrekt: '.$product[$productId]);
+                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
         }
 
@@ -290,7 +290,7 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $price = $this->getStringAsFloat($product[$productId]);
             if ($price < 0) {
-                throw new InvalidParameterException('Eingabeformat von Preis ist nicht korrekt: '.$product[$productId]);
+                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
         }
 
@@ -343,7 +343,7 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $quantity = $this->getQuantityAsInteger($product[$productId]);
             if ($quantity < 0) {
-                throw new InvalidParameterException('Eingabeformat von Anzahl ist nicht korrekt: '.$product[$productId]);
+                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
         }
 
@@ -983,7 +983,7 @@ class ProductsTable extends AppTable
         );
 
         // INSERT PRODUCT_LANG
-        $name = StringComponent::removeSpecialChars('Neues Produkt von ' . $manufacturer->name);
+        $name = StringComponent::removeSpecialChars(__('New_product_of') . ' ' . $manufacturer->name);
         $this->ProductLangs->save(
             $this->ProductLangs->newEntity(
                 [

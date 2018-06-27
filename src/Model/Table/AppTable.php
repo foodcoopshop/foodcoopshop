@@ -42,7 +42,7 @@ class AppTable extends Table
 
     public function getNumberRangeValidator(Validator $validator, $field, $min, $max)
     {
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $message = __('Please_enter_a_number_between_{0}_and_{1}.', [$min, $max]);
         $validator->lessThanOrEqual($field, $max, $message);
         $validator->greaterThanOrEqual($field, $min, $message);
         $validator->notEmpty($field, $message);

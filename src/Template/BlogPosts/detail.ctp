@@ -62,11 +62,8 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     );
 }
 
-?>
-
-<?php
 if (!empty($neighbors['prev']) || !empty($neighbors['next'])) {
-    echo '<h2>Weitere Beiträge</h2>';
+    echo '<h2>'.__('Further_news').'</h2>';
 }
 if (!empty($neighbors['prev'])) {
     echo $this->element('blogPosts', [

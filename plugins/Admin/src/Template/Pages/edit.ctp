@@ -90,7 +90,7 @@ echo $this->Form->control('Pages.extern_url', [
 
 if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
     echo $this->Form->control('Pages.delete_page', [
-        'label' => __d('admin', 'Pages_delete_page_main_description') . ' <span class="after small">'.__d('admin', 'Pages_delete_page_sub_description').'</span>',
+        'label' => __d('admin', 'Pages_delete_page_main_description') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

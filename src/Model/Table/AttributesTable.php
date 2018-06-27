@@ -30,11 +30,11 @@ class AttributesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
+        $validator->notEmpty('name', __('Please_enter_a_name.'));
         $validator->add('name', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => 'Eine Variante mit dem Namen existiert bereits.'
+            'message' => __('An_attribute_with_this_name_already_exists.')
         ]);
         return $validator;
     }

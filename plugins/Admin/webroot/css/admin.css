@@ -979,7 +979,7 @@ form.fcs-form .small {
 form.fcs-form .checkbox .small {
     line-height: 16px;
     float: left;
-    max-width: 600px;
+    max-width: 280px;
     margin-top: 7px;
 }
 form.fcs-form .checkbox .small.multiple-lines {
@@ -1111,6 +1111,9 @@ body.payments .payment-approval-comment-wrapper,
 body.reports.payment .payment-approval-comment-wrapper {
     float: left;
     margin-right: 2px;
+}
+body.payments.edit form {
+	width: 530px;
 }
 body.payments.edit .email-template-info {
     float: left;

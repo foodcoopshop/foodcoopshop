@@ -182,8 +182,8 @@ class OrderDetailsTable extends AppTable
 
     /**
      * @param int $manufacturerId
-     * @param date $dateFrom
-     * @param date $dateTo
+     * @param $dateFrom
+     * @param $dateTo
      * @return float
      */
     public function getOpenOrderDetailSum($manufacturerId, $dateFrom, $dateTo)

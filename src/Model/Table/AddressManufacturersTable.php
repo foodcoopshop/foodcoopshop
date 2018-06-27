@@ -23,29 +23,29 @@ class AddressManufacturersTable extends AddressesTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('firstname', 'Bitte gib den Vornamen des Rechnungsempfängers an.');
-        $validator->notEmpty('lastname', 'Bitte gib den Nachnamen des Rechnungsempfängers an.');
-        $validator->notEmpty('email', 'Bitte gib eine E-Mail-Adresse an.');
-        $validator->email('email', false, 'Die E-Mail-Adresse ist nicht gültig.');
+        $validator->notEmpty('firstname', __('Please_enter_the_first_name_of_the_invoice_holder.'));
+        $validator->notEmpty('lastname', __('Please_enter_the_last_name_of_the_invoice_holder.'));
+        $validator->notEmpty('email', __('Please_enter_an_email_address.'));
+        $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => 'Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.'
+            'message' => __('The_email_address_is_already_used_by_another_member_or_manufacturer.')
         ]);
         $validator->allowEmpty('postcode');
         $validator->add('postcode', 'validFormat', [
             'rule' => array('custom', ZIP_REGEX),
-            'message' => 'Die PLZ ist nicht gültig.'
+            'message' => __('The_zip_is_not_valid.')
         ]);
         $validator->allowEmpty('phone_mobile');
         $validator->add('phone_mobile', 'validFormat', [
             'rule' => array('custom', PHONE_REGEX),
-            'message' => 'Die Handynummer ist nicht gültig.'
+            'message' => __('The_mobile_number_is_not_valid.')
         ]);
         $validator->allowEmpty('phone');
         $validator->add('phone', 'validFormat', [
             'rule' => array('custom', PHONE_REGEX),
-            'message' => 'Die Telefonnummer ist nicht gültig.'
+            'message' => __('The_phone_number_is_not_valid.')
         ]);
         return $validator;
     }

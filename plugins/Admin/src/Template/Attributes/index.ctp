@@ -32,7 +32,7 @@ use Cake\Utility\Hash;
         <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Variante erstellen', $this->Slug->getAttributeAdd(), [
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_attribute').'', $this->Slug->getAttributeAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
             ]);
@@ -47,13 +47,13 @@ use Cake\Utility\Hash;
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">ID</th>';
+echo '<th class="hide">'.__d('admin', 'ID').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Attributes.name', 'Name') . '</th>';
-echo '<th>' . $this->Paginator->sort('Attributes.can_be_used_as_unit', 'Gewicht') . '</th>';
-echo '<th>Aktivierten Produkten zugewiesen?</th>';
-echo '<th>Deaktivierten Produkten zugewiesen?</th>';
-echo '<th>' . $this->Paginator->sort('Attributes.modified', 'geändert am') . '</th>';
+echo '<th>' . $this->Paginator->sort('Attributes.name', __d('admin', 'Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Attributes.can_be_used_as_unit', __d('admin', 'Weight')) . '</th>';
+echo '<th>'.__d('admin', 'Associated_to_active_products?').'</th>';
+echo '<th>'.__d('admin', 'Associated_to_inactive_products?').'</th>';
+echo '<th>' . $this->Paginator->sort('Attributes.modified', __d('admin', 'Modified_on')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -74,7 +74,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => 'Bearbeiten'
+        'title' => __d('admin', 'Edit')
     ], $this->Slug->getAttributeEdit($attribute->id_attribute));
     echo '</td>';
 
@@ -91,9 +91,9 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['online'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fa"></i> '.__d('admin', 'Associated_products').' (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
-            'title' => 'Zugewiesene Produkte anzeigen',
+            'title' => __d('admin', 'Show_associated_products'),
             'escape' => false
         ]);
         echo '<div class="toggle-content">' . join('<br /> ', Hash::extract($attribute->combination_product['online'], '{n}.link')) . '</div>';
@@ -102,9 +102,9 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['offline'])) {
-        echo $this->Html->link('<i class="fa"></i> Zugewiesene Produkte (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fa"></i> '.__d('admin', 'Associated_products').' (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
-            'title' => 'Zugewiesene Produkte anzeigen',
+            'title' => __d('admin', 'Show_associated_products'),
             'escape' => false
         ]);
         echo '<div class="toggle-content">' . join('<br /> ', Hash::extract($attribute->combination_product['offline'], '{n}.name')) . '</div>';

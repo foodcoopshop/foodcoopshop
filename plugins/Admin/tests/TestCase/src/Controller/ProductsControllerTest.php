@@ -50,7 +50,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $price = 'invalid-price';
         $this->changeProductPrice(346, $price);
         $response = $this->browser->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('Eingabeformat von Preis ist nicht korrekt: ' . $price, $response->msg);
+        $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
         $this->assertJsonError();
     }
 

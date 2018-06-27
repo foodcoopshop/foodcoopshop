@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 11:17+0200\n"
-"PO-Revision-Date: 2018-06-27 14:59+0200\n"
+"POT-Creation-Date: 2018-06-27 16:47+0200\n"
+"PO-Revision-Date: 2018-06-27 17:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -181,11 +181,9 @@ msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
 msgstr "The status of your credit upload was successfully changed to {0}."
 
 msgid ""
-"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}"
-"_and_an_email_was_sent_to_the_member."
+"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
 msgstr ""
-"The status of the credit upload for {0} was successfully changed to {1} and an email was sent to the "
-"member."
+"The status of the credit upload for {0} was successfully changed to {1} and an email was sent to the member."
 
 msgid "for"
 msgstr "for"
@@ -352,20 +350,56 @@ msgstr "Save"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Weight_unit"
+msgstr "Weight unit"
+
+msgid "Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg)."
+msgstr "Please check, if this attribute represents a weight attribute (e.g. kg)."
+
+msgid "docs_route_products"
+msgstr "products"
+
+msgid "Information_needed_for_function_price_per_unit."
+msgstr "Information needed for the function \"Price per unit\"."
+
+msgid "Delete_attribute?"
+msgstr "Delete attribute?"
+
+msgid "Attribute_can_not_be_deleted_because_products_are_associated_with_it."
+msgstr "Attribute can not be deleted because products are associated with it."
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Check and do not forget to click <b>Save</b> button."
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Weight"
+msgstr "Weight"
+
+msgid "Associated_to_active_products?"
+msgstr "Associated with active products?"
+
+msgid "Associated_to_inactive_products?"
+msgstr "Associated with inactive products?"
+
+msgid "Modified_on"
+msgstr "Modified on"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Associated_products"
+msgstr "Associated products"
+
+msgid "Show_associated_products"
+msgstr "Show associated products"
+
 msgid "{0,plural,=1{record} other{records}}"
 msgstr "{0,plural,=1{record} other{records}}"
-
-msgid "all_manufacturers"
-msgstr "all manufacturers"
-
-msgid "Image"
-msgstr "Image"
-
-msgid "Homepage"
-msgstr "Homepage"
-
-msgid "Only_for_members"
-msgstr "Only for members"
 
 msgid "Title"
 msgstr "Title"
@@ -373,29 +407,76 @@ msgstr "Title"
 msgid "Short_description"
 msgstr "Short description"
 
-msgid "Modified_by"
-msgstr "Modified by"
+msgid "Image"
+msgstr "Image"
+
+msgid "Click_on_image_to_change_it."
+msgstr "Click on image to change it."
+
+msgid "Upload_new_image_or_change_it"
+msgstr "Upload new image or change it"
+
+msgid "Delete_image?"
+msgstr "Delete image?"
 
 msgid "Manufacturer"
 msgstr "Manufacturer"
 
-msgid "Modified_on"
-msgstr "Modified on"
+msgid "Chose_manufacturer"
+msgstr "Chose manufacturer"
+
+msgid "Blog_post_manufacturer_description"
+msgstr ""
+"If the manufacturer is only shown for signed in members, this is also the case for the blog post (ignoring "
+"the setting for the blog post)."
+
+msgid "Show_on_homepage"
+msgstr "Show on home page"
+
+msgid "Only_for_members"
+msgstr "Only for members"
 
 msgid "Active"
 msgstr "Active"
 
-msgid "Edit"
-msgstr "Edit"
+msgid "Move_on_first_place?"
+msgstr "Move to first place?"
+
+msgid "If_checked_the_blog_post_will_be_set_to_first_place_of_list."
+msgstr "If checked, the blog post will be set to the first place of the list."
+
+msgid "Delete_blog_post?"
+msgstr "Delete blog post?"
+
+msgid "docs_route_manufacturers"
+msgstr "manufacturers"
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "How do I use the editor?"
+
+msgid "all_manufacturers"
+msgstr "all manufacturers"
+
+msgid "Homepage"
+msgstr "Homepage"
+
+msgid "Modified_by"
+msgstr "Modified by"
 
 msgid "Show_blog_post"
 msgstr "Show blog post"
 
-msgid "ID"
-msgstr "ID"
+msgid "Parent_category"
+msgstr "Parent category"
 
-msgid "Name"
-msgstr "Name"
+msgid "No_parent_category_(highest_level)"
+msgstr "No parent category (top level)"
+
+msgid "Delete_category?"
+msgstr "Delete category?"
+
+msgid "Description"
+msgstr "Description"
 
 msgid "docs_route_settings"
 msgstr "settings"
@@ -711,8 +792,8 @@ msgstr "Please enter the amount that you just transfered to our bank account."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
 msgstr ""
-"If you chose \"payback\", please enter the amount that you just transfered back to the bank account of "
-"the user."
+"If you chose \"payback\", please enter the amount that you just transfered back to the bank account of the "
+"user."
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
@@ -757,12 +838,11 @@ msgid ""
 "The_total_sum_below_right_(minus_{0}_"
 "%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr ""
-"The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as "
-"soon as possible."
+"The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as soon "
+"as possible."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-"The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
+msgstr "The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
 
 msgid "Paid_by_members_in_{0}"
 msgstr "Paid by all members in {0}"
@@ -812,9 +892,6 @@ msgstr "(Link only works for superadmins)."
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Thank you very much for your work!"
 
-msgid "docs_route_products"
-msgstr "products"
-
 msgid "Pick_up_date"
 msgstr "Pick-up date"
 
@@ -829,9 +906,6 @@ msgstr "Show list (grouped by product)"
 
 msgid "Show_list_(grouped_by_member)"
 msgstr "Show list (grouped by member)"
-
-msgid "docs_route_manufacturers"
-msgstr "manufacturers"
 
 msgid "General"
 msgstr "General"
@@ -875,12 +949,8 @@ msgstr "Upload new logo or change it"
 msgid "Delete_logo?"
 msgstr "Delete logo?"
 
-msgid "Do_not_forget_to_press_save"
-msgstr "Don't forget to press save button"
-
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
-msgstr ""
-"Will be shown on the manufacturer overview page. Can't be independently changed by the manufacturer."
+msgstr "Will be shown on the manufacturer overview page. Can't be independently changed by the manufacturer."
 
 msgid "Long_description"
 msgstr "Long description"
@@ -890,9 +960,6 @@ msgstr "To save long description please press save and then edit the manufacture
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Will be shown on the manufacturer's profile page."
-
-msgid "How_do_I_use_the_WYSIWYG_editor?"
-msgstr "How do I use the editor?"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr "is kept private and is only used to transfer money to your bank account."
@@ -1096,9 +1163,6 @@ msgstr "pick-up-products"
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Amount minus eventual variable member fee"
 
-msgid "Weight"
-msgstr "Weight"
-
 msgid "Order_date"
 msgstr "Order date"
 
@@ -1189,9 +1253,6 @@ msgstr "Menu item leads to the given url, content of page is not shown."
 msgid "Pages_delete_page_main_description"
 msgstr "Delete page?"
 
-msgid "Pages_delete_page_sub_description"
-msgstr "Do not forget to click on the <b>Save</b> button."
-
 msgid "to_the_admin_area"
 msgstr "to the admin panel"
 
@@ -1215,6 +1276,31 @@ msgstr "Full width"
 
 msgid "Link"
 msgstr "Link"
+
+msgid "Date_of_upload"
+msgstr "Date of upload"
+
+msgid "Date_last_modified"
+msgstr "Last modified date"
+
+msgid "Last_editor"
+msgstr "Last editor"
+
+msgid "This_payment_has_not_been_changed_yet."
+msgstr "This payment has not been changed yet."
+
+msgid "Send_email?"
+msgstr "Send email?"
+
+msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment."
+msgstr ""
+"If checked, the member will be notified about the status change by email on saving (including the comment)."
+
+msgid "Email_preview"
+msgstr "Email preview"
+
+msgid "Comment"
+msgstr "Comment"
 
 msgid "Add_transfered_member_fee"
 msgstr "Add transfered member fee"
@@ -1321,8 +1407,35 @@ msgstr "product preview"
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"
 
+msgid "Added_by"
+msgstr "Added by"
+
+msgid "deleted_on"
+msgstr "deleted on"
+
+msgid "does_not_appear_in_sum."
+msgstr "not included in sum."
+
+msgid "Slider_image"
+msgstr "Slider image"
+
+msgid "Width"
+msgstr "Width"
+
 msgid "Rank"
 msgstr "Rank"
+
+msgid "Delete_slider_image?"
+msgstr "Delete slider image?"
+
+msgid "Tax_rates_can_not_be_changed."
+msgstr "Tax rates can not be changed."
+
+msgid "e.g._10_for_10%"
+msgstr "e.g. 10 for 10%"
+
+msgid "Tax_rates_can_not_be_changed_later."
+msgstr "Tax rates can not be changed later."
 
 msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
@@ -1335,6 +1448,12 @@ msgstr "Show manufacturer"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{record} other{records}}"
+
+#~ msgid "Do_not_forget_to_press_save"
+#~ msgstr "Don't forget to press save button"
+
+#~ msgid "Pages_delete_page_sub_description"
+#~ msgstr "Do not forget to click on the <b>Save</b> button."
 
 #, fuzzy
 #~ msgid "Amount_in"

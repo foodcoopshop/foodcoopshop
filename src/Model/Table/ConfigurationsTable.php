@@ -53,34 +53,34 @@ class ConfigurationsTable extends AppTable
     public function validationFcsFacebookUrl(Validator $validator)
     {
         $validator->allowEmpty('value');
-        $validator->urlWithProtocol('value', 'Bitte gibt eine gültige Internet-Adresse an.');
+        $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
 
     public function validationFcsAppEmail(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
-        $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
+        $validator->notEmpty('value', __('Please_enter_an_email_address.'));
+        $validator->email('value', false, __('The_email_address_is_not_valid.'));
         return $validator;
     }
 
     public function validationFcsAccountingEmail(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib eine E-Mail-Adresse an.');
-        $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
+        $validator->notEmpty('value', __('Please_enter_an_email_address.'));
+        $validator->email('value', false, __('The_email_address_is_not_valid.'));
         return $validator;
     }
 
     public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
         $validator->allowEmpty('value');
-        $validator->email('value', false, 'Bitte gib eine gültige E-Mail-Adresse an.');
+        $validator->email('value', false, __('The_email_address_is_not_valid.'));
         return $validator;
     }
 
     public function validationFcsMinimalCreditBalance(Validator $validator)
     {
-        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 500);
         return $validator;
     }
@@ -95,12 +95,6 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
 
-    public function validationFcsLocale(Validator $validator)
-    {
-        $validator->inList('value', array_keys(Configure::read('app.implementedLocales')), 'Die Sprache ist nicht gültig.');
-        return $validator;
-    }
-    
     public function validationFcsShowProductPriceForGuests(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
@@ -123,19 +117,19 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsProductAvailabilityLow(Validator $validator)
     {
-        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 10);
     }
     
     public function validationFcsDaysShowProductAsNew(Validator $validator)
     {
-        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
     
     public function validationFcsPaymentProductMaximum(Validator $validator)
     {
-        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 50, 1000);
     }
 
@@ -151,7 +145,7 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsAppName(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib den Namen der Foodcoop an.');
+        $validator->notEmpty('value', __('Please_enter_the_name_of_the_foodcoop.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 5, 255);
         return $validator;
     }
@@ -163,50 +157,50 @@ class ConfigurationsTable extends AppTable
     
     public function validationFcsTimebasedCurrencyName(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib den Namen der Stundenabrechnung an.');
+        $validator->notEmpty('value', __('Please_enter_the_paying_with_time_module_name.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
         return $validator;
     }
     
     public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib die Abkürzung des Namens der Stundenabrechnung an.');
+        $validator->notEmpty('value', __('Please_enter_the_abbreviation_of_the_paying_with_time_module.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
         return $validator;
     }
     
     public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib den Umrechnungskurs für die Stundenabrechnung in '.Configure::read('appDb.FCS_CURRENCY_SYMBOL').' an.');
-        $validator->decimal('value', 2, 'Bitte trage genau 2 Kommastellen ein.');
+        $validator->notEmpty('value', __('Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}.',[Configure::read('appDb.FCS_CURRENCY_SYMBOL')]));
+        $validator->decimal('value', 2, __('Please_enter_exactly_2_decimals.'));
         return $validator;
     }
     
     public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib einen Wert an.');
-        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator->notEmpty('value', __('Please_provide_a_value.'));
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 50);
         return $validator;
     }
     
     public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
     {
-        $validator->notEmpty('value', 'Bitte gib einen Wert an.');
-        $validator->numeric('value', 'Kommastellen sind nicht zulässig.');
+        $validator->notEmpty('value', __('Please_provide_a_value.'));
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
         return $validator;
     }
     
     private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
     {
-        $validator->inList($field, array_keys($values), 'Folgende Werte sind gültig: ' . implode(', ', array_keys($values)));
+        $validator->inList($field, array_keys($values), __('The_following_values_are_valid:') . ' ' . implode(', ', array_keys($values)));
         return $validator;
     }
 
     private function getLengthBetweenValidator($validator, $field, $min, $max)
     {
-        $message = 'Die Anzahl der Zeichen muss zwischen ' . $min . ' und ' . $max . ' liegen.';
+        $message = __('The_amount_of_characters_needs_to_be_between_{0}_and_{1}.', [$min, $max]);
         $validator->lengthBetween($field, [$min, $max], $message);
         return $validator;
     }

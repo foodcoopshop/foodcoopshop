@@ -46,20 +46,21 @@ class ManufacturersTable extends AppTable
     
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
-        $validator->lengthBetween('name', [3, 64], 'Bitte gib zwischen 3 und 64 Zeichen ein.');
+        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $range = [3, 64];
+        $validator->lengthBetween('name', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
         $validator->allowEmpty('iban');
         $validator->add('iban', 'validFormat', [
             'rule' => array('custom', IBAN_REGEX),
-            'message' => 'Bitte gib einen gültigen IBAN ein.'
+            'message' => __('Please_enter_a_valid_IBAN.')
         ]);
         $validator->allowEmpty('bic');
         $validator->add('bic', 'validFormat', [
             'rule' => array('custom', BIC_REGEX),
-            'message' => 'Bitte gib einen gültigen BIC ein.'
+            'message' => __('Please_enter_a_valid_BIC.')
         ]);
         $validator->allowEmpty('homepage');
-        $validator->urlWithProtocol('homepage', 'Bitte gibt eine gültige Internet-Adresse an.');
+        $validator->urlWithProtocol('homepage', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
     
@@ -69,11 +70,11 @@ class ManufacturersTable extends AppTable
         $validator->add('send_order_list_cc', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
-            'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).'
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
         ]);
-        $validator->numeric('timebased_currency_max_percentage', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('timebased_currency_max_percentage', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
-        $validator->numeric('timebased_currency_max_credit_balance', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
@@ -239,7 +240,6 @@ class ManufacturersTable extends AppTable
     
     /**
      * @param string $email
-     * @return Customer array
      */
     public function getCustomerRecord($email)
     {
@@ -302,7 +302,7 @@ class ManufacturersTable extends AppTable
             }
             $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active);
             if ($holidayInfo != '') {
-                $holidayInfo = 'Lieferpause ' . $holidayInfo;
+                $holidayInfo = __('Delivery_break') . ' ' . $holidayInfo;
                 if ($manufacturer->iss_holiday_active) {
                     $additionalInfo = $holidayInfo;
                 } else {
@@ -390,10 +390,10 @@ class ManufacturersTable extends AppTable
         }
         $manufacturersForDropdown = [];
         if (! empty($onlineManufacturers)) {
-            $manufacturersForDropdown['online'] = $onlineManufacturers;
+            $manufacturersForDropdown[__('online')] = $onlineManufacturers;
         }
         if (! empty($offlineManufacturers)) {
-            $manufacturersForDropdown['offline'] = $offlineManufacturers;
+            $manufacturersForDropdown[__('offline')] = $offlineManufacturers;
         }
         
         return $manufacturersForDropdown;

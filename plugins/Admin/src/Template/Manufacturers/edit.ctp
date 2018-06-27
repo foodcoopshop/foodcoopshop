@@ -132,7 +132,7 @@ if ($appAuth->isManufacturer()) {
     echo '</div>';
 
     echo $this->Form->control('Manufacturers.delete_image', [
-    'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Do_not_forget_to_press_save').'</span>',
+    'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
     'type' => 'checkbox',
     'escape' => false
     ]);

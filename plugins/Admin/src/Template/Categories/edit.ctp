@@ -57,25 +57,25 @@ echo $this->Form->create($category, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Categories.name', [
-    'label' => 'Name'
+    'label' => __d('admin', 'Name')
 ]);
 echo $this->Form->control('Categories.id_parent', [
     'type' => 'select',
-    'label' => 'Übergeordnete Kategorie',
-    'empty' => 'Keine (oberste Ebene)',
+    'label' => __d('admin', 'Parent_category'),
+    'empty' => __d('admin', 'No_parent_category_(highest_level)'),
     'options' => $categoriesForSelect
 ]);
 
 echo '<div class="input">';
-echo '<label>Bild';
+echo '<label>'.__d('admin', 'Image');
 if ($imageSrc) {
-    echo '<br /><span class="small">Zum Ändern auf das Bild klicken.</span>';
+    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'</span>';
 }
 echo '</label>';
 echo '<div style="float:right;">';
 echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
-    'title' => 'Neues Bild hochladen bzw. austauschen',
+    'title' => __d('admin', 'Upload_new_image_or_change_it'),
     'data-object-id' => $idForImageUpload
 ], 'javascript:void(0);');
 echo '</div>';
@@ -83,28 +83,28 @@ echo $this->Form->hidden('Categories.tmp_image');
 echo '</div>';
 
 echo $this->Form->control('Categories.delete_image', [
-    'label' => 'Bild löschen? <span class="after small">Speichern nicht vergessen</span>',
+    'label' => __d('admin', 'Delete_image?') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
 
 if ($this->request->getRequestTarget() != $this->Slug->getCategoryAdd()) {
     echo $this->Form->control('Categories.delete_category', [
-        'label' => 'Kategorie löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
+        'label' => __d('admin', 'Delete_category?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
 }
 
 echo $this->Form->control('Categories.active', [
-    'label' => 'Aktiv?',
+    'label' => __d('admin', 'Active').'?',
     'type' => 'checkbox'
 ]);
 
 echo $this->Form->control('Categories.description', [
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Beschreibung<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
+    'label' => __d('admin', 'Description') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
 ]);
 
