@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-26 16:17+0200\n"
+"POT-Creation-Date: 2018-06-27 11:17+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,6 +14,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+msgid "Activities"
+msgstr ""
+
+msgid "Add_attribute"
+msgstr ""
+
+msgid "Edit_attribute"
+msgstr ""
+
 msgid "Errors_while_saving!"
 msgstr ""
 
@@ -21,6 +30,39 @@ msgid "created"
 msgstr ""
 
 msgid "changed"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "The_attribute_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Add_blog_post"
+msgstr ""
+
+msgid "Edit_blog_post"
+msgstr ""
+
+msgid "The_blog_post_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Blog_posts"
+msgstr ""
+
+msgid "Add_category"
+msgstr ""
+
+msgid "Edit_category"
+msgstr ""
+
+msgid "The_category_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Categories"
 msgstr ""
 
 msgid "Change_password"
@@ -33,6 +75,9 @@ msgid "The_member_{0}_has_changed_his_password."
 msgstr ""
 
 msgid "Your_new_password_has_been_saved_successfully."
+msgstr ""
+
+msgid "Edit_my_profile"
 msgstr ""
 
 msgid "Edit_profile"
@@ -108,6 +153,18 @@ msgid "Shop_order"
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Edit_page"
+msgstr ""
+
+msgid "The_page_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Pages"
 msgstr ""
 
 msgid "Your_comment_will_be_shown_here."
@@ -233,6 +290,30 @@ msgstr ""
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr ""
 
+msgid "Add_slider"
+msgstr ""
+
+msgid "Edit_slider"
+msgstr ""
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Slideshow"
+msgstr ""
+
+msgid "Add_tax_rate"
+msgstr ""
+
+msgid "Edit_tax_rate"
+msgstr ""
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Tax_rates"
+msgstr ""
+
 msgid "all_activities"
 msgstr ""
 
@@ -269,10 +350,121 @@ msgstr ""
 msgid "{0,plural,=1{record} other{records}}"
 msgstr ""
 
+msgid "all_manufacturers"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Homepage"
+msgstr ""
+
+msgid "Only_for_members"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Short_description"
+msgstr ""
+
+msgid "Modified_by"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Modified_on"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Show_blog_post"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
 msgid "docs_route_settings"
 msgstr ""
 
+msgid "The_following_settings_can_be_changed_in_the_admin_area."
+msgstr ""
+
+msgid "Setting"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Remote_foodcoops"
+msgstr ""
+
+msgid "Foodcoops_with_which_manufacturers_can_synchronize_their_product_data."
+msgstr ""
+
+msgid "Info_page_for_network_module"
+msgstr ""
+
+msgid "Add_remote_foodcoop"
+msgstr ""
+
+msgid "Domain"
+msgstr ""
+
+msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop."
+msgstr ""
+
+msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
+msgstr ""
+
+msgid "Version_FoodCoopShop"
+msgstr ""
+
+msgid "Last_executed_migration"
+msgstr ""
+
 msgid "Pick_up_day"
+msgstr ""
+
+msgid "Software_update_version"
+msgstr ""
+
+msgid "Please_find_more_information_in_the_changelog_{0}."
+msgstr ""
+
+msgid "activated"
+msgstr ""
+
+msgid "deactivated"
+msgstr ""
+
+msgid "Logo_for_website,_width:"
+msgstr ""
+
+msgid "Logo_for_order_lists_and_invoices,_width:"
+msgstr ""
+
+msgid "Default_image_for_product,_width:"
+msgstr ""
+
+msgid "Default_image_for_manufacturer,_width:"
+msgstr ""
+
+msgid "Default_image_for_blog_post,_width:"
 msgstr ""
 
 msgid "Old_password"
@@ -347,9 +539,6 @@ msgstr ""
 msgid "and_last_order_date_between"
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
 msgid "Group"
 msgstr ""
 
@@ -366,9 +555,6 @@ msgid "Last_order_date"
 msgstr ""
 
 msgid "Comment_abbreviation"
-msgstr ""
-
-msgid "Edit"
 msgstr ""
 
 msgid "Newbie_only_{0}_times_ordered."
@@ -455,6 +641,9 @@ msgstr ""
 msgid "chose_member..."
 msgstr ""
 
+msgid "Show_category"
+msgstr ""
+
 msgid "1_day_ahead"
 msgstr ""
 
@@ -462,9 +651,6 @@ msgid "to"
 msgstr ""
 
 msgid "1_day_back"
-msgstr ""
-
-msgid "Activities"
 msgstr ""
 
 msgid "Cancelled_products"
@@ -476,13 +662,7 @@ msgstr ""
 msgid "My_data"
 msgstr ""
 
-msgid "Blog_posts"
-msgstr ""
-
 msgid "Website_administration"
-msgstr ""
-
-msgid "Home"
 msgstr ""
 
 msgid "Manufacturers"
@@ -495,21 +675,6 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Members"
-msgstr ""
-
-msgid "Pages"
-msgstr ""
-
-msgid "Categories"
-msgstr ""
-
-msgid "Attributes"
-msgstr ""
-
-msgid "Slideshow"
-msgstr ""
-
-msgid "Tax_rates"
 msgstr ""
 
 msgid "Financial_reports"
@@ -525,6 +690,9 @@ msgid "My_profile"
 msgstr ""
 
 msgid "Contact_person"
+msgstr ""
+
+msgid "Show_page"
 msgstr ""
 
 msgid "Bank_account_data"
@@ -638,9 +806,6 @@ msgstr ""
 msgid "Pick_up_date"
 msgstr ""
 
-msgid "Manufacturer"
-msgstr ""
-
 msgid "Order_list_by_product"
 msgstr ""
 
@@ -699,9 +864,6 @@ msgid "Delete_logo?"
 msgstr ""
 
 msgid "Do_not_forget_to_press_save"
-msgstr ""
-
-msgid "Short_description"
 msgstr ""
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
@@ -770,9 +932,6 @@ msgstr ""
 msgid "Visibility_of_the_products"
 msgstr ""
 
-msgid "Active"
-msgstr ""
-
 msgid "Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer)."
 msgstr ""
 
@@ -780,9 +939,6 @@ msgid "Delivery_break"
 msgstr ""
 
 msgid "How_do_I_use_the_function_delivery_break?"
-msgstr ""
-
-msgid "Only_for_members"
 msgstr ""
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
@@ -866,12 +1022,6 @@ msgstr ""
 msgid "Chose_member"
 msgstr ""
 
-msgid "Remote_foodcoops"
-msgstr ""
-
-msgid "Info_page_for_network_module"
-msgstr ""
-
 msgid "Paying_with_time"
 msgstr ""
 
@@ -915,9 +1065,6 @@ msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
-msgstr ""
-
-msgid "all_manufacturers"
 msgstr ""
 
 msgid "all_members"
@@ -986,6 +1133,51 @@ msgstr ""
 msgid "Close_all_orders"
 msgstr ""
 
+msgid "Page_title"
+msgstr ""
+
+msgid "Pages_menu_type_main_description"
+msgstr ""
+
+msgid "Pages_menu_type_sub_description"
+msgstr ""
+
+msgid "Pages_parent_main_description"
+msgstr ""
+
+msgid "Pages_parent_sub_description"
+msgstr ""
+
+msgid "Chose_parent_menu_item"
+msgstr ""
+
+msgid "Pages_position_main_description"
+msgstr ""
+
+msgid "Pages_position_sub_description"
+msgstr ""
+
+msgid "Pages_position_sub2_description"
+msgstr ""
+
+msgid "Pages_full_width_main_description"
+msgstr ""
+
+msgid "Pages_full_width_sub_description"
+msgstr ""
+
+msgid "Pages_extern_url_main_description"
+msgstr ""
+
+msgid "Pages_extern_url_sub_description"
+msgstr ""
+
+msgid "Pages_delete_page_main_description"
+msgstr ""
+
+msgid "Pages_delete_page_sub_description"
+msgstr ""
+
 msgid "to_the_admin_area"
 msgstr ""
 
@@ -993,6 +1185,21 @@ msgid "to_the_manufacturer_area"
 msgstr ""
 
 msgid "Welcome"
+msgstr ""
+
+msgid "Add_page"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "Rank_in_menu"
+msgstr ""
+
+msgid "Full_width"
+msgstr ""
+
+msgid "Link"
 msgstr ""
 
 msgid "Add_transfered_member_fee"
@@ -1041,9 +1248,6 @@ msgid "Add_product"
 msgstr ""
 
 msgid "Synchronize_products"
-msgstr ""
-
-msgid "Image"
 msgstr ""
 
 msgid "Product_declaration"
@@ -1103,6 +1307,9 @@ msgstr ""
 msgid "docs_route_financial_reports"
 msgstr ""
 
+msgid "Rank"
+msgstr ""
+
 msgid "docs_route_paying_with_time_module"
 msgstr ""
 
@@ -1110,15 +1317,6 @@ msgid "Show_product"
 msgstr ""
 
 msgid "Show_manufacturer"
-msgstr ""
-
-msgid "Show_blog_post"
-msgstr ""
-
-msgid "Show_page"
-msgstr ""
-
-msgid "Show_category"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"

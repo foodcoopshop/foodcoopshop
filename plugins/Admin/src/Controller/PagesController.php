@@ -40,7 +40,7 @@ class PagesController extends AdminAppController
 
     public function home()
     {
-        $this->set('title_for_layout', 'Home');
+        $this->set('title_for_layout', __d('admin', 'Home'));
     }
 
     public function add()
@@ -80,7 +80,7 @@ class PagesController extends AdminAppController
         if (empty($page)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Seite bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_page'));
 
         $pageChildren = $this->Page->find('all', [
             'conditions' => [
@@ -140,10 +140,10 @@ class PagesController extends AdminAppController
             if (!empty($this->getRequest()->getData('Pages.delete_page'))) {
                 $page = $this->Page->patchEntity($page, ['active' => APP_DEL]);
                 $this->Page->save($page);
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'page_deleted';
             }
-            $message = 'Die Seite <b>' . $page->title . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_page_{0}_has_been_{1}.', ['<b>' . $page->title . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $page->id_page, 'pages', $message);
             $this->Flash->success($message);
 
@@ -178,7 +178,7 @@ class PagesController extends AdminAppController
         $pages = $this->Page->getThreaded($conditions);
         $this->set('pages', $pages);
 
-        $this->set('title_for_layout', 'Seiten');
+        $this->set('title_for_layout', __d('admin', 'Pages'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());

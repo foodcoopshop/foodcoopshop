@@ -18,24 +18,26 @@ use Cake\Core\Configure;
 <div id="blogPosts">
 
         <?php
-        $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
+        $this->element('addScript', ['script' => 
+            Configure::read('app.jsNamespace') . ".Admin.init();" . 
+            Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
         "
         ]);
         $this->element('highlightRowAfterEdit', [
-        'rowIdPrefix' => '#blogPost-'
+            'rowIdPrefix' => '#blogPost-'
         ]);
     ?>
    
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+        	<h1><?php echo $title_for_layout; ?></h1>
+            <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_users'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <?php
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 echo $this->Form->control('manufacturerId', [
                     'type' => 'select',
                     'label' => '',
-                    'empty' => 'alle Hersteller',
+                    'empty' => __d('admin', 'all_manufacturers'),
                     'options' => $manufacturersForDropdown,
                     'default' => isset($manufacturerId) ? $manufacturerId : ''
                 ]);
@@ -44,7 +46,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neuen Blog-Artikel erstellen', $this->Slug->getBlogPostAdd(), [
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_blog_post').'', $this->Slug->getBlogPostAdd(), [
                     'class' => 'btn btn-default',
                     'escape' => false
                 ]);
@@ -60,16 +62,16 @@ use Cake\Core\Configure;
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide"></th>';
-echo '<th>Bild</th>';
+echo '<th>'.__d('admin', 'Image').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.is_featured', 'Start-Seite') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', 'Nur für Mitglieder') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.title', 'Titel') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', 'Kurze Beschreibung') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'geändert von') . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturers.name', 'Hersteller') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.modified', 'geändert am') . '</th>';
-echo '<th>' . $this->Paginator->sort('BlogPosts.active', 'Aktiv') . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.is_featured', __d('admin', 'Homepage')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', __d('admin', 'Only_for_members')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.title', __d('admin', 'Title')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', __d('admin', 'Short_description')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Modified_by')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.modified', __d('admin', 'Modified_on')) . '</th>';
+echo '<th>' . $this->Paginator->sort('BlogPosts.active', __d('admin', 'Active')) . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -103,7 +105,7 @@ foreach ($blogPosts as $blogPost) {
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => 'Bearbeiten'
+        'title' => __d('admin', 'Edit')
     ], $this->Slug->getBlogPostEdit($blogPost->id_blog_post));
     echo '</td>';
 
@@ -158,7 +160,7 @@ foreach ($blogPosts as $blogPost) {
     echo '<td>';
     if ($blogPost->active) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => 'Blog-Artikel anzeigen',
+            'title' => __d('admin', 'Show_blog_post'),
             'target' => '_blank'
         ], $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title));
     }

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-26 16:17+0200\n"
-"PO-Revision-Date: 2018-06-26 16:18+0200\n"
+"POT-Creation-Date: 2018-06-27 11:17+0200\n"
+"PO-Revision-Date: 2018-06-27 11:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -15,6 +15,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.8\n"
 
+msgid "Activities"
+msgstr "Aktivitäten"
+
+msgid "Add_attribute"
+msgstr "Neue Variante erstellen"
+
+msgid "Edit_attribute"
+msgstr "Variante bearbeiten"
+
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
 
@@ -23,6 +32,39 @@ msgstr "erstellt"
 
 msgid "changed"
 msgstr "geändert"
+
+msgid "deleted"
+msgstr "gelöscht"
+
+msgid "The_attribute_{0}_has_been_{1}."
+msgstr "Die Variante {0} wurde {1}."
+
+msgid "Attributes"
+msgstr "Varianten"
+
+msgid "Add_blog_post"
+msgstr "Neuen Blog-Artikel erstellen"
+
+msgid "Edit_blog_post"
+msgstr "Blog-Artikel bearbeiten"
+
+msgid "The_blog_post_{0}_has_been_{1}."
+msgstr "Der Blog-Artikel {0} wurde {1}."
+
+msgid "Blog_posts"
+msgstr "Blog-Artikel"
+
+msgid "Add_category"
+msgstr "Neue Kategorie erstellen"
+
+msgid "Edit_category"
+msgstr "Kategorie bearbeiten"
+
+msgid "The_category_{0}_has_been_{1}."
+msgstr "Die Kategorie {0} wurde {1}."
+
+msgid "Categories"
+msgstr "Kategorien"
 
 msgid "Change_password"
 msgstr "Passwort ändern"
@@ -35,6 +77,9 @@ msgstr "Das Mitglied {0} hat sein Passwort geändert."
 
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Dein neues Passwort wurde erfolgreich gespeichert."
+
+msgid "Edit_my_profile"
+msgstr "Mein Profil bearbeiten"
 
 msgid "Edit_profile"
 msgstr "Profil bearbeiten"
@@ -110,6 +155,18 @@ msgstr "Sofort-Bestellung"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Edit_page"
+msgstr "Seite bearbeiten"
+
+msgid "The_page_{0}_has_been_{1}."
+msgstr "Die Seite {0} wurde {1}."
+
+msgid "Pages"
+msgstr "Seiten"
 
 msgid "Your_comment_will_be_shown_here."
 msgstr "Dein Kommentar wird hier angezeigt."
@@ -240,6 +297,30 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
 
+msgid "Add_slider"
+msgstr "Neues Slideshow-Bild erstellen"
+
+msgid "Edit_slider"
+msgstr "Slideshow-Bild bearbeiten"
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr "Das Slideshow-Bild {0} wurde {1}."
+
+msgid "Slideshow"
+msgstr "Slideshow"
+
+msgid "Add_tax_rate"
+msgstr "Neuen Steuersatz erstellen"
+
+msgid "Edit_tax_rate"
+msgstr "Steuersatz bearbeiten"
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr "Der Steuersatz {0} wurde {1}."
+
+msgid "Tax_rates"
+msgstr "Steuersätze"
+
 msgid "all_activities"
 msgstr "alle Aktivitäten"
 
@@ -276,11 +357,124 @@ msgstr "Abbrechen"
 msgid "{0,plural,=1{record} other{records}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
+msgid "all_manufacturers"
+msgstr "alle Hersteller"
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Homepage"
+msgstr "Homepage"
+
+msgid "Only_for_members"
+msgstr "Nur für Mitglieder"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Short_description"
+msgstr "Kurze Beschreibung"
+
+msgid "Modified_by"
+msgstr "Geändert von"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Modified_on"
+msgstr "Geändert am"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Show_blog_post"
+msgstr "Blog-Artikel anzeigen"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Name"
+msgstr "Name"
+
 msgid "docs_route_settings"
 msgstr "einstellungen"
 
+msgid "The_following_settings_can_be_changed_in_the_admin_area."
+msgstr "Die folgendenden Einstellungen können im Admin-Bereich geändert werden."
+
+msgid "Setting"
+msgstr "Einstellung"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
+msgid "Remote_foodcoops"
+msgstr "Remote Foodcoops"
+
+msgid "Foodcoops_with_which_manufacturers_can_synchronize_their_product_data."
+msgstr "Foodcoops, mit denen Hersteller ihre Produktdaten synchronisieren können."
+
+msgid "Info_page_for_network_module"
+msgstr "Infos zum Netzwerk-Modul"
+
+msgid "Add_remote_foodcoop"
+msgstr "Neue Remote Foodcoop erstellen"
+
+msgid "Domain"
+msgstr "Domain"
+
+msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop."
+msgstr ""
+"Solange der variable Mitgliedsbeitrag aktiviert ist, können für diese Foodcoop keine Remote-Foodcoops "
+"erstellt werden."
+
+msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
+msgstr "Die folgendenden Einstellungen können im Admin-Bereich <b>nicht</b> geändert werden."
+
+msgid "Version_FoodCoopShop"
+msgstr "Version FoodCoopShop"
+
+msgid "Last_executed_migration"
+msgstr "Zuletzt ausgeführte Migration"
+
 msgid "Pick_up_day"
 msgstr "Abholtag"
+
+msgid "Software_update_version"
+msgstr "Software-Update / Version"
+
+msgid "Please_find_more_information_in_the_changelog_{0}."
+msgstr "Mehr Informationen zu den Änderungen findest du im {0}."
+
+msgid "activated"
+msgstr "aktiviert"
+
+msgid "deactivated"
+msgstr "deaktiviert"
+
+msgid "Logo_for_website,_width:"
+msgstr "Logo für Webseite, Breite: "
+
+msgid "Logo_for_order_lists_and_invoices,_width:"
+msgstr "Logo für Bestelllisten, Rechnungen und andere PDFs, Breite: "
+
+msgid "Default_image_for_product,_width:"
+msgstr "Standard-Bild für Produkt, Breite:"
+
+msgid "Default_image_for_manufacturer,_width:"
+msgstr "Standard-Bild für Hersteller, Breite:"
+
+msgid "Default_image_for_blog_post,_width:"
+msgstr "Standard-Bild für Blog-Artikel, Breite: "
 
 msgid "Old_password"
 msgstr "Altes Passwort"
@@ -354,9 +548,6 @@ msgstr "und"
 msgid "and_last_order_date_between"
 msgstr "und letztes Bestelldatum vom"
 
-msgid "Name"
-msgstr "Name"
-
 msgid "Group"
 msgstr "Gruppe"
 
@@ -374,9 +565,6 @@ msgstr "Letztes Bestell-Datum"
 
 msgid "Comment_abbreviation"
 msgstr "Komm."
-
-msgid "Edit"
-msgstr "Bearbeiten"
 
 msgid "Newbie_only_{0}_times_ordered."
 msgstr "Neuling: Erst {0}x bestellt."
@@ -462,6 +650,9 @@ msgstr "Betrag in {0}"
 msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
+msgid "Show_category"
+msgstr "Kategorie anzeigen"
+
 msgid "1_day_ahead"
 msgstr "1 Tag zurück"
 
@@ -470,9 +661,6 @@ msgstr "bis"
 
 msgid "1_day_back"
 msgstr "1 Tag vor"
-
-msgid "Activities"
-msgstr "Aktivitäten"
 
 msgid "Cancelled_products"
 msgstr "Stornierte Produkte"
@@ -483,14 +671,8 @@ msgstr "Pfand-Rückgaben"
 msgid "My_data"
 msgstr "Meine Daten"
 
-msgid "Blog_posts"
-msgstr "Blog-Artikel"
-
 msgid "Website_administration"
 msgstr "Homepage-Verwaltung"
-
-msgid "Home"
-msgstr "Home"
 
 msgid "Manufacturers"
 msgstr "Hersteller"
@@ -503,21 +685,6 @@ msgstr "Pfandkonto"
 
 msgid "Members"
 msgstr "Mitglieder"
-
-msgid "Pages"
-msgstr "Seiten"
-
-msgid "Categories"
-msgstr "Kategorien"
-
-msgid "Attributes"
-msgstr "Varianten"
-
-msgid "Slideshow"
-msgstr "Slideshow"
-
-msgid "Tax_rates"
-msgstr "Steuersätze"
 
 msgid "Financial_reports"
 msgstr "Finanzberichte"
@@ -533,6 +700,9 @@ msgstr "Mein Profil"
 
 msgid "Contact_person"
 msgstr "Ansprechperson"
+
+msgid "Show_page"
+msgstr "Seite anzeigen"
 
 msgid "Bank_account_data"
 msgstr "Bankdaten"
@@ -653,9 +823,6 @@ msgstr "produkte"
 msgid "Pick_up_date"
 msgstr "Abholdatum"
 
-msgid "Manufacturer"
-msgstr "Hersteller"
-
 msgid "Order_list_by_product"
 msgstr "Bestellliste nach Produkt"
 
@@ -687,7 +854,7 @@ msgid "Will_be_shown_in_imprint_{0}."
 msgstr "Wird {0} angezeigt."
 
 msgid "Example_given_abbreviation"
-msgstr "Z. B."
+msgstr "z.B."
 
 msgid "Website"
 msgstr "Homepage"
@@ -715,9 +882,6 @@ msgstr "Logo löschen?"
 
 msgid "Do_not_forget_to_press_save"
 msgstr "Speicher nicht vergesen"
-
-msgid "Short_description"
-msgstr "Kurze Beschreibung"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
@@ -790,9 +954,6 @@ msgstr "z. B.: \"Durchschnittsteuersatz 10% zzgl. Zusatzsteuer 10%\""
 msgid "Visibility_of_the_products"
 msgstr "Sichtbarkeit der Produkte"
 
-msgid "Active"
-msgstr "Aktiv"
-
 msgid "Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer)."
 msgstr "Hersteller-Profil und Produkte werden angezeigt (vom Hersteller selbst nicht änderbar)."
 
@@ -801,9 +962,6 @@ msgstr "Lieferpause"
 
 msgid "How_do_I_use_the_function_delivery_break?"
 msgstr "Wie verwende ich die Funktion \"Lieferpause\"?"
-
-msgid "Only_for_members"
-msgstr "Nur für Mitglieder"
 
 msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
 msgstr "Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt."
@@ -887,12 +1045,6 @@ msgstr "Leitfaden für Sammelbestellungen"
 msgid "Chose_member"
 msgstr "Mitglied auswählen..."
 
-msgid "Remote_foodcoops"
-msgstr "Remote Foodcoops"
-
-msgid "Info_page_for_network_module"
-msgstr "Infos zum Netzwerk-Modul"
-
 msgid "Paying_with_time"
 msgstr "Stundenabrechnung"
 
@@ -937,9 +1089,6 @@ msgstr "Rechnung prüfen"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
-
-msgid "all_manufacturers"
-msgstr "alle Hersteller"
 
 msgid "all_members"
 msgstr "alle Mitglieder"
@@ -1007,6 +1156,51 @@ msgstr "Bestellungen als PDF generieren"
 msgid "Close_all_orders"
 msgstr "Alle Bestellungen abschließen"
 
+msgid "Page_title"
+msgstr "Seitentitel"
+
+msgid "Pages_menu_type_main_description"
+msgstr "In welchem Menü"
+
+msgid "Pages_menu_type_sub_description"
+msgstr "soll die Seite angezeigt werden?"
+
+msgid "Pages_parent_main_description"
+msgstr "Übergeordneter Menüpunkt"
+
+msgid "Pages_parent_sub_description"
+msgstr "Hauptmenü: Auswahl leer lassen"
+
+msgid "Chose_parent_menu_item"
+msgstr "Übergeordneten Menüpunkt auswählen..."
+
+msgid "Pages_position_main_description"
+msgstr "Reihenfolge im Menü"
+
+msgid "Pages_position_sub_description"
+msgstr "Zahl von 0 bis 100"
+
+msgid "Pages_position_sub2_description"
+msgstr "\"0\" zeigt die Seite nicht im Menü an, sie bleibt aber über den Link erreichbar."
+
+msgid "Pages_full_width_main_description"
+msgstr "Ganze Breite?"
+
+msgid "Pages_full_width_sub_description"
+msgstr "Inhalt der Seite wird verbreitert, indem das linke Menü ausgeblendet wird."
+
+msgid "Pages_extern_url_main_description"
+msgstr "Link auf externe Seite?"
+
+msgid "Pages_extern_url_sub_description"
+msgstr "Menüpunkt führt auf diese Webseite (der Inhalt der Seite wird nicht angezeigt)."
+
+msgid "Pages_delete_page_main_description"
+msgstr "Seite löschen?"
+
+msgid "Pages_delete_page_sub_description"
+msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
+
 msgid "to_the_admin_area"
 msgstr "im Admin-Beriche"
 
@@ -1015,6 +1209,21 @@ msgstr "im Hersteller-Bereich"
 
 msgid "Welcome"
 msgstr "Willkommen"
+
+msgid "Add_page"
+msgstr "Neue Seite erstellen"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "Rank_in_menu"
+msgstr "Reihenfolge im Menü"
+
+msgid "Full_width"
+msgstr "Ganze Breite"
+
+msgid "Link"
+msgstr "Link"
 
 msgid "Add_transfered_member_fee"
 msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
@@ -1063,9 +1272,6 @@ msgstr "Neues Produkt"
 
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"
-
-msgid "Image"
-msgstr "Bild"
 
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
@@ -1124,6 +1330,9 @@ msgstr "Produkt-Vorschau"
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
 
+msgid "Rank"
+msgstr "Reihenfolge"
+
 msgid "docs_route_paying_with_time_module"
 msgstr "stundenabrechnung"
 
@@ -1132,15 +1341,6 @@ msgstr "Produkt anzeigen"
 
 msgid "Show_manufacturer"
 msgstr "Hersteller anzeigen"
-
-msgid "Show_blog_post"
-msgstr "Blog-Artikel anzeigen"
-
-msgid "Show_page"
-msgstr "Seite anzeigen"
-
-msgid "Show_category"
-msgstr "Kategorie anzeigen"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"

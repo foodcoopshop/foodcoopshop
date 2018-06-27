@@ -1424,7 +1424,7 @@ foodcoopshop.Admin = {
         // copy save and cancel button below form
         var form = $('form.fcs-form');
         form.after('<div class="form-buttons"></div>');
-        $('#content .form-buttons').append($('.filter-container .right > a').clone(true)); // true clones events
+        $('#content .form-buttons').append($('.filter-container .right > a.submit, .filter-container .right > a.cancel').clone(true)); // true clones events
 
         // submit form on enter in text fields
         form.find('input[type=text], input[type=number], input[type=password], input[type="tel"]').keypress(function (e) {

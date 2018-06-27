@@ -29,12 +29,12 @@ use Cake\Core\Configure;
    
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <h1>Seiten</h1>
+            <h1><?php echo $title_for_layout; ?></h1>
             <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
             <div class="right">
                 <?php
                 echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Seite erstellen', $this->Slug->getPageAdd(), [
+                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_page').'', $this->Slug->getPageAdd(), [
                     'class' => 'btn btn-default',
                     'escape' => false
                 ]);
@@ -52,15 +52,15 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('Pages.id_page', 'ID') . '</th>';
 echo '<th></th>';
-echo '<th>Titel</th>';
-echo '<th>Menü</th>';
-echo '<th>Reihenfolge im Menü</th>';
-echo '<th>Nur für Mitglieder</th>';
-echo '<th>Ganze Breite</th>';
-echo '<th>Link</th>';
-echo '<th>geändert von</th>';
-echo '<th>geändert am</th>';
-echo '<th>Aktiv</th>';
+echo '<th>'.__d('admin', 'Title').'</th>';
+echo '<th>'.__d('admin', 'Menu').'</th>';
+echo '<th>'.__d('admin', 'Rank_in_menu').'</th>';
+echo '<th>'.__d('admin', 'Only_for_members').'</th>';
+echo '<th>'.__d('admin', 'Full_width').'</th>';
+echo '<th>'.__d('admin', 'Link').'</th>';
+echo '<th>'.__d('admin', 'Modified_by').'</th>';
+echo '<th>'.__d('admin', 'Modified_on').'</th>';
+echo '<th>'.__d('admin', 'Active').'</th>';
 echo '<th></th>';
 echo '</tr>';
 

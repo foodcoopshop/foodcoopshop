@@ -36,7 +36,7 @@ class CategoriesController extends AdminAppController
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Kategorie erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_category'));
         
         $this->set('disabledSelectCategoryIds', []);
         
@@ -63,7 +63,7 @@ class CategoriesController extends AdminAppController
         if (empty($category)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Kategorie bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_category'));
         
         $categoryChildren = $this->Category->find('all')->find('children', ['for' => $categoryId]);
         
@@ -120,9 +120,9 @@ class CategoriesController extends AdminAppController
             if (!empty($this->getRequest()->getData('Categories.delete_category'))) {
                 $this->Category->delete($category);
                 $actionLogType = 'category_deleted';
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('admin', 'deleted');
             }
-            $message = 'Die Kategorie <b>' . $category->name . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_category_{0}_has_been_{1}.', ['<b>' . $category->name . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $category->id_category, 'categories', $message);
             $this->Flash->success($message);
 
@@ -149,6 +149,6 @@ class CategoriesController extends AdminAppController
 
         $this->set('categories', $categories);
 
-        $this->set('title_for_layout', 'Kategorien');
+        $this->set('title_for_layout', __d('admin', 'Categories'));
     }
 }

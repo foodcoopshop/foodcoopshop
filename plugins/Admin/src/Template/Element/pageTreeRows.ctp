@@ -38,7 +38,7 @@ foreach ($pages as $page) {
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => 'Bearbeiten'
+        'title' => __d('admin', 'Edit')
     ], $this->Slug->getPageEdit($page->id_page));
     echo '</td>';
 
@@ -101,7 +101,7 @@ foreach ($pages as $page) {
     echo '<td>';
     if ($page->active) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => 'Seite anzeigen',
+            'title' => __d('admin', 'Show_page'),
             'target' => '_blank'
         ], $this->Slug->getPageDetail($page->id_page, $page->title));
     }

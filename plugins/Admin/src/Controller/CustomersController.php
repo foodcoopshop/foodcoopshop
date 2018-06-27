@@ -264,7 +264,7 @@ class CustomersController extends AdminAppController
 
     public function profile()
     {
-        $this->set('title_for_layout', 'Mein Profil bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
         $this->_processForm($this->AppAuth->getUserId());
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');

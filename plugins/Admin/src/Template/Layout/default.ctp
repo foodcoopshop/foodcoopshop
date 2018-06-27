@@ -99,6 +99,5 @@ if ($scripts != '') {
 
 ?>
 
-
 </body>
 </html>

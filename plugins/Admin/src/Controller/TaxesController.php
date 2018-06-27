@@ -39,7 +39,7 @@ class TaxesController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Steuersatz erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_tax_rate'));
         $this->_processForm($tax, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -63,7 +63,7 @@ class TaxesController extends AdminAppController
         if (empty($tax)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Steuersatz bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_tax_rate'));
         $this->_processForm($tax, true);
     }
 
@@ -99,7 +99,7 @@ class TaxesController extends AdminAppController
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $message = 'Der Steuersatz <b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
 
@@ -131,6 +131,6 @@ class TaxesController extends AdminAppController
 
         $this->set('taxes', $taxes);
 
-        $this->set('title_for_layout', 'Steuersätze');
+        $this->set('title_for_layout', __d('admin', 'Tax_rates'));
     }
 }

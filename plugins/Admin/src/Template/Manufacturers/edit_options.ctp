@@ -81,7 +81,7 @@ echo '<div class="holiday-wrapper">';
     echo '</div>';
 
     echo $this->Form->control('Manufacturers.is_private', [
-        'label' => ''.__d('admin', 'Only_for_members').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_only_visible_for_signed_in_members.').'</span>',
+        'label' => __d('admin', 'Only_for_members').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_only_visible_for_signed_in_members.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

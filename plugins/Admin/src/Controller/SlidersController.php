@@ -34,7 +34,7 @@ class SlidersController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Slideshow-Bild erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_slider'));
         $this->_processForm($slider, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -58,7 +58,7 @@ class SlidersController extends AdminAppController
         if (empty($slider)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Slideshow-Bild bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_slider'));
         $this->_processForm($slider, true);
     }
 
@@ -107,10 +107,10 @@ class SlidersController extends AdminAppController
             if (!empty($this->getRequest()->getData('Sliders.delete_slider'))) {
                 $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
                 $this->Slider->save($slider);
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'slider_deleted';
             }
-            $message = 'Das Slideshow-Bild <b>' . $slider->id_slider . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_slider_{0}_has_been_{1}.', ['<b>' . $slider->id_slider . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $slider->id_slider, 'sliders', $message);
             $this->Flash->success($message);
 
@@ -141,6 +141,6 @@ class SlidersController extends AdminAppController
         ]);
 
         $this->set('sliders', $sliders);
-        $this->set('title_for_layout', 'Slideshow');
+        $this->set('title_for_layout', __d('admin', 'Slideshow'));
     }
 }
