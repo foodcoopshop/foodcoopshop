@@ -24,10 +24,9 @@ class MyNumberHelper extends NumberHelper
     
     public function formatAsCurrency($amount)
     {
-        $currency = self::formatAsUnit($amount, Configure::read('appDb.FCS_CURRENCY_SYMBOL'));
-        if (I18n::getLocale() == 'en_US') {
-            $currency = Configure::read('appDb.FCS_CURRENCY_SYMBOL') . self::formatAsDecimal($amount);
-        }
+        $currency = self::currency($amount, 'USD'); // e.g. PLN for polish zloty does not return the currency symbol
+        $currency = str_replace('$', Configure::read('appDb.FCS_CURRENCY_SYMBOL'), $currency);
+        $currency = str_replace(' ', '&nbsp;', $currency); // careful: pattern is not a normal space but a no-break space 0xA0
         return $currency;
     }
     
