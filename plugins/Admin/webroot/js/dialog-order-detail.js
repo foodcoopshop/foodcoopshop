@@ -27,7 +27,7 @@ foodcoopshop.DialogOrderDetail = {
     
     getHtmlForOrderDetailProductPriceEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductPricePrice"></label><br />';
-        dialogHtml += '<input type="text" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
+        dialogHtml += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
         dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b>';
         dialogHtml += '<div class="textarea-wrapper" style="margin-top: 10px;">';
         dialogHtml += '<label for="dialogEditPriceReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPriceAdapted + '</label>';

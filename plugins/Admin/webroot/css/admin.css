@@ -826,8 +826,7 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#order-detail-product-price-edit-form input[type="text"],
-#order-detail-product-quantity-edit-form input[type="text"],
+#order-detail-product-price-edit-form input[type="number"],
 #order-detail-product-quantity-edit-form input[type="number"],
 #product-price-edit-form input[type="text"],
 #product-price-edit-form input[type="number"],
