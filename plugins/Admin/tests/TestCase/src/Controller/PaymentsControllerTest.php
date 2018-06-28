@@ -129,7 +129,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            10,
+            '10,7',
             'deposit'
         );
         $this->logout();
@@ -138,7 +138,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             Configure::read('test.superadminId'),
             'payment_deposit_customer_added',
             'payments',
-            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: <b>10,00&nbsp;€'
+            'Pfand-Rückgabe für Demo Mitglied wurde erfolgreich eingetragen: <b>10,70&nbsp;€'
         );
     }
 
