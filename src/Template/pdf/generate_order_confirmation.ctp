@@ -26,9 +26,9 @@ if (!empty($manufacturers)) {
     foreach ($manufacturers as $manufacturerId => $details) {
         $pdf->AddPage();
 
-        $pdf->infoTextForFooter = 'Bestellübersicht ' . $details['Manufacturer']->name;
+        $pdf->infoTextForFooter = __('Order_overview') . ' ' . $details['Manufacturer']->name;
 
-        $pdf->writeHTML('<h3>Bestellung von '. $appAuth->getUsername().'<br />getätigt am '. $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
+        $pdf->writeHTML('<h3>' . __('Order_of') . ' '. $appAuth->getUsername().'<br />' . __('placed_on') . ' '. $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
         $pdf->Ln(8);
 
         $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');
@@ -41,10 +41,10 @@ if (!empty($manufacturers)) {
             45
         ];
         $headers = [
-            'Anzahl',
-            'Produkt',
-            'Preis',
-            'Pfand'
+            __('Amount'),
+            __('Product'),
+            __('Price'),
+            __('Deposit')
         ];
 
         $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
@@ -121,9 +121,9 @@ if (!empty($manufacturers)) {
 
         $pdf->renderTable();
 
-        $pdf->writeHTML('<p>Die Preise verstehen sich inklusive Umsatzsteuer.</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p>' . __('Prices_are_including_vat.') . '</p>', true, false, true, false, '');
         $pdf->Ln(3);
-        $pdf->writeHTML('<p>Enthaltene Umsatzsteuer: ' . $this->MyNumber->formatAsCurrency($sumOrderDetailTax) . '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p>' . __('Including_vat') . ': ' . $this->MyNumber->formatAsCurrency($sumOrderDetailTax) . '</p>', true, false, true, false, '');
     }
 }
 

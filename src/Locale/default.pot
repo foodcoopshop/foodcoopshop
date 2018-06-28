@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 09:31+0200\n"
+"POT-Creation-Date: 2018-06-28 17:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1581,6 +1581,18 @@ msgid "Imprint"
 msgstr ""
 
 msgid "Terms_and_conditions"
+msgstr ""
+
+msgid "Order_overview"
+msgstr ""
+
+msgid "Order_of"
+msgstr ""
+
+msgid "placed_on"
+msgstr ""
+
+msgid "Prices_are_including_vat."
 msgstr ""
 
 msgid "Information_about_right_of_withdrawal"
