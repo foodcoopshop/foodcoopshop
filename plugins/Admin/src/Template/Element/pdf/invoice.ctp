@@ -49,7 +49,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->infoTextForFooter = $results_product[0]['ManufacturerName'];
 if ($results_product[0]['ManufacturerUidNumber'] != '') {
-    $pdf->infoTextForFooter .= ', UID-Nummer: ' . $results_product[0]['ManufacturerUidNumber'];
+    $pdf->infoTextForFooter .= ', ' . __('VAT_number') . ': ' . $results_product[0]['ManufacturerUidNumber'];
 }
 $pdf->infoTextForFooter .= ', '.__d('admin', 'Invoice_number_abbreviation').' ' . $newInvoiceNumber;
 

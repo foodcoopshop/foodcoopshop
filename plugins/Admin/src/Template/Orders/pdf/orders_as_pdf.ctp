@@ -19,18 +19,18 @@ use Cake\Core\Configure;
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
-$pdf->infoTextForFooter = 'Bestellungen';
+$pdf->infoTextForFooter = __d('admin', 'Orders');
 
 $j = 1;
 foreach ($orders as $order) {
     $pdf->Ln(5);
     $pdf->writeHTML('<h2>' . $order->customer->name . '</h2>', true, false, true, false, '');
-    $pdf->writeHTML('<h3>Bestellung vom ' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')) . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>'.__d('admin', 'Order_from') . ' ' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')) . '</h3>', true, false, true, false, '');
 
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && $order->comment != '') {
         $pdf->SetRightMargin(16);
         $pdf->Ln(2);
-        $pdf->writeHTML('<p><b>Kommentar: </b>' . $order->comment. '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p><b>'.__d('admin', 'Comment').': </b>' . $order->comment. '</p>', true, false, true, false, '');
     }
 
     $pdf->Ln(5);
@@ -43,11 +43,11 @@ foreach ($orders as $order) {
         45
     ];
     $headers = [
-        'Anzahl',
-        'Produkt',
-        'Hersteller',
-        'Preis',
-        'Pfand'
+        __d('admin', 'Amount'),
+        __d('admin', 'Product'),
+        __d('admin', 'Manufacturer'),
+        __d('admin', 'Price'),
+        __d('admin', 'Deposit')
     ];
 
     $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
@@ -140,7 +140,7 @@ foreach ($orders as $order) {
     $pdf->renderTable();
 
     if ($usesQuantityInUnits > 0) {
-        $html = '<p>* Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern.</p>';
+        $html = '<p>* '.__('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
     }
     
@@ -150,7 +150,8 @@ foreach ($orders as $order) {
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Ln(2);
     }
-    $html = '<p>Vielen Dank, dass du bei uns bestellst!</p>';
+    
+    $html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
 
     if ($j < $orders->count()) {

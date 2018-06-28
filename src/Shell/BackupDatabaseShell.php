@@ -65,7 +65,7 @@ class BackupDatabaseShell extends AppShell
         unlink($backupdir . DS . $filename);
         // END zip and delete sql file
 
-        $message = 'Datenbank-Backup erfolgreich ('.Number::toReadableSize(filesize($zipFilename)).').';
+        $message = __('Database_backup_successful') . ' ('.Number::toReadableSize(filesize($zipFilename)).').';
 
         // email zipped file
         $email = new AppEmail(false);

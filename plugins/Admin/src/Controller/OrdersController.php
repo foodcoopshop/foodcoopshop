@@ -55,10 +55,10 @@ class OrdersController extends AdminAppController
             )
         );
 
-        $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
-
+        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
+        
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder->id_order . ' von '.$oldOrder->customer->name.' wurde geändert: <div class="changed">' . $orderComment . ' </div>');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', __d('admin', 'The_comment_of_the_order_number_{0}_by_{1}_was_changed:', [$oldOrder->id_order, $oldOrder->customer->name]) . ' <div class="changed">' . $orderComment . ' </div>');
 
         die(json_encode([
             'status' => 1,

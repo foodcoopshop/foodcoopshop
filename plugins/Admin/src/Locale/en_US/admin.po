@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 17:31+0200\n"
-"PO-Revision-Date: 2018-06-27 17:31+0200\n"
+"POT-Creation-Date: 2018-06-28 09:31+0200\n"
+"PO-Revision-Date: 2018-06-28 09:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -66,6 +66,21 @@ msgstr "The category {0} has been {1}."
 msgid "Categories"
 msgstr "Categories"
 
+msgid "The_setting_has_been_changed_successfully."
+msgstr "The setting has been changed successfully."
+
+msgid "The_setting_{0}_has_been_changed_to_{1}."
+msgstr "The setting {0} has been changed to {1}."
+
+msgid "Settings"
+msgstr "Setting"
+
+msgid "Send_test_email"
+msgstr "Send test email"
+
+msgid "Test_email"
+msgstr "Test email"
+
 msgid "Change_password"
 msgstr "Change password"
 
@@ -78,6 +93,27 @@ msgstr "The member {0} has changed his password."
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Your new password has been saved successfully."
 
+msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
+msgstr "Amount of orders that have not been placed before two months:"
+
+msgid "The_credit_is"
+msgstr "The credit is"
+
+msgid "It_needs_to_be_zero."
+msgstr "It needs to be 0."
+
+msgid "The_credit_of_the_paying_with_time_account_is:"
+msgstr "The credit of the paying-with-time-module is:"
+
+msgid "The_member_is_still_associated_to_the_following_manufacturers:"
+msgstr "The member is still associated to the following manufacturers:"
+
+msgid "Your_account_has_been_deleted_successfully."
+msgstr "Your account has been deleted successfully."
+
+msgid "{0}_has_deleted_an_account."
+msgstr "{0} has deleted an account."
+
 msgid "Edit_my_profile"
 msgstr "Edit my profile"
 
@@ -89,6 +125,45 @@ msgstr "Your profile was changed."
 
 msgid "The_profile_of_{0}_was_changed."
 msgstr "The profile of {0} was changed."
+
+msgid "The_member_{0}_has_been_deactivated_succesfully."
+msgstr "The member {0} has been deactivated successfully."
+
+msgid "The_member_{0}_has_been_activated_succesfully."
+msgstr "The member {0} has been activated successfully."
+
+msgid "The_account_was_activated"
+msgstr "The account was activated."
+
+msgid "Filename_Terms-of-use"
+msgstr "Terms-of-use"
+
+msgid "The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email."
+msgstr "The member {0} has been activated successfully and the member was notified by email."
+
+msgid "The_comment_was_changed_successfully."
+msgstr "The comment has been changed successfully."
+
+msgid "The_comment_of_the_member_{0}_was_changed:"
+msgstr "The comment of the member {0} was changed:"
+
+msgid "Sum_of_credits_of_activated_members"
+msgstr "Sum of credits of <b>activated</b> members"
+
+msgid "Sum_of_credits_of_deactivated_members"
+msgstr "Sum of credits of <b>deactivated</b> members"
+
+msgid "Sum_of_credits_of_deleted_members"
+msgstr "Sum of credits of <b>deleted</b> members"
+
+msgid "Sum_of_deposit_compensation_payments_for_manufactures"
+msgstr "Sum of compensation payments for manufacturers"
+
+msgid "Credit_and_deposit"
+msgstr "Credit and deposit"
+
+msgid "Members"
+msgstr "Members"
 
 msgid "_Order_list_filename_"
 msgstr "_Order_list_"
@@ -146,6 +221,9 @@ msgstr "Group by manufacturer"
 
 msgid "Ordered_products"
 msgstr "Ordered products"
+
+msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
+msgstr "The comment of the order number {0} by {1} was changed:"
 
 msgid "Orders"
 msgstr "Orders"
@@ -763,9 +841,6 @@ msgstr "Products"
 msgid "Deposit_account"
 msgstr "Deposit account"
 
-msgid "Members"
-msgstr "Members"
-
 msgid "Financial_reports"
 msgstr "Financial reports"
 
@@ -1214,6 +1289,12 @@ msgstr "Generate orders as PDF"
 msgid "Close_all_orders"
 msgstr "Close all orders"
 
+msgid "Order_from"
+msgstr "Order from"
+
+msgid "Comment"
+msgstr "Comment"
+
 msgid "Page_title"
 msgstr "Page title"
 
@@ -1301,9 +1382,6 @@ msgstr ""
 
 msgid "Email_preview"
 msgstr "Email preview"
-
-msgid "Comment"
-msgstr "Comment"
 
 msgid "Add_transfered_member_fee"
 msgstr "Add transfered member fee"
@@ -1451,6 +1529,9 @@ msgstr "Show manufacturer"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{record} other{records}}"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
 #~ msgid "Do_not_forget_to_press_save"
 #~ msgstr "Don't forget to press save button"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 17:31+0200\n"
+"POT-Creation-Date: 2018-06-28 09:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -65,6 +65,21 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+msgid "The_setting_has_been_changed_successfully."
+msgstr ""
+
+msgid "The_setting_{0}_has_been_changed_to_{1}."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Send_test_email"
+msgstr ""
+
+msgid "Test_email"
+msgstr ""
+
 msgid "Change_password"
 msgstr ""
 
@@ -77,6 +92,27 @@ msgstr ""
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr ""
 
+msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
+msgstr ""
+
+msgid "The_credit_is"
+msgstr ""
+
+msgid "It_needs_to_be_zero."
+msgstr ""
+
+msgid "The_credit_of_the_paying_with_time_account_is:"
+msgstr ""
+
+msgid "The_member_is_still_associated_to_the_following_manufacturers:"
+msgstr ""
+
+msgid "Your_account_has_been_deleted_successfully."
+msgstr ""
+
+msgid "{0}_has_deleted_an_account."
+msgstr ""
+
 msgid "Edit_my_profile"
 msgstr ""
 
@@ -87,6 +123,45 @@ msgid "Your_profile_was_changed."
 msgstr ""
 
 msgid "The_profile_of_{0}_was_changed."
+msgstr ""
+
+msgid "The_member_{0}_has_been_deactivated_succesfully."
+msgstr ""
+
+msgid "The_member_{0}_has_been_activated_succesfully."
+msgstr ""
+
+msgid "The_account_was_activated"
+msgstr ""
+
+msgid "Filename_Terms-of-use"
+msgstr ""
+
+msgid "The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email."
+msgstr ""
+
+msgid "The_comment_was_changed_successfully."
+msgstr ""
+
+msgid "The_comment_of_the_member_{0}_was_changed:"
+msgstr ""
+
+msgid "Sum_of_credits_of_activated_members"
+msgstr ""
+
+msgid "Sum_of_credits_of_deactivated_members"
+msgstr ""
+
+msgid "Sum_of_credits_of_deleted_members"
+msgstr ""
+
+msgid "Sum_of_deposit_compensation_payments_for_manufactures"
+msgstr ""
+
+msgid "Credit_and_deposit"
+msgstr ""
+
+msgid "Members"
 msgstr ""
 
 msgid "_Order_list_filename_"
@@ -144,6 +219,9 @@ msgid "Group_by_manufacturer"
 msgstr ""
 
 msgid "Ordered_products"
+msgstr ""
+
+msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr ""
 
 msgid "Orders"
@@ -758,9 +836,6 @@ msgstr ""
 msgid "Deposit_account"
 msgstr ""
 
-msgid "Members"
-msgstr ""
-
 msgid "Financial_reports"
 msgstr ""
 
@@ -1202,6 +1277,12 @@ msgstr ""
 msgid "Close_all_orders"
 msgstr ""
 
+msgid "Order_from"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
 msgid "Page_title"
 msgstr ""
 
@@ -1287,9 +1368,6 @@ msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_o
 msgstr ""
 
 msgid "Email_preview"
-msgstr ""
-
-msgid "Comment"
 msgstr ""
 
 msgid "Add_transfered_member_fee"
@@ -1437,5 +1515,8 @@ msgid "Show_manufacturer"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr ""
 

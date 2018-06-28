@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 17:31+0200\n"
-"PO-Revision-Date: 2018-06-27 17:31+0200\n"
+"POT-Creation-Date: 2018-06-28 09:31+0200\n"
+"PO-Revision-Date: 2018-06-28 09:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -66,6 +66,21 @@ msgstr "Die Kategorie {0} wurde {1}."
 msgid "Categories"
 msgstr "Kategorien"
 
+msgid "The_setting_has_been_changed_successfully."
+msgstr "Die Einstellung wurde erfolgreich geändert."
+
+msgid "The_setting_{0}_has_been_changed_to_{1}."
+msgstr "Die Einstellung {0} wurde auf {1} geändert."
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Send_test_email"
+msgstr "Test E-Mail versenden"
+
+msgid "Test_email"
+msgstr "Test E-Mail"
+
 msgid "Change_password"
 msgstr "Passwort ändern"
 
@@ -78,6 +93,27 @@ msgstr "Das Mitglied {0} hat sein Passwort geändert."
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Dein neues Passwort wurde erfolgreich gespeichert."
 
+msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
+msgstr "Anzahl der Bestellungen, die noch nicht vor mindestens zwei Monaten getätigt worden sind:"
+
+msgid "The_credit_is"
+msgstr "Das Guthaben beträgt"
+
+msgid "It_needs_to_be_zero."
+msgstr "Es muss 0 betragen."
+
+msgid "The_credit_of_the_paying_with_time_account_is:"
+msgstr "Das Guthaben des Stundenkontos beträgt"
+
+msgid "The_member_is_still_associated_to_the_following_manufacturers:"
+msgstr "Das Mitglied ist noch folgenden Herstellern als Ansprechperson zugeordnet:"
+
+msgid "Your_account_has_been_deleted_successfully."
+msgstr "Dein Mitgliedskonto wurde erfolgreich gelöscht."
+
+msgid "{0}_has_deleted_an_account."
+msgstr "{0} hat ein Mitgliedskonto gelöscht."
+
 msgid "Edit_my_profile"
 msgstr "Mein Profil bearbeiten"
 
@@ -89,6 +125,45 @@ msgstr "Dein Profil wurde geändert."
 
 msgid "The_profile_of_{0}_was_changed."
 msgstr "Das Profil von {0} wurde geändert."
+
+msgid "The_member_{0}_has_been_deactivated_succesfully."
+msgstr "Das Mitglied {0} wurde erfolgreich deaktiviert."
+
+msgid "The_member_{0}_has_been_activated_succesfully."
+msgstr "Das Mitglied {0} wurde erfolgreich aktiviert."
+
+msgid "The_account_was_activated"
+msgstr "Das Mitgliedskonto wurde aktiviert"
+
+msgid "Filename_Terms-of-use"
+msgstr "Nutzungsbedingungen"
+
+msgid "The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email."
+msgstr "Das Mitglied {0} wurde erfolgreich aktiviert und per E-Mai darüber informiert."
+
+msgid "The_comment_was_changed_successfully."
+msgstr "Der Kommentar wurde erfolgreich geändert."
+
+msgid "The_comment_of_the_member_{0}_was_changed:"
+msgstr "Der Kommentar des Mitglieds {0} wurde geändert: "
+
+msgid "Sum_of_credits_of_activated_members"
+msgstr "Summe der Guthaben <b>aktivierter</b> Mitglieder"
+
+msgid "Sum_of_credits_of_deactivated_members"
+msgstr "Summe der Guthaben <b>deaktivierter</b> Mitglieder"
+
+msgid "Sum_of_credits_of_deleted_members"
+msgstr "Summe der Guthaben <b>gelöschter</b> Mitglieder"
+
+msgid "Sum_of_deposit_compensation_payments_for_manufactures"
+msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
+
+msgid "Credit_and_deposit"
+msgstr "Guthaben und Pfand-Saldo"
+
+msgid "Members"
+msgstr "Mitglieder"
 
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
@@ -146,6 +221,9 @@ msgstr "Gruppieren nach Hersteller"
 
 msgid "Ordered_products"
 msgstr "Bestellte Produkte"
+
+msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
+msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
 
 msgid "Orders"
 msgstr "Bestellungen"
@@ -767,9 +845,6 @@ msgstr "Produkte"
 msgid "Deposit_account"
 msgstr "Pfandkonto"
 
-msgid "Members"
-msgstr "Mitglieder"
-
 msgid "Financial_reports"
 msgstr "Finanzberichte"
 
@@ -1225,6 +1300,12 @@ msgstr "Bestellungen als PDF generieren"
 msgid "Close_all_orders"
 msgstr "Alle Bestellungen abschließen"
 
+msgid "Order_from"
+msgstr "Bestellung vom"
+
+msgid "Comment"
+msgstr "Kommentar"
+
 msgid "Page_title"
 msgstr "Seitentitel"
 
@@ -1313,9 +1394,6 @@ msgstr ""
 
 msgid "Email_preview"
 msgstr "E-Mail-Vorschau"
-
-msgid "Comment"
-msgstr "Kommentar"
 
 msgid "Add_transfered_member_fee"
 msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
@@ -1463,6 +1541,11 @@ msgstr "Hersteller anzeigen"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+"Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig "
+"ändern."
 
 #~ msgid "Do_not_forget_to_press_save"
 #~ msgstr "Speicher nicht vergesen"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-27 17:36+0200\n"
-"PO-Revision-Date: 2018-06-27 17:37+0200\n"
+"POT-Creation-Date: 2018-06-28 09:31+0200\n"
+"PO-Revision-Date: 2018-06-28 09:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1208,6 +1208,9 @@ msgstr "Runtime"
 msgid "seconds"
 msgstr "seconds"
 
+msgid "Database_backup_successful"
+msgstr "Database backup successful"
+
 msgid "to_(time_context)"
 msgstr "to"
 
@@ -1271,8 +1274,8 @@ msgstr "Please pay when picking up your products."
 msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 msgstr "Please pick up your products on {0} at {1}."
 
-msgid "general_terms_of_use"
-msgstr "general terms of use"
+msgid "general_terms_and_conditions"
+msgstr "general terms and conditions"
 
 msgid "I_accept_the_{0}"
 msgstr "I accept the {0}"
@@ -1808,6 +1811,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "general_terms_of_use"
+#~ msgstr "general terms of use"
 
 #, fuzzy
 #~ msgid "More_news"

@@ -91,7 +91,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
                 echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
             echo '</div>';
-            $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_of_use').'</a>';
+            $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_and_conditions').'</a>';
             echo $this->Form->control('Orders.general_terms_and_conditions_accepted', [
                 'label' => __('I_accept_the_{0}', [$generalTermsOfUseLink]),
                 'type' => 'checkbox',
