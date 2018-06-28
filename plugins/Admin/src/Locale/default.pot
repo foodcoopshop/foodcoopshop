@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 14:14+0200\n"
+"POT-Creation-Date: 2018-06-28 17:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -998,6 +998,24 @@ msgstr ""
 msgid "Thank_you_very_much_for_your_work!"
 msgstr ""
 
+msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight."
+msgstr ""
+
+msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
+msgstr ""
+
+msgid "route_cart"
+msgstr ""
+
+msgid "Click_here_to_open_the"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr ""
+
 msgid "Pick_up_date"
 msgstr ""
 
@@ -1029,9 +1047,6 @@ msgid "Will_be_shown_in_imprint_{0}."
 msgstr ""
 
 msgid "Example_given_abbreviation"
-msgstr ""
-
-msgid "Website"
 msgstr ""
 
 msgid "To_your_settings"

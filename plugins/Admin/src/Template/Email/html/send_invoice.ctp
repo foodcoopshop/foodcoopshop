@@ -46,4 +46,4 @@
     </tr>
 
 </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

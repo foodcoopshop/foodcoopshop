@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 14:14+0200\n"
-"PO-Revision-Date: 2018-06-28 16:50+0200\n"
+"POT-Creation-Date: 2018-06-28 17:24+0200\n"
+"PO-Revision-Date: 2018-06-28 17:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1009,6 +1009,24 @@ msgstr "(Link only works for superadmins)."
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Thank you very much for your work!"
 
+msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight."
+msgstr "{0} is the last day to order. You can do that until {1} midnight."
+
+msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
+msgstr "Do you want to load your last order into your shopping cart? The current cart will be emptied for that."
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "Click_here_to_open_the"
+msgstr "Click here to open the"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr "And here you can unsubscribe from this email reminder"
+
 msgid "Pick_up_date"
 msgstr "Pick-up date"
 
@@ -1041,9 +1059,6 @@ msgstr "Will be shown {0}."
 
 msgid "Example_given_abbreviation"
 msgstr "E. g."
-
-msgid "Website"
-msgstr "Website"
 
 msgid "To_your_settings"
 msgstr "Go to your settings"

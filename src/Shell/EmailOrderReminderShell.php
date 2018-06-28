@@ -82,7 +82,7 @@ class EmailOrderReminderShell extends AppShell
             $email = new AppEmail();
             $email->setTo($customer->email)
             ->setTemplate('Admin.email_order_reminder')
-            ->setSubject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
+            ->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
             ->setViewVars([
                 'customer' => $customer,
                 'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
@@ -94,7 +94,7 @@ class EmailOrderReminderShell extends AppShell
             $i ++;
         }
 
-        $outString .= 'Verschickte E-Mails: ' . $i;
+        $outString .= __('Sent_emails') . ': ' . $i;
 
         $this->stopTimeLogging();
 

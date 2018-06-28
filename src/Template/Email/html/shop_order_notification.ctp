@@ -30,7 +30,7 @@
         </tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
 
 <?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
     <?php echo $this->element('email/orderedProductsTable', [
@@ -40,4 +40,4 @@
         'productSum' => $productSum,
         'productAndDepositSum' => $productAndDepositSum
     ]); ?>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
