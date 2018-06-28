@@ -50,7 +50,7 @@ use Cake\Core\Configure;
             </p>
 
             <p>Unsere Produzenten können leider ab und zu die bestellte Ware
-                nicht liefern. Du erhältst du diese Mail, damit du rechtzeitig für
+                nicht liefern. Du erhältst diese Mail, damit du rechtzeitig für
                 Ersatz sorgen kannst.</p>
             <p>Vielen Dank für dein Verständnis!</p>
                 
