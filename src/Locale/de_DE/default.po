@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 17:21+0200\n"
-"PO-Revision-Date: 2018-06-28 17:34+0200\n"
+"POT-Creation-Date: 2018-06-28 17:35+0200\n"
+"PO-Revision-Date: 2018-06-28 17:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1214,6 +1214,12 @@ msgstr "Datenbank-Backup erfolgreich"
 
 msgid "Order_reminder"
 msgstr "Bestell-Erinnerung"
+
+msgid "today"
+msgstr "heute"
+
+msgid "tomorrow"
+msgstr "morgen"
 
 msgid "Sent_emails"
 msgstr "Versendete E-Mails"

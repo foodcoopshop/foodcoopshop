@@ -85,7 +85,7 @@ class EmailOrderReminderShell extends AppShell
             ->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
             ->setViewVars([
                 'customer' => $customer,
-                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
+                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? __('today') : __('tomorrow')
             ])
             ->send();
 

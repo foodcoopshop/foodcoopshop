@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 17:24+0200\n"
+"POT-Creation-Date: 2018-06-28 17:35+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1209,6 +1209,12 @@ msgid "Database_backup_successful"
 msgstr ""
 
 msgid "Order_reminder"
+msgstr ""
+
+msgid "today"
+msgstr ""
+
+msgid "tomorrow"
 msgstr ""
 
 msgid "Sent_emails"
