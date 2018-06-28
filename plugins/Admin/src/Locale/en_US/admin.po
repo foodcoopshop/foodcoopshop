@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 09:31+0200\n"
-"PO-Revision-Date: 2018-06-28 09:47+0200\n"
+"POT-Creation-Date: 2018-06-28 14:14+0200\n"
+"PO-Revision-Date: 2018-06-28 16:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -221,6 +221,45 @@ msgstr "Group by manufacturer"
 
 msgid "Ordered_products"
 msgstr "Ordered products"
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+
+msgid "Weight_adapted"
+msgstr "Weight apapted"
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "An email was sent to {0}."
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "An email was sent to {0} and to the manufacturer {1}."
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr "The amount of the ordered product {0} was successfully adapted from {1} to {2}."
+
+msgid "Ordered_amount_adapted"
+msgstr "Ordered amount adapted"
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr "The stock was increased to {0}."
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "The price of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
+
+msgid "Ordered_price_adapted"
+msgstr "Price adapted"
+
+msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
+msgstr "Product {0} (price {1}) of order number {2} from {3} was successfully cancelled."
+
+msgid "Product_was_cancelled"
+msgstr "Product cancelled"
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}"
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}"
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "The comment of the order number {0} by {1} was changed:"

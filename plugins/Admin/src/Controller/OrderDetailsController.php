@@ -352,24 +352,27 @@ class OrderDetailsController extends AdminAppController
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
         
-        $message = 'Das Gewicht des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') ';
-        $message .= 'wurde erfolgreich von ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units);
-        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' auf ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity);
-        $message .= ' ' . $oldOrderDetail->order_detail_unit->unit_name . ' angepasst ';
+        $message = __d('admin', 'The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
+            '<b>' . $oldOrderDetail->product_name . '</b>',
+            $oldOrderDetail->product_amount,
+            Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name,
+            Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name
+        ]);
         
         // send email to customer if price was changed
         if (!$doNotChangePrice) {
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_quantity_changed')
             ->setTo($oldOrderDetail->order->customer->email)
-            ->setSubject('Gewicht angepasst: ' . $oldOrderDetail->product_name)
+            ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
                 'newProductQuantityInUnits' => $productQuantity,
                 'newOrderDetail' => $newOrderDetail,
                 'appAuth' => $this->AppAuth
             ]);
-            $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
+            
+            $emailMssage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
         
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -377,13 +380,17 @@ class OrderDetailsController extends AdminAppController
             $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
             
             if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-                $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
+                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                    '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                    '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
+                ]);
                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
             }
             
             $email->send();
-            $message .= ' versendet.';
         }
+        
+        $message .= $emailMessage;
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -442,22 +449,26 @@ class OrderDetailsController extends AdminAppController
         
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $productAmount);
         
-        $message = 'Die Anzahl des bestellten Produktes <b>' . $oldOrderDetail->product_name . '" </b> wurde erfolgreich von ' . $oldOrderDetail->product_amount . ' auf ' . $productAmount . ' geändert';
+        $message = __d('admin', 'The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}.', [
+            '<b>' . $oldOrderDetail->product_name . '</b>',
+            $oldOrderDetail->product_amount,
+            $productAmount
+        ]);
 
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_amount_changed')
         ->setTo($oldOrderDetail->order->customer->email)
-        ->setSubject('Bestellte Anzahl angepasst: ' . $oldOrderDetail->product_name)
+        ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
             'appAuth' => $this->AppAuth,
             'editAmountReason' => $editAmountReason
         ]);
-
-        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
-
+        
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+        
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
@@ -466,19 +477,24 @@ class OrderDetailsController extends AdminAppController
         // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
         $weekday = date('N');
         if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductAmountChangedNotification) {
-            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
+            ]);
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
         }
 
         $email->send();
-
-        $message .= ' versendet.';
+        
+        $message .= $emailMessage;
 
         if ($editAmountReason != '') {
-            $message .= ' Grund: <b>"' . $editAmountReason . '"</b>';
+            $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editAmountReason . '"</b>';
         }
 
-        $message .= ' Der Lagerstand wurde auf ' . Configure::read('app.numberHelper')->formatAsDecimal($newAmount, 0) . ' erhöht.';
+        $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
+            Configure::read('app.numberHelper')->formatAsDecimal($newAmount, 0)
+        ]);
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_amount_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
@@ -529,14 +545,20 @@ class OrderDetailsController extends AdminAppController
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
         
-        $message = 'Der Preis des bestellten Produktes <b>' . $oldOrderDetail->product_name . '</b> (Anzahl: ' . $oldOrderDetail->product_amount . ') wurde erfolgreich von ' . Configure::read('app.numberHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl) . ' auf ' . Configure::read('app.numberHelper')->formatAsDecimal($productPrice) . ' angepasst ';
+        $message = __d('admin', 'The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
+            '<b>' . $oldOrderDetail->product_name . '</b>',
+            $oldOrderDetail->product_amount,
+            Configure::read('app.numberHelper')->formatAsDecimal($oldOrderDetail->total_price_tax_incl),
+            Configure::read('app.numberHelper')->formatAsDecimal($productPrice)
+        ]);
+        
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
         
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_price_changed')
         ->setTo($oldOrderDetail->order->customer->email)
-        ->setSubject('Preis angepasst: ' . $oldOrderDetail->product_name)
+        ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
             'newOrderDetail' => $newOrderDetail,
@@ -544,22 +566,26 @@ class OrderDetailsController extends AdminAppController
             'editPriceReason' => $editPriceReason
         ]);
 
-        $message .= ' und eine E-Mail an <b>' . $oldOrderDetail->order->customer->name . '</b>';
-
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+        
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-            $message .= ' sowie an den Hersteller <b>' . $oldOrderDetail->product->manufacturer->name . '</b>';
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
+            ]);
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
         }
 
         $email->send();
 
-        $message .= ' versendet.';
+        $message .= $emailMessage;
+        
         if ($editPriceReason != '') {
-            $message .= ' Grund: <b>"' . $editPriceReason . '"</b>';
+            $message .= ' '.__d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
         }
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
@@ -609,8 +635,13 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = 'Produkt <b>' . $orderDetail->product_name . '</b> ' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . ' aus Bestellung Nr. ' . $orderDetail->id_order . ' vom ' . $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde erfolgreich storniert';
-
+            $message = __d('admin', 'Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled.', [
+                '<b>' . $orderDetail->product_name . '</b>',
+                Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
+                $orderDetail->id_order,
+                $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
+            ]);
+            
             $this->OrderDetail->deleteOrderDetail($orderDetail);
             $this->OrderDetail->Orders->updateSums($orderDetail->order);
             
@@ -625,15 +656,15 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_deleted')
             ->setTo($orderDetail->order->customer->email)
-            ->setSubject('Produkt wurde storniert: ' . $orderDetail->product_name)
+            ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
                 'appAuth' => $this->AppAuth,
                 'cancellationReason' => $cancellationReason
             ]);
 
-            $message .= ' und eine E-Mail an <b>' . $orderDetail->order->customer->name . '</b>';
-
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->order->customer->name . '</b>']);
+            
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
@@ -642,28 +673,33 @@ class OrderDetailsController extends AdminAppController
             // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
             $weekday = date('N');
             if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
-                $message .= ' sowie an den Hersteller <b>' . $orderDetail->product->manufacturer->name . '</b>';
+                $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+                    '<b>' . $orderDetail->order->customer->name . '</b>',
+                    '<b>' . $orderDetail->product->manufacturer->name . '</b>'
+                ]);
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
             }
 
             $email->send();
+            
+            $message .= $emailMessage;
 
-            $message .= ' versendet.';
             if ($cancellationReason != '') {
-                $message .= ' Grund: <b>"' . $cancellationReason . '"</b>';
+                $message .= ' '.__d('admin', 'Reason').': <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' Der Lagerstand wurde um ' . $orderDetail->product_amount . ' auf ' . Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0) . ' erhöht.';
-
+            $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
+                Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0)
+            ]);
+            
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);
         }
 
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
-        $productString = $orderDetailsCount == 1 ? 'Produkt wurde' : 'Produkte wurden';
         if ($orderDetailsCount > 1) {
-            $flashMessage =  $orderDetailsCount . ' ' . $productString . ' erfolgreich storniert.';
+            $flashMessage = $orderDetailsCount . ' ' . __d('admin', '{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}', $orderDetailsCount);
         }
         $this->Flash->success($flashMessage);
 

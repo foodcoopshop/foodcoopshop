@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 09:31+0200\n"
-"PO-Revision-Date: 2018-06-28 09:42+0200\n"
+"POT-Creation-Date: 2018-06-28 14:14+0200\n"
+"PO-Revision-Date: 2018-06-28 14:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -221,6 +221,45 @@ msgstr "Gruppieren nach Hersteller"
 
 msgid "Ordered_products"
 msgstr "Bestellte Produkte"
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+
+msgid "Weight_adapted"
+msgstr "Gewicht angepasst"
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "Eine E-Mail wurde an {0} verschickt."
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "Eine E-Mail wurde an {0} sowie an den Hersteller {1} versendet."
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr "Die Anzahl des bestellten Produktes {0} wurde erfolgreich von {1} auf {2} angepasst."
+
+msgid "Ordered_amount_adapted"
+msgstr "Bestellte Anzahl angepasst"
+
+msgid "Reason"
+msgstr "Grund"
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr "Der Lagerstand wurde auf {0} erhöht."
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
+
+msgid "Ordered_price_adapted"
+msgstr "Preis angepasst"
+
+msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
+msgstr "Produkt {0} (Preis: {1}) aus Bestellung Nr. {2} vom {3} wurde erfolgreich storniert."
+
+msgid "Product_was_cancelled"
+msgstr "Produkt storniert"
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}"
+msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurden erfolgreich storniert.}"
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"

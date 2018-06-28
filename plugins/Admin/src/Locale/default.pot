@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 09:31+0200\n"
+"POT-Creation-Date: 2018-06-28 14:14+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -219,6 +219,45 @@ msgid "Group_by_manufacturer"
 msgstr ""
 
 msgid "Ordered_products"
+msgstr ""
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr ""
+
+msgid "Weight_adapted"
+msgstr ""
+
+msgid "An_email_was_sent_to_{0}."
+msgstr ""
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr ""
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr ""
+
+msgid "Ordered_amount_adapted"
+msgstr ""
+
+msgid "Reason"
+msgstr ""
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr ""
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr ""
+
+msgid "Ordered_price_adapted"
+msgstr ""
+
+msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
+msgstr ""
+
+msgid "Product_was_cancelled"
+msgstr ""
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}"
 msgstr ""
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
