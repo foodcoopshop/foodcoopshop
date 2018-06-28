@@ -26,7 +26,7 @@ use Cake\Core\Configure;
             <p><?php echo __d('admin', '{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight.', [$lastOrderDayAsString, $lastOrderDayAsString]); ?></p>
 
             <p><?php echo __d('admin', 'Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that.'); ?><br />
-                 <a href="<?php echo Configure::read('app.cakeServerName'); ?>/warenkorb/addLastOrderToCart"><?php echo Configure::read('app.cakeServerName'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart</a>
+                 <a href="<?php echo Configure::read('app.cakeServerName'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart"><?php echo Configure::read('app.cakeServerName'); ?>/<?php echo __d('admin', 'route_cart'); ?>/addLastOrderToCart</a>
             </p>
 
             <p>
