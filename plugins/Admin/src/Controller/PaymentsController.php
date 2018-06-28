@@ -223,6 +223,7 @@ class PaymentsController extends AdminAppController
         }
 
         $amount = $this->getRequest()->getData('amount');
+        $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
         
         try {
             $entity = $this->Payment->newEntity(

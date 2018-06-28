@@ -36,7 +36,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentParameterPriceOk()
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65.03', 'product');
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', 'product');
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
     
@@ -51,7 +51,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentParameterPriceAlmostZero()
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0.003', 'product');
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0,003', 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
@@ -67,7 +67,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentParameterPriceWrongNumber()
     {
         $this->loginAsCustomer();
-        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10.--', 'product');
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Bitte gib eine korrekte Zahl ein', $jsonDecodedContent->msg);
     }
@@ -93,7 +93,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            '10.5',
+            '10,5',
             'product'
         );
         $this->logout();
@@ -111,7 +111,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
-            '20.5',
+            '20,5',
             'product'
         );
         $this->logout();
@@ -189,7 +189,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceBeforeAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
 
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
+        $this->addPayment(Configure::read('test.customerId'), '10,5', 'product');
         $response = $this->browser->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
@@ -228,7 +228,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
         $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment '.$paymentType.' did not increase credit balance');
         $this->assertEquals(1, $jsonDecodedContent->status);
-        $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
+        $this->assertEquals($amountToAdd, Configure::read('app.numberHelper')->formatAsDecimal($jsonDecodedContent->amount, 1));
     }
 
     private function assertActionLogRecord($customerId, $expectedType, $expectedObjectType, $expectedText)
