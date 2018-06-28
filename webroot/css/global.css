@@ -225,6 +225,9 @@ a.toggle-link.collapsed i:before {
 .ui-dialog .ajax-loader {
     bottom: 14px;
 }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+	font-family: 'Open Sans';
+}
 .ui-dialog .ui-dialog-content {
     position: static;
 }
