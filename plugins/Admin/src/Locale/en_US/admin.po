@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"POT-Creation-Date: 2018-06-29 10:46+0200\n"
 "PO-Revision-Date: 2018-06-29 10:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -165,6 +165,13 @@ msgstr "Credit and deposit"
 msgid "Members"
 msgstr "Members"
 
+msgid "Deposit_account"
+msgstr "Deposit account"
+
+#, fuzzy
+msgid "Deposit_take_back_detail_for"
+msgstr "Deposit take back"
+
 msgid "_Order_list_filename_"
 msgstr "_Order_list_"
 
@@ -275,6 +282,9 @@ msgstr "No member found with id {0}."
 
 msgid "Home"
 msgstr "Home"
+
+msgid "Add_page"
+msgstr "Add page"
 
 msgid "Edit_page"
 msgstr "Edit page"
@@ -395,6 +405,9 @@ msgstr "The short description of the product {0} from manufacturer {1} has been 
 
 msgid "All_manufacturers"
 msgstr "All manufacturers"
+
+msgid "Products"
+msgstr "Products"
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
@@ -869,12 +882,6 @@ msgstr "Website administration"
 
 msgid "Manufacturers"
 msgstr "Manufacturers"
-
-msgid "Products"
-msgstr "Products"
-
-msgid "Deposit_account"
-msgstr "Deposit account"
 
 msgid "Financial_reports"
 msgstr "Financial reports"
@@ -1499,9 +1506,6 @@ msgstr "to the manufacturer panel"
 
 msgid "Welcome"
 msgstr "Welcome"
-
-msgid "Add_page"
-msgstr "Add page"
 
 msgid "Menu"
 msgstr "Menu"

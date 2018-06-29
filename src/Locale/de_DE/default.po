@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"POT-Creation-Date: 2018-06-29 10:46+0200\n"
 "PO-Revision-Date: 2018-06-29 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,6 +17,9 @@ msgstr ""
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
+
+msgid "News"
+msgstr "Aktuelles"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -365,9 +368,6 @@ msgstr "Hersteller"
 
 msgid "route_news_list"
 msgstr "aktuelles"
-
-msgid "News"
-msgstr "Aktuelles"
 
 msgid "Pages"
 msgstr "Seiten"
@@ -734,6 +734,18 @@ msgstr "gegen den Uhrzeigersinn drehen?"
 
 msgid "rotate_clockwise?"
 msgstr "im Uhrzeigersinn drehen?"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Terms_of_use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Privacy_policy"
+msgstr "Datenschutzerklärung"
+
+msgid "List_of_allergens"
+msgstr "Allergenliste"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1416,15 +1428,6 @@ msgstr "Umsatzsteuer"
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
 
-msgid "Terms_of_use"
-msgstr "Nutzungsbedingungen"
-
-msgid "Privacy_policy"
-msgstr "Datenschutzerklärung"
-
-msgid "List_of_allergens"
-msgstr "Allergenliste"
-
 msgid "Information"
 msgstr "Informationen"
 
@@ -1478,9 +1481,6 @@ msgstr "Eingeloggt"
 
 msgid "Product"
 msgstr "Produkt"
-
-msgid "Manufacturer"
-msgstr "Hersteller"
 
 msgid "Price"
 msgstr "Preis"

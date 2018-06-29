@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"POT-Creation-Date: 2018-06-29 10:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -164,6 +164,12 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+msgid "Deposit_account"
+msgstr ""
+
+msgid "Deposit_take_back_detail_for"
+msgstr ""
+
 msgid "_Order_list_filename_"
 msgstr ""
 
@@ -273,6 +279,9 @@ msgid "No_member_found_with_id_{0}."
 msgstr ""
 
 msgid "Home"
+msgstr ""
+
+msgid "Add_page"
 msgstr ""
 
 msgid "Edit_page"
@@ -393,6 +402,9 @@ msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_change
 msgstr ""
 
 msgid "All_manufacturers"
+msgstr ""
+
+msgid "Products"
 msgstr ""
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
@@ -867,12 +879,6 @@ msgid "Website_administration"
 msgstr ""
 
 msgid "Manufacturers"
-msgstr ""
-
-msgid "Products"
-msgstr ""
-
-msgid "Deposit_account"
 msgstr ""
 
 msgid "Financial_reports"
@@ -1497,9 +1503,6 @@ msgid "to_the_manufacturer_area"
 msgstr ""
 
 msgid "Welcome"
-msgstr ""
-
-msgid "Add_page"
 msgstr ""
 
 msgid "Menu"

@@ -83,7 +83,7 @@ class DepositsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
-            $this->set('title_for_layout', 'Pfandkonto');
+            $this->set('title_for_layout', __d('admin', 'Deposit_account'));
             return;
         }
 
@@ -191,6 +191,6 @@ class DepositsController extends AdminAppController
         $month = $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
-        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer->name);
+        $this->set('title_for_layout', __d('admin', 'Deposit_take_back_detail_for') . ' ' . $manufacturer->name);
     }
 }

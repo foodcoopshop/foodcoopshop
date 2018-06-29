@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:21+0200\n"
-"PO-Revision-Date: 2018-06-29 10:19+0200\n"
+"POT-Creation-Date: 2018-06-29 10:46+0200\n"
+"PO-Revision-Date: 2018-06-29 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -165,6 +165,13 @@ msgstr "Guthaben und Pfand-Saldo"
 msgid "Members"
 msgstr "Mitglieder"
 
+msgid "Deposit_account"
+msgstr "Pfandkonto"
+
+#, fuzzy
+msgid "Deposit_take_back_detail_for"
+msgstr "Pfand-Rücknahme"
+
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
 
@@ -275,6 +282,9 @@ msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 
 msgid "Home"
 msgstr "Home"
+
+msgid "Add_page"
+msgstr "Neue Seite erstellen"
 
 msgid "Edit_page"
 msgstr "Seite bearbeiten"
@@ -395,6 +405,9 @@ msgstr "Die Kurzbeschreibung des Produktes {0} vom Hersteller {1} wurde geänder
 
 msgid "All_manufacturers"
 msgstr "Alle Hersteller"
+
+msgid "Products"
+msgstr "Produkte"
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "Die Standard-Variante des Produktes {0} vom Hersteller {1} wurde auf {2} geändert."
@@ -870,12 +883,6 @@ msgstr "Homepage-Verwaltung"
 msgid "Manufacturers"
 msgstr "Hersteller"
 
-msgid "Products"
-msgstr "Produkte"
-
-msgid "Deposit_account"
-msgstr "Pfandkonto"
-
 msgid "Financial_reports"
 msgstr "Finanzberichte"
 
@@ -1089,7 +1096,6 @@ msgstr "Neuer Preis für"
 msgid "The_base_price_is_{0}."
 msgstr "Der Basis-Preis beträgt {0}."
 
-#, fuzzy
 msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
 msgstr "Der Status deiner Guthaben-Aufladung vom {0} über {1} wurde auf {2} geändert."
 
@@ -1111,20 +1117,17 @@ msgstr "<b>Achtung:</b> es wird das Bestelldatum berücksichtigt, nicht das Lief
 msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
 msgstr "Sollten der Rechnungsbetrag nicht mit deinen Aufzeichnungen übereinstimmen, sag uns bitte umgehend Bescheid."
 
-#, fuzzy
 msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
-msgstr "Betrag, der auf dein Konto überwiesen wird"
+msgstr "Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto überwiesen."
 
 msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
 msgstr "im Anhang findest du zwei Bestelllisten (gruppiert nach Produkt und Mitglied) für die nächste Lieferung."
 
-#, fuzzy
 msgid "Your_personal_manufacturer_panel"
-msgstr "im Hersteller-Bereich"
+msgstr "Dein persönlicher Hersteller-Bereich:"
 
-#, fuzzy
 msgid "Help_pages"
-msgstr "Homepage"
+msgstr "Online-Hilfe"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern."
@@ -1135,9 +1138,8 @@ msgstr "Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung dei
 msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
 msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls du bei uns auch bestellen möchtest, registriere dich bitte auf unserer Seite und verwende dazu aber eine andere E-Mail-Adresse."
 
-#, fuzzy
 msgid "Your_contact_person"
-msgstr "Ansprechperson"
+msgstr "Deine Ansprechperson"
 
 msgid "Pick_up_date"
 msgstr "Abholdatum"
@@ -1504,9 +1506,6 @@ msgstr "im Hersteller-Bereich"
 
 msgid "Welcome"
 msgstr "Willkommen"
-
-msgid "Add_page"
-msgstr "Neue Seite erstellen"
 
 msgid "Menu"
 msgstr "Menü"

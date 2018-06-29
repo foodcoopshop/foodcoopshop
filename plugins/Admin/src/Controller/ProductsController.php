@@ -885,7 +885,7 @@ class ProductsController extends AdminAppController
             $this->set('variableMemberFee', $variableMemberFee);
         }
 
-        $this->set('title_for_layout', 'Produkte');
+        $this->set('title_for_layout', __d('admin', 'Products'));
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');

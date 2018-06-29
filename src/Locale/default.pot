@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"POT-Creation-Date: 2018-06-29 10:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,9 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "You_have_been_signed_out."
+msgstr ""
+
+msgid "News"
 msgstr ""
 
 msgid "You_are_not_signed_in."
@@ -363,9 +366,6 @@ msgid "Manufacturers"
 msgstr ""
 
 msgid "route_news_list"
-msgstr ""
-
-msgid "News"
 msgstr ""
 
 msgid "Pages"
@@ -732,6 +732,18 @@ msgid "rotate_anti_clockwise?"
 msgstr ""
 
 msgid "rotate_clockwise?"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Terms_of_use"
+msgstr ""
+
+msgid "Privacy_policy"
+msgstr ""
+
+msgid "List_of_allergens"
 msgstr ""
 
 msgid "Price_excl."
@@ -1415,15 +1427,6 @@ msgstr ""
 msgid "Show_cart_button"
 msgstr ""
 
-msgid "Terms_of_use"
-msgstr ""
-
-msgid "Privacy_policy"
-msgstr ""
-
-msgid "List_of_allergens"
-msgstr ""
-
 msgid "Information"
 msgstr ""
 
@@ -1476,9 +1479,6 @@ msgid "Signed_in"
 msgstr ""
 
 msgid "Product"
-msgstr ""
-
-msgid "Manufacturer"
 msgstr ""
 
 msgid "Price"

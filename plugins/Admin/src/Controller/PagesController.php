@@ -53,7 +53,7 @@ class PagesController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Seite erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_page'));
 
         $this->set('disabledSelectPageIds', []);
 
