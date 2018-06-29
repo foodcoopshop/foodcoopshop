@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:46+0200\n"
-"PO-Revision-Date: 2018-06-29 10:45+0200\n"
+"POT-Creation-Date: 2018-06-29 10:58+0200\n"
+"PO-Revision-Date: 2018-06-29 10:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -168,9 +168,8 @@ msgstr "Mitglieder"
 msgid "Deposit_account"
 msgstr "Pfandkonto"
 
-#, fuzzy
 msgid "Deposit_take_back_detail_for"
-msgstr "Pfand-Rücknahme"
+msgstr "Pfand-Rücknahme Detail für"
 
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
@@ -1108,8 +1107,8 @@ msgstr "Kommentar"
 msgid "Hello"
 msgstr "Hallo"
 
-msgid "This_invoice_contains_all_orders_that_have_been_placed_in_{0}."
-msgstr "In dieser Rechnung sind alle Bestellungen enthalten, die im {0} getätigt wurden."
+msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
+msgstr "in dieser Rechnung sind alle Bestellungen enthalten, die im {0} getätigt wurden."
 
 msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
 msgstr "<b>Achtung:</b> es wird das Bestelldatum berücksichtigt, nicht das Lieferdatum."

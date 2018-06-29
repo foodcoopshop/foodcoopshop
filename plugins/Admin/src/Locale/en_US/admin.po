@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:46+0200\n"
-"PO-Revision-Date: 2018-06-29 10:28+0200\n"
+"POT-Creation-Date: 2018-06-29 10:58+0200\n"
+"PO-Revision-Date: 2018-06-29 10:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -168,9 +168,8 @@ msgstr "Members"
 msgid "Deposit_account"
 msgstr "Deposit account"
 
-#, fuzzy
 msgid "Deposit_take_back_detail_for"
-msgstr "Deposit take back"
+msgstr "Deposit take back detail for"
 
 msgid "_Order_list_filename_"
 msgstr "_Order_list_"
@@ -1108,8 +1107,8 @@ msgstr "Comment"
 msgid "Hello"
 msgstr "Hello"
 
-msgid "This_invoice_contains_all_orders_that_have_been_placed_in_{0}."
-msgstr "This invoide contains all orders that have been placed in {0}."
+msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
+msgstr "this invoice contains all orders that have been placed in {0}."
 
 msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
 msgstr "Be careful: It is the order date that counts, not the delivery date!"
@@ -1121,13 +1120,13 @@ msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_ne
 msgstr "The invoice amount will be transfered to your bank account within the next days."
 
 msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
-msgstr "please find two order lists attached for the next delivery (grouped by product and menber)."
+msgstr "please find two order lists attached for the next delivery (grouped by product and member)."
 
 msgid "Your_personal_manufacturer_panel"
 msgstr "Your personal manufacturer panel"
 
 msgid "Help_pages"
-msgstr "Help pages"
+msgstr "Online help"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "You can change your imprint by yourself."

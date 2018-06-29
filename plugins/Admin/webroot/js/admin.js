@@ -1792,7 +1792,7 @@ foodcoopshop.Admin = {
             
             var row = $(this).closest('tr');
             var orderDetailId = row.find('td:nth-child(2)').html();
-            var price = row.find('td:nth-child(6) span.product-price-for-dialog').html();
+            var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('td:nth-child(6) span.product-price-for-dialog').html());
             var productPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice');
             
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);

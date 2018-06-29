@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:46+0200\n"
+"POT-Creation-Date: 2018-06-29 10:58+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1106,7 +1106,7 @@ msgstr ""
 msgid "Hello"
 msgstr ""
 
-msgid "This_invoice_contains_all_orders_that_have_been_placed_in_{0}."
+msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
 msgstr ""
 
 msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
