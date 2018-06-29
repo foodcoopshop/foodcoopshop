@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 17:24+0200\n"
-"PO-Revision-Date: 2018-06-28 17:26+0200\n"
+"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"PO-Revision-Date: 2018-06-29 10:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -297,10 +297,8 @@ msgstr "The status of the credit upload for {0} was successfully changed to {1}.
 msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
 msgstr "The status of your credit upload was successfully changed to {0}."
 
-msgid ""
-"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
-msgstr ""
-"The status of the credit upload for {0} was successfully changed to {1} and an email was sent to the member."
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
+msgstr "The status of the credit upload for {0} was successfully changed to {1} and an email was sent to the member."
 
 msgid "for"
 msgstr "for"
@@ -546,9 +544,7 @@ msgid "Chose_manufacturer"
 msgstr "Chose manufacturer"
 
 msgid "Blog_post_manufacturer_description"
-msgstr ""
-"If the manufacturer is only shown for signed in members, this is also the case for the blog post (ignoring "
-"the setting for the blog post)."
+msgstr "If the manufacturer is only shown for signed in members, this is also the case for the blog post (ignoring the setting for the blog post)."
 
 msgid "Show_on_homepage"
 msgstr "Show on home page"
@@ -908,9 +904,7 @@ msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
 msgstr "Please enter the amount that you just transfered to our bank account."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
-msgstr ""
-"If you chose \"payback\", please enter the amount that you just transfered back to the bank account of the "
-"user."
+msgstr "If you chose \"payback\", please enter the amount that you just transfered back to the bank account of the user."
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
@@ -951,12 +945,8 @@ msgstr "variable member fee"
 msgid "New_total_sum"
 msgstr "New total sum"
 
-msgid ""
-"The_total_sum_below_right_(minus_{0}_"
-"%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-"The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as soon "
-"as possible."
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as soon as possible."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr "The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
@@ -1009,6 +999,18 @@ msgstr "(Link only works for superadmins)."
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Thank you very much for your work!"
 
+msgid "your_credit_is_used_up_and_equals_{0}."
+msgstr "your credit is used up and equals {0}."
+
+msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgstr "Pleas sonn transfer new credit (e. g. 100 {0}) to our bank account."
+
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr "Do not forget to add it to our credit system after the bank transfer."
+
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr "Here you find the link to add credit:"
+
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight."
 msgstr "{0} is the last day to order. You can do that until {1} midnight."
 
@@ -1026,6 +1028,111 @@ msgstr "Website"
 
 msgid "And_here_you_can_unsubscribe_this_email_reminder"
 msgstr "And here you can unsubscribe from this email reminder"
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr "The amount of the product {0} has been apapted."
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr "You have ordered it on {0} at manufacturer {1}."
+
+msgid "Old_amount"
+msgstr "Old amunt"
+
+msgid "New_amount"
+msgstr "New amount"
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr "Why has the amount been adapted?"
+
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr "PS: Your credit has been adapted automatically."
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr "sorry, {0} can not be delivered."
+
+msgid "Order_date"
+msgstr "Order date"
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr "Why has the product been cancelled?"
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr "Sorry, but sometimes our manufacturers are not able to deliver the ordered products. You receive this email so you can buy the products elsewhere on time."
+
+msgid "Thanks_for_respecting_that!"
+msgstr "Thanks for respecting that!"
+
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr "The price of the product {0} has been adapted."
+
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr "You have ordered {0} units of it on {1} at manufacturer {2}."
+
+msgid "Old_price"
+msgstr "Old price"
+
+msgid "New_price"
+msgstr "New price"
+
+msgid "Why_has_the_price_been_adpated?"
+msgstr "Why has the price been adapted?"
+
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr "The weight of the product {0} has been adapated."
+
+msgid "Old_price_for"
+msgstr "Old price for"
+
+msgid "New_price_for"
+msgstr "New price for"
+
+msgid "The_base_price_is_{0}."
+msgstr "The base price is {0}."
+
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr "The status of your credit upload of {0} ({1)} was changed to {2}."
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr "Please compare the credit upload that you added to our system with the actual bank account transfer."
+
+msgid "Comment"
+msgstr "Comment"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "This_invoice_contains_all_orders_that_have_been_placed_in_{0}."
+msgstr "This invoide contains all orders that have been placed in {0}."
+
+msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+msgstr "Be careful: It is the order date that counts, not the delivery date!"
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr "If the invoice amount should differ from your own recordings, please tell us."
+
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr "The invoice amount will be transfered to your bank account within the next days."
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr "please find two order lists attached for the next delivery (grouped by product and menber)."
+
+msgid "Your_personal_manufacturer_panel"
+msgstr "Your personal manufacturer panel"
+
+msgid "Help_pages"
+msgstr "Help pages"
+
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr "You can change your imprint by yourself."
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr "Your products are only visible for members. To view your products as the member sees them, you need to be logged in."
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr "For signing in please use the email address of this message. If you want to order products from other manufacturers, please sign on with a different email address."
+
+msgid "Your_contact_person"
+msgstr "Your contact person"
 
 msgid "Pick_up_date"
 msgstr "Pick-up date"
@@ -1109,8 +1216,7 @@ msgid "Company_data"
 msgstr "Company data"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
-msgstr ""
-"for your imprint and your invoices. The imprint can be found on your profile in the bottom right corner."
+msgstr "for your imprint and your invoices. The imprint can be found on your profile in the bottom right corner."
 
 msgid "VAT_number"
 msgstr "VAT number"
@@ -1295,9 +1401,6 @@ msgstr "pick-up-products"
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Amount minus eventual variable member fee"
 
-msgid "Order_date"
-msgstr "Order date"
-
 msgid "Click_to_change_amount"
 msgstr "Click to change amount"
 
@@ -1345,9 +1448,6 @@ msgstr "Close all orders"
 
 msgid "Order_from"
 msgstr "Order from"
-
-msgid "Comment"
-msgstr "Comment"
 
 msgid "Page_title"
 msgstr "Page title"
@@ -1431,8 +1531,7 @@ msgid "Send_email?"
 msgstr "Send email?"
 
 msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment."
-msgstr ""
-"If checked, the member will be notified about the status change by email on saving (including the comment)."
+msgstr "If checked, the member will be notified about the status change by email on saving (including the comment)."
 
 msgid "Email_preview"
 msgstr "Email preview"

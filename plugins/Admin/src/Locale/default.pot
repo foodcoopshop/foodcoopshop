@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 17:24+0200\n"
+"POT-Creation-Date: 2018-06-29 10:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -998,6 +998,18 @@ msgstr ""
 msgid "Thank_you_very_much_for_your_work!"
 msgstr ""
 
+msgid "your_credit_is_used_up_and_equals_{0}."
+msgstr ""
+
+msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgstr ""
+
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr ""
+
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr ""
+
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight."
 msgstr ""
 
@@ -1014,6 +1026,111 @@ msgid "Website"
 msgstr ""
 
 msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr ""
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr ""
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr ""
+
+msgid "Old_amount"
+msgstr ""
+
+msgid "New_amount"
+msgstr ""
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr ""
+
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr ""
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr ""
+
+msgid "Order_date"
+msgstr ""
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr ""
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr ""
+
+msgid "Thanks_for_respecting_that!"
+msgstr ""
+
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr ""
+
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr ""
+
+msgid "Old_price"
+msgstr ""
+
+msgid "New_price"
+msgstr ""
+
+msgid "Why_has_the_price_been_adpated?"
+msgstr ""
+
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr ""
+
+msgid "Old_price_for"
+msgstr ""
+
+msgid "New_price_for"
+msgstr ""
+
+msgid "The_base_price_is_{0}."
+msgstr ""
+
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr ""
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "This_invoice_contains_all_orders_that_have_been_placed_in_{0}."
+msgstr ""
+
+msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+msgstr ""
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr ""
+
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr ""
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr ""
+
+msgid "Your_personal_manufacturer_panel"
+msgstr ""
+
+msgid "Help_pages"
+msgstr ""
+
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr ""
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr ""
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr ""
+
+msgid "Your_contact_person"
 msgstr ""
 
 msgid "Pick_up_date"
@@ -1283,9 +1400,6 @@ msgstr ""
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr ""
 
-msgid "Order_date"
-msgstr ""
-
 msgid "Click_to_change_amount"
 msgstr ""
 
@@ -1332,9 +1446,6 @@ msgid "Close_all_orders"
 msgstr ""
 
 msgid "Order_from"
-msgstr ""
-
-msgid "Comment"
 msgstr ""
 
 msgid "Page_title"

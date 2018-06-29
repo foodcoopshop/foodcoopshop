@@ -20,51 +20,41 @@ use Cake\Core\Configure;
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                Hallo <?php echo $manufacturer->address_manufacturer->firstname; ?>,
+                <?php echo __d('admin', 'Hello'); ?> <?php echo $manufacturer->address_manufacturer->firstname; ?>,
             </td>
     </tr>
 
     <tr>
         <td>
 
-            <p>im Anhang findest du zwei Bestelllisten (gruppiert nach Produkt und Mitglied) für die nächste Lieferung.</p>
+            <p><?php echo __d('admin', 'please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member).'); ?></p>
 
             <p>
-                <b>Dein persönlicher Hersteller-Bereich: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
+                <b><?php echo __d('admin', 'Your_personal_manufacturer_panel'); ?>: </b> <a href="<?php echo Configure::read('app.cakeServerName'); ?>/admin"><?php echo Configure::read('app.cakeServerName'); ?>/admin</a>
             </p>
 
-            <ul style="padding-left: 10px;">
-                <li>Bearbeiten deines Hersteller-Profils (Logo, Beschreibung)</li>
-                <li>Neue Produkte erstellen (inkl. Varianten - z.B. Produkt mit 0,5 kg und 1 kg)</li>
-                <li>Anzahl, Preis, Beschreibung, Lagerstand, Pfand und Kategorien deiner Produkte ändern</li>
-                <li>Hochladen von Produkt-Fotos</li>
-                <li>Aktivieren bzw. Deaktivieren deiner Produkte</li>
-                <li>Produkte als neu markieren</li>
-                <li>Anpassen des Preises, des Gewichts und Stornieren von bereits bestellten Produkten</li>
-                <li>Pfandkonto (falls du Pfand verwendest)</li>
-                <li>Lieferpause: Zeitraum angeben und deine Produkte werden automatisch angezeigt bzw. deaktiviert</li>
-                <li>Benachrichtigungs-E-Mails und weitere Einstellungen ändern</li>
-                <li>Passwort ändern</li>
-            </ul>
-            
+			<p>
+				<?php echo __d('admin', 'Help_pages'); ?>: <br />
+				<a href="<?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_manufacturers'));?>"><?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_manufacturers')); ?></a><br />
+				<a href="<?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_products'));?>"><?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_products')); ?></a>
+			</p>
+			
             <p>
-                Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern.
+                <?php echo __d('admin', 'You_can_change_your_imprint_by_yourself.'); ?>
             </p>
 
             <?php if (!Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) { ?> 
             <p>
-                Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung
-                deiner Produkte zu überprüfen, musst du angemeldet sein.
+                <?php echo __d('admin', 'Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in.'); ?>
             </p>
             <?php } ?>
 
             <p>
-                Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls du bei uns auch bestellen möchtest, registriere dich bitte auf
-                unserer Seite und verwende dazu aber eine andere E-Mail-Adresse.
+            	<?php echo __d('admin', 'For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address.'); ?>
             </p>
             
             <?php if (!empty($manufacturer->customer)) { ?>
-                <p><b>Deine Ansprechperson: </b><?php echo $manufacturer->customer->name . ', ' . $manufacturer->customer->email . ', ' . $manufacturer->customer->address_customer->phone_mobile; ?></p>
+                <p><b><?php echo __d('admin', 'Your_contact_person'); ?>: </b><?php echo $manufacturer->customer->name . ', ' . $manufacturer->customer->email . ', ' . $manufacturer->customer->address_customer->phone_mobile; ?></p>
             <?php } ?>
 
         </td>

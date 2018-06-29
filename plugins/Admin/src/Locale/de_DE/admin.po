@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 17:24+0200\n"
-"PO-Revision-Date: 2018-06-28 17:33+0200\n"
+"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"PO-Revision-Date: 2018-06-29 10:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -297,11 +297,8 @@ msgstr "Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} ge�
 msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
 msgstr "Der Status deiner Guthaben-Aufladung wurde erfolgreich auf {0} geändert."
 
-msgid ""
-"The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
-msgstr ""
-"Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} geändert und eine E-Mail an das Mitglied "
-"verschickt."
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
+msgstr "Der Status der Guthaben-Aufladung für {0} wurde erfolgreich auf {1} geändert und eine E-Mail an das Mitglied verschickt."
 
 msgid "for"
 msgstr "für"
@@ -319,8 +316,7 @@ msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_the
 msgstr "Der Betrag ist im Pfandkonto von {0} eingetragen worden und kann dort wieder gelöscht werden."
 
 msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
-msgstr ""
-"Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."
+msgstr "Der Betrag ist im Mitgliedsbeitrags-System von {0} eingetragen worden und kann dort wieder gelöscht werden."
 
 msgid "The_payment_({0}_{1})_was_removed_successfully."
 msgstr "Die Zahlung ({0}, {1}) wurde erfolgreich gelöscht."
@@ -548,9 +544,7 @@ msgid "Chose_manufacturer"
 msgstr "Hersteller auswählen"
 
 msgid "Blog_post_manufacturer_description"
-msgstr ""
-"Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von "
-"der eigenen Einstellung \"nur für Mitglieder\")."
+msgstr "Falls der Hersteller nur für Mitglieder angezeigt wird, gilt das auch für diesen Blog-Artikel (unabhängig von der eigenen Einstellung \"nur für Mitglieder\")."
 
 msgid "Show_on_homepage"
 msgstr "Auf der Startseite anzeigen"
@@ -634,9 +628,7 @@ msgid "Domain"
 msgstr "Domain"
 
 msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop."
-msgstr ""
-"Solange der variable Mitgliedsbeitrag aktiviert ist, können für diese Foodcoop keine Remote-Foodcoops "
-"erstellt werden."
+msgstr "Solange der variable Mitgliedsbeitrag aktiviert ist, können für diese Foodcoop keine Remote-Foodcoops erstellt werden."
 
 msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
 msgstr "Die folgendenden Einstellungen können im Admin-Bereich <b>nicht</b> geändert werden."
@@ -912,8 +904,7 @@ msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
 msgstr "Bitte trage hier den Betrag ein, den du soeben auf unser Konto überwiesen hast."
 
 msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
-msgstr ""
-"Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast."
+msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast."
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
@@ -954,12 +945,8 @@ msgstr "variabler Mitgliedsbeitrag"
 msgid "New_total_sum"
 msgstr "Neue Gesamtsumme"
 
-msgid ""
-"The_total_sum_below_right_(minus_{0}_"
-"%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-"Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich auf "
-"dein Konto überwiesen."
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen."
 
 msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
 msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
@@ -1004,10 +991,7 @@ msgid "Here_you_find_the_overview_for_making_the_transfers:"
 msgstr "Hier findest du die Übersicht zum Überweisen:"
 
 msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
-msgstr ""
-"Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den "
-"tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und "
-"macht das Guthaben-System weniger fehleranfällig."
+msgstr "Bei dieser Gelegenheit könntest du auch gleich die ins System eingetragenen Guthaben-Aufladungen mit den tatsächlichen Überweisungen vergleichen und bestätigen. Das spart am Ende des Jahres eine Menge Arbeit und macht das Guthaben-System weniger fehleranfällig."
 
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Link nur für Superadmins)."
@@ -1015,12 +999,23 @@ msgstr "(Link nur für Superadmins)."
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Vielen Dank für deine Arbeit!"
 
+msgid "your_credit_is_used_up_and_equals_{0}."
+msgstr "dein Guthaben ist aufgebraucht und beträgt {0}."
+
+msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgstr "Bitte überweise bald wieder ein neues Guthaben (z.B. 100,00 {0}) auf unser Konto."
+
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr "Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System einzutragen</b>, da es ansonsten zwar auf unserem Bankkonto gutgeschrieben ist, aber nicht in deinem Guthaben-System aufscheint."
+
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr "Hier der Link zum Eintragen:"
+
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight."
 msgstr " {0} ist schon wieder der letzte Bestelltag. Bis {1} Mitternacht hast du noch Zeit."
 
 msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
-msgstr ""
-"Möchtest du deine letzte Bestellung in den Warenkorb laden? Der aktuelle Warenkorb wird dafür vorher geleert."
+msgstr "Möchtest du deine letzte Bestellung in den Warenkorb laden? Der aktuelle Warenkorb wird dafür vorher geleert."
 
 msgid "route_cart"
 msgstr "warenkorb"
@@ -1033,6 +1028,116 @@ msgstr "Homepage"
 
 msgid "And_here_you_can_unsubscribe_this_email_reminder"
 msgstr "Und hier kannst du diese E-Mail abbestellen"
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr "Die Anzahl des Produktes {0} wurde angepasst."
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr "Du hast es am {0} beim Hersteller {1} bestellt."
+
+msgid "Old_amount"
+msgstr "Alte Anzahl"
+
+msgid "New_amount"
+msgstr "Neue Anzahl"
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr "Warum wurde die Anzahl angepasst?"
+
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr "PS: Dein Guthaben wurde automatisch angepasst."
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr "{0} kann leider nicht geliefert werden."
+
+msgid "Order_date"
+msgstr "Bestelldatum"
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr "Warum wurde das Produkt storniert?"
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr "Unsere Produzenten können leider ab und zu die bestellte Ware nicht liefern. Du erhältst diese Mail, damit du rechtzeitig für Ersatz sorgen kannst."
+
+msgid "Thanks_for_respecting_that!"
+msgstr "Vielen Dank für dein Verständnis!"
+
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr "Der Preis des Produktes {0} wurde erfolgreich angepasst."
+
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr "Du hast {0} Stück davon am {1} beim Hersteller {2} bestellt."
+
+msgid "Old_price"
+msgstr "Alter Preis"
+
+msgid "New_price"
+msgstr "Neuer Preis"
+
+msgid "Why_has_the_price_been_adpated?"
+msgstr "Warum wurde der Preis angepasst?"
+
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr "Das Gewicht des Produktes {0} wurde erfolgreich angepasst."
+
+msgid "Old_price_for"
+msgstr "Alter Preis für"
+
+msgid "New_price_for"
+msgstr "Neuer Preis für"
+
+msgid "The_base_price_is_{0}."
+msgstr "Der Basis-Preis beträgt {0}."
+
+#, fuzzy
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr "Der Status deiner Guthaben-Aufladung vom {0} über {1} wurde auf {2} geändert."
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr "Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto."
+
+msgid "Comment"
+msgstr "Kommentar"
+
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "This_invoice_contains_all_orders_that_have_been_placed_in_{0}."
+msgstr "In dieser Rechnung sind alle Bestellungen enthalten, die im {0} getätigt wurden."
+
+msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+msgstr "<b>Achtung:</b> es wird das Bestelldatum berücksichtigt, nicht das Lieferdatum."
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr "Sollten der Rechnungsbetrag nicht mit deinen Aufzeichnungen übereinstimmen, sag uns bitte umgehend Bescheid."
+
+#, fuzzy
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr "Betrag, der auf dein Konto überwiesen wird"
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr "im Anhang findest du zwei Bestelllisten (gruppiert nach Produkt und Mitglied) für die nächste Lieferung."
+
+#, fuzzy
+msgid "Your_personal_manufacturer_panel"
+msgstr "im Hersteller-Bereich"
+
+#, fuzzy
+msgid "Help_pages"
+msgstr "Homepage"
+
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr "Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern."
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr "Deine Produkte sind nur für Mitglieder sichtbar. Um die Darstellung deiner Produkte zu überprüfen, musst du angemeldet sein."
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls du bei uns auch bestellen möchtest, registriere dich bitte auf unserer Seite und verwende dazu aber eine andere E-Mail-Adresse."
+
+#, fuzzy
+msgid "Your_contact_person"
+msgstr "Ansprechperson"
 
 msgid "Pick_up_date"
 msgstr "Abholdatum"
@@ -1089,16 +1194,13 @@ msgid "Delete_logo?"
 msgstr "Logo löschen?"
 
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
-msgstr ""
-"Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
+msgstr "Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
 
 msgid "Long_description"
 msgstr "Lange Beschreibung"
 
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
-msgstr ""
-"Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" "
-"klicken."
+msgstr "Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" klicken."
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Wird auf der Hersteller-Seite angezeigt."
@@ -1119,9 +1221,7 @@ msgid "Company_data"
 msgstr "Firmendaten"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
-msgstr ""
-"für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten "
-"rechts."
+msgstr "für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten rechts."
 
 msgid "VAT_number"
 msgstr "UID-Nummer"
@@ -1226,8 +1326,7 @@ msgid "Variable_member_fee_in"
 msgstr "Variabler Mitgliedsbeitrag in"
 
 msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
-msgstr ""
-"Die Rechnung für den Hersteller wird um den angegebenen Prozentwert reduziert (nur ganze Zahlen erlaubt)."
+msgstr "Die Rechnung für den Hersteller wird um den angegebenen Prozentwert reduziert (nur ganze Zahlen erlaubt)."
 
 msgid "Preselected_tax_rate_for_new_products"
 msgstr "Voreingestellter Steuersatz für neue Produkte"
@@ -1307,9 +1406,6 @@ msgstr "abholung-der-produkte"
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
 
-msgid "Order_date"
-msgstr "Bestelldatum"
-
 msgid "Click_to_change_amount"
 msgstr "Zum Ändern der Anzahl anklicken"
 
@@ -1357,9 +1453,6 @@ msgstr "Alle Bestellungen abschließen"
 
 msgid "Order_from"
 msgstr "Bestellung vom"
-
-msgid "Comment"
-msgstr "Kommentar"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1443,9 +1536,7 @@ msgid "Send_email?"
 msgstr "E-Mail versenden?"
 
 msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment."
-msgstr ""
-"Wenn angehakt, wird das Mitglied beim Speichern per E-Mail über die Status-Änderung informiert (inkl. "
-"Kommentar)."
+msgstr "Wenn angehakt, wird das Mitglied beim Speichern per E-Mail über die Status-Änderung informiert (inkl. Kommentar)."
 
 msgid "Email_preview"
 msgstr "E-Mail-Vorschau"
@@ -1598,9 +1689,7 @@ msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr ""
-"Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig "
-"ändern."
+msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
 #~ msgid "Do_not_forget_to_press_save"
 #~ msgstr "Speicher nicht vergesen"

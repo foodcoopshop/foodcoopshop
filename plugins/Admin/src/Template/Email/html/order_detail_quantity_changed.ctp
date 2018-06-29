@@ -18,30 +18,33 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
-        
-        <tr>
+    <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
+    
+    <tr>
         <td>
 
             <p>
-                Das Gewicht des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast <?php echo $oldOrderDetail->product_amount; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
-                bestellt.
+            	<?php echo __d('admin', 'The_weight_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?><?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
+            	    $oldOrderDetail->product_amount,
+            	    $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
+            	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
+            	]); ?>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis für <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
-                <li>Neuer Preis für <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'Old_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'New_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
             </ul>
             
             <p>
-            	Der Basis-Preis beträgt <?php echo $this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount); ?>.
+            	<?php echo __d('admin', 'The_base_price_is_{0}.', [$this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount)]); ?>
             </p>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
+                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
             <?php } ?>
 
-            </td>
+        </td>
 
     </tr>
 

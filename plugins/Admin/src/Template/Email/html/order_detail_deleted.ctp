@@ -18,47 +18,35 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $orderDetail->order->customer]); ?>
-                
-        <tr>
+    <?php echo $this->element('email/greeting', ['data' => $orderDetail->order->customer]); ?>
+            
+    <tr>
         <td>
 
             <p>
-                <b><?php echo $orderDetail->product_name; ?></b>
-                kann leider nicht geliefert werden.
+                <b><?php echo __d('admin', 'sorry,_{0}_can_not_be_delivered.', [$orderDetail->product_name]); ?></b>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Preis: <b><?php echo $this->MyNumber->formatAsDecimal($orderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
-                <li>Anzahl: <b><?php echo $orderDetail->product_amount; ?></b></li>
-                <li>Hersteller: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
-                <li>Bestelldatum: <b><?php echo $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
+                <li><?php echo __d('admin', 'Price'); ?>: <b><?php echo $this->MyNumber->formatAsDecimal($orderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'Amount'); ?>: <b><?php echo $orderDetail->product_amount; ?></b></li>
+                <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
+                <li><?php echo __d('admin', 'Order_date'); ?>: <b><?php echo $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
             </ul>
 
             <p>
-                Warum wurde das Produkt storniert?<br />
-                <b>
-                <?php
-
-                if ($cancellationReason != '') {
-                    echo '"' . $cancellationReason . '"';
-                } else {
-                    echo 'Kein Grund angegeben.';
-                }
-                ?>
-                </b>
+                <?php echo __d('admin', 'Why_has_the_product_been_cancelled?'); ?><br />
+                <b><?php echo '"' . $cancellationReason . '"'; ?></b>
             </p>
 
-            <p>Unsere Produzenten können leider ab und zu die bestellte Ware
-                nicht liefern. Du erhältst diese Mail, damit du rechtzeitig für
-                Ersatz sorgen kannst.</p>
-            <p>Vielen Dank für dein Verständnis!</p>
+            <p><?php echo __d('admin', 'Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere.'); ?></p>
+            <p><?php echo __d('admin', 'Thanks_for_respecting_that!'); ?></p>
                 
                 <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                    <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
+                    <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
                 <?php } ?>
 
-            </td>
+        </td>
 
     </tr>
 

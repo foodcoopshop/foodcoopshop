@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-28 17:35+0200\n"
-"PO-Revision-Date: 2018-06-28 17:35+0200\n"
+"POT-Creation-Date: 2018-06-29 10:21+0200\n"
+"PO-Revision-Date: 2018-06-29 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -343,8 +343,7 @@ msgid "Load_past_order"
 msgstr "Vergangene Bestellungen laden"
 
 msgid "Load_past_order_dialog_description_html"
-msgstr ""
-"<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
+msgstr "<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
 
 msgid "Remove_from_cart?"
 msgstr "Aus dem Warenkorb löschen?"
@@ -437,9 +436,7 @@ msgid "ordered_by"
 msgstr "bestellt von"
 
 msgid "Explaination_text_apdapt_price_form_apapt_weight."
-msgstr ""
-"Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich "
-"gelieferte Gewicht scheint auf der Rechnung auf."
+msgstr "Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf."
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
@@ -1219,7 +1216,7 @@ msgid "today"
 msgstr "heute"
 
 msgid "tomorrow"
-msgstr "morgen"
+msgstr "Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto überwiesen."
 
 msgid "Sent_emails"
 msgstr "Versendete E-Mails"
@@ -1531,9 +1528,7 @@ msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr ""
-"Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich "
-"vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
+msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Deine Registrierung bei {0} war erfolgreich!"
@@ -1572,8 +1567,7 @@ msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
 msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
 
 msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr ""
-"Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
+msgstr "Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
 msgid "route_search"
 msgstr "suche"
@@ -1624,9 +1618,7 @@ msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_
 msgstr "Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück."
 
 msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
-msgstr ""
-"Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden "
-"Dienstleistung (*)"
+msgstr "Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)"
 
 msgid "Ordered_on"
 msgstr "Bestellt am"

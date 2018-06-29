@@ -18,7 +18,7 @@
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                Hallo <?php echo $manufacturer->address_manufacturer->firstname; ?>,
+                <?php echo __d('admin', 'Hello'); ?> <?php echo $manufacturer->address_manufacturer->firstname; ?>,
             </td>
     </tr>
 
@@ -26,20 +26,14 @@
         <td>
 
             <p>
-                In dieser Rechnung sind alle Bestellungen enthalten, die im <b><?php echo $invoicePeriodMonthAndYear; ?></b>
-                getätigt wurden. <b>Achtung:</b> es wird das Bestelldatum
-                berücksichtigt, nicht das Lieferdatum.
+            	<?php echo __d('admin', 'This_invoice_contains_all_orders_that_have_been_placed_in_{0}.'); ?> <?php echo __d('admin', 'Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date.'); ?>
             </p>
 
-            <p>Sollten der Rechnungsbetrag nicht mit deinen Aufzeichnungen
-                übereinstimmen, sag uns bitte umgehend Bescheid.</p>
+            <p><?php echo __d('admin', 'If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us.'); ?></p>
 
-            <p>Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto
-                überwiesen.</p>
+            <p><?php echo __d('admin', 'The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days.'); ?></p>
 
-            <p>
-                <b>Vielen Dank, dass du uns belieferst!</b>
-            </p>
+            <p><b><?php echo __d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!'); ?></b></p>
 
         </td>
 
