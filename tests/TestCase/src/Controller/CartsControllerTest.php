@@ -28,7 +28,7 @@ class CartsControllerTest extends AppCakeTestCase
     public $productId2 = '60-10';
     // knoblauch, 0% tax, , manufacturerId 5
     public $productId3 = '344';
-    
+
     public $Cart;
 
     public $Product;
@@ -93,34 +93,34 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
         $this->assertJsonError();
     }
-    
+
     public function testProductPlacedInCart()
     {
         $this->loginAsSuperadmin();
-        
+
         $amount1 = 2;
         $this->addProductToCart($this->productId1, $amount1);
         $this->assertJsonOk();
-        
+
         // check if product was placed in cart
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
         $this->assertEquals($this->productId1, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
-    
+
     public function testAttributePlacedInCart()
     {
         $this->loginAsSuperadmin();
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
-        
+
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
-        
+
     }
-    
+
     public function testAddTooManyProducts()
     {
         $this->loginAsSuperadmin();
@@ -128,7 +128,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, $amount);
         $this->addTooManyProducts($this->productId1, 99, $amount, 'Die gewünschte Anzahl <b>100</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
     }
-    
+
     public function testAddTooManyAttributes()
     {
         $this->loginAsSuperadmin();
@@ -136,7 +136,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId2, $amount);
         $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 20', 0);
     }
-    
+
     public function testProductDeactivatedWhileShopping()
     {
         $this->loginAsSuperadmin();
@@ -149,13 +149,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeProductStatus($this->productId1, APP_ON);
     }
-    
+
     public function testManufacturerDeactivatedWhileShopping()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $manufacturerId = 5;
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
@@ -163,13 +163,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
     }
-    
+
     public function testManufacturerHolidayModeActivatedWhileShopping()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $manufacturerId = 5;
         $this->changeManufacturerHolidayMode($manufacturerId, date('Y-m-d'));
         $this->finishCart();
@@ -177,13 +177,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
         $this->changeManufacturerHolidayMode($manufacturerId, null);
     }
-    
+
     public function testProductStockAvailableDecreasedWhileShopping()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
@@ -191,13 +191,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Menge: 1', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
     }
-    
+
     public function testAttributeStockAvailableDecreasedWhileShopping()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
@@ -205,35 +205,35 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Menge: 1', $this->browser->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
-    
+
     public function testFinishCartCheckboxesValidation()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $this->finishCart(0, 0);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->browser->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
     }
-    
+
     public function testFinishCartOrderCommentValidation()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $this->finishCart(1, 1, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, adfasfd sa');
         $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->browser->getContent(), 'order comment validation did not work');
     }
-    
+
     public function testFinishOrderWithComment()
     {
 
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        
+
         $orderComment = 'this is a valid order comment';
         $this->finishCart(1, 1, $orderComment);
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
@@ -248,7 +248,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'OrderDetails.OrderDetailTaxes'
             ]
         ])->first();
-        
+
         $this->checkOrder($order, $orderId, $orderComment);
 
         // check order_details for product1
@@ -288,31 +288,31 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->browser->doFoodCoopShopLogout();
     }
-    
+
     public function testFinishOrderTimebasedCurrencyEnabled()
     {
         $reducedMaxPercentage = 15;
         $defaultMaxPercentage = 30;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
-        
+
         $this->loginAsSuperadmin();
         $this->fillCart();
-        
+
         $this->addProductToCart(103, 5); // bratwürstel, manufacturerId 4
-        
+
         $this->checkCartStatus();
-        
+
         $this->finishCart(1, 1, '', '1700');
         $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
-        
+
         $this->finishCart(1, 1, '', '');
         $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
-        
+
         $this->finishCart(1, 1, '', '1200');
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
-        
+
         $this->checkCartStatusAfterFinish();
-        
+
         $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
@@ -323,7 +323,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'OrderDetails.OrderDetailTaxes'
             ]
         ])->first();
-        
+
         // check table order
         $this->assertEquals($order->total_paid, 18.416364, 'order->total_paid not correct');
         $this->assertEquals($order->total_paid_tax_incl, 18.416364, 'order->total_paid_tax_incl not correct');
@@ -332,60 +332,59 @@ class CartsControllerTest extends AppCakeTestCase
         // check table order_detail
         $this->assertEquals($order->order_details[0]->total_price_tax_incl, 2.700000, 'order_detail->total_price_tax_incl not correct');
         $this->assertEquals($order->order_details[0]->total_price_tax_excl, 2.455786, 'order_detail->total_price_tax_excl not correct');
-        
+
         $this->assertEquals($order->order_details[1]->total_price_tax_incl, 15.240000, 'order_detail->total_price_tax_incl not correct');
         $this->assertEquals($order->order_details[1]->total_price_tax_excl,  13.859095, 'order_detail->total_price_tax_excl not correct');
-        
+
         $this->assertEquals($order->order_details[2]->total_price_tax_incl, 0.476364, 'order_detail->total_price_tax_incl not correct');
         $this->assertEquals($order->order_details[2]->total_price_tax_excl, 0.476364, 'order_detail->total_price_tax_excl not correct');
 
         $this->assertEquals($order->order_details[3]->total_price_tax_incl, 1.860000, 'order_detail->total_price_tax_incl not correct');
         $this->assertEquals($order->order_details[3]->total_price_tax_excl, 1.636365, 'order_detail->total_price_tax_excl not correct');
-        
-        
+
         // check table timebased_currency_order
         $this->assertEquals($order->timebased_currency_order->money_excl_sum, 3.590000, 'timebased_currency_order->money_excl_sum not correct');
         $this->assertEquals($order->timebased_currency_order->money_incl_sum, 3.940000, 'timebased_currency_order->money_incl_sum not correct');
         $this->assertEquals($order->timebased_currency_order->seconds_sum, 1200, 'timebased_currency_order->seconds_sum not correct');
-        
+
         // check table timebased_currency_order_details
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_excl, 0.85, 'order_detail timebased_currency_order_detail->money_excl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_incl, 0.94, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->seconds, 336, 'order_detail timebased_currency_order_detail->seconds not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
         $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
-        
+
         $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_excl, 2.05, 'order_detail timebased_currency_order_detail->money_excl not correct');
         $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_incl, 2.26, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->seconds, 805, 'order_detail timebased_currency_order_detail->seconds not correct');
         $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->max_percentage, $reducedMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
         $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
-        
+
         $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->money_excl, 0.160000, 'order_detail timebased_currency_order_detail->money_excl not correct');
         $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->money_incl, 0.160000, 'order_detail timebased_currency_order_detail->money_incl not correct');
         $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->seconds, 59, 'order_detail timebased_currency_order_detail->seconds not correct');
         $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
         $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
-        
+
         $this->assertEmpty($order->order_details[3]->timebased_currency_order_detail);
-        
+
     }
-    
+
     public function testFinishCartWithPricePerUnit()
     {
         $this->loginAsSuperadmin();
-        
+
         $productIdA = 347; // forelle
         $productIdB = '348-11'; // rindfleisch, 0,5 kg
-        
+
         $this->addProductToCart($productIdA, 2);
         $this->addProductToCart($productIdB, 3);
-        
+
         $this->finishCart(1, 1);
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
-        
+
         $this->checkCartStatusAfterFinish();
-        
+
         $order = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
@@ -395,11 +394,11 @@ class CartsControllerTest extends AppCakeTestCase
                 'OrderDetails.OrderDetailUnits'
             ]
         ])->first();
-        
+
         // check order
         $this->assertEquals($order->total_paid_tax_excl, 36.81, 'order total_paid_tax_excl not correct');
         $this->assertEquals($order->total_paid_tax_incl, 40.500000, 'order total_paid_tax_incl not correct');
-        
+
         // check order_details
         $this->checkOrderDetails($order->order_details[0], 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 2);
         $this->checkOrderDetails($order->order_details[1], 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 2);
@@ -410,22 +409,22 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order->order_details[0]->order_detail_unit->quantity_in_units, 350);
         $this->assertEquals($order->order_details[0]->order_detail_unit->unit_name, 'g');
         $this->assertEquals($order->order_details[0]->order_detail_unit->unit_amount, 100);
-        
+
         $this->assertEquals($order->order_details[1]->order_detail_unit->product_quantity_in_units, 1.5);
         $this->assertEquals($order->order_details[1]->order_detail_unit->price_incl_per_unit, 20);
         $this->assertEquals($order->order_details[1]->order_detail_unit->quantity_in_units, 0.5);
         $this->assertEquals($order->order_details[1]->order_detail_unit->unit_name, 'kg');
         $this->assertEquals($order->order_details[1]->order_detail_unit->unit_amount, 1);
-        
+
         // check order_detail_taxes
         $this->assertEquals($order->order_details[0]->order_detail_tax->unit_amount, 0.48);
         $this->assertEquals($order->order_details[0]->order_detail_tax->total_amount, 0.96);
 
         $this->assertEquals($order->order_details[1]->order_detail_tax->unit_amount, 0.91);
         $this->assertEquals($order->order_details[1]->order_detail_tax->total_amount, 2.73);
-        
+
     }
-    
+
     public function testShopOrder()
     {
         $this->loginAsSuperadmin();
@@ -480,7 +479,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart($this->productId3, 1); // product with zero tax
     }
-    
+
     /**
      * before finishing cart!
      */
@@ -490,7 +489,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
         $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
     }
-    
+
     /**
      * cake cart status check AFTER finish
      * as cart is finished, a new cart is already existing
@@ -556,7 +555,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($order->cancellation_terms_accepted, 1, 'order cancellation_terms_accepted not correct');
         $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
     }
-    
+
     private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
     {
 

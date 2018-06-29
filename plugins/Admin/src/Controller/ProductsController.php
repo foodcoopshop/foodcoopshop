@@ -163,13 +163,13 @@ class ProductsController extends AdminAppController
             $thumbsFileName = $thumbsPath . DS . $product->image->id_image . $options['suffix'] . '.jpg';
             unlink($thumbsFileName);
         }
-        
+
         $actionLogMessage = __d('admin', 'Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
             $product->image->id_image,
             '<b>' . $product->product_lang->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
-        
+
         $this->Flash->success($actionLogMessage);
         $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
 
@@ -556,7 +556,7 @@ class ProductsController extends AdminAppController
 
         $quantity = $this->Product->getQuantityAsInteger($this->getRequest()->getData('quantity'));
         $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->product_lang->name . '</b>']));
-        
+
         $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldProduct->stock_available->quantity, $quantity]));
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
@@ -569,7 +569,7 @@ class ProductsController extends AdminAppController
     public function editPrice()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
@@ -631,26 +631,26 @@ class ProductsController extends AdminAppController
 
         $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
-        
+
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
             $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
         }
-        
+
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
             $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($priceInclPerUnit, $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
-        
+
         $actionLogMessage = __d('admin', 'The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
             '<b>' . $oldProduct->product_lang->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>',
             $oldPrice,
             $newPrice
         ]);
-        
+
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
@@ -713,7 +713,7 @@ class ProductsController extends AdminAppController
             $oldDeposit = $depositEntity->deposit;
         }
         $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
-        
+
         $actionLogMessage = __d('admin', 'The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [
             '<b>' . $productName . '</b>',
             Configure::read('app.numberHelper')->formatAsCurrency($oldDeposit),

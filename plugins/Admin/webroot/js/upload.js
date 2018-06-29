@@ -105,10 +105,10 @@ foodcoopshop.Upload = {
                 click: function() {
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/deleteImage/' + objectId;                   
+                    document.location.href = '/admin/products/deleteImage/' + objectId;
                 }
-            };            
-            
+            };
+
             // bind delete button
             if (imageUploadForm.find('a.img-delete').length == 0) {
                 if (imageUploadForm.find('img.existingImage').length == 1) {

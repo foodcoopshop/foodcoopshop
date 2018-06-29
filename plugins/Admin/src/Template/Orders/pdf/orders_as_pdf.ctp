@@ -71,7 +71,7 @@ foreach ($orders as $order) {
             $quantityStyle = ' background-color:#cecece;';
         }
         $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
-        
+
         $unity = '';
         if (!empty($orderDetail->order_detail_unit)) {
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
@@ -85,15 +85,14 @@ foreach ($orders as $order) {
             }
         }
         $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . $unity . '</td>';
-        
-        
+
         $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail->product->manufacturer->name . '</td>';
 
         $priceStyle = '';
         if (!empty($orderDetail->order_detail_unit)) {
             $priceStyle = ' background-color:#cecece;';
         }
-        
+
         $pdf->table .= '<td style="' . $priceStyle . 'text-align: right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
         if (!empty($orderDetail->order_detail_unit)) {
@@ -109,7 +108,7 @@ foreach ($orders as $order) {
             $deposit = '';
         }
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
-        
+
         $sumPrice += $orderDetail['total_price_tax_incl'];
         $sumQuantity += $orderDetail['product_amount'];
 
@@ -143,14 +142,14 @@ foreach ($orders as $order) {
         $html = '<p>* '.__('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
     }
-    
+
     $pdf->Ln(5);
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') {
         $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Ln(2);
     }
-    
+
     $html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
     $pdf->writeHTML($html, true, false, true, false, '');
 

@@ -18,8 +18,8 @@ use Cake\Core\Configure;
 <div id="blogPosts">
 
         <?php
-        $this->element('addScript', ['script' => 
-            Configure::read('app.jsNamespace') . ".Admin.init();" . 
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
         "
         ]);

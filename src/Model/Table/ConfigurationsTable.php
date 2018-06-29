@@ -99,7 +99,7 @@ class ConfigurationsTable extends AppTable
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsDefaultNewMemberActive(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
@@ -120,13 +120,13 @@ class ConfigurationsTable extends AppTable
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 10);
     }
-    
+
     public function validationFcsDaysShowProductAsNew(Validator $validator)
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
-    
+
     public function validationFcsPaymentProductMaximum(Validator $validator)
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
@@ -154,28 +154,28 @@ class ConfigurationsTable extends AppTable
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsTimebasedCurrencyName(Validator $validator)
     {
         $validator->notEmpty('value', __('Please_enter_the_paying_with_time_module_name.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
         return $validator;
     }
-    
+
     public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
     {
         $validator->notEmpty('value', __('Please_enter_the_abbreviation_of_the_paying_with_time_module.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
         return $validator;
     }
-    
+
     public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
     {
         $validator->notEmpty('value', __('Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}.',[Configure::read('appDb.FCS_CURRENCY_SYMBOL')]));
         $validator->decimal('value', 2, __('Please_enter_exactly_2_decimals.'));
         return $validator;
     }
-    
+
     public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
     {
         $validator->notEmpty('value', __('Please_provide_a_value.'));
@@ -183,7 +183,7 @@ class ConfigurationsTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 50);
         return $validator;
     }
-    
+
     public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
     {
         $validator->notEmpty('value', __('Please_provide_a_value.'));
@@ -191,7 +191,7 @@ class ConfigurationsTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
         return $validator;
     }
-    
+
     private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
     {
         $validator->inList($field, array_keys($values), __('The_following_values_are_valid:') . ' ' . implode(', ', array_keys($values)));

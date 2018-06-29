@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 
     <?php
     $this->element('addScript', [
-        'script' => 
+        'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" .
             Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"

@@ -63,19 +63,19 @@ $this->element('addScript', [
             if (! Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED' && substr($configuration->name, 0, 23) == 'FCS_TIMEBASED_CURRENCY_') {
                 continue;
             }
-            
+
             if ($configuration->name == 'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS' && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 continue;
             }
-            
+
             echo '<tr>';
 
                 echo '<td class="first">';
                     echo $configuration->text;
                 echo '</td>';
-    
+
                 echo '<td style="width:30px;">';
-    
+
                     // timebased currency module is still in beta mode - only enable it in database and do not show edit icon
                     if ($configuration->name != 'FCS_TIMEBASED_CURRENCY_ENABLED') {
                         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -83,11 +83,11 @@ $this->element('addScript', [
                             'class' => 'edit-configuration-button'
                         ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
                     }
-    
+
                 echo '</td>';
 
                 echo '<td>';
-    
+
                 switch ($configuration->type) {
                     case 'number':
                     case 'text':
@@ -102,7 +102,7 @@ $this->element('addScript', [
                         echo (boolean) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no');
                         break;
                 }
-    
+
                 echo '</td>';
 
             echo '</tr>';
@@ -187,7 +187,7 @@ $this->element('addScript', [
                 echo '<td class="first">';
                     echo $configuration->text;
                 echo '</td>';
-    
+
                 echo '<td>';
                     echo $configuration->value;
                 echo '</td>';

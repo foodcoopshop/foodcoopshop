@@ -129,7 +129,7 @@ class ManufacturersController extends AdminAppController
             // keep original data for getCustomerRecord - clone does not work on nested objects
             $unchangedManufacturerAddress = clone $manufacturer->address_manufacturer;
         }
-        
+
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
             $this->getRequest()->getData(),
@@ -278,7 +278,7 @@ class ManufacturersController extends AdminAppController
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
-        
+
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $this->Product->getCountByManufacturerId($manufacturer->id_manufacturer);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
@@ -300,11 +300,11 @@ class ManufacturersController extends AdminAppController
 
     public function sendInvoice()
     {
-        
+
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
-        
+
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -405,11 +405,11 @@ class ManufacturersController extends AdminAppController
 
     public function sendOrderList()
     {
-        
+
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
-        
+
         Configure::read('app.timeHelper')->recalcDeliveryDayDelta();
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -534,9 +534,9 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->send_ordered_product_amount_changed_notification)) {
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
-        
+
         $manufacturer->timebased_currency_max_credit_balance /= 3600;
-        
+
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = TableRegistry::getTableLocator()->get('Customers');
             $this->set('customersForDropdown', $this->Customer->getForDropdown());
@@ -562,10 +562,10 @@ class ManufacturersController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
         }
-        
+
         if (!empty($this->getRequest()->getData('Manufacturers.holiday_from'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_from', new Time($this->getRequest()->getData('Manufacturers.holiday_from'))));
-            
+
         }
         if (!empty($this->getRequest()->getData('Manufacturers.holiday_to'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_to', new Time($this->getRequest()->getData('Manufacturers.holiday_to'))));
@@ -585,7 +585,7 @@ class ManufacturersController extends AdminAppController
         if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') * 3600));
         }
-        
+
         if (!empty($manufacturer->getErrors())) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
@@ -676,10 +676,10 @@ class ManufacturersController extends AdminAppController
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        
+
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $results = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($results);
-        
+
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
         $this->set('dateFrom', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))));
@@ -708,7 +708,7 @@ class ManufacturersController extends AdminAppController
         $this->set('sumPriceIncl', $sumPriceIncl);
         $this->set('sumAmount', $sumAmount);
         $this->set('sumTimebasedCurrencyPriceIncl', $sumTimebasedCurrencyPriceIncl);
-        
+
         $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
         $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
@@ -721,7 +721,7 @@ class ManufacturersController extends AdminAppController
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
-        
+
         $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,

@@ -23,14 +23,14 @@ use App\Controller\Component\StringComponent;
  */
 class MyHtmlHelper extends HtmlHelper
 {
-    
+
     public function __construct(View $View, array $config = [])
     {
         $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
         $this->helpers[] = 'MyNumber';
         parent::__construct($View, $config);
     }
-    
+
     function wrapJavascriptBlock($content) {
         return "<script>
             //<![CDATA[
@@ -40,7 +40,7 @@ class MyHtmlHelper extends HtmlHelper
             //]]>
         </script>";
     }
-    
+
     public function getCurrencyName($currencySymbol)
     {
         switch($currencySymbol) {
@@ -55,14 +55,14 @@ class MyHtmlHelper extends HtmlHelper
                 break;
         }
     }
-    
+
     public function getDocsUrl($page)
     {
         $languageCode = substr(I18n::getLocale(), 0, 2);
         $url = 'https://foodcoopshop.github.io/' . $languageCode . '/' . $page;
         return $url;
     }
-    
+
     public function getNameRespectingIsDeleted($customer)
     {
         if (empty($customer)) {
@@ -70,17 +70,17 @@ class MyHtmlHelper extends HtmlHelper
         }
         return $customer->name;
     }
-    
+
     public function getDeletedCustomerName()
     {
         return __('Deleted_Member');
     }
-    
+
     public function getDeletedCustomerEmail()
     {
         return __('Deleted_Email_Address');
     }
-    
+
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number
@@ -126,7 +126,7 @@ class MyHtmlHelper extends HtmlHelper
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo)) {
             $shortResult .= ' ' . __('delivery_break_until') . ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
         }
-        
+
         $result = $shortResult;
         if ($long) {
             $result = __('The_manufacturer_{0}_has_{1}_delivery_break.', ['<b>' . $name . '</b>', $shortResult]);
@@ -136,7 +136,7 @@ class MyHtmlHelper extends HtmlHelper
 
         return $result;
     }
-    
+
     public function getCustomerAddress($customer)
     {
         if (empty($customer->address_customer)) {
@@ -147,7 +147,7 @@ class MyHtmlHelper extends HtmlHelper
             $details .= '<br />' . $customer->address_customer->address2;
         }
         $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
-        
+
         if ($customer->address_customer->phone_mobile != '') {
             $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
         }
@@ -369,7 +369,7 @@ class MyHtmlHelper extends HtmlHelper
         ];
         return $tabs;
     }
-    
+
     public function getPaymentTexts()
     {
         $paymentTexts = [

@@ -24,43 +24,43 @@ class MyNumberHelperTest extends AppCakeTestCase
     {
         $this->MyNumberHelper = new MyNumberHelper(new View());
     }
-    
+
     public function testFormatAsDecimalThreeDigits()
     {
         $result = $this->MyNumberHelper->formatAsDecimal(100, 3);
         $this->assertEquals($result, '100,000');
     }
-    
+
     public function testFormatAsDecimalTwoDigitsDefault()
     {
         $result = $this->MyNumberHelper->formatAsDecimal(88.1);
         $this->assertEquals($result, '88,10');
     }
-    
+
     public function testFormatAsDecimalRemoveTrailingZeros()
     {
         $result = $this->MyNumberHelper->formatAsDecimal(93.800, 2, true);
         $this->assertEquals($result, '93,8');
     }
-    
+
     public function testParseFloatRespectingLocaleInvalidString()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('invalid-price');
         $this->assertFalse($result);
     }
-    
+
     public function testParseFloatRespectingLocaleValidGermanPrice()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3,44');
         $this->assertEquals($result, 3.44);
     }
-    
+
     public function testParseFloatRespectingLocaleValidEnglishPriceWithWrongLocale()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3.45');
         $this->assertEquals($result, 3.45);
     }
-    
+
     public function testParseFloatRespectingLocaleValidEnglishPriceWithEnglishLocale()
     {
         I18n::setLocale('en_US');
@@ -68,13 +68,13 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->assertEquals($result, 3.45);
         I18n::setLocale('de_DE');
     }
-    
+
     public function testParseFloatRespectingLocaleNegativeFloat()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('-3,45');
         $this->assertEquals($result, -3.45);
     }
-    
+
     public function testParseFloatRespectingLocaleInteger()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3');

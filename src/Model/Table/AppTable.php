@@ -53,7 +53,7 @@ class AppTable extends Table
     {
         return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
     }
-    
+
     public function getAllValidationErrors($entity)
     {
         $preparedErrors = [];
@@ -116,7 +116,7 @@ class AppTable extends Table
                 Manufacturers.timebased_currency_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
                 StockAvailables.quantity";
-        
+
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";
         }

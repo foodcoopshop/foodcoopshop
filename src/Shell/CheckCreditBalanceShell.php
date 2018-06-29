@@ -73,7 +73,7 @@ class CheckCreditBalanceShell extends AppShell
 
         $outString .= __('Sum') . ': ' . Configure::read('app.numberHelper')->formatAsCurrency($deltaSum * - 1) . '<br />';
         $outString .= __('Sent_emails') . ': ' . $i;
-        
+
         $this->stopTimeLogging();
 
         $this->ActionLog->customSave('cronjob_check_credit_balance', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());

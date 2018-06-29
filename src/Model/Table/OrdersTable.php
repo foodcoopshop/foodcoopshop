@@ -91,7 +91,7 @@ class OrdersTable extends AppTable
 
         return $query->toArray()[0]['SumTotalPaid'];
     }
-    
+
     public function getSumDeposit($customerId)
     {
         $conditions = [
@@ -141,7 +141,7 @@ class OrdersTable extends AppTable
         }
 
         $contain = ['Customers', 'TimebasedCurrencyOrders'];
-        
+
         $fields = [];
         $orderParams = [
             'conditions' => $conditions,

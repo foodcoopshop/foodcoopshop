@@ -75,7 +75,7 @@ class AppController extends Controller
         $loggedUser = $this->AppAuth->user();
         $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
     }
-    
+
     /**
      * check valid login on each request
      * logged in user should be logged out if deleted or deactivated by admin
@@ -100,7 +100,7 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        
+
         $this->validateAuthentication();
 
         $isMobile = false;
@@ -108,7 +108,7 @@ class AppController extends Controller
             $isMobile = true;
         }
         $this->set('isMobile', $isMobile);
-        
+
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);

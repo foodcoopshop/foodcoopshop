@@ -60,7 +60,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             	]);
     	    }
     	}
-        	
+
         if ($appAuth->user() && $this->Html->paymentIsCashless()) {
             if ($this->request->getSession()->check('Auth.shopOrderCustomer')) {
                 $this->element('addScript', ['script' =>
@@ -70,7 +70,7 @@ if ($appAuth->Cart->getProducts() !== null) {
                     echo __('This_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')->name.'</b>']);
                 echo '<b><a class="btn btn-default" href="javascript:void(0);">'.__('Cancel_shop_order?').'</a></b>';
                 echo '</p>';
-                
+
             }
             $class = ['payment'];
             if ($creditBalance < 0) { // set in FrontendController

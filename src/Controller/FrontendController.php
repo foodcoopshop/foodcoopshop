@@ -47,7 +47,7 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             $product['attributes'] = [];
-            
+
             if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                 if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
                     $product['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
@@ -55,7 +55,7 @@ class FrontendController extends AppController
                     $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
                 }
             }
-            
+
             $attributes = $this->ProductAttribute->find('all', [
                 'conditions' => [
                     'ProductAttributes.id_product' => $product['id_product']
@@ -98,7 +98,7 @@ class FrontendController extends AppController
                     'unit_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : 0,
                     'quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : 0
                 ];
-                
+
                 if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                     if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
                         $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
@@ -106,7 +106,7 @@ class FrontendController extends AppController
                         $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
                     }
                 }
-                
+
                 $product['attributes'][] = $preparedAttributes;
             }
         }

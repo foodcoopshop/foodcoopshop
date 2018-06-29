@@ -19,9 +19,9 @@ use Cake\View\Helper;
  */
 class PricePerUnitHelper extends Helper
 {
-    
+
     public $helpers = ['MyHtml', 'MyNumber'];
-    
+
     public function getStringFromUnitSums($unitSum, $separator)
     {
         $unitSumString = '';
@@ -34,7 +34,7 @@ class PricePerUnitHelper extends Helper
         }
         return $unitSumString;
     }
-    
+
     public function getQuantityInUnitsStringForAttributes($attributeName, $attributeCanBeUsedAsUnit, $unitPricePerUnitEnabled, $unitQuantityInUnits, $unitName, $amount=1)
     {
         $result = $attributeName;
@@ -50,7 +50,7 @@ class PricePerUnitHelper extends Helper
         }
         return $result;
     }
-    
+
     public function getQuantityInUnitsWithWrapper($quantityInUnitsEnabled, $quantityInUnits, $unitName)
     {
         $quantityInUnitsString = $this->getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName);
@@ -59,7 +59,7 @@ class PricePerUnitHelper extends Helper
         }
         return $quantityInUnitsString;
     }
-    
+
     public function getQuantityInUnits($quantityInUnitsEnabled, $quantityInUnits, $unitName, $amount=1)
     {
         $result = '';
@@ -71,12 +71,12 @@ class PricePerUnitHelper extends Helper
         }
         return $result;
     }
-    
+
     public function getPricePerUnit($priceInclPerUnit, $quantityInUnits, $amount)
     {
         return '<div class="price">' . $this->MyNumber->formatAsCurrency($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
     }
-    
+
     public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount)
     {
         $infoText = '<div class="line">';
@@ -87,10 +87,10 @@ class PricePerUnitHelper extends Helper
         $infoText .= '</div>';
         return $infoText;
     }
-    
+
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
     {
         return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
     }
-    
+
 }

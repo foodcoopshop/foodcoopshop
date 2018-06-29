@@ -224,7 +224,7 @@ class PaymentsController extends AdminAppController
 
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
-        
+
         try {
             $entity = $this->Payment->newEntity(
                 ['amount' => $amount],
@@ -236,7 +236,7 @@ class PaymentsController extends AdminAppController
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
-        
+
         if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
             $message = 'FCS_PAYMENT_PRODUCT_MAXIMUM: ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
             $this->log($message);
@@ -555,7 +555,7 @@ class PaymentsController extends AdminAppController
                 $contain[] = 'PaidCashFreeOrders.TimebasedCurrencyOrders';
             }
         }
-        
+
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->getCustomerId()
@@ -605,7 +605,7 @@ class PaymentsController extends AdminAppController
                 ];
             }
         }
-        
+
         $timebasedCurrencyOrderInList = false;
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             if (!empty($customer->paid_cash_free_orders)) {

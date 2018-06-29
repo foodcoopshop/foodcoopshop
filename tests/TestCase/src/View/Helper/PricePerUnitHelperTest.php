@@ -23,7 +23,7 @@ class PricePerUnitHelperTest extends AppCakeTestCase
     {
         $this->PricePerUnitHelper = new PricePerUnitHelper(new View());
     }
-    
+
     public function testGetQuantityInUnitsStringForAttributesA()
     {
         $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('500 g', true, true, 500, 'g', 2);
@@ -35,13 +35,13 @@ class PricePerUnitHelperTest extends AppCakeTestCase
         $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', false, true, 1, 'kg', 2);
         $this->assertEquals($result, 'Stück, je ca. 1 kg');
     }
-    
+
     public function testGetQuantityInUnitsStringForAttributesC()
     {
         $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', true, true, 250, 'g');
         $this->assertEquals($result, 'ca. 250 g');
     }
-    
+
     public function testGetQuantityInUnitsStringForAttributesD()
     {
         $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', false, false, 250, 'g');

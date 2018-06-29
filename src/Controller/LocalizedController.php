@@ -21,7 +21,7 @@ use Cake\I18n\I18n;
 
 class LocalizedController extends Controller
 {
-    
+
     private function getStrings()
     {
         $strings = [
@@ -244,16 +244,16 @@ class LocalizedController extends Controller
                 'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
                 'rotateClockwise' => __('rotate_clockwise?')
             ]
-            
+
         ];
         return $strings;
     }
-    
+
     public function renderAsJsFile() {
         $this->viewBuilder()->setLayout('ajax');
         $this->set('localizedJs', $this->getStrings());
     }
-    
+
 }
 
 ?>

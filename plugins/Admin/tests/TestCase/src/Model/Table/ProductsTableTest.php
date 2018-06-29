@@ -56,7 +56,7 @@ class ProductsTableTest extends AppCakeTestCase
                 'result' => '80-9',
             ]
         ];
-        
+
         foreach ($tests as $test) {
             $result = $this->Product->getCompositeProductIdAndAttributeId($test['ids']['productId'], $test['ids']['attributeId']);
             $this->assertEquals($test['result'], $result);

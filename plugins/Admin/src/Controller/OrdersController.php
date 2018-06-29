@@ -56,7 +56,7 @@ class OrdersController extends AdminAppController
         );
 
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
-        
+
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', __d('admin', 'The_comment_of_the_order_number_{0}_by_{1}_was_changed:', [$oldOrder->id_order, $oldOrder->customer->name]) . ' <div class="changed">' . $orderComment . ' </div>');
 
@@ -71,7 +71,7 @@ class OrdersController extends AdminAppController
         if (empty($this->getRequest()->getQuery('orderIds'))) {
             throw new RecordNotFoundException('wrong orderIds');
         }
-        
+
         $orderIds = explode(',', $this->getRequest()->getQuery('orderIds'));
         if (empty($orderIds)) {
             throw new RecordNotFoundException('wrong orderIds');
@@ -189,7 +189,7 @@ class OrdersController extends AdminAppController
                 'msg' => 'error'
             ]));
         }
-        
+
         foreach ($orderIds as $orderId) {
             $oldOrder = $this->Order->find('all', [
                 'conditions' => [
@@ -308,9 +308,9 @@ class OrdersController extends AdminAppController
             'contain' => $orderParams['contain']
         ])
         ->select($this->Order->Customers);
-        
+
         $query->select($this->Order->TimebasedCurrencyOrders);
-        
+
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
@@ -332,7 +332,7 @@ class OrdersController extends AdminAppController
             }
         }
         $this->set('orders', $orders);
-        
+
         $timebasedCurrencyOrderInList = false;
         foreach($orders as $order) {
             if (!empty($order->timebased_currency_order)) {
@@ -341,7 +341,7 @@ class OrdersController extends AdminAppController
             }
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
-        
+
         $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
         $this->set('title_for_layout', __d('admin', 'Orders'));

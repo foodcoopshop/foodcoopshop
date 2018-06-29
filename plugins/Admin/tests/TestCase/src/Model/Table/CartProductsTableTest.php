@@ -29,7 +29,7 @@ class CartProductsTableTest extends AppCakeTestCase
         $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage wrong cartId: 0
@@ -58,7 +58,7 @@ class CartProductsTableTest extends AppCakeTestCase
         $cart = $this->getCartWithCartProducts($cartId, $customerId);
         $this->assertEmpty($cart->cart_products, 'cart products not empty');
     }
-    
+
     private function getCartWithCartProducts($cartId, $customerId)
     {
         $cart = $this->Cart->find('all', [

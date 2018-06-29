@@ -40,13 +40,13 @@ use Cake\Core\Configure;
                     Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ]);
         }
-        
+
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
             ]);
         }
-        
+
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#order-'
         ]);
@@ -251,9 +251,9 @@ use Cake\Core\Configure;
         }
     }
     echo '</div>';
-    
+
     echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
-    
+
     echo '<div class="sc"></div>';
 
     ?>

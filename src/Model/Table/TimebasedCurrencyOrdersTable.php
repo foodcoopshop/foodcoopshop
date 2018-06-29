@@ -40,22 +40,22 @@ class TimebasedCurrencyOrdersTable extends AppTable
         $validator->numeric('seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
         return $validator;
     }
-    
+
     public function updateSums($order)
     {
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        
+
         $query = $this->TimebasedCurrencyOrderDetail->find('all');
         $query->contain(['OrderDetails']);
         $query->select(['sumMoneyIncl' => $query->func()->sum('TimebasedCurrencyOrderDetails.money_incl')]);
         $query->select(['sumMoneyExcl' => $query->func()->sum('TimebasedCurrencyOrderDetails.money_excl')]);
         $query->select(['sumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')]);
-        
+
         $query->group('OrderDetails.id_order');
         $query->having(['OrderDetails.id_order' => $order->id_order]);
-        
+
         $timebasedCurrencyOrderDetails = $query->first();
-        
+
         // if last timebased_currency_order_detail was deleted, $timebasedCurrencyOrderDetails is empty => avoid notices
         if (empty($timebasedCurrencyOrderDetails)) {
             $sumMoneyIncl = 0;
@@ -66,13 +66,13 @@ class TimebasedCurrencyOrdersTable extends AppTable
             $sumMoneyExcl = $timebasedCurrencyOrderDetails['sumMoneyExcl'];
             $sumSeconds = $timebasedCurrencyOrderDetails['sumSeconds'];
         }
-        
+
         $timebasedCurrencyOrder2update = [
             'money_incl_sum' => $sumMoneyIncl,
             'money_excl_sum' => $sumMoneyExcl,
             'seconds_sum' => $sumSeconds
         ];
-        
+
         $this->save(
             $this->patchEntity($order->timebased_currency_order, $timebasedCurrencyOrder2update)
         );

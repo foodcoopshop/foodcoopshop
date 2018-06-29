@@ -161,7 +161,7 @@ if ($product['description'] != '') {
 
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
-            
+
             $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
                 $attribute['ProductAttributeCombinations']['Attributes']['name'],
                 $attribute['ProductAttributeCombinations']['Attributes']['can_be_used_as_unit'],
@@ -169,14 +169,14 @@ if ($product['description'] != '') {
                 $attribute['Units']['quantity_in_units'],
                 $attribute['Units']['unit_name']
             );
-            
+
             echo '<div class="radio">
                       <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
                           <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
                                $radioButtonLabel.'
                       </label>
                   </div>';
-           
+
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
@@ -215,7 +215,7 @@ if ($product['description'] != '') {
         }
         echo '</div>';
 
-        $unityStrings = []; 
+        $unityStrings = [];
         if ($product['unity'] != '') {
             $unityStrings[] = $product['unity'];
         }

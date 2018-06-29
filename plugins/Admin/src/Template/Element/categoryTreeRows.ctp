@@ -20,7 +20,7 @@ $categoryTable = TableRegistry::getTableLocator()->get('Categories');
 
 foreach ($categories as $category) {
     $level = $categoryTable->getLevel($category);
-    
+
     $rowClass = [
         'data'
     ];
@@ -30,7 +30,7 @@ foreach ($categories as $category) {
     if (! $category->active) {
         $rowClass[] = 'deactivated';
     }
-    
+
     echo '<tr id="category-' . $category->id_category . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';

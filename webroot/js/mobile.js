@@ -201,8 +201,7 @@ foodcoopshop.Mobile = {
         if (loadLastOrderDetailsDropdown.length > 0) {
             cartPage.after(loadLastOrderDetailsDropdown.closest('div.input'));
         }
-        
-        
+
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));
 

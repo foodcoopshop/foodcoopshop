@@ -92,11 +92,11 @@ class CustomersController extends FrontendController
         $customer = $this->Customer->newEntity();
 
         if (!empty($this->getRequest()->getData())) {
-            
+
             $this->loadComponent('Sanitize');
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
             $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
-            
+
             $customer = $this->Customer->patchEntity(
                 $customer,
                 $this->getRequest()->getData(),
@@ -248,7 +248,7 @@ class CustomersController extends FrontendController
             }
 
             if (! empty($this->getRequest()->getData())) {
-                
+
                 $this->loadComponent('Sanitize');
                 $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
                 $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
@@ -256,7 +256,7 @@ class CustomersController extends FrontendController
                 $this->setRequest($this->getRequest()->withData('Customers.email', $this->getRequest()->getData('Customers.address_customer.email')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.firstname', $this->getRequest()->getData('Customers.firstname')));
                 $this->setRequest($this->getRequest()->withData('Customers.address_customer.lastname', $this->getRequest()->getData('Customers.lastname')));
-                
+
                 $customer = $this->Customer->patchEntity(
                     $customer,
                     $this->getRequest()->getData(),
@@ -283,7 +283,7 @@ class CustomersController extends FrontendController
                     // write action log
                     $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
                     $message = __('Member_{0}_created_an_account.', [$this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname')]);
-                    
+
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
                     // START send confirmation email to customer

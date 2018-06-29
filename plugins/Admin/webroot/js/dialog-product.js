@@ -12,7 +12,7 @@
  * @link          https://www.foodcoopshop.com
  */
 foodcoopshop.DialogProduct = {
-    
+
     getHtmlForProductNameEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogName">' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</label><br />';
         dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
@@ -31,7 +31,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeNameAndDescription, dialogId, dialogHtml);
         return dialogHtml;
     },
-    
+
     getHtmlForProductPriceEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogPricePrice"></label><br />';
         dialogHtml += '<label class="radio">';
@@ -69,7 +69,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangePrice, dialogId, dialogHtml);
         return dialogHtml;
     },
-    
+
     getHtmlForProductDepositEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogDepositDeposit"></label><br />';
         dialogHtml += '<input type="text" name="dialogDepositDeposit" id="dialogDepositDeposit" value="" />';
@@ -78,7 +78,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.Deposit, dialogId, dialogHtml);
         return dialogHtml;
     },
-    
+
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
         dialogHtml += '<input type="text" name="dialogQuantityQuantity" id="dialogQuantityQuantity" value="" />';

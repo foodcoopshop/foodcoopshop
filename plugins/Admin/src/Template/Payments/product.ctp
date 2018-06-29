@@ -36,7 +36,7 @@ if (count($payments) == 0) {
             'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
         ]);
     }
-    
+
     echo '<table class="list">';
     echo '<tr class="sort">';
         echo '<th>'.__d('admin', 'Date').'</th>';

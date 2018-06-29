@@ -44,7 +44,7 @@ foodcoopshop.Cart = {
         this.updateCartDepositSum(depositSum);
         this.updateCartTaxSum(taxSum);
         this.updateCartTimebasedCurrencySum(timebasedCurrencyHoursSum);
-        
+
         foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
         $('.cart p.products').show();
 
@@ -71,18 +71,18 @@ foodcoopshop.Cart = {
     },
 
     updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours) {
-        
+
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
         var oldAmountValue = parseInt(oldAmount.html());
         var newAmount = oldAmountValue + parseInt(amount);
         oldAmount.html(newAmount);
         foodcoopshop.Helper.applyBlinkEffect(oldAmount);
-        
+
         // update unity
         var oldUnity = productContainer.find('span.unity');
         var newUnityHtml = oldUnity.html();
-        
+
         if (newAmount > 1 && oldAmountValue == 1) {
             var approxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.approx);
             newUnityHtml = newUnityHtml.replace(approxRegExp, foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
@@ -123,7 +123,7 @@ foodcoopshop.Cart = {
             (tax * amount)
         );
         oldTax.html(foodcoopshop.Helper.formatFloatAsCurrency(newTax));
-        
+
         // update timebasedCurrencyHours
         var oldTimebasedCurrencyHours = productContainer.find('.timebasedCurrencySeconds');
         if (oldTimebasedCurrencyHours.length > 0) {
@@ -163,7 +163,7 @@ foodcoopshop.Cart = {
                 // use attribute label as unity
                 unity = productWrapper.find('input[type="radio"]:checked').parent().text().trim();
             }
-            
+
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
             var timebasedCurrencyHours = 0;
             if (timebasedCurrencyElement.length > 0) {
@@ -171,7 +171,7 @@ foodcoopshop.Cart = {
                     timebasedCurrencyElement.html()
                 );
             }
-            
+
             var productContainer = $('#cart p.products .product.' + productId);
 
             // restore last state after eventuall error after in ajax request
@@ -273,14 +273,14 @@ foodcoopshop.Cart = {
             var oldAmount = parseInt(productContainer.find('.amount span.value').html());
             var newPrice = price / oldAmount;
             var newTax = tax / oldAmount;
-            
+
             var timebasedCurrencyHoursContainer = productContainer.find('.timebasedCurrencySeconds');
             var newTimebasedCurrencyHours = 0;
             if (timebasedCurrencyHoursContainer.length > 0) {
                 var timebasedCurrencyHours = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyAsFloat(timebasedCurrencyHoursContainer.html());
                 newTimebasedCurrencyHours = timebasedCurrencyHours / oldAmount;
             }
-            
+
             var depositContainer = productContainer.find('.deposit span');
             var newDeposit = 0;
             if (depositContainer.length > 0) {
@@ -322,7 +322,7 @@ foodcoopshop.Cart = {
                             foodcoopshop.Helper.disableButton(minusButton);
                         } else {
                             foodcoopshop.Helper.enableButton(minusButton);
-                        }                       
+                        }
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
@@ -470,7 +470,7 @@ foodcoopshop.Cart = {
         });
 
     },
-    
+
     initLoadLastOrderDetailsDropdown : function() {
         $('#load-last-order-details').on('change', function() {
             var selectedValue = $(this).val();
@@ -488,7 +488,7 @@ foodcoopshop.Cart = {
                     redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart?deliveryDate=' + selectedValue;
                 }
                 dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-                
+
                 var buttons = {};
                 buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
                 buttons['yes'] = {

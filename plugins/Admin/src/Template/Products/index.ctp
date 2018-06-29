@@ -21,18 +21,18 @@ use Cake\Core\Configure;
         $this->element('addScript', [
         'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" . 
-            Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" . 
-            Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" . 
+            Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .
+            Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" .
             Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" .
-            Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
@@ -286,7 +286,7 @@ use Cake\Core\Configure;
                 'script' => Configure::read('app.jsNamespace') . ".Admin.setProductUnitData($('#product-unit-object-".$product->id_product."'),'".json_encode($product->unit)."');"
             ]);
         }
-        
+
         echo '<td class="' . ($product->price_is_zero ? 'not-available' : '') . '">';
         echo '<div class="table-cell-wrapper price">';
 	        if (empty($product->product_attributes)) {

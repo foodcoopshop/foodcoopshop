@@ -171,7 +171,7 @@ class MenuHelper extends Helper
         }
         return [];
     }
-    
+
     public function getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
@@ -179,7 +179,7 @@ class MenuHelper extends Helper
         }
         return [];
     }
-    
+
     public function getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForManufacturer()) {
@@ -187,5 +187,5 @@ class MenuHelper extends Helper
         }
         return [];
     }
-    
+
 }

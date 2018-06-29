@@ -97,7 +97,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 'type' => 'checkbox',
                 'escape' => false
             ]);
-            
+
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
                 echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
             echo '</div>';

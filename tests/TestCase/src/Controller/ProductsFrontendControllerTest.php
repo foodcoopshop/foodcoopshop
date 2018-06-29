@@ -51,7 +51,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assertNotRegExpWithUnquotedString('0,62&nbsp;€', $response); // price must not be shown
         $this->assert200OkHeader();
     }
-    
+
     public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);

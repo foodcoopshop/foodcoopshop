@@ -24,7 +24,7 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.DecreaseAmount, dialogId, dialogHtml);
         return dialogHtml;
     },
-    
+
     getHtmlForOrderDetailProductPriceEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductPricePrice"></label><br />';
         dialogHtml += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
@@ -57,5 +57,5 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.AdaptWeight, dialogId, dialogHtml);
         return dialogHtml;
     }
-    
+
 };

@@ -136,9 +136,9 @@ return [
          * date of the last update of terms of use
          */
         'termsOfUseLastUpdate' => '2016-11-28',
-        
+
         'implementedLocales' => ['de_DE', 'en_US'],
-        
+
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'numberHelper' => new App\View\Helper\MyNumberHelper(new Cake\View\View()),
@@ -173,6 +173,6 @@ return [
             'Year' => 'Y',
             'DateShortAlt' => 'm/d/Y'
         ]
-        
+
     ]
 ];

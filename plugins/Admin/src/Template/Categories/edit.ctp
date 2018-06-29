@@ -17,7 +17,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => 
+    'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.categories .add-image-button', foodcoopshop.Upload.saveCategoryTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.disableSelectpickerItems('#categories-id-parent', " . json_encode($disabledSelectCategoryIds) . ");" .

@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => 
+    'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();
     "
 ]);

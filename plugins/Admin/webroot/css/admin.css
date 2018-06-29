@@ -529,7 +529,7 @@ form div.error-message {
 }
 #labelUnity span {
     font-weight: normal;
-    font-size: 12px;	
+    font-size: 12px;
 }
 .product-description-rename-info {
     position: absolute;
@@ -935,7 +935,7 @@ body.customers .delete-customer-button {
     float:right;
     clear:both;
     margin-bottom: 15px;
-    margin-top: 15px; 
+    margin-top: 15px;
 }
 body.configurations.index td.first {
     vertical-align: top;

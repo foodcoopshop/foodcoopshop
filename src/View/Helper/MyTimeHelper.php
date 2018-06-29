@@ -21,12 +21,12 @@ use Cake\I18n\I18n;
  */
 class MyTimeHelper extends TimeHelper
 {
-    
+
     public function getI18Format($formatString)
     {
         return Configure::read('DateFormat.'. I18n::getLocale() . '.' . $formatString);
     }
-    
+
     public function getLastDayOfGivenMonth($monthAndYear)
     {
         return date('t', strtotime($monthAndYear));
@@ -157,7 +157,7 @@ class MyTimeHelper extends TimeHelper
         }
 
         $date = date($this->getI18Format('DateShortAlt'), $date);
-        
+
         return $date;
     }
 
@@ -196,7 +196,7 @@ class MyTimeHelper extends TimeHelper
         if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
             $dateDiff = Configure::read('app.deliveryDayDelta') * -1;
         }
-        
+
         $date = date($this->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
 
         return $date;

@@ -32,7 +32,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     /**
      * @param int $manufacturerId
      * @return array
@@ -69,7 +69,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'approval', -1, 1);
         return $validator;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -80,9 +80,9 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         if (!$manufacturerId && !$customerId) {
             throw new InvalidParameterException('either manufacturerId or customerId needs to be set');
         }
-        
+
         $query = $this->find('all');
-        
+
         $query->where([
             'TimebasedCurrencyPayments.status' => APP_ON,
             'TimebasedCurrencyPayments.approval > ' . APP_DEL
@@ -97,11 +97,11 @@ class TimebasedCurrencyPaymentsTable extends AppTable
                 ['TimebasedCurrencyPayments.id_manufacturer' => $manufacturerId]
             );
         }
-        
+
         return $query;
-        
+
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -122,7 +122,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         }
         return $unapprovedCount;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -135,7 +135,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
         $query->select(
             ['SumSeconds' => $query->func()->sum('TimebasedCurrencyPayments.seconds')]
         );
-        
+
         $sumSeconds = $query->toArray()[0]['SumSeconds'];
         if ($sumSeconds == '') {
             $sumSeconds = 0;

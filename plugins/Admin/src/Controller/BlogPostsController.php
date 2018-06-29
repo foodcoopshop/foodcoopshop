@@ -120,15 +120,15 @@ class BlogPostsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content'])));
 
         $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->AppAuth->getUserId()));
-        
+
         if ($this->AppAuth->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('BlogPosts.id_manufacturer', $this->AppAuth->getManufacturerId()));
         }
-        
+
         if (!$this->getRequest()->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer() && $isEditMode) {
             $this->BlogPost->removeBehavior('Timestamp');
         }
-        
+
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
         if (!empty($blogPost->getErrors())) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));

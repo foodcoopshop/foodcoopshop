@@ -51,7 +51,7 @@ class PaymentsTable extends AppTable
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_needs_to_be_greater_than_0.'));
         return $validator;
     }
-    
+
     private function getManufacturerDepositConditions($manufacturerId = null)
     {
         $conditions = [

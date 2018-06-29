@@ -115,7 +115,7 @@ class StringComponent extends Component
         $string = preg_replace("/[$separator]+/u", "$separator", $string);
         return $string;
     }
-    
+
     public static function slugifyAndKeepCase($string)
     {
         return self::slugify($string, '-', false);

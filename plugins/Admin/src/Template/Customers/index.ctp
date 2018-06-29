@@ -85,7 +85,7 @@ foreach ($customers as $customer) {
     echo '<td>';
 
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
-    
+
         if ($appAuth->isSuperadmin()) {
             echo '<span class="edit-wrapper">';
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -96,12 +96,12 @@ foreach ($customers as $customer) {
         if ($customer->order_count <= 3) {
             $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$customer->order_count]).'"></i> ' . $customerName;
         }
-    
+
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
             'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
             'escape' => false
         ]) . '</span>';
-    
+
         echo '<div class="customer-details-wrapper">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
                 'class' => 'customer-details-read-button',
@@ -175,21 +175,21 @@ foreach ($customers as $customer) {
                 echo $this->Number->formatAsCurrency($customer->credit_balance);
             }
         }
-        
+
         echo '</td>';
     }
-    
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<td>';
         if ($customer->timebased_currency_enabled) {
             $sumTimebasedCurrency += $customer->timebased_currency_credit_balance;
-            
+
             $timebasedCurrencyCreditBalanceClasses = [];
             if ($customer->timebased_currency_credit_balance < 0) {
                 $timebasedCurrencyCreditBalanceClasses[] = 'negative';
             }
             $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($customer->timebased_currency_credit_balance);
-            
+
             if ($appAuth->isSuperadmin()) {
                 echo $this->Html->getJqueryUiIcon(
                     $timebasedCurrencyCreditBalanceHtml,
@@ -205,7 +205,7 @@ foreach ($customers as $customer) {
         }
         echo '</td>';
     }
-    
+
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';

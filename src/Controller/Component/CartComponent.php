@@ -41,7 +41,7 @@ class CartComponent extends Component
         }
         return 0;
     }
-    
+
     public function getProductAndDepositSum()
     {
         return $this->getProductSum() + $this->getDepositSum();
@@ -54,12 +54,12 @@ class CartComponent extends Component
         }
         return 0;
     }
-    
+
     public function isTimebasedCurrencyUsed()
     {
         return isset($this->cart['CartTimebasedCurrencyUsed']) && $this->cart['CartTimebasedCurrencyUsed'];
     }
-    
+
     public function getTimebasedCurrencyMoneyExclSum()
     {
         if ($this->cart !== null) {
@@ -67,7 +67,7 @@ class CartComponent extends Component
         }
         return 0;
     }
-    
+
     /**
      * avoids rounding errors
      * @return number
@@ -76,7 +76,7 @@ class CartComponent extends Component
     {
         return round($this->getTimebasedCurrencySecondsSum() * 1.05, 0);
     }
-    
+
     public function getTimebasedCurrencySecondsSum()
     {
         if ($this->cart !== null) {
@@ -84,7 +84,7 @@ class CartComponent extends Component
         }
         return 0;
     }
-    
+
     public function getTaxSum()
     {
         if ($this->cart !== null) {

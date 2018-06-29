@@ -85,7 +85,7 @@ class SendInvoicesShell extends AppShell
         // 5) check if manufacturers have open order details and send email
         $i = 0;
         $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
-        
+
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
 

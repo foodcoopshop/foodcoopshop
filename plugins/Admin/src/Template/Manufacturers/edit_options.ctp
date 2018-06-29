@@ -211,7 +211,7 @@ echo '<div class="holiday-wrapper">';
             ]);
         }
     }
-    
+
     echo $this->Form->end();
 
 ?>

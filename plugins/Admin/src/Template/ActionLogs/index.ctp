@@ -21,8 +21,8 @@ use Cake\Core\Configure;
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . 
-            Configure::read('app.jsNamespace') . ".Admin.init();" . 
+            datefieldSelector.datepicker();" .
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");
         "
         ]);

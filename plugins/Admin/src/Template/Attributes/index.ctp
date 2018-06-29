@@ -81,13 +81,13 @@ foreach ($attributes as $attribute) {
     echo '<td>';
     echo $attribute->name;
     echo '</td>';
-    
+
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
         if ($attribute->can_be_used_as_unit == 1) {
             echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
         }
     echo '</td>';
-    
+
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['online'])) {

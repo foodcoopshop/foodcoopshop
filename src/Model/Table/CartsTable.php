@@ -33,15 +33,15 @@ class CartsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function getProductNameWithUnity($productName, $unity)
     {
         return $productName . ($unity != '' ? ' : ' . $unity : '');
     }
-    
+
     public function adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor)
     {
-        
+
         $cartProductSum = 0;
         $cartProductSumExcl = 0;
         $cartProductSecondsSum = 0;
@@ -63,12 +63,12 @@ class CartsTable extends AppTable
                 $cartProductSumExcl += $cartProduct['priceExcl'];
             }
         }
-        
+
         $cart['CartTimebasedCurrencyUsed'] = true;
         $cart['CartTimebasedCurrencySecondsSum'] = $cartProductSecondsSum;
         $cart['CartProductSum'] = $cartProductSum;
         $cart['CartProductSumExcl'] = $cartProductSumExcl;
-                
+
         return $cart;
     }
 
@@ -93,7 +93,7 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-        
+
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['id_cart']
@@ -119,7 +119,7 @@ class CartsTable extends AppTable
             'Cart' => $cart,
             'CartProducts' => []
         ];
-        
+
         foreach ($cartProducts as &$cartProduct) {
 
             $imageId = 0;
@@ -132,7 +132,7 @@ class CartsTable extends AppTable
             } else {
                 $productData = $this->prepareMainProduct($cartProduct);
             }
-            
+
             $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
             $productLink = Configure::read('app.htmlHelper')->link(
                 $cartProduct->product_lang->name,
@@ -146,9 +146,9 @@ class CartsTable extends AppTable
             $productData['image'] = $productImage;
             $productData['productLink'] = $productLink;
             $productData['manufacturerLink'] = $manufacturerLink;
-            
+
             $preparedCart['CartProducts'][] = $productData;
-            
+
         }
 
         // sum up deposits and products
@@ -177,7 +177,7 @@ class CartsTable extends AppTable
         }
         return $preparedCart;
     }
-    
+
     private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
     {
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -189,9 +189,9 @@ class CartsTable extends AppTable
             }
         }
         return $productData;
-        
+
     }
-    
+
     /**
      * @param array $productData
      * @return number
@@ -206,21 +206,21 @@ class CartsTable extends AppTable
         }
         return $count;
     }
-    
+
     /**
      * @param CartProductsTable $cartProduct
      * @return array
      */
     private function prepareMainProduct($cartProduct)
     {
-        
+
         $productsTable = TableRegistry::getTableLocator()->get('Products');
-        
+
         $netPricePerPiece = $cartProduct->product->product_shop->price;
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
-        
+
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
             'productId' => $cartProduct->id_product,
@@ -232,13 +232,13 @@ class CartsTable extends AppTable
             'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
             'tax' => $tax
         ];
-        
+
         $deposit = 0;
         if (!empty($cartProduct->product->deposit_product->deposit)) {
             $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
         }
         $productData['deposit'] = $deposit;
-        
+
         $unitName = '';
         $unitAmount = 0;
         $priceInclPerUnit = 0;
@@ -268,27 +268,27 @@ class CartsTable extends AppTable
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
         $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
         $productData['quantityInUnits'] = $quantityInUnits;
-        
+
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
-        
+
         return $productData;
-        
+
     }
-    
+
     /**
      * @param CartProductsTable $cartProduct
      * @return array
      */
     private function prepareProductAttribute($cartProduct)
     {
-        
+
         $productsTable = TableRegistry::getTableLocator()->get('Products');
-        
+
         $netPricePerPiece = $cartProduct->product_attribute->product_attribute_shop->price;
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
-        
+
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
             'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
@@ -300,20 +300,20 @@ class CartsTable extends AppTable
             'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
             'tax' => $tax
         ];
-        
+
         $deposit = 0;
         if (!empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
             $deposit = $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount;
         }
         $productData['deposit'] = $deposit;
-        
+
         $unitName = '';
         $unityName = '';
         $unitAmount = 0;
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
         $productQuantityInUnits = 0;
-        
+
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
             if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
@@ -347,11 +347,11 @@ class CartsTable extends AppTable
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
         $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
         $productData['quantityInUnits'] = $quantityInUnits;
-        
+
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
-        
+
         return $productData;
-        
+
     }
-    
+
 }

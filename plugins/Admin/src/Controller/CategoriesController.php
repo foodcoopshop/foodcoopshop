@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
 
 class CategoriesController extends AdminAppController
 {
-            
+
     public function isAuthorized($user)
     {
         return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
@@ -37,9 +37,9 @@ class CategoriesController extends AdminAppController
             ['validate' => false]
         );
         $this->set('title_for_layout', __d('admin', 'Add_category'));
-        
+
         $this->set('disabledSelectCategoryIds', []);
-        
+
         $this->_processForm($category, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -64,15 +64,15 @@ class CategoriesController extends AdminAppController
             throw new NotFoundException;
         }
         $this->set('title_for_layout', __d('admin', 'Edit_category'));
-        
+
         $categoryChildren = $this->Category->find('all')->find('children', ['for' => $categoryId]);
-        
+
         $disabledSelectCategoryIds = [(int) $categoryId];
         foreach ($categoryChildren as $categoryChild) {
             $disabledSelectCategoryIds[] = $categoryChild->id_category;
         }
         $this->set('disabledSelectCategoryIds', $disabledSelectCategoryIds);
-        
+
         $this->_processForm($category, true);
     }
 

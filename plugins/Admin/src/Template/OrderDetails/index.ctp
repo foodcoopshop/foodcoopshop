@@ -34,7 +34,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
     ]);
-    
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
@@ -173,14 +173,14 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
 
     echo '<td class="right">';
-    
+
         if (!empty($orderDetail->timebased_currency_order_detail)) {
             echo '<span id="timebased-currency-object-'.$orderDetail->id_order_detail.'" class="timebased-currency-object"></span>';
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".Admin.setOrderDetailTimebasedCurrencyData($('#timebased-currency-object-".$orderDetail->id_order_detail."'),'".json_encode($orderDetail->timebased_currency_order_detail)."');"
             ]);
         }
-        
+
         echo '<div class="table-cell-wrapper amount">';
         if ($groupBy == '') {
             if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
@@ -277,7 +277,7 @@ foreach ($orderDetails as $orderDetail) {
         }
     }
     echo '</td>';
-    
+
     if ($groupBy == '') {
         echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
             if (!empty($orderDetail->order_detail_unit)) {

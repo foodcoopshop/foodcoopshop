@@ -21,7 +21,7 @@ use Cake\View\Helper\NumberHelper;
  */
 class MyNumberHelper extends NumberHelper
 {
-    
+
     public function formatAsCurrency($amount)
     {
         $currency = self::currency($amount, 'USD'); // e.g. PLN for polish zloty does not return the currency symbol
@@ -29,17 +29,17 @@ class MyNumberHelper extends NumberHelper
         $currency = str_replace(' ', '&nbsp;', $currency); // careful: pattern is not a normal space but a no-break space 0xA0
         return $currency;
     }
-    
+
     public function formatAsUnit($amount, $shortcode)
     {
         return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
     }
-    
+
     public function formatAsPercent($amount)
     {
         return self::formatAsDecimal($amount) . '%';
     }
-    
+
     /**
      * shows decimals only if necessary
      * @param $rate
@@ -48,12 +48,12 @@ class MyNumberHelper extends NumberHelper
     {
         return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
     }
-    
+
     public function formatUnitAsDecimal($amount)
     {
         return self::formatAsDecimal($amount, 3, true);
     }
-    
+
     public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
     {
         $result = self::format($amount, [
@@ -66,7 +66,7 @@ class MyNumberHelper extends NumberHelper
         }
         return $result;
     }
-    
+
     /**
      * self::parseFloat($double, ['locale' => I18n::getLocale()]); did not work with travis!
      * @return boolean|mixed
@@ -79,7 +79,7 @@ class MyNumberHelper extends NumberHelper
         if (!is_numeric($double)) {
             return false;
         }
-        return $double; 
+        return $double;
     }
 }
 ?>

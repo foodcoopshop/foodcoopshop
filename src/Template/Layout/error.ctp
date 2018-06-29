@@ -76,7 +76,7 @@ use Cake\Core\Configure;
     if ($scripts != '') {
         echo $this->Html->wrapJavascriptBlock($scripts);
     }
-    
+
 ?>
 
 </body>
