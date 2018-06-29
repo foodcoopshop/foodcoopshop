@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:58+0200\n"
+"POT-Creation-Date: 2018-06-29 14:57+0200\n"
 "PO-Revision-Date: 2018-06-29 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1221,6 +1221,16 @@ msgstr "Sekunden"
 msgid "Database_backup_successful"
 msgstr "Datenbank-Backup erfolgreich"
 
+#, fuzzy
+msgid "Your_credit_is_used_up"
+msgstr "Dein Warenkorb ist leer"
+
+msgid "Sum"
+msgstr "Summe"
+
+msgid "Sent_emails"
+msgstr "Versendete E-Mails"
+
 msgid "Order_reminder"
 msgstr "Bestell-Erinnerung"
 
@@ -1229,9 +1239,6 @@ msgstr "heute"
 
 msgid "tomorrow"
 msgstr "Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto überwiesen."
-
-msgid "Sent_emails"
-msgstr "Versendete E-Mails"
 
 msgid "to_(time_context)"
 msgstr "bis"
@@ -1418,9 +1425,6 @@ msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen 
 
 msgid "Add_credit"
 msgstr "Guthaben aufladen"
-
-msgid "Sum"
-msgstr "Summe"
 
 msgid "Value_added_tax"
 msgstr "Umsatzsteuer"

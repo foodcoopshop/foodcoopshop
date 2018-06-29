@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 10:58+0200\n"
-"PO-Revision-Date: 2018-06-28 17:36+0200\n"
+"POT-Creation-Date: 2018-06-29 14:57+0200\n"
+"PO-Revision-Date: 2018-06-29 14:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1221,6 +1221,15 @@ msgstr "seconds"
 msgid "Database_backup_successful"
 msgstr "Database backup successful"
 
+msgid "Your_credit_is_used_up"
+msgstr "Your credit is used up"
+
+msgid "Sum"
+msgstr "Sum"
+
+msgid "Sent_emails"
+msgstr "Sent emails"
+
 msgid "Order_reminder"
 msgstr "Order reminder"
 
@@ -1229,9 +1238,6 @@ msgstr "today"
 
 msgid "tomorrow"
 msgstr "tomorrow"
-
-msgid "Sent_emails"
-msgstr "Sent emails"
 
 msgid "to_(time_context)"
 msgstr "to"
@@ -1418,9 +1424,6 @@ msgstr "You reached the order limit of {0}. Please add credit."
 
 msgid "Add_credit"
 msgstr "Add credit"
-
-msgid "Sum"
-msgstr "Sum"
 
 msgid "Value_added_tax"
 msgstr "Value added tax"
