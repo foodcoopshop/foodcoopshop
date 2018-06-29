@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-            	<?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?><?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
+            	<?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
             	    $oldOrderDetail->product_amount,
             	    $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
             	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
