@@ -699,7 +699,7 @@ class OrderDetailsController extends AdminAppController
         $flashMessage = $message;
         $orderDetailsCount = count($orderDetailIds);
         if ($orderDetailsCount > 1) {
-            $flashMessage = $orderDetailsCount . ' ' . __d('admin', '{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}', $orderDetailsCount);
+            $flashMessage = $orderDetailsCount . ' ' . __d('admin', '{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}', $orderDetailsCount);
         }
         $this->Flash->success($flashMessage);
 
