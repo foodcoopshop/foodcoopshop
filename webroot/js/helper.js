@@ -415,7 +415,7 @@ foodcoopshop.Helper = {
     },
 
     initLogoutInstantOrderCustomerButton: function () {
-        $('#cart .shop-order-customer-info a.btn').on('click', function () {
+        $('#cart .instant-order-customer-info a.btn').on('click', function () {
             var buttons = {};
             buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
             buttons['yes'] = {

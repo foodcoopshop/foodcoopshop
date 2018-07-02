@@ -194,7 +194,7 @@ foodcoopshop.Mobile = {
 
         // add credit balance info and shop order info to cart page
         var cartPage = $('body.carts.detail #inner-content h1:first');
-        cartPage.after($('#cart p.shop-order-customer-info'));
+        cartPage.after($('#cart p.instant-order-customer-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
 
         var loadLastOrderDetailsDropdown = $('#cart .inner #load-last-order-details');
