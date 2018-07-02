@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-02 10:12+0200\n"
-"PO-Revision-Date: 2018-07-02 10:07+0200\n"
+"POT-Creation-Date: 2018-07-02 10:45+0200\n"
+"PO-Revision-Date: 2018-07-02 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -288,7 +288,6 @@ msgstr "Sofort-Bestellung"
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 
-#, fuzzy
 msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
 msgstr "Die Bestellung {0} von {1} wurde auf den {2} rückdatiert."
 
@@ -1342,7 +1341,7 @@ msgstr "bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine I
 msgid "Instant_orders"
 msgstr "Sofort-Bestellungen"
 
-msgid "to_receive_an_email_on_every_shop_order."
+msgid "to_receive_an_email_on_every_instant_order."
 msgstr "bei jeder Sofort-Bestellung eine Info-Mail erhalten."
 
 msgid "Other_settings"

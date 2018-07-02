@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-02 10:12+0200\n"
-"PO-Revision-Date: 2018-07-02 10:08+0200\n"
+"POT-Creation-Date: 2018-07-02 10:45+0200\n"
+"PO-Revision-Date: 2018-07-02 10:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -71,6 +71,9 @@ msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bes
 
 msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
 msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "Errors_occurred."
+msgstr "Es sind Fehler aufgetreten."
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."

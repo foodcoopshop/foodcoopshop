@@ -516,7 +516,7 @@ class CartsController extends FrontendController
         $this->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || !empty($formErrors)) {
-            $this->Flash->error('Es sind Fehler aufgetreten.');
+            $this->Flash->error(__('Errors_occurred.'));
         } else {
 
             $selectedTimebasedCurrencySeconds = 0;
